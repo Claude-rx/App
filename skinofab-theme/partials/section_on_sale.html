@@ -1,0 +1,29 @@
+{# Spark homepage on-sale product grid. #}
+{% if settings.show_on_sale %}
+    {% if settings.on_sale_products|length > 0 %}
+    <section class="py-section-y md:py-section-y-md" {% if settings.on_sale_bg_color %}style="background-color: {{ settings.on_sale_bg_color }};"{% endif %}>
+        <div class="container">
+            {% t "homepage.heading.on_sale" as default_on_sale %}
+            {% include "partials/section_heading.html" with heading=settings.on_sale_header|default:default_on_sale size=settings.on_sale_header_size align=settings.on_sale_header_align %}
+            {% include "partials/product_grid.html" with products=settings.on_sale_products columns=settings.on_sale_columns card_bg=settings.on_sale_card_bg %}
+        </div>
+    </section>
+    {% elif request.is_setting_preview or request.COOKIES.preview_theme %}
+    {# Setup placeholder: Theme Editor and theme preview only. Both bypass the page cache, so a live shopper never receives it. #}
+    <section class="container py-12 md:py-16">
+        <div class="border-2 border-dashed border-slate-200 p-8">
+            <div class="h-5 w-32 bg-slate-100 rounded mb-6"></div>
+            <div class="product-grid">
+                {% for i in "123" %}
+                <div>
+                    <div class="aspect-square bg-slate-50 mb-3"></div>
+                    <div class="h-3 w-3/4 bg-slate-100 rounded mb-2"></div>
+                    <div class="h-3 w-1/3 bg-slate-100 rounded"></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <p class="text-center text-xs text-slate-300 mt-4">{% t "homepage.placeholder.on_sale" %}</p>
+    </section>
+    {% endif %}
+{% endif %}

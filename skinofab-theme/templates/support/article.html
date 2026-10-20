@@ -1,0 +1,41 @@
+{% extends "layouts/base.html" %}
+{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ 'main.css'|asset_url }}">{% endblock spark_css %}
+
+{% block title %}
+    {{ article.title }} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container py-3">
+    <nav aria-label="{% t 'navigation.breadcrumb' %}">
+        <ol class="flex items-center gap-2 text-xs text-slate-400">
+            <li><a href="{{ homepage_url }}" class="hover:text-slate-600">{% t "navigation.main.home" %}</a></li>
+            <li>/</li>
+            <li><a href="{% url 'support:category-list' %}" class="hover:text-slate-600">{% t "navigation.main.support" %}</a></li>
+            <li>/</li>
+            <li class="text-slate-600">{{ article.title }}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="container py-8 md:py-12">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-semibold text-slate-800 mb-4">{{ article.title }}</h1>
+        <p class="text-xs text-slate-400 mb-8">
+            {% t "store.support.last_updated" %} {{ article.updated_at|date:"M d, Y" }}
+        </p>
+
+        <div class="text-sm text-slate-600 leading-relaxed content-body">
+            {{ article.content|safe }}
+        </div>
+
+        <hr class="my-8 border-slate-200">
+        <p class="text-sm text-slate-500">
+            {% url 'customer:support-ticket-create' as create_ticket_link %}
+            {% t "store.support.create_support_request" with link=create_ticket_link %}
+        </p>
+    </div>
+</div>
+{% endblock content %}

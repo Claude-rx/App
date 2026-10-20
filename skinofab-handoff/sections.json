@@ -25,7 +25,9 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [
         "home.announcement.desktop.sticky",
         "home.announcement.tablet.sticky",
@@ -62,7 +64,11 @@
         "home.header.sm_-_sales_banner_-_mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-814w-f7",
         "home.header.stain-814w-00001a"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "prices-from-next",
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -95,7 +101,9 @@
         "home.hero.smooche-reverse-time-peptide-serum-hero-1800w-19c378",
         "home.hero.smooche-reverse-time-peptide-serum-hero-mobile-1680w-cb2c05"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [
         "home.hero.cta-dest",
         "home.hero.slider"
@@ -158,7 +166,11 @@
         "home.bestsellers.1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-720w-076aba",
         "home.bestsellers.1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims",
+        "prices-from-next"
+      ],
       "behavior_ids": [
         "home.bestsellers.slider"
       ],
@@ -317,7 +329,8 @@
         "home.bundles.figma-e7087-d171e9"
       ],
       "divergence_ids": [
-        "promotions-need-offers"
+        "promotions-need-offers",
+        "prices-from-next"
       ],
       "behavior_ids": [
         "home.bundles.slider"
@@ -390,7 +403,9 @@
         "home.formulas.smooche-korean-formulas-foundation-application-2190w-e256b5",
         "home.formulas.smooche-korean-formulas-foundation-application-1800w-2dc986"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -495,7 +510,9 @@
         "home.essentials.figma-c99bd-57b22a",
         "home.essentials.figma-e7087-d171e9"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "prices-from-next"
+      ],
       "behavior_ids": [
         "home.essentials.slider"
       ],
@@ -610,7 +627,9 @@
       "asset_ids": [
         "home.footer.skinofab-logo-white"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -638,7 +657,9 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [
         "pdp.announcement.desktop.sticky",
         "pdp.announcement.tablet.sticky",
@@ -751,7 +772,11 @@
         "pdp.main.24_e2816f7f-0236-4d48-8794-a7b92c9b627d-1350w-9608d0",
         "pdp.main.25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-d89302"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims",
+        "prices-from-next",
+        "promotions-need-offers"
+      ],
       "behavior_ids": [
         "pdp.main.desktop.sticky",
         "pdp.main.tablet.sticky"
@@ -782,7 +807,9 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -817,7 +844,9 @@
         "pdp.kopstorm_testomonials_9xvcek.3_bd0bdd54-c308-410a-b798-8a8fea628997_800x800",
         "pdp.kopstorm_testomonials_9xvcek.2_9c7e1c85-81c7-4ffb-8ccb-a246f8658467_800x800"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -881,7 +910,9 @@
         "pdp.section_image_with_text_cyzhwr.icons_smooche_new_8d474301-a5ef-4be6-bd48-ff9",
         "pdp.section_image_with_text_cyzhwr.icons_smooche_new_19_100x100-171c53"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -943,7 +974,9 @@
         "pdp.kopstorm_compare_lqnyxd.checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-20w-c",
         "pdp.kopstorm_compare_lqnyxd.checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-60w-e"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1005,7 +1038,10 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims",
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1037,7 +1073,9 @@
         "pdp.kopstorm_why_gca7fq.icons_smooche_new_12_500x500-488fb2",
         "pdp.kopstorm_why_gca7fq.icons_smooche_new_13_500x500-c4009e"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [
         "pdp.kopstorm_why_gca7fq.cta-dest"
       ],
@@ -1097,7 +1135,9 @@
       "asset_ids": [
         "pdp.footer.skinofab-logo-white"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1125,7 +1165,9 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [
         "collection.announcement.desktop.sticky",
         "collection.announcement.tablet.sticky",
@@ -1229,7 +1271,8 @@
         "collection.section_icons_row_cudwgr.icojns_smooche_2_fcd549a2-4c5f-41b5-86af-d5f-x"
       ],
       "divergence_ids": [
-        "social-proof-claims"
+        "social-proof-claims",
+        "promotions-need-offers"
       ],
       "behavior_ids": [],
       "responsive_notes": ""
@@ -1313,7 +1356,9 @@
         "collection.main.beautyblender-productpicsimagesphotos_16ba3af3-8839-4806-aed-108"
       ],
       "divergence_ids": [
-        "promotions-need-offers"
+        "promotions-need-offers",
+        "prices-from-next",
+        "social-proof-claims"
       ],
       "behavior_ids": [
         "collection.main.desktop.sticky",
@@ -1348,7 +1393,9 @@
       "asset_ids": [
         "collection.footer.skinofab-logo-white"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1376,7 +1423,9 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [
         "page-faq.announcement.desktop.sticky",
         "page-faq.announcement.tablet.sticky",
@@ -1469,7 +1518,10 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims",
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1499,7 +1551,9 @@
       "asset_ids": [
         "page-faq.footer.skinofab-logo-white"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1527,7 +1581,9 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [
         "policy-terms.announcement.desktop.sticky",
         "policy-terms.announcement.tablet.sticky",
@@ -1650,7 +1706,9 @@
       "asset_ids": [
         "policy-terms.footer.skinofab-logo-white"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1678,7 +1736,9 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [
         "article.announcement.desktop.sticky",
         "article.announcement.tablet.sticky",
@@ -1771,7 +1831,10 @@
       },
       "commerce_surface": "",
       "asset_ids": [],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1857,7 +1920,9 @@
       "asset_ids": [
         "article.footer.skinofab-logo-white"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1887,7 +1952,9 @@
       "asset_ids": [
         "lander.s0.215a694d-fed6-490c-9ad7-df4f828e3557"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1919,7 +1986,11 @@
         "lander.s1.adc2be4a-7515-4935-8eba-0f6eebc9bdd5-x",
         "lander.s1.215a694d-fed6-490c-9ad7-df4f828e3557"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims",
+        "prices-from-next"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -1950,7 +2021,10 @@
         "lander.s2.6d517e73-b58a-4aaf-a13f-db8e55fb01df",
         "lander.s2.adc2be4a-7515-4935-8eba-0f6eebc9bdd5"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
       "behavior_ids": [
         "lander.s2.media0"
       ],
@@ -2111,7 +2185,10 @@
         "lander.s7.be382ee1-283a-4a2d-90ae-3c4370cfcec9",
         "lander.s7.8123a267-73c7-41ec-86d7-f0c4f831cda9"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -2143,7 +2220,10 @@
         "lander.s8.39279355-93ee-4899-bdeb-ee8ce659ab45",
         "lander.s8.3a3d4846-90bf-4602-9fc2-9482ac586678"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -2173,7 +2253,9 @@
       "asset_ids": [
         "lander.s9.a42aa7c8-a061-4010-9669-5abac190a9a7"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [
         "lander.s9.media4"
       ],
@@ -2206,7 +2288,10 @@
         "lander.s10.9be7e268-4413-428c-b92c-b660e1331473",
         "lander.s10.39279355-93ee-4899-bdeb-ee8ce659ab45"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -2238,7 +2323,10 @@
         "lander.s11.be382ee1-283a-4a2d-90ae-3c4370cfcec9",
         "lander.s11.9be7e268-4413-428c-b92c-b660e1331473"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
       "behavior_ids": [],
       "responsive_notes": ""
     },
@@ -2269,7 +2357,10 @@
         "lander.s12.e7af3cac-3a0f-4f3a-bee9-48a09b656a9a",
         "lander.s12.3a3d4846-90bf-4602-9fc2-9482ac586678"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims",
+        "promotions-need-offers"
+      ],
       "behavior_ids": [
         "lander.s12.desktop.sticky",
         "lander.s12.tablet.sticky"
@@ -2300,7 +2391,9 @@
       "asset_ids": [
         "lander.s13.e7af3cac-3a0f-4f3a-bee9-48a09b656a9a"
       ],
-      "divergence_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
       "behavior_ids": [
         "lander.s13.mobile.sticky"
       ],

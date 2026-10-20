@@ -1,0 +1,307 @@
+{
+    "global": {
+        "button": {
+            "more": "More",
+            "search": "Search",
+            "close": "Close",
+            "save": "Save",
+            "save_loading": "Saving...",
+            "go_back": "Go back",
+            "learn_more": "Learn more",
+            "dismiss": "Dismiss"
+        },
+        "error": {
+            "please_check_error": "<strong>Oops! We found some errors</strong> - please check the error messages below and try again",
+            "403": "Permission denied!",
+            "403_message": "We're sorry but you are not permitted to access this page.",
+            "404": "Page not found",
+            "404_message": "We're sorry but the page you are looking for can't be found.",
+            "500": "500 Internal Server Error",
+            "500_heading": "Sorry, it's not you, it's us.",
+            "500_message": "We've been notified of the issue, please try again later.",
+            "generic_try_again": "Something went wrong - please try again",
+            "connection_try_again": "Connection issue - please try again"
+        },
+        "confirm": {
+            "delete": "Are you sure you want to delete?"
+        },
+        "accessibility": {
+            "skip_to_main_content": "Skip to main content"
+        }
+    },
+    "navigation": {
+        "main": {
+            "home": "Home",
+            "shop": "Shop",
+            "blog": "Blog",
+            "support": "Support",
+            "contact": "Contact",
+            "cart": "Cart"
+        },
+        "search": "Search",
+        "cart": "Cart",
+        "menu": {
+            "toggle": "Menu"
+        },
+        "footer": {
+            "about_us": "About us",
+            "contact_us": "Contact us",
+            "account_info": "Account & Info",
+            "support_terms": "Support & Terms",
+            "support": "Support",
+            "help": "Help Center",
+            "rights": "All Rights Reserved.",
+            "terms_conditions": "Terms & Conditions",
+            "privacy": "Privacy Policy",
+            "address": "Address",
+            "copyright": "All Rights Reserved"
+        },
+        "account": {
+            "account": "Account",
+            "subscriptions": "Subscriptions",
+            "orders": "Order History",
+            "profile": "Profile",
+            "addresses": "Addresses",
+            "support": "Support",
+            "dashboard": "Dashboard",
+            "logout": "Logout",
+            "login_or_register": "Login or Register",
+            "welcome": "Welcome back"
+        },
+        "pagination": {
+            "next": "Next"
+        },
+        "breadcrumb": "Breadcrumb"
+    },
+    "tables": {
+        "heading": {
+            "product_name": "Product Name",
+            "product": "Product",
+            "quantity": "Quantity",
+            "schedule": "Schedule",
+            "price": "Price",
+            "discount": "Discount",
+            "total": "Total",
+            "items_to_buy_now": "Items to buy now"
+        },
+        "content": {
+            "price": "Price",
+            "discount": "Discount"
+        },
+        "actions": {
+            "remove": "Remove",
+            "add_coupon": "Add coupon",
+            "add_coupon_loading": "Adding...",
+            "reload": "Reload",
+            "reload_loading": "Updating...",
+            "add": "Add"
+        }
+    },
+    "order": {
+        "cart": {
+            "title": "Cart",
+            "summary": "Summary",
+            "cart_total": "Cart Total",
+            "cart_total_discount": "Cart total (after discounts)",
+            "applied_offer": "Applied Offer",
+            "applied_coupons": "Applied Coupons",
+            "shipping": "Shipping",
+            "order_total": "Order Total",
+            "proceed_to_checkout": "Proceed to checkout",
+            "upsell_message_detail": "{{ message }} to qualify for the <b>{{ offer_name }}</b> special offer",
+            "continue_shopping": "Continue shopping",
+            "cart_empty": "Your cart is empty.",
+            "items_count": {
+                "one": "{{ count }} Item",
+                "other": "{{ count }} Items"
+            },
+            "subscription_items": {
+                "one": "Subscription ({{ count }} item)",
+                "other": "Subscription ({{ count }} items)"
+            },
+            "calculated_at_checkout": "Calculated at checkout",
+            "subscription_details": "Subscription Details",
+            "product": "Product",
+            "quantity": "Qty",
+            "price": "Price",
+            "subscription_total": "Subscription Total",
+            "subscription_renewal_message": "Your subscription will renew every",
+            "coupon_code": "Coupon code",
+            "empty_hint": "Add items to get started"
+        }
+    },
+    "store": {
+        "blog": {
+            "title": "Blog",
+            "no_posts": "No posts have been created yet.",
+            "search_not_found": "Found <strong>0</strong> results.",
+            "all_categories": "All categories",
+            "category_filter": "Filter by category"
+        },
+        "catalogue": {
+            "filters": "Filters",
+            "filter_clear": "Clear",
+            "free": "Free",
+            "sale": "Sale",
+            "none_found": "No products found.",
+            "edit_this_category": "Edit this category",
+            "edit_this_product": "Edit this product",
+            "buy_option": "Buy option",
+            "one_time": "One Time",
+            "subscribe_save": "Subscribe & Save",
+            "order_arrival_frequency": "How often would you like your order to arrive?",
+            "add_to_cart": "Add to cart",
+            "add_to_cart_loading": "Adding...",
+            "product_unavailable": "Unavailable",
+            "out_of_stock": "Out of stock",
+            "size_guide": "Size guide",
+            "about": "About",
+            "reviews": "Reviews",
+            "no_reviews": "This product does not have any reviews yet",
+            "no_reviews_add": "be the first to write one",
+            "customer_reviews": "Customer Reviews",
+            "see_all_reviews": "See all reviews",
+            "write_a_review": "Write a review",
+            "recommended_products_header": "Recommended products",
+            "apply_filters": "Apply filters",
+            "description": "Description",
+            "filter_reset": "Reset",
+            "product_images": "Product images",
+            "previous_image": "Previous image",
+            "next_image": "Next image",
+            "one_time_purchase": "One-time purchase",
+            "one_time_subtitle": "Buy once, no commitment",
+            "recurring_delivery": "Recurring delivery",
+            "delivery_frequency": "Delivery frequency",
+            "added_to_cart": "Added",
+            "product_not_found": "Product not found",
+            "add_to_cart_error": "Could not add to cart",
+            "subscription_frequency_error": "Please choose a valid subscription frequency.",
+            "view_image": "View image {{ count }}",
+            "select_variant": "Select variant",
+            "product_image_alt": "{{ title }} - image {{ count }}"
+        },
+        "review": {
+            "reviews": "Reviews",
+            "customer_reviews": "Customer reviews",
+            "all_reviews": "All Reviews",
+            "customer_reviews_count": {
+                "one": "{{ count }} customer review",
+                "other": "{{ count }} customer reviews"
+            },
+            "reviewed_by_you": "Reviewed by you",
+            "reviewed_by_other": "Reviewed by <b>{{ name }}</b>",
+            "no_reviews": "This product does not have any reviews yet.",
+            "leave_review": "Leave a product review",
+            "save_review": "Save review"
+        },
+        "search": {
+            "products_matching": "Products matching {{ q }}",
+            "search_not_found": "Found 0 results.",
+            "search_placeholder": "Search products",
+            "suggestion": "Search for products by name, description, or category.",
+            "close_search": "Close search"
+        },
+        "support": {
+            "title": "Support",
+            "heading": "How can we help?",
+            "search_not_found": "Found 0 results.",
+            "view": "View",
+            "create_support_request": "Still need help? Create <a href='{{ link }}'>a support request</a> with our customer service team and we'd be happy to help.",
+            "no_categories": "No categories have been created yet.",
+            "articles": "Articles",
+            "no_articles": "No articles have been created yet.",
+            "edit_this_article": "Edit this article",
+            "last_updated": "Last Updated"
+        }
+    },
+    "side_cart": {
+        "default": {
+            "your_order": "Your Order",
+            "your_cart_is_empty": "Your Cart is Empty!",
+            "oops_You_have_nothing_here": "Oops! You have nothing here.",
+            "quantity": "Quantity",
+            "qty": "Qty",
+            "schedule": "Schedule",
+            "price": "Price",
+            "savings": "Savings",
+            "regular": "Regular",
+            "your_price": "Your Price",
+            "cart_subtotal": "Cart Subtotal",
+            "discount": "Discount",
+            "shipping": "Shipping",
+            "cart": "Cart",
+            "total": "Total",
+            "product": "Product",
+            "subscription_details": "Subscription Details",
+            "applied_coupons": "Applied Coupons",
+            "subscription_items_one": "Subscription ({{count}} item)",
+            "subscription_items_other": "Subscription ({{count}} items)",
+            "calculated_at_checkout": "Calculated at checkout",
+            "subscription_total": "Subscription Total",
+            "subscription_renewal_message": "Your subscription will renew every",
+            "proceed_to_checkout": "Proceed to checkout",
+            "have_a_coupon": "Have a coupon?",
+            "coupon_code": "Coupon Code",
+            "apply_coupon": "Apply coupon",
+            "close_cart": "Close cart",
+            "frequency_template": "Every {count} {interval}",
+            "decrease_quantity": "Decrease quantity",
+            "increase_quantity": "Increase quantity",
+            "remove_item": "Remove {title}",
+            "item_removed_announcement": "Item removed from cart.",
+            "quantity_updated_announcement": "Cart quantity updated.",
+            "remove_voucher": "Remove voucher",
+            "invalid_coupon_code": "Invalid coupon code",
+            "shipping_progress_message": "You are {amount} away from FREE shipping",
+            "gift_progress_message": "You are {amount} away from a FREE gift!",
+            "final_progress_message": "You have unlocked all rewards!",
+            "upsell_section_title": "You may also like"
+        }
+    },
+    "footer": {
+        "support": "Support",
+        "help": "Help Center",
+        "rights": "All Rights Reserved."
+    },
+    "pagination": {
+        "label": "Pagination",
+        "previous": "Previous",
+        "next": "Next"
+    },
+    "product": {
+        "no_image": "No image",
+        "sold_out": "Sold out"
+    },
+    "catalogue": {
+        "continue_shopping": "Continue shopping"
+    },
+    "membership": {
+        "price_label": "Member price",
+        "applied_at_checkout": "Applied at checkout"
+    },
+    "homepage": {
+        "cta": {
+            "shop_now": "Shop now",
+            "view_all": "View all",
+            "view_product": "View product"
+        },
+        "heading": {
+            "on_sale": "On sale",
+            "featured_products": "Featured products",
+            "featured_categories": "Shop by category",
+            "promo_banner": "Limited-time offer",
+            "featured_product": "Featured product"
+        },
+        "placeholder": {
+            "hero_image": "Hero image",
+            "hero_image_path": "Settings > Homepage > Hero Image",
+            "featured_products": "Featured Products - Settings > Homepage > Featured Products",
+            "featured_categories": "Featured Categories - Settings > Homepage > Featured Categories",
+            "on_sale": "On Sale - Settings > Homepage > On Sale > Products",
+            "featured_product": "Featured Product - Settings > Homepage > Featured Product",
+            "image_text": "Image with Text - Settings > Homepage > Image with Text",
+            "text_block": "Text Block - Settings > Homepage > Text Block"
+        }
+    }
+}

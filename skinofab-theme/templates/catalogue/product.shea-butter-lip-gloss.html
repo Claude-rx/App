@@ -1,0 +1,2583 @@
+{% extends 'layouts/base.html' %}
+{% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
+{% block body_id %}{% firstof "volume-lip-gloss-with-shea-butter-for-soft-lips-smooche" %}{% endblock %}
+{% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
+{% block sf_head %}
+<link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
+</style><style>
+      .video-slide, .video-thumbnail, .product__form .btn--submit, #locationinfop, .product-grid-item .btn--quick .btn__inner, .product-upsell__btn, .btn, .btn--primary, .btn--primary .shopify-payment-button__button--unbranded, input.btn .shopify-payment-button__button--unbranded, input.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded, input.btn, input.shopify-payment-button__button--unbranded {
+         border-radius: 10px!important;
+      }
+      .input-group, .select-popout__toggle  {
+         border-radius: 10px!important;
+      }
+      #SiteFooter .input-group__fields input {
+        border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;
+      }
+        .input-group__btn {
+            border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;
+        }
+
+        button[aria-expanded=true] #accordionbefore:before {
+          background-color: #f7f7f7!important;
+        }
+      @media only screen and (max-width: 767px) {
+        .product-single .product__title {
+          font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;
+        }
+      }
+      #cart-drawer .product-upsell__holder .product-grid-item__swatch {
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 6px !important;
+      }
+      /* Preserve the bar's height while keeping it below the cart/header stack. */
+      body.js-drawer-open-cart .announcement-bar-static,
+      body:has(#cart-drawer.is-open) .announcement-bar-static {
+        z-index: 8999 !important;
+      }
+      body.js-drawer-open .announcement-bar-static,
+      body.js-quick-view-from-cart .announcement-bar-static,
+      body.js-quick-view-visible .announcement-bar-static,
+      body:has(#nav-drawer.is-open) .announcement-bar-static,
+      body:has(.drawer.is-open) .announcement-bar-static {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style><style>
+        .swiper-scrollbar {
+        display: none!important;
+        }
+      </style><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="{{ 'sf/css/all-min-2d3b0a.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/><script src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><link href="{{ 'sf/css/swiper-bundle-min-9d0eb7.css'|asset_url }}" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><style data-shopify="">:root { --loader-image-size: 60px; }:root { --loader-image-size: 320px; }html:not(.is-loading) .loading-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-overlay { position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s; }
+        .loading-overlay .loader__image--fallback { width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain; }
+        .loader__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out; }
+        .loader__image { max-width: 60px; height: auto; object-fit: contain; }</style><script>
+        const loadingAppearance = "once";
+        const loaded = sessionStorage.getItem('loaded');
+
+        if (loadingAppearance === 'once') {
+          if (loaded === null) {
+            sessionStorage.setItem('loaded', true);
+            document.documentElement.classList.add('is-loading');
+          }
+        } else {
+          document.documentElement.classList.add('is-loading');
+        }
+      </script><style data-shopify="">@font-face {
+  font-family: Jost;
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
+}
+
+@font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+@font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}
+
+
+:root {--COLOR-PRIMARY-OPPOSITE: #ffffff;
+  --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --PRIMARY-BUTTONS-COLOR-BG: #000000;
+  --PRIMARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --PRIMARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --PRIMARY-BUTTONS-COLOR-LIGHTEN-DARKEN: #1a1a1a;
+
+  --PRIMARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--COLOR-SECONDARY-OPPOSITE: #ffffff;
+  --COLOR-SECONDARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --SECONDARY-BUTTONS-COLOR-BG: #000000;
+  --SECONDARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --SECONDARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --SECONDARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--OUTLINE-BUTTONS-PRIMARY-BG: transparent;
+  --OUTLINE-BUTTONS-PRIMARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-SECONDARY-BG: transparent;
+  --OUTLINE-BUTTONS-SECONDARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-WHITE-BG: transparent;
+  --OUTLINE-BUTTONS-WHITE-TEXT: #ffffff;
+  --OUTLINE-BUTTONS-WHITE-BORDER: #ffffff;
+
+  --OUTLINE-BUTTONS-BLACK-BG: transparent;
+  --OUTLINE-BUTTONS-BLACK-TEXT: #000000;
+  --OUTLINE-BUTTONS-BLACK-BORDER: #000000;--OUTLINE-SOLID-BUTTONS-PRIMARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-WHITE-BG: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-WHITE-TEXT: #000000;
+  --OUTLINE-SOLID-BUTTONS-WHITE-BORDER: #000000;
+
+  --OUTLINE-SOLID-BUTTONS-BLACK-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-BLACK-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-BLACK-BORDER: #ffffff;--COLOR-HEADING: #151515;
+  --COLOR-TEXT: #151515;
+  --COLOR-TEXT-DARKEN: #000000;
+  --COLOR-TEXT-LIGHTEN: #484848;
+  --COLOR-TEXT-ALPHA-5: rgba(21, 21, 21, 0.05);
+  --COLOR-TEXT-ALPHA-8: rgba(21, 21, 21, 0.08);
+  --COLOR-TEXT-ALPHA-10: rgba(21, 21, 21, 0.1);
+  --COLOR-TEXT-ALPHA-15: rgba(21, 21, 21, 0.15);
+  --COLOR-TEXT-ALPHA-20: rgba(21, 21, 21, 0.2);
+  --COLOR-TEXT-ALPHA-25: rgba(21, 21, 21, 0.25);
+  --COLOR-TEXT-ALPHA-50: rgba(21, 21, 21, 0.5);
+  --COLOR-TEXT-ALPHA-60: rgba(21, 21, 21, 0.6);
+  --COLOR-TEXT-ALPHA-85: rgba(21, 21, 21, 0.85);
+
+  --COLOR-BG: #ffffff;
+  --COLOR-BG-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-BG-ALPHA-35: rgba(255, 255, 255, 0.35);
+  --COLOR-BG-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BG-ALPHA-65: rgba(255, 255, 255, 0.65);
+  --COLOR-BG-ALPHA-85: rgba(255, 255, 255, 0.85);
+  --COLOR-BG-OVERLAY: rgba(255, 255, 255, 0.75);
+  --COLOR-BG-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-BG: #fafafa;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-EFFECT: #f5f5f5;
+  --COLOR-BG-LIGHTEN-DARKEN-FOREGROUND: #f7f7f7;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER: #cccccc;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER-LINE: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-2: #cdcdcd;
+  --COLOR-BG-LIGHTEN-DARKEN-3: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-4: #9a9a9a;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-2: #999999;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-3: #808080;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-4: #666666;
+
+  --COLOR-BG-SECONDARY: #f7f7f7;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN: #dedede;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN-CONTRAST: #777777;
+
+  --COLOR-INPUT-BG: #ffffff;
+
+  --COLOR-ACCENT: #df8096;
+  --COLOR-ACCENT-TEXT: #fff;
+
+  --COLOR-BORDER: #f7f7f7;
+  --COLOR-BORDER-ALPHA-15: rgba(247, 247, 247, 0.15);
+  --COLOR-BORDER-ALPHA-30: rgba(247, 247, 247, 0.3);
+  --COLOR-BORDER-ALPHA-50: rgba(247, 247, 247, 0.5);
+  --COLOR-BORDER-ALPHA-65: rgba(247, 247, 247, 0.65);
+  --COLOR-BORDER-LIGHTEN-DARKEN: #ababab;
+  --COLOR-BORDER-HAIRLINE: #f7f7f7;
+
+  --COLOR-SALE-BG: #df8096;
+  --COLOR-SALE-TEXT: #ffffff;
+  --COLOR-CUSTOM-BG: #df8096;
+  --COLOR-CUSTOM-TEXT: #ffffff;
+  --COLOR-SOLD-BG: #000000;
+  --COLOR-SOLD-TEXT: #ffffff;
+  --COLOR-SAVING-BG: #df8096;
+  --COLOR-SAVING-TEXT: #ffffff;
+
+  --COLOR-WHITE-BLACK: fff;
+  --COLOR-BLACK-WHITE: #000;
+  --COLOR-BLACK-WHITE-ALPHA-25: rgba(0, 0, 0, 0.25);--COLOR-DISABLED-GREY: rgba(21, 21, 21, 0.05);
+  --COLOR-DISABLED-GREY-DARKEN: rgba(21, 21, 21, 0.45);
+  --COLOR-ERROR: #D02E2E;
+  --COLOR-ERROR-BG: #f3cbcb;
+  --COLOR-SUCCESS: #56AD6A;
+  --COLOR-SUCCESS-BG: #ECFEF0;
+  --COLOR-WARN: #ECBD5E;
+  --COLOR-TRANSPARENT: rgba(255, 255, 255, 0);
+
+  --COLOR-WHITE: #ffffff;
+  --COLOR-WHITE-DARKEN: #f2f2f2;
+  --COLOR-WHITE-ALPHA-10: rgba(255, 255, 255, 0.1);
+  --COLOR-WHITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-WHITE-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-WHITE-ALPHA-50: rgba(255, 255, 255, 0.5);
+  --COLOR-WHITE-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BLACK: #000000;
+  --COLOR-BLACK-LIGHTEN: #1a1a1a;
+  --COLOR-BLACK-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --COLOR-BLACK-ALPHA-20: rgba(0, 0, 0, 0.2);
+  --COLOR-BLACK-ALPHA-25: rgba(0, 0, 0, 0.25);
+  --COLOR-BLACK-ALPHA-50: rgba(0, 0, 0, 0.5);
+  --COLOR-BLACK-ALPHA-60: rgba(0, 0, 0, 0.6);--FONT-STACK-BODY: futura-pt, sans-serif;
+  --FONT-STYLE-BODY: normal;
+  --FONT-STYLE-BODY-ITALIC: italic;
+  --FONT-ADJUST-BODY: 1.0;
+
+  --FONT-WEIGHT-BODY: 400;
+  --FONT-WEIGHT-BODY-LIGHT: 100;
+  --FONT-WEIGHT-BODY-MEDIUM: 700;
+  --FONT-WEIGHT-BODY-BOLD: 500;
+
+  --FONT-STACK-HEADING: futura-pt, sans-serif;
+  --FONT-STYLE-HEADING: normal;
+  --FONT-STYLE-HEADING-ITALIC: italic;
+  --FONT-ADJUST-HEADING: 1.1;
+
+  --FONT-WEIGHT-HEADING: 600;
+  --FONT-WEIGHT-HEADING-LIGHT: 400;
+  --FONT-WEIGHT-HEADING-MEDIUM: 900;
+  --FONT-WEIGHT-HEADING-BOLD: 600;
+
+  --FONT-STACK-NAV: futura-pt, sans-serif;
+  --FONT-STYLE-NAV: normal;
+  --FONT-STYLE-NAV-ITALIC: italic;
+  --FONT-ADJUST-NAV: 0.8;
+  --FONT-ADJUST-NAV-TOP-LEVEL: 0.8;
+
+  --FONT-WEIGHT-NAV: 600;
+  --FONT-WEIGHT-NAV-LIGHT: 400;
+  --FONT-WEIGHT-NAV-MEDIUM: 900;
+  --FONT-WEIGHT-NAV-BOLD: 700;
+
+  --FONT-ADJUST-PRODUCT-GRID: 0.9;
+
+  --FONT-STACK-BUTTON: futura-pt, sans-serif;
+  --FONT-STYLE-BUTTON: normal;
+  --FONT-STYLE-BUTTON-ITALIC: italic;
+  --FONT-ADJUST-BUTTON: 0.8;
+
+  --FONT-WEIGHT-BUTTON: 600;
+  --FONT-WEIGHT-BUTTON-MEDIUM: 900;
+  --FONT-WEIGHT-BUTTON-BOLD: 700;
+
+  --FONT-STACK-SUBHEADING: futura-pt, sans-serif;
+  --FONT-STYLE-SUBHEADING: normal;
+  --FONT-ADJUST-SUBHEADING: 1.0;
+
+  --FONT-WEIGHT-SUBHEADING: 400;
+  --FONT-WEIGHT-SUBHEADING-BOLD: 500;
+
+  --FONT-STACK-LABEL: futura-pt, sans-serif;
+  --FONT-STYLE-LABEL: normal;
+  --FONT-ADJUST-LABEL: 0.65;
+
+  --FONT-WEIGHT-LABEL: 500;
+
+  --LETTER-SPACING-NAV: 0.075em;
+  --LETTER-SPACING-SUBHEADING: 0.025em;
+  --LETTER-SPACING-BUTTON: 0.125em;
+  --LETTER-SPACING-LABEL: 0.05em;
+
+  --BUTTON-TEXT-CAPS: uppercase;
+  --HEADING-TEXT-CAPS: none;
+  --SUBHEADING-TEXT-CAPS: uppercase;
+  --LABEL-TEXT-CAPS: uppercase;--FONT-SIZE-INPUT: 1.0rem;--RADIUS: 30px;
+  --RADIUS-SMALL: 22px;
+  --RADIUS-TINY: 14px;
+  --RADIUS-BADGE: 3px;
+  --RADIUS-CHECKBOX: 4px;
+  --RADIUS-TEXTAREA: 8px;--PRODUCT-MEDIA-PADDING-TOP: 100%;--BORDER-WIDTH: 1px;--STROKE-WIDTH: 12px;--SITE-WIDTH: 1440px;
+  --SITE-WIDTH-NARROW: 840px;--COLOR-UPSELLS-BG: #f7f7f7;
+  --COLOR-UPSELLS-TEXT: #000000;
+  --COLOR-UPSELLS-TEXT-LIGHTEN: #333333;
+  --COLOR-UPSELLS-DISABLED-GREY-DARKEN: rgba(0, 0, 0, 0.45);
+  --UPSELLS-HEIGHT: 155px;
+  --UPSELLS-IMAGE-WIDTH: 20%;--ICON-ARROW-RIGHT: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik03MiAzNkwxMzIgOTZMNzIgMTU2IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==");--loading-svg: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjRweCIgdmlld0JveD0iMCAwIDMyMCA0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIwIiBoZWlnaHQ9IjQiIGZpbGw9IiMwMDAiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieCIgZnJvbT0iMCIgdG89IjMyMCIgZHVyPSIyLjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0id2lkdGgiIGZyb209IjAiIHRvPSIzMjAiIGR1cj0iMi4xcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4KICA8L3JlY3Q+Cjwvc3ZnPgo=");
+  --icon-check: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgZmlsbD0iI2ZmZiI+CiAgPHBhdGggZD0iTTExLjY1Mzg4MywxLjU1NDU5NjIxIEwxMy4yMDgxNzQ5LDIuODEzMjM2OTkgTDcuNTQ0MjkxMzgsOS44MDc1NTA2NSBMNy41MzI0MzQxOCw5Ljc5NzU5NjIxIEw3LjE1NzMwOTk1LDEwLjI2MzM1NTEgTDIuNDk0NDM0MTgsNi40ODc0MzI4IEwzLjc1MzA3NDk2LDQuOTMzMTQwODcgTDYuODcyNDM0MTgsNy40NTg1OTYyMSBMMTEuNjUzODgzLDEuNTU0NTk2MjEgWiI+PC9wYXRoPgo8L3N2Zz4K");
+  --icon-check-swatch: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cGF0aCBkPSJNMTEuNjUzODgzLDEuNTU0NTk2MjEgTDEzLjIwODE3NDksMi44MTMyMzY5OSBMNy41NDQyOTEzOCw5LjgwNzU1MDY1IEw3LjUzMjQzNDE4LDkuNzk3NTk2MjEgTDcuMTU3MzA5OTUsMTAuMjYzMzU1MSBMMi40OTQ0MzQxOCw2LjQ4NzQzMjggTDMuNzUzMDc0OTYsNC45MzMxNDA4NyBMNi44NzI0MzQxOCw3LjQ1ODU5NjIxIEwxMS42NTM4ODMsMS41NTQ1OTYyMSBaIiBpZD0icGF0aC1hd18xZXVwNi1xLTEiPjwvcGF0aD4KICAgIDxmaWx0ZXIgeD0iLTI4LjAlIiB5PSItMzQuNCUiIHdpZHRoPSIxNTYuMCUiIGhlaWdodD0iMTY4LjklIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItYXdfMWV1cDYtcS0yIj4KICAgICAgPGZlT2Zmc2V0IGR4PSIwIiBkeT0iMCIgaW49IlNvdXJjZUFscGhhIiByZXN1bHQ9InNoYWRvd09mZnNldE91dGVyMSI+PC9mZU9mZnNldD4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMSIgaW49InNoYWRvd09mZnNldE91dGVyMSIgcmVzdWx0PSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlR2F1c3NpYW5CbHVyPgogICAgICA8ZmVDb2xvck1hdHJpeCB2YWx1ZXM9IjAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgMCAwIDAgMSAwIiB0eXBlPSJtYXRyaXgiIGluPSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlQ29sb3JNYXRyaXg+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPGcgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgIDx1c2UgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIiBmaWx0ZXI9InVybCgjZmlsdGVyLWF3XzFldXA2LXEtMikiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgICA8dXNlIGZpbGw9IiNmZmZmZmYiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgPC9nPgo8L3N2Zz4K");
+  --icon-zoom-in: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICAgICAgPHBhdGggZD0iTTEyLjYsOSBMMTIuNiwxNi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");
+  --icon-zoom-out: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");--collection-sticky-bar-height: 0px;
+  --collection-image-padding-top: 60%;
+
+  --drawer-width: 400px;
+  --drawer-transition: transform 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);--gutter: 60px;
+  --gutter-mobile: 20px;
+  --grid-gutter: 20px;
+  --grid-gutter-mobile: 35px;--inner: 20px;
+  --inner-tablet: 18px;
+  --inner-mobile: 16px;--grid: repeat(4, minmax(0, 1fr));
+  --grid-tablet: repeat(3, minmax(0, 1fr));
+  --grid-mobile: repeat(2, minmax(0, 1fr));
+  --megamenu-grid: repeat(4, minmax(0, 1fr));
+  --grid-row: 1 / span 4;--scrollbar-width: 0px;--overlay: #000;
+  --overlay-opacity: 1;--swatch-width: 38px;
+  --swatch-height: 26px;
+  --swatch-size: 32px;
+  --swatch-size-mobile: 30px;
+
+  
+  --move-offset: 20px;
+
+  
+  --autoplay-speed: 2200ms;
+
+  
+--filter-bg: .97;
+  --product-filter-bg: .97;
+  }</style><link href="{{ 'sf/css/kopstorm-V2-ea6148.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/theme-410305.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm-62aff9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm_new-c14bc9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><script type="text/javascript">
+    if (window.MSInputMethodContext && document.documentMode) {
+      var scripts = document.getElementsByTagName('script')[0];
+      var polyfill = document.createElement("script");
+      polyfill.defer = true;
+      polyfill.src = "{{ 'sf/js/ie11-831ade.js'|asset_url }}";
+
+      scripts.parentNode.insertBefore(polyfill, scripts);
+
+      document.documentElement.classList.add('ie11');
+    } else {
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    }
+
+    let root = '/';
+    if (root[root.length - 1] !== '/') {
+      root = `${root}/`;
+    }
+
+    window.theme = {
+      routes: {
+        root: root,
+        cart_url: "\/cart",
+        cart_add_url: "\/cart\/add",
+        cart_change_url: "\/cart\/change",
+        shop_url: "https:\/\/smooche.com",
+        searchUrl: '/search',
+        predictiveSearchUrl: '/search/suggest',
+        product_recommendations_url: "\/recommendations\/products"
+      },
+      assets: {
+        photoswipe: '{{ 'sf/js/photoswipe-7aaf31.js'|asset_url }}',
+        smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
+        no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
+        swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
+        base: "//smooche.com/cdn/shop/t/76/assets/"
+      },
+      strings: {
+        add_to_cart: "Add to Cart",
+        cart_acceptance_error: "You must accept our terms and conditions.",
+        cart_empty: "Your cart is currently empty.",
+        cart_price: "Price",
+        cart_quantity: "Quantity",
+        cart_items_one: "{% templatetag openvariable %} count }} item",
+        cart_items_many: "{% templatetag openvariable %} count }} items",
+        cart_title: "Cart",
+        cart_total: "Total",
+        continue_shopping: "Continue Shopping",
+        free: "Free",
+        limit_error: "Sorry, looks like we don\u0026#39;t have enough of this product.",
+        preorder: "Pre-Order",
+        remove: "Remove",
+        sale_badge_text: "Sale",
+        saving_badge: "Save {% templatetag openvariable %} discount }}",
+        saving_up_to_badge: "Save up to {% templatetag openvariable %} discount }}",
+        sold_out: "Sold Out",
+        subscription: "Subscription",
+        unavailable: "Unavailable",
+        unit_price_label: "Unit price",
+        unit_price_separator: "per",
+        zero_qty_error: "Quantity must be greater than 0.",
+        delete_confirm: "Are you sure you wish to delete this address?",
+        newsletter_product_availability: "Notify Me When It’s Available"
+      },
+      icons: {
+        plus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-plus" viewBox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        minus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-minus" viewBox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        close: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      },
+      settings: {
+        animations: false,
+        cartType: "drawer",
+        enableAcceptTerms: false,
+        enableInfinityScroll: false,
+        enablePaymentButton: true,
+        gridImageSize: "cover",
+        gridImageAspectRatio: 1,
+        mobileMenuBehaviour: "link",
+        productGridHover: "image",
+        savingBadgeType: "percentage",
+        showSaleBadge: true,
+        showSoldBadge: true,
+        showSavingBadge: true,
+        quickBuy: "none",
+        suggestArticles: false,
+        suggestCollections: true,
+        suggestProducts: true,
+        suggestPages: false,
+        suggestionsResultsLimit: 10,
+        currency_code_enable: true,
+        hideInventoryCount: true,
+        enableColorSwatchesCollection: true,
+      },
+      sizes: {
+        mobile: 480,
+        small: 768,
+        large: 1024,
+        widescreen: 1440
+      },
+      moneyFormat: "${% templatetag openvariable %}amount_no_decimals}}",
+      moneyWithCurrencyFormat: "${% templatetag openvariable %}amount_no_decimals}} USD",
+      subtotal: 0,
+      info: {
+        name: 'Palo Alto'
+      },
+      version: '5.6.0'
+    };
+    window.PaloAlto = window.PaloAlto || {};
+    window.slate = window.slate || {};
+    window.isHeaderTransparent = false;
+    window.stickyHeaderHeight = 60;
+    window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/smooche-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
+        @media screen and (max-width: 767px) {
+        .product-single__details {
+          overflow: ;
+        }
+        }
+      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Smooche","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Smooche","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
+        #shopify-buyer-consent {
+  margin-top: 1em;
+  display: inline-block;
+  width: 100%;
+}
+
+#shopify-buyer-consent.hidden {
+  display: none;
+}
+
+#shopify-subscription-policy-button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+#shopify-subscription-policy-button::before {
+  box-shadow: none;
+}
+
+      </style><script defer="defer" src="{{ 'sf/js/smooche-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
+    #alia-popup-root-alia-qqoyyurlj3kbg51i {
+      z-index: 999999 !important;
+    }
+  </style><script id="kaching-bundles-translations" type="application/json">
+    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
+  </script><script class="kaching-bundles-product" data-main="true" data-product-id="7920108798108" type="application/json">
+    {
+      "id": 7920108798108,
+      "handle": "shea-butter-lip-gloss",
+      "url": "\/products\/shea-butter-lip-gloss",
+      "availableForSale": true,
+      "title": "Volume Lip Gloss",
+      "image": "..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4.png\u0026v=1765879190",
+      "collectionIds": [307652133020,304922558620,319257280668,314587218076,302830616732,307304136860],
+      "options": [
+        
+          {
+            "defaultName": "Color",
+            "name": "Color",
+            "position": 1,
+            "optionValues": [
+              
+                {
+                  "id": 3768345821340,
+                  "defaultName": "Clear",
+                  "name": "Clear",
+                  "swatch": {
+                    "color": null,
+                    "image": null
+                  }
+                },
+              
+                {
+                  "id": 3830204170396,
+                  "defaultName": "Sweet Pink",
+                  "name": "Sweet Pink",
+                  "swatch": {
+                    "color": null,
+                    "image": null
+                  }
+                }
+              
+            ]
+          }
+        
+      ],
+      "selectedVariantId": 44708919378076,
+      "variants": [
+        
+          {
+            "id": 44708919378076,
+            "availableForSale": true,
+            "price": 1900,
+            "compareAtPrice": null,
+            "options": ["Clear"],
+            "imageId": 43686077005980,
+            "image": "..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4.png\u0026v=1765879190",
+            "inventoryManagement": "shopify",
+            "inventoryPolicy": "continue",
+            "inventoryQuantity": 14128,
+            "unitPriceMeasurement": null,
+            "sellingPlans": [
+              
+            ]
+          },
+        
+          {
+            "id": 44766948360348,
+            "availableForSale": true,
+            "price": 1900,
+            "compareAtPrice": null,
+            "options": ["Sweet Pink"],
+            "imageId": 43686082314396,
+            "image": "..\/assets\/img\/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png\u0026v=1765879190",
+            "inventoryManagement": "shopify",
+            "inventoryPolicy": "continue",
+            "inventoryQuantity": 31470,
+            "unitPriceMeasurement": null,
+            "sellingPlans": [
+              
+            ]
+          }
+        
+      ],
+      "requiresSellingPlan": false,
+      "sellingPlans": [
+        
+      ],
+      "isNativeBundle": null,
+      "metafields": {
+        "text": null,
+        "text2": null,
+        "text3": null,
+        "text4": null
+      }
+    }
+  </script><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-f7208f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
+    .kaching-bundles__block {
+      display: none;
+    }
+
+    .kaching-bundles-sticky-atc {
+      display: none;
+    }
+  </style>
+{% endblock sf_head %}
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root { --loader-image: var(--loading-svg); }</style><div class="loader loader--image">
+<div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
+</div>
+</div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
+{% block content_wrapper %}
+<div data-template="product.shea-butter-lip-gloss"><main class="main-content" data-main="" id="MainContent">
+<div class="shopify-section" id="shopify-section-template--20029866344604__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--20029866344604__section_custom_html_7WqcF9 {
+    --PT: 0px;
+    --PB: 0px;
+  }</style><section class="section-padding" id="CustomCode--template--20029866344604__section_custom_html_7WqcF9">
+<div class="wrapper">
+<div><element id="product"></element></div>
+</div>
+</section>
+</div><div class="shopify-section shopify-section--product" id="shopify-section-template--20029866344604__main"><style data-shopify="">#ProductTemplate--template--20029866344604__main {
+    --PT: 60px;
+    --PB: 0px;
+  }</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--20029866344604__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--20029866344604__main">
+<div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--20029866344604__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--20029866344604__main">
+<div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="34869021737116" data-media-id="template--20029866344604__main-34869021737116" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34869021737116"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869021737116" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-d88360.png'|asset_url }}" srcset="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-753w-1a3155.png'|asset_url }} 753w, {{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-61405b.png'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34869179089052" data-media-id="template--20029866344604__main-34869179089052" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34869179089052"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869179089052" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/LipGloss-Productimagesphotos-1080w-1125f2.jpg'|asset_url }}" srcset="{{ 'sf/img/LipGloss-Productimagesphotos-753w-c47213.jpg'|asset_url }} 753w, {{ 'sf/img/LipGloss-Productimagesphotos-1080w-05a6fc.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34869021769884" data-media-id="template--20029866344604__main-34869021769884" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34869021769884"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869021769884" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-462818.jpg'|asset_url }}" srcset="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-753w-3dfe59.jpg'|asset_url }} 753w, {{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-628895.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37647948841116" data-media-id="template--20029866344604__main-37647948841116" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-37647948841116"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948841116" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/clear1-1080w-49d5cf.jpg'|asset_url }}" srcset="{{ 'sf/img/clear1-753w-b21d18.jpg'|asset_url }} 753w, {{ 'sf/img/clear1-1080w-4131c5.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34869027045532" data-media-id="template--20029866344604__main-34869027045532" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34869027045532"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869027045532" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png'|asset_url }}" srcset="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-753w-b76e81.png'|asset_url }} 753w, {{ 'sf/img/LipGloss_Clear_-Productimagesphotos-1080w-0c9b47.png'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34917423546524" data-media-id="template--20029866344604__main-34917423546524" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34917423546524"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34917423546524" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink_2-1080w-239330.jpg'|asset_url }}" srcset="{{ 'sf/img/pink_2-753w-d4316e.jpg'|asset_url }} 753w, {{ 'sf/img/pink_2-1080w-a04020.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34917423579292" data-media-id="template--20029866344604__main-34917423579292" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34917423579292"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34917423579292" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink-1080w-5a13c7.jpg'|asset_url }}" srcset="{{ 'sf/img/pink-753w-27476e.jpg'|asset_url }} 753w, {{ 'sf/img/pink-1080w-c3cbcb.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37647948873884" data-media-id="template--20029866344604__main-37647948873884" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-37647948873884"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948873884" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink1-1080w-b3b3c2.jpg'|asset_url }}" srcset="{{ 'sf/img/pink1-753w-8411fc.jpg'|asset_url }} 753w, {{ 'sf/img/pink1-1080w-27cbf8.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37647948808348" data-media-id="template--20029866344604__main-37647948808348" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-37647948808348"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948808348" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-4ee9bb.jpg'|asset_url }}" srcset="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-753w-b752f3.jpg'|asset_url }} 753w, {{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-06b9db.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+</div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="34869021737116" data-thumbnail-id="template--20029866344604__main-34869021737116"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-178w-27f411.png'|asset_url }}" srcset="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-61405b.png'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="34869179089052" data-thumbnail-id="template--20029866344604__main-34869179089052"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/LipGloss-Productimagesphotos-178w-57e376.png'|asset_url }}" srcset="{{ 'sf/img/LipGloss-Productimagesphotos-1080w-05a6fc.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="34869021769884" data-thumbnail-id="template--20029866344604__main-34869021769884"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-178w-ed760f.png'|asset_url }}" srcset="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-628895.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37647948841116" data-thumbnail-id="template--20029866344604__main-37647948841116"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/clear1-178w-9724de.png'|asset_url }}" srcset="{{ 'sf/img/clear1-1080w-4131c5.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="34869027045532" data-thumbnail-id="template--20029866344604__main-34869027045532"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-178w-08bc39.png'|asset_url }}" srcset="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-1080w-0c9b47.png'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="34917423546524" data-thumbnail-id="template--20029866344604__main-34917423546524"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink_2-178w-ce8567.png'|asset_url }}" srcset="{{ 'sf/img/pink_2-1080w-a04020.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="34917423579292" data-thumbnail-id="template--20029866344604__main-34917423579292"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink-178w-d008b5.png'|asset_url }}" srcset="{{ 'sf/img/pink-1080w-c3cbcb.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37647948873884" data-thumbnail-id="template--20029866344604__main-37647948873884"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink1-178w-24d728.png'|asset_url }}" srcset="{{ 'sf/img/pink1-1080w-27cbf8.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37647948808348" data-thumbnail-id="template--20029866344604__main-37647948808348"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-178w-b7fb22.png'|asset_url }}" srcset="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-06b9db.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div></div></div>
+<div class="product-single__details" data-collapsible-single="" id="product_details">
+<div class="form__wrapper" data-product-info="">
+<div class="product__block standard__app">
+<div class="shopify-block shopify-app-block" id="shopify-block-AaVg0MDkydVl1YVphU__loox_reviews_loox_rating_RWJLDj">
+<a aria-label="Scroll to reviews">
+<div class="loox-rating loox-widget" data-color-star="" data-color-text="" data-content-size="16" data-floating-product-reviews-enabled="true" data-id="7920108798108" data-loox-block-id="AaVg0MDkydVl1YVphU__loox_reviews_loox_rating_RWJLDj" data-pattern="4.8/5 ([count] reviews)" data-raters="281" data-rating="4.8" data-testid="loox-rating-widget"></div>
+</a>
+</div>
+</div>
+<style>
+                              .product__block.standard__app .loox-rating.loox-widget {
+                      display: none!important;
+                  }
+                </style>
+<a href="#looxReviews">
+<div class="loox-rating custom-rating" data-id="7920108798108" data-raters="14,233" data-rating="4.8">
+<span>4.8/5 (14,233 reviews)</span>
+</div>
+</a>
+<div class="product__block product__title-and-price" id="product_link">
+<h1 class="product__title">{{ product.get_title }}</h1>
+</div><style>
+                #productpricetemplate--20029866344604__main {
+                  font-size: 21px!important;
+                }
+                @media screen and (max-width: 767px){
+                 #productpricetemplate--20029866344604__main {
+                  font-size: 18px!important;
+                }
+                }
+              </style>
+<div class="product__block product__price-and-badge" style="--PBB:20px;">
+<div class="product__price-and-rating">
+<div class="product__price" data-price-wrapper="" id="productpricetemplate--20029866344604__main">
+<s class="product__price--compare" data-compare-price=""></s><span class="product__price--regular" data-product-price="">{% include 'partials/sf_price.html' with p=product %}</span>
+<span class="product__price--off hidden" data-price-off="">
+<span><p><strong>Flash sale</strong></p></span>
+<span data-price-off-type="" style="display: none">Sale</span>
+<em style="display: none">•</em>
+<span data-price-off-amount="" style="display: none"></span>
+</span>
+</div></div>
+</div>
+<smooche-installments data-currency="USD" data-price="1900" id="afterpay" style="display:block">
+<span>or 4 interest-free payments of <strong>{% include 'partials/sf_price.html' with p=product quarter=1 %}</strong> with <img alt="Afterpay" height="21" src="{{ 'sf/img/AP_logo_badge_6328x2204_blackmint_png-ced85f.png'|asset_url }}" width="60"/></span>
+</smooche-installments>
+<script defer="" src="{{ 'sf/js/smooche-installments-0dba32.js'|asset_url }}"></script>
+<div class="product__block" style="--PBB:20px;"><div class="product__subheading">
+<p><strong>For a glossy look</strong> </p>
+</div></div><div class="product__block" style="--PBB:10px;">
+<div class="smooche-usp-grid">
+<div class="smooche-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_4_83be8e54-6f50-452d-abd9-55e90f108e77-cbe22c.svg'|asset_url }}" width="24"/>
+<span>Enhances lip plumpers</span>
+</div>
+<div class="smooche-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_01a66b15-c5c7-4371-9f7d-1ee02ea8963e-0bd2cd.svg'|asset_url }}" width="24"/>
+<span>Glossy mirror-like shine</span>
+</div>
+<div class="smooche-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_1_c9211393-b47b-41de-8995-1463ac44ae3e-6e78bb.svg'|asset_url }}" width="24"/>
+<span>Approved by dermatologists</span>
+</div>
+<div class="smooche-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_13-b2c981.svg'|asset_url }}" width="24"/>
+<span>100% natural &amp; vegan</span>
+</div>
+</div>
+<style>
+.smooche-usp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.smooche-usp-grid__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #f7f7f7;
+  border-radius: 8px;
+}
+.smooche-usp-grid__item img {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.smooche-usp-grid__item span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2D2D2D;
+  line-height: 1.3;
+}
+</style>
+</div><div class="kopstorm_form1 product__block variant__labels--hide btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_50 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_50 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866344604__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+<input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
+<div class="product__selectors" selector_product=""><div class="selector-wrapper selector-wrapper--swatches" data-option-position="1" f="">
+<legend class="radio__legend-color siblings__legend-color">
+<span class="radio__legend__label-color label-typography-color">COLOR:
+          <span class="selected-swatch" selected-swatch="Clear">Clear</span>
+</span>
+</legend><fieldset class="radio__fieldset radio__fieldset--circle" data-swatches-container="">
+<legend class="radio__legend" data-swatches-label="">
+<span class="radio__legend__label label-typography">Color</span></legend><span class="swatch__button swatch__button--circle" data-swatches-button="">
+<input checked="" class="swatch__input" data-index="option1" data-single-option-selector="" id="template--20029866344604__main-7920108798108-Color-clear" name="options[Color]" type="radio" value="Clear"/>
+<label class="swatch__label" data-swatch="Clear" data-swatch-variant="44708919378076" data-tooltip="Clear" for="template--20029866344604__main-7920108798108-Color-clear" selected-swatch="Clear">
+<span class="visually-hidden">Clear</span>
+<span class="icon icon-check"></span>
+</label>
+</span><span class="swatch__button swatch__button--circle" data-swatches-button="">
+<input class="swatch__input" data-index="option1" data-single-option-selector="" id="template--20029866344604__main-7920108798108-Color-sweet-pink" name="options[Color]" type="radio" value="Sweet Pink"/>
+<label class="swatch__label" data-swatch="Sweet Pink" data-swatch-variant="44766948360348" data-tooltip="Sweet Pink" for="template--20029866344604__main-7920108798108-Color-sweet-pink" selected-swatch="Sweet Pink">
+<span class="visually-hidden">Sweet Pink</span>
+<span class="icon icon-check"></span>
+</label>
+</span></fieldset><button aria-controls="CollectionFilterActions--product-type" aria-expanded="false" class="btn btn--text swatch__more" data-swatches-more="" type="button">
+<span>Show more</span>
+<span>Show less</span>
+</button></div></div><input name="product-id" type="hidden" value="7920108798108"/><input name="section-id" type="hidden" value="template--20029866344604__main"/></form></div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_52 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_52 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866344604__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+<input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/>
+<div class="shop-pay-terms">
+<shopify-payment-terms shopify-meta='{"type":"product","currency_code":"USD","country_code":"US","variants":[{"id":44708919378076,"price_per_term":"$10","price_per_term_amount":9.5,"full_price":"$19","full_price_amount":19.0,"eligible":false,"available":true,"number_of_payment_terms":2},{"id":44766948360348,"price_per_term":"$10","price_per_term_amount":9.5,"full_price":"$19","full_price_amount":19.0,"eligible":false,"available":true,"number_of_payment_terms":2}],"min_price":"$35","min_price_amount":35.0,"max_price":"$30,000","max_price_amount":30000.0,"financing_plans":[{"min_price":"$35","max_price":"$50","terms":[{"apr":0,"loan_type":"split_pay","installments_count":2}],"min_price_amount":35.0,"max_price_amount":49.99},{"min_price":"$50","max_price":"$1,000","terms":[{"apr":0,"loan_type":"split_pay","installments_count":3},{"apr":0,"loan_type":"split_pay","installments_count":4},{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":50.0,"max_price_amount":999.99},{"min_price":"$1,000","max_price":"$30,000","terms":[{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":1000.0,"max_price_amount":30000.0}],"installments_buyer_prequalification_enabled":false,"seller_id":2823039}' variant-id="44708919378076"></shopify-payment-terms>
+</div><div id="CTA_kopstorm"><div class="selector-wrapper selector-wrapper--qty">
+<div class="select__fieldset">
+<div class="select-popout select-popout--small" data-popout="" data-popout-prevent="true">
+<button aria-controls="template--20029866344604__main-select-quantity" aria-expanded="false" aria-labelledby="template--20029866344604__main-select-quantity-label" class="select-popout__toggle" data-popout-quantity="" data-popout-toggle="" type="button">
+<span class="select-popout__value" data-popout-text="" data-quantity-select="">1</span><svg aria-hidden="true" class="icon icon-select" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="m72 36 60 60-60 60" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="select-popout__list" data-popout-list="" id="template--20029866344604__main-select-quantity">
+<ul class="select-popout__list__scroll"><li class="select-popout__item select-popout__item--current">
+<a aria-current="true" class="select-popout__option" data-popout-option="" data-value="1" href="#">
+<span>1 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="2" href="#">
+<span>2 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="3" href="#">
+<span>3 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="4" href="#">
+<span>4 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="5" href="#">
+<span>5 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="6" href="#">
+<span>6 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="7" href="#">
+<span>7 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="8" href="#">
+<span>8 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="9" href="#">
+<span>9 </span>
+</a>
+</li><li class="select-popout__item">
+<a class="select-popout__option" data-popout-option="" data-value="10" href="#">
+<span>10 +</span>
+</a>
+</li></ul>
+</div>
+<div class="quantity-selector" data-quantity-holder="">
+<label class="label-hidden" for="product-quantity-buttons-template--20029866344604__main">Quantity</label>
+<button class="quantity__btn quantity__btn--decrease" data-quantity-button="" data-quantity-minus="" tabindex="0" title="Decrease Quantity - Volume Lip Gloss" type="button">
+<span class="visually-hidden">Decrease Quantity</span><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<input aria-label="quantity" autocomplete="off" class="quantity__selector quantity__input" data-popout-input="" data-quantity-field="" id="product-quantity-buttons-template--20029866344604__main" min="1" name="quantity" pattern="[0-9]*" title="Quantity - Volume Lip Gloss" type="number" value="1"/>
+<button class="quantity__btn quantity__btn--increase" data-quantity-button="" data-quantity-plus="" tabindex="0" title="Increase Quantity - Volume Lip Gloss" type="button">
+<span class="visually-hidden">Increase Quantity</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+</div>
+</div>
+</div>
+</div><div class="product__submit__holder product__submit__holder--notification">
+<div class="product__submit__buttons">
+<div class="product__submit__item">
+<button class="btn btn--primary btn--solid btn--large btn--submit product__submit__add" data-add-to-cart="" data-notification-popup="
+
+&lt;div class='product__notification' data-notification&gt;
+  &lt;h2 class='product__notification__title'&gt;Volume Lip Gloss&lt;/h2&gt;&lt;p class='product__notification__subtitle'&gt;Clear&lt;/p&gt;&lt;form method='post' action='/contact#NotificationForm--template--20029866344604__main--44708919378076' id='NotificationForm--template--20029866344604__main--44708919378076' accept-charset='UTF-8' class='contact-form' data-notification-form=''&gt;&lt;input type='hidden' name='form_type' value='customer' /&gt;&lt;input type='hidden' name='utf8' value='✓' /&gt;&lt;div class='product__notification__message'&gt;
+      &lt;p&gt;Your email has been received.&lt;/p&gt;
+    &lt;/div&gt;&lt;div class='product__notification__form'&gt;
+      &lt;label for='Email--template--20029866344604__main'&gt;Please enter your email and we will let you know when your selected item becomes available.&lt;/label&gt;
+
+      &lt;input type='hidden' name='contact[tags]' value='newsletter, out-of-stock-notification--Volume Lip Gloss'/&gt;
+      &lt;input type='hidden' name='contact[first_name]' value='Newsletter' /&gt;
+      &lt;input type='hidden' name='contact[last_name]' value='Subscriber' /&gt;
+
+      &lt;div class='input-group input-group--inline'&gt;
+        &lt;div class='input-group__item'&gt;
+          &lt;input type='email' value='' placeholder='Your email' name='contact[email]' id='Email--template--20029866344604__main' class='input-group__field input-group__field--email' aria-label='Your email' autocorrect='off' autocapitalize='off' required data-popup-input&gt;
+        &lt;/div&gt;
+        &lt;div class='input-group__item--btn'&gt;
+          &lt;button type='submit' name='subscribe' id='SubscribeSubmit--template--20029866344604__main' class='btn btn--primary btn--solid'&gt;
+            &lt;span data-notification-button-text&gt;Notify Me&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;/form&gt;&lt;button title='Close (Esc)' class='product__notification__close' data-popup-close&gt;&lt;svg aria-hidden='true' focusable='false' role='presentation' class='icon icon-close' viewBox='0 0 192 192'&gt;&lt;path d='M150 42 42 150M150 150 42 42' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/&gt;&lt;/svg&gt;&lt;/button&gt;
+&lt;/div&gt;" id="AddToCart--template--20029866344604__main" name="add" type="submit">
+<span data-add-to-cart-text="">Add to Cart
+</span>
+<em class="loader loader--line"><em class="loader-indeterminate"></em></em>
+</button>
+</div></div>
+<div class="product__form__errors" data-cart-errors-container="" role="alert"></div>
+</div>
+</div><input name="product-id" type="hidden" value="7920108798108"/><input name="section-id" type="hidden" value="template--20029866344604__main"/></form></div>
+<div class="product__block" data-current-variant-id="44708919378076" data-default-usp="Ready to ship" data-shipping-usp="" data-us-delivery-max-days="4" data-us-delivery-min-days="2" data-us-fulfillable-variants="" style="--PBB:10px;">
+<p id="stockinfop">
+<span class="stock-left">
+<span class="pulsing-dot" style="background-color: #16a34a;">
+<style>
+        #stockinfop {
+          list-style: none !important;
+        }
+        #stockinfop .pulsing-dot::before {
+          background-color: #16a34a!important;
+        }
+        #stockinfop .stock-left > span:not(.pulsing-dot) {
+          color: #16a34a!important;
+        }
+      </style>
+</span>
+<span id="shippingUspText" style="color: #16a34a;">Ready to ship</span>
+</span>
+<span class="location-right" id="locationinfop"></span>
+</p>
+</div>
+<style>
+  #locationinfop,
+  #stockinfop {
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 0.975rem;
+    font-weight: 500;
+    border-radius: 12px;
+    margin-top: 3px;
+  }
+
+  #stockinfop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .stock-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .location-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .location-right .shipping-country-flag {
+    width: 20px;
+    height: 15px;
+    flex: 0 0 20px;
+  }
+
+  .pulsing-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: dot-breathe 2s ease-in-out infinite;
+  }
+
+  /* No ::before halo — the expanding same-color ring read as a second dot.
+     A gentle opacity breathe on the dot itself signals "live" instead. */
+  .pulsing-dot::before {
+    content: none;
+  }
+
+  @keyframes dot-breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+
+@media only screen and (max-width: 767px) {
+  #locationinfop, #stockinfop {
+    text-align: center;
+    font-size: 0.975rem;
+    font-weight: 500;
+    border-radius: 10px;
+    margin-top: 3px;
+    font-size: 14.5px;
+  }
+}
+</style>
+<script>
+  // Cached original innerHTML of the shipping/returns accordion body, captured once
+  // so the worldwide-shipping paragraphs can be toggled without losing content.
+  let originalShippingAccordionHtml = null;
+
+  function setLocationInfo(countryCode, countryName) {
+    const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
+    const validCountryCode = /^[A-Z]{2}$/.test(normalizedCountryCode);
+    const flagMarkup = validCountryCode
+      ? `<img class="shipping-country-flag" src="https://cdn.shopify.com/static/images/flags/${normalizedCountryCode.toLowerCase()}.svg?width=32" alt="" aria-hidden="true" width="20" height="15" style="vertical-align: middle;">`
+      : '<span aria-hidden="true">📦</span>';
+    const countryLabel = validCountryCode ? normalizedCountryCode : 'your country';
+    const locationInfoP = document.getElementById('locationinfop');
+    const locationInfoCart = document.getElementById('locationinfocart');
+    const showSeparator = true;
+    const separator = showSeparator ? '<span aria-hidden="true">|</span>' : '';
+
+    // Create shipping message for the location info span
+    const shippingMessage = `${flagMarkup}${separator}<span class="shipping_usp">Free shipping to <span style="text-decoration: underline; color: black; font-weight:bold;">${countryLabel}</span></span>`;
+    const shippingMessageCart = `to ${flagMarkup} ${countryLabel}`;
+
+    for (const [element, message] of [[locationInfoP, shippingMessage], [locationInfoCart, shippingMessageCart]]) {
+      if (!element) continue;
+      element.innerHTML = message;
+      const flagImage = element.querySelector('.shipping-country-flag');
+      if (flagImage) {
+        flagImage.addEventListener('error', () => flagImage.replaceWith(document.createTextNode('📦')), { once: true });
+      }
+    }
+
+    window.smoocheCustomerCountry = countryCode;
+    updateShippingUspText();
+  }
+
+  // Formats "today + daysFromNow" as e.g. "July 4"
+  function formatDeliveryDate(daysFromNow) {
+    const date = new Date();
+    date.setDate(date.getDate() + daysFromNow);
+    const month = date.toLocaleDateString('en-US', { month: 'long' });
+    return `${month} ${date.getDate()}`;
+  }
+
+  // Whether the given (or currently selected) variant is marked in-stock at a US fulfillment location
+  function isVariantUsFulfillable(fulfillableVariantsAttr, currentVariantIdAttr, variantId) {
+    const fulfillableIds = (fulfillableVariantsAttr || '').split(',').filter(Boolean);
+    const currentVariantId = String(variantId || currentVariantIdAttr);
+    return fulfillableIds.includes(currentVariantId);
+  }
+
+  // Swaps the pulsing USP text (and the shipping/returns accordion note) to the
+  // US delivery estimate when the shopper is in the US and the current variant
+  // has stock at a US fulfillment location.
+  function updateShippingUspText(variantId) {
+    const isUsCustomer = window.smoocheCustomerCountry === 'US';
+
+    const block = document.querySelector('[data-shipping-usp]');
+    const uspText = block ? document.getElementById('shippingUspText') : null;
+    const locationInfoP = document.getElementById('locationinfop');
+    const stockInfoP = document.getElementById('stockinfop');
+
+    if (block && uspText) {
+      if (block.dataset.originalUspColor === undefined) {
+        block.dataset.originalUspColor = uspText.style.color;
+      }
+      if (stockInfoP && block.dataset.originalStockJustify === undefined) {
+        block.dataset.originalStockJustify = stockInfoP.style.justifyContent;
+      }
+
+      const showUsDelivery = isUsCustomer && isVariantUsFulfillable(block.dataset.usFulfillableVariants, block.dataset.currentVariantId, variantId);
+
+      if (showUsDelivery) {
+        const minDays = parseInt(block.dataset.usDeliveryMinDays, 10) || 2;
+        const maxDays = parseInt(block.dataset.usDeliveryMaxDays, 10) || 4;
+        uspText.textContent = `🇺🇸 Fast & Free Delivery (${formatDeliveryDate(minDays)} - ${formatDeliveryDate(maxDays)})`;
+        uspText.style.setProperty('color', '#000', 'important');
+      } else {
+        uspText.textContent = block.dataset.defaultUsp;
+        uspText.style.setProperty('color', block.dataset.originalUspColor);
+      }
+
+      if (locationInfoP) {
+        locationInfoP.style.display = showUsDelivery ? 'none' : '';
+      }
+      if (stockInfoP) {
+        stockInfoP.style.justifyContent = showUsDelivery ? 'center' : block.dataset.originalStockJustify;
+      }
+    }
+
+    const shippingNote = document.getElementById('usShippingAccordionNote');
+    if (shippingNote) {
+      const showNote = isUsCustomer && isVariantUsFulfillable(shippingNote.dataset.usFulfillableVariants, shippingNote.dataset.currentVariantId, variantId);
+      if (showNote) {
+        const minDays = block ? (parseInt(block.dataset.usDeliveryMinDays, 10) || 2) : 2;
+        const maxDays = block ? (parseInt(block.dataset.usDeliveryMaxDays, 10) || 4) : 4;
+        const startDate = formatDeliveryDate(minDays);
+        const endDate = formatDeliveryDate(maxDays);
+        shippingNote.innerHTML = `<p><strong>🇺🇸 Fast & Free Delivery to the US!</strong></p><p>This item is in stock at our US warehouse, so your order ships domestically instead of internationally. Expect delivery between ${startDate} and ${endDate}, with tracked shipping included at no extra cost.</p>`;
+        shippingNote.style.display = '';
+      } else {
+        shippingNote.style.display = 'none';
+      }
+
+      // The worldwide-shipping paragraphs don't apply once we're showing the US-specific
+      // delivery note above, so hide them and leave only the Returns section visible.
+      const shippingContent = document.getElementById('shippingAccordionContent');
+      if (shippingContent) {
+        if (originalShippingAccordionHtml === null) {
+          originalShippingAccordionHtml = shippingContent.innerHTML;
+        }
+        const returnsMarker = '<strong>Returns</strong>';
+        const markerIndex = originalShippingAccordionHtml.indexOf(returnsMarker);
+
+        if (showNote && markerIndex !== -1) {
+          shippingContent.innerHTML = originalShippingAccordionHtml.slice(markerIndex);
+        } else {
+          shippingContent.innerHTML = originalShippingAccordionHtml;
+        }
+      }
+    }
+  }
+
+  // This function fetches the browsing context suggestions and updates the p tag
+  async function fetchLocationInfo() {
+    try {
+      const response = await fetch('/browsing_context_suggestions.json');
+      const data = await response.json();
+      const countryCode = data.detected_values.country.handle;
+      const countryName = data.detected_values.country.name;
+
+      setLocationInfo(countryCode, countryName);
+    } catch (error) {
+      console.error('Error fetching location info:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+    fetchLocationInfo();
+  });
+
+  document.addEventListener('cart:change', function(event) {
+    fetchLocationInfo();
+  });
+
+  document.addEventListener('theme:variant:change', function(event) {
+    const variant = event.detail && event.detail.variant;
+    if (variant) {
+      updateShippingUspText(variant.id);
+    }
+  });
+</script>
+<div class="product__block product__accordions" id="Block--product_accordion_JmaAcV" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-how-does-it-work--template--20029866344604__main--product_accordion_JmaAcV" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span id="accordionbefore">How does it work?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-how-does-it-work--template--20029866344604__main--product_accordion_JmaAcV">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<p>Our lip gloss delivers a glossy finish that enhances the fuller look achieved with our lip plumper. It creates a mirror-like shine that makes lips appear even more luscious.</p>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--product_accordion_Jeg4px" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-is-it-safe-to-use--template--20029866344604__main--product_accordion_Jeg4px" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span id="accordionbefore">Is it safe to use?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-is-it-safe-to-use--template--20029866344604__main--product_accordion_Jeg4px">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<p>Our lip gloss is natural, safe, cruelty free, sulfate free, and paraben free. </p>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--9927e90d-2ecb-4104-af67-0dadf75b2a0a" style="--PBB:30px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-shipping-and-returns--template--20029866344604__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span id="accordionbefore">Shipping and returns</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-shipping-and-returns--template--20029866344604__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<div data-current-variant-id="44708919378076" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p>This product is not eligible for free shipping on its own.<br/><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="https://08f531-2.myshopify.com/policies/refund-policy" title="Refund Policy">return policy</a> for more information.</p></div>
+</div>
+</div>
+</div></div>
+</div>
+</div><script data-product-json="" id="ProductJson-template--20029866344604__main" type="application/json">
+      {"id":7920108798108,"title":"Volume Lip Gloss","handle":"shea-butter-lip-gloss","description":"\u003cdiv class=\"w-full text-token-text-primary\" dir=\"auto\" data-testid=\"conversation-turn-5\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"px-4 py-2 justify-center text-base md:gap-6 m-auto\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"flex flex-1 text-base mx-auto gap-3 juice:gap-4 juice:md:gap-6 md:px-5 lg:px-1 xl:px-5 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"relative flex w-full flex-col agent-turn\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"flex-col gap-1 md:gap-3\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"flex flex-grow flex-col max-w-full\" data-mce-fragment=\"1\"\u003e\n\u003cdiv data-message-author-role=\"assistant\" data-message-id=\"ce095959-67a0-4d17-82ab-276daa5b4e49\" dir=\"auto\" class=\"min-h-[20px] text-message flex flex-col items-start gap-3 whitespace-pre-wrap break-words [.text-message+\u0026amp;]:mt-5 overflow-x-auto\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"markdown prose w-full break-words dark:prose-invert light\" data-mce-fragment=\"1\"\u003e\n\u003cp data-mce-fragment=\"1\"\u003eDiscover the nourishing touch of our Shea Butter Lip Gloss. Infused with rich shea butter, this gloss hydrates and softens lips while adding a subtle sheen. Lightweight and non-sticky, it's perfect for daily wear and on-the-go touch-ups. Enjoy beautifully glossy lips with a natural look.\u003c\/p\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e","published_at":"2024-03-28T05:03:32-04:00","created_at":"2024-03-28T05:03:32-04:00","vendor":"Smooche LLC","type":"","tags":["category_lips","Order Fulfillment Guru"],"price":1900,"price_min":1900,"price_max":1900,"available":true,"price_varies":false,"compare_at_price":null,"compare_at_price_min":0,"compare_at_price_max":0,"compare_at_price_varies":false,"variants":[{"id":44708919378076,"title":"Clear","option1":"Clear","option2":null,"option3":null,"sku":"smooche-shea-butter-lip-gloss","requires_shipping":true,"taxable":true,"featured_image":{"id":43686077005980,"product_id":7920108798108,"position":1,"created_at":"2025-12-11T10:34:16-05:00","updated_at":"2025-12-16T04:59:50-05:00","alt":null,"width":1080,"height":1080,"src":"..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4.png","variant_ids":[44708919378076]},"available":true,"name":"Volume Lip Gloss - Clear","public_title":"Clear","options":["Clear"],"price":1900,"weight":0,"compare_at_price":null,"inventory_management":"shopify","barcode":"","featured_media":{"alt":null,"id":34869021737116,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4.png"}},"requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":44766948360348,"title":"Sweet Pink","option1":"Sweet Pink","option2":null,"option3":null,"sku":"","requires_shipping":true,"taxable":true,"featured_image":{"id":43686082314396,"product_id":7920108798108,"position":5,"created_at":"2025-12-11T10:34:41-05:00","updated_at":"2025-12-16T04:59:50-05:00","alt":null,"width":1080,"height":1080,"src":"..\/assets\/img\/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png","variant_ids":[44766948360348]},"available":true,"name":"Volume Lip Gloss - Sweet Pink","public_title":"Sweet Pink","options":["Sweet Pink"],"price":1900,"weight":0,"compare_at_price":null,"inventory_management":"shopify","barcode":"","featured_media":{"alt":null,"id":34869027045532,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png"}},"requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4.png","..\/assets\/img\/LipGloss-Productimagesphotos-814w-b8d0e8.jpg","..\/assets\/img\/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-462818.jpg","..\/assets\/img\/clear1-178w-9724de.png","..\/assets\/img\/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png","..\/assets\/img\/pink_2-1080w-a04020.jpg","..\/assets\/img\/pink-178w-d008b5.png","..\/assets\/img\/pink1-178w-24d728.png","..\/assets\/img\/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-4ee9bb.jpg"],"featured_image":"..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4.png","options":["Color"],"media":[{"alt":null,"id":34869021737116,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4.png","width":1080},{"alt":null,"id":34869179089052,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/LipGloss-Productimagesphotos-814w-b8d0e8.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/LipGloss-Productimagesphotos-814w-b8d0e8.jpg","width":1080},{"alt":null,"id":34869021769884,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-462818.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-462818.jpg","width":1080},{"alt":null,"id":37647948841116,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/clear1-178w-9724de.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/clear1-178w-9724de.png","width":1080},{"alt":null,"id":34869027045532,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png","width":1080},{"alt":null,"id":34917423546524,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/pink_2-1080w-a04020.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/pink_2-1080w-a04020.jpg","width":1080},{"alt":null,"id":34917423579292,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/pink-178w-d008b5.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/pink-178w-d008b5.png","width":1080},{"alt":null,"id":37647948873884,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/pink1-178w-24d728.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/pink1-178w-24d728.png","width":1080},{"alt":null,"id":37647948808348,"position":9,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-4ee9bb.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-4ee9bb.jpg","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cdiv class=\"w-full text-token-text-primary\" dir=\"auto\" data-testid=\"conversation-turn-5\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"px-4 py-2 justify-center text-base md:gap-6 m-auto\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"flex flex-1 text-base mx-auto gap-3 juice:gap-4 juice:md:gap-6 md:px-5 lg:px-1 xl:px-5 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"relative flex w-full flex-col agent-turn\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"flex-col gap-1 md:gap-3\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"flex flex-grow flex-col max-w-full\" data-mce-fragment=\"1\"\u003e\n\u003cdiv data-message-author-role=\"assistant\" data-message-id=\"ce095959-67a0-4d17-82ab-276daa5b4e49\" dir=\"auto\" class=\"min-h-[20px] text-message flex flex-col items-start gap-3 whitespace-pre-wrap break-words [.text-message+\u0026amp;]:mt-5 overflow-x-auto\" data-mce-fragment=\"1\"\u003e\n\u003cdiv class=\"markdown prose w-full break-words dark:prose-invert light\" data-mce-fragment=\"1\"\u003e\n\u003cp data-mce-fragment=\"1\"\u003eDiscover the nourishing touch of our Shea Butter Lip Gloss. Infused with rich shea butter, this gloss hydrates and softens lips while adding a subtle sheen. Lightweight and non-sticky, it's perfect for daily wear and on-the-go touch-ups. Enjoy beautifully glossy lips with a natural look.\u003c\/p\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e"}
+    </script>
+<script id="ModelJson-template--20029866344604__main" type="application/json">
+      []
+    </script>
+</div></div>
+<style>
+  #frontrow-sticker {
+    position: absolute;
+    z-index: 3;
+    border-radius: 0 !important;
+    max-width: unset !important;
+    left: 0px !important;
+    top: 0 !important;
+  }
+
+  .iframe-modal-frontrow {
+    display: none;
+    position: fixed;
+    z-index: 99999999;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Mobile only — scale down */
+  @media only screen and (max-width: 480px) {
+    #frontrow-sticker {
+      transform: scale(0.70) !important;
+      transform-origin: 0px 0px !important;
+    }
+  }
+
+  .iframe.frontrow { display: none; position: fixed; left: 0; top: 0; z-index: 99999997; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden; }
+</style>
+</section>
+<style>
+  #sticky_atcs .product__submit__add {
+        width: max-content;
+    min-width: max-content;
+    flex: none;
+    margin: 0;
+  }
+  .price-wrapper {
+          font-size: 14px;
+    }
+      #sticky_atcs .product__submit__add {
+    font-size: 12px;
+}
+  @media only screen and (max-width: 767px) {
+    #sticky_atcs .product__submit__add {
+    font-size: 10px;
+}
+    .price-wrapper {
+          font-size: 13px;
+    }
+  }
+  </style><div id="sticky_atcs">
+<div class="wrapper">
+<div class="wrap">
+<div class="left">
+<img alt="Volume Lip Gloss" height="60" loading="lazy" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-180w-f2c4a3.png'|asset_url }}" width="60"/>
+<div>
+<h5>Volume Lip Gloss</h5>
+<div class="price-wrapper">
+<span class="product__price--regular">{% include 'partials/sf_price.html' with p=product %}</span>
+<span class="product__price--compare"></span>
+</div>
+</div>
+</div>
+<a class="btn btn--primary btn--solid btn--large btn--submit product__submit__add" data-option-position="" data-value="" href="#product_link" type="button">
+                Shop now
+              </a>
+</div>
+<div class="wrap" style="display: none!important;">
+<div class="left">
+<img alt="Volume Lip Gloss" height="60" loading="lazy" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-180w-f2c4a3.png'|asset_url }}" width="60"/>
+<div>
+<h5>Volume Lip Gloss</h5>
+<div class="price-wrapper">
+<span class="product__price--regular">{% include 'partials/sf_price.html' with p=product %}</span>
+<span class="product__price--compare"></span>
+</div>
+</div>
+</div>
+<div class="right">
+<div class="sticky-variant-wrapper"><div class="sticky-option">
+<label class="sticky-option__label">Color:</label>
+<div class="sticky-option__values"><button class="sticky-swatch is-active" data-option-position="1" data-value="Clear" type="button">
+                Clear
+              </button><button class="sticky-swatch" data-option-position="1" data-value="Sweet Pink" type="button">
+                Sweet Pink
+              </button></div>
+</div><button class="btn btn--submit btn--solid btn--primary" data-sticky-add-to-cart="" name="add" type="submit">
+<span data-sticky-add-to-cart-text="">Sold Out
+</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+#sticky_atcs {
+opacity: 0;
+visibility: hidden;
+transform: translateY(100%);
+transition: all 0.3s ease;
+}
+
+  #sticky_atcs.scrolled {
+opacity: 1;
+visibility: visible;
+transform: translateY(0%);
+transition: all 0.3s ease;
+}
+
+
+.sticky-visible {
+opacity: 1;
+visibility: visible;
+transform: translateY(0);
+}
+
+#sticky_atcs {
+width: 100%;
+position: fixed;
+bottom: 0;
+height: auto;
+z-index: 999;
+background: white;
+box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+padding: 10px;
+}
+
+#sticky_atcs .wrap {
+display: flex;
+align-items: center;
+gap: 25px;
+justify-content: space-between;
+flex-wrap: wrap;
+}
+
+#sticky_atcs h5 {
+margin-bottom: 3px!important;
+font-size: 16px;
+}
+
+#sticky_atcs img {
+width: 60px;
+height: 60px;
+border-radius: 7px;
+object-fit: cover;
+}
+
+#sticky_atcs .left {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+#sticky_atcs .right {
+flex: 1;
+max-width: 400px;
+}
+
+/* Variant switcher styles */
+.sticky-variant-wrapper {
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.sticky-option {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.sticky-option__label {
+font-size: 14px;
+font-weight: 500;
+margin: 0;
+}
+
+.sticky-option__values {
+display: flex;
+gap: 5px;
+}
+
+.sticky-swatch {
+min-width: 35px;
+height: 35px;
+padding: 0 10px;
+border: 2px solid #ddd;
+background: white;
+border-radius: 35px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 13px;
+transition: all 0.2s ease;
+}
+
+.sticky-swatch:hover:not(:disabled) {
+border-color: #000;
+}
+
+.sticky-swatch.is-active {
+border-color: #000;
+background: #000;
+color: white;
+}
+
+.sticky-swatch.is-sold-out {
+opacity: 0.5;
+cursor: not-allowed;
+text-decoration: line-through;
+}
+
+.btn--submit {
+min-height: 35px;
+margin: 0;
+flex: 1;
+}
+
+@media only screen and (max-width: 767px) {
+#sticky_atcs {
+padding: 10px;
+}
+
+#sticky_atcs .wrap {
+gap: 10px;
+}
+
+#sticky_atcs h5 {
+font-size: 14px;
+}
+
+#sticky_atcs img {
+}
+
+#sticky_atcs .right {
+width: 100%;
+max-width: none;
+}
+
+.sticky-variant-wrapper {
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.sticky-option {
+width: 100%;
+}
+
+.sticky-swatch {
+min-width: 30px;
+height: 30px;
+font-size: 12px;
+}
+
+.btn--submit {
+width: 100%;
+margin-top: 5px;
+}
+}
+</style>
+<style> #shopify-section-template--20029866344604__main .product__form__wrapper {--PBB: 8px !important;} #shopify-section-template--20029866344604__main #locationinfop {margin-top: 0;} </style></div><div class="shopify-section" id="shopify-section-template--20029866344604__section_image_with_text_CwtnL8"><style>
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: transparent;
+  font-family: var(--FONT-STACK-BODY);
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__grid--reverse {
+  direction: rtl;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__grid--reverse > * {
+  direction: ltr;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__image {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__content {
+  text-align: left;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__heading {
+  text-align: left;
+  text-transform: none;
+  margin: 0 0 20px 0;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__highlight {
+  background: #df8096;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  line-height: 1.6;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__text {
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0 0 24px 0;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__text p {
+  margin: 0 0 14px 0;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__text p:last-child {
+  margin-bottom: 0;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__usps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+  margin-top: 24px;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__usp {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__usp img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__usp-text {
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--heading);
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__usp img { width: 26px; height: 26px; }
+  .smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__usp-text { font-size: 13px; line-height: 1.25; }
+  .smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__usp { gap: 8px; }
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__usp-text p {
+  margin: 0;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__button {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 14px 32px;
+  background: var(--heading);
+  color: #fff;
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__button:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 767px) {
+  .smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__grid--reverse {
+    direction: ltr;
+  }
+  .smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__text {
+    font-size: 14px;
+  }
+  .smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8 .smooche-iwt__heading {
+    font-size: 24px;
+  }
+}
+</style>
+<section class="smooche-iwt-template--20029866344604__section_image_with_text_CwtnL8">
+<div class="wrapper">
+<div class="smooche-iwt__grid smooche-iwt__grid--reverse">
+<div class="smooche-iwt__image">
+<img alt="For a glossy finish" loading="lazy" src="{{ 'sf/img/3_4183a62d-878f-4feb-81f1-423cc6e3fac9_1200x1200-9ab546.jpg'|asset_url }}"/>
+</div>
+<div class="smooche-iwt__content">
+<h2 class="section__heading h2 smooche-iwt__heading">For a 
+<span class="smooche-iwt__highlight">glossy finish</span>
+</h2>
+<div class="smooche-iwt__text">
+<p>Make your lips irresistible by giving them a glossy finish with our Volume Lip Gloss. Perfect in combination with our Lip Plumpers. Use our Luxury Lip Liner to give them even more definition.</p>
+</div>
+<div class="smooche-iwt__usps">
+<div class="smooche-iwt__usp">
+<img alt="" src="{{ 'sf/img/icons_smooche_new_4_83be8e54-6f50-452d-abd9-55e90f108e77_100-3fe2ca.svg'|asset_url }}"/>
+<div class="smooche-iwt__usp-text"><p>Enhances lip plumpers</p></div>
+</div>
+<div class="smooche-iwt__usp">
+<img alt="" src="{{ 'sf/img/icons_smooche_new_1_c9211393-b47b-41de-8995-1463ac44ae3e_100-249070.svg'|asset_url }}"/>
+<div class="smooche-iwt__usp-text"><p>100% natural &amp; vegan</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div><section class="shopify-section" id="shopify-section-template--20029866344604__171016962378cf5f40"><style data-shopify="">#App--template--20029866344604__171016962378cf5f40 {
+    --PT: 60px;
+    --PB: 0px;
+  }</style><div class="section-padding" data-section-type="template--20029866344604__171016962378cf5f40" id="App--template--20029866344604__171016962378cf5f40">
+<div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-ATnhDUVZ6NVFJMFhZV__loox_reviews_loox_dynamic_section_NJEA6M">
+<div class="loox-widget" data-default-tab="automatic" data-limit="20" data-product-id="7920108798108" data-reviews-to-display="" id="looxReviews" style="margin:0 auto;max-width:1080px;">
+<div id="loox-reviews-feed">
+<style class="loox-temp-hiding-style">
+			#loox-reviews-feed {
+				display: none;
+			}
+		</style>
+<section aria-label="Customer reviews">
+<h3>Customer Reviews</h3>
+<p class="loox-ssr-review-summary">
+					Overall rating: 4.8 / 5 from 281 reviews.
+				</p>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="LTOXU0XJn">
+<a class="loox-review-media-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
+<img alt="Customer photo review of Shea Butter Lip Gloss" class="loox-review-image" decoding="async" height="5712" loading="lazy" src="https://images.loox.io/uploads/2024/4/17/e6K1yuLdQ_mid.jpg" width="4284"/>
+</a>
+<p class="loox-review-body">This Shea Butter Lip Gloss product is amazing. I’m never buying other lip gloss brands again. This is so shiny and smooth and it tastes and smells like cupcakes!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Kaitlyn M.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2024-04-17T23:36:46.106Z">
+								April 17, 2024
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shea Butter Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="X8sW16Rie">
+<a class="loox-review-media-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
+<img alt="Customer photo review of Shea Butter Lip Gloss" class="loox-review-image" decoding="async" height="4032" loading="lazy" src="https://images.loox.io/uploads/2024/4/17/YKF75Ce5I_mid.jpg" width="3024"/>
+</a>
+<p class="loox-review-body">OMG. It's so shiny and stays on for so long! It's so hydrating and feels buttery smooth on my lips and is worth my money. Loving it!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Barbara F.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2024-04-17T23:34:55.300Z">
+								April 17, 2024
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shea Butter Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="KDKHRjXbz">
+<a class="loox-review-media-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
+<img alt="Customer photo review of Shea Butter Lip Gloss" class="loox-review-image" decoding="async" height="4032" loading="lazy" src="https://images.loox.io/uploads/2024/4/17/Me4FBkdxG_mid.jpg" width="3024"/>
+</a>
+<p class="loox-review-body">I'm so happy that I gave this lip gloss a try. Really, it lasts for a long while. Very hydrating and not sticky at all.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Verna J.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2024-04-17T23:32:59.840Z">
+								April 17, 2024
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shea Butter Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="QRuMIqS-A">
+<a class="loox-review-media-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
+<img alt="Customer photo review of Shea Butter Lip Gloss" class="loox-review-image" decoding="async" height="5712" loading="lazy" src="https://images.loox.io/uploads/2024/4/17/CWgkyJanpC_mid.jpg" width="4284"/>
+</a>
+<p class="loox-review-body">I am still on my first tube and I can already tell, it looks great on my lips. I just love this Shea Butter lip gloss. It definitely adds moisture and shine to my lips!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Laura L.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2024-04-17T23:31:04.966Z">
+								April 17, 2024
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shea Butter Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="wMUaApYx3">
+<a class="loox-review-media-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
+<img alt="Customer photo review of Shea Butter Lip Gloss" class="loox-review-image" decoding="async" height="5712" loading="lazy" src="https://images.loox.io/uploads/2024/4/17/QFvFip-hd_mid.jpg" width="4284"/>
+</a>
+<p class="loox-review-body">I like how shea butter is healthy for lips. Great coverage and texture. A definite value, would purchase again.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Carol H.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2024-04-17T23:20:32.937Z">
+								April 17, 2024
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shea Butter Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="cxz-m4VRJ">
+<a class="loox-review-media-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
+<img alt="Customer photo review of Shea Butter Lip Gloss" class="loox-review-image" decoding="async" height="4032" loading="lazy" src="https://images.loox.io/uploads/2024/4/17/251rqKO-__mid.jpg" width="3024"/>
+</a>
+<p class="loox-review-body">Wow, this is a very nice lip gloss for the value! Good consistency on the thicker side which lasts longer than others. This can be worn alone or over lipstick. Perfect for the Lip Gloss Lover in me!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Pamela C.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2024-04-17T23:19:26.388Z">
+								April 17, 2024
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shea Butter Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="GK8EYfJczq">
+<a class="loox-review-media-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
+<img alt="Customer photo review of Shea Butter Lip Gloss" class="loox-review-image" decoding="async" height="5712" loading="lazy" src="https://images.loox.io/uploads/2024/4/17/OylhfrlBN_mid.jpg" width="4284"/>
+</a>
+<p class="loox-review-body">I’m the kind of lady who needs gloss all the time. So this lasted me for a while! It's just the perfect lip gloss.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Sharon S.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2024-04-17T23:16:46.270Z">
+								April 17, 2024
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shea Butter Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="8x4SNM4_3">
+<p class="loox-review-body">New experience to come!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Gloria E. B.</span>
+<span class="loox-review-rating">5/5</span>
+<time class="loox-review-date" datetime="2026-08-25T01:14:56.495Z">
+								August 24, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="7XUtpkCAF">
+<p class="loox-review-body">Feels so soft on the lips, great product!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Murine L.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-17T19:42:20.111Z">
+								August 17, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="Jp6fFST2B">
+<p class="loox-review-body">The lip gloss is nice and shiny.  It has a nice moisturizing feel.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Susan M.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-17T15:05:04.360Z">
+								August 17, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="5wB1owPpb">
+<p class="loox-review-body">I absolutely love this lip gross</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Alexandrina S.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-14T22:58:37.548Z">
+								August 14, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="rQYKGuIoa">
+<p class="loox-review-body">Lovely</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Deborah D.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-14T00:35:08.962Z">
+								August 13, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="HnFcjoLrP">
+<p class="loox-review-body">Good experience. I oredered another product.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Nina C.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-12T14:45:44.444Z">
+								August 12, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="sZ14bk2zE">
+<p class="loox-review-body">Excellent on top of the lip stain</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Shani S.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-12T06:19:43.107Z">
+								August 12, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="M75mwCwVF">
+<p class="loox-review-body">Very moist but not too slippery.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Am B.</span>
+<span class="loox-review-rating">4/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-12T02:32:51.890Z">
+								August 11, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="oQcuccH9oa">
+<p class="loox-review-body">Love this product  !</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Dalina D.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-09T23:58:05.813Z">
+								August 9, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="pdYGy1SFE">
+<p class="loox-review-body">Love all the products thank you</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Tonya S.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-07T23:59:57.307Z">
+								August 7, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="qSN5RXrP2">
+<p class="loox-review-body">..it's actually not TOO glossy - so like, it doesn't make your lips look slimy like so many of these glosses do - I kinda like it! I like it more than I thought I would</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Rachel S.</span>
+<span class="loox-review-rating">4/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-07T11:15:14.537Z">
+								August 7, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="dgiX3Oa2N">
+<p class="loox-review-body">I really love this lip gloss. I don’t feel that it plumps but it makes your lips very glossy looking.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Frances L.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-06T21:47:57.922Z">
+								August 6, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="UNEhjhweq">
+<p class="loox-review-body">the glossy finish is absolutely beautiful and it doesn’t leave a sticky feeling on the lips. it’s neutral color is perfect for everyday wear and it gives a natural look</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Susan E.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-06T20:30:03.137Z">
+								August 6, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="6BZcXqmgM">
+<p class="loox-review-body">Shipping was fast and I like the product. It goes on smoothly and blends in easily. The lipgloss I got in Sweet Pink is awesome. It feels great on my lips and lasts slightly longer than a lot of others I've used. Plus the color looks so natural. I'd recommended it for purchase. Try it. You wont know till you try it. I'd buy it again.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Denise L.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-06T20:08:49.255Z">
+								August 6, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="iu4QRUFqp">
+<p class="loox-review-body">I love the way it Britten's my lips</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Charlotte R.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-06T17:15:03.185Z">
+								August 6, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="5TKtWJ6YA">
+<p class="loox-review-body">The lip gloss is nice and feels good going on.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Sherri S.</span>
+<span class="loox-review-rating">4/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-06T00:22:47.481Z">
+								August 5, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="57WVruCKM">
+<p class="loox-review-body">Love it!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Bonnie G.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-06T00:14:53.486Z">
+								August 5, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="43DNRBVRb">
+<p class="loox-review-body">Love it!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Kathy T.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-05T22:45:49.702Z">
+								August 5, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="gOEwJffXT">
+<p class="loox-review-body">Excellent gloss</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Sophie M.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-05T20:00:19.417Z">
+								August 5, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="klgGwDwsV">
+<p class="loox-review-body">Feels nice on my lips but not a great deal different from any other lip gloss I've tried</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Adrienne B.</span>
+<span class="loox-review-rating">4/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-05T07:00:55.668Z">
+								August 5, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="J3eAd6Eeg">
+<p class="loox-review-body">I like the products and have reordered them once already.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Edean C.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-05T02:34:48.043Z">
+								August 4, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="9alNp3swf">
+<p class="loox-review-body">I love how smooth it is</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Shirley R.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-05T02:03:39.307Z">
+								August 4, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="quNfRDy4uO">
+<p class="loox-review-body">It feels very soft and my lips shine so beautifully!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Alice E.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-04T19:03:43.541Z">
+								August 4, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="uBNePoUah">
+<p class="loox-review-body">This is a really good product. It adds a lovely shine to the lips and makes them extremely kissable. Very nice look.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Ben H.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-04T12:25:52.514Z">
+								August 4, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="ukSAFjPPD">
+<p class="loox-review-body">❤️</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Brandi L.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-04T05:07:13.164Z">
+								August 4, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="ocsn-0KY6">
+<p class="loox-review-body">I like the natural pink tone, and it's not sticky or greasy feeling.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Talia U.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-04T00:25:51.584Z">
+								August 3, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="5mi5Wf_Mq">
+<p class="loox-review-body">Great product</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Sheryl H.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-03T23:59:11.566Z">
+								August 3, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="NLkhVIvpB">
+<p class="loox-review-body">Great product</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Mary D.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-03T23:20:15.000Z">
+								August 3, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="Ru2qSIByv">
+<p class="loox-review-body">Like the way it looks and feels</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Sharon D.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-03T12:16:59.818Z">
+								August 3, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="aXlyyz4Lr">
+<p class="loox-review-body">Great for my purse.  Feels good</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Nancy B.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-03T03:26:56.851Z">
+								August 2, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="WI0e_Gaqn">
+<p class="loox-review-body">Great lip gloss!</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Marianne I.</span>
+<span class="loox-review-rating">4/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-02T20:40:55.888Z">
+								August 2, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="BekCi4vFZ9">
+<p class="loox-review-body">Its just enough color, and it doesn't dry out my lips like other lip glosses do.</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Amy S.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-02T12:16:35.247Z">
+								August 2, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+<article class="loox-review" data-product-id="7920108798108" data-review-id="Izy73E9SO">
+<p class="loox-review-body">Great product love it</p>
+<p class="loox-review-metadata">
+<span class="loox-reviewer-name">Mary H.</span>
+<span class="loox-review-rating">5/5</span>
+<span class="loox-review-verified">Verified</span>
+<time class="loox-review-date" datetime="2026-08-01T07:29:09.680Z">
+								August 1, 2026
+							</time>
+</p>
+<p class="loox-review-product">
+<a class="loox-review-product-link" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a>
+</p>
+</article>
+</section>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><div class="shopify-section" id="shopify-section-template--20029866344604__related"><style data-shopify="">#relatedProducts--template--20029866344604__related {
+    --PT: 60px;
+    --PB: 60px;
+  }</style><div class="related-products section-padding js-only" data-columns="4" data-limit="4" data-product-id="7920108798108" data-section-id="template--20029866344604__related" data-section-type="related-products" id="relatedProducts--template--20029866344604__related">
+<div class="wrapper"><div class="tabs tabs--stacked" data-tabs-holder=""><div class="tabs__contents" data-tabs-contents="">
+<div class="tab current" data-tab="0"><div data-limit="4" data-product-id="7920108798108" data-related-products=""></div></div>
+</div>
+</div></div>
+</div>
+</div><section class="shopify-section" id="shopify-section-template--20029866344604__17115330127241654c"><style data-shopify="">#App--template--20029866344604__17115330127241654c {
+    --PT: 60px;
+    --PB: 60px;
+  }</style><div class="section-padding" data-section-type="template--20029866344604__17115330127241654c" id="App--template--20029866344604__17115330127241654c">
+<div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-ATkEvWTd6NElzbTJpW__instafeed_app_block_7xnk96">
+<style>
+      div[id*="instafeed_app_block"] {
+        width: 100%;
+      }
+      div.shopify-section:has(> [id*="instafeed_app_block"]) {
+      width: 100%;
+      }
+      
+      body #insta-feed {
+      
+          
+
+          
+          margin-bottom: 0px!important;
+          
+
+          
+
+          
+
+          
+      }
+      
+      body #insta-feed h2 {
+      
+        
+        
+         text-align: center;
+      }
+
+      
+      
+</style>
+<div id="insta-feed"></div>
+</div>
+</div>
+</div>
+</section>
+</main></div>
+{% endblock content_wrapper %}
+{% block sf_tail %}
+<div aria-hidden="true" class="pswp pswp--custom-loader" data-index="0" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="pswp pswp--custom-loader" data-index="1" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/smooche-cart-timer-b352c2.js'|asset_url }}"></script><script>
+      // Function to update the price element with the new variant price
+      function updateProductPrice(newPrice) {
+        const priceElement = document.getElementById('productpricingnew');
+        if (!priceElement) return;
+        priceElement.textContent = newPrice;
+      }
+
+      // Event listener to detect changes in the variant selection
+      document.addEventListener('DOMContentLoaded', function () {
+        // Assuming the variant change triggers an update on the element with class 'product__price--regular'
+        const regularPriceElement = document.querySelector('.product__price--regular');
+
+        if (regularPriceElement && document.getElementById('productpricingnew')) {
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+              // Update the `productpricingnew` element with the new price when it changes
+              updateProductPrice(mutation.target.textContent);
+            });
+          });
+
+          // Observe changes in the regular price element
+          observer.observe(regularPriceElement, {
+            childList: true,
+            subtree: true,
+          });
+        }
+      });
+    </script><script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get all swatch labels
+        const swatchLabels = document.querySelectorAll('.swatch__label');
+
+        swatchLabels.forEach((label) => {
+          label.addEventListener('click', (event) => {
+            // Get the value of selected-swatch from the clicked label
+            const selectedSwatch = label.getAttribute('selected-swatch');
+
+            // Update the .selected-swatch content
+            const selectedSwatchElement = document.querySelector('.selected-swatch');
+            if (selectedSwatchElement && selectedSwatch) {
+              selectedSwatchElement.textContent = selectedSwatch;
+            }
+          });
+        });
+      });
+    </script><script>
+      /* Accordion Popup JavaScript - Moves modals to body for proper z-index stacking */
+
+(function() {
+  'use strict';
+
+  // Move all popup modals to body for proper z-index stacking
+  function movePopupsToBody() {
+    document.querySelectorAll('.popup-modal[data-popup-modal]').forEach(function(popup) {
+      // Only move if not already a direct child of body
+      if (popup.parentElement !== document.body) {
+        document.body.appendChild(popup);
+      }
+    });
+  }
+
+  function initAccordionPopups() {
+    // First, move popups to body level
+    movePopupsToBody();
+
+    // Open popup via trigger link
+    document.querySelectorAll('[data-popup-trigger]').forEach(function(trigger) {
+      // Remove existing listeners to prevent duplicates
+      trigger.removeEventListener('click', handleTriggerClick);
+      trigger.addEventListener('click', handleTriggerClick);
+    });
+
+    // Close popup via close button or overlay click
+    document.querySelectorAll('[data-popup-close]').forEach(function(closeBtn) {
+      closeBtn.removeEventListener('click', handleCloseClick);
+      closeBtn.addEventListener('click', handleCloseClick);
+    });
+  }
+
+  function handleTriggerClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-trigger');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function handleCloseClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-close');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Close on escape key (only add once)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var activePopup = document.querySelector('.popup-modal.is-active');
+      if (activePopup) {
+        activePopup.classList.remove('is-active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccordionPopups);
+  } else {
+    initAccordionPopups();
+  }
+
+  // Re-initialize for Shopify sections (if using Section Rendering API)
+  document.addEventListener('shopify:section:load', initAccordionPopups);
+})();
+    </script>
+<script type="application/json" id="sf-variant-options">[{% for field in variant_form %}{% if 'attr' in field.id_for_label %}{"code": "{{ field.html_name|slice:'5:'|escapejs }}", "label": "{{ field.label|escapejs }}", "choices": [{% for c in field.field.choices %}["{{ c.0|escapejs }}", "{{ c.1|escapejs }}"]{% if not forloop.last %},{% endif %}{% endfor %}]},{% endif %}{% endfor %}null]</script>
+{{ product.data|json_script:'product-data' }}
+{% app_hook "view_product" %}
+{% app_hook "add_to_cart" %}
+{% endblock sf_tail %}

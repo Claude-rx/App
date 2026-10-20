@@ -4,3 +4,9 @@ skinofab-home.zip
 tools/site-export/cache/
 skinofab-site*.zip
 .capture-tmp/
+# generated binary theme assets (recreated by tools/theme-build/build_theme.py from the export)
+skinofab-theme/assets/sf/img/
+skinofab-theme/assets/sf/media/
+skinofab-theme/assets/sf/fonts/
+skinofab-handoff/media/
+skinofab-theme*.zip

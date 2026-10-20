@@ -1,0 +1,24 @@
+# Schema settings intentionally omitted from settings_data.json.
+ab_link_text # template applies a default filter
+cart_header_title # template applies a default filter
+enable_membership_pricing # schema default applies
+featured_categories_header # template applies a default filter
+featured_product_cta_text # template applies a default filter
+featured_products_cta_text # template applies a default filter
+featured_products_header # template applies a default filter
+final_step_message # template applies a default filter
+homepage_hero_cta # template applies a default filter
+image_text_cta_text # template applies a default filter
+membership_active_status_value # template applies a default filter
+membership_detail_text # template applies a default filter
+membership_discount_percent # template applies a default filter
+membership_label # template applies a default filter
+membership_status_metadata_key # template applies a default filter
+on_sale_header # template applies a default filter
+promo_banner_cta_text # template applies a default filter
+promo_banner_heading # template applies a default filter
+recommended_products_header # template applies a default filter
+step_1_message # template applies a default filter
+step_2_message # template applies a default filter
+upsell_section_title # template applies a default filter
+variant_size_guide_text # template applies a default filter

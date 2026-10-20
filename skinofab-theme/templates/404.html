@@ -1,0 +1,15 @@
+{% extends 'layouts/base.html' %}
+{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ 'main.css'|asset_url }}">{% endblock spark_css %}
+
+{% block title %}{% t "global.error.404" %} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="container py-16 md:py-24">
+    <div class="max-w-md mx-auto text-center">
+        <p class="text-6xl font-semibold text-slate-200 mb-4">404</p>
+        <h1 class="text-xl font-semibold text-slate-800 mb-2">{% t "global.error.404" %}</h1>
+        <p class="text-sm text-slate-500 mb-8">{% t "global.error.404_message" %}</p>
+        <a href="{{ homepage_url }}" class="btn btn-primary">{% t "navigation.main.home" %}</a>
+    </div>
+</div>
+{% endblock %}

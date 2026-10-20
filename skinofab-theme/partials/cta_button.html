@@ -1,0 +1,8 @@
+{# Shared CTA helper. Expects href, label, style, outline. Optional: outline_color. style: primary|accent|secondary. #}
+{% if href and label %}
+<a href="{{ href }}"
+   class="btn {% if outline %}btn-outline{% elif style == 'accent' %}btn-accent{% elif style == 'secondary' %}btn-secondary{% else %}btn-primary{% endif %}"
+   {% if outline %}style="--btn-color: {% if outline_color %}{{ outline_color }}{% elif style == 'accent' %}var(--accent-color){% else %}var(--primary-color){% endif %};"{% endif %}>
+    {{ label }}
+</a>
+{% endif %}

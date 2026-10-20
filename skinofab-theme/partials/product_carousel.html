@@ -1,0 +1,31 @@
+{# Spark Theme -- Product Image Carousel (used in product cards with multiple images) #}
+{# This is a lightweight alternative to the full PDP gallery #}
+{# For the main PDP gallery, Spark uses spark-gallery.js directly in product.html #}
+{% with images=product.get_all_images %}
+{% if images|length > 1 %}
+<div class="relative overflow-hidden group">
+    {% for image in images %}
+        {% image_thumbnail image.original "400x400" crop="center" as thumb %}
+        <img src="{{ thumb.url }}"
+             alt="{% t 'store.catalogue.product_image_alt' with title=product.get_title count=forloop.counter %}"
+             class="w-full aspect-square object-cover {% if not forloop.first %}hidden{% endif %}"
+             data-carousel-index="{{ forloop.counter0 }}"
+             loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" />
+    {% endfor %}
+    {% if images|length > 1 %}
+        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+            {% for image in images %}
+                <span class="w-1.5 h-1.5 rounded-full {% if forloop.first %}bg-slate-800{% else %}bg-slate-300{% endif %}" data-dot-index="{{ forloop.counter0 }}"></span>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% elif images %}
+    {% image_thumbnail images.0.original "400x400" crop="center" as thumb %}
+    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-full aspect-square object-cover" loading="lazy" />
+{% else %}
+    <div class="aspect-square bg-slate-100 flex items-center justify-center">
+        <span class="text-slate-300 text-sm">{% t 'product.no_image' %}</span>
+    </div>
+{% endif %}
+{% endwith %}

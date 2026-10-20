@@ -1,0 +1,2142 @@
+{
+  "SKINOFAB": {
+    "Product Links": [
+      {
+        "name": "sf_p_4_pack_2x_extreme_2x_long_lasting",
+        "type": "product",
+        "label": "Bestseller Duo Kit",
+        "help_text": "NEXT product shown wherever the design links to \"4-pack-2x-extreme-2x-long-lasting\": links, prices and add to cart. Also set this product's template to \"4-pack-2x-extreme-2x-long-lasting\"."
+      },
+      {
+        "name": "sf_p_beauty_mirror",
+        "type": "product",
+        "label": "Beauty Mirror",
+        "help_text": "NEXT product shown wherever the design links to \"beauty-mirror\": links, prices and add to cart. Also set this product's template to \"beauty-mirror\"."
+      },
+      {
+        "name": "sf_p_brow_gel",
+        "type": "product",
+        "label": "Fibre Brow Gel",
+        "help_text": "NEXT product shown wherever the design links to \"brow-gel\": links, prices and add to cart. Also set this product's template to \"brow-gel\"."
+      },
+      {
+        "name": "sf_p_color_changing_foundation",
+        "type": "product",
+        "label": "Color Changing Foundation",
+        "help_text": "NEXT product shown wherever the design links to \"color-changing-foundation\": links, prices and add to cart. Also set this product's template to \"color-changing-foundation\"."
+      },
+      {
+        "name": "sf_p_essential_lip_liner",
+        "type": "product",
+        "label": "Luxury Lip Liner",
+        "help_text": "NEXT product shown wherever the design links to \"essential-lip-liner\": links, prices and add to cart. Also set this product's template to \"essential-lip-liner\"."
+      },
+      {
+        "name": "sf_p_extreme_lip_plumper",
+        "type": "product",
+        "label": "Extreme Lip Plumper",
+        "help_text": "NEXT product shown wherever the design links to \"extreme-lip-plumper\": links, prices and add to cart. Also set this product's template to \"extreme-lip-plumper\"."
+      },
+      {
+        "name": "sf_p_eyebrow_serum",
+        "type": "product",
+        "label": "Eyebrow Growth Serum",
+        "help_text": "NEXT product shown wherever the design links to \"eyebrow-serum\": links, prices and add to cart. Also set this product's template to \"eyebrow-serum\"."
+      },
+      {
+        "name": "sf_p_eyelash_curler",
+        "type": "product",
+        "label": "Eyelash Curler",
+        "help_text": "NEXT product shown wherever the design links to \"eyelash-curler\": links, prices and add to cart. Also set this product's template to \"eyelash-curler\"."
+      },
+      {
+        "name": "sf_p_eyelash_serum",
+        "type": "product",
+        "label": "Eyelash Growth Serum",
+        "help_text": "NEXT product shown wherever the design links to \"eyelash-serum\": links, prices and add to cart. Also set this product's template to \"eyelash-serum\"."
+      },
+      {
+        "name": "sf_p_face_roller",
+        "type": "product",
+        "label": "Face Roller",
+        "help_text": "NEXT product shown wherever the design links to \"face-roller\": links, prices and add to cart. Also set this product's template to \"face-roller\"."
+      },
+      {
+        "name": "sf_p_foundation_mega_pack",
+        "type": "product",
+        "label": "Foundation Mega Pack",
+        "help_text": "NEXT product shown wherever the design links to \"foundation-mega-pack\": links, prices and add to cart. Also set this product's template to \"foundation-mega-pack\"."
+      },
+      {
+        "name": "sf_p_gua_sha",
+        "type": "product",
+        "label": "Gua Sha",
+        "help_text": "NEXT product shown wherever the design links to \"gua-sha\": links, prices and add to cart. Also set this product's template to \"gua-sha\"."
+      },
+      {
+        "name": "sf_p_hyaluronic_acid_lip_plumper",
+        "type": "product",
+        "label": "Normal Lip Plumper",
+        "help_text": "NEXT product shown wherever the design links to \"hyaluronic-acid-lip-plumper\": links, prices and add to cart. Also set this product's template to \"hyaluronic-acid-lip-plumper\"."
+      },
+      {
+        "name": "sf_p_lash_brow_duo",
+        "type": "product",
+        "label": "Lash & Brow Growth Kit",
+        "help_text": "NEXT product shown wherever the design links to \"lash-brow-duo\": links, prices and add to cart. Also set this product's template to \"lash-brow-duo\"."
+      },
+      {
+        "name": "sf_p_liquid_blender_brush",
+        "type": "product",
+        "label": "Liquid Blender Brush",
+        "help_text": "NEXT product shown wherever the design links to \"liquid-blender-brush\": links, prices and add to cart. Also set this product's template to \"liquid-blender-brush\"."
+      },
+      {
+        "name": "sf_p_long_lash_mascara",
+        "type": "product",
+        "label": "2-in-1 Serum Mascara",
+        "help_text": "NEXT product shown wherever the design links to \"long-lash-mascara\": links, prices and add to cart. Also set this product's template to \"long-lash-mascara\"."
+      },
+      {
+        "name": "sf_p_peel_off_lip_stain",
+        "type": "product",
+        "label": "Peel-off Lip Stain",
+        "help_text": "NEXT product shown wherever the design links to \"peel-off-lip-stain\": links, prices and add to cart. Also set this product's template to \"peel-off-lip-stain\"."
+      },
+      {
+        "name": "sf_p_reverse_time_peptide_serum",
+        "type": "product",
+        "label": "Reverse-time Peptide Serum",
+        "help_text": "NEXT product shown wherever the design links to \"reverse-time-peptide-serum\": links, prices and add to cart. Also set this product's template to \"reverse-time-peptide-serum\"."
+      },
+      {
+        "name": "sf_p_shea_butter_lip_gloss",
+        "type": "product",
+        "label": "Volume Lip Gloss",
+        "help_text": "NEXT product shown wherever the design links to \"shea-butter-lip-gloss\": links, prices and add to cart. Also set this product's template to \"shea-butter-lip-gloss\"."
+      },
+      {
+        "name": "sf_p_smooche_blender",
+        "type": "product",
+        "label": "Smooche Blender",
+        "help_text": "NEXT product shown wherever the design links to \"smooche-blender\": links, prices and add to cart. Also set this product's template to \"smooche-blender\"."
+      },
+      {
+        "name": "sf_p_smooche_gift_card",
+        "type": "product",
+        "label": "Smooche Gift Card",
+        "help_text": "NEXT product shown wherever the design links to \"smooche-gift-card\": links, prices and add to cart. Also set this product's template to \"smooche-gift-card\"."
+      },
+      {
+        "name": "sf_p_stick_and_stain",
+        "type": "product",
+        "label": "Peel-off Lip Stain",
+        "help_text": "NEXT product shown wherever the design links to \"stick-and-stain\": links, prices and add to cart. Also set this product's template to \"stick-and-stain\"."
+      },
+      {
+        "name": "sf_p_stick_stain3",
+        "type": "product",
+        "label": "Peel-off Lip Stain",
+        "help_text": "NEXT product shown wherever the design links to \"stick-stain3\": links, prices and add to cart. Also set this product's template to \"stick-stain3\"."
+      },
+      {
+        "name": "sf_p_triple_lip_plumper_bundle",
+        "type": "product",
+        "label": "Triple Lip Plumper Bundle",
+        "help_text": "NEXT product shown wherever the design links to \"triple-lip-plumper-bundle\": links, prices and add to cart. Also set this product's template to \"triple-lip-plumper-bundle\"."
+      },
+      {
+        "name": "sf_p_ultra_peptide_collagen_lifting_mask",
+        "type": "product",
+        "label": "Ultra Peptide & Collagen Lifting Mask",
+        "help_text": "NEXT product shown wherever the design links to \"ultra-peptide-collagen-lifting-mask\": links, prices and add to cart. Also set this product's template to \"ultra-peptide-collagen-lifting-mask\"."
+      },
+      {
+        "name": "sf_p_under_eye_reset",
+        "type": "product",
+        "label": "Under-eye Reset Patches",
+        "help_text": "NEXT product shown wherever the design links to \"under-eye-reset\": links, prices and add to cart. Also set this product's template to \"under-eye-reset\"."
+      }
+    ],
+    "Checkout Add-ons": [
+      {
+        "name": "sf_shipping_protection",
+        "type": "product",
+        "label": "Premium Shipping Protection",
+        "help_text": "NEXT product whose price the design quotes for shipping protection (FAQ and buy-box copy)."
+      },
+      {
+        "name": "sf_shipping_fee_text",
+        "type": "text",
+        "label": "Shipping Fee (as shown in delivery copy)",
+        "default": "$2.99 USD",
+        "help_text": "Must match the shipping rate configured in Dashboard > Settings > Shipping."
+      }
+    ],
+    "Collection Links": [
+      {
+        "name": "sf_c_b2g5",
+        "type": "url",
+        "label": "B2G5",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"b2g5\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_brows",
+        "type": "url",
+        "label": "Brows",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"brows\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_bundles",
+        "type": "url",
+        "label": "Bundles",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"bundles\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_canal_products",
+        "type": "url",
+        "label": "Canal Products",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"canal-products\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_essentials",
+        "type": "url",
+        "label": "Essentials",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"essentials\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_face",
+        "type": "url",
+        "label": "Face",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"face\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_homepage_lips",
+        "type": "url",
+        "label": "Homepage Lips",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"homepage-lips\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_lashes",
+        "type": "url",
+        "label": "Lashes",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"lashes\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_lips",
+        "type": "url",
+        "label": "Lips",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"lips\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_lipstain",
+        "type": "url",
+        "label": "Lipstain",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"lipstain\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_sale",
+        "type": "url",
+        "label": "Sale",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"sale\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_serums",
+        "type": "url",
+        "label": "Serums",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"serums\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_skin",
+        "type": "url",
+        "label": "Skin",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"skin\" collection links go (a NEXT category URL)."
+      },
+      {
+        "name": "sf_c_the_hits",
+        "type": "url",
+        "label": "The Hits",
+        "default": "/catalogue/",
+        "help_text": "Where the design's \"the-hits\" collection links go (a NEXT category URL)."
+      }
+    ]
+  },
+  "Homepage": {
+    "Sections": [
+      {
+        "name": "show_hero",
+        "label": "Show Hero",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Display the hero banner on the homepage."
+      },
+      {
+        "name": "show_featured_product",
+        "label": "Show Featured Product",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Display a single featured product spotlight on the homepage."
+      },
+      {
+        "name": "show_featured_products",
+        "label": "Show Featured Products",
+        "type": "checkbox",
+        "default": true,
+        "help_text": "Display the featured products grid on the homepage."
+      },
+      {
+        "name": "show_featured_categories",
+        "label": "Show Featured Categories",
+        "type": "checkbox",
+        "default": true,
+        "help_text": "Display the featured categories section on the homepage."
+      },
+      {
+        "name": "show_on_sale",
+        "label": "Show On Sale",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Display a curated on-sale products section with sale badges and discount pricing."
+      },
+      {
+        "name": "show_promo_banner",
+        "label": "Show Promo Banner",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Display a full-width promotional banner with a heading and call-to-action button."
+      },
+      {
+        "name": "show_image_text",
+        "label": "Show Image with Text",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Display a two-column image and text section for a brand story, ingredient callout, or explainer."
+      },
+      {
+        "name": "show_text_block",
+        "label": "Show Text Block",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Display a standalone block of text, such as a brand statement or an intro paragraph, below the hero."
+      }
+    ],
+    "Hero": [
+      {
+        "name": "homepage_hero_image",
+        "label": "Hero Image",
+        "type": "image_picker",
+        "help_text": "Full-width hero image. Use a high-quality product or lifestyle photo."
+      },
+      {
+        "name": "homepage_hero_image_mobile",
+        "label": "Hero Image (Mobile)",
+        "type": "image_picker",
+        "help_text": "Optional mobile-optimized hero image. Falls back to desktop image if not set."
+      },
+      {
+        "name": "homepage_hero_heading",
+        "label": "Hero Heading",
+        "type": "text",
+        "help_text": "Large heading text overlaid on the hero image.",
+        "max_length": 100
+      },
+      {
+        "name": "homepage_hero_subheading",
+        "label": "Hero Subheading",
+        "type": "text",
+        "help_text": "Smaller text below the heading.",
+        "max_length": 200
+      },
+      {
+        "name": "homepage_hero_text_color",
+        "label": "Hero Text Color",
+        "type": "color",
+        "help_text": "Color for text on the hero image. Leave blank for white."
+      },
+      {
+        "name": "homepage_hero_text_align",
+        "label": "Hero Text Alignment",
+        "type": "select",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left",
+        "help_text": "Alignment of heading and subheading text on the hero."
+      },
+      {
+        "name": "homepage_hero_content_position",
+        "label": "Content Position",
+        "type": "select",
+        "options": [
+          {
+            "name": "Top Left",
+            "value": "top-left"
+          },
+          {
+            "name": "Top Center",
+            "value": "top-center"
+          },
+          {
+            "name": "Top Right",
+            "value": "top-right"
+          },
+          {
+            "name": "Middle Left",
+            "value": "middle-left"
+          },
+          {
+            "name": "Middle Center",
+            "value": "middle-center"
+          },
+          {
+            "name": "Middle Right",
+            "value": "middle-right"
+          },
+          {
+            "name": "Bottom Left",
+            "value": "bottom-left"
+          },
+          {
+            "name": "Bottom Center",
+            "value": "bottom-center"
+          },
+          {
+            "name": "Bottom Right",
+            "value": "bottom-right"
+          }
+        ],
+        "default": "bottom-left",
+        "help_text": "Position of the hero copy block over the image."
+      },
+      {
+        "name": "homepage_hero_content_width",
+        "label": "Content Width",
+        "type": "select",
+        "options": [
+          {
+            "name": "Narrow",
+            "value": "narrow"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Wide",
+            "value": "wide"
+          },
+          {
+            "name": "Full",
+            "value": "full"
+          }
+        ],
+        "default": "medium",
+        "help_text": "Maximum width for hero copy on desktop."
+      },
+      {
+        "name": "homepage_hero_height",
+        "label": "Hero Height",
+        "type": "select",
+        "options": [
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Full Screen",
+            "value": "full"
+          }
+        ],
+        "default": "medium",
+        "help_text": "Minimum height of the hero section."
+      },
+      {
+        "name": "homepage_hero_overlay_color",
+        "label": "Hero Overlay Color",
+        "type": "color",
+        "help_text": "Color overlay on the hero image for text readability. Leave blank for no overlay."
+      },
+      {
+        "name": "homepage_hero_overlay_opacity",
+        "label": "Hero Overlay Opacity",
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "default": 30,
+        "help_text": "Opacity of the hero overlay (0 = transparent, 100 = solid)."
+      },
+      {
+        "name": "homepage_hero_alt",
+        "label": "Hero Image Alt Text",
+        "type": "text",
+        "help_text": "Accessible description of the hero image.",
+        "max_length": 250
+      },
+      {
+        "name": "homepage_hero_link",
+        "label": "Hero Link URL",
+        "type": "url",
+        "help_text": "Where the hero button links to (e.g. /catalogue/).",
+        "max_length": 500
+      },
+      {
+        "name": "homepage_hero_cta",
+        "label": "Hero Button Text",
+        "type": "text",
+        "help_text": "Call-to-action button text. Leave blank to use the localized default.",
+        "max_length": 50
+      },
+      {
+        "name": "homepage_hero_cta_style",
+        "label": "Hero Button Color",
+        "type": "select",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
+          }
+        ],
+        "default": "primary",
+        "help_text": "Button color from store branding."
+      },
+      {
+        "name": "homepage_hero_cta_outline",
+        "label": "Use Outline Button Style",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Display the hero button as an outline button."
+      }
+    ],
+    "Featured Product": [
+      {
+        "name": "featured_product",
+        "label": "Product",
+        "type": "product",
+        "help_text": "Select a single product to spotlight on the homepage."
+      },
+      {
+        "name": "featured_product_header",
+        "label": "Section Heading",
+        "type": "text",
+        "help_text": "Heading above the featured product. Leave blank to use the localized default.",
+        "max_length": 250
+      },
+      {
+        "name": "featured_product_header_size",
+        "label": "Heading Size",
+        "type": "select",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ],
+        "default": "medium",
+        "help_text": "Size of the featured product section heading."
+      },
+      {
+        "name": "featured_product_header_align",
+        "label": "Heading Alignment",
+        "type": "select",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left",
+        "help_text": "Alignment of the featured product section heading."
+      },
+      {
+        "name": "featured_product_description",
+        "label": "Custom Description",
+        "type": "richtext",
+        "help_text": "Override the product description with custom text.",
+        "max_length": 1000
+      },
+      {
+        "name": "featured_product_cta_text",
+        "label": "Button Text",
+        "type": "text",
+        "help_text": "Call-to-action button text. Leave blank to use the localized default.",
+        "max_length": 100
+      },
+      {
+        "name": "featured_product_cta_style",
+        "label": "Button Color",
+        "type": "select",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
+          }
+        ],
+        "default": "primary",
+        "help_text": "Button color from store branding."
+      },
+      {
+        "name": "featured_product_cta_outline",
+        "label": "Use Outline Button Style",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Display the featured product button as an outline button."
+      },
+      {
+        "name": "featured_product_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Section background color. Leave blank for white."
+      }
+    ],
+    "Featured Products": [
+      {
+        "name": "featured_products",
+        "label": "Products",
+        "type": "products",
+        "help_text": "Products to feature on the homepage."
+      },
+      {
+        "name": "featured_products_header",
+        "label": "Section Heading",
+        "type": "text",
+        "help_text": "Heading above the featured products grid. Leave blank to use the localized default.",
+        "max_length": 250
+      },
+      {
+        "name": "featured_products_header_size",
+        "label": "Heading Size",
+        "type": "select",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ],
+        "default": "medium",
+        "help_text": "Size of the featured products heading."
+      },
+      {
+        "name": "featured_products_header_align",
+        "label": "Heading Alignment",
+        "type": "select",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left",
+        "help_text": "Alignment of the featured products heading."
+      },
+      {
+        "name": "featured_products_columns",
+        "label": "Columns (Desktop)",
+        "type": "range",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "unit": "",
+        "default": 3,
+        "help_text": "Number of product columns on desktop."
+      },
+      {
+        "name": "featured_products_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Section background color. Leave blank for white."
+      },
+      {
+        "name": "featured_products_card_bg",
+        "label": "Card Background Color",
+        "type": "color",
+        "help_text": "Optional background color for product cards in this section."
+      },
+      {
+        "name": "featured_products_cta_text",
+        "label": "Button Text",
+        "type": "text",
+        "help_text": "Optional button text shown below the grid. Leave blank to use the localized default.",
+        "max_length": 100
+      },
+      {
+        "name": "featured_products_cta_url",
+        "label": "Button URL",
+        "type": "url",
+        "help_text": "Optional destination for a button shown below the grid.",
+        "max_length": 500
+      },
+      {
+        "name": "featured_products_cta_style",
+        "label": "Button Color",
+        "type": "select",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
+          }
+        ],
+        "default": "primary",
+        "help_text": "Button color from store branding."
+      },
+      {
+        "name": "featured_products_cta_outline",
+        "label": "Use Outline Button Style",
+        "type": "checkbox",
+        "default": true,
+        "help_text": "Display the featured products button as an outline button."
+      }
+    ],
+    "On Sale": [
+      {
+        "name": "on_sale_header",
+        "label": "Section Heading",
+        "type": "text",
+        "help_text": "Heading above the on-sale products grid. Leave blank to use the localized default.",
+        "max_length": 250
+      },
+      {
+        "name": "on_sale_header_size",
+        "label": "Heading Size",
+        "type": "select",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ],
+        "default": "medium",
+        "help_text": "Size of the on-sale section heading."
+      },
+      {
+        "name": "on_sale_header_align",
+        "label": "Heading Alignment",
+        "type": "select",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left",
+        "help_text": "Alignment of the on-sale section heading."
+      },
+      {
+        "name": "on_sale_products",
+        "label": "Products",
+        "type": "products",
+        "help_text": "Select products to feature in the On Sale section. Add your discounted products here."
+      },
+      {
+        "name": "on_sale_columns",
+        "label": "Columns (Desktop)",
+        "type": "range",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "unit": "",
+        "default": 3,
+        "help_text": "Number of product columns on desktop."
+      },
+      {
+        "name": "on_sale_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Section background color. Leave blank for white."
+      },
+      {
+        "name": "on_sale_card_bg",
+        "label": "Card Background Color",
+        "type": "color",
+        "help_text": "Optional background color for product cards in this section."
+      }
+    ],
+    "Promo Banner": [
+      {
+        "name": "promo_banner_heading",
+        "label": "Heading",
+        "type": "text",
+        "help_text": "Large heading text on the promo banner. Leave blank to use the localized default.",
+        "max_length": 100
+      },
+      {
+        "name": "promo_banner_subheading",
+        "label": "Subheading",
+        "type": "text",
+        "help_text": "Smaller supporting text below the heading.",
+        "max_length": 200
+      },
+      {
+        "name": "promo_banner_cta_text",
+        "label": "Button Text",
+        "type": "text",
+        "help_text": "Optional button text shown in the promo banner. Leave blank to use the localized default.",
+        "max_length": 50
+      },
+      {
+        "name": "promo_banner_cta_url",
+        "label": "Button URL",
+        "type": "url",
+        "help_text": "Where the button links to (e.g. /catalogue/).",
+        "max_length": 500
+      },
+      {
+        "name": "promo_banner_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Banner background color. Leave blank to use your store's primary color."
+      },
+      {
+        "name": "promo_banner_text_color",
+        "label": "Text Color",
+        "type": "color",
+        "help_text": "Banner text and button color. Leave blank for white."
+      },
+      {
+        "name": "promo_banner_cta_style",
+        "label": "Button Color",
+        "type": "select",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
+          }
+        ],
+        "default": "primary",
+        "help_text": "Button color from store branding when outline style is disabled."
+      },
+      {
+        "name": "promo_banner_cta_outline",
+        "label": "Use Outline Button Style",
+        "type": "checkbox",
+        "default": true,
+        "help_text": "Display the promo banner button as an outline button using the banner text color."
+      }
+    ],
+    "Featured Categories": [
+      {
+        "name": "featured_categories",
+        "label": "Categories",
+        "type": "product_categories",
+        "help_text": "Categories to feature on the homepage."
+      },
+      {
+        "name": "featured_categories_header",
+        "label": "Section Heading",
+        "type": "text",
+        "help_text": "Heading above the featured categories. Leave blank to use the localized default.",
+        "max_length": 250
+      },
+      {
+        "name": "featured_categories_header_size",
+        "label": "Heading Size",
+        "type": "select",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ],
+        "default": "medium",
+        "help_text": "Size of the featured categories heading."
+      },
+      {
+        "name": "featured_categories_header_align",
+        "label": "Heading Alignment",
+        "type": "select",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left",
+        "help_text": "Alignment of the featured categories heading."
+      },
+      {
+        "name": "featured_categories_columns",
+        "label": "Columns (Desktop)",
+        "type": "range",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "unit": "",
+        "default": 2,
+        "help_text": "Number of category columns on desktop."
+      },
+      {
+        "name": "featured_categories_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Section background color. Leave blank for white."
+      },
+      {
+        "name": "featured_categories_overlay_color",
+        "label": "Overlay Color",
+        "type": "color",
+        "help_text": "Overlay color for category image tiles. Leave blank for black."
+      },
+      {
+        "name": "featured_categories_overlay_opacity",
+        "label": "Overlay Opacity",
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "default": 20,
+        "help_text": "Opacity of the category tile overlay."
+      },
+      {
+        "name": "featured_categories_text_color",
+        "label": "Text Color",
+        "type": "color",
+        "help_text": "Text color for category tile labels. Leave blank for white."
+      }
+    ],
+    "Image with Text": [
+      {
+        "name": "image_text_image",
+        "label": "Image",
+        "type": "image_picker",
+        "help_text": "Image for one half of the section. Use a product or lifestyle photo that survives cropping."
+      },
+      {
+        "name": "image_text_image_alt",
+        "label": "Image Alt Text",
+        "type": "text",
+        "help_text": "Accessible description of the image. Leave blank to use the heading.",
+        "max_length": 250
+      },
+      {
+        "name": "image_text_image_position",
+        "label": "Image Position",
+        "type": "select",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left",
+        "help_text": "Which side the image sits on at tablet and desktop widths. On mobile the image always stacks above the text."
+      },
+      {
+        "name": "image_text_image_ratio",
+        "label": "Image Ratio",
+        "type": "select",
+        "options": [
+          {
+            "name": "Square",
+            "value": "square"
+          },
+          {
+            "name": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "name": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "name": "Native",
+            "value": "native"
+          }
+        ],
+        "default": "square",
+        "help_text": "Crop the image to a fixed ratio, or use Native to show the image at its own proportions."
+      },
+      {
+        "name": "image_text_eyebrow",
+        "label": "Eyebrow",
+        "type": "text",
+        "help_text": "Short uppercase label above the heading.",
+        "max_length": 50
+      },
+      {
+        "name": "image_text_heading",
+        "label": "Heading",
+        "type": "text",
+        "help_text": "Section heading beside the image.",
+        "max_length": 100
+      },
+      {
+        "name": "image_text_body",
+        "label": "Body",
+        "type": "richtext",
+        "help_text": "Supporting copy below the heading.",
+        "max_length": 1000
+      },
+      {
+        "name": "image_text_cta_text",
+        "label": "Button Text",
+        "type": "text",
+        "help_text": "Optional button text. Leave blank to use the localized default.",
+        "max_length": 50
+      },
+      {
+        "name": "image_text_cta_url",
+        "label": "Button URL",
+        "type": "url",
+        "help_text": "Where the button links to (e.g. /catalogue/). Leave blank to hide the button.",
+        "max_length": 500
+      },
+      {
+        "name": "image_text_cta_style",
+        "label": "Button Style",
+        "type": "select",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "name": "Outline",
+            "value": "outline"
+          }
+        ],
+        "default": "primary",
+        "help_text": "Primary fills with your primary color, Secondary is a quiet bordered button, Outline follows the section text color."
+      },
+      {
+        "name": "image_text_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Section background color. Leave blank for the page background."
+      },
+      {
+        "name": "image_text_text_color",
+        "label": "Text Color",
+        "type": "color",
+        "help_text": "Heading, body, and outline button color. Leave blank for the theme defaults."
+      }
+    ],
+    "Text Block": [
+      {
+        "name": "text_block_eyebrow",
+        "label": "Eyebrow",
+        "type": "text",
+        "help_text": "Short uppercase label above the heading.",
+        "max_length": 50
+      },
+      {
+        "name": "text_block_heading",
+        "label": "Heading",
+        "type": "text",
+        "help_text": "Section heading.",
+        "max_length": 100
+      },
+      {
+        "name": "text_block_body",
+        "label": "Body",
+        "type": "richtext",
+        "help_text": "The text of the block. The section shows once it has a heading or body.",
+        "max_length": 2000
+      },
+      {
+        "name": "text_block_align",
+        "label": "Alignment",
+        "type": "select",
+        "options": [
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Left",
+            "value": "left"
+          }
+        ],
+        "default": "center",
+        "help_text": "Center the text, or align it to the left edge of the page content."
+      },
+      {
+        "name": "text_block_width",
+        "label": "Width",
+        "type": "select",
+        "options": [
+          {
+            "name": "Narrow",
+            "value": "narrow"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Wide",
+            "value": "wide"
+          }
+        ],
+        "default": "medium",
+        "help_text": "Maximum line length of the text. Narrow reads best for short statements."
+      },
+      {
+        "name": "text_block_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Section background color. Leave blank for the page background."
+      },
+      {
+        "name": "text_block_text_color",
+        "label": "Text Color",
+        "type": "color",
+        "help_text": "Eyebrow, heading, and body color. Leave blank for the theme defaults."
+      }
+    ],
+    "Custom CSS": [
+      {
+        "name": "home_page_css",
+        "label": "Homepage Custom CSS",
+        "type": "css",
+        "help_text": "Add CSS styles that only load on the homepage."
+      }
+    ]
+  },
+  "Product Pages": {
+    "Product Images": [
+      {
+        "name": "product_gallery_layout",
+        "label": "Image Gallery Layout",
+        "type": "radio",
+        "options": [
+          {
+            "name": "Thumbnails below image",
+            "value": "bottom"
+          },
+          {
+            "name": "Thumbnails to the left",
+            "value": "left"
+          }
+        ],
+        "default": "bottom",
+        "help_text": "Position of thumbnail navigation on product pages."
+      },
+      {
+        "name": "product_media_fit",
+        "label": "Image Display",
+        "type": "radio",
+        "options": [
+          {
+            "name": "Original (fit)",
+            "value": "fit"
+          },
+          {
+            "name": "Cover (crop to fill)",
+            "value": "cover"
+          }
+        ],
+        "default": "fit",
+        "help_text": "How product images are displayed in cards and galleries."
+      }
+    ],
+    "Product Information": [
+      {
+        "name": "variant_picker",
+        "label": "Variant Picker Style",
+        "type": "radio",
+        "options": [
+          {
+            "name": "Dropdown",
+            "value": "select"
+          },
+          {
+            "name": "Buttons",
+            "value": "radio"
+          },
+          {
+            "name": "Chips (option buttons)",
+            "value": "chips"
+          }
+        ],
+        "default": "select",
+        "help_text": "How variant options are presented. Chips render each option as a tappable button and mark unavailable combinations."
+      },
+      {
+        "name": "product_description_placement",
+        "label": "Description Layout",
+        "type": "radio",
+        "options": [
+          {
+            "name": "Beside images (column)",
+            "value": "column"
+          },
+          {
+            "name": "Below images (stacked)",
+            "value": "stacked"
+          }
+        ],
+        "default": "column",
+        "help_text": "Where the product description appears relative to the image gallery."
+      },
+      {
+        "name": "variant_size_guide_url",
+        "label": "Size Guide Link",
+        "type": "url",
+        "max_length": 500,
+        "help_text": "Page the size guide link opens. Leave blank to hide the link."
+      },
+      {
+        "name": "variant_size_guide_text",
+        "label": "Size Guide Link Text",
+        "type": "text",
+        "max_length": 40,
+        "help_text": "Label for the size guide link. Defaults to a translated 'Size guide'."
+      },
+      {
+        "name": "variant_size_guide_option",
+        "label": "Size Guide Option Group",
+        "type": "text",
+        "max_length": 100,
+        "help_text": "Variant attribute code the size guide link sits beside, for example 'size'. Leave blank to show it on every option group."
+      }
+    ],
+    "Product Cards": [
+      {
+        "name": "product_card_border",
+        "label": "Show Product Card Borders",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Add a subtle border around product cards in grids."
+      },
+      {
+        "name": "product_card_sold_out_style",
+        "label": "Sold Out Products In Grids",
+        "type": "select",
+        "default": "badge",
+        "options": [
+          {
+            "name": "Show with a Sold out badge",
+            "value": "badge"
+          },
+          {
+            "name": "Show greyed out with a Sold out badge",
+            "value": "muted"
+          },
+          {
+            "name": "Hide the card",
+            "value": "hide"
+          }
+        ],
+        "help_text": "How product cards render when a product cannot be bought. Hiding cards makes curated grids show fewer products than configured."
+      }
+    ],
+    "Shop All": [
+      {
+        "name": "shop_all_filters",
+        "label": "Show Filters on Shop All",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Show the product filters on the Shop All page as well as on category pages. Create filters under Storefront > Filters; nothing shows until at least one exists."
+      }
+    ],
+    "Membership Pricing": [
+      {
+        "name": "enable_membership_pricing",
+        "label": "Enable Membership Price Presentation",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Show member pricing when the logged-in customer metadata matches the configured active member value. Requires a matching checkout discount configured outside the theme."
+      },
+      {
+        "name": "membership_discount_percent",
+        "label": "Membership Discount Percent",
+        "type": "number",
+        "default": 25,
+        "help_text": "Percentage discount to present on storefront prices for active members."
+      },
+      {
+        "name": "membership_status_metadata_key",
+        "label": "Status Metadata Key",
+        "type": "text",
+        "default": "member_status",
+        "help_text": "Customer metadata key used to identify active members.",
+        "max_length": 100
+      },
+      {
+        "name": "membership_active_status_value",
+        "label": "Active Status Value",
+        "type": "text",
+        "default": "active",
+        "help_text": "Metadata value that qualifies a logged-in customer for member pricing.",
+        "max_length": 100
+      },
+      {
+        "name": "membership_label",
+        "label": "Member Price Label",
+        "type": "text",
+        "help_text": "Short label shown beside the member price. Leave blank to use the localized default.",
+        "max_length": 80
+      },
+      {
+        "name": "membership_detail_text",
+        "label": "Member Price Detail",
+        "type": "text",
+        "help_text": "Optional detail shown on larger price surfaces. Leave blank to use the localized default.",
+        "max_length": 120
+      }
+    ],
+    "Product Reviews": [
+      {
+        "name": "product_reviews",
+        "label": "Enable Product Reviews",
+        "type": "checkbox",
+        "help_text": "Show customer reviews on product pages."
+      }
+    ],
+    "Recommended Products": [
+      {
+        "name": "show_recommended",
+        "label": "Show Recommended Products",
+        "type": "checkbox",
+        "default": true,
+        "help_text": "Display recommended products section on product pages."
+      },
+      {
+        "name": "recommended_products_header",
+        "label": "Section Heading",
+        "type": "text",
+        "help_text": "Heading above recommended products. Leave blank to use the localized default.",
+        "max_length": 250
+      },
+      {
+        "name": "recommended_products_header_size",
+        "label": "Heading Size",
+        "type": "select",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ],
+        "default": "medium",
+        "help_text": "Size of the recommended products heading."
+      },
+      {
+        "name": "recommended_products_header_align",
+        "label": "Heading Alignment",
+        "type": "select",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left",
+        "help_text": "Alignment of the recommended products heading."
+      },
+      {
+        "name": "recommended_products_columns",
+        "label": "Columns (Desktop)",
+        "type": "range",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "unit": "",
+        "default": 3,
+        "help_text": "Number of recommended product columns on desktop."
+      },
+      {
+        "name": "recommended_products_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Section background color. Leave blank for white."
+      },
+      {
+        "name": "recommended_products_card_bg",
+        "label": "Card Background Color",
+        "type": "color",
+        "help_text": "Optional background color for product cards in this section."
+      }
+    ],
+    "Custom CSS": [
+      {
+        "name": "product_page_css",
+        "label": "Product Page Custom CSS",
+        "type": "css",
+        "help_text": "Add CSS styles that only load on product detail pages."
+      }
+    ]
+  },
+  "Footer": {
+    "Footer Navigation": [
+      {
+        "name": "footer_menu",
+        "label": "Footer Menu",
+        "type": "menu",
+        "help_text": "Footer links menu."
+      }
+    ],
+    "Footer Style": [
+      {
+        "name": "footer_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Footer background color. Leave blank for light gray."
+      },
+      {
+        "name": "footer_text_color",
+        "label": "Text Color",
+        "type": "color",
+        "help_text": "Footer text color. Leave blank for default."
+      },
+      {
+        "name": "footer_link_color",
+        "label": "Link Color",
+        "type": "color",
+        "help_text": "Footer link color. Leave blank for default."
+      }
+    ],
+    "Social Media": [
+      {
+        "name": "enable_social",
+        "label": "Show Social Links",
+        "type": "checkbox",
+        "help_text": "Display social media icons in the footer."
+      },
+      {
+        "name": "facebook_link",
+        "label": "Facebook",
+        "type": "url",
+        "help_text": "Facebook page URL.",
+        "max_length": 500
+      },
+      {
+        "name": "instragram_link",
+        "label": "Instagram",
+        "type": "url",
+        "help_text": "Instagram profile URL.",
+        "max_length": 500
+      },
+      {
+        "name": "twitter_link",
+        "label": "X (Twitter)",
+        "type": "url",
+        "help_text": "X / Twitter profile URL.",
+        "max_length": 500
+      },
+      {
+        "name": "youtube_link",
+        "label": "YouTube",
+        "type": "url",
+        "help_text": "YouTube channel URL.",
+        "max_length": 500
+      },
+      {
+        "name": "tiktok_link",
+        "label": "TikTok",
+        "type": "url",
+        "help_text": "TikTok profile URL.",
+        "max_length": 500
+      },
+      {
+        "name": "pinterest_link",
+        "label": "Pinterest",
+        "type": "url",
+        "help_text": "Pinterest profile URL.",
+        "max_length": 500
+      },
+      {
+        "name": "snapchat_link",
+        "label": "Snapchat",
+        "type": "url",
+        "help_text": "Snapchat profile URL.",
+        "max_length": 500
+      },
+      {
+        "name": "vimeo_link",
+        "label": "Vimeo",
+        "type": "url",
+        "help_text": "Vimeo channel URL.",
+        "max_length": 500
+      }
+    ],
+    "Payment Icons": [
+      {
+        "name": "pay_icons",
+        "label": "Payment Icons",
+        "type": "select",
+        "multi-select": true,
+        "help_text": "Select payment method icons to display in the footer.",
+        "options": [
+          {
+            "name": "Visa",
+            "value": "visa"
+          },
+          {
+            "name": "Mastercard",
+            "value": "mc"
+          },
+          {
+            "name": "PayPal",
+            "value": "ppal"
+          },
+          {
+            "name": "Klarna",
+            "value": "klarna"
+          },
+          {
+            "name": "Amex",
+            "value": "amex"
+          },
+          {
+            "name": "Diners",
+            "value": "diners"
+          },
+          {
+            "name": "Discover",
+            "value": "discover"
+          },
+          {
+            "name": "Maestro",
+            "value": "maestro"
+          },
+          {
+            "name": "JCB",
+            "value": "jcb"
+          },
+          {
+            "name": "Dankort",
+            "value": "dankort"
+          },
+          {
+            "name": "Google Pay",
+            "value": "googlepay"
+          },
+          {
+            "name": "Apple Pay",
+            "value": "applepay"
+          }
+        ]
+      }
+    ],
+    "Disclaimer": [
+      {
+        "name": "site_disclaimer",
+        "label": "Site Disclaimer",
+        "type": "richtext",
+        "help_text": "Optional legal disclaimer displayed at the very bottom of the footer."
+      }
+    ]
+  },
+  "Style": {
+    "Fonts": [
+      {
+        "name": "font_script",
+        "label": "Custom Font Embed Code",
+        "type": "html",
+        "help_text": "Paste a font embed code (e.g. Google Fonts link tag) to load custom fonts."
+      },
+      {
+        "name": "font_body",
+        "label": "Body Font Family",
+        "type": "text",
+        "help_text": "CSS font-family for body text. Leave blank for system font stack.",
+        "max_length": 500
+      },
+      {
+        "name": "font_header",
+        "label": "Heading Font Family",
+        "type": "text",
+        "help_text": "CSS font-family for headings. Leave blank to inherit body font.",
+        "max_length": 500
+      }
+    ],
+    "Colors": [
+      {
+        "name": "body_text_color",
+        "label": "Body Text Color",
+        "type": "color",
+        "help_text": "Default color for body text."
+      },
+      {
+        "name": "body_header_color",
+        "label": "Heading Color",
+        "type": "color",
+        "help_text": "Default color for headings."
+      },
+      {
+        "name": "body_link_color",
+        "label": "Link Color",
+        "type": "color",
+        "help_text": "Default color for links."
+      }
+    ],
+    "Layout": [
+      {
+        "name": "body_bg_color",
+        "label": "Page Background Color",
+        "type": "color",
+        "help_text": "Background color for the page. Default white."
+      },
+      {
+        "name": "border_color",
+        "label": "Border Color",
+        "type": "color",
+        "help_text": "Color for secondary button and bordered product card borders. Default slate-200 (#E2E8F0)."
+      },
+      {
+        "name": "radius_control",
+        "label": "Control Radius",
+        "type": "select",
+        "options": [
+          {
+            "name": "None",
+            "value": "0"
+          },
+          {
+            "name": "4px",
+            "value": "4px"
+          },
+          {
+            "name": "8px",
+            "value": "8px"
+          },
+          {
+            "name": "12px",
+            "value": "12px"
+          },
+          {
+            "name": "16px",
+            "value": "16px"
+          }
+        ],
+        "default": "4px",
+        "help_text": "Corner radius for buttons. Default 4px."
+      },
+      {
+        "name": "radius_card",
+        "label": "Card Radius",
+        "type": "select",
+        "options": [
+          {
+            "name": "None",
+            "value": "0"
+          },
+          {
+            "name": "4px",
+            "value": "4px"
+          },
+          {
+            "name": "8px",
+            "value": "8px"
+          },
+          {
+            "name": "12px",
+            "value": "12px"
+          },
+          {
+            "name": "16px",
+            "value": "16px"
+          }
+        ],
+        "default": "0",
+        "help_text": "Corner radius for product cards. Default none."
+      },
+      {
+        "name": "section_padding",
+        "label": "Section Padding",
+        "type": "select",
+        "options": [
+          {
+            "name": "Compact",
+            "value": "compact"
+          },
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Roomy",
+            "value": "roomy"
+          }
+        ],
+        "default": "default",
+        "help_text": "Vertical padding for homepage sections. Default 3rem."
+      },
+      {
+        "name": "content_gap",
+        "label": "Content Gap",
+        "type": "select",
+        "options": [
+          {
+            "name": "Tight",
+            "value": "tight"
+          },
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Loose",
+            "value": "loose"
+          }
+        ],
+        "default": "default",
+        "help_text": "Gap between products and content columns. Default 1.5rem."
+      },
+      {
+        "name": "container_max_width",
+        "label": "Container Max Width",
+        "type": "select",
+        "options": [
+          {
+            "name": "1120px",
+            "value": "1120px"
+          },
+          {
+            "name": "1280px",
+            "value": "1280px"
+          },
+          {
+            "name": "1440px",
+            "value": "1440px"
+          }
+        ],
+        "default": "1280px",
+        "help_text": "Maximum width for page content. Default 1280px."
+      }
+    ],
+    "Type Scale": [
+      {
+        "name": "heading_scale",
+        "label": "Heading Scale",
+        "type": "select",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ],
+        "default": "default",
+        "help_text": "Scale applied to display and section headings. Default 1."
+      },
+      {
+        "name": "body_size",
+        "label": "Body Size",
+        "type": "select",
+        "options": [
+          {
+            "name": "15px",
+            "value": "15px"
+          },
+          {
+            "name": "16px",
+            "value": "16px"
+          },
+          {
+            "name": "17px",
+            "value": "17px"
+          },
+          {
+            "name": "18px",
+            "value": "18px"
+          }
+        ],
+        "default": "16px",
+        "help_text": "Base font size for body text. Default 16px."
+      }
+    ]
+  },
+  "Side Cart": {
+    "General": [
+      {
+        "name": "cart_header_title",
+        "label": "Header Title",
+        "type": "text",
+        "help_text": "Title displayed at the top of the side cart. Leave blank to use the localized default.",
+        "max_length": 50
+      },
+      {
+        "name": "sidecart_open_on_add",
+        "label": "Open on Add to Cart",
+        "type": "checkbox",
+        "default": true,
+        "help_text": "Automatically open the side cart when a product is added."
+      }
+    ],
+    "Rewards Progress": [
+      {
+        "name": "enable_progress_bar",
+        "label": "Enable Rewards Progress",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Show a progress bar in the side cart for free shipping and free gift rewards."
+      },
+      {
+        "name": "usd_goal_1",
+        "label": "Free Shipping Threshold",
+        "type": "number",
+        "default": 50,
+        "help_text": "Cart total required for free shipping."
+      },
+      {
+        "name": "usd_goal_2",
+        "label": "Free Gift Threshold",
+        "type": "number",
+        "default": 100,
+        "help_text": "Cart total required for the free gift. Must be higher than the free shipping threshold."
+      },
+      {
+        "name": "step_1_message",
+        "label": "Free Shipping Message",
+        "type": "text",
+        "help_text": "Message shown when cart is below the shipping threshold. Use {amount} for the remaining amount. Leave blank to use the localized default.",
+        "max_length": 200
+      },
+      {
+        "name": "step_2_message",
+        "label": "Free Gift Message",
+        "type": "text",
+        "help_text": "Message shown when cart is between shipping and gift thresholds. Use {amount} for the remaining amount. Leave blank to use the localized default.",
+        "max_length": 200
+      },
+      {
+        "name": "final_step_message",
+        "label": "All Rewards Reached Message",
+        "type": "text",
+        "help_text": "Celebration message shown when the cart total exceeds all milestones. Leave blank to use the localized default.",
+        "max_length": 200
+      },
+      {
+        "name": "gift_product",
+        "label": "Free Gift Product",
+        "type": "product",
+        "help_text": "Select a parent product for the free gift. Its first variant will be automatically added to the cart when the gift threshold is reached."
+      }
+    ],
+    "Suggested Products": [
+      {
+        "name": "enable_upsells",
+        "label": "Enable Suggested Products",
+        "type": "checkbox",
+        "default": false,
+        "help_text": "Show product suggestions in the side cart to encourage additional purchases."
+      },
+      {
+        "name": "upsell_section_title",
+        "label": "Section Title",
+        "type": "text",
+        "help_text": "Heading displayed above suggested products in the side cart. Leave blank to use the localized default.",
+        "max_length": 100
+      },
+      {
+        "name": "upsell_fallback_slots",
+        "label": "Advanced: Fallback Slot Order",
+        "type": "text",
+        "default": "1,2",
+        "help_text": "Advanced fallback order for suggested products. Usually leave as 1,2.",
+        "max_length": 20
+      },
+      {
+        "name": "upsell_product_1",
+        "label": "Suggested Product 1",
+        "type": "product",
+        "help_text": "First product suggestion. Hidden if already in the cart."
+      },
+      {
+        "name": "upsell_product_2",
+        "label": "Suggested Product 2",
+        "type": "product",
+        "help_text": "Second product suggestion. Hidden if already in the cart."
+      },
+      {
+        "name": "upsell_product_3",
+        "label": "Suggested Product 3",
+        "type": "product",
+        "help_text": "Third product suggestion. Hidden if already in the cart."
+      }
+    ]
+  },
+  "Advanced": {
+    "Site Settings": [
+      {
+        "name": "site_index",
+        "label": "Disable Search Indexing",
+        "type": "checkbox",
+        "help_text": "Add noindex, nofollow meta tag to prevent search engines from indexing."
+      },
+      {
+        "name": "account_only",
+        "label": "Account Only Mode",
+        "type": "checkbox",
+        "help_text": "Hide navigation and storefront content. Shows only account login."
+      },
+      {
+        "name": "account_only_show_footer",
+        "label": "Show Footer in Account Only",
+        "type": "checkbox",
+        "default": true,
+        "help_text": "Display the footer (contact info, links, payment icons) on the account only screen. Disable for a minimal login-only view."
+      }
+    ],
+    "Custom Code": [
+      {
+        "name": "custom_css",
+        "label": "Custom CSS",
+        "type": "css",
+        "help_text": "Add custom CSS styles. Warning: custom styles may need updating when the theme is updated."
+      }
+    ]
+  },
+  "Navigation": {
+    "Main Navigation": [
+      {
+        "name": "main_menu",
+        "label": "Main Menu",
+        "type": "menu",
+        "help_text": "Primary site navigation menu.",
+        "default": "main_menu"
+      },
+      {
+        "name": "logo_align",
+        "label": "Logo Alignment Desktop",
+        "type": "select",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Centered",
+            "value": "centered"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left",
+        "help_text": "Position of the logo on desktop navigation."
+      }
+    ],
+    "Navbar Style": [
+      {
+        "name": "navbar_style",
+        "label": "Color Scheme",
+        "type": "select",
+        "options": [
+          {
+            "name": "Light",
+            "value": "light"
+          },
+          {
+            "name": "Dark",
+            "value": "dark"
+          }
+        ],
+        "default": "light",
+        "help_text": "Default header color scheme when custom colors are blank."
+      },
+      {
+        "name": "navbar_bg_color",
+        "label": "Navbar Background Color",
+        "type": "color",
+        "help_text": "Background color for the header. Leave blank for white."
+      },
+      {
+        "name": "navbar_link_color",
+        "label": "Navbar Link Color",
+        "type": "color",
+        "help_text": "Text and icon color for the header. Leave blank for default."
+      }
+    ],
+    "Announcement Bar": [
+      {
+        "name": "ab_text",
+        "label": "Announcement Text",
+        "type": "text",
+        "help_text": "Short announcement displayed at the top of the page. Leave blank to hide.",
+        "max_length": 250
+      },
+      {
+        "name": "ab_bg_color",
+        "label": "Background Color",
+        "type": "color",
+        "help_text": "Announcement bar background color. Leave blank for primary color."
+      },
+      {
+        "name": "ab_text_color",
+        "label": "Text Color",
+        "type": "color",
+        "help_text": "Announcement bar text color. Leave blank for white."
+      },
+      {
+        "name": "ab_link",
+        "label": "Link URL",
+        "type": "text",
+        "help_text": "Optional link URL for the announcement.",
+        "max_length": 500
+      },
+      {
+        "name": "ab_link_text",
+        "label": "Link Text",
+        "type": "text",
+        "help_text": "Text for the announcement link. Leave blank to use the localized default.",
+        "max_length": 100
+      },
+      {
+        "name": "ab_placement",
+        "label": "Show On",
+        "type": "radio",
+        "options": [
+          {
+            "name": "All Pages",
+            "value": "all"
+          },
+          {
+            "name": "Home Page Only",
+            "value": "home"
+          },
+          {
+            "name": "None",
+            "value": "none"
+          }
+        ],
+        "default": "all",
+        "help_text": "Where the announcement bar is displayed."
+      }
+    ]
+  }
+}

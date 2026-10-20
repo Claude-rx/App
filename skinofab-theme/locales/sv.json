@@ -1,0 +1,307 @@
+{
+    "global": {
+        "button": {
+            "more": "Mer",
+            "search": "Sök",
+            "close": "Stäng",
+            "save": "Spara",
+            "save_loading": "Sparar...",
+            "go_back": "Gå tillbaka",
+            "learn_more": "Learn more",
+            "dismiss": "Dismiss"
+        },
+        "error": {
+            "please_check_error": "<strong>Hoppsan! Vi hittade några fel</strong> - kontrollera felmeddelandena nedan och försök igen",
+            "403": "Tillstånd nekas!",
+            "403_message": "Vi beklagar, men du har inte tillåtelse att komma åt den här sidan.",
+            "404": "Sidan hittades inte",
+            "404_message": "Vi är ledsna, men sidan du letar efter kan inte hittas.",
+            "500": "500 Internt serverfel",
+            "500_heading": "Förlåt, det är inte du, det är vi.",
+            "500_message": "Vi har blivit underrättade om problemet, försök igen senare.",
+            "generic_try_again": "Something went wrong - please try again",
+            "connection_try_again": "Connection issue - please try again"
+        },
+        "confirm": {
+            "delete": "Are you sure you want to delete?"
+        },
+        "accessibility": {
+            "skip_to_main_content": "Gå till huvudinnehållet"
+        }
+    },
+    "navigation": {
+        "main": {
+            "home": "Hem",
+            "shop": "Handla",
+            "blog": "blogg",
+            "support": "Support",
+            "contact": "Kontakt",
+            "cart": "Kundvagn"
+        },
+        "account": {
+            "account": "Konto",
+            "subscriptions": "Prenumerationer",
+            "orders": "Orderhistorik",
+            "profile": "Profil",
+            "addresses": "Adresser",
+            "support": "Support",
+            "dashboard": "Instrumentpanel",
+            "logout": "Utloggning",
+            "login_or_register": "Logga in eller registrera dig",
+            "welcome": "Welcome back"
+        },
+        "footer": {
+            "about_us": "Om oss",
+            "contact_us": "Kontakta oss",
+            "account_info": "Konto & Info",
+            "support_terms": "Support & Villkor",
+            "support": "FAQ",
+            "terms_conditions": "Regler & Villkor",
+            "privacy": "Sekretesspolicy",
+            "address": "Adress",
+            "copyright": "Alla rättigheter reserverade",
+            "help": "Hjälpcenter",
+            "rights": "Alla rättigheter förbehållna."
+        },
+        "pagination": {
+            "next": "Nästa"
+        },
+        "search": "Sök",
+        "cart": "Varukorg",
+        "menu": {
+            "toggle": "Menu"
+        },
+        "breadcrumb": "Breadcrumb"
+    },
+    "tables": {
+        "heading": {
+            "product_name": "Produktens namn",
+            "product": "Produkt",
+            "quantity": "Mängd",
+            "schedule": "Tidtabell",
+            "price": "Pris",
+            "discount": "Rabatt",
+            "total": "Totalt",
+            "items_to_buy_now": "Objekt att köpa nu"
+        },
+        "content": {
+            "price": "Pris",
+            "discount": "Rabatt"
+        },
+        "actions": {
+            "remove": "Ta bort",
+            "add_coupon": "Lägg till kupong",
+            "add_coupon_loading": "Lägger till...",
+            "reload": "Ladda om",
+            "reload_loading": "Uppdaterar...",
+            "add": "Lägg till"
+        }
+    },
+    "order": {
+        "cart": {
+            "title": "Varukorg",
+            "summary": "Sammanfattning",
+            "cart_total": "Varukorg Totalt",
+            "cart_total_discount": "Varukorg totalt (efter rabatter)",
+            "applied_offer": "Tillämpat erbjudande",
+            "applied_coupons": "Tillämpade kuponger",
+            "shipping": "Frakt",
+            "order_total": "Beställning totalt",
+            "proceed_to_checkout": "Fortsätt till kassan",
+            "upsell_message_detail": "{{ message }} för att kvalificera sig för <b>{{ offer_name }}</b> specialerbjudande",
+            "continue_shopping": "Fortsätt shoppa",
+            "cart_empty": "Din varukorg är tom.",
+            "items_count": {
+                "one": "{{ count }} objekt",
+                "other": "{{ count }} objekt"
+            },
+            "subscription_items": {
+                "one": "Prenumeration ({{ count }} objekt)",
+                "other": "Prenumeration ({{ count }} artiklar)"
+            },
+            "calculated_at_checkout": "Beräknad i kassan",
+            "subscription_details": "Information om prenumeration",
+            "product": "Produkt",
+            "quantity": "Antal",
+            "price": "Pris",
+            "subscription_total": "Prenumeration Totalt",
+            "subscription_renewal_message": "Din prenumeration förnyas varje",
+            "coupon_code": "Coupon code",
+            "empty_hint": "Add items to get started"
+        }
+    },
+    "store": {
+        "blog": {
+            "title": "blogg",
+            "no_posts": "Inga inlägg har skapats ännu.",
+            "search_not_found": "Hittade <strong>0</strong> resultat.",
+            "all_categories": "All categories",
+            "category_filter": "Filter by category"
+        },
+        "catalogue": {
+            "filters": "Filtrera",
+            "filter_clear": "Klart",
+            "free": "Gratis",
+            "sale": "Försäljning",
+            "none_found": "Inga produkter hittades.",
+            "edit_this_category": "Redigera denna kategori",
+            "edit_this_product": "Redigera den här produkten",
+            "buy_option": "Köp alternativ",
+            "one_time": "En gång",
+            "subscribe_save": "Prenumerera på",
+            "order_arrival_frequency": "Hur ofta vill du att din beställning ska anlända?",
+            "add_to_cart": "Lägg till i varukorgen",
+            "add_to_cart_loading": "Lägger till...",
+            "product_unavailable": "Ej tillgänglig",
+            "out_of_stock": "Slut i lager",
+            "size_guide": "Storleksguide",
+            "about": "Om",
+            "reviews": "Recensioner",
+            "no_reviews": "Den här produkten har inga recensioner ännu",
+            "no_reviews_add": "vara den första att skriva en",
+            "customer_reviews": "Kundrecensioner",
+            "see_all_reviews": "Se alla recensioner",
+            "write_a_review": "Skriv en recension",
+            "recommended_products_header": "Rekommenderade produkter",
+            "apply_filters": "Apply filters",
+            "description": "Description",
+            "filter_reset": "Reset",
+            "product_images": "Product images",
+            "previous_image": "Previous image",
+            "next_image": "Next image",
+            "one_time_purchase": "One-time purchase",
+            "one_time_subtitle": "Buy once, no commitment",
+            "recurring_delivery": "Recurring delivery",
+            "delivery_frequency": "Delivery frequency",
+            "added_to_cart": "Added",
+            "product_not_found": "Product not found",
+            "add_to_cart_error": "Could not add to cart",
+            "subscription_frequency_error": "Please choose a valid subscription frequency.",
+            "view_image": "View image {{ count }}",
+            "select_variant": "Select variant",
+            "product_image_alt": "{{ title }} - image {{ count }}"
+        },
+        "review": {
+            "reviews": "Recensioner",
+            "customer_reviews": "Kundrecensioner",
+            "all_reviews": "Alla recensioner",
+            "customer_reviews_count": {
+                "one": "{{ count }} kundrecensioner",
+                "other": "{{ count }} kundrecensioner"
+            },
+            "reviewed_by_you": "Recenserad av dig",
+            "reviewed_by_other": "Recenserad av <b>{{ name }}</b>",
+            "no_reviews": "Denna produkt har inga recensioner ännu.",
+            "leave_review": "Lämna en produktrecension",
+            "save_review": "Spara granskning"
+        },
+        "search": {
+            "products_matching": "Produkter som matchar {{ q }}",
+            "search_not_found": "Hittade 0 resultat.",
+            "search_placeholder": "Search products",
+            "suggestion": "Search for products by name, description, or category.",
+            "close_search": "Close search"
+        },
+        "support": {
+            "title": "Support",
+            "heading": "Hur kan vi hjälpa till?",
+            "search_not_found": "Hittade 0 resultat.",
+            "view": "Visa",
+            "create_support_request": "Behöver du fortfarande hjälp? Skapa <a href='{{ link }}'>en supportförfrågan</a> med vårt kundserviceteam och vi hjälper gärna till.",
+            "no_categories": "Inga kategorier har skapats ännu.",
+            "articles": "Artiklar",
+            "no_articles": "Inga artiklar har skapats ännu.",
+            "edit_this_article": "Redigera den här artikeln",
+            "last_updated": "Senast uppdaterad"
+        }
+    },
+    "side_cart": {
+        "default": {
+            "your_order": "Din beställning",
+            "your_cart_is_empty": "Din kundvagn är tom!",
+            "oops_You_have_nothing_here": "Hoppsan! Du har ingenting här.",
+            "quantity": "Kvantitet",
+            "qty": "Antal",
+            "schedule": "Schema",
+            "price": "Pris",
+            "savings": "Besparingar",
+            "regular": "Regelbunden",
+            "your_price": "Ditt pris",
+            "cart_subtotal": "Varukorgen Delsumma",
+            "discount": "Rabatt",
+            "shipping": "Frakt",
+            "cart": "Varukorg",
+            "total": "Totalt",
+            "product": "Produkt",
+            "subscription_details": "Information om prenumeration",
+            "applied_coupons": "Tillämpade kuponger",
+            "subscription_items_one": "Prenumeration ({{count}} item)",
+            "subscription_items_other": "Prenumeration ({{count}} artiklar)",
+            "calculated_at_checkout": "Beräknad i kassan",
+            "subscription_total": "Prenumeration Totalt",
+            "subscription_renewal_message": "Din prenumeration förnyas varje",
+            "proceed_to_checkout": "Fortsätt till kassan",
+            "have_a_coupon": "Har du en kupong?",
+            "coupon_code": "Kupong Kod",
+            "apply_coupon": "Tillämpa kupong",
+            "close_cart": "Close varukorg",
+            "frequency_template": "Every {count} {interval}",
+            "decrease_quantity": "Decrease quantity",
+            "increase_quantity": "Increase quantity",
+            "remove_item": "Remove {title}",
+            "item_removed_announcement": "Varan har tagits bort från varukorgen.",
+            "quantity_updated_announcement": "Antalet i varukorgen har uppdaterats.",
+            "remove_voucher": "Remove voucher",
+            "invalid_coupon_code": "Invalid coupon code",
+            "shipping_progress_message": "You are {amount} away from FREE shipping",
+            "gift_progress_message": "You are {amount} away from a FREE gift!",
+            "final_progress_message": "You have unlocked all rewards!",
+            "upsell_section_title": "Du kanske också gillar"
+        }
+    },
+    "footer": {
+        "support": "Support",
+        "help": "Help Center",
+        "rights": "All Rights Reserved."
+    },
+    "pagination": {
+        "label": "Pagination",
+        "previous": "Previous",
+        "next": "Next"
+    },
+    "product": {
+        "no_image": "No image",
+        "sold_out": "Slutsåld"
+    },
+    "catalogue": {
+        "continue_shopping": "Fortsätt handla"
+    },
+    "membership": {
+        "price_label": "Member price",
+        "applied_at_checkout": "Applied at checkout"
+    },
+    "homepage": {
+        "cta": {
+            "shop_now": "Shop now",
+            "view_all": "View all",
+            "view_product": "View product"
+        },
+        "heading": {
+            "on_sale": "On sale",
+            "featured_products": "Utvalda produkter",
+            "featured_categories": "Handla efter kategori",
+            "promo_banner": "Tidsbegränsat erbjudande",
+            "featured_product": "Utvald produkt"
+        },
+        "placeholder": {
+            "hero_image": "Hero image",
+            "hero_image_path": "Settings > Homepage > Hero Image",
+            "featured_products": "Featured Products - Settings > Homepage > Featured Products",
+            "featured_categories": "Featured Categories - Settings > Homepage > Featured Categories",
+            "on_sale": "On Sale - Settings > Homepage > On Sale > Products",
+            "featured_product": "Featured Product - Settings > Homepage > Featured Product",
+            "image_text": "Image with Text - Settings > Homepage > Image with Text",
+            "text_block": "Text Block - Settings > Homepage > Text Block"
+        }
+    }
+}

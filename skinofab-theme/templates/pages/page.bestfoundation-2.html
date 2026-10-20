@@ -1,0 +1,179 @@
+{% extends 'layouts/base.html' %}
+{% block title %}{% firstof "I Tried 7 Different Foundations. Only One Actually Worked. – SKINOFAB" %}{% endblock %}
+{% block body_id %}{% endblock %}
+{% block body_class %}{% firstof "template-page bf-article-layout" %}{% endblock %}
+{% block sf_head %}
+<link href="{{ 'sf/css/bestfoundation-fonts-8d67c7.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/bestfoundation-copy-c05218.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><style>
+      html,body{margin:0;padding:0;background:#fff}main{display:block;width:100%;margin:0;padding:0}
+      .bf-skip-link{position:absolute;top:-100px;left:0;z-index:100;background:#fff;color:#000;padding:12px}
+      .bf-skip-link:focus{top:0}
+    </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Smooche","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Smooche","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"page"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
+        #shopify-buyer-consent {
+  margin-top: 1em;
+  display: inline-block;
+  width: 100%;
+}
+
+#shopify-buyer-consent.hidden {
+  display: none;
+}
+
+#shopify-subscription-policy-button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+#shopify-subscription-policy-button::before {
+  box-shadow: none;
+}
+
+      </style><link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" media="print" onload="this.media='all'" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><script id="kaching-bundles-translations" type="application/json">
+    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
+  </script><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-f7208f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
+    .kaching-bundles__block {
+      display: none;
+    }
+
+    .kaching-bundles-sticky-atc {
+      display: none;
+    }
+  </style>
+{% endblock sf_head %}
+{% block sf_lead %}<a class="bf-skip-link" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
+{% block nav_header %}{% endblock nav_header %}
+{% block footer %}{% endblock footer %}
+{% block content_wrapper %}
+<main id="MainContent"><section class="shopify-section bf-copy-section" id="shopify-section-template--22171120173212__article">
+<script defer="" src="{{ 'sf/js/bestfoundation-copy-a2e638.js'|asset_url }}"></script>
+<div class="bf-copy" data-bf-copy="" data-countdown="8064" style="--bf-article-width:850px;--bf-outer-width:1312px;--bf-font:futura-pt;--bf-accent:#DF8096;--bf-blue:#8096DF;--bf-background:#ffffff;">
+<div class="bf-promo">
+<div class="bf-promo-copy"><p><strong>Up to 60% off + FREE gifts</strong></p></div>
+<div aria-label="Offer countdown" class="bf-clock"><span data-bf-timer="hours">02</span><span>:</span><span data-bf-timer="minutes">14</span><span>:</span><span data-bf-timer="seconds">24</span></div>
+</div>
+<header class="bf-masthead">
+<picture class="bf-masthead-logo">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/215a694d-fed6-490c-9ad7-df4f828e3557">
+<img alt="Cosmetic Times" height="77" loading="eager" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/215a694d-fed6-490c-9ad7-df4f828e3557" width="230"/>
+</source></picture>
+<nav aria-label="Article topics"><p>FASHION</p><p>BEAUTY</p><p>SKIN</p></nav>
+</header>
+<section class="bf-intro bf-width">
+<div class="bf-intro-meta"><span class="bf-read-badge"><p>Most read 2025</p></span><span aria-hidden="true" class="bf-meta-dot"></span><div class="bf-read-time"><span class="bf-desktop"><p>4 min read</p></span><span class="bf-mobile"><p>4min read</p></span></div></div>
+<div class="bf-intro-title"><h1>I tried 7 different foundations. <br/><span style="color: var(--bf-accent)">Only 1 made me look younger.</span></h1></div>
+<div class="bf-intro-body"><p><span style="color: rgb(37, 51, 25)">Let me save you the time and money I wasted.</span><br/><br/><span style="color: rgb(37, 51, 25)">Over the past 3 years, I've tried $180 foundations, </span>$220 creams<span style="color: rgb(37, 51, 25)">, $500 skin laser therapy my mom recommended, two different "anti-aging" brands, some $40 Amazon oil with 5-star reviews, and finally, this adaptive foundation everyone kept talking about.</span><br/><br/><strong>Six failures. One winner.</strong><span style="color: rgb(37, 51, 25)"><strong> Here's the difference:</strong></span></p></div>
+<div class="bf-author">
+<picture class="bf-author-photo">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/adc2be4a-7515-4935-8eba-0f6eebc9bdd5">
+<img alt="Article author" height="48" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/adc2be4a-7515-4935-8eba-0f6eebc9bdd5" width="48"/>
+</source></picture>
+<div class="bf-author-details"><div><p>Michelle Mason</p></div><div><p>Dermatologist</p></div></div>
+<span class="bf-verified"><svg aria-hidden="true" viewbox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" fill="currentColor"></path></svg><p>Verified</p></span>
+</div>
+</section>
+<section class="bf-reason bf-reason--1 bf-width">
+<div class="bf-reason-title"><h2>1. It looks like skin, not makeup</h2></div>
+<div class="bf-media bf-video" data-bf-video="">
+<video autoplay="" data-poster="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/9a3168fa-3a06-4dd3-8868-43a9d0611d2d" data-src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/6d517e73-b58a-4aaf-a13f-db8e55fb01df" loop="" muted="" playsinline="" preload="none"></video>
+<div class="bf-video-controls"><button aria-label="Pause" aria-pressed="true" data-bf-toggle="" type="button"><svg aria-hidden="true" viewbox="0 0 16 16"><path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"></path></svg></button></div>
+</div>
+<div class="bf-reason-body"><div class="bf-desktop"><p>The first thing I noticed was what <em>wasn’t</em> there. No mask effect. <strong>No settling into lines</strong>. No powdery finish. It <strong>blended seamlessly</strong> and disappeared into my skin, leaving a natural, healthy look that didn’t scream “foundation.”</p></div><div class="bf-mobile"><p>The first thing I noticed was what <em>wasn’t</em> there. No mask effect. No settling into lines. No powdery finish. It <strong>blended seamlessly</strong> and disappeared into my skin, leaving a natural, healthy look that didn’t scream “foundation.”</p></div></div>
+</section>
+<section class="bf-reason bf-reason--2 bf-width">
+<div class="bf-reason-title"><span class="bf-desktop"><p>2. I looked noticeably younger without trying</p></span><span class="bf-mobile"><h2>2. I looked noticeably younger without trying</h2></span></div>
+<picture class="bf-media">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/0c813290-ef20-4ba5-aff1-f92dc1e44a10">
+<img alt="Foundation results" height="405" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/0c813290-ef20-4ba5-aff1-f92dc1e44a10" width="405"/>
+</source></picture>
+<div class="bf-reason-body"><p>Something about the finish softened everything. <strong>Fine lines looked less visible</strong>, my complexion appeared more even, and my face simply looked fresher. Not “made up” younger. Just rested, <strong>smoother</strong>, and more <strong>radiant</strong>.</p></div>
+</section>
+<section class="bf-reason bf-reason--3 bf-width">
+<div class="bf-reason-title"><h2>3. No shade guessing, no stress</h2></div>
+<picture class="bf-media">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/44cf4517-3767-4a0b-a299-8a7cd69ca514">
+<img alt="Foundation results" height="405" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/44cf4517-3767-4a0b-a299-8a7cd69ca514" width="405"/>
+</source></picture>
+<div class="bf-reason-body"><p>I didn’t have to choose between five shades and hope one worked. The formula <strong>adjusted to my natural skin tone</strong> as I applied it. No orange tint. No pale cast. It matched me in seconds and stayed consistent all day.</p></div>
+</section>
+<section class="bf-reason bf-reason--4 bf-width">
+<div class="bf-reason-title"><h2>4. Comfortable all day, even on mature skin</h2></div>
+<div class="bf-media bf-video" data-bf-video="">
+<video autoplay="" data-poster="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/d5f2e9f0-8b3a-4119-bce7-dae67ba82e6b" data-src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/5f7ece33-fa4e-4781-b762-0c68ca84d983" loop="" muted="" playsinline="" preload="none"></video>
+<div class="bf-video-controls"><button aria-label="Pause" aria-pressed="true" data-bf-toggle="" type="button"><svg aria-hidden="true" viewbox="0 0 16 16"><path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"></path></svg></button></div>
+</div>
+<div class="bf-reason-body"><p>Heavier foundations usually feel tight by midday. This one stayed <strong>light and comfortable</strong> from morning to evening. It didn’t cling to dry areas or slide into expression lines. I honestly forgot I was wearing it.</p></div>
+</section>
+<section class="bf-reason bf-reason--5 bf-width">
+<div class="bf-reason-title"><h2>5. Built-in SPF 15 without the greasy feel</h2></div>
+<picture class="bf-media">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/8123a267-73c7-41ec-86d7-f0c4f831cda9">
+<img alt="Foundation results" height="405" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/8123a267-73c7-41ec-86d7-f0c4f831cda9" width="405"/>
+</source></picture>
+<div class="bf-reason-body"><p>I loved not having to layer sunscreen underneath. The <strong>SPF 15</strong> is built in, so my skin is <strong>protected</strong> during everyday exposure without shine or heaviness. One less step, and <strong>no irritation</strong>.</p></div>
+</section>
+<section class="bf-offer"><div class="bf-offer-card bf-width">
+<div class="bf-offer-title"><p>UP TO 60% OFF <span style="color: var(--bf-accent)">+ FREE GIFTS</span></p></div>
+<a class="bf-offer-image" href="#">
+<picture class="bf-media">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3a3d4846-90bf-4602-9fc2-9482ac586678">
+<img alt="Foundation offer and gifts" height="405" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3a3d4846-90bf-4602-9fc2-9482ac586678" width="405"/>
+</source></picture>
+</a>
+<div class="bf-offer-body"><p>I was skeptical too. But with free shipping and a 30-day guarantee, there's nothing to lose.</p></div>
+<a class="bf-offer-button" href="#"><p>TRY RISK-FREE →</p></a>
+<div class="bf-offer-guarantee"><p>Try it today with a 30-Day Money Back Guarantee!</p></div>
+</div></section>
+<section class="bf-reason bf-reason--6 bf-width">
+<div class="bf-reason-title"><h2>6. Why it works so naturally</h2></div>
+<picture class="bf-media">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/a42aa7c8-a061-4010-9669-5abac190a9a7">
+<img alt="Foundation results" height="405" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/a42aa7c8-a061-4010-9669-5abac190a9a7" width="405"/>
+</source></picture>
+<div class="bf-reason-body"><div class="bf-desktop"><p>The secret is in the <strong>adaptive pigments</strong>. They respond to your skin tone as you apply them, creating a soft-focus effect that evens out color and reflects light gently. <strong>Nothing harsh. Nothing artificial.</strong></p></div><div class="bf-mobile"><p>The secret is in the <strong>adaptive pigments</strong>. They respond to your skin tone as you apply them, creating a soft-focus effect that evens out color and reflects light gently. <strong>Nothing harsh. Nothing artificial</strong>.</p></div></div>
+</section>
+<section class="bf-reason bf-reason--7 bf-width">
+<div class="bf-reason-title"><h2>7. Women like me are switching to this</h2></div>
+<div class="bf-media bf-video" data-bf-video="">
+<video autoplay="" data-poster="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3e585099-910d-4af0-a96d-ab9912b16428" data-src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/9d634628-16c7-46b1-bf2c-ef7bf2d2c19e" loop="" muted="" playsinline="" preload="none"></video>
+<div class="bf-video-controls"><button aria-label="Pause" aria-pressed="true" data-bf-toggle="" type="button"><svg aria-hidden="true" viewbox="0 0 16 16"><path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"></path></svg></button></div>
+</div>
+<div class="bf-reason-body"><p>After trying it, I wasn’t surprised to see how <strong>many women over 50 had done the same</strong>. Not influencers. Real women who wanted to look polished without looking overdone. The results are subtle, flattering, and confidence-boosting.</p></div>
+</section>
+<section class="bf-reason bf-reason--8 bf-width">
+<div class="bf-reason-title"><h2>8. Try it risk-free</h2></div>
+<picture class="bf-media">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/9be7e268-4413-428c-b92c-b660e1331473">
+<img alt="Foundation results" height="405" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/9be7e268-4413-428c-b92c-b660e1331473" width="405"/>
+</source></picture>
+<div class="bf-reason-body"><div class="bf-desktop"><p>With up to <strong>60% off</strong>, <strong>free</strong> <strong>shipping</strong>, and a <strong>30-day guarantee</strong>, there’s no pressure. If you don’t see the difference in how your skin looks and feels, you can send it back.</p></div><div class="bf-mobile"><p>With up to <strong>60% off</strong>, <strong>free shipping</strong>, and a <strong>30-day guarantee</strong>, there’s no pressure. If you don’t see the difference in how your skin looks and feels, you can send it back.</p></div></div>
+</section>
+<section class="bf-offer"><div class="bf-offer-card bf-width">
+<div class="bf-offer-title"><p>UP TO 60% OFF <span style="color: var(--bf-accent)">+ FREE GIFTS</span></p></div>
+<a class="bf-offer-image" href="#">
+<picture class="bf-media">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3a3d4846-90bf-4602-9fc2-9482ac586678">
+<img alt="Foundation offer and gifts" height="405" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3a3d4846-90bf-4602-9fc2-9482ac586678" width="405"/>
+</source></picture>
+</a>
+<div class="bf-offer-body"><p>I was skeptical too. But with free shipping and a 30-day guarantee, there's nothing to lose.</p></div>
+<a class="bf-offer-button" href="#"><p>TRY RISK-FREE →</p></a>
+<div class="bf-offer-guarantee"><p>Try it today with a 30-Day Money Back Guarantee!</p></div>
+</div></section>
+<aside class="bf-sticky">
+<a class="bf-sticky-button" href="#"><p>LOOK YOUNGER →</p></a>
+<div class="bf-sticky-proof">
+<picture class="bf-sticky-avatars">
+<source media="(max-width:640px)" srcset="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/e7af3cac-3a0f-4f3a-bee9-48a09b656a9a">
+<img alt="Happy customers" height="18" loading="lazy" src="https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/e7af3cac-3a0f-4f3a-bee9-48a09b656a9a" width="45"/>
+</source></picture>
+<div><p>Loved by Kim ❤️ and 300.000+ others</p></div></div>
+</aside>
+</div>
+</section></main>
+{% endblock content_wrapper %}
+{% block sf_tail %}
+
+{% endblock sf_tail %}

@@ -1,0 +1,14 @@
+{# Spark Theme -- Recommended Products (used on PDP) #}
+{# Usage: {% include 'partials/recommended_products.html' %} #}
+{# Requires: product (parent context) #}
+{% if settings.show_recommended and product.sorted_recommended_products %}
+<section class="border-t border-slate-200" {% if settings.recommended_products_bg_color %}style="background-color: {{ settings.recommended_products_bg_color }};"{% endif %}>
+    <div class="container py-12 md:py-16">
+        <h2 class="{% if settings.recommended_products_header_size == 'large' %}text-3xl md:text-4xl{% elif settings.recommended_products_header_size == 'small' %}text-xl{% else %}text-2xl{% endif %} font-semibold text-slate-800 mb-8 {% if settings.recommended_products_header_align == 'center' %}text-center{% elif settings.recommended_products_header_align == 'right' %}text-right{% endif %}">
+            {% t "store.catalogue.recommended_products_header" as default_recommended_products_header %}
+            {{ settings.recommended_products_header|default:default_recommended_products_header }}
+        </h2>
+        {% include "partials/product_grid.html" with products=product.sorted_recommended_products columns=settings.recommended_products_columns card_bg=settings.recommended_products_card_bg %}
+    </div>
+</section>
+{% endif %}

@@ -8,28 +8,58 @@
       "route_ids": [
         "home",
         "pdp",
-        "collection"
+        "collection",
+        "page-faq",
+        "lander",
+        "article"
       ],
       "section_ids": [
         "home.reviews",
         "home.experts",
         "pdp.kopstorm_results_nnthgp",
-        "collection.section_icons_row_cudwgr"
+        "collection.section_icons_row_cudwgr",
+        "home.hero",
+        "home.bestsellers",
+        "home.formulas",
+        "pdp.main",
+        "pdp.section_text_rlda4j",
+        "pdp.kopstorm_testomonials_9xvcek",
+        "pdp.section_image_with_text_cyzhwr",
+        "pdp.kopstorm_compare_lqnyxd",
+        "pdp.section_accordions_k6qprc",
+        "pdp.kopstorm_why_gca7fq",
+        "collection.main",
+        "page-faq.s1",
+        "lander.s1",
+        "lander.s7",
+        "lander.s9",
+        "lander.s11",
+        "lander.s12",
+        "lander.s2",
+        "lander.s8",
+        "lander.s10",
+        "lander.s13",
+        "home.header",
+        "article.s1"
       ],
       "capture_ids": [
         "home-desktop-static",
         "pdp-desktop-static",
-        "collection-desktop-static"
+        "collection-desktop-static",
+        "page-faq-desktop-static",
+        "lander-desktop-static",
+        "lander-mobile-static",
+        "article-desktop-static"
       ],
       "source_expectation": "The source states customer counts, ratings, review counts, expert endorsements and results.",
       "platform_behavior": "NEXT has no evidence for these numbers; they are the merchant's own claims.",
       "decision": "source-wins-with-guardrails",
       "implementation_guardrail": "Reuse only with the operator's approval that SKINOFAB can substantiate each claim.",
       "status": "approved",
-      "approved_by": "operator (zouhairkhatem@gmail.com), 2026-10-20: \"Keep them, I approve\"",
+      "approved_by": "operator (zouhairkhatem@gmail.com), 2026-10-20: \"Keep them, I approve\" (option stated: prices always come from your NEXT catalog)",
       "target_evidence": {
         "origin": "prior-input",
-        "summary": "Operator's word in this session: SKINOFAB can substantiate the claims; promos will get matching NEXT Offers; prices come from the NEXT catalog."
+        "summary": "Operator's word in this session; no NEXT store connected yet, so nothing was read from NEXT."
       }
     },
     {
@@ -38,25 +68,153 @@
       "surface": "promotional / savings copy",
       "route_ids": [
         "home",
-        "collection"
+        "collection",
+        "pdp",
+        "page-faq",
+        "policy-terms",
+        "article",
+        "lander"
       ],
       "section_ids": [
         "home.bundles",
-        "collection.main"
+        "collection.main",
+        "home.announcement",
+        "home.bestsellers",
+        "home.footer",
+        "pdp.announcement",
+        "pdp.main",
+        "pdp.footer",
+        "collection.announcement",
+        "collection.section_icons_row_cudwgr",
+        "collection.footer",
+        "page-faq.announcement",
+        "page-faq.s1",
+        "page-faq.footer",
+        "policy-terms.announcement",
+        "policy-terms.footer",
+        "article.announcement",
+        "article.s1",
+        "article.footer",
+        "lander.s1",
+        "lander.s7",
+        "lander.s10",
+        "lander.s11",
+        "lander.s0",
+        "lander.s2",
+        "lander.s8",
+        "lander.s12",
+        "home.header",
+        "pdp.section_accordions_k6qprc"
       ],
       "capture_ids": [
         "home-desktop-static",
-        "collection-desktop-static"
+        "collection-desktop-static",
+        "pdp-desktop-static",
+        "page-faq-desktop-static",
+        "policy-terms-desktop-static",
+        "article-desktop-static",
+        "lander-desktop-static",
+        "lander-mobile-static"
       ],
       "source_expectation": "The source advertises sales, savings percentages and free gifts.",
       "platform_behavior": "NEXT applies discounts only through configured Offers or vouchers; none exist yet.",
       "decision": "source-wins-with-guardrails",
       "implementation_guardrail": "Keep the copy in a Theme setting so it can change with the Offer; configure the matching Offer in Dashboard > Marketing > Offers before publishing.",
       "status": "approved",
-      "approved_by": "operator (zouhairkhatem@gmail.com), 2026-10-20: \"Keep them, I approve\"",
+      "approved_by": "operator (zouhairkhatem@gmail.com), 2026-10-20: \"Keep them, I approve\" (option stated: prices always come from your NEXT catalog)",
       "target_evidence": {
         "origin": "prior-input",
-        "summary": "Operator's word in this session: SKINOFAB can substantiate the claims; promos will get matching NEXT Offers; prices come from the NEXT catalog."
+        "summary": "Operator's word in this session; no NEXT store connected yet, so nothing was read from NEXT."
+      }
+    },
+    {
+      "divergence_id": "prices-from-next",
+      "kind": "commerce",
+      "surface": "product prices",
+      "route_ids": [
+        "home",
+        "pdp",
+        "collection",
+        "lander"
+      ],
+      "section_ids": [
+        "home.bestsellers",
+        "home.bundles",
+        "home.essentials",
+        "pdp.main",
+        "collection.main",
+        "home.header",
+        "lander.s1"
+      ],
+      "capture_ids": [
+        "home-desktop-static",
+        "pdp-desktop-static",
+        "collection-desktop-static",
+        "collection-mobile-static",
+        "lander-desktop-static"
+      ],
+      "source_expectation": "The source shows fixed prices and compare-at prices.",
+      "platform_behavior": "Prices, compare-at prices and currency come from the NEXT catalog per visitor currency.",
+      "decision": "platform-wins",
+      "implementation_guardrail": "Render every price with {% purchase_info_for_product %} / session.price; never hardcode a price.",
+      "status": "approved",
+      "approved_by": "operator (zouhairkhatem@gmail.com), 2026-10-20: \"Keep them, I approve\" (option stated: prices always come from your NEXT catalog)",
+      "target_evidence": {
+        "origin": "prior-input",
+        "summary": "Operator's word in this session; no NEXT store connected yet, so nothing was read from NEXT."
+      }
+    },
+    {
+      "divergence_id": "collection-cards-from-next",
+      "kind": "layout",
+      "surface": "collection product grid",
+      "route_ids": [
+        "collection"
+      ],
+      "section_ids": [
+        "collection.main"
+      ],
+      "capture_ids": [
+        "collection-desktop-static",
+        "collection-tablet-static",
+        "collection-mobile-static"
+      ],
+      "source_expectation": "The source grid lists 24 curated Smooche cards with colour swatches, badges and review stars.",
+      "platform_behavior": "The NEXT category grid renders the category's own products; the design card markup is kept, but swatches, badges and stars depend on per-product data NEXT does not provide in the card context.",
+      "decision": "platform-wins",
+      "implementation_guardrail": "Cards come from {% for product in products %} with the design markup (partials/sf_product_card.html); title, image, link and price from NEXT.",
+      "status": "implemented",
+      "approved_by": "",
+      "target_evidence": {
+        "origin": "none",
+        "summary": "Platform contract: product identity and prices come from NEXT."
+      }
+    },
+    {
+      "divergence_id": "article-content-from-next",
+      "kind": "layout",
+      "surface": "blog article body",
+      "route_ids": [
+        "article"
+      ],
+      "section_ids": [
+        "article.s0",
+        "article.s1"
+      ],
+      "capture_ids": [
+        "article-desktop-static",
+        "article-tablet-static",
+        "article-mobile-static"
+      ],
+      "source_expectation": "The source article shows its fixed title and body.",
+      "platform_behavior": "blog/post.html renders the NEXT post (title, date, image, content). Geometry matches once the post content from next-setup-kit/blog-posts.json is imported.",
+      "decision": "platform-wins",
+      "implementation_guardrail": "Article copy lives in NEXT blog posts, imported from the setup kit; the template carries only the layout.",
+      "status": "implemented",
+      "approved_by": "",
+      "target_evidence": {
+        "origin": "none",
+        "summary": "Post content is store data."
       }
     }
   ]

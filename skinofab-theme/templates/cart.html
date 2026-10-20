@@ -1,0 +1,201 @@
+{% extends 'layouts/base.html' %}
+{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ 'main.css'|asset_url }}">{% endblock spark_css %}
+
+{% block title %}{% t "order.cart.title" %} | {{ block.super }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container py-3">
+    <nav aria-label="{% t 'navigation.breadcrumb' %}">
+        <ol class="flex items-center gap-2 text-xs text-slate-400">
+            <li><a href="{{ homepage_url }}" class="hover:text-slate-600">{% t "navigation.main.home" %}</a></li>
+            <li>/</li>
+            <li class="text-slate-600">{% t "order.cart.title" %}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-8 md:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+
+        {# Cart items — 2/3 width #}
+        <div class="md:col-span-2">
+
+            {% if cart_warnings %}
+                {% for warning in cart_warnings %}
+                    <div class="p-4 mb-4 text-sm text-amber-800 bg-amber-50 border border-amber-200">
+                        {{ warning }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if upsell_messages %}
+                {% for upsell in upsell_messages %}
+                    <div class="p-4 mb-4 text-sm border" style="border-color: var(--primary-color); background-color: var(--primary-color); color: white; opacity: 0.9;">
+                        {% t "order.cart.upsell_message_detail" with message=upsell.message offer_name=upsell.offer.name %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% include "partials/alert_messages.html" %}
+
+            {% if not cart.is_empty %}
+                <form method="post" id="cart_formset">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+
+                    {# Cart line items #}
+                    {% for form in formset %}
+                        {% with line=form.instance product=form.instance.product %}
+                            {% purchase_info_for_line request line as session %}
+                            <div class="flex gap-4 py-6 {% if not forloop.first %}border-t border-slate-200{% endif %}">
+                                {{ form.id }}
+
+                                {# Product image #}
+                                {% with image=product.primary_image %}
+                                    {% if image.original %}
+                                        {% image_thumbnail image.original "100x100" crop="center" upscale=False as thumb %}
+                                        <a href="{{ product.get_absolute_url }}" class="flex-shrink-0">
+                                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" width="100" height="100" class="bg-slate-50" loading="lazy" />
+                                        </a>
+                                    {% endif %}
+                                {% endwith %}
+
+                                {# Product info #}
+                                <div class="flex-1">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <div class="text-sm font-medium text-slate-800">{{ line.description }}</div>
+                                            <div class="text-sm text-slate-500 mt-1">
+                                                {% if not line.unit_price_incl_tax and not line.unit_tax_excl_tax %}
+                                                    &mdash;
+                                                {% else %}
+                                                    {% if line.is_tax_known %}
+                                                        {{ line.unit_price_incl_tax|currency:line.price_currency }}
+                                                    {% else %}
+                                                        {{ line.unit_price_excl_tax|currency:line.price_currency }}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                            {% if line.discount_value %}
+                                                <div class="text-xs text-green-600 mt-1">
+                                                    {% t "tables.content.discount" %}: {{ line.discount_value|currency:line.price_currency }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="text-sm font-medium text-slate-800">
+                                            {{ line.line_price_incl_tax_incl_discounts|currency:line.price_currency }}
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-4 mt-3">
+                                        <div class="flex items-center gap-2">
+                                            {{ form.quantity }}
+                                        </div>
+                                        {{ form.subscription_range }}
+                                        <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="remove" class="remove-from-cart text-xs text-slate-400 hover:text-slate-700 ml-auto">
+                                            {% t "tables.actions.remove" %}
+                                            <div style="display:none">{{ form.DELETE }}</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endwith %}
+                    {% endfor %}
+                </form>
+
+                {# Voucher form #}
+                {% if voucher_form %}
+                <div class="border-t border-slate-200 pt-6 mt-2">
+                    <form id="voucher_form" action="{% url 'cart:vouchers-add' %}" method="post" class="flex gap-2">
+                        {% csrf_token %}
+                        <input type="text" name="code" required id="id_code" maxlength="128"
+                               class="flex-1 px-3 py-2 border border-slate-200 text-sm"
+                               placeholder="{% t 'tables.actions.add_coupon' %}" />
+                        <button type="submit" class="btn btn-secondary text-sm"
+                                data-loading-text='{% t "tables.actions.add_coupon_loading" %}'>
+                            {% t "tables.actions.add_coupon" %}
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+
+            {% else %}
+                {# Empty cart #}
+                <div class="py-16 text-center">
+                    <p class="text-slate-500 mb-4">{% t "order.cart.cart_empty" %}</p>
+                    <a href="{% url 'catalogue:index' %}" class="btn btn-primary">{% t "order.cart.continue_shopping" %}</a>
+                </div>
+            {% endif %}
+        </div>
+
+        {# Order summary — 1/3 width #}
+        {% if not cart.is_empty %}
+        <div>
+            <div class="bg-slate-50 p-6 md:sticky md:top-24">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-semibold text-slate-800">{% t "order.cart.summary" %}</h2>
+                    <span class="text-xs text-slate-500 bg-slate-200 px-2 py-1 rounded">
+                        {% t "order.cart.items_count" with count=cart.num_items %}
+                    </span>
+                </div>
+
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-slate-600">{% t "order.cart.cart_total" %}</span>
+                        <span>{{ cart.total_excl_tax_excl_discounts|currency:cart.currency }}</span>
+                    </div>
+
+                    {% with offer_discounts=cart.offer_discounts voucher_discounts=cart.grouped_voucher_discounts %}
+                        {% for discount in offer_discounts %}
+                            <div class="flex justify-between text-green-600">
+                                <span>{{ discount.name }}</span>
+                                <span>-{{ discount.discount|currency:cart.currency }}</span>
+                            </div>
+                        {% endfor %}
+                        {% for discount in voucher_discounts %}
+                            <div class="flex justify-between text-green-600">
+                                <span>{{ discount.voucher.code }}
+                                    <form action="{% url 'cart:vouchers-remove' pk=discount.voucher.id %}" method="POST" class="inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="text-xs text-slate-400 hover:text-red-500 ml-1">&times;</button>
+                                    </form>
+                                </span>
+                                <span>-{{ discount.discount|currency:cart.currency }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+
+                    <div class="flex justify-between text-slate-400">
+                        <span>{% t "order.cart.shipping" %}</span>
+                        <span class="text-xs">{% t "order.cart.calculated_at_checkout" %}</span>
+                    </div>
+
+                    {% if cart.display_taxes %}
+                        <div class="flex justify-between">
+                            <span class="text-slate-600">{{ cart.display_taxes }}</span>
+                            <span>{{ order_total.tax|currency:cart.currency }}</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="flex justify-between pt-3 border-t border-slate-200 font-semibold text-slate-800">
+                        <span>{% t "order.cart.order_total" %}</span>
+                        <span>{{ order_total.incl_tax|currency:cart.currency }}</span>
+                    </div>
+                </div>
+
+                <a href="{% url 'checkout:index' %}" class="btn btn-primary w-full mt-6 py-3 text-base">
+                    {% t "order.cart.proceed_to_checkout" %}
+                </a>
+
+                <a href="{% url 'catalogue:index' %}" class="block text-center text-sm text-slate-500 hover:text-slate-700 mt-4">
+                    {% t "order.cart.continue_shopping" %}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

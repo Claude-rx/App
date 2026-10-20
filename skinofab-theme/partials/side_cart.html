@@ -1,0 +1,50 @@
+{# Spark Theme - Custom Side Cart (GraphQL-first, Web Component) #}
+{# Replaces platform's side_cart.js with <spark-cart-drawer> Web Component #}
+
+{% t 'side_cart.default.your_order' as default_cart_header_title %}
+<spark-cart-drawer
+    hidden
+    role="dialog"
+    aria-label="{% t 'side_cart.default.cart' %}"
+    aria-modal="true"
+    aria-expanded="false"
+    data-open="false"
+    data-checkout-url="{% url 'checkout:index' %}"
+    data-header-title="{{ settings.cart_header_title|default:default_cart_header_title }}"
+    data-empty-title="{% t 'side_cart.default.your_cart_is_empty' %}"
+    data-empty-sub="{% t 'side_cart.default.oops_You_have_nothing_here' %}"
+    data-continue-text="{% t 'catalogue.continue_shopping' %}"
+    data-continue-url="/"
+    data-checkout-text="{% t 'side_cart.default.proceed_to_checkout' %}"
+    data-subtotal-text="{% t 'side_cart.default.cart_subtotal' %}"
+    data-discount-text="{% t 'side_cart.default.discount' %}"
+    data-shipping-text="{% t 'side_cart.default.calculated_at_checkout' %}"
+    data-coupon-placeholder="{% t 'side_cart.default.coupon_code' %}"
+    data-coupon-btn="{% t 'side_cart.default.apply_coupon' %}"
+    data-close-cart-label="{% t 'side_cart.default.close_cart' %}"
+    data-free-text="{% t 'store.catalogue.free' %}"
+    data-frequency-template="{% t 'side_cart.default.frequency_template' %}"
+    data-decrease-quantity-label="{% t 'side_cart.default.decrease_quantity' %}"
+    data-quantity-label="{% t 'side_cart.default.quantity' %}"
+    data-increase-quantity-label="{% t 'side_cart.default.increase_quantity' %}"
+    data-remove-item-label="{% t 'side_cart.default.remove_item' %}"
+    data-remove-voucher-label="{% t 'side_cart.default.remove_voucher' %}"
+    data-shipping-label="{% t 'side_cart.default.shipping' %}"
+    data-total-label="{% t 'side_cart.default.total' %}"
+    data-invalid-coupon-text="{% t 'side_cart.default.invalid_coupon_code' %}"
+    data-currency="{{ request.CURRENCY_CODE|default:'USD' }}"
+    data-open-on-add="{% if settings.sidecart_open_on_add == False %}false{% else %}true{% endif %}"
+    {% if settings.gift_product %}{% with gift=settings.gift_product %}data-gift-product-id="{% firstof gift.children.first.pk gift.pk %}"{% endwith %}{% endif %}
+>
+    {# Progress bar (slotted into drawer panel between header and body) #}
+    <div slot="progress">
+        {% include "partials/block_cart_progress_wrapper.html" %}
+    </div>
+
+    {# Upsell slots (slotted into drawer panel between body and footer) #}
+    {% if settings.enable_upsells %}
+    <div slot="upsells" style="padding: 0 20px;">
+        {% include "partials/block_cart_upsell.html" %}
+    </div>
+    {% endif %}
+</spark-cart-drawer>

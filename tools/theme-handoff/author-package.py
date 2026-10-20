@@ -112,7 +112,7 @@ for c in captures:
 
 # ---------------------------------------------------------------- copy decisions + ledger
 copy = J('copy.json')
-PRICE = re.compile(r'(\$\s?\d|\d+\s?USD|\bUSD\b)')
+PRICE = re.compile(r'(\$\s?\d|\d+\s?USD)')
 SAVING = re.compile(r'(?i)\b(save|off|sale|free (shipping|gift|mystery)|% ?off|\bdeal)\b|\d+\s?%')
 CLAIM = re.compile(r'(?i)(\d[\d,.]*\s?(\+|k\b|m\b|million)|\bloved by\b|\btrusted\b|dermatolog|clinical|\breviews?\b|\bsold\b|#1|\bbest\b|\bproven\b|\bresults?\b|guarantee)')
 ledger = {}
@@ -127,17 +127,17 @@ def ledger_entry(did, kind, surface, sid, cid, src_exp, plat, decision, guard):
     if did not in sec_by_id[sid]['divergence_ids']: sec_by_id[sid]['divergence_ids'].append(did)
     return did
 
-for s in copy['strings']:
+def decide(s):
     t = s['source_text']; sid = s['section_id']; cid = s['capture_id']
     s['role'] = s['role'] or ('heading' if s['capture_key'].endswith('::heading') else 'cta' if s['capture_key'].endswith('::cta') else 'body')
     for k in ('reuse_basis', 'commerce_fact', 'next_evidence', 'divergence_id', 'approved_by', 'next_source'): s.pop(k, None)
-    if PRICE.search(t):
+    if PRICE.search(t) and len(t) <= 24:
         s.update(decision='omit', text='', commerce_fact=True,
                  divergence_id=ledger_entry('prices-from-next', 'commerce', 'product prices', sid, cid,
                      'The source shows fixed prices and compare-at prices.',
                      'Prices, compare-at prices and currency come from the NEXT catalog per visitor currency.',
                      'platform-wins', 'Render every price with {% purchase_info_for_product %} / session.price; never hardcode a price.'))
-    elif SAVING.search(t):
+    elif SAVING.search(t) or (PRICE.search(t) and re.search(r'(?i)shipping|delivery|protection', t)):
         s.update(decision='reuse', text=t, reuse_basis=RIGHTS, commerce_fact=True, next_evidence='',
                  divergence_id=ledger_entry('promotions-need-offers', 'commerce', 'promotional / savings copy', sid, cid,
                      'The source advertises sales, savings percentages and free gifts.',
@@ -152,6 +152,72 @@ for s in copy['strings']:
     else:
         s.update(decision='reuse', text=t, reuse_basis=RIGHTS)
     if s.get('commerce_fact') and s['decision'] == 'reuse': s['next_evidence'] = 'pending: no NEXT store connected'
+    fee = re.compile(r'\s*\$\s?\d[\d,]*(?:\.\d{2})?\s?USD')
+    if len(t) > 24 and fee.search(t) and re.search(r'(?i)shipping|delivery|protection', t):
+        # the build renders the fee from the Shipping Fee theme setting inside the sentence
+        s.update(decision='replace', text=re.sub(r'\s+', ' ', fee.sub(' ', t)).strip(),
+                 next_source='Theme setting sf_shipping_fee_text (must equal the NEXT shipping rate)')
+        for k in ('reuse_basis', 'next_evidence'): s.pop(k, None)
+
+copy['strings'] = [s for s in copy['strings'] if not s['copy_id'].startswith('ft_')]
+for s in copy['strings']: decide(s)
+
+# Full visible-text coverage: every line each section showed, every image alt and link name (captured evidence).
+seen_text = {(s['section_id'], s['source_text']) for s in copy['strings']}
+def add_text(sid, cid, key, vp, text, role):
+    text = re.sub(r'\s+', ' ', text).strip()
+    if len(text) < 2 or not re.search(r'[A-Za-z]', text) or (sid, text) in seen_text: return
+    seen_text.add((sid, text))
+    entry = {'copy_id': f"ft_{re.sub(r'[^a-z0-9]+', '_', sid)}_{len(seen_text)}", 'section_id': sid, 'capture_id': cid,
+             'viewport': vp, 'role': role, 'source_text': text, 'decision': 'unresolved', 'text': ''}
+    if key: entry['capture_key'] = key
+    decide(entry); copy['strings'].append(entry)
+for c in captures:
+    rc = raw[c['capture_id']]
+    for key, tgt in rc['targets'].items():
+        if '::' in key or key not in sec_by_id: continue
+        for line in (tgt.get('text') or '').split('\n'):
+            add_text(key, c['capture_id'], key, c['viewport'], line, 'body')
+    for im in rc.get('images', []):
+        if im.get('target_key') in sec_by_id and im.get('alt'):
+            add_text(im['target_key'], c['capture_id'], None, c['viewport'], im['alt'], 'alt')
+    for ln in rc.get('links', []):
+        if ln.get('target_key') in sec_by_id:
+            for t in (ln.get('accessible_name'), ln.get('text')):
+                if t: add_text(ln['target_key'], c['capture_id'], None, c['viewport'], t, 'label')
+# Hidden-state copy (closed accordions, inactive tabs, off-canvas drawers, screen-reader labels) is not visible text,
+# so captures cannot record it. It is extracted from the supplied HTML with copy-lint's own tokenizer, per section.
+import importlib.util
+FIGMA = Path(PKG_PY).parents[2] / 'next-theme-figma' / 'scripts' / 'copy-lint.py'
+spec = importlib.util.spec_from_file_location('copy_lint', FIGMA); copy_lint = importlib.util.module_from_spec(spec); spec.loader.exec_module(copy_lint)
+supplied = 0
+corpus = {copy_lint.normalize(x['text']) for x in copy['strings'] if x.get('text')}
+for r in routes['routes']:
+    rid = r['route_id']; soup = BeautifulSoup(open(EXPORT / ROUTE_FILE[rid]).read(), 'lxml')
+    for sid in order[rid]:
+        sel = sec_by_id[sid]['source_selector']
+        try: el = soup.select_one(sel)
+        except Exception: el = None
+        if el is None: continue
+        for cand in copy_lint.extract_candidates(str(el), 2):
+            text = copy_lint.normalize(cand['text'])
+            if text in corpus: continue
+            corpus.add(text)
+            entry = {'copy_id': f"ft_{re.sub(r'[^a-z0-9]+', '_', sid)}_h{len(corpus)}", 'section_id': sid,
+                     'capture_id': cap(rid, 'desktop'), 'viewport': 'desktop', 'role': 'alt' if cand['kind'] == 'attribute' else 'body',
+                     'source_text': text, 'decision': 'unresolved', 'text': '', 'source_basis': 'supplied-html (hidden state, not visible at capture)'}
+            decide(entry); copy['strings'].append(entry); supplied += 1
+    chrome = next((x for x in order[rid] if x.endswith('.header')), order[rid][0])
+    for cand in copy_lint.extract_candidates(str(soup.body), 2):
+        text = copy_lint.normalize(cand['text'])
+        if text in corpus: continue
+        corpus.add(text)
+        entry = {'copy_id': f"ft_{re.sub(r'[^a-z0-9]+', '_', chrome)}_b{len(corpus)}", 'section_id': chrome,
+                 'capture_id': cap(rid, 'desktop'), 'viewport': 'desktop', 'role': 'alt' if cand['kind'] == 'attribute' else 'label',
+                 'source_text': text, 'decision': 'unresolved', 'text': '', 'source_basis': 'supplied-html (page chrome outside sections)'}
+        decide(entry); copy['strings'].append(entry); supplied += 1
+print('supplied-html copy strings', supplied)
+copy['allowed_deviations'] = []
 W('copy.json', copy)
 
 # ---------------------------------------------------------------- behaviors
@@ -211,6 +277,17 @@ W('design-handoff.json', h)
 W('sections.json', {'schema_version': 'next-theme-dev/handoff-sections/v1', 'sections': sections})
 W('routes.json', routes)
 W('assets.json', {'schema_version': 'next-theme-dev/handoff-assets/v1', 'assets': assets})
+# Decisions already recorded (operator approvals, implementation status) are carried forward, never reset.
+try:
+    previous = {e['divergence_id']: e for e in json.load(open(PKG / 'platform-divergence-ledger.json')).get('entries', [])}
+except Exception:
+    previous = {}
+for did, e in ledger.items():
+    old = previous.get(did)
+    if old and old.get('status') in ('approved', 'implemented', 'accepted-gap'):
+        for k in ('status', 'approved_by', 'target_evidence', 'decision'): e[k] = old[k]
+for did, old in previous.items():  # entries authored by hand (e.g. build-time layout divergences) survive regeneration
+    if did not in ledger: ledger[did] = old
 W('platform-divergence-ledger.json', {'schema_version': 'next-theme-dev/handoff-divergence/v1', 'entries': list(ledger.values())})
 W('behaviors.json', {'schema_version': 'next-theme-dev/handoff-behaviors/v1', 'behaviors': behaviors, 'claims': []})
 

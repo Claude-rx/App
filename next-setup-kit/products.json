@@ -1,0 +1,880 @@
+[
+  {
+    "design_handle": "4-pack-2x-extreme-2x-long-lasting",
+    "title": "Bestseller Duo Kit",
+    "slug": "4-pack-2x-extreme-2x-long-lasting",
+    "template": "4-pack-2x-extreme-2x-long-lasting",
+    "theme_setting": "sf_p_4_pack_2x_extreme_2x_long_lasting",
+    "description_html": "<p>Two of Smooche's most-loved products, bundled into one unbeatable deal. This kit pairs our viral Color Changing Foundation with the Extreme Lip Plumper for a complete face look — adaptive coverage that matches your skin tone, plus plump, glossy lips in seconds. Everything you need, nothing you don't.</p>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Transparent"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Transparent",
+        "options": [
+          "Transparent",
+          null,
+          null
+        ],
+        "design_price": 59.0,
+        "design_compare_at_price": 156.0,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "beauty-mirror",
+    "title": "Beauty Mirror",
+    "slug": "beauty-mirror",
+    "template": "beauty-mirror",
+    "theme_setting": "sf_p_beauty_mirror",
+    "description_html": "<p>Mirror, mirror, on the wall, who's the fairest of them all? You of course! Take this compact beauty mirror everywhere with you to make sure your make-up always looks perfect.</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Beauty Mirror",
+        "options": [],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "brow-gel",
+    "title": "Fibre Brow Gel",
+    "slug": "brow-gel",
+    "template": "brow-gel",
+    "theme_setting": "sf_p_brow_gel",
+    "description_html": "<p>Thicker, fuller, defined brows — instantly. Smooche's Fibre Brow Gel uses micro-fibre technology to coat and build each hair, creating a natural feathery finish that lasts all day. Waterproof and smudge-proof, it's the one product your brow routine has been missing. Available in 5 shades to match every hair colour.</p>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Taupe",
+          "Dark Brown",
+          "Chocolate",
+          "Ash Brown",
+          "Smooth Black"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Taupe",
+        "options": [
+          "Taupe",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      },
+      {
+        "title": "Dark Brown",
+        "options": [
+          "Dark Brown",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      },
+      {
+        "title": "Chocolate",
+        "options": [
+          "Chocolate",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      },
+      {
+        "title": "Ash Brown",
+        "options": [
+          "Ash Brown",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      },
+      {
+        "title": "Smooth Black",
+        "options": [
+          "Smooth Black",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "color-changing-foundation",
+    "title": "Color Changing Foundation",
+    "slug": "color-changing-foundation",
+    "template": "color-changing-foundation",
+    "theme_setting": "sf_p_color_changing_foundation",
+    "description_html": "<div class=\"product__block\" data-shopify-editor-block='{\"id\":\"template--19381720252572__main__text_ACNbkY\",\"domId\":\"text_ACNbkY\",\"type\":\"text\"}'>\n<div class=\"product__subheading\" data-shopify-editor-block='{\"id\":\"template--19381720252572__main__text_ACNbkY\",\"domId\":\"text_ACNbkY\",\"type\":\"text\"}' data-live-text-setting=\"template--19381720252572__main__text_ACNbkY.title\">\n<p>Say goodbye to shade-matching struggles. This color-changing foundation adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.</p>\n</div>\n</div>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Color Changing Foundation",
+        "options": [],
+        "design_price": 49.0,
+        "design_compare_at_price": 59.0,
+        "sku": "SMO-CCF-001"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "essential-lip-liner",
+    "title": "Luxury Lip Liner",
+    "slug": "essential-lip-liner",
+    "template": "essential-lip-liner",
+    "theme_setting": "sf_p_essential_lip_liner",
+    "description_html": "<p><meta charset=\"utf-8\"><span>Give your plumped up lips extra definition and shape. Fill in uneven areas and make your lips more kissable than ever. Combine it with Volume Lip Gloss to give your lips a glossy finish.</span></p>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Espresso",
+          "Hazelnut",
+          "Blush",
+          "Cherry"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Espresso",
+        "options": [
+          "Espresso",
+          null,
+          null
+        ],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": "DPCD5-AZ374002"
+      },
+      {
+        "title": "Hazelnut",
+        "options": [
+          "Hazelnut",
+          null,
+          null
+        ],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": "DPCD5-AZ374003"
+      },
+      {
+        "title": "Blush",
+        "options": [
+          "Blush",
+          null,
+          null
+        ],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": "smooche-luxury-lip-liner-redwood"
+      },
+      {
+        "title": "Cherry",
+        "options": [
+          "Cherry",
+          null,
+          null
+        ],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": "DPCD5-AZ374001"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "extreme-lip-plumper",
+    "title": "Extreme Lip Plumper",
+    "slug": "extreme-lip-plumper",
+    "template": "extreme-lip-plumper",
+    "theme_setting": "sf_p_extreme_lip_plumper",
+    "description_html": "<h2 class=\"products-list__heading subheading-text\"><strong>For an instant, extreme, effect</strong></h2>\n<p><span style=\"font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; font-size: 0.875rem;\">Feel the heat with our instant plumper for extreme results. Infused with powerful ingredients, our high-intensity lip serum provides instant, fiery plumping. Caution: this lip plumper delivers a tingling sensation and may feel hot on the lips.</span><br></p>\n<ul></ul>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Transparent",
+          "Raspberry"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Transparent",
+        "options": [
+          "Transparent",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 49.0,
+        "sku": "DPCD5-KL168001"
+      },
+      {
+        "title": "Raspberry",
+        "options": [
+          "Raspberry",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 49.0,
+        "sku": "DPCD5-YF267001"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "eyebrow-serum",
+    "title": "Eyebrow Growth Serum",
+    "slug": "eyebrow-serum",
+    "template": "eyebrow-serum",
+    "theme_setting": "sf_p_eyebrow_serum",
+    "description_html": "<p>Achieve the fuller, thicker, and healthier brows you've always desired with our revolutionary Eyebrow Growth Serum. Our serum is expertly formulated to promote growth and strengthen each hair, and the skin around it, giving you bold and beautiful brows.</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Eyebrow Growth Serum",
+        "options": [],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": "DPCD5-PW431001"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "eyelash-curler",
+    "title": "Eyelash Curler",
+    "slug": "eyelash-curler",
+    "template": "eyelash-curler",
+    "theme_setting": "sf_p_eyelash_curler",
+    "description_html": "<p>This sleek eyelash curler is your secret weapon for captivating, wide-eyed allure. Compact and easy to use, it's perfect for creating stunning curls anytime, anywhere. Get ready to bat those lashes and turn heads wherever you go!</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Eyelash Curler",
+        "options": [],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "eyelash-serum",
+    "title": "Eyelash Growth Serum",
+    "slug": "eyelash-serum",
+    "template": "eyelash-serum",
+    "theme_setting": "sf_p_eyelash_serum",
+    "description_html": "<p class=\"p1\"><span class=\"s1\">Achieve the fuller, thicker, and healthier lashes you've always desired with our revolutionary Eyelash Growth Serum. Our serum is expertly formulated to promote growth and strengthen each lash, and the skin around it, giving you bold and beautiful lashes.</span></p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Eyelash Growth Serum",
+        "options": [],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": "DPCD5-PW433001"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "face-roller",
+    "title": "Face Roller",
+    "slug": "face-roller",
+    "template": "face-roller",
+    "theme_setting": "sf_p_face_roller",
+    "description_html": "<p>Reveal your skin’s natural glow with our sleek stainless steel Face Roller — designed to refresh, de-puff, and revive your complexion. This cooling tool helps boost circulation and promote lymphatic drainage, leaving your skin looking smoother, firmer, and more radiant. Indulge in a relaxing ritual that enhances your beauty and brings a spa-like calm to your daily routine.</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Face Roller",
+        "options": [],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "foundation-mega-pack",
+    "title": "Foundation Mega Pack",
+    "slug": "foundation-mega-pack",
+    "template": "foundation-mega-pack",
+    "theme_setting": "sf_p_foundation_mega_pack",
+    "description_html": "",
+    "options": [],
+    "variants": [
+      {
+        "title": "Foundation Mega Pack",
+        "options": [],
+        "design_price": 119.0,
+        "design_compare_at_price": 194.0,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "gua-sha",
+    "title": "Gua Sha",
+    "slug": "gua-sha",
+    "template": "gua-sha",
+    "theme_setting": "sf_p_gua_sha",
+    "description_html": "<p>Experience the smoother, more radiant skin you've always dreamed of with our innovative Gua Sha tool. Expertly crafted from stainless steel to enhance circulation and reduce puffiness, it provides you with a glowing complexion and a rejuvenated appearance. Enjoy the soothing effects and a flawless finish that highlights your natural beauty.</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Gua Sha",
+        "options": [],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "hyaluronic-acid-lip-plumper",
+    "title": "Normal Lip Plumper",
+    "slug": "hyaluronic-acid-lip-plumper",
+    "template": "hyaluronic-acid-lip-plumper",
+    "theme_setting": "sf_p_hyaluronic_acid_lip_plumper",
+    "description_html": "<h2 class=\"products-list__heading subheading-text\"><strong>For longer lasting results</strong></h2>\n<p><span data-mce-fragment=\"1\">Lock in hydration with our long-lasting plumper, enriched with hydrating hyaluronic acid. For a long-lasting plump effect, apply regularly over time. </span></p>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Transparent"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Transparent",
+        "options": [
+          "Transparent",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 49.0,
+        "sku": "SMO-NLP-TR"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "lash-brow-duo",
+    "title": "Lash & Brow Growth Kit",
+    "slug": "lash-brow-duo",
+    "template": "lash-brow-duo",
+    "theme_setting": "sf_p_lash_brow_duo",
+    "description_html": "<p>One kit. Longer lashes. Fuller brows. Smooche's Lash &amp; Brow Growth Kit combines our bestselling Eyelash Growth Serum and Eyebrow Growth Serum into a complete treatment duo — clinically inspired to visibly thicken and lengthen with consistent use. See results in as little as 4 weeks. Your transformation starts here.</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Lash & Brow Growth Kit",
+        "options": [],
+        "design_price": 49.0,
+        "design_compare_at_price": 78.0,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "liquid-blender-brush",
+    "title": "Liquid Blender Brush",
+    "slug": "liquid-blender-brush",
+    "template": "liquid-blender-brush",
+    "theme_setting": "sf_p_liquid_blender_brush",
+    "description_html": "<p>Flawless application, zero mess. Smooche's Liquid Blender Brush is designed to apply liquid and cream products with salon-level precision — think seamless foundation blending, no streaks, no waste. The densely packed bristles pick up the perfect amount of product every time, giving you a smooth, even finish in half the time.</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Liquid Blender Brush",
+        "options": [],
+        "design_price": 29.0,
+        "design_compare_at_price": null,
+        "sku": "SMO-LBB-001"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "long-lash-mascara",
+    "title": "2-in-1 Serum Mascara",
+    "slug": "long-lash-mascara",
+    "template": "long-lash-mascara",
+    "theme_setting": "sf_p_long_lash_mascara",
+    "description_html": "<div data-shopify-editor-block='{\"id\":\"template--18398378557596__main__text_dEqcaA\",\"domId\":\"text_dEqcaA\",\"type\":\"text\"}' class=\"product__block\">\n<div data-live-text-setting=\"template--18398378557596__main__text_dEqcaA.title\" data-shopify-editor-block='{\"id\":\"template--18398378557596__main__text_dEqcaA\",\"domId\":\"text_dEqcaA\",\"type\":\"text\"}' class=\"product__subheading\">\n<p>Instantly achieve the look of longer, fuller lashes with our best-selling mascara. The ultra-smooth formula glides on without clumping, flaking, or smudging — and stays put all day, even through heat and humidity.</p>\n</div>\n</div>\n<div data-shopify-editor-block='{\"id\":\"template--18398378557596__main__variant_new_CLdLF4\",\"domId\":\"variant_new_CLdLF4\",\"type\":\"variant_new\"}' data-form-wrapper=\"\" class=\"kopstorm_form1 product__block variant__labels--hide btn--half\"><form data-editor-form-attribute=\"\" data-recipient-errors=\"false\" data-product-form=\"\" enctype=\"multipart/form-data\" class=\"product__form\" id=\"AddToCartForm--template--18398378557596__main\" action=\"https://08f531-2.myshopify.com/cart/add?oseid=whpsVQ1eFSJ2ufpCh9UGeN3s\" method=\"post\">\n<div class=\"product__selectors\">\n<div data-option-position=\"1\" class=\"selector-wrapper selector-wrapper--swatches\"><br></div>\n</div>\n</form></div>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Perfect Black"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Perfect Black",
+        "options": [
+          "Perfect Black",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 49.0,
+        "sku": "DPCD5-PW432001"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "peel-off-lip-stain",
+    "title": "Peel-off Lip Stain",
+    "slug": "peel-off-lip-stain",
+    "template": "peel-off-lip-stain",
+    "theme_setting": "sf_p_peel_off_lip_stain",
+    "description_html": "<p>The Smooche Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Smooche Peel-off Lip Stain, and it's easy to see why!</p>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Raspberry Kiss",
+          "Watermelon Sugar",
+          "Mauve Berry",
+          "Velvet Cacao"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Raspberry Kiss",
+        "options": [
+          "Raspberry Kiss",
+          null,
+          null
+        ],
+        "design_price": 34.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      },
+      {
+        "title": "Watermelon Sugar",
+        "options": [
+          "Watermelon Sugar",
+          null,
+          null
+        ],
+        "design_price": 34.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      },
+      {
+        "title": "Mauve Berry",
+        "options": [
+          "Mauve Berry",
+          null,
+          null
+        ],
+        "design_price": 34.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      },
+      {
+        "title": "Velvet Cacao",
+        "options": [
+          "Velvet Cacao",
+          null,
+          null
+        ],
+        "design_price": 34.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "reverse-time-peptide-serum",
+    "title": "Reverse-time Peptide Serum",
+    "slug": "reverse-time-peptide-serum",
+    "template": "reverse-time-peptide-serum",
+    "theme_setting": "sf_p_reverse_time_peptide_serum",
+    "description_html": "<p class=\"font-claude-response-body break-words whitespace-normal\">Smoother, brighter, firmer-looking skin. Our peptide serum pairs Argireline and Matrixyl with niacinamide and vitamin C to visibly soften fine lines.</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Reverse-time Peptide Serum",
+        "options": [],
+        "design_price": 63.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "shea-butter-lip-gloss",
+    "title": "Volume Lip Gloss",
+    "slug": "shea-butter-lip-gloss",
+    "template": "shea-butter-lip-gloss",
+    "theme_setting": "sf_p_shea_butter_lip_gloss",
+    "description_html": "<div class=\"w-full text-token-text-primary\" dir=\"auto\" data-testid=\"conversation-turn-5\" data-mce-fragment=\"1\">\n<div class=\"px-4 py-2 justify-center text-base md:gap-6 m-auto\" data-mce-fragment=\"1\">\n<div class=\"flex flex-1 text-base mx-auto gap-3 juice:gap-4 juice:md:gap-6 md:px-5 lg:px-1 xl:px-5 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]\" data-mce-fragment=\"1\">\n<div class=\"relative flex w-full flex-col agent-turn\" data-mce-fragment=\"1\">\n<div class=\"flex-col gap-1 md:gap-3\" data-mce-fragment=\"1\">\n<div class=\"flex flex-grow flex-col max-w-full\" data-mce-fragment=\"1\">\n<div data-message-author-role=\"assistant\" data-message-id=\"ce095959-67a0-4d17-82ab-276daa5b4e49\" dir=\"auto\" class=\"min-h-[20px] text-message flex flex-col items-start gap-3 whitespace-pre-wrap break-words [.text-message+&amp;]:mt-5 overflow-x-auto\" data-mce-fragment=\"1\">\n<div class=\"markdown prose w-full break-words dark:prose-invert light\" data-mce-fragment=\"1\">\n<p data-mce-fragment=\"1\">Discover the nourishing touch of our Shea Butter Lip Gloss. Infused with rich shea butter, this gloss hydrates and softens lips while adding a subtle sheen. Lightweight and non-sticky, it's perfect for daily wear and on-the-go touch-ups. Enjoy beautifully glossy lips with a natural look.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Clear",
+          "Sweet Pink"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Clear",
+        "options": [
+          "Clear",
+          null,
+          null
+        ],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": "smooche-shea-butter-lip-gloss"
+      },
+      {
+        "title": "Sweet Pink",
+        "options": [
+          "Sweet Pink",
+          null,
+          null
+        ],
+        "design_price": 19.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "smooche-blender",
+    "title": "Smooche Blender",
+    "slug": "smooche-blender",
+    "template": "smooche-blender",
+    "theme_setting": "sf_p_smooche_blender",
+    "description_html": "",
+    "options": [],
+    "variants": [
+      {
+        "title": "Smooche Blender",
+        "options": [],
+        "design_price": 9.0,
+        "design_compare_at_price": 19.0,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "smooche-gift-card",
+    "title": "Smooche Gift Card",
+    "slug": "smooche-gift-card",
+    "template": "smooche-gift-card",
+    "theme_setting": "sf_p_smooche_gift_card",
+    "description_html": "<p>The best gift is smooche.</p>",
+    "options": [
+      {
+        "name": "Denominations",
+        "values": [
+          "$10,00",
+          "$25,00",
+          "$50,00",
+          "$100,00"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "$10,00",
+        "options": [
+          "$10,00",
+          null,
+          null
+        ],
+        "design_price": 10.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      },
+      {
+        "title": "$25,00",
+        "options": [
+          "$25,00",
+          null,
+          null
+        ],
+        "design_price": 25.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      },
+      {
+        "title": "$50,00",
+        "options": [
+          "$50,00",
+          null,
+          null
+        ],
+        "design_price": 50.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      },
+      {
+        "title": "$100,00",
+        "options": [
+          "$100,00",
+          null,
+          null
+        ],
+        "design_price": 100.0,
+        "design_compare_at_price": null,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "stick-and-stain",
+    "title": "Peel-off Lip Stain",
+    "slug": "stick-and-stain",
+    "template": "stick-and-stain",
+    "theme_setting": "sf_p_stick_and_stain",
+    "description_html": "<p>The Smooche Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Smooche Peel-off Lip Stain, and it's easy to see why!</p>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Raspberry Kiss",
+          "Watermelon Sugar",
+          "Mauve Berry",
+          "Velvet Cacao"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Raspberry Kiss",
+        "options": [
+          "Raspberry Kiss",
+          null,
+          null
+        ],
+        "design_price": 29.0,
+        "design_compare_at_price": null,
+        "sku": "SMO-PLS-RK"
+      },
+      {
+        "title": "Watermelon Sugar",
+        "options": [
+          "Watermelon Sugar",
+          null,
+          null
+        ],
+        "design_price": 29.0,
+        "design_compare_at_price": null,
+        "sku": "SMO-PLS-WS"
+      },
+      {
+        "title": "Mauve Berry",
+        "options": [
+          "Mauve Berry",
+          null,
+          null
+        ],
+        "design_price": 29.0,
+        "design_compare_at_price": null,
+        "sku": "SMO-PLS-MB"
+      },
+      {
+        "title": "Velvet Cacao",
+        "options": [
+          "Velvet Cacao",
+          null,
+          null
+        ],
+        "design_price": 29.0,
+        "design_compare_at_price": null,
+        "sku": "SMO-PLS-VC"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "stick-stain3",
+    "title": "Peel-off Lip Stain",
+    "slug": "stick-stain3",
+    "template": "stick-stain3",
+    "theme_setting": "sf_p_stick_stain3",
+    "description_html": "<p>The Smooche Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Smooche Peel-off Lip Stain, and it's easy to see why!</p>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Raspberry Kiss",
+          "Watermelon Sugar",
+          "Mauve Berry",
+          "Velvet Cacao"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Raspberry Kiss",
+        "options": [
+          "Raspberry Kiss",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      },
+      {
+        "title": "Watermelon Sugar",
+        "options": [
+          "Watermelon Sugar",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      },
+      {
+        "title": "Mauve Berry",
+        "options": [
+          "Mauve Berry",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      },
+      {
+        "title": "Velvet Cacao",
+        "options": [
+          "Velvet Cacao",
+          null,
+          null
+        ],
+        "design_price": 39.0,
+        "design_compare_at_price": 59.0,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "triple-lip-plumper-bundle",
+    "title": "Triple Lip Plumper Bundle",
+    "slug": "triple-lip-plumper-bundle",
+    "template": "triple-lip-plumper-bundle",
+    "theme_setting": "sf_p_triple_lip_plumper_bundle",
+    "description_html": "<p><meta charset=\"utf-8\"><span>The Smooche Lip plumper </span><strong>is going viral</strong><span> because of the insane before and after video's all over social media. After many tests and a long period of research, we are proud to say we have found </span><strong>the perfect formula for our plumpers.</strong><span> Made with 100% natural ingredients, our plumpers are the only natural and effective way to plump up your lips.</span></p>",
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Transparent"
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "title": "Transparent",
+        "options": [
+          "Transparent",
+          null,
+          null
+        ],
+        "design_price": 49.0,
+        "design_compare_at_price": 117.0,
+        "sku": "smooche-triple-lip-plumper-bundle"
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "ultra-peptide-collagen-lifting-mask",
+    "title": "Ultra Peptide & Collagen Lifting Mask",
+    "slug": "ultra-peptide-collagen-lifting-mask",
+    "template": "ultra-peptide-collagen-lifting-mask",
+    "theme_setting": "sf_p_ultra_peptide_collagen_lifting_mask",
+    "description_html": "<p><meta charset=\"utf-8\">A deeply hydrating lifting mask that helps skin appear firmer, smoother, and plumper. Infused with 5 advanced peptides, collagen, ceramides, niacinamide, and 8 forms of hyaluronic acid to support the skin barrier and promote a healthy, radiant-looking complexion. The mask gradually turns transparent as the essence absorbs into the skin.<br></p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Ultra Peptide & Collagen Lifting Mask",
+        "options": [],
+        "design_price": 39.0,
+        "design_compare_at_price": 49.0,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  },
+  {
+    "design_handle": "under-eye-reset",
+    "title": "Under-eye Reset Patches",
+    "slug": "under-eye-reset",
+    "template": "under-eye-reset",
+    "theme_setting": "sf_p_under_eye_reset",
+    "description_html": "<p class=\"p1\">Hydrating under-eye patches that help depuff, brighten and smooth the delicate eye area for a refreshed, well-rested appearance.</p>",
+    "options": [],
+    "variants": [
+      {
+        "title": "Under-eye Reset Patches",
+        "options": [],
+        "design_price": 29.0,
+        "design_compare_at_price": 39.0,
+        "sku": ""
+      }
+    ],
+    "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
+  }
+]

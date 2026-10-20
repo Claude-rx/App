@@ -1,0 +1,114 @@
+{% extends "layouts/base.html" %}
+{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ 'main.css'|asset_url }}">{% endblock spark_css %}
+
+{% block title %}
+    {{ review.title }} | {% t "store.review.reviews" %} | {{ product.title }} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container py-3">
+    <nav aria-label="{% t 'navigation.breadcrumb' %}">
+        <ol class="flex items-center gap-2 text-xs text-slate-400">
+            <li><a href="{{ homepage_url }}" class="hover:text-slate-600">{% t "navigation.main.home" %}</a></li>
+            <li>/</li>
+            {% with category=product.categories.all.0 %}
+                {% if category %}
+                    {% for c in category.get_ancestors_and_self %}
+                        <li><a href="{{ c.get_absolute_url }}" class="hover:text-slate-600">{{ c.name }}</a></li>
+                        <li>/</li>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <li><a href="{{ product.get_absolute_url }}" class="hover:text-slate-600">{{ product.title }}</a></li>
+            <li>/</li>
+            <li><a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.pk %}" class="hover:text-slate-600">{% t "store.review.all_reviews" %}</a></li>
+            <li>/</li>
+            <li class="text-slate-600">{{ review.title }}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-8 md:py-12">
+
+    {# Product summary #}
+    <div class="flex flex-col sm:flex-row items-start gap-6 mb-10">
+        <div class="flex-shrink-0">
+            {% with image=product.primary_image %}
+                {% image_thumbnail image.original "x180" upscale=False as thumb %}
+                <a href="{{ product.get_absolute_url }}">
+                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-28 h-28 object-cover" loading="lazy" />
+                </a>
+            {% endwith %}
+        </div>
+        <div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-1">
+                <a href="{{ product.get_absolute_url }}">{{ product.get_title }}</a>
+            </h3>
+
+            {% purchase_info_for_product request product as session %}
+            {% if session.price.exists %}
+                {% if session.price.price_retail > session.price.price %}
+                    <del class="text-sm text-slate-400">{{ session.price.price_retail|currency:session.price.currency }}</del>
+                {% endif %}
+                {% if session.price.price == 0 %}
+                    <span class="text-lg font-medium">{% t "store.catalogue.free" %}</span>
+                {% else %}
+                    <span class="text-lg font-medium">{{ session.price.price|currency:session.price.currency }}</span>
+                {% endif %}
+            {% endif %}
+
+            {% if product.rating != None %}
+                <div class="flex items-center gap-3 mt-2">
+                    <div class="flex text-amber-400">
+                        {% for i in '12345' %}
+                            {% if forloop.counter <= product.rating %}
+                                <span>&#9733;</span>
+                            {% else %}
+                                <span class="text-slate-300">&#9733;</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <span class="text-xs text-slate-500">
+                        {% t "store.review.customer_reviews_count" with count=product.num_approved_reviews %}
+                    </span>
+                </div>
+            {% endif %}
+
+            {% if product|is_review_permitted:user %}
+                <a href="{% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id %}#addreview"
+                   class="inline-block px-4 py-2 text-sm text-white mt-3" style="background-color: var(--primary-color);">
+                    {% t "store.catalogue.write_a_review" %}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {# Single review #}
+    <div class="border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50">
+            <h4 class="font-medium text-slate-800">{{ review.title }}</h4>
+            <div class="flex text-amber-400 text-sm">
+                {% for i in '12345' %}
+                    {% if forloop.counter <= review.score %}
+                        <span>&#9733;</span>
+                    {% else %}
+                        <span class="text-slate-300">&#9733;</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="px-6 py-4">
+            <p class="text-sm text-slate-600 leading-relaxed">{{ review.body|striptags }}</p>
+        </div>
+        <div class="px-6 py-3 text-xs text-slate-400 border-t border-slate-100">
+            {% if review.user == user %}
+                {% t "store.review.reviewed_by_you" with review_date=review.date_created %}
+            {% else %}
+                {% t "store.review.reviewed_by_other" with name=review.reviewer_name review_date=review.date_created %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{# Spark Theme — Pagination #}
+{# The platform tag preserves existing query parameters while replacing page. #}
+{% if page_obj.has_other_pages %}
+<nav aria-label="{% t 'pagination.label' %}" class="flex items-center justify-center gap-2 mt-12">
+    {% if page_obj.has_previous %}
+        <a href="{% add_query_param request 'page' page_obj.previous_page_number %}"
+           class="p-2 text-slate-600 hover:text-slate-900"
+           aria-label="{% t 'pagination.previous' %}">
+            {% include 'partials/icons/chevron-left.html' %}
+        </a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+            <span class="w-10 h-10 flex items-center justify-center text-sm font-medium text-white rounded"
+                  style="background-color: var(--primary-color);"
+                  aria-current="page">
+                {{ num }}
+            </span>
+        {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+            <a href="{% add_query_param request 'page' num %}"
+               class="w-10 h-10 flex items-center justify-center text-sm text-slate-600 hover:bg-slate-50 rounded">
+                {{ num }}
+            </a>
+        {% elif num == 1 or num == page_obj.paginator.num_pages %}
+            <a href="{% add_query_param request 'page' num %}"
+               class="w-10 h-10 flex items-center justify-center text-sm text-slate-600 hover:bg-slate-50 rounded">
+                {{ num }}
+            </a>
+        {% elif num == page_obj.number|add:"-3" or num == page_obj.number|add:"3" %}
+            <span class="w-10 h-10 flex items-center justify-center text-sm text-slate-400">&hellip;</span>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="{% add_query_param request 'page' page_obj.next_page_number %}"
+           class="p-2 text-slate-600 hover:text-slate-900"
+           aria-label="{% t 'pagination.next' %}">
+            {% include 'partials/icons/chevron-right.html' %}
+        </a>
+    {% endif %}
+</nav>
+{% endif %}

@@ -22,7 +22,11 @@
         "route_id": "home",
         "ready": true,
         "blockers": [],
-        "surface": []
+        "surface": [
+          "copy ft_home_header_b678: omit",
+          "copy ft_home_header_b685: omit",
+          "copy ft_home_header_b686: omit"
+        ]
       },
       {
         "section_id": "home.hero",
@@ -36,7 +40,22 @@
         "route_id": "home",
         "ready": true,
         "blockers": [],
-        "surface": []
+        "surface": [
+          "copy ft_home_bestsellers_86: omit",
+          "copy ft_home_bestsellers_87: omit",
+          "copy ft_home_bestsellers_94: omit",
+          "copy ft_home_bestsellers_95: omit",
+          "copy ft_home_bestsellers_101: omit",
+          "copy ft_home_bestsellers_h507: omit",
+          "copy ft_home_bestsellers_h508: omit",
+          "copy ft_home_bestsellers_h510: omit",
+          "copy ft_home_bestsellers_h511: omit",
+          "copy ft_home_bestsellers_h513: omit",
+          "copy ft_home_bestsellers_h514: omit",
+          "copy ft_home_bestsellers_h515: omit",
+          "copy ft_home_bestsellers_h516: omit",
+          "copy ft_home_bestsellers_h517: omit"
+        ]
       },
       {
         "section_id": "home.reviews",
@@ -64,7 +83,19 @@
         "route_id": "home",
         "ready": true,
         "blockers": [],
-        "surface": []
+        "surface": [
+          "copy ft_home_bundles_132: omit",
+          "copy ft_home_bundles_133: omit",
+          "copy ft_home_bundles_137: omit",
+          "copy ft_home_bundles_138: omit",
+          "copy ft_home_bundles_142: omit",
+          "copy ft_home_bundles_146: omit",
+          "copy ft_home_bundles_147: omit",
+          "copy ft_home_bundles_h523: omit",
+          "copy ft_home_bundles_h524: omit",
+          "copy ft_home_bundles_h526: omit",
+          "copy ft_home_bundles_h529: omit"
+        ]
       },
       {
         "section_id": "home.serum",
@@ -99,7 +130,10 @@
         "route_id": "home",
         "ready": true,
         "blockers": [],
-        "surface": []
+        "surface": [
+          "copy ft_home_essentials_166: omit",
+          "copy ft_home_essentials_168: omit"
+        ]
       },
       {
         "section_id": "home.celebration_desktop",
@@ -141,7 +175,11 @@
         "route_id": "pdp",
         "ready": true,
         "blockers": [],
-        "surface": []
+        "surface": [
+          "copy ft_pdp_main_287: omit",
+          "copy ft_pdp_main_288: omit",
+          "copy ft_pdp_main_h743: omit"
+        ]
       },
       {
         "section_id": "pdp.section_text_rlda4j",
@@ -253,7 +291,27 @@
         "route_id": "collection",
         "ready": true,
         "blockers": [],
-        "surface": []
+        "surface": [
+          "copy ft_collection_main_435: omit",
+          "copy ft_collection_main_438: omit",
+          "copy ft_collection_main_443: omit",
+          "copy ft_collection_main_459: omit",
+          "copy ft_collection_main_464: omit",
+          "copy ft_collection_main_475: omit",
+          "copy ft_collection_main_478: omit",
+          "copy ft_collection_main_557: omit",
+          "copy ft_collection_main_566: omit",
+          "copy ft_collection_main_568: omit",
+          "copy ft_collection_main_570: omit",
+          "copy ft_collection_main_572: omit",
+          "copy ft_collection_main_577: omit",
+          "copy ft_collection_main_578: omit",
+          "copy ft_collection_main_579: omit",
+          "copy ft_collection_main_580: omit",
+          "copy ft_collection_main_581: omit",
+          "copy ft_collection_main_582: omit",
+          "copy ft_collection_main_h785: omit"
+        ]
       },
       {
         "section_id": "collection.footer",
@@ -399,7 +457,9 @@
           "asset lander.s1.adc2be4a-7515-4935-8eba-0f6eebc9bdd5-x needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/adc2be4a-7515-4935-8eba-0f6eebc9bdd5?width=1024: the export could not download it (host blocked in the build environment).",
           "asset lander.s1.215a694d-fed6-490c-9ad7-df4f828e3557 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/215a694d-fed6-490c-9ad7-df4f828e3557?width=460: the export could not download it (host blocked in the build environment)."
         ],
-        "surface": []
+        "surface": [
+          "copy ft_lander_s1_h866: omit"
+        ]
       },
       {
         "section_id": "lander.s2",

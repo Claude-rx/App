@@ -1,0 +1,949 @@
+{% extends 'layouts/base.html' %}
+{% block title %}{% firstof "Foundation Look Older – SKINOFAB" %}{% endblock %}
+{% block body_id %}{% firstof "foundation-look-older" %}{% endblock %}
+{% block body_class %}{% firstof "template-page body--rounded-corners palette--light no-outline" %}{% endblock %}
+{% block sf_head %}
+<link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
+</style><style>
+      .video-slide, .video-thumbnail, .product__form .btn--submit, #locationinfop, .product-grid-item .btn--quick .btn__inner, .product-upsell__btn, .btn, .btn--primary, .btn--primary .shopify-payment-button__button--unbranded, input.btn .shopify-payment-button__button--unbranded, input.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded, input.btn, input.shopify-payment-button__button--unbranded {
+         border-radius: 10px!important;
+      }
+      .input-group, .select-popout__toggle  {
+         border-radius: 10px!important;
+      }
+      #SiteFooter .input-group__fields input {
+        border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;
+      }
+        .input-group__btn {
+            border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;
+        }
+
+        button[aria-expanded=true] #accordionbefore:before {
+          background-color: #f7f7f7!important;
+        }
+      @media only screen and (max-width: 767px) {
+        .product-single .product__title {
+          font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;
+        }
+      }
+      #cart-drawer .product-upsell__holder .product-grid-item__swatch {
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 6px !important;
+      }
+      /* Preserve the bar's height while keeping it below the cart/header stack. */
+      body.js-drawer-open-cart .announcement-bar-static,
+      body:has(#cart-drawer.is-open) .announcement-bar-static {
+        z-index: 8999 !important;
+      }
+      body.js-drawer-open .announcement-bar-static,
+      body.js-quick-view-from-cart .announcement-bar-static,
+      body.js-quick-view-visible .announcement-bar-static,
+      body:has(#nav-drawer.is-open) .announcement-bar-static,
+      body:has(.drawer.is-open) .announcement-bar-static {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style><style>
+        .swiper-scrollbar {
+        display: none!important;
+        }
+      </style><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="{{ 'sf/css/all-min-2d3b0a.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/><script src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><link href="{{ 'sf/css/swiper-bundle-min-9d0eb7.css'|asset_url }}" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><style data-shopify="">:root { --loader-image-size: 60px; }:root { --loader-image-size: 320px; }html:not(.is-loading) .loading-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-overlay { position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s; }
+        .loading-overlay .loader__image--fallback { width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain; }
+        .loader__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out; }
+        .loader__image { max-width: 60px; height: auto; object-fit: contain; }</style><script>
+        const loadingAppearance = "once";
+        const loaded = sessionStorage.getItem('loaded');
+
+        if (loadingAppearance === 'once') {
+          if (loaded === null) {
+            sessionStorage.setItem('loaded', true);
+            document.documentElement.classList.add('is-loading');
+          }
+        } else {
+          document.documentElement.classList.add('is-loading');
+        }
+      </script><style data-shopify="">@font-face {
+  font-family: Jost;
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
+}
+
+@font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+@font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}
+
+
+:root {--COLOR-PRIMARY-OPPOSITE: #ffffff;
+  --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --PRIMARY-BUTTONS-COLOR-BG: #000000;
+  --PRIMARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --PRIMARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --PRIMARY-BUTTONS-COLOR-LIGHTEN-DARKEN: #1a1a1a;
+
+  --PRIMARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--COLOR-SECONDARY-OPPOSITE: #ffffff;
+  --COLOR-SECONDARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --SECONDARY-BUTTONS-COLOR-BG: #000000;
+  --SECONDARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --SECONDARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --SECONDARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--OUTLINE-BUTTONS-PRIMARY-BG: transparent;
+  --OUTLINE-BUTTONS-PRIMARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-SECONDARY-BG: transparent;
+  --OUTLINE-BUTTONS-SECONDARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-WHITE-BG: transparent;
+  --OUTLINE-BUTTONS-WHITE-TEXT: #ffffff;
+  --OUTLINE-BUTTONS-WHITE-BORDER: #ffffff;
+
+  --OUTLINE-BUTTONS-BLACK-BG: transparent;
+  --OUTLINE-BUTTONS-BLACK-TEXT: #000000;
+  --OUTLINE-BUTTONS-BLACK-BORDER: #000000;--OUTLINE-SOLID-BUTTONS-PRIMARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-WHITE-BG: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-WHITE-TEXT: #000000;
+  --OUTLINE-SOLID-BUTTONS-WHITE-BORDER: #000000;
+
+  --OUTLINE-SOLID-BUTTONS-BLACK-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-BLACK-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-BLACK-BORDER: #ffffff;--COLOR-HEADING: #151515;
+  --COLOR-TEXT: #151515;
+  --COLOR-TEXT-DARKEN: #000000;
+  --COLOR-TEXT-LIGHTEN: #484848;
+  --COLOR-TEXT-ALPHA-5: rgba(21, 21, 21, 0.05);
+  --COLOR-TEXT-ALPHA-8: rgba(21, 21, 21, 0.08);
+  --COLOR-TEXT-ALPHA-10: rgba(21, 21, 21, 0.1);
+  --COLOR-TEXT-ALPHA-15: rgba(21, 21, 21, 0.15);
+  --COLOR-TEXT-ALPHA-20: rgba(21, 21, 21, 0.2);
+  --COLOR-TEXT-ALPHA-25: rgba(21, 21, 21, 0.25);
+  --COLOR-TEXT-ALPHA-50: rgba(21, 21, 21, 0.5);
+  --COLOR-TEXT-ALPHA-60: rgba(21, 21, 21, 0.6);
+  --COLOR-TEXT-ALPHA-85: rgba(21, 21, 21, 0.85);
+
+  --COLOR-BG: #ffffff;
+  --COLOR-BG-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-BG-ALPHA-35: rgba(255, 255, 255, 0.35);
+  --COLOR-BG-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BG-ALPHA-65: rgba(255, 255, 255, 0.65);
+  --COLOR-BG-ALPHA-85: rgba(255, 255, 255, 0.85);
+  --COLOR-BG-OVERLAY: rgba(255, 255, 255, 0.75);
+  --COLOR-BG-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-BG: #fafafa;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-EFFECT: #f5f5f5;
+  --COLOR-BG-LIGHTEN-DARKEN-FOREGROUND: #f7f7f7;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER: #cccccc;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER-LINE: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-2: #cdcdcd;
+  --COLOR-BG-LIGHTEN-DARKEN-3: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-4: #9a9a9a;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-2: #999999;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-3: #808080;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-4: #666666;
+
+  --COLOR-BG-SECONDARY: #f7f7f7;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN: #dedede;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN-CONTRAST: #777777;
+
+  --COLOR-INPUT-BG: #ffffff;
+
+  --COLOR-ACCENT: #df8096;
+  --COLOR-ACCENT-TEXT: #fff;
+
+  --COLOR-BORDER: #f7f7f7;
+  --COLOR-BORDER-ALPHA-15: rgba(247, 247, 247, 0.15);
+  --COLOR-BORDER-ALPHA-30: rgba(247, 247, 247, 0.3);
+  --COLOR-BORDER-ALPHA-50: rgba(247, 247, 247, 0.5);
+  --COLOR-BORDER-ALPHA-65: rgba(247, 247, 247, 0.65);
+  --COLOR-BORDER-LIGHTEN-DARKEN: #ababab;
+  --COLOR-BORDER-HAIRLINE: #f7f7f7;
+
+  --COLOR-SALE-BG: #df8096;
+  --COLOR-SALE-TEXT: #ffffff;
+  --COLOR-CUSTOM-BG: #df8096;
+  --COLOR-CUSTOM-TEXT: #ffffff;
+  --COLOR-SOLD-BG: #000000;
+  --COLOR-SOLD-TEXT: #ffffff;
+  --COLOR-SAVING-BG: #df8096;
+  --COLOR-SAVING-TEXT: #ffffff;
+
+  --COLOR-WHITE-BLACK: fff;
+  --COLOR-BLACK-WHITE: #000;
+  --COLOR-BLACK-WHITE-ALPHA-25: rgba(0, 0, 0, 0.25);--COLOR-DISABLED-GREY: rgba(21, 21, 21, 0.05);
+  --COLOR-DISABLED-GREY-DARKEN: rgba(21, 21, 21, 0.45);
+  --COLOR-ERROR: #D02E2E;
+  --COLOR-ERROR-BG: #f3cbcb;
+  --COLOR-SUCCESS: #56AD6A;
+  --COLOR-SUCCESS-BG: #ECFEF0;
+  --COLOR-WARN: #ECBD5E;
+  --COLOR-TRANSPARENT: rgba(255, 255, 255, 0);
+
+  --COLOR-WHITE: #ffffff;
+  --COLOR-WHITE-DARKEN: #f2f2f2;
+  --COLOR-WHITE-ALPHA-10: rgba(255, 255, 255, 0.1);
+  --COLOR-WHITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-WHITE-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-WHITE-ALPHA-50: rgba(255, 255, 255, 0.5);
+  --COLOR-WHITE-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BLACK: #000000;
+  --COLOR-BLACK-LIGHTEN: #1a1a1a;
+  --COLOR-BLACK-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --COLOR-BLACK-ALPHA-20: rgba(0, 0, 0, 0.2);
+  --COLOR-BLACK-ALPHA-25: rgba(0, 0, 0, 0.25);
+  --COLOR-BLACK-ALPHA-50: rgba(0, 0, 0, 0.5);
+  --COLOR-BLACK-ALPHA-60: rgba(0, 0, 0, 0.6);--FONT-STACK-BODY: futura-pt, sans-serif;
+  --FONT-STYLE-BODY: normal;
+  --FONT-STYLE-BODY-ITALIC: italic;
+  --FONT-ADJUST-BODY: 1.0;
+
+  --FONT-WEIGHT-BODY: 400;
+  --FONT-WEIGHT-BODY-LIGHT: 100;
+  --FONT-WEIGHT-BODY-MEDIUM: 700;
+  --FONT-WEIGHT-BODY-BOLD: 500;
+
+  --FONT-STACK-HEADING: futura-pt, sans-serif;
+  --FONT-STYLE-HEADING: normal;
+  --FONT-STYLE-HEADING-ITALIC: italic;
+  --FONT-ADJUST-HEADING: 1.1;
+
+  --FONT-WEIGHT-HEADING: 600;
+  --FONT-WEIGHT-HEADING-LIGHT: 400;
+  --FONT-WEIGHT-HEADING-MEDIUM: 900;
+  --FONT-WEIGHT-HEADING-BOLD: 600;
+
+  --FONT-STACK-NAV: futura-pt, sans-serif;
+  --FONT-STYLE-NAV: normal;
+  --FONT-STYLE-NAV-ITALIC: italic;
+  --FONT-ADJUST-NAV: 0.8;
+  --FONT-ADJUST-NAV-TOP-LEVEL: 0.8;
+
+  --FONT-WEIGHT-NAV: 600;
+  --FONT-WEIGHT-NAV-LIGHT: 400;
+  --FONT-WEIGHT-NAV-MEDIUM: 900;
+  --FONT-WEIGHT-NAV-BOLD: 700;
+
+  --FONT-ADJUST-PRODUCT-GRID: 0.9;
+
+  --FONT-STACK-BUTTON: futura-pt, sans-serif;
+  --FONT-STYLE-BUTTON: normal;
+  --FONT-STYLE-BUTTON-ITALIC: italic;
+  --FONT-ADJUST-BUTTON: 0.8;
+
+  --FONT-WEIGHT-BUTTON: 600;
+  --FONT-WEIGHT-BUTTON-MEDIUM: 900;
+  --FONT-WEIGHT-BUTTON-BOLD: 700;
+
+  --FONT-STACK-SUBHEADING: futura-pt, sans-serif;
+  --FONT-STYLE-SUBHEADING: normal;
+  --FONT-ADJUST-SUBHEADING: 1.0;
+
+  --FONT-WEIGHT-SUBHEADING: 400;
+  --FONT-WEIGHT-SUBHEADING-BOLD: 500;
+
+  --FONT-STACK-LABEL: futura-pt, sans-serif;
+  --FONT-STYLE-LABEL: normal;
+  --FONT-ADJUST-LABEL: 0.65;
+
+  --FONT-WEIGHT-LABEL: 500;
+
+  --LETTER-SPACING-NAV: 0.075em;
+  --LETTER-SPACING-SUBHEADING: 0.025em;
+  --LETTER-SPACING-BUTTON: 0.125em;
+  --LETTER-SPACING-LABEL: 0.05em;
+
+  --BUTTON-TEXT-CAPS: uppercase;
+  --HEADING-TEXT-CAPS: none;
+  --SUBHEADING-TEXT-CAPS: uppercase;
+  --LABEL-TEXT-CAPS: uppercase;--FONT-SIZE-INPUT: 1.0rem;--RADIUS: 30px;
+  --RADIUS-SMALL: 22px;
+  --RADIUS-TINY: 14px;
+  --RADIUS-BADGE: 3px;
+  --RADIUS-CHECKBOX: 4px;
+  --RADIUS-TEXTAREA: 8px;--PRODUCT-MEDIA-PADDING-TOP: 100%;--BORDER-WIDTH: 1px;--STROKE-WIDTH: 12px;--SITE-WIDTH: 1440px;
+  --SITE-WIDTH-NARROW: 840px;--COLOR-UPSELLS-BG: #f7f7f7;
+  --COLOR-UPSELLS-TEXT: #000000;
+  --COLOR-UPSELLS-TEXT-LIGHTEN: #333333;
+  --COLOR-UPSELLS-DISABLED-GREY-DARKEN: rgba(0, 0, 0, 0.45);
+  --UPSELLS-HEIGHT: 155px;
+  --UPSELLS-IMAGE-WIDTH: 20%;--ICON-ARROW-RIGHT: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik03MiAzNkwxMzIgOTZMNzIgMTU2IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==");--loading-svg: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjRweCIgdmlld0JveD0iMCAwIDMyMCA0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIwIiBoZWlnaHQ9IjQiIGZpbGw9IiMwMDAiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieCIgZnJvbT0iMCIgdG89IjMyMCIgZHVyPSIyLjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0id2lkdGgiIGZyb209IjAiIHRvPSIzMjAiIGR1cj0iMi4xcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4KICA8L3JlY3Q+Cjwvc3ZnPgo=");
+  --icon-check: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgZmlsbD0iI2ZmZiI+CiAgPHBhdGggZD0iTTExLjY1Mzg4MywxLjU1NDU5NjIxIEwxMy4yMDgxNzQ5LDIuODEzMjM2OTkgTDcuNTQ0MjkxMzgsOS44MDc1NTA2NSBMNy41MzI0MzQxOCw5Ljc5NzU5NjIxIEw3LjE1NzMwOTk1LDEwLjI2MzM1NTEgTDIuNDk0NDM0MTgsNi40ODc0MzI4IEwzLjc1MzA3NDk2LDQuOTMzMTQwODcgTDYuODcyNDM0MTgsNy40NTg1OTYyMSBMMTEuNjUzODgzLDEuNTU0NTk2MjEgWiI+PC9wYXRoPgo8L3N2Zz4K");
+  --icon-check-swatch: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cGF0aCBkPSJNMTEuNjUzODgzLDEuNTU0NTk2MjEgTDEzLjIwODE3NDksMi44MTMyMzY5OSBMNy41NDQyOTEzOCw5LjgwNzU1MDY1IEw3LjUzMjQzNDE4LDkuNzk3NTk2MjEgTDcuMTU3MzA5OTUsMTAuMjYzMzU1MSBMMi40OTQ0MzQxOCw2LjQ4NzQzMjggTDMuNzUzMDc0OTYsNC45MzMxNDA4NyBMNi44NzI0MzQxOCw3LjQ1ODU5NjIxIEwxMS42NTM4ODMsMS41NTQ1OTYyMSBaIiBpZD0icGF0aC1hd18xZXVwNi1xLTEiPjwvcGF0aD4KICAgIDxmaWx0ZXIgeD0iLTI4LjAlIiB5PSItMzQuNCUiIHdpZHRoPSIxNTYuMCUiIGhlaWdodD0iMTY4LjklIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItYXdfMWV1cDYtcS0yIj4KICAgICAgPGZlT2Zmc2V0IGR4PSIwIiBkeT0iMCIgaW49IlNvdXJjZUFscGhhIiByZXN1bHQ9InNoYWRvd09mZnNldE91dGVyMSI+PC9mZU9mZnNldD4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMSIgaW49InNoYWRvd09mZnNldE91dGVyMSIgcmVzdWx0PSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlR2F1c3NpYW5CbHVyPgogICAgICA8ZmVDb2xvck1hdHJpeCB2YWx1ZXM9IjAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgMCAwIDAgMSAwIiB0eXBlPSJtYXRyaXgiIGluPSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlQ29sb3JNYXRyaXg+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPGcgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgIDx1c2UgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIiBmaWx0ZXI9InVybCgjZmlsdGVyLWF3XzFldXA2LXEtMikiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgICA8dXNlIGZpbGw9IiNmZmZmZmYiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgPC9nPgo8L3N2Zz4K");
+  --icon-zoom-in: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICAgICAgPHBhdGggZD0iTTEyLjYsOSBMMTIuNiwxNi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");
+  --icon-zoom-out: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");--collection-sticky-bar-height: 0px;
+  --collection-image-padding-top: 60%;
+
+  --drawer-width: 400px;
+  --drawer-transition: transform 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);--gutter: 60px;
+  --gutter-mobile: 20px;
+  --grid-gutter: 20px;
+  --grid-gutter-mobile: 35px;--inner: 20px;
+  --inner-tablet: 18px;
+  --inner-mobile: 16px;--grid: repeat(4, minmax(0, 1fr));
+  --grid-tablet: repeat(3, minmax(0, 1fr));
+  --grid-mobile: repeat(2, minmax(0, 1fr));
+  --megamenu-grid: repeat(4, minmax(0, 1fr));
+  --grid-row: 1 / span 4;--scrollbar-width: 0px;--overlay: #000;
+  --overlay-opacity: 1;--swatch-width: 38px;
+  --swatch-height: 26px;
+  --swatch-size: 32px;
+  --swatch-size-mobile: 30px;
+
+  
+  --move-offset: 20px;
+
+  
+  --autoplay-speed: 2200ms;
+
+  
+--filter-bg: .97;
+  --product-filter-bg: .97;
+  }</style><link href="{{ 'sf/css/kopstorm-V2-ea6148.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/theme-410305.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm-62aff9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm_new-c14bc9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><script type="text/javascript">
+    if (window.MSInputMethodContext && document.documentMode) {
+      var scripts = document.getElementsByTagName('script')[0];
+      var polyfill = document.createElement("script");
+      polyfill.defer = true;
+      polyfill.src = "{{ 'sf/js/ie11-831ade.js'|asset_url }}";
+
+      scripts.parentNode.insertBefore(polyfill, scripts);
+
+      document.documentElement.classList.add('ie11');
+    } else {
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    }
+
+    let root = '/';
+    if (root[root.length - 1] !== '/') {
+      root = `${root}/`;
+    }
+
+    window.theme = {
+      routes: {
+        root: root,
+        cart_url: "\/cart",
+        cart_add_url: "\/cart\/add",
+        cart_change_url: "\/cart\/change",
+        shop_url: "https:\/\/smooche.com",
+        searchUrl: '/search',
+        predictiveSearchUrl: '/search/suggest',
+        product_recommendations_url: "\/recommendations\/products"
+      },
+      assets: {
+        photoswipe: '{{ 'sf/js/photoswipe-7aaf31.js'|asset_url }}',
+        smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
+        no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
+        swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
+        base: "//smooche.com/cdn/shop/t/76/assets/"
+      },
+      strings: {
+        add_to_cart: "Add to Cart",
+        cart_acceptance_error: "You must accept our terms and conditions.",
+        cart_empty: "Your cart is currently empty.",
+        cart_price: "Price",
+        cart_quantity: "Quantity",
+        cart_items_one: "{% templatetag openvariable %} count }} item",
+        cart_items_many: "{% templatetag openvariable %} count }} items",
+        cart_title: "Cart",
+        cart_total: "Total",
+        continue_shopping: "Continue Shopping",
+        free: "Free",
+        limit_error: "Sorry, looks like we don\u0026#39;t have enough of this product.",
+        preorder: "Pre-Order",
+        remove: "Remove",
+        sale_badge_text: "Sale",
+        saving_badge: "Save {% templatetag openvariable %} discount }}",
+        saving_up_to_badge: "Save up to {% templatetag openvariable %} discount }}",
+        sold_out: "Sold Out",
+        subscription: "Subscription",
+        unavailable: "Unavailable",
+        unit_price_label: "Unit price",
+        unit_price_separator: "per",
+        zero_qty_error: "Quantity must be greater than 0.",
+        delete_confirm: "Are you sure you wish to delete this address?",
+        newsletter_product_availability: "Notify Me When It’s Available"
+      },
+      icons: {
+        plus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-plus" viewBox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        minus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-minus" viewBox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        close: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      },
+      settings: {
+        animations: false,
+        cartType: "drawer",
+        enableAcceptTerms: false,
+        enableInfinityScroll: false,
+        enablePaymentButton: true,
+        gridImageSize: "cover",
+        gridImageAspectRatio: 1,
+        mobileMenuBehaviour: "link",
+        productGridHover: "image",
+        savingBadgeType: "percentage",
+        showSaleBadge: true,
+        showSoldBadge: true,
+        showSavingBadge: true,
+        quickBuy: "none",
+        suggestArticles: false,
+        suggestCollections: true,
+        suggestProducts: true,
+        suggestPages: false,
+        suggestionsResultsLimit: 10,
+        currency_code_enable: true,
+        hideInventoryCount: true,
+        enableColorSwatchesCollection: true,
+      },
+      sizes: {
+        mobile: 480,
+        small: 768,
+        large: 1024,
+        widescreen: 1440
+      },
+      moneyFormat: "${% templatetag openvariable %}amount_no_decimals}}",
+      moneyWithCurrencyFormat: "${% templatetag openvariable %}amount_no_decimals}} USD",
+      subtotal: 0,
+      info: {
+        name: 'Palo Alto'
+      },
+      version: '5.6.0'
+    };
+    window.PaloAlto = window.PaloAlto || {};
+    window.slate = window.slate || {};
+    window.isHeaderTransparent = false;
+    window.stickyHeaderHeight = 60;
+    window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/smooche-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
+        @media screen and (max-width: 767px) {
+        .product-single__details {
+          overflow: ;
+        }
+        }
+      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Smooche","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Smooche","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"page"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
+        #shopify-buyer-consent {
+  margin-top: 1em;
+  display: inline-block;
+  width: 100%;
+}
+
+#shopify-buyer-consent.hidden {
+  display: none;
+}
+
+#shopify-subscription-policy-button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+#shopify-subscription-policy-button::before {
+  box-shadow: none;
+}
+
+      </style><link href="{{ 'sf/css/styles-ba8b6d.css'|asset_url }}" media="screen" rel="stylesheet"/><script defer="defer" src="{{ 'sf/js/smooche-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
+    #alia-popup-root-alia-qqoyyurlj3kbg51i {
+      z-index: 999999 !important;
+    }
+  </style><script id="kaching-bundles-translations" type="application/json">
+    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
+  </script><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-f7208f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
+    .kaching-bundles__block {
+      display: none;
+    }
+
+    .kaching-bundles-sticky-atc {
+      display: none;
+    }
+  </style>
+{% endblock sf_head %}
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root { --loader-image: var(--loading-svg); }</style><div class="loader loader--image">
+<div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
+</div>
+</div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
+{% block content_wrapper %}
+<main class="main-content" data-main="" id="MainContent">
+<section class="shopify-section sb-smooche-story-section" id="shopify-section-template--22185426026652__story">
+<style>
+    html, body { overflow: hidden !important; height: 100%; }
+    .shopify-section.announcement-bar-static,
+    .shopify-section-header,
+    .shopify-section-group-group-header,
+    .shopify-section-group-group-footer,
+    #SiteFooter { display: none !important; }
+  </style><div class="sbs" data-offer="5" data-sbs="" data-track="true" id="sbs-template--22185426026652__story" style="
+    --sbs-bg: #191015;
+    --sbs-text: #ffffff;
+    --sbs-muted: #c9b9bf;
+    --sbs-accent: #df8096;
+    --sbs-accent-soft: rgba(223, 128, 150, 0.35);
+    --sbs-highlight: #f2a7b9;
+    --sbs-button: #ffffff;
+    --sbs-button-text: #191015;
+    --sbs-button-glow: rgba(255, 255, 255, 0.22);
+    --sbs-card: rgba(255, 255, 255, 0.08);
+    --sbs-badge-bg: rgba(255, 255, 255, 0.1);
+    --sbs-card-line: rgba(255, 255, 255, 0.16);
+    --sbs-bg-rgb: 25, 16, 21;
+  ">
+<div class="sbs__frame">
+<header class="sbs__top">
+<div class="sbs__bar">
+<button aria-label="Previous" class="sbs__back" data-sbs-back="" hidden="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<span class="sbs__logo"><svg aria-hidden="true" class="sbs__logo-svg" fill="currentColor" focusable="false" viewbox="0 0 559 74.96"><path d="M493.35,70.37c-3.26-5.6.22-13.86,1.5-19.51,2.03-8.97,4.15-17.91,6.3-26.85.9-3.75,1.87-7.49,2.97-11.19,1.1-3.69,3.37-7.43,6.88-9.24,3.59-1.85,7.72-2.56,11.7-2.97,5.5-.56,11.03-.54,16.55-.43,3.97.08,8.03.3,11.86,1.41,3.79,1.1,8.28,3.87,7.87,8.48-.63,6.86-6.84,10.1-12.84,10.46-2.21.13-4.53.17-6.72.56-1.08.19-2.16.52-3.07,1.15-1.08.76-2.04,1.88-1.64,3.25.3,1.03.99,1.85,1.83,2.5,1.85,1.42,4.15,2.06,6.13,3.26.59.36,1.16.77,1.62,1.29,2.52,2.14,2.59,5.96.91,8.63-3.03,4.85-9.94,4.93-14.52,7.02-3.75,1.69-2.95,5.08.88,6.46,5.86,2.3,15.55,1.24,16.06,9.3-.07,4.81-4.25,9.45-8.9,10.06-11.77,1.54-23.3.66-33.98.92-3.47.08-7.91-.38-10.38-3.17-.39-.44-.73-.91-1.01-1.4Z"></path><path d="M165.31,44.06c-1.41-32.64,29.14-50.17,59.51-42.09,15.71,3.94,23.56,18.89,21.65,34.29-1.57,18.84-14.57,34.13-34.63,37.56-22.49,4.41-45.97-3.66-46.51-29.37v-.39ZM215.4,30.6c-.14-5.76-4.73-10.83-10.34-8.25-5.68,2.43-9.1,10.62-9.35,18.81-.76,8.75,5.63,16.97,13.6,9.25,4.45-4.72,6.43-12.91,6.12-19.4l-.03-.4Z"></path><path d="M273.57,4.88c-27.34,13.46-32.55,51.6-3.05,66.05,25.28,12.96,61.08-7.02,61.33-35.56l.02-.32c.05-29.28-34.31-43.15-58.3-30.17ZM293.84,50.19l-.25.15c-6.46,4.02-11.77-1.74-12.61-6.88-1.32-5.86.79-12.88,5.32-17.06,6.86-6.6,14.67-1.07,15.39,6.41,1.04,5.69-2.43,14.25-7.85,17.38Z"></path><path d="M337.2,43.79c-1-22.98,15.93-40.99,38.64-43.09,11.47-1.49,34-.84,31.11,15.63-3.22,12.57-18.78,2.76-27.24,8.51-8.68,4.07-11.88,19.75-3.47,25.47,3.11,2.2,7.45,2.24,11.19,1.88,3.03-.2,7.64-1.15,9.54.91,3.03,4.05-.28,11.26-3.47,14.8-5.62,6.49-14.98,7.44-24.07,6.95-18.36-.81-32.03-11.39-32.22-30.68v-.39Z"></path><path d="M404.26,72.08c-4.06-4.03-.73-10.77-.04-15.82,2.68-11.72,6.88-30.49,9.48-41.67,1.02-3.85,1.82-8.05,4.61-10.88,4.45-4.02,12.48-4.29,18.34-3.03,11.16,2.84,5.55,12.94,8.91,20.36,2.55,5.56,10.16,5.21,14.24,1.35,6.31-4.97,6.56-14.36,12.98-18.95,5.74-4.96,24.99-5.13,24.19,4.86-2.32,15.95-8.2,36.78-11.4,52.12-1.42,6.66-3.7,13.05-11.68,14.05-6.13,1.04-15.28.79-17.87-5.53-2.41-6.29,2.52-18.62-7.24-20.92-4.63-.96-9.17,2.13-11.73,5.69-3.96,5.22-4.67,12.72-9.64,17.04-5.82,5.27-16.69,5.43-23.04,1.44l-.14-.11Z"></path><path d="M2.13,69.96c-4.12-4.76-2.03-13.89,4.36-15.49,4.89-1.32,12.62.45,16.35-1.2,6.6-3.18-3.13-10.47-5.82-13.79-8.92-8.43-10.37-22.75-1.19-31.09C26-.52,42.1-.87,54.8.81c3.97.71,6.93,2,8.53,4.13,3.27,4.2,1.58,11.76-3.5,14-4.77,2.44-13.38.91-15.3,3.41-1.97,2.98,2.66,6.68,4.97,9.24,13.86,11.5,13.63,30.98-4.02,38.86-10.27,4.8-34.94,7.21-43.17-.3l-.18-.2Z"></path><path d="M153.05.33c-.15-.03-.3-.07-.45-.08-2.36-.4-4.73-.28-7.01.18-.03,0-.05.02-.08.02-4.71,1-9.22,3.48-13.22,6.06-1.41.92-2.76,1.81-4.11,2.65-3.81,2.31-7.56,4.01-12.6,3.61-1.28-.1-2.48-.37-3.59-.73-7.26-2.38-11.92-9.52-20.94-11.5-.33-.07-.67-.13-.98-.18-16.06-2.83-17.54,12.72-19.94,24.4,0,0-5.08,23.47-7.66,35.72-.42,1.96-.58,3.71-.48,5.23.33,5.39,3.89,8.09,10.84,8.7.32.03.67.05,1.02.07h.08c4.64-.07,9.39-1.66,12.7-4.64,2.45-2.2,4.16-5.53,5.39-8.84.52-1.66,1.02-3.38,1.58-5.01.93-3.41,1.81-6.87,2.6-10.32.42-1.78.9-3.66,2.21-5.09,2.75-3,5.34.63,6.97,3.26.38.62.72,1.17.98,1.58,1.48,2.26,3.46,3.23,6.26,3.1,2.83-.13,4.48-1.93,6.12-3.73,1.51-1.65,3.01-3.3,5.41-3.66,3.94-.62,1.65,7.71.6,11.4-.18.65-.33,1.15-.4,1.45-1.15,4.81-3.73,13.27.77,17.31l.15.13c.9.7,1.93,1.28,3.08,1.73.87.45,1.78.78,2.68,1.02,4.86,1.28,11.47,1.23,16.01-1.36,4.71-2.68,5.68-8.36,6.92-13.22,2.83-10.95,4.44-22.14,6.94-33.16.2-.87.4-1.81.57-2.81,1.55-8.46,2.11-21.15-8.42-23.27Z"></path></svg>
+<span class="sbs__sr">Smooche</span></span><button class="sbs__skip" data-sbs-skip="" type="button">Skip to special offer</button></div>
+<div aria-hidden="true" class="sbs__progress"><span class="sbs__seg is-done" data-sbs-seg=""></span><span class="sbs__seg" data-sbs-seg=""></span><span class="sbs__seg" data-sbs-seg=""></span><span class="sbs__seg" data-sbs-seg=""></span><span class="sbs__seg" data-sbs-seg=""></span><span class="sbs__seg" data-sbs-seg=""></span></div>
+</header>
+<div class="sbs__steps"><article class="sbs__step sbs__step--scene is-active" data-block-id="s1" data-index="0" data-sbs-step=""><div class="sbs__bg sbs__bg--top" style="--sbs-shift: 0; --sbs-scale: 1.0;"><img alt="" class="sbs__bg-img" decoding="async" fetchpriority="high" height="2688" sizes="(min-width: 768px) 430px, 100vw" src="{{ 'sf/img/smooche-story-1-mirror-hd-750w-192895.jpg'|asset_url }}" srcset="{{ 'sf/img/smooche-story-1-mirror-hd-750w-192895.jpg'|asset_url }} 750w, {{ 'sf/img/smooche-story-1-mirror-hd-1100w-ba2832.jpg'|asset_url }} 1100w" width="1520"/>
+</div>
+<div class="sbs__scrim sbs__scrim--scene"></div><div class="sbs__content"><h1 class="sbs__headline" data-sbs-focus="" tabindex="-1">Why does your foundation make you look <strong>older</strong> after 40?</h1><div class="sbs__body"><p>After 40, skin gets drier, new lines show up, and its tone keeps shifting.</p><p>A foundation in one fixed shade sits on top like a mask, cakes into your fine lines and turns orange by the afternoon.</p></div><p class="sbs__rating">
+<span aria-hidden="true" class="sbs__stars"><svg focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg></span>
+                Over 50,000 five-star reviews
+              </p><button class="sbs__cta" data-sbs-next="" type="button">
+<span>So what actually works?</span>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+</button></div>
+</article><article aria-hidden="true" class="sbs__step sbs__step--scene" data-block-id="s2" data-index="1" data-sbs-step=""><div class="sbs__bg sbs__bg--top" style="--sbs-shift: 0; --sbs-scale: 1.0;"><img alt="" class="sbs__bg-img" data-src="{{ 'sf/img/smooche-story-2-bottles-hd-750w-12dca0.jpg'|asset_url }}" data-srcset="{{ 'sf/img/smooche-story-2-bottles-hd-750w-12dca0.jpg'|asset_url }} 750w, {{ 'sf/img/smooche-story-2-bottles-hd-1100w-749fdf.jpg'|asset_url }} 1100w" decoding="async" height="2688" sizes="(min-width: 768px) 430px, 100vw" width="1520"/>
+</div>
+<div class="sbs__scrim sbs__scrim--scene"></div><div class="sbs__content"><h2 class="sbs__headline" data-sbs-focus="" tabindex="-1">Cakey. Wrong shade. <strong>Settling into every line.</strong></h2><div class="sbs__body"><p>You tried the expensive brands. You had your shade matched in the store. You added primer and a better sponge.</p><p>It looks fine for a couple of hours, then it cakes, sinks into your lines and drifts orange.</p><p>The problem isn’t your skin. It’s that most foundations are made for women in their 30s.</p><p>After 40 your tone shifts and your skin might get drier, so a fixed shade drifts and a heavy formula cakes into lines you didn’t even know were there.</p></div><button class="sbs__cta" data-sbs-next="" type="button">
+<span>So what do I switch to?</span>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+</button></div>
+</article><article aria-hidden="true" class="sbs__step sbs__step--product" data-block-id="s3" data-index="2" data-sbs-step=""><div class="sbs__bg sbs__bg--top" style="--sbs-shift: 0; --sbs-scale: 1.0;"><img alt="" class="sbs__bg-img" data-src="{{ 'sf/img/smooche-story-3-product-750w-c8de81.jpg'|asset_url }}" data-srcset="{{ 'sf/img/smooche-story-3-product-750w-c8de81.jpg'|asset_url }} 750w, {{ 'sf/img/smooche-story-3-product-1100w-fc3d9c.jpg'|asset_url }} 1100w" decoding="async" height="1344" sizes="(min-width: 768px) 430px, 100vw" width="752"/>
+</div>
+<div class="sbs__scrim sbs__scrim--product"></div><div class="sbs__content"><h2 class="sbs__headline" data-sbs-focus="" tabindex="-1">Switch to a foundation that <strong>adapts to you</strong>.</h2><div class="sbs__body"><p>It goes on white and adapts to you as you blend.</p><p>It feels lightweight, never cakes and stays put for 16+ hours.</p></div><ul class="sbs__items"><li class="sbs__item"><img alt="" class="sbs__item-img" data-src="{{ 'sf/img/foundation-3-color-changing-pigments-96w-a15a5c.jpg'|asset_url }}" decoding="async" height="40" width="40"/><span class="sbs__item-copy"><strong>Color Changing Pigments</strong>: match your exact shade</span>
+</li><li class="sbs__item"><img alt="" class="sbs__item-img" data-src="{{ 'sf/img/foundation-4-natural-coverage-96w-0d96ee.jpg'|asset_url }}" decoding="async" height="40" width="40"/><span class="sbs__item-copy"><strong>Natural coverage</strong>: blurs lines and redness</span>
+</li><li class="sbs__item"><img alt="" class="sbs__item-img" data-src="{{ 'sf/img/foundation-2-glycerin-96w-2ab512.jpg'|asset_url }}" decoding="async" height="40" width="40"/><span class="sbs__item-copy"><strong>Glycerin</strong>: keeps skin hydrated all day</span>
+</li><li class="sbs__item"><img alt="" class="sbs__item-img" data-src="{{ 'sf/img/foundation-5-mica-96w-4135b3.jpg'|asset_url }}" decoding="async" height="40" width="40"/><span class="sbs__item-copy"><strong>Mica</strong>: adds a soft, lit-from-within glow</span>
+</li><li class="sbs__item"><img alt="" class="sbs__item-img" data-src="{{ 'sf/img/foundation-1-spf15-96w-ecf1a4.jpg'|asset_url }}" decoding="async" height="40" width="40"/><span class="sbs__item-copy"><strong>SPF 15</strong>: built-in sun protection</span>
+</li></ul><button class="sbs__cta" data-sbs-next="" type="button">
+<span>What will I notice?</span>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+</button></div>
+</article><article aria-hidden="true" class="sbs__step sbs__step--timeline" data-block-id="s4" data-index="3" data-sbs-step=""><div class="sbs__bg sbs__bg--top" style="--sbs-shift: 14; --sbs-scale: 1.0;"><img alt="" class="sbs__bg-img" data-src="{{ 'sf/img/smooche-story-4-glow-750w-d6dfbd.jpg'|asset_url }}" data-srcset="{{ 'sf/img/smooche-story-4-glow-750w-d6dfbd.jpg'|asset_url }} 750w, {{ 'sf/img/smooche-story-4-glow-1100w-2e41b9.jpg'|asset_url }} 1100w" decoding="async" height="1344" sizes="(min-width: 768px) 430px, 100vw" width="752"/>
+</div>
+<div class="sbs__scrim sbs__scrim--timeline"></div><div class="sbs__content"><h2 class="sbs__headline" data-sbs-focus="" tabindex="-1">What you'll <strong>start to notice</strong>.</h2><ol class="sbs__stages"><li class="sbs__stage"><p class="sbs__stage-when">First blend</p><p class="sbs__stage-copy"><strong>Flawless from the first blend.</strong> It adapts to your skin tone in seconds, fine lines and blemishes look softer right away, and it stays put for 16+ hours.</p>
+</li><li class="sbs__stage"><p class="sbs__stage-when">1 Month</p><p class="sbs__stage-copy"><strong>Comfortable, hydrated skin.</strong> Glycerin keeps skin hydrated under coverage, from morning to night.</p>
+</li><li class="sbs__stage"><p class="sbs__stage-when">2 Months</p><p class="sbs__stage-copy"><strong>Healthier-looking bare skin.</strong> Your skin looks more even and rested, even with nothing on.</p>
+</li><li class="sbs__stage"><p class="sbs__stage-when">3+ Months</p><p class="sbs__stage-copy"><strong>Less makeup needed.</strong> Your skin looks so good underneath that you reach for less coverage.</p>
+</li></ol><button class="sbs__cta" data-sbs-next="" type="button">
+<span>I want that for me</span>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+</button></div>
+</article><article aria-hidden="true" class="sbs__step sbs__step--reviews" data-block-id="s5" data-index="4" data-sbs-step=""><div class="sbs__bg sbs__bg--top" style="--sbs-shift: 0; --sbs-scale: 1.0;"><img alt="" class="sbs__bg-img" data-src="{{ 'sf/img/smooche-story-5-daughter-750w-14bdec.jpg'|asset_url }}" data-srcset="{{ 'sf/img/smooche-story-5-daughter-750w-14bdec.jpg'|asset_url }} 750w, {{ 'sf/img/smooche-story-5-daughter-1100w-009954.jpg'|asset_url }} 1100w" decoding="async" height="1344" sizes="(min-width: 768px) 430px, 100vw" width="752"/>
+</div>
+<div class="sbs__scrim sbs__scrim--reviews"></div><div class="sbs__content"><h2 class="sbs__headline" data-sbs-focus="" tabindex="-1">Over <strong>1 million</strong> women feel confident in their skin again.</h2><div aria-label="Over 1 million women feel confident in their skin again." class="sbs__reviews" data-sbs-carousel="" role="group" tabindex="0"><div class="sbs__review"><figure class="sbs__review-card">
+<span aria-label="5 out of 5" class="sbs__stars sbs__stars--dark" role="img"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg></span>
+<blockquote class="sbs__review-quote"><p>“25 years of buying foundation, thousands of dollars, and they all did the same thing. settled into my pores, clung to the dry patches, went orange by lunch. this is the first one that's made me look younger instead of older. my husband asked if i'd had something done to my face.”</p></blockquote>
+<figcaption class="sbs__review-who">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="currentColor" r="10"></circle><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+                      Verified buyer · Jennifer, 58
+                    </figcaption>
+</figure></div><div class="sbs__review"><figure class="sbs__review-card">
+<span aria-label="5 out of 5" class="sbs__stars sbs__stars--dark" role="img"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg></span>
+<blockquote class="sbs__review-quote"><p>“i cried when i looked in the mirror, and i'm not exaggerating. my skin looked like MY skin, just smoother and more even. no lines standing out, no orange, no mask. i'm 61 and i finally love wearing foundation again 🙂”</p></blockquote>
+<figcaption class="sbs__review-who">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="currentColor" r="10"></circle><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+                      Verified buyer · Margaret, 61
+                    </figcaption>
+</figure></div><div class="sbs__review"><figure class="sbs__review-card">
+<span aria-label="5 out of 5" class="sbs__stars sbs__stars--dark" role="img"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg></span>
+<blockquote class="sbs__review-quote"><p>“watched it change color on the back of my hand and actually said what, out loud, in my kitchen. eight hours later it still looked the same. no orange. was not expecting that.”</p></blockquote>
+<figcaption class="sbs__review-who">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="currentColor" r="10"></circle><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+                      Verified buyer · Patricia, 58
+                    </figcaption>
+</figure></div><div class="sbs__review"><figure class="sbs__review-card">
+<span aria-label="5 out of 5" class="sbs__stars sbs__stars--dark" role="img"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg></span>
+<blockquote class="sbs__review-quote"><p>“i'd spent over $300 in a year returning foundations that didn't work. wrong shade, oxidized, settled into lines. this is the only one i'll ever buy again. three months in, i'm 56 and my skin finally looks flawless.”</p></blockquote>
+<figcaption class="sbs__review-who">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="currentColor" r="10"></circle><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+                      Verified buyer · Mia, 56
+                    </figcaption>
+</figure></div><div class="sbs__review"><figure class="sbs__review-card">
+<span aria-label="5 out of 5" class="sbs__stars sbs__stars--dark" role="img"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg></span>
+<blockquote class="sbs__review-quote"><p>“my daughter sent me this saying mum you NEED to try this. i was skeptical, what works on her skin won't work on my 62 year old face. ladies, listen to your daughters. no settling, no oxidizing, and i look years younger. best beauty purchase of my life.”</p></blockquote>
+<figcaption class="sbs__review-who">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="currentColor" r="10"></circle><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+                      Verified buyer · Susan, 62
+                    </figcaption>
+</figure></div><div class="sbs__review"><figure class="sbs__review-card">
+<span aria-label="5 out of 5" class="sbs__stars sbs__stars--dark" role="img"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m12 2.6 2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9Z" fill="currentColor"></path></svg></span>
+<blockquote class="sbs__review-quote"><p>“i'm a makeup artist, i've put every foundation on the market on someone's face. this is the first one i've watched glide over texture instead of sitting down in it. i'm 53 and i wear it myself now.”</p></blockquote>
+<figcaption class="sbs__review-who">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="currentColor" r="10"></circle><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+                      Verified buyer · Deborah, 53
+                    </figcaption>
+</figure></div></div><div aria-hidden="true" class="sbs__dots"><span class="sbs__dot is-active" data-sbs-dot=""></span><span class="sbs__dot" data-sbs-dot=""></span><span class="sbs__dot" data-sbs-dot=""></span><span class="sbs__dot" data-sbs-dot=""></span><span class="sbs__dot" data-sbs-dot=""></span><span class="sbs__dot" data-sbs-dot=""></span></div><button class="sbs__cta" data-sbs-next="" type="button">
+<span>Show me the deal</span>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+</button></div>
+</article><article aria-hidden="true" class="sbs__step sbs__step--offer" data-block-id="s6" data-index="5" data-sbs-step=""><div class="sbs__bg sbs__bg--plain"></div><div aria-hidden="true" class="sbs__confetti" data-sbs-confetti=""></div><div class="sbs__content"><div class="sbs__timer" data-key="template--22185426026652__story-s6" data-minutes="135" data-mode="visitor" data-sbs-timer=""><p class="sbs__timer-label">Exclusive offer</p><p aria-live="off" class="sbs__timer-clock" role="timer">
+<span><b data-sbs-h="">02</b>h</span>
+<span aria-hidden="true" class="sbs__timer-sep">:</span>
+<span><b data-sbs-m="">15</b>m</span>
+<span aria-hidden="true" class="sbs__timer-sep">:</span>
+<span><b data-sbs-s="">00</b>s</span>
+</p>
+</div><div class="sbs__photo sbs__photo--offer"><img alt="Smooche Color Changing Foundation with a free Smooche Blender, free shipping and a free mystery gift" class="sbs__photo-img" data-src="{{ 'sf/img/smooche-story-offer-gifts-720w-888d59.jpg'|asset_url }}" data-srcset="{{ 'sf/img/smooche-story-offer-gifts-720w-888d59.jpg'|asset_url }} 720w, {{ 'sf/img/smooche-story-offer-gifts-900w-c7af41.jpg'|asset_url }} 900w" decoding="async" height="1080" sizes="(min-width: 768px) 320px, 88vw" width="1080"/>
+</div><h2 class="sbs__headline" data-sbs-focus="" tabindex="-1">Up to <strong>60% off</strong> + free gifts</h2><ul class="sbs__perks"><li class="sbs__perk"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M4 11h16v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9ZM3 7h18v4H3zM12 7v14M12 7S10.5 3 8 3.6C6 4.1 6.6 7 9 7M12 7s1.5-4 4-3.4C18 4.1 17.4 7 15 7" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path></svg><span>Free gifts</span>
+</li><li class="sbs__perk"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M2.5 6h11v10h-11zM13.5 9.5h4l3 3.5V16h-7z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path><circle cx="6.5" cy="17.5" fill="none" r="1.8" stroke="currentColor" stroke-width="1.7"></circle><circle cx="17" cy="17.5" fill="none" r="1.8" stroke="currentColor" stroke-width="1.7"></circle></svg><span>Free shipping</span>
+</li></ul><p class="sbs__guarantee">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M12 2.5 4.5 5.5v6c0 4.6 3.2 8.4 7.5 10 4.3-1.6 7.5-5.4 7.5-10v-6Z" fill="currentColor"></path><path d="M8.5 12.2l2.4 2.4 4.6-4.9" fill="none" stroke="var(--sbs-bg)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<strong>30-day money-back guarantee</strong>
+</p><a class="sbs__cta" data-sbs-offer="" href="#">
+<span>Claim my offer</span>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg>
+</a><div class="sbs__disclaimer"><p>Individual results vary. The character shown on this page is an animated dramatization, and all imagery of her is AI-generated. She is not a customer. Quoted reviews are from verified Smooche buyers.</p></div></div>
+</article></div>
+</div>
+</div>
+</section>
+</main>
+{% endblock content_wrapper %}
+{% block sf_tail %}
+<div aria-hidden="true" class="pswp pswp--custom-loader" data-index="0" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="pswp pswp--custom-loader" data-index="1" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/smooche-cart-timer-b352c2.js'|asset_url }}"></script><script>
+      // Function to update the price element with the new variant price
+      function updateProductPrice(newPrice) {
+        const priceElement = document.getElementById('productpricingnew');
+        if (!priceElement) return;
+        priceElement.textContent = newPrice;
+      }
+
+      // Event listener to detect changes in the variant selection
+      document.addEventListener('DOMContentLoaded', function () {
+        // Assuming the variant change triggers an update on the element with class 'product__price--regular'
+        const regularPriceElement = document.querySelector('.product__price--regular');
+
+        if (regularPriceElement && document.getElementById('productpricingnew')) {
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+              // Update the `productpricingnew` element with the new price when it changes
+              updateProductPrice(mutation.target.textContent);
+            });
+          });
+
+          // Observe changes in the regular price element
+          observer.observe(regularPriceElement, {
+            childList: true,
+            subtree: true,
+          });
+        }
+      });
+    </script><script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get all swatch labels
+        const swatchLabels = document.querySelectorAll('.swatch__label');
+
+        swatchLabels.forEach((label) => {
+          label.addEventListener('click', (event) => {
+            // Get the value of selected-swatch from the clicked label
+            const selectedSwatch = label.getAttribute('selected-swatch');
+
+            // Update the .selected-swatch content
+            const selectedSwatchElement = document.querySelector('.selected-swatch');
+            if (selectedSwatchElement && selectedSwatch) {
+              selectedSwatchElement.textContent = selectedSwatch;
+            }
+          });
+        });
+      });
+    </script><script>
+      /* Accordion Popup JavaScript - Moves modals to body for proper z-index stacking */
+
+(function() {
+  'use strict';
+
+  // Move all popup modals to body for proper z-index stacking
+  function movePopupsToBody() {
+    document.querySelectorAll('.popup-modal[data-popup-modal]').forEach(function(popup) {
+      // Only move if not already a direct child of body
+      if (popup.parentElement !== document.body) {
+        document.body.appendChild(popup);
+      }
+    });
+  }
+
+  function initAccordionPopups() {
+    // First, move popups to body level
+    movePopupsToBody();
+
+    // Open popup via trigger link
+    document.querySelectorAll('[data-popup-trigger]').forEach(function(trigger) {
+      // Remove existing listeners to prevent duplicates
+      trigger.removeEventListener('click', handleTriggerClick);
+      trigger.addEventListener('click', handleTriggerClick);
+    });
+
+    // Close popup via close button or overlay click
+    document.querySelectorAll('[data-popup-close]').forEach(function(closeBtn) {
+      closeBtn.removeEventListener('click', handleCloseClick);
+      closeBtn.addEventListener('click', handleCloseClick);
+    });
+  }
+
+  function handleTriggerClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-trigger');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function handleCloseClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-close');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Close on escape key (only add once)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var activePopup = document.querySelector('.popup-modal.is-active');
+      if (activePopup) {
+        activePopup.classList.remove('is-active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccordionPopups);
+  } else {
+    initAccordionPopups();
+  }
+
+  // Re-initialize for Shopify sections (if using Section Rendering API)
+  document.addEventListener('shopify:section:load', initAccordionPopups);
+})();
+    </script>
+{% endblock sf_tail %}

@@ -1,0 +1,90 @@
+{# Spark Theme -- Cart Summary (order totals sidebar) #}
+<div class="border border-slate-200">
+    <div class="px-6 py-4 border-b border-slate-200">
+        <div class="flex items-center justify-between">
+            <span class="text-base font-semibold text-slate-800">{% t "order.cart.summary" %}</span>
+            <span class="text-xs text-slate-400 bg-slate-100 px-2 py-1">
+                {% t "order.cart.items_count" with count=cart.num_items %}
+            </span>
+        </div>
+    </div>
+    <div class="px-6 py-4">
+        <div class="space-y-3 text-sm">
+            {# Subtotal #}
+            <div class="flex justify-between">
+                <span class="text-slate-600">{% t "order.cart.cart_total" %}</span>
+                <span class="text-slate-800">{{ cart.total_excl_tax_excl_discounts|currency:cart.currency }}</span>
+            </div>
+
+            {# Offer discounts #}
+            {% with offer_discounts=cart.offer_discounts voucher_discounts=cart.grouped_voucher_discounts %}
+                {% for discount in offer_discounts %}
+                    <div class="flex justify-between text-green-600">
+                        <span>{{ discount.name }}</span>
+                        <span>-{{ discount.discount|currency:cart.currency }}</span>
+                    </div>
+                {% endfor %}
+
+                {# Voucher discounts #}
+                {% for discount in voucher_discounts %}
+                    <div class="flex justify-between text-green-600">
+                        <span class="flex items-center gap-2">
+                            {{ discount.voucher.code }}
+                            {% if editable %}
+                                <form action="{% url 'cart:vouchers-remove' pk=discount.voucher.id %}" method="POST" class="inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="text-xs text-red-400 hover:text-red-600">x</button>
+                                </form>
+                            {% endif %}
+                        </span>
+                        <span>-{{ discount.discount|currency:cart.currency }}</span>
+                    </div>
+                {% endfor %}
+            {% endwith %}
+
+            {# Subscription info #}
+            {% with subscription_rebill_quantity=cart.subscription_rebill_quantity %}
+                {% if subscription_rebill_quantity %}
+                    <div class="flex justify-between">
+                        <span class="text-slate-600">
+                            {% t "order.cart.subscription_items" with count=subscription_rebill_quantity %}
+                        </span>
+                        <span class="text-slate-800">
+                            {% if cart.is_tax_known %}
+                                {{ subscription_total_incl_tax|currency:cart.currency }}
+                            {% else %}
+                                {{ subscription_total_excl_tax|currency:cart.currency }}
+                            {% endif %}
+                        </span>
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {# Shipping #}
+            <div class="flex justify-between">
+                <span class="text-slate-600">{% t "order.cart.shipping" %}</span>
+                <span class="text-xs text-slate-400">{% t "order.cart.calculated_at_checkout" %}</span>
+            </div>
+
+            {# Tax #}
+            {% if cart.display_taxes %}
+                <div class="flex justify-between">
+                    <span class="text-slate-600">{{ cart.display_taxes }}</span>
+                    <span class="text-slate-800">{{ order_total.tax|currency:cart.currency }}</span>
+                </div>
+            {% endif %}
+
+            {# Order total #}
+            <div class="flex justify-between pt-3 border-t border-slate-200 font-semibold text-base">
+                <span class="text-slate-800">{% t "order.cart.order_total" %}</span>
+                <span class="text-slate-800">{{ order_total.incl_tax|currency:cart.currency }}</span>
+            </div>
+        </div>
+
+        {% if editable %}
+            <a href="{% url 'checkout:index' %}" class="btn btn-primary w-full mt-6">
+                {% t "order.cart.proceed_to_checkout" %}
+            </a>
+        {% endif %}
+    </div>
+</div>

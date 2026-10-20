@@ -1,0 +1,33 @@
+{# Store logo — handles logo, icon, or text fallback #}
+{% if store.branding.icon and store.branding.logo %}
+<picture>
+    {% with image=store.branding.logo %}
+    {% image_thumbnail image "150x" upscale=False as thumb_store_logo %}
+    {% image_thumbnail image "300x" upscale=False as thumb_store_logox2 %}
+    <source srcset="{{ thumb_store_logo.url }}, {{ thumb_store_logox2.url }} 2x" media="(min-width: 768px)" />
+    {% endwith %}
+    {% with image=store.branding.icon %}
+    {% image_thumbnail image "40x" upscale=False as thumb_store_icon %}
+    {% image_thumbnail image "80x" upscale=False as thumb_store_iconx2 %}
+    <img src="{{ thumb_store_logo.url }}" alt="{{ store.name }}" class="h-8 w-auto" srcset="{{ thumb_store_icon.url }}, {{ thumb_store_iconx2.url }} 2x" />
+    {% endwith %}
+</picture>
+{% elif store.branding.logo and not store.branding.icon %}
+<picture>
+    {% with image=store.branding.logo %}
+    {% image_thumbnail image "150x" upscale=False as thumb_store_logo %}
+    {% image_thumbnail image "300x" upscale=False as thumb_store_logox2 %}
+    <img src="{{ thumb_store_logo.url }}" alt="{{ store.name }}" class="h-8 w-auto" srcset="{{ thumb_store_logo.url }}, {{ thumb_store_logox2.url }} 2x" />
+    {% endwith %}
+</picture>
+{% elif store.branding.icon and not store.branding.logo %}
+<picture>
+    {% with image=store.branding.icon %}
+    {% image_thumbnail image "40x" upscale=False as thumb_store_icon %}
+    {% image_thumbnail image "80x" upscale=False as thumb_store_iconx2 %}
+    <img src="{{ thumb_store_icon.url }}" alt="{{ store.name }}" class="h-8 w-auto" srcset="{{ thumb_store_icon.url }}, {{ thumb_store_iconx2.url }} 2x" />
+    {% endwith %}
+</picture>
+{% else %}
+{{ store.name }}
+{% endif %}

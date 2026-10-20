@@ -1,0 +1,512 @@
+{
+  "filters": {
+    "abs": {
+      "arg": "none",
+      "library": "math_filters_tags"
+    },
+    "add_class": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "add_error_attr": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "add_error_class": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "add_label_class": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "add_nested_class": {
+      "arg": "none",
+      "library": "rest_framework"
+    },
+    "add_required_class": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "alternative_payment_method_icon": {
+      "arg": "none",
+      "library": "payment_method"
+    },
+    "append_attr": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "as_list_of_strings": {
+      "arg": "none",
+      "library": "rest_framework"
+    },
+    "as_stars": {
+      "arg": "none",
+      "library": "reviews_tags"
+    },
+    "as_string": {
+      "arg": "none",
+      "library": "rest_framework"
+    },
+    "asset_url": {
+      "arg": "none",
+      "library": "theme_tags"
+    },
+    "atleast": {
+      "arg": "required",
+      "library": "math_filters_tags"
+    },
+    "atmost": {
+      "arg": "required",
+      "library": "math_filters_tags"
+    },
+    "attr": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "bankcard_icon": {
+      "arg": "none",
+      "library": "payment_method"
+    },
+    "break_long_headers": {
+      "arg": "none",
+      "library": "rest_framework"
+    },
+    "by_ids": {
+      "arg": "required",
+      "library": "filter_tags"
+    },
+    "ceil": {
+      "arg": "none",
+      "library": "math_filters_tags"
+    },
+    "currency": {
+      "arg": "optional",
+      "library": "currency_filters"
+    },
+    "data": {
+      "arg": "none",
+      "library": "rest_framework"
+    },
+    "dividedby": {
+      "arg": "required",
+      "library": "math_filters_tags"
+    },
+    "field_type": {
+      "arg": "none",
+      "library": "widget_tweaks"
+    },
+    "floor": {
+      "arg": "none",
+      "library": "math_filters_tags"
+    },
+    "format_value": {
+      "arg": "none",
+      "library": "rest_framework"
+    },
+    "is_review_permitted": {
+      "arg": "required",
+      "library": "reviews_tags"
+    },
+    "is_webp": {
+      "arg": "none",
+      "library": "image_tags"
+    },
+    "items": {
+      "arg": "none",
+      "library": "rest_framework"
+    },
+    "may_vote": {
+      "arg": "required",
+      "library": "reviews_tags"
+    },
+    "media_url": {
+      "arg": "none",
+      "library": "theme_tags"
+    },
+    "minus": {
+      "arg": "required",
+      "library": "math_filters_tags"
+    },
+    "modulo": {
+      "arg": "required",
+      "library": "math_filters_tags"
+    },
+    "payment_method_display_name": {
+      "arg": "none",
+      "library": "payment_method"
+    },
+    "plus": {
+      "arg": "required",
+      "library": "math_filters_tags"
+    },
+    "remove_attr": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "round": {
+      "arg": "optional",
+      "library": "math_filters_tags"
+    },
+    "schema_links": {
+      "arg": "optional",
+      "library": "rest_framework"
+    },
+    "set_data": {
+      "arg": "required",
+      "library": "widget_tweaks"
+    },
+    "split": {
+      "arg": "optional",
+      "library": "string_filters"
+    },
+    "times": {
+      "arg": "required",
+      "library": "math_filters_tags"
+    },
+    "widget_type": {
+      "arg": "none",
+      "library": "widget_tweaks"
+    },
+    "with_location": {
+      "arg": "required",
+      "library": "rest_framework"
+    }
+  },
+  "tags": {
+    "absolute_url": {
+      "kind": "simple",
+      "library": "url_tags",
+      "params": [
+        "domain",
+        "path"
+      ],
+      "takes_context": false
+    },
+    "add_query_param": {
+      "kind": "simple",
+      "library": "rest_framework",
+      "params": [
+        "request",
+        "key",
+        "val"
+      ],
+      "takes_context": false
+    },
+    "annotate_form_field": {
+      "kind": "tag",
+      "library": "form_tags"
+    },
+    "app_hook": {
+      "kind": "simple",
+      "library": "app_hooks",
+      "params": [
+        "name"
+      ],
+      "takes_context": true,
+      "varargs": true,
+      "varkw": true
+    },
+    "basket_form": {
+      "kind": "simple",
+      "library": "basket_tags",
+      "params": [
+        "request",
+        "product",
+        "quantity_type="
+      ],
+      "takes_context": false
+    },
+    "cart_form": {
+      "kind": "simple",
+      "library": "cart_tags",
+      "params": [
+        "request",
+        "product",
+        "quantity_type="
+      ],
+      "takes_context": false
+    },
+    "category_tree": {
+      "kind": "simple",
+      "library": "category_tags",
+      "params": [
+        "depth=",
+        "parent="
+      ],
+      "takes_context": false
+    },
+    "checkout_payment_method_icon": {
+      "kind": "simple",
+      "library": "payment_method",
+      "params": [
+        "payment_method=",
+        "bankcard=",
+        "transaction=",
+        "source="
+      ],
+      "takes_context": false
+    },
+    "code": {
+      "kind": "block",
+      "library": "rest_framework",
+      "parse_until": [
+        "endcode"
+      ]
+    },
+    "core_js": {
+      "kind": "simple",
+      "library": "theme_tags",
+      "params": [],
+      "takes_context": true
+    },
+    "currency_symbol": {
+      "kind": "simple",
+      "library": "currency_filters",
+      "params": [
+        "currency_code"
+      ],
+      "takes_context": false
+    },
+    "customer_event_iframes": {
+      "kind": "simple",
+      "library": "customer_event_iframes",
+      "params": [],
+      "takes_context": true
+    },
+    "customer_event_manager": {
+      "kind": "simple",
+      "library": "customer_event_manager",
+      "params": [],
+      "takes_context": true
+    },
+    "extend_query_param": {
+      "kind": "simple",
+      "library": "extend_query_params_tags",
+      "params": [],
+      "takes_context": true,
+      "varargs": true,
+      "varkw": true
+    },
+    "form_for_link": {
+      "kind": "simple",
+      "library": "rest_framework",
+      "params": [
+        "link"
+      ],
+      "takes_context": false
+    },
+    "get_back_button": {
+      "kind": "simple",
+      "library": "history_tags",
+      "params": [],
+      "takes_context": true
+    },
+    "get_pagination_html": {
+      "kind": "simple",
+      "library": "rest_framework",
+      "params": [
+        "pager"
+      ],
+      "takes_context": false
+    },
+    "get_parameters": {
+      "kind": "simple",
+      "library": "display_tags",
+      "params": [
+        "except_field"
+      ],
+      "takes_context": true
+    },
+    "get_public_asset_url": {
+      "kind": "simple",
+      "library": "theme_tags",
+      "params": [
+        "file_name"
+      ],
+      "takes_context": false
+    },
+    "iffeature": {
+      "kind": "block",
+      "library": "display_tags",
+      "parse_until": [
+        "endiffeature"
+      ]
+    },
+    "image": {
+      "kind": "tag",
+      "library": "image_tags"
+    },
+    "image_thumbnail": {
+      "kind": "tag",
+      "library": "image_tags"
+    },
+    "last_day_of_month": {
+      "kind": "simple",
+      "library": "extend_query_params_tags",
+      "params": [
+        "date"
+      ],
+      "takes_context": false
+    },
+    "optional_docs_login": {
+      "kind": "simple",
+      "library": "rest_framework",
+      "params": [
+        "request"
+      ],
+      "takes_context": false
+    },
+    "optional_login": {
+      "kind": "simple",
+      "library": "rest_framework",
+      "params": [
+        "request"
+      ],
+      "takes_context": false
+    },
+    "optional_logout": {
+      "kind": "simple",
+      "library": "rest_framework",
+      "params": [
+        "request",
+        "user",
+        "csrf_token"
+      ],
+      "takes_context": false
+    },
+    "oscar_thumbnail": {
+      "kind": "tag",
+      "library": "image_tags"
+    },
+    "payment_gateway_display_name": {
+      "kind": "simple",
+      "library": "payment_method",
+      "params": [
+        "payment_gateway=",
+        "transaction="
+      ],
+      "takes_context": false
+    },
+    "payment_method_icon": {
+      "kind": "simple",
+      "library": "payment_method",
+      "params": [
+        "payment_method=",
+        "bankcard=",
+        "transaction=",
+        "bankcard_type="
+      ],
+      "takes_context": false
+    },
+    "pixels": {
+      "kind": "simple",
+      "library": "pixels",
+      "params": [],
+      "takes_context": true
+    },
+    "purchase_info_for_line": {
+      "kind": "simple",
+      "library": "purchase_info_tags",
+      "params": [
+        "request",
+        "line"
+      ],
+      "takes_context": false
+    },
+    "purchase_info_for_product": {
+      "kind": "simple",
+      "library": "purchase_info_tags",
+      "params": [
+        "request",
+        "product"
+      ],
+      "takes_context": false
+    },
+    "purchase_info_for_product_by_currency": {
+      "kind": "simple",
+      "library": "purchase_info_tags",
+      "params": [
+        "request",
+        "product",
+        "currency"
+      ],
+      "takes_context": false
+    },
+    "recently_viewed_products": {
+      "kind": "simple",
+      "library": "history_tags",
+      "params": [
+        "current_product="
+      ],
+      "takes_context": true
+    },
+    "render_field": {
+      "kind": "tag",
+      "library": "widget_tweaks"
+    },
+    "render_form": {
+      "kind": "simple",
+      "library": "rest_framework",
+      "params": [
+        "serializer",
+        "template_pack="
+      ],
+      "takes_context": false
+    },
+    "render_markdown": {
+      "kind": "simple",
+      "library": "rest_framework",
+      "params": [
+        "markdown_text"
+      ],
+      "takes_context": false
+    },
+    "seo": {
+      "kind": "simple",
+      "library": "seo_tags",
+      "params": [],
+      "takes_context": true
+    },
+    "setting_url_for_app": {
+      "kind": "simple",
+      "library": "app_setting_url",
+      "params": [
+        "request",
+        "app"
+      ],
+      "takes_context": false
+    },
+    "t": {
+      "kind": "simple",
+      "library": "theme_tags",
+      "params": [
+        "key"
+      ],
+      "takes_context": true,
+      "varargs": true,
+      "varkw": true
+    },
+    "where": {
+      "kind": "simple",
+      "library": "filter_tags",
+      "params": [
+        "objects",
+        "field",
+        "lookup_expr"
+      ],
+      "takes_context": false,
+      "varargs": true,
+      "varkw": true
+    },
+    "wishlists_containing_product": {
+      "kind": "simple",
+      "library": "wishlist_tags",
+      "params": [
+        "wishlists",
+        "product"
+      ],
+      "takes_context": false
+    }
+  }
+}

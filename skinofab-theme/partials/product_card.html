@@ -1,0 +1,54 @@
+{# Spark Theme — Product Card (reusable in grids) #}
+{# Usage: {% include 'partials/product_card.html' with product=product %} #}
+{# Sold-out cards follow settings.product_card_sold_out_style: badge (default), muted, or hide. #}
+{# A store whose data file predates the setting gets the badge behaviour without a settings_data push. #}
+{% purchase_info_for_product request product as session %}
+{% if session.availability.is_available_to_buy or settings.product_card_sold_out_style|default:'badge' != 'hide' %}
+<a href="{{ product.get_absolute_url }}"
+   class="product-card group relative {% if settings.product_card_border %}product-card-bordered{% endif %} {% if not session.availability.is_available_to_buy and settings.product_card_sold_out_style == 'muted' %}product-card-sold-out{% endif %}"
+   {% if card_bg %}style="background-color: {{ card_bg }};"{% endif %}>
+    {% with image=product.primary_image %}
+        {% if image.original %}
+            {% if settings.product_media_fit == 'cover' %}
+                {% image_thumbnail image.original "400x400" crop="center" as thumb %}
+            {% else %}
+                {% image_thumbnail image.original "400x" as thumb %}
+            {% endif %}
+            <img src="{{ thumb.url }}"
+                 alt="{{ product.get_title }}"
+                 width="400"
+                 {% if settings.product_media_fit == 'cover' %}height="400"{% endif %}
+                 class="{% if settings.product_media_fit == 'cover' %}object-cover aspect-square{% endif %}"
+                 loading="lazy" />
+        {% else %}
+            <div class="aspect-square bg-slate-100 flex items-center justify-center">
+                <span class="text-slate-300 text-sm">{% t 'product.no_image' %}</span>
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% if not session.availability.is_available_to_buy %}
+        <div class="product-card-sold-out-badge">{% t 'product.sold_out' %}</div>
+    {% elif session.price.exists and session.price.price_retail > session.price.price %}
+        <div class="absolute top-0 left-0 bg-[var(--primary-color)] text-white text-xs font-medium px-2 py-0.5 leading-5">
+            {% widthratio session.price.price session.price.price_retail 100 as pct %}{% t "store.catalogue.sale" %}
+        </div>
+    {% endif %}
+    <div class="product-title text-slate-800 group-hover:text-slate-600">{{ product.get_title }}</div>
+    {% app_hook 'product_card_rating_summary' %}
+    <div class="product-price"
+         data-spark-membership-price
+         data-spark-membership-layout="card"
+         data-base-price="{{ session.price.price }}"
+         data-currency="{{ session.price.currency }}">
+        {% if session.price.exists %}
+            {# Public price is separate so member pricing can strike it without changing retail compare-at. #}
+            <span data-spark-public-price>{{ session.price.price|currency:session.price.currency }}</span>
+            {% if session.price.price_retail > session.price.price %}
+                <span class="text-slate-400 text-xs line-through ml-1">
+                    {{ session.price.price_retail|currency:session.price.currency }}
+                </span>
+            {% endif %}
+        {% endif %}
+    </div>
+</a>
+{% endif %}

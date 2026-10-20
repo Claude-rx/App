@@ -1,0 +1,3543 @@
+{% extends 'layouts/base.html' %}
+{% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
+{% block body_id %}{% firstof "under-eye-reset-patches" %}{% endblock %}
+{% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
+{% block sf_head %}
+<link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
+</style><style>
+      .video-slide, .video-thumbnail, .product__form .btn--submit, #locationinfop, .product-grid-item .btn--quick .btn__inner, .product-upsell__btn, .btn, .btn--primary, .btn--primary .shopify-payment-button__button--unbranded, input.btn .shopify-payment-button__button--unbranded, input.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded, input.btn, input.shopify-payment-button__button--unbranded {
+         border-radius: 10px!important;
+      }
+      .input-group, .select-popout__toggle  {
+         border-radius: 10px!important;
+      }
+      #SiteFooter .input-group__fields input {
+        border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;
+      }
+        .input-group__btn {
+            border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;
+        }
+
+        button[aria-expanded=true] #accordionbefore:before {
+          background-color: #f7f7f7!important;
+        }
+      @media only screen and (max-width: 767px) {
+        .product-single .product__title {
+          font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;
+        }
+      }
+      #cart-drawer .product-upsell__holder .product-grid-item__swatch {
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 6px !important;
+      }
+      /* Preserve the bar's height while keeping it below the cart/header stack. */
+      body.js-drawer-open-cart .announcement-bar-static,
+      body:has(#cart-drawer.is-open) .announcement-bar-static {
+        z-index: 8999 !important;
+      }
+      body.js-drawer-open .announcement-bar-static,
+      body.js-quick-view-from-cart .announcement-bar-static,
+      body.js-quick-view-visible .announcement-bar-static,
+      body:has(#nav-drawer.is-open) .announcement-bar-static,
+      body:has(.drawer.is-open) .announcement-bar-static {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style><style>
+        .swiper-scrollbar {
+        display: none!important;
+        }
+      </style><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="{{ 'sf/css/all-min-2d3b0a.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/><script src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><link href="{{ 'sf/css/swiper-bundle-min-9d0eb7.css'|asset_url }}" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><style data-shopify="">:root { --loader-image-size: 60px; }:root { --loader-image-size: 320px; }html:not(.is-loading) .loading-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-overlay { position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s; }
+        .loading-overlay .loader__image--fallback { width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain; }
+        .loader__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out; }
+        .loader__image { max-width: 60px; height: auto; object-fit: contain; }</style><script>
+        const loadingAppearance = "once";
+        const loaded = sessionStorage.getItem('loaded');
+
+        if (loadingAppearance === 'once') {
+          if (loaded === null) {
+            sessionStorage.setItem('loaded', true);
+            document.documentElement.classList.add('is-loading');
+          }
+        } else {
+          document.documentElement.classList.add('is-loading');
+        }
+      </script><style data-shopify="">@font-face {
+  font-family: Jost;
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
+}
+
+@font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+@font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}
+
+
+:root {--COLOR-PRIMARY-OPPOSITE: #ffffff;
+  --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --PRIMARY-BUTTONS-COLOR-BG: #000000;
+  --PRIMARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --PRIMARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --PRIMARY-BUTTONS-COLOR-LIGHTEN-DARKEN: #1a1a1a;
+
+  --PRIMARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--COLOR-SECONDARY-OPPOSITE: #ffffff;
+  --COLOR-SECONDARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --SECONDARY-BUTTONS-COLOR-BG: #000000;
+  --SECONDARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --SECONDARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --SECONDARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--OUTLINE-BUTTONS-PRIMARY-BG: transparent;
+  --OUTLINE-BUTTONS-PRIMARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-SECONDARY-BG: transparent;
+  --OUTLINE-BUTTONS-SECONDARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-WHITE-BG: transparent;
+  --OUTLINE-BUTTONS-WHITE-TEXT: #ffffff;
+  --OUTLINE-BUTTONS-WHITE-BORDER: #ffffff;
+
+  --OUTLINE-BUTTONS-BLACK-BG: transparent;
+  --OUTLINE-BUTTONS-BLACK-TEXT: #000000;
+  --OUTLINE-BUTTONS-BLACK-BORDER: #000000;--OUTLINE-SOLID-BUTTONS-PRIMARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-WHITE-BG: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-WHITE-TEXT: #000000;
+  --OUTLINE-SOLID-BUTTONS-WHITE-BORDER: #000000;
+
+  --OUTLINE-SOLID-BUTTONS-BLACK-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-BLACK-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-BLACK-BORDER: #ffffff;--COLOR-HEADING: #151515;
+  --COLOR-TEXT: #151515;
+  --COLOR-TEXT-DARKEN: #000000;
+  --COLOR-TEXT-LIGHTEN: #484848;
+  --COLOR-TEXT-ALPHA-5: rgba(21, 21, 21, 0.05);
+  --COLOR-TEXT-ALPHA-8: rgba(21, 21, 21, 0.08);
+  --COLOR-TEXT-ALPHA-10: rgba(21, 21, 21, 0.1);
+  --COLOR-TEXT-ALPHA-15: rgba(21, 21, 21, 0.15);
+  --COLOR-TEXT-ALPHA-20: rgba(21, 21, 21, 0.2);
+  --COLOR-TEXT-ALPHA-25: rgba(21, 21, 21, 0.25);
+  --COLOR-TEXT-ALPHA-50: rgba(21, 21, 21, 0.5);
+  --COLOR-TEXT-ALPHA-60: rgba(21, 21, 21, 0.6);
+  --COLOR-TEXT-ALPHA-85: rgba(21, 21, 21, 0.85);
+
+  --COLOR-BG: #ffffff;
+  --COLOR-BG-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-BG-ALPHA-35: rgba(255, 255, 255, 0.35);
+  --COLOR-BG-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BG-ALPHA-65: rgba(255, 255, 255, 0.65);
+  --COLOR-BG-ALPHA-85: rgba(255, 255, 255, 0.85);
+  --COLOR-BG-OVERLAY: rgba(255, 255, 255, 0.75);
+  --COLOR-BG-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-BG: #fafafa;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-EFFECT: #f5f5f5;
+  --COLOR-BG-LIGHTEN-DARKEN-FOREGROUND: #f7f7f7;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER: #cccccc;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER-LINE: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-2: #cdcdcd;
+  --COLOR-BG-LIGHTEN-DARKEN-3: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-4: #9a9a9a;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-2: #999999;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-3: #808080;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-4: #666666;
+
+  --COLOR-BG-SECONDARY: #f7f7f7;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN: #dedede;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN-CONTRAST: #777777;
+
+  --COLOR-INPUT-BG: #ffffff;
+
+  --COLOR-ACCENT: #df8096;
+  --COLOR-ACCENT-TEXT: #fff;
+
+  --COLOR-BORDER: #f7f7f7;
+  --COLOR-BORDER-ALPHA-15: rgba(247, 247, 247, 0.15);
+  --COLOR-BORDER-ALPHA-30: rgba(247, 247, 247, 0.3);
+  --COLOR-BORDER-ALPHA-50: rgba(247, 247, 247, 0.5);
+  --COLOR-BORDER-ALPHA-65: rgba(247, 247, 247, 0.65);
+  --COLOR-BORDER-LIGHTEN-DARKEN: #ababab;
+  --COLOR-BORDER-HAIRLINE: #f7f7f7;
+
+  --COLOR-SALE-BG: #df8096;
+  --COLOR-SALE-TEXT: #ffffff;
+  --COLOR-CUSTOM-BG: #df8096;
+  --COLOR-CUSTOM-TEXT: #ffffff;
+  --COLOR-SOLD-BG: #000000;
+  --COLOR-SOLD-TEXT: #ffffff;
+  --COLOR-SAVING-BG: #df8096;
+  --COLOR-SAVING-TEXT: #ffffff;
+
+  --COLOR-WHITE-BLACK: fff;
+  --COLOR-BLACK-WHITE: #000;
+  --COLOR-BLACK-WHITE-ALPHA-25: rgba(0, 0, 0, 0.25);--COLOR-DISABLED-GREY: rgba(21, 21, 21, 0.05);
+  --COLOR-DISABLED-GREY-DARKEN: rgba(21, 21, 21, 0.45);
+  --COLOR-ERROR: #D02E2E;
+  --COLOR-ERROR-BG: #f3cbcb;
+  --COLOR-SUCCESS: #56AD6A;
+  --COLOR-SUCCESS-BG: #ECFEF0;
+  --COLOR-WARN: #ECBD5E;
+  --COLOR-TRANSPARENT: rgba(255, 255, 255, 0);
+
+  --COLOR-WHITE: #ffffff;
+  --COLOR-WHITE-DARKEN: #f2f2f2;
+  --COLOR-WHITE-ALPHA-10: rgba(255, 255, 255, 0.1);
+  --COLOR-WHITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-WHITE-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-WHITE-ALPHA-50: rgba(255, 255, 255, 0.5);
+  --COLOR-WHITE-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BLACK: #000000;
+  --COLOR-BLACK-LIGHTEN: #1a1a1a;
+  --COLOR-BLACK-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --COLOR-BLACK-ALPHA-20: rgba(0, 0, 0, 0.2);
+  --COLOR-BLACK-ALPHA-25: rgba(0, 0, 0, 0.25);
+  --COLOR-BLACK-ALPHA-50: rgba(0, 0, 0, 0.5);
+  --COLOR-BLACK-ALPHA-60: rgba(0, 0, 0, 0.6);--FONT-STACK-BODY: futura-pt, sans-serif;
+  --FONT-STYLE-BODY: normal;
+  --FONT-STYLE-BODY-ITALIC: italic;
+  --FONT-ADJUST-BODY: 1.0;
+
+  --FONT-WEIGHT-BODY: 400;
+  --FONT-WEIGHT-BODY-LIGHT: 100;
+  --FONT-WEIGHT-BODY-MEDIUM: 700;
+  --FONT-WEIGHT-BODY-BOLD: 500;
+
+  --FONT-STACK-HEADING: futura-pt, sans-serif;
+  --FONT-STYLE-HEADING: normal;
+  --FONT-STYLE-HEADING-ITALIC: italic;
+  --FONT-ADJUST-HEADING: 1.1;
+
+  --FONT-WEIGHT-HEADING: 600;
+  --FONT-WEIGHT-HEADING-LIGHT: 400;
+  --FONT-WEIGHT-HEADING-MEDIUM: 900;
+  --FONT-WEIGHT-HEADING-BOLD: 600;
+
+  --FONT-STACK-NAV: futura-pt, sans-serif;
+  --FONT-STYLE-NAV: normal;
+  --FONT-STYLE-NAV-ITALIC: italic;
+  --FONT-ADJUST-NAV: 0.8;
+  --FONT-ADJUST-NAV-TOP-LEVEL: 0.8;
+
+  --FONT-WEIGHT-NAV: 600;
+  --FONT-WEIGHT-NAV-LIGHT: 400;
+  --FONT-WEIGHT-NAV-MEDIUM: 900;
+  --FONT-WEIGHT-NAV-BOLD: 700;
+
+  --FONT-ADJUST-PRODUCT-GRID: 0.9;
+
+  --FONT-STACK-BUTTON: futura-pt, sans-serif;
+  --FONT-STYLE-BUTTON: normal;
+  --FONT-STYLE-BUTTON-ITALIC: italic;
+  --FONT-ADJUST-BUTTON: 0.8;
+
+  --FONT-WEIGHT-BUTTON: 600;
+  --FONT-WEIGHT-BUTTON-MEDIUM: 900;
+  --FONT-WEIGHT-BUTTON-BOLD: 700;
+
+  --FONT-STACK-SUBHEADING: futura-pt, sans-serif;
+  --FONT-STYLE-SUBHEADING: normal;
+  --FONT-ADJUST-SUBHEADING: 1.0;
+
+  --FONT-WEIGHT-SUBHEADING: 400;
+  --FONT-WEIGHT-SUBHEADING-BOLD: 500;
+
+  --FONT-STACK-LABEL: futura-pt, sans-serif;
+  --FONT-STYLE-LABEL: normal;
+  --FONT-ADJUST-LABEL: 0.65;
+
+  --FONT-WEIGHT-LABEL: 500;
+
+  --LETTER-SPACING-NAV: 0.075em;
+  --LETTER-SPACING-SUBHEADING: 0.025em;
+  --LETTER-SPACING-BUTTON: 0.125em;
+  --LETTER-SPACING-LABEL: 0.05em;
+
+  --BUTTON-TEXT-CAPS: uppercase;
+  --HEADING-TEXT-CAPS: none;
+  --SUBHEADING-TEXT-CAPS: uppercase;
+  --LABEL-TEXT-CAPS: uppercase;--FONT-SIZE-INPUT: 1.0rem;--RADIUS: 30px;
+  --RADIUS-SMALL: 22px;
+  --RADIUS-TINY: 14px;
+  --RADIUS-BADGE: 3px;
+  --RADIUS-CHECKBOX: 4px;
+  --RADIUS-TEXTAREA: 8px;--PRODUCT-MEDIA-PADDING-TOP: 100%;--BORDER-WIDTH: 1px;--STROKE-WIDTH: 12px;--SITE-WIDTH: 1440px;
+  --SITE-WIDTH-NARROW: 840px;--COLOR-UPSELLS-BG: #f7f7f7;
+  --COLOR-UPSELLS-TEXT: #000000;
+  --COLOR-UPSELLS-TEXT-LIGHTEN: #333333;
+  --COLOR-UPSELLS-DISABLED-GREY-DARKEN: rgba(0, 0, 0, 0.45);
+  --UPSELLS-HEIGHT: 155px;
+  --UPSELLS-IMAGE-WIDTH: 20%;--ICON-ARROW-RIGHT: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik03MiAzNkwxMzIgOTZMNzIgMTU2IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==");--loading-svg: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjRweCIgdmlld0JveD0iMCAwIDMyMCA0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIwIiBoZWlnaHQ9IjQiIGZpbGw9IiMwMDAiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieCIgZnJvbT0iMCIgdG89IjMyMCIgZHVyPSIyLjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0id2lkdGgiIGZyb209IjAiIHRvPSIzMjAiIGR1cj0iMi4xcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4KICA8L3JlY3Q+Cjwvc3ZnPgo=");
+  --icon-check: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgZmlsbD0iI2ZmZiI+CiAgPHBhdGggZD0iTTExLjY1Mzg4MywxLjU1NDU5NjIxIEwxMy4yMDgxNzQ5LDIuODEzMjM2OTkgTDcuNTQ0MjkxMzgsOS44MDc1NTA2NSBMNy41MzI0MzQxOCw5Ljc5NzU5NjIxIEw3LjE1NzMwOTk1LDEwLjI2MzM1NTEgTDIuNDk0NDM0MTgsNi40ODc0MzI4IEwzLjc1MzA3NDk2LDQuOTMzMTQwODcgTDYuODcyNDM0MTgsNy40NTg1OTYyMSBMMTEuNjUzODgzLDEuNTU0NTk2MjEgWiI+PC9wYXRoPgo8L3N2Zz4K");
+  --icon-check-swatch: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cGF0aCBkPSJNMTEuNjUzODgzLDEuNTU0NTk2MjEgTDEzLjIwODE3NDksMi44MTMyMzY5OSBMNy41NDQyOTEzOCw5LjgwNzU1MDY1IEw3LjUzMjQzNDE4LDkuNzk3NTk2MjEgTDcuMTU3MzA5OTUsMTAuMjYzMzU1MSBMMi40OTQ0MzQxOCw2LjQ4NzQzMjggTDMuNzUzMDc0OTYsNC45MzMxNDA4NyBMNi44NzI0MzQxOCw3LjQ1ODU5NjIxIEwxMS42NTM4ODMsMS41NTQ1OTYyMSBaIiBpZD0icGF0aC1hd18xZXVwNi1xLTEiPjwvcGF0aD4KICAgIDxmaWx0ZXIgeD0iLTI4LjAlIiB5PSItMzQuNCUiIHdpZHRoPSIxNTYuMCUiIGhlaWdodD0iMTY4LjklIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItYXdfMWV1cDYtcS0yIj4KICAgICAgPGZlT2Zmc2V0IGR4PSIwIiBkeT0iMCIgaW49IlNvdXJjZUFscGhhIiByZXN1bHQ9InNoYWRvd09mZnNldE91dGVyMSI+PC9mZU9mZnNldD4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMSIgaW49InNoYWRvd09mZnNldE91dGVyMSIgcmVzdWx0PSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlR2F1c3NpYW5CbHVyPgogICAgICA8ZmVDb2xvck1hdHJpeCB2YWx1ZXM9IjAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgMCAwIDAgMSAwIiB0eXBlPSJtYXRyaXgiIGluPSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlQ29sb3JNYXRyaXg+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPGcgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgIDx1c2UgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIiBmaWx0ZXI9InVybCgjZmlsdGVyLWF3XzFldXA2LXEtMikiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgICA8dXNlIGZpbGw9IiNmZmZmZmYiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgPC9nPgo8L3N2Zz4K");
+  --icon-zoom-in: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICAgICAgPHBhdGggZD0iTTEyLjYsOSBMMTIuNiwxNi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");
+  --icon-zoom-out: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");--collection-sticky-bar-height: 0px;
+  --collection-image-padding-top: 60%;
+
+  --drawer-width: 400px;
+  --drawer-transition: transform 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);--gutter: 60px;
+  --gutter-mobile: 20px;
+  --grid-gutter: 20px;
+  --grid-gutter-mobile: 35px;--inner: 20px;
+  --inner-tablet: 18px;
+  --inner-mobile: 16px;--grid: repeat(4, minmax(0, 1fr));
+  --grid-tablet: repeat(3, minmax(0, 1fr));
+  --grid-mobile: repeat(2, minmax(0, 1fr));
+  --megamenu-grid: repeat(4, minmax(0, 1fr));
+  --grid-row: 1 / span 4;--scrollbar-width: 0px;--overlay: #000;
+  --overlay-opacity: 1;--swatch-width: 38px;
+  --swatch-height: 26px;
+  --swatch-size: 32px;
+  --swatch-size-mobile: 30px;
+
+  
+  --move-offset: 20px;
+
+  
+  --autoplay-speed: 2200ms;
+
+  
+--filter-bg: .97;
+  --product-filter-bg: .97;
+  }</style><link href="{{ 'sf/css/kopstorm-V2-ea6148.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/theme-410305.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm-62aff9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm_new-c14bc9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><script type="text/javascript">
+    if (window.MSInputMethodContext && document.documentMode) {
+      var scripts = document.getElementsByTagName('script')[0];
+      var polyfill = document.createElement("script");
+      polyfill.defer = true;
+      polyfill.src = "{{ 'sf/js/ie11-831ade.js'|asset_url }}";
+
+      scripts.parentNode.insertBefore(polyfill, scripts);
+
+      document.documentElement.classList.add('ie11');
+    } else {
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    }
+
+    let root = '/';
+    if (root[root.length - 1] !== '/') {
+      root = `${root}/`;
+    }
+
+    window.theme = {
+      routes: {
+        root: root,
+        cart_url: "\/cart",
+        cart_add_url: "\/cart\/add",
+        cart_change_url: "\/cart\/change",
+        shop_url: "https:\/\/smooche.com",
+        searchUrl: '/search',
+        predictiveSearchUrl: '/search/suggest',
+        product_recommendations_url: "\/recommendations\/products"
+      },
+      assets: {
+        photoswipe: '{{ 'sf/js/photoswipe-7aaf31.js'|asset_url }}',
+        smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
+        no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
+        swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
+        base: "//smooche.com/cdn/shop/t/76/assets/"
+      },
+      strings: {
+        add_to_cart: "Add to Cart",
+        cart_acceptance_error: "You must accept our terms and conditions.",
+        cart_empty: "Your cart is currently empty.",
+        cart_price: "Price",
+        cart_quantity: "Quantity",
+        cart_items_one: "{% templatetag openvariable %} count }} item",
+        cart_items_many: "{% templatetag openvariable %} count }} items",
+        cart_title: "Cart",
+        cart_total: "Total",
+        continue_shopping: "Continue Shopping",
+        free: "Free",
+        limit_error: "Sorry, looks like we don\u0026#39;t have enough of this product.",
+        preorder: "Pre-Order",
+        remove: "Remove",
+        sale_badge_text: "Sale",
+        saving_badge: "Save {% templatetag openvariable %} discount }}",
+        saving_up_to_badge: "Save up to {% templatetag openvariable %} discount }}",
+        sold_out: "Sold Out",
+        subscription: "Subscription",
+        unavailable: "Unavailable",
+        unit_price_label: "Unit price",
+        unit_price_separator: "per",
+        zero_qty_error: "Quantity must be greater than 0.",
+        delete_confirm: "Are you sure you wish to delete this address?",
+        newsletter_product_availability: "Notify Me When It’s Available"
+      },
+      icons: {
+        plus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-plus" viewBox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        minus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-minus" viewBox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        close: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      },
+      settings: {
+        animations: false,
+        cartType: "drawer",
+        enableAcceptTerms: false,
+        enableInfinityScroll: false,
+        enablePaymentButton: true,
+        gridImageSize: "cover",
+        gridImageAspectRatio: 1,
+        mobileMenuBehaviour: "link",
+        productGridHover: "image",
+        savingBadgeType: "percentage",
+        showSaleBadge: true,
+        showSoldBadge: true,
+        showSavingBadge: true,
+        quickBuy: "none",
+        suggestArticles: false,
+        suggestCollections: true,
+        suggestProducts: true,
+        suggestPages: false,
+        suggestionsResultsLimit: 10,
+        currency_code_enable: true,
+        hideInventoryCount: true,
+        enableColorSwatchesCollection: true,
+      },
+      sizes: {
+        mobile: 480,
+        small: 768,
+        large: 1024,
+        widescreen: 1440
+      },
+      moneyFormat: "${% templatetag openvariable %}amount_no_decimals}}",
+      moneyWithCurrencyFormat: "${% templatetag openvariable %}amount_no_decimals}} USD",
+      subtotal: 0,
+      info: {
+        name: 'Palo Alto'
+      },
+      version: '5.6.0'
+    };
+    window.PaloAlto = window.PaloAlto || {};
+    window.slate = window.slate || {};
+    window.isHeaderTransparent = false;
+    window.stickyHeaderHeight = 60;
+    window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/smooche-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
+        @media screen and (max-width: 767px) {
+        .product-single__details {
+          overflow: ;
+        }
+        }
+      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Smooche","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Smooche","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
+        #shopify-buyer-consent {
+  margin-top: 1em;
+  display: inline-block;
+  width: 100%;
+}
+
+#shopify-buyer-consent.hidden {
+  display: none;
+}
+
+#shopify-subscription-policy-button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+#shopify-subscription-policy-button::before {
+  box-shadow: none;
+}
+
+      </style><script defer="defer" src="{{ 'sf/js/smooche-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
+    #alia-popup-root-alia-qqoyyurlj3kbg51i {
+      z-index: 999999 !important;
+    }
+  </style><script id="kaching-bundles-translations" type="application/json">
+    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
+  </script><script class="kaching-bundles-product" data-main="true" data-product-id="9264976101532" type="application/json">
+    {
+      "id": 9264976101532,
+      "handle": "under-eye-reset",
+      "url": "\/products\/under-eye-reset",
+      "availableForSale": true,
+      "title": "Under-eye Reset Patches",
+      "image": "..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-2400w-17bb92.png\u0026v=1789713523",
+      "collectionIds": [307652133020,304922558620,314587218076,333800898716,299336073372,333257605276],
+      "options": [
+        
+          {
+            "defaultName": "Title",
+            "name": "Title",
+            "position": 1,
+            "optionValues": [
+              
+                {
+                  "id": 6383494856860,
+                  "defaultName": "Default Title",
+                  "name": "Default Title",
+                  "swatch": {
+                    "color": null,
+                    "image": null
+                  }
+                }
+              
+            ]
+          }
+        
+      ],
+      "selectedVariantId": 47611439972508,
+      "variants": [
+        
+          {
+            "id": 47611439972508,
+            "availableForSale": true,
+            "price": 2900,
+            "compareAtPrice": 3900,
+            "options": ["Default Title"],
+            "imageId": null,
+            "image": null,
+            "inventoryManagement": "shopify",
+            "inventoryPolicy": "continue",
+            "inventoryQuantity": -3796,
+            "unitPriceMeasurement": null,
+            "sellingPlans": [
+              
+            ]
+          }
+        
+      ],
+      "requiresSellingPlan": false,
+      "sellingPlans": [
+        
+      ],
+      "isNativeBundle": null,
+      "metafields": {
+        "text": null,
+        "text2": null,
+        "text3": null,
+        "text4": null
+      }
+    }
+  </script><script class="kaching-bundles-product" data-product-id="9166105411740" type="application/json">
+    {
+      "id": 9166105411740,
+      "handle": "mystery-gift",
+      "url": "\/products\/mystery-gift",
+      "availableForSale": true,
+      "title": "Mystery Gift",
+      "image": "..\/assets\/img\/free_8-1600w-4bc8a8.png\u0026v=1765145633",
+      "collectionIds": [307652133020,304922558620,299336073372],
+      "options": [
+        
+          {
+            "defaultName": "Title",
+            "name": "Title",
+            "position": 1,
+            "optionValues": [
+              
+                {
+                  "id": 6021070520476,
+                  "defaultName": "Default Title",
+                  "name": "Default Title",
+                  "swatch": {
+                    "color": null,
+                    "image": null
+                  }
+                }
+              
+            ]
+          }
+        
+      ],
+      "selectedVariantId": 47239194837148,
+      "variants": [
+        
+          {
+            "id": 47239194837148,
+            "availableForSale": true,
+            "price": 1500,
+            "compareAtPrice": null,
+            "options": ["Default Title"],
+            "imageId": null,
+            "image": null,
+            "inventoryManagement": null,
+            "inventoryPolicy": "deny",
+            "inventoryQuantity": -59701,
+            "unitPriceMeasurement": null,
+            "sellingPlans": [
+              
+            ]
+          }
+        
+      ],
+      "requiresSellingPlan": false,
+      "sellingPlans": [
+        
+      ],
+      "isNativeBundle": null,
+      "metafields": {
+        "text": null,
+        "text2": null,
+        "text3": null,
+        "text4": null
+      }
+    }
+  </script><script class="kaching-bundles-product" data-product-id="8462448984220" type="application/json">
+    {
+      "id": 8462448984220,
+      "handle": "color-changing-foundation",
+      "url": "\/products\/color-changing-foundation",
+      "availableForSale": true,
+      "title": "Color Changing Foundation",
+      "image": "..\/assets\/img\/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--800w-25b847.jpg\u0026v=1790591291",
+      "collectionIds": [307652133020,304922558620,319257280668,314587218076,333800898716,299336073372],
+      "options": [
+        
+          {
+            "defaultName": "Title",
+            "name": "Title",
+            "position": 1,
+            "optionValues": [
+              
+                {
+                  "id": 4117717418140,
+                  "defaultName": "Default Title",
+                  "name": "Default Title",
+                  "swatch": {
+                    "color": null,
+                    "image": null
+                  }
+                }
+              
+            ]
+          }
+        
+      ],
+      "selectedVariantId": 45097716285596,
+      "variants": [
+        
+          {
+            "id": 45097716285596,
+            "availableForSale": true,
+            "price": 4900,
+            "compareAtPrice": 5900,
+            "options": ["Default Title"],
+            "imageId": null,
+            "image": null,
+            "inventoryManagement": "shopify",
+            "inventoryPolicy": "continue",
+            "inventoryQuantity": 978670,
+            "unitPriceMeasurement": null,
+            "sellingPlans": [
+              {
+                  "id": 3050799260,
+                  "price": 3900,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 3900
+                },
+{
+                  "id": 3063185564,
+                  "price": 4900,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 4900
+                },
+{
+                  "id": 3050832028,
+                  "price": 2450,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 2450
+                },
+{
+                  "id": 3063218332,
+                  "price": 4900,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 4900
+                },
+{
+                  "id": 2585002140,
+                  "price": 3920,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 3920
+                },
+{
+                  "id": 2584969372,
+                  "price": 3920,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 3920
+                },
+{
+                  "id": 2585034908,
+                  "price": 3920,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 3920
+                }
+
+            ]
+          }
+        
+      ],
+      "requiresSellingPlan": false,
+      "sellingPlans": [
+        
+            {
+              "id": 3050799260,
+              "name": "Every 28 days.",
+                "priceAdjustment": {
+                  "type": "fixed_amount",
+                  "value": 1000
+                }
+            },
+
+            {
+              "id": 3050832028,
+              "name": "Every 28 days",
+                "priceAdjustment": {
+                  "type": "price",
+                  "value": 2450
+                }
+            }
+,
+
+            {
+              "id": 3063185564,
+              "name": "Deliver every 45 days",
+                "priceAdjustment": {
+                  "type": "fixed_amount",
+                  "value": 0
+                }
+            },
+
+            {
+              "id": 3063218332,
+              "name": "Deliver every 60 days",
+                "priceAdjustment": {
+                  "type": "fixed_amount",
+                  "value": 0
+                }
+            }
+,
+
+            {
+              "id": 2585002140,
+              "name": "1 month subscription (Cancel Anytime)",
+                "priceAdjustment": {
+                  "type": "percentage",
+                  "value": 20
+                }
+            }
+,
+
+            {
+              "id": 2584969372,
+              "name": "2 month subscription (Cancel Anytime)",
+                "priceAdjustment": {
+                  "type": "percentage",
+                  "value": 20
+                }
+            }
+,
+
+            {
+              "id": 2585034908,
+              "name": "3 month subscription (Cancel Anytime)",
+                "priceAdjustment": {
+                  "type": "percentage",
+                  "value": 20
+                }
+            }
+
+
+      ],
+      "isNativeBundle": null,
+      "metafields": {
+        "text": null,
+        "text2": null,
+        "text3": null,
+        "text4": null
+      }
+    }
+  </script><style id="kaching-bundles-custom-css">
+        .kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions--link {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 12px !important;
+}
+
+.kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions__link {
+    all: unset !important;
+    cursor: pointer !important;
+    text-decoration: underline !important;
+    text-underline-offset: 3px !important;
+    font-size: 14px !important;
+    color: rgba(0, 0, 0, 1) !important;
+}
+      </style><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-f7208f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
+    .kaching-bundles__block {
+      display: none;
+    }
+
+    .kaching-bundles-sticky-atc {
+      display: none;
+    }
+  </style>
+{% endblock sf_head %}
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root { --loader-image: var(--loading-svg); }</style><div class="loader loader--image">
+<div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
+</div>
+</div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
+{% block content_wrapper %}
+<div data-template="product.under-eye-reset"><main class="main-content" data-main="" id="MainContent">
+<div class="shopify-section" id="shopify-section-template--21857329971356__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--21857329971356__section_custom_html_7WqcF9 {
+    --PT: 0px;
+    --PB: 0px;
+  }</style><section class="section-padding" id="CustomCode--template--21857329971356__section_custom_html_7WqcF9">
+<div class="wrapper">
+<div><element id="product"></element></div>
+</div>
+</section>
+</div><div class="shopify-section shopify-section--product" id="shopify-section-template--21857329971356__main"><style data-shopify="">#ProductTemplate--template--21857329971356__main {
+    --PT: 30px;
+    --PB: 0px;
+  }</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--21857329971356__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--21857329971356__main">
+<div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--21857329971356__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--21857329971356__main">
+<div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="37515662098588" data-media-id="template--21857329971356__main-37515662098588" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662098588"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662098588" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-7ecfe9.png'|asset_url }}" srcset="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-753w-a066eb.png'|asset_url }} 753w, {{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-41b6e2.png'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-enable-video-looping="true" data-id="37483818516636" data-media-id="template--21857329971356__main-37483818516636" data-product-single-media-wrapper="" data-product-slide="" data-type="video" data-video="" data-video-id="37483818516636" id="FeaturedMedia-template--21857329971356__main-37483818516636"><deferred-media class="product-single__media deferred-media product-single__media--37483818516636 product-single__media--video" data-deferred-media="" data-loop="true" style="padding-top: 100.0%;">
+<button aria-label="View Under-eye Reset Patches" class="deferred-media__poster" data-deferred-media-button="" type="button">
+<span class="deferred-media__poster-button"><svg aria-hidden="true" class="icon icon-media-video" focusable="false" role="presentation" viewbox="0 0 26 26"><path clip-rule="evenodd" d="M1 25h24V1H1v24z" fill-rule="evenodd"></path><path class="icon-media-video-outline" d="M.5 25v.5h25V.5H.5V25z"></path><path class="icon-media-video-element" clip-rule="evenodd" d="M9.718 6.72a1 1 0 0 0-1.518.855v10.736a1 1 0 0 0 1.562.827l8.35-5.677a1 1 0 0 0-.044-1.682l-8.35-5.06z" fill-rule="evenodd" opacity=".6"></path></svg></span>
+<img alt="Under-eye Reset Patches" class="img-object-cover" height="1440" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-0b3fb2.jpg'|asset_url }}" srcset="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-753w-81d00b.jpg'|asset_url }} 753w, {{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-d912e9.jpg'|asset_url }} 1440w" style="" width="1440"/>
+</button>
+<template>
+<video aria-label="Under-eye Reset Patches" autoplay="autoplay" class="media-video" controls="controls" loop="loop" muted="muted" playsinline="playsinline" poster="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000_1024x1-b0fe80.jpg'|asset_url }}" preload="metadata"><source src="{{ 'sf/media/2cf1f10d49d541a4a45c9228be643ee3-HD-1080p-2-5Mbps-94561307-4823ad.mp4'|asset_url }}" type="video/mp4"><img src="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000_1024x1-b0fe80.jpg'|asset_url }}"/></source></video>
+</template>
+</deferred-media></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662131356" data-media-id="template--21857329971356__main-37515662131356" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662131356"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662131356" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-7ebe35.jpg'|asset_url }}" srcset="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-753w-694ad7.png'|asset_url }} 753w, {{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-461c76.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662164124" data-media-id="template--21857329971356__main-37515662164124" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662164124"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662164124" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png'|asset_url }}" srcset="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-753w-91b4a0.png'|asset_url }} 753w, {{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-27053f.png'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662196892" data-media-id="template--21857329971356__main-37515662196892" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662196892"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662196892" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-09fb6f.jpg'|asset_url }}" srcset="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-753w-7d1807.png'|asset_url }} 753w, {{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37541670420636" data-media-id="template--21857329971356__main-37541670420636" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37541670420636"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37541670420636" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-1080w-c6184d.jpg'|asset_url }}" srcset="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-753w-ff6f29.png'|asset_url }} 753w, {{ 'sf/img/Under-eyeResetPatches-Productimages_1-1080w-fbc1b8.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662229660" data-media-id="template--21857329971356__main-37515662229660" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662229660"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662229660" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-124404.jpg'|asset_url }}" srcset="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-753w-fabe50.jpg'|asset_url }} 753w, {{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-dbc683.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37544488108188" data-media-id="template--21857329971356__main-37544488108188" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37544488108188"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37544488108188" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-1080w-dc7903.png'|asset_url }}" srcset="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-753w-3a8e9c.png'|asset_url }} 753w, {{ 'sf/img/Under-eyeResetPatches-Productimages_2-1080w-f7fc48.png'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662262428" data-media-id="template--21857329971356__main-37515662262428" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662262428"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662262428" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-2bc925.jpg'|asset_url }}" srcset="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-753w-4badb2.jpg'|asset_url }} 753w, {{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-5fb8cc.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662327964" data-media-id="template--21857329971356__main-37515662327964" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662327964"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662327964" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-cdf29d.jpg'|asset_url }}" srcset="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-753w-d8d2a2.jpg'|asset_url }} 753w, {{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-3cc648.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662360732" data-media-id="template--21857329971356__main-37515662360732" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662360732"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662360732" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-2ae365.jpg'|asset_url }}" srcset="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-753w-6bfbf2.jpg'|asset_url }} 753w, {{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-ded526.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662393500" data-media-id="template--21857329971356__main-37515662393500" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662393500"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662393500" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-a38d11.png'|asset_url }}" srcset="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-753w-c769ea.png'|asset_url }} 753w, {{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-1aaccb.png'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662426268" data-media-id="template--21857329971356__main-37515662426268" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662426268"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662426268" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-cc38b6.jpg'|asset_url }}" srcset="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-753w-eca3e7.png'|asset_url }} 753w, {{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662459036" data-media-id="template--21857329971356__main-37515662459036" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662459036"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662459036" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png'|asset_url }}" srcset="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-753w-b4b795.png'|asset_url }} 753w, {{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-4e7ae7.png'|asset_url }} 1080w" style="" width="1080"/>
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+</div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="37515662098588" data-thumbnail-id="template--21857329971356__main-37515662098588"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-178w-a862ab.png'|asset_url }}" srcset="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-41b6e2.png'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37483818516636" data-thumbnail-id="template--21857329971356__main-37483818516636"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-178w-c16b14.jpg'|asset_url }}" srcset="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-178w-b3610e.jpg'|asset_url }} 178w, {{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-d912e9.jpg'|asset_url }} 1440w" style="" width="178"/>
+</figure><svg aria-hidden="true" class="icon icon-media-video" focusable="false" role="presentation" viewbox="0 0 26 26"><path clip-rule="evenodd" d="M1 25h24V1H1v24z" fill-rule="evenodd"></path><path class="icon-media-video-outline" d="M.5 25v.5h25V.5H.5V25z"></path><path class="icon-media-video-element" clip-rule="evenodd" d="M9.718 6.72a1 1 0 0 0-1.518.855v10.736a1 1 0 0 0 1.562.827l8.35-5.677a1 1 0 0 0-.044-1.682l-8.35-5.06z" fill-rule="evenodd" opacity=".6"></path></svg></a></div><div class="product-single__thumbnail" data-id="37515662131356" data-thumbnail-id="template--21857329971356__main-37515662131356"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-178w-dab1e4.png'|asset_url }}" srcset="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-461c76.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662164124" data-thumbnail-id="template--21857329971356__main-37515662164124"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-178w-466ef6.png'|asset_url }}" srcset="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-27053f.png'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662196892" data-thumbnail-id="template--21857329971356__main-37515662196892"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png'|asset_url }}" srcset="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37541670420636" data-thumbnail-id="template--21857329971356__main-37541670420636"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png'|asset_url }}" srcset="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-1080w-fbc1b8.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662229660" data-thumbnail-id="template--21857329971356__main-37515662229660"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-178w-467521.png'|asset_url }}" srcset="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-dbc683.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37544488108188" data-thumbnail-id="template--21857329971356__main-37544488108188"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-178w-6105a8.png'|asset_url }}" srcset="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-1080w-f7fc48.png'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662262428" data-thumbnail-id="template--21857329971356__main-37515662262428"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-178w-0ef8d2.png'|asset_url }}" srcset="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-5fb8cc.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662327964" data-thumbnail-id="template--21857329971356__main-37515662327964"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-058989.png'|asset_url }}" srcset="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-3cc648.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662360732" data-thumbnail-id="template--21857329971356__main-37515662360732"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-178w-1df6ca.png'|asset_url }}" srcset="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-ded526.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662393500" data-thumbnail-id="template--21857329971356__main-37515662393500"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png'|asset_url }}" srcset="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-1aaccb.png'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662426268" data-thumbnail-id="template--21857329971356__main-37515662426268"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-178w-919894.png'|asset_url }}" srcset="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div><div class="product-single__thumbnail" data-id="37515662459036" data-thumbnail-id="template--21857329971356__main-37515662459036"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-178w-738d5f.png'|asset_url }}" srcset="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-4e7ae7.png'|asset_url }} 1080w" style="" width="178"/>
+</figure></a></div></div></div>
+<div class="product-single__details" data-collapsible-single="" id="product_details">
+<div class="form__wrapper" data-product-info=""><div class="product__block" style="--PBB:16px;">
+<div class="product__icon__row product__icon__row--center" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.9); --bg: #f7f7f7;padding: 5px 10px;"><div class="product__icon__text"><p><strong>🇰🇷 Formulated in Korea</strong></p></div></div>
+</div>
+<style>
+           .product__block.product__images {
+                 padding-top: 0px!important;
+     padding-bottom: 0px!important;
+    }
+          .profile-image:nth-child(1) {
+            background-image: url("{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-40b567.png'|asset_url }}");
+        }
+
+        .profile-image:nth-child(2) {
+            background-image: url("{{ 'sf/img/2_51914231-02fc-4cf3-b29c-1627c2d6ed9a_1000x1000-3d5afd.png'|asset_url }}");
+        }
+
+        .profile-image:nth-child(3) {
+            background-image: url("{{ 'sf/img/3_99578868-68cd-4fd4-9230-90bcb8d72a8e_1000x1000-544663.png'|asset_url }}");
+        }
+    </style>
+<div class="product__block product__images">
+<div class="social-proof-container">
+<div class="profile-images">
+<div class="profile-image"></div>
+<div class="profile-image"></div>
+<div class="profile-image"></div>
+</div>
+<div class="text-content">
+<span class="text1"><strong>Gigi</strong></span>
+<div class="checkmark">
+<svg enable-background="new 0 0 128 128" height="512" id="fi_10629607" viewbox="0 0 128 128" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m124 64c0 5.12-6.29 9.34-7.55 14.06-1.3 4.88 1.99 11.68-.48 15.95-2.51 4.34-10.06 4.86-13.58 8.38s-4.04 11.07-8.38 13.58c-4.27 2.47-11.07-.82-15.95.48-4.72 1.26-8.94 7.55-14.06 7.55s-9.34-6.29-14.06-7.55c-4.88-1.3-11.68 1.99-15.95-.48-4.34-2.51-4.86-10.06-8.38-13.58s-11.07-4.04-13.58-8.38c-2.47-4.27.82-11.07-.48-15.95-1.26-4.72-7.55-8.94-7.55-14.06s6.29-9.34 7.55-14.06c1.3-4.88-1.99-11.68.48-15.95 2.51-4.34 10.06-4.86 13.58-8.38s4.04-11.07 8.38-13.58c4.27-2.47 11.07.82 15.95-.48 4.72-1.26 8.94-7.55 14.06-7.55s9.34 6.29 14.06 7.55c4.88 1.3 11.68-1.99 15.95.48 4.34 2.51 4.86 10.06 8.38 13.58s11.07 4.04 13.58 8.38c2.47 4.27-.82 11.07.48 15.95 1.26 4.72 7.55 8.94 7.55 14.06z" fill="#2568ef"></path><path d="m81.34 46.12-22.84 22.84-11.84-11.83c-2.57-2.57-6.74-2.57-9.31 0-2.57 2.57-2.57 6.74 0 9.31l16.61 16.61c2.5 2.5 6.56 2.5 9.06 0l27.62-27.62c2.57-2.57 2.57-6.74 0-9.31-2.57-2.57-6.73-2.57-9.3 0z" fill="#fffcee"></path></g></svg>
+</div>
+<span class="text2">and 100,000+ others love smooche</span>
+</div>
+</div>
+</div>
+<div class="product__block product__title-and-price" id="product_link">
+<h1 class="product__title">{{ product.get_title }}</h1>
+</div><style>
+                #productpricetemplate--21857329971356__main {
+                  font-size: 21px!important;
+                }
+                @media screen and (max-width: 767px){
+                 #productpricetemplate--21857329971356__main {
+                  font-size: 26px!important;
+                }
+                }
+              </style>
+<div class="product__block product__price-and-badge" style="--PBB:20px;">
+<div class="product__price-and-rating">
+<div class="product__price" data-price-wrapper="" id="productpricetemplate--21857329971356__main">
+<s class="product__price--compare" data-compare-price="">{% include 'partials/sf_price.html' with p=product retail=1 %}</s><span class="product__price--regular product__price--sale" data-product-price="">{% include 'partials/sf_price.html' with p=product %}</span>
+<span class="product__price--off hidden" data-price-off="">
+<span><p><strong>NEW</strong></p></span>
+<span data-price-off-type="" style="display: none">Sale</span>
+<em style="display: none">•</em>
+<span data-price-off-amount="" style="display: none"></span>
+</span>
+</div></div>
+</div>
+<smooche-installments data-currency="USD" data-price="2900" id="afterpay" style="display:block">
+<span>or 4 interest-free payments of <strong>{% include 'partials/sf_price.html' with p=product quarter=1 %}</strong> with <img alt="Afterpay" height="21" src="{{ 'sf/img/AP_logo_badge_6328x2204_blackmint_png-ced85f.png'|asset_url }}" width="60"/></span>
+</smooche-installments>
+<script defer="" src="{{ 'sf/js/smooche-installments-0dba32.js'|asset_url }}"></script>
+<div class="product__block" style="--PBB:20px;"><div class="product__subheading">
+<h5><strong>For tired-looking under-eyes</strong></h5><p>Puffiness, dark circles and dry fine lines can leave you looking tired. These patches combine caffeine and niacinamide to help depuff and brighten, with PDRN, collagen and hyaluronic acid for hydrated, smoother-looking skin.</p>
+</div></div><div class="product__block" style="--PBB:10px;">
+<div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 1.0); --bg: ;"><div class="product__icon icon-stroke" style="--icon-size: 20px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
+<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="40" loading="eager" sizes="20px" src="{{ 'sf/img/blobsmall-40w-cce53b.svg'|asset_url }}" srcset="{{ 'sf/img/blobsmall-500w-9f3f52.svg'|asset_url }} 500w" style="" width="40"/>
+</figure></div></div><div class="product__icon__text"><p><strong>Less puffiness</strong></p></div></div>
+</div><div class="product__block" style="--PBB:10px;">
+<div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 1.0); --bg: ;"><div class="product__icon icon-stroke" style="--icon-size: 20px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
+<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="40" loading="eager" sizes="20px" src="{{ 'sf/img/blobsmall-40w-cce53b.svg'|asset_url }}" srcset="{{ 'sf/img/blobsmall-500w-9f3f52.svg'|asset_url }} 500w" style="" width="40"/>
+</figure></div></div><div class="product__icon__text"><p><strong>Brighter, refreshed eyes</strong></p></div></div>
+</div><div class="product__block" style="--PBB:20px;">
+<div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 1.0); --bg: ;"><div class="product__icon icon-stroke" style="--icon-size: 20px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
+<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="40" loading="eager" sizes="20px" src="{{ 'sf/img/blobsmall-40w-cce53b.svg'|asset_url }}" srcset="{{ 'sf/img/blobsmall-500w-9f3f52.svg'|asset_url }} 500w" style="" width="40"/>
+</figure></div></div><div class="product__icon__text"><p><strong>Softer-looking fine lines</strong></p></div></div>
+</div>
+<div class="product__block standard__app">
+<div class="shopify-block shopify-app-block" id="shopify-block-AdTJqL0tGUzZJRkt3M__kaching_bundles_app_block_DpN3tH">
+<script class="kaching-bundles-product" data-main="true" data-product-id="9264976101532" type="application/json">
+    {
+      "id": 9264976101532,
+      "handle": "under-eye-reset",
+      "url": "\/products\/under-eye-reset",
+      "availableForSale": true,
+      "title": "Under-eye Reset Patches",
+      "image": "..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-2400w-17bb92.png\u0026v=1789713523",
+      "collectionIds": [307652133020,304922558620,314587218076,333800898716,299336073372,333257605276],
+      "options": [
+        
+          {
+            "defaultName": "Title",
+            "name": "Title",
+            "position": 1,
+            "optionValues": [
+              
+                {
+                  "id": 6383494856860,
+                  "defaultName": "Default Title",
+                  "name": "Default Title",
+                  "swatch": {
+                    "color": null,
+                    "image": null
+                  }
+                }
+              
+            ]
+          }
+        
+      ],
+      "selectedVariantId": 47611439972508,
+      "variants": [
+        
+          {
+            "id": 47611439972508,
+            "availableForSale": true,
+            "price": 2900,
+            "compareAtPrice": 3900,
+            "options": ["Default Title"],
+            "imageId": null,
+            "image": null,
+            "inventoryManagement": "shopify",
+            "inventoryPolicy": "continue",
+            "inventoryQuantity": -3796,
+            "unitPriceMeasurement": null,
+            "sellingPlans": [
+              
+            ]
+          }
+        
+      ],
+      "requiresSellingPlan": false,
+      "sellingPlans": [
+        
+      ],
+      "isNativeBundle": null,
+      "metafields": {
+        "text": null,
+        "text2": null,
+        "text3": null,
+        "text4": null
+      }
+    }
+  </script>
+<script class="kaching-bundles-product" data-product-id="9166105411740" type="application/json">
+    {
+      "id": 9166105411740,
+      "handle": "mystery-gift",
+      "url": "\/products\/mystery-gift",
+      "availableForSale": true,
+      "title": "Mystery Gift",
+      "image": "..\/assets\/img\/free_8-1600w-4bc8a8.png\u0026v=1765145633",
+      "collectionIds": [307652133020,304922558620,299336073372],
+      "options": [
+        
+          {
+            "defaultName": "Title",
+            "name": "Title",
+            "position": 1,
+            "optionValues": [
+              
+                {
+                  "id": 6021070520476,
+                  "defaultName": "Default Title",
+                  "name": "Default Title",
+                  "swatch": {
+                    "color": null,
+                    "image": null
+                  }
+                }
+              
+            ]
+          }
+        
+      ],
+      "selectedVariantId": 47239194837148,
+      "variants": [
+        
+          {
+            "id": 47239194837148,
+            "availableForSale": true,
+            "price": 1500,
+            "compareAtPrice": null,
+            "options": ["Default Title"],
+            "imageId": null,
+            "image": null,
+            "inventoryManagement": null,
+            "inventoryPolicy": "deny",
+            "inventoryQuantity": -59701,
+            "unitPriceMeasurement": null,
+            "sellingPlans": [
+              
+            ]
+          }
+        
+      ],
+      "requiresSellingPlan": false,
+      "sellingPlans": [
+        
+      ],
+      "isNativeBundle": null,
+      "metafields": {
+        "text": null,
+        "text2": null,
+        "text3": null,
+        "text4": null
+      }
+    }
+  </script>
+<script class="kaching-bundles-product" data-product-id="8462448984220" type="application/json">
+    {
+      "id": 8462448984220,
+      "handle": "color-changing-foundation",
+      "url": "\/products\/color-changing-foundation",
+      "availableForSale": true,
+      "title": "Color Changing Foundation",
+      "image": "..\/assets\/img\/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--800w-25b847.jpg\u0026v=1790591291",
+      "collectionIds": [307652133020,304922558620,319257280668,314587218076,333800898716,299336073372],
+      "options": [
+        
+          {
+            "defaultName": "Title",
+            "name": "Title",
+            "position": 1,
+            "optionValues": [
+              
+                {
+                  "id": 4117717418140,
+                  "defaultName": "Default Title",
+                  "name": "Default Title",
+                  "swatch": {
+                    "color": null,
+                    "image": null
+                  }
+                }
+              
+            ]
+          }
+        
+      ],
+      "selectedVariantId": 45097716285596,
+      "variants": [
+        
+          {
+            "id": 45097716285596,
+            "availableForSale": true,
+            "price": 4900,
+            "compareAtPrice": 5900,
+            "options": ["Default Title"],
+            "imageId": null,
+            "image": null,
+            "inventoryManagement": "shopify",
+            "inventoryPolicy": "continue",
+            "inventoryQuantity": 978670,
+            "unitPriceMeasurement": null,
+            "sellingPlans": [
+              {
+                  "id": 3050799260,
+                  "price": 3900,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 3900
+                },
+{
+                  "id": 3063185564,
+                  "price": 4900,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 4900
+                },
+{
+                  "id": 3050832028,
+                  "price": 2450,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 2450
+                },
+{
+                  "id": 3063218332,
+                  "price": 4900,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 4900
+                },
+{
+                  "id": 2585002140,
+                  "price": 3920,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 3920
+                },
+{
+                  "id": 2584969372,
+                  "price": 3920,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 3920
+                },
+{
+                  "id": 2585034908,
+                  "price": 3920,
+                  "compareAtPrice": 4900,
+                  "perDeliveryPrice": 3920
+                }
+
+            ]
+          }
+        
+      ],
+      "requiresSellingPlan": false,
+      "sellingPlans": [
+        
+            {
+              "id": 3050799260,
+              "name": "Every 28 days.",
+                "priceAdjustment": {
+                  "type": "fixed_amount",
+                  "value": 1000
+                }
+            },
+
+            {
+              "id": 3050832028,
+              "name": "Every 28 days",
+                "priceAdjustment": {
+                  "type": "price",
+                  "value": 2450
+                }
+            }
+,
+
+            {
+              "id": 3063185564,
+              "name": "Deliver every 45 days",
+                "priceAdjustment": {
+                  "type": "fixed_amount",
+                  "value": 0
+                }
+            },
+
+            {
+              "id": 3063218332,
+              "name": "Deliver every 60 days",
+                "priceAdjustment": {
+                  "type": "fixed_amount",
+                  "value": 0
+                }
+            }
+,
+
+            {
+              "id": 2585002140,
+              "name": "1 month subscription (Cancel Anytime)",
+                "priceAdjustment": {
+                  "type": "percentage",
+                  "value": 20
+                }
+            }
+,
+
+            {
+              "id": 2584969372,
+              "name": "2 month subscription (Cancel Anytime)",
+                "priceAdjustment": {
+                  "type": "percentage",
+                  "value": 20
+                }
+            }
+,
+
+            {
+              "id": 2585034908,
+              "name": "3 month subscription (Cancel Anytime)",
+                "priceAdjustment": {
+                  "type": "percentage",
+                  "value": 20
+                }
+            }
+
+
+      ],
+      "isNativeBundle": null,
+      "metafields": {
+        "text": null,
+        "text2": null,
+        "text3": null,
+        "text4": null
+      }
+    }
+  </script>
+<style id="kaching-bundles-custom-css">
+        .kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions--link {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 12px !important;
+}
+
+.kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions__link {
+    all: unset !important;
+    cursor: pointer !important;
+    text-decoration: underline !important;
+    text-underline-offset: 3px !important;
+    font-size: 14px !important;
+    color: rgba(0, 0, 0, 1) !important;
+}
+      </style>
+<kaching-bundle data-skip-node-update="" data-skip-subtree-update="" manual-deal-block-id="" product-id="9264976101532"></kaching-bundle>
+</div>
+</div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:20px;">{% firstof product.children.first.pk product.pk as sf_atc_53 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_53 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--21857329971356__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+<input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
+<div class="shop-pay-terms">
+<shopify-payment-terms shopify-meta='{"type":"product","currency_code":"USD","country_code":"US","variants":[{"id":47611439972508,"price_per_term":"$15","price_per_term_amount":14.5,"full_price":"$29","full_price_amount":29.0,"eligible":false,"available":true,"number_of_payment_terms":2}],"min_price":"$35","min_price_amount":35.0,"max_price":"$30,000","max_price_amount":30000.0,"financing_plans":[{"min_price":"$35","max_price":"$50","terms":[{"apr":0,"loan_type":"split_pay","installments_count":2}],"min_price_amount":35.0,"max_price_amount":49.99},{"min_price":"$50","max_price":"$1,000","terms":[{"apr":0,"loan_type":"split_pay","installments_count":3},{"apr":0,"loan_type":"split_pay","installments_count":4},{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":50.0,"max_price_amount":999.99},{"min_price":"$1,000","max_price":"$30,000","terms":[{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":1000.0,"max_price_amount":30000.0}],"installments_buyer_prequalification_enabled":false,"seller_id":2823039}' variant-id="47611439972508"></shopify-payment-terms>
+</div><div id="CTA_kopstorm"><div class="product__submit__holder product__submit__holder--notification">
+<div class="product__submit__buttons">
+<div class="product__submit__item">
+<button class="btn btn--primary btn--solid btn--large btn--submit product__submit__add" data-add-to-cart="" data-notification-popup="
+
+&lt;div class='product__notification' data-notification&gt;
+  &lt;h2 class='product__notification__title'&gt;Under-eye Reset Patches&lt;/h2&gt;&lt;form method='post' action='/contact#NotificationForm--template--21857329971356__main--47611439972508' id='NotificationForm--template--21857329971356__main--47611439972508' accept-charset='UTF-8' class='contact-form' data-notification-form=''&gt;&lt;input type='hidden' name='form_type' value='customer' /&gt;&lt;input type='hidden' name='utf8' value='✓' /&gt;&lt;div class='product__notification__message'&gt;
+      &lt;p&gt;Your email has been received.&lt;/p&gt;
+    &lt;/div&gt;&lt;div class='product__notification__form'&gt;
+      &lt;label for='Email--template--21857329971356__main'&gt;Please enter your email and we will let you know when your selected item becomes available.&lt;/label&gt;
+
+      &lt;input type='hidden' name='contact[tags]' value='newsletter, out-of-stock-notification--Under-eye Reset Patches'/&gt;
+      &lt;input type='hidden' name='contact[first_name]' value='Newsletter' /&gt;
+      &lt;input type='hidden' name='contact[last_name]' value='Subscriber' /&gt;
+
+      &lt;div class='input-group input-group--inline'&gt;
+        &lt;div class='input-group__item'&gt;
+          &lt;input type='email' value='' placeholder='Your email' name='contact[email]' id='Email--template--21857329971356__main' class='input-group__field input-group__field--email' aria-label='Your email' autocorrect='off' autocapitalize='off' required data-popup-input&gt;
+        &lt;/div&gt;
+        &lt;div class='input-group__item--btn'&gt;
+          &lt;button type='submit' name='subscribe' id='SubscribeSubmit--template--21857329971356__main' class='btn btn--primary btn--solid'&gt;
+            &lt;span data-notification-button-text&gt;Notify Me&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;/form&gt;&lt;button title='Close (Esc)' class='product__notification__close' data-popup-close&gt;&lt;svg aria-hidden='true' focusable='false' role='presentation' class='icon icon-close' viewBox='0 0 192 192'&gt;&lt;path d='M150 42 42 150M150 150 42 42' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/&gt;&lt;/svg&gt;&lt;/button&gt;
+&lt;/div&gt;" id="AddToCart--template--21857329971356__main" name="add" type="submit">
+<span data-add-to-cart-text="">Add to Cart
+</span>
+<em class="loader loader--line"><em class="loader-indeterminate"></em></em>
+</button>
+</div></div>
+<div class="product__form__errors" data-cart-errors-container="" role="alert"></div>
+</div>
+</div><input name="product-id" type="hidden" value="9264976101532"/><input name="section-id" type="hidden" value="template--21857329971356__main"/></form></div>
+<div class="product__block" data-current-variant-id="47611439972508" data-default-usp="Shipped today" data-shipping-usp="" data-us-delivery-max-days="4" data-us-delivery-min-days="2" data-us-fulfillable-variants="" style="--PBB:10px;">
+<p id="stockinfop">
+<span class="stock-left">
+<span class="pulsing-dot" style="background-color: #16a34a;">
+<style>
+        #stockinfop {
+          list-style: none !important;
+        }
+        #stockinfop .pulsing-dot::before {
+          background-color: #16a34a!important;
+        }
+        #stockinfop .stock-left > span:not(.pulsing-dot) {
+          color: #16a34a!important;
+        }
+      </style>
+</span>
+<span id="shippingUspText" style="color: #16a34a;">Shipped today</span>
+</span>
+<span class="location-right" id="locationinfop"></span>
+</p>
+</div>
+<style>
+  #locationinfop,
+  #stockinfop {
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 0.975rem;
+    font-weight: 500;
+    border-radius: 12px;
+    margin-top: 3px;
+  }
+
+  #stockinfop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .stock-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .location-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .location-right .shipping-country-flag {
+    width: 20px;
+    height: 15px;
+    flex: 0 0 20px;
+  }
+
+  .pulsing-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: dot-breathe 2s ease-in-out infinite;
+  }
+
+  /* No ::before halo — the expanding same-color ring read as a second dot.
+     A gentle opacity breathe on the dot itself signals "live" instead. */
+  .pulsing-dot::before {
+    content: none;
+  }
+
+  @keyframes dot-breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+
+@media only screen and (max-width: 767px) {
+  #locationinfop, #stockinfop {
+    text-align: center;
+    font-size: 0.975rem;
+    font-weight: 500;
+    border-radius: 10px;
+    margin-top: 3px;
+    font-size: 14.5px;
+  }
+}
+</style>
+<script>
+  // Cached original innerHTML of the shipping/returns accordion body, captured once
+  // so the worldwide-shipping paragraphs can be toggled without losing content.
+  let originalShippingAccordionHtml = null;
+
+  function setLocationInfo(countryCode, countryName) {
+    const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
+    const validCountryCode = /^[A-Z]{2}$/.test(normalizedCountryCode);
+    const flagMarkup = validCountryCode
+      ? `<img class="shipping-country-flag" src="https://cdn.shopify.com/static/images/flags/${normalizedCountryCode.toLowerCase()}.svg?width=32" alt="" aria-hidden="true" width="20" height="15" style="vertical-align: middle;">`
+      : '<span aria-hidden="true">📦</span>';
+    const countryLabel = validCountryCode ? normalizedCountryCode : 'your country';
+    const locationInfoP = document.getElementById('locationinfop');
+    const locationInfoCart = document.getElementById('locationinfocart');
+    const showSeparator = true;
+    const separator = showSeparator ? '<span aria-hidden="true">|</span>' : '';
+
+    // Create shipping message for the location info span
+    const shippingMessage = `${flagMarkup}${separator}<span class="shipping_usp">Free shipping to <span style="text-decoration: underline; color: black; font-weight:bold;">${countryLabel}</span></span>`;
+    const shippingMessageCart = `to ${flagMarkup} ${countryLabel}`;
+
+    for (const [element, message] of [[locationInfoP, shippingMessage], [locationInfoCart, shippingMessageCart]]) {
+      if (!element) continue;
+      element.innerHTML = message;
+      const flagImage = element.querySelector('.shipping-country-flag');
+      if (flagImage) {
+        flagImage.addEventListener('error', () => flagImage.replaceWith(document.createTextNode('📦')), { once: true });
+      }
+    }
+
+    window.smoocheCustomerCountry = countryCode;
+    updateShippingUspText();
+  }
+
+  // Formats "today + daysFromNow" as e.g. "July 4"
+  function formatDeliveryDate(daysFromNow) {
+    const date = new Date();
+    date.setDate(date.getDate() + daysFromNow);
+    const month = date.toLocaleDateString('en-US', { month: 'long' });
+    return `${month} ${date.getDate()}`;
+  }
+
+  // Whether the given (or currently selected) variant is marked in-stock at a US fulfillment location
+  function isVariantUsFulfillable(fulfillableVariantsAttr, currentVariantIdAttr, variantId) {
+    const fulfillableIds = (fulfillableVariantsAttr || '').split(',').filter(Boolean);
+    const currentVariantId = String(variantId || currentVariantIdAttr);
+    return fulfillableIds.includes(currentVariantId);
+  }
+
+  // Swaps the pulsing USP text (and the shipping/returns accordion note) to the
+  // US delivery estimate when the shopper is in the US and the current variant
+  // has stock at a US fulfillment location.
+  function updateShippingUspText(variantId) {
+    const isUsCustomer = window.smoocheCustomerCountry === 'US';
+
+    const block = document.querySelector('[data-shipping-usp]');
+    const uspText = block ? document.getElementById('shippingUspText') : null;
+    const locationInfoP = document.getElementById('locationinfop');
+    const stockInfoP = document.getElementById('stockinfop');
+
+    if (block && uspText) {
+      if (block.dataset.originalUspColor === undefined) {
+        block.dataset.originalUspColor = uspText.style.color;
+      }
+      if (stockInfoP && block.dataset.originalStockJustify === undefined) {
+        block.dataset.originalStockJustify = stockInfoP.style.justifyContent;
+      }
+
+      const showUsDelivery = isUsCustomer && isVariantUsFulfillable(block.dataset.usFulfillableVariants, block.dataset.currentVariantId, variantId);
+
+      if (showUsDelivery) {
+        const minDays = parseInt(block.dataset.usDeliveryMinDays, 10) || 2;
+        const maxDays = parseInt(block.dataset.usDeliveryMaxDays, 10) || 4;
+        uspText.textContent = `🇺🇸 Fast & Free Delivery (${formatDeliveryDate(minDays)} - ${formatDeliveryDate(maxDays)})`;
+        uspText.style.setProperty('color', '#000', 'important');
+      } else {
+        uspText.textContent = block.dataset.defaultUsp;
+        uspText.style.setProperty('color', block.dataset.originalUspColor);
+      }
+
+      if (locationInfoP) {
+        locationInfoP.style.display = showUsDelivery ? 'none' : '';
+      }
+      if (stockInfoP) {
+        stockInfoP.style.justifyContent = showUsDelivery ? 'center' : block.dataset.originalStockJustify;
+      }
+    }
+
+    const shippingNote = document.getElementById('usShippingAccordionNote');
+    if (shippingNote) {
+      const showNote = isUsCustomer && isVariantUsFulfillable(shippingNote.dataset.usFulfillableVariants, shippingNote.dataset.currentVariantId, variantId);
+      if (showNote) {
+        const minDays = block ? (parseInt(block.dataset.usDeliveryMinDays, 10) || 2) : 2;
+        const maxDays = block ? (parseInt(block.dataset.usDeliveryMaxDays, 10) || 4) : 4;
+        const startDate = formatDeliveryDate(minDays);
+        const endDate = formatDeliveryDate(maxDays);
+        shippingNote.innerHTML = `<p><strong>🇺🇸 Fast & Free Delivery to the US!</strong></p><p>This item is in stock at our US warehouse, so your order ships domestically instead of internationally. Expect delivery between ${startDate} and ${endDate}, with tracked shipping included at no extra cost.</p>`;
+        shippingNote.style.display = '';
+      } else {
+        shippingNote.style.display = 'none';
+      }
+
+      // The worldwide-shipping paragraphs don't apply once we're showing the US-specific
+      // delivery note above, so hide them and leave only the Returns section visible.
+      const shippingContent = document.getElementById('shippingAccordionContent');
+      if (shippingContent) {
+        if (originalShippingAccordionHtml === null) {
+          originalShippingAccordionHtml = shippingContent.innerHTML;
+        }
+        const returnsMarker = '<strong>Returns</strong>';
+        const markerIndex = originalShippingAccordionHtml.indexOf(returnsMarker);
+
+        if (showNote && markerIndex !== -1) {
+          shippingContent.innerHTML = originalShippingAccordionHtml.slice(markerIndex);
+        } else {
+          shippingContent.innerHTML = originalShippingAccordionHtml;
+        }
+      }
+    }
+  }
+
+  // This function fetches the browsing context suggestions and updates the p tag
+  async function fetchLocationInfo() {
+    try {
+      const response = await fetch('/browsing_context_suggestions.json');
+      const data = await response.json();
+      const countryCode = data.detected_values.country.handle;
+      const countryName = data.detected_values.country.name;
+
+      setLocationInfo(countryCode, countryName);
+    } catch (error) {
+      console.error('Error fetching location info:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+    fetchLocationInfo();
+  });
+
+  document.addEventListener('cart:change', function(event) {
+    fetchLocationInfo();
+  });
+
+  document.addEventListener('theme:variant:change', function(event) {
+    const variant = event.detail && event.detail.variant;
+    if (variant) {
+      updateShippingUspText(variant.id);
+    }
+  });
+</script>
+<div class="product__block" style="--PBB:20px;"><hr class="hr--full"/></div><div class="product__block" style="--PBB:0px;"><div class="product__subheading">
+<p><strong>Selling out fast<br/></strong>Due to high demand, quantities are limited.</p>
+</div></div>
+<div class="product__block countdown-timer-wrapper">
+<style>
+    .countdown-timer-wrapper {
+     width: 100%;
+     padding-top: 6px!important;
+     padding-bottom: 20px!important;
+    }
+    
+    .countdown-timer-container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    
+    .countdown-timer-bar {
+      width: 100%;
+      height: 10px;
+      background-color: #f7f7f7;
+      border-radius: 0px;
+      overflow: hidden;
+      margin-bottom: 7px;
+          border-radius: 4px;
+    }
+    
+    .countdown-timer-progress {
+      height: 100%;
+      background-color: #df8096;
+      width: 89%;
+      transition: width 0.3s ease;
+      border-radius: 0px;
+    }
+    
+    .countdown-timer-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .countdown-timer-prefix {
+      color: #000000;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    .countdown-timer-end {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #df8096;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    .countdown-timer-time {
+      color: #df8096;
+      font-weight: 500;
+    }
+    
+    @media (max-width: 768px) {
+      .countdown-timer-container {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .countdown-timer-info {
+
+      }
+      
+      .countdown-timer-end {
+
+      }
+    }
+  </style>
+<div class="countdown-timer-container">
+<div class="countdown-timer-bar">
+<div class="countdown-timer-progress"></div>
+</div>
+<div class="countdown-timer-info">
+<span class="countdown-timer-prefix">89% sold</span>
+<div class="countdown-timer-end">
+<span>Ends in</span>
+<span class="countdown-timer-time" id="countdown-display">00:00:00</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const timerType = 'daily';
+    const customDate = '';
+    const customTime = '23:59';
+    
+    function updateCountdown() {
+      const now = new Date();
+      let targetDate;
+      
+      if (timerType === 'daily') {
+        // Daily reset at midnight
+        targetDate = new Date();
+        targetDate.setHours(24, 0, 0, 0);
+      } else if (timerType === 'custom' && customDate) {
+        // Custom date and time
+        const [year, month, day] = customDate.split('-').map(Number);
+        const [hours, minutes] = customTime ? customTime.split(':').map(Number) : [0, 0];
+        targetDate = new Date(year, month - 1, day, hours, minutes, 0, 0);
+        
+        // If the custom date has passed, hide the countdown
+        if (targetDate <= now) {
+          const display = document.getElementById('countdown-display');
+          if (display) {
+            display.textContent = '00:00:00';
+          }
+          return;
+        }
+      } else {
+        // Default to daily if no valid configuration
+        targetDate = new Date();
+        targetDate.setHours(24, 0, 0, 0);
+      }
+      
+      // Calculate time remaining
+      const timeRemaining = targetDate - now;
+      
+      if (timeRemaining > 0) {
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+        let formattedTime;
+        
+        if (days > 0) {
+          // Show days if countdown is more than 24 hours
+          formattedTime = days + 'd ' +
+            String(hours).padStart(2, '0') + ':' +
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+        } else {
+          // Standard HH:MM:SS format
+          formattedTime = 
+            String(hours).padStart(2, '0') + ':' +
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+        }
+        
+        const display = document.getElementById('countdown-display');
+        if (display) {
+          display.textContent = formattedTime;
+        }
+      } else {
+        // Timer ended
+        const display = document.getElementById('countdown-display');
+        if (display) {
+          display.textContent = '00:00:00';
+        }
+        
+        // For daily timer, reset after a brief pause
+        if (timerType === 'daily') {
+          setTimeout(updateCountdown, 1000);
+        }
+      }
+    }
+    
+    // Update immediately
+    updateCountdown();
+    
+    // Update every second
+    setInterval(updateCountdown, 1000);
+  })();
+</script>
+<div class="product__block product__accordions" id="Block--product_accordion_Jeg4px" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-why-is-this-different--template--21857329971356__main--product_accordion_Jeg4px" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span id="accordionbefore">Why is this different?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-why-is-this-different--template--21857329971356__main--product_accordion_Jeg4px">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<p>Targeted care for puffiness, dryness and fine lines. <strong>Caffeine and niacinamide</strong> help depuff and brighten. <strong>PDRN and collagen</strong> support firmer, smoother-looking skin. <strong>Hyaluronic acid</strong> hydrates for a plumper look.</p><p><strong>Panthenol and beta-glucan</strong> help soothe the delicate under-eye area and support its moisture barrier. One targeted step for fresher, well-rested-looking eyes.</p>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--product_accordion_fcL4QM" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-whats-actually-in-it--template--21857329971356__main--product_accordion_fcL4QM" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span id="accordionbefore">What's actually in it?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-whats-actually-in-it--template--21857329971356__main--product_accordion_fcL4QM">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<p>Seven key ingredients to hydrate, depuff and smooth your under-eyes.</p><p><strong>PDRN (Sodium DNA).</strong> Helps support skin renewal and improve the look of elasticity.</p><p><strong>Caffeine.</strong> Helps reduce visible puffiness for fresher, more awake-looking eyes.</p><p><strong>Niacinamide.</strong> Helps brighten and even skin tone.</p><p><strong>Hyaluronic Acid.</strong> Hydrates and plumps, helping soften the look of fine lines.</p><p><strong>Collagen.</strong> Helps improve the appearance of firmness and smoothness.</p><p><strong>Panthenol (Pro-Vitamin B5).</strong> Helps soothe and nourish the delicate under-eye area.</p><p><strong>Beta-Glucan.</strong> Supports the moisture barrier and provides lasting hydration.</p><p>Every ingredient, clearly listed. See the full formula below.</p>
+<div class="accordion__popup-link">
+<a class="accordion-popup-trigger" data-popup-trigger="product_accordion_fcL4QM" href="#">
+              View full list
+            </a>
+</div></div>
+</div>
+</div><div class="popup-modal" data-popup-modal="product_accordion_fcL4QM" id="popup-modal-product_accordion_fcL4QM">
+<div class="popup-modal__overlay" data-popup-close="product_accordion_fcL4QM"></div>
+<div class="popup-modal__content">
+<button aria-label="Close" class="popup-modal__close" data-popup-close="product_accordion_fcL4QM" type="button">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24">
+<line x1="18" x2="6" y1="6" y2="18"></line>
+<line x1="6" x2="18" y1="6" y2="18"></line>
+</svg>
+</button>
+<h3 class="popup-modal__title">Ingredients</h3>
+<div class="popup-modal__body rte">
+<p>Water (Aqua), Glycerin, Panthenol, Chondrus Crispus, 1,2-Hexanediol, Hydroxyacetophenone, Trehalose,</p><p>Glucomannan, Niacinamide, Potassium Chloride, Butylene Glycol, Sodium DNA (PDRN), Caffeine, Soluble</p><p>Collagen, Sodium Hyaluronate, Portulaca Oleracea Extract, Beta-Glucan, Silanetriol, Sodium Chloride,</p><p>Sodium Sulfate, Ethylhexylglycerin, CI 77491, CI 77492.</p>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--product_accordion_gFcQpW" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-how-should-i-use-it--template--21857329971356__main--product_accordion_gFcQpW" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span id="accordionbefore">How should I use it?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-how-should-i-use-it--template--21857329971356__main--product_accordion_gFcQpW">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<ol><li><strong>Cleanse</strong> — wash your face and gently pat dry.</li><li><strong>Apply</strong> — place one patch under each eye, avoiding direct contact with your eyes.</li><li><strong>Leave on</strong> — follow the recommended wear time on the packaging.</li><li><strong>Remove</strong> — gently lift off the patches and pat any remaining essence into your skin.</li></ol>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--9927e90d-2ecb-4104-af67-0dadf75b2a0a" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-shipping-and-returns--template--21857329971356__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span id="accordionbefore">Shipping and returns</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-shipping-and-returns--template--21857329971356__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<div data-current-variant-id="47611439972508" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p><strong>We offer FREE Worldwide Shipping!</strong></p><p>Due to the influx of orders from our ongoing <strong>sale</strong>, dispatch may be slightly delayed. Rest assured, all orders will ship within <strong>24–48 hours</strong>. Depending on your location, delivery may take approximately <strong>5–7 business days</strong>.<br/><br/>Although we offer shipping to all countries, a few islands are excluded from our delivery area. If your country is available during checkout, we ship to your country. We also provide standard international tracked shipping at no additional cost on all orders.<br/><br/>Additionally, we offer a premium international insured shipping option at a modest charge of <strong>{% include 'partials/sf_price.html' with p=product %}</strong>, which we highly recommend for prioritized service and faster delivery.<br/><br/><strong>Returns</strong><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="https://08f531-2.myshopify.com/policies/refund-policy" title="Refund Policy">return policy</a> for more information.</p></div>
+</div>
+</div>
+</div></div>
+<div class="product__block product__complementary" style="--PBB:20px;">
+<complementary-products class="complementary-products" data-complementary-products="" data-url="/recommendations/products?section_id=template--21857329971356__main&amp;product_id=9264976101532&amp;limit=10&amp;intent=complementary"></complementary-products>
+</div>
+</div>
+</div><script data-product-json="" id="ProductJson-template--21857329971356__main" type="application/json">
+      {"id":9264976101532,"title":"Under-eye Reset Patches","handle":"under-eye-reset","description":"\u003cp class=\"p1\"\u003eHydrating under-eye patches that help depuff, brighten and smooth the delicate eye area for a refreshed, well-rested appearance.\u003c\/p\u003e","published_at":"2026-09-18T02:31:59-04:00","created_at":"2026-09-16T01:15:31-04:00","vendor":"Smooche","type":"","tags":[],"price":2900,"price_min":2900,"price_max":2900,"available":true,"price_varies":false,"compare_at_price":3900,"compare_at_price_min":3900,"compare_at_price_max":3900,"compare_at_price_varies":false,"variants":[{"id":47611439972508,"title":"Default Title","option1":"Default Title","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Under-eye Reset Patches","public_title":null,"options":["Default Title"],"price":2900,"weight":0,"compare_at_price":3900,"inventory_management":"shopify","barcode":null,"requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-2400w-17bb92.png","..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-753w-694ad7.png","..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-753w-91b4a0.png","..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg","..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png","..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-178w-467521.png","..\/assets\/img\/Under-eyeResetPatches-Productimages_2-178w-6105a8.png","..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-5fb8cc.jpg","..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-058989.png","..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-2ae365.jpg","..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-753w-c769ea.png","..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg","..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-753w-b4b795.png"],"featured_image":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-2400w-17bb92.png","options":["Title"],"media":[{"alt":null,"id":37515662098588,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-2400w-17bb92.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-2400w-17bb92.png","width":1080},{"alt":null,"id":37483818516636,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1440,"width":1440,"src":"..\/assets\/img\/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-0b3fb2.jpg"},"aspect_ratio":1.0,"duration":7040,"media_type":"video","sources":[{"format":"mp4","height":480,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-SD-480p-0-9Mbps-94561307-923663.mp4","width":480},{"format":"mp4","height":1080,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-HD-1080p-2-5Mbps-94561307-4823ad.mp4","width":1080},{"format":"mp4","height":720,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-HD-720p-1-6Mbps-94561307-edc545.mp4","width":720},{"format":"m3u8","height":1080,"mime_type":"application\/x-mpegURL","url":"\/\/smooche.com\/cdn\/shop\/videos\/c\/vp\/2cf1f10d49d541a4a45c9228be643ee3\/2cf1f10d49d541a4a45c9228be643ee3.m3u8?v=0","width":1080}]},{"alt":null,"id":37515662131356,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-753w-694ad7.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-753w-694ad7.png","width":1080},{"alt":null,"id":37515662164124,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-753w-91b4a0.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-753w-91b4a0.png","width":1080},{"alt":null,"id":37515662196892,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg","width":1080},{"alt":null,"id":37541670420636,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png","width":1080},{"alt":null,"id":37515662229660,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-178w-467521.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-178w-467521.png","width":1080},{"alt":null,"id":37544488108188,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_2-178w-6105a8.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_2-178w-6105a8.png","width":1080},{"alt":null,"id":37515662262428,"position":9,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-5fb8cc.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-5fb8cc.jpg","width":1080},{"alt":null,"id":37515662327964,"position":10,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-058989.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-058989.png","width":1080},{"alt":null,"id":37515662360732,"position":11,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-2ae365.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-2ae365.jpg","width":1080},{"alt":null,"id":37515662393500,"position":12,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-753w-c769ea.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-753w-c769ea.png","width":1080},{"alt":null,"id":37515662426268,"position":13,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg","width":1080},{"alt":null,"id":37515662459036,"position":14,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-753w-b4b795.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-753w-b4b795.png","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cp class=\"p1\"\u003eHydrating under-eye patches that help depuff, brighten and smooth the delicate eye area for a refreshed, well-rested appearance.\u003c\/p\u003e"}
+    </script>
+<script id="ModelJson-template--21857329971356__main" type="application/json">
+      []
+    </script>
+</div></div>
+<style>
+  #frontrow-sticker {
+    position: absolute;
+    z-index: 3;
+    border-radius: 0 !important;
+    max-width: unset !important;
+    left: 0px !important;
+    top: 0 !important;
+  }
+
+  .iframe-modal-frontrow {
+    display: none;
+    position: fixed;
+    z-index: 99999999;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Mobile only — scale down */
+  @media only screen and (max-width: 480px) {
+    #frontrow-sticker {
+      transform: scale(0.70) !important;
+      transform-origin: 0px 0px !important;
+    }
+  }
+
+  .iframe.frontrow { display: none; position: fixed; left: 0; top: 0; z-index: 99999997; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden; }
+</style>
+</section>
+<style>
+  #sticky_atcs .product__submit__add {
+        width: max-content;
+    min-width: max-content;
+    flex: none;
+    margin: 0;
+  }
+  .price-wrapper {
+          font-size: 14px;
+    }
+      #sticky_atcs .product__submit__add {
+    font-size: 12px;
+}
+  @media only screen and (max-width: 767px) {
+    #sticky_atcs .product__submit__add {
+    font-size: 10px;
+}
+    .price-wrapper {
+          font-size: 13px;
+    }
+  }
+  </style><div id="sticky_atcs">
+<div class="wrapper">
+<div class="wrap">
+<div class="left">
+<img alt="Under-eye Reset Patches" height="60" loading="lazy" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-180w-7e5d58.png'|asset_url }}" width="60"/>
+<div>
+<h5>Under-eye Reset Patches</h5>
+<div class="price-wrapper">
+<span class="product__price--sale">{% include 'partials/sf_price.html' with p=product %}</span>
+<span class="product__price--compare">{% include 'partials/sf_price.html' with p=product retail=1 %}</span>
+</div>
+</div>
+</div>
+<a class="btn btn--primary btn--solid btn--large btn--submit product__submit__add" data-option-position="" data-value="" href="#product_link" type="button">
+                Shop now
+              </a>
+</div>
+<div class="wrap" style="display: none!important;">
+<div class="left">
+<img alt="Under-eye Reset Patches" height="60" loading="lazy" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-180w-7e5d58.png'|asset_url }}" width="60"/>
+<div>
+<h5>Under-eye Reset Patches</h5>
+<div class="price-wrapper">
+<span class="product__price--sale">{% include 'partials/sf_price.html' with p=product %}</span>
+<span class="product__price--compare">{% include 'partials/sf_price.html' with p=product retail=1 %}</span>
+</div>
+</div>
+</div>
+<div class="right">
+<div class="sticky-variant-wrapper"><button class="btn btn--submit btn--solid btn--primary" data-sticky-add-to-cart="" name="add" type="submit">
+<span data-sticky-add-to-cart-text="">Sold Out
+</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+#sticky_atcs {
+opacity: 0;
+visibility: hidden;
+transform: translateY(100%);
+transition: all 0.3s ease;
+}
+
+  #sticky_atcs.scrolled {
+opacity: 1;
+visibility: visible;
+transform: translateY(0%);
+transition: all 0.3s ease;
+}
+
+
+.sticky-visible {
+opacity: 1;
+visibility: visible;
+transform: translateY(0);
+}
+
+#sticky_atcs {
+width: 100%;
+position: fixed;
+bottom: 0;
+height: auto;
+z-index: 999;
+background: white;
+box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+padding: 10px;
+}
+
+#sticky_atcs .wrap {
+display: flex;
+align-items: center;
+gap: 25px;
+justify-content: space-between;
+flex-wrap: wrap;
+}
+
+#sticky_atcs h5 {
+margin-bottom: 3px!important;
+font-size: 16px;
+}
+
+#sticky_atcs img {
+width: 60px;
+height: 60px;
+border-radius: 7px;
+object-fit: cover;
+}
+
+#sticky_atcs .left {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+#sticky_atcs .right {
+flex: 1;
+max-width: 400px;
+}
+
+/* Variant switcher styles */
+.sticky-variant-wrapper {
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.sticky-option {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.sticky-option__label {
+font-size: 14px;
+font-weight: 500;
+margin: 0;
+}
+
+.sticky-option__values {
+display: flex;
+gap: 5px;
+}
+
+.sticky-swatch {
+min-width: 35px;
+height: 35px;
+padding: 0 10px;
+border: 2px solid #ddd;
+background: white;
+border-radius: 35px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 13px;
+transition: all 0.2s ease;
+}
+
+.sticky-swatch:hover:not(:disabled) {
+border-color: #000;
+}
+
+.sticky-swatch.is-active {
+border-color: #000;
+background: #000;
+color: white;
+}
+
+.sticky-swatch.is-sold-out {
+opacity: 0.5;
+cursor: not-allowed;
+text-decoration: line-through;
+}
+
+.btn--submit {
+min-height: 35px;
+margin: 0;
+flex: 1;
+}
+
+@media only screen and (max-width: 767px) {
+#sticky_atcs {
+padding: 10px;
+}
+
+#sticky_atcs .wrap {
+gap: 10px;
+}
+
+#sticky_atcs h5 {
+font-size: 14px;
+}
+
+#sticky_atcs img {
+}
+
+#sticky_atcs .right {
+width: 100%;
+max-width: none;
+}
+
+.sticky-variant-wrapper {
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.sticky-option {
+width: 100%;
+}
+
+.sticky-swatch {
+min-width: 30px;
+height: 30px;
+font-size: 12px;
+}
+
+.btn--submit {
+width: 100%;
+margin-top: 5px;
+}
+}
+</style>
+<style> #shopify-section-template--21857329971356__main .product__form__wrapper {--PBB: 8px !important;} #shopify-section-template--21857329971356__main #locationinfop {margin-top: 0;} </style></div><div class="shopify-section" id="shopify-section-template--21857329971356__section_image_with_text_xdx7DM"><style>
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: transparent;
+  font-family: var(--FONT-STACK-BODY);
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse {
+  direction: rtl;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse > * {
+  direction: ltr;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__image {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__content {
+  text-align: left;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__heading {
+  text-align: left;
+  text-transform: none;
+  margin: 0 0 20px 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__highlight {
+  background: #df8096;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  line-height: 1.6;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__text {
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0 0 24px 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__text p {
+  margin: 0 0 14px 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__text p:last-child {
+  margin-bottom: 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__usps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+  margin-top: 24px;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__usp {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__usp img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__usp-text {
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--heading);
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__usp img { width: 26px; height: 26px; }
+  .smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__usp-text { font-size: 13px; line-height: 1.25; }
+  .smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__usp { gap: 8px; }
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__usp-text p {
+  margin: 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__button {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 14px 32px;
+  background: var(--heading);
+  color: #fff;
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__button:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 767px) {
+  .smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse {
+    direction: ltr;
+  }
+  .smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__text {
+    font-size: 14px;
+  }
+  .smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM .smooche-iwt__heading {
+    font-size: 24px;
+  }
+}
+</style>
+<section class="smooche-iwt-template--21857329971356__section_image_with_text_xdx7DM">
+<div class="wrapper">
+<div class="smooche-iwt__grid">
+<div class="smooche-iwt__image">
+<img alt="Tired-looking eyes, meet your refresh" loading="lazy" src="{{ 'sf/img/3_d663a5a5-e0c7-4e66-838f-467e3a75223a_1200x1200-1172ee.jpg'|asset_url }}"/>
+</div>
+<div class="smooche-iwt__content">
+<h2 class="section__heading h2 smooche-iwt__heading"><strong>Tired-looking eyes, meet your </strong>
+<span class="smooche-iwt__highlight"><strong>refresh</strong></span>
+</h2>
+<div class="smooche-iwt__text">
+<p>Puffiness. Dryness. Fine lines. Give your under-eyes targeted care for a brighter, smoother, well-rested look.</p><p>With <strong>PDRN, caffeine, niacinamide, collagen and hyaluronic acid</strong>, these hydrating patches help reduce visible puffiness, brighten and soften the look of fine lines.</p>
+</div>
+<div class="smooche-iwt__usps">
+<div class="smooche-iwt__usp">
+<img alt="" src="{{ 'sf/img/blobsmall_100x100-6f4530.svg'|asset_url }}"/>
+<div class="smooche-iwt__usp-text"><p><strong>Hydrated, smoother-looking skin</strong></p></div>
+</div>
+<div class="smooche-iwt__usp">
+<img alt="" src="{{ 'sf/img/blobsmall_100x100-6f4530.svg'|asset_url }}"/>
+<div class="smooche-iwt__usp-text"><p><strong>Brighter, less puffy-looking eyes</strong></p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__section_image_with_text_Cyzhwr"><style>
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr {
+  padding-top: 20px;
+  padding-bottom: 40px;
+  background: transparent;
+  font-family: var(--FONT-STACK-BODY);
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__grid--reverse {
+  direction: rtl;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__grid--reverse > * {
+  direction: ltr;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__image {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__content {
+  text-align: left;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__heading {
+  text-align: left;
+  text-transform: none;
+  margin: 0 0 20px 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__highlight {
+  background: #df8096;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  line-height: 1.6;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__text {
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0 0 24px 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__text p {
+  margin: 0 0 14px 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__text p:last-child {
+  margin-bottom: 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__usps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+  margin-top: 24px;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__usp {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__usp img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__usp-text {
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--heading);
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__usp img { width: 26px; height: 26px; }
+  .smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__usp-text { font-size: 13px; line-height: 1.25; }
+  .smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__usp { gap: 8px; }
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__usp-text p {
+  margin: 0;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__button {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 14px 32px;
+  background: var(--heading);
+  color: #fff;
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__button:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 767px) {
+  .smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr {
+    padding-top: 20px;
+    padding-bottom: 30px;
+  }
+  .smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__grid--reverse {
+    direction: ltr;
+  }
+  .smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__text {
+    font-size: 14px;
+  }
+  .smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr .smooche-iwt__heading {
+    font-size: 24px;
+  }
+}
+</style>
+<section class="smooche-iwt-template--21857329971356__section_image_with_text_Cyzhwr">
+<div class="wrapper">
+<div class="smooche-iwt__grid smooche-iwt__grid--reverse">
+<div class="smooche-iwt__image">
+<img alt="How does it work?" loading="lazy" src="{{ 'sf/img/Under-eye_Reset_Patches_-_Product_images_1200x1200-1f958d.jpg'|asset_url }}"/>
+</div>
+<div class="smooche-iwt__content">
+<h2 class="section__heading h2 smooche-iwt__heading">How does it work?
+</h2>
+<div class="smooche-iwt__text">
+<p><strong>Depuff and brighten:</strong> Caffeine helps reduce visible puffiness, while niacinamide helps brighten tired-looking under-eyes.</p><p><strong>Hydrate and smooth:</strong> Hyaluronic acid replenishes moisture for plumper-looking skin and softer-looking fine lines.</p><p><strong>Support firmness:</strong> PDRN and collagen help improve the appearance of elasticity and smoothness.</p><p><strong>Soothe and nourish:</strong> Panthenol and beta-glucan help soothe the delicate eye area and support its moisture barrier.</p><p>Targeted care for brighter, smoother, well-rested-looking eyes.</p>
+</div>
+<div class="smooche-iwt__usps">
+<div class="smooche-iwt__usp">
+<img alt="" src="{{ 'sf/img/blobsmall_100x100-6f4530.svg'|asset_url }}"/>
+<div class="smooche-iwt__usp-text"><p><strong>Deeply hydrating</strong></p></div>
+</div>
+<div class="smooche-iwt__usp">
+<img alt="" src="{{ 'sf/img/blobsmall_100x100-6f4530.svg'|asset_url }}"/>
+<div class="smooche-iwt__usp-text"><p><strong>With PDRN, caffeine and collagen</strong></p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_results_v2_qic4Eh"><style>
+.smooche-results {
+  padding-top: 0px;
+  padding-bottom: 50px;
+  background: #ffffff;
+  font-family: var(--FONT-STACK-BODY);
+}
+
+.smooche-results .section__heading {
+  text-align: center;
+  text-transform: none;
+  margin-bottom: 40px;
+}
+
+.smooche-results__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.smooche-results--page-width .smooche-results__grid {
+  max-width: none;
+}
+
+.smooche-results__card {
+  background: #f7f7f7;
+  border-radius: 16px;
+  padding: 40px 28px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.smooche-results__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.smooche-results__percentage {
+  font-family: var(--FONT-STACK-HEADING);
+  font-weight: var(--FONT-WEIGHT-HEADING-BOLD);
+  font-size: 80px;
+  color: #df8096;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.smooche-results__title {
+  font-family: var(--FONT-STACK-HEADING);
+  font-weight: var(--FONT-WEIGHT-HEADING-BOLD);
+  font-size: 16px;
+  color: var(--heading);
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+
+.smooche-results__subtitle {
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 13px;
+  color: #999;
+  line-height: 1.4;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .smooche-results {
+    padding-top: 0px;
+    padding-bottom: 40px;
+  }
+  .smooche-results__grid {
+    display: none;
+  }
+  .smooche-results__slider {
+    display: block;
+    padding: 0 20px;
+  }
+  .smooche-results--page-width .smooche-results__slider {
+    padding: 0;
+  }
+  .smooche-results__slider .swiper-wrapper {
+    padding: 8px 0 12px;
+  }
+  .smooche-results__slider .swiper-slide {
+    width: 270px;
+    height: auto;
+  }
+  .smooche-results__card {
+    padding: 30px 24px;
+  }
+  .smooche-results__percentage {
+    font-size: 60px;
+  }
+  .smooche-results .swiper-scrollbar {
+    height: 4px;
+    margin-top: 24px;
+  }
+  .smooche-results .swiper-scrollbar-drag {
+    background: #df8096;
+  }
+  .smooche-results__nav {
+    position: relative;
+  }
+  .smooche-results .swiper-button-prev,
+  .smooche-results .swiper-button-next {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    top: var(--swiper-navigation-top-offset, 40%);
+  }
+  .smooche-results .swiper-button-prev { left: 0; }
+  .smooche-results .swiper-button-next { right: 0; }
+  .smooche-results .swiper-button-prev:after,
+  .smooche-results .swiper-button-next:after {
+    font-size: 12px;
+    font-weight: bold;
+    color: #2D2D2D;
+  }
+  .smooche-results div[aria-disabled="true"] {
+    opacity: 0.35;
+    cursor: auto;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .smooche-results__slider {
+    display: none;
+  }
+  .smooche-results .swiper-button-prev,
+  .smooche-results .swiper-button-next {
+    display: none;
+  }
+}
+</style>
+<section class="smooche-results smooche-results--page-width">
+<div class="wrapper">
+<h2 class="section__heading h2">Real results</h2>
+<div class="smooche-results__grid">
+<div class="smooche-results__card">
+<div class="smooche-results__percentage">96%</div>
+<div class="smooche-results__title">Said their under-eyes looked less puffy</div>
+<div class="smooche-results__subtitle">Based on an eight-week independent customer panel</div>
+</div>
+<div class="smooche-results__card">
+<div class="smooche-results__percentage">94%</div>
+<div class="smooche-results__title">Said their eyes looked brighter and more awake</div>
+<div class="smooche-results__subtitle">Based on an eight-week independent customer panel</div>
+</div>
+<div class="smooche-results__card">
+<div class="smooche-results__percentage">93%</div>
+<div class="smooche-results__title">Said their eyes looked brighter and more awake</div>
+<div class="smooche-results__subtitle">Based on an eight-week independent customer panel</div>
+</div>
+</div>
+<div class="smooche-results__slider">
+<div class="smooche-results__nav">
+<div class="swiper smooche-results-swiper">
+<div class="swiper-wrapper">
+<div class="swiper-slide">
+<div class="smooche-results__card">
+<div class="smooche-results__percentage">96%</div>
+<div class="smooche-results__title">Said their under-eyes looked less puffy</div>
+<div class="smooche-results__subtitle">Based on an eight-week independent customer panel</div>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="smooche-results__card">
+<div class="smooche-results__percentage">94%</div>
+<div class="smooche-results__title">Said their eyes looked brighter and more awake</div>
+<div class="smooche-results__subtitle">Based on an eight-week independent customer panel</div>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="smooche-results__card">
+<div class="smooche-results__percentage">93%</div>
+<div class="smooche-results__title">Said their eyes looked brighter and more awake</div>
+<div class="smooche-results__subtitle">Based on an eight-week independent customer panel</div>
+</div>
+</div>
+</div>
+<div class="swiper-scrollbar smooche-results-scrollbar"></div>
+</div>
+<div class="swiper-button-prev smooche-results-prev"></div>
+<div class="swiper-button-next smooche-results-next"></div>
+</div>
+</div>
+</div>
+</section>
+<script data-smooche-slider-config="" type="application/json">{"selector": ".smooche-results-swiper", "next": ".smooche-results-next", "prev": ".smooche-results-prev", "scrollbar": ".smooche-results-scrollbar", "options": {"slidesPerView": "auto", "spaceBetween": 14}}</script>
+<script defer="" src="{{ 'sf/js/smooche-section-sliders-7fe587.js'|asset_url }}"></script>
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_compare_v2_zyrpmY"><style>
+.smooche-compare-section {
+  padding: 50px 20px 60px;
+  background: #f7f7f7;
+}
+
+.smooche-compare-section .section__heading {
+  text-align: center;
+  text-transform: none;
+  margin-bottom: 40px;
+}
+
+.smooche-compare-table {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.smooche-compare-section--page-width {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.smooche-compare-section--page-width .smooche-compare-table {
+  max-width: none;
+}
+
+.smooche-compare-table thead th {
+  padding: 18px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #000000;
+  background: transparent;
+}
+
+.smooche-compare-table thead th:first-child {
+  text-align: left;
+}
+
+.smooche-compare-table thead th:not(:first-child) {
+  text-align: center;
+}
+
+.smooche-compare-table thead th.col-highlight {
+  background: transparent;
+  color: #fff;
+  border-bottom-color: #df8096;
+  position: relative;
+  z-index: 1;
+}
+
+.smooche-compare-table thead th.col-highlight::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #df8096;
+  border-radius: 12px 12px 0 0;
+  z-index: -1;
+}
+
+.smooche-compare-table thead th.col-highlight img {
+  filter: brightness(0) invert(1);
+}
+
+.smooche-compare-table tbody td {
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 1px solid #dadada;
+  vertical-align: middle;
+}
+
+.smooche-compare-table tbody td:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+
+.smooche-compare-table tbody td:not(:first-child) {
+  text-align: center;
+}
+
+.smooche-compare-table tbody td.col-highlight {
+  background: #df809612;
+}
+
+.smooche-compare-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.smooche-compare-table .compare-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.smooche-compare-table .compare-icon img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.smooche-compare-table .compare-icon--check svg {
+  color: #df8096;
+}
+
+.smooche-compare-table .compare-icon--cross svg {
+  color: #ccc;
+}
+
+.smooche-compare-table .header-logo {
+  max-height: 14px;
+  width: auto;
+}
+
+@media screen and (max-width: 600px) {
+  .smooche-compare-section {
+    padding: 40px 12px 50px;
+  }
+  .smooche-compare-section--page-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .smooche-compare-table thead th,
+  .smooche-compare-table tbody td {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+  .smooche-compare-table .compare-icon {
+    width: 24px;
+    height: 24px;
+  }
+  .smooche-compare-table .compare-icon img {
+    width: 16px;
+    height: 16px;
+  }
+}
+</style>
+<style>
+  .smooche-compare-table th:last-child,
+  .smooche-compare-table td:last-child {
+    display: none;
+  }
+</style>
+<section class="smooche-compare-section smooche-compare-section--page-width">
+<div class="wrapper">
+<h2 class="section__heading h2">Why smooche?</h2>
+<table class="smooche-compare-table">
+<thead>
+<tr>
+<th>
+</th>
+<th class="col-highlight">
+<img alt="SKINOFAB" class="header-logo" height="27" loading="lazy" src="{{ 'sf/img/skinofab-logo.svg'|asset_url }}" srcset="{{ 'sf/img/skinofab-logo.svg'|asset_url }} 200w" width="200"/>
+</th>
+<th>
+                
+                  Others
+                
+              </th>
+<th>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PDRN (Sodium DNA)</td><td class="col-highlight">
+<span class="compare-icon">
+<img alt="Yes" height="20" loading="lazy" src="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-60w-e2ccb4.svg'|asset_url }}" srcset="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-20w-cbe07c.svg'|asset_url }} 20w" width="20"/>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td>
+</tr>
+<tr>
+<td>Caffeine + niacinamide</td><td class="col-highlight">
+<span class="compare-icon">
+<img alt="Yes" height="20" loading="lazy" src="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-60w-e2ccb4.svg'|asset_url }}" srcset="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-20w-cbe07c.svg'|asset_url }} 20w" width="20"/>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td>
+</tr>
+<tr>
+<td>Collagen + hyaluronic</td><td class="col-highlight">
+<span class="compare-icon">
+<img alt="Yes" height="20" loading="lazy" src="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-60w-e2ccb4.svg'|asset_url }}" srcset="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-20w-cbe07c.svg'|asset_url }} 20w" width="20"/>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td>
+</tr>
+<tr>
+<td>Panthenol + beta-glucan</td><td class="col-highlight">
+<span class="compare-icon">
+<img alt="Yes" height="20" loading="lazy" src="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-60w-e2ccb4.svg'|asset_url }}" srcset="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-20w-cbe07c.svg'|asset_url }} 20w" width="20"/>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td>
+</tr>
+<tr>
+<td>Fragrance-free</td><td class="col-highlight">
+<span class="compare-icon">
+<img alt="Yes" height="20" loading="lazy" src="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-60w-e2ccb4.svg'|asset_url }}" srcset="{{ 'sf/img/checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-20w-cbe07c.svg'|asset_url }} 20w" width="20"/>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td><td>
+<span class="compare-icon">
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10"></circle><path d="M7 7L13 13M13 7L7 13" stroke="white" stroke-linecap="round" stroke-width="2"></path></svg>
+</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__section_accordions_k6qPrc">
+<style data-shopify="">#Accordions--template--21857329971356__section_accordions_k6qPrc {
+    --PT: 40px;
+    --PB: 60px;
+    --border-opacity: 0;
+    --MB: 10px;--bg-padded-line: var(--bg);}#Accordions--template--21857329971356__section_accordions_k6qPrc .accordion__item { --bg: #f7f7f7; }</style>
+<section class="section-padding accordions-section text-dark" data-section-id="template--21857329971356__section_accordions_k6qPrc" data-section-type="accordions" id="Accordions--template--21857329971356__section_accordions_k6qPrc">
+<div class="accordion__header">
+<div class="wrapper">
+<div class="section__header"><h2 class="section__heading h2">Frequently asked questions</h2>
+</div>
+</div>
+</div>
+<div class="accordion__content">
+<div class="wrapper" data-collapsible-single="">
+<div class="accordion__columns">
+<div class="accordion__column">
+<ul class="accordion__list"><li aria-haspopup="true" class="accordion__item accordion__item--first accordion__item--padded" id="Accordion--text_fgdEkq">
+<button aria-controls="Accordions-item--0-template--21857329971356__section_accordions_k6qPrc" class="accordion__item__title" data-collapsible-trigger="">
+<span class="accordion__item__title__text">How do I use it?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--0-template--21857329971356__section_accordions_k6qPrc">
+<div class="accordion__item__text rte" data-collapsible-content=""><ol><li><strong>Cleanse</strong> — wash your face and gently pat dry.</li><li><strong>Apply</strong> — place one patch under each eye, avoiding direct contact with your eyes.</li><li><strong>Leave on</strong> — follow the recommended wear time on the packaging.</li><li><strong>Remove</strong> — gently lift off the patches and pat any remaining essence into your skin.</li></ol></div>
+</div>
+</li><li aria-haspopup="true" class="accordion__item accordion__item--padded" id="Accordion--text_qLhb3a">
+<button aria-controls="Accordions-item--1-template--21857329971356__section_accordions_k6qPrc" class="accordion__item__title" data-collapsible-trigger="">
+<span class="accordion__item__title__text">Why is this different?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--1-template--21857329971356__section_accordions_k6qPrc">
+<div class="accordion__item__text rte" data-collapsible-content=""><p>Targeted care for puffiness, dryness and fine lines. <strong>Caffeine and niacinamide</strong> help depuff and brighten. <strong>PDRN and collagen</strong> support firmer, smoother-looking skin. <strong>Hyaluronic acid</strong> hydrates for a plumper look.</p><p><strong>Panthenol and beta-glucan</strong> help soothe the delicate under-eye area and support its moisture barrier. One targeted step for fresher, well-rested-looking eyes.</p></div>
+</div>
+</li><li aria-haspopup="true" class="accordion__item accordion__item--padded" id="Accordion--text_h49px4">
+<button aria-controls="Accordions-item--2-template--21857329971356__section_accordions_k6qPrc" class="accordion__item__title" data-collapsible-trigger="">
+<span class="accordion__item__title__text">Is it okay for sensitive skin?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--2-template--21857329971356__section_accordions_k6qPrc">
+<div class="accordion__item__text rte" data-collapsible-content=""><p>The patches contain panthenol and beta-glucan to help soothe and support the skin’s moisture barrier. Every skin is different, so if yours reacts easily, patch test before your first use.</p></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="accordion__column"><ul class="accordion__list accordion__list--two-columns"><li aria-haspopup="true" class="accordion__item accordion__item--padded" id="Accordion--text_tUrWXN">
+<button aria-controls="Accordions-item--3-template--21857329971356__section_accordions_k6qPrc" class="accordion__item__title" data-collapsible-trigger="">
+<span class="accordion__item__title__text">Where do you ship to?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--3-template--21857329971356__section_accordions_k6qPrc">
+<div class="accordion__item__text rte" data-collapsible-content=""><p>We offer free worldwide shipping to 65+ countries. Please see our <a href="/shipping-policy/" title="Shipping Policy">shipping policy</a> for your country and estimated delivery times.</p></div>
+</div>
+</li><li aria-haspopup="true" class="accordion__item accordion__item--padded" id="Accordion--text_CDiEyL">
+<button aria-controls="Accordions-item--4-template--21857329971356__section_accordions_k6qPrc" class="accordion__item__title" data-collapsible-trigger="">
+<span class="accordion__item__title__text">Can I return my order?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--4-template--21857329971356__section_accordions_k6qPrc">
+<div class="accordion__item__text rte" data-collapsible-content=""><p>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="/refund-policy/" title="Refund Policy">return policy</a> for more information.</p></div>
+</div>
+</li><li aria-haspopup="true" class="accordion__item accordion__item--padded" id="Accordion--text_g4kp6Y">
+<button aria-controls="Accordions-item--5-template--21857329971356__section_accordions_k6qPrc" class="accordion__item__title" data-collapsible-trigger="">
+<span class="accordion__item__title__text">Do I have to pay import duties and taxes?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--5-template--21857329971356__section_accordions_k6qPrc">
+<div class="accordion__item__text rte" data-collapsible-content=""><p>No, you do not have to pay any import duties or taxes. We aim to provide a hassle-free shopping experience, so the price you see is the price you pay. There are no hidden fees or additional charges at delivery. This ensures that you can enjoy our products without worrying about extra costs.</p></div>
+</div>
+</li></ul>
+</div>
+</div>
+</div>
+</div></section>
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_why_gcA7fQ"><style>
+.smooche-why-section {
+  padding-top: 0px;
+  padding-bottom: 60px;
+}
+
+.smooche-why-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: var(--radius, 12px);
+  overflow: hidden;
+  min-height: 500px;
+}
+
+.smooche-why__image {
+  background-size: cover;
+  background-position: center;
+  min-height: 350px;
+  position: relative;
+}
+
+.smooche-why__content {
+  background: #f7f7f7;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.smooche-why__content .section__heading {
+  text-align: left;
+  text-transform: none;
+  margin: 0 0 30px 0;
+}
+
+.smooche-why__text {
+  margin-bottom: 30px;
+}
+
+.smooche-why__text p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.smooche-why__features {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 30px;
+}
+
+.smooche-why__feature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.smooche-why__feature:last-child {
+  border-bottom: none;
+}
+
+.smooche-why__feature-icon {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.smooche-why__feature-icon img {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.smooche-why__feature-text {
+  flex: 1;
+}
+
+.smooche-why__feature-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #2D2D2D;
+  margin-bottom: 2px;
+}
+
+.smooche-why__feature-desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.smooche-why__feature-desc p {
+  margin: 0;
+}
+
+.smooche-why__cta .btn {
+  display: inline-block;
+}
+
+@media (min-width: 768px) {
+  .smooche-why-inner--square-image .smooche-why__image {
+    aspect-ratio: 1;
+  }
+  .smooche-why__content {
+    padding: 60px;
+  }
+}
+
+@media (max-width: 767px) {
+  .smooche-why-section {
+    padding-top: 0px;
+    padding-bottom: 60px;
+  }
+  .smooche-why-inner {
+    grid-template-columns: 1fr;
+  }
+  .smooche-why__image {
+    min-height: 280px;
+  }
+  .smooche-why__content {
+    padding: 30px 24px;
+  }
+  .smooche-why__content .section__heading {
+    margin-bottom: 20px;
+  }
+  .smooche-why__feature-icon {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+  }
+  .smooche-why__feature-icon img {
+    width: 24px;
+    height: 24px;
+  }
+}
+</style>
+<section class="smooche-why-section">
+<div class="wrapper">
+<div class="smooche-why-inner">
+<div class="smooche-why__image" style='background-image: url("{{ 'sf/img/7_5b4e859b-a9d0-4d70-9f54-1264d2b3ff0b_1500x1500-f5915f.jpg'|asset_url }}"); background-position: center center;'></div>
+<div class="smooche-why__content">
+<h2 class="section__heading h2">Why is smooche the best choice?</h2>
+<div class="smooche-why__features">
+<div class="smooche-why__feature">
+<div class="smooche-why__feature-icon">
+<img alt="Instant result" src="{{ 'sf/img/icons_smooche_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
+</div>
+<div class="smooche-why__feature-text">
+<div class="smooche-why__feature-title">Instant result</div>
+<div class="smooche-why__feature-desc"><p>Plumper, glowing skin from day one</p></div>
+</div>
+</div>
+<div class="smooche-why__feature">
+<div class="smooche-why__feature-icon">
+<img alt="Trusted by 100,000+ women" src="{{ 'sf/img/icons_smooche_new_12_500x500-488fb2.svg'|asset_url }}"/>
+</div>
+<div class="smooche-why__feature-text">
+<div class="smooche-why__feature-title">Trusted by 100,000+ women</div>
+<div class="smooche-why__feature-desc"><p>Join thousands who use smooche every single day</p></div>
+</div>
+</div>
+<div class="smooche-why__feature">
+<div class="smooche-why__feature-icon">
+<img alt="Clean &amp; cruelty free" src="{{ 'sf/img/icons_smooche_new_13_500x500-c4009e.svg'|asset_url }}"/>
+</div>
+<div class="smooche-why__feature-text">
+<div class="smooche-why__feature-title">Clean &amp; cruelty free</div>
+<div class="smooche-why__feature-desc"><p>Vegan formula with skin-nourishing ingredients</p></div>
+</div>
+</div>
+</div>
+<div class="smooche-why__cta">
+<a class="btn btn--dark" href="#product">Claim offer</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div><section class="shopify-section" id="shopify-section-template--21857329971356__17343673251239a5d7"><style data-shopify="">#App--template--21857329971356__17343673251239a5d7 {
+    --PT: 0px;
+    --PB: 60px;
+  }</style><div class="section-padding" data-section-type="template--21857329971356__17343673251239a5d7" id="App--template--21857329971356__17343673251239a5d7">
+<div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-ANDhOMWpta0NqRDVHc__instafeed_app_block_KDnEMw">
+<style>
+      div[id*="instafeed_app_block"] {
+        width: 100%;
+      }
+      div.shopify-section:has(> [id*="instafeed_app_block"]) {
+      width: 100%;
+      }
+      
+      body #insta-feed {
+      
+          
+
+          
+          margin-bottom: 0px!important;
+          
+
+          
+
+          
+
+          
+      }
+      
+      body #insta-feed h2 {
+      
+        
+        
+         text-align: center;
+      }
+
+      
+      
+</style>
+<div id="insta-feed"></div>
+</div>
+</div>
+</div>
+</section>
+</main></div>
+{% endblock content_wrapper %}
+{% block sf_tail %}
+<div aria-hidden="true" class="pswp pswp--custom-loader" data-index="0" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="pswp pswp--custom-loader" data-index="1" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/smooche-cart-timer-b352c2.js'|asset_url }}"></script><script>
+      // Function to update the price element with the new variant price
+      function updateProductPrice(newPrice) {
+        const priceElement = document.getElementById('productpricingnew');
+        if (!priceElement) return;
+        priceElement.textContent = newPrice;
+      }
+
+      // Event listener to detect changes in the variant selection
+      document.addEventListener('DOMContentLoaded', function () {
+        // Assuming the variant change triggers an update on the element with class 'product__price--regular'
+        const regularPriceElement = document.querySelector('.product__price--regular');
+
+        if (regularPriceElement && document.getElementById('productpricingnew')) {
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+              // Update the `productpricingnew` element with the new price when it changes
+              updateProductPrice(mutation.target.textContent);
+            });
+          });
+
+          // Observe changes in the regular price element
+          observer.observe(regularPriceElement, {
+            childList: true,
+            subtree: true,
+          });
+        }
+      });
+    </script><script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get all swatch labels
+        const swatchLabels = document.querySelectorAll('.swatch__label');
+
+        swatchLabels.forEach((label) => {
+          label.addEventListener('click', (event) => {
+            // Get the value of selected-swatch from the clicked label
+            const selectedSwatch = label.getAttribute('selected-swatch');
+
+            // Update the .selected-swatch content
+            const selectedSwatchElement = document.querySelector('.selected-swatch');
+            if (selectedSwatchElement && selectedSwatch) {
+              selectedSwatchElement.textContent = selectedSwatch;
+            }
+          });
+        });
+      });
+    </script><script>
+      /* Accordion Popup JavaScript - Moves modals to body for proper z-index stacking */
+
+(function() {
+  'use strict';
+
+  // Move all popup modals to body for proper z-index stacking
+  function movePopupsToBody() {
+    document.querySelectorAll('.popup-modal[data-popup-modal]').forEach(function(popup) {
+      // Only move if not already a direct child of body
+      if (popup.parentElement !== document.body) {
+        document.body.appendChild(popup);
+      }
+    });
+  }
+
+  function initAccordionPopups() {
+    // First, move popups to body level
+    movePopupsToBody();
+
+    // Open popup via trigger link
+    document.querySelectorAll('[data-popup-trigger]').forEach(function(trigger) {
+      // Remove existing listeners to prevent duplicates
+      trigger.removeEventListener('click', handleTriggerClick);
+      trigger.addEventListener('click', handleTriggerClick);
+    });
+
+    // Close popup via close button or overlay click
+    document.querySelectorAll('[data-popup-close]').forEach(function(closeBtn) {
+      closeBtn.removeEventListener('click', handleCloseClick);
+      closeBtn.addEventListener('click', handleCloseClick);
+    });
+  }
+
+  function handleTriggerClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-trigger');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function handleCloseClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-close');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Close on escape key (only add once)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var activePopup = document.querySelector('.popup-modal.is-active');
+      if (activePopup) {
+        activePopup.classList.remove('is-active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccordionPopups);
+  } else {
+    initAccordionPopups();
+  }
+
+  // Re-initialize for Shopify sections (if using Section Rendering API)
+  document.addEventListener('shopify:section:load', initAccordionPopups);
+})();
+    </script>
+<script type="application/json" id="sf-variant-options">[{% for field in variant_form %}{% if 'attr' in field.id_for_label %}{"code": "{{ field.html_name|slice:'5:'|escapejs }}", "label": "{{ field.label|escapejs }}", "choices": [{% for c in field.field.choices %}["{{ c.0|escapejs }}", "{{ c.1|escapejs }}"]{% if not forloop.last %},{% endif %}{% endfor %}]},{% endif %}{% endfor %}null]</script>
+{{ product.data|json_script:'product-data' }}
+{% app_hook "view_product" %}
+{% app_hook "add_to_cart" %}
+{% endblock sf_tail %}

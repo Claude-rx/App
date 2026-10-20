@@ -1,0 +1,4 @@
+development:
+  apikey: "replace-with-your-next-commerce-api-key"
+  store: "your-store-subdomain.29next.store"
+  theme_id: "replace-with-your-theme-id"

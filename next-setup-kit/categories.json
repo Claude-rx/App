@@ -1,0 +1,86 @@
+[
+  {
+    "design_handle": "b2g5",
+    "title": "B2G5",
+    "theme_setting": "sf_c_b2g5",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "brows",
+    "title": "Brows",
+    "theme_setting": "sf_c_brows",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "bundles",
+    "title": "Bundles",
+    "theme_setting": "sf_c_bundles",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "canal-products",
+    "title": "Canal Products",
+    "theme_setting": "sf_c_canal_products",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "essentials",
+    "title": "Essentials",
+    "theme_setting": "sf_c_essentials",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "face",
+    "title": "Face",
+    "theme_setting": "sf_c_face",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "homepage-lips",
+    "title": "Homepage Lips",
+    "theme_setting": "sf_c_homepage_lips",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "lashes",
+    "title": "Lashes",
+    "theme_setting": "sf_c_lashes",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "lips",
+    "title": "Lips",
+    "theme_setting": "sf_c_lips",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "lipstain",
+    "title": "Lipstain",
+    "theme_setting": "sf_c_lipstain",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "sale",
+    "title": "Sale",
+    "theme_setting": "sf_c_sale",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "serums",
+    "title": "Serums",
+    "theme_setting": "sf_c_serums",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "skin",
+    "title": "Skin",
+    "theme_setting": "sf_c_skin",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  },
+  {
+    "design_handle": "the-hits",
+    "title": "The Hits",
+    "theme_setting": "sf_c_the_hits",
+    "set_setting_to": "the NEXT category URL, e.g. /catalogue/category/<slug>_<id>/"
+  }
+]

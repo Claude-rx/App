@@ -1,0 +1,21 @@
+# Reviewed literal URL names used by Spark templates.
+blog:blog-list
+cart:add
+cart:vouchers-add
+cart:vouchers-remove
+catalogue:index
+catalogue:reviews-add
+catalogue:reviews-list
+checkout:index
+core:set-currency
+customer:login
+customer:logout
+customer:summary
+customer:support-ticket-create
+search:search
+set_language
+storefrontapi:graphql
+support:category-list
+
+# docs/intro-bootstrap-comparison.md and docs/terminology.md document no
+# additional platform route names.

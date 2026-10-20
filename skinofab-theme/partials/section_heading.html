@@ -1,0 +1,6 @@
+{# Shared section heading helper. Expects heading, size, and align. #}
+{% if heading %}
+<h2 class="{% if size == 'large' %}text-h1 md:text-h1-md{% elif size == 'small' %}text-h3{% else %}text-h2{% endif %} font-semibold text-slate-800 mb-8 {% if align == 'center' %}text-center{% elif align == 'right' %}text-right{% endif %}">
+    {{ heading }}
+</h2>
+{% endif %}

@@ -1,0 +1,957 @@
+{% extends 'layouts/base.html' %}
+{% block title %}{% firstof "I thought my brows were gone for good – until I tried this – SKINOFAB" %}{% endblock %}
+{% block body_id %}{% firstof "i-thought-my-brows-were-gone-for-good-until-i-tried-this" %}{% endblock %}
+{% block body_class %}{% firstof "template-page body--rounded-corners palette--light no-outline" %}{% endblock %}
+{% block sf_head %}
+<link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
+</style><style>
+      .video-slide, .video-thumbnail, .product__form .btn--submit, #locationinfop, .product-grid-item .btn--quick .btn__inner, .product-upsell__btn, .btn, .btn--primary, .btn--primary .shopify-payment-button__button--unbranded, input.btn .shopify-payment-button__button--unbranded, input.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded, input.btn, input.shopify-payment-button__button--unbranded {
+         border-radius: 10px!important;
+      }
+      .input-group, .select-popout__toggle  {
+         border-radius: 10px!important;
+      }
+      #SiteFooter .input-group__fields input {
+        border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;
+      }
+        .input-group__btn {
+            border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;
+        }
+
+        button[aria-expanded=true] #accordionbefore:before {
+          background-color: #f7f7f7!important;
+        }
+      @media only screen and (max-width: 767px) {
+        .product-single .product__title {
+          font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;
+        }
+      }
+      #cart-drawer .product-upsell__holder .product-grid-item__swatch {
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 6px !important;
+      }
+      /* Preserve the bar's height while keeping it below the cart/header stack. */
+      body.js-drawer-open-cart .announcement-bar-static,
+      body:has(#cart-drawer.is-open) .announcement-bar-static {
+        z-index: 8999 !important;
+      }
+      body.js-drawer-open .announcement-bar-static,
+      body.js-quick-view-from-cart .announcement-bar-static,
+      body.js-quick-view-visible .announcement-bar-static,
+      body:has(#nav-drawer.is-open) .announcement-bar-static,
+      body:has(.drawer.is-open) .announcement-bar-static {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style><style>
+        .shopify-section-group-group-header, #SiteHeader, #SiteFooter {
+        display: none !important;
+        }
+      </style><style>
+        .swiper-scrollbar {
+        display: none!important;
+        }
+      </style><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="{{ 'sf/css/all-min-2d3b0a.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/><script src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><link href="{{ 'sf/css/swiper-bundle-min-9d0eb7.css'|asset_url }}" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><style data-shopify="">:root { --loader-image-size: 60px; }:root { --loader-image-size: 320px; }html:not(.is-loading) .loading-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-overlay { position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s; }
+        .loading-overlay .loader__image--fallback { width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain; }
+        .loader__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out; }
+        .loader__image { max-width: 60px; height: auto; object-fit: contain; }</style><script>
+        const loadingAppearance = "once";
+        const loaded = sessionStorage.getItem('loaded');
+
+        if (loadingAppearance === 'once') {
+          if (loaded === null) {
+            sessionStorage.setItem('loaded', true);
+            document.documentElement.classList.add('is-loading');
+          }
+        } else {
+          document.documentElement.classList.add('is-loading');
+        }
+      </script><style data-shopify="">@font-face {
+  font-family: Jost;
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
+}
+
+@font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+@font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}
+
+
+:root {--COLOR-PRIMARY-OPPOSITE: #ffffff;
+  --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --PRIMARY-BUTTONS-COLOR-BG: #000000;
+  --PRIMARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --PRIMARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --PRIMARY-BUTTONS-COLOR-LIGHTEN-DARKEN: #1a1a1a;
+
+  --PRIMARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--COLOR-SECONDARY-OPPOSITE: #ffffff;
+  --COLOR-SECONDARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --SECONDARY-BUTTONS-COLOR-BG: #000000;
+  --SECONDARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --SECONDARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --SECONDARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--OUTLINE-BUTTONS-PRIMARY-BG: transparent;
+  --OUTLINE-BUTTONS-PRIMARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-SECONDARY-BG: transparent;
+  --OUTLINE-BUTTONS-SECONDARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-WHITE-BG: transparent;
+  --OUTLINE-BUTTONS-WHITE-TEXT: #ffffff;
+  --OUTLINE-BUTTONS-WHITE-BORDER: #ffffff;
+
+  --OUTLINE-BUTTONS-BLACK-BG: transparent;
+  --OUTLINE-BUTTONS-BLACK-TEXT: #000000;
+  --OUTLINE-BUTTONS-BLACK-BORDER: #000000;--OUTLINE-SOLID-BUTTONS-PRIMARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-WHITE-BG: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-WHITE-TEXT: #000000;
+  --OUTLINE-SOLID-BUTTONS-WHITE-BORDER: #000000;
+
+  --OUTLINE-SOLID-BUTTONS-BLACK-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-BLACK-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-BLACK-BORDER: #ffffff;--COLOR-HEADING: #151515;
+  --COLOR-TEXT: #151515;
+  --COLOR-TEXT-DARKEN: #000000;
+  --COLOR-TEXT-LIGHTEN: #484848;
+  --COLOR-TEXT-ALPHA-5: rgba(21, 21, 21, 0.05);
+  --COLOR-TEXT-ALPHA-8: rgba(21, 21, 21, 0.08);
+  --COLOR-TEXT-ALPHA-10: rgba(21, 21, 21, 0.1);
+  --COLOR-TEXT-ALPHA-15: rgba(21, 21, 21, 0.15);
+  --COLOR-TEXT-ALPHA-20: rgba(21, 21, 21, 0.2);
+  --COLOR-TEXT-ALPHA-25: rgba(21, 21, 21, 0.25);
+  --COLOR-TEXT-ALPHA-50: rgba(21, 21, 21, 0.5);
+  --COLOR-TEXT-ALPHA-60: rgba(21, 21, 21, 0.6);
+  --COLOR-TEXT-ALPHA-85: rgba(21, 21, 21, 0.85);
+
+  --COLOR-BG: #ffffff;
+  --COLOR-BG-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-BG-ALPHA-35: rgba(255, 255, 255, 0.35);
+  --COLOR-BG-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BG-ALPHA-65: rgba(255, 255, 255, 0.65);
+  --COLOR-BG-ALPHA-85: rgba(255, 255, 255, 0.85);
+  --COLOR-BG-OVERLAY: rgba(255, 255, 255, 0.75);
+  --COLOR-BG-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-BG: #fafafa;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-EFFECT: #f5f5f5;
+  --COLOR-BG-LIGHTEN-DARKEN-FOREGROUND: #f7f7f7;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER: #cccccc;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER-LINE: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-2: #cdcdcd;
+  --COLOR-BG-LIGHTEN-DARKEN-3: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-4: #9a9a9a;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-2: #999999;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-3: #808080;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-4: #666666;
+
+  --COLOR-BG-SECONDARY: #f7f7f7;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN: #dedede;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN-CONTRAST: #777777;
+
+  --COLOR-INPUT-BG: #ffffff;
+
+  --COLOR-ACCENT: #df8096;
+  --COLOR-ACCENT-TEXT: #fff;
+
+  --COLOR-BORDER: #f7f7f7;
+  --COLOR-BORDER-ALPHA-15: rgba(247, 247, 247, 0.15);
+  --COLOR-BORDER-ALPHA-30: rgba(247, 247, 247, 0.3);
+  --COLOR-BORDER-ALPHA-50: rgba(247, 247, 247, 0.5);
+  --COLOR-BORDER-ALPHA-65: rgba(247, 247, 247, 0.65);
+  --COLOR-BORDER-LIGHTEN-DARKEN: #ababab;
+  --COLOR-BORDER-HAIRLINE: #f7f7f7;
+
+  --COLOR-SALE-BG: #df8096;
+  --COLOR-SALE-TEXT: #ffffff;
+  --COLOR-CUSTOM-BG: #df8096;
+  --COLOR-CUSTOM-TEXT: #ffffff;
+  --COLOR-SOLD-BG: #000000;
+  --COLOR-SOLD-TEXT: #ffffff;
+  --COLOR-SAVING-BG: #df8096;
+  --COLOR-SAVING-TEXT: #ffffff;
+
+  --COLOR-WHITE-BLACK: fff;
+  --COLOR-BLACK-WHITE: #000;
+  --COLOR-BLACK-WHITE-ALPHA-25: rgba(0, 0, 0, 0.25);--COLOR-DISABLED-GREY: rgba(21, 21, 21, 0.05);
+  --COLOR-DISABLED-GREY-DARKEN: rgba(21, 21, 21, 0.45);
+  --COLOR-ERROR: #D02E2E;
+  --COLOR-ERROR-BG: #f3cbcb;
+  --COLOR-SUCCESS: #56AD6A;
+  --COLOR-SUCCESS-BG: #ECFEF0;
+  --COLOR-WARN: #ECBD5E;
+  --COLOR-TRANSPARENT: rgba(255, 255, 255, 0);
+
+  --COLOR-WHITE: #ffffff;
+  --COLOR-WHITE-DARKEN: #f2f2f2;
+  --COLOR-WHITE-ALPHA-10: rgba(255, 255, 255, 0.1);
+  --COLOR-WHITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-WHITE-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-WHITE-ALPHA-50: rgba(255, 255, 255, 0.5);
+  --COLOR-WHITE-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BLACK: #000000;
+  --COLOR-BLACK-LIGHTEN: #1a1a1a;
+  --COLOR-BLACK-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --COLOR-BLACK-ALPHA-20: rgba(0, 0, 0, 0.2);
+  --COLOR-BLACK-ALPHA-25: rgba(0, 0, 0, 0.25);
+  --COLOR-BLACK-ALPHA-50: rgba(0, 0, 0, 0.5);
+  --COLOR-BLACK-ALPHA-60: rgba(0, 0, 0, 0.6);--FONT-STACK-BODY: futura-pt, sans-serif;
+  --FONT-STYLE-BODY: normal;
+  --FONT-STYLE-BODY-ITALIC: italic;
+  --FONT-ADJUST-BODY: 1.0;
+
+  --FONT-WEIGHT-BODY: 400;
+  --FONT-WEIGHT-BODY-LIGHT: 100;
+  --FONT-WEIGHT-BODY-MEDIUM: 700;
+  --FONT-WEIGHT-BODY-BOLD: 500;
+
+  --FONT-STACK-HEADING: futura-pt, sans-serif;
+  --FONT-STYLE-HEADING: normal;
+  --FONT-STYLE-HEADING-ITALIC: italic;
+  --FONT-ADJUST-HEADING: 1.1;
+
+  --FONT-WEIGHT-HEADING: 600;
+  --FONT-WEIGHT-HEADING-LIGHT: 400;
+  --FONT-WEIGHT-HEADING-MEDIUM: 900;
+  --FONT-WEIGHT-HEADING-BOLD: 600;
+
+  --FONT-STACK-NAV: futura-pt, sans-serif;
+  --FONT-STYLE-NAV: normal;
+  --FONT-STYLE-NAV-ITALIC: italic;
+  --FONT-ADJUST-NAV: 0.8;
+  --FONT-ADJUST-NAV-TOP-LEVEL: 0.8;
+
+  --FONT-WEIGHT-NAV: 600;
+  --FONT-WEIGHT-NAV-LIGHT: 400;
+  --FONT-WEIGHT-NAV-MEDIUM: 900;
+  --FONT-WEIGHT-NAV-BOLD: 700;
+
+  --FONT-ADJUST-PRODUCT-GRID: 0.9;
+
+  --FONT-STACK-BUTTON: futura-pt, sans-serif;
+  --FONT-STYLE-BUTTON: normal;
+  --FONT-STYLE-BUTTON-ITALIC: italic;
+  --FONT-ADJUST-BUTTON: 0.8;
+
+  --FONT-WEIGHT-BUTTON: 600;
+  --FONT-WEIGHT-BUTTON-MEDIUM: 900;
+  --FONT-WEIGHT-BUTTON-BOLD: 700;
+
+  --FONT-STACK-SUBHEADING: futura-pt, sans-serif;
+  --FONT-STYLE-SUBHEADING: normal;
+  --FONT-ADJUST-SUBHEADING: 1.0;
+
+  --FONT-WEIGHT-SUBHEADING: 400;
+  --FONT-WEIGHT-SUBHEADING-BOLD: 500;
+
+  --FONT-STACK-LABEL: futura-pt, sans-serif;
+  --FONT-STYLE-LABEL: normal;
+  --FONT-ADJUST-LABEL: 0.65;
+
+  --FONT-WEIGHT-LABEL: 500;
+
+  --LETTER-SPACING-NAV: 0.075em;
+  --LETTER-SPACING-SUBHEADING: 0.025em;
+  --LETTER-SPACING-BUTTON: 0.125em;
+  --LETTER-SPACING-LABEL: 0.05em;
+
+  --BUTTON-TEXT-CAPS: uppercase;
+  --HEADING-TEXT-CAPS: none;
+  --SUBHEADING-TEXT-CAPS: uppercase;
+  --LABEL-TEXT-CAPS: uppercase;--FONT-SIZE-INPUT: 1.0rem;--RADIUS: 30px;
+  --RADIUS-SMALL: 22px;
+  --RADIUS-TINY: 14px;
+  --RADIUS-BADGE: 3px;
+  --RADIUS-CHECKBOX: 4px;
+  --RADIUS-TEXTAREA: 8px;--PRODUCT-MEDIA-PADDING-TOP: 100%;--BORDER-WIDTH: 1px;--STROKE-WIDTH: 12px;--SITE-WIDTH: 1440px;
+  --SITE-WIDTH-NARROW: 840px;--COLOR-UPSELLS-BG: #f7f7f7;
+  --COLOR-UPSELLS-TEXT: #000000;
+  --COLOR-UPSELLS-TEXT-LIGHTEN: #333333;
+  --COLOR-UPSELLS-DISABLED-GREY-DARKEN: rgba(0, 0, 0, 0.45);
+  --UPSELLS-HEIGHT: 155px;
+  --UPSELLS-IMAGE-WIDTH: 20%;--ICON-ARROW-RIGHT: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik03MiAzNkwxMzIgOTZMNzIgMTU2IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==");--loading-svg: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjRweCIgdmlld0JveD0iMCAwIDMyMCA0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIwIiBoZWlnaHQ9IjQiIGZpbGw9IiMwMDAiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieCIgZnJvbT0iMCIgdG89IjMyMCIgZHVyPSIyLjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0id2lkdGgiIGZyb209IjAiIHRvPSIzMjAiIGR1cj0iMi4xcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4KICA8L3JlY3Q+Cjwvc3ZnPgo=");
+  --icon-check: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgZmlsbD0iI2ZmZiI+CiAgPHBhdGggZD0iTTExLjY1Mzg4MywxLjU1NDU5NjIxIEwxMy4yMDgxNzQ5LDIuODEzMjM2OTkgTDcuNTQ0MjkxMzgsOS44MDc1NTA2NSBMNy41MzI0MzQxOCw5Ljc5NzU5NjIxIEw3LjE1NzMwOTk1LDEwLjI2MzM1NTEgTDIuNDk0NDM0MTgsNi40ODc0MzI4IEwzLjc1MzA3NDk2LDQuOTMzMTQwODcgTDYuODcyNDM0MTgsNy40NTg1OTYyMSBMMTEuNjUzODgzLDEuNTU0NTk2MjEgWiI+PC9wYXRoPgo8L3N2Zz4K");
+  --icon-check-swatch: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cGF0aCBkPSJNMTEuNjUzODgzLDEuNTU0NTk2MjEgTDEzLjIwODE3NDksMi44MTMyMzY5OSBMNy41NDQyOTEzOCw5LjgwNzU1MDY1IEw3LjUzMjQzNDE4LDkuNzk3NTk2MjEgTDcuMTU3MzA5OTUsMTAuMjYzMzU1MSBMMi40OTQ0MzQxOCw2LjQ4NzQzMjggTDMuNzUzMDc0OTYsNC45MzMxNDA4NyBMNi44NzI0MzQxOCw3LjQ1ODU5NjIxIEwxMS42NTM4ODMsMS41NTQ1OTYyMSBaIiBpZD0icGF0aC1hd18xZXVwNi1xLTEiPjwvcGF0aD4KICAgIDxmaWx0ZXIgeD0iLTI4LjAlIiB5PSItMzQuNCUiIHdpZHRoPSIxNTYuMCUiIGhlaWdodD0iMTY4LjklIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItYXdfMWV1cDYtcS0yIj4KICAgICAgPGZlT2Zmc2V0IGR4PSIwIiBkeT0iMCIgaW49IlNvdXJjZUFscGhhIiByZXN1bHQ9InNoYWRvd09mZnNldE91dGVyMSI+PC9mZU9mZnNldD4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMSIgaW49InNoYWRvd09mZnNldE91dGVyMSIgcmVzdWx0PSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlR2F1c3NpYW5CbHVyPgogICAgICA8ZmVDb2xvck1hdHJpeCB2YWx1ZXM9IjAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgMCAwIDAgMSAwIiB0eXBlPSJtYXRyaXgiIGluPSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlQ29sb3JNYXRyaXg+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPGcgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgIDx1c2UgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIiBmaWx0ZXI9InVybCgjZmlsdGVyLWF3XzFldXA2LXEtMikiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgICA8dXNlIGZpbGw9IiNmZmZmZmYiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgPC9nPgo8L3N2Zz4K");
+  --icon-zoom-in: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICAgICAgPHBhdGggZD0iTTEyLjYsOSBMMTIuNiwxNi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");
+  --icon-zoom-out: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");--collection-sticky-bar-height: 0px;
+  --collection-image-padding-top: 60%;
+
+  --drawer-width: 400px;
+  --drawer-transition: transform 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);--gutter: 60px;
+  --gutter-mobile: 20px;
+  --grid-gutter: 20px;
+  --grid-gutter-mobile: 35px;--inner: 20px;
+  --inner-tablet: 18px;
+  --inner-mobile: 16px;--grid: repeat(4, minmax(0, 1fr));
+  --grid-tablet: repeat(3, minmax(0, 1fr));
+  --grid-mobile: repeat(2, minmax(0, 1fr));
+  --megamenu-grid: repeat(4, minmax(0, 1fr));
+  --grid-row: 1 / span 4;--scrollbar-width: 0px;--overlay: #000;
+  --overlay-opacity: 1;--swatch-width: 38px;
+  --swatch-height: 26px;
+  --swatch-size: 32px;
+  --swatch-size-mobile: 30px;
+
+  
+  --move-offset: 20px;
+
+  
+  --autoplay-speed: 2200ms;
+
+  
+--filter-bg: .97;
+  --product-filter-bg: .97;
+  }</style><link href="{{ 'sf/css/kopstorm-V2-ea6148.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/theme-410305.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm-62aff9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm_new-c14bc9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><script type="text/javascript">
+    if (window.MSInputMethodContext && document.documentMode) {
+      var scripts = document.getElementsByTagName('script')[0];
+      var polyfill = document.createElement("script");
+      polyfill.defer = true;
+      polyfill.src = "{{ 'sf/js/ie11-831ade.js'|asset_url }}";
+
+      scripts.parentNode.insertBefore(polyfill, scripts);
+
+      document.documentElement.classList.add('ie11');
+    } else {
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    }
+
+    let root = '/';
+    if (root[root.length - 1] !== '/') {
+      root = `${root}/`;
+    }
+
+    window.theme = {
+      routes: {
+        root: root,
+        cart_url: "\/cart",
+        cart_add_url: "\/cart\/add",
+        cart_change_url: "\/cart\/change",
+        shop_url: "https:\/\/smooche.com",
+        searchUrl: '/search',
+        predictiveSearchUrl: '/search/suggest',
+        product_recommendations_url: "\/recommendations\/products"
+      },
+      assets: {
+        photoswipe: '{{ 'sf/js/photoswipe-7aaf31.js'|asset_url }}',
+        smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
+        no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
+        swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
+        base: "//smooche.com/cdn/shop/t/76/assets/"
+      },
+      strings: {
+        add_to_cart: "Add to Cart",
+        cart_acceptance_error: "You must accept our terms and conditions.",
+        cart_empty: "Your cart is currently empty.",
+        cart_price: "Price",
+        cart_quantity: "Quantity",
+        cart_items_one: "{% templatetag openvariable %} count }} item",
+        cart_items_many: "{% templatetag openvariable %} count }} items",
+        cart_title: "Cart",
+        cart_total: "Total",
+        continue_shopping: "Continue Shopping",
+        free: "Free",
+        limit_error: "Sorry, looks like we don\u0026#39;t have enough of this product.",
+        preorder: "Pre-Order",
+        remove: "Remove",
+        sale_badge_text: "Sale",
+        saving_badge: "Save {% templatetag openvariable %} discount }}",
+        saving_up_to_badge: "Save up to {% templatetag openvariable %} discount }}",
+        sold_out: "Sold Out",
+        subscription: "Subscription",
+        unavailable: "Unavailable",
+        unit_price_label: "Unit price",
+        unit_price_separator: "per",
+        zero_qty_error: "Quantity must be greater than 0.",
+        delete_confirm: "Are you sure you wish to delete this address?",
+        newsletter_product_availability: "Notify Me When It’s Available"
+      },
+      icons: {
+        plus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-plus" viewBox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        minus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-minus" viewBox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        close: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      },
+      settings: {
+        animations: false,
+        cartType: "drawer",
+        enableAcceptTerms: false,
+        enableInfinityScroll: false,
+        enablePaymentButton: true,
+        gridImageSize: "cover",
+        gridImageAspectRatio: 1,
+        mobileMenuBehaviour: "link",
+        productGridHover: "image",
+        savingBadgeType: "percentage",
+        showSaleBadge: true,
+        showSoldBadge: true,
+        showSavingBadge: true,
+        quickBuy: "none",
+        suggestArticles: false,
+        suggestCollections: true,
+        suggestProducts: true,
+        suggestPages: false,
+        suggestionsResultsLimit: 10,
+        currency_code_enable: true,
+        hideInventoryCount: true,
+        enableColorSwatchesCollection: true,
+      },
+      sizes: {
+        mobile: 480,
+        small: 768,
+        large: 1024,
+        widescreen: 1440
+      },
+      moneyFormat: "${% templatetag openvariable %}amount_no_decimals}}",
+      moneyWithCurrencyFormat: "${% templatetag openvariable %}amount_no_decimals}} USD",
+      subtotal: 0,
+      info: {
+        name: 'Palo Alto'
+      },
+      version: '5.6.0'
+    };
+    window.PaloAlto = window.PaloAlto || {};
+    window.slate = window.slate || {};
+    window.isHeaderTransparent = false;
+    window.stickyHeaderHeight = 60;
+    window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/smooche-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
+        @media screen and (max-width: 767px) {
+        .product-single__details {
+          overflow: ;
+        }
+        }
+      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Smooche","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Smooche","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"page"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
+        #shopify-buyer-consent {
+  margin-top: 1em;
+  display: inline-block;
+  width: 100%;
+}
+
+#shopify-buyer-consent.hidden {
+  display: none;
+}
+
+#shopify-subscription-policy-button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+#shopify-subscription-policy-button::before {
+  box-shadow: none;
+}
+
+      </style><script defer="defer" src="{{ 'sf/js/smooche-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
+    #alia-popup-root-alia-qqoyyurlj3kbg51i {
+      z-index: 999999 !important;
+    }
+  </style><script id="kaching-bundles-translations" type="application/json">
+    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
+  </script><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-f7208f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
+    .kaching-bundles__block {
+      display: none;
+    }
+
+    .kaching-bundles-sticky-atc {
+      display: none;
+    }
+  </style>
+{% endblock sf_head %}
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root { --loader-image: var(--loading-svg); }</style><div class="loader loader--image">
+<div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
+</div>
+</div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
+{% block content_wrapper %}
+<main class="main-content" data-main="" id="MainContent">
+<div class="shopify-section" id="shopify-section-template--20029874831516__instant-8RjMjnzDwPBzI6Uy">
+<div class="__instant i8RjMjnzDwPBzI6Uy" data-instant-id="8RjMjnzDwPBzI6Uy" data-instant-layout="PAGE" data-instant-version="4.3.1" data-section-id="template--20029874831516__instant-8RjMjnzDwPBzI6Uy"><link href="{{ 'sf/css/instant-8RjMjnzDwPBzI6Uy-828392.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/css2-0c6ec1.css'|asset_url }}" rel="stylesheet"/><div class="i3Gi7QqlJ0xFDMfnA" data-instant-type="root"><div class="iki4FalgbKknxnNhT" data-instant-type="container" id="iki4FalgbKknxnNhT"><div class="ivTbDwSnCKsWvoKGq" data-instant-type="container"><div class="i0X2ZljcnxZPHPOj6" data-instant-type="container"><div class="ibkfe7FV8ID4dzidC" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="high" height="600" loading="eager" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/TH1hIPYiCDugdaYh/dr-melly-2.png?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/TH1hIPYiCDugdaYh/dr-melly-2.png?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/TH1hIPYiCDugdaYh/dr-melly-2.png?width=1280 1280w" width="1000"/></div></div></div></div><div class="iWacNEeOjeeLczfZS" data-instant-type="container" id="iWacNEeOjeeLczfZS"><div class="ishRowQhzyUH5ZlVy" data-instant-type="container"><div class="instant-rich-text i121xS4I9pqkl7cP3" data-instant-type="text"><p><em>This is a shared article originally posted by Cosmetic Times.</em></p></div><div class="iyZCtot2jfSQlKqOr" data-instant-type="container"><div class="ipIMjA3pE9jLVT1nJ" data-instant-type="container"><div class="instant-rich-text ivFhMsxKz2YE9PoWA" data-instant-type="text"><h3>I thought my brows were gone for good – until I tried this</h3></div><div class="instant-rich-text iPmDzBe9oKNqtpsRa" data-instant-type="text"><p>If you’ve started noticing your eyebrows getting thinner with age—and wish you could bring them back—this might be exactly what you’ve been looking for.</p></div></div><div class="i32ODRBInzDrzxRUC" data-instant-type="container"><div class="instant-rich-text iV5vFWs7mNVdukn2I" data-instant-type="text"><p><em>Michelle Mason</em></p></div></div></div></div></div><div class="iW7tUZwOq5pmil3ak" data-instant-type="image" id="iW7tUZwOq5pmil3ak"><img alt="" class="instant-image instant-image__main instant-responsive instant-responsive--desktop instant-responsive--laptop instant-responsive--tablet" decoding="async" fetchpriority="auto" height="750" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/dMLA1VkqJJCMxz5A/eyebrows-1.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/dMLA1VkqJJCMxz5A/eyebrows-1.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/dMLA1VkqJJCMxz5A/eyebrows-1.jpg?width=1280 1280w" width="1800"/><img alt="" class="instant-image instant-image__main instant-responsive instant-responsive--mobile" decoding="async" fetchpriority="auto" height="1080" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/bQSGF01EiHA5RJYu/before-afters-brow-combined-4.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/bQSGF01EiHA5RJYu/before-afters-brow-combined-4.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/bQSGF01EiHA5RJYu/before-afters-brow-combined-4.jpg?width=1280 1280w" width="1080"/></div><div class="impu2agGaN9ScC088" data-instant-type="container" id="impu2agGaN9ScC088"><div class="i7WY9GAloJroF9Cf5" data-instant-type="container"><div class="iklRLiqhPHBv0YusT" data-instant-type="container"><div class="instant-rich-text iVYTkMcODhq2f5yUb" data-instant-type="text"><h3>The truth? I didn’t think my brows could grow back</h3></div><div class="instant-rich-text iuywgRxk272v2HSIq" data-instant-type="text"><p>As I got older, my once-full eyebrows started thinning out—slowly at first, then almost overnight. They became sparse, patchy, and uneven.</p><p></p><p>I tried everything: castor oil, coconut oil, even those viral TikTok hacks my daughter swore by. But nothing made a real difference.</p><p></p><p>I almost went through with microblading. But the thought of tattooing fake hairs onto aging skin gave me pause.</p><p></p><p>So I gave myself one last shot: find something natural, gentle, and actually proven to support real brow regrowth.</p><p></p><p>I didn’t expect much. But within 3 weeks, I started seeing actual new hairs—growing back where I hadn’t seen any in years.</p><p></p><p>It felt almost too good to be true. So I started doing research—trying to understand why this was finally working when everything else had failed. That’s when I realized the truth behind most brow serums out there…</p></div></div><div class="iGyefkEgMfCBxc15Q" data-instant-type="container"><div class="instant-rich-text iTFsZSvENhzIS3YUP" data-instant-type="text"><h3>What I discovered: Most brow serums are just fancy oils</h3></div><div class="instant-rich-text iHol3ZjSgifSxLHIf" data-instant-type="text"><p>I learned quickly that most serums are all hype and no science.</p><p></p><p>They rely on one or two outdated ingredients, and none of them are designed to actually stimulate the hair follicle long-term.</p><p></p><p>That’s when I found natural Smooche Eyebrow Growth Serum — the first formula I tried that combined the five most essential compounds for eyebrow regrowth:</p></div></div></div></div><div class="ixx5INmt5LzPsjvHX" data-instant-type="container" id="ixx5INmt5LzPsjvHX"><div class="ir0EDGwomRRYFgL58" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="800" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/z1cWjaCa7Rx70vpV/untitled-design.png?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/z1cWjaCa7Rx70vpV/untitled-design.png?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/z1cWjaCa7Rx70vpV/untitled-design.png?width=1280 1280w" width="1600"/></div></div><div class="i3UAm5RRyd7BaFAzR" data-instant-type="container" id="i3UAm5RRyd7BaFAzR"><div class="i1PBNYkEru8OTG6cY" data-instant-type="container"><div class="i8mYcmNVYfjdbM7Ox" data-instant-type="container"><div class="instant-rich-text ibIzYq9KxIhfeWtTV" data-instant-type="text"><h3>1. <strong>Hyaluronic acid</strong></h3></div><div class="instant-rich-text iNzazPyKv4Jlm7hq9" data-instant-type="text"><p>Hyaluronic acid deeply hydrates and plumps the brow area, creating an optimal environment for hair growth. Well-hydrated skin and follicles are more resilient and better able to support healthy, consistent brow growth.</p></div></div><div class="inH0mnQywyKx5BPhQ" data-instant-type="container"><div class="instant-rich-text iqeugaVwPmwI5AXkp" data-instant-type="text"><h3>2. <strong>Biotin (Vitamin B7)</strong></h3></div><div class="instant-rich-text iiwXe6Ln3PMkfkFGM" data-instant-type="text"><p>Biotin is essential for keratin production, the protein that makes up your hair. It strengthens existing brow hairs, reduces breakage, and supports the natural growth cycle, helping your brows grow in fuller and healthier over time.</p></div><div class="iZn585BudqbMGGYh5" data-instant-type="container"><div class="instant-rich-text ifVLc1swMh8nLqnBk" data-instant-type="text"><h3>3. <strong>Vitamin E</strong></h3></div><div class="instant-rich-text ioquSPQyqkfTt5VjL" data-instant-type="text"><p>Vitamin E is a powerful antioxidant that helps repair damaged hair follicles and protects them from oxidative stress. It also moisturizes and conditions the brow area, supporting a healthy environment for hair to grow stronger, thicker, and more resilient.</p></div></div></div><div class="io0RPvhx98WnBUywk" data-instant-type="container"><div class="instant-rich-text i4bLbPwh04JTbV8QD" data-instant-type="text"><h3>4. <strong>Panax Ginseng Extract</strong></h3></div><div class="instant-rich-text iiWbEqHu2ZXqJd8BA" data-instant-type="text"><p>Panax ginseng stimulates blood circulation around the hair follicles, encouraging nutrient delivery and promoting new hair growth. It also contains antioxidants that protect the follicles from damage, supporting stronger and thicker brows.</p></div><div class="i2FLm9HPNdMFpshd8" data-instant-type="container"><div class="instant-rich-text ixXFauNhmvJn3O5ek" data-instant-type="text"><h3>5. <strong>Swertia Japonica Extract</strong></h3></div><div class="instant-rich-text itL6UlnGFp9BJ4S7g" data-instant-type="text"><p>Swertia Japonica is a plant-based extract known for stimulating hair follicle activity. It helps revive dormant follicles, encouraging new brow hairs to grow while reinforcing the strength of existing ones.</p></div></div></div></div><div class="i2zhZYIMo49dqNqDO" data-instant-type="container"><div class="instant-slider-container iKZRvga0mEaV2R4Kr" data-instant-type="slider-container">
+<script id="instant-slider-iQ0MW3zOK4YTqoFwL-params" type="application/json">
+            { "breakpoints": { "0": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": "auto", "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 24 }, "576": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": 2, "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 24 }, "769": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": "auto", "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 24 } }, "navigation": { "nextEl": ".instant-slider-Q0MW3zOK4YTqoFwL-button-next", "prevEl": ".instant-slider-Q0MW3zOK4YTqoFwL-button-prev", "disabledClass": "instant-slider-button-disabled", "hiddenClass": "instant-slider-button-hidden", "lockClass": "instant-slider-button-lock", "navigationDisabledClass": "instant-slider-navigation-disabled" }, "watchOverflow": true, "a11y": false, "containerModifierClass": "instant-slider-", "noSwipingClass": "instant-slider-no-swiping", "slideClass": "instant-slider-slide", "slideBlankClass": "instant-slider-slide-blank", "slideActiveClass": "instant-slider-slide-active", "slideVisibleClass": "instant-slider-slide-visible", "slideFullyVisibleClass": "instant-slider-slide-fully-visible", "slideNextClass": "instant-slider-slide-next", "slidePrevClass": "instant-slider-slide-prev", "wrapperClass": "instant-slider-wrapper", "lazyPreloaderClass": "instant-slider-lazy-preloader", "on": {} }
+          </script>
+<div class="instant-slider iQ0MW3zOK4YTqoFwL" data-instant-slider-id="Q0MW3zOK4YTqoFwL" data-instant-type="slider" id="iQ0MW3zOK4YTqoFwL"><div class="instant-slider-wrapper"><div class="instant-slider-slide iAdCuRC9NXBWLs0lF" data-instant-type="slider-slide"><div class="ih0vV9rLTHKGmrn8A" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="1000" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/LpC79QfDjl39rwIM/squalane-4.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/LpC79QfDjl39rwIM/squalane-4.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/LpC79QfDjl39rwIM/squalane-4.jpg?width=1280 1280w" width="1000"/></div></div><div class="instant-slider-slide iE6JArX8BkFgmu9WQ" data-instant-type="slider-slide"><div class="i0nD0tfiz1Tb7hgXY" data-instant-type="image"><img alt="" class="instant-image instant-image__main instant-responsive instant-responsive--desktop instant-responsive--laptop instant-responsive--tablet" decoding="async" fetchpriority="auto" height="1000" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/xCiwSbSpSjdGt4Pf/squalane-5.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/xCiwSbSpSjdGt4Pf/squalane-5.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/xCiwSbSpSjdGt4Pf/squalane-5.jpg?width=1280 1280w" width="1000"/><img alt="" class="instant-image instant-image__main instant-responsive instant-responsive--mobile" decoding="async" fetchpriority="auto" height="1000" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/xCiwSbSpSjdGt4Pf/squalane-5.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/xCiwSbSpSjdGt4Pf/squalane-5.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/xCiwSbSpSjdGt4Pf/squalane-5.jpg?width=1280 1280w" width="1000"/></div></div><div class="instant-slider-slide iiTbzYjiVf7Dg5yfB" data-instant-type="slider-slide"><div class="ik3dN4vgojS6m4wg3" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="1000" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/X2Fdxa4DcIq2mWIN/squalane-2.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/X2Fdxa4DcIq2mWIN/squalane-2.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/X2Fdxa4DcIq2mWIN/squalane-2.jpg?width=1280 1280w" width="1000"/></div></div><div class="instant-slider-slide ijbncCKBktUSOxLf2" data-instant-type="slider-slide"><div class="iSa3FmLI0AKHqDMcx" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="1000" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/Ah5ykDxmy8XnC8u2/squalane.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/Ah5ykDxmy8XnC8u2/squalane.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/Ah5ykDxmy8XnC8u2/squalane.jpg?width=1280 1280w" width="1000"/></div></div><div class="instant-slider-slide iLHYU1zbxTeLOfc2N" data-instant-type="slider-slide"><div class="iqcgrNkasifsrjRYu" data-instant-type="image"><img alt="" class="instant-image instant-image__main instant-responsive instant-responsive--desktop instant-responsive--laptop instant-responsive--tablet" decoding="async" fetchpriority="auto" height="1000" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/gtwJTLpI6LR5jw4E/squalane-3.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/gtwJTLpI6LR5jw4E/squalane-3.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/gtwJTLpI6LR5jw4E/squalane-3.jpg?width=1280 1280w" width="1000"/><img alt="" class="instant-image instant-image__main instant-responsive instant-responsive--mobile" decoding="async" fetchpriority="auto" height="1000" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/gtwJTLpI6LR5jw4E/squalane-3.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/gtwJTLpI6LR5jw4E/squalane-3.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/gtwJTLpI6LR5jw4E/squalane-3.jpg?width=1280 1280w" width="1000"/></div></div></div></div><div class="ibkbLiJ5SGTpJr7qT" data-instant-type="container"><div class="instant-rich-text iBTf7LcEJb08nwXMh" data-instant-type="text"><p>Most serums have 1 or 2 of these. <strong>Smooche has all 5</strong> — in clinically backed concentrations.</p></div><div class="iB2RnbfEYEq5aGefl" data-instant-type="container"><button class="instant-slider-button instant-slider-button-prev instant-slider-Q0MW3zOK4YTqoFwL-button-prev inul8s0zUKYjHdaSS" data-instant-type="slider-button-prev" type="button"><div class="ibWVQTZ4lB5rDrk9O" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>arrow-left</title><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path>
+</svg></div></button><button class="instant-slider-button instant-slider-button-next instant-slider-Q0MW3zOK4YTqoFwL-button-next ix0kqSMhrFUYNgnQg" data-instant-type="slider-button-next" type="button"><div class="i2He6Zq8KnK1lKXhG" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>arrow-right</title><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+</svg></div></button></div></div></div></div></div><div class="ixf1B8acbKGgAMjM9" data-instant-type="container" id="ixf1B8acbKGgAMjM9"><div class="iZW8uqDJNnoNae08H" data-instant-type="container"><div class="iammdYMNzfMTcKCbU" data-instant-type="container"><div class="iaehn2RxtW78ZieDe" data-instant-type="container"></div><div class="instant-rich-text i4Vz16nhEAa2sWTmC" data-instant-type="text"><h3>Real growth. Real results.</h3></div></div></div><div class="iSwjyHAhvQauH0Y6P" data-instant-type="container"><div class="instant-slider-container iQf2fG4vq0ubsOeNS" data-instant-type="slider-container">
+<script id="instant-slider-iffkreort1hMKLjzG-params" type="application/json">
+            { "breakpoints": { "0": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": "auto", "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 24 }, "576": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": 2, "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 24 }, "769": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": "auto", "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 24 } }, "navigation": { "nextEl": ".instant-slider-ffkreort1hMKLjzG-button-next", "prevEl": ".instant-slider-ffkreort1hMKLjzG-button-prev", "disabledClass": "instant-slider-button-disabled", "hiddenClass": "instant-slider-button-hidden", "lockClass": "instant-slider-button-lock", "navigationDisabledClass": "instant-slider-navigation-disabled" }, "watchOverflow": true, "a11y": false, "containerModifierClass": "instant-slider-", "noSwipingClass": "instant-slider-no-swiping", "slideClass": "instant-slider-slide", "slideBlankClass": "instant-slider-slide-blank", "slideActiveClass": "instant-slider-slide-active", "slideVisibleClass": "instant-slider-slide-visible", "slideFullyVisibleClass": "instant-slider-slide-fully-visible", "slideNextClass": "instant-slider-slide-next", "slidePrevClass": "instant-slider-slide-prev", "wrapperClass": "instant-slider-wrapper", "lazyPreloaderClass": "instant-slider-lazy-preloader", "on": {} }
+          </script>
+<div class="instant-slider iffkreort1hMKLjzG" data-instant-slider-id="ffkreort1hMKLjzG" data-instant-type="slider" id="iffkreort1hMKLjzG"><div class="instant-slider-wrapper"><div class="instant-slider-slide iIuE47fu9MJMH2vLp" data-instant-type="slider-slide"><div class="iJuEpIznSj1uBc65v" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="1080" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/ATciszLOri0Nz6rW/before-afters-brow-combined.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/ATciszLOri0Nz6rW/before-afters-brow-combined.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/ATciszLOri0Nz6rW/before-afters-brow-combined.jpg?width=1280 1280w" width="1080"/></div><div class="instant-rich-text iFZ3i3LKNSGM6SlqP" data-instant-type="text"><p>Week after week I saw my eyebrows getting thicker and fuller. It works so incredibly well! After only 8 weeks my eyebrows look like this.</p><p></p><p>★★★★★ (5/5) Miranda</p></div></div><div class="instant-slider-slide iLoU8fgUSHUoyTlgd" data-instant-type="slider-slide"><div class="iIGZ3yRqILp4JguLZ" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="1080" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/sYhtc9FKBTOqA9tn/b.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/sYhtc9FKBTOqA9tn/b.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/sYhtc9FKBTOqA9tn/b.jpg?width=1280 1280w" width="1080"/></div><div class="instant-rich-text i85BqozYk0w3hvElj" data-instant-type="text"><p>I've had thin eyebrows for the past 20 years. Honestly, my hopes were not that high but after 8 weeks of patience I really saw results.</p><p></p><p>★★★★★ (5/5) Katie</p></div></div><div class="instant-slider-slide iUAPrwgrXy7FehoWi" data-instant-type="slider-slide"><div class="ip3TzWE57jsKsz7Ud" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="1080" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/RXNgPc7SCKWCtC3c/before-afters-brow-combined-1.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/RXNgPc7SCKWCtC3c/before-afters-brow-combined-1.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/RXNgPc7SCKWCtC3c/before-afters-brow-combined-1.jpg?width=1280 1280w" width="1080"/></div><div class="instant-rich-text iI4bccblLX6t0jzTe" data-instant-type="text"><p>“I’ve spent hundreds on brow products and nothing worked — until this. My brows are coming back thicker and darker every week.”</p><p></p><p>★★★★★ (5/5) Stephanie</p></div></div></div></div><div class="izciVJPnHBo488IgR" data-instant-type="container"><div class="instant-rich-text iPtMSfhsBzJjkoVoc" data-instant-type="text"><p>Real people, real results.</p></div><div class="irxSCxJ7lTpg7F9Ng" data-instant-type="container"><button class="instant-slider-button instant-slider-button-prev instant-slider-ffkreort1hMKLjzG-button-prev iNErvp3274YXhZYTt" data-instant-type="slider-button-prev" type="button"><div class="i0QSFAMdAYzb9VBcj" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>arrow-left</title><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path>
+</svg></div></button><button class="instant-slider-button instant-slider-button-next instant-slider-ffkreort1hMKLjzG-button-next iA8k0p4KGkihZr5BT" data-instant-type="slider-button-next" type="button"><div class="igYXPzEjWuyiGtY2c" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>arrow-right</title><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+</svg></div></button></div></div></div></div><div class="iYrK7QKWoxxvhzEFh" data-instant-type="container"><div class="i9G4EN2kZlcrwHgSW" data-instant-type="container"><div class="iXpwOsEBBgIx3gWdY" data-instant-type="container"><div class="instant-rich-text iwJXEbESFYstmpVPM" data-instant-type="text"><h3>Why smooche works for 10.000+ brows</h3></div></div><div class="ilz80gWtYyHv4KkAM" data-instant-type="image"><img alt="" class="instant-image instant-image__main instant-responsive instant-responsive--desktop instant-responsive--laptop instant-responsive--tablet" decoding="async" fetchpriority="auto" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/static/collection/Jj0dg6eJkCbXl1Ji/bitemarch20230300721-1.png?width=1280" srcset="https://cdn.instant.so/static/collection/Jj0dg6eJkCbXl1Ji/bitemarch20230300721-1.png?width=828 828w, https://cdn.instant.so/static/collection/Jj0dg6eJkCbXl1Ji/bitemarch20230300721-1.png?width=1280 1280w"/><img alt="" class="instant-image instant-image__main instant-responsive instant-responsive--mobile" decoding="async" fetchpriority="auto" height="1080" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/PJNN1QFZQ2s9hvER/untitled-design-1.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/PJNN1QFZQ2s9hvER/untitled-design-1.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/PJNN1QFZQ2s9hvER/untitled-design-1.jpg?width=1280 1280w" width="1080"/></div><div class="iVxwHgFcDRwbjsp2K" data-instant-type="container"><div class="iH1SYrfoHR4L60cI9" data-instant-type="container"><div class="ikbZqSqHJLhjgl5ij" data-instant-type="container"><div class="iuTTC9M17vfzYcApf" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>leaf</title><path d="M219.45,40.31a4,4,0,0,0-3.76-3.76C141.06,32.16,81.46,54.39,56.24,96,39,124.56,39.9,158.37,58.8,191.54L37.17,213.17a4,4,0,0,0,5.66,5.66l21.63-21.64c17.39,9.91,35,14.89,51.83,14.89A83.43,83.43,0,0,0,160,199.76C201.61,174.54,223.84,114.93,219.45,40.31ZM155.82,192.92c-25.37,15.37-55.56,14.75-85.48-1.61l92.5-92.49a4,4,0,0,0-5.66-5.66l-92.49,92.5c-16.36-29.92-17-60.11-1.61-85.48C86.34,61.77,141.72,41,211.66,44.34,215,114.28,194.23,169.66,155.82,192.92Z"></path>
+</svg></div><div class="instant-rich-text ivaeu36Uf1JPhfHXn" data-instant-type="text"><p>100% natural</p></div><div class="instant-rich-text imwqX3e3kZDnnioXN" data-instant-type="text"><p>100% natural and 100% safe for all skin types</p></div></div><div class="iY8rPXuEBNHzUEjMO" data-instant-type="container"><div class="iFWZdGSB3ZBmjBQUX" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>clock</title><path d="M128,28A100,100,0,1,0,228,128,100.11,100.11,0,0,0,128,28Zm0,192a92,92,0,1,1,92-92A92.1,92.1,0,0,1,128,220Zm60-92a4,4,0,0,1-4,4H128a4,4,0,0,1-4-4V72a4,4,0,0,1,8,0v52h52A4,4,0,0,1,188,128Z"></path>
+</svg></div><div class="instant-rich-text ilWWbwE1ptCnaLxjW" data-instant-type="text"><p>Works in 8 weeks</p></div><div class="instant-rich-text if5ZSA5PfyDkPmPqj" data-instant-type="text"><p>See results in a matter of weeks</p></div></div></div><div class="i527EOKWTP7KlO7PH" data-instant-type="container"><div class="iQ7w1ItNJ8wGIZ4DD" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="1080" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/PJNN1QFZQ2s9hvER/untitled-design-1.jpg?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/PJNN1QFZQ2s9hvER/untitled-design-1.jpg?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/PJNN1QFZQ2s9hvER/untitled-design-1.jpg?width=1280 1280w" width="1080"/></div></div><div class="iZiSApZ5GrV9z9LOo" data-instant-type="container"><div class="i3pBtyf18ucQppVKo" data-instant-type="container"><div class="iYz2tNjP5Wt0LHQBx" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>shield-check</title><path d="M208,44H48A12,12,0,0,0,36,56v58.77c0,86.87,73.54,115.7,88.28,120.6a11.65,11.65,0,0,0,7.44,0c14.74-4.9,88.28-33.73,88.28-120.6V56A12,12,0,0,0,208,44Zm4,70.79c0,81.38-69,108.41-82.8,113a3.53,3.53,0,0,1-2.4,0C113,223.2,44,196.17,44,114.79V56a4,4,0,0,1,4-4H208a4,4,0,0,1,4,4Zm-41.17-13.62a4,4,0,0,1,0,5.66l-56,56a4,4,0,0,1-5.66,0l-24-24a4,4,0,0,1,5.66-5.66L112,154.34l53.17-53.17A4,4,0,0,1,170.83,101.17Z"></path>
+</svg></div><div class="instant-rich-text iJ4x7qOTTC1sVWwgQ" data-instant-type="text"><p>Results guarantee</p></div><div class="instant-rich-text iTDbrHMJkKMdU7Ta8" data-instant-type="text"><p>Don't see the expected results? We'll refund you</p></div></div><div class="iJGkM2wFcaX77urDz" data-instant-type="container"><div class="iI8FvHumqOcC6HnbI" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>heart</title><path d="M178,36c-21.44,0-39.92,10.19-50,27.07C117.92,46.19,99.44,36,78,36A58.07,58.07,0,0,0,20,94c0,28.59,18,58.47,53.4,88.79a333.81,333.81,0,0,0,52.7,36.73,4,4,0,0,0,3.8,0,333.81,333.81,0,0,0,52.7-36.73C218,152.47,236,122.59,236,94A58.07,58.07,0,0,0,178,36ZM128,211.42C114,203.46,28,152.07,28,94A50.06,50.06,0,0,1,78,44c21.11,0,38.85,11.31,46.3,29.51a4,4,0,0,0,7.4,0C139.15,55.31,156.89,44,178,44a50.06,50.06,0,0,1,50,50C228,152,142,203.46,128,211.42Z"></path>
+</svg></div><div class="instant-rich-text ivRHbx46e2tvHMAK4" data-instant-type="text"><p>10.000+ customers</p></div><div class="instant-rich-text iOeUvXjxNyrGvYTcG" data-instant-type="text"><p>That has to mean something</p></div></div></div></div></div></div><div class="i804hayx49i7Xvfil" data-instant-type="container"><div class="iYD0hroRXzdNCPseM" data-instant-type="container"><div class="instant-rich-text inIHGPilUJ4dRzUlo" data-instant-type="text"><h3>Why microblading is not a good option</h3></div></div><div class="itkcizop6I4dVEi6x" data-instant-type="container"><div class="icZXNOF7ipMT54HUq" data-instant-type="container"><div class="im1jDNcWAadkYvzQ7" data-instant-type="container"></div><div class="iHVxU8Ij1lj8Q5wY2" data-instant-type="container"><div class="instant-rich-text iNYQEgscPH2MRv38R" data-instant-type="text"><h3>smooche</h3></div></div><div class="i3VOHz732bg9I9e9h" data-instant-type="container"><div class="instant-rich-text iFFhPSLaNfKDC9eiX" data-instant-type="text"><h3>microblading</h3></div></div></div><div class="isxLeeoxGLhwopuRF" data-instant-type="container"><div class="irR644mAc4CYJG4fp" data-instant-type="container"><div class="instant-rich-text iddVKeudQ7BJBUrr2" data-instant-type="text"><h3>Quick results</h3></div></div><div class="iX2TWb4x4swRwzy9g" data-instant-type="container"><div class="i1kWUJkzNeFR5rOwq" data-instant-type="container"><div class="izbU3No9jCbNtCjye" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>check-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg></div></div></div><div class="itq7WR7bWNILWMogO" data-instant-type="container"><div class="ioOf5LDYxQpULfw8U" data-instant-type="container"><div class="iHwk47AQIBQUDMz00" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>check-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg></div></div></div></div><div class="iT7PhGDsIj27xGk7a" data-instant-type="container"><div class="iCFvDXEAJwAlmPSgi" data-instant-type="container"><div class="instant-rich-text izpw3yhq5EHuQyftF" data-instant-type="text"><h3>Natural</h3></div></div><div class="incm3TbvR9WIHaAVy" data-instant-type="container"><div class="ireLfu4M6vD5DiXPD" data-instant-type="container"><div class="iNJcPwQ8uE1NZOID8" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>check-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg></div></div></div><div class="izVwDCwsmvSgEhmc2" data-instant-type="container"><div class="iAxqHgD3FhiWIUgWQ" data-instant-type="container"><div class="ijf9GzxOvvDH0rq5Q" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>x-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm37.66,130.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+</svg></div></div></div></div><div class="iiEISY6GvnSvrAMXf" data-instant-type="container"><div class="io3JP8A4tkzNQS28s" data-instant-type="container"><div class="instant-rich-text iNpKtSvVsNHrPocSq" data-instant-type="text"><h3>Hair growth</h3></div></div><div class="iRQEyzwSzNlgi0j3U" data-instant-type="container"><div class="iuIdrTUveZ1LYGFhk" data-instant-type="container"><div class="imp8dDBvzWKt2yh98" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>check-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg></div></div></div><div class="iNlhUgVvNozODrAOu" data-instant-type="container"><div class="iCas67tALsDJruMf4" data-instant-type="container"><div class="ilejngsHSTxsBIMC7" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>x-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm37.66,130.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+</svg></div></div></div></div><div class="iIBokUL6ZiKTZolkB" data-instant-type="container"><div class="ie0fHKyikBxCfTlrU" data-instant-type="container"><div class="instant-rich-text iI2XfL2s7uQTgvdO6" data-instant-type="text"><h3>Non-invasive</h3></div></div><div class="i74Rur1N3PuaqD2qj" data-instant-type="container"><div class="ioDBiqLHKlLUkxWUt" data-instant-type="container"><div class="ibIys8dbIz1GYTX3P" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>check-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg></div></div></div><div class="iuWH9IXyp8DmvyAVd" data-instant-type="container"><div class="iAGcF2L5Di0YutHA8" data-instant-type="container"><div class="io1Ej25s4Yhmxe9iS" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>x-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm37.66,130.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+</svg></div></div></div></div><div class="ijWpvdSjo1PDeG3gU" data-instant-type="container"><div class="i8bPDKD5bv34zbLqw" data-instant-type="container"><div class="instant-rich-text iNJRY62RvIR88wPr2" data-instant-type="text"><h3>Painless</h3></div></div><div class="izooy8VKVYD6GDX2H" data-instant-type="container"><div class="iAAaCI9pclSEqO8E1" data-instant-type="container"><div class="iQgiRs7v6bnqGSSkQ" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>check-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg></div></div></div><div class="iymd9u1b8v9Nk8d0Z" data-instant-type="container"><div class="ides4eaE7GWhQkWUH" data-instant-type="container"><div class="ifQMdkUA6XX1KH5sW" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>x-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm37.66,130.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+</svg></div></div></div></div><div class="inwltVz4MSzWxzwyM" data-instant-type="container"><div class="i8Xs9bXxv1IGbZPr3" data-instant-type="container"><div class="instant-rich-text i5Vm9buywvfnC3sW2" data-instant-type="text"><h3>Results guarantee</h3></div></div><div class="icHDB45sn9tpCezlJ" data-instant-type="container"><div class="iNmV0eca1gi2rTX8f" data-instant-type="container"><div class="itfwZEhZ3aVGYt1FI" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>check-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg></div></div></div><div class="ieA6xT6UrWhi2P3dm" data-instant-type="container"><div class="i41msQssR2dv8GhG2" data-instant-type="container"><div class="iCYgxIm3yNd1Oqu8k" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>x-circle</title><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm37.66,130.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+</svg></div></div></div></div></div></div></div><div class="i5DgnNbGqkM0lphpv" data-instant-type="container" id="i5DgnNbGqkM0lphpv"><div class="iuUonGyMjeYUKZIis" data-instant-type="container"></div><div class="iwEWBYS1u0TiOTkny" data-instant-type="container"><div class="ieR9uiyw389U6zIxu" data-instant-type="container"><div class="instant-rich-text ietHqsZLJ5LnptwZh" data-instant-type="text"><h3><strong>Ready to grow your brows naturally?</strong></h3></div><div class="instant-rich-text iD1F9AX2x82KKpX6q" data-instant-type="text"><p>Join over 10.000 women regrowing their brows naturally with smooche. It's not a cover-up, it's not fake. It's your own real brows - growing back. </p><p></p><p>✓ Results in <strong>8 weeks</strong></p><p>✓ 100% <strong>natural</strong></p><p>✓ No results? <strong>Money back</strong>.</p><p>✓ (Only today) <strong>Buy 1, Get 1 Free</strong></p></div><form class="i0MhuC1uteywfgz3Y" data-instant-form-product-url="/products/eyebrow-serum" data-instant-form-variant-id="44630578266268" data-instant-href="https://smooche.com/products/eyebrow-serum" data-instant-type="container" rel="noopener noreferrer"><div class="instant-rich-text i0fjmR1luZdeD1P95" data-instant-type="text"><p><strong>Shop now</strong></p></div></form><div class="instant-rich-text iG2lEGEdOk11CmwVK" data-instant-type="text"><p>★★★★★ (4.9/5)</p></div></div></div></div><div class="ifw6MvzNp6D6c7SqA" data-instant-type="container" id="ifw6MvzNp6D6c7SqA"><div class="iJvkZ6QLJ2b9Hd4Tx" data-instant-type="container"><div class="iksRQ1P1rvOruudP2" data-instant-type="container"><div class="instant-rich-text iTAw1kR4zlcHwssZR" data-instant-type="text"><h3>Limited stock notice</h3></div><div class="instant-rich-text iPN3Qqc8hEibUaKbA" data-instant-type="text"><p>Due to their secret deals <strong>Buy 1, Get 1 Free</strong> discount they have limited stock. Don't miss out on this secret deal, they sell out quickly. </p></div><form class="ieuvse7ZsPuEg5MUi" data-instant-form-product-url="/products/eyebrow-serum" data-instant-form-variant-id="44630578266268" data-instant-href="https://smooche.com/products/eyebrow-serum" data-instant-type="container" rel="noopener noreferrer"><div class="instant-rich-text iwTbJxdv5U6zCLv0J" data-instant-type="text"><p><strong>USE OFFER</strong></p></div></form></div></div></div><div class="ii01Xk7QnMc9aQXjj" data-instant-type="grid" id="ii01Xk7QnMc9aQXjj"><div class="instant-slider-container iJ08F0jOSuedQJ10k" data-instant-type="slider-container"><div class="i67sUfrW6fwyob1ph" data-instant-type="container"><div class="instant-rich-text iEUYFf6Z7Qbb9ayUF" data-instant-type="text"><h3>Reviews</h3></div><div class="instant-rich-text itOY0fzyCLtUKZLGc" data-instant-type="text"><p>Over 10.000 brows grew naturally thanks to smooche's Eyebrow Growth Serum</p></div>
+<script id="instant-slider-iYFTBD4do9jGtKfRw-params" type="application/json">
+            { "breakpoints": { "0": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": 1, "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 32 }, "576": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": 2, "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 32 }, "769": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": 2, "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 32 }, "1025": { "speed": 300, "direction": "horizontal", "autoHeight": false, "slidesPerView": 3, "freeMode": false, "centeredSlides": false, "centerInsufficientSlides": false, "spaceBetween": 32 } }, "navigation": { "nextEl": ".instant-slider-YFTBD4do9jGtKfRw-button-next", "prevEl": ".instant-slider-YFTBD4do9jGtKfRw-button-prev", "disabledClass": "instant-slider-button-disabled", "hiddenClass": "instant-slider-button-hidden", "lockClass": "instant-slider-button-lock", "navigationDisabledClass": "instant-slider-navigation-disabled" }, "watchOverflow": true, "a11y": false, "containerModifierClass": "instant-slider-", "noSwipingClass": "instant-slider-no-swiping", "slideClass": "instant-slider-slide", "slideBlankClass": "instant-slider-slide-blank", "slideActiveClass": "instant-slider-slide-active", "slideVisibleClass": "instant-slider-slide-visible", "slideFullyVisibleClass": "instant-slider-slide-fully-visible", "slideNextClass": "instant-slider-slide-next", "slidePrevClass": "instant-slider-slide-prev", "wrapperClass": "instant-slider-wrapper", "lazyPreloaderClass": "instant-slider-lazy-preloader", "on": {} }
+          </script>
+<div class="instant-slider iYFTBD4do9jGtKfRw" data-instant-slider-id="YFTBD4do9jGtKfRw" data-instant-type="slider" id="iYFTBD4do9jGtKfRw"><div class="instant-slider-wrapper"><div class="instant-slider-slide i2evh19FjtC5Tj7O3" data-instant-type="slider-slide"><div class="iMTtESvmvZqQIgV9g" data-instant-type="container"><div class="izMU27u3vhb6hoeXl" data-instant-type="container"><div class="i6AgaCh0LdaxPmoYT" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="iDaotqq8J6UDBbo9i" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="itC9zBUq4dYEShI9v" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="ioSSdXimAONl70hgl" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="iQOA3OU2u5tUxXrOU" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div></div><div class="instant-rich-text iO27K3H71Gw4mSNe3" data-instant-type="text"><p>“I overplucked for years and nothing worked — until this. By week 4, new hairs started growing in spots that had been bare forever. No irritation, no gimmicks. It’s the first thing that actually delivered.”</p></div></div><div class="iCJAGpxxfJ78gz67e" data-instant-type="container"><div class="iZT67A2Y1lD3xwNTN" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="500" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/utAdAKu0X6DfNQ5S/4.png?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/utAdAKu0X6DfNQ5S/4.png?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/utAdAKu0X6DfNQ5S/4.png?width=1280 1280w" width="500"/></div><div class="instant-rich-text iLh83wAwE3Jpkr8bZ" data-instant-type="text"><p>Jessica</p></div></div></div><div class="instant-slider-slide iHFA9E0iT6bVOkLFM" data-instant-type="slider-slide"><div class="iQP5JHApW6Lh6CpjQ" data-instant-type="container"><div class="iZSYixbq1YgZEx3kT" data-instant-type="container"><div class="ipzeQcBnN3LATk9F4" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="i0w6KkXtJ69M9oJQa" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="ijDwoqM4rlqjQDvYx" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="inIxf2TP7G69oyZ2x" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="i98vtT1hO4aRnY5hu" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div></div><div class="instant-rich-text iBT4IgJF1iZibCkDY" data-instant-type="text"><p>“I’ve tried every serum, and this is the only one that gave real results. Growth started at 3 weeks and kept going. No irritation, no fluff — just real, fuller brows.”</p></div></div><div class="itN2wsktXdjEaaEBq" data-instant-type="container"><div class="ia2V2LwnpP73NxJO1" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="500" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/Zm06K43B931Ofwma/3.png?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/Zm06K43B931Ofwma/3.png?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/Zm06K43B931Ofwma/3.png?width=1280 1280w" width="500"/></div><div class="instant-rich-text iPZzgZ7DkkPGC2KBa" data-instant-type="text"><p>Leila</p></div></div></div><div class="instant-slider-slide imRMjCwRvqgvyc1HI" data-instant-type="slider-slide"><div class="ixaLCyoWi0oyOdtdM" data-instant-type="container"><div class="igo0MrRbPk772BMhZ" data-instant-type="container"><div class="ipqOGXAf178RqlULy" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="iZERm8r3YcwJvafPp" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="idfIyUAepvh7ZIBpu" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="isuioK8nmUzbZ2Z7o" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="i0OXue5foCZzURJao" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div></div><div class="instant-rich-text iVugDrAe7bqGeZaA1" data-instant-type="text"><p>“I’ve been microblading for years. This serum gave me enough growth to cancel my next appointment. My real brows are coming back — even at 41.”</p></div></div><div class="iXWuDDLYtNAjjy4Rv" data-instant-type="container"><div class="iI4Vh5yUbrxm9RRB2" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="500" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/sbc3UbVZKbJslaRN/2.png?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/sbc3UbVZKbJslaRN/2.png?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/sbc3UbVZKbJslaRN/2.png?width=1280 1280w" width="500"/></div><div class="instant-rich-text iXH1ooc5SAjl16SQA" data-instant-type="text"><p>Nadia</p></div></div></div><div class="instant-slider-slide iZy4y0xAu63RC043Z" data-instant-type="slider-slide"><div class="iIKqprfttO1FbNmGU" data-instant-type="container"><div class="iu2mjwje7MATjyz0E" data-instant-type="container"><div class="ilhogJUn0nh004pVh" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="iZEYpxIzcghC8pn4e" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="iVPoP2JcIcjgY2JAR" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="i2nijdPeXOE1973qH" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div><div class="i6bwCIB2kJIbsMOgs" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>star</title><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+</svg></div></div><div class="instant-rich-text iQotcNKUkwSzJL96Y" data-instant-type="text"><p>“Didn’t expect much — but it worked fast. My patchy tails filled in, and my sensitive skin had no issues at all. I’m hooked.”</p></div></div><div class="ieMIWGyl0ROD5y8fO" data-instant-type="container"><div class="i9m3CdCAi0KQ2Rz4J" data-instant-type="image"><img alt="" class="instant-image instant-image__main" decoding="async" fetchpriority="auto" height="500" loading="lazy" sizes="(max-width: 1280px) 100vw, 1280px" src="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/aCy7dZSwDd4FN2Wo/1.png?width=1280" srcset="https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/aCy7dZSwDd4FN2Wo/1.png?width=828 828w, https://cdn.instant.so/sites/h30Bfl907IyoRU7y/assets/aCy7dZSwDd4FN2Wo/1.png?width=1280 1280w" width="500"/></div><div class="instant-rich-text iOE0NiSFOW2fmFjIO" data-instant-type="text"><p>Danielle</p></div></div></div></div></div><div class="iwhncUQBNnGomgpOZ" data-instant-type="container"><button class="instant-slider-button instant-slider-button-prev instant-slider-YFTBD4do9jGtKfRw-button-prev i0m3McUgExMi2gNQK" data-instant-type="slider-button-prev" type="button"><div class="iYh031VK8BVyFz5aA" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>arrow-left</title><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path>
+</svg></div></button><button class="instant-slider-button instant-slider-button-next instant-slider-YFTBD4do9jGtKfRw-button-next iGaTkBZenkMgqFeae" data-instant-type="slider-button-next" type="button"><div class="im0bHuhjd4TLRp6b0" data-instant-type="icon">
+<svg class="instant-icon" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<title>arrow-right</title><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+</svg></div></button></div></div></div></div></div>
+</div>
+</div>
+</main>
+{% endblock content_wrapper %}
+{% block sf_tail %}
+<div aria-hidden="true" class="pswp pswp--custom-loader" data-index="0" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="pswp pswp--custom-loader" data-index="1" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/smooche-cart-timer-b352c2.js'|asset_url }}"></script><script>
+      // Function to update the price element with the new variant price
+      function updateProductPrice(newPrice) {
+        const priceElement = document.getElementById('productpricingnew');
+        if (!priceElement) return;
+        priceElement.textContent = newPrice;
+      }
+
+      // Event listener to detect changes in the variant selection
+      document.addEventListener('DOMContentLoaded', function () {
+        // Assuming the variant change triggers an update on the element with class 'product__price--regular'
+        const regularPriceElement = document.querySelector('.product__price--regular');
+
+        if (regularPriceElement && document.getElementById('productpricingnew')) {
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+              // Update the `productpricingnew` element with the new price when it changes
+              updateProductPrice(mutation.target.textContent);
+            });
+          });
+
+          // Observe changes in the regular price element
+          observer.observe(regularPriceElement, {
+            childList: true,
+            subtree: true,
+          });
+        }
+      });
+    </script><script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get all swatch labels
+        const swatchLabels = document.querySelectorAll('.swatch__label');
+
+        swatchLabels.forEach((label) => {
+          label.addEventListener('click', (event) => {
+            // Get the value of selected-swatch from the clicked label
+            const selectedSwatch = label.getAttribute('selected-swatch');
+
+            // Update the .selected-swatch content
+            const selectedSwatchElement = document.querySelector('.selected-swatch');
+            if (selectedSwatchElement && selectedSwatch) {
+              selectedSwatchElement.textContent = selectedSwatch;
+            }
+          });
+        });
+      });
+    </script><script>
+      /* Accordion Popup JavaScript - Moves modals to body for proper z-index stacking */
+
+(function() {
+  'use strict';
+
+  // Move all popup modals to body for proper z-index stacking
+  function movePopupsToBody() {
+    document.querySelectorAll('.popup-modal[data-popup-modal]').forEach(function(popup) {
+      // Only move if not already a direct child of body
+      if (popup.parentElement !== document.body) {
+        document.body.appendChild(popup);
+      }
+    });
+  }
+
+  function initAccordionPopups() {
+    // First, move popups to body level
+    movePopupsToBody();
+
+    // Open popup via trigger link
+    document.querySelectorAll('[data-popup-trigger]').forEach(function(trigger) {
+      // Remove existing listeners to prevent duplicates
+      trigger.removeEventListener('click', handleTriggerClick);
+      trigger.addEventListener('click', handleTriggerClick);
+    });
+
+    // Close popup via close button or overlay click
+    document.querySelectorAll('[data-popup-close]').forEach(function(closeBtn) {
+      closeBtn.removeEventListener('click', handleCloseClick);
+      closeBtn.addEventListener('click', handleCloseClick);
+    });
+  }
+
+  function handleTriggerClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-trigger');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function handleCloseClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-close');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Close on escape key (only add once)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var activePopup = document.querySelector('.popup-modal.is-active');
+      if (activePopup) {
+        activePopup.classList.remove('is-active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccordionPopups);
+  } else {
+    initAccordionPopups();
+  }
+
+  // Re-initialize for Shopify sections (if using Section Rendering API)
+  document.addEventListener('shopify:section:load', initAccordionPopups);
+})();
+    </script>
+{% endblock sf_tail %}

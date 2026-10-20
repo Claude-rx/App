@@ -1,0 +1,80 @@
+{% comment %}
+  Spark Progress Bar — renders inside the cart drawer.
+  Expects context: first_value, second_value, max_value, min_value
+  Included by block_cart_progress_wrapper.html with reward threshold values.
+{% endcomment %}
+{% load theme_tags %}
+{% widthratio first_value max_value 100 as first_percent %}
+{% widthratio second_value max_value 100 as second_percent %}
+{% t 'side_cart.default.shipping_progress_message' as default_step_1_message %}
+{% t 'side_cart.default.gift_progress_message' as default_step_2_message %}
+{% t 'side_cart.default.final_progress_message' as default_final_step_message %}
+
+{% if settings.enable_progress_bar %}
+<div class="spark-progress-section" style="padding: 12px 0;">
+
+  <spark-progress-bar
+    data-min="{{ min_value }}"
+    data-max="{{ max_value }}"
+    data-value="0"
+    data-currency-code="{{ request.CURRENCY_CODE }}"
+    style="--position: 0%;"
+  >
+    {# Messages (slotted into shadow DOM) #}
+    <div data-shipping slot="messages"
+         data-value="{{ first_value }}"
+         data-message-template="{{ settings.step_1_message|default:default_step_1_message }}"
+         class="spark-progress-msg">
+      <span class="js-message-text">{{ settings.step_1_message|default:default_step_1_message }}</span>
+    </div>
+    {% if settings.gift_product %}
+    <div data-gift slot="messages"
+         data-value="{{ second_value }}"
+         data-gift-id="{{ settings.gift_product.children.first.pk }}"
+         data-message-template="{{ settings.step_2_message|default:default_step_2_message }}"
+         class="spark-progress-msg">
+      <span class="js-message-text">{{ settings.step_2_message|default:default_step_2_message }}</span>
+    </div>
+    {% endif %}
+    <div data-final-goal slot="messages"
+         class="spark-progress-msg">
+      <span class="js-message-text">{{ settings.final_step_message|default:default_final_step_message }}</span>
+    </div>
+
+    {# Step markers (slotted into progress track) #}
+    <div slot="steps"
+         style="position:absolute;left:{{ first_percent }}%;top:50%;transform:translate(-50%,-50%);"
+         class="spark-progress-step"
+         aria-checked="false"
+         data-step
+         data-step-type="shipping"
+         data-value="{{ first_value }}">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="3" width="15" height="13"></rect>
+        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+      </svg>
+    </div>
+    {% if settings.gift_product %}
+    <div slot="steps"
+         style="position:absolute;left:{{ second_percent }}%;top:50%;transform:translate(-50%,-50%);"
+         class="spark-progress-step"
+         aria-checked="false"
+         data-step
+         data-step-type="gift"
+         data-value="{{ second_value }}"
+         data-gift-id="{{ settings.gift_product.children.first.pk }}">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 12 20 22 4 22 4 12"></polyline>
+        <rect x="2" y="7" width="20" height="5"></rect>
+        <line x1="12" y1="22" x2="12" y2="7"></line>
+        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+      </svg>
+    </div>
+    {% endif %}
+  </spark-progress-bar>
+
+</div>
+{% endif %}

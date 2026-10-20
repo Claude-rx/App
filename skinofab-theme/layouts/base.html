@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+
+<head>
+    {# 1. Metadata / SEO / GEO. Keep this plain and early. #}
+    <title>{% block title %}{{ store.get_meta_title }} - {{ store.tagline }}{% endblock %}</title>
+    <link rel="alternate" hreflang="{{ LANGUAGE_CODE }}" href="https://{{ request.get_host }}{{ request.path }}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="NOARCHIVE,NOCACHE" />
+
+    {% block site_index %}
+        {% if settings.site_index %}
+            <meta name="robots" content="noindex, nofollow">
+        {% endif %}
+    {% endblock site_index %}
+
+    {% block seo %}
+        {% seo %}
+    {% endblock seo %}
+
+    {% block favicon %}
+        {% if store.branding.icon %}
+            {% with image=store.branding.icon %}
+                {% image_thumbnail image "32x32" upscale=False crop="center" as thumb_store_icon %}
+                <link rel="shortcut icon" href="{{ thumb_store_icon.url }}" />
+            {% endwith %}
+        {% endif %}
+    {% endblock favicon %}
+
+    {# 2. Critical preloads. Page templates should only preload LCP assets here. #}
+    {% block critical_preloads %}{% endblock critical_preloads %}
+
+    {# 3. CSS. Discover the theme stylesheet before optional font embeds. #}
+    {% block styles %}
+        {% block spark_css %}{% endblock spark_css %}
+        {% include 'partials/sf_asset_styles.html' %}
+
+        {% if settings.font_script %}
+            {{ settings.font_script|safe }}
+        {% endif %}
+
+        <style>
+            :root {
+                --primary-color: {{ store.branding.primary_color|default:"#1E293B" }};
+                --accent-color: {{ store.branding.accent_color|default:"#475569" }};
+                --primary-color-lighter: color-mix(in srgb, var(--primary-color), #fff 15%);
+                --primary-color-darker: color-mix(in srgb, var(--primary-color), #000 15%);
+                --accent-color-lighter: color-mix(in srgb, var(--accent-color), #fff 15%);
+                --accent-color-darker: color-mix(in srgb, var(--accent-color), #000 15%);
+                {% if settings.font_body %}
+                    --font-body: {{ settings.font_body|safe }};
+                {% endif %}
+                {% if settings.font_header %}
+                    --font-header: {{ settings.font_header|safe }};
+                {% endif %}
+                {% if settings.body_text_color %}
+                    --body-text-color: {{ settings.body_text_color }};
+                {% endif %}
+                {% if settings.body_header_color %}
+                    --body-header-color: {{ settings.body_header_color }};
+                {% endif %}
+                {% if settings.body_link_color %}
+                    --body-link-color: {{ settings.body_link_color }};
+                {% endif %}
+                {# Style tokens (spark#56): bridge properties read by @theme in css/input.css #}
+                {% if settings.body_bg_color %}
+                    --body-bg-color: {{ settings.body_bg_color }};
+                {% endif %}
+                {% if settings.border_color %}
+                    --border-color: {{ settings.border_color }};
+                {% endif %}
+                {% if settings.radius_control %}
+                    --control-radius: {{ settings.radius_control }};
+                {% endif %}
+                {% if settings.radius_card %}
+                    --card-radius: {{ settings.radius_card }};
+                {% endif %}
+                {% if settings.section_padding == "compact" %}
+                    --section-padding-y: 2rem;
+                {% elif settings.section_padding == "roomy" %}
+                    --section-padding-y: 5rem;
+                {% endif %}
+                {% if settings.content_gap == "tight" %}
+                    --content-gap: 1rem;
+                {% elif settings.content_gap == "loose" %}
+                    --content-gap: 2rem;
+                {% endif %}
+                {% if settings.heading_scale == "small" %}
+                    --heading-scale: 0.875;
+                {% elif settings.heading_scale == "large" %}
+                    --heading-scale: 1.125;
+                {% endif %}
+                {% if settings.body_size and settings.body_size != "16px" %}
+                    --body-size: {{ settings.body_size }};
+                {% endif %}
+                {% if settings.container_max_width %}
+                    --container-max: {{ settings.container_max_width }};
+                {% endif %}
+            }
+            {% if settings.font_body %}
+                body { font-family: var(--font-body); }
+            {% endif %}
+            {% if settings.font_header %}
+                h1, h2, h3, h4, h5, h6 { font-family: var(--font-header); }
+            {% endif %}
+            {% if settings.body_text_color %}
+                body { color: var(--body-text-color); }
+            {% endif %}
+            {% if settings.body_header_color %}
+                h1, h2, h3, h4, h5, h6 { color: var(--body-header-color); }
+            {% endif %}
+            {% if settings.body_link_color %}
+                a { color: var(--body-link-color); }
+                a:hover { opacity: 0.8; }
+            {% endif %}
+        </style>
+    {% endblock styles %}
+
+    {# 4. Priority JS. Keep this rare, tiny, and before-paint only. #}
+    {% block priority_scripts %}
+    {# Contrast auto-detection — must run before first paint to avoid flash #}
+    <script>
+    (function(){
+        var c = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+        if (c && c.charAt(0) === '#') {
+            var hex = c.replace('#','');
+            if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+            var r = parseInt(hex.substr(0,2),16)/255;
+            var g = parseInt(hex.substr(2,2),16)/255;
+            var b = parseInt(hex.substr(4,2),16)/255;
+            // Relative luminance (WCAG)
+            r = r <= 0.03928 ? r/12.92 : Math.pow((r+0.055)/1.055, 2.4);
+            g = g <= 0.03928 ? g/12.92 : Math.pow((g+0.055)/1.055, 2.4);
+            b = b <= 0.03928 ? b/12.92 : Math.pow((b+0.055)/1.055, 2.4);
+            if (0.2126*r + 0.7152*g + 0.0722*b > 0.6) {
+                document.documentElement.setAttribute('data-light-primary','');
+            }
+        }
+    })();
+    </script>
+    {% endblock priority_scripts %}
+
+    {% block extrastyles %}{% endblock extrastyles %}
+
+    {% block custom_css %}
+        {% if settings.custom_css %}
+            <style>{{ settings.custom_css|safe }}</style>
+        {% endif %}
+    {% endblock custom_css %}
+    {% block extrahead %}{% endblock extrahead %}
+    {% url 'storefrontapi:graphql' as sf_graphql_url %}
+    <script>window.SFStore = { currency: "{{ request.CURRENCY_CODE|default:'USD'|escapejs }}", symbol: "{% filter escapejs %}{% currency_symbol request.CURRENCY_CODE|default:'USD' %}{% endfilter %}", graphqlUrl: "{{ sf_graphql_url|default:'/api/graphql/'|escapejs }}" };
+    window.SFProductJson = {"4-pack-2x-extreme-2x-long-lasting":"{{ 'sf/data/product-4-pack-2x-extreme-2x-long-lasting.json'|asset_url|escapejs }}","beauty-mirror":"{{ 'sf/data/product-beauty-mirror.json'|asset_url|escapejs }}","brow-gel":"{{ 'sf/data/product-brow-gel.json'|asset_url|escapejs }}","color-changing-foundation":"{{ 'sf/data/product-color-changing-foundation.json'|asset_url|escapejs }}","essential-lip-liner":"{{ 'sf/data/product-essential-lip-liner.json'|asset_url|escapejs }}","extreme-lip-plumper":"{{ 'sf/data/product-extreme-lip-plumper.json'|asset_url|escapejs }}","eyebrow-serum":"{{ 'sf/data/product-eyebrow-serum.json'|asset_url|escapejs }}","eyelash-curler":"{{ 'sf/data/product-eyelash-curler.json'|asset_url|escapejs }}","eyelash-serum":"{{ 'sf/data/product-eyelash-serum.json'|asset_url|escapejs }}","face-roller":"{{ 'sf/data/product-face-roller.json'|asset_url|escapejs }}","foundation-mega-pack":"{{ 'sf/data/product-foundation-mega-pack.json'|asset_url|escapejs }}","gua-sha":"{{ 'sf/data/product-gua-sha.json'|asset_url|escapejs }}","hyaluronic-acid-lip-plumper":"{{ 'sf/data/product-hyaluronic-acid-lip-plumper.json'|asset_url|escapejs }}","lash-brow-duo":"{{ 'sf/data/product-lash-brow-duo.json'|asset_url|escapejs }}","liquid-blender-brush":"{{ 'sf/data/product-liquid-blender-brush.json'|asset_url|escapejs }}","long-lash-mascara":"{{ 'sf/data/product-long-lash-mascara.json'|asset_url|escapejs }}","peel-off-lip-stain":"{{ 'sf/data/product-peel-off-lip-stain.json'|asset_url|escapejs }}","reverse-time-peptide-serum":"{{ 'sf/data/product-reverse-time-peptide-serum.json'|asset_url|escapejs }}","shea-butter-lip-gloss":"{{ 'sf/data/product-shea-butter-lip-gloss.json'|asset_url|escapejs }}","smooche-blender":"{{ 'sf/data/product-smooche-blender.json'|asset_url|escapejs }}","smooche-gift-card":"{{ 'sf/data/product-smooche-gift-card.json'|asset_url|escapejs }}","stick-and-stain":"{{ 'sf/data/product-stick-and-stain.json'|asset_url|escapejs }}","stick-stain3":"{{ 'sf/data/product-stick-stain3.json'|asset_url|escapejs }}","triple-lip-plumper-bundle":"{{ 'sf/data/product-triple-lip-plumper-bundle.json'|asset_url|escapejs }}","ultra-peptide-collagen-lifting-mask":"{{ 'sf/data/product-ultra-peptide-collagen-lifting-mask.json'|asset_url|escapejs }}","under-eye-reset":"{{ 'sf/data/product-under-eye-reset.json'|asset_url|escapejs }}"};
+    window.SFHandlePk = {"4-pack-2x-extreme-2x-long-lasting":"{% firstof settings.sf_p_4_pack_2x_extreme_2x_long_lasting.children.first.pk settings.sf_p_4_pack_2x_extreme_2x_long_lasting.pk %}","beauty-mirror":"{% firstof settings.sf_p_beauty_mirror.children.first.pk settings.sf_p_beauty_mirror.pk %}","brow-gel":"{% firstof settings.sf_p_brow_gel.children.first.pk settings.sf_p_brow_gel.pk %}","color-changing-foundation":"{% firstof settings.sf_p_color_changing_foundation.children.first.pk settings.sf_p_color_changing_foundation.pk %}","essential-lip-liner":"{% firstof settings.sf_p_essential_lip_liner.children.first.pk settings.sf_p_essential_lip_liner.pk %}","extreme-lip-plumper":"{% firstof settings.sf_p_extreme_lip_plumper.children.first.pk settings.sf_p_extreme_lip_plumper.pk %}","eyebrow-serum":"{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk %}","eyelash-curler":"{% firstof settings.sf_p_eyelash_curler.children.first.pk settings.sf_p_eyelash_curler.pk %}","eyelash-serum":"{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk %}","face-roller":"{% firstof settings.sf_p_face_roller.children.first.pk settings.sf_p_face_roller.pk %}","foundation-mega-pack":"{% firstof settings.sf_p_foundation_mega_pack.children.first.pk settings.sf_p_foundation_mega_pack.pk %}","gua-sha":"{% firstof settings.sf_p_gua_sha.children.first.pk settings.sf_p_gua_sha.pk %}","hyaluronic-acid-lip-plumper":"{% firstof settings.sf_p_hyaluronic_acid_lip_plumper.children.first.pk settings.sf_p_hyaluronic_acid_lip_plumper.pk %}","lash-brow-duo":"{% firstof settings.sf_p_lash_brow_duo.children.first.pk settings.sf_p_lash_brow_duo.pk %}","liquid-blender-brush":"{% firstof settings.sf_p_liquid_blender_brush.children.first.pk settings.sf_p_liquid_blender_brush.pk %}","long-lash-mascara":"{% firstof settings.sf_p_long_lash_mascara.children.first.pk settings.sf_p_long_lash_mascara.pk %}","peel-off-lip-stain":"{% firstof settings.sf_p_peel_off_lip_stain.children.first.pk settings.sf_p_peel_off_lip_stain.pk %}","reverse-time-peptide-serum":"{% firstof settings.sf_p_reverse_time_peptide_serum.children.first.pk settings.sf_p_reverse_time_peptide_serum.pk %}","shea-butter-lip-gloss":"{% firstof settings.sf_p_shea_butter_lip_gloss.children.first.pk settings.sf_p_shea_butter_lip_gloss.pk %}","smooche-blender":"{% firstof settings.sf_p_smooche_blender.children.first.pk settings.sf_p_smooche_blender.pk %}","smooche-gift-card":"{% firstof settings.sf_p_smooche_gift_card.children.first.pk settings.sf_p_smooche_gift_card.pk %}","stick-and-stain":"{% firstof settings.sf_p_stick_and_stain.children.first.pk settings.sf_p_stick_and_stain.pk %}","stick-stain3":"{% firstof settings.sf_p_stick_stain3.children.first.pk settings.sf_p_stick_stain3.pk %}","triple-lip-plumper-bundle":"{% firstof settings.sf_p_triple_lip_plumper_bundle.children.first.pk settings.sf_p_triple_lip_plumper_bundle.pk %}","ultra-peptide-collagen-lifting-mask":"{% firstof settings.sf_p_ultra_peptide_collagen_lifting_mask.children.first.pk settings.sf_p_ultra_peptide_collagen_lifting_mask.pk %}","under-eye-reset":"{% firstof settings.sf_p_under_eye_reset.children.first.pk settings.sf_p_under_eye_reset.pk %}"};
+    window.SFVariantHandle = {"43845629673628": "essential-lip-liner", "44574735302812": "smooche-gift-card", "44574735335580": "smooche-gift-card", "44574735368348": "smooche-gift-card", "44574735401116": "smooche-gift-card", "44630578167964": "eyelash-serum", "44630578266268": "eyebrow-serum", "44630586523804": "lash-brow-duo", "44663423959196": "extreme-lip-plumper", "44663423991964": "extreme-lip-plumper", "44663453876380": "hyaluronic-acid-lip-plumper", "44708866785436": "triple-lip-plumper-bundle", "44708866818204": "4-pack-2x-extreme-2x-long-lasting", "44708919378076": "shea-butter-lip-gloss", "44723611762844": "eyelash-curler", "44723612778652": "beauty-mirror", "44734369464476": "stick-and-stain", "44735301353628": "stick-and-stain", "44735301386396": "stick-and-stain", "44735301419164": "stick-and-stain", "44766942298268": "essential-lip-liner", "44766942331036": "essential-lip-liner", "44766942363804": "essential-lip-liner", "44766948360348": "shea-butter-lip-gloss", "44793604636828": "gua-sha", "44799937773724": "face-roller", "45056292978844": "long-lash-mascara", "45097716285596": "color-changing-foundation", "45177250119836": "stick-stain3", "45177250152604": "stick-stain3", "45177250185372": "stick-stain3", "45177250218140": "stick-stain3", "45979785953436": "peel-off-lip-stain", "45979785986204": "peel-off-lip-stain", "45979786018972": "peel-off-lip-stain", "45979786051740": "peel-off-lip-stain", "46053902155932": "liquid-blender-brush", "46514010456220": "brow-gel", "46523901673628": "brow-gel", "46523901706396": "brow-gel", "46523901739164": "brow-gel", "46523901771932": "brow-gel", "46674691588252": "smooche-blender", "46856090124444": "foundation-mega-pack", "47229345398940": "reverse-time-peptide-serum", "47579046084764": "ultra-peptide-collagen-lifting-mask", "47611439972508": "under-eye-reset", "7869252337820": "hyaluronic-acid-lip-plumper", "7889590845596": "extreme-lip-plumper", "7889591599260": "triple-lip-plumper-bundle", "7920108798108": "shea-butter-lip-gloss", "8142066876572": "essential-lip-liner", "8237782663324": "4-pack-2x-extreme-2x-long-lasting", "8239382364316": "stick-and-stain", "8295885439132": "smooche-gift-card", "8307946160284": "eyebrow-serum", "8308261486748": "eyelash-serum", "8309372289180": "lash-brow-duo", "8310551969948": "long-lash-mascara", "8338765545628": "eyelash-curler", "8338765775004": "beauty-mirror", "8358778536092": "gua-sha", "8361261629596": "face-roller", "8462448984220": "color-changing-foundation", "8483767222428": "stick-stain3", "8747833557148": "brow-gel", "8781456703644": "peel-off-lip-stain", "8794333970588": "liquid-blender-brush", "8975477506204": "smooche-blender", "9019261157532": "foundation-mega-pack", "9163492425884": "reverse-time-peptide-serum", "9248604782748": "ultra-peptide-collagen-lifting-mask", "9264976101532": "under-eye-reset"};</script>
+    <script src="{{ 'js/skinofab-commerce.js'|asset_url }}"></script>
+    {% block sf_head %}{% endblock sf_head %}
+
+    {# Head app hook is for platform-critical head snippets only. Prefer footer hooks. #}
+    {% block head_app_hooks %}
+        {% app_hook 'global_header' %}
+    {% endblock head_app_hooks %}
+</head>
+
+<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+    {% block sf_lead %}{% endblock sf_lead %}
+    <a href="#MainContent" class="skip-to-content visually-hidden">{% t 'global.accessibility.skip_to_main_content' %}</a>
+
+    {% block layout %}
+        {% if not settings.account_only %}
+
+            {# Announcement bar — respects ab_placement setting #}
+            {% block announcement_bar %}
+                {% if settings.ab_text and settings.ab_placement != 'none' and settings.ab_placement != 'home' %}
+                    {% include "partials/announcement_bar.html" %}
+                {% endif %}
+            {% endblock announcement_bar %}
+
+            {# Header / Navigation #}
+            {% block nav_header %}
+                {% include 'partials/header.html' %}
+            {% endblock %}
+
+        {% endif %}
+
+        {# Main content #}
+        {% block content_wrapper %}
+            <main id="main-content" tabindex="-1">
+                {% block breadcrumbs %}{% endblock %}
+                <div class="container">
+                    {% include "partials/alert_messages.html" %}
+                </div>
+                {% block content %}{% endblock %}
+            </main>
+        {% endblock %}
+
+        {# Footer #}
+        {% if not settings.account_only %}
+            {% block footer %}
+                {% include "partials/footer.html" %}
+            {% endblock %}
+        {% endif %}
+
+    {% endblock %}
+
+    {# Modals #}
+    {% block modals %}{% endblock modals %}
+
+    {# Non-critical UI shells are parsed before their Web Components register. #}
+    {% block side_cart %}
+        {% include 'partials/side_cart.html' %}
+    {% endblock side_cart %}
+
+    {# Platform event trackers (GA4, GTM, Klaviyo, Taboola apps subscribe through these frames). Rendered by core_js in Intro Bootstrap; Spark dropped core_js and must render it itself. #}
+    {% block pixels %}
+        {% pixels %}
+    {% endblock pixels %}
+
+    {# Theme JS - dependency ordered, zero jQuery, zero Bootstrap. #}
+    {% block scripts %}
+        <script type="text/javascript" src="{{ 'js/spark-events.js'|asset_url }}"></script>
+        <script>
+        {% t 'store.catalogue.add_to_cart' as spark_i18n_add_to_cart %}
+        {% t 'store.catalogue.product_unavailable' as spark_i18n_unavailable %}
+        {% t 'global.confirm.delete' as spark_i18n_delete_confirm %}
+        {% t 'store.catalogue.subscription_frequency_error' as spark_i18n_subscription_frequency_error %}
+        {% t 'side_cart.default.item_removed_announcement' as spark_i18n_cart_item_removed %}
+        {% t 'side_cart.default.quantity_updated_announcement' as spark_i18n_cart_quantity_updated %}
+        window.SparkCartAssets = {
+            cart: "{{ 'js/spark-cart.js'|asset_url|escapejs }}",
+            cartRewards: "{{ 'js/spark-cart-rewards.js'|asset_url|escapejs }}",
+            cartRenderer: "{{ 'js/spark-cart-drawer-renderer.js'|asset_url|escapejs }}",
+            progressBar: "{{ 'js/components/spark-progress-bar.js'|asset_url|escapejs }}",
+            upsellItem: "{{ 'js/components/spark-upsell-item.js'|asset_url|escapejs }}",
+            cartDrawer: "{{ 'js/components/spark-cart-drawer.js'|asset_url|escapejs }}"
+        };
+        window.SparkI18n = {
+            addToCart: "{{ spark_i18n_add_to_cart|escapejs }}",
+            unavailable: "{{ spark_i18n_unavailable|escapejs }}",
+            deleteConfirm: "{{ spark_i18n_delete_confirm|escapejs }}",
+            subscriptionFrequencyError: "{{ spark_i18n_subscription_frequency_error|escapejs }}",
+            cartItemRemoved: "{{ spark_i18n_cart_item_removed|escapejs }}",
+            cartQuantityUpdated: "{{ spark_i18n_cart_quantity_updated|escapejs }}"
+        };
+        </script>
+        <script type="text/javascript" src="{{ 'js/spark-cart-loader.js'|asset_url }}"></script>
+        
+        {% if settings.enable_membership_pricing %}
+            {% url 'storefrontapi:graphql' as membership_graphql_url %}
+            <script>
+            {% t 'membership.price_label' as default_membership_label %}
+            {% t 'membership.applied_at_checkout' as default_membership_detail_text %}
+            window.SparkMembershipPricingConfig = {
+                enabled: true,
+                graphqlUrl: "{{ membership_graphql_url|default:'/api/graphql/'|escapejs }}",
+                discountPercent: "{{ settings.membership_discount_percent|default:"25"|escapejs }}",
+                statusMetadataKey: "{{ settings.membership_status_metadata_key|default:"member_status"|escapejs }}",
+                activeStatusValue: "{{ settings.membership_active_status_value|default:"active"|escapejs }}",
+                label: "{{ settings.membership_label|default:default_membership_label|escapejs }}",
+                detailText: "{{ settings.membership_detail_text|default:default_membership_detail_text|escapejs }}"
+            };
+            </script>
+            <script type="text/javascript" src="{{ 'js/spark-membership-pricing.js'|asset_url }}" defer></script>
+        {% endif %}
+    {% endblock %}
+
+    {% block component_scripts %}{% endblock component_scripts %}
+
+    {% block platform_compatibility %}
+        {# Platform compatibility — replaces jQuery-dependent core_js with vanilla JS #}
+        <script type="text/javascript" src="{{ 'js/spark-platform.js'|asset_url }}"></script>
+    {% endblock platform_compatibility %}
+
+    {% block preview_indicator %}
+        {% if request.COOKIES.preview_theme %}
+            <script type="text/javascript" src="{{ 'js/spark-preview.js'|asset_url }}"></script>
+        {% endif %}
+    {% endblock preview_indicator %}
+
+    {# Additional JS #}
+    {% block sf_tail %}{% endblock sf_tail %}
+    {% block extrascripts %}{% endblock %}
+
+    {% block delight_scripts %}
+    {# Delight: skeleton dismiss + keyboard nav #}
+    <script>
+    (function(){
+        // Skeleton: hide once product grid is rendered
+        var skel = document.getElementById('product-skeleton');
+        if (skel) {
+            var grid = document.getElementById('product-grid');
+            if (grid && grid.children.length > 0) {
+                skel.style.display = 'none';
+            } else if (!grid) {
+                skel.style.display = 'none';
+            }
+        }
+
+        // Keyboard nav: product grid — Enter on focused card navigates to PDP
+        document.querySelectorAll('.product-card').forEach(function(card) {
+            if (!card.getAttribute('tabindex')) card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
+
+    })();
+    </script>
+    {% endblock delight_scripts %}
+
+    {# Non-critical apps and tracking run after content and theme JS. #}
+    {% block footer_app_hooks %}
+        {% app_hook 'global_social_proof' %}
+        {% app_hook 'global_footer' %}
+    {% endblock footer_app_hooks %}
+    {% block tracking %}{% endblock tracking %}
+
+</body>
+</html>

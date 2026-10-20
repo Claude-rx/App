@@ -1,0 +1,67 @@
+{% extends "layouts/base.html" %}
+{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ 'main.css'|asset_url }}">{% endblock spark_css %}
+
+{% block title %}
+    {{ category.name }} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container py-3">
+    <nav aria-label="{% t 'navigation.breadcrumb' %}">
+        <ol class="flex items-center gap-2 text-xs text-slate-400">
+            <li><a href="{{ homepage_url }}" class="hover:text-slate-600">{% t "navigation.main.home" %}</a></li>
+            <li>/</li>
+            <li><a href="{% url 'support:category-list' %}" class="hover:text-slate-600">{% t "navigation.main.support" %}</a></li>
+            <li>/</li>
+            <li class="text-slate-600">{{ category.name }}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="container py-8 md:py-12">
+    {# Search #}
+    <form method="get" class="flex gap-2 mb-8 max-w-xl">
+        <input type="text" name="text"
+               placeholder="{% t 'global.button.search' %}"
+               class="flex-1 text-sm border border-slate-200 px-4 py-2" />
+        <button class="btn btn-primary text-sm" type="submit">
+            {% t "global.button.search" %}
+        </button>
+    </form>
+
+    <h1 class="text-2xl font-semibold text-slate-800 mb-6">
+        {{ category.name }} {% t "store.support.articles" %}
+    </h1>
+
+    {% if articles %}
+        <ul class="divide-y divide-slate-200 border border-slate-200 mb-8">
+            {% for article in articles %}
+                <li class="flex items-center justify-between px-4 py-3">
+                    <a href="{{ article.get_absolute_url }}" class="text-sm text-slate-700 hover:text-slate-900">
+                        {{ article.title }}
+                    </a>
+                    <a href="{{ article.get_absolute_url }}" class="btn btn-secondary text-xs px-3 py-1">
+                        {% t "store.support.view" %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="text-sm text-slate-500">
+            {% url 'customer:support-ticket-create' as create_ticket_link %}
+            {% t "store.support.create_support_request" with link=create_ticket_link %}
+        </p>
+    {% else %}
+        {% if not is_search %}
+            <p class="text-slate-500 mb-4">{% t "store.support.no_articles" %}</p>
+        {% else %}
+            <p class="text-slate-500 mb-4">{% t "store.support.search_not_found" %}</p>
+        {% endif %}
+        <p class="text-sm text-slate-500">
+            {% url 'customer:support-ticket-create' as create_ticket_link %}
+            {% t "store.support.create_support_request" with link=create_ticket_link %}
+        </p>
+    {% endif %}
+</div>
+{% endblock content %}

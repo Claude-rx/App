@@ -1,0 +1,19 @@
+{# SKINOFAB product card (design markup) for NEXT products. Usage: include with product=product #}
+{% with images=product.get_all_images %}{% if images %}{% image_thumbnail images.0.original "1080x1080" crop="center" as sf_card_img0 %}{% endif %}{% if images.1 %}{% image_thumbnail images.1.original "1080x1080" crop="center" as sf_card_img1 %}{% elif images %}{% image_thumbnail images.0.original "1080x1080" crop="center" as sf_card_img1 %}{% endif %}
+<div category="" class="product-grid-item grid__item one-quarter mobile--one-half" data-product-block="" id="product-item-{{ product.pk }}"><div class="product-grid-item__image" data-product-media-container=""><div class="product__media__container" style="--aspect-ratio: 1.0;">
+<a aria-label="{{ product.get_title }}" class="product__media__holder" data-grid-link="" href="{{ product.get_absolute_url }}"><deferred-loading class="product__media__image product__media__image--hover-fade-in" data-deferred-container="[data-product-block]" data-product-media-featured="">
+<figure class="lazy-image background-size-cover is-loading product__media product__media--featured-visible" data-grid-image="" data-product-image="" style="">
+<img alt="{{ product.get_title }}" class="is-loading" fetchpriority="high" height="1080" loading="eager" src="{{ sf_card_img0.url }}" width="1080"/>
+</figure><span class="visually-hidden">{{ product.get_title }}</span>
+</deferred-loading><deferred-loading class="product__media__hover product__media__hover--fade-in" data-deferred-container="[data-product-block]" data-deferred-triggers="[data-deferred-trigger-element]">
+<figure class="lazy-image background-size-cover is-loading product__media__hover-img product__media__hover-img--visible product__media" data-product-image-hover="" style="">
+<img alt="{{ product.get_title }}" class="is-loading" height="1080" loading="lazy" src="{{ sf_card_img1.url }}" width="1080"/>
+</figure></deferred-loading></a></div>
+</div>
+<div class="product-grid-item__info product-grid-item__info--inline">
+<div class="product-grid-item__info-content">
+<a aria-label="{{ product.get_title }}" class="product-grid-item__title font-heading" data-grid-link="" href="{{ product.get_absolute_url }}">{{ product.get_title }}</a> <span class="product-grid-item__info-separator"></span>
+ <a class="product-grid-item__price price" data-grid-link="" href="{{ product.get_absolute_url }}">{% include 'partials/sf_price.html' with p=product %}</a>
+</div></div>
+</div>
+{% endwith %}
