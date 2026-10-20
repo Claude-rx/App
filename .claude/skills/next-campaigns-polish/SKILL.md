@@ -1,0 +1,223 @@
+---
+name: next-campaigns-polish
+version: 1.1.46
+description: Run the visual/runtime polish pass after build and before QA for a Campaigns OS campaign.
+---
+
+Bundle revision: 1.60.0+skills.1
+Run `npx --no-install campaigns-os tooling status --skills-revision 1.60.0+skills.1`
+from the campaign's Page Kit folder, where it runs the project's pinned copy and
+never installs one, at the start of each task. Start a fresh session if it
+reports `mismatch`: this text is already in your context and is never re-read
+while the CLI on disk can move under it. If the output has no `Skills revision:`
+line (no `revision_check` under `--json`), a campaigns-os older than this check
+answered; follow none of its actions and run the pinned copy.
+
+# Next Campaigns Polish
+
+## Installed toolkit commands
+
+Run from the campaign folder with an exact project-local devDependency and
+committed lockfile. Orient on reviewed source before installation; check release
+provenance or pin the full reviewed Git SHA. Preflight with `npx --no-install
+campaigns-os tooling status --platform <claude|codex>` (tier `B`: its only write
+is the command-lifecycle journal) and refresh bundled skills for the same
+profile with `install-skills` (tier `B`: writes the shared skill directories;
+nothing leaves the machine). Use the invocation printed by status and `next` to
+avoid PATH shadowing.
+
+In the instructions below, bare `campaigns-os …` means `npx --no-install
+campaigns-os …` from that campaign folder. Keep `--no-install`: `campaigns-os`
+is only the bin name of `@nextcommerce/campaigns-os`, so where no pinned copy is
+installed a plain `npx` looks that name up on the registry and, with no terminal
+to ask, installs what it finds. Global-only users substitute the global copy's
+printed invocation for each `npx --no-install campaigns-os` example; toolkit
+contributors translate to `npm run campaigns-os -- …` in the toolkit checkout.
+Browser installation is `npx --no-install campaigns-os qa install-browser`, not
+a campaign npm script. `tooling diagnose --packet <p> --json` (tier `none`:
+read-only, and exempt from lifecycle capture) provides a redacted support export
+without changing retained evidence.
+
+The effect class in each parenthetical below is the declared row of
+`contracts/effects.v1.json` (`none` < `B` writes < `A` sends < `C` destructive).
+Read that file, not this text, when an exact path or endpoint matters.
+
+
+Use this after build has produced a runnable page-kit campaign.
+
+Theme gate: `campaigns-os next polish` (tier `A`, like every `next` form: additive writes under `.campaign-runtime/` plus a stage-progress POST under Run Telemetry consent; `--no-write` and `--no-remit` are each tier `B`) blocks when theme inspect found a
+generatable brand theme that is not yet applied to commerce pages. Do not work
+around the gate — apply the brand layer (`theme generate`, tier `B`; copy into
+campaign assets, load after `next-core.css`, rebuild, `campaigns-os record build`,
+then `campaigns-os record theme --packet <p>`, tier `C`) or record an
+explicit waiver (`campaigns-os theme waive --packet <p> --reason "<why>" --waived-by "<named human>"` — tier `C`, because the waiver overwrites the assembly report and doctor output; placeholders are refused).
+
+Responsibilities:
+
+- Compare prepared source design against built campaign pages.
+- Scan the prepared source assets for brand marks such as `logo*.png`, `logo*.svg`, and obvious header/logo images before leaving starter-template logos in place.
+- Scan **visible** rendered text inside the family's content/commerce surfaces (the selectors enumerated in `contracts/template-brand-contract.<family>.v0.json`) for placeholder/residue copy the build should have replaced — the *literal starter defaults*: lorem-ipsum, the unmodified starter headings (`Product Name` / `Package Title` / `Your headline`), `[VERIFY …]` author notes, `TODO` markers. Match the literal starter strings, not any authored copy that merely contains those words, and skip `<script>` / `<style>` / JSON-LD / `data-*` attributes. Treat a surviving literal starter default on a content/commerce surface as a polish blocker — replace it from the prepared source / CampaignSpec; do not draft substitute copy (if the design's authored copy is genuinely missing, flag it rather than invent it). This is *copy* residue, complementary to the computed-style / asset residue gated by `next-campaigns-qa` + the brand contract — not a duplicate of it.
+- Flag template *defaults* left where they disagree with the prepared design — e.g. the same benefit icon repeated across a grid *when the design uses distinct icons*, or a guarantee badge/term that disagrees with the design — as polish defects, not just logos. Judge against the prepared source, not taste: copy or imagery the source/CampaignSpec does not supply (e.g. a placeholder testimonial name/quote/role) is residue; "looks generic" on its own is not. Copy the source does supply, including its proof and urgency elements (reviews, "Verified Purchase" labels, recent-purchase popups, stock counters, countdowns, guarantees), is the merchant's content: keep it as designed and do not record it as an issue or an unconfirmed claim.
+- **Brand-bleed (cloned-source de-brand) pass.** When a campaign is cloned from a proven sibling, the sibling's brand defaults ride along. Inspect the built pages and assets for residual cross-brand bleed and clear it before recording: (1) a residual promo/sale banner or coupon code/copy from the source campaign (including a baked-in *fake* code); (2) a prior-campaign / sibling favicon left in place; (3) scaffold or non-design fonts the design did not specify (e.g. starter `Plus Jakarta`); (4) hardcoded non-token colors — any brand color literal that should be a token, such as next-core's `#C670FE` "Most Popular" pill. Clear each from the prepared source / CampaignSpec and brand theme (tokens, not literals); flag — do not invent — anything the design genuinely doesn't supply. Treat surviving bleed as a polish blocker. This complements the favicon/logo and copy-residue checks above; it is the cross-brand contamination angle, not a duplicate.
+- Read the normalized Campaign Build Brief at `.campaign-runtime/input/campaign-build-brief.normalized.json` and the recorded decisions (`adapter_decisions`, `decisions` and `theme` in `.campaign-runtime/assembly-report.json`, and `assembly.template_decision_notes` in the Build Packet) before working on the campaign. The campaign intent summary at the top of the setup, build, Polish and QA prompts and in every `next` result is orientation, never a source of prices or commerce behaviour.
+- Read the assembly report decisions before polishing. Do not reintroduce source-HTML elements that build intentionally dropped because CampaignSpec/API did not support them, such as unavailable payment methods.
+- **Remove or rename a contract-listed payment-chrome asset; never edit one in place.** The assets named in `contracts/template-brand-contract.<family>.v0.json` under `default_residue.payment_chrome.assets` are keyed by QA on the *referenced basename*, not on their contents. Stripping the unsupported marks from inside a shared file such as `upsell-payment-logos.svg` leaves the reference in place, so QA reports residue for an asset that no longer carries any — and on 2026-09-06 the repair loop's remedy for that report deleted a cards-only trust strip that was correct. Delete the asset, or write a new one under a new name and repoint the reference. QA downgrades an edited-in-place asset to `manual_review` rather than a blocker, but that is a safety net for a mistake, not the supported way to do this.
+- Preserve existing `report.theme` data. If polish changes generated theme CSS, load order, commerce-page coverage, theme warnings, or the first repair-loop defect, update the Assembly Report `theme` block rather than leaving stale evidence.
+- Patch only SDK-safe CSS, skin, layout, and content surfaces.
+- Preserve checkout/cart/upsell/receipt runtime wiring.
+- Capture desktop and mobile evidence for key commerce anchors.
+- For checkout payment, capture zoomed evidence of the express-wallet mount and card fields after SDK readiness. Verify that the visible hosted card and CVV input paths are vertically centered inside native-looking controls; do not accept full-height Spreedly iframes, oversized blank fields, or placeholder text pinned to the top edge.
+- Treat express wallet presence as browser/device eligible. Record which wallets mounted in the tested browser, but do not fail solely because Apple Pay is absent in a non-eligible browser. Fail or block when the express mount is empty despite supported wallets, or when mounted wallet buttons are visually malformed.
+- For bundle selectors and order bumps, verify active/inactive visual state after interaction, mobile label wrapping, badge placement, and selected/unchecked state. A native hidden input state that disagrees with the SDK class state is a polish blocker. So is a selected/active visual driven by a *non-SDK static attribute the SDK never clears* — e.g. a hardcoded `data-selected="true"` left on the initial card. (The native `selected` attribute on `<option>`/custom selects *is* SDK/browser-managed, so do not flag that.) The selected style must follow the SDK-managed class (e.g. `.next-selected` — see the family's bundle-selector selectors in `contracts/template-brand-contract.<family>.v0.json`) so a single-select swap clears the previous selection. Verify by interaction that the previously-selected item deselects after another is picked — a selector that only ever paints "selected" on click is a blocker.
+- For exit-intent pops and promo-code inputs, polish the wrapper/copy states without breaking SDK coupon/voucher apply hooks or `cart.hasCoupon("CODE")` conditional labels.
+- If `report.theme` or `context.theme` exists, verify brand-theme load order after `next-core.css`, source-token parity for primary color/CTA/surface/text/font/radius when present, and SDK safety. When the brand layer is missing, stale, low-confidence, or unsafe to apply, record the first repair-loop defect or an explicit skipped reason.
+- When at least one mapped page has a design route, before recording a terminal
+  Polish status, install the package-owned browser once with
+  `npx --no-install campaigns-os qa install-browser`, serve the current build,
+  and run `campaigns-os polish capture --packet <packet> --base-url <served-build-url>`
+  (tier `A`: it writes the polish evidence and assembly report under the target
+  and fetches the served build at `--base-url`).
+  The package captures every mapped route at fixed desktop/mobile viewports and
+  attaches `stages.polish.evidence.visual_review.page_load`. Never hand-author,
+  copy, or repair that object directly.
+- If every mapped page is template stock (`skip_reason`), there is no design
+  route for that capture. On a local loopback preview, or a hosted preview at
+  the packet's non-loopback HTTP(S) `deploy.preview_url` that differs from
+  `deploy.production_url` by origin or route path, doctor carries the missing
+  evidence forward as a warning. Query or fragment text on the production
+  page does not make it a distinct preview. If the hosted preview URL is not
+  yet recorded, run
+  `campaigns-os qa policy set --packet <packet> --preview-url <url>` first.
+  Then follow `campaigns-os next --packet <packet>`: it hands off
+  `campaigns-os record deploy --packet <packet> --base-url
+  <preview route root>`, then `campaigns-os qa run --packet <packet>
+  --base-url <preview-url> --browser --test-order common`, then closeout. QA
+  against the packet's production URL keeps the checkpoint blocked.
+- When a readability warning appears, report it with its colours, ratio, requirement and pages. Offer the operator options inside the brand palette (a darker or lighter shade of the same hue, the palette's text colour, or a larger, bold label where the design allows). Do not recolour the merchant's design until the operator chooses. Accept a warning only with the refs, reason and name the operator gives you at the QC handoff.
+- Record Polish as `completed`, `skipped`, or `blocked` with
+  `campaigns-os record polish --packet <packet> --evidence <polish-evidence.json>`
+  (tier `C`: it overwrites `stages.polish` in the assembly report and stamps the
+  doctor output stale; `--dry-run` is tier `none`). A nonzero capture result keeps
+  Polish blocked until repair and recapture. The
+  producer persists bounded incomplete evidence for diagnosis and does not mark
+  the stage complete. Record Polish as `skipped` only when the operator decides in this conversation to skip it, and quote their reason as `skip_reason`.
+- Use `npm run smoke:polish-capture` only as an optional local producer smoke
+  after browser installation. It opens a loopback fixture server and is not
+  part of `npm run check` or the CI browser lane.
+
+## Recording polish evidence
+
+The polish gate (`campaigns-os next polish` / QA handoff) reads structured
+evidence from `stages.polish.evidence`. The full accepted schema — stage-record
+requirements, every required field's accepted shape, the favicon certification
+shape and its escape semantics, the semantic text scans, and the blocker-code
+ladder — is documented in `docs/polish-evidence.md`. That document is the
+schema reference; this section is the recording guidance.
+
+**All seven evidence fields are required** or the gate blocks with
+`polish.evidence_incomplete`:
+
+- `visual_review` — an **object with a `screenshots` array** (aliases:
+  `screenshot_paths`, `paths`, `urls`) holding at least one non-empty
+  path/URL string for the captured desktop+mobile evidence, plus the
+  package-generated `page_load` object. A bare string or a screenshot-less
+  object does NOT pass, no matter how real the review was.
+- `brand_review` — object; must include the `favicon` attestation and the
+  `brand_bleed` attestation (below).
+- `checkout_review` — object; must include `field_labels` (aliases
+  `initial_field_hints`, `visible_labels`) confirming legible initial field
+  hints, and `bump_compare_price_rule` (alias `bump_compare_price`)
+  confirming no equal/no-discount compare price renders.
+- `template_residue_review` — non-empty; its `starter_favicon` entry accepts
+  the same certification shape as `brand_review.favicon`.
+- `commerce_flow_review` — non-empty string/array/object.
+- `issues` — **must be an array**; `[]` is the canonical "no issues found".
+- `commands` — non-empty array of the commands polish actually ran; never
+  include build commands (that reads as self-certification).
+
+Write the seven fields under `evidence` in a JSON file and record it with
+`campaigns-os record polish --packet <packet> --evidence <file>`. The file
+holds `status` (`completed` or `completed_with_warnings`, default
+`completed`), `evidence`, and optionally `repair_loop_defect` (null or an
+object, written to `report.theme.repair_loop_defect`); any other key but the
+two below is refused. The command stamps `performed_by: "next-campaigns-polish"`,
+`source_build_fingerprint` (doctor's current output fingerprint, which must
+equal the recorded `stages.assembly.build_fingerprint`), `completed_at`, and —
+when the report fingerprints a Design Source Package —
+`source_package_material_fingerprint`. It keeps the captured `page_load`,
+names any shape error by field (for example `repair_loop_defect` given as a
+string), and writes nothing unless the polish gate doctor evaluates would pass
+on the result. `docs/polish-evidence.md` ("Recording with `record polish`")
+has a complete example file. Do not hand-edit `stages.polish`.
+
+A Polish that cannot complete is recorded with the same command: a file with
+`"status": "blocked"` and `blockers` (a non-empty array of `{"code", "message"}`
+objects), or `"status": "skipped"` and a `skip_reason` string. `evidence` is
+optional for both; the captured evidence stays. Either keeps `next` at Polish
+and QA blocked until a completed Polish is recorded. Record Polish as `skipped` only when the operator decides in this conversation to skip it, and quote their reason as `skip_reason`.
+
+The `polish.hidden_eager_media` checkpoint blocks on nonwaivable missing,
+malformed, stale, integrity-invalid, route-mismatched, or incomplete package
+capture evidence. A complete finding means one computed-hidden `video` or
+`audio` element transferred strictly more than `1,048,576` bytes without an
+exact ASCII-case-insensitive `preload="none"` or `preload="metadata"` content
+attribute. Repair and recapture first. Only a complete real finding has an exact
+named-human waiver lane:
+
+`campaigns-os checkpoint waive` is tier `C`: a waiver overwrites the assembly
+report and doctor output.
+
+```bash
+campaigns-os checkpoint waive \
+  --packet <packet> \
+  --gate polish.hidden_eager_media \
+  --reason "<why this exact finding is accepted>" \
+  --waived-by "<named human>" \
+  --review-condition "<specific re-evaluation trigger>"
+```
+
+The waiver remains visible and becomes inert when the build, slug, route plan,
+fixed viewports, or finding state changes.
+
+The favicon certification shape is authoritative (it skips the free-text leak
+scan): `{ "byte_match": true }` or `status`/`result` one of `matched_source`,
+`promoted_source`, `confirmed_non_template`, `no_source_candidate`. Free-text
+favicon evidence is scanned for starter-leak phrasing and the literal
+`images/favicon.png` path — certify structurally when you verified byte-level.
+
+Record, alongside the favicon (`brand_review.favicon`) and order-bump
+compare-price (`checkout_review.bump_compare_price_rule`) attestations the
+gate already checks, a `brand_review.brand_bleed` attestation for the de-brand
+pass above. Without it the gate blocks every completed polish run.
+
+Write the cleared result as an object — `cleared: true` is the canonical,
+unambiguous form (the gate accepts it directly and does not then scan the rest
+of the object for residue):
+
+```jsonc
+"brand_review": {
+  "favicon": { "byte_match": true, "status": "matched_source" },
+  "brand_bleed": {
+    "cleared": true,
+    "promo_codes": "none",
+    "favicon": "brand favicon",
+    "fonts": "design fonts only",
+    "colors": "tokenized"
+  }
+}
+```
+
+Field precedence is `brand_bleed`, then aliases `brand_bleed_review`, then
+`debrand`. A confirming free-form string is also accepted (e.g. `"promo banner
+stripped, design fonts only, colors tokenized, no prior favicon"`).
+
+Pitfall: if you record bleed as a string (or omit `cleared: true`), the gate
+runs a negative-text matcher over the value. Affirm clearance and do **not**
+echo the offending tokens — phrasings like `cleared: false`, `not cleared`,
+`bleed found`, `#C670FE`, `Plus Jakarta`, `prior-campaign`, or `promo code …
+still present` all block, even when describing what you *removed*. State the
+cleared outcome (`"de-brand pass complete, no residue"`), not the residue you
+deleted. If bleed genuinely remains, record `cleared: false` (or `bleed_found:
+true`) so the gate blocks until it is fixed — never paper over it.
+
+Polish is not QA and does not certify launch readiness.

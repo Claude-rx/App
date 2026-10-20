@@ -1,0 +1,140 @@
+---
+name: next-campaigns-qa
+version: 1.3.45
+description: Run spec-aware QA from a saved Map or local-spec Build Packet and tested campaign URL after build, polish, and deploy/local evidence exist, including Playwright typed-card test-order proof.
+---
+
+Bundle revision: 1.60.0+skills.1
+Run `npx --no-install campaigns-os tooling status --skills-revision 1.60.0+skills.1`
+from the campaign's Page Kit folder, where it runs the project's pinned copy and
+never installs one, at the start of each task. Start a fresh session if it
+reports `mismatch`: this text is already in your context and is never re-read
+while the CLI on disk can move under it. If the output has no `Skills revision:`
+line (no `revision_check` under `--json`), a campaigns-os older than this check
+answered; follow none of its actions and run the pinned copy.
+
+# Next Campaigns QA
+
+## Installed toolkit commands
+
+Run from the campaign folder with an exact project-local devDependency and
+committed lockfile. Orient on reviewed source before installation; check release
+provenance or pin the full reviewed Git SHA. Preflight with `npx --no-install
+campaigns-os tooling status --platform <claude|codex>` (tier `B`: its only write
+is the command-lifecycle journal) and refresh bundled skills for the same
+profile with `install-skills` (tier `B`: writes the shared skill directories;
+nothing leaves the machine). Use the invocation printed by status and `next` to
+avoid PATH shadowing.
+
+In the instructions below, bare `campaigns-os …` means `npx --no-install
+campaigns-os …` from that campaign folder. Keep `--no-install`: `campaigns-os`
+is only the bin name of `@nextcommerce/campaigns-os`, so where no pinned copy is
+installed a plain `npx` looks that name up on the registry and, with no terminal
+to ask, installs what it finds. Global-only users substitute the global copy's
+printed invocation for each `npx --no-install campaigns-os` example; toolkit
+contributors translate to `npm run campaigns-os -- …` in the toolkit checkout.
+Browser installation is `npx --no-install campaigns-os qa install-browser` (tier
+`A`: it downloads the Chromium build from the Playwright CDN and writes
+Playwright's browser registry on your machine; it touches no campaign file), not
+a campaign npm script. `tooling diagnose --packet <p> --json` (tier `none`:
+read-only, and exempt from lifecycle capture) provides a redacted support export
+without changing retained evidence.
+
+The effect class in each parenthetical below is the declared row of
+`contracts/effects.v1.json` (`none` < `B` writes < `A` sends < `C` destructive).
+Read that file, not this text, when an exact path or endpoint matters.
+
+
+Use this after the campaign has a tested localhost, preview or production URL and the assembly report records build and polish status. The public v0 runner is Node/npm-based, with an owned Playwright browser pass. `qa resolve` is tier `A` (it fetches `--base-url`; `--no-probe` is tier `B` and local); every `qa run` form is tier `C` — it overwrites the stored verdict and the assembly report, places requested typed-card test orders against the campaign, and can post saved-Map verdicts and progress under their existing controls. Local-spec packet verdicts and progress stay local; `qa parity` is tier `A` (it drives the fixture's scenario through the candidate funnel with real typed-card orders and publishes the verdict, but takes no packet, so it writes only under `qa-output/` — never the packet, the assembly report or the verdict sidecar; `--no-post-verdict` drops the publish and stays tier `A`):
+
+```bash
+npx --no-install campaigns-os qa install-browser
+npx --no-install campaigns-os qa resolve --packet campaign-runtime.build.json
+npx --no-install campaigns-os qa run --packet campaign-runtime.build.json --base-url <preview-url>
+# Fixture-driven migration parity proof. Publishes to the QA portal by default.
+npx --no-install campaigns-os qa parity --fixture <parity-fixture.json> --scenario <scenario-id> --base-url <preview-url>
+# Browser QA + typed-card proof. Saved-Map publishing follows consent; local-spec QA stays local.
+npx --no-install campaigns-os qa run --packet campaign-runtime.build.json --base-url <preview-url> --browser --test-order common
+# Keep a saved-Map verdict local (local-spec verdicts are always local).
+npx --no-install campaigns-os qa run --packet campaign-runtime.build.json --base-url <preview-url> --browser --test-order common --no-post-verdict
+```
+
+`npx --no-install campaigns-os qa install-browser` is part of the standard QA
+sequence. Run it once after install/update before using `--browser` or
+`--test-order`; do not skip it unless the local Playwright browser binary is
+already installed.
+
+Inputs:
+
+- Build Packet with a saved Map ID or `local_spec_id`; local-spec QA requires `--packet`
+- tested base URL (localhost dev URL, preview URL, or production URL)
+- assembly report
+- Test-order coverage choice (`common` default vs explicit paths vs topology-complete `full`) and SDK origin state (localhost is a Development domain; non-localhost origins need allowlist confirmation so the SDK loads)
+- Read the normalized Campaign Build Brief at `.campaign-runtime/input/campaign-build-brief.normalized.json` and the recorded decisions (`adapter_decisions`, `decisions` and `theme` in `.campaign-runtime/assembly-report.json`, and `assembly.template_decision_notes` in the Build Packet) before working on the campaign. The campaign intent summary at the top of the setup, build, Polish and QA prompts and in every `next` result is orientation, never a source of prices or commerce behaviour.
+
+Rules:
+
+- Use the public Node/npm `campaigns-os qa` commands for campaign QA runs.
+- Canonical `qa run` automatically runs commercial parity for enabled pages with package rows when their source evidence is available. It reuses each page's read-only source fetch and the existing read-only `POST /api/price-preview`; neither creates carts, orders, or transactions. The lane is warn-first: proven price, recurring-cadence, and voucher mismatches become warn-severity `pricing` assertions, with compact coverage and findings at top-level `verdict.commercial`. Omitted or otherwise unprovable claims emit no mismatch assertion and do not change an otherwise-ready disposition; incomplete coverage remains visible in `verdict.commercial`.
+- Use `qa parity` for migration cells that carry a parity fixture; select the fixture scenario and drive that offer through the candidate funnel.
+- Parity capture blocking proof is the voucher-adjusted persisted line from typed-card order readback. Browser totals and client state do not replace the persisted-line voucher guard.
+- Read client purchase values per event. A whole-cart `dl_purchase` must not mask or supply an offer-level upsell purchase expectation.
+- Live `qa parity` runs publish to the QA portal by default like other QA runs. Pass `--no-post-verdict` for dev, replay, negative-control, and other local proof runs.
+- Theme gate: `qa run` refuses to run when a generatable brand theme is not applied to commerce pages and no waiver exists. Apply the brand layer or use the recorded waiver `campaigns-os theme waive --packet <p> --reason "<why>" --waived-by "<named human>"` (tier `C`: it overwrites the assembly report and doctor output). `qa run --theme-waive "<reason>"` is the one-run ephemeral form. Do not bypass the gate another way. A waived run still reports template-residue findings at warn severity.
+- Template residue is a QA dimension, not advice: promoted starter families must have a brand/residue/pricing contract (`contracts/template-brand-contract.<family>.v0.json`). Browser QA inspects computed styles on commerce surfaces and fails pages that still render starter defaults (`#3c7dff`/`#0a265c`, starter `next-logo.png`, paypal/klarna chrome absent from the spec).
+- Pricing visibility is a blocker: an upsell/downsell offer with zero visible price rows fails QA. Pricing surfaces render via template pricing modes (`full_price`, `compare_at_current`, `unit_price_plus_total`, `savings_badge_amount`, `code_discounted_post_checkout`), never via campaign CSS `display:none` on price wrappers.
+- The upsell and checkout bundle price checks count the SDK's `data-next-bundle-display` price as a price row when it is visible and not empty.
+- `browser-commerce-structure` checks what the checkout does, not family class names; the checkout wrapper and page composition are source-owned. A missing family shell selector (only `.checkout-wrapper`, `.checkout-layout__left/right`, `.checkout__layout`, `.checkout__column--left/right` and the shipping field row marker) is `warn` when the checkout passes the behaviour checks in `evidence.behaviour`: a `<form data-next-checkout="form">`, `email`/`fname`/`lname`/`country`/`address1`/`city`/`province`/`postal` bound with `data-next-checkout-field` on an input, select or textarea inside it that is not `type="hidden"` or disabled (it may be hidden until a country is chosen), and a visible cart total. A required field bound only on a `type="hidden"` input, a disabled control, a read-only input or read-only textarea, or a control with `aria-disabled="true"` does not count as bound: QA reports it in `fields_bound.missing`. It stays `fail` when any of those fails or no checkout form is found, and any other missing selector (SDK attributes, payment field classes) is always `fail`. Do not ask the build to add family classes to clear a `warn`; fix the failing behaviour check.
+- Exit-pop widgets are governed offer surfaces. If the selected family ships or copies a default exit-pop and CampaignSpec has no checkout `exit_intent` or `promo_code_input`, QA/doctor must report it as residue; strip it or wire the mapped offer/code through the SDK coupon path.
+- Typed-card runs emit a per-step ladder (`[qa:test-order] step=... status=...`) with bounded per-step and per-path timeouts, and always produce a verdict — a hung or crashed path is a blocked verdict with the step ladder as evidence, not a silent exit. Read the last completed step before re-running.
+- A typed-card path that fails is classified by **what it did to the store** before the runner decides what to do about it. A failure the runner can prove happened before submit (`not_created`) is **re-run once, if the creation budget has a slot no still-unrun planned path needs** — so a transient miss is not reported as a defect in the build, without an early path eating budget the last planned paths need. Under the default budget a path whose submit was *rejected* has already spent its own slot, so it is not re-run and records `evidence.order_creation.rerun_skipped` instead. When the re-run does happen, both attempts appear in `test_orders[]` and `evidence.retry` names the first attempt's error and ref id. A failure that happened **after** the order was created (`created` — most often a receipt that did not render) is **never resubmitted**: the runner reloads that order's receipt and re-runs only the read-only checks, and `evidence.recovery` carries the original failure, the checks re-run, and whether it cleared. Read `evidence.order_creation` for two separate counts: `submissions_reserved` (platform-side creation slots charged to this path — reserved before a submit click, or charged for a hosted-checkout redirect where no submit click happens — which stand even when the create then failed) and `orders_confirmed_created` (creates the platform was observed to accept) — a spent slot with no confirmed order is the ambiguous case, not an order to reconcile. Recovery clears only on persisted evidence it re-read on that pass: a failed or absent order read-back stops it honestly rather than re-deciding against the original attempt's numbers. An outcome it cannot prove either way (`ambiguous` — an unusable read-back, a lost create response, a network-failed create, a 4xx after an earlier 2xx) stops the path and names the operator check instead of buying again. A pass that only came back after recovery is never indistinguishable from a first-attempt pass, and a failure that survives recovery still blocks.
+- Analytics correctness is two-phase in the same run: the campaign-root visit inventories declared providers/tags only, then the one canonical typed-card run proves Purchase for each topology-recognized receipt from the signals emitted across every page the path loaded after checkout, read after the full `--analytics-settle` window. The receipt qualifies the order; the journey is measured, because the SDK fires `dl_purchase` (and the outbound Purchase) on the first `?ref_id=` page — the upsell page when the funnel has one — and dedupes it on the receipt. It never places a second analytics order. The receipt document's own reading stays in evidence (`receipt_signals`, `fired_on`) as the diagnostic of which document fired.
+- A missing or topology-unrecognized receipt is `MANUAL_REVIEW`/`WARN`; a recognized receipt with no dataLayer, outbound Meta, or outbound GA4 Purchase is `FAIL`/`BLOCKER`. Capture, unreadable-page, and settle-deadline errors on a recognized receipt are explicit non-waivable blockers. The `analytics-correctness:purchase-fires` waiver applies only to a genuine recognized-receipt/no-signal failure, and is recorded with `campaigns-os qa waive --assertion analytics-correctness:purchase-fires --reason "<why>"` (tier `C`: it overwrites the assembly report and doctor output; the lane is scoped to that one assertion and every other is refused).
+- Keep QA in a tight sequence: install the Playwright browser, resolve topology, run browser QA plus typed-card proof with `--test-order common` by default. `qa run` has no permission flag: coverage is its only control. Test orders still land in the store as real orders that someone may have to cancel, so unless the operator has already said test orders are fine for this campaign, ask once, up front in your first turn with your other setup questions. When the operator has answered, at the start of this session or earlier in the build, follow that answer and do not pause QA to ask again. When nobody asked, ask once before the first test order rather than skip the question. Otherwise pause only for missing inputs, out-of-scope runtime pages that block checkout proof, or merchant-specific uncertainty.
+- Use `--browser` for rendered browser evidence. Browser QA must use the package-owned Playwright flow, not external agent/browser skills.
+- Saved-Map QA publishes to the QA portal under the existing consent and flag controls; report the portal link only when publication succeeds. Pass `--no-post-verdict` (or `--local-only`) to keep that verdict local. This stays tier `C`: served-page probes, requested orders, Run Telemetry and progress retain their own controls. See `docs/qa-and-test-orders.md` for the saved-Map publication policy.
+- Local-spec QA always keeps verdicts and progress local. `qa run` suppresses portal publication even with `--post-verdict`; `qa publish` refuses local-spec packets with `local_spec`. Report the local verdict/sidecar as evidence, never a dashboard link. A matching route cannot replace a matching `local_spec_id`, and QA refuses a foreign or stale local Assembly Report. Run Telemetry still follows its consent controls.
+- Browser QA must include checkout commerce geometry evidence, not just mount counts: express-wallet buttons rendered in the current browser, card/CVV hosted iframe host dimensions, iframe text-path height, and center alignment. Apple Pay is browser/device eligible, so record mounted wallet kinds instead of requiring Apple Pay in Chrome-only QA.
+- `qa resolve` accepts either the deploy host or the campaign-root URL; when a Build Packet carries `campaign.public_route_slug`, the runner resolves page URLs under that slug.
+- Routing meta tags must be checked in runtime form. `next-success-url`, `next-upsell-accept-url`, and `next-upsell-decline-url` should point at campaign-root paths such as `/campaign-slug/upsell/`, not source filenames or unrooted spec literals.
+- Upsell accept/decline routes may be SDK-bound controls rather than static `<a href>` links. Treat rendered `data-next-upsell-action="add"` and `data-next-upsell-action="skip"` controls as valid route evidence, then prove the path in the browser walkthrough.
+- When CampaignSpec declares checkout `exit_intent.enabled`, browser QA should trigger/open the pop, accept the mapped offer, and verify the code is active, totals/order summary reprice through SDK/API state, and `cart.hasCoupon("CODE")` presentation appears only after apply.
+- When CampaignSpec declares checkout `promo_code_input.enabled`, browser QA should enter the mapped `offer_code` and verify active-code state, repricing, discount row rendering, and conditional presentation. Missing promo-code input is a blocker when CampaignSpec, source design, or user instructions declared it.
+- A declared offer surface that the build never shipped is a blocker, not a silent pass. Every `--browser` run emits `browser-exit-intent-surface:<page>` and `browser-promo-code-surface:<page>` for each checkout page whose CampaignSpec declares the surface with `enabled: true`. Absent markup is `FAIL`/`BLOCKER`; a surface that renders but cannot be tied to the declared `offer_code` (or sits behind an unopened disclosure) is `MANUAL_REVIEW`/`WARN`. Exit-intent markup is looked for inside `<template>` content as well as the live document, because a correctly built pop lives nowhere else before it fires. A browser collector that threw mid-read `SKIP`s with the cause instead of blocking — it did not find nothing, it could not look.
+- Typed-card runs reconcile the persisted order against what the checkout displayed at submit, and report both halves separately from whether the order was created: `browser-order-display-parity:<plan>` fails as a blocker naming any `is_upsell: false` line whose package the checkout never rendered as selected (and any displayed package that was never charged), and `browser-order-total-parity:<plan>` fails as a blocker when the order's pre-upsell total disagrees with the displayed summary total. Both `SKIP` with a stated reason when the page gives them nothing to compare — a summary whose rows carry no `data-package-id`, or a checkout with no `[data-next-display="cart.total"]` surface. Read a skip as missing coverage, never as a pass.
+- Test orders must exercise the tested campaign through the Campaign Cart SDK, not a hand-built backend API request.
+- Use the canonical Playwright typed-card path: fill customer/shipping fields, type sandbox card data into the active hosted payment iframes, and click the real checkout submit button.
+- Use a shared safe inbox for typed-card test-order customer email when the operator provides one. Reusing one safe inbox keeps customer/user lists clean while still allowing notification delivery.
+- The legacy SDK test-mode event and direct API order path are diagnostic fallbacks only; do not use them as launch proof unless the operator explicitly asks for a diagnostic fallback.
+- Do not use `next.getCartData().cartLines` as cart-populated proof. That field currently stays empty; use typed-card order read-back for committed cart truth, the `cart:updated` payload `items` / `summary.lines` for in-page cart state, and rendered bundle DOM evidence for pre-commit selection.
+- After the base checkout test order redirects to upsell, click the rendered SDK upsell accept/decline controls to prove the live upsell path. Do not fabricate upsell lines with a direct API call.
+- Valid test-order modes are `common`, `checkout`, `accept`, `decline`, `both`, `full`, `off`, and explicit accept/decline paths such as `accept-decline-accept`.
+- Browser test orders default to `--max-test-orders 6` (an accidental-flood guard, not a permission gate). Planning happens before browser launch; when `full` exceeds the cap, use explicit sample paths or rerun with the exact larger cap printed by the command (a linear three-offer graph plans nine orders, so use `--max-test-orders 9`). That cap bounds planned paths; `--max-order-creations` bounds real order creations, defaults to the planned path count, and is reserved before each submit click. A run that hits it stops that path with an explicit budget assertion — read it as a safety stop, not as a checkout defect, and account for the orders already created before raising it.
+- The checkout a test order drives is the Checkout on the tested path: the page typed `checkout`, which takes payment, never the first page typed checkout. On a multi-step path (`select` → `checkout_step`… → `checkout`) the runner enters the cart on the select page (bundle cards plus a checkout button; `--select-package` clicks the matching `data-next-bundle-card`) or on the first step, submits each `checkout_step` form and asserts it lands on the step's declared next page (`checkout_step_submitted`), and submits the order only on the Checkout. A campaign may hold several Checkouts, one per split-test path.
+- Resolve paths from the selected checkout's `expected_next_url`, then follow reachable offer `expected_accept_url` / `expected_decline_url` edges. Treat only declared receipt/thank-you pages and genuine cross-origin handoffs as terminals; an absent same-origin route is unresolved, not an external handoff.
+- `--test-order common` is the default depth. When every actual terminal path fits under the flood cap (`--max-test-orders`, 6 by default), it runs them all and records effective depth `full`, reason `under_cap`. Above the cap it runs checkout, first-offer accept/decline and the shortest real receipt path, then adds the shortest path that clicks the decline on each offer or downsell page no planned path declines yet, until the cap is reached, and names any page left out. It never trims the checkout/accept/decline/receipt sample to fit a lower cap, and it must not synthesize a receipt path from offer count.
+- A page counts as exercised only when an order of its own funnel clicked its decline control. Reaching the page, or clicking only its accept, does not count. `browser-test-order:upsell-action-coverage` reports this for every page with upsell actions in every funnel of the run, and is `pass` or `warn` only when coverage is certain (orders placed, every offer page listed with its own unshared URL, every plan matched to one funnel, every click on a declared page of the order's funnel): `warn` names each page whose decline no order clicked and each funnel no order ran through, `pass` means every page's decline was clicked. Anything uncertain is `manual_review` naming the pages and why (`evidence.reason`, `evidence.not_assessable`, `evidence.uncertainty`), including a `--test-order off` run or attempts that all failed before an order reference. Read `warn` and `manual_review` as missing proof, not as a defect.
+- Use `full` for every actual terminal path. The graph walk is deterministic and cycle-safe; cycles, missing routes, unresolved same-origin targets, and reachable nonterminals block `full` before browser launch instead of producing phantom coverage.
+- A path with remaining actions may stop cleanly only at a terminal recognized in that selected topology. Missing accept/decline controls on any other page are blockers. A cross-origin handoff is a valid terminal navigation but is not receipt-rendering or persisted-receipt proof.
+- Keep multi-funnel and `tiers:common` / `tiers:full` plans isolated to each selected checkout's own funnel graph, tiers, and recognized terminals; never borrow an unrelated funnel's receipt page.
+- Accepted-upsell proof is valid only when the browser observes the order upsell API mutation and the final order evidence contains the selected upsell package. A checkout bump line marked `is_upsell` is not accepted-upsell proof.
+- Test orders are real orders in the store, but global test cards bypass the gateway: no charge, no transaction, and no merchant-specific sandbox routing to confirm. Localhost on any port is globally available as a Campaigns App Development domain and suppresses Campaigns analytics; non-localhost preview/production origins must be allowlisted for the campaign API key so the SDK loads — that is about SDK initialization, not test-order permission.
+- Launch readiness is separate from Campaigns OS proof. If QA passes on local/preview, still surface production storefront URL, live payment methods, shipping markets, legal/support URLs, analytics expectations, and merchant-side configuration as real-shopper readiness items before launch.
+- For multi-market campaigns, verify at least one non-default currency/country path: currency display, shipping method names/prices, available payment methods, and market-specific copy.
+- Treat missing deploy URL, missing polish status, or unresolved doctor blockers as launch blockers.
+- Report blockers, warnings, and residual risks.
+- When a readability warning appears, report it with its colours, ratio, requirement and pages. Offer the operator options inside the brand palette (a darker or lighter shade of the same hue, the palette's text colour, or a larger, bold label where the design allows). Do not recolour the merchant's design until the operator chooses. Accept a warning only with the refs, reason and name the operator gives you at the QC handoff.
+- At the end of QA, run `next` and present the QC handoff once. Ask the operator which open warnings to accept and why. Run `checkpoint accept` only with the refs, reason, and name the operator gave you in this conversation. Never write `qc_accepts`, `qc_results`, or QA verdict files by hand. The up-front test-order permission does not cover accepts.
+- QA follows build and polish; it does not edit campaign code.
+
+Canonical test-order flow:
+
+1. Open the deployed checkout URL in the package-owned Playwright browser session.
+2. Select the intended bundle/cart using the rendered campaign controls.
+3. Fill the checkout fields with QA customer/address data.
+4. Type the sandbox card into the active hosted payment iframes and click the real checkout submit button.
+5. Wait for the SDK to create the test order and redirect with `ref_id`.
+6. On upsell pages, click the actual accept or decline button for the target path.
+7. Verify receipt/order evidence and summarize order number, `ref_id`, selected cart, active vouchers/promo codes, discounts, upsell path, and line-item result.
+
+Do not use `campaigns-os qa run --legacy-api-test-order` as the canonical proof path. It bypasses the deployed campaign page and the SDK checkout/upsell surfaces; keep it only as a diagnostic fallback when explicitly requested.
