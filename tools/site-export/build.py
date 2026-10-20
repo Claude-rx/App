@@ -21,7 +21,25 @@ LOCALES = r'^/(?:de-de|en-de|en-nl|nl-nl)(?=/|$)'
 sess = requests.Session()
 sess.mount('https://', requests.adapters.HTTPAdapter(pool_maxsize=16, max_retries=3))
 
-def http(url):
+CACHE = os.path.join(HERE, 'cache')  # persistent download cache (git-ignored); delete it to force a fresh pull
+os.makedirs(CACHE, exist_ok=True)
+
+class Cached:
+    def __init__(self, content): self.content = content
+    @property
+    def text(self): return self.content.decode('utf-8', 'replace')
+
+def http(url, fresh=False):
+    """GET with retries. Assets are cached on disk; pages/JSON (fresh=True) always come from the live store."""
+    f = os.path.join(CACHE, hashlib.sha1(url.encode()).hexdigest())
+    if not fresh and os.path.exists(f): return Cached(open(f, 'rb').read())
+    r = _http(url)
+    if not fresh:
+        with open(f + '.tmp', 'wb') as fh: fh.write(r.content)
+        os.replace(f + '.tmp', f)
+    return r
+
+def _http(url):
     for attempt in range(4):
         try:
             r = sess.get(url, headers=UA, timeout=90)
@@ -33,15 +51,16 @@ def http(url):
             time.sleep(2 ** attempt)
 
 # ---------------------------------------------------------------- pages
+SKIP = {'/products/smooche-premium-shipping-protection'}  # checkout add-on, redirects to a collection
 EXTRA = ['/', '/blogs/news', '/cart', '/search', '/policies/terms-of-service', '/policies/privacy-policy',
          '/policies/refund-policy', '/policies/shipping-policy', '/policies/contact-information']
 
 def discover():
     paths = set(EXTRA)
-    for sm in re.findall(r'<loc>([^<]+)</loc>', http(BASE + 'sitemap.xml').text):
+    for sm in re.findall(r'<loc>([^<]+)</loc>', http(BASE + 'sitemap.xml', fresh=True).text):
         sm = sm.replace('&amp;', '&')
         if re.search(r'smooche\.com/sitemap_(products|pages|collections|articles)_', sm):
-            for loc in re.findall(r'<loc>([^<]+)</loc>', http(sm).text):
+            for loc in re.findall(r'<loc>([^<]+)</loc>', http(sm, fresh=True).text):
                 p = up.urlparse(loc).path
                 if p.startswith(('/products/', '/pages/', '/collections/', '/blogs/')): paths.add(p.rstrip('/'))
     return sorted(paths, key=lambda p: (p != '/', p))
@@ -63,6 +82,7 @@ VENDOR = {  # CDN prefix -> npm package dir
     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/': f'{NPM}/jquery-3.7.1/package/dist/',
     'https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/': f'{NPM}/js-cookie-3.0.1/package/',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/': f'{NPM}/fortawesome-fontawesome-free-6.6.0/package/',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/': f'{NPM}/fortawesome-fontawesome-free-6.6.0/package/',
 }
 EXT_DIR = {'.css': 'css', '.js': 'js', '.json': 'js', '.woff': 'fonts', '.woff2': 'fonts', '.ttf': 'fonts',
            '.otf': 'fonts', '.eot': 'fonts', '.mp4': 'media', '.webm': 'media', '.mov': 'media', '.m4v': 'media'}
@@ -73,7 +93,7 @@ cache, failed, by_base = {}, {}, {}
 def absu(u, base=BASE):
     u = u.strip().replace('&amp;', '&')
     if u.startswith('//'): u = 'https:' + u
-    return up.urljoin(base, u)
+    return re.sub(r'^https://(?:www\.)?smooche\.com//+', 'https://', up.urljoin(base, u))
 
 def local_name(url, kind=None):
     p = up.urlparse(url)
@@ -87,6 +107,7 @@ def local_name(url, kind=None):
 
 def get(url, kind=None):
     """Download url once into the shared store; returns site-root-relative path (or the url if it failed)."""
+    if re.match(r'^(?:\.\./|/)*assets/', url): return re.sub(r'^(?:\.\./|/)*', '', url)  # already local
     url = absu(url)
     for key, path in LOGO_MAP.items():
         if key in url: return path
@@ -159,7 +180,9 @@ def write_static():
     var u = typeof input === "string" ? input : (input && input.url) || "";
     if (/[?&]sections?=/.test(u)) return res("{}", "application/json");
     if (/\/cart(\/(add|change|update|clear))?(\.js)?(\?|$)/.test(u)) return res(JSON.stringify(cart), "application/json");
-    if (/\/(recommendations|search\/suggest)|[?&]section_id=/.test(u)) return res("", "text/html");
+    var rec = u.match(/\/recommendations\/products\?.*product_id=(\d+)/);
+    if (rec) return native((window.theme && theme.routes && theme.routes.root || "/") + "recommendations/" + rec[1] + ".html");
+    if (/\/search\/suggest|[?&]section_id=/.test(u)) return Promise.resolve(new Response("", {status: 404}));
     if (/browsing_context_suggestions\.json/.test(u)) return res("{}", "application/json");
     return native(input, init);
   };
@@ -188,12 +211,12 @@ DROP_INLINE = ('Shopify.MCP', 'webmcp', 'klaviyo', 'TriplePixel', 'TREKKIE', 'wp
                'Shopify.shop', 'eab_data', 'accessToken', 'storefrontAccessToken', 'shopifyDomain', 'n.q=o',
                'gtag(', 'fbq(', 'ttq.', 'dataLayer', 'hotjar', 'clarity', 'pintrk', 'snaptr', 'rdt(', 'intercom',
                'Intercom', 'attentive', 'postscript', 'okendo', 'yotpo', 'judge.me', 'gorgias', 'rebuy', 'checkoutchamp',
-               'thefrontrowhealth', 'nfcube', 'instafeed')
+               'thefrontrowhealth', 'nfcube', 'instafeed', 'iubenda.js')
 URL_ATTRS = ('src', 'data-src', 'poster', 'data-poster', 'data-bgset', 'data-bg', 'data-image', 'data-video-src',
              'data-mobile-src', 'data-desktop-src', 'data-zoom', 'data-zoom-src', 'data-large', 'href')
 MEDIA_RE = re.compile(r'\.(jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(\?|$)|/cdn/shop/(files|products|videos|t/)', re.I)
 CDN_MEDIA = re.compile(r'(?:https?:)?(?:\\?/){2}(?:smooche\.com|cdn\.shopify\.com)(?:\\?/)[^"\'\s<>)]+?'
-                       r'\.(?:jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(?:\?[^"\'\s<>)]*)?(?=["\'\s<>)])', re.I)
+                       r'\.(?:jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(?:[?%][^"\'\s<>)\\]*)?(?=["\'\s<>)\\])', re.I)
 
 def asset_urls(soup):
     urls = set()
@@ -243,7 +266,6 @@ def build_page(path, html, pages):
                 m.get('name', '').startswith(('twitter:', 'shopify', 'google-site', 'facebook', 'apple-itunes'))):
             m.decompose()
 
-    prefetch(asset_urls(soup))
     for l in soup.find_all('link'):
         rel = ' '.join(l.get('rel', []))
         href = l.get('href', '')
@@ -258,6 +280,22 @@ def build_page(path, html, pages):
         else:
             l.decompose()
 
+    localize_tree(soup, pre, page_file, pages)
+    snapshot_related(soup, pages)
+    embed_iubenda(soup)
+    for sel in ('#shopify-pc__banner', '#shopify-pc__prefs', '[id^=klaviyo]', '.intercom-lightweight-app',
+                'shopify-accelerated-checkout', 'shopify-accelerated-checkout-cart', '.shopify-payment-button'):
+        for e in soup.select(sel): e.decompose()
+    head = soup.head or soup
+    shim = soup.new_tag('script', src=L('assets/js/offline-shim.js'))
+    head.insert(0, shim)
+    if soup.title and soup.title.string:
+        soup.title.string = re.sub(r'(?i)smooche', 'SKINOFAB', soup.title.string)
+    return page_file, pre, str(soup)
+
+def localize_tree(soup, pre, page_file, pages):
+    def L(rel): return pre + rel if rel.startswith('assets/') else rel
+    prefetch(asset_urls(soup))
     for el in soup.find_all(True):
         if el.attrs is None: continue
         if el.name == 'img' and 'your-flame-image-url' in el.get('src', ''): el.decompose(); continue
@@ -275,15 +313,46 @@ def build_page(path, html, pages):
         if st.string and ('url(' in st.string or 'typekit' in st.string):
             st.string = process_css(st.string, BASE, pre)
 
-    for sel in ('#shopify-pc__banner', '#shopify-pc__prefs', '[id^=klaviyo]', '.intercom-lightweight-app',
-                'shopify-accelerated-checkout', 'shopify-accelerated-checkout-cart', '.shopify-payment-button'):
-        for e in soup.select(sel): e.decompose()
-    head = soup.head or soup
-    shim = soup.new_tag('script', src=L('assets/js/offline-shim.js'))
-    head.insert(0, shim)
-    if soup.title and soup.title.string:
-        soup.title.string = re.sub(r'(?i)smooche', 'SKINOFAB', soup.title.string)
-    return page_file, pre, str(soup)
+ROOT_FILES = {}  # site-root path -> content (product JSON, recommendation fragments); served at the site root
+
+def snapshot_related(soup, pages):
+    """PDP 'You may also like' is fetched at runtime from /recommendations/products: snapshot it from the live store."""
+    for sec in soup.select('[data-section-id][data-product-id][data-limit]'):
+        if not sec.select_one('[data-related-products]'): continue
+        sid, pid, lim = sec['data-section-id'], sec['data-product-id'], sec['data-limit']
+        key = f'recommendations/{pid}.html'
+        if key in ROOT_FILES: continue
+        try:
+            frag = BeautifulSoup(http(f'{BASE}recommendations/products?section_id={sid}&limit={lim}&product_id={pid}', fresh=True).text, 'lxml')
+        except Exception as e:
+            failed[f'recommendations:{pid}'] = str(e)[:80]; continue
+        for s in frag.find_all(['script', 'noscript', 'iframe']): s.decompose()
+        localize_tree(frag, '/', 'index.html', pages)
+        for a in frag.find_all('a', href=True):  # links were made relative to the root; make them root-absolute
+            if not a['href'].startswith(('#', 'http', 'mailto:', 'tel:', '/')): a['href'] = '/' + a['href']
+        body = frag.body
+        ROOT_FILES[key] = ''.join(str(c) for c in body.contents) if body else str(frag)
+
+def snapshot_products(handles):
+    """Theme JS fetches /products/<handle>.js (swatches, quick add, upsells): snapshot the product JSON."""
+    def one(h):
+        try: txt = http(f'{BASE}products/{h}.js', fresh=True).text
+        except Exception as e: failed[f'product-json:{h}'] = str(e)[:80]; return
+        ROOT_FILES[f'products/{h}.js'] = finalize(txt, '/')
+    with ThreadPoolExecutor(8) as ex: list(ex.map(one, sorted(handles)))
+
+def embed_iubenda(soup):
+    """Cookie policy is an iubenda embed (fetched client-side from iubenda.com): inline the policy text."""
+    for a in soup.select('a.iubenda-embed[href]'):
+        try:
+            doc = BeautifulSoup(http(a['href']).text, 'lxml')
+            body = doc.select_one('#wbars_all, .iub_container, .iub_content, #iub-legalDoc, main') or doc.body
+            for s in body.find_all(['script', 'style', 'link', 'iframe']): s.decompose()
+            box = soup.new_tag('div', attrs={'class': 'rte iubenda-inline'})
+            box.append(BeautifulSoup(str(body), 'html.parser'))
+            a.replace_with(box)
+        except Exception as e:
+            failed[f'iubenda:{a["href"]}'] = str(e)[:80]
 
 def map_link(h, page_file, pages):
     if h.startswith(('#', 'mailto:', 'tel:', 'javascript:')): return h
@@ -297,6 +366,21 @@ def map_link(h, page_file, pages):
         return rel + (f'#{u.fragment}' if u.fragment else '')
     return '#'
 
+def capped(u):
+    """Originals referenced from JSON can be 4000px+; Shopify's image CDN resizes on request."""
+    if re.search(r'\.(jpe?g|png|webp|gif)(\?|$)', u, re.I) and 'width=' not in u and re.search(r'/cdn/shop/|cdn\.shopify\.com', u):
+        return u + ('&' if '?' in u else '?') + 'width=1600'
+    return u
+
+def fix_dead_scrollbars(html):
+    """Some page-builder sliders point Swiper at a scrollbar element that isn't in the page (same bug live):
+    Swiper then throws during init. Disable just that scrollbar."""
+    def rep(m):
+        cls = m.group(2).lstrip('.')
+        if re.search(r'class="[^"]*(?<![\w-])' + re.escape(cls) + r'(?![\w-])', html): return m.group(0)
+        return m.group(1) + 'enabled: false, el: null'
+    return re.sub(r"(scrollbar:\s*\{[^}]*?)el:\s*['\"](\.[\w-]+)['\"]", rep, html)
+
 def finalize(html, pre):
     """Localize media URLs embedded in JSON/JS blobs (product galleries, variant images) and stray logo refs."""
     def rep(m):
@@ -304,30 +388,40 @@ def finalize(html, pre):
         u = absu(raw.replace('\\/', '/'))
         for key, path in LOGO_MAP.items():
             if key in u: return pre + path
-        hit = cache.get(u) or by_base.get(up.urlparse(u).path)
-        if not hit: return raw
+        hit = cache.get(u) or by_base.get(up.urlparse(u).path) or get(capped(u))
+        if not hit.startswith('assets/'): return raw
         return (pre + hit).replace('/', '\\/') if '\\/' in raw else pre + hit
     return CDN_MEDIA.sub(rep, html)
 
 def main():
     write_static()
     pages = discover()
+    pages = [p for p in pages if p not in SKIP]
     if ONLY: pages = [p for p in pages if p in ONLY or p == '/']
     pageset = set(pages)
     print(f'{len(pages)} pages')
     built, errors = [], {}
     for i, path in enumerate(pages, 1):
         try:
-            html = http(BASE.rstrip('/') + path).text
+            html = http(BASE.rstrip('/') + path, fresh=True).text
             page_file, pre, out = build_page(path, html, pageset)
             built.append((page_file, pre, out))
             print(f'[{i}/{len(pages)}] {path} -> {page_file}', flush=True)
         except Exception as e:
             errors[path] = repr(e)[:120]; print(f'[{i}/{len(pages)}] {path} FAILED {e}', flush=True)
         if i == 1: write_font_fallback()
+    handles = {p.split('/')[-1] for p in pages if p.startswith('/products/')}
+    for out in [b[2] for b in built] + list(ROOT_FILES.values()):
+        handles.update(re.findall(r'data-[a-z-]*handle="([a-z0-9][a-z0-9-]*)"', out))
+        handles.update(re.findall(r'products/([a-z0-9][a-z0-9-]*)(?:\.js|\.html|")', out))
+    snapshot_products(handles)
     for page_file, pre, out in built:
         os.makedirs(os.path.dirname(f'{OUT}/{page_file}'), exist_ok=True)
-        with open(f'{OUT}/{page_file}', 'w', encoding='utf-8') as f: f.write(finalize(out, pre))
+        with open(f'{OUT}/{page_file}', 'w', encoding='utf-8') as f: f.write(fix_dead_scrollbars(finalize(out, pre)))
+    for rel, txt in ROOT_FILES.items():
+        if rel.endswith('.html'): txt = finalize(txt, '/')
+        os.makedirs(os.path.dirname(f'{OUT}/{rel}'), exist_ok=True)
+        with open(f'{OUT}/{rel}', 'w', encoding='utf-8') as f: f.write(txt)
     json.dump({'pages': [b[0] for b in built], 'page_errors': errors, 'asset_failures': failed},
               open(f'{OUT}/export-manifest.json', 'w'), indent=1)
     print(f'pages {len(built)}  page errors {len(errors)}  assets {sum(1 for v in cache.values() if v)}  '

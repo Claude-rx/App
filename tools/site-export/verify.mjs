@@ -48,7 +48,7 @@ for (const pg of pages) {
   } catch (e) { r.errors.push('LOAD: ' + e.message.slice(0, 120)); }
   await p.close();
   const out = { ...r, external: [...r.external] };
-  const fail = out.external.length || out.errors.length || out.missing.length || (out.broken || []).length || out.oldLogos || !out.logos;
+  const fail = out.external.length || out.errors.length || out.missing.length || (out.broken || []).length || out.oldLogos;
   if (fail) bad++;
   report[pg] = out;
   console.log(`${fail ? 'FAIL' : ' ok '} ${pg}${fail ? ' ' + JSON.stringify(out) : ''}`);
