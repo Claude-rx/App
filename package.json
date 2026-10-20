@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "description": "Next Commerce agent workspace",
+  "scripts": {
+    "nc": "campaigns-os",
+    "nc:login": "campaigns-os login",
+    "nc:status": "campaigns-os tooling status --platform claude",
+    "skills:update": "scripts/update-nextcommerce-skills.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Claude-rx/App.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Claude-rx/App/issues"
+  },
+  "homepage": "https://github.com/Claude-rx/App#readme",
+  "devDependencies": {
+    "@nextcommerce/campaigns-os": "1.60.0"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

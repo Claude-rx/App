@@ -18,11 +18,34 @@ Store-ops skills need a store Admin API token; they prompt for it — never comm
 **Update:** `scripts/update-nextcommerce-skills.sh [campaigns-os-version]` (needs git, npm, rsync).
 It refuses to overwrite locally edited skills; review, then rerun the upstream installer with `--force`.
 
-### MCP server — `.mcp.json`
+### CLI — `@nextcommerce/campaigns-os` (pinned 1.60.0, devDependency)
 
-`nextcommerce` → `https://mcp.nextcommerce.com/mcp` (HTTP, OAuth). Approve it on first launch, then
-authenticate via `/mcp`. Note: Next Commerce documents this gateway as an **operator-admitted private pilot** —
-your store must be admitted for sign-in to succeed.
+Next Commerce recommends driving everything headless via the CLI + APIs (the MCP gateway is experimental and adds nothing).
 
-In Claude Code cloud sessions, add `mcp.nextcommerce.com` (and `*.29next.store` for store API calls) to the
-environment's **Allowed domains**.
+```bash
+npm ci                                              # installs the pinned CLI
+npm run nc:status                                   # READY check: pin, skills, login
+npx --no-install campaigns-os login --store <sub>   # <sub>.29next.store — device-code browser sign-in
+```
+
+- `login` is optional: it only lets `spec derive --from-store` fill the Store Profile (`campaign.store_*`).
+  Packages, offers and shipping are read with the campaign's **public Campaigns API key**.
+- Break-glass alternative: an Admin API token (`store:read`, `content:read`) in an env var, passed as
+  `--store-token-source env:<VAR>` — never on the command line, never committed.
+- Keep `--no-install` so npx can't fetch an unpinned package.
+
+### What stays in the Dashboard
+
+Campaigns can be driven 100% by API once products exist (Shopify sync, or create products via the Admin API).
+Payment gateways, users and general settings still need **Dashboard → Settings**
+([general settings & branding](https://docs.nextcommerce.com/docs/start-here/get-started/general-settings-and-branding)).
+
+### Agent docs
+
+- https://campaigns.nextcommerce.com/ — campaign build guide (point your agent here)
+- https://developers.nextcommerce.com/ — all APIs, agent-ready
+
+### Cloud sessions
+
+Add these to the environment's **Allowed domains**: `*.nextcommerce.com`, `*.29next.store`
+(npm is allowed by default).
