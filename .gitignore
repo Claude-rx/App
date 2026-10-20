@@ -3,3 +3,4 @@ tools/site-export/capture/
 skinofab-home.zip
 tools/site-export/cache/
 skinofab-site*.zip
+.capture-tmp/

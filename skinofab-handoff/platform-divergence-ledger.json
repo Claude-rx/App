@@ -1,0 +1,63 @@
+{
+  "schema_version": "next-theme-dev/handoff-divergence/v1",
+  "entries": [
+    {
+      "divergence_id": "social-proof-claims",
+      "kind": "claim",
+      "surface": "social proof and performance claims",
+      "route_ids": [
+        "home",
+        "pdp",
+        "collection"
+      ],
+      "section_ids": [
+        "home.reviews",
+        "home.experts",
+        "pdp.kopstorm_results_nnthgp",
+        "collection.section_icons_row_cudwgr"
+      ],
+      "capture_ids": [
+        "home-desktop-static",
+        "pdp-desktop-static",
+        "collection-desktop-static"
+      ],
+      "source_expectation": "The source states customer counts, ratings, review counts, expert endorsements and results.",
+      "platform_behavior": "NEXT has no evidence for these numbers; they are the merchant's own claims.",
+      "decision": "source-wins-with-guardrails",
+      "implementation_guardrail": "Reuse only with the operator's approval that SKINOFAB can substantiate each claim.",
+      "status": "approved",
+      "approved_by": "operator (zouhairkhatem@gmail.com), 2026-10-20: \"Keep them, I approve\"",
+      "target_evidence": {
+        "origin": "prior-input",
+        "summary": "Operator's word in this session: SKINOFAB can substantiate the claims; promos will get matching NEXT Offers; prices come from the NEXT catalog."
+      }
+    },
+    {
+      "divergence_id": "promotions-need-offers",
+      "kind": "commerce",
+      "surface": "promotional / savings copy",
+      "route_ids": [
+        "home",
+        "collection"
+      ],
+      "section_ids": [
+        "home.bundles",
+        "collection.main"
+      ],
+      "capture_ids": [
+        "home-desktop-static",
+        "collection-desktop-static"
+      ],
+      "source_expectation": "The source advertises sales, savings percentages and free gifts.",
+      "platform_behavior": "NEXT applies discounts only through configured Offers or vouchers; none exist yet.",
+      "decision": "source-wins-with-guardrails",
+      "implementation_guardrail": "Keep the copy in a Theme setting so it can change with the Offer; configure the matching Offer in Dashboard > Marketing > Offers before publishing.",
+      "status": "approved",
+      "approved_by": "operator (zouhairkhatem@gmail.com), 2026-10-20: \"Keep them, I approve\"",
+      "target_evidence": {
+        "origin": "prior-input",
+        "summary": "Operator's word in this session: SKINOFAB can substantiate the claims; promos will get matching NEXT Offers; prices come from the NEXT catalog."
+      }
+    }
+  ]
+}

@@ -50,12 +50,31 @@ def shrink(path):
         print('skip', path, e)
     return 0, None, None
 
+SIGS = ((b'\xff\xd8\xff', '.jpg'), (b'\x89PNG', '.png'), (b'GIF8', '.gif'))
+
+def true_ext(path):
+    head = open(path, 'rb').read(12)
+    if head[:4] == b'RIFF' and head[8:12] == b'WEBP': return '.webp'
+    return next((e for sig, e in SIGS if head.startswith(sig)), None)
+
+# 1) files whose content doesn't match their extension (CDNs negotiate formats): rename to the real one
+mislabeled = {}
+for d, _, fs in os.walk(os.path.join(ROOT, 'assets', 'img')):
+    for f in fs:
+        p = os.path.join(d, f); stem, ext = os.path.splitext(f)
+        real = true_ext(p)
+        if real and ext.lower() not in (real, '.jpeg' if real == '.jpg' else real):
+            new = stem + real
+            os.replace(p, os.path.join(d, new)); mislabeled[f] = new
+
 files = [os.path.join(d, f) for d, _, fs in os.walk(os.path.join(ROOT, 'assets', 'img')) for f in fs
          if os.path.getsize(os.path.join(d, f)) > MIN_BYTES]
 with ProcessPoolExecutor() as ex:
     results = list(ex.map(shrink, files, chunksize=4))
 saved = sum(r[0] for r in results)
 renames = {a: b for _, a, b in results if a}
+for a, b in mislabeled.items():  # chain: a mislabeled file may also have been converted
+    renames[a] = renames.get(b, b)
 if renames:
     import re
     pat = re.compile('|'.join(re.escape(a) for a in sorted(renames, key=len, reverse=True)))
@@ -66,4 +85,4 @@ if renames:
                 txt = open(p, encoding='utf-8', errors='surrogateescape').read()
                 new = pat.sub(lambda m: renames[m.group(0)], txt)
                 if new != txt: open(p, 'w', encoding='utf-8', errors='surrogateescape').write(new)
-print(f'optimized {len(files)} images ({len(renames)} PNG->JPEG), saved {saved / 1e6:.0f} MB')
+print(f'optimized {len(files)} images ({len(renames) - len(mislabeled)} PNG->JPEG, {len(mislabeled)} mislabeled fixed), saved {saved / 1e6:.0f} MB')
