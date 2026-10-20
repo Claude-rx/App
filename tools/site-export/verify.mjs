@@ -1,0 +1,21 @@
+import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';
+import http from 'http'; import fs from 'fs'; import path from 'path';
+const ROOT = process.argv[2], SHOT = process.argv[3];
+const types = { '.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif','.woff2':'font/woff2','.woff':'font/woff','.ttf':'font/ttf','.mp4':'video/mp4' };
+const srv = http.createServer((q, r) => { const f = path.join(ROOT, decodeURIComponent(q.url.split('?')[0]) === '/' ? 'index.html' : decodeURIComponent(q.url.split('?')[0]));
+  fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': types[path.extname(f).toLowerCase()] || 'application/octet-stream' }); r.end(d); }); }).listen(8765);
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const vp = process.argv[4] === 'mobile' ? { width: 390, height: 844 } : { width: 1440, height: 900 };
+const p = await b.newPage({ viewport: vp });
+const external = new Set(), errors = [], missing = [];
+await p.route('**/*', rt => { const u = rt.request().url(); if (u.startsWith('http://localhost:8765')) return rt.continue(); external.add(u.split('?')[0].slice(0,100)); return rt.abort(); });
+p.on('pageerror', e => errors.push(e.message.slice(0, 160)));
+p.on('response', r => { if (r.status() === 404) missing.push(r.url()); });
+await p.goto('http://localhost:8765/', { waitUntil: 'networkidle' });
+for (let y = 0; y < 30; y++) { await p.mouse.wheel(0, 700); await p.waitForTimeout(250); }
+await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(2000);
+const broken = await p.evaluate(() => [...document.images].filter(i => i.complete && i.naturalWidth === 0 && i.getAttribute('src')).map(i => i.getAttribute('src').slice(0, 90)));
+const logos = await p.evaluate(() => [...document.images].filter(i => /skinofab/.test(i.currentSrc)).length);
+await p.screenshot({ path: SHOT, fullPage: true });
+console.log(JSON.stringify({ external: [...external], errors, missing, broken, logos }, null, 1));
+await b.close(); srv.close();
