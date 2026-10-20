@@ -5,7 +5,7 @@ usage: python3 -I build.py <out_dir> <logo.svg> [--only /path,/path]
 Pipeline per page: fetch server HTML -> strip trackers/apps -> localize every image, video, font, stylesheet and theme
 script into a shared assets/ store -> swap the logo -> rewrite internal links to the exported .html files.
 """
-import sys, os, re, json, hashlib, shutil, subprocess, time, urllib.parse as up
+import sys, os, re, json, hashlib, shutil, subprocess, threading, time, urllib.parse as up
 from concurrent.futures import ThreadPoolExecutor
 import requests
 from bs4 import BeautifulSoup, Comment
@@ -35,8 +35,9 @@ def http(url, fresh=False):
     if not fresh and os.path.exists(f): return Cached(open(f, 'rb').read())
     r = _http(url)
     if not fresh:
-        with open(f + '.tmp', 'wb') as fh: fh.write(r.content)
-        os.replace(f + '.tmp', f)
+        tmp = f'{f}.{os.getpid()}.{threading.get_ident()}.tmp'
+        with open(tmp, 'wb') as fh: fh.write(r.content)
+        os.replace(tmp, f)
     return r
 
 def _http(url):
@@ -97,7 +98,7 @@ def absu(u, base=BASE):
 
 def local_name(url, kind=None):
     p = up.urlparse(url)
-    stem, ext = os.path.splitext(os.path.basename(p.path) or 'file')
+    stem, ext = os.path.splitext(up.unquote(up.unquote(os.path.basename(p.path))).split('?')[0] or 'file')
     ext = '.css' if kind == 'css' else ext.lower()
     q = up.parse_qs(p.query)
     tag = f"-{q['width'][0]}w" if 'width' in q else ''
@@ -109,6 +110,7 @@ def get(url, kind=None):
     """Download url once into the shared store; returns site-root-relative path (or the url if it failed)."""
     if re.match(r'^(?:\.\./|/)*assets/', url): return re.sub(r'^(?:\.\./|/)*', '', url)  # already local
     url = absu(url)
+    if re.match(r'https://(?:www\.)?smooche\.com/assets/', url): return url.split('.com/', 1)[1]  # already local
     for key, path in LOGO_MAP.items():
         if key in url: return path
     if url in cache: return cache[url] or url
@@ -181,7 +183,10 @@ def write_static():
     if (/[?&]sections?=/.test(u)) return res("{}", "application/json");
     if (/\/cart(\/(add|change|update|clear))?(\.js)?(\?|$)/.test(u)) return res(JSON.stringify(cart), "application/json");
     var rec = u.match(/\/recommendations\/products\?.*product_id=(\d+)/);
-    if (rec) return native((window.theme && theme.routes && theme.routes.root || "/") + "recommendations/" + rec[1] + ".html");
+    if (rec) {
+      var intent = (u.match(/[?&]intent=(\w+)/) || [])[1];
+      return native((window.theme && theme.routes && theme.routes.root || "/") + "recommendations/" + rec[1] + (intent ? "-" + intent : "") + ".html");
+    }
     if (/\/search\/suggest|[?&]section_id=/.test(u)) return Promise.resolve(new Response("", {status: 404}));
     if (/browsing_context_suggestions\.json/.test(u)) return res("{}", "application/json");
     return native(input, init);
@@ -214,7 +219,7 @@ DROP_INLINE = ('Shopify.MCP', 'webmcp', 'klaviyo', 'TriplePixel', 'TREKKIE', 'wp
                'thefrontrowhealth', 'nfcube', 'instafeed', 'iubenda.js')
 URL_ATTRS = ('src', 'data-src', 'poster', 'data-poster', 'data-bgset', 'data-bg', 'data-image', 'data-video-src',
              'data-mobile-src', 'data-desktop-src', 'data-zoom', 'data-zoom-src', 'data-large', 'href')
-MEDIA_RE = re.compile(r'\.(jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(\?|$)|/cdn/shop/(files|products|videos|t/)', re.I)
+MEDIA_RE = re.compile(r'\.(jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(\?|%|$)|/cdn/shop/(files|products|videos|t/)', re.I)
 CDN_MEDIA = re.compile(r'(?:https?:)?(?:\\?/){2}(?:smooche\.com|cdn\.shopify\.com)(?:\\?/)[^"\'\s<>)]+?'
                        r'\.(?:jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(?:[?%][^"\'\s<>)\\]*)?(?=["\'\s<>)\\])', re.I)
 
@@ -317,13 +322,20 @@ ROOT_FILES = {}  # site-root path -> content (product JSON, recommendation fragm
 
 def snapshot_related(soup, pages):
     """PDP 'You may also like' is fetched at runtime from /recommendations/products: snapshot it from the live store."""
+    queries = []
     for sec in soup.select('[data-section-id][data-product-id][data-limit]'):
-        if not sec.select_one('[data-related-products]'): continue
-        sid, pid, lim = sec['data-section-id'], sec['data-product-id'], sec['data-limit']
-        key = f'recommendations/{pid}.html'
+        if sec.select_one('[data-related-products]'):
+            queries.append(f"section_id={sec['data-section-id']}&limit={sec['data-limit']}&product_id={sec['data-product-id']}")
+    for m in re.finditer(r'/recommendations/products\?([^"\'\s<>]+)', str(soup)):  # complementary blocks etc.
+        queries.append(m.group(1).replace('&amp;', '&'))
+    for q in queries:
+        qs = up.parse_qs(q)
+        pid, intent = qs.get('product_id', [''])[0], qs.get('intent', [''])[0]
+        if not pid: continue
+        key = f'recommendations/{pid}{"-" + intent if intent else ""}.html'
         if key in ROOT_FILES: continue
         try:
-            frag = BeautifulSoup(http(f'{BASE}recommendations/products?section_id={sid}&limit={lim}&product_id={pid}', fresh=True).text, 'lxml')
+            frag = BeautifulSoup(http(f'{BASE}recommendations/products?{q}', fresh=True).text, 'lxml')
         except Exception as e:
             failed[f'recommendations:{pid}'] = str(e)[:80]; continue
         for s in frag.find_all(['script', 'noscript', 'iframe']): s.decompose()
