@@ -24,7 +24,7 @@ def pad_left(im, w, h):
     narrower render keeps the whole subject instead of losing the top of the face to a crop."""
     im = im.resize((round(im.width * h / im.height), h), Image.LANCZOS)
     if im.width >= w: return fit(im, w, h)
-    canvas = Image.new('RGB', (w, h))
+    canvas = Image.new(im.mode, (w, h))
     edge = im.crop((0, 0, max(4, im.width // 40), h)).resize((1, h), Image.LANCZOS)   # per-row background colour
     canvas.paste(edge.resize((w - im.width + 2, h)), (0, 0))
     canvas.paste(im, (w - im.width, 0))
@@ -41,7 +41,8 @@ for job in JOBS:
     if job.get('n') is None: continue
     src = GEN / f"{job['key']}.png"
     if not src.exists(): print('missing', src.name); continue
-    im = Image.open(src).convert('RGB')
+    im = Image.open(src)
+    im = im.convert('RGBA') if 'A' in im.getbands() else im.convert('RGB')   # cut-outs keep their transparency
     if job.get('rotate'): im = im.rotate(90, expand=True)
     for v in GROUPS[job['n']]['variants']:
         name = BRAND.sub(brand, v)
@@ -49,7 +50,7 @@ for job in JOBS:
         if not target.exists(): continue
         with Image.open(target) as old: fmt, size = old.format, old.size
         out = (pad_left if job.get('fit') == 'pad-left' else fit)(im, *size); dst = OUT / name
-        if fmt == 'JPEG': out.save(dst, 'JPEG', quality=88, optimize=True, progressive=True)
+        if fmt == 'JPEG': out.convert('RGB').save(dst, 'JPEG', quality=88, optimize=True, progressive=True)
         elif fmt == 'PNG': out.save(dst, 'PNG', optimize=True)
         elif fmt == 'WEBP': out.save(dst, 'WEBP', quality=88, method=5)
         elif fmt == 'AVIF': out.save(dst, 'AVIF', quality=80)
