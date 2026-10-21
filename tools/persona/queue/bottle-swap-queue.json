@@ -1,0 +1,399 @@
+{
+ "how_to_run": "Needs a working image-edit route: the Higgsfield studio storage (Vercel Blob) is suspended, so 4SToken results \"cannot be found in the library\", and the Higgsfield API has 0.03 credits (21 Oct 2026). Per job: edit source_url with refs + prompt (nano-banana-pro or gpt-image-2), save as <key>.png in a folder, review the bottle against brand/adaptive-peptide-foundation/01-front.png, then: images.py <jobs> groups.json <folder> rel3 <out>, copy <out> over the persona image set and re-run apply_persona.py -> fresh_alpha_names.py -> apf_pages.py --classic -> build.",
+ "done_locally": [
+  374,
+  270
+ ],
+ "jobs": [
+  {
+   "n": 577,
+   "key": "swap-577",
+   "pages": [
+    "index.html"
+   ],
+   "source": "makeup-artist-foundation-review-poster-720w-68c7bf.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/makeup-artist-foundation-review-poster-720w-68c7bf.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 596,
+   "key": "swap-596",
+   "pages": [
+    "index.html"
+   ],
+   "source": "phenomenon-03-20261017-poster-780w-f7e445.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/phenomenon-03-20261017-poster-780w-f7e445.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 597,
+   "key": "swap-597",
+   "pages": [
+    "index.html"
+   ],
+   "source": "phenomenon-04-20261017-poster-780w-9f10e8.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/phenomenon-04-20261017-poster-780w-9f10e8.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 598,
+   "key": "swap-598",
+   "pages": [
+    "index.html"
+   ],
+   "source": "phenomenon-05-20261017-poster-780w-7f3b3b.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/phenomenon-05-20261017-poster-780w-7f3b3b.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 600,
+   "key": "swap-600",
+   "pages": [
+    "index.html"
+   ],
+   "source": "phenomenon-07-20261017-poster-780w-5b663f.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/phenomenon-07-20261017-poster-780w-5b663f.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 665,
+   "key": "swap-665",
+   "pages": [
+    "index.html"
+   ],
+   "source": "skinofab-color-changing-foundation-hero-4096w-p28498b.jpg",
+   "source_url": null,
+   "note": "not on the CDN under this name: push the file as skf-src-<n>.jpg first",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 666,
+   "key": "swap-666",
+   "pages": [
+    "index.html"
+   ],
+   "source": "skinofab-color-changing-foundation-model-1460w-pd0e41a.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/skinofab-color-changing-foundation-model-1460w-pd0e41a.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 667,
+   "key": "swap-667",
+   "pages": [
+    "index.html"
+   ],
+   "source": "skinofab-color-changing-foundation-model-mobile-660w-p4e9bec.png",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/skinofab-color-changing-foundation-model-mobile-660w-p4e9bec.png",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 671,
+   "key": "swap-671",
+   "pages": [
+    "index.html"
+   ],
+   "source": "skinofab-foundation-mega-pack-bundle-710w-6e7d5c.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/skinofab-foundation-mega-pack-bundle-710w-6e7d5c.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 673,
+   "key": "swap-673",
+   "pages": [
+    "index.html"
+   ],
+   "source": "skinofab-korean-formulas-foundation-application-2190w-a020488.png",
+   "source_url": null,
+   "note": "not on the CDN under this name: push the file as skf-src-<n>.jpg first",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 674,
+   "key": "swap-674",
+   "pages": [
+    "index.html"
+   ],
+   "source": "skinofab-korean-formulas-foundation-application-mobile-940w-a41f0f7.png",
+   "source_url": null,
+   "note": "not on the CDN under this name: push the file as skf-src-<n>.jpg first",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 709,
+   "key": "swap-709",
+   "pages": [
+    "index.html"
+   ],
+   "source": "softer-lines-foundation-review-poster-720w-645465.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/softer-lines-foundation-review-poster-720w-645465.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 49,
+   "key": "swap-49",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "1_b944fd48-e480-4f21-abb9-4fb17f00599b_800x800-82f489.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/1_b944fd48-e480-4f21-abb9-4fb17f00599b_800x800-82f489.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 61,
+   "key": "swap-61",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-1350w-pff78b5.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-1350w-pff78b5.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 63,
+   "key": "swap-63",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1350w-p4aed38.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1350w-p4aed38.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 64,
+   "key": "swap-64",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "24_e2816f7f-0236-4d48-8794-a7b92c9b627d-1350w-p44a8e8.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-1350w-p44a8e8.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 71,
+   "key": "swap-71",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "2_221c6006-6944-4b6f-a085-220e11ef092d-1080w-993850.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/2_221c6006-6944-4b6f-a085-220e11ef092d-1080w-993850.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 84,
+   "key": "swap-84",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "2_9c7e1c85-81c7-4ffb-8ccb-a246f8658467_800x800-d920b1.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/2_9c7e1c85-81c7-4ffb-8ccb-a246f8658467_800x800-d920b1.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 87,
+   "key": "swap-87",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "2_babe5169-1ca7-4783-a76c-7c65766c2bb1_1500x1500-p5dff2c.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/2_babe5169-1ca7-4783-a76c-7c65766c2bb1_1500x1500-p5dff2c.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 121,
+   "key": "swap-121",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "3_bd0bdd54-c308-410a-b798-8a8fea628997_800x800-6d4bad.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/3_bd0bdd54-c308-410a-b798-8a8fea628997_800x800-6d4bad.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 142,
+   "key": "swap-142",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "4_80c5ec42-b5e2-4ec4-953b-4ae927043b20_800x800-f6f5f8.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/4_80c5ec42-b5e2-4ec4-953b-4ae927043b20_800x800-f6f5f8.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 166,
+   "key": "swap-166",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "5_9146d931-fc02-41ef-80bc-663d593c60b8_800x800-970513.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/5_9146d931-fc02-41ef-80bc-663d593c60b8_800x800-970513.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 184,
+   "key": "swap-184",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "6_1a1cbb1e-0e99-4eb2-a8c6-f1e23de7b15c_800x800-b8bafc.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/6_1a1cbb1e-0e99-4eb2-a8c6-f1e23de7b15c_800x800-b8bafc.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 227,
+   "key": "swap-227",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "8_87ca3242-b11c-40e2-beab-fb1aa34022a6-1080w-p6ce9e3.png",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-1080w-p6ce9e3.png",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 272,
+   "key": "swap-272",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "ColorChangingFoundation-Productimagesphotos_1_87f31fb4-5811--1080w-5cf198.png",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/ColorChangingFoundation-Productimagesphotos_1_87f31fb4-5811--1080w-5cf198.png",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  },
+  {
+   "n": 276,
+   "key": "swap-276",
+   "pages": [
+    "products/color-changing-foundation.html"
+   ],
+   "source": "ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-1350w-pc6d1ae.jpg",
+   "source_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-1350w-pc6d1ae.jpg",
+   "note": null,
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg"
+   ],
+   "prompt": "Edit the first image only. Keep the exact same photo: the same person (face, skin, hair, age), hands, fingers, pose, crop, framing, camera angle, lighting, shadows, background and any text or graphics, unchanged. Change ONLY the black foundation bottle (and its cap if one is shown): replace it with the exact product in the other reference images, at the same position, angle and size, held the same way. The product is a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring; SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom) and under it only the small white lines ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz. No other text or logo on the bottle. Photorealistic, reflections and grip matching the scene."
+  }
+ ]
+}

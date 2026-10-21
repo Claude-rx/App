@@ -1,7 +1,11 @@
 """Focus the export on the Adaptive Peptide Foundation: single-product homepage, 20-step product page, focused menus.
 
-usage: python3 -I apf_pages.py <export_dir> <images.json>
+usage: python3 -I apf_pages.py <export_dir> <images.json> [--classic]
 Runs in place on the persona export (after apply_persona.py), before the theme build.
+
+--classic keeps the persona design as it was (homepage, product page, menus, cart drawer, gallery and images) and only
+applies what the subscription-only offer and the product name need: the plan price under the title (no compare-at),
+no pay-in-4 line, the "Start my monthly refill" button, and the visible product name.
 
 - every page: desktop + mobile menus and the footer "Shop" column point only at the foundation; the product
   name becomes "Adaptive Peptide Foundation" in visible text (URLs and handles stay)
@@ -19,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import apf_copy
 
 EXP, IMAGES = Path(sys.argv[1]), json.load(open(sys.argv[2]))
+CLASSIC = '--classic' in sys.argv[3:]
 IMG = EXP / 'assets' / 'img'
 PDP = 'products/color-changing-foundation.html'
 missing, removed = [], []
@@ -204,9 +209,9 @@ def homepage(t, imgs):
     body = apf_copy.home_sections(PDP)
     return t[:s] + '<section class="shopify-section" id="shopify-section-apf-home">' + fill(body, imgs, '') + '</section>' + t[e:]
 
-def product_page(t, imgs):
-    for old, new in apf_copy.BUYBOX: t = text_rule(t, old, new, 'pdp buy box')
-    t = rebuild_gallery(t, imgs)
+def subscription_buybox(t):
+    """What the monthly plan needs in the design's buy box, whichever design version is live."""
+    t = text_rule(t, '>Add to Cart<', '>Start my monthly refill<', 'pdp button')
     # the price under the title is the plan price (rendered by the theme); the design script must not rewrite it
     # from the variant data (the $39 list price), so its hooks come off
     m = re.search(r'<div class="product__block product__price-and-badge"[^>]*>', t)
@@ -222,6 +227,13 @@ def product_page(t, imgs):
     # "or 4 interest-free payments of ..." does not apply to a monthly plan
     t, n = re.subn(r'<skinofab-installments\b.*?</skinofab-installments>\s*(?:<script[^>]*skinofab-installments[^>]*></script>)?', '', t, flags=re.S)
     if not n: missing.append(('pdp', 'installments'))
+    return t
+
+def product_page(t, imgs):
+    for old, new in apf_copy.BUYBOX:
+        if old != '>Add to Cart<': t = text_rule(t, old, new, 'pdp buy box')
+    t = rebuild_gallery(t, imgs)
+    t = subscription_buybox(t)
     # attributes can come before class, so match class anywhere in the opener
     for marker, opener in (('Selling out fast', r'<div\b[^>]*\bclass="product__block"[^>]*>'),
                            ('12-week customer survey', r'<div\b[^>]*\bclass="product__block customer-survey-results"[^>]*>')):
@@ -236,12 +248,17 @@ def product_page(t, imgs):
     return t[:s] + '<section class="shopify-section" id="shopify-section-apf-pdp">' + fill(apf_copy.pdp_sections(), imgs, '../') + '</section>' + t[e:]
 
 def main():
-    imgs = make_images()
+    imgs = {} if CLASSIC else make_images()
     pages = sorted(EXP.rglob('*.html'))
     for p in pages:
         rel = p.relative_to(EXP).as_posix()
         t = p.read_text(encoding='utf-8', errors='surrogateescape')
         prefix = '../' * rel.count('/')
+        if CLASSIC:
+            if rel == PDP: t = subscription_buybox(t)
+            t = re.sub(r'alt="KoreanColorChangingFoundation-Productimages_1_[^"]*"', f'alt="{apf_copy.PRODUCT}"', t)
+            p.write_text(visible_rename(t), encoding='utf-8', errors='surrogateescape')
+            continue
         t = focus_nav(t, prefix, rel)
         if rel == 'index.html': t = homepage(t, imgs)
         if rel == PDP: t = product_page(t, imgs)
