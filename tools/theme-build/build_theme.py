@@ -113,9 +113,23 @@ def balance_braces(css):
 
 SASS_FN = re.compile(r'(?<![\w$-])(min|max|clamp|rgba?|hsla?|invert|grayscale|saturate|opacity|alpha)\(', re.I)
 
+def split_args(inner):
+    args, depth, cur = [], 0, ''
+    for ch in inner:
+        if ch == '(': depth += 1
+        elif ch == ')': depth -= 1
+        if ch == ',' and depth == 0: args.append(cur); cur = ''
+        else: cur += ch
+    return args + [cur]
+
+ARITH = re.compile(r'\s[-+*/]\s|[\d.%a-z)]\s*[*/]\s*[\d.(]', re.I)
+
 def sass_passthrough(css):
-    """Emit CSS functions that share a name with Sass built-ins as interpolated strings (#{"min(...)"}), which
-    Sass outputs verbatim instead of evaluating (it rejects var()/calc()/mixed units inside them)."""
+    """NEXT validates theme CSS with a Sass compiler but serves the file as written, so the CSS must be valid for
+    both. Sass evaluates min()/max()/clamp()/rgb()/... itself and rejects var()/calc()/mixed units inside them, so
+    those calls are emitted with a capitalised name (Min(, Clamp(, Rgba(...): CSS function names are
+    case-insensitive for browsers, while Sass treats an unknown name as a plain CSS function. Arithmetic arguments
+    of min/max/clamp are wrapped in calc() so neither side has to evaluate them."""
     out, i = [], 0
     while True:
         m = SASS_FN.search(css, i)
@@ -130,10 +144,15 @@ def sass_passthrough(css):
             k += 1
         if k < 0 or k >= len(css):
             out.append(css[i:m.end()]); i = m.end(); continue
-        call = css[m.start():k + 1]
-        q = '"' if '"' not in call else ("'" if "'" not in call else None)
+        name = m.group(1).lower()
+        args = []
+        for a in split_args(css[m.end():k]):
+            a = sass_passthrough(a)
+            if name in ('min', 'max', 'clamp') and ARITH.search(a) and not re.fullmatch(r'\s*[\w-]+\(.*\)\s*', a, re.S):
+                a = f'calc({a.strip()})'
+            args.append(a)
         out.append(css[i:m.start()])
-        out.append(f'#{{{q}{call}{q}}}' if q else call)
+        out.append(name[0].upper() + name[1:] + '(' + ','.join(args) + ')')
         i = k + 1
     return ''.join(out)
 

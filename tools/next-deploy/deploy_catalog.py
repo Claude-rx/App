@@ -1,6 +1,6 @@
 """Create the SKINOFAB catalog on NEXT through the Admin API (2024-04-01).
 
-usage: NEXT_API_TOKEN=... python3 -I deploy_catalog.py <store_subdomain> <export_dir> <out_mapping.json> [--dry-run]
+usage: NEXT_API_TOKEN=... python3 -I deploy_catalog.py <store_subdomain> <export_dir> <out_mapping.json> [--dry-run] [--replace-images]
 
 Idempotent: categories and pages are matched by slug, products by the handle -> id mapping of the previous
 run (<out_mapping.json>, checked against the live product list; NEXT re-slugs products from their title and the list
@@ -9,7 +9,8 @@ API does not return the template key) with slug as a fallback, so a re-run never
   - products with variant attributes, variants (SKU, USD price + compare-at, stock), template key = design handle,
     and the design's product images (base64 upload, variant images linked)
   - pages with template key = slug (existing pages with the same slug only get their template set)
-Writes the handle -> product id / variant ids / category ids mapping used for the theme's Product Links settings.
+--replace-images deletes each product's current images and uploads the export's again (after a rebrand of the
+design's photos). Writes the handle -> product id / variant ids / category ids mapping used for the theme's Product Links settings.
 """
 import base64, json, os, re, sys, time, urllib.request, urllib.error
 from pathlib import Path
@@ -17,6 +18,7 @@ from bs4 import BeautifulSoup
 
 STORE, EXPORT, OUT = sys.argv[1], Path(sys.argv[2]).resolve(), Path(sys.argv[3]).resolve()
 DRY = '--dry-run' in sys.argv
+REPLACE = '--replace-images' in sys.argv
 TOKEN = os.environ['NEXT_API_TOKEN']
 API = f'https://{STORE}.29next.store/api/admin/'
 LOG = []
@@ -134,8 +136,12 @@ for h in handles:
     else:
         prod = write('POST', 'products/', body, f'product {h}')
     pid = prod.get('id')
-    # images (only for products created now, or products without images)
-    if pid and not DRY and not prod.get('images'):
+    # images (only for products created now, or products without images; all of them with --replace-images)
+    if pid and not DRY and REPLACE:
+        for img in prod.get('images') or []:
+            call('DELETE', f"products/{pid}/images/{img['id']}/")
+        LOG.append({'ok': f'images {h} cleared', 'count': len(prod.get('images') or [])})
+    if pid and not DRY and (REPLACE or not prod.get('images')):
         by_value = {}
         for v_src, v_res in zip(d.get('variants', []), prod.get('variants', [])):
             src = (v_src.get('featured_image') or {}).get('src')
