@@ -219,7 +219,8 @@ DROP_INLINE = ('Shopify.MCP', 'webmcp', 'klaviyo', 'TriplePixel', 'TREKKIE', 'wp
                'thefrontrowhealth', 'nfcube', 'instafeed', 'iubenda.js')
 URL_ATTRS = ('src', 'data-src', 'poster', 'data-poster', 'data-bgset', 'data-bg', 'data-image', 'data-video-src',
              'data-mobile-src', 'data-desktop-src', 'data-zoom', 'data-zoom-src', 'data-large', 'href')
-MEDIA_RE = re.compile(r'\.(jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(\?|%|$)|/cdn/shop/(files|products|videos|t/)', re.I)
+MEDIA_RE = re.compile(r'\.(jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(\?|%|$)|/cdn/shop/(files|products|videos|t/)'
+                      r'|//(assets\.replocdn\.com|cdn\.instant\.so|images\.loox\.io)/', re.I)  # page-builder media has no extension
 CDN_MEDIA = re.compile(r'(?:https?:)?(?:\\?/){2}(?:smooche\.com|cdn\.shopify\.com)(?:\\?/)[^"\'\s<>)]+?'
                        r'\.(?:jpe?g|png|gif|webp|avif|svg|mp4|webm|mov|m4v)(?:[?%][^"\'\s<>)\\]*)?(?=["\'\s<>)\\])', re.I)
 

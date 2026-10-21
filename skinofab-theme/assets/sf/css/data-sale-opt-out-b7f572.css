@@ -46,7 +46,7 @@
 }
 
 .pc--show-email-field input[type='checkbox'] {
-  accent-color: rgb(var(--color-foreground, from inherit));
+  accent-color: #{"rgb(var(--color-foreground, from inherit))"};
 }
 
 .pc--opt-out-form-wrapper {
@@ -84,16 +84,16 @@
 
 /* Used to allow for border color flipping when variable is not used */
 .pc--border-color {
-  border-color: rgb(var(--color-foreground, from inherit));
-  filter: invert(
+  border-color: #{"rgb(var(--color-foreground, from inherit))"};
+  filter: #{"invert(
     var(--color-foreground),
     0.75
-  ); /* Invert color when color-foreground is not present (should indicate custom theme) */
+  )"}; /* Invert color when color-foreground is not present (should indicate custom theme) */
 }
 
 .pc--opt-out-form-wrapper .pc--opt-out-form-field input:hover {
-  border-color: rgb(var(--color-foreground, from inherit));
-  filter: invert(var(--color-foreground), 0.75);
+  border-color: #{"rgb(var(--color-foreground, from inherit))"};
+  filter: #{"invert(var(--color-foreground), 0.75)"};
 }
 
 .pc--opt-out-form-wrapper .pc--opt-out-form-field input:focus {

@@ -55,6 +55,10 @@ SIGS = ((b'\xff\xd8\xff', '.jpg'), (b'\x89PNG', '.png'), (b'GIF8', '.gif'))
 def true_ext(path):
     head = open(path, 'rb').read(12)
     if head[:4] == b'RIFF' and head[8:12] == b'WEBP': return '.webp'
+    if head[4:12] in (b'ftypavif', b'ftypavis'): return '.avif'
+    if head[4:8] == b'ftyp': return '.mp4'
+    if b'@font-face' in open(path, 'rb').read(4096): return '.css'
+    if b'<svg' in open(path, 'rb').read(512).lower() or head.lstrip().startswith(b'<?xml'): return '.svg'
     return next((e for sig, e in SIGS if head.startswith(sig)), None)
 
 # 1) files whose content doesn't match their extension (CDNs negotiate formats): rename to the real one

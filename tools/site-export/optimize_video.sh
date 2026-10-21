@@ -11,5 +11,5 @@ enc() {
   && [ "$(stat -c%s "$t")" -lt "$(stat -c%s "$f")" ] && mv "$t" "$f" || rm -f "$t"
 }
 export -f enc
-ls "$1"/assets/media/*.mp4 | xargs -P "$(nproc)" -I{} bash -c 'enc "$@"' _ {}
+ls "$1"/assets/media/*.mp4 "$1"/assets/img/*.mp4 2>/dev/null | xargs -P "$(nproc)" -I{} bash -c 'enc "$@"' _ {}
 du -sh "$1"/assets/media

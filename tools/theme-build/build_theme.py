@@ -21,8 +21,10 @@ LOG = {'unbound_prices': [], 'missing_assets': set(), 'templates': [], 'unmapped
 # ---------------------------------------------------------------- 1. Spark baseline
 SPARK_KEEP = ['assets', 'configs', 'layouts', 'locales', 'partials', 'templates', 'css', 'scripts', 'Makefile',
               'manifest.json', 'theme-contract.json', 'LICENSE', 'DESIGN.md', 'config.example.yml', '.gitignore']
+keep = (OUT / 'config.yml').read_bytes() if (OUT / 'config.yml').exists() else None  # ntk store binding
 if OUT.exists(): shutil.rmtree(OUT)
 OUT.mkdir(parents=True)
+if keep is not None: (OUT / 'config.yml').write_bytes(keep)
 for name in SPARK_KEEP:
     src = SPARK / name
     if src.is_dir(): shutil.copytree(src, OUT / name)
@@ -71,6 +73,83 @@ def css_rel_to_root(text):
         return f'url({q}{norm}{q})' if norm.startswith('assets/') else m.group(0)
     return re.sub(r'url\(\s*([\'"]?)([^\'")]+)\1\s*\)', rep, text)
 
+def strip_balanced_blocks(css, head_re):
+    """Remove at-rule blocks whose prelude matches head_re, braces balanced."""
+    out, i = [], 0
+    for m in re.finditer(head_re, css):
+        if m.start() < i: continue
+        j = css.find('{', m.end() - 1)
+        if j < 0: break
+        depth, k = 0, j
+        while k < len(css):
+            if css[k] == '{': depth += 1
+            elif css[k] == '}':
+                depth -= 1
+                if depth == 0: break
+            k += 1
+        out.append(css[i:m.start()]); i = k + 1
+    out.append(css[i:])
+    return ''.join(out)
+
+def balance_braces(css):
+    """Drop closing braces with no opener (browsers ignore them; the platform's Sass compiler rejects them)."""
+    out, depth, i, n = [], 0, 0, len(css)
+    while i < n:
+        c = css[i]
+        if css.startswith('/*', i):
+            j = css.find('*/', i + 2); j = n if j < 0 else j + 2
+            out.append(css[i:j]); i = j; continue
+        if c in '"\'':
+            j = i + 1
+            while j < n and css[j] != c:
+                j += 2 if css[j] == '\\' else 1
+            out.append(css[i:j + 1]); i = j + 1; continue
+        if c == '{': depth += 1
+        elif c == '}':
+            if depth == 0: i += 1; continue
+            depth -= 1
+        out.append(c); i += 1
+    return ''.join(out)
+
+SASS_FN = re.compile(r'(?<![\w$-])(min|max|clamp|rgba?|hsla?|invert|grayscale|saturate|opacity|alpha)\(', re.I)
+
+def sass_passthrough(css):
+    """Emit CSS functions that share a name with Sass built-ins as interpolated strings (#{"min(...)"}), which
+    Sass outputs verbatim instead of evaluating (it rejects var()/calc()/mixed units inside them)."""
+    out, i = [], 0
+    while True:
+        m = SASS_FN.search(css, i)
+        if not m: out.append(css[i:]); break
+        depth, k = 0, m.end() - 1
+        while k < len(css):
+            if css[k] == '(': depth += 1
+            elif css[k] == ')':
+                depth -= 1
+                if depth == 0: break
+            elif css[k] in '{};': k = -1; break
+            k += 1
+        if k < 0 or k >= len(css):
+            out.append(css[i:m.end()]); i = m.end(); continue
+        call = css[m.start():k + 1]
+        q = '"' if '"' not in call else ("'" if "'" not in call else None)
+        out.append(css[i:m.start()])
+        out.append(f'#{{{q}{call}{q}}}' if q else call)
+        i = k + 1
+    return ''.join(out)
+
+def platform_safe_css(css):
+    """NEXT compiles theme CSS with a Sass compiler. Keep the design CSS byte-for-byte equivalent for browsers while
+    avoiding constructs Sass evaluates or cannot parse:
+      - min()/max()/clamp()/rgb()/rgba()/hsl()/hsla() collide with Sass built-ins: CSS function names are
+        case-insensitive, Sass's are not, so upper-casing them passes them through unevaluated;
+      - @supports not (selector(...)) blocks (old-browser fallbacks Sass cannot parse) are dropped;
+      - DTL openers get a space after the brace (equivalent CSS);
+      - unmatched closing braces are dropped."""
+    css = strip_balanced_blocks(css, r'@supports\s+not\s*\(\s*selector\(')
+    css = sass_passthrough(css)
+    css = re.sub(r'\{(?=[%{#])', '{ ', css)
+    return balance_braces(css)
+
 def process_css_asset(text, name):
     text = css_rel_to_root(text)
     def font_face(m):
@@ -88,7 +167,7 @@ def process_css_asset(text, name):
         return f'var({var})'
     text = re.sub(r'url\(\s*([\'"]?)([^\'")]+)\1\s*\)', url_rep, text)
     text = re.sub(r'/\*#\s*sourceMappingURL=[^*]*\*/', '', text)
-    return dtl_escape(text)
+    return platform_safe_css(text)
 
 def process_js_asset(text):
     text = re.sub(r'//# sourceMappingURL=\S+', '', text)
@@ -616,11 +695,22 @@ for group in schema['SKINOFAB'].values():
         data.setdefault(field['name'], field.get('default') if field['type'] != 'product' else None)
 (OUT / 'configs' / 'settings_data.json').write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 
+# ---------------------------------------------------------------- 9b. platform CSS gate (the store compiles CSS with Sass)
+try:
+    import sass
+    for f in sorted((OUT / 'assets').rglob('*.css')):
+        try: sass.compile(string=f.read_text('utf-8'))
+        except Exception as e: LOG.setdefault('css_compile_errors', []).append(f'{f.relative_to(OUT)}: {str(e).splitlines()[0][:160]}')
+except ImportError:
+    LOG['css_compile_errors'] = ['libsass not installed (pip install libsass): CSS gate skipped']
+
 # ---------------------------------------------------------------- 10. report
 report = {'templates': sorted(LOG['templates']), 'unbound_prices': LOG['unbound_prices'],
           'missing_assets': sorted(LOG['missing_assets']), 'unmapped_links': sorted(LOG['unmapped_links']),
-          'font_faces': len(FONT_FACES), 'css_url_vars': len(CSS_VARS), 'product_json': len(PRODUCT_JSON)}
+          'font_faces': len(FONT_FACES), 'css_url_vars': len(CSS_VARS), 'product_json': len(PRODUCT_JSON),
+          'css_compile_errors': LOG.get('css_compile_errors', [])}
 (OUT.parent / 'theme-build-report.json').write_text(json.dumps(report, indent=1))
 print(f"templates {len(report['templates'])}  unbound prices {len(report['unbound_prices'])}  "
       f"missing assets {len(report['missing_assets'])}  unmapped links {len(report['unmapped_links'])}  "
-      f"fonts {len(FONT_FACES)}  css vars {len(CSS_VARS)}")
+      f"fonts {len(FONT_FACES)}  css vars {len(CSS_VARS)}  css compile errors {len(LOG.get('css_compile_errors', []))}")
+for e in LOG.get('css_compile_errors', []): print('  CSS', e)
