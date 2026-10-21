@@ -1,0 +1,519 @@
+<main class="main-content" data-main="" id="MainContent">
+<div class="shopify-section shopify-section--page" id="shopify-section-template--20029877452956__main"><style data-shopify="">#Page--template--20029877452956__main {
+    --PT: 60px;
+    --PB: 60px;
+  }</style><section class="section-default section-padding" id="Page--template--20029877452956__main">
+<div class="wrapper"><h1 class="page-title text-center">Build Your Bundle</h1><div class="rte"><style>
+  /* ===== BUNDLE BUILDER STYLES ===== */
+  #smooche-bundle-builder {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px 120px;
+    color: #1a1a1a;
+    box-sizing: border-box;
+  }
+
+  #smooche-bundle-builder * { box-sizing: border-box; }
+
+  /* Discount Tiers */
+  .bb-tiers {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 24px 0;
+  }
+  .bb-tier {
+    background: #fff;
+    border: 2px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 14px 22px;
+    text-align: center;
+    min-width: 120px;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+  .bb-tier.active {
+    border-color: #c9295e;
+    background: #fff0f5;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(201, 41, 94, 0.18);
+  }
+  .bb-tier-count {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #c9295e;
+    line-height: 1;
+  }
+  .bb-tier-label {
+    font-size: 0.78rem;
+    color: #666;
+    margin: 2px 0;
+    font-weight: 500;
+  }
+  .bb-tier-badge {
+    display: inline-block;
+    background: #c9295e;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 6px;
+  }
+
+  /* Progress bar */
+  .bb-progress-wrap {
+    margin: 20px auto;
+    max-width: 500px;
+    text-align: center;
+  }
+  .bb-progress-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .bb-progress-label span {
+    color: #c9295e;
+    font-weight: 700;
+  }
+  .bb-progress-bar-bg {
+    background: #f0f0f0;
+    border-radius: 99px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .bb-progress-bar-fill {
+    height: 100%;
+    background: #c9295e;
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    width: 0%;
+  }
+  .bb-progress-dots {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    padding: 0 2px;
+  }
+  .bb-progress-dot {
+    font-size: 0.72rem;
+    color: #aaa;
+    font-weight: 600;
+  }
+  .bb-progress-dot.passed { color: #c9295e; }
+
+  /* Product Grid */
+  .bb-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (min-width: 640px) {
+    .bb-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 900px) {
+    .bb-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (min-width: 1100px) {
+    .bb-grid { grid-template-columns: repeat(5, 1fr); }
+  }
+
+  /* Product Card */
+  .bb-card {
+    background: #fff;
+    border: 2px solid #e8e8e8;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .bb-card:hover {
+    border-color: #c9295e;
+    box-shadow: 0 6px 20px rgba(201, 41, 94, 0.12);
+    transform: translateY(-2px);
+  }
+  .bb-card.selected {
+    border-color: #c9295e;
+    background: #fff8fb;
+    box-shadow: 0 8px 28px rgba(201, 41, 94, 0.22);
+    transform: translateY(-3px);
+  }
+  .bb-card.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    pointer-events: none;
+  }
+  .bb-card.disabled:hover { border-color: #e8e8e8; box-shadow: none; transform: none; }
+
+  .bb-card-check {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    z-index: 2;
+  }
+  .bb-card.selected .bb-card-check {
+    background: #c9295e;
+    border-color: #c9295e;
+  }
+  .bb-card-check svg {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .bb-card.selected .bb-card-check svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .bb-card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #c9295e;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .bb-card-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+    background: #f8f8f8;
+  }
+  .bb-card-body {
+    padding: 10px 12px 14px;
+  }
+  .bb-card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+    margin: 0 0 4px;
+    min-height: 2.2em;
+  }
+  .bb-card-price {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #c9295e;
+  }
+  .bb-card-add {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px 0;
+    border: 2px solid #c9295e;
+    border-radius: 8px;
+    background: transparent;
+    color: #c9295e;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .bb-card.selected .bb-card-add {
+    background: #c9295e;
+    color: #fff;
+  }
+
+  /* Max reached notice */
+  .bb-max-notice {
+    text-align: center;
+    color: #c9295e;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 16px;
+    min-height: 1.4em;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .bb-max-notice.visible { opacity: 1; }
+
+  /* Sticky Bottom Bar */
+  .bb-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 2px solid #f0f0f0;
+    box-shadow: 0 -6px 30px rgba(0,0,0,0.12);
+    z-index: 1000;
+    padding: 12px 20px;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .bb-sticky.visible { transform: translateY(0); }
+  .bb-sticky-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .bb-sticky-info {
+    flex: 1;
+    min-width: 160px;
+  }
+  .bb-sticky-count {
+    font-size: 0.82rem;
+    color: #666;
+    font-weight: 500;
+  }
+  .bb-sticky-count strong { color: #c9295e; }
+  .bb-sticky-total {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    line-height: 1.1;
+    margin-top: 2px;
+  }
+  .bb-cta {
+    display: block;
+    background: #c9295e;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(201, 41, 94, 0.35);
+  }
+  .bb-cta:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 24px rgba(201, 41, 94, 0.45);
+    text-decoration: none;
+    color: #fff;
+  }
+  .bb-cta:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Ripple animation on select */
+  @keyframes bb-ripple {
+    0% { transform: scale(1); opacity: 0.4; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: 480px) {
+    .bb-tier { padding: 10px 14px; min-width: 90px; }
+    .bb-tier-count { font-size: 1.2rem; }
+  }
+</style>
+<div id="smooche-bundle-builder">
+<p style="text-align:center;color:#666;font-size:1rem;margin:0 0 20px;">Pick 2–4 products and mix &amp; match your favourites 💄</p>
+<div class="bb-tiers">
+<div class="bb-tier" id="bb-tier-2">
+<div class="bb-tier-count">2</div>
+<div class="bb-tier-label">products</div>
+<div class="bb-tier-badge">Best Duo</div>
+</div>
+<div class="bb-tier" id="bb-tier-3">
+<div class="bb-tier-count">3</div>
+<div class="bb-tier-label">products</div>
+<div class="bb-tier-badge">Best Trio</div>
+</div>
+<div class="bb-tier" id="bb-tier-4">
+<div class="bb-tier-count">4</div>
+<div class="bb-tier-label">products</div>
+<div class="bb-tier-badge">Best Value</div>
+</div>
+</div>
+<div class="bb-progress-wrap">
+<div class="bb-progress-label">You've selected <span id="bb-progress-num">0</span> of 4 items</div>
+<div class="bb-progress-bar-bg">
+<div class="bb-progress-bar-fill" id="bb-progress-fill"></div>
+</div>
+<div class="bb-progress-dots">
+<span class="bb-progress-dot" id="bb-dot-0">0</span>
+<span class="bb-progress-dot" id="bb-dot-2">2 ✓</span>
+<span class="bb-progress-dot" id="bb-dot-3">3 ✓</span>
+<span class="bb-progress-dot" id="bb-dot-4">4 ✓</span>
+</div>
+</div>
+<div class="bb-grid" id="bb-grid"></div>
+<div class="bb-max-notice" id="bb-max-notice">✨ Max 4 products — remove one to swap!</div>
+</div>
+<div class="bb-sticky" id="bb-sticky">
+<div class="bb-sticky-inner">
+<div class="bb-sticky-info">
+<div class="bb-sticky-count" id="bb-sticky-count">0 items selected — add at least 2 to add to cart</div>
+<div class="bb-sticky-total" id="bb-sticky-total"></div>
+</div>
+<button class="bb-cta" disabled="" id="bb-cta-btn" onclick="bbAddToCart()">Add Bundle to Cart 🛒</button>
+</div>
+</div>
+<script>
+(function() {
+  var PRODUCTS = [{"title": "Color Changing Foundation", "price": "39.00", "variant_id": "45097716285596", "image": "{{ 'sf/img/ColorChangingFoundation-Productimagesphotos_639aab4b-1799-45-af4a0e.png'|asset_url }}", "handle": "color-changing-foundation", "badge": "\u2b50 Hero Product"}, {"title": "Extreme Lip Plumper", "price": "39.00", "variant_id": "44663423959196", "image": "{{ 'sf/img/ELPC-1600w-9db6e8.png'|asset_url }}", "handle": "extreme-lip-plumper", "badge": "\ud83d\udd25 Bestseller"}, {"title": "Normal Lip Plumper", "price": "39.00", "variant_id": "44663453876380", "image": "{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1600w-b32bb1.png'|asset_url }}", "handle": "hyaluronic-acid-lip-plumper", "badge": ""}, {"title": "Eyelash Growth Serum", "price": "39.00", "variant_id": "44630578167964", "image": "{{ 'sf/img/1_baf8104b-c432-4b62-af61-27a2c0166176-1600w-acddab.png'|asset_url }}", "handle": "eyelash-serum", "badge": "\ud83d\udca7 Growth Formula"}, {"title": "Eyebrow Growth Serum", "price": "39.00", "variant_id": "44630578266268", "image": "{{ 'sf/img/1_5abef206-af49-4330-b807-2d7403d6c81e-1600w-d00d41.png'|asset_url }}", "handle": "eyebrow-serum", "badge": ""}, {"title": "Fibre Brow Gel", "price": "39.00", "variant_id": "46514010456220", "image": "{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1600w-5bee9b.png'|asset_url }}", "handle": "brow-gel", "badge": "\u2728 New"}, {"title": "Lash & Brow Growth Kit", "price": "49.00", "variant_id": "44630586523804", "image": "{{ 'sf/img/jsdfsd-1600w-3e3e9c.jpg'|asset_url }}", "handle": "lash-brow-duo", "badge": "\ud83c\udf81 Kit Deal"}, {"title": "2-in-1 Serum Mascara", "price": "39.00", "variant_id": "45056292978844", "image": "{{ 'sf/img/1_20b6ec93-6006-4a9f-9321-81c12e325c04-1600w-380b76.png'|asset_url }}", "handle": "long-lash-mascara", "badge": "\ud83d\udcab 2-in-1"}, {"title": "Liquid Blender Brush", "price": "29.00", "variant_id": "46053902155932", "image": "{{ 'sf/img/1_dc0c4f7a-6f9d-4866-870f-5d39a75f4867-1600w-2dee66.png'|asset_url }}", "handle": "liquid-blender-brush", "badge": ""}, {"title": "Beauty Blender", "price": "9.00", "variant_id": "45737078194332", "image": "{{ 'sf/img/1_f4abad2e-bd5e-4735-ab86-6a72861225c5-1600w-92548c.png'|asset_url }}", "handle": "beauty-blender", "badge": ""}];
+
+  var DISCOUNTS = { 2: 10, 3: 15, 4: 20 };
+  var selected = [];
+  var MAX = 4;
+
+  function formatPrice(cents) {
+    return '$' + parseFloat(cents).toFixed(2);
+  }
+
+  function getDiscount() {
+    var n = selected.length;
+    if (n >= 4) return 20;
+    if (n >= 3) return 15;
+    if (n >= 2) return 10;
+    return 0;
+  }
+
+  function render() {
+    var n = selected.length;
+    var disc = getDiscount();
+
+    // Progress bar
+    document.getElementById('bb-progress-num').textContent = n;
+    document.getElementById('bb-progress-fill').style.width = (n / MAX * 100) + '%';
+    ['2','3','4'].forEach(function(k) {
+      var dot = document.getElementById('bb-dot-' + k);
+      if (n >= parseInt(k)) dot.classList.add('passed');
+      else dot.classList.remove('passed');
+    });
+
+    // Tier highlights
+    [2,3,4].forEach(function(k) {
+      var el = document.getElementById('bb-tier-' + k);
+      if (n >= k) el.classList.add('active');
+      else el.classList.remove('active');
+    });
+
+    // Cards
+    var cards = document.querySelectorAll('.bb-card');
+    cards.forEach(function(card) {
+      var vid = card.getAttribute('data-vid');
+      var isSel = selected.indexOf(vid) !== -1;
+      var isDisabled = !isSel && n >= MAX;
+      card.classList.toggle('selected', isSel);
+      card.classList.toggle('disabled', isDisabled);
+      var btn = card.querySelector('.bb-card-add');
+      if (btn) btn.textContent = isSel ? '✓ Added' : '+ Add to Bundle';
+
+      // Update price display — full price only
+      var priceEl = card.querySelector('.bb-card-price');
+      if (priceEl) {
+        var base = parseFloat(card.getAttribute('data-price'));
+        priceEl.innerHTML = formatPrice(base);
+      }
+    });
+
+    // Max notice
+    var notice = document.getElementById('bb-max-notice');
+    notice.classList.toggle('visible', n >= MAX);
+
+    // Sticky bar
+    var sticky = document.getElementById('bb-sticky');
+    sticky.classList.toggle('visible', n > 0);
+
+    var rawTotal = selected.reduce(function(acc, vid) {
+      var p = PRODUCTS.find(function(x) { return x.variant_id === vid; });
+      return acc + (p ? parseFloat(p.price) : 0);
+    }, 0);
+
+    var countEl = document.getElementById('bb-sticky-count');
+    var totalEl = document.getElementById('bb-sticky-total');
+
+    if (n === 0) {
+      countEl.innerHTML = '0 items selected — add at least 2 to add to cart';
+      totalEl.innerHTML = '';
+    } else if (n === 1) {
+      countEl.innerHTML = '<strong>1 item</strong> selected — add 1 more to unlock the bundle';
+      totalEl.innerHTML = formatPrice(rawTotal);
+    } else {
+      countEl.innerHTML = '<strong>' + n + ' item' + (n > 1 ? 's' : '') + '</strong> selected';
+      totalEl.innerHTML = formatPrice(rawTotal);
+    }
+
+    var ctaBtn = document.getElementById('bb-cta-btn');
+    ctaBtn.disabled = n < 2;
+  }
+
+  function toggleProduct(vid) {
+    var idx = selected.indexOf(vid);
+    if (idx !== -1) {
+      selected.splice(idx, 1);
+    } else {
+      if (selected.length >= MAX) return;
+      selected.push(vid);
+    }
+    render();
+  }
+
+  window.bbAddToCart = function() {
+    if (selected.length < 2) return;
+    var cartStr = selected.map(function(vid) { return vid + ':1'; }).join(',');
+    window.SFCommerce.addPermalink(cartStr);
+  };
+
+  // Build grid
+  var grid = document.getElementById('bb-grid');
+  PRODUCTS.forEach(function(p) {
+    var card = document.createElement('div');
+    card.className = 'bb-card';
+    card.setAttribute('data-vid', p.variant_id);
+    card.setAttribute('data-price', p.price);
+    card.innerHTML =
+      (p.badge ? '<div class="bb-card-badge">' + p.badge + '</div>' : '') +
+      '<div class="bb-card-check">' +
+        '<svg width="14" height="14" viewBox="0 0 14 14" fill="none">' +
+          '<polyline points="2,7 5.5,10.5 12,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '</svg>' +
+      '</div>' +
+      '<img class="bb-card-img" src="' + p.image + '" alt="' + p.title + '" loading="lazy">' +
+      '<div class="bb-card-body">' +
+        '<div class="bb-card-title">' + p.title + '</div>' +
+        '<div class="bb-card-price">$' + parseFloat(p.price).toFixed(2) + '</div>' +
+        '<button class="bb-card-add">+ Add to Bundle</button>' +
+      '</div>';
+
+    card.addEventListener('click', function() {
+      toggleProduct(p.variant_id);
+    });
+    grid.appendChild(card);
+  });
+
+  render();
+})();
+</script></div>
+</div>
+</section></div>
+</main>

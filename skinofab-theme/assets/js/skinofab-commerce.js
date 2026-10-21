@@ -256,11 +256,7 @@
             (form.matches('[data-sf-product-form], .product__form, [data-product-form], [data-cart-form], [id^="AddToCartForm"], [action*="/cart/add"]'));
     }
 
-    document.addEventListener('submit', function(e) {
-        var form = e.target;
-        if (!isProductForm(form)) return;
-        e.preventDefault();
-        e.stopImmediatePropagation();
+    function addFromForm(form) {
         var idEl = form.querySelector('input[name="id"]:checked') || form.querySelector('[name="id"]');
         var qtyEl = form.querySelector('[name="quantity"]');
         var btn = form.querySelector('[type="submit"], [data-add-to-cart]');
@@ -273,6 +269,24 @@
             if (box) { box.textContent = err.message; box.hidden = false; }
             if (window.console) console.warn('[skinofab] add to cart failed', err);
         });
+    }
+
+    /* The design submits product forms through a click handler on [data-add-to-cart] (then renders its own
+       Shopify cart drawer); keyboard submits go through the form. Both are taken over here, before the design's
+       handlers run, so the add goes to NEXT and the Spark side cart is the only drawer. */
+    document.addEventListener('submit', function(e) {
+        if (!isProductForm(e.target)) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        addFromForm(e.target);
+    }, true);
+    document.addEventListener('click', function(e) {
+        var btn = e.target && e.target.closest && e.target.closest('[data-add-to-cart], button[name="add"], [type="submit"]');
+        var form = btn && btn.closest('form');
+        if (!btn || !isProductForm(form) || btn.disabled || btn.getAttribute('aria-disabled') === 'true') return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        addFromForm(form);
     }, true);
 
     document.addEventListener('click', function(e) {

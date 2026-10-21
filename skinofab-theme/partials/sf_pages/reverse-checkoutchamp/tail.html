@@ -1,0 +1,200 @@
+<div aria-hidden="true" class="pswp pswp--custom-loader" data-index="0" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="pswp pswp--custom-loader" data-index="1" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/smooche-cart-timer-b352c2.js'|asset_url }}"></script><script>
+      // Function to update the price element with the new variant price
+      function updateProductPrice(newPrice) {
+        const priceElement = document.getElementById('productpricingnew');
+        if (!priceElement) return;
+        priceElement.textContent = newPrice;
+      }
+
+      // Event listener to detect changes in the variant selection
+      document.addEventListener('DOMContentLoaded', function () {
+        // Assuming the variant change triggers an update on the element with class 'product__price--regular'
+        const regularPriceElement = document.querySelector('.product__price--regular');
+
+        if (regularPriceElement && document.getElementById('productpricingnew')) {
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+              // Update the `productpricingnew` element with the new price when it changes
+              updateProductPrice(mutation.target.textContent);
+            });
+          });
+
+          // Observe changes in the regular price element
+          observer.observe(regularPriceElement, {
+            childList: true,
+            subtree: true,
+          });
+        }
+      });
+    </script><script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get all swatch labels
+        const swatchLabels = document.querySelectorAll('.swatch__label');
+
+        swatchLabels.forEach((label) => {
+          label.addEventListener('click', (event) => {
+            // Get the value of selected-swatch from the clicked label
+            const selectedSwatch = label.getAttribute('selected-swatch');
+
+            // Update the .selected-swatch content
+            const selectedSwatchElement = document.querySelector('.selected-swatch');
+            if (selectedSwatchElement && selectedSwatch) {
+              selectedSwatchElement.textContent = selectedSwatch;
+            }
+          });
+        });
+      });
+    </script><script>
+      /* Accordion Popup JavaScript - Moves modals to body for proper z-index stacking */
+
+(function() {
+  'use strict';
+
+  // Move all popup modals to body for proper z-index stacking
+  function movePopupsToBody() {
+    document.querySelectorAll('.popup-modal[data-popup-modal]').forEach(function(popup) {
+      // Only move if not already a direct child of body
+      if (popup.parentElement !== document.body) {
+        document.body.appendChild(popup);
+      }
+    });
+  }
+
+  function initAccordionPopups() {
+    // First, move popups to body level
+    movePopupsToBody();
+
+    // Open popup via trigger link
+    document.querySelectorAll('[data-popup-trigger]').forEach(function(trigger) {
+      // Remove existing listeners to prevent duplicates
+      trigger.removeEventListener('click', handleTriggerClick);
+      trigger.addEventListener('click', handleTriggerClick);
+    });
+
+    // Close popup via close button or overlay click
+    document.querySelectorAll('[data-popup-close]').forEach(function(closeBtn) {
+      closeBtn.removeEventListener('click', handleCloseClick);
+      closeBtn.addEventListener('click', handleCloseClick);
+    });
+  }
+
+  function handleTriggerClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-trigger');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function handleCloseClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-close');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Close on escape key (only add once)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var activePopup = document.querySelector('.popup-modal.is-active');
+      if (activePopup) {
+        activePopup.classList.remove('is-active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccordionPopups);
+  } else {
+    initAccordionPopups();
+  }
+
+  // Re-initialize for Shopify sections (if using Section Rendering API)
+  document.addEventListener('shopify:section:load', initAccordionPopups);
+})();
+    </script>

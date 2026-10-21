@@ -2,8 +2,9 @@
 
 usage: NEXT_API_TOKEN=... python3 -I deploy_catalog.py <store_subdomain> <export_dir> <out_mapping.json> [--dry-run]
 
-Idempotent: categories, products and pages are matched by slug, so a re-run updates nothing it already created
-and never duplicates. Creates
+Idempotent: categories and pages are matched by slug, products by the handle -> id mapping of the previous
+run (<out_mapping.json>, checked against the live product list; NEXT re-slugs products from their title and the list
+API does not return the template key) with slug as a fallback, so a re-run never duplicates. Creates
   - categories from the design's collection pages (membership = products linked from each collection grid)
   - products with variant attributes, variants (SKU, USD price + compare-at, stock), template key = design handle,
     and the design's product images (base64 upload, variant images linked)
@@ -98,7 +99,13 @@ for f in sorted((EXPORT / 'collections').glob('*.html')):
 product_cats = {h: [cat_ids[c] for c, m in cat_members.items() if h in m and cat_ids.get(c)] for h in handles}
 
 # ---------------------------------------------------------------- products
-existing = {p['slug']: p for p in list_all('products/')}
+live = list_all('products/')
+existing = {p['slug']: p for p in live}
+by_id = {p['id']: p for p in live}
+prior = json.loads(OUT.read_text()).get('mapping', {}).get('products', {}) if OUT.exists() else {}
+for h, m in prior.items():
+    if m.get('id') in by_id:   # the previous run's product for this handle, full record (variants, images)
+        existing[h] = call('GET', f"products/{m['id']}/")
 mapping = {'store': STORE, 'categories': cat_ids, 'products': {}}
 for h in handles:
     d = snaps[h]

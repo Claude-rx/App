@@ -448,11 +448,28 @@ def simple(page, template):
 # 7a homepage
 simple('index.html', 'templates/index.html')
 
-# 7b pages + policies (one custom page template per design page; template key = slug)
+# 7b pages + policies. NEXT did not apply a page's custom template in testing (even a trivial one), so page.html
+# dispatches on page.slug itself: each design page's blocks live in partials/sf_pages/<slug>/, and every
+# page.<slug>.html just extends page.html, so selecting the template in the dashboard renders the same thing.
+PAGE_PARTS = {}
+def page_partials(page, slug):
+    parts = decompose(page)
+    slots = Slots()
+    blocks = {'head': slots.render(frag_html(parts['head'], page, slots)),
+              'lead': slots.render(frag_html(parts['lead'], page, slots)),
+              'content': main_html(parts, page, slots),
+              'tail': slots.render(frag_html(parts['tail'], page, slots))}
+    for name, body in blocks.items():
+        write(f'partials/sf_pages/{slug}/{name}.html', body + '\n')
+    PAGE_PARTS[slug] = {'title': dtl_literal(parts['title']), 'body_id': dtl_literal(parts['body_id']),
+                        'body_class': dtl_literal(parts['body_class']), 'header': parts['has_header'], 'footer': parts['has_footer']}
+    write(f'templates/pages/page.{slug}.html',
+          "{# Design page '%s': rendered by templates/pages/page.html (dispatch on page.slug). #}\n"
+          "{%% extends 'templates/pages/page.html' %%}\n" % slug)
 for slug in sorted(PAGE_SLUGS):
-    simple(f'pages/{slug}.html', f'templates/pages/page.{slug}.html')
+    page_partials(f'pages/{slug}.html', slug)
 for slug in sorted(POLICY_ONLY):
-    simple(f'policies/{slug}.html', f'templates/pages/page.{slug}.html')
+    page_partials(f'policies/{slug}.html', slug)
 
 # 7c default page template: design page layout with NEXT page title + content
 def generic_page():
@@ -466,7 +483,37 @@ def generic_page():
         if rte:
             rte.clear(); rte.append(slots.put('{% if page.content %}{{ page.content|safe }}{% else %}{{ flatpage.content|safe }}{% endif %}'))
         return slots.render(str(transform(main, page, slots)))
-    write('templates/pages/page.html', page_template(page, parts, content, title_dtl='{% firstof page.title flatpage.title %} | {{ block.super }}'))
+    generic = page_template(page, parts, content, title_dtl='{% firstof page.title flatpage.title %} | {{ block.super }}')
+    # Wrap each generic block in a slug dispatch: design pages first, the generic layout as the fallback.
+    slugs = sorted(PAGE_PARTS)
+    def dispatch(block, per_slug, fallback):
+        branches = ''.join("{%% %s sf_slug == '%s' %%}%s" % ('if' if i == 0 else 'elif', sl, per_slug(sl)) for i, sl in enumerate(slugs))
+        return '{%% block %s %%}%s{%% else %%}%s{%% endif %%}{%% endblock %s %%}' % (block, branches, fallback, block)
+    def gen_block(name):
+        m = re.search(r'\{%% block %s %%\}(.*?)\{%% endblock(?: %s)? %%\}' % (name, name), generic, re.S)
+        return m.group(1) if m else ''
+    inc = lambda part: (lambda sl: "{%% include 'partials/sf_pages/%s/%s.html' %%}" % (sl, part))
+    out = ["{% extends 'layouts/base.html' %}",
+           "{# Pages: dispatch on page.slug to the design page partials (partials/sf_pages/<slug>/); generic layout otherwise. #}",
+           dispatch('title', lambda sl: PAGE_PARTS[sl]['title'], gen_block('title')),
+           dispatch('body_id', lambda sl: PAGE_PARTS[sl]['body_id'], gen_block('body_id')),
+           dispatch('body_class', lambda sl: PAGE_PARTS[sl]['body_class'], gen_block('body_class')),
+           dispatch('sf_head', inc('head'), gen_block('sf_head')),
+           dispatch('sf_lead', inc('lead'), gen_block('sf_lead')),
+           dispatch('content_wrapper', inc('content'), gen_block('content_wrapper')),
+           dispatch('sf_tail', inc('tail'), gen_block('sf_tail'))]
+    no_header = [sl for sl in slugs if not PAGE_PARTS[sl]['header']]
+    no_footer = [sl for sl in slugs if not PAGE_PARTS[sl]['footer']]
+    if no_header:
+        out.append("{%% block nav_header %%}{%% if %s %%}{%% else %%}{{ block.super }}{%% endif %%}{%% endblock nav_header %%}"
+                   % ' or '.join("sf_slug == '%s'" % sl for sl in no_header))
+    if no_footer:
+        out.append("{%% block footer %%}{%% if %s %%}{%% else %%}{{ block.super }}{%% endif %%}{%% endblock footer %%}"
+                   % ' or '.join("sf_slug == '%s'" % sl for sl in no_footer))
+    text = '\n'.join(out) + '\n'
+    # sf_slug: the page slug, available in every block (with-blocks would not span block boundaries)
+    text = text.replace('sf_slug ==', 'page.slug ==')
+    write('templates/pages/page.html', text)
 generic_page()
 
 # 7d product pages: one template per design product (template key = handle), bound to NEXT `product`
@@ -646,6 +693,10 @@ product_json = ','.join('"%s":"{{ \'sf/data/product-%s.json\'|asset_url|escapejs
 base = (SPARK / 'layouts' / 'base.html').read_text()
 base = base.replace('<link rel="stylesheet" type="text/css" href="{{ \'main.css\'|asset_url }}">',
                     "{% block spark_css %}{% endblock spark_css %}\n        {% include 'partials/sf_asset_styles.html' %}")
+base = base.replace("{% endblock styles %}",
+    "{% endblock styles %}\n    {# Spark side cart in the design's look: black controls, design body font. #}\n"
+    "    <style>:root{--primary-color:#000000;--primary-color-darker:#000000;--primary-color-lighter:#333333;--accent-color:#000000;"
+    "--font-body:var(--FONT-STACK-BODY, 'Jost', sans-serif);}</style>", 1)
 base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "{% block extrahead %}{% endblock extrahead %}\n"
     "    {% url 'storefrontapi:graphql' as sf_graphql_url %}\n"
@@ -693,6 +744,13 @@ data = json.loads((OUT / 'configs' / 'settings_data.json').read_text())
 for group in schema['SKINOFAB'].values():
     for field in group:
         data.setdefault(field['name'], field.get('default') if field['type'] != 'product' else None)
+catalog = os.environ.get('SF_CATALOG')  # deploy mapping (tools/next-deploy) -> Product / Collection Links
+if catalog and Path(catalog).exists():
+    m = json.loads(Path(catalog).read_text())['mapping']
+    for h, v in m.get('products', {}).items():
+        if v.get('id'): data[f'sf_p_{var(h)}'] = v['id']
+    for c, cid in m.get('categories', {}).items():
+        if cid: data[f'sf_c_{var(c)}'] = f'/catalogue/category/{c}_{cid}/'
 (OUT / 'configs' / 'settings_data.json').write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 
 # ---------------------------------------------------------------- 9b. platform CSS gate (the store compiles CSS with Sass)
