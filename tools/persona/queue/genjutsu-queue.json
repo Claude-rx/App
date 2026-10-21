@@ -1,50 +1,46 @@
 {
- "how_to_run": "Higgsfield credits needed. For each job: higgsfield-studio genjutsu mode \"object_swap\" (or the Higgsfield MCP generate_video with hf_mult_replace_object) with video = video_url, reference images = refs, prompt; confirm_higgsfield true. Check the bottle in several frames against the product sheet, then replace the file in the theme under a new content-hashed name (NEXT CDN caches by file name) and rewrite its references.",
+ "endpoint": "higgsfield/genjutsu/object-swap/v1.0",
+ "resolution": "720p",
+ "refs": [
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+ ],
+ "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact bottle in the reference images, in every frame where it appears: a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring, SKINOFAB printed vertically in a white serif typeface, and under it only ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz in small white letters. Keep everything else exactly the same: the woman, her face, skin, hair, hands, grip, gestures, makeup application, the room, lighting, camera motion and timing. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic.",
+ "how_to_run": "HF_API_KEY_ID / HF_API_KEY_SECRET in the environment, then: python3 -I tools/persona/genjutsu_direct.py tools/persona/queue/genjutsu-queue.json skinofab-theme <work_dir> --go",
+ "not_swapped": {
+  "67378f79": "pink SMOOCHE serum (Reverse-time Peptide Serum), not the foundation",
+  "ce67af4f": "bag of lip products, not the foundation"
+ },
  "jobs": [
   {
+   "key": "gj-2ff54da7",
+   "video": "2ff54da7c0a546d9a1ac06160b9df70a-HD-1080p-2-5Mbps-97954776-f31cb3.mp4",
+   "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact bottle in the reference images, in every frame where it appears: a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring, SKINOFAB printed vertically in a white serif typeface, and under it only ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz in small white letters. Keep everything else exactly the same: the woman, her face, skin, hair, hands, grip, gestures, makeup application, the room, lighting, camera motion and timing. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic. Also change the white on-screen text SMOOCHE to SKINOFAB in the same font, size and position."
+  },
+  {
    "key": "gj-41b77ec4",
-   "mode": "object_swap",
-   "video_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/41b77ec426134227829d7762a7af3f49-HD-1080p-2-5Mbps-97901334-c97e00.mp4",
-   "refs": [
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
-   ],
-   "prompt": "Replace the foundation bottle the woman holds and uses with the bottle in the reference images, in every frame. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Match the lighting, reflections, motion blur, hand grip and occlusion of the original so it looks filmed, not composited. Keep the woman, her face, hands, voice, the room, the camera motion and any captions exactly as they are. Super realistic."
+   "video": "41b77ec426134227829d7762a7af3f49-HD-1080p-2-5Mbps-97901334-c97e00.mp4"
   },
   {
    "key": "gj-43e0f648",
-   "mode": "object_swap",
-   "video_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/43e0f6484a4b45a08fed8078280871e7-HD-1080p-2-5Mbps-97900995-2974e9.mp4",
-   "refs": [
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
-   ],
-   "prompt": "Replace the foundation bottle the woman holds and uses with the bottle in the reference images, in every frame. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Match the lighting, reflections, motion blur, hand grip and occlusion of the original so it looks filmed, not composited. Keep the woman, her face, hands, voice, the room, the camera motion and any captions exactly as they are. Super realistic."
+   "video": "43e0f6484a4b45a08fed8078280871e7-HD-1080p-2-5Mbps-97900995-2974e9.mp4"
   },
   {
    "key": "gj-88d49199",
-   "mode": "object_swap",
-   "video_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/88d49199f410441eb42151e8aa0d62ca-HD-1080p-2-5Mbps-97901333-174c63.mp4",
-   "refs": [
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
-   ],
-   "prompt": "Replace the foundation bottle the woman holds and uses with the bottle in the reference images, in every frame. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Match the lighting, reflections, motion blur, hand grip and occlusion of the original so it looks filmed, not composited. Keep the woman, her face, hands, voice, the room, the camera motion and any captions exactly as they are. Super realistic."
+   "video": "88d49199f410441eb42151e8aa0d62ca-HD-1080p-2-5Mbps-97901333-174c63.mp4"
   },
   {
    "key": "gj-b705ce67",
-   "mode": "object_swap",
-   "video_url": "https://cdn.29next.store/media/skinofab/themes/34/assets/b705ce67f07b41119b80cf8e7765b43a-HD-1080p-2-5Mbps-97954777-9c3f53.mp4",
-   "refs": [
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
-    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
-   ],
-   "prompt": "Replace the foundation bottle the woman holds and uses with the bottle in the reference images, in every frame. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Match the lighting, reflections, motion blur, hand grip and occlusion of the original so it looks filmed, not composited. Keep the woman, her face, hands, voice, the room, the camera motion and any captions exactly as they are. Super realistic."
+   "video": "b705ce67f07b41119b80cf8e7765b43a-HD-1080p-2-5Mbps-97954777-9c3f53.mp4"
+  },
+  {
+   "key": "gj-de65acac",
+   "video": "de65acac52f6451f832b76762138f0d1-HD-720p-1-6Mbps-97954778-642859.mp4"
+  },
+  {
+   "key": "gj-f8efa52f",
+   "video": "f8efa52f3caa47c49dfcd5559dfac42f-HD-1080p-2-5Mbps-97954775-1016b6.mp4"
   }
- ],
- "estimate": "Genjutsu object_swap, list price (21 Oct 2026 quotes): 60 s = $41.54 at 720p / $99.55 at 1080p, about $0.69 / $1.66 per second; the 4 videos are 21.5 + 60.3 + 22.5 + 10 s = 114 s, about $79 at 720p or $190 at 1080p."
+ ]
 }

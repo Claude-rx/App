@@ -247,6 +247,26 @@ def product_page(t, imgs):
     if s < 0 or e < 0: missing.append(('pdp', 'below-the-fold sections')); return t
     return t[:s] + '<section class="shopify-section" id="shopify-section-apf-pdp">' + fill(apf_copy.pdp_sections(), imgs, '../') + '</section>' + t[e:]
 
+# videos re-made with Genjutsu (tools/persona/genjutsu_direct.py): {original media file name: finished local file}
+VIDEO_SWAPS = Path(__file__).resolve().parent / 'queue' / 'video-swaps.json'
+
+def swap_videos(pages):
+    """Copy each finished video into the export under a new content-hashed name and point every page at it."""
+    if not VIDEO_SWAPS.exists(): return {}
+    import shutil
+    ren = {}
+    for old, src in json.loads(VIDEO_SWAPS.read_text()).items():
+        src = Path(src)
+        if not (EXP / 'assets' / 'media' / old).exists() or not src.exists(): missing.append(('video swap', old)); continue
+        new = re.sub(r'-[0-9a-f]{6}$', '', Path(old).stem) + '-g' + hashlib.md5(src.read_bytes()).hexdigest()[:6] + '.mp4'
+        shutil.copy2(src, EXP / 'assets' / 'media' / new); ren[old] = new
+    if ren:
+        rx = re.compile('|'.join(re.escape(k) for k in ren))
+        for p in pages:
+            t = p.read_text(encoding='utf-8', errors='surrogateescape'); n = rx.sub(lambda m: ren[m.group(0)], t)
+            if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
+    return ren
+
 def main():
     imgs = {} if CLASSIC else make_images()
     pages = sorted(EXP.rglob('*.html'))
@@ -267,10 +287,11 @@ def main():
         t = re.sub(r'alt="KoreanColorChangingFoundation-Productimages_1_[^"]*"', f'alt="{apf_copy.PRODUCT}"', t)
         t = visible_rename(t)
         p.write_text(t, encoding='utf-8', errors='surrogateescape')
+    videos = swap_videos(pages)
     nav_missing = [m for m in missing if m[1] in ('desktop menu', 'mobile menu')]
     real = [m for m in missing if m not in nav_missing]
     print(json.dumps({'pages': len(pages), 'images': {k: v[0] for k, v in imgs.items()},
-                      'pages_without_menus': len(nav_missing), 'pdp_removed': removed, 'missing': real}, indent=1))
+                      'pages_without_menus': len(nav_missing), 'pdp_removed': removed, 'videos': videos, 'missing': real}, indent=1))
     if real: sys.exit(1)
 
 main()
