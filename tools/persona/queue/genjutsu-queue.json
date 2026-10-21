@@ -45,5 +45,6 @@
    ],
    "prompt": "Replace the foundation bottle the woman holds and uses with the bottle in the reference images, in every frame. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Match the lighting, reflections, motion blur, hand grip and occlusion of the original so it looks filmed, not composited. Keep the woman, her face, hands, voice, the room, the camera motion and any captions exactly as they are. Super realistic."
   }
- ]
+ ],
+ "estimate": "Genjutsu object_swap, list price (21 Oct 2026 quotes): 60 s = $41.54 at 720p / $99.55 at 1080p, about $0.69 / $1.66 per second; the 4 videos are 21.5 + 60.3 + 22.5 + 10 s = 114 s, about $79 at 720p or $190 at 1080p."
 }
