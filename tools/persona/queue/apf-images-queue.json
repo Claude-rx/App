@@ -1,0 +1,85 @@
+{
+ "how_to_run": "Higgsfield credits needed (balance was 0.03 on 21 Oct 2026). For each job: higgsfield-studio run_endpoint \"marketing-studio/image\" (nano banana pro or gpt image 2) with image refs = refs, aspect, prompt, confirm_higgsfield true; save the result as <key>.png, review it against brand/adaptive-peptide-foundation/01-front.png (label text, proportions), then map it to a slot in tools/persona/apf-images.json and re-run the pipeline.",
+ "jobs": [
+  {
+   "key": "apf-hero",
+   "aspect": "4:5",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+   ],
+   "prompt": "Use the reference images as the product. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Real-looking woman about 56, light skin, chin-length silver-blonde bob: natural fine lines and crow's feet, mature skin texture, no airbrushing, fresh and even skin. She stands at a bright bathroom mirror in the morning and holds the bottle at cheek height, relaxed half smile, looking at camera. Photorealistic, natural daylight, editorial but honest, neutral black-white-grey palette, no extra text or logos."
+  },
+  {
+   "key": "apf-dots",
+   "aspect": "4:5",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+   ],
+   "prompt": "Use the reference images as the product. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Real-looking woman about 61, medium olive skin, shoulder-length grey hair: natural fine lines and crow's feet, mature skin texture, no airbrushing, fresh and even skin. She has just dotted five small white dots of foundation on her forehead, cheeks, nose and chin, holding the bottle in her other hand, close-up from the shoulders up. Photorealistic, natural daylight, editorial but honest, neutral black-white-grey palette, no extra text or logos."
+  },
+  {
+   "key": "apf-blend",
+   "aspect": "1:1",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+   ],
+   "prompt": "Use the reference images as the product. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Real-looking woman about 58, fair skin with a few sun spots, soft grey bob: natural fine lines and crow's feet, mature skin texture, no airbrushing, fresh and even skin. She blends the foundation into one cheek with her fingertips: the dots on the blended side have turned into her skin tone, the other side still shows white dots; the bottle stands on the vanity in front of her. Photorealistic, natural daylight, editorial but honest, neutral black-white-grey palette, no extra text or logos."
+  },
+  {
+   "key": "apf-video-call",
+   "aspect": "4:3",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+   ],
+   "prompt": "Use the reference images as the product. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Real-looking woman about 59, deep brown skin, cropped silver hair: natural fine lines and crow's feet, mature skin texture, no airbrushing, fresh and even skin. She is on a video call at a home desk by a window, laptop open, skin looks even and natural on camera; the bottle stands next to the laptop. Photorealistic, natural daylight, editorial but honest, neutral black-white-grey palette, no extra text or logos."
+  },
+  {
+   "key": "apf-two-bases",
+   "aspect": "4:3",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+   ],
+   "prompt": "Use the reference images as the product. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Two real-looking women two women, about 52 with light-medium skin and about 60 with medium-deep skin, natural fine lines and mature skin, no airbrushing. They stand side by side in soft daylight, each holding one bottle, friendly and natural. Photorealistic, natural daylight, editorial but honest, neutral black-white-grey palette, no extra text or logos."
+  },
+  {
+   "key": "apf-ugc-margaret",
+   "aspect": "1:1",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+   ],
+   "prompt": "Use the reference images as the product. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Real-looking woman about 61, light skin, short white hair: natural fine lines and crow's feet, mature skin texture, no airbrushing, fresh and even skin. She takes a casual phone selfie in her bathroom holding the bottle next to her face, slightly imperfect phone-camera look. Photorealistic, natural daylight, editorial but honest, neutral black-white-grey palette, no extra text or logos."
+  },
+  {
+   "key": "apf-refill-box",
+   "aspect": "4:3",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+   ],
+   "prompt": "Use the reference images as the product. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Real-looking woman about 57, golden-tan skin, dark hair with silver streaks: natural fine lines and crow's feet, mature skin texture, no airbrushing, fresh and even skin. She opens a plain black mailer box at her kitchen table: the monthly refill, the bottle lifted out in her hand, morning light. Photorealistic, natural daylight, editorial but honest, neutral black-white-grey palette, no extra text or logos."
+  },
+  {
+   "key": "apf-vanity",
+   "aspect": "1:1",
+   "refs": [
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
+    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+   ],
+   "prompt": "Use the reference images as the product. The product is EXACTLY the bottle in the reference images: a matte black cylindrical airless bottle, 103 mm tall and 32.5 mm wide (about 3.2:1), black pump head with a small white nozzle ring, the word SKINOFAB printed vertically in a white serif typeface (S at the top, B at the bottom), and under it only \"ADAPTIVE PEPTIDE FOUNDATION\", \"PDRN\" and \"30 mL / 1.01 fl oz\" in small white sans-serif. No other text, logo, colour or cap on the bottle. Keep its size true to a real hand. Still life: the bottle standing on a pale stone vanity next to a folded white towel and a small glass of water, soft morning window light, shallow depth of field. Photorealistic, natural daylight, editorial but honest, neutral black-white-grey palette, no extra text or logos."
+  }
+ ]
+}
