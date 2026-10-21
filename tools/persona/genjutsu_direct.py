@@ -53,6 +53,8 @@ def call(method, url, body=None):
 def parts_of(job):
     """Cut a long video into equal parts of at most 28 s (re-encoded, so every cut lands exactly)."""
     src = THEME / 'assets' / 'sf' / 'media' / job['video']
+    if not src.exists():                    # a fresh checkout has no built media: take the live copy from the CDN
+        src.parent.mkdir(parents=True, exist_ok=True); urllib.request.urlretrieve(CDN + job['video'], src)
     d = duration(src); n = max(1, math.ceil(d / MAX_PART))
     if n == 1: return src, d, [{'name': job['video'], 'url': CDN + job['video'], 'seconds': d, 'local': str(src)}]
     out, step = [], d / n
@@ -65,6 +67,9 @@ def parts_of(job):
     return src, d, out
 
 def push(files):
+    cfg = THEME / 'config.yml'                 # git-ignored; recreate it in a fresh checkout (no secrets in it)
+    if not cfg.exists():
+        cfg.write_text('development:\n  sass:\n    output_style: nested\n  store: https://skinofab.29next.store\n  theme_id: 34\n')
     if files: subprocess.run(['ntk', 'push', '-a', os.environ['NEXT_API_TOKEN'], *files], cwd=THEME, check=True, capture_output=True)
 
 plan, total = [], 0.0
@@ -122,3 +127,18 @@ for key, f in STATE.get('finals', {}).items():
     dst = KEEP / f'{key}.mp4'
     dst.write_bytes(Path(f['file']).read_bytes()); swaps[f['source']] = str(dst)
 swaps_p.write_text(json.dumps(swaps, indent=1)); print(len(swaps), 'videos mapped in', swaps_p)
+
+# put them live without a rebuild: new content-hashed names in the theme, every template reference rewritten, pushed
+import hashlib, re
+ren = {}
+for old, f in swaps.items():
+    data = Path(f).read_bytes()
+    new = re.sub(r'-[0-9a-f]{6}$', '', Path(old).stem) + '-g' + hashlib.md5(data).hexdigest()[:6] + '.mp4'
+    (THEME / 'assets' / 'sf' / 'media' / new).write_bytes(data); ren[old] = new
+changed = []
+for p in list(THEME.glob('templates/**/*.html')) + list(THEME.glob('partials/**/*.html')) + list(THEME.glob('layouts/*.html')):
+    s = p.read_text(encoding='utf-8', errors='surrogateescape'); n = s
+    for old, new in ren.items(): n = n.replace(old, new)
+    if n != s: p.write_text(n, encoding='utf-8', errors='surrogateescape'); changed.append(str(p.relative_to(THEME)))
+push([f'assets/sf/media/{n}' for n in ren.values()] + changed)
+print('live:', len(ren), 'videos,', len(changed), 'templates updated and pushed')
