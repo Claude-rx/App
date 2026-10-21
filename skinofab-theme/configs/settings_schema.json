@@ -116,16 +116,16 @@
         "help_text": "NEXT product shown wherever the design links to \"shea-butter-lip-gloss\": links, prices and add to cart. Also set this product's template to \"shea-butter-lip-gloss\"."
       },
       {
-        "name": "sf_p_smooche_blender",
+        "name": "sf_p_skinofab_blender",
         "type": "product",
-        "label": "Smooche Blender",
-        "help_text": "NEXT product shown wherever the design links to \"smooche-blender\": links, prices and add to cart. Also set this product's template to \"smooche-blender\"."
+        "label": "Skinofab Blender",
+        "help_text": "NEXT product shown wherever the design links to \"skinofab-blender\": links, prices and add to cart. Also set this product's template to \"skinofab-blender\"."
       },
       {
-        "name": "sf_p_smooche_gift_card",
+        "name": "sf_p_skinofab_gift_card",
         "type": "product",
-        "label": "Smooche Gift Card",
-        "help_text": "NEXT product shown wherever the design links to \"smooche-gift-card\": links, prices and add to cart. Also set this product's template to \"smooche-gift-card\"."
+        "label": "Skinofab Gift Card",
+        "help_text": "NEXT product shown wherever the design links to \"skinofab-gift-card\": links, prices and add to cart. Also set this product's template to \"skinofab-gift-card\"."
       },
       {
         "name": "sf_p_stick_and_stain",

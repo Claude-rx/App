@@ -1,8 +1,8 @@
 [
   {
     "title": "About SKINOFAB | American Beauty & Cosmetics Brand",
-    "slug": "about-smooche",
-    "template": "about-smooche",
+    "slug": "about-skinofab",
+    "template": "about-skinofab",
     "content": "<p>Rendered by the theme template.</p>",
     "meta_title": "About SKINOFAB | American Beauty & Cosmetics Brand",
     "meta_description": ""
@@ -369,24 +369,24 @@
   },
   {
     "title": "Collaborations",
-    "slug": "smooche-collaborations",
-    "template": "smooche-collaborations",
+    "slug": "skinofab-collaborations",
+    "template": "skinofab-collaborations",
     "content": "<p>Rendered by the theme template.</p>",
     "meta_title": "Collaborations",
     "meta_description": ""
   },
   {
     "title": "SKINOFAB - How To Use",
-    "slug": "smooche-how-to-use",
-    "template": "smooche-how-to-use",
+    "slug": "skinofab-how-to-use",
+    "template": "skinofab-how-to-use",
     "content": "<p>Rendered by the theme template.</p>",
     "meta_title": "SKINOFAB - How To Use",
     "meta_description": ""
   },
   {
     "title": "SKINOFAB VIP Sign-up",
-    "slug": "smoochevip",
-    "template": "smoochevip",
+    "slug": "skinofabvip",
+    "template": "skinofabvip",
     "content": "<p>Rendered by the theme template.</p>",
     "meta_title": "SKINOFAB VIP Sign-up",
     "meta_description": ""

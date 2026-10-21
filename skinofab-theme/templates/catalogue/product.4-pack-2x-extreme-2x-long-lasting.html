@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 {% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
-{% block body_id %}{% firstof "lip-bestseller-duo-kit-save-on-top-products-smooche" %}{% endblock %}
+{% block body_id %}{% firstof "lip-bestseller-duo-kit-save-on-top-products-skinofab" %}{% endblock %}
 {% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
 {% block sf_head %}
 <link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
@@ -291,7 +291,7 @@
 
   --COLOR-INPUT-BG: #ffffff;
 
-  --COLOR-ACCENT: #df8096;
+  --COLOR-ACCENT: #000000;
   --COLOR-ACCENT-TEXT: #fff;
 
   --COLOR-BORDER: #f7f7f7;
@@ -302,13 +302,13 @@
   --COLOR-BORDER-LIGHTEN-DARKEN: #ababab;
   --COLOR-BORDER-HAIRLINE: #f7f7f7;
 
-  --COLOR-SALE-BG: #df8096;
+  --COLOR-SALE-BG: #000000;
   --COLOR-SALE-TEXT: #ffffff;
-  --COLOR-CUSTOM-BG: #df8096;
+  --COLOR-CUSTOM-BG: #000000;
   --COLOR-CUSTOM-TEXT: #ffffff;
   --COLOR-SOLD-BG: #000000;
   --COLOR-SOLD-TEXT: #ffffff;
-  --COLOR-SAVING-BG: #df8096;
+  --COLOR-SAVING-BG: #000000;
   --COLOR-SAVING-TEXT: #ffffff;
 
   --COLOR-WHITE-BLACK: fff;
@@ -316,7 +316,7 @@
   --COLOR-BLACK-WHITE-ALPHA-25: rgba(0, 0, 0, 0.25);--COLOR-DISABLED-GREY: rgba(21, 21, 21, 0.05);
   --COLOR-DISABLED-GREY-DARKEN: rgba(21, 21, 21, 0.45);
   --COLOR-ERROR: #D02E2E;
-  --COLOR-ERROR-BG: #f3cbcb;
+  --COLOR-ERROR-BG: #dfdfdf;
   --COLOR-SUCCESS: #56AD6A;
   --COLOR-SUCCESS-BG: #ECFEF0;
   --COLOR-WARN: #ECBD5E;
@@ -466,7 +466,7 @@
         cart_url: "\/cart",
         cart_add_url: "\/cart\/add",
         cart_change_url: "\/cart\/change",
-        shop_url: "https:\/\/smooche.com",
+        shop_url: "https:\/\/skinofab.com",
         searchUrl: '/search',
         predictiveSearchUrl: '/search/suggest',
         product_recommendations_url: "\/recommendations\/products"
@@ -476,7 +476,7 @@
         smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
         no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
         swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
-        base: "//smooche.com/cdn/shop/t/76/assets/"
+        base: "//skinofab.com/cdn/shop/t/76/assets/"
       },
       strings: {
         add_to_cart: "Add to Cart",
@@ -553,13 +553,13 @@
     window.isHeaderTransparent = false;
     window.stickyHeaderHeight = 60;
     window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
-    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/smooche-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/skinofab-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
         @media screen and (max-width: 767px) {
         .product-single__details {
           overflow: ;
         }
         }
-      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Smooche","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Smooche","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
+      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Skinofab","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Skinofab","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
         #shopify-buyer-consent {
   margin-top: 1em;
   display: inline-block;
@@ -583,12 +583,12 @@
   box-shadow: none;
 }
 
-      </style><script defer="defer" src="{{ 'sf/js/smooche-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
+      </style><script defer="defer" src="{{ 'sf/js/skinofab-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
     #alia-popup-root-alia-qqoyyurlj3kbg51i {
       z-index: 999999 !important;
     }
   </style><script id="kaching-bundles-translations" type="application/json">
-    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
+    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
   </script><script class="kaching-bundles-product" data-main="true" data-product-id="8237782663324" type="application/json">
     {
       "id": 8237782663324,
@@ -684,76 +684,76 @@
 <div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--20029866410140__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--20029866410140__main">
 <div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="34925741801628" data-media-id="template--20029866410140__main-34925741801628" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866410140__main-34925741801628"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — product photo | Smooche" class="is-loading img-object-cover" data-image-id="34925741801628" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-1080w-8715ef.png'|asset_url }}" srcset="{{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-753w-01997d.png'|asset_url }} 753w, {{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-1080w-bb66ed.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — product photo | Skinofab" class="is-loading img-object-cover" data-image-id="34925741801628" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-1080w-8715ef.png'|asset_url }}" srcset="{{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-753w-01997d.png'|asset_url }} 753w, {{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-1080w-bb66ed.png'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34925744685212" data-media-id="template--20029866410140__main-34925744685212" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866410140__main-34925744685212"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — before and after results | Smooche" class="is-loading img-object-cover" data-image-id="34925744685212" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-1080w-1ed2d0.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-753w-dbf4b3.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-1080w-36e600.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — before and after results | Skinofab" class="is-loading img-object-cover" data-image-id="34925744685212" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-1080w-1ed2d0.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-753w-dbf4b3.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-1080w-36e600.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34925744717980" data-media-id="template--20029866410140__main-34925744717980" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866410140__main-34925744717980"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — ingredients and formula | Smooche" class="is-loading img-object-cover" data-image-id="34925744717980" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-5312c8.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-753w-ae97b9.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-f176ba.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — ingredients and formula | Skinofab" class="is-loading img-object-cover" data-image-id="34925744717980" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-5312c8.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-753w-ae97b9.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-f176ba.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34925744783516" data-media-id="template--20029866410140__main-34925744783516" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866410140__main-34925744783516"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — how to use | Smooche" class="is-loading img-object-cover" data-image-id="34925744783516" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-1080w-98ddb3.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-753w-1e1a49.png'|asset_url }} 753w, {{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-1080w-27e57a.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — how to use | Skinofab" class="is-loading img-object-cover" data-image-id="34925744783516" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-1080w-98ddb3.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-753w-1e1a49.png'|asset_url }} 753w, {{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-1080w-27e57a.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34925745275036" data-media-id="template--20029866410140__main-34925745275036" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866410140__main-34925745275036"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="34925745275036" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-1080w-ce9477.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-753w-c609c3.png'|asset_url }} 753w, {{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-1080w-cc0d72.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34925745275036" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-1080w-ce9477.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-753w-c609c3.png'|asset_url }} 753w, {{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-1080w-cc0d72.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34925744816284" data-media-id="template--20029866410140__main-34925744816284" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866410140__main-34925744816284"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="34925744816284" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-7f44bc.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-753w-633ac7.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-1ea1d2.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34925744816284" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-7f44bc.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-753w-633ac7.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-1ea1d2.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34925745045660" data-media-id="template--20029866410140__main-34925745045660" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866410140__main-34925745045660"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="34925745045660" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-fd0852.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-753w-fe9a63.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-7fe8a6.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34925745045660" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-fd0852.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-753w-fe9a63.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-7fe8a6.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34925744652444" data-media-id="template--20029866410140__main-34925744652444" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866410140__main-34925744652444"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="34925744652444" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-1080w-53ed36.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-753w-59c62c.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-1080w-f72221.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34925744652444" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-1080w-53ed36.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-753w-59c62c.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-1080w-f72221.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 </div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="34925741801628" data-thumbnail-id="template--20029866410140__main-34925741801628"><a aria-label="Bestseller Duo Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — product photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-178w-eb0afb.png'|asset_url }}" srcset="{{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-1080w-bb66ed.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — product photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-178w-eb0afb.png'|asset_url }}" srcset="{{ 'sf/img/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-1080w-bb66ed.png'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34925744685212" data-thumbnail-id="template--20029866410140__main-34925744685212"><a aria-label="Bestseller Duo Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — before and after results | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-178w-3016ec.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-1080w-36e600.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — before and after results | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-178w-3016ec.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-1080w-36e600.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34925744717980" data-thumbnail-id="template--20029866410140__main-34925744717980"><a aria-label="Bestseller Duo Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — ingredients and formula | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-178w-d6ebb8.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-f176ba.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — ingredients and formula | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-178w-d6ebb8.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-f176ba.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34925744783516" data-thumbnail-id="template--20029866410140__main-34925744783516"><a aria-label="Bestseller Duo Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — how to use | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-178w-66cb09.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-1080w-27e57a.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — how to use | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-178w-66cb09.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-1080w-27e57a.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34925745275036" data-thumbnail-id="template--20029866410140__main-34925745275036"><a aria-label="Bestseller Duo Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-178w-c0cba7.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-1080w-cc0d72.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-178w-c0cba7.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-1080w-cc0d72.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34925744816284" data-thumbnail-id="template--20029866410140__main-34925744816284"><a aria-label="Bestseller Duo Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-178w-989547.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-1ea1d2.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-178w-989547.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-1ea1d2.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34925745045660" data-thumbnail-id="template--20029866410140__main-34925745045660"><a aria-label="Bestseller Duo Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-178w-7a3504.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-7fe8a6.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-178w-7a3504.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-7fe8a6.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34925744652444" data-thumbnail-id="template--20029866410140__main-34925744652444"><a aria-label="Bestseller Duo Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-178w-30143b.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-1080w-f72221.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Bestseller Duo Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-178w-30143b.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-1080w-f72221.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div></div></div>
 <div class="product-single__details" data-collapsible-single="" id="product_details">
 <div class="form__wrapper" data-product-info="">
@@ -831,21 +831,21 @@
 </span>
 </div></div>
 </div>
-<smooche-installments data-currency="USD" data-price="5900" id="afterpay" style="display:block">
-<span>or 4 interest-free payments of <strong>{% include 'partials/sf_price.html' with p=product quarter=1 %}</strong> with <img alt="Afterpay" height="21" src="{{ 'sf/img/AP_logo_badge_6328x2204_blackmint_png-ced85f.png'|asset_url }}" width="60"/></span>
-</smooche-installments>
-<script defer="" src="{{ 'sf/js/smooche-installments-0dba32.js'|asset_url }}"></script>
+<skinofab-installments data-currency="USD" data-price="5900" id="afterpay" style="display:block">
+<span>or 4 interest-free payments of <strong>{% include 'partials/sf_price.html' with p=product %}</strong> with <img alt="Afterpay" height="21" src="{{ 'sf/img/AP_logo_badge_6328x2204_blackmint_png-ced85f.png'|asset_url }}" width="60"/></span>
+</skinofab-installments>
+<script defer="" src="{{ 'sf/js/skinofab-installments-0dba32.js'|asset_url }}"></script>
 <div class="product__block" style="--PBB:16px;">
 <div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.95); --bg: rgba(0,0,0,0);"><div class="product__icon icon-stroke" style="--icon-size: 26px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
-<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="52" loading="eager" sizes="26px" src="{{ 'sf/img/icons_smooche_new_21-52w-641e50.svg'|asset_url }}" srcset="{{ 'sf/img/icons_smooche_new_21-500w-35d142.svg'|asset_url }} 500w" style="" width="52"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="52" loading="eager" sizes="26px" src="{{ 'sf/img/icons_skinofab_new_21-52w-641e50.svg'|asset_url }}" srcset="{{ 'sf/img/icons_skinofab_new_21-500w-35d142.svg'|asset_url }} 500w" style="" width="52"/>
 </figure></div></div><div class="product__icon__text"><p>Get <strong>instantly</strong> fuller lips</p></div></div>
 </div><div class="product__block" style="--PBB:16px;">
 <div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.95); --bg: ;"><div class="product__icon icon-stroke" style="--icon-size: 26px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
-<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="52" loading="eager" sizes="26px" src="{{ 'sf/img/icons_smooche_new_22-52w-01b2d5.svg'|asset_url }}" srcset="{{ 'sf/img/icons_smooche_new_22-500w-0e95d5.svg'|asset_url }} 500w" style="" width="52"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="52" loading="eager" sizes="26px" src="{{ 'sf/img/icons_skinofab_new_22-52w-01b2d5.svg'|asset_url }}" srcset="{{ 'sf/img/icons_skinofab_new_22-500w-0e95d5.svg'|asset_url }} 500w" style="" width="52"/>
 </figure></div></div><div class="product__icon__text"><p>The best of <strong>both worlds</strong></p></div></div>
 </div><div class="product__block" style="--PBB:20px;">
 <div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.95); --bg: ;"><div class="product__icon icon-stroke" style="--icon-size: 26px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
-<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="52" loading="eager" sizes="26px" src="{{ 'sf/img/icons_smooche_new_26-52w-788ba3.svg'|asset_url }}" srcset="{{ 'sf/img/icons_smooche_new_26-500w-cb6447.svg'|asset_url }} 500w" style="" width="52"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="52" loading="eager" sizes="26px" src="{{ 'sf/img/icons_skinofab_new_26-52w-788ba3.svg'|asset_url }}" srcset="{{ 'sf/img/icons_skinofab_new_26-500w-cb6447.svg'|asset_url }} 500w" style="" width="52"/>
 </figure></div></div><div class="product__icon__text"><p><strong>Approved </strong>by dermatologists</p></div></div>
 </div><div class="kopstorm_form1 product__block variant__labels--hide btn--half" data-form-wrapper="" style="--PBB:20px;">{% firstof product.children.first.pk product.pk as sf_atc_63 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_63 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866410140__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
 <input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
@@ -1028,7 +1028,7 @@
       }
     }
 
-    window.smoocheCustomerCountry = countryCode;
+    window.skinofabCustomerCountry = countryCode;
     updateShippingUspText();
   }
 
@@ -1051,7 +1051,7 @@
   // US delivery estimate when the shopper is in the US and the current variant
   // has stock at a US fulfillment location.
   function updateShippingUspText(variantId) {
-    const isUsCustomer = window.smoocheCustomerCountry === 'US';
+    const isUsCustomer = window.skinofabCustomerCountry === 'US';
 
     const block = document.querySelector('[data-shipping-usp]');
     const uspText = block ? document.getElementById('shippingUspText') : null;
@@ -1235,7 +1235,7 @@
                   }
 
                  .video-slider .swiper-pagination-bullet-active {
-                background: #cc949b!important;
+                background: #b0b0b0!important;
                 }
                   .swiper-pagination {
                    position: relative!important;
@@ -1251,7 +1251,7 @@
                 }
 
                   .swiper-button-next_Videoslider {
-                background: #cc949b!important;
+                background: #b0b0b0!important;
                 color: #ffffff!important;
                     border-radius: 500px;
                     width: 27px;
@@ -1287,7 +1287,7 @@
                 }
 
                     .swiper-button-prev_Videoslider {
-                background: #cc949b!important;
+                background: #b0b0b0!important;
                 color: #ffffff!important;
                     border-radius: 500px;
                     width: 27px;
@@ -1596,7 +1596,7 @@ draggable: false,
                   position: relative;
                   margin: 0px !important;
                   border-radius: 500px;
-                  background: #df8096;
+                  background: #000000;
                   width: 27px;
                   height: 27px;left: auto;
                   right: auto;
@@ -1606,7 +1606,7 @@ draggable: false,
                   position: relative;
                   margin: 0px !important;
                   border-radius: 500px;
-                  background: #d9939b;
+                  background: #b6b6b6;
                   width: 27px;
                   height: 27px;left: auto;
                   right: auto;
@@ -1688,10 +1688,10 @@ draggable: false,
                   }
 
                       .UpsellSlider .product__badge__item {
-                    background: #f6ddea!important;
+                    background: #eaeaea!important;
                     color: #000000!important;
                     border: 0px solid!important;
-                          border-color: #cc939b!important;
+                          border-color: #b0b0b0!important;
                   }
                 </style>
 <div class="upsells upsellstemplate--20029866410140__main">
@@ -1834,7 +1834,7 @@ draggable: false,
                 </script>
 </div>
 </div><script data-product-json="" id="ProductJson-template--20029866410140__main" type="application/json">
-      {"id":8237782663324,"title":"Bestseller Duo Kit","handle":"4-pack-2x-extreme-2x-long-lasting","description":"\u003cp\u003eTwo of Smooche's most-loved products, bundled into one unbeatable deal. This kit pairs our viral Color Changing Foundation with the Extreme Lip Plumper for a complete face look — adaptive coverage that matches your skin tone, plus plump, glossy lips in seconds. Everything you need, nothing you don't.\u003c\/p\u003e","published_at":"2024-11-09T00:15:29-05:00","created_at":"2024-08-19T00:25:55-04:00","vendor":"Smooche","type":"","tags":["category_lips"],"price":5900,"price_min":5900,"price_max":5900,"available":true,"price_varies":false,"compare_at_price":15600,"compare_at_price_min":15600,"compare_at_price_max":15600,"compare_at_price_varies":false,"variants":[{"id":44708866818204,"title":"Transparent","option1":"Transparent","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Bestseller Duo Kit - Transparent","public_title":"Transparent","options":["Transparent"],"price":5900,"weight":0,"compare_at_price":15600,"inventory_management":"shopify","barcode":null,"requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3.png","..\/assets\/img\/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-814w-487eea.jpg","..\/assets\/img\/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-5312c8.jpg","..\/assets\/img\/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-178w-66cb09.png","..\/assets\/img\/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-178w-c0cba7.png","..\/assets\/img\/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-7f44bc.jpg","..\/assets\/img\/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-fd0852.jpg","..\/assets\/img\/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-178w-30143b.png"],"featured_image":"..\/assets\/img\/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3.png","options":["Color"],"media":[{"alt":"Bestseller Duo Kit — product photo | Smooche","id":34925741801628,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3.png","width":1080},{"alt":"Bestseller Duo Kit — before and after results | Smooche","id":34925744685212,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-814w-487eea.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-814w-487eea.jpg","width":1080},{"alt":"Bestseller Duo Kit — ingredients and formula | Smooche","id":34925744717980,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-5312c8.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-5312c8.jpg","width":1080},{"alt":"Bestseller Duo Kit — how to use | Smooche","id":34925744783516,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-178w-66cb09.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-178w-66cb09.png","width":1080},{"alt":"Bestseller Duo Kit — lifestyle photo | Smooche","id":34925745275036,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-178w-c0cba7.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-178w-c0cba7.png","width":1080},{"alt":"Bestseller Duo Kit — lifestyle photo | Smooche","id":34925744816284,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-7f44bc.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-7f44bc.jpg","width":1080},{"alt":"Bestseller Duo Kit — lifestyle photo | Smooche","id":34925745045660,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-fd0852.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-fd0852.jpg","width":1080},{"alt":"Bestseller Duo Kit — lifestyle photo | Smooche","id":34925744652444,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-178w-30143b.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-178w-30143b.png","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cp\u003eTwo of Smooche's most-loved products, bundled into one unbeatable deal. This kit pairs our viral Color Changing Foundation with the Extreme Lip Plumper for a complete face look — adaptive coverage that matches your skin tone, plus plump, glossy lips in seconds. Everything you need, nothing you don't.\u003c\/p\u003e"}
+      {"id":8237782663324,"title":"Bestseller Duo Kit","handle":"4-pack-2x-extreme-2x-long-lasting","description":"\u003cp\u003eTwo of Skinofab's most-loved products, bundled into one unbeatable deal. This kit pairs our viral Color Changing Foundation with the Extreme Lip Plumper for a complete face look — adaptive coverage that matches your skin tone, plus plump, glossy lips in seconds. Everything you need, nothing you don't.\u003c\/p\u003e","published_at":"2024-11-09T00:15:29-05:00","created_at":"2024-08-19T00:25:55-04:00","vendor":"Skinofab","type":"","tags":["category_lips"],"price":5900,"price_min":5900,"price_max":5900,"available":true,"price_varies":false,"compare_at_price":15600,"compare_at_price_min":15600,"compare_at_price_max":15600,"compare_at_price_varies":false,"variants":[{"id":44708866818204,"title":"Transparent","option1":"Transparent","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Bestseller Duo Kit - Transparent","public_title":"Transparent","options":["Transparent"],"price":5900,"weight":0,"compare_at_price":15600,"inventory_management":"shopify","barcode":null,"requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3.png","..\/assets\/img\/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-814w-487eea.jpg","..\/assets\/img\/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-5312c8.jpg","..\/assets\/img\/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-178w-66cb09.png","..\/assets\/img\/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-178w-c0cba7.png","..\/assets\/img\/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-7f44bc.jpg","..\/assets\/img\/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-fd0852.jpg","..\/assets\/img\/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-178w-30143b.png"],"featured_image":"..\/assets\/img\/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3.png","options":["Color"],"media":[{"alt":"Bestseller Duo Kit — product photo | Skinofab","id":34925741801628,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3.png","width":1080},{"alt":"Bestseller Duo Kit — before and after results | Skinofab","id":34925744685212,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-814w-487eea.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-814w-487eea.jpg","width":1080},{"alt":"Bestseller Duo Kit — ingredients and formula | Skinofab","id":34925744717980,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-5312c8.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1080w-5312c8.jpg","width":1080},{"alt":"Bestseller Duo Kit — how to use | Skinofab","id":34925744783516,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-178w-66cb09.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-178w-66cb09.png","width":1080},{"alt":"Bestseller Duo Kit — lifestyle photo | Skinofab","id":34925745275036,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-178w-c0cba7.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-178w-c0cba7.png","width":1080},{"alt":"Bestseller Duo Kit — lifestyle photo | Skinofab","id":34925744816284,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-7f44bc.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1080w-7f44bc.jpg","width":1080},{"alt":"Bestseller Duo Kit — lifestyle photo | Skinofab","id":34925745045660,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-fd0852.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1080w-fd0852.jpg","width":1080},{"alt":"Bestseller Duo Kit — lifestyle photo | Skinofab","id":34925744652444,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-178w-30143b.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-178w-30143b.png","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cp\u003eTwo of Skinofab's most-loved products, bundled into one unbeatable deal. This kit pairs our viral Color Changing Foundation with the Extreme Lip Plumper for a complete face look — adaptive coverage that matches your skin tone, plus plump, glossy lips in seconds. Everything you need, nothing you don't.\u003c\/p\u003e"}
     </script>
 <script id="ModelJson-template--20029866410140__main" type="application/json">
       []
@@ -2117,7 +2117,7 @@ margin-top: 5px;
     
   
   #testimonials .fa-star:before {
-    color: #df8096!important;
+    color: #000000!important;
 }
 .imagewrap {
   width: 100%;
@@ -2142,7 +2142,7 @@ margin: 0px;
 }
 #testimonials .swiper-button-prev {
 left: 0px !important;
-background: #cc949b!important;
+background: #b0b0b0!important;
 color: #ffffff!important;
     border-radius: 500px;
     width: 35px;
@@ -2159,7 +2159,7 @@ max-width: 100%;
 }
 #testimonials   .swiper-button-next {
 right: 0px !important;
-background: #cc949b!important;
+background: #b0b0b0!important;
 color: #ffffff!important;
     border-radius: 500px;
     width: 35px;
@@ -2264,7 +2264,7 @@ gap: 10px;
 
 #testimonials   .fa-star:before {
 content: "\f005";
-color: #fb6c83;
+color: #000000;
 }
   
 #testimonials   #name p {
@@ -2387,11 +2387,11 @@ color: white !important;
   }
 
 #testimonials  svg  path {
-    fill: #df8096;
+    fill: #000000;
   }
 
   .read-toggle {
-    color: #df8096!important;
+    color: #000000!important;
   }
 </style>
 <section class="section" id="testimonials">
@@ -2408,11 +2408,11 @@ color: white !important;
 <div class="test_header">
 <h5>Danna, 25</h5>
 <div class="test_stars">
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
 </div>
 </div>
 <p class="testimonial_text">Wow!!! This actually works. I tried the extreme and the normal one, and i love them both. I use the extreme one whenever I need some extra fuller lips, and the normal for daily wear. I always keep them in my bag so I’m ready for any situation. I 100% recommend it girlsss.</p>
@@ -2428,14 +2428,14 @@ color: white !important;
 <div class="test_header">
 <h5>Irem, 21</h5>
 <div class="test_stars">
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
 </div>
 </div>
-<p class="testimonial_text">I used it on my first date with my now-boyfriend. I remember so vividly how he complimented me on how good my lips looked. Best feeling ever. And yes... we kissed :) Now I obviously cannot ever go back. I love smooche for making lip plumpers that actually work! please never stop making these... &lt;3</p>
+<p class="testimonial_text">I used it on my first date with my now-boyfriend. I remember so vividly how he complimented me on how good my lips looked. Best feeling ever. And yes... we kissed :) Now I obviously cannot ever go back. I love skinofab for making lip plumpers that actually work! please never stop making these... &lt;3</p>
 <button class="read-toggle">Read More</button>
 </div>
 </div>
@@ -2448,11 +2448,11 @@ color: white !important;
 <div class="test_header">
 <h5>Katie, 22</h5>
 <div class="test_stars">
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
 </div>
 </div>
 <p class="testimonial_text">My whole life I had struggled with small lips and i almost got lip fillers done, but i wanted to try this first - and wow. I am so happy I never got fillers, because this is so much better. It looks much more natural and is safe and natural!!</p>
@@ -2468,11 +2468,11 @@ color: white !important;
 <div class="test_header">
 <h5>Melissa, 26</h5>
 <div class="test_stars">
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
-<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#df8096" fill="#df8096" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
+<svg class="" height="512" style="enable-background:new 0 0 512 512" version="1.1" viewbox="0 0 512 512" width="512" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0"><g><path class="" d="m512 197.816-186.039-12.231L255.898 9.569l-70.063 176.016L0 197.816l142.534 121.026-46.772 183.589L255.898 401.21l160.137 101.221-46.772-183.589z" data-original="#000000" fill="#000000" opacity="1"></path></g></svg>
 </div>
 </div>
 <p class="testimonial_text">I saw it on Instagram and I am so thankful, lol. I've tried so many lip products and none of them worked, but this one is different. My lips look fuller and more defined, it's crazy. I'm honestly shocked at how effective and easy it is. This is now a must-have in my beauty routine. I take it literally everywhere.</p>
@@ -2485,13 +2485,13 @@ color: white !important;
 <div class="swiper-scrollbar swiper-scrollbar_Testimonials" style="margin-top: 30px !important;"></div>
 </div>
 </section>
-<script data-smooche-slider-config="" type="application/json">{"selector": ".Testimonials", "next": ".swiper-button-next_Testimonials", "prev": ".swiper-button-prev_Testimonials", "scrollbar": ".swiper-scrollbar_Testimonials", "options": {"slidesPerView": 4, "spaceBetween": 20, "breakpoints": {"1": {"slidesPerView": 1.3, "spaceBetween": 13}, "767": {"slidesPerView": 2.5}, "1000": {"slidesPerView": 4}}}}</script>
-<script defer="" src="{{ 'sf/js/smooche-section-sliders-7fe587.js'|asset_url }}"></script>
+<script data-skinofab-slider-config="" type="application/json">{"selector": ".Testimonials", "next": ".swiper-button-next_Testimonials", "prev": ".swiper-button-prev_Testimonials", "scrollbar": ".swiper-scrollbar_Testimonials", "options": {"slidesPerView": 4, "spaceBetween": 20, "breakpoints": {"1": {"slidesPerView": 1.3, "spaceBetween": 13}, "767": {"slidesPerView": 2.5}, "1000": {"slidesPerView": 4}}}}</script>
+<script defer="" src="{{ 'sf/js/skinofab-section-sliders-7fe587.js'|asset_url }}"></script>
 </div><div class="shopify-section supports-transparent-header" id="shopify-section-template--20029866410140__section_image_with_text_xdx7DM">
 <style data-shopify="">#ImageWithText--template--20029866410140__section_image_with_text_xdx7DM {
     --PT: 20px;
     --PB: 20px;
---highlight-color: #df8096;--highlight-text-color: #ffffff;}
+--highlight-color: #000000;--highlight-text-color: #ffffff;}
 
   #ImageWithText--template--20029866410140__section_image_with_text_xdx7DM .image-with-text__heading {
     --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 1.3);
@@ -2504,14 +2504,14 @@ color: white !important;
 <img alt="plumper.jpg" class="is-loading" height="1080" loading="lazy" sizes="(min-width: 1024px) calc((1440px - 120px) * 0.5), (min-width: 768px) calc((100vw - 40px) * 0.5), calc(100vw - 40px)" src="{{ 'sf/img/plumper-1080w-7cd6e3.jpg'|asset_url }}" srcset="{{ 'sf/img/plumper-814w-12d7e9.jpg'|asset_url }} 814w, {{ 'sf/img/plumper-1080w-c36e48.jpg'|asset_url }} 1080w, {{ 'sf/img/plumper-1080w-c36e48.jpg'|asset_url }} 1080w" width="1080"/>
 </figure></div><div class="image-with-text__content text-left">
 <div class="image-with-text__content-items"><h3 class="image-with-text__heading h2 text-highlight-wrapper text-highlight-wrapper--highlight">
-<span class="text-highlight__break">Fuller lips, <span class="text-highlight" style="--icon-url: none;--icon-color: #df8096;">naturally</span></span></h3><div class="image-with-text__text"><p>Discover the secret to naturally fuller lips with our lip plumpers. Crafted from natural ingredients, these plumpers enhance your lips' natural volume and definition. Enjoy a hydrated, nourished pout that feels as good as it looks, all without the use of harsh chemicals. Embrace the beauty of nature and achieve the full, stunning lips you've always dreamed of.</p></div>
+<span class="text-highlight__break">Fuller lips, <span class="text-highlight" style="--icon-url: none;--icon-color: #000000;">naturally</span></span></h3><div class="image-with-text__text"><p>Discover the secret to naturally fuller lips with our lip plumpers. Crafted from natural ingredients, these plumpers enhance your lips' natural volume and definition. Enjoy a hydrated, nourished pout that feels as good as it looks, all without the use of harsh chemicals. Embrace the beauty of nature and achieve the full, stunning lips you've always dreamed of.</p></div>
 <div id="gif_wrapper">
 <div id="gif">
-<img src="{{ 'sf/img/icons_smooche_new_21_500x500-e0e4fc.svg'|asset_url }}" style="width: 36px!important;"/>
+<img src="{{ 'sf/img/icons_skinofab_new_21_500x500-e0e4fc.svg'|asset_url }}" style="width: 36px!important;"/>
 <div><p>Instant result</p></div>
 </div>
 <div id="gif">
-<img src="{{ 'sf/img/icons_smooche_new_26_500x500-ea3844.svg'|asset_url }}" style="width: 36px!important;"/>
+<img src="{{ 'sf/img/icons_skinofab_new_26_500x500-ea3844.svg'|asset_url }}" style="width: 36px!important;"/>
 <div><p>100% natural</p></div>
 </div>
 </div>
@@ -2521,7 +2521,7 @@ color: white !important;
 </div>
 </section>
 </div><div class="shopify-section" id="shopify-section-template--20029866410140__kopstorm_1_REVPeb"><style>
-   #smooche_1 {
+   #skinofab_1 {
     margin: 0 auto;
     border-radius: var(--radius);
         margin-top: 20px;
@@ -2531,7 +2531,7 @@ padding-bottom: 50px;
      
   }
   @media screen and (max-width: 767px) {
-  #smooche_1 {
+  #skinofab_1 {
             margin-top: 20px;
 margin-bottom: 20px;
 padding-top: 50px;      
@@ -2539,25 +2539,25 @@ padding-bottom: 50px;
   }
   }
 
-  #smooche_1 .gridcell h1, #smooche_1 .gridcell h2, #smooche_1 .gridcell h3, #smooche_1 .gridcell h4, #smooche_1 .gridcell h5, #smooche_1 .gridcell h6 {
+  #skinofab_1 .gridcell h1, #skinofab_1 .gridcell h2, #skinofab_1 .gridcell h3, #skinofab_1 .gridcell h4, #skinofab_1 .gridcell h5, #skinofab_1 .gridcell h6 {
     color: unset!important;
   }
   #headingmain h1, #headingmain h2, #headingmain h3, #headingmain h4, #headingmain h5, #headingmain h6 {
     color: unset!important;
   }
-  .smooche_1 {
+  .skinofab_1 {
     color: #000000!important;
     background: #f7f7f7!important;
   }
 
-  #smooche_1 p {
+  #skinofab_1 p {
     margin: 0 !important;
     line-height: 1.25!important;
     font-size: 14px!important;
 }
 </style>
 <div class="wrapper">
-<section class="smooche_1" id="smooche_1">
+<section class="skinofab_1" id="skinofab_1">
 <div class="wrapper">
 <div class="wrappit desktop">
 <div id="headingmain">
@@ -2577,7 +2577,7 @@ padding-bottom: 50px;
 <img alt="" class="image" src="{{ 'sf/img/A29203DF-5B9B-4AE5-9ACB-29FC6108C19D_1000x1000-c2e5ca.jpg'|asset_url }}"/>
 <div class="content">
 <h4 class="headingupper"><h5>Wait for 5-10 minutes</h5></h4>
-<p class="paragraph"></p><p>Let smooche do its magic</p>
+<p class="paragraph"></p><p>Let skinofab do its magic</p>
 </div>
 </div>
 <div class="gridcell">
@@ -2607,7 +2607,7 @@ padding-bottom: 50px;
 <img alt="" class="image" src="{{ 'sf/img/A29203DF-5B9B-4AE5-9ACB-29FC6108C19D_1000x1000-c2e5ca.jpg'|asset_url }}"/>
 <div class="content">
 <h4 class="headingupper"><h5>Wait for 5-10 minutes</h5></h4>
-<p></p><p>Let smooche do its magic</p>
+<p></p><p>Let skinofab do its magic</p>
 </div>
 </div>
 <div class="gridcell">
@@ -2821,7 +2821,7 @@ left: 0px;    border: 1px solid #e7e9ec;
 
 #percentage1 {
   font-size: 100px!important;
-  color: #df8096!important;
+  color: #000000!important;
 }
 @media screen and (max-width: 767px) {
 #percentage1 {
@@ -2898,19 +2898,19 @@ left: 0px;    border: 1px solid #e7e9ec;
 </div>
 </div>
 </div>
-</div><div class="shopify-section" id="shopify-section-template--20029866410140__kopstorm_compare_LQNYXd"><section class="shopify-section" id="shopify-section-template--18710562242803__smooche_compare"><style>
-.smooche_compare img{
+</div><div class="shopify-section" id="shopify-section-template--20029866410140__kopstorm_compare_LQNYXd"><section class="shopify-section" id="shopify-section-template--18710562242803__skinofab_compare"><style>
+.skinofab_compare img{
 width: 20px;
 height: 20px;
 }
 
-.smooche_compare .row2 img {
+.skinofab_compare .row2 img {
   max-height: 11px;
   width: auto;
   max-width: 100%;
 }
 
-.smooche_compare{
+.skinofab_compare{
 padding: 45px 0;
 display: flex;
 flex-direction: column;
@@ -2919,12 +2919,12 @@ background: #f7f7f7;
 
 }
 
-.smooche_compare h3{
+.skinofab_compare h3{
 margin-bottom: 0;
 margin-top: 0;
 }
 
-.smooche_compare .column{
+.skinofab_compare .column{
 display: flex;
 flex-direction: column;
 padding: 0px;
@@ -2932,7 +2932,7 @@ width: 100%;
 margin-top: 25px;
 }
 
-.smooche_compare .row {
+.skinofab_compare .row {
 display: grid;
 margin: 0;
 justify-content: center;
@@ -2941,16 +2941,16 @@ grid-template-columns: 1fr 1fr 1fr 1fr;
 gap: 10px;
 }
 
-.smooche_compare .row2{
+.skinofab_compare .row2{
 border-bottom: 1px solid #000000;
 }
 
-.smooche_compare .row:not(:first-child){
+.skinofab_compare .row:not(:first-child){
 border-bottom: 1px solid #dadada;
 min-height: 50px;
 }
 
-.smooche_compare .row h4{
+.skinofab_compare .row h4{
 font-size: 14px;
 line-height: normal;
 display: flex;
@@ -2960,7 +2960,7 @@ height: 40px;
 justify-content: center!important;
 }
 
-.smooche_compare .row h5{
+.skinofab_compare .row h5{
 font-size: 14px;
 line-height: normal;
 margin-top: 0;
@@ -2968,33 +2968,33 @@ margin-bottom: 0;
 }
 
 
-.smooche_compare .row h4:not(:first-child){
+.skinofab_compare .row h4:not(:first-child){
 text-align: center;
 }
 
-.smooche_compare .row h4:not(:first-child){
+.skinofab_compare .row h4:not(:first-child){
 width: 100%;
 justify-content: center;
 }
 
-.smooche_compare h4:not(:first-child),
-.smooche_compare .row div:not(:first-child){    }
+.skinofab_compare h4:not(:first-child),
+.skinofab_compare .row div:not(:first-child){    }
 
-.smooche_compare .row h4:first-child,
-.smooche_compare .row h5:first-child{
+.skinofab_compare .row h4:first-child,
+.skinofab_compare .row h5:first-child{
 width: 100%;
 padding-right: 0;
 justify-content: start !important;
 }
 
-.smooche_compare .row h4,
-.smooche_compare .row h5{
+.skinofab_compare .row h4,
+.skinofab_compare .row h5{
 margin-top: 15px;
 margin-bottom: 15px;
 }
 
 
-.smooche_compare .row div{
+.skinofab_compare .row div{
 width: 100%;
 align-self: center;
 padding: 0 23px;
@@ -3002,16 +3002,16 @@ display: flex;    justify-content: center;
 }
 
 @media screen and (min-width: 768px) {
-.smooche_compare .row h4:not(:first-child) {
+.skinofab_compare .row h4:not(:first-child) {
 margin-left: 0;
 }
-.smooche_compare h3{
+.skinofab_compare h3{
 text-align: center;
 }
 }
 
 @media screen and (max-width: 768px) {
-smooche_compare .row {
+skinofab_compare .row {
 display: grid;
 margin: 0;
 justify-content: center;
@@ -3019,7 +3019,7 @@ grid-template-rows: auto;
 grid-template-columns: 2fr 1fr 1fr 1fr;
 gap: 10px;
 }
-.smooche_compare .row h4 {
+.skinofab_compare .row h4 {
 
 }
 }
@@ -3028,20 +3028,20 @@ gap: 10px;
     .row div:last-child {
       display: none!important;
     }
-    .smooche_compare .row {
+    .skinofab_compare .row {
     grid-template-columns: 1fr 1fr 1fr;
 }
   </style>
-<section class="smooche_compare">
+<section class="skinofab_compare">
 <div class="wrapper">
-<h2>Why smooche?</h2>
+<h2>Why skinofab?</h2>
 <div class="column">
 <div class="row row2">
 <h4>
 </h4>
 <h4>
   
-    smooche
+    skinofab
   
 </h4>
 <h4>
@@ -3157,7 +3157,7 @@ gap: 10px;
 </div>
 </li><li aria-haspopup="true" class="accordion__item accordion__item--padded" id="Accordion--text_qLhb3a">
 <button aria-controls="Accordions-item--4-template--20029866410140__section_accordions_k6qPrc" class="accordion__item__title" data-collapsible-trigger="">
-<span class="accordion__item__title__text">Are Smooche lip plumpers safe for sensitive skin?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<span class="accordion__item__title__text">Are Skinofab lip plumpers safe for sensitive skin?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--4-template--20029866410140__section_accordions_k6qPrc">
 <div class="accordion__item__text rte" data-collapsible-content=""><p>Absolutely! We've carefully formulated our lip plumpers to be suitable for all skin types, including sensitive skin. Our products are free from harsh chemicals and have been dermatologically tested. However, if you have particularly sensitive skin, we recommend doing a patch test before regular use.</p></div>
 </div>
@@ -3200,12 +3200,12 @@ gap: 10px;
 </div>
 </div></section>
 </div><div class="shopify-section" id="shopify-section-template--20029866410140__kopstorm_why_gcA7fQ"><style>
-.smooche-why-section {
+.skinofab-why-section {
   padding-top: 0px;
   padding-bottom: 0px;
 }
 
-.smooche-why-inner {
+.skinofab-why-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: var(--radius, 12px);
@@ -3213,14 +3213,14 @@ gap: 10px;
   min-height: 500px;
 }
 
-.smooche-why__image {
+.skinofab-why__image {
   background-size: cover;
   background-position: center;
   min-height: 350px;
   position: relative;
 }
 
-.smooche-why__content {
+.skinofab-why__content {
   background: #f7f7f7;
   padding: 50px;
   display: flex;
@@ -3228,31 +3228,31 @@ gap: 10px;
   justify-content: center;
 }
 
-.smooche-why__content .section__heading {
+.skinofab-why__content .section__heading {
   text-align: left;
   text-transform: none;
   margin: 0 0 30px 0;
 }
 
-.smooche-why__text {
+.skinofab-why__text {
   margin-bottom: 30px;
 }
 
-.smooche-why__text p {
+.skinofab-why__text p {
   margin: 0;
   font-size: 15px;
   line-height: 1.6;
   color: #555;
 }
 
-.smooche-why__features {
+.skinofab-why__features {
   display: flex;
   flex-direction: column;
   gap: 0;
   margin-bottom: 30px;
 }
 
-.smooche-why__feature {
+.skinofab-why__feature {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -3260,11 +3260,11 @@ gap: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.smooche-why__feature:last-child {
+.skinofab-why__feature:last-child {
   border-bottom: none;
 }
 
-.smooche-why__feature-icon {
+.skinofab-why__feature-icon {
   flex: 0 0 48px;
   width: 48px;
   height: 48px;
@@ -3276,113 +3276,113 @@ gap: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.smooche-why__feature-icon img {
+.skinofab-why__feature-icon img {
   width: 28px;
   height: 28px;
   display: block;
 }
 
-.smooche-why__feature-text {
+.skinofab-why__feature-text {
   flex: 1;
 }
 
-.smooche-why__feature-title {
+.skinofab-why__feature-title {
   font-weight: 700;
   font-size: 15px;
   color: #2D2D2D;
   margin-bottom: 2px;
 }
 
-.smooche-why__feature-desc {
+.skinofab-why__feature-desc {
   font-size: 14px;
   color: #666;
   line-height: 1.4;
 }
 
-.smooche-why__feature-desc p {
+.skinofab-why__feature-desc p {
   margin: 0;
 }
 
-.smooche-why__cta .btn {
+.skinofab-why__cta .btn {
   display: inline-block;
 }
 
 @media (min-width: 768px) {
-  .smooche-why-inner--square-image .smooche-why__image {
+  .skinofab-why-inner--square-image .skinofab-why__image {
     aspect-ratio: 1;
   }
-  .smooche-why__content {
+  .skinofab-why__content {
     padding: 60px;
   }
 }
 
 @media (max-width: 767px) {
-  .smooche-why-section {
+  .skinofab-why-section {
     padding-top: 0px;
     padding-bottom: 0px;
   }
-  .smooche-why-inner {
+  .skinofab-why-inner {
     grid-template-columns: 1fr;
   }
-  .smooche-why__image {
+  .skinofab-why__image {
     min-height: 280px;
   }
-  .smooche-why__content {
+  .skinofab-why__content {
     padding: 30px 24px;
   }
-  .smooche-why__content .section__heading {
+  .skinofab-why__content .section__heading {
     margin-bottom: 20px;
   }
-  .smooche-why__feature-icon {
+  .skinofab-why__feature-icon {
     flex: 0 0 42px;
     width: 42px;
     height: 42px;
   }
-  .smooche-why__feature-icon img {
+  .skinofab-why__feature-icon img {
     width: 24px;
     height: 24px;
   }
 }
 </style>
-<section class="smooche-why-section">
+<section class="skinofab-why-section">
 <div class="wrapper">
-<div class="smooche-why-inner">
-<div class="smooche-why__image" style='background-image: url("{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432_1500x1500-115756.jpg'|asset_url }}"); background-position: center center;'></div>
-<div class="smooche-why__content">
-<h2 class="section__heading h2">The smooche difference</h2>
-<div class="smooche-why__text">
+<div class="skinofab-why-inner">
+<div class="skinofab-why__image" style='background-image: url("{{ 'sf/img/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432_1500x1500-115756.jpg'|asset_url }}"); background-position: center center;'></div>
+<div class="skinofab-why__content">
+<h2 class="section__heading h2">The skinofab difference</h2>
+<div class="skinofab-why__text">
 <p><strong>Our passion for beauty and confidence speaks for itself.</strong></p>
 </div>
-<div class="smooche-why__features">
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Instant result" src="{{ 'sf/img/icons_smooche_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
+<div class="skinofab-why__features">
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Instant result" src="{{ 'sf/img/icons_skinofab_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
 </div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Instant result</div>
-<div class="smooche-why__feature-desc"><p>Always an instant effect</p></div>
-</div>
-</div>
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Trusted by 100,000+" src="{{ 'sf/img/icons_smooche_new_12_500x500-488fb2.svg'|asset_url }}"/>
-</div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Trusted by 100,000+</div>
-<div class="smooche-why__feature-desc"><p>Loved by so many others</p></div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Instant result</div>
+<div class="skinofab-why__feature-desc"><p>Always an instant effect</p></div>
 </div>
 </div>
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Ethical" src="{{ 'sf/img/icons_smooche_new_13_500x500-c4009e.svg'|asset_url }}"/>
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Trusted by 100,000+" src="{{ 'sf/img/icons_skinofab_new_12_500x500-488fb2.svg'|asset_url }}"/>
 </div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Ethical</div>
-<div class="smooche-why__feature-desc"><p>Cruelty free and vegan</p></div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Trusted by 100,000+</div>
+<div class="skinofab-why__feature-desc"><p>Loved by so many others</p></div>
+</div>
+</div>
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Ethical" src="{{ 'sf/img/icons_skinofab_new_13_500x500-c4009e.svg'|asset_url }}"/>
+</div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Ethical</div>
+<div class="skinofab-why__feature-desc"><p>Cruelty free and vegan</p></div>
 </div>
 </div>
 </div>
-<div class="smooche-why__cta">
+<div class="skinofab-why__cta">
 <a class="btn btn--dark" href="#product">Claim offer</a>
 </div>
 </div>
@@ -3410,7 +3410,7 @@ gap: 10px;
 <a class="loox-review-media-link" href="{% if settings.sf_p_4_pack_2x_extreme_2x_long_lasting %}{{ settings.sf_p_4_pack_2x_extreme_2x_long_lasting.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
 <img alt="Customer photo review of Bestseller Duo Kit" class="loox-review-image" decoding="async" height="1280" loading="lazy" src="{{ 'sf/img/FczAH4UDY_mid-67405b.jpg'|asset_url }}" width="720"/>
 </a>
-<p class="loox-review-body">I absolutely love the Smooche lip extreme it makes my lips look massive you don’t need lipstick just Smooche lip plump the volume it gives is amazing will be ordering more x</p>
+<p class="loox-review-body">I absolutely love the Skinofab lip extreme it makes my lips look massive you don’t need lipstick just Skinofab lip plump the volume it gives is amazing will be ordering more x</p>
 <p class="loox-review-metadata">
 <span class="loox-reviewer-name">Samantha O.</span>
 <span class="loox-review-rating">5/5</span>
@@ -3596,7 +3596,7 @@ It tingles so much you KNOW it's working! 🤔</p>
 </p>
 </article>
 <article class="loox-review" data-product-id="8237782663324" data-review-id="SclJIiDYe">
-<p class="loox-review-body">I am enjoying the Smoochie Lip Plumper</p>
+<p class="loox-review-body">I am enjoying the Skinofab Lip Plumper</p>
 <p class="loox-review-metadata">
 <span class="loox-reviewer-name">Marti T.</span>
 <span class="loox-review-rating">5/5</span>
@@ -4078,7 +4078,7 @@ It tingles so much you KNOW it's working! 🤔</p>
 </div>
 </div>
 </div>
-</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/smooche-cart-timer-b352c2.js'|asset_url }}"></script><script>
+</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/skinofab-cart-timer-b352c2.js'|asset_url }}"></script><script>
       // Function to update the price element with the new variant price
       function updateProductPrice(newPrice) {
         const priceElement = document.getElementById('productpricingnew');

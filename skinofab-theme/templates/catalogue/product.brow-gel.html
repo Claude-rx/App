@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 {% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
-{% block body_id %}{% firstof "fibre-brow-gel-for-fuller-brows-instantly-smooche" %}{% endblock %}
+{% block body_id %}{% firstof "fibre-brow-gel-for-fuller-brows-instantly-skinofab" %}{% endblock %}
 {% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
 {% block sf_head %}
 <link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
@@ -291,7 +291,7 @@
 
   --COLOR-INPUT-BG: #ffffff;
 
-  --COLOR-ACCENT: #df8096;
+  --COLOR-ACCENT: #000000;
   --COLOR-ACCENT-TEXT: #fff;
 
   --COLOR-BORDER: #f7f7f7;
@@ -302,13 +302,13 @@
   --COLOR-BORDER-LIGHTEN-DARKEN: #ababab;
   --COLOR-BORDER-HAIRLINE: #f7f7f7;
 
-  --COLOR-SALE-BG: #df8096;
+  --COLOR-SALE-BG: #000000;
   --COLOR-SALE-TEXT: #ffffff;
-  --COLOR-CUSTOM-BG: #df8096;
+  --COLOR-CUSTOM-BG: #000000;
   --COLOR-CUSTOM-TEXT: #ffffff;
   --COLOR-SOLD-BG: #000000;
   --COLOR-SOLD-TEXT: #ffffff;
-  --COLOR-SAVING-BG: #df8096;
+  --COLOR-SAVING-BG: #000000;
   --COLOR-SAVING-TEXT: #ffffff;
 
   --COLOR-WHITE-BLACK: fff;
@@ -316,7 +316,7 @@
   --COLOR-BLACK-WHITE-ALPHA-25: rgba(0, 0, 0, 0.25);--COLOR-DISABLED-GREY: rgba(21, 21, 21, 0.05);
   --COLOR-DISABLED-GREY-DARKEN: rgba(21, 21, 21, 0.45);
   --COLOR-ERROR: #D02E2E;
-  --COLOR-ERROR-BG: #f3cbcb;
+  --COLOR-ERROR-BG: #dfdfdf;
   --COLOR-SUCCESS: #56AD6A;
   --COLOR-SUCCESS-BG: #ECFEF0;
   --COLOR-WARN: #ECBD5E;
@@ -466,7 +466,7 @@
         cart_url: "\/cart",
         cart_add_url: "\/cart\/add",
         cart_change_url: "\/cart\/change",
-        shop_url: "https:\/\/smooche.com",
+        shop_url: "https:\/\/skinofab.com",
         searchUrl: '/search',
         predictiveSearchUrl: '/search/suggest',
         product_recommendations_url: "\/recommendations\/products"
@@ -476,7 +476,7 @@
         smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
         no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
         swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
-        base: "//smooche.com/cdn/shop/t/76/assets/"
+        base: "//skinofab.com/cdn/shop/t/76/assets/"
       },
       strings: {
         add_to_cart: "Add to Cart",
@@ -553,13 +553,13 @@
     window.isHeaderTransparent = false;
     window.stickyHeaderHeight = 60;
     window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
-    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/smooche-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/skinofab-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
         @media screen and (max-width: 767px) {
         .product-single__details {
           overflow: ;
         }
         }
-      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Smooche","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Smooche","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
+      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Skinofab","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Skinofab","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
         #shopify-buyer-consent {
   margin-top: 1em;
   display: inline-block;
@@ -583,12 +583,12 @@
   box-shadow: none;
 }
 
-      </style><script defer="defer" src="{{ 'sf/js/smooche-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
+      </style><script defer="defer" src="{{ 'sf/js/skinofab-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
     #alia-popup-root-alia-qqoyyurlj3kbg51i {
       z-index: 999999 !important;
     }
   </style><script id="kaching-bundles-translations" type="application/json">
-    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
+    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
   </script><script class="kaching-bundles-product" data-main="true" data-product-id="8747833557148" type="application/json">
     {
       "id": 8747833557148,
@@ -873,21 +873,21 @@
 <div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--20029866147996__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--20029866147996__main">
 <div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="34990924300444" data-media-id="template--20029866147996__main-34990924300444" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866147996__main-34990924300444"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — product photo | Smooche" class="is-loading img-object-cover" data-image-id="34990924300444" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1080w-819238.png'|asset_url }}" srcset="{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-753w-9f5ef0.png'|asset_url }} 753w, {{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1080w-14372d.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — product photo | Skinofab" class="is-loading img-object-cover" data-image-id="34990924300444" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1080w-819238.png'|asset_url }}" srcset="{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-753w-9f5ef0.png'|asset_url }} 753w, {{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1080w-14372d.png'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34990924562588" data-media-id="template--20029866147996__main-34990924562588" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866147996__main-34990924562588"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="34990924562588" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-1080w-8aa8e2.jpg'|asset_url }}" srcset="{{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-753w-df7100.jpg'|asset_url }} 753w, {{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-1080w-3e2d09.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34990924562588" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-1080w-8aa8e2.jpg'|asset_url }}" srcset="{{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-753w-df7100.jpg'|asset_url }} 753w, {{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-1080w-3e2d09.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34990924398748" data-media-id="template--20029866147996__main-34990924398748" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866147996__main-34990924398748"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — ingredients and formula | Smooche" class="is-loading img-object-cover" data-image-id="34990924398748" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-1080w-cbaf5f.jpg'|asset_url }}" srcset="{{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-753w-e4b397.png'|asset_url }} 753w, {{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-1080w-9de4c3.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — ingredients and formula | Skinofab" class="is-loading img-object-cover" data-image-id="34990924398748" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-1080w-cbaf5f.jpg'|asset_url }}" srcset="{{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-753w-e4b397.png'|asset_url }} 753w, {{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-1080w-9de4c3.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
@@ -908,32 +908,32 @@
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34990924333212" data-media-id="template--20029866147996__main-34990924333212" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866147996__main-34990924333212"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — before and after results | Smooche" class="is-loading img-object-cover" data-image-id="34990924333212" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-66efd7.jpg'|asset_url }}" srcset="{{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-753w-a6c404.jpg'|asset_url }} 753w, {{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — before and after results | Skinofab" class="is-loading img-object-cover" data-image-id="34990924333212" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-66efd7.jpg'|asset_url }}" srcset="{{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-753w-a6c404.jpg'|asset_url }} 753w, {{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34990924660892" data-media-id="template--20029866147996__main-34990924660892" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866147996__main-34990924660892"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="34990924660892" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-5c73cd.jpg'|asset_url }}" srcset="{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-753w-063d05.jpg'|asset_url }} 753w, {{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-448222.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34990924660892" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-5c73cd.jpg'|asset_url }}" srcset="{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-753w-063d05.jpg'|asset_url }} 753w, {{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-448222.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 </div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="34990924300444" data-thumbnail-id="template--20029866147996__main-34990924300444"><a aria-label="Fibre Brow Gel" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — product photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-178w-5b4caa.png'|asset_url }}" srcset="{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1080w-14372d.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — product photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-178w-5b4caa.png'|asset_url }}" srcset="{{ 'sf/img/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1080w-14372d.png'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34990924562588" data-thumbnail-id="template--20029866147996__main-34990924562588"><a aria-label="Fibre Brow Gel" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-178w-a8bb4e.png'|asset_url }}" srcset="{{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-1080w-3e2d09.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-178w-a8bb4e.png'|asset_url }}" srcset="{{ 'sf/img/9_00897f9a-c241-4c94-8159-d2487a68033a-1080w-3e2d09.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34990924398748" data-thumbnail-id="template--20029866147996__main-34990924398748"><a aria-label="Fibre Brow Gel" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — ingredients and formula | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-178w-2b7eea.png'|asset_url }}" srcset="{{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-1080w-9de4c3.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — ingredients and formula | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-178w-2b7eea.png'|asset_url }}" srcset="{{ 'sf/img/4_18566978-f6a4-49c4-88e6-08d95a4a097a-1080w-9de4c3.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="37647795191964" data-thumbnail-id="template--20029866147996__main-37647795191964"><a aria-label="Fibre Brow Gel" class="product-single__thumbnail-link" href="#">
 <figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-178w-852ab6.png'|asset_url }}" srcset="{{ 'sf/img/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-1080w-0ff351.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="37647795224732" data-thumbnail-id="template--20029866147996__main-37647795224732"><a aria-label="Fibre Brow Gel" class="product-single__thumbnail-link" href="#">
 <figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_58bfce65-eb88-45f6-abe1-d88582154bc9-178w-29c532.png'|asset_url }}" srcset="{{ 'sf/img/2_58bfce65-eb88-45f6-abe1-d88582154bc9-1080w-4c702d.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34990924333212" data-thumbnail-id="template--20029866147996__main-34990924333212"><a aria-label="Fibre Brow Gel" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — before and after results | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-178w-6c7650.png'|asset_url }}" srcset="{{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — before and after results | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-178w-6c7650.png'|asset_url }}" srcset="{{ 'sf/img/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34990924660892" data-thumbnail-id="template--20029866147996__main-34990924660892"><a aria-label="Fibre Brow Gel" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-178w-a5b060.png'|asset_url }}" srcset="{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-448222.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Fibre Brow Gel — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-178w-a5b060.png'|asset_url }}" srcset="{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-448222.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div></div></div>
 <div class="product-single__details" data-collapsible-single="" id="product_details">
 <div class="form__wrapper" data-product-info="">
@@ -971,38 +971,38 @@
 </span>
 </div></div>
 </div>
-<smooche-installments data-currency="USD" data-price="3900" id="afterpay" style="display:block">
-<span>or 4 interest-free payments of <strong>{% include 'partials/sf_price.html' with p=product quarter=1 %}</strong> with <img alt="Afterpay" height="21" src="{{ 'sf/img/AP_logo_badge_6328x2204_blackmint_png-ced85f.png'|asset_url }}" width="60"/></span>
-</smooche-installments>
-<script defer="" src="{{ 'sf/js/smooche-installments-0dba32.js'|asset_url }}"></script>
+<skinofab-installments data-currency="USD" data-price="3900" id="afterpay" style="display:block">
+<span>or 4 interest-free payments of <strong>{% include 'partials/sf_price.html' with p=product %}</strong> with <img alt="Afterpay" height="21" src="{{ 'sf/img/AP_logo_badge_6328x2204_blackmint_png-ced85f.png'|asset_url }}" width="60"/></span>
+</skinofab-installments>
+<script defer="" src="{{ 'sf/js/skinofab-installments-0dba32.js'|asset_url }}"></script>
 <div class="product__block" style="--PBB:20px;"><div class="product__subheading">
 <p>Say goodbye to thin, sparse-looking brows. This fiber brow gel instantly builds fuller, thicker-looking brows in seconds, adding natural volume, shape, and definition for eyes that look more lifted, framed, and striking.</p>
 </div></div><div class="product__block" style="--PBB:20px;">
-<div class="smooche-usp-grid">
-<div class="smooche-usp-grid__item">
-<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_17-738b31.svg'|asset_url }}" width="24"/>
+<div class="skinofab-usp-grid">
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_17-738b31.svg'|asset_url }}" width="24"/>
 <span>Thicker brows in seconds</span>
 </div>
-<div class="smooche-usp-grid__item">
-<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_2_f8a63136-c037-42d3-8727-1087ccb8b08e-3a374c.svg'|asset_url }}" width="24"/>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_2_f8a63136-c037-42d3-8727-1087ccb8b08e-3a374c.svg'|asset_url }}" width="24"/>
 <span>Natural ingredients</span>
 </div>
-<div class="smooche-usp-grid__item">
-<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_33-7591dc.svg'|asset_url }}" width="24"/>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_33-7591dc.svg'|asset_url }}" width="24"/>
 <span>Smudge &amp; waterproof</span>
 </div>
-<div class="smooche-usp-grid__item">
-<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_8d474301-a5ef-4be6-bd48-ff9f51a41207-dd43b4.svg'|asset_url }}" width="24"/>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_8d474301-a5ef-4be6-bd48-ff9f51a41207-dd43b4.svg'|asset_url }}" width="24"/>
 <span>Lasts 12+ hours</span>
 </div>
 </div>
 <style>
-.smooche-usp-grid {
+.skinofab-usp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
-.smooche-usp-grid__item {
+.skinofab-usp-grid__item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -1010,12 +1010,12 @@
   background: #f7f7f7;
   border-radius: 8px;
 }
-.smooche-usp-grid__item img {
+.skinofab-usp-grid__item img {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
 }
-.smooche-usp-grid__item span {
+.skinofab-usp-grid__item span {
   font-size: 13px;
   font-weight: 600;
   color: #2D2D2D;
@@ -1220,7 +1220,7 @@
       }
     }
 
-    window.smoocheCustomerCountry = countryCode;
+    window.skinofabCustomerCountry = countryCode;
     updateShippingUspText();
   }
 
@@ -1243,7 +1243,7 @@
   // US delivery estimate when the shopper is in the US and the current variant
   // has stock at a US fulfillment location.
   function updateShippingUspText(variantId) {
-    const isUsCustomer = window.smoocheCustomerCountry === 'US';
+    const isUsCustomer = window.skinofabCustomerCountry === 'US';
 
     const block = document.querySelector('[data-shipping-usp]');
     const uspText = block ? document.getElementById('shippingUspText') : null;
@@ -1369,7 +1369,7 @@
 </div></div>
 </div>
 </div><script data-product-json="" id="ProductJson-template--20029866147996__main" type="application/json">
-      {"id":8747833557148,"title":"Fibre Brow Gel","handle":"brow-gel","description":"\u003cp\u003eThicker, fuller, defined brows — instantly. Smooche's Fibre Brow Gel uses micro-fibre technology to coat and build each hair, creating a natural feathery finish that lasts all day. Waterproof and smudge-proof, it's the one product your brow routine has been missing. Available in 5 shades to match every hair colour.\u003c\/p\u003e","published_at":"2026-03-17T10:03:06-04:00","created_at":"2025-12-23T09:13:05-05:00","vendor":"Smooche","type":"","tags":[],"price":3900,"price_min":3900,"price_max":3900,"available":true,"price_varies":false,"compare_at_price":5900,"compare_at_price_min":5900,"compare_at_price_max":5900,"compare_at_price_varies":false,"variants":[{"id":46514010456220,"title":"Taupe","option1":"Taupe","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Taupe","public_title":"Taupe","options":["Taupe"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":46523901673628,"title":"Dark Brown","option1":"Dark Brown","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Dark Brown","public_title":"Dark Brown","options":["Dark Brown"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":46523901706396,"title":"Chocolate","option1":"Chocolate","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Chocolate","public_title":"Chocolate","options":["Chocolate"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":46523901739164,"title":"Ash Brown","option1":"Ash Brown","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Ash Brown","public_title":"Ash Brown","options":["Ash Brown"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":46523901771932,"title":"Smooth Black","option1":"Smooth Black","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Smooth Black","public_title":"Smooth Black","options":["Smooth Black"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8.png","..\/assets\/img\/9_00897f9a-c241-4c94-8159-d2487a68033a-814w-4efa0b.jpg","..\/assets\/img\/4_18566978-f6a4-49c4-88e6-08d95a4a097a-753w-e4b397.png","..\/assets\/img\/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-1080w-ccbf5a.jpg","..\/assets\/img\/2_58bfce65-eb88-45f6-abe1-d88582154bc9-1080w-4c702d.jpg","..\/assets\/img\/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg","..\/assets\/img\/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-5c73cd.jpg"],"featured_image":"..\/assets\/img\/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8.png","options":["Color"],"media":[{"alt":"Fibre Brow Gel — product photo | Smooche","id":34990924300444,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8.png","width":1080},{"alt":"Fibre Brow Gel — lifestyle photo | Smooche","id":34990924562588,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/9_00897f9a-c241-4c94-8159-d2487a68033a-814w-4efa0b.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/9_00897f9a-c241-4c94-8159-d2487a68033a-814w-4efa0b.jpg","width":1080},{"alt":"Fibre Brow Gel — ingredients and formula | Smooche","id":34990924398748,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/4_18566978-f6a4-49c4-88e6-08d95a4a097a-753w-e4b397.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/4_18566978-f6a4-49c4-88e6-08d95a4a097a-753w-e4b397.png","width":1080},{"alt":null,"id":37647795191964,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-1080w-ccbf5a.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-1080w-ccbf5a.jpg","width":1080},{"alt":null,"id":37647795224732,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_58bfce65-eb88-45f6-abe1-d88582154bc9-1080w-4c702d.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_58bfce65-eb88-45f6-abe1-d88582154bc9-1080w-4c702d.jpg","width":1080},{"alt":"Fibre Brow Gel — before and after results | Smooche","id":34990924333212,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg","width":1080},{"alt":"Fibre Brow Gel — lifestyle photo | Smooche","id":34990924660892,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-5c73cd.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-5c73cd.jpg","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cp\u003eThicker, fuller, defined brows — instantly. Smooche's Fibre Brow Gel uses micro-fibre technology to coat and build each hair, creating a natural feathery finish that lasts all day. Waterproof and smudge-proof, it's the one product your brow routine has been missing. Available in 5 shades to match every hair colour.\u003c\/p\u003e"}
+      {"id":8747833557148,"title":"Fibre Brow Gel","handle":"brow-gel","description":"\u003cp\u003eThicker, fuller, defined brows — instantly. Skinofab's Fibre Brow Gel uses micro-fibre technology to coat and build each hair, creating a natural feathery finish that lasts all day. Waterproof and smudge-proof, it's the one product your brow routine has been missing. Available in 5 shades to match every hair colour.\u003c\/p\u003e","published_at":"2026-03-17T10:03:06-04:00","created_at":"2025-12-23T09:13:05-05:00","vendor":"Skinofab","type":"","tags":[],"price":3900,"price_min":3900,"price_max":3900,"available":true,"price_varies":false,"compare_at_price":5900,"compare_at_price_min":5900,"compare_at_price_max":5900,"compare_at_price_varies":false,"variants":[{"id":46514010456220,"title":"Taupe","option1":"Taupe","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Taupe","public_title":"Taupe","options":["Taupe"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":46523901673628,"title":"Dark Brown","option1":"Dark Brown","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Dark Brown","public_title":"Dark Brown","options":["Dark Brown"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":46523901706396,"title":"Chocolate","option1":"Chocolate","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Chocolate","public_title":"Chocolate","options":["Chocolate"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":46523901739164,"title":"Ash Brown","option1":"Ash Brown","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Ash Brown","public_title":"Ash Brown","options":["Ash Brown"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}},{"id":46523901771932,"title":"Smooth Black","option1":"Smooth Black","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Fibre Brow Gel - Smooth Black","public_title":"Smooth Black","options":["Smooth Black"],"price":3900,"weight":0,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8.png","..\/assets\/img\/9_00897f9a-c241-4c94-8159-d2487a68033a-814w-4efa0b.jpg","..\/assets\/img\/4_18566978-f6a4-49c4-88e6-08d95a4a097a-753w-e4b397.png","..\/assets\/img\/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-1080w-ccbf5a.jpg","..\/assets\/img\/2_58bfce65-eb88-45f6-abe1-d88582154bc9-1080w-4c702d.jpg","..\/assets\/img\/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg","..\/assets\/img\/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-5c73cd.jpg"],"featured_image":"..\/assets\/img\/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8.png","options":["Color"],"media":[{"alt":"Fibre Brow Gel — product photo | Skinofab","id":34990924300444,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8.png","width":1080},{"alt":"Fibre Brow Gel — lifestyle photo | Skinofab","id":34990924562588,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/9_00897f9a-c241-4c94-8159-d2487a68033a-814w-4efa0b.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/9_00897f9a-c241-4c94-8159-d2487a68033a-814w-4efa0b.jpg","width":1080},{"alt":"Fibre Brow Gel — ingredients and formula | Skinofab","id":34990924398748,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/4_18566978-f6a4-49c4-88e6-08d95a4a097a-753w-e4b397.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/4_18566978-f6a4-49c4-88e6-08d95a4a097a-753w-e4b397.png","width":1080},{"alt":null,"id":37647795191964,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-1080w-ccbf5a.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-1080w-ccbf5a.jpg","width":1080},{"alt":null,"id":37647795224732,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_58bfce65-eb88-45f6-abe1-d88582154bc9-1080w-4c702d.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_58bfce65-eb88-45f6-abe1-d88582154bc9-1080w-4c702d.jpg","width":1080},{"alt":"Fibre Brow Gel — before and after results | Skinofab","id":34990924333212,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1080w-8cfa10.jpg","width":1080},{"alt":"Fibre Brow Gel — lifestyle photo | Skinofab","id":34990924660892,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-5c73cd.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1080w-5c73cd.jpg","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cp\u003eThicker, fuller, defined brows — instantly. Skinofab's Fibre Brow Gel uses micro-fibre technology to coat and build each hair, creating a natural feathery finish that lasts all day. Waterproof and smudge-proof, it's the one product your brow routine has been missing. Available in 5 shades to match every hair colour.\u003c\/p\u003e"}
     </script>
 <script id="ModelJson-template--20029866147996__main" type="application/json">
       []
@@ -1650,13 +1650,13 @@ margin-top: 5px;
     padding-bottom: 20px;
   }</style><section class="divider-section wrapper" data-section-id="template--20029866147996__section_divider_jFWMfB" data-section-type="divider" id="Divider--template--20029866147996__section_divider_jFWMfB"><hr class="hr--full"/></section>
 </div><div class="shopify-section" id="shopify-section-template--20029866147996__kopstorm_testomonials_fbg"><style>
-.smooche-testimonials {
+.skinofab-testimonials {
   padding-top: 20px;
   padding-bottom: 20px;
   background: #ffffff;
 }
 
-.smooche-testimonials .section__heading {
+.skinofab-testimonials .section__heading {
   text-align: center;
   text-transform: none;
   margin-bottom: 30px;
@@ -1665,15 +1665,15 @@ margin-top: 5px;
 /* Slides must NOT stretch to the tallest sibling — otherwise expanding one
    card's "Read More" grows every card in the row. Each slide sizes to its
    own card; resting heights stay uniform because text is line-clamped. */
-.smooche-testimonials .swiper-wrapper {
+.skinofab-testimonials .swiper-wrapper {
   align-items: flex-start;
 }
 
-.smooche-testimonials .swiper-slide {
+.skinofab-testimonials .swiper-slide {
   height: auto;
 }
 
-.smooche-testimonials__card {
+.skinofab-testimonials__card {
   background: #f7f7f7;
   border-radius: 16px;
   overflow: hidden;
@@ -1682,20 +1682,20 @@ margin-top: 5px;
   flex-direction: column;
 }
 
-.smooche-testimonials__image {
+.skinofab-testimonials__image {
   width: 100%;
   height: 220px;
   overflow: hidden;
 }
 
-.smooche-testimonials__image img {
+.skinofab-testimonials__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.smooche-testimonials__body {
+.skinofab-testimonials__body {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -1703,89 +1703,89 @@ margin-top: 5px;
   flex: 1;
 }
 
-.smooche-testimonials__top {
+.skinofab-testimonials__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.smooche-testimonials__name {
+.skinofab-testimonials__name {
   font-weight: 700;
   font-size: 15px;
   color: #2D2D2D;
 }
 
-.smooche-testimonials__stars {
+.skinofab-testimonials__stars {
   display: flex;
   gap: 2px;
 }
 
-.smooche-testimonials__stars svg {
+.skinofab-testimonials__stars svg {
   width: 14px;
   height: 14px;
 }
 
-.smooche-testimonials__stars svg path {
-  fill: #df8096;
+.skinofab-testimonials__stars svg path {
+  fill: #000000;
 }
 
-.smooche-testimonials__verified {
+.skinofab-testimonials__verified {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   font-size: 11px;
   font-weight: 600;
-  color: #df8096;
+  color: #000000;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.smooche-testimonials__verified svg {
+.skinofab-testimonials__verified svg {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
 }
 
-.smooche-testimonials__text {
+.skinofab-testimonials__text {
   font-size: 14px;
   line-height: 1.55;
   color: #555;
   position: relative;
 }
 
-.smooche-testimonials__text p {
+.skinofab-testimonials__text p {
   margin: 0;
 }
 
-.smooche-testimonials__text:not(.is-expanded) p {
+.skinofab-testimonials__text:not(.is-expanded) p {
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.smooche-testimonials__read-more {
+.skinofab-testimonials__read-more {
   background: none;
   border: none;
   padding: 0;
   font-size: 13px;
   font-weight: 600;
-  color: #df8096;
+  color: #000000;
   cursor: pointer;
   margin-top: auto;
 }
 
-.smooche-testimonials__read-more:hover {
+.skinofab-testimonials__read-more:hover {
   text-decoration: underline;
 }
 
 /* Navigation */
-.smooche-testimonials__nav {
+.skinofab-testimonials__nav {
   position: relative;
 }
 
-.smooche-testimonials .swiper-button-prev,
-.smooche-testimonials .swiper-button-next {
+.skinofab-testimonials .swiper-button-prev,
+.skinofab-testimonials .swiper-button-next {
   width: 36px;
   height: 36px;
   background: #f7f7f7;
@@ -1794,64 +1794,64 @@ margin-top: 5px;
   top: var(--swiper-navigation-top-offset, 43%);
 }
 
-.smooche-testimonials .swiper-button-prev { left: 0; }
-.smooche-testimonials .swiper-button-next { right: 0; }
+.skinofab-testimonials .swiper-button-prev { left: 0; }
+.skinofab-testimonials .swiper-button-next { right: 0; }
 
-.smooche-testimonials .swiper-button-prev:after,
-.smooche-testimonials .swiper-button-next:after {
+.skinofab-testimonials .swiper-button-prev:after,
+.skinofab-testimonials .swiper-button-next:after {
   font-size: 14px;
   font-weight: bold;
   color: #000000;
 }
 
-.smooche-testimonials .swiper-scrollbar {
+.skinofab-testimonials .swiper-scrollbar {
   height: 4px;
   margin-top: 24px;
 }
 
-.smooche-testimonials .swiper-scrollbar-drag {
-  background: #df8096;
+.skinofab-testimonials .swiper-scrollbar-drag {
+  background: #000000;
 }
 
-.smooche-testimonials div[aria-disabled="true"] {
+.skinofab-testimonials div[aria-disabled="true"] {
   opacity: 0.35;
   cursor: auto;
   pointer-events: none;
 }
 
 @media (max-width: 767px) {
-  .smooche-testimonials {
+  .skinofab-testimonials {
     padding-top: 20px;
     padding-bottom: 20px;
   }
-  .smooche-testimonials__image {
+  .skinofab-testimonials__image {
     height: 200px;
   }
-  .smooche-testimonials__text {
+  .skinofab-testimonials__text {
     font-size: 14px;
   }
-  .smooche-testimonials__nav {
+  .skinofab-testimonials__nav {
     padding-left: 16px;
     padding-right: 16px;
   }
-  .smooche-testimonials .swiper-button-prev,
-  .smooche-testimonials .swiper-button-next {
+  .skinofab-testimonials .swiper-button-prev,
+  .skinofab-testimonials .swiper-button-next {
     width: 30px;
     height: 30px;
   }
 }
 </style>
-<section class="smooche-testimonials">
+<section class="skinofab-testimonials">
 <div class="wrapper">
-<div class="smooche-testimonials__nav">
-<div class="swiper smooche-testimonials-swiper">
+<div class="skinofab-testimonials__nav">
+<div class="swiper skinofab-testimonials-swiper">
 <div class="swiper-wrapper">
 <div class="swiper-slide">
-<div class="smooche-testimonials__card">
-<div class="smooche-testimonials__body">
-<div class="smooche-testimonials__top">
-<span class="smooche-testimonials__name">Emma, 34</span>
-<div class="smooche-testimonials__stars">
+<div class="skinofab-testimonials__card">
+<div class="skinofab-testimonials__body">
+<div class="skinofab-testimonials__top">
+<span class="skinofab-testimonials__name">Emma, 34</span>
+<div class="skinofab-testimonials__stars">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
@@ -1859,23 +1859,23 @@ margin-top: 5px;
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 </div>
 </div>
-<span class="smooche-testimonials__verified">
+<span class="skinofab-testimonials__verified">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z" fill="currentColor"></path></svg>
                       Verified purchase
                     </span>
-<div class="smooche-testimonials__text">
+<div class="skinofab-testimonials__text">
 <p>"I've been searching for a brow gel that actually holds all day without going stiff or crunchy. This one is incredible — my brows look naturally fuller and stay in place from morning to night. Finally found my holy grail!"</p>
 </div>
-<button class="smooche-testimonials__read-more" style="display:none;">Read More</button>
+<button class="skinofab-testimonials__read-more" style="display:none;">Read More</button>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-testimonials__card">
-<div class="smooche-testimonials__body">
-<div class="smooche-testimonials__top">
-<span class="smooche-testimonials__name">Rachel, 48</span>
-<div class="smooche-testimonials__stars">
+<div class="skinofab-testimonials__card">
+<div class="skinofab-testimonials__body">
+<div class="skinofab-testimonials__top">
+<span class="skinofab-testimonials__name">Rachel, 48</span>
+<div class="skinofab-testimonials__stars">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
@@ -1883,23 +1883,23 @@ margin-top: 5px;
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 </div>
 </div>
-<span class="smooche-testimonials__verified">
+<span class="skinofab-testimonials__verified">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z" fill="currentColor"></path></svg>
                       Verified purchase
                     </span>
-<div class="smooche-testimonials__text">
+<div class="skinofab-testimonials__text">
 <p>"My brows have been thinning as I've gotten older, and this gel has been a game changer. It fills in sparse areas beautifully and the tinted formula makes each hair look so much more defined. I get compliments every day."</p>
 </div>
-<button class="smooche-testimonials__read-more" style="display:none;">Read More</button>
+<button class="skinofab-testimonials__read-more" style="display:none;">Read More</button>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-testimonials__card">
-<div class="smooche-testimonials__body">
-<div class="smooche-testimonials__top">
-<span class="smooche-testimonials__name">Sophie, 29</span>
-<div class="smooche-testimonials__stars">
+<div class="skinofab-testimonials__card">
+<div class="skinofab-testimonials__body">
+<div class="skinofab-testimonials__top">
+<span class="skinofab-testimonials__name">Sophie, 29</span>
+<div class="skinofab-testimonials__stars">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
@@ -1907,23 +1907,23 @@ margin-top: 5px;
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 </div>
 </div>
-<span class="smooche-testimonials__verified">
+<span class="skinofab-testimonials__verified">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z" fill="currentColor"></path></svg>
                       Verified purchase
                     </span>
-<div class="smooche-testimonials__text">
+<div class="skinofab-testimonials__text">
 <p>"I was skeptical about yet another brow product but this one truly delivers. The fiber formula adds volume and shape instantly, and it's waterproof — I wore it to a workout and it stayed perfect the entire time!"</p>
 </div>
-<button class="smooche-testimonials__read-more" style="display:none;">Read More</button>
+<button class="skinofab-testimonials__read-more" style="display:none;">Read More</button>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-testimonials__card">
-<div class="smooche-testimonials__body">
-<div class="smooche-testimonials__top">
-<span class="smooche-testimonials__name">Mia, 41</span>
-<div class="smooche-testimonials__stars">
+<div class="skinofab-testimonials__card">
+<div class="skinofab-testimonials__body">
+<div class="skinofab-testimonials__top">
+<span class="skinofab-testimonials__name">Mia, 41</span>
+<div class="skinofab-testimonials__stars">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
@@ -1931,21 +1931,21 @@ margin-top: 5px;
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 </div>
 </div>
-<span class="smooche-testimonials__verified">
+<span class="skinofab-testimonials__verified">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z" fill="currentColor"></path></svg>
                       Verified purchase
                     </span>
-<div class="smooche-testimonials__text">
+<div class="skinofab-testimonials__text">
 <p>"The applicator makes it so easy to get precise, natural-looking brows every single time. I love that it feels lightweight and my brows don't look drawn-on. This is the only brow product I'll ever use now."</p>
 </div>
-<button class="smooche-testimonials__read-more" style="display:none;">Read More</button>
+<button class="skinofab-testimonials__read-more" style="display:none;">Read More</button>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="swiper-button-prev smooche-testimonials-prev"></div>
-<div class="swiper-button-next smooche-testimonials-next"></div>
+<div class="swiper-button-prev skinofab-testimonials-prev"></div>
+<div class="swiper-button-next skinofab-testimonials-next"></div>
 </div>
 </div>
 </section>
@@ -1953,7 +1953,7 @@ margin-top: 5px;
 (function () {
   var section = document.getElementById('shopify-section-template--20029866147996__kopstorm_testomonials_fbg');
   if (!section) return;
-  var slider = section.querySelector('.smooche-testimonials-swiper');
+  var slider = section.querySelector('.skinofab-testimonials-swiper');
   if (!slider || slider.swiper) return;
   new Swiper(slider, {
   slidesPerView: 4,
@@ -1965,8 +1965,8 @@ margin-top: 5px;
   },
   
   navigation: {
-    nextEl: section.querySelector('.smooche-testimonials-next'),
-    prevEl: section.querySelector('.smooche-testimonials-prev')
+    nextEl: section.querySelector('.skinofab-testimonials-next'),
+    prevEl: section.querySelector('.skinofab-testimonials-prev')
   },
   
   
@@ -1975,9 +1975,9 @@ margin-top: 5px;
 </script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll(".smooche-testimonials__card").forEach(function(card) {
-    var text = card.querySelector(".smooche-testimonials__text");
-    var btn = card.querySelector(".smooche-testimonials__read-more");
+  document.querySelectorAll(".skinofab-testimonials__card").forEach(function(card) {
+    var text = card.querySelector(".skinofab-testimonials__text");
+    var btn = card.querySelector(".skinofab-testimonials__read-more");
     if (!text || !btn) return;
     if (text.querySelector("p") && text.querySelector("p").scrollHeight > text.querySelector("p").clientHeight) {
       btn.style.display = "inline-block";
@@ -1990,52 +1990,52 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 </div><div class="shopify-section" id="shopify-section-template--20029866147996__section_image_with_text_xdx7DM"><style>
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM {
   padding-top: 20px;
   padding-bottom: 40px;
   background: transparent;
   font-family: var(--FONT-STACK-BODY);
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__grid {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
   align-items: center;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse {
   direction: rtl;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse > * {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse > * {
   direction: ltr;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__image {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__image {
   border-radius: 16px;
   overflow: hidden;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__image img {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__image img {
   width: 100%;
   height: auto;
   display: block;
   object-fit: contain;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__content {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__content {
   text-align: left;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__heading {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__heading {
   text-align: left;
   text-transform: none;
   margin: 0 0 20px 0;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__highlight {
-  background: #df8096;
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__highlight {
+  background: #000000;
   color: #ffffff;
   padding: 4px 10px;
   border-radius: 6px;
@@ -2044,7 +2044,7 @@ document.addEventListener("DOMContentLoaded", function() {
   line-height: 1.6;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__text {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__text {
   font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   color: #555;
@@ -2052,35 +2052,35 @@ document.addEventListener("DOMContentLoaded", function() {
   margin: 0 0 24px 0;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__text p {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__text p {
   margin: 0 0 14px 0;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__text p:last-child {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__text p:last-child {
   margin-bottom: 0;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__usps {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__usps {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px 20px;
   margin-top: 24px;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__usp {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__usp {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__usp img {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__usp img {
   width: 32px;
   height: 32px;
   flex-shrink: 0;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__usp-text {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__usp-text {
   font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   font-weight: 600;
@@ -2089,16 +2089,16 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 @media (max-width: 600px) {
-  .smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__usp img { width: 26px; height: 26px; }
-  .smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__usp-text { font-size: 13px; line-height: 1.25; }
-  .smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__usp { gap: 8px; }
+  .skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__usp img { width: 26px; height: 26px; }
+  .skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__usp-text { font-size: 13px; line-height: 1.25; }
+  .skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__usp { gap: 8px; }
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__usp-text p {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__usp-text p {
   margin: 0;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__button {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__button {
   display: inline-block;
   margin-top: 28px;
   padding: 14px 32px;
@@ -2114,51 +2114,51 @@ document.addEventListener("DOMContentLoaded", function() {
   transition: background 0.2s ease;
 }
 
-.smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__button:hover {
+.skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__button:hover {
   opacity: 0.85;
 }
 
 @media (max-width: 767px) {
-  .smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM {
+  .skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM {
     padding-top: 20px;
     padding-bottom: 30px;
   }
-  .smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__grid {
+  .skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__grid {
     grid-template-columns: 1fr;
     gap: 28px;
   }
-  .smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse {
+  .skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse {
     direction: ltr;
   }
-  .smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__text {
+  .skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__text {
     font-size: 14px;
   }
-  .smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM .smooche-iwt__heading {
+  .skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM .skinofab-iwt__heading {
     font-size: 24px;
   }
 }
 </style>
-<section class="smooche-iwt-template--20029866147996__section_image_with_text_xdx7DM">
+<section class="skinofab-iwt-template--20029866147996__section_image_with_text_xdx7DM">
 <div class="wrapper">
-<div class="smooche-iwt__grid">
-<div class="smooche-iwt__image">
+<div class="skinofab-iwt__grid">
+<div class="skinofab-iwt__image">
 <img alt="Brows that look naturally fuller" loading="lazy" src="{{ 'sf/img/brow_gel_beforeafter_1200x1200-87d6ed.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-iwt__content">
-<h2 class="section__heading h2 smooche-iwt__heading">Brows that look 
-<span class="smooche-iwt__highlight">naturally</span> fuller
+<div class="skinofab-iwt__content">
+<h2 class="section__heading h2 skinofab-iwt__heading">Brows that look 
+<span class="skinofab-iwt__highlight">naturally</span> fuller
 </h2>
-<div class="smooche-iwt__text">
+<div class="skinofab-iwt__text">
 <p>Meet the brow gel that instantly transforms thin, sparse brows into fuller, thicker-looking arches. Our tinted fiber formula grips onto each hair while adding subtle color and volume, creating the appearance of naturally dense brows in seconds.</p><p>The lightweight gel fills gaps, tints every strand, and sets your brows in place for all-day definition without stiffness. The result? Soft, natural brows that frame your face beautifully, never drawn-on or heavy.</p>
 </div>
-<div class="smooche-iwt__usps">
-<div class="smooche-iwt__usp">
-<img alt="" src="{{ 'sf/img/icons_smooche_new_c7df49e1-6425-4add-ad30-a7dfb74c5db3_100x1-40949e.svg'|asset_url }}"/>
-<div class="smooche-iwt__usp-text"><p>Thicker brows in seconds</p></div>
+<div class="skinofab-iwt__usps">
+<div class="skinofab-iwt__usp">
+<img alt="" src="{{ 'sf/img/icons_skinofab_new_c7df49e1-6425-4add-ad30-a7dfb74c5db3_100x1-40949e.svg'|asset_url }}"/>
+<div class="skinofab-iwt__usp-text"><p>Thicker brows in seconds</p></div>
 </div>
-<div class="smooche-iwt__usp">
-<img alt="" src="{{ 'sf/img/icons_smooche_new_33_100x100-f9a969.svg'|asset_url }}"/>
-<div class="smooche-iwt__usp-text"><p>Smudge and waterproof</p></div>
+<div class="skinofab-iwt__usp">
+<img alt="" src="{{ 'sf/img/icons_skinofab_new_33_100x100-f9a969.svg'|asset_url }}"/>
+<div class="skinofab-iwt__usp-text"><p>Smudge and waterproof</p></div>
 </div>
 </div>
 </div>
@@ -2365,7 +2365,7 @@ left: 0px;    border: 1px solid #e7e9ec;
 
 #percentage1 {
   font-size: 100px!important;
-  color: #df8096!important;
+  color: #000000!important;
 }
 @media screen and (max-width: 767px) {
 #percentage1 {
@@ -2384,18 +2384,18 @@ left: 0px;    border: 1px solid #e7e9ec;
 }
 </style>
 <style> #shopify-section-template--20029866147996__kopstorm_results_nntHGp {max-width: 1300px; margin-left: auto; margin-right: auto;} </style></div><div class="shopify-section" id="shopify-section-template--20029866147996__kopstorm_compare_LQNYXd"><style>
-.smooche-compare-section {
+.skinofab-compare-section {
   padding: 50px 20px 60px;
   background: #f7f7f7;
 }
 
-.smooche-compare-section .section__heading {
+.skinofab-compare-section .section__heading {
   text-align: center;
   text-transform: none;
   margin-bottom: 40px;
 }
 
-.smooche-compare-table {
+.skinofab-compare-table {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
@@ -2405,16 +2405,16 @@ left: 0px;    border: 1px solid #e7e9ec;
   border-radius: 12px;
 }
 
-.smooche-compare-section--page-width {
+.skinofab-compare-section--page-width {
   padding-left: 0;
   padding-right: 0;
 }
 
-.smooche-compare-section--page-width .smooche-compare-table {
+.skinofab-compare-section--page-width .skinofab-compare-table {
   max-width: none;
 }
 
-.smooche-compare-table thead th {
+.skinofab-compare-table thead th {
   padding: 18px 16px;
   font-size: 14px;
   font-weight: 700;
@@ -2424,39 +2424,39 @@ left: 0px;    border: 1px solid #e7e9ec;
   background: transparent;
 }
 
-.smooche-compare-table thead th:first-child {
+.skinofab-compare-table thead th:first-child {
   text-align: left;
 }
 
-.smooche-compare-table thead th:not(:first-child) {
+.skinofab-compare-table thead th:not(:first-child) {
   text-align: center;
 }
 
-.smooche-compare-table thead th.col-highlight {
+.skinofab-compare-table thead th.col-highlight {
   background: transparent;
   color: #fff;
-  border-bottom-color: #df8096;
+  border-bottom-color: #000000;
   position: relative;
   z-index: 1;
 }
 
-.smooche-compare-table thead th.col-highlight::before {
+.skinofab-compare-table thead th.col-highlight::before {
   content: '';
   position: absolute;
   top: -2px;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #df8096;
+  background: #000000;
   border-radius: 12px 12px 0 0;
   z-index: -1;
 }
 
-.smooche-compare-table thead th.col-highlight img {
+.skinofab-compare-table thead th.col-highlight img {
   filter: brightness(0) invert(1);
 }
 
-.smooche-compare-table tbody td {
+.skinofab-compare-table tbody td {
   padding: 16px;
   font-size: 14px;
   font-weight: 500;
@@ -2464,24 +2464,24 @@ left: 0px;    border: 1px solid #e7e9ec;
   vertical-align: middle;
 }
 
-.smooche-compare-table tbody td:first-child {
+.skinofab-compare-table tbody td:first-child {
   text-align: left;
   font-weight: 600;
 }
 
-.smooche-compare-table tbody td:not(:first-child) {
+.skinofab-compare-table tbody td:not(:first-child) {
   text-align: center;
 }
 
-.smooche-compare-table tbody td.col-highlight {
-  background: #df809612;
+.skinofab-compare-table tbody td.col-highlight {
+  background: #00000012;
 }
 
-.smooche-compare-table tbody tr:last-child td {
+.skinofab-compare-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.smooche-compare-table .compare-icon {
+.skinofab-compare-table .compare-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2489,58 +2489,58 @@ left: 0px;    border: 1px solid #e7e9ec;
   height: 28px;
 }
 
-.smooche-compare-table .compare-icon img {
+.skinofab-compare-table .compare-icon img {
   width: 20px;
   height: 20px;
   display: block;
 }
 
-.smooche-compare-table .compare-icon--check svg {
-  color: #df8096;
+.skinofab-compare-table .compare-icon--check svg {
+  color: #000000;
 }
 
-.smooche-compare-table .compare-icon--cross svg {
+.skinofab-compare-table .compare-icon--cross svg {
   color: #ccc;
 }
 
-.smooche-compare-table .header-logo {
+.skinofab-compare-table .header-logo {
   max-height: 14px;
   width: auto;
 }
 
 @media screen and (max-width: 600px) {
-  .smooche-compare-section {
+  .skinofab-compare-section {
     padding: 40px 12px 50px;
   }
-  .smooche-compare-section--page-width {
+  .skinofab-compare-section--page-width {
     padding-left: 0;
     padding-right: 0;
   }
-  .smooche-compare-table thead th,
-  .smooche-compare-table tbody td {
+  .skinofab-compare-table thead th,
+  .skinofab-compare-table tbody td {
     padding: 12px 8px;
     font-size: 12px;
   }
-  .smooche-compare-table .compare-icon {
+  .skinofab-compare-table .compare-icon {
     width: 24px;
     height: 24px;
   }
-  .smooche-compare-table .compare-icon img {
+  .skinofab-compare-table .compare-icon img {
     width: 16px;
     height: 16px;
   }
 }
 </style>
 <style>
-  .smooche-compare-table th:last-child,
-  .smooche-compare-table td:last-child {
+  .skinofab-compare-table th:last-child,
+  .skinofab-compare-table td:last-child {
     display: none;
   }
 </style>
-<section class="smooche-compare-section smooche-compare-section--page-width">
+<section class="skinofab-compare-section skinofab-compare-section--page-width">
 <div class="wrapper">
-<h2 class="section__heading h2">Why smooche?</h2>
-<table class="smooche-compare-table">
+<h2 class="section__heading h2">Why skinofab?</h2>
+<table class="skinofab-compare-table">
 <thead>
 <tr>
 <th>
@@ -2638,22 +2638,22 @@ left: 0px;    border: 1px solid #e7e9ec;
 </div>
 </section>
 </div><div class="shopify-section" id="shopify-section-template--20029866147996__kopstorm_ingredients_fbg"><style>
-.smooche-ingredients {
+.skinofab-ingredients {
   padding: 60px 0 70px;
   background: #fff9fb;
 }
 
-.smooche-ingredients__heading {
+.skinofab-ingredients__heading {
   text-align: center;
   margin-bottom: 50px;
 }
 
-.smooche-ingredients__heading .section__heading {
+.skinofab-ingredients__heading .section__heading {
   text-transform: none;
   margin-bottom: 0;
 }
 
-.smooche-ingredients__subtitle {
+.skinofab-ingredients__subtitle {
   margin-top: 10px;
   font-size: 15px;
   color: #777;
@@ -2662,18 +2662,18 @@ left: 0px;    border: 1px solid #e7e9ec;
   margin-right: auto;
 }
 
-.smooche-ingredients__subtitle p {
+.skinofab-ingredients__subtitle p {
   margin: 0;
 }
 
-.smooche-ingredients__grid {
+.skinofab-ingredients__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin: 0 auto;
 }
 
-.smooche-ingredients__card {
+.skinofab-ingredients__card {
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
@@ -2681,48 +2681,48 @@ left: 0px;    border: 1px solid #e7e9ec;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.smooche-ingredients__card:hover {
+.skinofab-ingredients__card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
 }
 
-.smooche-ingredients__image {
+.skinofab-ingredients__image {
   width: 100%;
   aspect-ratio: 1 / 0.85;
   overflow: hidden;
 }
 
-.smooche-ingredients__image img {
+.skinofab-ingredients__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.smooche-ingredients__info {
+.skinofab-ingredients__info {
   padding: 24px;
   text-align: center;
 }
 
-.smooche-ingredients__name {
+.skinofab-ingredients__name {
   font-size: 18px;
   font-weight: 700;
   color: #2D2D2D;
   margin: 0 0 8px 0;
 }
 
-.smooche-ingredients__desc {
+.skinofab-ingredients__desc {
   font-size: 14px;
   color: #777;
   line-height: 1.5;
   margin: 0;
 }
 
-.smooche-ingredients__desc p {
+.skinofab-ingredients__desc p {
   margin: 0;
 }
 
-.smooche-ingredients__badge {
+.skinofab-ingredients__badge {
   display: inline-block;
   margin-top: 14px;
   padding: 5px 14px;
@@ -2731,46 +2731,46 @@ left: 0px;    border: 1px solid #e7e9ec;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   border-radius: 20px;
-  background: #df8096;
+  background: #000000;
   color: #ffffff;
 }
 
 @media (max-width: 767px) {
-  .smooche-ingredients {
+  .skinofab-ingredients {
     padding: 40px 0 50px;
   }
-  .smooche-ingredients__heading {
+  .skinofab-ingredients__heading {
     padding: 0;
   }
-  .smooche-ingredients__grid {
+  .skinofab-ingredients__grid {
     display: none;
   }
-  .smooche-ingredients__slider {
+  .skinofab-ingredients__slider {
     display: block;
     padding: 0;
   }
-  .smooche-ingredients__slider .swiper-wrapper {
+  .skinofab-ingredients__slider .swiper-wrapper {
     padding: 8px 0 12px;
   }
-  .smooche-ingredients__slider .swiper-slide {
+  .skinofab-ingredients__slider .swiper-slide {
     width: 270px;
     height: auto;
   }
-  .smooche-ingredients__info {
+  .skinofab-ingredients__info {
     padding: 20px;
   }
-  .smooche-ingredients .swiper-scrollbar {
+  .skinofab-ingredients .swiper-scrollbar {
     height: 4px;
     margin-top: 24px;
   }
-  .smooche-ingredients .swiper-scrollbar-drag {
-    background: #df8096;
+  .skinofab-ingredients .swiper-scrollbar-drag {
+    background: #000000;
   }
-  .smooche-ingredients__nav {
+  .skinofab-ingredients__nav {
     position: relative;
   }
-  .smooche-ingredients .swiper-button-prev,
-  .smooche-ingredients .swiper-button-next {
+  .skinofab-ingredients .swiper-button-prev,
+  .skinofab-ingredients .swiper-button-next {
     display: flex;
     width: 30px;
     height: 30px;
@@ -2779,15 +2779,15 @@ left: 0px;    border: 1px solid #e7e9ec;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     top: var(--swiper-navigation-top-offset, 40%);
   }
-  .smooche-ingredients .swiper-button-prev { left: 0; }
-  .smooche-ingredients .swiper-button-next { right: 0; }
-  .smooche-ingredients .swiper-button-prev:after,
-  .smooche-ingredients .swiper-button-next:after {
+  .skinofab-ingredients .swiper-button-prev { left: 0; }
+  .skinofab-ingredients .swiper-button-next { right: 0; }
+  .skinofab-ingredients .swiper-button-prev:after,
+  .skinofab-ingredients .swiper-button-next:after {
     font-size: 12px;
     font-weight: bold;
     color: #2D2D2D;
   }
-  .smooche-ingredients div[aria-disabled="true"] {
+  .skinofab-ingredients div[aria-disabled="true"] {
     opacity: 0.35;
     cursor: auto;
     pointer-events: none;
@@ -2795,111 +2795,111 @@ left: 0px;    border: 1px solid #e7e9ec;
 }
 
 @media (min-width: 768px) {
-  .smooche-ingredients__slider {
+  .skinofab-ingredients__slider {
     display: none;
   }
-  .smooche-ingredients .swiper-button-prev,
-  .smooche-ingredients .swiper-button-next {
+  .skinofab-ingredients .swiper-button-prev,
+  .skinofab-ingredients .swiper-button-next {
     display: none;
   }
 }
 </style>
-<section class="smooche-ingredients">
+<section class="skinofab-ingredients">
 <div class="wrapper">
-<div class="smooche-ingredients__heading">
+<div class="skinofab-ingredients__heading">
 <h2 class="section__heading h2">What makes it special</h2>
-<div class="smooche-ingredients__subtitle"><p>Key ingredients</p></div>
+<div class="skinofab-ingredients__subtitle"><p>Key ingredients</p></div>
 </div>
-<div class="smooche-ingredients__grid">
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__grid">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="Glycerin" loading="lazy" src="{{ 'sf/img/3_4e5b0265-3b6d-43bb-84c5-d120590d4a9c_600x600-128bb6.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Glycerin</h4>
-<div class="smooche-ingredients__desc"><p>Skin-loving glycerin for all-day hydration and conditioning</p></div>
-<span class="smooche-ingredients__badge">Hydrating</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Glycerin</h4>
+<div class="skinofab-ingredients__desc"><p>Skin-loving glycerin for all-day hydration and conditioning</p></div>
+<span class="skinofab-ingredients__badge">Hydrating</span>
 </div>
 </div>
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="Carnauba Wax" loading="lazy" src="{{ 'sf/img/1_c4516a77-bd76-4c69-b753-710b3848f891_600x600-a01855.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Carnauba Wax</h4>
-<div class="smooche-ingredients__desc"><p>Natural plant wax that sculpts and holds brows all day without stiffness</p></div>
-<span class="smooche-ingredients__badge">Hold</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Carnauba Wax</h4>
+<div class="skinofab-ingredients__desc"><p>Natural plant wax that sculpts and holds brows all day without stiffness</p></div>
+<span class="skinofab-ingredients__badge">Hold</span>
 </div>
 </div>
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="PVP Fiber Complex" loading="lazy" src="{{ 'sf/img/2_5019c3ba-97f8-47b8-b8dd-2231a9070845_600x600-b10eb7.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">PVP Fiber Complex</h4>
-<div class="smooche-ingredients__desc"><p>Builds volume and fills sparse areas for naturally denser-looking brows</p></div>
-<span class="smooche-ingredients__badge">Volume</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">PVP Fiber Complex</h4>
+<div class="skinofab-ingredients__desc"><p>Builds volume and fills sparse areas for naturally denser-looking brows</p></div>
+<span class="skinofab-ingredients__badge">Volume</span>
 </div>
 </div>
 </div>
-<div class="smooche-ingredients__slider">
-<div class="smooche-ingredients__nav">
-<div class="swiper smooche-ingredients-swiper">
+<div class="skinofab-ingredients__slider">
+<div class="skinofab-ingredients__nav">
+<div class="swiper skinofab-ingredients-swiper">
 <div class="swiper-wrapper">
 <div class="swiper-slide">
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="Glycerin" loading="lazy" src="{{ 'sf/img/3_4e5b0265-3b6d-43bb-84c5-d120590d4a9c_600x600-128bb6.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Glycerin</h4>
-<div class="smooche-ingredients__desc"><p>Skin-loving glycerin for all-day hydration and conditioning</p></div>
-<span class="smooche-ingredients__badge">Hydrating</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Glycerin</h4>
+<div class="skinofab-ingredients__desc"><p>Skin-loving glycerin for all-day hydration and conditioning</p></div>
+<span class="skinofab-ingredients__badge">Hydrating</span>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="Carnauba Wax" loading="lazy" src="{{ 'sf/img/1_c4516a77-bd76-4c69-b753-710b3848f891_600x600-a01855.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Carnauba Wax</h4>
-<div class="smooche-ingredients__desc"><p>Natural plant wax that sculpts and holds brows all day without stiffness</p></div>
-<span class="smooche-ingredients__badge">Hold</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Carnauba Wax</h4>
+<div class="skinofab-ingredients__desc"><p>Natural plant wax that sculpts and holds brows all day without stiffness</p></div>
+<span class="skinofab-ingredients__badge">Hold</span>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="PVP Fiber Complex" loading="lazy" src="{{ 'sf/img/2_5019c3ba-97f8-47b8-b8dd-2231a9070845_600x600-b10eb7.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">PVP Fiber Complex</h4>
-<div class="smooche-ingredients__desc"><p>Builds volume and fills sparse areas for naturally denser-looking brows</p></div>
-<span class="smooche-ingredients__badge">Volume</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">PVP Fiber Complex</h4>
+<div class="skinofab-ingredients__desc"><p>Builds volume and fills sparse areas for naturally denser-looking brows</p></div>
+<span class="skinofab-ingredients__badge">Volume</span>
 </div>
 </div>
 </div>
 </div>
-<div class="swiper-scrollbar smooche-ingredients-scrollbar"></div>
+<div class="swiper-scrollbar skinofab-ingredients-scrollbar"></div>
 </div>
-<div class="swiper-button-prev smooche-ingredients-prev"></div>
-<div class="swiper-button-next smooche-ingredients-next"></div>
+<div class="swiper-button-prev skinofab-ingredients-prev"></div>
+<div class="swiper-button-next skinofab-ingredients-next"></div>
 </div>
 </div>
 </div>
 </section>
-<script data-smooche-slider-config="" type="application/json">{"selector": ".smooche-ingredients-swiper", "next": ".smooche-ingredients-next", "prev": ".smooche-ingredients-prev", "scrollbar": ".smooche-ingredients-scrollbar", "options": {"slidesPerView": "auto", "spaceBetween": 14}}</script>
-<script defer="" src="{{ 'sf/js/smooche-section-sliders-7fe587.js'|asset_url }}"></script>
+<script data-skinofab-slider-config="" type="application/json">{"selector": ".skinofab-ingredients-swiper", "next": ".skinofab-ingredients-next", "prev": ".skinofab-ingredients-prev", "scrollbar": ".skinofab-ingredients-scrollbar", "options": {"slidesPerView": "auto", "spaceBetween": 14}}</script>
+<script defer="" src="{{ 'sf/js/skinofab-section-sliders-7fe587.js'|asset_url }}"></script>
 </div><div class="shopify-section" id="shopify-section-template--20029866147996__kopstorm_why_gcA7fQ"><style>
-.smooche-why-section {
+.skinofab-why-section {
   padding-top: 60px;
   padding-bottom: 60px;
 }
 
-.smooche-why-inner {
+.skinofab-why-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: var(--radius, 12px);
@@ -2907,14 +2907,14 @@ left: 0px;    border: 1px solid #e7e9ec;
   min-height: 500px;
 }
 
-.smooche-why__image {
+.skinofab-why__image {
   background-size: cover;
   background-position: center;
   min-height: 350px;
   position: relative;
 }
 
-.smooche-why__content {
+.skinofab-why__content {
   background: #f7f7f7;
   padding: 50px;
   display: flex;
@@ -2922,31 +2922,31 @@ left: 0px;    border: 1px solid #e7e9ec;
   justify-content: center;
 }
 
-.smooche-why__content .section__heading {
+.skinofab-why__content .section__heading {
   text-align: left;
   text-transform: none;
   margin: 0 0 30px 0;
 }
 
-.smooche-why__text {
+.skinofab-why__text {
   margin-bottom: 30px;
 }
 
-.smooche-why__text p {
+.skinofab-why__text p {
   margin: 0;
   font-size: 15px;
   line-height: 1.6;
   color: #555;
 }
 
-.smooche-why__features {
+.skinofab-why__features {
   display: flex;
   flex-direction: column;
   gap: 0;
   margin-bottom: 30px;
 }
 
-.smooche-why__feature {
+.skinofab-why__feature {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -2954,11 +2954,11 @@ left: 0px;    border: 1px solid #e7e9ec;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.smooche-why__feature:last-child {
+.skinofab-why__feature:last-child {
   border-bottom: none;
 }
 
-.smooche-why__feature-icon {
+.skinofab-why__feature-icon {
   flex: 0 0 48px;
   width: 48px;
   height: 48px;
@@ -2970,110 +2970,110 @@ left: 0px;    border: 1px solid #e7e9ec;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.smooche-why__feature-icon img {
+.skinofab-why__feature-icon img {
   width: 28px;
   height: 28px;
   display: block;
 }
 
-.smooche-why__feature-text {
+.skinofab-why__feature-text {
   flex: 1;
 }
 
-.smooche-why__feature-title {
+.skinofab-why__feature-title {
   font-weight: 700;
   font-size: 15px;
   color: #2D2D2D;
   margin-bottom: 2px;
 }
 
-.smooche-why__feature-desc {
+.skinofab-why__feature-desc {
   font-size: 14px;
   color: #666;
   line-height: 1.4;
 }
 
-.smooche-why__feature-desc p {
+.skinofab-why__feature-desc p {
   margin: 0;
 }
 
-.smooche-why__cta .btn {
+.skinofab-why__cta .btn {
   display: inline-block;
 }
 
 @media (min-width: 768px) {
-  .smooche-why-inner--square-image .smooche-why__image {
+  .skinofab-why-inner--square-image .skinofab-why__image {
     aspect-ratio: 1;
   }
-  .smooche-why__content {
+  .skinofab-why__content {
     padding: 60px;
   }
 }
 
 @media (max-width: 767px) {
-  .smooche-why-section {
+  .skinofab-why-section {
     padding-top: 60px;
     padding-bottom: 60px;
   }
-  .smooche-why-inner {
+  .skinofab-why-inner {
     grid-template-columns: 1fr;
   }
-  .smooche-why__image {
+  .skinofab-why__image {
     min-height: 280px;
   }
-  .smooche-why__content {
+  .skinofab-why__content {
     padding: 30px 24px;
   }
-  .smooche-why__content .section__heading {
+  .skinofab-why__content .section__heading {
     margin-bottom: 20px;
   }
-  .smooche-why__feature-icon {
+  .skinofab-why__feature-icon {
     flex: 0 0 42px;
     width: 42px;
     height: 42px;
   }
-  .smooche-why__feature-icon img {
+  .skinofab-why__feature-icon img {
     width: 24px;
     height: 24px;
   }
 }
 </style>
-<section class="smooche-why-section">
+<section class="skinofab-why-section">
 <div class="wrapper">
-<div class="smooche-why-inner">
-<div class="smooche-why__image" style='background-image: url("{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08_1500x1500-b94c22.jpg'|asset_url }}"); background-position: center center;'></div>
-<div class="smooche-why__content">
-<h2 class="section__heading h2">The smooche difference</h2>
-<div class="smooche-why__features">
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Fuller brows in seconds" src="{{ 'sf/img/icons_smooche_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
+<div class="skinofab-why-inner">
+<div class="skinofab-why__image" style='background-image: url("{{ 'sf/img/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08_1500x1500-b94c22.jpg'|asset_url }}"); background-position: center center;'></div>
+<div class="skinofab-why__content">
+<h2 class="section__heading h2">The skinofab difference</h2>
+<div class="skinofab-why__features">
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Fuller brows in seconds" src="{{ 'sf/img/icons_skinofab_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
 </div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Fuller brows in seconds</div>
-<div class="smooche-why__feature-desc"><p>Instantly thicker, defined brows with every use</p></div>
-</div>
-</div>
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Trusted by 100,000+ women" src="{{ 'sf/img/icons_smooche_new_12_500x500-488fb2.svg'|asset_url }}"/>
-</div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Trusted by 100,000+ women</div>
-<div class="smooche-why__feature-desc"><p>Join thousands who transformed their brows for good</p></div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Fuller brows in seconds</div>
+<div class="skinofab-why__feature-desc"><p>Instantly thicker, defined brows with every use</p></div>
 </div>
 </div>
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Clean &amp; cruelty free" src="{{ 'sf/img/icons_smooche_new_13_500x500-c4009e.svg'|asset_url }}"/>
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Trusted by 100,000+ women" src="{{ 'sf/img/icons_skinofab_new_12_500x500-488fb2.svg'|asset_url }}"/>
 </div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Clean &amp; cruelty free</div>
-<div class="smooche-why__feature-desc"><p>Vegan formula with skin-nourishing ingredients</p></div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Trusted by 100,000+ women</div>
+<div class="skinofab-why__feature-desc"><p>Join thousands who transformed their brows for good</p></div>
+</div>
+</div>
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Clean &amp; cruelty free" src="{{ 'sf/img/icons_skinofab_new_13_500x500-c4009e.svg'|asset_url }}"/>
+</div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Clean &amp; cruelty free</div>
+<div class="skinofab-why__feature-desc"><p>Vegan formula with skin-nourishing ingredients</p></div>
 </div>
 </div>
 </div>
-<div class="smooche-why__cta">
+<div class="skinofab-why__cta">
 <a class="btn btn--dark" href="#product">Claim offer</a>
 </div>
 </div>
@@ -3204,7 +3204,7 @@ left: 0px;    border: 1px solid #e7e9ec;
 </div>
 </div>
 </div>
-</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/smooche-cart-timer-b352c2.js'|asset_url }}"></script><script>
+</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/skinofab-cart-timer-b352c2.js'|asset_url }}"></script><script>
       // Function to update the price element with the new variant price
       function updateProductPrice(newPrice) {
         const priceElement = document.getElementById('productpricingnew');

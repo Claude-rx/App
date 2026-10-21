@@ -5,7 +5,7 @@
     "slug": "4-pack-2x-extreme-2x-long-lasting",
     "template": "4-pack-2x-extreme-2x-long-lasting",
     "theme_setting": "sf_p_4_pack_2x_extreme_2x_long_lasting",
-    "description_html": "<p>Two of Smooche's most-loved products, bundled into one unbeatable deal. This kit pairs our viral Color Changing Foundation with the Extreme Lip Plumper for a complete face look — adaptive coverage that matches your skin tone, plus plump, glossy lips in seconds. Everything you need, nothing you don't.</p>",
+    "description_html": "<p>Two of Skinofab's most-loved products, bundled into one unbeatable deal. This kit pairs our viral Color Changing Foundation with the Extreme Lip Plumper for a complete face look — adaptive coverage that matches your skin tone, plus plump, glossy lips in seconds. Everything you need, nothing you don't.</p>",
     "options": [
       {
         "name": "Color",
@@ -54,7 +54,7 @@
     "slug": "brow-gel",
     "template": "brow-gel",
     "theme_setting": "sf_p_brow_gel",
-    "description_html": "<p>Thicker, fuller, defined brows — instantly. Smooche's Fibre Brow Gel uses micro-fibre technology to coat and build each hair, creating a natural feathery finish that lasts all day. Waterproof and smudge-proof, it's the one product your brow routine has been missing. Available in 5 shades to match every hair colour.</p>",
+    "description_html": "<p>Thicker, fuller, defined brows — instantly. Skinofab's Fibre Brow Gel uses micro-fibre technology to coat and build each hair, creating a natural feathery finish that lasts all day. Waterproof and smudge-proof, it's the one product your brow routine has been missing. Available in 5 shades to match every hair colour.</p>",
     "options": [
       {
         "name": "Color",
@@ -195,7 +195,7 @@
         ],
         "design_price": 19.0,
         "design_compare_at_price": null,
-        "sku": "smooche-luxury-lip-liner-redwood"
+        "sku": "skinofab-luxury-lip-liner-redwood"
       },
       {
         "title": "Cherry",
@@ -403,7 +403,7 @@
     "slug": "lash-brow-duo",
     "template": "lash-brow-duo",
     "theme_setting": "sf_p_lash_brow_duo",
-    "description_html": "<p>One kit. Longer lashes. Fuller brows. Smooche's Lash &amp; Brow Growth Kit combines our bestselling Eyelash Growth Serum and Eyebrow Growth Serum into a complete treatment duo — clinically inspired to visibly thicken and lengthen with consistent use. See results in as little as 4 weeks. Your transformation starts here.</p>",
+    "description_html": "<p>One kit. Longer lashes. Fuller brows. Skinofab's Lash &amp; Brow Growth Kit combines our bestselling Eyelash Growth Serum and Eyebrow Growth Serum into a complete treatment duo — clinically inspired to visibly thicken and lengthen with consistent use. See results in as little as 4 weeks. Your transformation starts here.</p>",
     "options": [],
     "variants": [
       {
@@ -422,7 +422,7 @@
     "slug": "liquid-blender-brush",
     "template": "liquid-blender-brush",
     "theme_setting": "sf_p_liquid_blender_brush",
-    "description_html": "<p>Flawless application, zero mess. Smooche's Liquid Blender Brush is designed to apply liquid and cream products with salon-level precision — think seamless foundation blending, no streaks, no waste. The densely packed bristles pick up the perfect amount of product every time, giving you a smooth, even finish in half the time.</p>",
+    "description_html": "<p>Flawless application, zero mess. Skinofab's Liquid Blender Brush is designed to apply liquid and cream products with salon-level precision — think seamless foundation blending, no streaks, no waste. The densely packed bristles pick up the perfect amount of product every time, giving you a smooth, even finish in half the time.</p>",
     "options": [],
     "variants": [
       {
@@ -471,7 +471,7 @@
     "slug": "peel-off-lip-stain",
     "template": "peel-off-lip-stain",
     "theme_setting": "sf_p_peel_off_lip_stain",
-    "description_html": "<p>The Smooche Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Smooche Peel-off Lip Stain, and it's easy to see why!</p>",
+    "description_html": "<p>The Skinofab Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Skinofab Peel-off Lip Stain, and it's easy to see why!</p>",
     "options": [
       {
         "name": "Color",
@@ -576,7 +576,7 @@
         ],
         "design_price": 19.0,
         "design_compare_at_price": null,
-        "sku": "smooche-shea-butter-lip-gloss"
+        "sku": "skinofab-shea-butter-lip-gloss"
       },
       {
         "title": "Sweet Pink",
@@ -593,16 +593,16 @@
     "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
   },
   {
-    "design_handle": "smooche-blender",
-    "title": "Smooche Blender",
-    "slug": "smooche-blender",
-    "template": "smooche-blender",
-    "theme_setting": "sf_p_smooche_blender",
+    "design_handle": "skinofab-blender",
+    "title": "Skinofab Blender",
+    "slug": "skinofab-blender",
+    "template": "skinofab-blender",
+    "theme_setting": "sf_p_skinofab_blender",
     "description_html": "",
     "options": [],
     "variants": [
       {
-        "title": "Smooche Blender",
+        "title": "Skinofab Blender",
         "options": [],
         "design_price": 9.0,
         "design_compare_at_price": 19.0,
@@ -612,12 +612,12 @@
     "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."
   },
   {
-    "design_handle": "smooche-gift-card",
-    "title": "Smooche Gift Card",
-    "slug": "smooche-gift-card",
-    "template": "smooche-gift-card",
-    "theme_setting": "sf_p_smooche_gift_card",
-    "description_html": "<p>The best gift is smooche.</p>",
+    "design_handle": "skinofab-gift-card",
+    "title": "Skinofab Gift Card",
+    "slug": "skinofab-gift-card",
+    "template": "skinofab-gift-card",
+    "theme_setting": "sf_p_skinofab_gift_card",
+    "description_html": "<p>The best gift is skinofab.</p>",
     "options": [
       {
         "name": "Denominations",
@@ -683,7 +683,7 @@
     "slug": "stick-and-stain",
     "template": "stick-and-stain",
     "theme_setting": "sf_p_stick_and_stain",
-    "description_html": "<p>The Smooche Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Smooche Peel-off Lip Stain, and it's easy to see why!</p>",
+    "description_html": "<p>The Skinofab Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Skinofab Peel-off Lip Stain, and it's easy to see why!</p>",
     "options": [
       {
         "name": "Color",
@@ -749,7 +749,7 @@
     "slug": "stick-stain3",
     "template": "stick-stain3",
     "theme_setting": "sf_p_stick_stain3",
-    "description_html": "<p>The Smooche Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Smooche Peel-off Lip Stain, and it's easy to see why!</p>",
+    "description_html": "<p>The Skinofab Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Skinofab Peel-off Lip Stain, and it's easy to see why!</p>",
     "options": [
       {
         "name": "Color",
@@ -815,7 +815,7 @@
     "slug": "triple-lip-plumper-bundle",
     "template": "triple-lip-plumper-bundle",
     "theme_setting": "sf_p_triple_lip_plumper_bundle",
-    "description_html": "<p><meta charset=\"utf-8\"><span>The Smooche Lip plumper </span><strong>is going viral</strong><span> because of the insane before and after video's all over social media. After many tests and a long period of research, we are proud to say we have found </span><strong>the perfect formula for our plumpers.</strong><span> Made with 100% natural ingredients, our plumpers are the only natural and effective way to plump up your lips.</span></p>",
+    "description_html": "<p><meta charset=\"utf-8\"><span>The Skinofab Lip plumper </span><strong>is going viral</strong><span> because of the insane before and after video's all over social media. After many tests and a long period of research, we are proud to say we have found </span><strong>the perfect formula for our plumpers.</strong><span> Made with 100% natural ingredients, our plumpers are the only natural and effective way to plump up your lips.</span></p>",
     "options": [
       {
         "name": "Color",
@@ -834,7 +834,7 @@
         ],
         "design_price": 49.0,
         "design_compare_at_price": 117.0,
-        "sku": "smooche-triple-lip-plumper-bundle"
+        "sku": "skinofab-triple-lip-plumper-bundle"
       }
     ],
     "note": "Design prices are a reference only. The storefront shows the prices you set in NEXT."

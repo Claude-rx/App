@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 {% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
-{% block body_id %}{% firstof "lip-plumper-for-long-lasting-hydrated-volume-smooche" %}{% endblock %}
+{% block body_id %}{% firstof "lip-plumper-for-long-lasting-hydrated-volume-skinofab" %}{% endblock %}
 {% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
 {% block sf_head %}
 <link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
@@ -291,7 +291,7 @@
 
   --COLOR-INPUT-BG: #ffffff;
 
-  --COLOR-ACCENT: #df8096;
+  --COLOR-ACCENT: #000000;
   --COLOR-ACCENT-TEXT: #fff;
 
   --COLOR-BORDER: #f7f7f7;
@@ -302,13 +302,13 @@
   --COLOR-BORDER-LIGHTEN-DARKEN: #ababab;
   --COLOR-BORDER-HAIRLINE: #f7f7f7;
 
-  --COLOR-SALE-BG: #df8096;
+  --COLOR-SALE-BG: #000000;
   --COLOR-SALE-TEXT: #ffffff;
-  --COLOR-CUSTOM-BG: #df8096;
+  --COLOR-CUSTOM-BG: #000000;
   --COLOR-CUSTOM-TEXT: #ffffff;
   --COLOR-SOLD-BG: #000000;
   --COLOR-SOLD-TEXT: #ffffff;
-  --COLOR-SAVING-BG: #df8096;
+  --COLOR-SAVING-BG: #000000;
   --COLOR-SAVING-TEXT: #ffffff;
 
   --COLOR-WHITE-BLACK: fff;
@@ -316,7 +316,7 @@
   --COLOR-BLACK-WHITE-ALPHA-25: rgba(0, 0, 0, 0.25);--COLOR-DISABLED-GREY: rgba(21, 21, 21, 0.05);
   --COLOR-DISABLED-GREY-DARKEN: rgba(21, 21, 21, 0.45);
   --COLOR-ERROR: #D02E2E;
-  --COLOR-ERROR-BG: #f3cbcb;
+  --COLOR-ERROR-BG: #dfdfdf;
   --COLOR-SUCCESS: #56AD6A;
   --COLOR-SUCCESS-BG: #ECFEF0;
   --COLOR-WARN: #ECBD5E;
@@ -466,7 +466,7 @@
         cart_url: "\/cart",
         cart_add_url: "\/cart\/add",
         cart_change_url: "\/cart\/change",
-        shop_url: "https:\/\/smooche.com",
+        shop_url: "https:\/\/skinofab.com",
         searchUrl: '/search',
         predictiveSearchUrl: '/search/suggest',
         product_recommendations_url: "\/recommendations\/products"
@@ -476,7 +476,7 @@
         smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
         no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
         swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
-        base: "//smooche.com/cdn/shop/t/76/assets/"
+        base: "//skinofab.com/cdn/shop/t/76/assets/"
       },
       strings: {
         add_to_cart: "Add to Cart",
@@ -553,13 +553,13 @@
     window.isHeaderTransparent = false;
     window.stickyHeaderHeight = 60;
     window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
-    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/smooche-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/skinofab-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
         @media screen and (max-width: 767px) {
         .product-single__details {
           overflow: ;
         }
         }
-      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Smooche","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Smooche","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
+      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Skinofab","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Skinofab","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
         #shopify-buyer-consent {
   margin-top: 1em;
   display: inline-block;
@@ -583,12 +583,12 @@
   box-shadow: none;
 }
 
-      </style><script defer="defer" src="{{ 'sf/js/smooche-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
+      </style><script defer="defer" src="{{ 'sf/js/skinofab-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
     #alia-popup-root-alia-qqoyyurlj3kbg51i {
       z-index: 999999 !important;
     }
   </style><script id="kaching-bundles-translations" type="application/json">
-    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Smooche Blender":"+ GRATIS Smooche Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
+    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
   </script><script class="kaching-bundles-product" data-main="true" data-product-id="7869252337820" type="application/json">
     {
       "id": 7869252337820,
@@ -684,76 +684,76 @@
 <div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--20029865459868__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--20029865459868__main">
 <div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="34878033461404" data-media-id="template--20029865459868__main-34878033461404" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865459868__main-34878033461404"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="TEST Smooche alt text" class="is-loading img-object-cover" data-image-id="34878033461404" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1080w-35be91.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-753w-9c5ede.png'|asset_url }} 753w, {{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1080w-e7e753.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="TEST Skinofab alt text" class="is-loading img-object-cover" data-image-id="34878033461404" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1080w-35be91.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-753w-9c5ede.png'|asset_url }} 753w, {{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1080w-e7e753.png'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34878033232028" data-media-id="template--20029865459868__main-34878033232028" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865459868__main-34878033232028"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — before and after results | Smooche" class="is-loading img-object-cover" data-image-id="34878033232028" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-1080w-164736.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-753w-926110.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-1080w-c4d15f.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — before and after results | Skinofab" class="is-loading img-object-cover" data-image-id="34878033232028" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-1080w-164736.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-753w-926110.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-1080w-c4d15f.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34878033264796" data-media-id="template--20029865459868__main-34878033264796" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865459868__main-34878033264796"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — ingredients and formula | Smooche" class="is-loading img-object-cover" data-image-id="34878033264796" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-294000.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-753w-34fa26.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — ingredients and formula | Skinofab" class="is-loading img-object-cover" data-image-id="34878033264796" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-294000.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-753w-34fa26.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34925743276188" data-media-id="template--20029865459868__main-34925743276188" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865459868__main-34925743276188"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — how to use | Smooche" class="is-loading img-object-cover" data-image-id="34925743276188" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-2eee61.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-753w-2af685.png'|asset_url }} 753w, {{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-42ef91.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — how to use | Skinofab" class="is-loading img-object-cover" data-image-id="34925743276188" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-2eee61.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-753w-2af685.png'|asset_url }} 753w, {{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-42ef91.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35169493975196" data-media-id="template--20029865459868__main-35169493975196" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865459868__main-35169493975196"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="35169493975196" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/NLPC-1080w-2e0ee9.jpg'|asset_url }}" srcset="{{ 'sf/img/NLPC-753w-e722dd.png'|asset_url }} 753w, {{ 'sf/img/NLPC-1080w-45f323.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35169493975196" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/NLPC-1080w-2e0ee9.jpg'|asset_url }}" srcset="{{ 'sf/img/NLPC-753w-e722dd.png'|asset_url }} 753w, {{ 'sf/img/NLPC-1080w-45f323.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35141460525212" data-media-id="template--20029865459868__main-35141460525212" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865459868__main-35141460525212"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="35141460525212" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-1080w-9e1ea1.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-753w-244010.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-1080w-29e004.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35141460525212" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-1080w-9e1ea1.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-753w-244010.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-1080w-29e004.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34878033395868" data-media-id="template--20029865459868__main-34878033395868" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865459868__main-34878033395868"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="34878033395868" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-1080w-e7e898.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-753w-130c94.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-1080w-7e7760.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34878033395868" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-1080w-e7e898.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-753w-130c94.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-1080w-7e7760.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34878033428636" data-media-id="template--20029865459868__main-34878033428636" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865459868__main-34878033428636"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Smooche" class="is-loading img-object-cover" data-image-id="34878033428636" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-1080w-090b91.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-753w-f9cd42.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-1080w-85c5b1.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34878033428636" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-1080w-090b91.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-753w-f9cd42.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-1080w-85c5b1.jpg'|asset_url }} 1080w" style="" width="1080"/>
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 </div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="34878033461404" data-thumbnail-id="template--20029865459868__main-34878033461404"><a aria-label="Normal Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="TEST Smooche alt text" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-178w-1f713e.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1080w-e7e753.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="TEST Skinofab alt text" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-178w-1f713e.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1080w-e7e753.png'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34878033232028" data-thumbnail-id="template--20029865459868__main-34878033232028"><a aria-label="Normal Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — before and after results | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-178w-2cd08d.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-1080w-c4d15f.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — before and after results | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-178w-2cd08d.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-1080w-c4d15f.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34878033264796" data-thumbnail-id="template--20029865459868__main-34878033264796"><a aria-label="Normal Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — ingredients and formula | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-178w-43d430.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — ingredients and formula | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-178w-43d430.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34925743276188" data-thumbnail-id="template--20029865459868__main-34925743276188"><a aria-label="Normal Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — how to use | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-178w-00d874.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-42ef91.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — how to use | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-178w-00d874.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-42ef91.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="35169493975196" data-thumbnail-id="template--20029865459868__main-35169493975196"><a aria-label="Normal Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/NLPC-178w-7e2aed.png'|asset_url }}" srcset="{{ 'sf/img/NLPC-1080w-45f323.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/NLPC-178w-7e2aed.png'|asset_url }}" srcset="{{ 'sf/img/NLPC-1080w-45f323.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="35141460525212" data-thumbnail-id="template--20029865459868__main-35141460525212"><a aria-label="Normal Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-178w-a759c6.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-1080w-29e004.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-178w-a759c6.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-1080w-29e004.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34878033395868" data-thumbnail-id="template--20029865459868__main-34878033395868"><a aria-label="Normal Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-178w-258e10.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-1080w-7e7760.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-178w-258e10.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-1080w-7e7760.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div><div class="product-single__thumbnail" data-id="34878033428636" data-thumbnail-id="template--20029865459868__main-34878033428636"><a aria-label="Normal Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Smooche" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-178w-e808cf.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-1080w-85c5b1.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover"><img alt="Normal Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-178w-e808cf.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-1080w-85c5b1.jpg'|asset_url }} 1080w" style="" width="178"/>
 </figure></a></div></div></div>
 <div class="product-single__details" data-collapsible-single="" id="product_details">
 <div class="form__wrapper" data-product-info=""><div class="product__block" style="--PBB:20px;">
@@ -833,36 +833,36 @@
 </span>
 </div></div>
 </div>
-<smooche-installments data-currency="USD" data-price="3900" id="afterpay" style="display:block">
-<span>or 4 interest-free payments of <strong>{% include 'partials/sf_price.html' with p=product quarter=1 %}</strong> with <img alt="Afterpay" height="21" src="{{ 'sf/img/AP_logo_badge_6328x2204_blackmint_png-ced85f.png'|asset_url }}" width="60"/></span>
-</smooche-installments>
-<script defer="" src="{{ 'sf/js/smooche-installments-0dba32.js'|asset_url }}"></script>
+<skinofab-installments data-currency="USD" data-price="3900" id="afterpay" style="display:block">
+<span>or 4 interest-free payments of <strong>{% include 'partials/sf_price.html' with p=product %}</strong> with <img alt="Afterpay" height="21" src="{{ 'sf/img/AP_logo_badge_6328x2204_blackmint_png-ced85f.png'|asset_url }}" width="60"/></span>
+</skinofab-installments>
+<script defer="" src="{{ 'sf/js/skinofab-installments-0dba32.js'|asset_url }}"></script>
 <div class="product__block" style="--PBB:10px;">
-<div class="smooche-usp-grid">
-<div class="smooche-usp-grid__item">
-<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_21-a5e68f.svg'|asset_url }}" width="24"/>
+<div class="skinofab-usp-grid">
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_21-a5e68f.svg'|asset_url }}" width="24"/>
 <span>Instantly fuller lips</span>
 </div>
-<div class="smooche-usp-grid__item">
-<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_22-0a6e02.svg'|asset_url }}" width="24"/>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_22-0a6e02.svg'|asset_url }}" width="24"/>
 <span>Subtle, natural results</span>
 </div>
-<div class="smooche-usp-grid__item">
-<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_26-e627cb.svg'|asset_url }}" width="24"/>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_26-e627cb.svg'|asset_url }}" width="24"/>
 <span>Approved by dermatologists</span>
 </div>
-<div class="smooche-usp-grid__item">
-<img alt="" height="24" src="{{ 'sf/img/icons_smooche_new_30-6be776.svg'|asset_url }}" width="24"/>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_30-6be776.svg'|asset_url }}" width="24"/>
 <span>100% natural &amp; vegan</span>
 </div>
 </div>
 <style>
-.smooche-usp-grid {
+.skinofab-usp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
-.smooche-usp-grid__item {
+.skinofab-usp-grid__item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -870,12 +870,12 @@
   background: #f7f7f7;
   border-radius: 8px;
 }
-.smooche-usp-grid__item img {
+.skinofab-usp-grid__item img {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
 }
-.smooche-usp-grid__item span {
+.skinofab-usp-grid__item span {
   font-size: 13px;
   font-weight: 600;
   color: #2D2D2D;
@@ -926,7 +926,7 @@ transition: all 0.3s ease;
 }
 
 .siblings__button:hover {
-border: 2px solid #CC939B!important;
+border: 2px solid #B0B0B0!important;
 border-radius: 5px!important;
 }
 
@@ -946,7 +946,7 @@ position: absolute;
 width: 100%!important;
 height: 100%!important;
 border-radius: 5px !important;
-border: 2px solid #CC939B !important;
+border: 2px solid #B0B0B0 !important;
 top: 0;
 left: 0;
 bottom: 0;
@@ -990,7 +990,7 @@ transition: all 0.3s ease;
 }
 
 .siblings__button:hover {
-border: 2px solid #CC939B!important;
+border: 2px solid #B0B0B0!important;
 border-radius: 5px!important;
 }
 
@@ -1010,7 +1010,7 @@ position: absolute;
 width: 100%!important;
 height: 100%!important;
 border-radius: 5px !important;
-border: 2px solid #CC939B !important;
+border: 2px solid #B0B0B0 !important;
 top: 0;
 left: 0;
 bottom: 0;
@@ -1261,7 +1261,7 @@ Extreme
       }
     }
 
-    window.smoocheCustomerCountry = countryCode;
+    window.skinofabCustomerCountry = countryCode;
     updateShippingUspText();
   }
 
@@ -1284,7 +1284,7 @@ Extreme
   // US delivery estimate when the shopper is in the US and the current variant
   // has stock at a US fulfillment location.
   function updateShippingUspText(variantId) {
-    const isUsCustomer = window.smoocheCustomerCountry === 'US';
+    const isUsCustomer = window.skinofabCustomerCountry === 'US';
 
     const block = document.querySelector('[data-shipping-usp]');
     const uspText = block ? document.getElementById('shippingUspText') : null;
@@ -1401,7 +1401,7 @@ Extreme
     .countdown-timer-bar {
       width: 100%;
       height: 10px;
-      background-color: #f6ddea;
+      background-color: #eaeaea;
       border-radius: 0px;
       overflow: hidden;
       margin-bottom: 7px;
@@ -1410,7 +1410,7 @@ Extreme
     
     .countdown-timer-progress {
       height: 100%;
-      background-color: #df8096;
+      background-color: #000000;
       width: 91%;
       transition: width 0.3s ease;
       border-radius: 0px;
@@ -1434,13 +1434,13 @@ Extreme
       display: flex;
       align-items: center;
       gap: 6px;
-      color: #df8096;
+      color: #000000;
       font-size: 16px;
       font-weight: 500;
     }
     
     .countdown-timer-time {
-      color: #df8096;
+      color: #000000;
       font-weight: 500;
     }
     
@@ -1560,12 +1560,12 @@ Extreme
 <style>
                   #product__featuretemplate--20029865459868__main {
                     border-width: 2px!important;
-                    border-color: #df8096!important;
+                    border-color: #000000!important;
                   }
                   @media screen and (max-width: 767px){
                   #product__featuretemplate--20029865459868__main {
                     border-width: 2px!important;
-                    border-color: #df8096!important;
+                    border-color: #000000!important;
                   }
                   }
                 </style>
@@ -1665,7 +1665,7 @@ Extreme
                   }
 
                  .video-slider .swiper-pagination-bullet-active {
-                background: #cc949b!important;
+                background: #b0b0b0!important;
                 }
                   .swiper-pagination {
                    position: relative!important;
@@ -1681,7 +1681,7 @@ Extreme
                 }
 
                   .swiper-button-next_Videoslider {
-                background: #cc949b!important;
+                background: #b0b0b0!important;
                 color: #ffffff!important;
                     border-radius: 500px;
                     width: 27px;
@@ -1717,7 +1717,7 @@ Extreme
                 }
 
                     .swiper-button-prev_Videoslider {
-                background: #cc949b!important;
+                background: #b0b0b0!important;
                 color: #ffffff!important;
                     border-radius: 500px;
                     width: 27px;
@@ -1990,7 +1990,7 @@ draggable: false,
 </div></div>
 </div>
 </div><script data-product-json="" id="ProductJson-template--20029865459868__main" type="application/json">
-      {"id":7869252337820,"title":"Normal Lip Plumper","handle":"hyaluronic-acid-lip-plumper","description":"\u003ch2 class=\"products-list__heading subheading-text\"\u003e\u003cstrong\u003eFor longer lasting results\u003c\/strong\u003e\u003c\/h2\u003e\n\u003cp\u003e\u003cspan data-mce-fragment=\"1\"\u003eLock in hydration with our long-lasting plumper, enriched with hydrating hyaluronic acid. For a long-lasting plump effect, apply regularly over time. \u003c\/span\u003e\u003c\/p\u003e","published_at":"2024-02-20T06:59:08-05:00","created_at":"2024-02-20T06:59:08-05:00","vendor":"Smooche","type":"","tags":["bf","category_lips","group1","Order Fulfillment Guru"],"price":3900,"price_min":3900,"price_max":3900,"available":true,"price_varies":false,"compare_at_price":4900,"compare_at_price_min":4900,"compare_at_price_max":4900,"compare_at_price_varies":false,"variants":[{"id":44663453876380,"title":"Transparent","option1":"Transparent","option2":null,"option3":null,"sku":"SMO-NLP-TR","requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Normal Lip Plumper - Transparent","public_title":"Transparent","options":["Transparent"],"price":3900,"weight":0,"compare_at_price":4900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb.png","..\/assets\/img\/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-814w-dfa555.jpg","..\/assets\/img\/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg","..\/assets\/img\/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-2eee61.jpg","..\/assets\/img\/NLPC-753w-e722dd.png","..\/assets\/img\/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-178w-a759c6.png","..\/assets\/img\/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-753w-130c94.jpg","..\/assets\/img\/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-178w-e808cf.png"],"featured_image":"..\/assets\/img\/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb.png","options":["Color"],"media":[{"alt":"TEST Smooche alt text","id":34878033461404,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb.png","width":1080},{"alt":"Normal Lip Plumper — before and after results | Smooche","id":34878033232028,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-814w-dfa555.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-814w-dfa555.jpg","width":1080},{"alt":"Normal Lip Plumper — ingredients and formula | Smooche","id":34878033264796,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg","width":1080},{"alt":"Normal Lip Plumper — how to use | Smooche","id":34925743276188,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-2eee61.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-2eee61.jpg","width":1080},{"alt":"Normal Lip Plumper — lifestyle photo | Smooche","id":35169493975196,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/NLPC-753w-e722dd.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/NLPC-753w-e722dd.png","width":1080},{"alt":"Normal Lip Plumper — lifestyle photo | Smooche","id":35141460525212,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-178w-a759c6.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-178w-a759c6.png","width":1080},{"alt":"Normal Lip Plumper — lifestyle photo | Smooche","id":34878033395868,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-753w-130c94.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-753w-130c94.jpg","width":1080},{"alt":"Normal Lip Plumper — lifestyle photo | Smooche","id":34878033428636,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-178w-e808cf.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-178w-e808cf.png","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003ch2 class=\"products-list__heading subheading-text\"\u003e\u003cstrong\u003eFor longer lasting results\u003c\/strong\u003e\u003c\/h2\u003e\n\u003cp\u003e\u003cspan data-mce-fragment=\"1\"\u003eLock in hydration with our long-lasting plumper, enriched with hydrating hyaluronic acid. For a long-lasting plump effect, apply regularly over time. \u003c\/span\u003e\u003c\/p\u003e"}
+      {"id":7869252337820,"title":"Normal Lip Plumper","handle":"hyaluronic-acid-lip-plumper","description":"\u003ch2 class=\"products-list__heading subheading-text\"\u003e\u003cstrong\u003eFor longer lasting results\u003c\/strong\u003e\u003c\/h2\u003e\n\u003cp\u003e\u003cspan data-mce-fragment=\"1\"\u003eLock in hydration with our long-lasting plumper, enriched with hydrating hyaluronic acid. For a long-lasting plump effect, apply regularly over time. \u003c\/span\u003e\u003c\/p\u003e","published_at":"2024-02-20T06:59:08-05:00","created_at":"2024-02-20T06:59:08-05:00","vendor":"Skinofab","type":"","tags":["bf","category_lips","group1","Order Fulfillment Guru"],"price":3900,"price_min":3900,"price_max":3900,"available":true,"price_varies":false,"compare_at_price":4900,"compare_at_price_min":4900,"compare_at_price_max":4900,"compare_at_price_varies":false,"variants":[{"id":44663453876380,"title":"Transparent","option1":"Transparent","option2":null,"option3":null,"sku":"SMO-NLP-TR","requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Normal Lip Plumper - Transparent","public_title":"Transparent","options":["Transparent"],"price":3900,"weight":0,"compare_at_price":4900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb.png","..\/assets\/img\/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-814w-dfa555.jpg","..\/assets\/img\/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg","..\/assets\/img\/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-2eee61.jpg","..\/assets\/img\/NLPC-753w-e722dd.png","..\/assets\/img\/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-178w-a759c6.png","..\/assets\/img\/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-753w-130c94.jpg","..\/assets\/img\/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-178w-e808cf.png"],"featured_image":"..\/assets\/img\/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb.png","options":["Color"],"media":[{"alt":"TEST Skinofab alt text","id":34878033461404,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb.png","width":1080},{"alt":"Normal Lip Plumper — before and after results | Skinofab","id":34878033232028,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-814w-dfa555.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-814w-dfa555.jpg","width":1080},{"alt":"Normal Lip Plumper — ingredients and formula | Skinofab","id":34878033264796,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1080w-114ccd.jpg","width":1080},{"alt":"Normal Lip Plumper — how to use | Skinofab","id":34925743276188,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-2eee61.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1080w-2eee61.jpg","width":1080},{"alt":"Normal Lip Plumper — lifestyle photo | Skinofab","id":35169493975196,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/NLPC-753w-e722dd.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/NLPC-753w-e722dd.png","width":1080},{"alt":"Normal Lip Plumper — lifestyle photo | Skinofab","id":35141460525212,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-178w-a759c6.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-178w-a759c6.png","width":1080},{"alt":"Normal Lip Plumper — lifestyle photo | Skinofab","id":34878033395868,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-753w-130c94.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-753w-130c94.jpg","width":1080},{"alt":"Normal Lip Plumper — lifestyle photo | Skinofab","id":34878033428636,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-178w-e808cf.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-178w-e808cf.png","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003ch2 class=\"products-list__heading subheading-text\"\u003e\u003cstrong\u003eFor longer lasting results\u003c\/strong\u003e\u003c\/h2\u003e\n\u003cp\u003e\u003cspan data-mce-fragment=\"1\"\u003eLock in hydration with our long-lasting plumper, enriched with hydrating hyaluronic acid. For a long-lasting plump effect, apply regularly over time. \u003c\/span\u003e\u003c\/p\u003e"}
     </script>
 <script id="ModelJson-template--20029865459868__main" type="application/json">
       []
@@ -2265,11 +2265,11 @@ margin-top: 5px;
 <div class="wrapper text-center">
 <div class="text">
 <style data-shopify="">#Text--heading_agkCrz.text__heading {
-                  --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 0.8);--highlight-color: var(--text);--highlight-color: #df8096;--highlight-text-color: #000000;}
+                  --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 0.8);--highlight-color: var(--text);--highlight-color: #000000;--highlight-text-color: #000000;}
                 @media screen and (min-width: 1024px) {
                   #Text--heading_agkCrz.text__heading { --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 0.8); }
                 }</style><div class="text__heading h2 text-highlight-wrapper text-highlight-wrapper--circle" id="Text--heading_agkCrz">
-<span class="text-highlight__break">Loved by <span class="text-highlight" style="--icon-url: none;--icon-color: #df8096;">50,000+<span class="text-highlight__icon text-highlight__icon--single-word"><svg fill="none" height="92" viewbox="0 0 226 92" width="226" xmlns="http://www.w3.org/2000/svg">
+<span class="text-highlight__break">Loved by <span class="text-highlight" style="--icon-url: none;--icon-color: #000000;">50,000+<span class="text-highlight__icon text-highlight__icon--single-word"><svg fill="none" height="92" viewbox="0 0 226 92" width="226" xmlns="http://www.w3.org/2000/svg">
 <path d="M223.164 36.9069C223.618 42.3287 221.306 47.9316 216.296 53.4861C211.282 59.0442 203.693 64.3996 193.997 69.2175C174.617 78.8478 147.203 86.1414 116.362 88.7259C85.521 91.3104 57.2753 88.6811 36.5628 82.4106C26.2005 79.2735 17.8263 75.2559 11.9575 70.6097C6.09246 65.9666 2.87988 60.8266 2.42553 55.4048C1.97118 49.983 4.2835 44.3801 9.29397 38.8255C14.3077 33.2675 21.8964 27.9121 31.592 23.0942C50.9721 13.4639 78.3863 6.17031 109.227 3.58582C140.068 1.00133 168.314 3.63062 189.027 9.90111C199.389 13.0382 207.763 17.0558 213.632 21.702C219.497 26.3451 222.71 31.4851 223.164 36.9069Z" stroke="currentColor" stroke-width="2"></path>
 </svg>
 </span></span></span>
@@ -2277,13 +2277,13 @@ margin-top: 5px;
 </div>
 </section>
 </div><div class="shopify-section" id="shopify-section-template--20029865459868__kopstorm_testomonials_mQpqEd"><style>
-.smooche-testimonials {
+.skinofab-testimonials {
   padding-top: 20px;
   padding-bottom: 20px;
   background: #ffffff;
 }
 
-.smooche-testimonials .section__heading {
+.skinofab-testimonials .section__heading {
   text-align: center;
   text-transform: none;
   margin-bottom: 30px;
@@ -2292,15 +2292,15 @@ margin-top: 5px;
 /* Slides must NOT stretch to the tallest sibling — otherwise expanding one
    card's "Read More" grows every card in the row. Each slide sizes to its
    own card; resting heights stay uniform because text is line-clamped. */
-.smooche-testimonials .swiper-wrapper {
+.skinofab-testimonials .swiper-wrapper {
   align-items: flex-start;
 }
 
-.smooche-testimonials .swiper-slide {
+.skinofab-testimonials .swiper-slide {
   height: auto;
 }
 
-.smooche-testimonials__card {
+.skinofab-testimonials__card {
   background: #f7f7f7;
   border-radius: 16px;
   overflow: hidden;
@@ -2309,20 +2309,20 @@ margin-top: 5px;
   flex-direction: column;
 }
 
-.smooche-testimonials__image {
+.skinofab-testimonials__image {
   width: 100%;
   height: 220px;
   overflow: hidden;
 }
 
-.smooche-testimonials__image img {
+.skinofab-testimonials__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.smooche-testimonials__body {
+.skinofab-testimonials__body {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -2330,89 +2330,89 @@ margin-top: 5px;
   flex: 1;
 }
 
-.smooche-testimonials__top {
+.skinofab-testimonials__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.smooche-testimonials__name {
+.skinofab-testimonials__name {
   font-weight: 700;
   font-size: 15px;
   color: #2D2D2D;
 }
 
-.smooche-testimonials__stars {
+.skinofab-testimonials__stars {
   display: flex;
   gap: 2px;
 }
 
-.smooche-testimonials__stars svg {
+.skinofab-testimonials__stars svg {
   width: 14px;
   height: 14px;
 }
 
-.smooche-testimonials__stars svg path {
-  fill: #df8096;
+.skinofab-testimonials__stars svg path {
+  fill: #000000;
 }
 
-.smooche-testimonials__verified {
+.skinofab-testimonials__verified {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   font-size: 11px;
   font-weight: 600;
-  color: #df8096;
+  color: #000000;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.smooche-testimonials__verified svg {
+.skinofab-testimonials__verified svg {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
 }
 
-.smooche-testimonials__text {
+.skinofab-testimonials__text {
   font-size: 14px;
   line-height: 1.55;
   color: #555;
   position: relative;
 }
 
-.smooche-testimonials__text p {
+.skinofab-testimonials__text p {
   margin: 0;
 }
 
-.smooche-testimonials__text:not(.is-expanded) p {
+.skinofab-testimonials__text:not(.is-expanded) p {
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.smooche-testimonials__read-more {
+.skinofab-testimonials__read-more {
   background: none;
   border: none;
   padding: 0;
   font-size: 13px;
   font-weight: 600;
-  color: #df8096;
+  color: #000000;
   cursor: pointer;
   margin-top: auto;
 }
 
-.smooche-testimonials__read-more:hover {
+.skinofab-testimonials__read-more:hover {
   text-decoration: underline;
 }
 
 /* Navigation */
-.smooche-testimonials__nav {
+.skinofab-testimonials__nav {
   position: relative;
 }
 
-.smooche-testimonials .swiper-button-prev,
-.smooche-testimonials .swiper-button-next {
+.skinofab-testimonials .swiper-button-prev,
+.skinofab-testimonials .swiper-button-next {
   width: 36px;
   height: 36px;
   background: #f7f7f7;
@@ -2421,67 +2421,67 @@ margin-top: 5px;
   top: var(--swiper-navigation-top-offset, 43%);
 }
 
-.smooche-testimonials .swiper-button-prev { left: 0; }
-.smooche-testimonials .swiper-button-next { right: 0; }
+.skinofab-testimonials .swiper-button-prev { left: 0; }
+.skinofab-testimonials .swiper-button-next { right: 0; }
 
-.smooche-testimonials .swiper-button-prev:after,
-.smooche-testimonials .swiper-button-next:after {
+.skinofab-testimonials .swiper-button-prev:after,
+.skinofab-testimonials .swiper-button-next:after {
   font-size: 14px;
   font-weight: bold;
   color: #000000;
 }
 
-.smooche-testimonials .swiper-scrollbar {
+.skinofab-testimonials .swiper-scrollbar {
   height: 4px;
   margin-top: 24px;
 }
 
-.smooche-testimonials .swiper-scrollbar-drag {
-  background: #df8096;
+.skinofab-testimonials .swiper-scrollbar-drag {
+  background: #000000;
 }
 
-.smooche-testimonials div[aria-disabled="true"] {
+.skinofab-testimonials div[aria-disabled="true"] {
   opacity: 0.35;
   cursor: auto;
   pointer-events: none;
 }
 
 @media (max-width: 767px) {
-  .smooche-testimonials {
+  .skinofab-testimonials {
     padding-top: 20px;
     padding-bottom: 20px;
   }
-  .smooche-testimonials__image {
+  .skinofab-testimonials__image {
     height: 200px;
   }
-  .smooche-testimonials__text {
+  .skinofab-testimonials__text {
     font-size: 14px;
   }
-  .smooche-testimonials__nav {
+  .skinofab-testimonials__nav {
     padding-left: 16px;
     padding-right: 16px;
   }
-  .smooche-testimonials .swiper-button-prev,
-  .smooche-testimonials .swiper-button-next {
+  .skinofab-testimonials .swiper-button-prev,
+  .skinofab-testimonials .swiper-button-next {
     width: 30px;
     height: 30px;
   }
 }
 </style>
-<section class="smooche-testimonials">
+<section class="skinofab-testimonials">
 <div class="wrapper">
-<div class="smooche-testimonials__nav">
-<div class="swiper smooche-testimonials-swiper">
+<div class="skinofab-testimonials__nav">
+<div class="swiper skinofab-testimonials-swiper">
 <div class="swiper-wrapper">
 <div class="swiper-slide">
-<div class="smooche-testimonials__card">
-<div class="smooche-testimonials__image">
+<div class="skinofab-testimonials__card">
+<div class="skinofab-testimonials__image">
 <img alt="Lena" loading="lazy" src="{{ 'sf/img/14_69c414a0-dbc5-476a-b273-551baff6f37b_800x800-6dc44c.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-testimonials__body">
-<div class="smooche-testimonials__top">
-<span class="smooche-testimonials__name">Lena</span>
-<div class="smooche-testimonials__stars">
+<div class="skinofab-testimonials__body">
+<div class="skinofab-testimonials__top">
+<span class="skinofab-testimonials__name">Lena</span>
+<div class="skinofab-testimonials__stars">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
@@ -2489,26 +2489,26 @@ margin-top: 5px;
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 </div>
 </div>
-<span class="smooche-testimonials__verified">
+<span class="skinofab-testimonials__verified">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z" fill="currentColor"></path></svg>
                       Verified purchase
                     </span>
-<div class="smooche-testimonials__text">
+<div class="skinofab-testimonials__text">
 <p>"I’m 63 and honestly didn’t expect much — but this lip plumper surprised me. My lips look fuller and smoother without that fake, overdone look, and the fine lines around my mouth are less noticeable. I finally feel confident wearing just lip gloss again."</p>
 </div>
-<button class="smooche-testimonials__read-more" style="display:none;">Read More</button>
+<button class="skinofab-testimonials__read-more" style="display:none;">Read More</button>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-testimonials__card">
-<div class="smooche-testimonials__image">
+<div class="skinofab-testimonials__card">
+<div class="skinofab-testimonials__image">
 <img alt="Melissa" loading="lazy" src="{{ 'sf/img/8_bed56c8e-3bd1-461a-b435-17db8d3450c6_800x800-ba5bd3.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-testimonials__body">
-<div class="smooche-testimonials__top">
-<span class="smooche-testimonials__name">Melissa</span>
-<div class="smooche-testimonials__stars">
+<div class="skinofab-testimonials__body">
+<div class="skinofab-testimonials__top">
+<span class="skinofab-testimonials__name">Melissa</span>
+<div class="skinofab-testimonials__stars">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
@@ -2516,26 +2516,26 @@ margin-top: 5px;
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 </div>
 </div>
-<span class="smooche-testimonials__verified">
+<span class="skinofab-testimonials__verified">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z" fill="currentColor"></path></svg>
                       Verified purchase
                     </span>
-<div class="smooche-testimonials__text">
+<div class="skinofab-testimonials__text">
 <p>"I saw it on Instagram and I am so thankful, lol. I’ve tried so many lip products and none of them worked, but this one is different. My lips look fuller and more defined, it’s crazy. I’m honestly shocked at how effective and easy it is. This is now a must-have in my beauty routine."</p>
 </div>
-<button class="smooche-testimonials__read-more" style="display:none;">Read More</button>
+<button class="skinofab-testimonials__read-more" style="display:none;">Read More</button>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-testimonials__card">
-<div class="smooche-testimonials__image">
+<div class="skinofab-testimonials__card">
+<div class="skinofab-testimonials__image">
 <img alt="Marian" loading="lazy" src="{{ 'sf/img/12_38c9d016-69b9-4b37-b2d1-127c8a86016e_800x800-1e5a35.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-testimonials__body">
-<div class="smooche-testimonials__top">
-<span class="smooche-testimonials__name">Marian</span>
-<div class="smooche-testimonials__stars">
+<div class="skinofab-testimonials__body">
+<div class="skinofab-testimonials__top">
+<span class="skinofab-testimonials__name">Marian</span>
+<div class="skinofab-testimonials__stars">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
@@ -2543,26 +2543,26 @@ margin-top: 5px;
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 </div>
 </div>
-<span class="smooche-testimonials__verified">
+<span class="skinofab-testimonials__verified">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z" fill="currentColor"></path></svg>
                       Verified purchase
                     </span>
-<div class="smooche-testimonials__text">
+<div class="skinofab-testimonials__text">
 <p>"I’m 67 and have tried so many products that promised ‘fuller lips’ and delivered nothing. This one is different. My lips look naturally plump, feel hydrated, and the color sits beautifully without bleeding into lines. It makes my whole face look fresher... I wish I’d found it years ago."</p>
 </div>
-<button class="smooche-testimonials__read-more" style="display:none;">Read More</button>
+<button class="skinofab-testimonials__read-more" style="display:none;">Read More</button>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-testimonials__card">
-<div class="smooche-testimonials__image">
+<div class="skinofab-testimonials__card">
+<div class="skinofab-testimonials__image">
 <img alt="Danna" loading="lazy" src="{{ 'sf/img/2_b5a9c078-5cd0-436e-a9e0-e73a535d1592_800x800-c3f922.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-testimonials__body">
-<div class="smooche-testimonials__top">
-<span class="smooche-testimonials__name">Danna</span>
-<div class="smooche-testimonials__stars">
+<div class="skinofab-testimonials__body">
+<div class="skinofab-testimonials__top">
+<span class="skinofab-testimonials__name">Danna</span>
+<div class="skinofab-testimonials__stars">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
@@ -2570,21 +2570,21 @@ margin-top: 5px;
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.47 5.01L18 6.87l-4 3.9.94 5.5L10 13.77l-4.94 2.5.94-5.5-4-3.9 5.53-.86L10 1z"></path></svg>
 </div>
 </div>
-<span class="smooche-testimonials__verified">
+<span class="skinofab-testimonials__verified">
 <svg fill="none" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z" fill="currentColor"></path></svg>
                       Verified purchase
                     </span>
-<div class="smooche-testimonials__text">
+<div class="skinofab-testimonials__text">
 <p>"Wow!!! This actually works. I tried the extreme and the normal one, and i love them both. I use the extreme one whenever I need some extra fuller lips, and the normal for daily wear. I always keep them in my bag so I’m ready for any situation. I 100% recommend it girlsss."</p>
 </div>
-<button class="smooche-testimonials__read-more" style="display:none;">Read More</button>
+<button class="skinofab-testimonials__read-more" style="display:none;">Read More</button>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="swiper-button-prev smooche-testimonials-prev"></div>
-<div class="swiper-button-next smooche-testimonials-next"></div>
+<div class="swiper-button-prev skinofab-testimonials-prev"></div>
+<div class="swiper-button-next skinofab-testimonials-next"></div>
 </div>
 </div>
 </section>
@@ -2592,7 +2592,7 @@ margin-top: 5px;
 (function () {
   var section = document.getElementById('shopify-section-template--20029865459868__kopstorm_testomonials_mQpqEd');
   if (!section) return;
-  var slider = section.querySelector('.smooche-testimonials-swiper');
+  var slider = section.querySelector('.skinofab-testimonials-swiper');
   if (!slider || slider.swiper) return;
   new Swiper(slider, {
   slidesPerView: 4,
@@ -2604,8 +2604,8 @@ margin-top: 5px;
   },
   
   navigation: {
-    nextEl: section.querySelector('.smooche-testimonials-next'),
-    prevEl: section.querySelector('.smooche-testimonials-prev')
+    nextEl: section.querySelector('.skinofab-testimonials-next'),
+    prevEl: section.querySelector('.skinofab-testimonials-prev')
   },
   
   
@@ -2614,9 +2614,9 @@ margin-top: 5px;
 </script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll(".smooche-testimonials__card").forEach(function(card) {
-    var text = card.querySelector(".smooche-testimonials__text");
-    var btn = card.querySelector(".smooche-testimonials__read-more");
+  document.querySelectorAll(".skinofab-testimonials__card").forEach(function(card) {
+    var text = card.querySelector(".skinofab-testimonials__text");
+    var btn = card.querySelector(".skinofab-testimonials__read-more");
     if (!text || !btn) return;
     if (text.querySelector("p") && text.querySelector("p").scrollHeight > text.querySelector("p").clientHeight) {
       btn.style.display = "inline-block";
@@ -2629,52 +2629,52 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 </div><div class="shopify-section" id="shopify-section-template--20029865459868__section_image_with_text_xdx7DM"><style>
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM {
   padding-top: 20px;
   padding-bottom: 20px;
   background: transparent;
   font-family: var(--FONT-STACK-BODY);
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__grid {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
   align-items: center;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse {
   direction: rtl;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse > * {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse > * {
   direction: ltr;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__image {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__image {
   border-radius: 16px;
   overflow: hidden;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__image img {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__image img {
   width: 100%;
   height: auto;
   display: block;
   object-fit: contain;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__content {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__content {
   text-align: left;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__heading {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__heading {
   text-align: left;
   text-transform: none;
   margin: 0 0 20px 0;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__highlight {
-  background: #df8096;
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__highlight {
+  background: #000000;
   color: #ffffff;
   padding: 4px 10px;
   border-radius: 6px;
@@ -2683,7 +2683,7 @@ document.addEventListener("DOMContentLoaded", function() {
   line-height: 1.6;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__text {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__text {
   font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   color: #555;
@@ -2691,35 +2691,35 @@ document.addEventListener("DOMContentLoaded", function() {
   margin: 0 0 24px 0;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__text p {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__text p {
   margin: 0 0 14px 0;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__text p:last-child {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__text p:last-child {
   margin-bottom: 0;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__usps {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__usps {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px 20px;
   margin-top: 24px;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__usp {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__usp {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__usp img {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__usp img {
   width: 32px;
   height: 32px;
   flex-shrink: 0;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__usp-text {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__usp-text {
   font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   font-weight: 600;
@@ -2728,16 +2728,16 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 @media (max-width: 600px) {
-  .smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__usp img { width: 26px; height: 26px; }
-  .smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__usp-text { font-size: 13px; line-height: 1.25; }
-  .smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__usp { gap: 8px; }
+  .skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__usp img { width: 26px; height: 26px; }
+  .skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__usp-text { font-size: 13px; line-height: 1.25; }
+  .skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__usp { gap: 8px; }
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__usp-text p {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__usp-text p {
   margin: 0;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__button {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__button {
   display: inline-block;
   margin-top: 28px;
   padding: 14px 32px;
@@ -2753,51 +2753,51 @@ document.addEventListener("DOMContentLoaded", function() {
   transition: background 0.2s ease;
 }
 
-.smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__button:hover {
+.skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__button:hover {
   opacity: 0.85;
 }
 
 @media (max-width: 767px) {
-  .smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM {
+  .skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM {
     padding-top: 20px;
     padding-bottom: 20px;
   }
-  .smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__grid {
+  .skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__grid {
     grid-template-columns: 1fr;
     gap: 28px;
   }
-  .smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__grid--reverse {
+  .skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse {
     direction: ltr;
   }
-  .smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__text {
+  .skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__text {
     font-size: 14px;
   }
-  .smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM .smooche-iwt__heading {
+  .skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM .skinofab-iwt__heading {
     font-size: 24px;
   }
 }
 </style>
-<section class="smooche-iwt-template--20029865459868__section_image_with_text_xdx7DM">
+<section class="skinofab-iwt-template--20029865459868__section_image_with_text_xdx7DM">
 <div class="wrapper">
-<div class="smooche-iwt__grid">
-<div class="smooche-iwt__image">
+<div class="skinofab-iwt__grid">
+<div class="skinofab-iwt__image">
 <img alt="Fuller lips, naturally" loading="lazy" src="{{ 'sf/img/DSC03436-Edit_1200x1200-11def3.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-iwt__content">
-<h2 class="section__heading h2 smooche-iwt__heading">Fuller lips, 
-<span class="smooche-iwt__highlight">naturally</span>
+<div class="skinofab-iwt__content">
+<h2 class="section__heading h2 skinofab-iwt__heading">Fuller lips, 
+<span class="skinofab-iwt__highlight">naturally</span>
 </h2>
-<div class="smooche-iwt__text">
+<div class="skinofab-iwt__text">
 <p>Discover the secret to naturally fuller lips with our lip plumpers. Crafted from natural ingredients, these plumpers enhance your lips' natural volume and definition. Enjoy a hydrated, nourished pout that feels as good as it looks, all without the use of harsh chemicals.</p>
 </div>
-<div class="smooche-iwt__usps">
-<div class="smooche-iwt__usp">
-<img alt="" src="{{ 'sf/img/icons_smooche_new_21_100x100-da372d.svg'|asset_url }}"/>
-<div class="smooche-iwt__usp-text"><p>Instant result</p></div>
+<div class="skinofab-iwt__usps">
+<div class="skinofab-iwt__usp">
+<img alt="" src="{{ 'sf/img/icons_skinofab_new_21_100x100-da372d.svg'|asset_url }}"/>
+<div class="skinofab-iwt__usp-text"><p>Instant result</p></div>
 </div>
-<div class="smooche-iwt__usp">
-<img alt="" src="{{ 'sf/img/icons_smooche_new_26_100x100-bd1063.svg'|asset_url }}"/>
-<div class="smooche-iwt__usp-text"><p>100% natural</p></div>
+<div class="skinofab-iwt__usp">
+<img alt="" src="{{ 'sf/img/icons_skinofab_new_26_100x100-bd1063.svg'|asset_url }}"/>
+<div class="skinofab-iwt__usp-text"><p>100% natural</p></div>
 </div>
 </div>
 </div>
@@ -2805,7 +2805,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 </section>
 </div><div class="shopify-section" id="shopify-section-template--20029865459868__kopstorm_1_REVPeb"><style>
-   #smooche_1 {
+   #skinofab_1 {
     margin: 0 auto;
     border-radius: var(--radius);
         margin-top: 20px;
@@ -2815,7 +2815,7 @@ padding-bottom: 50px;
      
   }
   @media screen and (max-width: 767px) {
-  #smooche_1 {
+  #skinofab_1 {
             margin-top: 20px;
 margin-bottom: 20px;
 padding-top: 50px;      
@@ -2823,25 +2823,25 @@ padding-bottom: 50px;
   }
   }
 
-  #smooche_1 .gridcell h1, #smooche_1 .gridcell h2, #smooche_1 .gridcell h3, #smooche_1 .gridcell h4, #smooche_1 .gridcell h5, #smooche_1 .gridcell h6 {
+  #skinofab_1 .gridcell h1, #skinofab_1 .gridcell h2, #skinofab_1 .gridcell h3, #skinofab_1 .gridcell h4, #skinofab_1 .gridcell h5, #skinofab_1 .gridcell h6 {
     color: unset!important;
   }
   #headingmain h1, #headingmain h2, #headingmain h3, #headingmain h4, #headingmain h5, #headingmain h6 {
     color: unset!important;
   }
-  .smooche_1 {
+  .skinofab_1 {
     color: #000000!important;
     background: #f7f7f7!important;
   }
 
-  #smooche_1 p {
+  #skinofab_1 p {
     margin: 0 !important;
     line-height: 1.25!important;
     font-size: 14px!important;
 }
 </style>
 <div class="wrapper">
-<section class="smooche_1" id="smooche_1">
+<section class="skinofab_1" id="skinofab_1">
 <div class="wrapper">
 <div class="wrappit desktop">
 <div id="headingmain">
@@ -2861,7 +2861,7 @@ padding-bottom: 50px;
 <img alt="" class="image" src="{{ 'sf/img/A29203DF-5B9B-4AE5-9ACB-29FC6108C19D_1000x1000-c2e5ca.jpg'|asset_url }}"/>
 <div class="content">
 <h4 class="headingupper"><h5>Wait for 5-10 minutes</h5></h4>
-<p class="paragraph"></p><p>Let smooche do its magic</p>
+<p class="paragraph"></p><p>Let skinofab do its magic</p>
 </div>
 </div>
 <div class="gridcell">
@@ -2891,7 +2891,7 @@ padding-bottom: 50px;
 <img alt="" class="image" src="{{ 'sf/img/A29203DF-5B9B-4AE5-9ACB-29FC6108C19D_1000x1000-c2e5ca.jpg'|asset_url }}"/>
 <div class="content">
 <h4 class="headingupper"><h5>Wait for 5-10 minutes</h5></h4>
-<p></p><p>Let smooche do its magic</p>
+<p></p><p>Let skinofab do its magic</p>
 </div>
 </div>
 <div class="gridcell">
@@ -3105,7 +3105,7 @@ left: 0px;    border: 1px solid #e7e9ec;
 
 #percentage1 {
   font-size: 100px!important;
-  color: #df8096!important;
+  color: #000000!important;
 }
 @media screen and (max-width: 767px) {
 #percentage1 {
@@ -3124,22 +3124,22 @@ left: 0px;    border: 1px solid #e7e9ec;
 }
 </style>
 <style> #shopify-section-template--20029865459868__kopstorm_results_nntHGp {max-width: 1300px; margin-left: auto; margin-right: auto;} </style></div><div class="shopify-section" id="shopify-section-template--20029865459868__kopstorm_ingredients_V2"><style>
-.smooche-ingredients {
+.skinofab-ingredients {
   padding: 60px 0 70px;
   background: #fff9fb;
 }
 
-.smooche-ingredients__heading {
+.skinofab-ingredients__heading {
   text-align: center;
   margin-bottom: 50px;
 }
 
-.smooche-ingredients__heading .section__heading {
+.skinofab-ingredients__heading .section__heading {
   text-transform: none;
   margin-bottom: 0;
 }
 
-.smooche-ingredients__subtitle {
+.skinofab-ingredients__subtitle {
   margin-top: 10px;
   font-size: 15px;
   color: #777;
@@ -3148,18 +3148,18 @@ left: 0px;    border: 1px solid #e7e9ec;
   margin-right: auto;
 }
 
-.smooche-ingredients__subtitle p {
+.skinofab-ingredients__subtitle p {
   margin: 0;
 }
 
-.smooche-ingredients__grid {
+.skinofab-ingredients__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin: 0 auto;
 }
 
-.smooche-ingredients__card {
+.skinofab-ingredients__card {
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
@@ -3167,48 +3167,48 @@ left: 0px;    border: 1px solid #e7e9ec;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.smooche-ingredients__card:hover {
+.skinofab-ingredients__card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
 }
 
-.smooche-ingredients__image {
+.skinofab-ingredients__image {
   width: 100%;
   aspect-ratio: 1 / 0.85;
   overflow: hidden;
 }
 
-.smooche-ingredients__image img {
+.skinofab-ingredients__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.smooche-ingredients__info {
+.skinofab-ingredients__info {
   padding: 24px;
   text-align: center;
 }
 
-.smooche-ingredients__name {
+.skinofab-ingredients__name {
   font-size: 18px;
   font-weight: 700;
   color: #2D2D2D;
   margin: 0 0 8px 0;
 }
 
-.smooche-ingredients__desc {
+.skinofab-ingredients__desc {
   font-size: 14px;
   color: #777;
   line-height: 1.5;
   margin: 0;
 }
 
-.smooche-ingredients__desc p {
+.skinofab-ingredients__desc p {
   margin: 0;
 }
 
-.smooche-ingredients__badge {
+.skinofab-ingredients__badge {
   display: inline-block;
   margin-top: 14px;
   padding: 5px 14px;
@@ -3217,46 +3217,46 @@ left: 0px;    border: 1px solid #e7e9ec;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   border-radius: 20px;
-  background: #DF8096;
+  background: #000000;
   color: #ffffff;
 }
 
 @media (max-width: 767px) {
-  .smooche-ingredients {
+  .skinofab-ingredients {
     padding: 40px 0 50px;
   }
-  .smooche-ingredients__heading {
+  .skinofab-ingredients__heading {
     padding: 0;
   }
-  .smooche-ingredients__grid {
+  .skinofab-ingredients__grid {
     display: none;
   }
-  .smooche-ingredients__slider {
+  .skinofab-ingredients__slider {
     display: block;
     padding: 0;
   }
-  .smooche-ingredients__slider .swiper-wrapper {
+  .skinofab-ingredients__slider .swiper-wrapper {
     padding: 8px 0 12px;
   }
-  .smooche-ingredients__slider .swiper-slide {
+  .skinofab-ingredients__slider .swiper-slide {
     width: 270px;
     height: auto;
   }
-  .smooche-ingredients__info {
+  .skinofab-ingredients__info {
     padding: 20px;
   }
-  .smooche-ingredients .swiper-scrollbar {
+  .skinofab-ingredients .swiper-scrollbar {
     height: 4px;
     margin-top: 24px;
   }
-  .smooche-ingredients .swiper-scrollbar-drag {
-    background: #DF8096;
+  .skinofab-ingredients .swiper-scrollbar-drag {
+    background: #000000;
   }
-  .smooche-ingredients__nav {
+  .skinofab-ingredients__nav {
     position: relative;
   }
-  .smooche-ingredients .swiper-button-prev,
-  .smooche-ingredients .swiper-button-next {
+  .skinofab-ingredients .swiper-button-prev,
+  .skinofab-ingredients .swiper-button-next {
     display: flex;
     width: 30px;
     height: 30px;
@@ -3265,15 +3265,15 @@ left: 0px;    border: 1px solid #e7e9ec;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     top: var(--swiper-navigation-top-offset, 40%);
   }
-  .smooche-ingredients .swiper-button-prev { left: 0; }
-  .smooche-ingredients .swiper-button-next { right: 0; }
-  .smooche-ingredients .swiper-button-prev:after,
-  .smooche-ingredients .swiper-button-next:after {
+  .skinofab-ingredients .swiper-button-prev { left: 0; }
+  .skinofab-ingredients .swiper-button-next { right: 0; }
+  .skinofab-ingredients .swiper-button-prev:after,
+  .skinofab-ingredients .swiper-button-next:after {
     font-size: 12px;
     font-weight: bold;
     color: #2D2D2D;
   }
-  .smooche-ingredients div[aria-disabled="true"] {
+  .skinofab-ingredients div[aria-disabled="true"] {
     opacity: 0.35;
     cursor: auto;
     pointer-events: none;
@@ -3281,117 +3281,117 @@ left: 0px;    border: 1px solid #e7e9ec;
 }
 
 @media (min-width: 768px) {
-  .smooche-ingredients__slider {
+  .skinofab-ingredients__slider {
     display: none;
   }
-  .smooche-ingredients .swiper-button-prev,
-  .smooche-ingredients .swiper-button-next {
+  .skinofab-ingredients .swiper-button-prev,
+  .skinofab-ingredients .swiper-button-next {
     display: none;
   }
 }
 </style>
-<section class="smooche-ingredients">
+<section class="skinofab-ingredients">
 <div class="wrapper">
-<div class="smooche-ingredients__heading">
+<div class="skinofab-ingredients__heading">
 <h2 class="section__heading h2">Lip-Loving Ingredients</h2>
-<div class="smooche-ingredients__subtitle"><p>Clean, nourishing formulas your lips will thank you for</p></div>
+<div class="skinofab-ingredients__subtitle"><p>Clean, nourishing formulas your lips will thank you for</p></div>
 </div>
-<div class="smooche-ingredients__grid">
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__grid">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="Hyaluronic Acid" loading="lazy" src="{{ 'sf/img/hyaluronic_acid_600x600-ef946a.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Hyaluronic Acid</h4>
-<div class="smooche-ingredients__desc"><p>Deeply hydrates and locks in moisture for long-lasting plumpness</p></div>
-<span class="smooche-ingredients__badge">Hydrating</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Hyaluronic Acid</h4>
+<div class="skinofab-ingredients__desc"><p>Deeply hydrates and locks in moisture for long-lasting plumpness</p></div>
+<span class="skinofab-ingredients__badge">Hydrating</span>
 </div>
 </div>
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
-<img alt="Peppermint Extract" loading="lazy" src="{{ 'sf/img/smooche_ingredients_3_600x600-144538.png'|asset_url }}"/>
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
+<img alt="Peppermint Extract" loading="lazy" src="{{ 'sf/img/skinofab_ingredients_3_600x600-144538.png'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Peppermint Extract</h4>
-<div class="smooche-ingredients__desc"><p>A refreshing, cooling sensation that temporarily enhances lip fullness</p></div>
-<span class="smooche-ingredients__badge">Plumping</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Peppermint Extract</h4>
+<div class="skinofab-ingredients__desc"><p>A refreshing, cooling sensation that temporarily enhances lip fullness</p></div>
+<span class="skinofab-ingredients__badge">Plumping</span>
 </div>
 </div>
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="Squalane" loading="lazy" src="{{ 'sf/img/squalane_600x600-d1557e.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Squalane</h4>
-<div class="smooche-ingredients__desc"><p>Nourishes and softens, retaining moisture for supple, healthy-looking lips</p></div>
-<span class="smooche-ingredients__badge">Nourishing</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Squalane</h4>
+<div class="skinofab-ingredients__desc"><p>Nourishes and softens, retaining moisture for supple, healthy-looking lips</p></div>
+<span class="skinofab-ingredients__badge">Nourishing</span>
 </div>
 </div>
 </div>
-<div class="smooche-ingredients__slider">
-<div class="smooche-ingredients__nav">
-<div class="swiper smooche-ingredients-swiper">
+<div class="skinofab-ingredients__slider">
+<div class="skinofab-ingredients__nav">
+<div class="swiper skinofab-ingredients-swiper">
 <div class="swiper-wrapper">
 <div class="swiper-slide">
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="Hyaluronic Acid" loading="lazy" src="{{ 'sf/img/hyaluronic_acid_600x600-ef946a.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Hyaluronic Acid</h4>
-<div class="smooche-ingredients__desc"><p>Deeply hydrates and locks in moisture for long-lasting plumpness</p></div>
-<span class="smooche-ingredients__badge">Hydrating</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Hyaluronic Acid</h4>
+<div class="skinofab-ingredients__desc"><p>Deeply hydrates and locks in moisture for long-lasting plumpness</p></div>
+<span class="skinofab-ingredients__badge">Hydrating</span>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
-<img alt="Peppermint Extract" loading="lazy" src="{{ 'sf/img/smooche_ingredients_3_600x600-144538.png'|asset_url }}"/>
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
+<img alt="Peppermint Extract" loading="lazy" src="{{ 'sf/img/skinofab_ingredients_3_600x600-144538.png'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Peppermint Extract</h4>
-<div class="smooche-ingredients__desc"><p>A refreshing, cooling sensation that temporarily enhances lip fullness</p></div>
-<span class="smooche-ingredients__badge">Plumping</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Peppermint Extract</h4>
+<div class="skinofab-ingredients__desc"><p>A refreshing, cooling sensation that temporarily enhances lip fullness</p></div>
+<span class="skinofab-ingredients__badge">Plumping</span>
 </div>
 </div>
 </div>
 <div class="swiper-slide">
-<div class="smooche-ingredients__card">
-<div class="smooche-ingredients__image">
+<div class="skinofab-ingredients__card">
+<div class="skinofab-ingredients__image">
 <img alt="Squalane" loading="lazy" src="{{ 'sf/img/squalane_600x600-d1557e.jpg'|asset_url }}"/>
 </div>
-<div class="smooche-ingredients__info">
-<h4 class="smooche-ingredients__name">Squalane</h4>
-<div class="smooche-ingredients__desc"><p>Nourishes and softens, retaining moisture for supple, healthy-looking lips</p></div>
-<span class="smooche-ingredients__badge">Nourishing</span>
+<div class="skinofab-ingredients__info">
+<h4 class="skinofab-ingredients__name">Squalane</h4>
+<div class="skinofab-ingredients__desc"><p>Nourishes and softens, retaining moisture for supple, healthy-looking lips</p></div>
+<span class="skinofab-ingredients__badge">Nourishing</span>
 </div>
 </div>
 </div>
 </div>
-<div class="swiper-scrollbar smooche-ingredients-scrollbar"></div>
+<div class="swiper-scrollbar skinofab-ingredients-scrollbar"></div>
 </div>
-<div class="swiper-button-prev smooche-ingredients-prev"></div>
-<div class="swiper-button-next smooche-ingredients-next"></div>
+<div class="swiper-button-prev skinofab-ingredients-prev"></div>
+<div class="swiper-button-next skinofab-ingredients-next"></div>
 </div>
 </div>
 </div>
 </section>
-<script data-smooche-slider-config="" type="application/json">{"selector": ".smooche-ingredients-swiper", "next": ".smooche-ingredients-next", "prev": ".smooche-ingredients-prev", "scrollbar": ".smooche-ingredients-scrollbar", "options": {"slidesPerView": "auto", "spaceBetween": 14}}</script>
-<script defer="" src="{{ 'sf/js/smooche-section-sliders-7fe587.js'|asset_url }}"></script>
+<script data-skinofab-slider-config="" type="application/json">{"selector": ".skinofab-ingredients-swiper", "next": ".skinofab-ingredients-next", "prev": ".skinofab-ingredients-prev", "scrollbar": ".skinofab-ingredients-scrollbar", "options": {"slidesPerView": "auto", "spaceBetween": 14}}</script>
+<script defer="" src="{{ 'sf/js/skinofab-section-sliders-7fe587.js'|asset_url }}"></script>
 </div><div class="shopify-section" id="shopify-section-template--20029865459868__kopstorm_compare_LQNYXd"><style>
-.smooche-compare-section {
+.skinofab-compare-section {
   padding: 50px 20px 60px;
   background: #f7f7f7;
 }
 
-.smooche-compare-section .section__heading {
+.skinofab-compare-section .section__heading {
   text-align: center;
   text-transform: none;
   margin-bottom: 40px;
 }
 
-.smooche-compare-table {
+.skinofab-compare-table {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
@@ -3401,16 +3401,16 @@ left: 0px;    border: 1px solid #e7e9ec;
   border-radius: 12px;
 }
 
-.smooche-compare-section--page-width {
+.skinofab-compare-section--page-width {
   padding-left: 0;
   padding-right: 0;
 }
 
-.smooche-compare-section--page-width .smooche-compare-table {
+.skinofab-compare-section--page-width .skinofab-compare-table {
   max-width: none;
 }
 
-.smooche-compare-table thead th {
+.skinofab-compare-table thead th {
   padding: 18px 16px;
   font-size: 14px;
   font-weight: 700;
@@ -3420,39 +3420,39 @@ left: 0px;    border: 1px solid #e7e9ec;
   background: transparent;
 }
 
-.smooche-compare-table thead th:first-child {
+.skinofab-compare-table thead th:first-child {
   text-align: left;
 }
 
-.smooche-compare-table thead th:not(:first-child) {
+.skinofab-compare-table thead th:not(:first-child) {
   text-align: center;
 }
 
-.smooche-compare-table thead th.col-highlight {
+.skinofab-compare-table thead th.col-highlight {
   background: transparent;
   color: #fff;
-  border-bottom-color: #DF8096;
+  border-bottom-color: #000000;
   position: relative;
   z-index: 1;
 }
 
-.smooche-compare-table thead th.col-highlight::before {
+.skinofab-compare-table thead th.col-highlight::before {
   content: '';
   position: absolute;
   top: -2px;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #DF8096;
+  background: #000000;
   border-radius: 12px 12px 0 0;
   z-index: -1;
 }
 
-.smooche-compare-table thead th.col-highlight img {
+.skinofab-compare-table thead th.col-highlight img {
   filter: brightness(0) invert(1);
 }
 
-.smooche-compare-table tbody td {
+.skinofab-compare-table tbody td {
   padding: 16px;
   font-size: 14px;
   font-weight: 500;
@@ -3460,24 +3460,24 @@ left: 0px;    border: 1px solid #e7e9ec;
   vertical-align: middle;
 }
 
-.smooche-compare-table tbody td:first-child {
+.skinofab-compare-table tbody td:first-child {
   text-align: left;
   font-weight: 600;
 }
 
-.smooche-compare-table tbody td:not(:first-child) {
+.skinofab-compare-table tbody td:not(:first-child) {
   text-align: center;
 }
 
-.smooche-compare-table tbody td.col-highlight {
-  background: #DF809612;
+.skinofab-compare-table tbody td.col-highlight {
+  background: #00000012;
 }
 
-.smooche-compare-table tbody tr:last-child td {
+.skinofab-compare-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.smooche-compare-table .compare-icon {
+.skinofab-compare-table .compare-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3485,58 +3485,58 @@ left: 0px;    border: 1px solid #e7e9ec;
   height: 28px;
 }
 
-.smooche-compare-table .compare-icon img {
+.skinofab-compare-table .compare-icon img {
   width: 20px;
   height: 20px;
   display: block;
 }
 
-.smooche-compare-table .compare-icon--check svg {
-  color: #DF8096;
+.skinofab-compare-table .compare-icon--check svg {
+  color: #000000;
 }
 
-.smooche-compare-table .compare-icon--cross svg {
+.skinofab-compare-table .compare-icon--cross svg {
   color: #ccc;
 }
 
-.smooche-compare-table .header-logo {
+.skinofab-compare-table .header-logo {
   max-height: 14px;
   width: auto;
 }
 
 @media screen and (max-width: 600px) {
-  .smooche-compare-section {
+  .skinofab-compare-section {
     padding: 40px 12px 50px;
   }
-  .smooche-compare-section--page-width {
+  .skinofab-compare-section--page-width {
     padding-left: 0;
     padding-right: 0;
   }
-  .smooche-compare-table thead th,
-  .smooche-compare-table tbody td {
+  .skinofab-compare-table thead th,
+  .skinofab-compare-table tbody td {
     padding: 12px 8px;
     font-size: 12px;
   }
-  .smooche-compare-table .compare-icon {
+  .skinofab-compare-table .compare-icon {
     width: 24px;
     height: 24px;
   }
-  .smooche-compare-table .compare-icon img {
+  .skinofab-compare-table .compare-icon img {
     width: 16px;
     height: 16px;
   }
 }
 </style>
 <style>
-  .smooche-compare-table th:last-child,
-  .smooche-compare-table td:last-child {
+  .skinofab-compare-table th:last-child,
+  .skinofab-compare-table td:last-child {
     display: none;
   }
 </style>
-<section class="smooche-compare-section smooche-compare-section--page-width">
+<section class="skinofab-compare-section skinofab-compare-section--page-width">
 <div class="wrapper">
-<h2 class="section__heading h2">Why smooche?</h2>
-<table class="smooche-compare-table">
+<h2 class="section__heading h2">Why skinofab?</h2>
+<table class="skinofab-compare-table">
 <thead>
 <tr>
 <th>
@@ -3676,7 +3676,7 @@ left: 0px;    border: 1px solid #e7e9ec;
 </div>
 </li><li aria-haspopup="true" class="accordion__item accordion__item--padded" id="Accordion--text_qLhb3a">
 <button aria-controls="Accordions-item--4-template--20029865459868__section_accordions_k6qPrc" class="accordion__item__title" data-collapsible-trigger="">
-<span class="accordion__item__title__text">Are Smooche lip plumpers safe for sensitive skin?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<span class="accordion__item__title__text">Are Skinofab lip plumpers safe for sensitive skin?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--4-template--20029865459868__section_accordions_k6qPrc">
 <div class="accordion__item__text rte" data-collapsible-content=""><p>Absolutely! We've carefully formulated our lip plumpers to be suitable for all skin types, including sensitive skin. Our products are free from harsh chemicals and have been dermatologically tested. However, if you have particularly sensitive skin, we recommend doing a patch test before regular use.</p></div>
 </div>
@@ -3719,12 +3719,12 @@ left: 0px;    border: 1px solid #e7e9ec;
 </div>
 </div></section>
 </div><div class="shopify-section" id="shopify-section-template--20029865459868__kopstorm_why_gcA7fQ"><style>
-.smooche-why-section {
+.skinofab-why-section {
   padding-top: 0px;
   padding-bottom: 60px;
 }
 
-.smooche-why-inner {
+.skinofab-why-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: var(--radius, 12px);
@@ -3732,14 +3732,14 @@ left: 0px;    border: 1px solid #e7e9ec;
   min-height: 500px;
 }
 
-.smooche-why__image {
+.skinofab-why__image {
   background-size: cover;
   background-position: center;
   min-height: 350px;
   position: relative;
 }
 
-.smooche-why__content {
+.skinofab-why__content {
   background: #f7f7f7;
   padding: 50px;
   display: flex;
@@ -3747,31 +3747,31 @@ left: 0px;    border: 1px solid #e7e9ec;
   justify-content: center;
 }
 
-.smooche-why__content .section__heading {
+.skinofab-why__content .section__heading {
   text-align: left;
   text-transform: none;
   margin: 0 0 30px 0;
 }
 
-.smooche-why__text {
+.skinofab-why__text {
   margin-bottom: 30px;
 }
 
-.smooche-why__text p {
+.skinofab-why__text p {
   margin: 0;
   font-size: 15px;
   line-height: 1.6;
   color: #555;
 }
 
-.smooche-why__features {
+.skinofab-why__features {
   display: flex;
   flex-direction: column;
   gap: 0;
   margin-bottom: 30px;
 }
 
-.smooche-why__feature {
+.skinofab-why__feature {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -3779,11 +3779,11 @@ left: 0px;    border: 1px solid #e7e9ec;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.smooche-why__feature:last-child {
+.skinofab-why__feature:last-child {
   border-bottom: none;
 }
 
-.smooche-why__feature-icon {
+.skinofab-why__feature-icon {
   flex: 0 0 48px;
   width: 48px;
   height: 48px;
@@ -3795,110 +3795,110 @@ left: 0px;    border: 1px solid #e7e9ec;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.smooche-why__feature-icon img {
+.skinofab-why__feature-icon img {
   width: 28px;
   height: 28px;
   display: block;
 }
 
-.smooche-why__feature-text {
+.skinofab-why__feature-text {
   flex: 1;
 }
 
-.smooche-why__feature-title {
+.skinofab-why__feature-title {
   font-weight: 700;
   font-size: 15px;
   color: #2D2D2D;
   margin-bottom: 2px;
 }
 
-.smooche-why__feature-desc {
+.skinofab-why__feature-desc {
   font-size: 14px;
   color: #666;
   line-height: 1.4;
 }
 
-.smooche-why__feature-desc p {
+.skinofab-why__feature-desc p {
   margin: 0;
 }
 
-.smooche-why__cta .btn {
+.skinofab-why__cta .btn {
   display: inline-block;
 }
 
 @media (min-width: 768px) {
-  .smooche-why-inner--square-image .smooche-why__image {
+  .skinofab-why-inner--square-image .skinofab-why__image {
     aspect-ratio: 1;
   }
-  .smooche-why__content {
+  .skinofab-why__content {
     padding: 60px;
   }
 }
 
 @media (max-width: 767px) {
-  .smooche-why-section {
+  .skinofab-why-section {
     padding-top: 0px;
     padding-bottom: 60px;
   }
-  .smooche-why-inner {
+  .skinofab-why-inner {
     grid-template-columns: 1fr;
   }
-  .smooche-why__image {
+  .skinofab-why__image {
     min-height: 280px;
   }
-  .smooche-why__content {
+  .skinofab-why__content {
     padding: 30px 24px;
   }
-  .smooche-why__content .section__heading {
+  .skinofab-why__content .section__heading {
     margin-bottom: 20px;
   }
-  .smooche-why__feature-icon {
+  .skinofab-why__feature-icon {
     flex: 0 0 42px;
     width: 42px;
     height: 42px;
   }
-  .smooche-why__feature-icon img {
+  .skinofab-why__feature-icon img {
     width: 24px;
     height: 24px;
   }
 }
 </style>
-<section class="smooche-why-section">
+<section class="skinofab-why-section">
 <div class="wrapper">
-<div class="smooche-why-inner">
-<div class="smooche-why__image" style='background-image: url("{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5_1500x1500-950a6f.jpg'|asset_url }}"); background-position: center center;'></div>
-<div class="smooche-why__content">
-<h2 class="section__heading h2">The smooche difference</h2>
-<div class="smooche-why__features">
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Visible results in seconds" src="{{ 'sf/img/icons_smooche_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
+<div class="skinofab-why-inner">
+<div class="skinofab-why__image" style='background-image: url("{{ 'sf/img/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5_1500x1500-950a6f.jpg'|asset_url }}"); background-position: center center;'></div>
+<div class="skinofab-why__content">
+<h2 class="section__heading h2">The skinofab difference</h2>
+<div class="skinofab-why__features">
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Visible results in seconds" src="{{ 'sf/img/icons_skinofab_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
 </div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Visible results in seconds</div>
-<div class="smooche-why__feature-desc"><p>Fuller, more defined lips from the very first use</p></div>
-</div>
-</div>
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Trusted by 100,000+ women" src="{{ 'sf/img/icons_smooche_new_12_500x500-488fb2.svg'|asset_url }}"/>
-</div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Trusted by 100,000+ women</div>
-<div class="smooche-why__feature-desc"><p>Join thousands who made smooche their go-to lip plumper</p></div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Visible results in seconds</div>
+<div class="skinofab-why__feature-desc"><p>Fuller, more defined lips from the very first use</p></div>
 </div>
 </div>
-<div class="smooche-why__feature">
-<div class="smooche-why__feature-icon">
-<img alt="Clean &amp; cruelty free" src="{{ 'sf/img/icons_smooche_new_13_500x500-c4009e.svg'|asset_url }}"/>
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Trusted by 100,000+ women" src="{{ 'sf/img/icons_skinofab_new_12_500x500-488fb2.svg'|asset_url }}"/>
 </div>
-<div class="smooche-why__feature-text">
-<div class="smooche-why__feature-title">Clean &amp; cruelty free</div>
-<div class="smooche-why__feature-desc"><p>Vegan formula with skin-nourishing ingredients</p></div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Trusted by 100,000+ women</div>
+<div class="skinofab-why__feature-desc"><p>Join thousands who made skinofab their go-to lip plumper</p></div>
+</div>
+</div>
+<div class="skinofab-why__feature">
+<div class="skinofab-why__feature-icon">
+<img alt="Clean &amp; cruelty free" src="{{ 'sf/img/icons_skinofab_new_13_500x500-c4009e.svg'|asset_url }}"/>
+</div>
+<div class="skinofab-why__feature-text">
+<div class="skinofab-why__feature-title">Clean &amp; cruelty free</div>
+<div class="skinofab-why__feature-desc"><p>Vegan formula with skin-nourishing ingredients</p></div>
 </div>
 </div>
 </div>
-<div class="smooche-why__cta">
+<div class="skinofab-why__cta">
 <a class="btn btn--dark" href="#product">Claim offer</a>
 </div>
 </div>
@@ -3942,7 +3942,7 @@ left: 0px;    border: 1px solid #e7e9ec;
 <a class="loox-review-media-link" href="{% if settings.sf_p_hyaluronic_acid_lip_plumper %}{{ settings.sf_p_hyaluronic_acid_lip_plumper.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
 <img alt="Customer photo review of Long Lasting Lip Plumper" class="loox-review-image" decoding="async" height="4032" loading="lazy" src="{{ 'sf/img/kEzvs7xlR_mid-928f9f.jpg'|asset_url }}" width="3024"/>
 </a>
-<p class="loox-review-body">Refreshing lip plumpers by Smooche! The juicy plumping effect is nice, not overpowering, and it has a smoothing and hydrating effect. Worth the try!</p>
+<p class="loox-review-body">Refreshing lip plumpers by Skinofab! The juicy plumping effect is nice, not overpowering, and it has a smoothing and hydrating effect. Worth the try!</p>
 <p class="loox-review-metadata">
 <span class="loox-reviewer-name">Hannah R.</span>
 <span class="loox-review-rating">5/5</span>
@@ -3974,7 +3974,7 @@ left: 0px;    border: 1px solid #e7e9ec;
 <a class="loox-review-media-link" href="{% if settings.sf_p_hyaluronic_acid_lip_plumper %}{{ settings.sf_p_hyaluronic_acid_lip_plumper.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" rel="nofollow">
 <img alt="Customer photo review of Long Lasting Lip Plumper" class="loox-review-image" decoding="async" height="2080" loading="lazy" src="{{ 'sf/img/vWQrvjh6C_mid-9366d6.jpg'|asset_url }}" width="1170"/>
 </a>
-<p class="loox-review-body">The first picture is my natural lips I think no makeup and a black top . The rest are my lips with lipstick after using my absolute favourite the Extreme Lip Plumper and I also use the Collagen Booster around the lip line and the skin as well to stop the wrinkles that vapers get. I cannot recommend this product enough I have had fillers quite a few times and because I naturally have fuller lips mainly the bottom . Looked ridiculous and I had to wear them for over 15 months I have had lip flip because as you age your top lip starts too turn inwards and I never noticed any difference!!!! I have tried so many plumpers I used a very well known plumper for years and then I saw Smooche on instagram. Honestly don’t waste your money try Smooche it’s the best by far and lasting . Make use of the two for one . I am!!!! The collagen for lines around lips and of course the I can’t live without Extreme plumper . Trust me you’ll never use another product 🩷🩷🩷🩷🥰🥰</p>
+<p class="loox-review-body">The first picture is my natural lips I think no makeup and a black top . The rest are my lips with lipstick after using my absolute favourite the Extreme Lip Plumper and I also use the Collagen Booster around the lip line and the skin as well to stop the wrinkles that vapers get. I cannot recommend this product enough I have had fillers quite a few times and because I naturally have fuller lips mainly the bottom . Looked ridiculous and I had to wear them for over 15 months I have had lip flip because as you age your top lip starts too turn inwards and I never noticed any difference!!!! I have tried so many plumpers I used a very well known plumper for years and then I saw Skinofab on instagram. Honestly don’t waste your money try Skinofab it’s the best by far and lasting . Make use of the two for one . I am!!!! The collagen for lines around lips and of course the I can’t live without Extreme plumper . Trust me you’ll never use another product 🩷🩷🩷🩷🥰🥰</p>
 <p class="loox-review-metadata">
 <span class="loox-reviewer-name">Thea-jane S.</span>
 <span class="loox-review-rating">5/5</span>
@@ -4660,7 +4660,7 @@ Goes on smoothly and stays on!!</p>
 </div>
 </div>
 </div>
-</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/smooche-cart-timer-b352c2.js'|asset_url }}"></script><script>
+</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/skinofab-cart-timer-b352c2.js'|asset_url }}"></script><script>
       // Function to update the price element with the new variant price
       function updateProductPrice(newPrice) {
         const priceElement = document.getElementById('productpricingnew');
