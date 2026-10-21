@@ -36,18 +36,6 @@
   "prompt": "Edit the first image. This is a close-up crop. Keep exactly the same crop and part of the face; make the visible skin, lips, eyes or brows those of a woman about 59, deep brown skin, cropped silver hair: natural fine lines, slightly thinner lips with soft lip lines, softer jawline, mature but well-cared-for, fresh skin. Make her look her age honestly: natural fine lines and crow's feet, mature skin texture, no airbrushing, but fresh, even and radiant. If there are several young women, make all of them 45 to 65 with different looks. Keep the image's framing, aspect ratio, crop and composition exactly; no new objects, no new text. Photorealistic. IMPORTANT: keep the original layout and panels exactly (do not merge or drop panels), and keep the exact product effect shown: glossy, plumped or tinted lips stay glossy, plumped or tinted; in before/after images the AFTER side must show the same visible product result as the original AFTER side."
  },
  {
-  "n": 213,
-  "key": "age-213",
-  "kind": "model",
-  "aspect": "auto",
-  "w": 1080,
-  "h": 1080,
-  "refs": [
-   "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-src2-213.jpg"
-  ],
-  "prompt": "Edit the first image. Replace the young woman with a woman about 61, medium olive skin, shoulder-length grey hair, same pose, gesture, crop, clothing and expression. Keep the product, background, lighting and any text exactly. Make her look her age honestly: natural fine lines and crow's feet, mature skin texture, no airbrushing, but fresh, even and radiant. If there are several young women, make all of them 45 to 65 with different looks. Keep the image's framing, aspect ratio, crop and composition exactly; no new objects, no new text. Photorealistic. IMPORTANT: keep the original layout and panels exactly (do not merge or drop panels), and keep the exact product effect shown: glossy, plumped or tinted lips stay glossy, plumped or tinted; in before/after images the AFTER side must show the same visible product result as the original AFTER side."
- },
- {
   "n": 258,
   "key": "age-258",
   "kind": "closeup",
@@ -1798,18 +1786,6 @@
    "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-src2-669.png"
   ],
   "prompt": "Edit the first image. This is a designed graphic. Replace only the young woman in it with a woman about 56, light skin, chin-length silver-blonde hair, same pose and crop. Keep every word of text, the layout, fonts, colors, icons and product exactly. Make her look her age honestly: natural fine lines and crow's feet, mature skin texture, no airbrushing, but fresh, even and radiant. If there are several young women, make all of them 45 to 65 with different looks. Keep the image's framing, aspect ratio, crop and composition exactly; no new objects, no new text. Photorealistic."
- },
- {
-  "n": 670,
-  "key": "age-670",
-  "kind": "model",
-  "aspect": "auto",
-  "w": 800,
-  "h": 1158,
-  "refs": [
-   "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-src2-670.jpg"
-  ],
-  "prompt": "Edit the first image. Replace the young woman with a woman about 61, medium olive skin, shoulder-length grey hair, same pose, gesture, crop, clothing and expression. Keep the product, background, lighting and any text exactly. Make her look her age honestly: natural fine lines and crow's feet, mature skin texture, no airbrushing, but fresh, even and radiant. If there are several young women, make all of them 45 to 65 with different looks. Keep the image's framing, aspect ratio, crop and composition exactly; no new objects, no new text. Photorealistic."
  },
  {
   "n": 673,
