@@ -18,6 +18,11 @@ VARIANT2HANDLE = {}  # Shopify variant/product id in the design markup -> produc
 SHIPPING_PROTECTION = 'smooche-premium-shipping-protection'
 LOG = {'unbound_prices': [], 'missing_assets': set(), 'templates': [], 'unmapped_links': set()}
 
+def must_replace(text, old, new, what):
+    """str.replace that fails the build when the anchor is missing (a Spark or design update moved it)."""
+    if old not in text: sys.exit(f'build: anchor for {what} not found')
+    return text.replace(old, new, 1)
+
 # ---------------------------------------------------------------- 1. Spark baseline
 SPARK_KEEP = ['assets', 'configs', 'layouts', 'locales', 'partials', 'templates', 'css', 'scripts', 'Makefile',
               'manifest.json', 'theme-contract.json', 'LICENSE', 'DESIGN.md', 'config.example.yml', '.gitignore']
@@ -211,6 +216,18 @@ for key, dest in AMAP.items():
 for js in ('offline-shim.js',):  # replaced by the commerce adapter
     (OUT / 'assets' / 'sf' / 'js' / js).unlink(missing_ok=True)
 shutil.copy2(HERE / 'static' / 'skinofab-commerce.js', OUT / 'assets' / 'js' / 'skinofab-commerce.js')
+import hashlib
+def static_asset(name):
+    """Copy tools/theme-build/static/<name> into the theme under a content-hashed name (the CDN caches by name)."""
+    data = (HERE / 'static' / name).read_bytes()
+    stem, ext = posixpath.splitext(name)
+    rel = f'sf/img/{stem}-{hashlib.md5(data).hexdigest()[:6]}{ext}'
+    (OUT / 'assets' / rel).write_bytes(data)
+    return rel
+FAVICON = {n: static_asset(f'skinofab-favicon{n}') for n in ('.svg', '-32.png', '-180.png')}
+CART_BOTTLE = static_asset('skinofab-cart-bottle.png')
+# the side cart's renderer (Spark's drawer keeps state and mutations; this draws it in SKINOFAB's look)
+shutil.copy2(HERE / 'static' / 'skinofab-cart-drawer.js', OUT / 'assets' / 'js' / 'skinofab-cart-drawer.js')
 
 # product JSON snapshots (colour swatches on cards fetch /products/<handle>.js)
 PRODUCT_JSON = {}
@@ -383,6 +400,64 @@ def transform(root, page, slots, current=None):
 def frag_html(nodes, page, slots, current=None):
     return ''.join(str(transform(n, page, slots, current)) if hasattr(n, 'find_all') else str(n) for n in nodes)
 
+# ---------------------------------------------------------------- 4b. design cleanup
+# The export carries the Shopify store's runtime: checkout/app configuration, app data blobs, a contact-form
+# captcha, and scripts for the Shopify cart drawer that the Spark side cart replaces. On NEXT none of it has
+# anything to talk to; it only costs bytes, requests and parse time. Links to the old store become NEXT routes.
+DEAD_SCRIPT_SRC = re.compile(r'(?:js-cookie-min|skinofab-cart-timer|skinofab-cart-gift-guard|skinofab-cart-upsell-purchase|'
+                             r'skinofab-routine-upgrade|skinofab-subscription-card-prices|jquery-min|offline-shim)')
+DEAD_LINK_HREF = re.compile(r'skinofab-routine-upgrade|cdn\.shopify\.com/')
+DEAD_IDS = {'in-context-paypal-metadata', 'apple-pay-shop-capabilities', 'shop-js-analytics', 'captcha-bootstrap',
+            'shopify-accelerated-checkout-cart', 'kaching-bundles-translations', 'replo-deps-shopify-store'}
+DEAD_CLASSES = {'kaching-bundles-product', 'kaching-bundles-deal-block-settings'}
+DEAD_INLINE = re.compile(r"\(o\.Shopify=o\.Shopify\|\|\{\}\)\.modules|document\.querySelector\('\[data-cart-drawer\]'\);\s*if \(!drawer\) return")
+OLD_HOSTS = re.compile(r'^(?:https?:)?//(?:www\.)?(?:08f531-2\.myshopify\.com|skinofab\.com|smooche\.com)(?=/|$)', re.I)
+THIRD_PARTY_IMG = re.compile(r'^https?://(?:www\.iubenda\.com|s3\.[a-z0-9-]+\.amazonaws\.com)/', re.I)
+FLAG_IMG = re.compile(r'<img class="shipping-country-flag" src="https://cdn\.shopify\.com/static/images/flags/[^"]*"[^>]*>')
+FLAG_EMOJI = ('<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint(...normalizedCountryCode.split(\'\')'
+              '.map(c => 127397 + c.charCodeAt(0)))}</span>')
+CLEAN = {'removed': 0, 'relinked': 0}
+
+def clean_design(soup):
+    for el in soup.find_all(['script', 'link', 'meta', 'style']):
+        src, href, txt = el.get('src') or '', el.get('href') or '', el.string or ''
+        if (el.get('id') in DEAD_IDS or DEAD_CLASSES & set(el.get('class') or [])
+                or (el.name == 'script' and (DEAD_SCRIPT_SRC.search(src) or DEAD_INLINE.search(txt)))
+                or (el.name == 'link' and DEAD_LINK_HREF.search(href))
+                or (el.name == 'meta' and el.get('http-equiv') == 'X-UA-Compatible')):
+            el.decompose(); CLEAN['removed'] += 1
+    if not soup.find(lambda t: t.name == 'kaching-bundle' or any('kaching-bundles__' in c for c in (t.get('class') or []))):
+        for el in soup.find_all('link', href=re.compile(r'kaching-bundles')):   # the bundles app's CSS, nothing to style
+            el.decompose(); CLEAN['removed'] += 1
+    for el in soup.select('shop-follow-button'):          # Shop app "follow" button: Shopify-only
+        (el.find_parent(class_='follow-on-shop') or el).decompose(); CLEAN['removed'] += 1
+    for el in soup.find_all('link', attrs={'fetchpriority': True}):
+        if not re.fullmatch(r'high|low|auto', el['fetchpriority']): del el['fetchpriority']   # unrendered app snippet
+    for el in soup.select('img.logo__image'):              # the header logo is the home link's only content
+        if not el.get('alt'): el['alt'] = 'SKINOFAB'
+    for el in soup.find_all('img', src=THIRD_PARTY_IMG):   # policy-generator provider favicons, hot-linked
+        el.decompose(); CLEAN['removed'] += 1
+    for el in soup.find_all(True):
+        if OLD_HOSTS.match(el.get('data-instant-href') or ''):   # prefetch hint for the old store's pages
+            del el['data-instant-href']; CLEAN['relinked'] += 1
+        for a in ('href', 'src', 'action'):
+            v = el.get(a)
+            if isinstance(v, str) and OLD_HOSTS.match(v):
+                el[a] = OLD_HOSTS.sub('', v) or '/'; CLEAN['relinked'] += 1
+        h = el.get('href') or ''
+        if re.match(r'https?://shopify\.com/\d+/account', h): el['href'] = '/accounts/'; CLEAN['relinked'] += 1
+        elif re.match(r'https?://form\.typeform\.com/', h): el['href'] = '/pages/contact'; CLEAN['relinked'] += 1
+        elif el.name == 'a' and re.match(r'https?://(?:www\.)?instagram\.com/p/', h):   # the old brand's posts
+            del el['href']; el.attrs.pop('target', None); el.attrs.pop('rel', None); CLEAN['relinked'] += 1
+    for sc in soup.find_all('script'):
+        t = sc.string
+        if not t: continue
+        n = FLAG_IMG.sub(FLAG_EMOJI, t)
+        n = re.sub(r'(shop_url:\s*)"https?:\\/\\/[^"]*"', r'\1"\\/"', n)
+        n = re.sub(r'(base:\s*)"//(?:www\.)?skinofab\.com/cdn/shop/[^"]*"', r'\1"\\/"', n)
+        n = re.sub(r'\\/\\/(?:www\.)?skinofab\.com\\/cdn\\/shop\\/', r'\\/cdn\\/shop\\/', n)
+        if n != t: sc.string = n; CLEAN['relinked'] += 1
+
 # ---------------------------------------------------------------- 5. page decomposition
 HEAD_DROP = lambda el: (el.name == 'title' or (el.name == 'meta' and (el.get('charset') or el.get('name') in ('viewport', 'description')))
                         or (el.name == 'link' and 'icon' in (el.get('rel') or []))
@@ -390,6 +465,7 @@ HEAD_DROP = lambda el: (el.name == 'title' or (el.name == 'meta' and (el.get('ch
 
 def decompose(page):
     soup = BeautifulSoup((EXPORT / page).read_text('utf-8'), 'lxml')
+    clean_design(soup)
     head = [el for el in soup.head.contents if not (getattr(el, 'name', None) and HEAD_DROP(el)) and str(el).strip()]
     body = soup.body
     kids = [k for k in body.contents if getattr(k, 'name', None)]
@@ -401,8 +477,10 @@ def decompose(page):
     tail_start = (ftr_idx[-1] + 1) if ftr_idx else ((main_idx + 1) if main_idx is not None else len(kids))
     tail = [k for k in kids[tail_start:] if 'shopify-app-block' not in ' '.join(k.get('class', []))]
     title = soup.title.get_text() if soup.title else 'SKINOFAB'
+    desc = soup.find('meta', attrs={'name': 'description'})
     return {'soup': soup, 'head': head, 'lead': lead, 'has_header': bool(hdr_idx), 'has_footer': bool(ftr_idx),
             'main': main, 'tail': tail, 'title': title, 'body_id': body.get('id', ''),
+            'description': re.sub(r'\s+', ' ', desc.get('content', '')).strip() if desc else '',
             'body_class': ' '.join(body.get('class', []))}
 
 def dtl_literal(value):
@@ -415,6 +493,9 @@ def write(rel, text):
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(text, 'utf-8')
     LOG['templates'].append(rel)
+
+# "<meta title> | <store title>" unless the meta title already carries the store name (e.g. "... | SKINOFAB")
+BRAND_TITLE = "{%% if store.name|upper in %s|upper %%}{{ %s }}{%% else %%}{{ %s }} | {{ block.super }}{%% endif %%}"
 
 def page_template(page, parts, content_dtl, title_dtl=None, current=None, extra_head='', extra_tail=''):
     slots = Slots()
@@ -465,8 +546,27 @@ def simple(page, template):
     parts = decompose(page)
     write(template, page_template(page, parts, lambda s: main_html(parts, page, s)))
 
-# 7a homepage
-simple('index.html', 'templates/index.html')
+# 7a homepage. Settings > SEO drives the home meta tags; until the store has a meta description, the design's
+# description, the hero image and the store's WebSite/Organization data stand in (the platform tag would print empty ones).
+def home_seo(parts):
+    hero = re.search(r"\{\{ '(sf/img/[^']*hero[^']*-1800w[^']*)'\|asset_url \}\}", (OUT / 'templates/index.html').read_text())
+    d = parts['description'].replace('"', '&quot;')
+    img = "{{ '%s'|asset_url }}" % hero.group(1) if hero else ''
+    return ('{% block seo %}{% if store.get_meta_description %}{{ block.super }}{% else %}'
+            '<meta name="title" content="{{ store.name }}">\n<meta name="description" content="' + d + '">\n'
+            '<meta property="og:title" content="{{ store.name }}">\n<meta property="og:description" content="' + d + '">\n'
+            '<meta property="og:type" content="website">\n<meta property="og:url" content="https://{{ request.get_host }}/">\n'
+            '<meta property="og:image" content="' + img + '">\n<meta name="twitter:card" content="summary_large_image">\n'
+            '<script type="application/ld+json">{"@context": "https://schema.org", "@graph": ['
+            '{"@type": "WebSite", "name": "{{ store.name|escapejs }}", "url": "https://{{ request.get_host }}/"}, '
+            '{"@type": "Organization", "name": "{{ store.name|escapejs }}", "url": "https://{{ request.get_host }}/", '
+            '"logo": "{{ \'SF_LOGO\'|asset_url }}"}]}</script>'
+            '{% endif %}{% endblock seo %}\n').replace('SF_LOGO', FAVICON['-180.png'])
+home_parts = decompose('index.html')
+write('templates/index.html', page_template('index.html', home_parts, lambda s: main_html(home_parts, 'index.html', s)))
+if home_parts['description']:
+    t = (OUT / 'templates/index.html').read_text()
+    (OUT / 'templates/index.html').write_text(t.replace("{% extends 'layouts/base.html' %}\n", "{% extends 'layouts/base.html' %}\n" + home_seo(home_parts), 1))
 
 # 7b pages + policies. NEXT did not apply a page's custom template in testing (even a trivial one), so page.html
 # dispatches on page.slug itself: each design page's blocks live in partials/sf_pages/<slug>/, and every
@@ -554,7 +654,7 @@ for f in sorted(EXPORTED):
     parts = decompose(f)
     write(f'templates/catalogue/product.{handle}.html',
           page_template(f, parts, lambda s, p=parts, f=f, h=handle: '<div data-template="product.%s">' % h + main_html(p, f, s, h, bind_pdp) + '</div>',
-                        title_dtl='{{ product.get_meta_title }} | {{ block.super }}', current=handle,
+                        title_dtl=BRAND_TITLE % (('product.get_meta_title',) * 3), current=handle,
                         extra_tail='\n' + VARIANT_JSON + '\n{% app_hook "view_product" %}\n{% app_hook "add_to_cart" %}'))
 
 # default product template: the flagship PDP layout, product section only, gallery from NEXT images
@@ -580,7 +680,7 @@ def default_product():
             first.insert_before(NavigableString(loop_open)); first.insert_after(NavigableString(slots.put('{% endfor %}')))
         return '<div data-template="product.default">' + slots.render(str(transform(main, f, slots, 'color-changing-foundation'))) + '</div>'
     write('templates/catalogue/product.html',
-          page_template(f, parts, content, title_dtl='{{ product.get_meta_title }} | {{ block.super }}', current='color-changing-foundation',
+          page_template(f, parts, content, title_dtl=BRAND_TITLE % (('product.get_meta_title',) * 3), current='color-changing-foundation',
                         extra_tail='\n' + VARIANT_JSON + '\n{% app_hook "view_product" %}\n{% app_hook "add_to_cart" %}'))
 default_product()
 
@@ -597,8 +697,14 @@ def build_card(card):
     if title: title.string = slots.put('{{ product.get_title }}')
     imgs = card.find_all('img')
     for i, img in enumerate(imgs[:2]):
-        for a in ('srcset', 'data-srcset', 'sizes'): img.attrs.pop(a, None)
+        for a in ('srcset', 'data-srcset', 'sizes', 'loading', 'fetchpriority'): img.attrs.pop(a, None)
         img['src'] = slots.put('{{ sf_card_img%d.url }}' % i)
+        img['srcset'] = slots.put('{{ sf_card_img%ds.url }} 360w, {{ sf_card_img%d.url }} 720w' % (i, i))
+        img['sizes'] = '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw'
+        img['width'], img['height'] = '720', '720'
+        # first row eager (LCP on collection pages), the rest and every hover image lazy
+        img['loading'] = slots.put('{% if forloop.counter > 4 %}lazy{% else %}eager{% endif %}') if i == 0 else 'lazy'
+        img['decoding'] = 'async'
         img['alt'] = slots.put('{{ product.get_title }}')
     for s in card.select('.visually-hidden'): s.string = slots.put('{{ product.get_title }}')
     price = card.select_one('.product-grid-item__price')
@@ -606,10 +712,14 @@ def build_card(card):
     card['id'] = slots.put('product-item-{{ product.pk }}')
     body = slots.render(str(card))
     CARD_PARTIAL = ("{# SKINOFAB product card (design markup) for NEXT products. Usage: include with product=product #}\n"
+                    "{# Cards are at most ~360 CSS px wide: 360/720 px crops at quality 80 (the tag defaults to 95) #}\n"
                     "{% with images=product.get_all_images %}"
-                    "{% if images %}{% image_thumbnail images.0.original \"1080x1080\" crop=\"center\" as sf_card_img0 %}{% endif %}"
-                    "{% if images.1 %}{% image_thumbnail images.1.original \"1080x1080\" crop=\"center\" as sf_card_img1 %}"
-                    "{% elif images %}{% image_thumbnail images.0.original \"1080x1080\" crop=\"center\" as sf_card_img1 %}{% endif %}\n"
+                    "{% if images %}{% image_thumbnail images.0.original \"360x360\" crop=\"center\" quality=80 as sf_card_img0s %}"
+                    "{% image_thumbnail images.0.original \"720x720\" crop=\"center\" quality=80 as sf_card_img0 %}{% endif %}"
+                    "{% if images.1 %}{% image_thumbnail images.1.original \"360x360\" crop=\"center\" quality=80 as sf_card_img1s %}"
+                    "{% image_thumbnail images.1.original \"720x720\" crop=\"center\" quality=80 as sf_card_img1 %}"
+                    "{% elif images %}{% image_thumbnail images.0.original \"360x360\" crop=\"center\" quality=80 as sf_card_img1s %}"
+                    "{% image_thumbnail images.0.original \"720x720\" crop=\"center\" quality=80 as sf_card_img1 %}{% endif %}\n"
                     + body + "\n{% endwith %}\n")
     write('partials/sf_product_card.html', CARD_PARTIAL)
 
@@ -667,7 +777,7 @@ def blog():
             for a in ('srcset', 'data-srcset', 'sizes'): hero.attrs.pop(a, None)
             hero['src'] = slots.put('{% if post.featured_image %}{% image_thumbnail post.featured_image "1600x" upscale=False as sf_post_img %}{{ sf_post_img.url }}{% endif %}')
         return slots.render(str(transform(main, art, slots)))
-    write('templates/blog/post.html', page_template(art, parts, post_content, title_dtl='{{ post.get_meta_title }} | {{ block.super }}'))
+    write('templates/blog/post.html', page_template(art, parts, post_content, title_dtl=BRAND_TITLE % (('post.get_meta_title',) * 3)))
     lst = 'blogs/news.html'
     parts2 = decompose(lst)
     def list_content(slots):
@@ -710,10 +820,24 @@ write('partials/sf_asset_styles.html',
       "{# Fonts and stylesheet images. Theme CSS cannot hold relative url()s on NEXT (CSS and media are served from different hosts), so they resolve here via asset_url. #}\n"
       "<style>\n" + '\n'.join(dict.fromkeys(fonts)) + '\n' + vars_css + "\n</style>\n")
 
-handle_pk = ','.join('"%s":"{%% firstof settings.sf_p_%s.children.first.pk settings.sf_p_%s.pk %%}"' % (h, var(h), var(h))
-                     for h in sorted({m.group(1) for f in EXPORTED for m in [re.fullmatch(r'products/([a-z0-9][a-z0-9-]*)\.html', f)] if m}))
 product_json = ','.join('"%s":"{{ \'sf/data/product-%s.json\'|asset_url|escapejs }}"' % (h, h) for h in sorted(PRODUCT_JSON))
 base = (SPARK / 'layouts' / 'base.html').read_text()
+# No dangling " - " when the store has no tagline; the store icon from Settings > Branding wins over the theme's.
+base = must_replace(base, '{% block title %}{{ store.get_meta_title }} - {{ store.tagline }}{% endblock %}',
+                    '{% block title %}{{ store.get_meta_title }}{% if store.tagline %} - {{ store.tagline }}{% endif %}{% endblock %}', 'title')
+base = must_replace(base, """                <link rel="shortcut icon" href="{{ thumb_store_icon.url }}" />
+            {% endwith %}
+        {% endif %}""", """                <link rel="shortcut icon" href="{{ thumb_store_icon.url }}" />
+            {% endwith %}
+        {% else %}
+            <link rel="icon" type="image/svg+xml" href="{{ 'FAV_SVG'|asset_url }}">
+            <link rel="icon" type="image/png" sizes="32x32" href="{{ 'FAV_32'|asset_url }}">
+            <link rel="apple-touch-icon" href="{{ 'FAV_180'|asset_url }}">
+        {% endif %}""".replace('FAV_SVG', FAVICON['.svg']).replace('FAV_32', FAVICON['-32.png']).replace('FAV_180', FAVICON['-180.png']), 'favicon')
+# Media (images, fonts, video) come from cdn.29next.store: open that connection before the HTML asks for it.
+base = must_replace(base, "{% block critical_preloads %}{% endblock critical_preloads %}",
+                    '<link rel="preconnect" href="https://cdn.29next.store">\n    <link rel="preconnect" href="https://cdn.29next.store" crossorigin>\n'
+                    "    {% block critical_preloads %}{% endblock critical_preloads %}", 'preconnect')
 base = base.replace('<link rel="stylesheet" type="text/css" href="{{ \'main.css\'|asset_url }}">',
                     "{% block spark_css %}{% endblock spark_css %}\n        {% include 'partials/sf_asset_styles.html' %}")
 base = base.replace("{% endblock styles %}",
@@ -725,17 +849,46 @@ base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "    {% url 'storefrontapi:graphql' as sf_graphql_url %}\n"
     "    <script>window.SFStore = { currency: \"{{ request.CURRENCY_CODE|default:'USD'|escapejs }}\", symbol: \"{% filter escapejs %}{% currency_symbol request.CURRENCY_CODE|default:'USD' %}{% endfilter %}\", graphqlUrl: \"{{ sf_graphql_url|default:'/api/graphql/'|escapejs }}\" };\n"
     "    window.SFProductJson = {" + product_json + "};\n"
-    "    window.SFHandlePk = {" + handle_pk + "};\n"
+    "    {# Design handle -> NEXT product pk, for the Shopify variant ids design scripts carry. Each page lists only the products it references (block sf_handle_pk): every entry is a settings product lookup per render. #}\n"
+    "    window.SFHandlePk = { {% block sf_handle_pk %}{% endblock sf_handle_pk %} };\n"
     "    window.SFVariantHandle = " + json.dumps(VARIANT2HANDLE, sort_keys=True) + ";\n"
     "    {# Theme settings > Subscription Offer: every add of this product (any variant, any button) is the plan below. #}\n"
     "    window.SFSubscriptionOnly = {% if settings.sf_subscription_product %}{ pks: [{% for sf_v in settings.sf_subscription_product.children.all %}\"{{ sf_v.pk }}\", {% endfor %}\"{{ settings.sf_subscription_product.pk }}\"], interval: \"{{ settings.sf_subscription_interval|default:'month'|escapejs }}\", intervalCount: \"{{ settings.sf_subscription_interval_count|default:'1'|escapejs }}\" }{% else %}null{% endif %};</script>\n"
-    "    <script src=\"{{ 'js/skinofab-commerce.js'|asset_url }}\"></script>\n"
+    "    {# defer: runs before the design's deferred scripts (document order), after every inline script, never blocks paint #}\n"
+    "    <script defer src=\"{{ 'js/skinofab-commerce.js'|asset_url }}\"></script>\n"
     "    {% block sf_head %}{% endblock sf_head %}")
 base = base.replace('<a href="#main-content" class="skip-to-content">', '{% block sf_lead %}{% endblock sf_lead %}\n    <a href="#MainContent" class="skip-to-content visually-hidden">')
 # The design header script reads [data-main] (first section, transparent header); Spark-native pages use this main.
 base = base.replace('<main id="main-content" tabindex="-1">', '<main id="main-content" tabindex="-1" data-main>', 1)
 # Spark's own theme.js (Spark header/menu/search widgets) would collide with the design's window.theme; the design ships its own.
 base = base.replace("<script type=\"text/javascript\" src=\"{{ 'js/theme.js'|asset_url }}\"></script>", "")
+# Side cart: SKINOFAB renderer in place of Spark's, configured from Theme settings > SKINOFAB > Cart Drawer
+base = must_replace(base, "cartRenderer: \"{{ 'js/spark-cart-drawer-renderer.js'|asset_url|escapejs }}\"",
+                    "cartRenderer: \"{{ 'js/skinofab-cart-drawer.js'|asset_url|escapejs }}\"", 'cart renderer')
+SF_CART = ('''        <script>
+        window.SFCart = {
+            shippingFree: {% if settings.sf_cart_free_shipping %}true{% else %}false{% endif %},
+            shippingNote: "{{ settings.sf_cart_shipping_note|default:''|escapejs }}",
+            reminderTitle: "{{ settings.sf_cart_reminder_title|default:''|escapejs }}", reminderText: "{{ settings.sf_cart_reminder_text|default:''|escapejs }}",
+            cancelTitle: "{{ settings.sf_cart_cancel_title|default:''|escapejs }}", cancelText: "{{ settings.sf_cart_cancel_text|default:''|escapejs }}",
+            guaranteeTitle: "{{ settings.sf_cart_guarantee_title|default:''|escapejs }}", guaranteeText: "{{ settings.sf_cart_guarantee_text|default:''|escapejs }}",
+            dueTodayText: "{{ settings.sf_cart_due_today|default:'Due today'|escapejs }}",
+            renewText: "{{ settings.sf_cart_renew_text|default:''|escapejs }}",
+            checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
+            secureText: "{{ settings.sf_cart_secure_text|default:''|escapejs }}",
+            couponToggle: "{{ settings.sf_cart_coupon_toggle|default:'Have a discount code?'|escapejs }}",
+            removeText: "{{ settings.sf_cart_remove_text|default:'Remove'|escapejs }}",
+            variantSuffix: "{{ settings.sf_cart_variant_suffix|default:''|escapejs }}",
+            emptyTitle: "{{ settings.sf_cart_empty_title|default:''|escapejs }}",
+            emptyText: "{{ settings.sf_cart_empty_text|default:''|escapejs }}",
+            emptyImage: "{{ 'CART_BOTTLE'|asset_url|escapejs }}",
+            shopUrl: "{% if settings.sf_subscription_product %}{{ settings.sf_subscription_product.get_absolute_url|escapejs }}{% else %}{% url 'catalogue:index' %}{% endif %}",
+            shopText: "{% if settings.sf_cart_empty_cta %}{{ settings.sf_cart_empty_cta|escapejs }}{% elif settings.sf_subscription_product %}Shop {{ settings.sf_subscription_product.get_title|escapejs }}{% endif %}"
+        };
+        </script>
+''').replace('CART_BOTTLE', CART_BOTTLE)
+base = must_replace(base, "        <script type=\"text/javascript\" src=\"{{ 'js/spark-cart-loader.js'|asset_url }}\"></script>",
+                    SF_CART + "        <script type=\"text/javascript\" src=\"{{ 'js/spark-cart-loader.js'|asset_url }}\"></script>", 'cart config')
 base = base.replace("{% block extrascripts %}{% endblock %}", "{% block sf_tail %}{% endblock sf_tail %}\n    {% block extrascripts %}{% endblock %}")
 write('layouts/base.html', base)
 
@@ -785,6 +938,49 @@ for rel, old_field in (('templates/cart.html', '{{ form.subscription_range }}'),
     s = s.replace(old_field, SUB_ONLY_IF + SUB_FIXED + '{% else %}' + old_field + '{% endif %}')   # both bind `product` to the line's
     p.write_text(s)
 
+# Cart page: free shipping said plainly when the store ships for free (Theme settings > SKINOFAB > Cart Drawer)
+FREE_SHIP = "{% if settings.sf_cart_free_shipping %}<span class=\"text-xs font-semibold\" style=\"color:#1f7a3f\">{% t 'store.catalogue.free' %}</span>{% else %}"
+for rel, old_span in (('templates/cart.html', '<span class="text-xs">{% t "order.cart.calculated_at_checkout" %}</span>'),
+                      ('partials/cart_summary.html', '<span class="text-xs text-slate-400">{% t "order.cart.calculated_at_checkout" %}</span>')):
+    p = OUT / rel
+    if not p.exists(): continue
+    t = p.read_text()
+    if 'sf_cart_free_shipping' not in t:
+        p.write_text(must_replace(t, old_span, FREE_SHIP + old_span + '{% endif %}', rel + ' shipping'))
+
+# ---------------------------------------------------------------- 8b. per-page product lookups (window.SFHandlePk)
+# Design scripts carry Shopify variant ids (permalinks, bundle builders, product JSON); the commerce adapter maps them
+# to NEXT through window.SFHandlePk. Each entry resolves a settings product (and its first child) on every render,
+# so a page lists only the handles whose ids occur in its own markup, plus the header/footer's.
+def handles_in(text):
+    return {VARIANT2HANDLE[i] for i in re.findall(r'(?<!\d)(\d{11,16})(?!\d)', text) if i in VARIANT2HANDLE}
+
+def handle_entries(handles):
+    return ','.join('"%s":"{%% firstof settings.sf_p_%s.children.first.pk settings.sf_p_%s.pk %%}"' % (h, var(h), var(h))
+                    for h in sorted(handles))
+
+CHROME_HANDLES = handles_in((OUT / 'partials/header.html').read_text() + (OUT / 'partials/footer.html').read_text())
+if CHROME_HANDLES:
+    b = (OUT / 'layouts/base.html').read_text()
+    (OUT / 'layouts/base.html').write_text(b.replace('{% block sf_handle_pk %}{% endblock sf_handle_pk %}',
+                                                     '{% block sf_handle_pk %}' + handle_entries(CHROME_HANDLES) + '{% endblock sf_handle_pk %}'))
+for p in sorted((OUT / 'templates').rglob('*.html')):
+    s = p.read_text()
+    if not s.startswith("{% extends 'layouts/base.html' %}") or '{% block sf_handle_pk %}' in s: continue
+    if p.name == 'page.html' and p.parent.name == 'pages':
+        per = {sl: handles_in(''.join(f.read_text() for f in (OUT / 'partials/sf_pages' / sl).glob('*.html'))) - CHROME_HANDLES
+               for sl in sorted(PAGE_PARTS)}
+        per = {sl: h for sl, h in per.items() if h}
+        if not per: continue
+        body = ''.join("{%% %s page.slug == '%s' %%}%s" % ('if' if i == 0 else 'elif', sl, handle_entries(h | CHROME_HANDLES))
+                       for i, (sl, h) in enumerate(per.items())) + '{% else %}{{ block.super }}{% endif %}'
+    else:
+        h = handles_in(s) - CHROME_HANDLES
+        if not h: continue
+        body = handle_entries(h | CHROME_HANDLES)
+    p.write_text(s.replace("{% extends 'layouts/base.html' %}", "{% extends 'layouts/base.html' %}\n{% block sf_handle_pk %}" + body + "{% endblock sf_handle_pk %}", 1))
+    LOG.setdefault('handle_pk_pages', {})[str(p.relative_to(OUT))] = len(h) if p.name != 'page.html' else sum(map(len, per.values()))
+
 # ---------------------------------------------------------------- 9. settings
 schema = json.loads((OUT / 'configs' / 'settings_schema.json').read_text())
 titles = {h: (d.get('title') or h) for h, d in PRODUCT_JSON.items()}
@@ -806,6 +1002,32 @@ schema = {'SKINOFAB': {
                             'help_text': 'Every how many intervals the refill ships (1 = every month). Must be one of the product\'s interval counts.'},
                            {'name': 'sf_subscription_price_text', 'type': 'text', 'label': 'Plan price text', 'default': '',
                             'help_text': 'Shown wherever the product\'s price appears, e.g. $33/mo. Must match the subscription price on the product variants.'}],
+    'Cart Drawer': [
+        {'name': 'sf_cart_free_shipping', 'type': 'checkbox', 'label': 'Shipping is free', 'default': True,
+         'help_text': 'Shows "Free" for shipping in the cart. Tick only while every rate in Dashboard > Settings > Shipping is $0.'},
+        {'name': 'sf_cart_shipping_note', 'type': 'text', 'label': 'Note under the cart title', 'default': 'Free shipping on every order',
+         'help_text': 'Leave empty to hide. Must match your shipping rates.'},
+        {'name': 'sf_cart_reminder_title', 'type': 'text', 'label': 'Plan card: line 1 title', 'default': 'Refill reminder'},
+        {'name': 'sf_cart_reminder_text', 'type': 'text', 'label': 'Plan card: line 1 text', 'default': 'We email you before every refill ships.'},
+        {'name': 'sf_cart_cancel_title', 'type': 'text', 'label': 'Plan card: line 2 title', 'default': 'Cancel any time'},
+        {'name': 'sf_cart_cancel_text', 'type': 'text', 'label': 'Plan card: line 2 text', 'default': 'Skip a month, switch base or cancel with one email. No fees.'},
+        {'name': 'sf_cart_guarantee_title', 'type': 'text', 'label': 'Plan card: line 3 title', 'default': 'Love it or your money back'},
+        {'name': 'sf_cart_guarantee_text', 'type': 'text', 'label': 'Plan card: line 3 text', 'default': '',
+         'help_text': 'Shown under subscription lines only. Must match your refund policy.'},
+        {'name': 'sf_cart_due_today', 'type': 'text', 'label': 'Total label when the cart has a plan', 'default': 'Due today'},
+        {'name': 'sf_cart_renew_text', 'type': 'text', 'label': 'Renewal line', 'default': 'Then {amount}. Cancel any time.',
+         'help_text': '{amount} becomes the plan price per period, e.g. $33.00/mo.'},
+        {'name': 'sf_cart_checkout_text', 'type': 'text', 'label': 'Checkout button', 'default': 'Secure checkout'},
+        {'name': 'sf_cart_secure_text', 'type': 'text', 'label': 'Under the checkout button', 'default': 'Encrypted payment. No minimum, no hidden fees.'},
+        {'name': 'sf_cart_coupon_toggle', 'type': 'text', 'label': 'Discount code link', 'default': 'Have a discount code?'},
+        {'name': 'sf_cart_remove_text', 'type': 'text', 'label': 'Remove link', 'default': 'Remove'},
+        {'name': 'sf_cart_variant_suffix', 'type': 'text', 'label': 'After the variant name', 'default': 'base',
+         'help_text': 'e.g. "Light\u2013Medium base". Leave empty to show the variant name alone.'},
+        {'name': 'sf_cart_empty_title', 'type': 'text', 'label': 'Empty cart title', 'default': 'Your bag is empty'},
+        {'name': 'sf_cart_empty_text', 'type': 'text', 'label': 'Empty cart text', 'default': 'Your shade is about a minute away.'},
+        {'name': 'sf_cart_empty_cta', 'type': 'text', 'label': 'Empty cart button', 'default': '',
+         'help_text': 'Leave empty for "Shop <subscription product>".'},
+    ],
     'Collection Links': [{'name': f'sf_c_{var(c)}', 'type': 'url', 'label': c.replace('-', ' ').title(), 'default': '/catalogue/',
                           'help_text': f'Where the design\'s "{c}" collection links go (a NEXT category URL).'} for c in collections],
 }, **schema}
@@ -814,6 +1036,7 @@ data = json.loads((OUT / 'configs' / 'settings_data.json').read_text())
 for group in schema['SKINOFAB'].values():
     for field in group:
         data.setdefault(field['name'], field.get('default') if field['type'] != 'product' else None)
+data.setdefault('cart_header_title', 'Your bag')
 catalog = os.environ.get('SF_CATALOG')  # deploy mapping (tools/next-deploy) -> Product / Collection Links
 if catalog and Path(catalog).exists():
     m = json.loads(Path(catalog).read_text())['mapping']

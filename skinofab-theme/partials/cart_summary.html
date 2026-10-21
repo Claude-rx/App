@@ -63,7 +63,7 @@
             {# Shipping #}
             <div class="flex justify-between">
                 <span class="text-slate-600">{% t "order.cart.shipping" %}</span>
-                <span class="text-xs text-slate-400">{% t "order.cart.calculated_at_checkout" %}</span>
+                {% if settings.sf_cart_free_shipping %}<span class="text-xs font-semibold" style="color:#1f7a3f">{% t 'store.catalogue.free' %}</span>{% else %}<span class="text-xs text-slate-400">{% t "order.cart.calculated_at_checkout" %}</span>{% endif %}
             </div>
 
             {# Tax #}

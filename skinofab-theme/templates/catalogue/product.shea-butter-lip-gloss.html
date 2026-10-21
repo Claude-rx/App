@@ -1,64 +1,16 @@
 {% extends 'layouts/base.html' %}
-{% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
+{% block sf_handle_pk %}"shea-butter-lip-gloss":"{% firstof settings.sf_p_shea_butter_lip_gloss.children.first.pk settings.sf_p_shea_butter_lip_gloss.pk %}"{% endblock sf_handle_pk %}
+{% block title %}{% if store.name|upper in product.get_meta_title|upper %}{{ product.get_meta_title }}{% else %}{{ product.get_meta_title }} | {{ block.super }}{% endif %}{% endblock %}
 {% block body_id %}{% firstof "volume-lip-gloss-with-shea-butter-for-soft-lips-skinofab" %}{% endblock %}
 {% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
 {% block sf_head %}
-<link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
-</style><style>
-      .video-slide, .video-thumbnail, .product__form .btn--submit, #locationinfop, .product-grid-item .btn--quick .btn__inner, .product-upsell__btn, .btn, .btn--primary, .btn--primary .shopify-payment-button__button--unbranded, input.btn .shopify-payment-button__button--unbranded, input.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded, input.btn, input.shopify-payment-button__button--unbranded {
-         border-radius: 10px!important;
-      }
-      .input-group, .select-popout__toggle  {
-         border-radius: 10px!important;
-      }
-      #SiteFooter .input-group__fields input {
-        border-top-left-radius: 10px!important;
-        border-bottom-left-radius: 10px!important;
-      }
-        .input-group__btn {
-            border-top-right-radius: 10px!important;
-        border-bottom-right-radius: 10px!important;
-        }
-
-        button[aria-expanded=true] #accordionbefore:before {
-          background-color: #f7f7f7!important;
-        }
-      @media only screen and (max-width: 767px) {
-        .product-single .product__title {
-          font-size: clamp(26px, 7.1vw, 29px);
-          line-height: 1.12;
-        }
-      }
-      #cart-drawer .product-upsell__holder .product-grid-item__swatch {
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-top: 6px !important;
-      }
-      /* Preserve the bar's height while keeping it below the cart/header stack. */
-      body.js-drawer-open-cart .announcement-bar-static,
-      body:has(#cart-drawer.is-open) .announcement-bar-static {
-        z-index: 8999 !important;
-      }
-      body.js-drawer-open .announcement-bar-static,
-      body.js-quick-view-from-cart .announcement-bar-static,
-      body.js-quick-view-visible .announcement-bar-static,
-      body:has(#nav-drawer.is-open) .announcement-bar-static,
-      body:has(.drawer.is-open) .announcement-bar-static {
-        display: none !important;
+<style></style><style>.video-slide,.video-thumbnail,.product__form .btn--submit,#locationinfop,.product-upsell__btn,.btn,.btn--primary,input.btn{border-radius: 10px!important;}.input-group,.select-popout__toggle{border-radius: 10px!important;}#SiteFooter .input-group__fields input{border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;}.input-group__btn{border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;}button[aria-expanded=true] #accordionbefore:before{background-color: #f7f7f7!important;}@media only screen and (max-width: 767px){.product-single .product__title{font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;}}body.js-drawer-open-cart .announcement-bar-static,body:has(#cart-drawer.is-open) .announcement-bar-static{z-index: 8999 !important;}body.js-drawer-open .announcement-bar-static,body.js-quick-view-from-cart .announcement-bar-static,body.js-quick-view-visible .announcement-bar-static,body:has(#nav-drawer.is-open) .announcement-bar-static,body:has(.drawer.is-open) .announcement-bar-static{display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
-        pointer-events: none !important;
-      }
-    </style><style>
-        .swiper-scrollbar {
-        display: none!important;
-        }
-      </style><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="{{ 'sf/css/all-min-2d3b0a.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/><script src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><link href="{{ 'sf/css/swiper-bundle-min-9d0eb7.css'|asset_url }}" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><style data-shopify="">:root { --loader-image-size: 60px; }:root { --loader-image-size: 320px; }html:not(.is-loading) .loading-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
-        .loading-overlay { position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s; }
-        .loading-overlay .loader__image--fallback { width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain; }
-        .loader__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out; }
-        .loader__image { max-width: 60px; height: auto; object-fit: contain; }</style><script>
+        pointer-events: none !important;}</style><style>.swiper-scrollbar{display: none!important;}</style><script defer src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><style data-shopify="">:root{--loader-image-size: 60px;}:root{--loader-image-size: 320px;}html:not(.is-loading) .loading-overlay{opacity: 0; visibility: hidden; pointer-events: none;}.loading-overlay{position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;}.loading-overlay .loader__image--fallback{width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain;}.loader__image__holder{position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out;}.loader__image{max-width: 60px; height: auto; object-fit: contain;}</style><script>
         const loadingAppearance = "once";
         const loaded = sessionStorage.getItem('loaded');
 
@@ -70,130 +22,84 @@
         } else {
           document.documentElement.classList.add('is-loading');
         }
-      </script><style data-shopify="">@font-face {
+      </script><style data-shopify="">@font-face{
   font-family: Jost;
   font-weight: 600;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
-}
-
-@font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-@font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 700;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 900;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 100;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: italic;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 700;
   font-style: italic;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
-}
-
-
-:root {--COLOR-PRIMARY-OPPOSITE: #ffffff;
+}:root{--COLOR-PRIMARY-OPPOSITE: #ffffff;
   --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
   --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
   --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
@@ -440,8 +346,7 @@
 
   
 --filter-bg: .97;
-  --product-filter-bg: .97;
-  }</style><link href="{{ 'sf/css/kopstorm-V2-ea6148.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/theme-410305.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm-62aff9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm_new-c14bc9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><script type="text/javascript">
+  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-2bede559.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
     if (window.MSInputMethodContext && document.documentMode) {
       var scripts = document.getElementsByTagName('script')[0];
       var polyfill = document.createElement("script");
@@ -466,7 +371,7 @@
         cart_url: "\/cart",
         cart_add_url: "\/cart\/add",
         cart_change_url: "\/cart\/change",
-        shop_url: "https:\/\/skinofab.com",
+        shop_url: "\/",
         searchUrl: '/search',
         predictiveSearchUrl: '/search/suggest',
         product_recommendations_url: "\/recommendations\/products"
@@ -476,7 +381,7 @@
         smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
         no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
         swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
-        base: "//skinofab.com/cdn/shop/t/76/assets/"
+        base: "\/"
       },
       strings: {
         add_to_cart: "Add to Cart",
@@ -553,243 +458,104 @@
     window.isHeaderTransparent = false;
     window.stickyHeaderHeight = 60;
     window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
-    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/skinofab-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
-        @media screen and (max-width: 767px) {
-        .product-single__details {
-          overflow: ;
-        }
-        }
-      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Skinofab","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Skinofab","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
-        #shopify-buyer-consent {
-  margin-top: 1em;
-  display: inline-block;
-  width: 100%;
-}
-
-#shopify-buyer-consent.hidden {
-  display: none;
-}
-
-#shopify-subscription-policy-button {
-  background: none;
-  border: none;
-  padding: 0;
-  text-decoration: underline;
-  font-size: inherit;
-  cursor: pointer;
-}
-
-#shopify-subscription-policy-button::before {
-  box-shadow: none;
-}
-
-      </style><script defer="defer" src="{{ 'sf/js/skinofab-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
-    #alia-popup-root-alia-qqoyyurlj3kbg51i {
-      z-index: 999999 !important;
-    }
-  </style><script id="kaching-bundles-translations" type="application/json">
-    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
-  </script><script class="kaching-bundles-product" data-main="true" data-product-id="7920108798108" type="application/json">
-    {
-      "id": 7920108798108,
-      "handle": "shea-butter-lip-gloss",
-      "url": "\/products\/shea-butter-lip-gloss",
-      "availableForSale": true,
-      "title": "Volume Lip Gloss",
-      "image": "..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-2400w-747dad.png\u0026v=1765879190",
-      "collectionIds": [307652133020,304922558620,319257280668,314587218076,302830616732,307304136860],
-      "options": [
-        
-          {
-            "defaultName": "Color",
-            "name": "Color",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 3768345821340,
-                  "defaultName": "Clear",
-                  "name": "Clear",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                },
-              
-                {
-                  "id": 3830204170396,
-                  "defaultName": "Sweet Pink",
-                  "name": "Sweet Pink",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 44708919378076,
-      "variants": [
-        
-          {
-            "id": 44708919378076,
-            "availableForSale": true,
-            "price": 1900,
-            "compareAtPrice": null,
-            "options": ["Clear"],
-            "imageId": 43686077005980,
-            "image": "..\/assets\/img\/1_806b81e8-e466-4549-be40-160b224b6b3f-2400w-747dad.png\u0026v=1765879190",
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": 14127,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          },
-        
-          {
-            "id": 44766948360348,
-            "availableForSale": true,
-            "price": 1900,
-            "compareAtPrice": null,
-            "options": ["Sweet Pink"],
-            "imageId": 43686082314396,
-            "image": "..\/assets\/img\/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png\u0026v=1765879190",
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": 31464,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-c3094f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
-    .kaching-bundles__block {
-      display: none;
-    }
-
-    .kaching-bundles-sticky-atc {
-      display: none;
-    }
-  </style>
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><style>@media screen and (max-width: 767px){.product-single__details{overflow: ;}}</style><style></style><style></style>
 {% endblock sf_head %}
-{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root { --loader-image: var(--loading-svg); }</style><div class="loader loader--image">
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root{--loader-image: var(--loading-svg);}</style><div class="loader loader--image">
 <div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
 </div>
 </div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
 {% block content_wrapper %}
 <div data-template="product.shea-butter-lip-gloss"><main class="main-content" data-main="" id="MainContent">
-<div class="shopify-section" id="shopify-section-template--20029866344604__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--20029866344604__section_custom_html_7WqcF9 {
-    --PT: 0px;
-    --PB: 0px;
-  }</style><section class="section-padding" id="CustomCode--template--20029866344604__section_custom_html_7WqcF9">
+<div class="shopify-section" id="shopify-section-template--20029866344604__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--20029866344604__section_custom_html_7WqcF9{--PT: 0px;
+    --PB: 0px;}</style><section class="section-padding" id="CustomCode--template--20029866344604__section_custom_html_7WqcF9">
 <div class="wrapper">
 <div><element id="product"></element></div>
 </div>
 </section>
-</div><div class="shopify-section shopify-section--product" id="shopify-section-template--20029866344604__main"><style data-shopify="">#ProductTemplate--template--20029866344604__main {
-    --PT: 60px;
-    --PB: 0px;
-  }</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--20029866344604__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--20029866344604__main">
+</div><div class="shopify-section shopify-section--product" id="shopify-section-template--20029866344604__main"><style data-shopify="">#ProductTemplate--template--20029866344604__main{--PT: 60px;
+    --PB: 0px;}</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--20029866344604__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--20029866344604__main">
 <div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--20029866344604__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--20029866344604__main">
 <div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="34869021737116" data-media-id="template--20029866344604__main-34869021737116" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34869021737116"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869021737116" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-d88360.png'|asset_url }}" srcset="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-753w-1a3155.png'|asset_url }} 753w, {{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-61405b.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-61405b.png'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869021737116" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-d88360.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34869179089052" data-media-id="template--20029866344604__main-34869179089052" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34869179089052"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869179089052" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/LipGloss-Productimagesphotos-1080w-1125f2.jpg'|asset_url }}" srcset="{{ 'sf/img/LipGloss-Productimagesphotos-753w-c47213.jpg'|asset_url }} 753w, {{ 'sf/img/LipGloss-Productimagesphotos-1080w-05a6fc.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/LipGloss-Productimagesphotos-1080w-05a6fc.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869179089052" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/LipGloss-Productimagesphotos-1080w-1125f2.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34869021769884" data-media-id="template--20029866344604__main-34869021769884" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34869021769884"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869021769884" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-pc7ed47.jpg'|asset_url }}" srcset="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-753w-pddee7e.jpg'|asset_url }} 753w, {{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-pc7ed47.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-pc7ed47.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869021769884" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-pc7ed47.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37647948841116" data-media-id="template--20029866344604__main-37647948841116" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-37647948841116"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948841116" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/clear1-1080w-49d5cf.jpg'|asset_url }}" srcset="{{ 'sf/img/clear1-753w-b21d18.jpg'|asset_url }} 753w, {{ 'sf/img/clear1-1080w-4131c5.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/clear1-1080w-4131c5.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948841116" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/clear1-1080w-49d5cf.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34869027045532" data-media-id="template--20029866344604__main-34869027045532" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34869027045532"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869027045532" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png'|asset_url }}" srcset="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-753w-b76e81.png'|asset_url }} 753w, {{ 'sf/img/LipGloss_Clear_-Productimagesphotos-1080w-0c9b47.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/LipGloss_Clear_-Productimagesphotos-1080w-0c9b47.png'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34869027045532" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-1080w-764a80.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34917423546524" data-media-id="template--20029866344604__main-34917423546524" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34917423546524"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34917423546524" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink_2-1080w-239330.jpg'|asset_url }}" srcset="{{ 'sf/img/pink_2-753w-d4316e.jpg'|asset_url }} 753w, {{ 'sf/img/pink_2-1080w-a04020.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/pink_2-1080w-a04020.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34917423546524" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink_2-1080w-239330.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34917423579292" data-media-id="template--20029866344604__main-34917423579292" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-34917423579292"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34917423579292" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink-1080w-5a13c7.jpg'|asset_url }}" srcset="{{ 'sf/img/pink-753w-27476e.jpg'|asset_url }} 753w, {{ 'sf/img/pink-1080w-c3cbcb.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/pink-1080w-c3cbcb.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="34917423579292" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink-1080w-5a13c7.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37647948873884" data-media-id="template--20029866344604__main-37647948873884" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-37647948873884"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948873884" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink1-1080w-b3b3c2.jpg'|asset_url }}" srcset="{{ 'sf/img/pink1-753w-8411fc.jpg'|asset_url }} 753w, {{ 'sf/img/pink1-1080w-27cbf8.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/pink1-1080w-27cbf8.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948873884" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/pink1-1080w-b3b3c2.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37647948808348" data-media-id="template--20029866344604__main-37647948808348" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866344604__main-37647948808348"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948808348" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-p5cb902.jpg'|asset_url }}" srcset="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-753w-p409a95.jpg'|asset_url }} 753w, {{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-p5cb902.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-p5cb902.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading img-object-cover" data-image-id="37647948808348" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-p5cb902.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 </div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="34869021737116" data-thumbnail-id="template--20029866344604__main-34869021737116"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-178w-27f411.png'|asset_url }}" srcset="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-61405b.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1080w-61405b.png'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-178w-27f411.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34869179089052" data-thumbnail-id="template--20029866344604__main-34869179089052"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/LipGloss-Productimagesphotos-178w-57e376.png'|asset_url }}" srcset="{{ 'sf/img/LipGloss-Productimagesphotos-1080w-05a6fc.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/LipGloss-Productimagesphotos-1080w-05a6fc.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/LipGloss-Productimagesphotos-178w-57e376.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34869021769884" data-thumbnail-id="template--20029866344604__main-34869021769884"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-178w-pc04815.png'|asset_url }}" srcset="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-pc7ed47.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1080w-pc7ed47.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-178w-pc04815.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37647948841116" data-thumbnail-id="template--20029866344604__main-37647948841116"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/clear1-178w-9724de.png'|asset_url }}" srcset="{{ 'sf/img/clear1-1080w-4131c5.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/clear1-1080w-4131c5.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/clear1-178w-9724de.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34869027045532" data-thumbnail-id="template--20029866344604__main-34869027045532"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-178w-08bc39.png'|asset_url }}" srcset="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-1080w-0c9b47.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/LipGloss_Clear_-Productimagesphotos-1080w-0c9b47.png'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/LipGloss_Clear_-Productimagesphotos-178w-08bc39.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34917423546524" data-thumbnail-id="template--20029866344604__main-34917423546524"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink_2-178w-ce8567.png'|asset_url }}" srcset="{{ 'sf/img/pink_2-1080w-a04020.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/pink_2-1080w-a04020.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink_2-178w-ce8567.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34917423579292" data-thumbnail-id="template--20029866344604__main-34917423579292"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink-178w-d008b5.png'|asset_url }}" srcset="{{ 'sf/img/pink-1080w-c3cbcb.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/pink-1080w-c3cbcb.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink-178w-d008b5.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37647948873884" data-thumbnail-id="template--20029866344604__main-37647948873884"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink1-178w-24d728.png'|asset_url }}" srcset="{{ 'sf/img/pink1-1080w-27cbf8.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/pink1-1080w-27cbf8.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/pink1-178w-24d728.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37647948808348" data-thumbnail-id="template--20029866344604__main-37647948808348"><a aria-label="Volume Lip Gloss" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-178w-p816389.png'|asset_url }}" srcset="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-p5cb902.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-1080w-p5cb902.jpg'|asset_url %}<img alt="Volume Lip Gloss" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_c1124540-be99-42e5-9107-7c2f1b459727-178w-p816389.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div></div></div>
 <div class="product-single__details" data-collapsible-single="" id="product_details">
 <div class="form__wrapper" data-product-info="">
@@ -800,11 +566,7 @@
 </a>
 </div>
 </div>
-<style>
-                              .product__block.standard__app .loox-rating.loox-widget {
-                      display: none!important;
-                  }
-                </style>
+<style>.product__block.standard__app .loox-rating.loox-widget{display: none!important;}</style>
 <a href="#looxReviews">
 <div class="loox-rating custom-rating" data-id="7920108798108" data-raters="14,233" data-rating="4.8">
 <span>4.8/5 (14,233 reviews)</span>
@@ -812,16 +574,7 @@
 </a>
 <div class="product__block product__title-and-price" id="product_link">
 <h1 class="product__title">{{ product.get_title }}</h1>
-</div><style>
-                #productpricetemplate--20029866344604__main {
-                  font-size: 21px!important;
-                }
-                @media screen and (max-width: 767px){
-                 #productpricetemplate--20029866344604__main {
-                  font-size: 18px!important;
-                }
-                }
-              </style>
+</div><style>#productpricetemplate--20029866344604__main{font-size: 21px!important;}@media screen and (max-width: 767px){% templatetag opencomment %}productpricetemplate--20029866344604__main{font-size: 18px!important;}}</style>
 <div class="product__block product__price-and-badge" style="--PBB:20px;">
 <div class="product__price-and-rating">
 <div class="product__price" data-price-wrapper="" id="productpricetemplate--20029866344604__main">
@@ -859,33 +612,20 @@
 <span>100% natural &amp; vegan</span>
 </div>
 </div>
-<style>
-.skinofab-usp-grid {
-  display: grid;
+<style>.skinofab-usp-grid{display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-.skinofab-usp-grid__item {
-  display: flex;
+  gap: 8px;}.skinofab-usp-grid__item{display: flex;
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
   background: #f7f7f7;
-  border-radius: 8px;
-}
-.skinofab-usp-grid__item img {
-  width: 22px;
+  border-radius: 8px;}.skinofab-usp-grid__item img{width: 22px;
   height: 22px;
-  flex-shrink: 0;
-}
-.skinofab-usp-grid__item span {
-  font-size: 13px;
+  flex-shrink: 0;}.skinofab-usp-grid__item span{font-size: 13px;
   font-weight: 600;
   color: #2D2D2D;
-  line-height: 1.3;
-}
-</style>
-</div><div class="kopstorm_form1 product__block variant__labels--hide btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_50 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_50 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866344604__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+  line-height: 1.3;}</style>
+</div><div class="kopstorm_form1 product__block variant__labels--hide btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_44 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_44 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866344604__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
 <input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
 <div class="product__selectors" selector_product=""><div class="selector-wrapper selector-wrapper--swatches" data-option-position="1" f="">
 <legend class="radio__legend-color siblings__legend-color">
@@ -909,7 +649,7 @@
 </span></fieldset><button aria-controls="CollectionFilterActions--product-type" aria-expanded="false" class="btn btn--text swatch__more" data-swatches-more="" type="button">
 <span>Show more</span>
 <span>Show less</span>
-</button></div></div><input name="product-id" type="hidden" value="7920108798108"/><input name="section-id" type="hidden" value="template--20029866344604__main"/></form></div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_52 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_52 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866344604__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+</button></div></div><input name="product-id" type="hidden" value="7920108798108"/><input name="section-id" type="hidden" value="template--20029866344604__main"/></form></div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_46 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_46 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866344604__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
 <input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/>
 <div class="shop-pay-terms">
 <shopify-payment-terms shopify-meta='{"type":"product","currency_code":"USD","country_code":"US","variants":[{"id":44708919378076,"price_per_term":"$10","price_per_term_amount":9.5,"full_price":"$19","full_price_amount":19.0,"eligible":false,"available":true,"number_of_payment_terms":2},{"id":44766948360348,"price_per_term":"$10","price_per_term_amount":9.5,"full_price":"$19","full_price_amount":19.0,"eligible":false,"available":true,"number_of_payment_terms":2}],"min_price":"$35","min_price_amount":35.0,"max_price":"$30,000","max_price_amount":30000.0,"financing_plans":[{"min_price":"$35","max_price":"$50","terms":[{"apr":0,"loan_type":"split_pay","installments_count":2}],"min_price_amount":35.0,"max_price_amount":49.99},{"min_price":"$50","max_price":"$1,000","terms":[{"apr":0,"loan_type":"split_pay","installments_count":3},{"apr":0,"loan_type":"split_pay","installments_count":4},{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":50.0,"max_price_amount":999.99},{"min_price":"$1,000","max_price":"$30,000","terms":[{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":1000.0,"max_price_amount":30000.0}],"installments_buyer_prequalification_enabled":false,"seller_id":2823039}' variant-id="44708919378076"></shopify-payment-terms>
@@ -1010,89 +750,40 @@
 <p id="stockinfop">
 <span class="stock-left">
 <span class="pulsing-dot" style="background-color: #16a34a;">
-<style>
-        #stockinfop {
-          list-style: none !important;
-        }
-        #stockinfop .pulsing-dot::before {
-          background-color: #16a34a!important;
-        }
-        #stockinfop .stock-left > span:not(.pulsing-dot) {
-          color: #16a34a!important;
-        }
-      </style>
+<style>#stockinfop{list-style: none !important;}#stockinfop .pulsing-dot::before{background-color: #16a34a!important;}#stockinfop .stock-left > span:not(.pulsing-dot){color: #16a34a!important;}</style>
 </span>
 <span id="shippingUspText" style="color: #16a34a;">Ready to ship</span>
 </span>
 <span class="location-right" id="locationinfop"></span>
 </p>
 </div>
-<style>
-  #locationinfop,
-  #stockinfop {
-    margin-bottom: 0px;
+<style>#locationinfop,#stockinfop{margin-bottom: 0px;
     text-align: center;
     font-size: 0.975rem;
     font-weight: 500;
     border-radius: 12px;
-    margin-top: 3px;
-  }
-
-  #stockinfop {
-    display: flex;
+    margin-top: 3px;}#stockinfop{display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .stock-left {
-    display: flex;
+    margin-bottom: 10px;}.stock-left{display: flex;
     align-items: center;
-    gap: 8px;
-  }
-
-  .location-right {
-    display: flex;
+    gap: 8px;}.location-right{display: flex;
     align-items: center;
-    gap: 4px;
-  }
-
-  .location-right .shipping-country-flag {
-    width: 20px;
+    gap: 4px;}.location-right .shipping-country-flag{width: 20px;
     height: 15px;
-    flex: 0 0 20px;
-  }
-
-  .pulsing-dot {
-    position: relative;
+    flex: 0 0 20px;}.pulsing-dot{position: relative;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    animation: dot-breathe 2s ease-in-out infinite;
-  }
-
-  /* No ::before halo — the expanding same-color ring read as a second dot.
-     A gentle opacity breathe on the dot itself signals "live" instead. */
-  .pulsing-dot::before {
-    content: none;
-  }
-
-  @keyframes dot-breathe {
+    animation: dot-breathe 2s ease-in-out infinite;}.pulsing-dot::before{content: none;}@keyframes dot-breathe{
     0%, 100% { opacity: 1; }
     50% { opacity: 0.45; }
-  }
-
-@media only screen and (max-width: 767px) {
-  #locationinfop, #stockinfop {
-    text-align: center;
+  }@media only screen and (max-width: 767px){% templatetag opencomment %}locationinfop,#stockinfop{text-align: center;
     font-size: 0.975rem;
     font-weight: 500;
     border-radius: 10px;
     margin-top: 3px;
-    font-size: 14.5px;
-  }
-}
-</style>
+    font-size: 14.5px;}}</style>
 <script>
   // Cached original innerHTML of the shipping/returns accordion body, captured once
   // so the worldwide-shipping paragraphs can be toggled without losing content.
@@ -1102,7 +793,7 @@
     const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
     const validCountryCode = /^[A-Z]{2}$/.test(normalizedCountryCode);
     const flagMarkup = validCountryCode
-      ? `<img class="shipping-country-flag" src="https://cdn.shopify.com/static/images/flags/${normalizedCountryCode.toLowerCase()}.svg?width=32" alt="" aria-hidden="true" width="20" height="15" style="vertical-align: middle;">`
+      ? `<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint(...normalizedCountryCode.split('').map(c => 127397 + c.charCodeAt(0)))}</span>`
       : '<span aria-hidden="true">📦</span>';
     const countryLabel = validCountryCode ? normalizedCountryCode : 'your country';
     const locationInfoP = document.getElementById('locationinfop');
@@ -1266,7 +957,7 @@
 <span id="accordionbefore">Shipping and returns</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-shipping-and-returns--template--20029866344604__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a">
 <div class="product__accordion__inner rte" data-collapsible-content="">
-<div data-current-variant-id="44708919378076" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p>This product is not eligible for free shipping on its own.<br/><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="https://08f531-2.myshopify.com/policies/refund-policy" title="Refund Policy">return policy</a> for more information.</p></div>
+<div data-current-variant-id="44708919378076" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p>This product is not eligible for free shipping on its own.<br/><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="/refund-policy/" title="Refund Policy">return policy</a> for more information.</p></div>
 </div>
 </div>
 </div></div>
@@ -1278,59 +969,12 @@
       []
     </script>
 </div></div>
-<style>
-  #frontrow-sticker {
-    position: absolute;
-    z-index: 3;
-    border-radius: 0 !important;
-    max-width: unset !important;
-    left: 0px !important;
-    top: 0 !important;
-  }
-
-  .iframe-modal-frontrow {
-    display: none;
-    position: fixed;
-    z-index: 99999999;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  /* Mobile only — scale down */
-  @media only screen and (max-width: 480px) {
-    #frontrow-sticker {
-      transform: scale(0.70) !important;
-      transform-origin: 0px 0px !important;
-    }
-  }
-
-  .iframe.frontrow { display: none; position: fixed; left: 0; top: 0; z-index: 99999997; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden; }
-</style>
+<style></style>
 </section>
-<style>
-  #sticky_atcs .product__submit__add {
-        width: max-content;
+<style>#sticky_atcs .product__submit__add{width: max-content;
     min-width: max-content;
     flex: none;
-    margin: 0;
-  }
-  .price-wrapper {
-          font-size: 14px;
-    }
-      #sticky_atcs .product__submit__add {
-    font-size: 12px;
-}
-  @media only screen and (max-width: 767px) {
-    #sticky_atcs .product__submit__add {
-    font-size: 10px;
-}
-    .price-wrapper {
-          font-size: 13px;
-    }
-  }
-  </style><div id="sticky_atcs">
+    margin: 0;}.price-wrapper{font-size: 14px;}#sticky_atcs .product__submit__add{font-size: 12px;}@media only screen and (max-width: 767px){% templatetag opencomment %}sticky_atcs .product__submit__add{font-size: 10px;}.price-wrapper{font-size: 13px;}}</style><div id="sticky_atcs">
 <div class="wrapper">
 <div class="wrap">
 <div class="left">
@@ -1375,96 +1019,38 @@
 </div>
 </div>
 </div>
-<style>
-#sticky_atcs {
-opacity: 0;
+<style>#sticky_atcs{opacity: 0;
 visibility: hidden;
 transform: translateY(100%);
-transition: all 0.3s ease;
-}
-
-  #sticky_atcs.scrolled {
-opacity: 1;
+transition: all 0.3s ease;}#sticky_atcs.scrolled{opacity: 1;
 visibility: visible;
 transform: translateY(0%);
-transition: all 0.3s ease;
-}
-
-
-.sticky-visible {
-opacity: 1;
-visibility: visible;
-transform: translateY(0);
-}
-
-#sticky_atcs {
-width: 100%;
+transition: all 0.3s ease;}#sticky_atcs{width: 100%;
 position: fixed;
 bottom: 0;
 height: auto;
 z-index: 999;
 background: white;
 box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-padding: 10px;
-}
-
-#sticky_atcs .wrap {
-display: flex;
+padding: 10px;}#sticky_atcs .wrap{display: flex;
 align-items: center;
 gap: 25px;
 justify-content: space-between;
-flex-wrap: wrap;
-}
-
-#sticky_atcs h5 {
-margin-bottom: 3px!important;
-font-size: 16px;
-}
-
-#sticky_atcs img {
-width: 60px;
+flex-wrap: wrap;}#sticky_atcs h5{margin-bottom: 3px!important;
+font-size: 16px;}#sticky_atcs img{width: 60px;
 height: 60px;
 border-radius: 7px;
-object-fit: cover;
-}
-
-#sticky_atcs .left {
-display: flex;
+object-fit: cover;}#sticky_atcs .left{display: flex;
 align-items: center;
-gap: 20px;
-}
-
-#sticky_atcs .right {
-flex: 1;
-max-width: 400px;
-}
-
-/* Variant switcher styles */
-.sticky-variant-wrapper {
-display: flex;
+gap: 20px;}#sticky_atcs .right{flex: 1;
+max-width: 400px;}.sticky-variant-wrapper{display: flex;
 align-items: center;
-gap: 15px;
-}
-
-.sticky-option {
-display: flex;
+gap: 15px;}.sticky-option{display: flex;
 align-items: center;
-gap: 10px;
-}
-
-.sticky-option__label {
-font-size: 14px;
+gap: 10px;}.sticky-option__label{font-size: 14px;
 font-weight: 500;
-margin: 0;
-}
-
-.sticky-option__values {
-display: flex;
-gap: 5px;
-}
-
-.sticky-swatch {
-min-width: 35px;
+margin: 0;}.sticky-option__values{display: flex;
+gap: 5px;}.sticky-swatch{min-width: 35px;
 height: 35px;
 padding: 0 10px;
 border: 2px solid #ddd;
@@ -1475,222 +1061,55 @@ display: flex;
 align-items: center;
 justify-content: center;
 font-size: 13px;
-transition: all 0.2s ease;
-}
-
-.sticky-swatch:hover:not(:disabled) {
-border-color: #000;
-}
-
-.sticky-swatch.is-active {
-border-color: #000;
+transition: all 0.2s ease;}.sticky-swatch:hover:not(:disabled){border-color: #000;}.sticky-swatch.is-active{border-color: #000;
 background: #000;
-color: white;
-}
-
-.sticky-swatch.is-sold-out {
-opacity: 0.5;
+color: white;}.sticky-swatch.is-sold-out{opacity: 0.5;
 cursor: not-allowed;
-text-decoration: line-through;
-}
-
-.btn--submit {
-min-height: 35px;
+text-decoration: line-through;}.btn--submit{min-height: 35px;
 margin: 0;
-flex: 1;
-}
-
-@media only screen and (max-width: 767px) {
-#sticky_atcs {
-padding: 10px;
-}
-
-#sticky_atcs .wrap {
-gap: 10px;
-}
-
-#sticky_atcs h5 {
-font-size: 14px;
-}
-
-#sticky_atcs img {
-}
-
-#sticky_atcs .right {
-width: 100%;
-max-width: none;
-}
-
-.sticky-variant-wrapper {
-flex-wrap: wrap;
-gap: 10px;
-}
-
-.sticky-option {
-width: 100%;
-}
-
-.sticky-swatch {
-min-width: 30px;
+flex: 1;}@media only screen and (max-width: 767px){% templatetag opencomment %}sticky_atcs{padding: 10px;}#sticky_atcs .wrap{gap: 10px;}#sticky_atcs h5{font-size: 14px;}#sticky_atcs img{}#sticky_atcs .right{width: 100%;
+max-width: none;}.sticky-variant-wrapper{flex-wrap: wrap;
+gap: 10px;}.sticky-option{width: 100%;}.sticky-swatch{min-width: 30px;
 height: 30px;
-font-size: 12px;
-}
-
-.btn--submit {
-width: 100%;
-margin-top: 5px;
-}
-}
-</style>
-<style> #shopify-section-template--20029866344604__main .product__form__wrapper {--PBB: 8px !important;} #shopify-section-template--20029866344604__main #locationinfop {margin-top: 0;} </style></div><div class="shopify-section" id="shopify-section-template--20029866344604__section_image_with_text_CwtnL8"><style>
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 {
-  padding-top: 20px;
+font-size: 12px;}.btn--submit{width: 100%;
+margin-top: 5px;}}</style>
+<style>#shopify-section-template--20029866344604__main .product__form__wrapper{--PBB: 8px !important;}#shopify-section-template--20029866344604__main #locationinfop{margin-top: 0;}</style></div><div class="shopify-section" id="shopify-section-template--20029866344604__section_image_with_text_CwtnL8"><style>.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8{padding-top: 20px;
   padding-bottom: 20px;
   background: transparent;
-  font-family: var(--FONT-STACK-BODY);
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid {
-  display: grid;
+  font-family: var(--FONT-STACK-BODY);}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid{display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
-  align-items: center;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid--reverse {
-  direction: rtl;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid--reverse > * {
-  direction: ltr;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__image {
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__image img {
-  width: 100%;
+  align-items: center;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid--reverse{direction: rtl;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid--reverse > *{direction: ltr;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__image{border-radius: 16px;
+  overflow: hidden;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__image img{width: 100%;
   height: auto;
   display: block;
-  object-fit: contain;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__content {
-  text-align: left;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__heading {
-  text-align: left;
+  object-fit: contain;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__content{text-align: left;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__heading{text-align: left;
   text-transform: none;
-  margin: 0 0 20px 0;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__highlight {
-  background: #000000;
+  margin: 0 0 20px 0;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__highlight{background: #000000;
   color: #ffffff;
   padding: 4px 10px;
   border-radius: 6px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  line-height: 1.6;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__text {
-  font-family: var(--FONT-STACK-BODY);
+  line-height: 1.6;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__text{font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   color: #555;
   line-height: 1.7;
-  margin: 0 0 24px 0;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__text p {
-  margin: 0 0 14px 0;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__text p:last-child {
-  margin-bottom: 0;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usps {
-  display: grid;
+  margin: 0 0 24px 0;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__text p{margin: 0 0 14px 0;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__text p:last-child{margin-bottom: 0;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usps{display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px 20px;
-  margin-top: 24px;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp {
-  display: flex;
+  margin-top: 24px;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp{display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp img {
-  width: 32px;
+  min-width: 0;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp img{width: 32px;
   height: 32px;
-  flex-shrink: 0;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp-text {
-  font-family: var(--FONT-STACK-BODY);
+  flex-shrink: 0;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp-text{font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   font-weight: 600;
   color: var(--heading);
-  min-width: 0;
-}
-
-@media (max-width: 600px) {
-  .skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp img { width: 26px; height: 26px; }
-  .skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp-text { font-size: 13px; line-height: 1.25; }
-  .skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp { gap: 8px; }
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp-text p {
-  margin: 0;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__button {
-  display: inline-block;
-  margin-top: 28px;
-  padding: 14px 32px;
-  background: var(--heading);
-  color: #fff;
-  font-family: var(--FONT-STACK-BODY);
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__button:hover {
-  opacity: 0.85;
-}
-
-@media (max-width: 767px) {
-  .skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  .skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid--reverse {
-    direction: ltr;
-  }
-  .skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__text {
-    font-size: 14px;
-  }
-  .skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__heading {
-    font-size: 24px;
-  }
-}
-</style>
+  min-width: 0;}@media (max-width: 600px){.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp img{width: 26px; height: 26px;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp-text{font-size: 13px; line-height: 1.25;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp{gap: 8px;}}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__usp-text p{margin: 0;}@media (max-width: 767px){.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8{padding-top: 20px;
+    padding-bottom: 20px;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid{grid-template-columns: 1fr;
+    gap: 28px;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__grid--reverse{direction: ltr;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__text{font-size: 14px;}.skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8 .skinofab-iwt__heading{font-size: 24px;}}</style>
 <section class="skinofab-iwt-template--20029866344604__section_image_with_text_CwtnL8">
 <div class="wrapper">
 <div class="skinofab-iwt__grid skinofab-iwt__grid--reverse">
@@ -1718,18 +1137,12 @@ margin-top: 5px;
 </div>
 </div>
 </section>
-</div><section class="shopify-section" id="shopify-section-template--20029866344604__171016962378cf5f40"><style data-shopify="">#App--template--20029866344604__171016962378cf5f40 {
-    --PT: 60px;
-    --PB: 0px;
-  }</style><div class="section-padding" data-section-type="template--20029866344604__171016962378cf5f40" id="App--template--20029866344604__171016962378cf5f40">
+</div><section class="shopify-section" id="shopify-section-template--20029866344604__171016962378cf5f40"><style data-shopify="">#App--template--20029866344604__171016962378cf5f40{--PT: 60px;
+    --PB: 0px;}</style><div class="section-padding" data-section-type="template--20029866344604__171016962378cf5f40" id="App--template--20029866344604__171016962378cf5f40">
 <div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-ATnhDUVZ6NVFJMFhZV__loox_reviews_loox_dynamic_section_NJEA6M">
 <div class="loox-widget" data-default-tab="automatic" data-limit="20" data-product-id="7920108798108" data-reviews-to-display="" id="looxReviews" style="margin:0 auto;max-width:1080px;">
 <div id="loox-reviews-feed">
-<style class="loox-temp-hiding-style">
-			#loox-reviews-feed {
-				display: none;
-			}
-		</style>
+<style class="loox-temp-hiding-style">#loox-reviews-feed{display: none;}</style>
 <section aria-label="Customer reviews">
 <h3>Customer Reviews</h3>
 <p class="loox-ssr-review-summary">
@@ -2321,53 +1734,17 @@ margin-top: 5px;
 </div>
 </div>
 </div>
-</section><div class="shopify-section" id="shopify-section-template--20029866344604__related"><style data-shopify="">#relatedProducts--template--20029866344604__related {
-    --PT: 60px;
-    --PB: 60px;
-  }</style><div class="related-products section-padding js-only" data-columns="4" data-limit="4" data-product-id="7920108798108" data-section-id="template--20029866344604__related" data-section-type="related-products" id="relatedProducts--template--20029866344604__related">
+</section><div class="shopify-section" id="shopify-section-template--20029866344604__related"><style data-shopify="">#relatedProducts--template--20029866344604__related{--PT: 60px;
+    --PB: 60px;}</style><div class="related-products section-padding js-only" data-columns="4" data-limit="4" data-product-id="7920108798108" data-section-id="template--20029866344604__related" data-section-type="related-products" id="relatedProducts--template--20029866344604__related">
 <div class="wrapper"><div class="tabs tabs--stacked" data-tabs-holder=""><div class="tabs__contents" data-tabs-contents="">
 <div class="tab current" data-tab="0"><div data-limit="4" data-product-id="7920108798108" data-related-products=""></div></div>
 </div>
 </div></div>
 </div>
-</div><section class="shopify-section" id="shopify-section-template--20029866344604__17115330127241654c"><style data-shopify="">#App--template--20029866344604__17115330127241654c {
-    --PT: 60px;
-    --PB: 60px;
-  }</style><div class="section-padding" data-section-type="template--20029866344604__17115330127241654c" id="App--template--20029866344604__17115330127241654c">
+</div><section class="shopify-section" id="shopify-section-template--20029866344604__17115330127241654c"><style data-shopify="">#App--template--20029866344604__17115330127241654c{--PT: 60px;
+    --PB: 60px;}</style><div class="section-padding" data-section-type="template--20029866344604__17115330127241654c" id="App--template--20029866344604__17115330127241654c">
 <div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-ATkEvWTd6NElzbTJpW__instafeed_app_block_7xnk96">
-<style>
-      div[id*="instafeed_app_block"] {
-        width: 100%;
-      }
-      div.shopify-section:has(> [id*="instafeed_app_block"]) {
-      width: 100%;
-      }
-      
-      body #insta-feed {
-      
-          
-
-          
-          margin-bottom: 0px!important;
-          
-
-          
-
-          
-
-          
-      }
-      
-      body #insta-feed h2 {
-      
-        
-        
-         text-align: center;
-      }
-
-      
-      
-</style>
+<style>div[id*="instafeed_app_block"]{width: 100%;}div.shopify-section:has(> [id*="instafeed_app_block"]){width: 100%;}body #insta-feed{margin-bottom: 0px!important;}body #insta-feed h2{text-align: center;}</style>
 <div id="insta-feed"></div>
 </div>
 </div>
@@ -2454,7 +1831,7 @@ margin-top: 5px;
 </div>
 </div>
 </div>
-</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/skinofab-cart-timer-b352c2.js'|asset_url }}"></script><script>
+</div><script>
       // Function to update the price element with the new variant price
       function updateProductPrice(newPrice) {
         const priceElement = document.getElementById('productpricingnew');

@@ -1,64 +1,16 @@
 {% extends 'layouts/base.html' %}
-{% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
+{% block sf_handle_pk %}"eyebrow-serum":"{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk %}","eyelash-serum":"{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk %}","lash-brow-duo":"{% firstof settings.sf_p_lash_brow_duo.children.first.pk settings.sf_p_lash_brow_duo.pk %}"{% endblock sf_handle_pk %}
+{% block title %}{% if store.name|upper in product.get_meta_title|upper %}{{ product.get_meta_title }}{% else %}{{ product.get_meta_title }} | {{ block.super }}{% endif %}{% endblock %}
 {% block body_id %}{% firstof "lash-amp-brow-growth-kit-for-fuller-results-skinofab" %}{% endblock %}
 {% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
 {% block sf_head %}
-<link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
-</style><style>
-      .video-slide, .video-thumbnail, .product__form .btn--submit, #locationinfop, .product-grid-item .btn--quick .btn__inner, .product-upsell__btn, .btn, .btn--primary, .btn--primary .shopify-payment-button__button--unbranded, input.btn .shopify-payment-button__button--unbranded, input.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded, input.btn, input.shopify-payment-button__button--unbranded {
-         border-radius: 10px!important;
-      }
-      .input-group, .select-popout__toggle  {
-         border-radius: 10px!important;
-      }
-      #SiteFooter .input-group__fields input {
-        border-top-left-radius: 10px!important;
-        border-bottom-left-radius: 10px!important;
-      }
-        .input-group__btn {
-            border-top-right-radius: 10px!important;
-        border-bottom-right-radius: 10px!important;
-        }
-
-        button[aria-expanded=true] #accordionbefore:before {
-          background-color: #f7f7f7!important;
-        }
-      @media only screen and (max-width: 767px) {
-        .product-single .product__title {
-          font-size: clamp(26px, 7.1vw, 29px);
-          line-height: 1.12;
-        }
-      }
-      #cart-drawer .product-upsell__holder .product-grid-item__swatch {
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-top: 6px !important;
-      }
-      /* Preserve the bar's height while keeping it below the cart/header stack. */
-      body.js-drawer-open-cart .announcement-bar-static,
-      body:has(#cart-drawer.is-open) .announcement-bar-static {
-        z-index: 8999 !important;
-      }
-      body.js-drawer-open .announcement-bar-static,
-      body.js-quick-view-from-cart .announcement-bar-static,
-      body.js-quick-view-visible .announcement-bar-static,
-      body:has(#nav-drawer.is-open) .announcement-bar-static,
-      body:has(.drawer.is-open) .announcement-bar-static {
-        display: none !important;
+<style></style><style>.video-slide,.video-thumbnail,.product__form .btn--submit,#locationinfop,.product-upsell__btn,.btn,.btn--primary,input.btn{border-radius: 10px!important;}.input-group,.select-popout__toggle{border-radius: 10px!important;}#SiteFooter .input-group__fields input{border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;}.input-group__btn{border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;}button[aria-expanded=true] #accordionbefore:before{background-color: #f7f7f7!important;}@media only screen and (max-width: 767px){.product-single .product__title{font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;}}body.js-drawer-open-cart .announcement-bar-static,body:has(#cart-drawer.is-open) .announcement-bar-static{z-index: 8999 !important;}body.js-drawer-open .announcement-bar-static,body.js-quick-view-from-cart .announcement-bar-static,body.js-quick-view-visible .announcement-bar-static,body:has(#nav-drawer.is-open) .announcement-bar-static,body:has(.drawer.is-open) .announcement-bar-static{display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
-        pointer-events: none !important;
-      }
-    </style><style>
-        .swiper-scrollbar {
-        display: none!important;
-        }
-      </style><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="{{ 'sf/css/all-min-2d3b0a.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/><script src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><link href="{{ 'sf/css/swiper-bundle-min-9d0eb7.css'|asset_url }}" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><style data-shopify="">:root { --loader-image-size: 60px; }:root { --loader-image-size: 320px; }html:not(.is-loading) .loading-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
-        .loading-overlay { position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s; }
-        .loading-overlay .loader__image--fallback { width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain; }
-        .loader__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out; }
-        .loader__image { max-width: 60px; height: auto; object-fit: contain; }</style><script>
+        pointer-events: none !important;}</style><style>.swiper-scrollbar{display: none!important;}</style><script defer src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><style data-shopify="">:root{--loader-image-size: 60px;}:root{--loader-image-size: 320px;}html:not(.is-loading) .loading-overlay{opacity: 0; visibility: hidden; pointer-events: none;}.loading-overlay{position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;}.loading-overlay .loader__image--fallback{width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain;}.loader__image__holder{position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out;}.loader__image{max-width: 60px; height: auto; object-fit: contain;}</style><script>
         const loadingAppearance = "once";
         const loaded = sessionStorage.getItem('loaded');
 
@@ -70,130 +22,84 @@
         } else {
           document.documentElement.classList.add('is-loading');
         }
-      </script><style data-shopify="">@font-face {
+      </script><style data-shopify="">@font-face{
   font-family: Jost;
   font-weight: 600;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
-}
-
-@font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-@font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 700;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 900;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 100;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: italic;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 700;
   font-style: italic;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
-}
-
-
-:root {--COLOR-PRIMARY-OPPOSITE: #ffffff;
+}:root{--COLOR-PRIMARY-OPPOSITE: #ffffff;
   --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
   --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
   --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
@@ -440,8 +346,7 @@
 
   
 --filter-bg: .97;
-  --product-filter-bg: .97;
-  }</style><link href="{{ 'sf/css/kopstorm-V2-ea6148.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/theme-410305.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm-62aff9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm_new-c14bc9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><script type="text/javascript">
+  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-2bede559.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
     if (window.MSInputMethodContext && document.documentMode) {
       var scripts = document.getElementsByTagName('script')[0];
       var polyfill = document.createElement("script");
@@ -466,7 +371,7 @@
         cart_url: "\/cart",
         cart_add_url: "\/cart\/add",
         cart_change_url: "\/cart\/change",
-        shop_url: "https:\/\/skinofab.com",
+        shop_url: "\/",
         searchUrl: '/search',
         predictiveSearchUrl: '/search/suggest',
         product_recommendations_url: "\/recommendations\/products"
@@ -476,7 +381,7 @@
         smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
         no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
         swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
-        base: "//skinofab.com/cdn/shop/t/76/assets/"
+        base: "\/"
       },
       strings: {
         add_to_cart: "Add to Cart",
@@ -553,324 +458,131 @@
     window.isHeaderTransparent = false;
     window.stickyHeaderHeight = 60;
     window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
-    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/skinofab-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
-        @media screen and (max-width: 767px) {
-        .product-single__details {
-          overflow: ;
-        }
-        }
-      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Skinofab","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Skinofab","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
-        #shopify-buyer-consent {
-  margin-top: 1em;
-  display: inline-block;
-  width: 100%;
-}
-
-#shopify-buyer-consent.hidden {
-  display: none;
-}
-
-#shopify-subscription-policy-button {
-  background: none;
-  border: none;
-  padding: 0;
-  text-decoration: underline;
-  font-size: inherit;
-  cursor: pointer;
-}
-
-#shopify-subscription-policy-button::before {
-  box-shadow: none;
-}
-
-      </style><script defer="defer" src="{{ 'sf/js/skinofab-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
-    #alia-popup-root-alia-qqoyyurlj3kbg51i {
-      z-index: 999999 !important;
-    }
-  </style><script id="kaching-bundles-translations" type="application/json">
-    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
-  </script><script class="kaching-bundles-product" data-main="true" data-product-id="8309372289180" type="application/json">
-    {
-      "id": 8309372289180,
-      "handle": "lash-brow-duo",
-      "url": "\/products\/lash-brow-duo",
-      "availableForSale": true,
-      "title": "Lash \u0026 Brow Growth Kit",
-      "image": "..\/assets\/img\/jsdfsd-800w-eb1645.jpg\u0026v=1768799004",
-      "collectionIds": [307652133020,304922558620,314587218076,333800964252,309886910620,333800931484,299336073372,308666531996],
-      "options": [
-        
-          {
-            "defaultName": "Title",
-            "name": "Title",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 3692629131420,
-                  "defaultName": "Default Title",
-                  "name": "Default Title",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 44630586523804,
-      "variants": [
-        
-          {
-            "id": 44630586523804,
-            "availableForSale": true,
-            "price": 4900,
-            "compareAtPrice": 7800,
-            "options": ["Default Title"],
-            "imageId": null,
-            "image": null,
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": -8257,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script><script class="kaching-bundles-deal-block-settings" data-product-id="8309372289180" type="application/json">
-            {"blockTitle":"","blockVisibility":"selected-products","discountName":"a temporary discount","excludeB2bCustomers":false,"blockLayout":"vertical","differentVariantsEnabled":true,"hideVariantPicker":false,"disableVariantOptionSync":false,"hideUnavailableOptions":false,"showPricesPerItem":false,"showBothPrices":false,"unitLabel":"","useProductCompareAtPrice":true,"showPricesWithoutDecimals":false,"priceRounding":true,"priceRoundingPrecision":".99","updateNativePrice":false,"updateNativePriceType":"item","skipCart":false,"lowStockAlertEnabled":false,"lowStockAlert":{"message":"Only {% templatetag openvariable %}stock}} left","textColor":{"red":255,"blue":9,"alpha":1,"green":9},"threshold":5},"showVariantsForSingleQuantity":true,"preselectedDealBarId":"61a9299f-ab68-4a57-bdc5-b425daac200c","dealBars":[{"id":"61a9299f-ab68-4a57-bdc5-b425daac200c","label":"","title":"2-pack","upsells":[],"quantity":1,"subtitle":"Lasts 4 weeks","badgeText":"","freeGifts":[],"badgeStyle":"simple","highlights":null,"dealBarType":"quantity-break","discountType":"specific","badgeImageGID":null,"discountValue":49,"mediaImageGID":null,"showAsSoldOut":{"label":"Sold out","opacity":0.3,"textSize":13,"textColor":{"red":255,"blue":255,"alpha":1,"green":255},"backgroundColor":{"red":0,"blue":0,"alpha":1,"green":0}},"sellingPlanGid":null,"featuredMediaGID":null,"freeGiftsSummary":null,"quantitySelector":false,"featuredProductGID":null,"sellingPlanEnabled":false,"hideBehindScratchOff":false,"showAsSoldOutEnabled":false,"multipleGiftsSelectors":[],"productPersonalisation":null},{"id":"b456b60d-de07-49cf-b798-53d4c8efed4d","label":"SAVE {% templatetag openvariable %}saved_total}}","title":"4-pack","upsells":[],"quantity":2,"subtitle":"Lasts 8 weeks","badgeText":"Most popular","freeGifts":[{"id":"zDx9","text":"+ FREE Mystery Gift","giftType":"product","quantity":1,"imageSize":30,"showPrice":false,"productGID":"gid:\/\/shopify\/Product\/8628578517148","variantGIDs":null,"mediaImageGID":"gid:\/\/shopify\/MediaImage\/34781180756124","includeInCompareAt":false,"applyOnlyForSubscriptions":false,"excludeRatesAboveThreshold":false,"excludeRatesAboveThresholdAmount":0},{"id":"CLQ3","text":"+ FREE Shipping","giftType":"product","quantity":1,"imageSize":30,"showPrice":false,"productGID":null,"variantGIDs":null,"mediaImageGID":"gid:\/\/shopify\/MediaImage\/34795915444380","includeInCompareAt":false,"applyOnlyForSubscriptions":false,"excludeRatesAboveThreshold":false,"excludeRatesAboveThresholdAmount":0}],"badgeStyle":"simple","highlights":null,"dealBarType":"quantity-break","discountType":"specific","badgeImageGID":null,"discountValue":59,"mediaImageGID":null,"showAsSoldOut":null,"sellingPlanGid":null,"featuredMediaGID":null,"freeGiftsSummary":null,"quantitySelector":false,"featuredProductGID":null,"sellingPlanEnabled":false,"hideBehindScratchOff":false,"showAsSoldOutEnabled":false,"multipleGiftsSelectors":[],"productPersonalisation":null}],"cornerRadius":10,"spacing":0.7,"colors":{"label":{"red":255,"blue":255,"alpha":1,"green":255},"price":{"red":21,"blue":21,"alpha":1,"green":21},"title":{"red":21,"blue":21,"alpha":1,"green":21},"border":{"red":223,"blue":150,"alpha":1,"green":128},"subtitle":{"red":85,"blue":85,"alpha":1,"green":85},"badgeText":{"red":255,"blue":255,"alpha":1,"green":255},"fullPrice":{"red":85,"blue":85,"alpha":1,"green":85},"background":{"red":247,"blue":247,"alpha":1,"green":247},"blockTitle":{"red":21,"blue":21,"alpha":1,"green":21},"upsellText":{"red":0,"blue":0,"alpha":1,"green":0},"freeGiftText":{"red":21,"blue":21,"alpha":1,"green":21},"badgeBackground":{"red":123,"blue":215,"alpha":1,"green":147},"labelBackground":{"red":223,"blue":150,"alpha":1,"green":128},"upsellBackground":{"red":204,"blue":204,"alpha":1,"green":204},"freeGiftBackground":{"red":247,"blue":247,"alpha":1,"green":247},"selectedBackground":{"red":255,"blue":255,"alpha":1,"green":255},"upsellSelectedText":{"red":21,"blue":21,"alpha":1,"green":21},"freeGiftSelectedText":{"red":255,"blue":255,"alpha":1,"green":255},"upsellSelectedBackground":{"red":204,"blue":204,"alpha":1,"green":204},"freeGiftSelectedBackground":{"red":223,"blue":150,"alpha":1,"green":128}},"fonts":{"label":{"size":11,"style":"regular"},"title":{"size":18,"style":"bold"},"upsell":{"size":12,"style":"bold"},"freeGift":{"size":12,"style":"bold"},"subtitle":{"size":13,"style":"regular"},"unitLabel":{"size":13,"style":"regular"},"blockTitle":{"size":13,"style":"bold"},"fontFamily":null},"customStylesEnabled":false,"customStyles":"","swatchOptions":[],"swatchSize":18,"swatchShape":"circle","showSelectedSwatchName":false,"imageSize":48,"imageCornerRadius":6,"collectionBreaksEnabled":false,"collectionBreaks":{"buttonText":"Choose","visibility":"excluded-products","buttonColor":{"red":223,"blue":150,"alpha":1,"green":128},"mediaImageGID":null,"showProductName":true,"excludedProducts":[],"productPhotoSize":40,"selectedProducts":[],"selectedCollections":[],"autoFillNotChosenItems":false,"requireItemSelectionAlert":{"text":"There is a required item to be selected in order to complete your order.","textColor":{"red":240,"blue":56,"alpha":1,"green":68},"backgroundColor":{"red":254,"blue":226,"alpha":1,"green":228}},"requireItemSelectionEnabled":false,"showChosenProductsPriceOnly":false},"chooseProductModal":{"heading":"Choose product","textSize":14,"textColor":{"red":21,"blue":21,"alpha":1,"green":21},"buttonSize":16,"buttonText":"Choose","priceColor":{"red":21,"blue":21,"alpha":1,"green":21},"buttonColor":{"red":223,"blue":150,"alpha":1,"green":128},"overlayColor":{"red":0,"blue":0,"alpha":0.5,"green":0},"buttonTextColor":{"red":255,"blue":255,"alpha":1,"green":255},"showSearchField":false,"productPhotoSize":100,"defaultSortOption":"relevance","compareAtPriceColor":{"red":85,"blue":85,"alpha":1,"green":85},"showVariantImageByDefault":false},"timerEnabled":false,"scratchOffEnabled":false,"scratchOff":null,"subscriptionsEnabled":false,"subscriptions":null,"currency":null,"stickyAtcEnabled":false,"stickyAtc":{"title":"{% templatetag openvariable %}product}}","mobile":{"buttonPadding":15,"titleFontSize":16,"buttonFontSize":16,"productPhotoSize":40,"buttonCornerRadius":8,"productPhotoCornerRadius":0},"titleFont":{"size":16,"style":"regular"},"buttonFont":{"size":16,"style":"bold"},"buttonText":"Choose bundle","titleColor":{"red":0,"blue":0,"alpha":1,"green":0},"buttonColor":{"red":48,"blue":48,"alpha":1,"green":48},"buttonPadding":15,"backgroundColor":{"red":255,"blue":255,"alpha":1,"green":255},"buttonTextColor":{"red":255,"blue":255,"alpha":1,"green":255},"productPhotoSize":40,"sameSizeOnMobile":true,"buttonCornerRadius":8,"productPhotoCornerRadius":0},"progressiveGiftsEnabled":false,"checkboxUpsellsEnabled":false,"savingsSummaryEnabled":false,"savingsSummary":null,"excludedProductIds":[],"excludedCollectionIds":[],"selectedProductIds":[8309372289180],"selectedCollectionIds":[],"marketId":null,"excludedMarketIds":[],"timer":null,"progressiveGifts":null,"checkboxUpsells":null,"defaultVariantsV2":[],"id":"82096088-e363-4aca-b025-e2f49256861f","nanoId":"G_jS","versionId":"fc095a30-ace8-41f4-a5c3-cfee711c5c2d","otherProductHandles":["10-gift-card"]}
-          </script><script class="kaching-bundles-product" data-product-id="8628578517148" type="application/json">
-    {
-      "id": 8628578517148,
-      "handle": "10-gift-card",
-      "url": "\/products\/10-gift-card",
-      "availableForSale": true,
-      "title": "Mystery Gift",
-      "image": "..\/assets\/img\/free_8-1600w-4bc8a8.png\u0026v=1765145633",
-      "collectionIds": [],
-      "options": [
-        
-          {
-            "defaultName": "Title",
-            "name": "Title",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 4705222852764,
-                  "defaultName": "Default Title",
-                  "name": "Default Title",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 45555084853404,
-      "variants": [
-        
-          {
-            "id": 45555084853404,
-            "availableForSale": true,
-            "price": 0,
-            "compareAtPrice": 1500,
-            "options": ["Default Title"],
-            "imageId": null,
-            "image": null,
-            "inventoryManagement": null,
-            "inventoryPolicy": "deny",
-            "inventoryQuantity": -1010811,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script><style id="kaching-bundles-custom-css">
-        .kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions--link {
-    display: flex !important;
-    justify-content: center !important;
-    margin-top: 12px !important;
-}
-
-.kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions__link {
-    all: unset !important;
-    cursor: pointer !important;
-    text-decoration: underline !important;
-    text-underline-offset: 3px !important;
-    font-size: 14px !important;
-    color: rgba(0, 0, 0, 1) !important;
-}
-      </style><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-c3094f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
-    .kaching-bundles__block {
-      display: none;
-    }
-
-    .kaching-bundles-sticky-atc {
-      display: none;
-    }
-  </style>
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><style>@media screen and (max-width: 767px){.product-single__details{overflow: ;}}</style><style></style><style id="kaching-bundles-custom-css"></style><style></style>
 {% endblock sf_head %}
-{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root { --loader-image: var(--loading-svg); }</style><div class="loader loader--image">
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root{--loader-image: var(--loading-svg);}</style><div class="loader loader--image">
 <div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
 </div>
 </div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
 {% block content_wrapper %}
 <div data-template="product.lash-brow-duo"><main class="main-content" data-main="" id="MainContent">
-<div class="shopify-section" id="shopify-section-template--20029865754780__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--20029865754780__section_custom_html_7WqcF9 {
-    --PT: 0px;
-    --PB: 0px;
-  }</style><section class="section-padding" id="CustomCode--template--20029865754780__section_custom_html_7WqcF9">
+<div class="shopify-section" id="shopify-section-template--20029865754780__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--20029865754780__section_custom_html_7WqcF9{--PT: 0px;
+    --PB: 0px;}</style><section class="section-padding" id="CustomCode--template--20029865754780__section_custom_html_7WqcF9">
 <div class="wrapper">
 <div><element id="product"></element></div>
 </div>
 </section>
-</div><div class="shopify-section shopify-section--product" id="shopify-section-template--20029865754780__main"><style data-shopify="">#ProductTemplate--template--20029865754780__main {
-    --PT: 60px;
-    --PB: 0px;
-  }</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--20029865754780__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--20029865754780__main">
+</div><div class="shopify-section shopify-section--product" id="shopify-section-template--20029865754780__main"><style data-shopify="">#ProductTemplate--template--20029865754780__main{--PT: 60px;
+    --PB: 0px;}</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--20029865754780__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--20029865754780__main">
 <div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--20029865754780__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--20029865754780__main">
 <div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="35164895936668" data-media-id="template--20029865754780__main-35164895936668" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164895936668"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — product photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164895936668" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/jsdfsd-1080w-86f566.jpg'|asset_url }}" srcset="{{ 'sf/img/jsdfsd-753w-d3bdf4.jpg'|asset_url }} 753w, {{ 'sf/img/jsdfsd-1080w-360d26.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/jsdfsd-1080w-360d26.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — product photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164895936668" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/jsdfsd-1080w-86f566.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164896362652" data-media-id="template--20029865754780__main-35164896362652" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164896362652"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — before and after results | Skinofab" class="is-loading img-object-cover" data-image-id="35164896362652" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg'|asset_url }}" srcset="{{ 'sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-753w-p4407ad.jpg'|asset_url }} 753w, {{ 'sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — before and after results | Skinofab" class="is-loading img-object-cover" data-image-id="35164896362652" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164898721948" data-media-id="template--20029865754780__main-35164898721948" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164898721948"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — ingredients and formula | Skinofab" class="is-loading img-object-cover" data-image-id="35164898721948" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-1080w-e3c0ae.png'|asset_url }}" srcset="{{ 'sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-753w-5a7504.png'|asset_url }} 753w, {{ 'sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-1080w-5f03c1.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-1080w-5f03c1.png'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — ingredients and formula | Skinofab" class="is-loading img-object-cover" data-image-id="35164898721948" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-1080w-e3c0ae.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164896297116" data-media-id="template--20029865754780__main-35164896297116" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164896297116"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — how to use | Skinofab" class="is-loading img-object-cover" data-image-id="35164896297116" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-1080w-ab9b2b.jpg'|asset_url }}" srcset="{{ 'sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-753w-542d93.jpg'|asset_url }} 753w, {{ 'sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-1080w-6c67eb.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-1080w-6c67eb.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — how to use | Skinofab" class="is-loading img-object-cover" data-image-id="35164896297116" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-1080w-ab9b2b.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164898656412" data-media-id="template--20029865754780__main-35164898656412" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164898656412"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898656412" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-a049a5.jpg'|asset_url }}" srcset="{{ 'sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-753w-2b19b7.png'|asset_url }} 753w, {{ 'sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-6911c6.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-6911c6.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898656412" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-a049a5.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164898623644" data-media-id="template--20029865754780__main-35164898623644" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164898623644"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898623644" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-1080w-pc1e066.jpg'|asset_url }}" srcset="{{ 'sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-753w-pc1d098.png'|asset_url }} 753w, {{ 'sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-1080w-pc1e066.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-1080w-pc1e066.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898623644" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-1080w-pc1e066.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164896231580" data-media-id="template--20029865754780__main-35164896231580" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164896231580"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164896231580" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg'|asset_url }}" srcset="{{ 'sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-753w-pce883a.png'|asset_url }} 753w, {{ 'sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164896231580" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164898590876" data-media-id="template--20029865754780__main-35164898590876" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164898590876"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898590876" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-98f36c.png'|asset_url }}" srcset="{{ 'sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-753w-afdb2f.png'|asset_url }} 753w, {{ 'sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-620c51.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-620c51.png'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898590876" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-98f36c.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164896198812" data-media-id="template--20029865754780__main-35164896198812" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164896198812"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164896198812" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-b62e95.png'|asset_url }}" srcset="{{ 'sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-753w-5c5104.png'|asset_url }} 753w, {{ 'sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-7b896d.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-7b896d.png'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164896198812" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-b62e95.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37647989145756" data-media-id="template--20029865754780__main-37647989145756" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-37647989145756"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit" class="is-loading img-object-cover" data-image-id="37647989145756" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-0e78b8.jpg'|asset_url }}" srcset="{{ 'sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-753w-ffa922.jpg'|asset_url }} 753w, {{ 'sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-4cbf39.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-4cbf39.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit" class="is-loading img-object-cover" data-image-id="37647989145756" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-0e78b8.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164898525340" data-media-id="template--20029865754780__main-35164898525340" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164898525340"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898525340" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg'|asset_url }}" srcset="{{ 'sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-753w-pf4e3c2.jpg'|asset_url }} 753w, {{ 'sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898525340" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35164898754716" data-media-id="template--20029865754780__main-35164898754716" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865754780__main-35164898754716"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898754716" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-1080w-p2ac401.jpg'|asset_url }}" srcset="{{ 'sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-753w-p32f523.jpg'|asset_url }} 753w, {{ 'sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-1080w-p2ac401.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-1080w-p2ac401.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35164898754716" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-1080w-p2ac401.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 </div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="35164895936668" data-thumbnail-id="template--20029865754780__main-35164895936668"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — product photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/jsdfsd-178w-7eeca6.png'|asset_url }}" srcset="{{ 'sf/img/jsdfsd-1080w-360d26.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/jsdfsd-1080w-360d26.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — product photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/jsdfsd-178w-7eeca6.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164896362652" data-thumbnail-id="template--20029865754780__main-35164896362652"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — before and after results | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-178w-p090a9d.png'|asset_url }}" srcset="{{ 'sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — before and after results | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-178w-p090a9d.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164898721948" data-thumbnail-id="template--20029865754780__main-35164898721948"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — ingredients and formula | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-178w-33ddab.png'|asset_url }}" srcset="{{ 'sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-1080w-5f03c1.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-1080w-5f03c1.png'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — ingredients and formula | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-178w-33ddab.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164896297116" data-thumbnail-id="template--20029865754780__main-35164896297116"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — how to use | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-178w-cea102.png'|asset_url }}" srcset="{{ 'sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-1080w-6c67eb.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-1080w-6c67eb.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — how to use | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/6_a9614489-63aa-46d8-ba19-a12d084c44af-178w-cea102.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164898656412" data-thumbnail-id="template--20029865754780__main-35164898656412"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-178w-f29fbd.png'|asset_url }}" srcset="{{ 'sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-6911c6.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-6911c6.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/6_eb826aa0-fe75-4660-9e70-105cf071d929-178w-f29fbd.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164898623644" data-thumbnail-id="template--20029865754780__main-35164898623644"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-178w-pfae206.png'|asset_url }}" srcset="{{ 'sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-1080w-pc1e066.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-1080w-pc1e066.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/5_d015d81d-27ef-4d9d-b978-4fea642b207e-178w-pfae206.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164896231580" data-thumbnail-id="template--20029865754780__main-35164896231580"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-178w-p189cb2.png'|asset_url }}" srcset="{{ 'sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_6f404360-d45e-4277-8156-b88e7c1e757a-178w-p189cb2.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164898590876" data-thumbnail-id="template--20029865754780__main-35164898590876"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-178w-5b1694.png'|asset_url }}" srcset="{{ 'sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-620c51.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-620c51.png'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-178w-5b1694.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164896198812" data-thumbnail-id="template--20029865754780__main-35164896198812"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-178w-a63603.png'|asset_url }}" srcset="{{ 'sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-7b896d.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-7b896d.png'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-178w-a63603.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37647989145756" data-thumbnail-id="template--20029865754780__main-37647989145756"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-178w-b86f64.png'|asset_url }}" srcset="{{ 'sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-4cbf39.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-4cbf39.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-178w-b86f64.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164898525340" data-thumbnail-id="template--20029865754780__main-35164898525340"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-178w-p1f111c.png'|asset_url }}" srcset="{{ 'sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_e0142610-bc42-4c35-89a5-91caa656dc8d-178w-p1f111c.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35164898754716" data-thumbnail-id="template--20029865754780__main-35164898754716"><a aria-label="Lash &amp; Brow Growth Kit" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-178w-p60c3a8.png'|asset_url }}" srcset="{{ 'sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-1080w-p2ac401.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-1080w-p2ac401.jpg'|asset_url %}<img alt="Lash &amp; Brow Growth Kit — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_78eacf36-6489-4783-8d1c-954a045383fe-178w-p60c3a8.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div></div></div>
 <div class="product-single__details" data-collapsible-single="" id="product_details">
 <div class="form__wrapper" data-product-info="">
@@ -881,11 +593,7 @@
 </a>
 </div>
 </div>
-<style>
-                              .product__block.standard__app .loox-rating.loox-widget {
-                      display: none!important;
-                  }
-                </style>
+<style>.product__block.standard__app .loox-rating.loox-widget{display: none!important;}</style>
 <a href="#looxReviews">
 <div class="loox-rating custom-rating" data-id="8309372289180" data-raters="23,482" data-rating="4.8">
 <span>4.8/5 (23,482 reviews)</span>
@@ -893,16 +601,7 @@
 </a>
 <div class="product__block product__title-and-price" id="product_link">
 <h1 class="product__title">{{ product.get_title }}</h1>
-</div><style>
-                #productpricetemplate--20029865754780__main {
-                  font-size: 21px!important;
-                }
-                @media screen and (max-width: 767px){
-                 #productpricetemplate--20029865754780__main {
-                  font-size: 18px!important;
-                }
-                }
-              </style>
+</div><style>#productpricetemplate--20029865754780__main{font-size: 21px!important;}@media screen and (max-width: 767px){% templatetag opencomment %}productpricetemplate--20029865754780__main{font-size: 18px!important;}}</style>
 <div class="product__block product__price-and-badge" style="--PBB:20px;">
 <div class="product__price-and-rating">
 <div class="product__price" data-price-wrapper="" id="productpricetemplate--20029865754780__main">
@@ -931,7 +630,7 @@
 <div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.95); --bg: ;"><div class="product__icon icon-stroke" style="--icon-size: 26px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
 <figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="52" loading="eager" sizes="26px" src="{{ 'sf/img/icons_skinofab_new_3_ce7c32a8-7fa2-4b11-867a-b27f4f1ebe71-52w-9954df.svg'|asset_url }}" srcset="{{ 'sf/img/icons_skinofab_new_3_ce7c32a8-7fa2-4b11-867a-b27f4f1ebe71-500w-60e1df.svg'|asset_url }} 500w" style="" width="52"/>
 </figure></div></div><div class="product__icon__text"><p><strong>Clinically</strong> tested</p></div></div>
-</div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_59 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_59 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029865754780__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+</div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_52 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_52 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029865754780__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
 <input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
 <div class="shop-pay-terms">
 <shopify-payment-terms shopify-meta='{"type":"product","currency_code":"USD","country_code":"US","variants":[{"id":44630586523804,"price_per_term":"$25","price_per_term_amount":24.5,"full_price":"$49","full_price_amount":49.0,"eligible":true,"available":true,"number_of_payment_terms":2}],"min_price":"$35","min_price_amount":35.0,"max_price":"$30,000","max_price_amount":30000.0,"financing_plans":[{"min_price":"$35","max_price":"$50","terms":[{"apr":0,"loan_type":"split_pay","installments_count":2}],"min_price_amount":35.0,"max_price_amount":49.99},{"min_price":"$50","max_price":"$1,000","terms":[{"apr":0,"loan_type":"split_pay","installments_count":3},{"apr":0,"loan_type":"split_pay","installments_count":4},{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":50.0,"max_price_amount":999.99},{"min_price":"$1,000","max_price":"$30,000","terms":[{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":1000.0,"max_price_amount":30000.0}],"installments_buyer_prequalification_enabled":false,"seller_id":2823039}' variant-id="44630586523804"></shopify-payment-terms>
@@ -974,89 +673,40 @@
 <p id="stockinfop">
 <span class="stock-left">
 <span class="pulsing-dot" style="background-color: #16a34a;">
-<style>
-        #stockinfop {
-          list-style: none !important;
-        }
-        #stockinfop .pulsing-dot::before {
-          background-color: #16a34a!important;
-        }
-        #stockinfop .stock-left > span:not(.pulsing-dot) {
-          color: #16a34a!important;
-        }
-      </style>
+<style>#stockinfop{list-style: none !important;}#stockinfop .pulsing-dot::before{background-color: #16a34a!important;}#stockinfop .stock-left > span:not(.pulsing-dot){color: #16a34a!important;}</style>
 </span>
 <span id="shippingUspText" style="color: #16a34a;">Ready to ship</span>
 </span>
 <span class="location-right" id="locationinfop"></span>
 </p>
 </div>
-<style>
-  #locationinfop,
-  #stockinfop {
-    margin-bottom: 0px;
+<style>#locationinfop,#stockinfop{margin-bottom: 0px;
     text-align: center;
     font-size: 0.975rem;
     font-weight: 500;
     border-radius: 12px;
-    margin-top: 3px;
-  }
-
-  #stockinfop {
-    display: flex;
+    margin-top: 3px;}#stockinfop{display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .stock-left {
-    display: flex;
+    margin-bottom: 10px;}.stock-left{display: flex;
     align-items: center;
-    gap: 8px;
-  }
-
-  .location-right {
-    display: flex;
+    gap: 8px;}.location-right{display: flex;
     align-items: center;
-    gap: 4px;
-  }
-
-  .location-right .shipping-country-flag {
-    width: 20px;
+    gap: 4px;}.location-right .shipping-country-flag{width: 20px;
     height: 15px;
-    flex: 0 0 20px;
-  }
-
-  .pulsing-dot {
-    position: relative;
+    flex: 0 0 20px;}.pulsing-dot{position: relative;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    animation: dot-breathe 2s ease-in-out infinite;
-  }
-
-  /* No ::before halo — the expanding same-color ring read as a second dot.
-     A gentle opacity breathe on the dot itself signals "live" instead. */
-  .pulsing-dot::before {
-    content: none;
-  }
-
-  @keyframes dot-breathe {
+    animation: dot-breathe 2s ease-in-out infinite;}.pulsing-dot::before{content: none;}@keyframes dot-breathe{
     0%, 100% { opacity: 1; }
     50% { opacity: 0.45; }
-  }
-
-@media only screen and (max-width: 767px) {
-  #locationinfop, #stockinfop {
-    text-align: center;
+  }@media only screen and (max-width: 767px){% templatetag opencomment %}locationinfop,#stockinfop{text-align: center;
     font-size: 0.975rem;
     font-weight: 500;
     border-radius: 10px;
     margin-top: 3px;
-    font-size: 14.5px;
-  }
-}
-</style>
+    font-size: 14.5px;}}</style>
 <script>
   // Cached original innerHTML of the shipping/returns accordion body, captured once
   // so the worldwide-shipping paragraphs can be toggled without losing content.
@@ -1066,7 +716,7 @@
     const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
     const validCountryCode = /^[A-Z]{2}$/.test(normalizedCountryCode);
     const flagMarkup = validCountryCode
-      ? `<img class="shipping-country-flag" src="https://cdn.shopify.com/static/images/flags/${normalizedCountryCode.toLowerCase()}.svg?width=32" alt="" aria-hidden="true" width="20" height="15" style="vertical-align: middle;">`
+      ? `<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint(...normalizedCountryCode.split('').map(c => 127397 + c.charCodeAt(0)))}</span>`
       : '<span aria-hidden="true">📦</span>';
     const countryLabel = validCountryCode ? normalizedCountryCode : 'your country';
     const locationInfoP = document.getElementById('locationinfop');
@@ -1207,21 +857,12 @@
     }
   });
 </script>
-<style>
-                  #product__featuretemplate--20029865754780__main {
-                    border-width: 2px!important;
-                    border-color: #000000!important;
-                  }
-                  @media screen and (max-width: 767px){
-                  #product__featuretemplate--20029865754780__main {
-                    border-width: 2px!important;
-                    border-color: #000000!important;
-                  }
-                  }
-                </style>
+<style>#product__featuretemplate--20029865754780__main{border-width: 2px!important;
+                    border-color: #000000!important;}@media screen and (max-width: 767px){% templatetag opencomment %}product__featuretemplate--20029865754780__main{border-width: 2px!important;
+                    border-color: #000000!important;}}</style>
 <div class="product__block product__features" data-slider="" style="--PBB:20px;"><div class="product__feature" data-block-id="feature_KtJVpY" id="product__featuretemplate--20029865754780__main" style="--bg: #f7f7f7;--text: #000000;--heading: #000000;padding: var(--grid-gutter);">
 <div class="product__feature__content"><div class="product__feature__icon__container"><div class="product__icon icon-stroke" style="--icon-size: 50px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
-<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="100" loading="eager" sizes="50px" src="{{ 'sf/img/Color_Changing_Foundation_-_Product_images_photos_2-100w-a12f7c3.png'|asset_url }}" srcset="{{ 'sf/img/Color_Changing_Foundation_-_Product_images_photos_2-810w-ae42f79.png'|asset_url }} 810w" style="" width="100"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/Color_Changing_Foundation_-_Product_images_photos_2-810w-ae42f79.png'|asset_url %}<img class="is-loading product__icon__img img-object-cover" height="100" loading="eager" sizes="50px" src="{{ 'sf/img/Color_Changing_Foundation_-_Product_images_photos_2-100w-a12f7c3.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=50 50w, {{ sf_img }}&amp;width=100 100w, {{ sf_img }}&amp;width=150 150w, {{ sf_img }} 810w" style="" width="100"/>{% endwith %}
 </figure></div></div><div class="product__feature__heading">
 <h5>30-day money-back guarantee</h5>
 </div></div><div class="product__feature__text">
@@ -1305,8 +946,10 @@
 </div>
 <div class="swiper-scrollbar swiper-scrollbar_Ingredients"></div>
 </div>
-<script>
-var swiper7 = new Swiper(".Ingredients", {
+<script>var swiper7;
+document.addEventListener('DOMContentLoaded', function () {
+
+swiper7 = new Swiper(".Ingredients", {
 slidesPerView: 2.5,
 spaceBetween: 20,
 breakpoints: {
@@ -1333,7 +976,8 @@ el: ".swiper-pagination_Ingredients",
 draggable: false,
       },
 });
-</script>
+
+});</script>
 <p><strong>Aqua (Water):<br/></strong>The most common ingredient in cosmetic formulations, used as a solvent.</p><p><strong>Hyaluronate (Hyaluronic Acid):<br/></strong>A hydrating agent that helps retain moisture in skin and hair.</p><p><strong>Pentylene Glycol:<br/></strong>A humectant and solvent that helps to moisturize and improve the texture of formulations.</p><p><strong>Panax Ginseng Extract:<br/></strong>Known for its antioxidant properties, it helps to energize and rejuvenate the skin.</p><p><strong>Swertia Japonica Extract:<br/></strong>Used for its potential hair growth benefits and to strengthen hair.</p><p><strong>Pumpkin Seed Extract:<br/></strong>Contains nutrients beneficial for skin and hair, such as vitamins and fatty acids, which  help in moisturizing and strengthening.</p><p><strong>Acorus Calamus Root Extract:<br/></strong>Traditionally used in herbal medicine, it has soothing properties.</p><p><strong>Panthenol (Provitamin B5):<br/></strong>A moisturizing agent that improves hydration, reduces itching and inflammation, and accelerates wound healing.</p><p><strong>Serenoa Serrulata Fruit Extract (Saw Palmetto):<br/></strong>Supports hair health and reduces hair loss.</p><p><strong>Biotinoyl Tripeptide-1:<br/></strong>Improves hair strength and promotes growth.</p><p><strong>Myristoyl Pentapeptide-17:<br/></strong>A peptide that enhances the appearance of lashes and brows by promoting growth.</p><p><strong>Oligopeptide-10:<br/></strong>Known for its antimicrobial properties, it helps with skin clarity.</p><p><strong>Tocopherol (Vitamin E)<br/></strong>An antioxidant that helps protect skin and hair from damage and supports moisture retention.</p><p><strong>Biotin (Vitamin B7):<br/></strong>Essential for healthy hair and skin, used to support hair strength and growth.</p>
 </div>
 </div>
@@ -1343,7 +987,7 @@ draggable: false,
 <span id="accordionbefore">Shipping and returns</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-shipping-and-returns--template--20029865754780__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a">
 <div class="product__accordion__inner rte" data-collapsible-content="">
-<div data-current-variant-id="44630586523804" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p><strong>We offer FREE Worldwide Shipping!</strong></p><p>Due to the influx of orders from our ongoing <strong>sale</strong>, dispatch may be slightly delayed. Rest assured, all orders will ship within <strong>24–48 hours</strong>. Depending on your location, delivery may take approximately <strong>5–7 business days</strong>.<br/><br/>Although we offer shipping to all countries, a few islands are excluded from our delivery area. If your country is available during checkout, we ship to your country. We also provide standard international tracked shipping at no additional cost on all orders.<br/><br/>Additionally, we offer a premium international insured shipping option at a modest charge of <strong>{% include 'partials/sf_price.html' with p=product %}</strong>, which we highly recommend for prioritized service and faster delivery.<br/><br/><strong>Returns</strong><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="https://08f531-2.myshopify.com/policies/refund-policy" title="Refund Policy">return policy</a> for more information.</p></div>
+<div data-current-variant-id="44630586523804" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p><strong>We offer FREE Worldwide Shipping!</strong></p><p>Due to the influx of orders from our ongoing <strong>sale</strong>, dispatch may be slightly delayed. Rest assured, all orders will ship within <strong>24–48 hours</strong>. Depending on your location, delivery may take approximately <strong>5–7 business days</strong>.<br/><br/>Although we offer shipping to all countries, a few islands are excluded from our delivery area. If your country is available during checkout, we ship to your country. We also provide standard international tracked shipping at no additional cost on all orders.<br/><br/><br/><br/><strong>Returns</strong><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="/refund-policy/" title="Refund Policy">return policy</a> for more information.</p></div>
 </div>
 </div>
 </div></div>
@@ -1361,137 +1005,59 @@ draggable: false,
 </loox-snippets-widget>
 </div>
 </div>
-<style>
-                  .upsellstemplate--20029865754780__main .text h6 {
-                    font-size: 17px!important;
-                  }
-
-                  .upsellstemplate--20029865754780__main  .button {
-                  text-transform: uppercase !important;
+<style>.upsellstemplate--20029865754780__main .text h6{font-size: 17px!important;}.upsellstemplate--20029865754780__main  .button{text-transform: uppercase !important;
                   font-size: 14px !important;
                   padding: 13px 35px !important;
                   box-shadow: #63636333 0 2px 8px;
                   color: #ffffff!important;
                   background: #262626!important;
-                  margin-top: 10px!important;    width: 100%;
-                  }
-                  .upsellstemplate--20029865754780__main   .prices {
-                  font-size: 16px;
+                  margin-top: 10px!important;    width: 100%;}.upsellstemplate--20029865754780__main   .prices{font-size: 16px;
                   margin-top: 10px;
                   margin-bottom: 5px;
                   display: flex;
                   align-items: center;
                   flex-wrap: wrap;
                   gap: 10px;
-                  row-gap: 0px;
-                  }
-                  .upsellstemplate--20029865754780__main  .featured_image {
-                  border-radius: var(--radius);
+                  row-gap: 0px;}.upsellstemplate--20029865754780__main  .featured_image{border-radius: var(--radius);
                   overflow: hidden;
-                  display: flex;
-                  }
-                  .upsellstemplate--20029865754780__main .upsellheader .swiper-button-next {
-                  position: relative;
+                  display: flex;}.upsellstemplate--20029865754780__main .upsellheader .swiper-button-next{position: relative;
                   margin: 0px !important;
                   border-radius: 500px;
                   background: #000000;
                   width: 27px;
                   height: 27px;left: auto;
-                  right: auto;
-                  }
-
-                  .upsellstemplate--20029865754780__main .upsellheader .swiper-button-prev {
-                  position: relative;
+                  right: auto;}.upsellstemplate--20029865754780__main .upsellheader .swiper-button-prev{position: relative;
                   margin: 0px !important;
                   border-radius: 500px;
                   background: #b6b6b6;
                   width: 27px;
                   height: 27px;left: auto;
-                  right: auto;
-                  }
-                  .upsellstemplate--20029865754780__main   .arrows {
-                  display: flex;
-                  gap: 5px;
-                  }
-                  .upsellstemplate--20029865754780__main .upsellheader {
-                  display: flex;
+                  right: auto;}.upsellstemplate--20029865754780__main   .arrows{display: flex;
+                  gap: 5px;}.upsellstemplate--20029865754780__main .upsellheader{display: flex;
                   align-items: center;
                   justify-content: space-between;
                   margin-bottom: 15px;
-                  margin-top: 20px;
-                  }
-                  .upsellstemplate--20029865754780__main .swiper-button-next:after, .upsellstemplate--20029865754780__main .swiper-button-prev:after {
-                  font-size: 10px!important;    color: white;
-                  }
-                  .upsellstemplate--20029865754780__main  .text {
-                  margin-top: 15px;
-                  }
-                  .upsellstemplate--20029865754780__main    .saleprice {
-                  color: #f83a3a!important;
-                  }
-                  .upsellstemplate--20029865754780__main    .compareprice {
-                  text-decoration: line-through;
-                  }
-
-                  .upsellstemplate--20029865754780__main .upsellcontent .btn {
-                  width: 100%;
+                  margin-top: 20px;}.upsellstemplate--20029865754780__main .swiper-button-next:after,.upsellstemplate--20029865754780__main .swiper-button-prev:after{font-size: 10px!important;    color: white;}.upsellstemplate--20029865754780__main  .text{margin-top: 15px;}.upsellstemplate--20029865754780__main    .compareprice{text-decoration: line-through;}.upsellstemplate--20029865754780__main .upsellcontent .btn{width: 100%;
                   padding: 10px;
-                  margin-top: 5px;
-                  }
-                  .upsellstemplate--20029865754780__main .upsellcontent .product__price--compare, .upsellcontent .product__price--regular {
-                  font-size: 14px!important;
-                  }
-
-                  .upsellstemplate--20029865754780__main div[aria-disabled="true"] {
-                  opacity: 0.35!important;
-                  }
-                      .upsellstemplate--20029865754780__main {
-                      padding-bottom: 10px;
-                    }
-                  @media screen and (max-width: 767px) {
-                    .upsellstemplate--20029865754780__main {
-                      padding-bottom: 25px;
-                    }
-                  .upsellstemplate--20029865754780__main .text h6 {
-                  font-size: 14px!important;
-                  }
-                  .upsellstemplate--20029865754780__main .upsellcontent .btn {
-                  width: 100%;
+                  margin-top: 5px;}.upsellstemplate--20029865754780__main .upsellcontent .product__price--compare,.upsellcontent .product__price--regular{font-size: 14px!important;}.upsellstemplate--20029865754780__main div[aria-disabled="true"]{opacity: 0.35!important;}.upsellstemplate--20029865754780__main{padding-bottom: 10px;}@media screen and (max-width: 767px){.upsellstemplate--20029865754780__main{padding-bottom: 25px;}.upsellstemplate--20029865754780__main .text h6{font-size: 14px!important;}.upsellstemplate--20029865754780__main .upsellcontent .btn{width: 100%;
                   padding: 10px;
-                  margin-top: 5px;
-                  }
-                  .upsellstemplate--20029865754780__main .upsellcontent .product__price--compare, .upsellcontent .product__price--regular {
-                  font-size: 13px!important;
-                  }
-
-                  .upsellstemplate--20029865754780__main .button {
-                  text-transform: uppercase !important;
+                  margin-top: 5px;}.upsellstemplate--20029865754780__main .upsellcontent .product__price--compare,.upsellcontent .product__price--regular{font-size: 13px!important;}.upsellstemplate--20029865754780__main .button{text-transform: uppercase !important;
                   font-size: 12px !important;
                   padding: 13px 35px !important;
                   box-shadow: #63636333 0 2px 8px;
                   color: #ffffff!important;
                   background: #262626!important;
-                  margin-top: 10px!important;    width: 100%;
-                  }
-                  .upsellstemplate--20029865754780__main .prices {
-                  font-size: 16px;
+                  margin-top: 10px!important;    width: 100%;}.upsellstemplate--20029865754780__main .prices{font-size: 16px;
                   margin-top: 7px;
                   margin-bottom: 5px;
                   display: flex;
                   align-items: center;
                   flex-wrap: wrap;
                   gap: 10px;
-                  row-gap: 0px;
-                  }
-                  }
-
-                      .UpsellSlider .product__badge__item {
-                    background: #eaeaea!important;
+                  row-gap: 0px;}}.UpsellSlider .product__badge__item{background: #eaeaea!important;
                     color: #000000!important;
                     border: 0px solid!important;
-                          border-color: #b0b0b0!important;
-                  }
-                </style>
+                          border-color: #b0b0b0!important;}</style>
 <div class="upsells upsellstemplate--20029865754780__main">
 <div class="upsellheader">
 <h6>You may also like</h6>
@@ -1518,7 +1084,7 @@ draggable: false,
 <p class="product__price--regular product__price--sale">{% include 'partials/sf_price.html' with p=settings.sf_p_eyebrow_serum %}</p>
 <p class="product__price--compare">{% include 'partials/sf_price.html' with p=settings.sf_p_eyebrow_serum retail=1 %}</p>
 </div>
-<div class="buttons">{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk as sf_atc_61 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_61 %}" class="shopify-product-form" data-product-form="" data-sf-product-form="" enctype="multipart/form-data" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/><input data-sf-next-default="{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk %}" name="id" type="hidden" value="{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk %}"/>
+<div class="buttons">{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk as sf_atc_54 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_54 %}" class="shopify-product-form" data-product-form="" data-sf-product-form="" enctype="multipart/form-data" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/><input data-sf-next-default="{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk %}" name="id" type="hidden" value="{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk %}"/>
 <button class="product-upsell__btn btn" data-add-to-cart="" data-upsell-btn="" id="" name="add" type="submit">
 <span class="product-upsell__btn-hidden" data-upsell-btn-text="">Add to Cart</span>
 <span class="product-upsell__btn-text">Add to Cart</span>
@@ -1548,7 +1114,7 @@ draggable: false,
 <p class="product__price--regular product__price--sale">{% include 'partials/sf_price.html' with p=settings.sf_p_eyelash_serum %}</p>
 <p class="product__price--compare">{% include 'partials/sf_price.html' with p=settings.sf_p_eyelash_serum retail=1 %}</p>
 </div>
-<div class="buttons">{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk as sf_atc_63 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_63 %}" class="shopify-product-form" data-product-form="" data-sf-product-form="" enctype="multipart/form-data" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/><input data-sf-next-default="{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk %}" name="id" type="hidden" value="{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk %}"/>
+<div class="buttons">{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk as sf_atc_56 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_56 %}" class="shopify-product-form" data-product-form="" data-sf-product-form="" enctype="multipart/form-data" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/><input data-sf-next-default="{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk %}" name="id" type="hidden" value="{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk %}"/>
 <button class="product-upsell__btn btn" data-add-to-cart="" data-upsell-btn="" id="" name="add" type="submit">
 <span class="product-upsell__btn-hidden" data-upsell-btn-text="">Add to Cart</span>
 <span class="product-upsell__btn-text">Add to Cart</span>
@@ -1567,8 +1133,10 @@ draggable: false,
 </div>
 </div>
 </div>
-<script>
-                  var swiperUpsellSlider = new Swiper('.UpsellSlider', {
+<script>var swiperUpsellSlider;
+document.addEventListener('DOMContentLoaded', function () {
+
+                  swiperUpsellSlider = new Swiper('.UpsellSlider', {
                     slidesPerView: 2,
                     spaceBetween: 20,
                     speed: 300,
@@ -1587,7 +1155,8 @@ draggable: false,
                       prevEl: '.swiper-button-prevcomplementary_products_rjYTpD',
                     },
                   });
-                </script>
+                
+});</script>
 </div>
 </div><script data-product-json="" id="ProductJson-template--20029865754780__main" type="application/json">
       {"id":8309372289180,"title":"Lash \u0026 Brow Growth Kit","handle":"lash-brow-duo","description":"\u003cp\u003eOne kit. Longer lashes. Fuller brows. Skinofab's Lash \u0026amp; Brow Growth Kit combines our bestselling Eyelash Growth Serum and Eyebrow Growth Serum into a complete treatment duo — clinically inspired to visibly thicken and lengthen with consistent use. See results in as little as 4 weeks. Your transformation starts here.\u003c\/p\u003e","published_at":"2026-01-19T00:08:59-05:00","created_at":"2024-12-03T04:14:13-05:00","vendor":"Skinofab","type":"","tags":[],"price":4900,"price_min":4900,"price_max":4900,"available":true,"price_varies":false,"compare_at_price":7800,"compare_at_price_min":7800,"compare_at_price_max":7800,"compare_at_price_varies":false,"variants":[{"id":44630586523804,"title":"Default Title","option1":"Default Title","option2":null,"option3":null,"sku":"","requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Lash \u0026 Brow Growth Kit","public_title":null,"options":["Default Title"],"price":4900,"weight":0,"compare_at_price":7800,"inventory_management":"shopify","barcode":null,"requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/jsdfsd-800w-eb1645.jpg","..\/assets\/img\/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg","..\/assets\/img\/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-178w-33ddab.png","..\/assets\/img\/6_a9614489-63aa-46d8-ba19-a12d084c44af-753w-542d93.jpg","..\/assets\/img\/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-a049a5.jpg","..\/assets\/img\/5_d015d81d-27ef-4d9d-b978-4fea642b207e-178w-pfae206.png","..\/assets\/img\/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg","..\/assets\/img\/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-620c51.png","..\/assets\/img\/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-7b896d.png","..\/assets\/img\/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-0e78b8.jpg","..\/assets\/img\/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg","..\/assets\/img\/9_78eacf36-6489-4783-8d1c-954a045383fe-814w-pf0737e.jpg"],"featured_image":"..\/assets\/img\/jsdfsd-800w-eb1645.jpg","options":["Title"],"media":[{"alt":"Lash \u0026 Brow Growth Kit — product photo | Skinofab","id":35164895936668,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/jsdfsd-800w-eb1645.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/jsdfsd-800w-eb1645.jpg","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — before and after results | Skinofab","id":35164896362652,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1080w-p4a708f.jpg","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — ingredients and formula | Skinofab","id":35164898721948,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-178w-33ddab.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-178w-33ddab.png","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — how to use | Skinofab","id":35164896297116,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/6_a9614489-63aa-46d8-ba19-a12d084c44af-753w-542d93.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/6_a9614489-63aa-46d8-ba19-a12d084c44af-753w-542d93.jpg","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — lifestyle photo | Skinofab","id":35164898656412,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-a049a5.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/6_eb826aa0-fe75-4660-9e70-105cf071d929-1080w-a049a5.jpg","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — lifestyle photo | Skinofab","id":35164898623644,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/5_d015d81d-27ef-4d9d-b978-4fea642b207e-178w-pfae206.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/5_d015d81d-27ef-4d9d-b978-4fea642b207e-178w-pfae206.png","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — lifestyle photo | Skinofab","id":35164896231580,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/4_6f404360-d45e-4277-8156-b88e7c1e757a-1080w-p9f83d7.jpg","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — lifestyle photo | Skinofab","id":35164898590876,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-620c51.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1080w-620c51.png","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — lifestyle photo | Skinofab","id":35164896198812,"position":9,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-7b896d.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1080w-7b896d.png","width":1080},{"alt":null,"id":37647989145756,"position":10,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-0e78b8.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1080w-0e78b8.jpg","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — lifestyle photo | Skinofab","id":35164898525340,"position":11,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_e0142610-bc42-4c35-89a5-91caa656dc8d-1080w-pf78751.jpg","width":1080},{"alt":"Lash \u0026 Brow Growth Kit — lifestyle photo | Skinofab","id":35164898754716,"position":12,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/9_78eacf36-6489-4783-8d1c-954a045383fe-814w-pf0737e.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/9_78eacf36-6489-4783-8d1c-954a045383fe-814w-pf0737e.jpg","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cp\u003eOne kit. Longer lashes. Fuller brows. Skinofab's Lash \u0026amp; Brow Growth Kit combines our bestselling Eyelash Growth Serum and Eyebrow Growth Serum into a complete treatment duo — clinically inspired to visibly thicken and lengthen with consistent use. See results in as little as 4 weeks. Your transformation starts here.\u003c\/p\u003e"}
@@ -1596,59 +1165,12 @@ draggable: false,
       []
     </script>
 </div></div>
-<style>
-  #frontrow-sticker {
-    position: absolute;
-    z-index: 3;
-    border-radius: 0 !important;
-    max-width: unset !important;
-    left: 0px !important;
-    top: 0 !important;
-  }
-
-  .iframe-modal-frontrow {
-    display: none;
-    position: fixed;
-    z-index: 99999999;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  /* Mobile only — scale down */
-  @media only screen and (max-width: 480px) {
-    #frontrow-sticker {
-      transform: scale(0.70) !important;
-      transform-origin: 0px 0px !important;
-    }
-  }
-
-  .iframe.frontrow { display: none; position: fixed; left: 0; top: 0; z-index: 99999997; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden; }
-</style>
+<style></style>
 </section>
-<style>
-  #sticky_atcs .product__submit__add {
-        width: max-content;
+<style>#sticky_atcs .product__submit__add{width: max-content;
     min-width: max-content;
     flex: none;
-    margin: 0;
-  }
-  .price-wrapper {
-          font-size: 14px;
-    }
-      #sticky_atcs .product__submit__add {
-    font-size: 12px;
-}
-  @media only screen and (max-width: 767px) {
-    #sticky_atcs .product__submit__add {
-    font-size: 10px;
-}
-    .price-wrapper {
-          font-size: 13px;
-    }
-  }
-  </style><div id="sticky_atcs">
+    margin: 0;}.price-wrapper{font-size: 14px;}#sticky_atcs .product__submit__add{font-size: 12px;}@media only screen and (max-width: 767px){% templatetag opencomment %}sticky_atcs .product__submit__add{font-size: 10px;}.price-wrapper{font-size: 13px;}}</style><div id="sticky_atcs">
 <div class="wrapper">
 <div class="wrap">
 <div class="left">
@@ -1686,96 +1208,38 @@ draggable: false,
 </div>
 </div>
 </div>
-<style>
-#sticky_atcs {
-opacity: 0;
+<style>#sticky_atcs{opacity: 0;
 visibility: hidden;
 transform: translateY(100%);
-transition: all 0.3s ease;
-}
-
-  #sticky_atcs.scrolled {
-opacity: 1;
+transition: all 0.3s ease;}#sticky_atcs.scrolled{opacity: 1;
 visibility: visible;
 transform: translateY(0%);
-transition: all 0.3s ease;
-}
-
-
-.sticky-visible {
-opacity: 1;
-visibility: visible;
-transform: translateY(0);
-}
-
-#sticky_atcs {
-width: 100%;
+transition: all 0.3s ease;}#sticky_atcs{width: 100%;
 position: fixed;
 bottom: 0;
 height: auto;
 z-index: 999;
 background: white;
 box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-padding: 10px;
-}
-
-#sticky_atcs .wrap {
-display: flex;
+padding: 10px;}#sticky_atcs .wrap{display: flex;
 align-items: center;
 gap: 25px;
 justify-content: space-between;
-flex-wrap: wrap;
-}
-
-#sticky_atcs h5 {
-margin-bottom: 3px!important;
-font-size: 16px;
-}
-
-#sticky_atcs img {
-width: 60px;
+flex-wrap: wrap;}#sticky_atcs h5{margin-bottom: 3px!important;
+font-size: 16px;}#sticky_atcs img{width: 60px;
 height: 60px;
 border-radius: 7px;
-object-fit: cover;
-}
-
-#sticky_atcs .left {
-display: flex;
+object-fit: cover;}#sticky_atcs .left{display: flex;
 align-items: center;
-gap: 20px;
-}
-
-#sticky_atcs .right {
-flex: 1;
-max-width: 400px;
-}
-
-/* Variant switcher styles */
-.sticky-variant-wrapper {
-display: flex;
+gap: 20px;}#sticky_atcs .right{flex: 1;
+max-width: 400px;}.sticky-variant-wrapper{display: flex;
 align-items: center;
-gap: 15px;
-}
-
-.sticky-option {
-display: flex;
+gap: 15px;}.sticky-option{display: flex;
 align-items: center;
-gap: 10px;
-}
-
-.sticky-option__label {
-font-size: 14px;
+gap: 10px;}.sticky-option__label{font-size: 14px;
 font-weight: 500;
-margin: 0;
-}
-
-.sticky-option__values {
-display: flex;
-gap: 5px;
-}
-
-.sticky-swatch {
-min-width: 35px;
+margin: 0;}.sticky-option__values{display: flex;
+gap: 5px;}.sticky-swatch{min-width: 35px;
 height: 35px;
 padding: 0 10px;
 border: 2px solid #ddd;
@@ -1786,113 +1250,27 @@ display: flex;
 align-items: center;
 justify-content: center;
 font-size: 13px;
-transition: all 0.2s ease;
-}
-
-.sticky-swatch:hover:not(:disabled) {
-border-color: #000;
-}
-
-.sticky-swatch.is-active {
-border-color: #000;
+transition: all 0.2s ease;}.sticky-swatch:hover:not(:disabled){border-color: #000;}.sticky-swatch.is-active{border-color: #000;
 background: #000;
-color: white;
-}
-
-.sticky-swatch.is-sold-out {
-opacity: 0.5;
+color: white;}.sticky-swatch.is-sold-out{opacity: 0.5;
 cursor: not-allowed;
-text-decoration: line-through;
-}
-
-.btn--submit {
-min-height: 35px;
+text-decoration: line-through;}.btn--submit{min-height: 35px;
 margin: 0;
-flex: 1;
-}
-
-@media only screen and (max-width: 767px) {
-#sticky_atcs {
-padding: 10px;
-}
-
-#sticky_atcs .wrap {
-gap: 10px;
-}
-
-#sticky_atcs h5 {
-font-size: 14px;
-}
-
-#sticky_atcs img {
-}
-
-#sticky_atcs .right {
-width: 100%;
-max-width: none;
-}
-
-.sticky-variant-wrapper {
-flex-wrap: wrap;
-gap: 10px;
-}
-
-.sticky-option {
-width: 100%;
-}
-
-.sticky-swatch {
-min-width: 30px;
+flex: 1;}@media only screen and (max-width: 767px){% templatetag opencomment %}sticky_atcs{padding: 10px;}#sticky_atcs .wrap{gap: 10px;}#sticky_atcs h5{font-size: 14px;}#sticky_atcs img{}#sticky_atcs .right{width: 100%;
+max-width: none;}.sticky-variant-wrapper{flex-wrap: wrap;
+gap: 10px;}.sticky-option{width: 100%;}.sticky-swatch{min-width: 30px;
 height: 30px;
-font-size: 12px;
-}
-
-.btn--submit {
-width: 100%;
-margin-top: 5px;
-}
-}
-</style>
-<style> #shopify-section-template--20029865754780__main .product__form__wrapper {--PBB: 8px !important;} #shopify-section-template--20029865754780__main #locationinfop {margin-top: 0;} </style></div><div class="shopify-section" id="shopify-section-template--20029865754780__kopstorm_testomonials_pr6E3A"><link href="{{ 'sf/css/all-min-ef4087.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/>
-<style>
-
- #testimonials .swiper-scrollbar.swiper-scrollbar-horizontal {
-    height: 4px !important;
-}
-
-
-  #testimonials .swiper-pagination-bullet {
-    width: 30px!important;
-    border-radius: 5px!important;
-}
-    
-  
-  #testimonials .fa-star:before {
-    color: #000000!important;
-}
-.imagewrap {
-  width: 100%;
+font-size: 12px;}.btn--submit{width: 100%;
+margin-top: 5px;}}</style>
+<style>#shopify-section-template--20029865754780__main .product__form__wrapper{--PBB: 8px !important;}#shopify-section-template--20029865754780__main #locationinfop{margin-top: 0;}</style></div><div class="shopify-section" id="shopify-section-template--20029865754780__kopstorm_testomonials_pr6E3A"><link href="{{ 'sf/css/all-min-ef4087.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/>
+<style>#testimonials .swiper-scrollbar.swiper-scrollbar-horizontal{height: 4px !important;}#testimonials .swiper-pagination-bullet{width: 30px!important;
+    border-radius: 5px!important;}.imagewrap{width: 100%;
     display: flex;
     flex-direction: column;
     gap: 4px;
-  margin-bottom: 5px;
-}
-.reviewcard {
-    border-radius: var(--radius);
+  margin-bottom: 5px;}.reviewcard{border-radius: var(--radius);
     width: 100%;
-    object-fit: cover;
-}
-#testimonials strong {
-font-weight: 600;
-}
-#testimonials .fa-star {
-font-size: 13px;
-}
-#testimonials p {
-margin: 0px;
-}
-#testimonials .swiper-button-prev {
-left: 0px !important;
+    object-fit: cover;}#testimonials strong{font-weight: 600;}#testimonials p{margin: 0px;}#testimonials .swiper-button-prev{left: 0px !important;
 background: #b0b0b0!important;
 color: #ffffff!important;
     border-radius: 500px;
@@ -1902,14 +1280,7 @@ color: #ffffff!important;
     align-items: center;
     box-shadow: rgb(0 0 0 / 8%) 0px 1px 4px;
     margin: 0;
-    position: absolute;    top: var(--swiper-navigation-top-offset, 43%);
-}
-#testimonials .Testimonials {
-max-width: 100%;
-
-}
-#testimonials   .swiper-button-next {
-right: 0px !important;
+    position: absolute;    top: var(--swiper-navigation-top-offset, 43%);}#testimonials .Testimonials{max-width: 100%;}#testimonials   .swiper-button-next{right: 0px !important;
 background: #b0b0b0!important;
 color: #ffffff!important;
     border-radius: 500px;
@@ -1919,30 +1290,11 @@ color: #ffffff!important;
     align-items: center;
     box-shadow: rgb(0 0 0 / 8%) 0px 1px 4px;
     margin: 0;
-    position: absolute;    top: var(--swiper-navigation-top-offset, 43%);
-  
-}
-#testimonials {
-padding-top: 50px;
+    position: absolute;    top: var(--swiper-navigation-top-offset, 43%);}#testimonials{padding-top: 50px;
 padding-bottom: 30px;
-  background-color: #ffffff!important;
-}
-#testimonials   .swiper-scrollbar {
-
-}
-#testimonials   .swiper-button-next:after {
-font-size: 16px;
-    font-weight: bold;
-}
-
-#testimonials  .swiper-button-prev:after {
-font-size: 16px;
-    font-weight: bold;
-}
-
-#testimonials   #reviewcard {
-
-padding: 20px;
+  background-color: #ffffff!important;}#testimonials   .swiper-scrollbar{}#testimonials   .swiper-button-next:after{font-size: 16px;
+    font-weight: bold;}#testimonials  .swiper-button-prev:after{font-size: 16px;
+    font-weight: bold;}#testimonials   #reviewcard{padding: 20px;
 background: #f7f7f7!important;
 
 display: flex;
@@ -1951,200 +1303,40 @@ flex-direction: column;
     gap: 10px;
     text-align: left;
   border-radius: var(--radius);
-      box-shadow: rgb(0 0 0 / 4%) 0px 1px 10px 0px;
-}
-
-#testimonials   #stars {
-display: flex;
+      box-shadow: rgb(0 0 0 / 4%) 0px 1px 10px 0px;}#testimonials   #stars{display: flex;
 align-items: center;
 gap: 1px;
-margin-bottom: 4px;
-}
-
-#testimonials h1 {
-}
-
-#testimonials  .swiper-scrollbar-drag {
-background: rgb(204 148 155)!important;
-}
-
-#testimonials h1 {
-margin: 0px;
-}
-
-#testimonials h2 {
-margin: 0px;
-}
-
-#testimonials h3 {
-margin: 0px;
-}
-
-#testimonials h4 {
-margin: 0px;
-}
-  
-
-#testimonials .Testimonials {
-margin-top: 0px;
-}
-
-
-#testimonials #mainwrapper {
-position: relative;
-}
-
-#testimonials   .wrap {
-display: flex;
+margin-bottom: 4px;}#testimonials h1{}#testimonials  .swiper-scrollbar-drag{background: rgb(204 148 155)!important;}#testimonials h1{margin: 0px;}#testimonials h2{margin: 0px;}#testimonials h3{margin: 0px;}#testimonials h4{margin: 0px;}#testimonials .Testimonials{margin-top: 0px;}#testimonials #mainwrapper{position: relative;}#testimonials   .wrap{display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
 gap: 5px;
-text-align: center;
-}
-
-#testimonials   .swiper-slide {
-position: relative;
-}
-
-#testimonials   #reviewcard .image {
-display: flex;
+text-align: center;}#testimonials   .swiper-slide{position: relative;}#testimonials   #reviewcard .image{display: flex;
 align-items: center;
-gap: 10px;
-}
-
-#testimonials   .fa-star:before {
-content: "\f005";
-color: #000000;
-}
-  
-#testimonials   #name p {
-font-size: 14px;
-}
-  
-#testimonials    #name span {
-font-size: 14px;
-}
-  
-#testimonials   .image img {
-border-radius: 500px;
+gap: 10px;}#testimonials   #name p{font-size: 14px;}#testimonials    #name span{font-size: 14px;}#testimonials   .image img{border-radius: 500px;
 width: 32px;
 height: 32px;
-object-fit: cover;
-}
-
-    .test_header h5 {
-    font-size: 17px!important;
-  }
-
-     #testimonials p {
-    font-size: 16px!important;
-  }
-
-  .reviewcard {
-    height: 100px!important;
-}
-
-@media screen and (max-width:767px){
-  .reviewcard {
-    height: 100px!important;
-}
-
-      .test_header h5 {
-    font-size: 17px!important;
-  }
-      #testimonials p {
-    font-size: 15px!important;
-  }
-
-  
-  #testimonials .wrapper {
-
-  }
-.test_stars img {
-    width: 13px!important;
-}
-#testimonials {
-padding-top: 50px;
-padding-bottom: 30px;
-}
-#testimonials #mainwrapper {
-    position: relative;
+object-fit: cover;}.test_header h5{font-size: 17px!important;}#testimonials p{font-size: 16px!important;}.reviewcard{height: 100px!important;}@media screen and (max-width:767px){.reviewcard{height: 100px!important;}.test_header h5{font-size: 17px!important;}#testimonials p{font-size: 15px!important;}#testimonials .wrapper{}.test_stars img{width: 13px!important;}#testimonials{padding-top: 50px;
+padding-bottom: 30px;}#testimonials #mainwrapper{position: relative;
        margin-right: -20px;
-    margin-left: -20px;
-}
-
-    #testimonials .Testimonials {
-        max-width: 100%;
+    margin-left: -20px;}#testimonials .Testimonials{max-width: 100%;
         margin-top: 0px;
         padding-right: 20px;
-        padding-left: 20px;
-    }
-  
-
-#testimonials .Testimonials {
-        max-width: 100%;
-        margin-top: 0px;
- 
-}
- 
-
-#testimonials    .swiper-button-next:after {
-color: white !important;
-}
-
-#testimonials   .swiper-button-prev:after {
-color: white !important;
-}
-  .swiper-pagination_Testimonials {
-    position: relative;
+        padding-left: 20px;}#testimonials .Testimonials{max-width: 100%;
+        margin-top: 0px;}#testimonials    .swiper-button-next:after{color: white !important;}#testimonials   .swiper-button-prev:after{color: white !important;}.swiper-pagination_Testimonials{position: relative;
     margin-top: 22px;
-    margin-bottom: -15px;
-  }
-}
-    .swiper-pagination_Testimonials {
-    position: relative;
+    margin-bottom: -15px;}}.swiper-pagination_Testimonials{position: relative;
     margin-top: 22px;
-    margin-bottom: -15px;
-  }
-.test_stars img {
-  width: 15px;
-}
-
-  div[aria-disabled="true"] {
-        opacity: .35;
+    margin-bottom: -15px;}.test_stars img{width: 15px;}div[aria-disabled="true"]{opacity: .35;
     cursor: auto;
-    pointer-events: none;
-  }
-  .test_stars {
-    display: flex;
+    pointer-events: none;}.test_stars{display: flex;
     align-items: center;
     gap: 3px;
-    padding: 3px 6px;
-  }
-  .test_header {
-        width: 100%;
+    padding: 3px 6px;}.test_header{width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-  }
-  .test_header h5 {
-    margin: 0px!important;
-  }
-
-#testimonials  svg {
-        width: 13px;
-    height: auto;
-  }
-
-#testimonials  svg  path {
-    fill: #000000;
-  }
-
-  .read-toggle {
-    color: #000000!important;
-  }
-</style>
+    justify-content: space-between;}.test_header h5{margin: 0px!important;}#testimonials  svg{width: 13px;
+    height: auto;}#testimonials  svg  path{fill: #000000;}.read-toggle{color: #000000!important;}</style>
 <section class="section" id="testimonials">
 <div class="wrapper">
 <div id="mainwrapper">
@@ -2239,20 +1431,15 @@ color: white !important;
 <script data-skinofab-slider-config="" type="application/json">{"selector": ".Testimonials", "next": ".swiper-button-next_Testimonials", "prev": ".swiper-button-prev_Testimonials", "scrollbar": ".swiper-scrollbar_Testimonials", "options": {"slidesPerView": 4, "spaceBetween": 20, "breakpoints": {"1": {"slidesPerView": 1.3, "spaceBetween": 13}, "767": {"slidesPerView": 2.5}, "1000": {"slidesPerView": 4}}}}</script>
 <script defer="" src="{{ 'sf/js/skinofab-section-sliders-7fe587.js'|asset_url }}"></script>
 </div><div class="shopify-section supports-transparent-header" id="shopify-section-template--20029865754780__section_image_with_text_xdx7DM">
-<style data-shopify="">#ImageWithText--template--20029865754780__section_image_with_text_xdx7DM {
-    --PT: 20px;
+<style data-shopify="">#ImageWithText--template--20029865754780__section_image_with_text_xdx7DM{--PT: 20px;
     --PB: 20px;
---highlight-color: #eaeaea;--highlight-text-color: #000000;}
-
-  #ImageWithText--template--20029865754780__section_image_with_text_xdx7DM .image-with-text__heading {
-    --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 1.3);
-  }</style>
+--highlight-color: #eaeaea;--highlight-text-color: #000000;}#ImageWithText--template--20029865754780__section_image_with_text_xdx7DM .image-with-text__heading{--adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 1.3);}</style>
 <section class="contain_iwttemplate--20029865754780__section_image_with_text_xdx7DM section-padding image-with-text six-fifty-height image-with-text--image-fifty text-dark" data-prevent-transparent-header="" data-section-id="template--20029865754780__section_image_with_text_xdx7DM" data-section-type="image-with-text" id="ImageWithText--template--20029865754780__section_image_with_text_xdx7DM">
 <div class="image-with-text__wrapper">
 <div class="wrapper"><a class="image-with-text__link" href="#product"></a><div class="image-with-text__items image-with-text__items--inline-left hover-scale">
 <div class="image-with-text__image">
 <figure class="lazy-image background-size-cover is-loading image-with-text__image-bg" style="">
-<img alt="1_6b8653c6-3778-4e94-b8c2-0507d416a4f6.jpg" class="is-loading" height="1080" loading="lazy" sizes="(min-width: 1024px) calc((1440px - 120px) * 0.5), (min-width: 768px) calc((100vw - 40px) * 0.5), calc(100vw - 40px)" src="{{ 'sf/img/1_6b8653c6-3778-4e94-b8c2-0507d416a4f6-1080w-p266b3e.jpg'|asset_url }}" srcset="{{ 'sf/img/1_6b8653c6-3778-4e94-b8c2-0507d416a4f6-814w-pc1945f.jpg'|asset_url }} 814w, {{ 'sf/img/1_6b8653c6-3778-4e94-b8c2-0507d416a4f6-1080w-p266b3e.jpg'|asset_url }} 1080w, {{ 'sf/img/1_6b8653c6-3778-4e94-b8c2-0507d416a4f6-1080w-p266b3e.jpg'|asset_url }} 1080w" width="1080"/>
+{% with sf_img='sf/img/1_6b8653c6-3778-4e94-b8c2-0507d416a4f6-1080w-p266b3e.jpg'|asset_url %}<img alt="1_6b8653c6-3778-4e94-b8c2-0507d416a4f6.jpg" class="is-loading" height="1080" loading="lazy" sizes="(min-width: 1024px) calc((1440px - 120px) * 0.5), (min-width: 768px) calc((100vw - 40px) * 0.5), calc(100vw - 40px)" src="{{ 'sf/img/1_6b8653c6-3778-4e94-b8c2-0507d416a4f6-1080w-p266b3e.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="1080"/>{% endwith %}
 </figure></div><div class="image-with-text__content text-left">
 <div class="image-with-text__content-items"><h3 class="image-with-text__heading h2 text-highlight-wrapper text-highlight-wrapper--highlight">
 <span class="text-highlight__break">Fuller, longer, healthier, <span class="text-highlight" style="--icon-url: none;--icon-color: #eaeaea;">brows &amp; lashes</span></span></h3><div class="image-with-text__text"><p>Achieve the longer, fuller and thicker lashes and brows you've always desired with our revolutionary Eyebrow and Eyelash Growth Kit. Our serum is expertly formulated to promote growth and strengthen each hair, and the skin around it, giving you bold and beautiful brows.</p></div>
@@ -2329,8 +1516,10 @@ color: white !important;
 </div>
 </div>
 </section>
-<script>
-var swiper = new Swiper(".id2Swiper", {
+<script>var swiper;
+document.addEventListener('DOMContentLoaded', function () {
+
+swiper = new Swiper(".id2Swiper", {
 slidesPerView: 3,
 centeredSlides: true,
 spaceBetween: 20,
@@ -2362,317 +1551,99 @@ el: ".swiper-pagination3",
 clickable: true,
 },
 });
-</script>
-<style>
-#id2 .swiper-pagination-bullet-active {
-background: black;
-}
-.id2Swiper {
-overflow: visible;
-}
 
-#id2 .swiper-pagination3 {
-display: none;
-}
-
-#id2 {
-overflow: hidden;
+});</script>
+<style>#id2 .swiper-pagination-bullet-active{background: black;}.id2Swiper{overflow: visible;}#id2 .swiper-pagination3{display: none;}#id2{overflow: hidden;
 position: relative;  
 padding-top: 0px;
-padding-bottom: 50px;
-}
-
-.id2desktop {
-display: block;
-}
-
-.id2mobile {
-display: none;
-}
-
-
-
-@media screen and (max-width: 767px) {
-#id2 {
-padding-top: 0px;
-padding-bottom: 40px;
-}
-#id2 .swiper-button-prev:after {
-font-size: 16px!important;
-color: black;
-}
-#id2 .swiper-button-next:after {
-font-size: 16px!important;
-color: black;
-}
-.swiper-pagination3 {
-margin-top: 35px;
-position: relative;
-}
-.swiper-pagination3 {
-display: block!important;
-}
-.id2desktop {
-display: none;
-}
-
-.id2mobile {
-display: block;
-}
-
-.swiper-button-next3 {
-width: 30px;
+padding-bottom: 50px;}.id2desktop{display: block;}.id2mobile{display: none;}@media screen and (max-width: 767px){% templatetag opencomment %}id2{padding-top: 0px;
+padding-bottom: 40px;}#id2 .swiper-button-prev:after{font-size: 16px!important;
+color: black;}#id2 .swiper-button-next:after{font-size: 16px!important;
+color: black;}.swiper-pagination3{margin-top: 35px;
+position: relative;}.swiper-pagination3{display: block!important;}.id2desktop{display: none;}.id2mobile{display: block;}.swiper-button-next3{width: 30px;
 height: 30px;
     background: #fff;
     border-radius: 500px;
     padding: 17px;
     right: 0px;
-    border: 1px solid #e7e9ec;
-}
-.swiper-button-prev3 {
-width: 30px;
+    border: 1px solid #e7e9ec;}.swiper-button-prev3{width: 30px;
 height: 30px;
     background: #fff;
     border-radius: 500px;
     padding: 17px;
-left: 0px;    border: 1px solid #e7e9ec;
-}
-}
-  #id2 p:empty {
-    display: none!important;
-  }
-  #id2 p::empty {
-    display: none!important;
-  }
-  
-  #id2 p {
-  margin-bottom: 0px!important;
-}
-  
-#id2 .grid-cell {
-  background: #f7f7f7!important;
+left: 0px;    border: 1px solid #e7e9ec;}}#id2 p:empty{display: none!important;}#id2 p::empty{display: none!important;}#id2 p{margin-bottom: 0px!important;}#id2 .grid-cell{background: #f7f7f7!important;
   box-shadow: none!important;
   transition: all 0.15s ease-out;
   padding: 30px;
-  border-radius: var(--radius);
-  
-}
-
-#id2 .grid-cell:hover {
-      transition: all 0.15s ease-out;
+  border-radius: var(--radius);}#id2 .grid-cell:hover{transition: all 0.15s ease-out;
     background: white !important;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 1px 50px 0px !important;
-    transform: scale(1.03);
-}
-  
-#id2 h3 {
-}
-
-#percentage1 {
-  font-size: 100px!important;
-  color: #000000!important;
-}
-@media screen and (max-width: 767px) {
-#percentage1 {
-  font-size: 70px!important;
-}
-#id2 .grid-cell {
-  background: #f7f7f7!important;
-  box-shadow: none!important;
-}
-#id2 h3 {
-
-} 
-  #id2 .content {
-    margin-top: 20px;
-  }
-}
-</style>
-<style> #shopify-section-template--20029865754780__kopstorm_results_nntHGp {max-width: 1300px; margin-left: auto; margin-right: auto;} </style></div><div class="shopify-section index-section" id="shopify-section-template--20029865754780__section_columns_Ffcfxf"><style data-shopify="">#SectionColumns--template--20029865754780__section_columns_Ffcfxf {
-    --PT: 0px;
+    transform: scale(1.03);}#id2 h3{}#percentage1{font-size: 100px!important;
+  color: #000000!important;}@media screen and (max-width: 767px){% templatetag opencomment %}percentage1{font-size: 70px!important;}#id2 .grid-cell{background: #f7f7f7!important;
+  box-shadow: none!important;}#id2 h3{}#id2 .content{margin-top: 20px;}}</style>
+<style>#shopify-section-template--20029865754780__kopstorm_results_nntHGp{max-width: 1300px; margin-left: auto; margin-right: auto;}</style></div><div class="shopify-section index-section" id="shopify-section-template--20029865754780__section_columns_Ffcfxf"><style data-shopify="">#SectionColumns--template--20029865754780__section_columns_Ffcfxf{--PT: 0px;
     --PB: 60px;
-    --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 1.2);--border: #000000;
-  }
-  #SectionColumns--template--20029865754780__section_columns_Ffcfxf .column-item__text p { --adjust-body: calc(var(--FONT-ADJUST-BODY) * 1.0); }</style><div class="section-padding section-columns text-left" data-section-id="template--20029865754780__section_columns_Ffcfxf" data-section-type="columns-with-image" id="SectionColumns--template--20029865754780__section_columns_Ffcfxf">
+    --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 1.2);--border: #000000;}#SectionColumns--template--20029865754780__section_columns_Ffcfxf .column-item__text p{--adjust-body: calc(var(--FONT-ADJUST-BODY) * 1.0);}</style><div class="section-padding section-columns text-left" data-section-id="template--20029865754780__section_columns_Ffcfxf" data-section-type="columns-with-image" id="SectionColumns--template--20029865754780__section_columns_Ffcfxf">
 <div class="wrapper"><div class="section-columns__wrapper carousel__container"><div class="section-columns__slider carousel carousel--mobile" data-slider="">
-<div class="carousel__item column-item one-third mobile--one-whole column-item--image" data-slider-item=""><style data-shopify="">#columnItemImage--text_block_ARnUnd {
-                  --aspect-ratio: 80.0%;
-                }
-
-                
-                  @media screen and (max-width: 767px) {
-                    #columnItemImage--text_block_ARnUnd {
-                      --aspect-ratio: 80.0%;
-                    }
-                  }
-                
-</style><div class="column-item__inner"><div class="column-item__image-wrapper" data-media-container="" id="columnItemImage--text_block_ARnUnd">
+<div class="carousel__item column-item one-third mobile--one-whole column-item--image" data-slider-item=""><style data-shopify="">#columnItemImage--text_block_ARnUnd{--aspect-ratio: 80.0%;}@media screen and (max-width: 767px){% templatetag opencomment %}columnItemImage--text_block_ARnUnd{--aspect-ratio: 80.0%;}}</style><div class="column-item__inner"><div class="column-item__image-wrapper" data-media-container="" id="columnItemImage--text_block_ARnUnd">
 <figure class="lazy-image background-size-cover is-loading column-item__image" style="">
-<img alt="Biotin (Vitamin B7)" class="is-loading" height="813" loading="lazy" sizes="(min-width: 1024px) calc(((1440px - 120px) - 40px) / 3), (min-width: 768px) calc(((100vw - 2 * 20px) * 0.9 - 20px) / 2), calc((100vw - 2 * 20px) - 20px)" src="{{ 'sf/img/panax-813w-321c6e.jpg'|asset_url }}" srcset="{{ 'sf/img/panax-813w-a5aec6.jpg'|asset_url }} 813w" width="813"/>
+{% with sf_img='sf/img/panax-813w-a5aec6.jpg'|asset_url %}<img alt="Biotin (Vitamin B7)" class="is-loading" height="813" loading="lazy" sizes="(min-width: 1024px) calc(((1440px - 120px) - 40px) / 3), (min-width: 768px) calc(((100vw - 2 * 20px) * 0.9 - 20px) / 2), calc((100vw - 2 * 20px) - 20px)" src="{{ 'sf/img/panax-813w-321c6e.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 813w" width="813"/>{% endwith %}
 </figure></div><div class="column-item__content"><h3 class="column-item__heading h6">Biotin (Vitamin B7)</h3><div class="column-item__text"><p>Boosts strength and vitality for resilient hair and radiant skin</p></div></div>
 </div>
-</div><div class="carousel__item column-item one-third mobile--one-whole column-item--image" data-slider-item=""><style data-shopify="">#columnItemImage--text_block_LULL9W {
-                  --aspect-ratio: 80.0%;
-                }
-
-                
-                  @media screen and (max-width: 767px) {
-                    #columnItemImage--text_block_LULL9W {
-                      --aspect-ratio: 80.0%;
-                    }
-                  }
-                
-</style><div class="column-item__inner"><div class="column-item__image-wrapper" data-media-container="" id="columnItemImage--text_block_LULL9W">
+</div><div class="carousel__item column-item one-third mobile--one-whole column-item--image" data-slider-item=""><style data-shopify="">#columnItemImage--text_block_LULL9W{--aspect-ratio: 80.0%;}@media screen and (max-width: 767px){% templatetag opencomment %}columnItemImage--text_block_LULL9W{--aspect-ratio: 80.0%;}}</style><div class="column-item__inner"><div class="column-item__image-wrapper" data-media-container="" id="columnItemImage--text_block_LULL9W">
 <figure class="lazy-image background-size-cover is-loading column-item__image" style="">
-<img alt="Vitamin E" class="is-loading" height="1000" loading="lazy" sizes="(min-width: 1024px) calc(((1440px - 120px) - 40px) / 3), (min-width: 768px) calc(((100vw - 2 * 20px) * 0.9 - 20px) / 2), calc((100vw - 2 * 20px) - 20px)" src="{{ 'sf/img/vitamin-e_acid-1000w-972f08.jpg'|asset_url }}" srcset="{{ 'sf/img/vitamin-e_acid-814w-57a7e9.jpg'|asset_url }} 814w, {{ 'sf/img/vitamin-e_acid-1000w-07ea23.jpg'|asset_url }} 1000w" width="1000"/>
+{% with sf_img='sf/img/vitamin-e_acid-1000w-07ea23.jpg'|asset_url %}<img alt="Vitamin E" class="is-loading" height="1000" loading="lazy" sizes="(min-width: 1024px) calc(((1440px - 120px) - 40px) / 3), (min-width: 768px) calc(((100vw - 2 * 20px) * 0.9 - 20px) / 2), calc((100vw - 2 * 20px) - 20px)" src="{{ 'sf/img/vitamin-e_acid-1000w-972f08.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1000w" width="1000"/>{% endwith %}
 </figure></div><div class="column-item__content"><h3 class="column-item__heading h6">Vitamin E</h3><div class="column-item__text"><p>An antioxidant that helps protect skin and hair from damage and supports moisture retention.</p></div></div>
 </div>
-</div><div class="carousel__item column-item one-third mobile--one-whole column-item--image" data-slider-item=""><style data-shopify="">#columnItemImage--text_block_RnnkGj {
-                  --aspect-ratio: 80.0%;
-                }
-
-                
-                  @media screen and (max-width: 767px) {
-                    #columnItemImage--text_block_RnnkGj {
-                      --aspect-ratio: 80.0%;
-                    }
-                  }
-                
-</style><div class="column-item__inner"><div class="column-item__image-wrapper" data-media-container="" id="columnItemImage--text_block_RnnkGj">
+</div><div class="carousel__item column-item one-third mobile--one-whole column-item--image" data-slider-item=""><style data-shopify="">#columnItemImage--text_block_RnnkGj{--aspect-ratio: 80.0%;}@media screen and (max-width: 767px){% templatetag opencomment %}columnItemImage--text_block_RnnkGj{--aspect-ratio: 80.0%;}}</style><div class="column-item__inner"><div class="column-item__image-wrapper" data-media-container="" id="columnItemImage--text_block_RnnkGj">
 <figure class="lazy-image background-size-cover is-loading column-item__image" style="">
-<img alt="Hyaluronic Acid" class="is-loading" height="813" loading="lazy" sizes="(min-width: 1024px) calc(((1440px - 120px) - 40px) / 3), (min-width: 768px) calc(((100vw - 2 * 20px) * 0.9 - 20px) / 2), calc((100vw - 2 * 20px) - 20px)" src="{{ 'sf/img/squalane_8195037e-970f-4ce7-b9bf-36bbdf408ca5-813w-1dc722.jpg'|asset_url }}" srcset="{{ 'sf/img/squalane_8195037e-970f-4ce7-b9bf-36bbdf408ca5-813w-fca850.jpg'|asset_url }} 813w" width="813"/>
+{% with sf_img='sf/img/squalane_8195037e-970f-4ce7-b9bf-36bbdf408ca5-813w-fca850.jpg'|asset_url %}<img alt="Hyaluronic Acid" class="is-loading" height="813" loading="lazy" sizes="(min-width: 1024px) calc(((1440px - 120px) - 40px) / 3), (min-width: 768px) calc(((100vw - 2 * 20px) * 0.9 - 20px) / 2), calc((100vw - 2 * 20px) - 20px)" src="{{ 'sf/img/squalane_8195037e-970f-4ce7-b9bf-36bbdf408ca5-813w-1dc722.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 813w" width="813"/>{% endwith %}
 </figure></div><div class="column-item__content"><h3 class="column-item__heading h6">Hyaluronic Acid</h3><div class="column-item__text"><p>Deeply hydrates and revitalizes skin and hair with long-lasting moisture</p></div></div>
 </div>
 </div></div>
 </div>
 </div>
 </div>
-</div><div class="shopify-section" id="shopify-section-template--20029865754780__kopstorm_compare_Ci3zdf"><section class="shopify-section" id="shopify-section-template--18710562242803__skinofab_compare"><style>
-.skinofab_compare img{
-width: 20px;
-height: 20px;
-}
-
-.skinofab_compare .row2 img {
-  max-height: 11px;
+</div><div class="shopify-section" id="shopify-section-template--20029865754780__kopstorm_compare_Ci3zdf"><section class="shopify-section" id="shopify-section-template--18710562242803__skinofab_compare"><style>.skinofab_compare img{width: 20px;
+height: 20px;}.skinofab_compare .row2 img{max-height: 11px;
   width: auto;
-  max-width: 100%;
-}
-
-.skinofab_compare{
-padding: 45px 0;
+  max-width: 100%;}.skinofab_compare{padding: 45px 0;
 display: flex;
 flex-direction: column;
 align-items: center;
-background: #f7f7f7;
-
-}
-
-.skinofab_compare h3{
-margin-bottom: 0;
-margin-top: 0;
-}
-
-.skinofab_compare .column{
-display: flex;
+background: #f7f7f7;}.skinofab_compare h3{margin-bottom: 0;
+margin-top: 0;}.skinofab_compare .column{display: flex;
 flex-direction: column;
 padding: 0px;
 width: 100%;
-margin-top: 25px;
-}
-
-.skinofab_compare .row {
-display: grid;
+margin-top: 25px;}.skinofab_compare .row{display: grid;
 margin: 0;
 justify-content: center;
 grid-template-rows: auto;
 grid-template-columns: 1fr 1fr 1fr 1fr;
-gap: 10px;
-}
-
-.skinofab_compare .row2{
-border-bottom: 1px solid #000000;
-}
-
-.skinofab_compare .row:not(:first-child){
-border-bottom: 1px solid #dadada;
-min-height: 50px;
-}
-
-.skinofab_compare .row h4{
-font-size: 14px;
+gap: 10px;}.skinofab_compare .row2{border-bottom: 1px solid #000000;}.skinofab_compare .row:not(:first-child){border-bottom: 1px solid #dadada;
+min-height: 50px;}.skinofab_compare .row h4{font-size: 14px;
 line-height: normal;
 display: flex;
 align-items: center;
 margin: 0;
 height: 40px;
-justify-content: center!important;
-}
-
-.skinofab_compare .row h5{
-font-size: 14px;
+justify-content: center!important;}.skinofab_compare .row h5{font-size: 14px;
 line-height: normal;
 margin-top: 0;
-margin-bottom: 0;
-}
-
-
-.skinofab_compare .row h4:not(:first-child){
-text-align: center;
-}
-
-.skinofab_compare .row h4:not(:first-child){
-width: 100%;
-justify-content: center;
-}
-
-.skinofab_compare h4:not(:first-child),
-.skinofab_compare .row div:not(:first-child){    }
-
-.skinofab_compare .row h4:first-child,
-.skinofab_compare .row h5:first-child{
-width: 100%;
+margin-bottom: 0;}.skinofab_compare .row h4:not(:first-child){text-align: center;}.skinofab_compare .row h4:not(:first-child){width: 100%;
+justify-content: center;}.skinofab_compare h4:not(:first-child),.skinofab_compare .row div:not(:first-child){}.skinofab_compare .row h4:first-child,.skinofab_compare .row h5:first-child{width: 100%;
 padding-right: 0;
-justify-content: start !important;
-}
-
-.skinofab_compare .row h4,
-.skinofab_compare .row h5{
-margin-top: 15px;
-margin-bottom: 15px;
-}
-
-
-.skinofab_compare .row div{
-width: 100%;
+justify-content: start !important;}.skinofab_compare .row h4,.skinofab_compare .row h5{margin-top: 15px;
+margin-bottom: 15px;}.skinofab_compare .row div{width: 100%;
 align-self: center;
 padding: 0 23px;
-display: flex;    justify-content: center;
-}
-
-@media screen and (min-width: 768px) {
-.skinofab_compare .row h4:not(:first-child) {
-margin-left: 0;
-}
-.skinofab_compare h3{
-text-align: center;
-}
-}
-
-@media screen and (max-width: 768px) {
-skinofab_compare .row {
-display: grid;
+display: flex;    justify-content: center;}@media screen and (min-width: 768px){.skinofab_compare .row h4:not(:first-child){margin-left: 0;}.skinofab_compare h3{text-align: center;}}@media screen and (max-width: 768px){skinofab_compare .row{display: grid;
 margin: 0;
 justify-content: center;
 grid-template-rows: auto;
 grid-template-columns: 2fr 1fr 1fr 1fr;
-gap: 10px;
-}
-.skinofab_compare .row h4 {
-
-}
-}
-</style>
+gap: 10px;}.skinofab_compare .row h4{}}</style>
 <section class="skinofab_compare">
 <div class="wrapper">
 <h2>Why skinofab?</h2>
@@ -2761,11 +1732,10 @@ gap: 10px;
 </section>
 </section>
 </div><div class="shopify-section" id="shopify-section-template--20029865754780__section_accordions_k6qPrc">
-<style data-shopify="">#Accordions--template--20029865754780__section_accordions_k6qPrc {
-    --PT: 60px;
+<style data-shopify="">#Accordions--template--20029865754780__section_accordions_k6qPrc{--PT: 60px;
     --PB: 60px;
     --border-opacity: 0;
-    --MB: 10px;--bg-padded-line: var(--bg);}#Accordions--template--20029865754780__section_accordions_k6qPrc .accordion__item { --bg: #f7f7f7; }</style>
+    --MB: 10px;--bg-padded-line: var(--bg);}#Accordions--template--20029865754780__section_accordions_k6qPrc .accordion__item{--bg: #f7f7f7;}</style>
 <section class="section-padding accordions-section text-dark" data-section-id="template--20029865754780__section_accordions_k6qPrc" data-section-type="accordions" id="Accordions--template--20029865754780__section_accordions_k6qPrc">
 <div class="accordion__header">
 <div class="wrapper">
@@ -2845,73 +1815,31 @@ gap: 10px;
 </div>
 </div>
 </div></section>
-</div><div class="shopify-section" id="shopify-section-template--20029865754780__kopstorm_why_gcA7fQ"><style>
-.skinofab-why-section {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.skinofab-why-inner {
-  display: grid;
+</div><div class="shopify-section" id="shopify-section-template--20029865754780__kopstorm_why_gcA7fQ"><style>.skinofab-why-section{padding-top: 0px;
+  padding-bottom: 0px;}.skinofab-why-inner{display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: var(--radius, 12px);
   overflow: hidden;
-  min-height: 500px;
-}
-
-.skinofab-why__image {
-  background-size: cover;
+  min-height: 500px;}.skinofab-why__image{background-size: cover;
   background-position: center;
   min-height: 350px;
-  position: relative;
-}
-
-.skinofab-why__content {
-  background: #f7f7f7;
+  position: relative;}.skinofab-why__content{background: #f7f7f7;
   padding: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.skinofab-why__content .section__heading {
-  text-align: left;
+  justify-content: center;}.skinofab-why__content .section__heading{text-align: left;
   text-transform: none;
-  margin: 0 0 30px 0;
-}
-
-.skinofab-why__text {
-  margin-bottom: 30px;
-}
-
-.skinofab-why__text p {
-  margin: 0;
+  margin: 0 0 30px 0;}.skinofab-why__text{margin-bottom: 30px;}.skinofab-why__text p{margin: 0;
   font-size: 15px;
   line-height: 1.6;
-  color: #555;
-}
-
-.skinofab-why__features {
-  display: flex;
+  color: #555;}.skinofab-why__features{display: flex;
   flex-direction: column;
   gap: 0;
-  margin-bottom: 30px;
-}
-
-.skinofab-why__feature {
-  display: flex;
+  margin-bottom: 30px;}.skinofab-why__feature{display: flex;
   align-items: center;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.skinofab-why__feature:last-child {
-  border-bottom: none;
-}
-
-.skinofab-why__feature-icon {
-  flex: 0 0 48px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);}.skinofab-why__feature:last-child{border-bottom: none;}.skinofab-why__feature-icon{flex: 0 0 48px;
   width: 48px;
   height: 48px;
   border-radius: 12px;
@@ -2919,77 +1847,18 @@ gap: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.skinofab-why__feature-icon img {
-  width: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);}.skinofab-why__feature-icon img{width: 28px;
   height: 28px;
-  display: block;
-}
-
-.skinofab-why__feature-text {
-  flex: 1;
-}
-
-.skinofab-why__feature-title {
-  font-weight: 700;
+  display: block;}.skinofab-why__feature-text{flex: 1;}.skinofab-why__feature-title{font-weight: 700;
   font-size: 15px;
   color: #2D2D2D;
-  margin-bottom: 2px;
-}
-
-.skinofab-why__feature-desc {
-  font-size: 14px;
+  margin-bottom: 2px;}.skinofab-why__feature-desc{font-size: 14px;
   color: #666;
-  line-height: 1.4;
-}
-
-.skinofab-why__feature-desc p {
-  margin: 0;
-}
-
-.skinofab-why__cta .btn {
-  display: inline-block;
-}
-
-@media (min-width: 768px) {
-  .skinofab-why-inner--square-image .skinofab-why__image {
-    aspect-ratio: 1;
-  }
-  .skinofab-why__content {
-    padding: 60px;
-  }
-}
-
-@media (max-width: 767px) {
-  .skinofab-why-section {
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
-  .skinofab-why-inner {
-    grid-template-columns: 1fr;
-  }
-  .skinofab-why__image {
-    min-height: 280px;
-  }
-  .skinofab-why__content {
-    padding: 30px 24px;
-  }
-  .skinofab-why__content .section__heading {
-    margin-bottom: 20px;
-  }
-  .skinofab-why__feature-icon {
-    flex: 0 0 42px;
+  line-height: 1.4;}.skinofab-why__feature-desc p{margin: 0;}.skinofab-why__cta .btn{display: inline-block;}@media (min-width: 768px){.skinofab-why-inner--square-image .skinofab-why__image{aspect-ratio: 1;}.skinofab-why__content{padding: 60px;}}@media (max-width: 767px){.skinofab-why-section{padding-top: 0px;
+    padding-bottom: 0px;}.skinofab-why-inner{grid-template-columns: 1fr;}.skinofab-why__image{min-height: 280px;}.skinofab-why__content{padding: 30px 24px;}.skinofab-why__content .section__heading{margin-bottom: 20px;}.skinofab-why__feature-icon{flex: 0 0 42px;
     width: 42px;
-    height: 42px;
-  }
-  .skinofab-why__feature-icon img {
-    width: 24px;
-    height: 24px;
-  }
-}
-</style>
+    height: 42px;}.skinofab-why__feature-icon img{width: 24px;
+    height: 24px;}}</style>
 <section class="skinofab-why-section">
 <div class="wrapper">
 <div class="skinofab-why-inner">
@@ -3035,18 +1904,12 @@ gap: 10px;
 </div>
 </div>
 </section>
-</div><section class="shopify-section" id="shopify-section-template--20029865754780__171016962378cf5f40"><style data-shopify="">#App--template--20029865754780__171016962378cf5f40 {
-    --PT: 60px;
-    --PB: 0px;
-  }</style><div class="section-padding" data-section-type="template--20029865754780__171016962378cf5f40" id="App--template--20029865754780__171016962378cf5f40">
+</div><section class="shopify-section" id="shopify-section-template--20029865754780__171016962378cf5f40"><style data-shopify="">#App--template--20029865754780__171016962378cf5f40{--PT: 60px;
+    --PB: 0px;}</style><div class="section-padding" data-section-type="template--20029865754780__171016962378cf5f40" id="App--template--20029865754780__171016962378cf5f40">
 <div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-AOGdjeWlhcmFyN1FrU__loox_reviews_loox_dynamic_section_NJEA6M">
 <div class="loox-widget" data-default-tab="automatic" data-limit="20" data-product-id="8309372289180" data-reviews-to-display="" id="looxReviews" style="margin:0 auto;max-width:1080px;">
 <div id="loox-reviews-feed">
-<style class="loox-temp-hiding-style">
-			#loox-reviews-feed {
-				display: none;
-			}
-		</style>
+<style class="loox-temp-hiding-style">#loox-reviews-feed{display: none;}</style>
 <section aria-label="Customer reviews">
 <h3>Customer Reviews</h3>
 <p class="loox-ssr-review-summary">
@@ -3612,44 +2475,10 @@ for about a year now. Being in my early 70s, my eye brows had spaces in them and
 </div>
 </div>
 </div>
-</section><section class="shopify-section" id="shopify-section-template--20029865754780__17343670428704549b"><style data-shopify="">#App--template--20029865754780__17343670428704549b {
-    --PT: 0px;
-    --PB: 60px;
-  }</style><div class="section-padding" data-section-type="template--20029865754780__17343670428704549b" id="App--template--20029865754780__17343670428704549b">
+</section><section class="shopify-section" id="shopify-section-template--20029865754780__17343670428704549b"><style data-shopify="">#App--template--20029865754780__17343670428704549b{--PT: 0px;
+    --PB: 60px;}</style><div class="section-padding" data-section-type="template--20029865754780__17343670428704549b" id="App--template--20029865754780__17343670428704549b">
 <div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-AZi9rd0V5NmtpSmZ0d__instafeed_app_block_n7QK4n">
-<style>
-      div[id*="instafeed_app_block"] {
-        width: 100%;
-      }
-      div.shopify-section:has(> [id*="instafeed_app_block"]) {
-      width: 100%;
-      }
-      
-      body #insta-feed {
-      
-          
-
-          
-          margin-bottom: 0px!important;
-          
-
-          
-
-          
-
-          
-      }
-      
-      body #insta-feed h2 {
-      
-        
-        
-         text-align: center;
-      }
-
-      
-      
-</style>
+<style>div[id*="instafeed_app_block"]{width: 100%;}div.shopify-section:has(> [id*="instafeed_app_block"]){width: 100%;}body #insta-feed{margin-bottom: 0px!important;}body #insta-feed h2{text-align: center;}</style>
 <div id="insta-feed"></div>
 </div>
 </div>
@@ -3736,7 +2565,7 @@ for about a year now. Being in my early 70s, my eye brows had spaces in them and
 </div>
 </div>
 </div>
-</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/skinofab-cart-timer-b352c2.js'|asset_url }}"></script><script>
+</div><script>
       // Function to update the price element with the new variant price
       function updateProductPrice(newPrice) {
         const priceElement = document.getElementById('productpricingnew');

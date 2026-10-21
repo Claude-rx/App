@@ -67,7 +67,7 @@ def t(context, key, *args, **kwargs):
     return s
 
 @register.filter
-def asset_url(path): return '/assets/' + str(path)
+def asset_url(path): return '/assets/' + str(path) + '?v=local'   # the platform's URLs always carry a ?v= token
 
 @register.filter
 def currency(value, code=None):

@@ -1,0 +1,188 @@
+{
+ "css": {
+  "all-min-2d3b0a.css": {
+   "before_kb": 91.6,
+   "after_kb": 2.1,
+   "selectors": 2575,
+   "dropped": 2560
+  },
+  "all-min-ef4087.css": {
+   "before_kb": 91.6,
+   "after_kb": 2.1,
+   "selectors": 2575,
+   "dropped": 2560
+  },
+  "bestfoundation-copy-c05218.css": {
+   "before_kb": 8.4,
+   "after_kb": 8.4,
+   "selectors": 115,
+   "dropped": 0
+  },
+  "bestfoundation-fonts-8d67c7.css": {
+   "before_kb": 0.0,
+   "after_kb": 0.0
+  },
+  "css2-00ae1c.css": {
+   "before_kb": 0.3,
+   "after_kb": 0.0
+  },
+  "css2-0c6ec1.css": {
+   "before_kb": 0.4,
+   "after_kb": 0.0
+  },
+  "css2-19aadc.css": {
+   "before_kb": 0.3,
+   "after_kb": 0.0
+  },
+  "css2-477560.css": {
+   "before_kb": 0.3,
+   "after_kb": 0.0
+  },
+  "css2-bd7b5a.css": {
+   "before_kb": 0.3,
+   "after_kb": 0.0
+  },
+  "data-sale-opt-out-b7f572.css": {
+   "before_kb": 5.1,
+   "after_kb": 0.1,
+   "selectors": 27,
+   "dropped": 26
+  },
+  "figma-home-b8e5e8.css": {
+   "before_kb": 41.3,
+   "after_kb": 40.3,
+   "selectors": 569,
+   "dropped": 17
+  },
+  "futura-pt-fallback.css": {
+   "before_kb": 0.1,
+   "after_kb": 0.0
+  },
+  "instant-8RjMjnzDwPBzI6Uy-828392.css": {
+   "before_kb": 103.2,
+   "after_kb": 89.7,
+   "selectors": 811,
+   "dropped": 128
+  },
+  "instant-PxhePZoFUWBJLP7u-a702fb.css": {
+   "before_kb": 45.2,
+   "after_kb": 33.4,
+   "selectors": 398,
+   "dropped": 108
+  },
+  "instant-g5DAKnvfiOF89B1k-e9b7a9.css": {
+   "before_kb": 69.3,
+   "after_kb": 55.9,
+   "selectors": 609,
+   "dropped": 126
+  },
+  "instant-gZNzjB8MhezcfyvJ-8f7e8e.css": {
+   "before_kb": 83.3,
+   "after_kb": 70.0,
+   "selectors": 665,
+   "dropped": 126
+  },
+  "kaching-bundles-c3094f.css": {
+   "before_kb": 1.2,
+   "after_kb": 0.3,
+   "selectors": 16,
+   "dropped": 11
+  },
+  "kopstorm-62aff9.css": {
+   "before_kb": 20.7,
+   "after_kb": 14.1,
+   "selectors": 293,
+   "dropped": 89
+  },
+  "kopstorm-V2-ea6148.css": {
+   "before_kb": 1.4,
+   "after_kb": 0.4,
+   "selectors": 22,
+   "dropped": 16
+  },
+  "kopstorm_new-c14bc9.css": {
+   "before_kb": 2.6,
+   "after_kb": 2.2,
+   "selectors": 19,
+   "dropped": 1
+  },
+  "policy-0e156355-8644b1.css": {
+   "before_kb": 0.3,
+   "after_kb": 0.1,
+   "selectors": 4,
+   "dropped": 2
+  },
+  "serum-sub-atc-f35009.css": {
+   "before_kb": 1.9,
+   "after_kb": 1.1,
+   "selectors": 16,
+   "dropped": 7
+  },
+  "skinofab-routine-upgrade-dd71f5.css": {
+   "before_kb": 2.1,
+   "after_kb": 0.6,
+   "selectors": 19,
+   "dropped": 13
+  },
+  "styles-ba8b6d.css": {
+   "before_kb": 93.7,
+   "after_kb": 42.3,
+   "selectors": 1014,
+   "dropped": 543
+  },
+  "swiper-bundle-min-9d0eb7.css": {
+   "before_kb": 17.6,
+   "after_kb": 17.4,
+   "selectors": 182,
+   "dropped": 0
+  },
+  "theme-410305.css": {
+   "before_kb": 627.7,
+   "after_kb": 257.5,
+   "selectors": 7384,
+   "dropped": 4298
+  },
+  "inline": {
+   "blocks": 1722,
+   "before_kb": 8614.7,
+   "after_kb": 7287.0,
+   "skipped": 0
+  }
+ },
+ "fonts": {
+  "sf_asset_styles": {
+   "duplicate": 60,
+   "unused": 15,
+   "kept": 25,
+   "url_vars_dropped": 2
+  },
+  "google_fonts_self_hosted": {
+   "css2-d7688d.css": 14,
+   "css2-b2dc35.css": 14,
+   "css2-70c8a4.css": 20
+  }
+ },
+ "bundles": {
+  "sfb-2bede559.css": {
+   "kb": 291.4,
+   "members": [
+    "futura-pt-fallback.css",
+    "all-min-2d3b0a.css",
+    "swiper-bundle-min-9d0eb7.css",
+    "kopstorm-V2-ea6148.css",
+    "theme-410305.css",
+    "kopstorm-62aff9.css",
+    "kopstorm_new-c14bc9.css"
+   ]
+  }
+ },
+ "swiper": {
+  "inline_scripts_deferred": 53,
+  "script_tags_deferred": 87
+ },
+ "images": {
+  "elements": 1003,
+  "skipped": 1108
+ },
+ "errors": []
+}

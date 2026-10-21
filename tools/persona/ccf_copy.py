@@ -41,6 +41,10 @@ GLOBAL = [
      "— Mature skin makes less oil, so a hydrating, fragrance-free base matters more than an SPF number in your foundation. Keep sunscreen as its own step."),
     ("Yes, I know, SPF every day. I never did it. It was greasy and it made everything pill. So we put <strong>SPF 15</strong> straight into the foundation and now I'm covered for everyday sun without thinking about it. No shine, no heaviness, and one less bottle on my counter.",
      "Yes, I know, sunscreen every day. I wear mine, but every foundation I put on top of it pilled or dried into my lines. So we made a hydrating, fragrance-free foundation that layers over sunscreen without pilling. No shine, no heaviness, nothing tight by lunch."),
+    # Shipping: the store has one rate, free on every order (NEXT shipping method "Default", $0.00). There is no paid
+    # "premium insured" option at checkout, so the sentences offering one go.
+    (r'RE:\s*Additionally,\s+we\s+offer\s+a\s+premium\s+international\s+insured\s+shipping\s+option\s+at\s+a\s+modest\s+charge\s+of\s*<strong>[^<]*</strong>,\s+which\s+we\s+highly\s+recommend\s+for\s+prioritized\s+service\s+and\s+faster\s+delivery\.', ''),
+    (r'RE:\s*We\s+also\s+offer\s+a\s+premium\s+international\s+insured\s+shipping\s+option\s+for\s+just\s+\$2\.99\s?USD,\s+which\s+we\s+recommend\s+for\s+prioritized\s+service\s+and\s+faster\s+delivery\.?', ''),
     # the remaining bare "SPF 15" chips / comparison-table rows
     (">SPF 15<", ">Fragrance-free<"),
     # 16-hour wear and "all skin tones" over-promises (report 4.4 and 11)
@@ -51,6 +55,9 @@ GLOBAL = [
 
 PAGE = {
     'index.html': [
+        # meta description + og:description (the theme uses it while Settings > SEO has no store description)
+        ("Cosmetics made to glow, feel skinofab.",
+         "Adaptive Peptide Foundation: the color-adapting serum foundation made for skin after 45. Goes on white, turns into your skin. $33/mo, cancel any time."),
         ("Foundation that adapts to you", "Stop guessing your shade after 45"),
         ("Adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
          "It goes on white and turns into your skin as you blend. A hydrating serum foundation with peptides and PDRN that won't settle into your lines."),

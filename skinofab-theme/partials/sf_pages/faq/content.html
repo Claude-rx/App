@@ -1,8 +1,6 @@
 <main class="main-content" data-main="" id="MainContent">
-<div class="shopify-section shopify-section--page" id="shopify-section-template--20029877452956__main"><style data-shopify="">#Page--template--20029877452956__main {
-    --PT: 60px;
-    --PB: 60px;
-  }</style><section class="section-default section-padding" id="Page--template--20029877452956__main">
+<div class="shopify-section shopify-section--page" id="shopify-section-template--20029877452956__main"><style data-shopify="">#Page--template--20029877452956__main{--PT: 60px;
+    --PB: 60px;}</style><section class="section-default section-padding" id="Page--template--20029877452956__main">
 <div class="wrapper"><h1 class="page-title text-center">FAQ</h1><div class="rte"><div class="faq-container">
 <div class="faq-section">
 <h2>About Skinofab</h2>
@@ -207,7 +205,7 @@
 </svg>
 </button>
 <div class="faq-answer" id="faq-answer-15" role="region">
-<div class="faq-answer-inner"><p>Yes — we offer FREE standard worldwide shipping on all orders! We also offer a premium international insured shipping option for just {{ settings.sf_shipping_fee_text|default:'' }}, which we recommend for prioritized service and faster delivery.</p></div>
+<div class="faq-answer-inner"><p>Yes — we offer FREE standard worldwide shipping on all orders!</p></div>
 </div>
 </div>
 <div class="faq-item" data-index="16">
@@ -340,37 +338,20 @@
 </div>
 </div>
 </div>
-<style>
-.faq-container {
-  max-width: 800px;
+<style>.faq-container{max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  font-family: inherit;
-}
-.faq-container h1 {
-  font-size: 2em;
+  font-family: inherit;}.faq-container h1{font-size: 2em;
   margin-bottom: 30px;
   color: #1a1a1a;
-  text-align: center;
-}
-.faq-section {
-  margin-bottom: 40px;
-}
-.faq-section h2 {
-  font-size: 1.2em;
+  text-align: center;}.faq-section{margin-bottom: 40px;}.faq-section h2{font-size: 1.2em;
   font-weight: 700;
   color: #000000;
   border-bottom: 2px solid #000000;
   padding-bottom: 8px;
   margin-bottom: 8px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.faq-item {
-  border-bottom: 1px solid #eee;
-}
-.faq-question {
-  display: flex;
+  letter-spacing: 0.05em;}.faq-item{border-bottom: 1px solid #eee;}.faq-question{display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -383,40 +364,14 @@
   font-weight: 600;
   color: #1a1a1a;
   font-family: inherit;
-  gap: 12px;
-}
-.faq-question:hover {
+  gap: 12px;}.faq-question:hover{color: #000000;}.faq-question span{flex: 1;}.faq-icon{flex-shrink: 0;
   color: #000000;
-}
-.faq-question span {
-  flex: 1;
-}
-.faq-icon {
-  flex-shrink: 0;
-  color: #000000;
-  transition: transform 0.3s ease;
-}
-.faq-question[aria-expanded="true"] .faq-icon {
-  transform: rotate(180deg);
-}
-.faq-answer {
-  overflow: hidden;
+  transition: transform 0.3s ease;}.faq-question[aria-expanded="true"] .faq-icon{transform: rotate(180deg);}.faq-answer{overflow: hidden;
   max-height: 0;
-  transition: max-height 0.35s ease;
-}
-.faq-answer.is-open {
-  max-height: 600px;
-}
-.faq-answer-inner {
-  padding: 0 0 16px 0;
+  transition: max-height 0.35s ease;}.faq-answer.is-open{max-height: 600px;}.faq-answer-inner{padding: 0 0 16px 0;
   color: #555;
-  line-height: 1.7;
-}
-.faq-answer-inner a {
-  color: #000000;
-  text-decoration: underline;
-}
-</style>
+  line-height: 1.7;}.faq-answer-inner a{color: #000000;
+  text-decoration: underline;}</style>
 <script>
 (function() {
   var questions = document.querySelectorAll('.faq-question');

@@ -3,7 +3,7 @@
 
 <head>
     {# 1. Metadata / SEO / GEO. Keep this plain and early. #}
-    <title>{% block title %}{{ store.get_meta_title }} - {{ store.tagline }}{% endblock %}</title>
+    <title>{% block title %}{{ store.get_meta_title }}{% if store.tagline %} - {{ store.tagline }}{% endif %}{% endblock %}</title>
     <link rel="alternate" hreflang="{{ LANGUAGE_CODE }}" href="https://{{ request.get_host }}{{ request.path }}" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,10 +25,16 @@
                 {% image_thumbnail image "32x32" upscale=False crop="center" as thumb_store_icon %}
                 <link rel="shortcut icon" href="{{ thumb_store_icon.url }}" />
             {% endwith %}
+        {% else %}
+            <link rel="icon" type="image/svg+xml" href="{{ 'sf/img/skinofab-favicon-816745.svg'|asset_url }}">
+            <link rel="icon" type="image/png" sizes="32x32" href="{{ 'sf/img/skinofab-favicon-32-a20259.png'|asset_url }}">
+            <link rel="apple-touch-icon" href="{{ 'sf/img/skinofab-favicon-180-15097e.png'|asset_url }}">
         {% endif %}
     {% endblock favicon %}
 
     {# 2. Critical preloads. Page templates should only preload LCP assets here. #}
+    <link rel="preconnect" href="https://cdn.29next.store">
+    <link rel="preconnect" href="https://cdn.29next.store" crossorigin>
     {% block critical_preloads %}{% endblock critical_preloads %}
 
     {# 3. CSS. Discover the theme stylesheet before optional font embeds. #}
@@ -154,11 +160,13 @@
     {% url 'storefrontapi:graphql' as sf_graphql_url %}
     <script>window.SFStore = { currency: "{{ request.CURRENCY_CODE|default:'USD'|escapejs }}", symbol: "{% filter escapejs %}{% currency_symbol request.CURRENCY_CODE|default:'USD' %}{% endfilter %}", graphqlUrl: "{{ sf_graphql_url|default:'/api/graphql/'|escapejs }}" };
     window.SFProductJson = {"4-pack-2x-extreme-2x-long-lasting":"{{ 'sf/data/product-4-pack-2x-extreme-2x-long-lasting.json'|asset_url|escapejs }}","beauty-mirror":"{{ 'sf/data/product-beauty-mirror.json'|asset_url|escapejs }}","brow-gel":"{{ 'sf/data/product-brow-gel.json'|asset_url|escapejs }}","color-changing-foundation":"{{ 'sf/data/product-color-changing-foundation.json'|asset_url|escapejs }}","essential-lip-liner":"{{ 'sf/data/product-essential-lip-liner.json'|asset_url|escapejs }}","extreme-lip-plumper":"{{ 'sf/data/product-extreme-lip-plumper.json'|asset_url|escapejs }}","eyebrow-serum":"{{ 'sf/data/product-eyebrow-serum.json'|asset_url|escapejs }}","eyelash-curler":"{{ 'sf/data/product-eyelash-curler.json'|asset_url|escapejs }}","eyelash-serum":"{{ 'sf/data/product-eyelash-serum.json'|asset_url|escapejs }}","face-roller":"{{ 'sf/data/product-face-roller.json'|asset_url|escapejs }}","foundation-mega-pack":"{{ 'sf/data/product-foundation-mega-pack.json'|asset_url|escapejs }}","gua-sha":"{{ 'sf/data/product-gua-sha.json'|asset_url|escapejs }}","hyaluronic-acid-lip-plumper":"{{ 'sf/data/product-hyaluronic-acid-lip-plumper.json'|asset_url|escapejs }}","lash-brow-duo":"{{ 'sf/data/product-lash-brow-duo.json'|asset_url|escapejs }}","liquid-blender-brush":"{{ 'sf/data/product-liquid-blender-brush.json'|asset_url|escapejs }}","long-lash-mascara":"{{ 'sf/data/product-long-lash-mascara.json'|asset_url|escapejs }}","peel-off-lip-stain":"{{ 'sf/data/product-peel-off-lip-stain.json'|asset_url|escapejs }}","reverse-time-peptide-serum":"{{ 'sf/data/product-reverse-time-peptide-serum.json'|asset_url|escapejs }}","shea-butter-lip-gloss":"{{ 'sf/data/product-shea-butter-lip-gloss.json'|asset_url|escapejs }}","skinofab-blender":"{{ 'sf/data/product-skinofab-blender.json'|asset_url|escapejs }}","skinofab-gift-card":"{{ 'sf/data/product-skinofab-gift-card.json'|asset_url|escapejs }}","stick-and-stain":"{{ 'sf/data/product-stick-and-stain.json'|asset_url|escapejs }}","stick-stain3":"{{ 'sf/data/product-stick-stain3.json'|asset_url|escapejs }}","triple-lip-plumper-bundle":"{{ 'sf/data/product-triple-lip-plumper-bundle.json'|asset_url|escapejs }}","ultra-peptide-collagen-lifting-mask":"{{ 'sf/data/product-ultra-peptide-collagen-lifting-mask.json'|asset_url|escapejs }}","under-eye-reset":"{{ 'sf/data/product-under-eye-reset.json'|asset_url|escapejs }}"};
-    window.SFHandlePk = {"4-pack-2x-extreme-2x-long-lasting":"{% firstof settings.sf_p_4_pack_2x_extreme_2x_long_lasting.children.first.pk settings.sf_p_4_pack_2x_extreme_2x_long_lasting.pk %}","beauty-mirror":"{% firstof settings.sf_p_beauty_mirror.children.first.pk settings.sf_p_beauty_mirror.pk %}","brow-gel":"{% firstof settings.sf_p_brow_gel.children.first.pk settings.sf_p_brow_gel.pk %}","color-changing-foundation":"{% firstof settings.sf_p_color_changing_foundation.children.first.pk settings.sf_p_color_changing_foundation.pk %}","essential-lip-liner":"{% firstof settings.sf_p_essential_lip_liner.children.first.pk settings.sf_p_essential_lip_liner.pk %}","extreme-lip-plumper":"{% firstof settings.sf_p_extreme_lip_plumper.children.first.pk settings.sf_p_extreme_lip_plumper.pk %}","eyebrow-serum":"{% firstof settings.sf_p_eyebrow_serum.children.first.pk settings.sf_p_eyebrow_serum.pk %}","eyelash-curler":"{% firstof settings.sf_p_eyelash_curler.children.first.pk settings.sf_p_eyelash_curler.pk %}","eyelash-serum":"{% firstof settings.sf_p_eyelash_serum.children.first.pk settings.sf_p_eyelash_serum.pk %}","face-roller":"{% firstof settings.sf_p_face_roller.children.first.pk settings.sf_p_face_roller.pk %}","foundation-mega-pack":"{% firstof settings.sf_p_foundation_mega_pack.children.first.pk settings.sf_p_foundation_mega_pack.pk %}","gua-sha":"{% firstof settings.sf_p_gua_sha.children.first.pk settings.sf_p_gua_sha.pk %}","hyaluronic-acid-lip-plumper":"{% firstof settings.sf_p_hyaluronic_acid_lip_plumper.children.first.pk settings.sf_p_hyaluronic_acid_lip_plumper.pk %}","lash-brow-duo":"{% firstof settings.sf_p_lash_brow_duo.children.first.pk settings.sf_p_lash_brow_duo.pk %}","liquid-blender-brush":"{% firstof settings.sf_p_liquid_blender_brush.children.first.pk settings.sf_p_liquid_blender_brush.pk %}","long-lash-mascara":"{% firstof settings.sf_p_long_lash_mascara.children.first.pk settings.sf_p_long_lash_mascara.pk %}","peel-off-lip-stain":"{% firstof settings.sf_p_peel_off_lip_stain.children.first.pk settings.sf_p_peel_off_lip_stain.pk %}","reverse-time-peptide-serum":"{% firstof settings.sf_p_reverse_time_peptide_serum.children.first.pk settings.sf_p_reverse_time_peptide_serum.pk %}","shea-butter-lip-gloss":"{% firstof settings.sf_p_shea_butter_lip_gloss.children.first.pk settings.sf_p_shea_butter_lip_gloss.pk %}","skinofab-blender":"{% firstof settings.sf_p_skinofab_blender.children.first.pk settings.sf_p_skinofab_blender.pk %}","skinofab-gift-card":"{% firstof settings.sf_p_skinofab_gift_card.children.first.pk settings.sf_p_skinofab_gift_card.pk %}","stick-and-stain":"{% firstof settings.sf_p_stick_and_stain.children.first.pk settings.sf_p_stick_and_stain.pk %}","stick-stain3":"{% firstof settings.sf_p_stick_stain3.children.first.pk settings.sf_p_stick_stain3.pk %}","triple-lip-plumper-bundle":"{% firstof settings.sf_p_triple_lip_plumper_bundle.children.first.pk settings.sf_p_triple_lip_plumper_bundle.pk %}","ultra-peptide-collagen-lifting-mask":"{% firstof settings.sf_p_ultra_peptide_collagen_lifting_mask.children.first.pk settings.sf_p_ultra_peptide_collagen_lifting_mask.pk %}","under-eye-reset":"{% firstof settings.sf_p_under_eye_reset.children.first.pk settings.sf_p_under_eye_reset.pk %}"};
+    {# Design handle -> NEXT product pk, for the Shopify variant ids design scripts carry. Each page lists only the products it references (block sf_handle_pk): every entry is a settings product lookup per render. #}
+    window.SFHandlePk = { {% block sf_handle_pk %}{% endblock sf_handle_pk %} };
     window.SFVariantHandle = {"43845629673628": "essential-lip-liner", "44574735302812": "skinofab-gift-card", "44574735335580": "skinofab-gift-card", "44574735368348": "skinofab-gift-card", "44574735401116": "skinofab-gift-card", "44630578167964": "eyelash-serum", "44630578266268": "eyebrow-serum", "44630586523804": "lash-brow-duo", "44663423959196": "extreme-lip-plumper", "44663423991964": "extreme-lip-plumper", "44663453876380": "hyaluronic-acid-lip-plumper", "44708866785436": "triple-lip-plumper-bundle", "44708866818204": "4-pack-2x-extreme-2x-long-lasting", "44708919378076": "shea-butter-lip-gloss", "44723611762844": "eyelash-curler", "44723612778652": "beauty-mirror", "44734369464476": "stick-and-stain", "44735301353628": "stick-and-stain", "44735301386396": "stick-and-stain", "44735301419164": "stick-and-stain", "44766942298268": "essential-lip-liner", "44766942331036": "essential-lip-liner", "44766942363804": "essential-lip-liner", "44766948360348": "shea-butter-lip-gloss", "44793604636828": "gua-sha", "44799937773724": "face-roller", "45056292978844": "long-lash-mascara", "45097716285596": "color-changing-foundation", "45177250119836": "stick-stain3", "45177250152604": "stick-stain3", "45177250185372": "stick-stain3", "45177250218140": "stick-stain3", "45979785953436": "peel-off-lip-stain", "45979785986204": "peel-off-lip-stain", "45979786018972": "peel-off-lip-stain", "45979786051740": "peel-off-lip-stain", "46053902155932": "liquid-blender-brush", "46514010456220": "brow-gel", "46523901673628": "brow-gel", "46523901706396": "brow-gel", "46523901739164": "brow-gel", "46523901771932": "brow-gel", "46674691588252": "skinofab-blender", "46856090124444": "foundation-mega-pack", "47229345398940": "reverse-time-peptide-serum", "47579046084764": "ultra-peptide-collagen-lifting-mask", "47611439972508": "under-eye-reset", "7869252337820": "hyaluronic-acid-lip-plumper", "7889590845596": "extreme-lip-plumper", "7889591599260": "triple-lip-plumper-bundle", "7920108798108": "shea-butter-lip-gloss", "8142066876572": "essential-lip-liner", "8237782663324": "4-pack-2x-extreme-2x-long-lasting", "8239382364316": "stick-and-stain", "8295885439132": "skinofab-gift-card", "8307946160284": "eyebrow-serum", "8308261486748": "eyelash-serum", "8309372289180": "lash-brow-duo", "8310551969948": "long-lash-mascara", "8338765545628": "eyelash-curler", "8338765775004": "beauty-mirror", "8358778536092": "gua-sha", "8361261629596": "face-roller", "8462448984220": "color-changing-foundation", "8483767222428": "stick-stain3", "8747833557148": "brow-gel", "8781456703644": "peel-off-lip-stain", "8794333970588": "liquid-blender-brush", "8975477506204": "skinofab-blender", "9019261157532": "foundation-mega-pack", "9163492425884": "reverse-time-peptide-serum", "9248604782748": "ultra-peptide-collagen-lifting-mask", "9264976101532": "under-eye-reset"};
     {# Theme settings > Subscription Offer: every add of this product (any variant, any button) is the plan below. #}
     window.SFSubscriptionOnly = {% if settings.sf_subscription_product %}{ pks: [{% for sf_v in settings.sf_subscription_product.children.all %}"{{ sf_v.pk }}", {% endfor %}"{{ settings.sf_subscription_product.pk }}"], interval: "{{ settings.sf_subscription_interval|default:'month'|escapejs }}", intervalCount: "{{ settings.sf_subscription_interval_count|default:'1'|escapejs }}" }{% else %}null{% endif %};</script>
-    <script src="{{ 'js/skinofab-commerce.js'|asset_url }}"></script>
+    {# defer: runs before the design's deferred scripts (document order), after every inline script, never blocks paint #}
+    <script defer src="{{ 'js/skinofab-commerce.js'|asset_url }}"></script>
     {% block sf_head %}{% endblock sf_head %}
 
     {# Head app hook is for platform-critical head snippets only. Prefer footer hooks. #}
@@ -234,7 +242,7 @@
         window.SparkCartAssets = {
             cart: "{{ 'js/spark-cart.js'|asset_url|escapejs }}",
             cartRewards: "{{ 'js/spark-cart-rewards.js'|asset_url|escapejs }}",
-            cartRenderer: "{{ 'js/spark-cart-drawer-renderer.js'|asset_url|escapejs }}",
+            cartRenderer: "{{ 'js/skinofab-cart-drawer.js'|asset_url|escapejs }}",
             progressBar: "{{ 'js/components/spark-progress-bar.js'|asset_url|escapejs }}",
             upsellItem: "{{ 'js/components/spark-upsell-item.js'|asset_url|escapejs }}",
             cartDrawer: "{{ 'js/components/spark-cart-drawer.js'|asset_url|escapejs }}"
@@ -246,6 +254,27 @@
             subscriptionFrequencyError: "{{ spark_i18n_subscription_frequency_error|escapejs }}",
             cartItemRemoved: "{{ spark_i18n_cart_item_removed|escapejs }}",
             cartQuantityUpdated: "{{ spark_i18n_cart_quantity_updated|escapejs }}"
+        };
+        </script>
+        <script>
+        window.SFCart = {
+            shippingFree: {% if settings.sf_cart_free_shipping %}true{% else %}false{% endif %},
+            shippingNote: "{{ settings.sf_cart_shipping_note|default:''|escapejs }}",
+            reminderTitle: "{{ settings.sf_cart_reminder_title|default:''|escapejs }}", reminderText: "{{ settings.sf_cart_reminder_text|default:''|escapejs }}",
+            cancelTitle: "{{ settings.sf_cart_cancel_title|default:''|escapejs }}", cancelText: "{{ settings.sf_cart_cancel_text|default:''|escapejs }}",
+            guaranteeTitle: "{{ settings.sf_cart_guarantee_title|default:''|escapejs }}", guaranteeText: "{{ settings.sf_cart_guarantee_text|default:''|escapejs }}",
+            dueTodayText: "{{ settings.sf_cart_due_today|default:'Due today'|escapejs }}",
+            renewText: "{{ settings.sf_cart_renew_text|default:''|escapejs }}",
+            checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
+            secureText: "{{ settings.sf_cart_secure_text|default:''|escapejs }}",
+            couponToggle: "{{ settings.sf_cart_coupon_toggle|default:'Have a discount code?'|escapejs }}",
+            removeText: "{{ settings.sf_cart_remove_text|default:'Remove'|escapejs }}",
+            variantSuffix: "{{ settings.sf_cart_variant_suffix|default:''|escapejs }}",
+            emptyTitle: "{{ settings.sf_cart_empty_title|default:''|escapejs }}",
+            emptyText: "{{ settings.sf_cart_empty_text|default:''|escapejs }}",
+            emptyImage: "{{ 'sf/img/skinofab-cart-bottle-8b0333.png'|asset_url|escapejs }}",
+            shopUrl: "{% if settings.sf_subscription_product %}{{ settings.sf_subscription_product.get_absolute_url|escapejs }}{% else %}{% url 'catalogue:index' %}{% endif %}",
+            shopText: "{% if settings.sf_cart_empty_cta %}{{ settings.sf_cart_empty_cta|escapejs }}{% elif settings.sf_subscription_product %}Shop {{ settings.sf_subscription_product.get_title|escapejs }}{% endif %}"
         };
         </script>
         <script type="text/javascript" src="{{ 'js/spark-cart-loader.js'|asset_url }}"></script>

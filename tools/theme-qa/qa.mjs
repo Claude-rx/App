@@ -31,7 +31,8 @@ function graphql(body) {
     (input.lines || []).forEach(l => {
       const ex = cart.lines.find(x => x.product.pk === l.productPk);
       if (ex) ex.quantity += l.quantity; else cart.lines.push({ pk: lineSeq++, quantity: l.quantity, unitPriceExclTax: '39.00', isUpsell: false,
-        interval: null, intervalCount: null, properties: [], product: { pk: l.productPk, title: `Product ${l.productPk}`, url: '/products/x/', metadata: null,
+        interval: l.subscription ? l.subscription.interval : null, intervalCount: l.subscription ? l.subscription.intervalCount : null,
+        properties: [], product: { pk: l.productPk, title: `Product ${l.productPk} - Light\u2013Medium`, url: '/products/x/', metadata: null,
           primaryImage: null, subscriptionInfo: null, parent: null, purchaseInfo: { priceRetail: { value: '49.00', format: '$49.00', currency: 'USD' }, availableForSale: true, availability: 'instock' } } });
     });
     recalc(); return { addCartLines: { success: true, errors: [], cart } };
@@ -89,6 +90,16 @@ for (const route of routes) {
                    lines: d && d.shadowRoot ? d.shadowRoot.querySelectorAll('[data-line-id], .spark-cart-line, li').length : -1 };
         });
         if (!r.cart.drawerOpen || r.cart.drawerOpen !== 'true') r.errors.push('CART: side cart did not open ' + JSON.stringify(r.cart));
+        // the drawer's own header (title + close) must be on top of the store's sticky header
+        r.cart.headerOnTop = await p.evaluate(() => { const el = document.elementFromPoint(window.innerWidth - 24, 24); return !!(el && el.closest('spark-cart-drawer')); });
+        if (!r.cart.headerOnTop) r.errors.push('CART: drawer header is covered');
+        if (SHOTS) {
+          const base = path.join(SHOTS, (route.replace(/\//g, '_') || 'home'));
+          await p.screenshot({ path: base + '-drawer.png' });
+          await p.evaluate(() => { const d = document.querySelector('spark-cart-drawer'); const b = d && d.shadowRoot.querySelector('[data-action="remove"]'); if (b) b.click(); });
+          await p.waitForTimeout(1500);
+          await p.screenshot({ path: base + '-drawer-empty.png' });
+        }
       }
     }
   } catch (e) { r.errors.push('LOAD: ' + e.message.slice(0, 120)); }

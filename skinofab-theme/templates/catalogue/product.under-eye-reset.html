@@ -1,64 +1,16 @@
 {% extends 'layouts/base.html' %}
-{% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
+{% block sf_handle_pk %}"under-eye-reset":"{% firstof settings.sf_p_under_eye_reset.children.first.pk settings.sf_p_under_eye_reset.pk %}"{% endblock sf_handle_pk %}
+{% block title %}{% if store.name|upper in product.get_meta_title|upper %}{{ product.get_meta_title }}{% else %}{{ product.get_meta_title }} | {{ block.super }}{% endif %}{% endblock %}
 {% block body_id %}{% firstof "under-eye-reset-patches" %}{% endblock %}
 {% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
 {% block sf_head %}
-<link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
-</style><style>
-      .video-slide, .video-thumbnail, .product__form .btn--submit, #locationinfop, .product-grid-item .btn--quick .btn__inner, .product-upsell__btn, .btn, .btn--primary, .btn--primary .shopify-payment-button__button--unbranded, input.btn .shopify-payment-button__button--unbranded, input.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded, input.btn, input.shopify-payment-button__button--unbranded {
-         border-radius: 10px!important;
-      }
-      .input-group, .select-popout__toggle  {
-         border-radius: 10px!important;
-      }
-      #SiteFooter .input-group__fields input {
-        border-top-left-radius: 10px!important;
-        border-bottom-left-radius: 10px!important;
-      }
-        .input-group__btn {
-            border-top-right-radius: 10px!important;
-        border-bottom-right-radius: 10px!important;
-        }
-
-        button[aria-expanded=true] #accordionbefore:before {
-          background-color: #f7f7f7!important;
-        }
-      @media only screen and (max-width: 767px) {
-        .product-single .product__title {
-          font-size: clamp(26px, 7.1vw, 29px);
-          line-height: 1.12;
-        }
-      }
-      #cart-drawer .product-upsell__holder .product-grid-item__swatch {
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-top: 6px !important;
-      }
-      /* Preserve the bar's height while keeping it below the cart/header stack. */
-      body.js-drawer-open-cart .announcement-bar-static,
-      body:has(#cart-drawer.is-open) .announcement-bar-static {
-        z-index: 8999 !important;
-      }
-      body.js-drawer-open .announcement-bar-static,
-      body.js-quick-view-from-cart .announcement-bar-static,
-      body.js-quick-view-visible .announcement-bar-static,
-      body:has(#nav-drawer.is-open) .announcement-bar-static,
-      body:has(.drawer.is-open) .announcement-bar-static {
-        display: none !important;
+<style></style><style>.video-slide,.video-thumbnail,.product__form .btn--submit,#locationinfop,.product-upsell__btn,.btn,.btn--primary,input.btn{border-radius: 10px!important;}.input-group,.select-popout__toggle{border-radius: 10px!important;}#SiteFooter .input-group__fields input{border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;}.input-group__btn{border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;}button[aria-expanded=true] #accordionbefore:before{background-color: #f7f7f7!important;}@media only screen and (max-width: 767px){.product-single .product__title{font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;}}body.js-drawer-open-cart .announcement-bar-static,body:has(#cart-drawer.is-open) .announcement-bar-static{z-index: 8999 !important;}body.js-drawer-open .announcement-bar-static,body.js-quick-view-from-cart .announcement-bar-static,body.js-quick-view-visible .announcement-bar-static,body:has(#nav-drawer.is-open) .announcement-bar-static,body:has(.drawer.is-open) .announcement-bar-static{display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
-        pointer-events: none !important;
-      }
-    </style><style>
-        .swiper-scrollbar {
-        display: none!important;
-        }
-      </style><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="{{ 'sf/css/all-min-2d3b0a.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/><script src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><link href="{{ 'sf/css/swiper-bundle-min-9d0eb7.css'|asset_url }}" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><style data-shopify="">:root { --loader-image-size: 60px; }:root { --loader-image-size: 320px; }html:not(.is-loading) .loading-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
-        .loading-overlay { position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s; }
-        .loading-overlay .loader__image--fallback { width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain; }
-        .loader__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out; }
-        .loader__image { max-width: 60px; height: auto; object-fit: contain; }</style><script>
+        pointer-events: none !important;}</style><style>.swiper-scrollbar{display: none!important;}</style><script defer src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><style data-shopify="">:root{--loader-image-size: 60px;}:root{--loader-image-size: 320px;}html:not(.is-loading) .loading-overlay{opacity: 0; visibility: hidden; pointer-events: none;}.loading-overlay{position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;}.loading-overlay .loader__image--fallback{width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain;}.loader__image__holder{position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out;}.loader__image{max-width: 60px; height: auto; object-fit: contain;}</style><script>
         const loadingAppearance = "once";
         const loaded = sessionStorage.getItem('loaded');
 
@@ -70,130 +22,84 @@
         } else {
           document.documentElement.classList.add('is-loading');
         }
-      </script><style data-shopify="">@font-face {
+      </script><style data-shopify="">@font-face{
   font-family: Jost;
   font-weight: 600;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
-}
-
-@font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-@font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 700;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 900;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 100;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: italic;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 700;
   font-style: italic;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
-}
-
-
-:root {--COLOR-PRIMARY-OPPOSITE: #ffffff;
+}:root{--COLOR-PRIMARY-OPPOSITE: #ffffff;
   --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
   --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
   --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
@@ -440,8 +346,7 @@
 
   
 --filter-bg: .97;
-  --product-filter-bg: .97;
-  }</style><link href="{{ 'sf/css/kopstorm-V2-ea6148.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/theme-410305.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm-62aff9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm_new-c14bc9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><script type="text/javascript">
+  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-2bede559.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
     if (window.MSInputMethodContext && document.documentMode) {
       var scripts = document.getElementsByTagName('script')[0];
       var polyfill = document.createElement("script");
@@ -466,7 +371,7 @@
         cart_url: "\/cart",
         cart_add_url: "\/cart\/add",
         cart_change_url: "\/cart\/change",
-        shop_url: "https:\/\/skinofab.com",
+        shop_url: "\/",
         searchUrl: '/search',
         predictiveSearchUrl: '/search/suggest',
         product_recommendations_url: "\/recommendations\/products"
@@ -476,7 +381,7 @@
         smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
         no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
         swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
-        base: "//skinofab.com/cdn/shop/t/76/assets/"
+        base: "\/"
       },
       strings: {
         add_to_cart: "Add to Cart",
@@ -553,391 +458,26 @@
     window.isHeaderTransparent = false;
     window.stickyHeaderHeight = 60;
     window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
-    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/skinofab-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
-        @media screen and (max-width: 767px) {
-        .product-single__details {
-          overflow: ;
-        }
-        }
-      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Skinofab","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Skinofab","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
-        #shopify-buyer-consent {
-  margin-top: 1em;
-  display: inline-block;
-  width: 100%;
-}
-
-#shopify-buyer-consent.hidden {
-  display: none;
-}
-
-#shopify-subscription-policy-button {
-  background: none;
-  border: none;
-  padding: 0;
-  text-decoration: underline;
-  font-size: inherit;
-  cursor: pointer;
-}
-
-#shopify-subscription-policy-button::before {
-  box-shadow: none;
-}
-
-      </style><script defer="defer" src="{{ 'sf/js/skinofab-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
-    #alia-popup-root-alia-qqoyyurlj3kbg51i {
-      z-index: 999999 !important;
-    }
-  </style><script id="kaching-bundles-translations" type="application/json">
-    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
-  </script><script class="kaching-bundles-product" data-main="true" data-product-id="9264976101532" type="application/json">
-    {
-      "id": 9264976101532,
-      "handle": "under-eye-reset",
-      "url": "\/products\/under-eye-reset",
-      "availableForSale": true,
-      "title": "Under-eye Reset Patches",
-      "image": "..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png\u0026v=1789713523",
-      "collectionIds": [307652133020,304922558620,314587218076,333800898716,299336073372,333257605276],
-      "options": [
-        
-          {
-            "defaultName": "Title",
-            "name": "Title",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 6383494856860,
-                  "defaultName": "Default Title",
-                  "name": "Default Title",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 47611439972508,
-      "variants": [
-        
-          {
-            "id": 47611439972508,
-            "availableForSale": true,
-            "price": 2900,
-            "compareAtPrice": 3900,
-            "options": ["Default Title"],
-            "imageId": null,
-            "image": null,
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": -3815,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script><script class="kaching-bundles-product" data-product-id="9166105411740" type="application/json">
-    {
-      "id": 9166105411740,
-      "handle": "mystery-gift",
-      "url": "\/products\/mystery-gift",
-      "availableForSale": true,
-      "title": "Mystery Gift",
-      "image": "..\/assets\/img\/free_8-1600w-4bc8a8.png\u0026v=1765145633",
-      "collectionIds": [307652133020,304922558620,299336073372],
-      "options": [
-        
-          {
-            "defaultName": "Title",
-            "name": "Title",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 6021070520476,
-                  "defaultName": "Default Title",
-                  "name": "Default Title",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 47239194837148,
-      "variants": [
-        
-          {
-            "id": 47239194837148,
-            "availableForSale": true,
-            "price": 1500,
-            "compareAtPrice": null,
-            "options": ["Default Title"],
-            "imageId": null,
-            "image": null,
-            "inventoryManagement": null,
-            "inventoryPolicy": "deny",
-            "inventoryQuantity": -59988,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script><script class="kaching-bundles-product" data-product-id="8462448984220" type="application/json">
-    {
-      "id": 8462448984220,
-      "handle": "color-changing-foundation",
-      "url": "\/products\/color-changing-foundation",
-      "availableForSale": true,
-      "title": "Color Changing Foundation",
-      "image": "..\/assets\/img\/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--160w-p8bb67b.jpg\u0026v=1790591291",
-      "collectionIds": [307652133020,304922558620,319257280668,314587218076,333800898716,299336073372],
-      "options": [
-        
-          {
-            "defaultName": "Title",
-            "name": "Title",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 4117717418140,
-                  "defaultName": "Default Title",
-                  "name": "Default Title",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 45097716285596,
-      "variants": [
-        
-          {
-            "id": 45097716285596,
-            "availableForSale": true,
-            "price": 4900,
-            "compareAtPrice": 5900,
-            "options": ["Default Title"],
-            "imageId": null,
-            "image": null,
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": 975759,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              {
-                  "id": 3050799260,
-                  "price": 3900,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 3900
-                },
-{
-                  "id": 3063185564,
-                  "price": 4900,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 4900
-                },
-{
-                  "id": 3050832028,
-                  "price": 2450,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 2450
-                },
-{
-                  "id": 3063218332,
-                  "price": 4900,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 4900
-                },
-{
-                  "id": 2585002140,
-                  "price": 3920,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 3920
-                },
-{
-                  "id": 2584969372,
-                  "price": 3920,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 3920
-                },
-{
-                  "id": 2585034908,
-                  "price": 3920,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 3920
-                }
-
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-            {
-              "id": 3050799260,
-              "name": "Every 28 days.",
-                "priceAdjustment": {
-                  "type": "fixed_amount",
-                  "value": 1000
-                }
-            },
-
-            {
-              "id": 3050832028,
-              "name": "Every 28 days",
-                "priceAdjustment": {
-                  "type": "price",
-                  "value": 2450
-                }
-            }
-,
-
-            {
-              "id": 3063185564,
-              "name": "Deliver every 45 days",
-                "priceAdjustment": {
-                  "type": "fixed_amount",
-                  "value": 0
-                }
-            },
-
-            {
-              "id": 3063218332,
-              "name": "Deliver every 60 days",
-                "priceAdjustment": {
-                  "type": "fixed_amount",
-                  "value": 0
-                }
-            }
-,
-
-            {
-              "id": 2585002140,
-              "name": "1 month subscription (Cancel Anytime)",
-                "priceAdjustment": {
-                  "type": "percentage",
-                  "value": 20
-                }
-            }
-,
-
-            {
-              "id": 2584969372,
-              "name": "2 month subscription (Cancel Anytime)",
-                "priceAdjustment": {
-                  "type": "percentage",
-                  "value": 20
-                }
-            }
-,
-
-            {
-              "id": 2585034908,
-              "name": "3 month subscription (Cancel Anytime)",
-                "priceAdjustment": {
-                  "type": "percentage",
-                  "value": 20
-                }
-            }
-
-
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script><style id="kaching-bundles-custom-css">
-        .kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions--link {
-    display: flex !important;
-    justify-content: center !important;
-    margin-top: 12px !important;
-}
-
-.kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions__link {
-    all: unset !important;
-    cursor: pointer !important;
-    text-decoration: underline !important;
-    text-underline-offset: 3px !important;
-    font-size: 14px !important;
-    color: rgba(0, 0, 0, 1) !important;
-}
-      </style><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-c3094f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
-    .kaching-bundles__block {
-      display: none;
-    }
-
-    .kaching-bundles-sticky-atc {
-      display: none;
-    }
-  </style>
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><style>@media screen and (max-width: 767px){.product-single__details{overflow: ;}}</style><style></style><style id="kaching-bundles-custom-css"></style><link href="{{ 'sf/css/kaching-bundles-c3094f.css'|asset_url }}" media="all" rel="stylesheet"/><style></style>
 {% endblock sf_head %}
-{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root { --loader-image: var(--loading-svg); }</style><div class="loader loader--image">
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root{--loader-image: var(--loading-svg);}</style><div class="loader loader--image">
 <div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
 </div>
 </div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
 {% block content_wrapper %}
 <div data-template="product.under-eye-reset"><main class="main-content" data-main="" id="MainContent">
-<div class="shopify-section" id="shopify-section-template--21857329971356__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--21857329971356__section_custom_html_7WqcF9 {
-    --PT: 0px;
-    --PB: 0px;
-  }</style><section class="section-padding" id="CustomCode--template--21857329971356__section_custom_html_7WqcF9">
+<div class="shopify-section" id="shopify-section-template--21857329971356__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--21857329971356__section_custom_html_7WqcF9{--PT: 0px;
+    --PB: 0px;}</style><section class="section-padding" id="CustomCode--template--21857329971356__section_custom_html_7WqcF9">
 <div class="wrapper">
 <div><element id="product"></element></div>
 </div>
 </section>
-</div><div class="shopify-section shopify-section--product" id="shopify-section-template--21857329971356__main"><style data-shopify="">#ProductTemplate--template--21857329971356__main {
-    --PT: 30px;
-    --PB: 0px;
-  }</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--21857329971356__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--21857329971356__main">
+</div><div class="shopify-section shopify-section--product" id="shopify-section-template--21857329971356__main"><style data-shopify="">#ProductTemplate--template--21857329971356__main{--PT: 30px;
+    --PB: 0px;}</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--21857329971356__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--21857329971356__main">
 <div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--21857329971356__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--21857329971356__main">
 <div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="37515662098588" data-media-id="template--21857329971356__main-37515662098588" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662098588"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662098588" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-7ecfe9.png'|asset_url }}" srcset="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-753w-a066eb.png'|asset_url }} 753w, {{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-41b6e2.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-41b6e2.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662098588" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-7ecfe9.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
@@ -945,7 +485,7 @@
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-enable-video-looping="true" data-id="37483818516636" data-media-id="template--21857329971356__main-37483818516636" data-product-single-media-wrapper="" data-product-slide="" data-type="video" data-video="" data-video-id="37483818516636" id="FeaturedMedia-template--21857329971356__main-37483818516636"><deferred-media class="product-single__media deferred-media product-single__media--37483818516636 product-single__media--video" data-deferred-media="" data-loop="true" style="padding-top: 100.0%;">
 <button aria-label="View Under-eye Reset Patches" class="deferred-media__poster" data-deferred-media-button="" type="button">
 <span class="deferred-media__poster-button"><svg aria-hidden="true" class="icon icon-media-video" focusable="false" role="presentation" viewbox="0 0 26 26"><path clip-rule="evenodd" d="M1 25h24V1H1v24z" fill-rule="evenodd"></path><path class="icon-media-video-outline" d="M.5 25v.5h25V.5H.5V25z"></path><path class="icon-media-video-element" clip-rule="evenodd" d="M9.718 6.72a1 1 0 0 0-1.518.855v10.736a1 1 0 0 0 1.562.827l8.35-5.677a1 1 0 0 0-.044-1.682l-8.35-5.06z" fill-rule="evenodd" opacity=".6"></path></svg></span>
-<img alt="Under-eye Reset Patches" class="img-object-cover" height="1440" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-pd466d5.jpg'|asset_url }}" srcset="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-753w-p155b42.jpg'|asset_url }} 753w, {{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-pd466d5.jpg'|asset_url }} 1440w" style="" width="1440"/>
+{% with sf_img='sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-pd466d5.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="img-object-cover" height="1440" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-pd466d5.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }} 1440w" style="" width="1440"/>{% endwith %}
 </button>
 <template>
 <video aria-label="Under-eye Reset Patches" autoplay="autoplay" class="media-video" controls="controls" loop="loop" muted="muted" playsinline="playsinline" poster="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000_1024x1-p682369.jpg'|asset_url }}" preload="metadata"><source src="{{ 'sf/media/2cf1f10d49d541a4a45c9228be643ee3-HD-1080p-2-5Mbps-94561307-4823ad.mp4'|asset_url }}" type="video/mp4"><img src="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000_1024x1-p682369.jpg'|asset_url }}"/></source></video>
@@ -953,138 +493,123 @@
 </deferred-media></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662131356" data-media-id="template--21857329971356__main-37515662131356" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662131356"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662131356" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg'|asset_url }}" srcset="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-753w-p579e49.png'|asset_url }} 753w, {{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662131356" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662164124" data-media-id="template--21857329971356__main-37515662164124" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662164124"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662164124" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png'|asset_url }}" srcset="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-753w-91b4a0.png'|asset_url }} 753w, {{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-27053f.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-27053f.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662164124" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662196892" data-media-id="template--21857329971356__main-37515662196892" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662196892"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662196892" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-09fb6f.jpg'|asset_url }}" srcset="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-753w-7d1807.png'|asset_url }} 753w, {{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662196892" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-09fb6f.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37541670420636" data-media-id="template--21857329971356__main-37541670420636" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37541670420636"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37541670420636" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-1080w-c6184d.jpg'|asset_url }}" srcset="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-753w-ff6f29.png'|asset_url }} 753w, {{ 'sf/img/Under-eyeResetPatches-Productimages_1-1080w-fbc1b8.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/Under-eyeResetPatches-Productimages_1-1080w-fbc1b8.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37541670420636" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-1080w-c6184d.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662229660" data-media-id="template--21857329971356__main-37515662229660" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662229660"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662229660" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg'|asset_url }}" srcset="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-753w-pddaadf.jpg'|asset_url }} 753w, {{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662229660" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37544488108188" data-media-id="template--21857329971356__main-37544488108188" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37544488108188"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37544488108188" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-1080w-dc7903.png'|asset_url }}" srcset="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-753w-3a8e9c.png'|asset_url }} 753w, {{ 'sf/img/Under-eyeResetPatches-Productimages_2-1080w-f7fc48.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/Under-eyeResetPatches-Productimages_2-1080w-f7fc48.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37544488108188" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-1080w-dc7903.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662262428" data-media-id="template--21857329971356__main-37515662262428" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662262428"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662262428" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-p497960.jpg'|asset_url }}" srcset="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-753w-pbe2c78.jpg'|asset_url }} 753w, {{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-p497960.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-p497960.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662262428" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-p497960.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662327964" data-media-id="template--21857329971356__main-37515662327964" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662327964"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662327964" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-p74cc22.jpg'|asset_url }}" srcset="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-753w-p374ea9.jpg'|asset_url }} 753w, {{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-p74cc22.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-p74cc22.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662327964" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-p74cc22.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662360732" data-media-id="template--21857329971356__main-37515662360732" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662360732"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662360732" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg'|asset_url }}" srcset="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-753w-pf7107a.jpg'|asset_url }} 753w, {{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662360732" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662393500" data-media-id="template--21857329971356__main-37515662393500" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662393500"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662393500" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-a38d11.png'|asset_url }}" srcset="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-753w-c769ea.png'|asset_url }} 753w, {{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-1aaccb.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-1aaccb.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662393500" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-a38d11.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662426268" data-media-id="template--21857329971356__main-37515662426268" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662426268"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662426268" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-cc38b6.jpg'|asset_url }}" srcset="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-753w-eca3e7.png'|asset_url }} 753w, {{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662426268" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-cc38b6.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37515662459036" data-media-id="template--21857329971356__main-37515662459036" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--21857329971356__main-37515662459036"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662459036" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png'|asset_url }}" srcset="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-753w-b4b795.png'|asset_url }} 753w, {{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-4e7ae7.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-4e7ae7.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading img-object-cover" data-image-id="37515662459036" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 </div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="37515662098588" data-thumbnail-id="template--21857329971356__main-37515662098588"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-178w-a862ab.png'|asset_url }}" srcset="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-41b6e2.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-41b6e2.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-178w-a862ab.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37483818516636" data-thumbnail-id="template--21857329971356__main-37483818516636"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-178w-p0b7b6f.jpg'|asset_url }}" srcset="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-178w-p0b7b6f.jpg'|asset_url }} 178w, {{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-pd466d5.jpg'|asset_url }} 1440w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-pd466d5.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-178w-p0b7b6f.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1440w" style="" width="178"/>{% endwith %}
 </figure><svg aria-hidden="true" class="icon icon-media-video" focusable="false" role="presentation" viewbox="0 0 26 26"><path clip-rule="evenodd" d="M1 25h24V1H1v24z" fill-rule="evenodd"></path><path class="icon-media-video-outline" d="M.5 25v.5h25V.5H.5V25z"></path><path class="icon-media-video-element" clip-rule="evenodd" d="M9.718 6.72a1 1 0 0 0-1.518.855v10.736a1 1 0 0 0 1.562.827l8.35-5.677a1 1 0 0 0-.044-1.682l-8.35-5.06z" fill-rule="evenodd" opacity=".6"></path></svg></a></div><div class="product-single__thumbnail" data-id="37515662131356" data-thumbnail-id="template--21857329971356__main-37515662131356"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-178w-pc52cdd.png'|asset_url }}" srcset="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_e8917bc3-d853-4c5c-b72d-85825210cf93-178w-pc52cdd.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662164124" data-thumbnail-id="template--21857329971356__main-37515662164124"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-178w-466ef6.png'|asset_url }}" srcset="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-27053f.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-27053f.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-178w-466ef6.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662196892" data-thumbnail-id="template--21857329971356__main-37515662196892"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png'|asset_url }}" srcset="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1080w-beef36.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37541670420636" data-thumbnail-id="template--21857329971356__main-37541670420636"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png'|asset_url }}" srcset="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-1080w-fbc1b8.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/Under-eyeResetPatches-Productimages_1-1080w-fbc1b8.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662229660" data-thumbnail-id="template--21857329971356__main-37515662229660"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-178w-p1df585.png'|asset_url }}" srcset="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/5_28967e09-2223-4d0c-bd80-8b72414db926-178w-p1df585.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37544488108188" data-thumbnail-id="template--21857329971356__main-37544488108188"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-178w-6105a8.png'|asset_url }}" srcset="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-1080w-f7fc48.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/Under-eyeResetPatches-Productimages_2-1080w-f7fc48.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/Under-eyeResetPatches-Productimages_2-178w-6105a8.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662262428" data-thumbnail-id="template--21857329971356__main-37515662262428"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-178w-p8a57d6.png'|asset_url }}" srcset="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-p497960.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1080w-p497960.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-178w-p8a57d6.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662327964" data-thumbnail-id="template--21857329971356__main-37515662327964"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-p08e2ad.png'|asset_url }}" srcset="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-p74cc22.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1080w-p74cc22.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-p08e2ad.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662360732" data-thumbnail-id="template--21857329971356__main-37515662360732"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-178w-pbabf79.png'|asset_url }}" srcset="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-178w-pbabf79.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662393500" data-thumbnail-id="template--21857329971356__main-37515662393500"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png'|asset_url }}" srcset="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-1aaccb.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-1080w-1aaccb.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662426268" data-thumbnail-id="template--21857329971356__main-37515662426268"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-178w-919894.png'|asset_url }}" srcset="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-178w-919894.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="37515662459036" data-thumbnail-id="template--21857329971356__main-37515662459036"><a aria-label="Under-eye Reset Patches" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-178w-738d5f.png'|asset_url }}" srcset="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-4e7ae7.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-4e7ae7.png'|asset_url %}<img alt="Under-eye Reset Patches" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/12_17994055-c9e0-417c-8f29-b33d30324f43-178w-738d5f.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div></div></div>
 <div class="product-single__details" data-collapsible-single="" id="product_details">
 <div class="form__wrapper" data-product-info=""><div class="product__block" style="--PBB:16px;">
 <div class="product__icon__row product__icon__row--center" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.9); --bg: #f7f7f7;padding: 5px 10px;"><div class="product__icon__text"><p><strong>🇰🇷 Formulated in Korea</strong></p></div></div>
 </div>
-<style>
-           .product__block.product__images {
-                 padding-top: 0px!important;
-     padding-bottom: 0px!important;
-    }
-          .profile-image:nth-child(1) {
-            background-image: url("{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-p8adec8.png'|asset_url }}");
-        }
-
-        .profile-image:nth-child(2) {
-            background-image: url("{{ 'sf/img/2_51914231-02fc-4cf3-b29c-1627c2d6ed9a_1000x1000-pf1aa35.png'|asset_url }}");
-        }
-
-        .profile-image:nth-child(3) {
-            background-image: url("{{ 'sf/img/3_99578868-68cd-4fd4-9230-90bcb8d72a8e_1000x1000-p7db3fa.png'|asset_url }}");
-        }
-    </style>
+<style>.product__block.product__images{padding-top: 0px!important;
+     padding-bottom: 0px!important;}.profile-image:nth-child(1){background-image: url("{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-p8adec8.png'|asset_url }}");}.profile-image:nth-child(2){background-image: url("{{ 'sf/img/2_51914231-02fc-4cf3-b29c-1627c2d6ed9a_1000x1000-pf1aa35.png'|asset_url }}");}.profile-image:nth-child(3){background-image: url("{{ 'sf/img/3_99578868-68cd-4fd4-9230-90bcb8d72a8e_1000x1000-p7db3fa.png'|asset_url }}");}</style>
 <div class="product__block product__images">
 <div class="social-proof-container">
 <div class="profile-images">
@@ -1103,16 +628,7 @@
 </div>
 <div class="product__block product__title-and-price" id="product_link">
 <h1 class="product__title">{{ product.get_title }}</h1>
-</div><style>
-                #productpricetemplate--21857329971356__main {
-                  font-size: 21px!important;
-                }
-                @media screen and (max-width: 767px){
-                 #productpricetemplate--21857329971356__main {
-                  font-size: 26px!important;
-                }
-                }
-              </style>
+</div><style>#productpricetemplate--21857329971356__main{font-size: 21px!important;}@media screen and (max-width: 767px){% templatetag opencomment %}productpricetemplate--21857329971356__main{font-size: 26px!important;}}</style>
 <div class="product__block product__price-and-badge" style="--PBB:20px;">
 <div class="product__price-and-rating">
 <div class="product__price" data-price-wrapper="" id="productpricetemplate--21857329971356__main">
@@ -1146,330 +662,13 @@
 </div>
 <div class="product__block standard__app">
 <div class="shopify-block shopify-app-block" id="shopify-block-AdTJqL0tGUzZJRkt3M__kaching_bundles_app_block_DpN3tH">
-<script class="kaching-bundles-product" data-main="true" data-product-id="9264976101532" type="application/json">
-    {
-      "id": 9264976101532,
-      "handle": "under-eye-reset",
-      "url": "\/products\/under-eye-reset",
-      "availableForSale": true,
-      "title": "Under-eye Reset Patches",
-      "image": "..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png\u0026v=1789713523",
-      "collectionIds": [307652133020,304922558620,314587218076,333800898716,299336073372,333257605276],
-      "options": [
-        
-          {
-            "defaultName": "Title",
-            "name": "Title",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 6383494856860,
-                  "defaultName": "Default Title",
-                  "name": "Default Title",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 47611439972508,
-      "variants": [
-        
-          {
-            "id": 47611439972508,
-            "availableForSale": true,
-            "price": 2900,
-            "compareAtPrice": 3900,
-            "options": ["Default Title"],
-            "imageId": null,
-            "image": null,
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": -3815,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script>
-<script class="kaching-bundles-product" data-product-id="9166105411740" type="application/json">
-    {
-      "id": 9166105411740,
-      "handle": "mystery-gift",
-      "url": "\/products\/mystery-gift",
-      "availableForSale": true,
-      "title": "Mystery Gift",
-      "image": "..\/assets\/img\/free_8-1600w-4bc8a8.png\u0026v=1765145633",
-      "collectionIds": [307652133020,304922558620,299336073372],
-      "options": [
-        
-          {
-            "defaultName": "Title",
-            "name": "Title",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 6021070520476,
-                  "defaultName": "Default Title",
-                  "name": "Default Title",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 47239194837148,
-      "variants": [
-        
-          {
-            "id": 47239194837148,
-            "availableForSale": true,
-            "price": 1500,
-            "compareAtPrice": null,
-            "options": ["Default Title"],
-            "imageId": null,
-            "image": null,
-            "inventoryManagement": null,
-            "inventoryPolicy": "deny",
-            "inventoryQuantity": -59988,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script>
-<script class="kaching-bundles-product" data-product-id="8462448984220" type="application/json">
-    {
-      "id": 8462448984220,
-      "handle": "color-changing-foundation",
-      "url": "\/products\/color-changing-foundation",
-      "availableForSale": true,
-      "title": "Color Changing Foundation",
-      "image": "..\/assets\/img\/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--160w-p8bb67b.jpg\u0026v=1790591291",
-      "collectionIds": [307652133020,304922558620,319257280668,314587218076,333800898716,299336073372],
-      "options": [
-        
-          {
-            "defaultName": "Title",
-            "name": "Title",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 4117717418140,
-                  "defaultName": "Default Title",
-                  "name": "Default Title",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 45097716285596,
-      "variants": [
-        
-          {
-            "id": 45097716285596,
-            "availableForSale": true,
-            "price": 4900,
-            "compareAtPrice": 5900,
-            "options": ["Default Title"],
-            "imageId": null,
-            "image": null,
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": 975759,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              {
-                  "id": 3050799260,
-                  "price": 3900,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 3900
-                },
-{
-                  "id": 3063185564,
-                  "price": 4900,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 4900
-                },
-{
-                  "id": 3050832028,
-                  "price": 2450,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 2450
-                },
-{
-                  "id": 3063218332,
-                  "price": 4900,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 4900
-                },
-{
-                  "id": 2585002140,
-                  "price": 3920,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 3920
-                },
-{
-                  "id": 2584969372,
-                  "price": 3920,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 3920
-                },
-{
-                  "id": 2585034908,
-                  "price": 3920,
-                  "compareAtPrice": 4900,
-                  "perDeliveryPrice": 3920
-                }
-
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-            {
-              "id": 3050799260,
-              "name": "Every 28 days.",
-                "priceAdjustment": {
-                  "type": "fixed_amount",
-                  "value": 1000
-                }
-            },
-
-            {
-              "id": 3050832028,
-              "name": "Every 28 days",
-                "priceAdjustment": {
-                  "type": "price",
-                  "value": 2450
-                }
-            }
-,
-
-            {
-              "id": 3063185564,
-              "name": "Deliver every 45 days",
-                "priceAdjustment": {
-                  "type": "fixed_amount",
-                  "value": 0
-                }
-            },
-
-            {
-              "id": 3063218332,
-              "name": "Deliver every 60 days",
-                "priceAdjustment": {
-                  "type": "fixed_amount",
-                  "value": 0
-                }
-            }
-,
-
-            {
-              "id": 2585002140,
-              "name": "1 month subscription (Cancel Anytime)",
-                "priceAdjustment": {
-                  "type": "percentage",
-                  "value": 20
-                }
-            }
-,
-
-            {
-              "id": 2584969372,
-              "name": "2 month subscription (Cancel Anytime)",
-                "priceAdjustment": {
-                  "type": "percentage",
-                  "value": 20
-                }
-            }
-,
-
-            {
-              "id": 2585034908,
-              "name": "3 month subscription (Cancel Anytime)",
-                "priceAdjustment": {
-                  "type": "percentage",
-                  "value": 20
-                }
-            }
 
 
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script>
-<style id="kaching-bundles-custom-css">
-        .kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions--link {
-    display: flex !important;
-    justify-content: center !important;
-    margin-top: 12px !important;
-}
 
-.kaching-bundles__subscriptions-wrapper .kaching-bundles__subscriptions__link {
-    all: unset !important;
-    cursor: pointer !important;
-    text-decoration: underline !important;
-    text-underline-offset: 3px !important;
-    font-size: 14px !important;
-    color: rgba(0, 0, 0, 1) !important;
-}
-      </style>
+<style id="kaching-bundles-custom-css"></style>
 <kaching-bundle data-skip-node-update="" data-skip-subtree-update="" manual-deal-block-id="" product-id="9264976101532"></kaching-bundle>
 </div>
-</div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:20px;">{% firstof product.children.first.pk product.pk as sf_atc_53 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_53 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--21857329971356__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+</div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:20px;">{% firstof product.children.first.pk product.pk as sf_atc_47 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_47 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--21857329971356__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
 <input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
 <div class="shop-pay-terms">
 <shopify-payment-terms shopify-meta='{"type":"product","currency_code":"USD","country_code":"US","variants":[{"id":47611439972508,"price_per_term":"$15","price_per_term_amount":14.5,"full_price":"$29","full_price_amount":29.0,"eligible":false,"available":true,"number_of_payment_terms":2}],"min_price":"$35","min_price_amount":35.0,"max_price":"$30,000","max_price_amount":30000.0,"financing_plans":[{"min_price":"$35","max_price":"$50","terms":[{"apr":0,"loan_type":"split_pay","installments_count":2}],"min_price_amount":35.0,"max_price_amount":49.99},{"min_price":"$50","max_price":"$1,000","terms":[{"apr":0,"loan_type":"split_pay","installments_count":3},{"apr":0,"loan_type":"split_pay","installments_count":4},{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":50.0,"max_price_amount":999.99},{"min_price":"$1,000","max_price":"$30,000","terms":[{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":1000.0,"max_price_amount":30000.0}],"installments_buyer_prequalification_enabled":false,"seller_id":2823039}' variant-id="47611439972508"></shopify-payment-terms>
@@ -1512,89 +711,40 @@
 <p id="stockinfop">
 <span class="stock-left">
 <span class="pulsing-dot" style="background-color: #16a34a;">
-<style>
-        #stockinfop {
-          list-style: none !important;
-        }
-        #stockinfop .pulsing-dot::before {
-          background-color: #16a34a!important;
-        }
-        #stockinfop .stock-left > span:not(.pulsing-dot) {
-          color: #16a34a!important;
-        }
-      </style>
+<style>#stockinfop{list-style: none !important;}#stockinfop .pulsing-dot::before{background-color: #16a34a!important;}#stockinfop .stock-left > span:not(.pulsing-dot){color: #16a34a!important;}</style>
 </span>
 <span id="shippingUspText" style="color: #16a34a;">Shipped today</span>
 </span>
 <span class="location-right" id="locationinfop"></span>
 </p>
 </div>
-<style>
-  #locationinfop,
-  #stockinfop {
-    margin-bottom: 0px;
+<style>#locationinfop,#stockinfop{margin-bottom: 0px;
     text-align: center;
     font-size: 0.975rem;
     font-weight: 500;
     border-radius: 12px;
-    margin-top: 3px;
-  }
-
-  #stockinfop {
-    display: flex;
+    margin-top: 3px;}#stockinfop{display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .stock-left {
-    display: flex;
+    margin-bottom: 10px;}.stock-left{display: flex;
     align-items: center;
-    gap: 8px;
-  }
-
-  .location-right {
-    display: flex;
+    gap: 8px;}.location-right{display: flex;
     align-items: center;
-    gap: 4px;
-  }
-
-  .location-right .shipping-country-flag {
-    width: 20px;
+    gap: 4px;}.location-right .shipping-country-flag{width: 20px;
     height: 15px;
-    flex: 0 0 20px;
-  }
-
-  .pulsing-dot {
-    position: relative;
+    flex: 0 0 20px;}.pulsing-dot{position: relative;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    animation: dot-breathe 2s ease-in-out infinite;
-  }
-
-  /* No ::before halo — the expanding same-color ring read as a second dot.
-     A gentle opacity breathe on the dot itself signals "live" instead. */
-  .pulsing-dot::before {
-    content: none;
-  }
-
-  @keyframes dot-breathe {
+    animation: dot-breathe 2s ease-in-out infinite;}.pulsing-dot::before{content: none;}@keyframes dot-breathe{
     0%, 100% { opacity: 1; }
     50% { opacity: 0.45; }
-  }
-
-@media only screen and (max-width: 767px) {
-  #locationinfop, #stockinfop {
-    text-align: center;
+  }@media only screen and (max-width: 767px){% templatetag opencomment %}locationinfop,#stockinfop{text-align: center;
     font-size: 0.975rem;
     font-weight: 500;
     border-radius: 10px;
     margin-top: 3px;
-    font-size: 14.5px;
-  }
-}
-</style>
+    font-size: 14.5px;}}</style>
 <script>
   // Cached original innerHTML of the shipping/returns accordion body, captured once
   // so the worldwide-shipping paragraphs can be toggled without losing content.
@@ -1604,7 +754,7 @@
     const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
     const validCountryCode = /^[A-Z]{2}$/.test(normalizedCountryCode);
     const flagMarkup = validCountryCode
-      ? `<img class="shipping-country-flag" src="https://cdn.shopify.com/static/images/flags/${normalizedCountryCode.toLowerCase()}.svg?width=32" alt="" aria-hidden="true" width="20" height="15" style="vertical-align: middle;">`
+      ? `<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint(...normalizedCountryCode.split('').map(c => 127397 + c.charCodeAt(0)))}</span>`
       : '<span aria-hidden="true">📦</span>';
     const countryLabel = validCountryCode ? normalizedCountryCode : 'your country';
     const locationInfoP = document.getElementById('locationinfop');
@@ -1749,81 +899,33 @@
 <p><strong>Selling out fast<br/></strong>Due to high demand, quantities are limited.</p>
 </div></div>
 <div class="product__block countdown-timer-wrapper">
-<style>
-    .countdown-timer-wrapper {
-     width: 100%;
+<style>.countdown-timer-wrapper{width: 100%;
      padding-top: 6px!important;
-     padding-bottom: 20px!important;
-    }
-    
-    .countdown-timer-container {
-      width: 100%;
+     padding-bottom: 20px!important;}.countdown-timer-container{width: 100%;
       max-width: 100%;
-      margin: 0 auto;
-    }
-    
-    .countdown-timer-bar {
-      width: 100%;
+      margin: 0 auto;}.countdown-timer-bar{width: 100%;
       height: 10px;
       background-color: #f7f7f7;
       border-radius: 0px;
       overflow: hidden;
       margin-bottom: 7px;
-          border-radius: 4px;
-    }
-    
-    .countdown-timer-progress {
-      height: 100%;
+          border-radius: 4px;}.countdown-timer-progress{height: 100%;
       background-color: #000000;
       width: 89%;
       transition: width 0.3s ease;
-      border-radius: 0px;
-    }
-    
-    .countdown-timer-info {
-      display: flex;
+      border-radius: 0px;}.countdown-timer-info{display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
-    }
-    
-    .countdown-timer-prefix {
-      color: #000000;
+      gap: 8px;}.countdown-timer-prefix{color: #000000;
       font-size: 16px;
-      font-weight: 500;
-    }
-    
-    .countdown-timer-end {
-      display: flex;
+      font-weight: 500;}.countdown-timer-end{display: flex;
       align-items: center;
       gap: 6px;
       color: #000000;
       font-size: 16px;
-      font-weight: 500;
-    }
-    
-    .countdown-timer-time {
-      color: #000000;
-      font-weight: 500;
-    }
-    
-    @media (max-width: 768px) {
-      .countdown-timer-container {
-        width: 100%;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .countdown-timer-info {
-
-      }
-      
-      .countdown-timer-end {
-
-      }
-    }
-  </style>
+      font-weight: 500;}.countdown-timer-time{color: #000000;
+      font-weight: 500;}@media (max-width: 768px){.countdown-timer-container{width: 100%;}}@media (max-width: 480px){.countdown-timer-info{}.countdown-timer-end{}}</style>
 <div class="countdown-timer-container">
 <div class="countdown-timer-bar">
 <div class="countdown-timer-progress"></div>
@@ -1971,7 +1073,7 @@
 <span id="accordionbefore">Shipping and returns</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-shipping-and-returns--template--21857329971356__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a">
 <div class="product__accordion__inner rte" data-collapsible-content="">
-<div data-current-variant-id="47611439972508" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p><strong>We offer FREE Worldwide Shipping!</strong></p><p>Due to the influx of orders from our ongoing <strong>sale</strong>, dispatch may be slightly delayed. Rest assured, all orders will ship within <strong>24–48 hours</strong>. Depending on your location, delivery may take approximately <strong>5–7 business days</strong>.<br/><br/>Although we offer shipping to all countries, a few islands are excluded from our delivery area. If your country is available during checkout, we ship to your country. We also provide standard international tracked shipping at no additional cost on all orders.<br/><br/>Additionally, we offer a premium international insured shipping option at a modest charge of <strong>{% include 'partials/sf_price.html' with p=product %}</strong>, which we highly recommend for prioritized service and faster delivery.<br/><br/><strong>Returns</strong><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="https://08f531-2.myshopify.com/policies/refund-policy" title="Refund Policy">return policy</a> for more information.</p></div>
+<div data-current-variant-id="47611439972508" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p><strong>We offer FREE Worldwide Shipping!</strong></p><p>Due to the influx of orders from our ongoing <strong>sale</strong>, dispatch may be slightly delayed. Rest assured, all orders will ship within <strong>24–48 hours</strong>. Depending on your location, delivery may take approximately <strong>5–7 business days</strong>.<br/><br/>Although we offer shipping to all countries, a few islands are excluded from our delivery area. If your country is available during checkout, we ship to your country. We also provide standard international tracked shipping at no additional cost on all orders.<br/><br/><br/><br/><strong>Returns</strong><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="/refund-policy/" title="Refund Policy">return policy</a> for more information.</p></div>
 </div>
 </div>
 </div></div>
@@ -1980,65 +1082,18 @@
 </div>
 </div>
 </div><script data-product-json="" id="ProductJson-template--21857329971356__main" type="application/json">
-      {"id":9264976101532,"title":"Under-eye Reset Patches","handle":"under-eye-reset","description":"\u003cp class=\"p1\"\u003eHydrating under-eye patches that help depuff, brighten and smooth the delicate eye area for a refreshed, well-rested appearance.\u003c\/p\u003e","published_at":"2026-09-18T02:31:59-04:00","created_at":"2026-09-16T01:15:31-04:00","vendor":"Skinofab","type":"","tags":[],"price":2900,"price_min":2900,"price_max":2900,"available":true,"price_varies":false,"compare_at_price":3900,"compare_at_price_min":3900,"compare_at_price_max":3900,"compare_at_price_varies":false,"variants":[{"id":47611439972508,"title":"Default Title","option1":"Default Title","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Under-eye Reset Patches","public_title":null,"options":["Default Title"],"price":2900,"weight":0,"compare_at_price":3900,"inventory_management":"shopify","barcode":null,"requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png","..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg","..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png","..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png","..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png","..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg","..\/assets\/img\/Under-eyeResetPatches-Productimages_2-753w-3a8e9c.png","..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-753w-pbe2c78.jpg","..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-p08e2ad.png","..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg","..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png","..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg","..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png"],"featured_image":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png","options":["Title"],"media":[{"alt":null,"id":37515662098588,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png","width":1080},{"alt":null,"id":37483818516636,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1440,"width":1440,"src":"..\/assets\/img\/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-814w-p839b7e.jpg"},"aspect_ratio":1.0,"duration":7040,"media_type":"video","sources":[{"format":"mp4","height":480,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-SD-480p-0-9Mbps-94561307-923663.mp4","width":480},{"format":"mp4","height":1080,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-HD-1080p-2-5Mbps-94561307-4823ad.mp4","width":1080},{"format":"mp4","height":720,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-HD-720p-1-6Mbps-94561307-edc545.mp4","width":720},{"format":"m3u8","height":1080,"mime_type":"application\/x-mpegURL","url":"\/\/skinofab.com\/cdn\/shop\/videos\/c\/vp\/2cf1f10d49d541a4a45c9228be643ee3\/2cf1f10d49d541a4a45c9228be643ee3.m3u8?v=0","width":1080}]},{"alt":null,"id":37515662131356,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg","width":1080},{"alt":null,"id":37515662164124,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png","width":1080},{"alt":null,"id":37515662196892,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png","width":1080},{"alt":null,"id":37541670420636,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png","width":1080},{"alt":null,"id":37515662229660,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg","width":1080},{"alt":null,"id":37544488108188,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_2-753w-3a8e9c.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_2-753w-3a8e9c.png","width":1080},{"alt":null,"id":37515662262428,"position":9,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-753w-pbe2c78.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-753w-pbe2c78.jpg","width":1080},{"alt":null,"id":37515662327964,"position":10,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-p08e2ad.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-p08e2ad.png","width":1080},{"alt":null,"id":37515662360732,"position":11,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg","width":1080},{"alt":null,"id":37515662393500,"position":12,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png","width":1080},{"alt":null,"id":37515662426268,"position":13,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg","width":1080},{"alt":null,"id":37515662459036,"position":14,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cp class=\"p1\"\u003eHydrating under-eye patches that help depuff, brighten and smooth the delicate eye area for a refreshed, well-rested appearance.\u003c\/p\u003e"}
+      {"id":9264976101532,"title":"Under-eye Reset Patches","handle":"under-eye-reset","description":"\u003cp class=\"p1\"\u003eHydrating under-eye patches that help depuff, brighten and smooth the delicate eye area for a refreshed, well-rested appearance.\u003c\/p\u003e","published_at":"2026-09-18T02:31:59-04:00","created_at":"2026-09-16T01:15:31-04:00","vendor":"Skinofab","type":"","tags":[],"price":2900,"price_min":2900,"price_max":2900,"available":true,"price_varies":false,"compare_at_price":3900,"compare_at_price_min":3900,"compare_at_price_max":3900,"compare_at_price_varies":false,"variants":[{"id":47611439972508,"title":"Default Title","option1":"Default Title","option2":null,"option3":null,"sku":null,"requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Under-eye Reset Patches","public_title":null,"options":["Default Title"],"price":2900,"weight":0,"compare_at_price":3900,"inventory_management":"shopify","barcode":null,"requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png","..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg","..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png","..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png","..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png","..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg","..\/assets\/img\/Under-eyeResetPatches-Productimages_2-753w-3a8e9c.png","..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-753w-pbe2c78.jpg","..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-p08e2ad.png","..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg","..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png","..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg","..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png"],"featured_image":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png","options":["Title"],"media":[{"alt":null,"id":37515662098588,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb.png","width":1080},{"alt":null,"id":37483818516636,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1440,"width":1440,"src":"..\/assets\/img\/2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-814w-p839b7e.jpg"},"aspect_ratio":1.0,"duration":7040,"media_type":"video","sources":[{"format":"mp4","height":480,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-SD-480p-0-9Mbps-94561307-923663.mp4","width":480},{"format":"mp4","height":1080,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-HD-1080p-2-5Mbps-94561307-4823ad.mp4","width":1080},{"format":"mp4","height":720,"mime_type":"video\/mp4","url":"..\/assets\/media\/2cf1f10d49d541a4a45c9228be643ee3-HD-720p-1-6Mbps-94561307-edc545.mp4","width":720},{"format":"m3u8","height":1080,"mime_type":"application\/x-mpegURL","url":"\/cdn\/shop\/videos\/c\/vp\/2cf1f10d49d541a4a45c9228be643ee3\/2cf1f10d49d541a4a45c9228be643ee3.m3u8?v=0","width":1080}]},{"alt":null,"id":37515662131356,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1080w-p0e56a0.jpg","width":1080},{"alt":null,"id":37515662164124,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1080w-ba45fa.png","width":1080},{"alt":null,"id":37515662196892,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-178w-970281.png","width":1080},{"alt":null,"id":37541670420636,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_1-178w-b7ebf9.png","width":1080},{"alt":null,"id":37515662229660,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/5_28967e09-2223-4d0c-bd80-8b72414db926-1080w-paa2bae.jpg","width":1080},{"alt":null,"id":37544488108188,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_2-753w-3a8e9c.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/Under-eyeResetPatches-Productimages_2-753w-3a8e9c.png","width":1080},{"alt":null,"id":37515662262428,"position":9,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-753w-pbe2c78.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-753w-pbe2c78.jpg","width":1080},{"alt":null,"id":37515662327964,"position":10,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-p08e2ad.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-178w-p08e2ad.png","width":1080},{"alt":null,"id":37515662360732,"position":11,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1080w-p92401d.jpg","width":1080},{"alt":null,"id":37515662393500,"position":12,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/10_e99f97b9-a72d-4b9a-ac55-5722b067bbf9-178w-4e675c.png","width":1080},{"alt":null,"id":37515662426268,"position":13,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/11_1c5ef18d-9536-4269-89ea-7c4f6b8bdc82-1080w-c569ea.jpg","width":1080},{"alt":null,"id":37515662459036,"position":14,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/12_17994055-c9e0-417c-8f29-b33d30324f43-1080w-c9a04c.png","width":1080}],"requires_selling_plan":false,"selling_plan_groups":[],"content":"\u003cp class=\"p1\"\u003eHydrating under-eye patches that help depuff, brighten and smooth the delicate eye area for a refreshed, well-rested appearance.\u003c\/p\u003e"}
     </script>
 <script id="ModelJson-template--21857329971356__main" type="application/json">
       []
     </script>
 </div></div>
-<style>
-  #frontrow-sticker {
-    position: absolute;
-    z-index: 3;
-    border-radius: 0 !important;
-    max-width: unset !important;
-    left: 0px !important;
-    top: 0 !important;
-  }
-
-  .iframe-modal-frontrow {
-    display: none;
-    position: fixed;
-    z-index: 99999999;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  /* Mobile only — scale down */
-  @media only screen and (max-width: 480px) {
-    #frontrow-sticker {
-      transform: scale(0.70) !important;
-      transform-origin: 0px 0px !important;
-    }
-  }
-
-  .iframe.frontrow { display: none; position: fixed; left: 0; top: 0; z-index: 99999997; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden; }
-</style>
+<style></style>
 </section>
-<style>
-  #sticky_atcs .product__submit__add {
-        width: max-content;
+<style>#sticky_atcs .product__submit__add{width: max-content;
     min-width: max-content;
     flex: none;
-    margin: 0;
-  }
-  .price-wrapper {
-          font-size: 14px;
-    }
-      #sticky_atcs .product__submit__add {
-    font-size: 12px;
-}
-  @media only screen and (max-width: 767px) {
-    #sticky_atcs .product__submit__add {
-    font-size: 10px;
-}
-    .price-wrapper {
-          font-size: 13px;
-    }
-  }
-  </style><div id="sticky_atcs">
+    margin: 0;}.price-wrapper{font-size: 14px;}#sticky_atcs .product__submit__add{font-size: 12px;}@media only screen and (max-width: 767px){% templatetag opencomment %}sticky_atcs .product__submit__add{font-size: 10px;}.price-wrapper{font-size: 13px;}}</style><div id="sticky_atcs">
 <div class="wrapper">
 <div class="wrap">
 <div class="left">
@@ -2076,96 +1131,38 @@
 </div>
 </div>
 </div>
-<style>
-#sticky_atcs {
-opacity: 0;
+<style>#sticky_atcs{opacity: 0;
 visibility: hidden;
 transform: translateY(100%);
-transition: all 0.3s ease;
-}
-
-  #sticky_atcs.scrolled {
-opacity: 1;
+transition: all 0.3s ease;}#sticky_atcs.scrolled{opacity: 1;
 visibility: visible;
 transform: translateY(0%);
-transition: all 0.3s ease;
-}
-
-
-.sticky-visible {
-opacity: 1;
-visibility: visible;
-transform: translateY(0);
-}
-
-#sticky_atcs {
-width: 100%;
+transition: all 0.3s ease;}#sticky_atcs{width: 100%;
 position: fixed;
 bottom: 0;
 height: auto;
 z-index: 999;
 background: white;
 box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-padding: 10px;
-}
-
-#sticky_atcs .wrap {
-display: flex;
+padding: 10px;}#sticky_atcs .wrap{display: flex;
 align-items: center;
 gap: 25px;
 justify-content: space-between;
-flex-wrap: wrap;
-}
-
-#sticky_atcs h5 {
-margin-bottom: 3px!important;
-font-size: 16px;
-}
-
-#sticky_atcs img {
-width: 60px;
+flex-wrap: wrap;}#sticky_atcs h5{margin-bottom: 3px!important;
+font-size: 16px;}#sticky_atcs img{width: 60px;
 height: 60px;
 border-radius: 7px;
-object-fit: cover;
-}
-
-#sticky_atcs .left {
-display: flex;
+object-fit: cover;}#sticky_atcs .left{display: flex;
 align-items: center;
-gap: 20px;
-}
-
-#sticky_atcs .right {
-flex: 1;
-max-width: 400px;
-}
-
-/* Variant switcher styles */
-.sticky-variant-wrapper {
-display: flex;
+gap: 20px;}#sticky_atcs .right{flex: 1;
+max-width: 400px;}.sticky-variant-wrapper{display: flex;
 align-items: center;
-gap: 15px;
-}
-
-.sticky-option {
-display: flex;
+gap: 15px;}.sticky-option{display: flex;
 align-items: center;
-gap: 10px;
-}
-
-.sticky-option__label {
-font-size: 14px;
+gap: 10px;}.sticky-option__label{font-size: 14px;
 font-weight: 500;
-margin: 0;
-}
-
-.sticky-option__values {
-display: flex;
-gap: 5px;
-}
-
-.sticky-swatch {
-min-width: 35px;
+margin: 0;}.sticky-option__values{display: flex;
+gap: 5px;}.sticky-swatch{min-width: 35px;
 height: 35px;
 padding: 0 10px;
 border: 2px solid #ddd;
@@ -2176,222 +1173,55 @@ display: flex;
 align-items: center;
 justify-content: center;
 font-size: 13px;
-transition: all 0.2s ease;
-}
-
-.sticky-swatch:hover:not(:disabled) {
-border-color: #000;
-}
-
-.sticky-swatch.is-active {
-border-color: #000;
+transition: all 0.2s ease;}.sticky-swatch:hover:not(:disabled){border-color: #000;}.sticky-swatch.is-active{border-color: #000;
 background: #000;
-color: white;
-}
-
-.sticky-swatch.is-sold-out {
-opacity: 0.5;
+color: white;}.sticky-swatch.is-sold-out{opacity: 0.5;
 cursor: not-allowed;
-text-decoration: line-through;
-}
-
-.btn--submit {
-min-height: 35px;
+text-decoration: line-through;}.btn--submit{min-height: 35px;
 margin: 0;
-flex: 1;
-}
-
-@media only screen and (max-width: 767px) {
-#sticky_atcs {
-padding: 10px;
-}
-
-#sticky_atcs .wrap {
-gap: 10px;
-}
-
-#sticky_atcs h5 {
-font-size: 14px;
-}
-
-#sticky_atcs img {
-}
-
-#sticky_atcs .right {
-width: 100%;
-max-width: none;
-}
-
-.sticky-variant-wrapper {
-flex-wrap: wrap;
-gap: 10px;
-}
-
-.sticky-option {
-width: 100%;
-}
-
-.sticky-swatch {
-min-width: 30px;
+flex: 1;}@media only screen and (max-width: 767px){% templatetag opencomment %}sticky_atcs{padding: 10px;}#sticky_atcs .wrap{gap: 10px;}#sticky_atcs h5{font-size: 14px;}#sticky_atcs img{}#sticky_atcs .right{width: 100%;
+max-width: none;}.sticky-variant-wrapper{flex-wrap: wrap;
+gap: 10px;}.sticky-option{width: 100%;}.sticky-swatch{min-width: 30px;
 height: 30px;
-font-size: 12px;
-}
-
-.btn--submit {
-width: 100%;
-margin-top: 5px;
-}
-}
-</style>
-<style> #shopify-section-template--21857329971356__main .product__form__wrapper {--PBB: 8px !important;} #shopify-section-template--21857329971356__main #locationinfop {margin-top: 0;} </style></div><div class="shopify-section" id="shopify-section-template--21857329971356__section_image_with_text_xdx7DM"><style>
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM {
-  padding-top: 20px;
+font-size: 12px;}.btn--submit{width: 100%;
+margin-top: 5px;}}</style>
+<style>#shopify-section-template--21857329971356__main .product__form__wrapper{--PBB: 8px !important;}#shopify-section-template--21857329971356__main #locationinfop{margin-top: 0;}</style></div><div class="shopify-section" id="shopify-section-template--21857329971356__section_image_with_text_xdx7DM"><style>.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM{padding-top: 20px;
   padding-bottom: 20px;
   background: transparent;
-  font-family: var(--FONT-STACK-BODY);
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid {
-  display: grid;
+  font-family: var(--FONT-STACK-BODY);}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid{display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
-  align-items: center;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse {
-  direction: rtl;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse > * {
-  direction: ltr;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__image {
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__image img {
-  width: 100%;
+  align-items: center;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse{direction: rtl;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse > *{direction: ltr;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__image{border-radius: 16px;
+  overflow: hidden;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__image img{width: 100%;
   height: auto;
   display: block;
-  object-fit: contain;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__content {
-  text-align: left;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__heading {
-  text-align: left;
+  object-fit: contain;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__content{text-align: left;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__heading{text-align: left;
   text-transform: none;
-  margin: 0 0 20px 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__highlight {
-  background: #000000;
+  margin: 0 0 20px 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__highlight{background: #000000;
   color: #ffffff;
   padding: 4px 10px;
   border-radius: 6px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  line-height: 1.6;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__text {
-  font-family: var(--FONT-STACK-BODY);
+  line-height: 1.6;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__text{font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   color: #555;
   line-height: 1.7;
-  margin: 0 0 24px 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__text p {
-  margin: 0 0 14px 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__text p:last-child {
-  margin-bottom: 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usps {
-  display: grid;
+  margin: 0 0 24px 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__text p{margin: 0 0 14px 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__text p:last-child{margin-bottom: 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usps{display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px 20px;
-  margin-top: 24px;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp {
-  display: flex;
+  margin-top: 24px;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp{display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp img {
-  width: 32px;
+  min-width: 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp img{width: 32px;
   height: 32px;
-  flex-shrink: 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp-text {
-  font-family: var(--FONT-STACK-BODY);
+  flex-shrink: 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp-text{font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   font-weight: 600;
   color: var(--heading);
-  min-width: 0;
-}
-
-@media (max-width: 600px) {
-  .skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp img { width: 26px; height: 26px; }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp-text { font-size: 13px; line-height: 1.25; }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp { gap: 8px; }
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp-text p {
-  margin: 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__button {
-  display: inline-block;
-  margin-top: 28px;
-  padding: 14px 32px;
-  background: var(--heading);
-  color: #fff;
-  font-family: var(--FONT-STACK-BODY);
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__button:hover {
-  opacity: 0.85;
-}
-
-@media (max-width: 767px) {
-  .skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse {
-    direction: ltr;
-  }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__text {
-    font-size: 14px;
-  }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__heading {
-    font-size: 24px;
-  }
-}
-</style>
+  min-width: 0;}@media (max-width: 600px){.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp img{width: 26px; height: 26px;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp-text{font-size: 13px; line-height: 1.25;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp{gap: 8px;}}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__usp-text p{margin: 0;}@media (max-width: 767px){.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM{padding-top: 20px;
+    padding-bottom: 20px;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid{grid-template-columns: 1fr;
+    gap: 28px;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse{direction: ltr;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__text{font-size: 14px;}.skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM .skinofab-iwt__heading{font-size: 24px;}}</style>
 <section class="skinofab-iwt-template--21857329971356__section_image_with_text_xdx7DM">
 <div class="wrapper">
 <div class="skinofab-iwt__grid">
@@ -2419,155 +1249,43 @@ margin-top: 5px;
 </div>
 </div>
 </section>
-</div><div class="shopify-section" id="shopify-section-template--21857329971356__section_image_with_text_Cyzhwr"><style>
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr {
-  padding-top: 20px;
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__section_image_with_text_Cyzhwr"><style>.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr{padding-top: 20px;
   padding-bottom: 40px;
   background: transparent;
-  font-family: var(--FONT-STACK-BODY);
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid {
-  display: grid;
+  font-family: var(--FONT-STACK-BODY);}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid{display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
-  align-items: center;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid--reverse {
-  direction: rtl;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid--reverse > * {
-  direction: ltr;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__image {
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__image img {
-  width: 100%;
+  align-items: center;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid--reverse{direction: rtl;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid--reverse > *{direction: ltr;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__image{border-radius: 16px;
+  overflow: hidden;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__image img{width: 100%;
   height: auto;
   display: block;
-  object-fit: contain;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__content {
-  text-align: left;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__heading {
-  text-align: left;
+  object-fit: contain;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__content{text-align: left;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__heading{text-align: left;
   text-transform: none;
-  margin: 0 0 20px 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__highlight {
-  background: #000000;
+  margin: 0 0 20px 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__highlight{background: #000000;
   color: #ffffff;
   padding: 4px 10px;
   border-radius: 6px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  line-height: 1.6;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__text {
-  font-family: var(--FONT-STACK-BODY);
+  line-height: 1.6;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__text{font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   color: #555;
   line-height: 1.7;
-  margin: 0 0 24px 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__text p {
-  margin: 0 0 14px 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__text p:last-child {
-  margin-bottom: 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usps {
-  display: grid;
+  margin: 0 0 24px 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__text p{margin: 0 0 14px 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__text p:last-child{margin-bottom: 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usps{display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px 20px;
-  margin-top: 24px;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp {
-  display: flex;
+  margin-top: 24px;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp{display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp img {
-  width: 32px;
+  min-width: 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp img{width: 32px;
   height: 32px;
-  flex-shrink: 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp-text {
-  font-family: var(--FONT-STACK-BODY);
+  flex-shrink: 0;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp-text{font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   font-weight: 600;
   color: var(--heading);
-  min-width: 0;
-}
-
-@media (max-width: 600px) {
-  .skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp img { width: 26px; height: 26px; }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp-text { font-size: 13px; line-height: 1.25; }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp { gap: 8px; }
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp-text p {
-  margin: 0;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__button {
-  display: inline-block;
-  margin-top: 28px;
-  padding: 14px 32px;
-  background: var(--heading);
-  color: #fff;
-  font-family: var(--FONT-STACK-BODY);
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__button:hover {
-  opacity: 0.85;
-}
-
-@media (max-width: 767px) {
-  .skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr {
-    padding-top: 20px;
-    padding-bottom: 30px;
-  }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid--reverse {
-    direction: ltr;
-  }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__text {
-    font-size: 14px;
-  }
-  .skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__heading {
-    font-size: 24px;
-  }
-}
-</style>
+  min-width: 0;}@media (max-width: 600px){.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp img{width: 26px; height: 26px;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp-text{font-size: 13px; line-height: 1.25;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp{gap: 8px;}}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__usp-text p{margin: 0;}@media (max-width: 767px){.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr{padding-top: 20px;
+    padding-bottom: 30px;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid{grid-template-columns: 1fr;
+    gap: 28px;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__grid--reverse{direction: ltr;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__text{font-size: 14px;}.skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr .skinofab-iwt__heading{font-size: 24px;}}</style>
 <section class="skinofab-iwt-template--21857329971356__section_image_with_text_Cyzhwr">
 <div class="wrapper">
 <div class="skinofab-iwt__grid skinofab-iwt__grid--reverse">
@@ -2594,144 +1312,49 @@ margin-top: 5px;
 </div>
 </div>
 </section>
-</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_results_v2_qic4Eh"><style>
-.skinofab-results {
-  padding-top: 0px;
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_results_v2_qic4Eh"><style>.skinofab-results{padding-top: 0px;
   padding-bottom: 50px;
   background: #ffffff;
-  font-family: var(--FONT-STACK-BODY);
-}
-
-.skinofab-results .section__heading {
-  text-align: center;
+  font-family: var(--FONT-STACK-BODY);}.skinofab-results .section__heading{text-align: center;
   text-transform: none;
-  margin-bottom: 40px;
-}
-
-.skinofab-results__grid {
-  display: grid;
+  margin-bottom: 40px;}.skinofab-results__grid{display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   max-width: 1100px;
-  margin: 0 auto;
-}
-
-.skinofab-results--page-width .skinofab-results__grid {
-  max-width: none;
-}
-
-.skinofab-results__card {
-  background: #f7f7f7;
+  margin: 0 auto;}.skinofab-results--page-width .skinofab-results__grid{max-width: none;}.skinofab-results__card{background: #f7f7f7;
   border-radius: 16px;
   padding: 40px 28px;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.skinofab-results__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-}
-
-.skinofab-results__percentage {
-  font-family: var(--FONT-STACK-HEADING);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;}.skinofab-results__card:hover{transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);}.skinofab-results__percentage{font-family: var(--FONT-STACK-HEADING);
   font-weight: var(--FONT-WEIGHT-HEADING-BOLD);
   font-size: 80px;
   color: #000000;
   line-height: 1;
-  margin-bottom: 12px;
-}
-
-.skinofab-results__title {
-  font-family: var(--FONT-STACK-HEADING);
+  margin-bottom: 12px;}.skinofab-results__title{font-family: var(--FONT-STACK-HEADING);
   font-weight: var(--FONT-WEIGHT-HEADING-BOLD);
   font-size: 16px;
   color: var(--heading);
   margin: 0 0 10px 0;
-  line-height: 1.4;
-}
-
-.skinofab-results__subtitle {
-  font-family: var(--FONT-STACK-BODY);
+  line-height: 1.4;}.skinofab-results__subtitle{font-family: var(--FONT-STACK-BODY);
   font-size: 13px;
   color: #999;
   line-height: 1.4;
-  margin: 0;
-}
-
-@media (max-width: 767px) {
-  .skinofab-results {
-    padding-top: 0px;
-    padding-bottom: 40px;
-  }
-  .skinofab-results__grid {
-    display: none;
-  }
-  .skinofab-results__slider {
-    display: block;
-    padding: 0 20px;
-  }
-  .skinofab-results--page-width .skinofab-results__slider {
-    padding: 0;
-  }
-  .skinofab-results__slider .swiper-wrapper {
-    padding: 8px 0 12px;
-  }
-  .skinofab-results__slider .swiper-slide {
-    width: 270px;
-    height: auto;
-  }
-  .skinofab-results__card {
-    padding: 30px 24px;
-  }
-  .skinofab-results__percentage {
-    font-size: 60px;
-  }
-  .skinofab-results .swiper-scrollbar {
-    height: 4px;
-    margin-top: 24px;
-  }
-  .skinofab-results .swiper-scrollbar-drag {
-    background: #000000;
-  }
-  .skinofab-results__nav {
-    position: relative;
-  }
-  .skinofab-results .swiper-button-prev,
-  .skinofab-results .swiper-button-next {
-    display: flex;
+  margin: 0;}@media (max-width: 767px){.skinofab-results{padding-top: 0px;
+    padding-bottom: 40px;}.skinofab-results__grid{display: none;}.skinofab-results__slider{display: block;
+    padding: 0 20px;}.skinofab-results--page-width .skinofab-results__slider{padding: 0;}.skinofab-results__slider .swiper-wrapper{padding: 8px 0 12px;}.skinofab-results__slider .swiper-slide{width: 270px;
+    height: auto;}.skinofab-results__card{padding: 30px 24px;}.skinofab-results__percentage{font-size: 60px;}.skinofab-results .swiper-scrollbar{height: 4px;
+    margin-top: 24px;}.skinofab-results .swiper-scrollbar-drag{background: #000000;}.skinofab-results__nav{position: relative;}.skinofab-results .swiper-button-prev,.skinofab-results .swiper-button-next{display: flex;
     width: 30px;
     height: 30px;
     background: #fff;
     border-radius: 50%;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    top: var(--swiper-navigation-top-offset, 40%);
-  }
-  .skinofab-results .swiper-button-prev { left: 0; }
-  .skinofab-results .swiper-button-next { right: 0; }
-  .skinofab-results .swiper-button-prev:after,
-  .skinofab-results .swiper-button-next:after {
-    font-size: 12px;
+    top: var(--swiper-navigation-top-offset, 40%);}.skinofab-results .swiper-button-prev{left: 0;}.skinofab-results .swiper-button-next{right: 0;}.skinofab-results .swiper-button-prev:after,.skinofab-results .swiper-button-next:after{font-size: 12px;
     font-weight: bold;
-    color: #2D2D2D;
-  }
-  .skinofab-results div[aria-disabled="true"] {
-    opacity: 0.35;
+    color: #2D2D2D;}.skinofab-results div[aria-disabled="true"]{opacity: 0.35;
     cursor: auto;
-    pointer-events: none;
-  }
-}
-
-@media (min-width: 768px) {
-  .skinofab-results__slider {
-    display: none;
-  }
-  .skinofab-results .swiper-button-prev,
-  .skinofab-results .swiper-button-next {
-    display: none;
-  }
-}
-</style>
+    pointer-events: none;}}@media (min-width: 768px){.skinofab-results__slider{display: none;}.skinofab-results .swiper-button-prev,.skinofab-results .swiper-button-next{display: none;}}</style>
 <section class="skinofab-results skinofab-results--page-width">
 <div class="wrapper">
 <h2 class="section__heading h2">Real results</h2>
@@ -2788,65 +1411,27 @@ margin-top: 5px;
 </section>
 <script data-skinofab-slider-config="" type="application/json">{"selector": ".skinofab-results-swiper", "next": ".skinofab-results-next", "prev": ".skinofab-results-prev", "scrollbar": ".skinofab-results-scrollbar", "options": {"slidesPerView": "auto", "spaceBetween": 14}}</script>
 <script defer="" src="{{ 'sf/js/skinofab-section-sliders-7fe587.js'|asset_url }}"></script>
-</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_compare_v2_zyrpmY"><style>
-.skinofab-compare-section {
-  padding: 50px 20px 60px;
-  background: #f7f7f7;
-}
-
-.skinofab-compare-section .section__heading {
-  text-align: center;
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_compare_v2_zyrpmY"><style>.skinofab-compare-section{padding: 50px 20px 60px;
+  background: #f7f7f7;}.skinofab-compare-section .section__heading{text-align: center;
   text-transform: none;
-  margin-bottom: 40px;
-}
-
-.skinofab-compare-table {
-  width: 100%;
+  margin-bottom: 40px;}.skinofab-compare-table{width: 100%;
   max-width: 800px;
   margin: 0 auto;
   border-collapse: separate;
   border-spacing: 0;
   overflow: hidden;
-  border-radius: 12px;
-}
-
-.skinofab-compare-section--page-width {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.skinofab-compare-section--page-width .skinofab-compare-table {
-  max-width: none;
-}
-
-.skinofab-compare-table thead th {
-  padding: 18px 16px;
+  border-radius: 12px;}.skinofab-compare-section--page-width{padding-left: 0;
+  padding-right: 0;}.skinofab-compare-section--page-width .skinofab-compare-table{max-width: none;}.skinofab-compare-table thead th{padding: 18px 16px;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-bottom: 2px solid #000000;
-  background: transparent;
-}
-
-.skinofab-compare-table thead th:first-child {
-  text-align: left;
-}
-
-.skinofab-compare-table thead th:not(:first-child) {
-  text-align: center;
-}
-
-.skinofab-compare-table thead th.col-highlight {
-  background: transparent;
+  background: transparent;}.skinofab-compare-table thead th:first-child{text-align: left;}.skinofab-compare-table thead th:not(:first-child){text-align: center;}.skinofab-compare-table thead th.col-highlight{background: transparent;
   color: #fff;
   border-bottom-color: #000000;
   position: relative;
-  z-index: 1;
-}
-
-.skinofab-compare-table thead th.col-highlight::before {
-  content: '';
+  z-index: 1;}.skinofab-compare-table thead th.col-highlight::before{content: '';
   position: absolute;
   top: -2px;
   left: 0;
@@ -2854,94 +1439,24 @@ margin-top: 5px;
   bottom: 0;
   background: #000000;
   border-radius: 12px 12px 0 0;
-  z-index: -1;
-}
-
-.skinofab-compare-table thead th.col-highlight img {
-  filter: brightness(0) invert(1);
-}
-
-.skinofab-compare-table tbody td {
-  padding: 16px;
+  z-index: -1;}.skinofab-compare-table thead th.col-highlight img{filter: brightness(0) invert(1);}.skinofab-compare-table tbody td{padding: 16px;
   font-size: 14px;
   font-weight: 500;
   border-bottom: 1px solid #dadada;
-  vertical-align: middle;
-}
-
-.skinofab-compare-table tbody td:first-child {
-  text-align: left;
-  font-weight: 600;
-}
-
-.skinofab-compare-table tbody td:not(:first-child) {
-  text-align: center;
-}
-
-.skinofab-compare-table tbody td.col-highlight {
-  background: #00000012;
-}
-
-.skinofab-compare-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.skinofab-compare-table .compare-icon {
-  display: inline-flex;
+  vertical-align: middle;}.skinofab-compare-table tbody td:first-child{text-align: left;
+  font-weight: 600;}.skinofab-compare-table tbody td:not(:first-child){text-align: center;}.skinofab-compare-table tbody td.col-highlight{background: #00000012;}.skinofab-compare-table tbody tr:last-child td{border-bottom: none;}.skinofab-compare-table .compare-icon{display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 28px;
-  height: 28px;
-}
-
-.skinofab-compare-table .compare-icon img {
-  width: 20px;
+  height: 28px;}.skinofab-compare-table .compare-icon img{width: 20px;
   height: 20px;
-  display: block;
-}
-
-.skinofab-compare-table .compare-icon--check svg {
-  color: #000000;
-}
-
-.skinofab-compare-table .compare-icon--cross svg {
-  color: #ccc;
-}
-
-.skinofab-compare-table .header-logo {
-  max-height: 14px;
-  width: auto;
-}
-
-@media screen and (max-width: 600px) {
-  .skinofab-compare-section {
-    padding: 40px 12px 50px;
-  }
-  .skinofab-compare-section--page-width {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .skinofab-compare-table thead th,
-  .skinofab-compare-table tbody td {
-    padding: 12px 8px;
-    font-size: 12px;
-  }
-  .skinofab-compare-table .compare-icon {
-    width: 24px;
-    height: 24px;
-  }
-  .skinofab-compare-table .compare-icon img {
-    width: 16px;
-    height: 16px;
-  }
-}
-</style>
-<style>
-  .skinofab-compare-table th:last-child,
-  .skinofab-compare-table td:last-child {
-    display: none;
-  }
-</style>
+  display: block;}.skinofab-compare-table .header-logo{max-height: 14px;
+  width: auto;}@media screen and (max-width: 600px){.skinofab-compare-section{padding: 40px 12px 50px;}.skinofab-compare-section--page-width{padding-left: 0;
+    padding-right: 0;}.skinofab-compare-table thead th,.skinofab-compare-table tbody td{padding: 12px 8px;
+    font-size: 12px;}.skinofab-compare-table .compare-icon{width: 24px;
+    height: 24px;}.skinofab-compare-table .compare-icon img{width: 16px;
+    height: 16px;}}</style>
+<style>.skinofab-compare-table th:last-child,.skinofab-compare-table td:last-child{display: none;}</style>
 <section class="skinofab-compare-section skinofab-compare-section--page-width">
 <div class="wrapper">
 <h2 class="section__heading h2">Why skinofab?</h2>
@@ -3043,11 +1558,10 @@ margin-top: 5px;
 </div>
 </section>
 </div><div class="shopify-section" id="shopify-section-template--21857329971356__section_accordions_k6qPrc">
-<style data-shopify="">#Accordions--template--21857329971356__section_accordions_k6qPrc {
-    --PT: 40px;
+<style data-shopify="">#Accordions--template--21857329971356__section_accordions_k6qPrc{--PT: 40px;
     --PB: 60px;
     --border-opacity: 0;
-    --MB: 10px;--bg-padded-line: var(--bg);}#Accordions--template--21857329971356__section_accordions_k6qPrc .accordion__item { --bg: #f7f7f7; }</style>
+    --MB: 10px;--bg-padded-line: var(--bg);}#Accordions--template--21857329971356__section_accordions_k6qPrc .accordion__item{--bg: #f7f7f7;}</style>
 <section class="section-padding accordions-section text-dark" data-section-id="template--21857329971356__section_accordions_k6qPrc" data-section-type="accordions" id="Accordions--template--21857329971356__section_accordions_k6qPrc">
 <div class="accordion__header">
 <div class="wrapper">
@@ -3103,73 +1617,31 @@ margin-top: 5px;
 </div>
 </div>
 </div></section>
-</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_why_gcA7fQ"><style>
-.skinofab-why-section {
-  padding-top: 0px;
-  padding-bottom: 60px;
-}
-
-.skinofab-why-inner {
-  display: grid;
+</div><div class="shopify-section" id="shopify-section-template--21857329971356__kopstorm_why_gcA7fQ"><style>.skinofab-why-section{padding-top: 0px;
+  padding-bottom: 60px;}.skinofab-why-inner{display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: var(--radius, 12px);
   overflow: hidden;
-  min-height: 500px;
-}
-
-.skinofab-why__image {
-  background-size: cover;
+  min-height: 500px;}.skinofab-why__image{background-size: cover;
   background-position: center;
   min-height: 350px;
-  position: relative;
-}
-
-.skinofab-why__content {
-  background: #f7f7f7;
+  position: relative;}.skinofab-why__content{background: #f7f7f7;
   padding: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.skinofab-why__content .section__heading {
-  text-align: left;
+  justify-content: center;}.skinofab-why__content .section__heading{text-align: left;
   text-transform: none;
-  margin: 0 0 30px 0;
-}
-
-.skinofab-why__text {
-  margin-bottom: 30px;
-}
-
-.skinofab-why__text p {
-  margin: 0;
+  margin: 0 0 30px 0;}.skinofab-why__text{margin-bottom: 30px;}.skinofab-why__text p{margin: 0;
   font-size: 15px;
   line-height: 1.6;
-  color: #555;
-}
-
-.skinofab-why__features {
-  display: flex;
+  color: #555;}.skinofab-why__features{display: flex;
   flex-direction: column;
   gap: 0;
-  margin-bottom: 30px;
-}
-
-.skinofab-why__feature {
-  display: flex;
+  margin-bottom: 30px;}.skinofab-why__feature{display: flex;
   align-items: center;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.skinofab-why__feature:last-child {
-  border-bottom: none;
-}
-
-.skinofab-why__feature-icon {
-  flex: 0 0 48px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);}.skinofab-why__feature:last-child{border-bottom: none;}.skinofab-why__feature-icon{flex: 0 0 48px;
   width: 48px;
   height: 48px;
   border-radius: 12px;
@@ -3177,77 +1649,18 @@ margin-top: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.skinofab-why__feature-icon img {
-  width: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);}.skinofab-why__feature-icon img{width: 28px;
   height: 28px;
-  display: block;
-}
-
-.skinofab-why__feature-text {
-  flex: 1;
-}
-
-.skinofab-why__feature-title {
-  font-weight: 700;
+  display: block;}.skinofab-why__feature-text{flex: 1;}.skinofab-why__feature-title{font-weight: 700;
   font-size: 15px;
   color: #2D2D2D;
-  margin-bottom: 2px;
-}
-
-.skinofab-why__feature-desc {
-  font-size: 14px;
+  margin-bottom: 2px;}.skinofab-why__feature-desc{font-size: 14px;
   color: #666;
-  line-height: 1.4;
-}
-
-.skinofab-why__feature-desc p {
-  margin: 0;
-}
-
-.skinofab-why__cta .btn {
-  display: inline-block;
-}
-
-@media (min-width: 768px) {
-  .skinofab-why-inner--square-image .skinofab-why__image {
-    aspect-ratio: 1;
-  }
-  .skinofab-why__content {
-    padding: 60px;
-  }
-}
-
-@media (max-width: 767px) {
-  .skinofab-why-section {
-    padding-top: 0px;
-    padding-bottom: 60px;
-  }
-  .skinofab-why-inner {
-    grid-template-columns: 1fr;
-  }
-  .skinofab-why__image {
-    min-height: 280px;
-  }
-  .skinofab-why__content {
-    padding: 30px 24px;
-  }
-  .skinofab-why__content .section__heading {
-    margin-bottom: 20px;
-  }
-  .skinofab-why__feature-icon {
-    flex: 0 0 42px;
+  line-height: 1.4;}.skinofab-why__feature-desc p{margin: 0;}.skinofab-why__cta .btn{display: inline-block;}@media (min-width: 768px){.skinofab-why-inner--square-image .skinofab-why__image{aspect-ratio: 1;}.skinofab-why__content{padding: 60px;}}@media (max-width: 767px){.skinofab-why-section{padding-top: 0px;
+    padding-bottom: 60px;}.skinofab-why-inner{grid-template-columns: 1fr;}.skinofab-why__image{min-height: 280px;}.skinofab-why__content{padding: 30px 24px;}.skinofab-why__content .section__heading{margin-bottom: 20px;}.skinofab-why__feature-icon{flex: 0 0 42px;
     width: 42px;
-    height: 42px;
-  }
-  .skinofab-why__feature-icon img {
-    width: 24px;
-    height: 24px;
-  }
-}
-</style>
+    height: 42px;}.skinofab-why__feature-icon img{width: 24px;
+    height: 24px;}}</style>
 <section class="skinofab-why-section">
 <div class="wrapper">
 <div class="skinofab-why-inner">
@@ -3290,44 +1703,10 @@ margin-top: 5px;
 </div>
 </div>
 </section>
-</div><section class="shopify-section" id="shopify-section-template--21857329971356__17343673251239a5d7"><style data-shopify="">#App--template--21857329971356__17343673251239a5d7 {
-    --PT: 0px;
-    --PB: 60px;
-  }</style><div class="section-padding" data-section-type="template--21857329971356__17343673251239a5d7" id="App--template--21857329971356__17343673251239a5d7">
+</div><section class="shopify-section" id="shopify-section-template--21857329971356__17343673251239a5d7"><style data-shopify="">#App--template--21857329971356__17343673251239a5d7{--PT: 0px;
+    --PB: 60px;}</style><div class="section-padding" data-section-type="template--21857329971356__17343673251239a5d7" id="App--template--21857329971356__17343673251239a5d7">
 <div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-ANDhOMWpta0NqRDVHc__instafeed_app_block_KDnEMw">
-<style>
-      div[id*="instafeed_app_block"] {
-        width: 100%;
-      }
-      div.shopify-section:has(> [id*="instafeed_app_block"]) {
-      width: 100%;
-      }
-      
-      body #insta-feed {
-      
-          
-
-          
-          margin-bottom: 0px!important;
-          
-
-          
-
-          
-
-          
-      }
-      
-      body #insta-feed h2 {
-      
-        
-        
-         text-align: center;
-      }
-
-      
-      
-</style>
+<style>div[id*="instafeed_app_block"]{width: 100%;}div.shopify-section:has(> [id*="instafeed_app_block"]){width: 100%;}body #insta-feed{margin-bottom: 0px!important;}body #insta-feed h2{text-align: center;}</style>
 <div id="insta-feed"></div>
 </div>
 </div>
@@ -3414,7 +1793,7 @@ margin-top: 5px;
 </div>
 </div>
 </div>
-</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/skinofab-cart-timer-b352c2.js'|asset_url }}"></script><script>
+</div><script>
       // Function to update the price element with the new variant price
       function updateProductPrice(newPrice) {
         const priceElement = document.getElementById('productpricingnew');

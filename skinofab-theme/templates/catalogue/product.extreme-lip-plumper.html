@@ -1,64 +1,16 @@
 {% extends 'layouts/base.html' %}
-{% block title %}{{ product.get_meta_title }} | {{ block.super }}{% endblock %}
+{% block sf_handle_pk %}"extreme-lip-plumper":"{% firstof settings.sf_p_extreme_lip_plumper.children.first.pk settings.sf_p_extreme_lip_plumper.pk %}"{% endblock sf_handle_pk %}
+{% block title %}{% if store.name|upper in product.get_meta_title|upper %}{{ product.get_meta_title }}{% else %}{{ product.get_meta_title }} | {{ block.super }}{% endif %}{% endblock %}
 {% block body_id %}{% firstof "extreme-lip-plumper-for-instant-maximum-volume-skinofab" %}{% endblock %}
 {% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
 {% block sf_head %}
-<link href="{{ 'sf/css/futura-pt-fallback.css'|asset_url }}" rel="stylesheet"/><style>
-</style><style>
-      .video-slide, .video-thumbnail, .product__form .btn--submit, #locationinfop, .product-grid-item .btn--quick .btn__inner, .product-upsell__btn, .btn, .btn--primary, .btn--primary .shopify-payment-button__button--unbranded, input.btn .shopify-payment-button__button--unbranded, input.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded, input.btn, input.shopify-payment-button__button--unbranded {
-         border-radius: 10px!important;
-      }
-      .input-group, .select-popout__toggle  {
-         border-radius: 10px!important;
-      }
-      #SiteFooter .input-group__fields input {
-        border-top-left-radius: 10px!important;
-        border-bottom-left-radius: 10px!important;
-      }
-        .input-group__btn {
-            border-top-right-radius: 10px!important;
-        border-bottom-right-radius: 10px!important;
-        }
-
-        button[aria-expanded=true] #accordionbefore:before {
-          background-color: #f7f7f7!important;
-        }
-      @media only screen and (max-width: 767px) {
-        .product-single .product__title {
-          font-size: clamp(26px, 7.1vw, 29px);
-          line-height: 1.12;
-        }
-      }
-      #cart-drawer .product-upsell__holder .product-grid-item__swatch {
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-top: 6px !important;
-      }
-      /* Preserve the bar's height while keeping it below the cart/header stack. */
-      body.js-drawer-open-cart .announcement-bar-static,
-      body:has(#cart-drawer.is-open) .announcement-bar-static {
-        z-index: 8999 !important;
-      }
-      body.js-drawer-open .announcement-bar-static,
-      body.js-quick-view-from-cart .announcement-bar-static,
-      body.js-quick-view-visible .announcement-bar-static,
-      body:has(#nav-drawer.is-open) .announcement-bar-static,
-      body:has(.drawer.is-open) .announcement-bar-static {
-        display: none !important;
+<style></style><style>.video-slide,.video-thumbnail,.product__form .btn--submit,#locationinfop,.product-upsell__btn,.btn,.btn--primary,input.btn{border-radius: 10px!important;}.input-group,.select-popout__toggle{border-radius: 10px!important;}#SiteFooter .input-group__fields input{border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;}.input-group__btn{border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;}button[aria-expanded=true] #accordionbefore:before{background-color: #f7f7f7!important;}@media only screen and (max-width: 767px){.product-single .product__title{font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;}}body.js-drawer-open-cart .announcement-bar-static,body:has(#cart-drawer.is-open) .announcement-bar-static{z-index: 8999 !important;}body.js-drawer-open .announcement-bar-static,body.js-quick-view-from-cart .announcement-bar-static,body.js-quick-view-visible .announcement-bar-static,body:has(#nav-drawer.is-open) .announcement-bar-static,body:has(.drawer.is-open) .announcement-bar-static{display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
-        pointer-events: none !important;
-      }
-    </style><style>
-        .swiper-scrollbar {
-        display: none!important;
-        }
-      </style><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="{{ 'sf/css/all-min-2d3b0a.css'|asset_url }}" referrerpolicy="no-referrer" rel="stylesheet"/><script src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><link href="{{ 'sf/css/swiper-bundle-min-9d0eb7.css'|asset_url }}" rel="stylesheet"/><script defer="" referrerpolicy="no-referrer" src="{{ 'sf/js/jquery-min-91916b.js'|asset_url }}"></script><style data-shopify="">:root { --loader-image-size: 60px; }:root { --loader-image-size: 320px; }html:not(.is-loading) .loading-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
-        .loading-overlay { position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s; }
-        .loading-overlay .loader__image--fallback { width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain; }
-        .loader__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out; }
-        .loader__image { max-width: 60px; height: auto; object-fit: contain; }</style><script>
+        pointer-events: none !important;}</style><style>.swiper-scrollbar{display: none!important;}</style><script defer src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><style data-shopify="">:root{--loader-image-size: 60px;}:root{--loader-image-size: 320px;}html:not(.is-loading) .loading-overlay{opacity: 0; visibility: hidden; pointer-events: none;}.loading-overlay{position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;}.loading-overlay .loader__image--fallback{width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain;}.loader__image__holder{position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out;}.loader__image{max-width: 60px; height: auto; object-fit: contain;}</style><script>
         const loadingAppearance = "once";
         const loaded = sessionStorage.getItem('loaded');
 
@@ -70,130 +22,84 @@
         } else {
           document.documentElement.classList.add('is-loading');
         }
-      </script><style data-shopify="">@font-face {
+      </script><style data-shopify="">@font-face{
   font-family: Jost;
   font-weight: 600;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
-}
-
-@font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-@font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 700;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 900;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 100;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 400;
   font-style: italic;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 700;
   font-style: italic;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
-}
-
-
-
-
-  @font-face {
+}@font-face{
   font-family: Jost;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
   src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
        url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
-}
-
-
-:root {--COLOR-PRIMARY-OPPOSITE: #ffffff;
+}:root{--COLOR-PRIMARY-OPPOSITE: #ffffff;
   --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
   --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
   --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
@@ -440,8 +346,7 @@
 
   
 --filter-bg: .97;
-  --product-filter-bg: .97;
-  }</style><link href="{{ 'sf/css/kopstorm-V2-ea6148.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/theme-410305.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm-62aff9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><link href="{{ 'sf/css/kopstorm_new-c14bc9.css'|asset_url }}" media="all" rel="stylesheet" type="text/css"/><script type="text/javascript">
+  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-2bede559.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
     if (window.MSInputMethodContext && document.documentMode) {
       var scripts = document.getElementsByTagName('script')[0];
       var polyfill = document.createElement("script");
@@ -466,7 +371,7 @@
         cart_url: "\/cart",
         cart_add_url: "\/cart\/add",
         cart_change_url: "\/cart\/change",
-        shop_url: "https:\/\/skinofab.com",
+        shop_url: "\/",
         searchUrl: '/search',
         predictiveSearchUrl: '/search/suggest',
         product_recommendations_url: "\/recommendations\/products"
@@ -476,7 +381,7 @@
         smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
         no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
         swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
-        base: "//skinofab.com/cdn/shop/t/76/assets/"
+        base: "\/"
       },
       strings: {
         add_to_cart: "Add to Cart",
@@ -553,328 +458,174 @@
     window.isHeaderTransparent = false;
     window.stickyHeaderHeight = 60;
     window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
-    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/skinofab-cart-gift-guard-db1629.js'|asset_url }}"></script><style>
-        @media screen and (max-width: 767px) {
-        .product-single__details {
-          overflow: ;
-        }
-        }
-      </style><meta data-currency="USD" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-shop-id="62149886108" data-venmo-supported="false" id="in-context-paypal-metadata"/><script id="apple-pay-shop-capabilities" type="application/json">{"shopId":62149886108,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/62149886108","merchantName":"Skinofab","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Skinofab","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script><script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script><script id="shop-js-analytics" type="application/json">{"pageType":"product"}</script><script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.3.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script><style id="shopify-accelerated-checkout-cart">
-        #shopify-buyer-consent {
-  margin-top: 1em;
-  display: inline-block;
-  width: 100%;
-}
-
-#shopify-buyer-consent.hidden {
-  display: none;
-}
-
-#shopify-subscription-policy-button {
-  background: none;
-  border: none;
-  padding: 0;
-  text-decoration: underline;
-  font-size: inherit;
-  cursor: pointer;
-}
-
-#shopify-subscription-policy-button::before {
-  box-shadow: none;
-}
-
-      </style><script defer="defer" src="{{ 'sf/js/skinofab-subscription-card-prices-f4b416.js'|asset_url }}"></script><style>
-    #alia-popup-root-alia-qqoyyurlj3kbg51i {
-      z-index: 999999 !important;
-    }
-  </style><script id="kaching-bundles-translations" type="application/json">
-    [{"locale":"de","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"ein zeitlich begrenzter Rabatt","One bottle":"Eine Flasche","Regular price":"Regulärer Preis","Two bottles":"Zwei Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 Plumper":"1 Plumper","Regular price":"Regulärer Preis","Buy 1, Get 1 FREE":"Kaufe 1, erhalte 1 GRATIS","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Paket auswählen","1 Piece":"1 Stück","Regular price":"Regulärer Preis","2 Pieces":"2 Stück","Free Gift \u0026 Free Shipping":"Gratisgeschenk \u0026 Gratisversand","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/Stück","MOST POPULAR":"AM BELIEBTESTEN","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","3 Pieces":"3 Stück","BEST VALUE":"BESTES PREIS-LEISTUNGS-VERHÄLTNIS"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"ein zeitlich begrenzter Rabatt","2-pack":"2er-Packung","Lasts 4 weeks":"Hält 4 Wochen","4-pack":"4er-Packung","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Lasts 4 weeks":"Hält 4 Wochen","2 bottles":"2 Flaschen","Lasts 8 weeks":"Hält 8 Wochen","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","Most popular":"Am beliebtesten","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 1":"Kaufen Sie 1","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","$19 per bottle":"19 Dollar pro Flasche"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"ein zeitlich begrenzter Rabatt","1 bottle":"1 Flasche","Regular price":"Regulärer Preis","2 bottles":"2 Flaschen","Temporary deal":"Vorübergehende Vereinbarung","SAVE {% templatetag openvariable %}saved_total}}":"SAVE {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS Überraschungsgeschenk","+ FREE Shipping":"+ KOSTENLOSER Versand","Buy 2 Get 1 Free":"Kaufe 2 und erhalte 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} pro Flasche"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eine Flasche","Get 1 bottle":"Hol dir 1 Flasche","Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Get 2 bottles":"Hol dir 2 Flaschen","-50%":"-50%","LAST CHANCE":"LETZTE CHANCE","+ Eyelash Curler":"+ Wimpernzange"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Kaufe 1, erhalte 1 gratis","Lasts up to 6 weeks":"Hält bis zu 6 Wochen","-50%":"-50%","TODAY ONLY":"NUR HEUTE","Buy 2, Get 2 Free":"Kaufe 2, erhalte 2 gratis","Lasts up to 12 weeks":"Hält bis zu 12 Wochen","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS Kosmetiktasche"}}}},{"locale":"nl","translations":{"system":{},"dealBlocks":{"8d5b4c49-3b5a-4662-ab36-8fecc2b5fefa":{"a temporary discount":"een tijdelijke korting","One bottle":"Eén fles","Regular price":"Normale prijs","Two bottles":"Twee flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"bc071fa0-346b-450a-ae21-89170a8d4e04":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"93ad268c-89f0-4f2b-b80f-165781f766f5":{"a temporary discount":"een tijdelijke korting","1 Plumper":"1 Plumper","Regular price":"Normale prijs","Buy 1, Get 1 FREE":"Koop 1, krijg 1 gratis","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"15f1c2d7-95b3-4377-a151-0bd581c7e036":{"MegaDeal":"MegaDeal","{% templatetag openvariable %}product}}":"{% templatetag openvariable %}product}}","Choose bundle":"Kies een bundel","1 Piece":"1 stuk","Regular price":"Normale prijs","2 Pieces":"2 stuks","Free Gift \u0026 Free Shipping":"Gratis cadeau \u0026 gratis verzending","{% templatetag openvariable %}new_price}}\/each":"{% templatetag openvariable %}new_price}}\/stuk","MOST POPULAR":"MEEST POPULAIR","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","3 Pieces":"3 stuks","BEST VALUE":"BESTE PRIJS-KWALITEITVERHOUDING"},"82096088-e363-4aca-b025-e2f49256861f":{"a temporary discount":"een tijdelijke korting","2-pack":"Verpakking van 2 stuks","Lasts 4 weeks":"Goed voor 4 weken","4-pack":"Verpakking van 4 stuks","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"ee46e0de-2cc6-43cc-ae6c-820b05230e58":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Lasts 4 weeks":"Goed voor 4 weken","2 bottles":"2 flessen","Lasts 8 weeks":"Goed voor 8 weken","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"37137d16-efe9-4984-a1e0-7fed2112194b":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","Most popular":"Meest populair","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 1":"Koop 1","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","$19 per bottle":"$19 per fles"},"30c92309-6ae5-4426-bc03-b474e86687cc":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke overeenkomst","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending"},"cb67df6a-4c6f-4ce1-a7a1-bb0de7fa3fda":{"a temporary discount":"een tijdelijke korting","1 bottle":"1 fles","Regular price":"Normale prijs","2 bottles":"2 flessen","Temporary deal":"Tijdelijke deal","SAVE {% templatetag openvariable %}saved_total}}":"BESPAAR {% templatetag openvariable %}saved_total}}","+ FREE Skinofab Blender":"+ GRATIS Skinofab Blender","+ FREE Mystery Gift":"+ GRATIS verrassingscadeau","+ FREE Shipping":"+ GRATIS verzending","Buy 2 Get 1 Free":"Koop 2 en krijg 1 gratis","{% templatetag openvariable %}new_unit_price}} per bottle":"{% templatetag openvariable %}new_unit_price}} per fles"},"d9281509-6186-4fc3-80dc-d07589b2bd71":{"One bottle":"Eén fles","Get 1 bottle":"Ontvang 1 fles","Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Get 2 bottles":"Neem 2 flessen","-50%":"-50%","LAST CHANCE":"LAATSTE KANS","+ Eyelash Curler":"+ Wimperkruller"},"1d46624b-421b-4822-a3b0-f9b0be3069c6":{"Buy 1, Get 1 Free":"Koop er één, krijg er één gratis","Lasts up to 6 weeks":"Gaat tot 6 weken mee.","-50%":"-50%","TODAY ONLY":"ALLEEN VANDAAG","Buy 2, Get 2 Free":"Koop 2, krijg 2 gratis","Lasts up to 12 weeks":"Gaat tot 12 weken mee.","-56%":"-56%","+ FREE Beauty Bag":"+ GRATIS beautybag"}}}}]
-  </script><script class="kaching-bundles-product" data-main="true" data-product-id="7889590845596" type="application/json">
-    {
-      "id": 7889590845596,
-      "handle": "extreme-lip-plumper",
-      "url": "\/products\/extreme-lip-plumper",
-      "availableForSale": true,
-      "title": "Extreme Lip Plumper",
-      "image": "..\/assets\/img\/ELPC-800w-8921eb.png\u0026v=1768886153",
-      "collectionIds": [307652133020,304922558620,319257280668,314587218076,308318240924,307304136860,299336073372],
-      "options": [
-        
-          {
-            "defaultName": "Color",
-            "name": "Color",
-            "position": 1,
-            "optionValues": [
-              
-                {
-                  "id": 3738897186972,
-                  "defaultName": "Transparent",
-                  "name": "Transparent",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                },
-              
-                {
-                  "id": 3720260681884,
-                  "defaultName": "Raspberry",
-                  "name": "Raspberry",
-                  "swatch": {
-                    "color": null,
-                    "image": null
-                  }
-                }
-              
-            ]
-          }
-        
-      ],
-      "selectedVariantId": 44663423959196,
-      "variants": [
-        
-          {
-            "id": 44663423959196,
-            "availableForSale": true,
-            "price": 3900,
-            "compareAtPrice": 4900,
-            "options": ["Transparent"],
-            "imageId": 43685897207964,
-            "image": "..\/assets\/img\/ELPC-800w-8921eb.png\u0026v=1768886153",
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": 9642,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          },
-        
-          {
-            "id": 44663423991964,
-            "availableForSale": true,
-            "price": 3900,
-            "compareAtPrice": 4900,
-            "options": ["Raspberry"],
-            "imageId": 43685907595420,
-            "image": "..\/assets\/img\/ELPR-1080w-79ee77.png\u0026v=1768886153",
-            "inventoryManagement": "shopify",
-            "inventoryPolicy": "continue",
-            "inventoryQuantity": 14520,
-            "unitPriceMeasurement": null,
-            "sellingPlans": [
-              
-            ]
-          }
-        
-      ],
-      "requiresSellingPlan": false,
-      "sellingPlans": [
-        
-      ],
-      "isNativeBundle": null,
-      "metafields": {
-        "text": null,
-        "text2": null,
-        "text3": null,
-        "text4": null
-      }
-    }
-  </script><link fetchpriority="&lt;!-- BEGIN app snippet: fetch_priority --&gt;high&lt;!-- END app snippet --&gt;" href="{{ 'sf/css/kaching-bundles-c3094f.css'|asset_url }}" media="all" rel="stylesheet"/><style>
-    .kaching-bundles__block {
-      display: none;
-    }
-
-    .kaching-bundles-sticky-atc {
-      display: none;
-    }
-  </style>
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><style>@media screen and (max-width: 767px){.product-single__details{overflow: ;}}</style><style></style><style></style>
 {% endblock sf_head %}
-{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root { --loader-image: var(--loading-svg); }</style><div class="loader loader--image">
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root{--loader-image: var(--loading-svg);}</style><div class="loader loader--image">
 <div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
 </div>
 </div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
 {% block content_wrapper %}
 <div data-template="product.extreme-lip-plumper"><main class="main-content" data-main="" id="MainContent">
-<div class="shopify-section" id="shopify-section-template--20029866475676__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--20029866475676__section_custom_html_7WqcF9 {
-    --PT: 0px;
-    --PB: 0px;
-  }</style><section class="section-padding" id="CustomCode--template--20029866475676__section_custom_html_7WqcF9">
+<div class="shopify-section" id="shopify-section-template--20029866475676__section_custom_html_7WqcF9"><style data-shopify="">#CustomCode--template--20029866475676__section_custom_html_7WqcF9{--PT: 0px;
+    --PB: 0px;}</style><section class="section-padding" id="CustomCode--template--20029866475676__section_custom_html_7WqcF9">
 <div class="wrapper">
 <div><element id="product"></element></div>
 </div>
 </section>
-</div><div class="shopify-section shopify-section--product" id="shopify-section-template--20029866475676__main"><style data-shopify="">#ProductTemplate--template--20029866475676__main {
-    --PT: 60px;
-    --PB: 0px;
-  }</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--20029866475676__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--20029866475676__main">
+</div><div class="shopify-section shopify-section--product" id="shopify-section-template--20029866475676__main"><style data-shopify="">#ProductTemplate--template--20029866475676__main{--PT: 60px;
+    --PB: 0px;}</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--20029866475676__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--20029866475676__main">
 <div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--20029866475676__main"><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--20029866475676__main">
 <div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="34868845084828" data-media-id="template--20029866475676__main-34868845084828" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868845084828"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — product photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868845084828" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC-1080w-f97924.png'|asset_url }}" srcset="{{ 'sf/img/ELPC-753w-9f39c9.png'|asset_url }} 753w, {{ 'sf/img/ELPC-1080w-5dd1e2.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC-1080w-5dd1e2.png'|asset_url %}<img alt="Extreme Lip Plumper — product photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868845084828" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC-1080w-f97924.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868844855452" data-media-id="template--20029866475676__main-34868844855452" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868844855452"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — before and after results | Skinofab" class="is-loading img-object-cover" data-image-id="34868844855452" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_2-1080w-p4dec22.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_2-753w-p0c321b.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_2-1080w-p4dec22.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_2-1080w-p4dec22.jpg'|asset_url %}<img alt="Extreme Lip Plumper — before and after results | Skinofab" class="is-loading img-object-cover" data-image-id="34868844855452" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_2-1080w-p4dec22.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868844888220" data-media-id="template--20029866475676__main-34868844888220" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868844888220"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — ingredients and formula | Skinofab" class="is-loading img-object-cover" data-image-id="34868844888220" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_3-1080w-1652ab.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_3-753w-e5535e.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_3-1080w-721470.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_3-1080w-721470.jpg'|asset_url %}<img alt="Extreme Lip Plumper — ingredients and formula | Skinofab" class="is-loading img-object-cover" data-image-id="34868844888220" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_3-1080w-1652ab.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868844920988" data-media-id="template--20029866475676__main-34868844920988" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868844920988"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — how to use | Skinofab" class="is-loading img-object-cover" data-image-id="34868844920988" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_4-1080w-p95224e.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_4-753w-ped6402.png'|asset_url }} 753w, {{ 'sf/img/ELPC_4-1080w-p95224e.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_4-1080w-p95224e.jpg'|asset_url %}<img alt="Extreme Lip Plumper — how to use | Skinofab" class="is-loading img-object-cover" data-image-id="34868844920988" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_4-1080w-p95224e.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35169494040732" data-media-id="template--20029866475676__main-35169494040732" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-35169494040732"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35169494040732" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-1080w-c38676.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-753w-867329.png'|asset_url }} 753w, {{ 'sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-1080w-8e0f30.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-1080w-8e0f30.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35169494040732" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-1080w-c38676.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868844986524" data-media-id="template--20029866475676__main-34868844986524" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868844986524"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868844986524" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_6-1080w-cd5ed9.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_6-753w-846a53.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_6-1080w-d97b1e.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_6-1080w-d97b1e.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868844986524" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_6-1080w-cd5ed9.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868845019292" data-media-id="template--20029866475676__main-34868845019292" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868845019292"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868845019292" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_7-1080w-3b32d0.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_7-753w-979085.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_7-1080w-7accd7.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_7-1080w-7accd7.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868845019292" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_7-1080w-3b32d0.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868845052060" data-media-id="template--20029866475676__main-34868845052060" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868845052060"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868845052060" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_8-1080w-pa4d732.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPC_8-753w-pc1da2a.jpg'|asset_url }} 753w, {{ 'sf/img/ELPC_8-1080w-pa4d732.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_8-1080w-pa4d732.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868845052060" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPC_8-1080w-pa4d732.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868855406748" data-media-id="template--20029866475676__main-34868855406748" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868855406748"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855406748" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR-1080w-b76f98.png'|asset_url }}" srcset="{{ 'sf/img/ELPR-753w-fee0e0.png'|asset_url }} 753w, {{ 'sf/img/ELPR-1080w-79ee77.png'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR-1080w-79ee77.png'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855406748" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR-1080w-b76f98.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868855210140" data-media-id="template--20029866475676__main-34868855210140" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868855210140"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855210140" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_2-1080w-p9bbe70.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPR_2-753w-p382347.jpg'|asset_url }} 753w, {{ 'sf/img/ELPR_2-1080w-p9bbe70.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_2-1080w-p9bbe70.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855210140" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_2-1080w-p9bbe70.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868855242908" data-media-id="template--20029866475676__main-34868855242908" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868855242908"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855242908" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_3-1080w-a2cc23.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPR_3-753w-9ba191.jpg'|asset_url }} 753w, {{ 'sf/img/ELPR_3-1080w-6a02ff.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_3-1080w-6a02ff.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855242908" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_3-1080w-a2cc23.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868855275676" data-media-id="template--20029866475676__main-34868855275676" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868855275676"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855275676" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_4-1080w-p4b8cd4.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPR_4-753w-p7c9a42.png'|asset_url }} 753w, {{ 'sf/img/ELPR_4-1080w-p4b8cd4.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_4-1080w-p4b8cd4.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855275676" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_4-1080w-p4b8cd4.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35169494007964" data-media-id="template--20029866475676__main-35169494007964" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-35169494007964"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35169494007964" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-1080w-b04096.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-753w-62f085.png'|asset_url }} 753w, {{ 'sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-1080w-d2d46b.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-1080w-d2d46b.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35169494007964" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-1080w-b04096.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="35141450465436" data-media-id="template--20029866475676__main-35141450465436" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-35141450465436"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35141450465436" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-1080w-769a9d.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-753w-74dc35.jpg'|asset_url }} 753w, {{ 'sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-1080w-278569.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-1080w-278569.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="35141450465436" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-1080w-769a9d.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868855341212" data-media-id="template--20029866475676__main-34868855341212" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868855341212"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855341212" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_6-1080w-f14fad.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPR_6-753w-95fc94.jpg'|asset_url }} 753w, {{ 'sf/img/ELPR_6-1080w-c79612.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_6-1080w-c79612.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855341212" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_6-1080w-f14fad.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 <div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34868855373980" data-media-id="template--20029866475676__main-34868855373980" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029866475676__main-34868855373980"><div class="product-single__media product-single__media--image">
 <div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855373980" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_7-1080w-2ffe31.jpg'|asset_url }}" srcset="{{ 'sf/img/ELPR_7-753w-81d952.jpg'|asset_url }} 753w, {{ 'sf/img/ELPR_7-1080w-51a7f6.jpg'|asset_url }} 1080w" style="" width="1080"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_7-1080w-51a7f6.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading img-object-cover" data-image-id="34868855373980" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 768px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ELPR_7-1080w-2ffe31.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
 </figure>
 <a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="#" rel="lightbox">
 <span class="visually-hidden">Open image lightbox</span>
 </a></div></div>
 </div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="34868845084828" data-thumbnail-id="template--20029866475676__main-34868845084828"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — product photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC-178w-17e0bf.png'|asset_url }}" srcset="{{ 'sf/img/ELPC-1080w-5dd1e2.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC-1080w-5dd1e2.png'|asset_url %}<img alt="Extreme Lip Plumper — product photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC-178w-17e0bf.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868844855452" data-thumbnail-id="template--20029866475676__main-34868844855452"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — before and after results | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_2-178w-pd45332.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_2-1080w-p4dec22.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_2-1080w-p4dec22.jpg'|asset_url %}<img alt="Extreme Lip Plumper — before and after results | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_2-178w-pd45332.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868844888220" data-thumbnail-id="template--20029866475676__main-34868844888220"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — ingredients and formula | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_3-178w-32c7d7.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_3-1080w-721470.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_3-1080w-721470.jpg'|asset_url %}<img alt="Extreme Lip Plumper — ingredients and formula | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_3-178w-32c7d7.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868844920988" data-thumbnail-id="template--20029866475676__main-34868844920988"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — how to use | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_4-178w-pfd6d55.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_4-1080w-p95224e.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_4-1080w-p95224e.jpg'|asset_url %}<img alt="Extreme Lip Plumper — how to use | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_4-178w-pfd6d55.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35169494040732" data-thumbnail-id="template--20029866475676__main-35169494040732"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-178w-2cd1a6.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-1080w-8e0f30.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-1080w-8e0f30.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-178w-2cd1a6.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868844986524" data-thumbnail-id="template--20029866475676__main-34868844986524"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_6-178w-ede00f.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_6-1080w-d97b1e.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_6-1080w-d97b1e.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_6-178w-ede00f.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868845019292" data-thumbnail-id="template--20029866475676__main-34868845019292"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_7-178w-c29566.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_7-1080w-7accd7.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_7-1080w-7accd7.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_7-178w-c29566.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868845052060" data-thumbnail-id="template--20029866475676__main-34868845052060"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_8-178w-pddadd6.png'|asset_url }}" srcset="{{ 'sf/img/ELPC_8-1080w-pa4d732.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPC_8-1080w-pa4d732.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPC_8-178w-pddadd6.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868855406748" data-thumbnail-id="template--20029866475676__main-34868855406748"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR-178w-2d0df3.png'|asset_url }}" srcset="{{ 'sf/img/ELPR-1080w-79ee77.png'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR-1080w-79ee77.png'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR-178w-2d0df3.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868855210140" data-thumbnail-id="template--20029866475676__main-34868855210140"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_2-178w-p3763ac.png'|asset_url }}" srcset="{{ 'sf/img/ELPR_2-1080w-p9bbe70.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_2-1080w-p9bbe70.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_2-178w-p3763ac.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868855242908" data-thumbnail-id="template--20029866475676__main-34868855242908"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_3-178w-b070e6.png'|asset_url }}" srcset="{{ 'sf/img/ELPR_3-1080w-6a02ff.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_3-1080w-6a02ff.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_3-178w-b070e6.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868855275676" data-thumbnail-id="template--20029866475676__main-34868855275676"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_4-178w-pc886cf.png'|asset_url }}" srcset="{{ 'sf/img/ELPR_4-1080w-p4b8cd4.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_4-1080w-p4b8cd4.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_4-178w-pc886cf.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35169494007964" data-thumbnail-id="template--20029866475676__main-35169494007964"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-178w-1f8d83.png'|asset_url }}" srcset="{{ 'sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-1080w-d2d46b.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-1080w-d2d46b.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_2_d519db13-ccc7-46be-8537-ce42f2245c5e-178w-1f8d83.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="35141450465436" data-thumbnail-id="template--20029866475676__main-35141450465436"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-178w-62655d.png'|asset_url }}" srcset="{{ 'sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-1080w-278569.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-1080w-278569.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_94688b38-ca0b-44de-b490-5ff17a9bb788-178w-62655d.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868855341212" data-thumbnail-id="template--20029866475676__main-34868855341212"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_6-178w-26d5b3.png'|asset_url }}" srcset="{{ 'sf/img/ELPR_6-1080w-c79612.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_6-1080w-c79612.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_6-178w-26d5b3.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div><div class="product-single__thumbnail" data-id="34868855373980" data-thumbnail-id="template--20029866475676__main-34868855373980"><a aria-label="Extreme Lip Plumper" class="product-single__thumbnail-link" href="#">
-<figure class="lazy-image is-loading lazy-image--cover"><img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_7-178w-c7e093.png'|asset_url }}" srcset="{{ 'sf/img/ELPR_7-1080w-51a7f6.jpg'|asset_url }} 1080w" style="" width="178"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ELPR_7-1080w-51a7f6.jpg'|asset_url %}<img alt="Extreme Lip Plumper — lifestyle photo | Skinofab" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ELPR_7-178w-c7e093.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
 </figure></a></div></div></div>
 <div class="product-single__details" data-collapsible-single="" id="product_details">
 <div class="form__wrapper" data-product-info=""><div class="product__block" style="--PBB:20px;">
 <div class="product__icon__row product__icon__row--center" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.9); --bg: #f7f7f7;padding: 5px 10px;"><div class="product__icon__text"><p>New packaging, same results.</p></div></div>
 </div>
-<style>
-           .product__block.product__images {
-                 padding-top: 0px!important;
-     padding-bottom: 10px!important;
-    }
-          .profile-image:nth-child(1) {
-            background-image: url("{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-p8adec8.png'|asset_url }}");
-        }
-
-        .profile-image:nth-child(2) {
-            background-image: url("{{ 'sf/img/2_51914231-02fc-4cf3-b29c-1627c2d6ed9a_1000x1000-pf1aa35.png'|asset_url }}");
-        }
-
-        .profile-image:nth-child(3) {
-            background-image: url("{{ 'sf/img/3_99578868-68cd-4fd4-9230-90bcb8d72a8e_1000x1000-p7db3fa.png'|asset_url }}");
-        }
-    </style>
+<style>.product__block.product__images{padding-top: 0px!important;
+     padding-bottom: 10px!important;}.profile-image:nth-child(1){background-image: url("{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-p8adec8.png'|asset_url }}");}.profile-image:nth-child(2){background-image: url("{{ 'sf/img/2_51914231-02fc-4cf3-b29c-1627c2d6ed9a_1000x1000-pf1aa35.png'|asset_url }}");}.profile-image:nth-child(3){background-image: url("{{ 'sf/img/3_99578868-68cd-4fd4-9230-90bcb8d72a8e_1000x1000-p7db3fa.png'|asset_url }}");}</style>
 <div class="product__block product__images">
 <div class="social-proof-container">
 <div class="profile-images">
@@ -898,11 +649,7 @@
 </a>
 </div>
 </div>
-<style>
-                              .product__block.standard__app .loox-rating.loox-widget {
-                      display: none!important;
-                  }
-                </style>
+<style>.product__block.standard__app .loox-rating.loox-widget{display: none!important;}</style>
 <a href="#looxReviews">
 <div class="loox-rating custom-rating" data-id="7889590845596" data-raters="61,876" data-rating="4.8">
 <span>4.8/5 (61,876 reviews)</span>
@@ -910,16 +657,7 @@
 </a>
 <div class="product__block product__title-and-price" id="product_link">
 <h1 class="product__title">{{ product.get_title }}</h1>
-</div><style>
-                #productpricetemplate--20029866475676__main {
-                  font-size: 21px!important;
-                }
-                @media screen and (max-width: 767px){
-                 #productpricetemplate--20029866475676__main {
-                  font-size: 18px!important;
-                }
-                }
-              </style>
+</div><style>#productpricetemplate--20029866475676__main{font-size: 21px!important;}@media screen and (max-width: 767px){% templatetag opencomment %}productpricetemplate--20029866475676__main{font-size: 18px!important;}}</style>
 <div class="product__block product__price-and-badge" style="--PBB:20px;">
 <div class="product__price-and-rating">
 <div class="product__price" data-price-wrapper="" id="productpricetemplate--20029866475676__main">
@@ -955,33 +693,20 @@
 <span>100% natural &amp; vegan</span>
 </div>
 </div>
-<style>
-.skinofab-usp-grid {
-  display: grid;
+<style>.skinofab-usp-grid{display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-.skinofab-usp-grid__item {
-  display: flex;
+  gap: 8px;}.skinofab-usp-grid__item{display: flex;
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
   background: #f7f7f7;
-  border-radius: 8px;
-}
-.skinofab-usp-grid__item img {
-  width: 22px;
+  border-radius: 8px;}.skinofab-usp-grid__item img{width: 22px;
   height: 22px;
-  flex-shrink: 0;
-}
-.skinofab-usp-grid__item span {
-  font-size: 13px;
+  flex-shrink: 0;}.skinofab-usp-grid__item span{font-size: 13px;
   font-weight: 600;
   color: #2D2D2D;
-  line-height: 1.3;
-}
-</style>
-</div><div class="kopstorm_form1 product__block variant__labels--hide btn--half" data-form-wrapper="" style="--PBB:20px;">{% firstof product.children.first.pk product.pk as sf_atc_56 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_56 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866475676__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+  line-height: 1.3;}</style>
+</div><div class="kopstorm_form1 product__block variant__labels--hide btn--half" data-form-wrapper="" style="--PBB:20px;">{% firstof product.children.first.pk product.pk as sf_atc_49 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_49 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866475676__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
 <input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
 <div class="product__selectors" selector_product=""><div class="selector-wrapper selector-wrapper--swatches" data-option-position="1" f="">
 <legend class="radio__legend-color siblings__legend-color">
@@ -1015,38 +740,15 @@
 </legend>
 <a class="siblings__swatch siblings__swatch--circle siblings__swatch--image" fff="" href="{% if settings.sf_p_hyaluronic_acid_lip_plumper %}{{ settings.sf_p_hyaluronic_acid_lip_plumper.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
 <div class="siblings__button" data-swatch="Transparent" data-tooltip="Normal ">
-<style>
-.siblings {
-margin-bottom: 0px!important;
-}
-
-
-.siblings__button {
-width: auto;
+<style>.siblings{margin-bottom: 0px!important;}.siblings__button{width: auto;
 height: auto;
 padding: 5px 10px!important;
 border-radius: 5px!important;
 border: 2px solid transparent!important;
-transition: all 0.3s ease;
-}
-
-.siblings__button:hover {
-border: 2px solid #B0B0B0!important;
-border-radius: 5px!important;
-}
-
-.siblings__swatch {
-border-radius: 5px!important;
+transition: all 0.3s ease;}.siblings__button:hover{border: 2px solid #B0B0B0!important;
+border-radius: 5px!important;}.siblings__swatch{border-radius: 5px!important;
 padding: 0px!important;
-background: #f7f9fa;
-}
-
-.siblings__swatch[aria-current="true"] .siblings__button:hover {
-border: 2px solid transparent!important;
-}
-
-.siblings__swatch[aria-current="true"] .siblings__button:after {
-content: '';
+background: #f7f9fa;}.siblings__swatch[aria-current="true"] .siblings__button:hover{border: 2px solid transparent!important;}.siblings__swatch[aria-current="true"] .siblings__button:after{content: '';
 position: absolute;
 width: 100%!important;
 height: 100%!important;
@@ -1056,13 +758,7 @@ top: 0;
 left: 0;
 bottom: 0;
 right: 0;
-transform: none!important;
-}
-
-.radio__legend__label {
-font-weight: 600!important;
-}
-</style>
+transform: none!important;}.radio__legend__label{font-weight: 600!important;}</style>
 <span>
 <span style="font-weight: 500;">
 
@@ -1079,38 +775,15 @@ Normal
 </a>
 <a aria-current="true" class="siblings__swatch siblings__swatch--circle siblings__swatch--image" fff="" href="{% if settings.sf_p_extreme_lip_plumper %}{{ settings.sf_p_extreme_lip_plumper.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
 <div class="siblings__button" data-swatch="Transparent" data-tooltip="Extreme ">
-<style>
-.siblings {
-margin-bottom: 0px!important;
-}
-
-
-.siblings__button {
-width: auto;
+<style>.siblings{margin-bottom: 0px!important;}.siblings__button{width: auto;
 height: auto;
 padding: 5px 10px!important;
 border-radius: 5px!important;
 border: 2px solid transparent!important;
-transition: all 0.3s ease;
-}
-
-.siblings__button:hover {
-border: 2px solid #B0B0B0!important;
-border-radius: 5px!important;
-}
-
-.siblings__swatch {
-border-radius: 5px!important;
+transition: all 0.3s ease;}.siblings__button:hover{border: 2px solid #B0B0B0!important;
+border-radius: 5px!important;}.siblings__swatch{border-radius: 5px!important;
 padding: 0px!important;
-background: #f7f9fa;
-}
-
-.siblings__swatch[aria-current="true"] .siblings__button:hover {
-border: 2px solid transparent!important;
-}
-
-.siblings__swatch[aria-current="true"] .siblings__button:after {
-content: '';
+background: #f7f9fa;}.siblings__swatch[aria-current="true"] .siblings__button:hover{border: 2px solid transparent!important;}.siblings__swatch[aria-current="true"] .siblings__button:after{content: '';
 position: absolute;
 width: 100%!important;
 height: 100%!important;
@@ -1120,13 +793,7 @@ top: 0;
 left: 0;
 bottom: 0;
 right: 0;
-transform: none!important;
-}
-
-.radio__legend__label {
-font-weight: 600!important;
-}
-</style>
+transform: none!important;}.radio__legend__label{font-weight: 600!important;}</style>
 <span>
 <span style="font-weight: 500;">
 
@@ -1146,13 +813,13 @@ Extreme
 <h6><strong>Flash SALE</strong></h6>
 </div></div><div class="product__block" style="--PBB:6px;">
 <div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.95); --bg: #f7f7f7;padding: 5px 10px;"><div class="product__icon icon-stroke" style="--icon-size: 40px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
-<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="80" loading="eager" sizes="40px" src="{{ 'sf/img/pp_2-80w-a9a86fc.png'|asset_url }}" srcset="{{ 'sf/img/pp_2-500w-ab68e42.png'|asset_url }} 500w" style="" width="80"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/pp_2-500w-ab68e42.png'|asset_url %}<img class="is-loading product__icon__img img-object-cover" height="80" loading="eager" sizes="40px" src="{{ 'sf/img/pp_2-80w-a9a86fc.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=40 40w, {{ sf_img }}&amp;width=80 80w, {{ sf_img }}&amp;width=120 120w, {{ sf_img }} 500w" style="" width="80"/>{% endwith %}
 </figure></div></div><div class="product__icon__text"><p><strong>Buy 1, Get 1 FREE<br/></strong>Add two items to your cart</p></div></div>
 </div><div class="product__block" style="--PBB:20px;">
 <div class="product__icon__row" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.95); --bg: #f7f7f7;padding: 5px 10px;"><div class="product__icon icon-stroke" style="--icon-size: 40px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
-<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="80" loading="eager" sizes="40px" src="{{ 'sf/img/1_eea6d46b-7558-42fc-966a-83c64539e969-80w-5a747f.png'|asset_url }}" srcset="{{ 'sf/img/1_eea6d46b-7558-42fc-966a-83c64539e969-500w-d300d5.png'|asset_url }} 500w" style="" width="80"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/1_eea6d46b-7558-42fc-966a-83c64539e969-500w-d300d5.png'|asset_url %}<img class="is-loading product__icon__img img-object-cover" height="80" loading="eager" sizes="40px" src="{{ 'sf/img/1_eea6d46b-7558-42fc-966a-83c64539e969-80w-5a747f.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=40 40w, {{ sf_img }}&amp;width=80 80w, {{ sf_img }}&amp;width=120 120w, {{ sf_img }} 500w" style="" width="80"/>{% endwith %}
 </figure></div></div><div class="product__icon__text"><p>+<strong> FREE</strong> <strong>Mystery Gift</strong></p></div></div>
-</div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:26px;">{% firstof product.children.first.pk product.pk as sf_atc_58 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_58 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866475676__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+</div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:26px;">{% firstof product.children.first.pk product.pk as sf_atc_51 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_51 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029866475676__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
 <input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/>
 <div class="shop-pay-terms">
 <shopify-payment-terms shopify-meta='{"type":"product","currency_code":"USD","country_code":"US","variants":[{"id":44663423959196,"price_per_term":"$20","price_per_term_amount":19.5,"full_price":"$39","full_price_amount":39.0,"eligible":true,"available":true,"number_of_payment_terms":2},{"id":44663423991964,"price_per_term":"$20","price_per_term_amount":19.5,"full_price":"$39","full_price_amount":39.0,"eligible":true,"available":true,"number_of_payment_terms":2}],"min_price":"$35","min_price_amount":35.0,"max_price":"$30,000","max_price_amount":30000.0,"financing_plans":[{"min_price":"$35","max_price":"$50","terms":[{"apr":0,"loan_type":"split_pay","installments_count":2}],"min_price_amount":35.0,"max_price_amount":49.99},{"min_price":"$50","max_price":"$1,000","terms":[{"apr":0,"loan_type":"split_pay","installments_count":3},{"apr":0,"loan_type":"split_pay","installments_count":4},{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":50.0,"max_price_amount":999.99},{"min_price":"$1,000","max_price":"$30,000","terms":[{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":1000.0,"max_price_amount":30000.0}],"installments_buyer_prequalification_enabled":false,"seller_id":2823039}' variant-id="44663423959196"></shopify-payment-terms>
@@ -1253,89 +920,40 @@ Extreme
 <p id="stockinfop">
 <span class="stock-left">
 <span class="pulsing-dot" style="background-color: #16a34a;">
-<style>
-        #stockinfop {
-          list-style: none !important;
-        }
-        #stockinfop .pulsing-dot::before {
-          background-color: #16a34a!important;
-        }
-        #stockinfop .stock-left > span:not(.pulsing-dot) {
-          color: #16a34a!important;
-        }
-      </style>
+<style>#stockinfop{list-style: none !important;}#stockinfop .pulsing-dot::before{background-color: #16a34a!important;}#stockinfop .stock-left > span:not(.pulsing-dot){color: #16a34a!important;}</style>
 </span>
 <span id="shippingUspText" style="color: #16a34a;">Shipped today</span>
 </span>
 <span class="location-right" id="locationinfop"></span>
 </p>
 </div>
-<style>
-  #locationinfop,
-  #stockinfop {
-    margin-bottom: 0px;
+<style>#locationinfop,#stockinfop{margin-bottom: 0px;
     text-align: center;
     font-size: 0.975rem;
     font-weight: 500;
     border-radius: 12px;
-    margin-top: 3px;
-  }
-
-  #stockinfop {
-    display: flex;
+    margin-top: 3px;}#stockinfop{display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .stock-left {
-    display: flex;
+    margin-bottom: 10px;}.stock-left{display: flex;
     align-items: center;
-    gap: 8px;
-  }
-
-  .location-right {
-    display: flex;
+    gap: 8px;}.location-right{display: flex;
     align-items: center;
-    gap: 4px;
-  }
-
-  .location-right .shipping-country-flag {
-    width: 20px;
+    gap: 4px;}.location-right .shipping-country-flag{width: 20px;
     height: 15px;
-    flex: 0 0 20px;
-  }
-
-  .pulsing-dot {
-    position: relative;
+    flex: 0 0 20px;}.pulsing-dot{position: relative;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    animation: dot-breathe 2s ease-in-out infinite;
-  }
-
-  /* No ::before halo — the expanding same-color ring read as a second dot.
-     A gentle opacity breathe on the dot itself signals "live" instead. */
-  .pulsing-dot::before {
-    content: none;
-  }
-
-  @keyframes dot-breathe {
+    animation: dot-breathe 2s ease-in-out infinite;}.pulsing-dot::before{content: none;}@keyframes dot-breathe{
     0%, 100% { opacity: 1; }
     50% { opacity: 0.45; }
-  }
-
-@media only screen and (max-width: 767px) {
-  #locationinfop, #stockinfop {
-    text-align: center;
+  }@media only screen and (max-width: 767px){% templatetag opencomment %}locationinfop,#stockinfop{text-align: center;
     font-size: 0.975rem;
     font-weight: 500;
     border-radius: 10px;
     margin-top: 3px;
-    font-size: 14.5px;
-  }
-}
-</style>
+    font-size: 14.5px;}}</style>
 <script>
   // Cached original innerHTML of the shipping/returns accordion body, captured once
   // so the worldwide-shipping paragraphs can be toggled without losing content.
@@ -1345,7 +963,7 @@ Extreme
     const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
     const validCountryCode = /^[A-Z]{2}$/.test(normalizedCountryCode);
     const flagMarkup = validCountryCode
-      ? `<img class="shipping-country-flag" src="https://cdn.shopify.com/static/images/flags/${normalizedCountryCode.toLowerCase()}.svg?width=32" alt="" aria-hidden="true" width="20" height="15" style="vertical-align: middle;">`
+      ? `<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint(...normalizedCountryCode.split('').map(c => 127397 + c.charCodeAt(0)))}</span>`
       : '<span aria-hidden="true">📦</span>';
     const countryLabel = validCountryCode ? normalizedCountryCode : 'your country';
     const locationInfoP = document.getElementById('locationinfop');
@@ -1490,81 +1108,33 @@ Extreme
 <p><strong>Selling out fast<br/></strong>Due to high demand, quantities are limited.</p>
 </div></div>
 <div class="product__block countdown-timer-wrapper">
-<style>
-    .countdown-timer-wrapper {
-     width: 100%;
+<style>.countdown-timer-wrapper{width: 100%;
      padding-top: 6px!important;
-     padding-bottom: 30px!important;
-    }
-    
-    .countdown-timer-container {
-      width: 100%;
+     padding-bottom: 30px!important;}.countdown-timer-container{width: 100%;
       max-width: 100%;
-      margin: 0 auto;
-    }
-    
-    .countdown-timer-bar {
-      width: 100%;
+      margin: 0 auto;}.countdown-timer-bar{width: 100%;
       height: 10px;
       background-color: #eaeaea;
       border-radius: 0px;
       overflow: hidden;
       margin-bottom: 7px;
-          border-radius: 4px;
-    }
-    
-    .countdown-timer-progress {
-      height: 100%;
+          border-radius: 4px;}.countdown-timer-progress{height: 100%;
       background-color: #000000;
       width: 91%;
       transition: width 0.3s ease;
-      border-radius: 0px;
-    }
-    
-    .countdown-timer-info {
-      display: flex;
+      border-radius: 0px;}.countdown-timer-info{display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
-    }
-    
-    .countdown-timer-prefix {
-      color: #000000;
+      gap: 8px;}.countdown-timer-prefix{color: #000000;
       font-size: 16px;
-      font-weight: 500;
-    }
-    
-    .countdown-timer-end {
-      display: flex;
+      font-weight: 500;}.countdown-timer-end{display: flex;
       align-items: center;
       gap: 6px;
       color: #000000;
       font-size: 16px;
-      font-weight: 500;
-    }
-    
-    .countdown-timer-time {
-      color: #000000;
-      font-weight: 500;
-    }
-    
-    @media (max-width: 768px) {
-      .countdown-timer-container {
-        width: 100%;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .countdown-timer-info {
-
-      }
-      
-      .countdown-timer-end {
-
-      }
-    }
-  </style>
+      font-weight: 500;}.countdown-timer-time{color: #000000;
+      font-weight: 500;}@media (max-width: 768px){.countdown-timer-container{width: 100%;}}@media (max-width: 480px){.countdown-timer-info{}.countdown-timer-end{}}</style>
 <div class="countdown-timer-container">
 <div class="countdown-timer-bar">
 <div class="countdown-timer-progress"></div>
@@ -1662,21 +1232,12 @@ Extreme
     setInterval(updateCountdown, 1000);
   })();
 </script>
-<style>
-                  #product__featuretemplate--20029866475676__main {
-                    border-width: 2px!important;
-                    border-color: #000000!important;
-                  }
-                  @media screen and (max-width: 767px){
-                  #product__featuretemplate--20029866475676__main {
-                    border-width: 2px!important;
-                    border-color: #000000!important;
-                  }
-                  }
-                </style>
+<style>#product__featuretemplate--20029866475676__main{border-width: 2px!important;
+                    border-color: #000000!important;}@media screen and (max-width: 767px){% templatetag opencomment %}product__featuretemplate--20029866475676__main{border-width: 2px!important;
+                    border-color: #000000!important;}}</style>
 <div class="product__block product__features" data-slider="" style="--PBB:20px;"><div class="product__feature" data-block-id="feature_guarantee" id="product__featuretemplate--20029866475676__main" style="--bg: #f7f7f7;--text: #000000;--heading: #000000;padding: var(--grid-gutter);">
 <div class="product__feature__content"><div class="product__feature__icon__container"><div class="product__icon icon-stroke" style="--icon-size: 50px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
-<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover" height="100" loading="eager" sizes="50px" src="{{ 'sf/img/Color_Changing_Foundation_-_Product_images_photos_2-100w-a12f7c3.png'|asset_url }}" srcset="{{ 'sf/img/Color_Changing_Foundation_-_Product_images_photos_2-810w-ae42f79.png'|asset_url }} 810w" style="" width="100"/>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/Color_Changing_Foundation_-_Product_images_photos_2-810w-ae42f79.png'|asset_url %}<img class="is-loading product__icon__img img-object-cover" height="100" loading="eager" sizes="50px" src="{{ 'sf/img/Color_Changing_Foundation_-_Product_images_photos_2-100w-a12f7c3.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=50 50w, {{ sf_img }}&amp;width=100 100w, {{ sf_img }}&amp;width=150 150w, {{ sf_img }} 810w" style="" width="100"/>{% endwith %}
 </figure></div></div><div class="product__feature__heading">
 <h5>30-day money-back guarantee</h5>
 </div></div><div class="product__feature__text">
@@ -1755,38 +1316,10 @@ Extreme
 <div class="swiper-button-next swiper-button-next_Videoslider"></div>
 </div>
 </div>
-<style>
-                 .video-slider .swiper-slide {
-                    width: max-content;
-                   height: max-content;
-                }
-
-                 .video-slider .swiper-button-prev[aria-disabled="true"] {
-                     opacity: 0;
-                  }
-
-                  .video-slider   .swiper-button-next[aria-disabled="true"] {
-                     opacity: 0;
-                  }
-
-                 .video-slider .swiper-pagination-bullet-active {
-                background: #b0b0b0!important;
-                }
-                  .swiper-pagination {
-                   position: relative!important;
-                  }
-
-                 .video-slider .swiper-wrapper {
-                    height: max-content;
-                  }
-                .video-slider {
-                  display: flex;
+<style>.video-slider .swiper-slide{width: max-content;
+                   height: max-content;}.video-slider .swiper-button-prev[aria-disabled="true"]{opacity: 0;}.video-slider   .swiper-button-next[aria-disabled="true"]{opacity: 0;}.video-slider .swiper-pagination-bullet-active{background: #b0b0b0!important;}.swiper-pagination{position: relative!important;}.video-slider .swiper-wrapper{height: max-content;}.video-slider{display: flex;
                   overflow-x: auto;
-                  scroll-snap-type: x mandatory;
-                }
-
-                  .swiper-button-next_Videoslider {
-                background: #b0b0b0!important;
+                  scroll-snap-type: x mandatory;}.swiper-button-next_Videoslider{background: #b0b0b0!important;
                 color: #ffffff!important;
                     border-radius: 500px;
                     width: 27px;
@@ -1799,30 +1332,12 @@ Extreme
                     right: 5px;
                     margin: 0;
                     position: absolute;
-                    top: 39%;
-                  }
-
-                 .Videoslider .swiper-pagination {
-                    position: relative !important;
+                    top: 39%;}.Videoslider .swiper-pagination{position: relative !important;
                     margin-top: 10px;
                    height: max-content;
-                    line-height: 1;
-                }
-
-                  .swiper-button-prev_Videoslider:after {
-                    font-size: 12px;
-                    font-weight: bold;
-                }
-                .Videoslider {
-                  margin: 0px!important;
-                }
-                 .swiper-button-next_Videoslider:after {
-                    font-size: 12px;
-                    font-weight: bold;
-                }
-
-                    .swiper-button-prev_Videoslider {
-                background: #b0b0b0!important;
+                    line-height: 1;}.swiper-button-prev_Videoslider:after{font-size: 12px;
+                    font-weight: bold;}.Videoslider{margin: 0px!important;}.swiper-button-next_Videoslider:after{font-size: 12px;
+                    font-weight: bold;}.swiper-button-prev_Videoslider{background: #b0b0b0!important;
                 color: #ffffff!important;
                     border-radius: 500px;
                     width: 27px;
@@ -1836,26 +1351,12 @@ Extreme
                     margin: 0;
                     position: absolute;
                     right: auto;
-                    top: 39%;
-                  }
-
-                .video-slide {
-                  flex: 0 0 auto;
+                    top: 39%;}.video-slide{flex: 0 0 auto;
                   scroll-snap-align: start;
                   border-radius: 8px;
-                  margin-right: 0px!important;
-                }
-
-                .video-thumbnail {
-                  border-radius: 8px;
-                }
-
-                .video-slider::-webkit-scrollbar {
-                  display: none;
-                }
-              </style>
-<script>
-                function loadVideo(videoSlideElement, videoUrl) {
+                  margin-right: 0px!important;}.video-thumbnail{border-radius: 8px;}.video-slider::-webkit-scrollbar{display: none;}</style>
+<script>var swiper;
+function loadVideo(videoSlideElement, videoUrl) {
                   var videoElement = videoSlideElement.getElementsByTagName('video')[0];
                   var thumbnailElement = videoSlideElement.getElementsByTagName('img')[0];
                   if (!videoElement.src) {
@@ -1865,6 +1366,9 @@ Extreme
                     videoElement.play();
                   }
                 }
+document.addEventListener('DOMContentLoaded', function () {
+
+                
 
                 document.querySelector('.video-slider').addEventListener('wheel', function (e) {
                   if (e.deltaY != 0) {
@@ -1873,7 +1377,7 @@ Extreme
                   }
                 });
 
-                var swiper = new Swiper('.Videoslidervideoblock_gUayMm', {
+                swiper = new Swiper('.Videoslidervideoblock_gUayMm', {
                   slidesPerView: 'auto',
                   spaceBetween: 9,
                   breakpoints: {
@@ -1901,7 +1405,8 @@ Extreme
                     dragSize: 'auto',
                   },
                 });
-              </script><div class="product__block product__accordions" id="Block--product_accordion_JmaAcV" style="--PBB:10px;"><div class="product__accordion">
+              
+});</script><div class="product__block product__accordions" id="Block--product_accordion_JmaAcV" style="--PBB:10px;"><div class="product__accordion">
 <button aria-controls="ProductAccordion--page-how-does-it-work--template--20029866475676__main--product_accordion_JmaAcV" class="product__accordion__title font-heading" data-collapsible-trigger="">
 <span id="accordionbefore">How does it work?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-how-does-it-work--template--20029866475676__main--product_accordion_JmaAcV">
@@ -2051,8 +1556,10 @@ Extreme
 </div>
 <div class="swiper-scrollbar swiper-scrollbar_Ingredients"></div>
 </div>
-<script>
-var swiper7 = new Swiper(".Ingredients", {
+<script>var swiper7;
+document.addEventListener('DOMContentLoaded', function () {
+
+swiper7 = new Swiper(".Ingredients", {
 slidesPerView: 2.5,
 spaceBetween: 20,
 breakpoints: {
@@ -2079,7 +1586,8 @@ el: ".swiper-pagination_Ingredients",
 draggable: false,
       },
 });
-</script>
+
+});</script>
 <p>Content: 3mL<strong><br/><br/>Hydrogenated Polyisobutene:<br/></strong>A vegan-friendly, synthetic emollient that provides a smooth, non-greasy feel and enhances moisture retention. (Vegan)</p><p><strong>Hyaluronic Acid<br/></strong>Naturally derived and vegan-friendly, it deeply hydrates and plumps the skin by retaining moisture. (Vegan)</p><p><strong>Peppermint Extract<br/></strong>A natural, vegan extract that provides a refreshing, cooling sensation and invigorates the senses. (Vegan)</p><p><strong>Vitamin E (Tocopherol)<br/></strong>A plant-derived antioxidant that protects the skin from damage and supports moisture retention. (Vegan)</p><p><strong>Ethylene/Propylene/Styrene Copolymer<br/></strong>A vegan-friendly polymer that enhances texture and provides a flexible, film-forming property. (Vegan)</p><p><strong>Glycerin:<br/></strong>A plant-derived humectant that attracts moisture, keeping lips soft and supple. (Vegan)</p><p><strong>Butylene/Ethylene/Styrene Copolymer:<br/></strong>A vegan-friendly polymer that improves texture and provides a smooth, flexible finish. (Vegan)</p><p><strong>Water (Aqua):<br/></strong>A pure, natural solvent that hydrates and blends ingredients seamlessly.<br/>(Vegan)</p><p><strong>Cetearyl Ethylhexanoate:<br/></strong>A plant-based emollient that provides a silky, lightweight feel and enhances spreadability. (Vegan)</p><p><strong>Benzyl Nicotinate:<br/></strong>A vegan compound that stimulates circulation, promoting a healthy, radiant look. (Vegan)</p><p><strong>Niacinamide:<br/></strong>A form of Vitamin B3, it improves skin texture, brightens complexion, and supports barrier function. (Vegan)</p><p><strong>Phytosphingosine:<br/></strong>A naturally occurring lipid that helps maintain the skin's barrier and supports healthy skin. (Vegan)</p><p><strong>Glycine Soja (Soybean) Seed Extract:<br/></strong>A plant-derived extract rich in antioxidants that nourishes and protects the skin. (Vegan)</p><p><strong>Sorbitan Isostearate:<br/></strong>A plant-based emulsifier that helps blend ingredients and maintain product stability. (Vegan)</p><p><strong>Stevia Rebaudiana Extract:<br/></strong>A natural, vegan extract that provides sweetness and has soothing properties. (Vegan)</p><p><strong>Panthenol:<br/></strong>A provitamin of B5, it hydrates, soothes, and repairs the skin, enhancing softness and elasticity. (Vegan)</p><p><strong>Tocopheryl Acetate:<br/></strong>A stable form of Vitamin E that acts as an antioxidant, protecting and moisturizing the skin. (Vegan)</p><p><strong>Portulaca Pilosa Extract:</strong></p><p>A natural, vegan extract that hydrates and plumps the skin, providing anti<br/>aging benefits. (Vegan)</p><p><strong>Ceramide NP:<br/></strong>A vegan-friendly lipid that strengthens the skin's barrier and retains moisture. (Vegan)</p><p><strong>Willow Bark Extract:<br/></strong>A natural source of salicylic acid, it gently exfoliates and soothes the skin. (Vegan)</p><p><strong>Squalane:<br/></strong>A plant-based moisturizer that mimics natural skin oils to hydrate and soften lips. (Vegan)</p>
 </div>
 </div>
@@ -2089,7 +1597,7 @@ draggable: false,
 <span id="accordionbefore">Shipping and returns</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-shipping-and-returns--template--20029866475676__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a">
 <div class="product__accordion__inner rte" data-collapsible-content="">
-<div data-current-variant-id="44663423959196" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p><strong>We offer FREE Worldwide Shipping!</strong></p><p>Due to the influx of orders from our ongoing <strong>sale</strong>, dispatch may be slightly delayed. Rest assured, all orders will ship within <strong>24–48 hours</strong>. Depending on your location, delivery may take approximately <strong>5–7 business days</strong>.<br/><br/>Although we offer shipping to all countries, a few islands are excluded from our delivery area. If your country is available during checkout, we ship to your country. We also provide standard international tracked shipping at no additional cost on all orders.<br/><br/>Additionally, we offer a premium international insured shipping option at a modest charge of <strong>{% include 'partials/sf_price.html' with p=product %}</strong>, which we highly recommend for prioritized service and faster delivery.<br/><br/><strong>Returns</strong><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="https://08f531-2.myshopify.com/policies/refund-policy" title="Refund Policy">return policy</a> for more information.</p></div>
+<div data-current-variant-id="44663423959196" data-us-fulfillable-variants="" id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p><strong>We offer FREE Worldwide Shipping!</strong></p><p>Due to the influx of orders from our ongoing <strong>sale</strong>, dispatch may be slightly delayed. Rest assured, all orders will ship within <strong>24–48 hours</strong>. Depending on your location, delivery may take approximately <strong>5–7 business days</strong>.<br/><br/>Although we offer shipping to all countries, a few islands are excluded from our delivery area. If your country is available during checkout, we ship to your country. We also provide standard international tracked shipping at no additional cost on all orders.<br/><br/><br/><br/><strong>Returns</strong><br/>All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our <a href="/refund-policy/" title="Refund Policy">return policy</a> for more information.</p></div>
 </div>
 </div>
 </div></div>
@@ -2101,59 +1609,12 @@ draggable: false,
       []
     </script>
 </div></div>
-<style>
-  #frontrow-sticker {
-    position: absolute;
-    z-index: 3;
-    border-radius: 0 !important;
-    max-width: unset !important;
-    left: 0px !important;
-    top: 0 !important;
-  }
-
-  .iframe-modal-frontrow {
-    display: none;
-    position: fixed;
-    z-index: 99999999;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  /* Mobile only — scale down */
-  @media only screen and (max-width: 480px) {
-    #frontrow-sticker {
-      transform: scale(0.70) !important;
-      transform-origin: 0px 0px !important;
-    }
-  }
-
-  .iframe.frontrow { display: none; position: fixed; left: 0; top: 0; z-index: 99999997; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden; }
-</style>
+<style></style>
 </section>
-<style>
-  #sticky_atcs .product__submit__add {
-        width: max-content;
+<style>#sticky_atcs .product__submit__add{width: max-content;
     min-width: max-content;
     flex: none;
-    margin: 0;
-  }
-  .price-wrapper {
-          font-size: 14px;
-    }
-      #sticky_atcs .product__submit__add {
-    font-size: 12px;
-}
-  @media only screen and (max-width: 767px) {
-    #sticky_atcs .product__submit__add {
-    font-size: 10px;
-}
-    .price-wrapper {
-          font-size: 13px;
-    }
-  }
-  </style><div id="sticky_atcs">
+    margin: 0;}.price-wrapper{font-size: 14px;}#sticky_atcs .product__submit__add{font-size: 12px;}@media only screen and (max-width: 767px){% templatetag opencomment %}sticky_atcs .product__submit__add{font-size: 10px;}.price-wrapper{font-size: 13px;}}</style><div id="sticky_atcs">
 <div class="wrapper">
 <div class="wrap">
 <div class="left">
@@ -2198,96 +1659,38 @@ draggable: false,
 </div>
 </div>
 </div>
-<style>
-#sticky_atcs {
-opacity: 0;
+<style>#sticky_atcs{opacity: 0;
 visibility: hidden;
 transform: translateY(100%);
-transition: all 0.3s ease;
-}
-
-  #sticky_atcs.scrolled {
-opacity: 1;
+transition: all 0.3s ease;}#sticky_atcs.scrolled{opacity: 1;
 visibility: visible;
 transform: translateY(0%);
-transition: all 0.3s ease;
-}
-
-
-.sticky-visible {
-opacity: 1;
-visibility: visible;
-transform: translateY(0);
-}
-
-#sticky_atcs {
-width: 100%;
+transition: all 0.3s ease;}#sticky_atcs{width: 100%;
 position: fixed;
 bottom: 0;
 height: auto;
 z-index: 999;
 background: white;
 box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-padding: 10px;
-}
-
-#sticky_atcs .wrap {
-display: flex;
+padding: 10px;}#sticky_atcs .wrap{display: flex;
 align-items: center;
 gap: 25px;
 justify-content: space-between;
-flex-wrap: wrap;
-}
-
-#sticky_atcs h5 {
-margin-bottom: 3px!important;
-font-size: 16px;
-}
-
-#sticky_atcs img {
-width: 60px;
+flex-wrap: wrap;}#sticky_atcs h5{margin-bottom: 3px!important;
+font-size: 16px;}#sticky_atcs img{width: 60px;
 height: 60px;
 border-radius: 7px;
-object-fit: cover;
-}
-
-#sticky_atcs .left {
-display: flex;
+object-fit: cover;}#sticky_atcs .left{display: flex;
 align-items: center;
-gap: 20px;
-}
-
-#sticky_atcs .right {
-flex: 1;
-max-width: 400px;
-}
-
-/* Variant switcher styles */
-.sticky-variant-wrapper {
-display: flex;
+gap: 20px;}#sticky_atcs .right{flex: 1;
+max-width: 400px;}.sticky-variant-wrapper{display: flex;
 align-items: center;
-gap: 15px;
-}
-
-.sticky-option {
-display: flex;
+gap: 15px;}.sticky-option{display: flex;
 align-items: center;
-gap: 10px;
-}
-
-.sticky-option__label {
-font-size: 14px;
+gap: 10px;}.sticky-option__label{font-size: 14px;
 font-weight: 500;
-margin: 0;
-}
-
-.sticky-option__values {
-display: flex;
-gap: 5px;
-}
-
-.sticky-swatch {
-min-width: 35px;
+margin: 0;}.sticky-option__values{display: flex;
+gap: 5px;}.sticky-swatch{min-width: 35px;
 height: 35px;
 padding: 0 10px;
 border: 2px solid #ddd;
@@ -2298,84 +1701,23 @@ display: flex;
 align-items: center;
 justify-content: center;
 font-size: 13px;
-transition: all 0.2s ease;
-}
-
-.sticky-swatch:hover:not(:disabled) {
-border-color: #000;
-}
-
-.sticky-swatch.is-active {
-border-color: #000;
+transition: all 0.2s ease;}.sticky-swatch:hover:not(:disabled){border-color: #000;}.sticky-swatch.is-active{border-color: #000;
 background: #000;
-color: white;
-}
-
-.sticky-swatch.is-sold-out {
-opacity: 0.5;
+color: white;}.sticky-swatch.is-sold-out{opacity: 0.5;
 cursor: not-allowed;
-text-decoration: line-through;
-}
-
-.btn--submit {
-min-height: 35px;
+text-decoration: line-through;}.btn--submit{min-height: 35px;
 margin: 0;
-flex: 1;
-}
-
-@media only screen and (max-width: 767px) {
-#sticky_atcs {
-padding: 10px;
-}
-
-#sticky_atcs .wrap {
-gap: 10px;
-}
-
-#sticky_atcs h5 {
-font-size: 14px;
-}
-
-#sticky_atcs img {
-}
-
-#sticky_atcs .right {
-width: 100%;
-max-width: none;
-}
-
-.sticky-variant-wrapper {
-flex-wrap: wrap;
-gap: 10px;
-}
-
-.sticky-option {
-width: 100%;
-}
-
-.sticky-swatch {
-min-width: 30px;
+flex: 1;}@media only screen and (max-width: 767px){% templatetag opencomment %}sticky_atcs{padding: 10px;}#sticky_atcs .wrap{gap: 10px;}#sticky_atcs h5{font-size: 14px;}#sticky_atcs img{}#sticky_atcs .right{width: 100%;
+max-width: none;}.sticky-variant-wrapper{flex-wrap: wrap;
+gap: 10px;}.sticky-option{width: 100%;}.sticky-swatch{min-width: 30px;
 height: 30px;
-font-size: 12px;
-}
-
-.btn--submit {
-width: 100%;
-margin-top: 5px;
-}
-}
-</style>
-<style> #shopify-section-template--20029866475676__main .product__form__wrapper {--PBB: 8px !important;} #shopify-section-template--20029866475676__main #locationinfop {margin-top: 0;} </style></div><div class="shopify-section text" id="shopify-section-template--20029866475676__section_text_K34UCg"><style data-shopify="">#Text--template--20029866475676__section_text_K34UCg {
-    --PT: 60px;
-    --PB: 0px;
-  }</style><section class="section-padding text-section text-dark" data-section-id="template--20029866475676__section_text_K34UCg" data-section-type="text" id="Text--template--20029866475676__section_text_K34UCg">
+font-size: 12px;}.btn--submit{width: 100%;
+margin-top: 5px;}}</style>
+<style>#shopify-section-template--20029866475676__main .product__form__wrapper{--PBB: 8px !important;}#shopify-section-template--20029866475676__main #locationinfop{margin-top: 0;}</style></div><div class="shopify-section text" id="shopify-section-template--20029866475676__section_text_K34UCg"><style data-shopify="">#Text--template--20029866475676__section_text_K34UCg{--PT: 60px;
+    --PB: 0px;}</style><section class="section-padding text-section text-dark" data-section-id="template--20029866475676__section_text_K34UCg" data-section-type="text" id="Text--template--20029866475676__section_text_K34UCg">
 <div class="wrapper text-center">
 <div class="text">
-<style data-shopify="">#Text--heading_mfMa4Y.text__heading {
-                  --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 0.8);--highlight-color: var(--text);--highlight-color: #000000;--highlight-text-color: #000000;}
-                @media screen and (min-width: 1024px) {
-                  #Text--heading_mfMa4Y.text__heading { --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 0.8); }
-                }</style><div class="text__heading h2 text-highlight-wrapper text-highlight-wrapper--circle" id="Text--heading_mfMa4Y">
+<style data-shopify="">#Text--heading_mfMa4Y.text__heading{--adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 0.8);--highlight-color: var(--text);--highlight-color: #000000;--highlight-text-color: #000000;}@media screen and (min-width: 1024px){% templatetag opencomment %}Text--heading_mfMa4Y.text__heading{--adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 0.8);}}</style><div class="text__heading h2 text-highlight-wrapper text-highlight-wrapper--circle" id="Text--heading_mfMa4Y">
 <span class="text-highlight__break">Loved by <span class="text-highlight" style="--icon-url: none;--icon-color: #000000;">60,000+<span class="text-highlight__icon text-highlight__icon--single-word"><svg fill="none" height="92" viewbox="0 0 226 92" width="226" xmlns="http://www.w3.org/2000/svg">
 <path d="M223.164 36.9069C223.618 42.3287 221.306 47.9316 216.296 53.4861C211.282 59.0442 203.693 64.3996 193.997 69.2175C174.617 78.8478 147.203 86.1414 116.362 88.7259C85.521 91.3104 57.2753 88.6811 36.5628 82.4106C26.2005 79.2735 17.8263 75.2559 11.9575 70.6097C6.09246 65.9666 2.87988 60.8266 2.42553 55.4048C1.97118 49.983 4.2835 44.3801 9.29397 38.8255C14.3077 33.2675 21.8964 27.9121 31.592 23.0942C50.9721 13.4639 78.3863 6.17031 109.227 3.58582C140.068 1.00133 168.314 3.63062 189.027 9.90111C199.389 13.0382 207.763 17.0558 213.632 21.702C219.497 26.3451 222.71 31.4851 223.164 36.9069Z" stroke="currentColor" stroke-width="2"></path>
 </svg>
@@ -2383,198 +1725,66 @@ margin-top: 5px;
 </div></div>
 </div>
 </section>
-</div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_testimonials_pr6E3A"><style>
-.skinofab-testimonials {
-  padding-top: 20px;
+</div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_testimonials_pr6E3A"><style>.skinofab-testimonials{padding-top: 20px;
   padding-bottom: 20px;
-  background: #ffffff;
-}
-
-.skinofab-testimonials .section__heading {
-  text-align: center;
+  background: #ffffff;}.skinofab-testimonials .section__heading{text-align: center;
   text-transform: none;
-  margin-bottom: 30px;
-}
-
-/* Slides must NOT stretch to the tallest sibling — otherwise expanding one
-   card's "Read More" grows every card in the row. Each slide sizes to its
-   own card; resting heights stay uniform because text is line-clamped. */
-.skinofab-testimonials .swiper-wrapper {
-  align-items: flex-start;
-}
-
-.skinofab-testimonials .swiper-slide {
-  height: auto;
-}
-
-.skinofab-testimonials__card {
-  background: #f7f7f7;
+  margin-bottom: 30px;}.skinofab-testimonials .swiper-wrapper{align-items: flex-start;}.skinofab-testimonials .swiper-slide{height: auto;}.skinofab-testimonials__card{background: #f7f7f7;
   border-radius: 16px;
   overflow: hidden;
   height: auto;
   display: flex;
-  flex-direction: column;
-}
-
-.skinofab-testimonials__image {
-  width: 100%;
+  flex-direction: column;}.skinofab-testimonials__image{width: 100%;
   height: 220px;
-  overflow: hidden;
-}
-
-.skinofab-testimonials__image img {
-  width: 100%;
+  overflow: hidden;}.skinofab-testimonials__image img{width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-}
-
-.skinofab-testimonials__body {
-  padding: 20px;
+  display: block;}.skinofab-testimonials__body{padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  flex: 1;
-}
-
-.skinofab-testimonials__top {
-  display: flex;
+  flex: 1;}.skinofab-testimonials__top{display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.skinofab-testimonials__name {
-  font-weight: 700;
+  justify-content: space-between;}.skinofab-testimonials__name{font-weight: 700;
   font-size: 15px;
-  color: #2D2D2D;
-}
-
-.skinofab-testimonials__stars {
-  display: flex;
-  gap: 2px;
-}
-
-.skinofab-testimonials__stars svg {
-  width: 14px;
-  height: 14px;
-}
-
-.skinofab-testimonials__stars svg path {
-  fill: #000000;
-}
-
-.skinofab-testimonials__verified {
-  display: inline-flex;
+  color: #2D2D2D;}.skinofab-testimonials__stars{display: flex;
+  gap: 2px;}.skinofab-testimonials__stars svg{width: 14px;
+  height: 14px;}.skinofab-testimonials__stars svg path{fill: #000000;}.skinofab-testimonials__verified{display: inline-flex;
   align-items: center;
   gap: 5px;
   font-size: 11px;
   font-weight: 600;
   color: #000000;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.skinofab-testimonials__verified svg {
-  width: 14px;
+  letter-spacing: 0.5px;}.skinofab-testimonials__verified svg{width: 14px;
   height: 14px;
-  flex-shrink: 0;
-}
-
-.skinofab-testimonials__text {
-  font-size: 14px;
+  flex-shrink: 0;}.skinofab-testimonials__text{font-size: 14px;
   line-height: 1.55;
   color: #555;
-  position: relative;
-}
-
-.skinofab-testimonials__text p {
-  margin: 0;
-}
-
-.skinofab-testimonials__text:not(.is-expanded) p {
-  display: -webkit-box;
+  position: relative;}.skinofab-testimonials__text p{margin: 0;}.skinofab-testimonials__text:not(.is-expanded) p{display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.skinofab-testimonials__read-more {
-  background: none;
+  overflow: hidden;}.skinofab-testimonials__read-more{background: none;
   border: none;
   padding: 0;
   font-size: 13px;
   font-weight: 600;
   color: #000000;
   cursor: pointer;
-  margin-top: auto;
-}
-
-.skinofab-testimonials__read-more:hover {
-  text-decoration: underline;
-}
-
-/* Navigation */
-.skinofab-testimonials__nav {
-  position: relative;
-}
-
-.skinofab-testimonials .swiper-button-prev,
-.skinofab-testimonials .swiper-button-next {
-  width: 36px;
+  margin-top: auto;}.skinofab-testimonials__read-more:hover{text-decoration: underline;}.skinofab-testimonials__nav{position: relative;}.skinofab-testimonials .swiper-button-prev,.skinofab-testimonials .swiper-button-next{width: 36px;
   height: 36px;
   background: #f7f7f7;
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  top: var(--swiper-navigation-top-offset, 43%);
-}
-
-.skinofab-testimonials .swiper-button-prev { left: 0; }
-.skinofab-testimonials .swiper-button-next { right: 0; }
-
-.skinofab-testimonials .swiper-button-prev:after,
-.skinofab-testimonials .swiper-button-next:after {
-  font-size: 14px;
+  top: var(--swiper-navigation-top-offset, 43%);}.skinofab-testimonials .swiper-button-prev{left: 0;}.skinofab-testimonials .swiper-button-next{right: 0;}.skinofab-testimonials .swiper-button-prev:after,.skinofab-testimonials .swiper-button-next:after{font-size: 14px;
   font-weight: bold;
-  color: #000000;
-}
-
-.skinofab-testimonials .swiper-scrollbar {
-  height: 4px;
-  margin-top: 24px;
-}
-
-.skinofab-testimonials .swiper-scrollbar-drag {
-  background: #000000;
-}
-
-.skinofab-testimonials div[aria-disabled="true"] {
-  opacity: 0.35;
+  color: #000000;}.skinofab-testimonials .swiper-scrollbar{height: 4px;
+  margin-top: 24px;}.skinofab-testimonials .swiper-scrollbar-drag{background: #000000;}.skinofab-testimonials div[aria-disabled="true"]{opacity: 0.35;
   cursor: auto;
-  pointer-events: none;
-}
-
-@media (max-width: 767px) {
-  .skinofab-testimonials {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  .skinofab-testimonials__image {
-    height: 200px;
-  }
-  .skinofab-testimonials__text {
-    font-size: 14px;
-  }
-  .skinofab-testimonials__nav {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  .skinofab-testimonials .swiper-button-prev,
-  .skinofab-testimonials .swiper-button-next {
-    width: 30px;
-    height: 30px;
-  }
-}
-</style>
+  pointer-events: none;}@media (max-width: 767px){.skinofab-testimonials{padding-top: 20px;
+    padding-bottom: 20px;}.skinofab-testimonials__image{height: 200px;}.skinofab-testimonials__text{font-size: 14px;}.skinofab-testimonials__nav{padding-left: 16px;
+    padding-right: 16px;}.skinofab-testimonials .swiper-button-prev,.skinofab-testimonials .swiper-button-next{width: 30px;
+    height: 30px;}}</style>
 <section class="skinofab-testimonials">
 <div class="wrapper">
 <div class="skinofab-testimonials__nav">
@@ -2695,7 +1905,8 @@ margin-top: 5px;
 </div>
 </div>
 </section>
-<script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+
 (function () {
   var section = document.getElementById('shopify-section-template--20029866475676__kopstorm_testimonials_pr6E3A');
   if (!section) return;
@@ -2718,7 +1929,8 @@ margin-top: 5px;
   
   });
 })();
-</script>
+
+});</script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   document.querySelectorAll(".skinofab-testimonials__card").forEach(function(card) {
@@ -2735,155 +1947,43 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
-</div><div class="shopify-section" id="shopify-section-template--20029866475676__section_image_with_text_xdx7DM"><style>
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM {
-  padding-top: 20px;
+</div><div class="shopify-section" id="shopify-section-template--20029866475676__section_image_with_text_xdx7DM"><style>.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM{padding-top: 20px;
   padding-bottom: 20px;
   background: transparent;
-  font-family: var(--FONT-STACK-BODY);
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid {
-  display: grid;
+  font-family: var(--FONT-STACK-BODY);}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid{display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
-  align-items: center;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse {
-  direction: rtl;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse > * {
-  direction: ltr;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__image {
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__image img {
-  width: 100%;
+  align-items: center;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse{direction: rtl;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse > *{direction: ltr;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__image{border-radius: 16px;
+  overflow: hidden;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__image img{width: 100%;
   height: auto;
   display: block;
-  object-fit: contain;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__content {
-  text-align: left;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__heading {
-  text-align: left;
+  object-fit: contain;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__content{text-align: left;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__heading{text-align: left;
   text-transform: none;
-  margin: 0 0 20px 0;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__highlight {
-  background: #000000;
+  margin: 0 0 20px 0;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__highlight{background: #000000;
   color: #ffffff;
   padding: 4px 10px;
   border-radius: 6px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  line-height: 1.6;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__text {
-  font-family: var(--FONT-STACK-BODY);
+  line-height: 1.6;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__text{font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   color: #555;
   line-height: 1.7;
-  margin: 0 0 24px 0;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__text p {
-  margin: 0 0 14px 0;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__text p:last-child {
-  margin-bottom: 0;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usps {
-  display: grid;
+  margin: 0 0 24px 0;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__text p{margin: 0 0 14px 0;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__text p:last-child{margin-bottom: 0;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usps{display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px 20px;
-  margin-top: 24px;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp {
-  display: flex;
+  margin-top: 24px;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp{display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp img {
-  width: 32px;
+  min-width: 0;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp img{width: 32px;
   height: 32px;
-  flex-shrink: 0;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp-text {
-  font-family: var(--FONT-STACK-BODY);
+  flex-shrink: 0;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp-text{font-family: var(--FONT-STACK-BODY);
   font-size: 15px;
   font-weight: 600;
   color: var(--heading);
-  min-width: 0;
-}
-
-@media (max-width: 600px) {
-  .skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp img { width: 26px; height: 26px; }
-  .skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp-text { font-size: 13px; line-height: 1.25; }
-  .skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp { gap: 8px; }
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp-text p {
-  margin: 0;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__button {
-  display: inline-block;
-  margin-top: 28px;
-  padding: 14px 32px;
-  background: var(--heading);
-  color: #fff;
-  font-family: var(--FONT-STACK-BODY);
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__button:hover {
-  opacity: 0.85;
-}
-
-@media (max-width: 767px) {
-  .skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  .skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse {
-    direction: ltr;
-  }
-  .skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__text {
-    font-size: 14px;
-  }
-  .skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__heading {
-    font-size: 24px;
-  }
-}
-</style>
+  min-width: 0;}@media (max-width: 600px){.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp img{width: 26px; height: 26px;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp-text{font-size: 13px; line-height: 1.25;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp{gap: 8px;}}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__usp-text p{margin: 0;}@media (max-width: 767px){.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM{padding-top: 20px;
+    padding-bottom: 20px;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid{grid-template-columns: 1fr;
+    gap: 28px;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__grid--reverse{direction: ltr;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__text{font-size: 14px;}.skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM .skinofab-iwt__heading{font-size: 24px;}}</style>
 <section class="skinofab-iwt-template--20029866475676__section_image_with_text_xdx7DM">
 <div class="wrapper">
 <div class="skinofab-iwt__grid">
@@ -2911,42 +2011,18 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 </div>
 </section>
-</div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_1_REVPeb"><style>
-   #skinofab_1 {
-    margin: 0 auto;
+</div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_1_REVPeb"><style>#skinofab_1{margin: 0 auto;
     border-radius: var(--radius);
         margin-top: 20px;
 margin-bottom: 20px;
     padding-top: 50px;
-padding-bottom: 50px;
-     
-  }
-  @media screen and (max-width: 767px) {
-  #skinofab_1 {
-            margin-top: 20px;
+padding-bottom: 50px;}@media screen and (max-width: 767px){% templatetag opencomment %}skinofab_1{margin-top: 20px;
 margin-bottom: 20px;
 padding-top: 50px;      
-padding-bottom: 50px;
-  }
-  }
-
-  #skinofab_1 .gridcell h1, #skinofab_1 .gridcell h2, #skinofab_1 .gridcell h3, #skinofab_1 .gridcell h4, #skinofab_1 .gridcell h5, #skinofab_1 .gridcell h6 {
-    color: unset!important;
-  }
-  #headingmain h1, #headingmain h2, #headingmain h3, #headingmain h4, #headingmain h5, #headingmain h6 {
-    color: unset!important;
-  }
-  .skinofab_1 {
-    color: #000000!important;
-    background: #f7f7f7!important;
-  }
-
-  #skinofab_1 p {
-    margin: 0 !important;
+padding-bottom: 50px;}}#skinofab_1 .gridcell h1,#skinofab_1 .gridcell h2,#skinofab_1 .gridcell h3,#skinofab_1 .gridcell h4,#skinofab_1 .gridcell h5,#skinofab_1 .gridcell h6{color: unset!important;}#headingmain h1,#headingmain h2,#headingmain h3,#headingmain h4,#headingmain h5,#headingmain h6{color: unset!important;}.skinofab_1{color: #000000!important;
+    background: #f7f7f7!important;}#skinofab_1 p{margin: 0 !important;
     line-height: 1.25!important;
-    font-size: 14px!important;
-}
-</style>
+    font-size: 14px!important;}</style>
 <div class="wrapper">
 <section class="skinofab_1" id="skinofab_1">
 <div class="wrapper">
@@ -3071,8 +2147,10 @@ padding-bottom: 50px;
 </div>
 </div>
 </section>
-<script>
-var swiper = new Swiper(".id2Swiper", {
+<script>var swiper;
+document.addEventListener('DOMContentLoaded', function () {
+
+swiper = new Swiper(".id2Swiper", {
 slidesPerView: 3,
 centeredSlides: true,
 spaceBetween: 20,
@@ -3104,219 +2182,65 @@ el: ".swiper-pagination3",
 clickable: true,
 },
 });
-</script>
-<style>
-#id2 .swiper-pagination-bullet-active {
-background: black;
-}
-.id2Swiper {
-overflow: visible;
-}
 
-#id2 .swiper-pagination3 {
-display: none;
-}
-
-#id2 {
-overflow: hidden;
+});</script>
+<style>#id2 .swiper-pagination-bullet-active{background: black;}.id2Swiper{overflow: visible;}#id2 .swiper-pagination3{display: none;}#id2{overflow: hidden;
 position: relative;  
 padding-top: 0px;
-padding-bottom: 50px;
-}
-
-.id2desktop {
-display: block;
-}
-
-.id2mobile {
-display: none;
-}
-
-
-
-@media screen and (max-width: 767px) {
-#id2 {
-padding-top: 0px;
-padding-bottom: 40px;
-}
-#id2 .swiper-button-prev:after {
-font-size: 16px!important;
-color: black;
-}
-#id2 .swiper-button-next:after {
-font-size: 16px!important;
-color: black;
-}
-.swiper-pagination3 {
-margin-top: 35px;
-position: relative;
-}
-.swiper-pagination3 {
-display: block!important;
-}
-.id2desktop {
-display: none;
-}
-
-.id2mobile {
-display: block;
-}
-
-.swiper-button-next3 {
-width: 30px;
+padding-bottom: 50px;}.id2desktop{display: block;}.id2mobile{display: none;}@media screen and (max-width: 767px){% templatetag opencomment %}id2{padding-top: 0px;
+padding-bottom: 40px;}#id2 .swiper-button-prev:after{font-size: 16px!important;
+color: black;}#id2 .swiper-button-next:after{font-size: 16px!important;
+color: black;}.swiper-pagination3{margin-top: 35px;
+position: relative;}.swiper-pagination3{display: block!important;}.id2desktop{display: none;}.id2mobile{display: block;}.swiper-button-next3{width: 30px;
 height: 30px;
     background: #fff;
     border-radius: 500px;
     padding: 17px;
     right: 0px;
-    border: 1px solid #e7e9ec;
-}
-.swiper-button-prev3 {
-width: 30px;
+    border: 1px solid #e7e9ec;}.swiper-button-prev3{width: 30px;
 height: 30px;
     background: #fff;
     border-radius: 500px;
     padding: 17px;
-left: 0px;    border: 1px solid #e7e9ec;
-}
-}
-  #id2 p:empty {
-    display: none!important;
-  }
-  #id2 p::empty {
-    display: none!important;
-  }
-  
-  #id2 p {
-  margin-bottom: 0px!important;
-}
-  
-#id2 .grid-cell {
-  background: #f7f7f7!important;
+left: 0px;    border: 1px solid #e7e9ec;}}#id2 p:empty{display: none!important;}#id2 p::empty{display: none!important;}#id2 p{margin-bottom: 0px!important;}#id2 .grid-cell{background: #f7f7f7!important;
   box-shadow: none!important;
   transition: all 0.15s ease-out;
   padding: 30px;
-  border-radius: var(--radius);
-  
-}
-
-#id2 .grid-cell:hover {
-      transition: all 0.15s ease-out;
+  border-radius: var(--radius);}#id2 .grid-cell:hover{transition: all 0.15s ease-out;
     background: white !important;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 1px 50px 0px !important;
-    transform: scale(1.03);
-}
-  
-#id2 h3 {
-}
-
-#percentage1 {
-  font-size: 100px!important;
-  color: #000000!important;
-}
-@media screen and (max-width: 767px) {
-#percentage1 {
-  font-size: 70px!important;
-}
-#id2 .grid-cell {
-  background: #f7f7f7!important;
-  box-shadow: none!important;
-}
-#id2 h3 {
-
-} 
-  #id2 .content {
-    margin-top: 20px;
-  }
-}
-</style>
-<style> #shopify-section-template--20029866475676__kopstorm_results_nntHGp {max-width: 1300px; margin-left: auto; margin-right: auto;} </style></div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_ingredients_lp_extreme"><style>
-.skinofab-ingredients {
-  padding: 60px 0 70px;
-  background: #fff9fb;
-}
-
-.skinofab-ingredients__heading {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.skinofab-ingredients__heading .section__heading {
-  text-transform: none;
-  margin-bottom: 0;
-}
-
-.skinofab-ingredients__subtitle {
-  margin-top: 10px;
+    transform: scale(1.03);}#id2 h3{}#percentage1{font-size: 100px!important;
+  color: #000000!important;}@media screen and (max-width: 767px){% templatetag opencomment %}percentage1{font-size: 70px!important;}#id2 .grid-cell{background: #f7f7f7!important;
+  box-shadow: none!important;}#id2 h3{}#id2 .content{margin-top: 20px;}}</style>
+<style>#shopify-section-template--20029866475676__kopstorm_results_nntHGp{max-width: 1300px; margin-left: auto; margin-right: auto;}</style></div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_ingredients_lp_extreme"><style>.skinofab-ingredients{padding: 60px 0 70px;
+  background: #fff9fb;}.skinofab-ingredients__heading{text-align: center;
+  margin-bottom: 50px;}.skinofab-ingredients__heading .section__heading{text-transform: none;
+  margin-bottom: 0;}.skinofab-ingredients__subtitle{margin-top: 10px;
   font-size: 15px;
   color: #777;
   max-width: 500px;
   margin-left: auto;
-  margin-right: auto;
-}
-
-.skinofab-ingredients__subtitle p {
-  margin: 0;
-}
-
-.skinofab-ingredients__grid {
-  display: grid;
+  margin-right: auto;}.skinofab-ingredients__subtitle p{margin: 0;}.skinofab-ingredients__grid{display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin: 0 auto;
-}
-
-.skinofab-ingredients__card {
-  background: #ffffff;
+  margin: 0 auto;}.skinofab-ingredients__card{background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.skinofab-ingredients__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
-}
-
-.skinofab-ingredients__image {
-  width: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;}.skinofab-ingredients__card:hover{transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);}.skinofab-ingredients__image{width: 100%;
   aspect-ratio: 1 / 0.85;
-  overflow: hidden;
-}
-
-.skinofab-ingredients__image img {
-  width: 100%;
+  overflow: hidden;}.skinofab-ingredients__image img{width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-}
-
-.skinofab-ingredients__info {
-  padding: 24px;
-  text-align: center;
-}
-
-.skinofab-ingredients__name {
-  font-size: 18px;
+  display: block;}.skinofab-ingredients__info{padding: 24px;
+  text-align: center;}.skinofab-ingredients__name{font-size: 18px;
   font-weight: 700;
   color: #2D2D2D;
-  margin: 0 0 8px 0;
-}
-
-.skinofab-ingredients__desc {
-  font-size: 14px;
+  margin: 0 0 8px 0;}.skinofab-ingredients__desc{font-size: 14px;
   color: #777;
   line-height: 1.5;
-  margin: 0;
-}
-
-.skinofab-ingredients__desc p {
-  margin: 0;
-}
-
-.skinofab-ingredients__badge {
-  display: inline-block;
+  margin: 0;}.skinofab-ingredients__desc p{margin: 0;}.skinofab-ingredients__badge{display: inline-block;
   margin-top: 14px;
   padding: 5px 14px;
   font-size: 11px;
@@ -3325,78 +2249,20 @@ left: 0px;    border: 1px solid #e7e9ec;
   letter-spacing: 0.8px;
   border-radius: 20px;
   background: #000000;
-  color: #ffffff;
-}
-
-@media (max-width: 767px) {
-  .skinofab-ingredients {
-    padding: 40px 0 50px;
-  }
-  .skinofab-ingredients__heading {
-    padding: 0;
-  }
-  .skinofab-ingredients__grid {
-    display: none;
-  }
-  .skinofab-ingredients__slider {
-    display: block;
-    padding: 0;
-  }
-  .skinofab-ingredients__slider .swiper-wrapper {
-    padding: 8px 0 12px;
-  }
-  .skinofab-ingredients__slider .swiper-slide {
-    width: 270px;
-    height: auto;
-  }
-  .skinofab-ingredients__info {
-    padding: 20px;
-  }
-  .skinofab-ingredients .swiper-scrollbar {
-    height: 4px;
-    margin-top: 24px;
-  }
-  .skinofab-ingredients .swiper-scrollbar-drag {
-    background: #000000;
-  }
-  .skinofab-ingredients__nav {
-    position: relative;
-  }
-  .skinofab-ingredients .swiper-button-prev,
-  .skinofab-ingredients .swiper-button-next {
-    display: flex;
+  color: #ffffff;}@media (max-width: 767px){.skinofab-ingredients{padding: 40px 0 50px;}.skinofab-ingredients__heading{padding: 0;}.skinofab-ingredients__grid{display: none;}.skinofab-ingredients__slider{display: block;
+    padding: 0;}.skinofab-ingredients__slider .swiper-wrapper{padding: 8px 0 12px;}.skinofab-ingredients__slider .swiper-slide{width: 270px;
+    height: auto;}.skinofab-ingredients__info{padding: 20px;}.skinofab-ingredients .swiper-scrollbar{height: 4px;
+    margin-top: 24px;}.skinofab-ingredients .swiper-scrollbar-drag{background: #000000;}.skinofab-ingredients__nav{position: relative;}.skinofab-ingredients .swiper-button-prev,.skinofab-ingredients .swiper-button-next{display: flex;
     width: 30px;
     height: 30px;
     background: #fff;
     border-radius: 50%;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    top: var(--swiper-navigation-top-offset, 40%);
-  }
-  .skinofab-ingredients .swiper-button-prev { left: 0; }
-  .skinofab-ingredients .swiper-button-next { right: 0; }
-  .skinofab-ingredients .swiper-button-prev:after,
-  .skinofab-ingredients .swiper-button-next:after {
-    font-size: 12px;
+    top: var(--swiper-navigation-top-offset, 40%);}.skinofab-ingredients .swiper-button-prev{left: 0;}.skinofab-ingredients .swiper-button-next{right: 0;}.skinofab-ingredients .swiper-button-prev:after,.skinofab-ingredients .swiper-button-next:after{font-size: 12px;
     font-weight: bold;
-    color: #2D2D2D;
-  }
-  .skinofab-ingredients div[aria-disabled="true"] {
-    opacity: 0.35;
+    color: #2D2D2D;}.skinofab-ingredients div[aria-disabled="true"]{opacity: 0.35;
     cursor: auto;
-    pointer-events: none;
-  }
-}
-
-@media (min-width: 768px) {
-  .skinofab-ingredients__slider {
-    display: none;
-  }
-  .skinofab-ingredients .swiper-button-prev,
-  .skinofab-ingredients .swiper-button-next {
-    display: none;
-  }
-}
-</style>
+    pointer-events: none;}}@media (min-width: 768px){.skinofab-ingredients__slider{display: none;}.skinofab-ingredients .swiper-button-prev,.skinofab-ingredients .swiper-button-next{display: none;}}</style>
 <section class="skinofab-ingredients">
 <div class="wrapper">
 <div class="skinofab-ingredients__heading">
@@ -3486,65 +2352,27 @@ left: 0px;    border: 1px solid #e7e9ec;
 </section>
 <script data-skinofab-slider-config="" type="application/json">{"selector": ".skinofab-ingredients-swiper", "next": ".skinofab-ingredients-next", "prev": ".skinofab-ingredients-prev", "scrollbar": ".skinofab-ingredients-scrollbar", "options": {"slidesPerView": "auto", "spaceBetween": 14}}</script>
 <script defer="" src="{{ 'sf/js/skinofab-section-sliders-7fe587.js'|asset_url }}"></script>
-</div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_compare_LQNYXd"><style>
-.skinofab-compare-section {
-  padding: 50px 20px 60px;
-  background: #f7f7f7;
-}
-
-.skinofab-compare-section .section__heading {
-  text-align: center;
+</div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_compare_LQNYXd"><style>.skinofab-compare-section{padding: 50px 20px 60px;
+  background: #f7f7f7;}.skinofab-compare-section .section__heading{text-align: center;
   text-transform: none;
-  margin-bottom: 40px;
-}
-
-.skinofab-compare-table {
-  width: 100%;
+  margin-bottom: 40px;}.skinofab-compare-table{width: 100%;
   max-width: 800px;
   margin: 0 auto;
   border-collapse: separate;
   border-spacing: 0;
   overflow: hidden;
-  border-radius: 12px;
-}
-
-.skinofab-compare-section--page-width {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.skinofab-compare-section--page-width .skinofab-compare-table {
-  max-width: none;
-}
-
-.skinofab-compare-table thead th {
-  padding: 18px 16px;
+  border-radius: 12px;}.skinofab-compare-section--page-width{padding-left: 0;
+  padding-right: 0;}.skinofab-compare-section--page-width .skinofab-compare-table{max-width: none;}.skinofab-compare-table thead th{padding: 18px 16px;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-bottom: 2px solid #000000;
-  background: transparent;
-}
-
-.skinofab-compare-table thead th:first-child {
-  text-align: left;
-}
-
-.skinofab-compare-table thead th:not(:first-child) {
-  text-align: center;
-}
-
-.skinofab-compare-table thead th.col-highlight {
-  background: transparent;
+  background: transparent;}.skinofab-compare-table thead th:first-child{text-align: left;}.skinofab-compare-table thead th:not(:first-child){text-align: center;}.skinofab-compare-table thead th.col-highlight{background: transparent;
   color: #fff;
   border-bottom-color: #000000;
   position: relative;
-  z-index: 1;
-}
-
-.skinofab-compare-table thead th.col-highlight::before {
-  content: '';
+  z-index: 1;}.skinofab-compare-table thead th.col-highlight::before{content: '';
   position: absolute;
   top: -2px;
   left: 0;
@@ -3552,94 +2380,24 @@ left: 0px;    border: 1px solid #e7e9ec;
   bottom: 0;
   background: #000000;
   border-radius: 12px 12px 0 0;
-  z-index: -1;
-}
-
-.skinofab-compare-table thead th.col-highlight img {
-  filter: brightness(0) invert(1);
-}
-
-.skinofab-compare-table tbody td {
-  padding: 16px;
+  z-index: -1;}.skinofab-compare-table thead th.col-highlight img{filter: brightness(0) invert(1);}.skinofab-compare-table tbody td{padding: 16px;
   font-size: 14px;
   font-weight: 500;
   border-bottom: 1px solid #dadada;
-  vertical-align: middle;
-}
-
-.skinofab-compare-table tbody td:first-child {
-  text-align: left;
-  font-weight: 600;
-}
-
-.skinofab-compare-table tbody td:not(:first-child) {
-  text-align: center;
-}
-
-.skinofab-compare-table tbody td.col-highlight {
-  background: #00000012;
-}
-
-.skinofab-compare-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.skinofab-compare-table .compare-icon {
-  display: inline-flex;
+  vertical-align: middle;}.skinofab-compare-table tbody td:first-child{text-align: left;
+  font-weight: 600;}.skinofab-compare-table tbody td:not(:first-child){text-align: center;}.skinofab-compare-table tbody td.col-highlight{background: #00000012;}.skinofab-compare-table tbody tr:last-child td{border-bottom: none;}.skinofab-compare-table .compare-icon{display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 28px;
-  height: 28px;
-}
-
-.skinofab-compare-table .compare-icon img {
-  width: 20px;
+  height: 28px;}.skinofab-compare-table .compare-icon img{width: 20px;
   height: 20px;
-  display: block;
-}
-
-.skinofab-compare-table .compare-icon--check svg {
-  color: #000000;
-}
-
-.skinofab-compare-table .compare-icon--cross svg {
-  color: #ccc;
-}
-
-.skinofab-compare-table .header-logo {
-  max-height: 14px;
-  width: auto;
-}
-
-@media screen and (max-width: 600px) {
-  .skinofab-compare-section {
-    padding: 40px 12px 50px;
-  }
-  .skinofab-compare-section--page-width {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .skinofab-compare-table thead th,
-  .skinofab-compare-table tbody td {
-    padding: 12px 8px;
-    font-size: 12px;
-  }
-  .skinofab-compare-table .compare-icon {
-    width: 24px;
-    height: 24px;
-  }
-  .skinofab-compare-table .compare-icon img {
-    width: 16px;
-    height: 16px;
-  }
-}
-</style>
-<style>
-  .skinofab-compare-table th:last-child,
-  .skinofab-compare-table td:last-child {
-    display: none;
-  }
-</style>
+  display: block;}.skinofab-compare-table .header-logo{max-height: 14px;
+  width: auto;}@media screen and (max-width: 600px){.skinofab-compare-section{padding: 40px 12px 50px;}.skinofab-compare-section--page-width{padding-left: 0;
+    padding-right: 0;}.skinofab-compare-table thead th,.skinofab-compare-table tbody td{padding: 12px 8px;
+    font-size: 12px;}.skinofab-compare-table .compare-icon{width: 24px;
+    height: 24px;}.skinofab-compare-table .compare-icon img{width: 16px;
+    height: 16px;}}</style>
+<style>.skinofab-compare-table th:last-child,.skinofab-compare-table td:last-child{display: none;}</style>
 <section class="skinofab-compare-section skinofab-compare-section--page-width">
 <div class="wrapper">
 <h2 class="section__heading h2">Why skinofab?</h2>
@@ -3741,11 +2499,10 @@ left: 0px;    border: 1px solid #e7e9ec;
 </div>
 </section>
 </div><div class="shopify-section" id="shopify-section-template--20029866475676__section_accordions_k6qPrc">
-<style data-shopify="">#Accordions--template--20029866475676__section_accordions_k6qPrc {
-    --PT: 60px;
+<style data-shopify="">#Accordions--template--20029866475676__section_accordions_k6qPrc{--PT: 60px;
     --PB: 60px;
     --border-opacity: 0;
-    --MB: 10px;--bg-padded-line: var(--bg);}#Accordions--template--20029866475676__section_accordions_k6qPrc .accordion__item { --bg: #f7f7f7; }</style>
+    --MB: 10px;--bg-padded-line: var(--bg);}#Accordions--template--20029866475676__section_accordions_k6qPrc .accordion__item{--bg: #f7f7f7;}</style>
 <section class="section-padding accordions-section text-dark" data-section-id="template--20029866475676__section_accordions_k6qPrc" data-section-type="accordions" id="Accordions--template--20029866475676__section_accordions_k6qPrc">
 <div class="accordion__header">
 <div class="wrapper">
@@ -3825,73 +2582,31 @@ left: 0px;    border: 1px solid #e7e9ec;
 </div>
 </div>
 </div></section>
-</div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_why_gcA7fQ"><style>
-.skinofab-why-section {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.skinofab-why-inner {
-  display: grid;
+</div><div class="shopify-section" id="shopify-section-template--20029866475676__kopstorm_why_gcA7fQ"><style>.skinofab-why-section{padding-top: 0px;
+  padding-bottom: 0px;}.skinofab-why-inner{display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: var(--radius, 12px);
   overflow: hidden;
-  min-height: 500px;
-}
-
-.skinofab-why__image {
-  background-size: cover;
+  min-height: 500px;}.skinofab-why__image{background-size: cover;
   background-position: center;
   min-height: 350px;
-  position: relative;
-}
-
-.skinofab-why__content {
-  background: #f7f7f7;
+  position: relative;}.skinofab-why__content{background: #f7f7f7;
   padding: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.skinofab-why__content .section__heading {
-  text-align: left;
+  justify-content: center;}.skinofab-why__content .section__heading{text-align: left;
   text-transform: none;
-  margin: 0 0 30px 0;
-}
-
-.skinofab-why__text {
-  margin-bottom: 30px;
-}
-
-.skinofab-why__text p {
-  margin: 0;
+  margin: 0 0 30px 0;}.skinofab-why__text{margin-bottom: 30px;}.skinofab-why__text p{margin: 0;
   font-size: 15px;
   line-height: 1.6;
-  color: #555;
-}
-
-.skinofab-why__features {
-  display: flex;
+  color: #555;}.skinofab-why__features{display: flex;
   flex-direction: column;
   gap: 0;
-  margin-bottom: 30px;
-}
-
-.skinofab-why__feature {
-  display: flex;
+  margin-bottom: 30px;}.skinofab-why__feature{display: flex;
   align-items: center;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.skinofab-why__feature:last-child {
-  border-bottom: none;
-}
-
-.skinofab-why__feature-icon {
-  flex: 0 0 48px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);}.skinofab-why__feature:last-child{border-bottom: none;}.skinofab-why__feature-icon{flex: 0 0 48px;
   width: 48px;
   height: 48px;
   border-radius: 12px;
@@ -3899,77 +2614,18 @@ left: 0px;    border: 1px solid #e7e9ec;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.skinofab-why__feature-icon img {
-  width: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);}.skinofab-why__feature-icon img{width: 28px;
   height: 28px;
-  display: block;
-}
-
-.skinofab-why__feature-text {
-  flex: 1;
-}
-
-.skinofab-why__feature-title {
-  font-weight: 700;
+  display: block;}.skinofab-why__feature-text{flex: 1;}.skinofab-why__feature-title{font-weight: 700;
   font-size: 15px;
   color: #2D2D2D;
-  margin-bottom: 2px;
-}
-
-.skinofab-why__feature-desc {
-  font-size: 14px;
+  margin-bottom: 2px;}.skinofab-why__feature-desc{font-size: 14px;
   color: #666;
-  line-height: 1.4;
-}
-
-.skinofab-why__feature-desc p {
-  margin: 0;
-}
-
-.skinofab-why__cta .btn {
-  display: inline-block;
-}
-
-@media (min-width: 768px) {
-  .skinofab-why-inner--square-image .skinofab-why__image {
-    aspect-ratio: 1;
-  }
-  .skinofab-why__content {
-    padding: 60px;
-  }
-}
-
-@media (max-width: 767px) {
-  .skinofab-why-section {
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
-  .skinofab-why-inner {
-    grid-template-columns: 1fr;
-  }
-  .skinofab-why__image {
-    min-height: 280px;
-  }
-  .skinofab-why__content {
-    padding: 30px 24px;
-  }
-  .skinofab-why__content .section__heading {
-    margin-bottom: 20px;
-  }
-  .skinofab-why__feature-icon {
-    flex: 0 0 42px;
+  line-height: 1.4;}.skinofab-why__feature-desc p{margin: 0;}.skinofab-why__cta .btn{display: inline-block;}@media (min-width: 768px){.skinofab-why-inner--square-image .skinofab-why__image{aspect-ratio: 1;}.skinofab-why__content{padding: 60px;}}@media (max-width: 767px){.skinofab-why-section{padding-top: 0px;
+    padding-bottom: 0px;}.skinofab-why-inner{grid-template-columns: 1fr;}.skinofab-why__image{min-height: 280px;}.skinofab-why__content{padding: 30px 24px;}.skinofab-why__content .section__heading{margin-bottom: 20px;}.skinofab-why__feature-icon{flex: 0 0 42px;
     width: 42px;
-    height: 42px;
-  }
-  .skinofab-why__feature-icon img {
-    width: 24px;
-    height: 24px;
-  }
-}
-</style>
+    height: 42px;}.skinofab-why__feature-icon img{width: 24px;
+    height: 24px;}}</style>
 <section class="skinofab-why-section">
 <div class="wrapper">
 <div class="skinofab-why-inner">
@@ -4012,18 +2668,12 @@ left: 0px;    border: 1px solid #e7e9ec;
 </div>
 </div>
 </section>
-</div><section class="shopify-section" id="shopify-section-template--20029866475676__171016962378cf5f40"><style data-shopify="">#App--template--20029866475676__171016962378cf5f40 {
-    --PT: 60px;
-    --PB: 0px;
-  }</style><div class="section-padding" data-section-type="template--20029866475676__171016962378cf5f40" id="App--template--20029866475676__171016962378cf5f40">
+</div><section class="shopify-section" id="shopify-section-template--20029866475676__171016962378cf5f40"><style data-shopify="">#App--template--20029866475676__171016962378cf5f40{--PT: 60px;
+    --PB: 0px;}</style><div class="section-padding" data-section-type="template--20029866475676__171016962378cf5f40" id="App--template--20029866475676__171016962378cf5f40">
 <div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-Ack1JOVFXMXYwZWc3K__loox_reviews_loox_dynamic_section_NJEA6M">
 <div class="loox-widget" data-default-tab="automatic" data-limit="20" data-product-id="7889590845596" data-reviews-to-display="" id="looxReviews" style="margin:0 auto;max-width:1080px;">
 <div id="loox-reviews-feed">
-<style class="loox-temp-hiding-style">
-			#loox-reviews-feed {
-				display: none;
-			}
-		</style>
+<style class="loox-temp-hiding-style">#loox-reviews-feed{display: none;}</style>
 <section aria-label="Customer reviews">
 <h3>Customer Reviews</h3>
 <p class="loox-ssr-review-summary">
@@ -4690,44 +3340,10 @@ Fast delivery, good information</p>
 </div>
 </div>
 </div>
-</section><section class="shopify-section" id="shopify-section-template--20029866475676__17343673251239a5d7"><style data-shopify="">#App--template--20029866475676__17343673251239a5d7 {
-    --PT: 0px;
-    --PB: 60px;
-  }</style><div class="section-padding" data-section-type="template--20029866475676__17343673251239a5d7" id="App--template--20029866475676__17343673251239a5d7">
+</section><section class="shopify-section" id="shopify-section-template--20029866475676__17343673251239a5d7"><style data-shopify="">#App--template--20029866475676__17343673251239a5d7{--PT: 0px;
+    --PB: 60px;}</style><div class="section-padding" data-section-type="template--20029866475676__17343673251239a5d7" id="App--template--20029866475676__17343673251239a5d7">
 <div class="wrapper"><div class="shopify-block shopify-app-block" id="shopify-block-AVXZPNEVEa1VNSHpiZ__instafeed_app_block_KDnEMw">
-<style>
-      div[id*="instafeed_app_block"] {
-        width: 100%;
-      }
-      div.shopify-section:has(> [id*="instafeed_app_block"]) {
-      width: 100%;
-      }
-      
-      body #insta-feed {
-      
-          
-
-          
-          margin-bottom: 0px!important;
-          
-
-          
-
-          
-
-          
-      }
-      
-      body #insta-feed h2 {
-      
-        
-        
-         text-align: center;
-      }
-
-      
-      
-</style>
+<style>div[id*="instafeed_app_block"]{width: 100%;}div.shopify-section:has(> [id*="instafeed_app_block"]){width: 100%;}body #insta-feed{margin-bottom: 0px!important;}body #insta-feed h2{text-align: center;}</style>
 <div id="insta-feed"></div>
 </div>
 </div>
@@ -4814,7 +3430,7 @@ Fast delivery, good information</p>
 </div>
 </div>
 </div>
-</div><script src="{{ 'sf/js/js-cookie-min-275d34.js'|asset_url }}"></script><script defer="" src="{{ 'sf/js/skinofab-cart-timer-b352c2.js'|asset_url }}"></script><script>
+</div><script>
       // Function to update the price element with the new variant price
       function updateProductPrice(newPrice) {
         const priceElement = document.getElementById('productpricingnew');
