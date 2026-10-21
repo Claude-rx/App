@@ -5,8 +5,10 @@ usage: python3 -I apply_persona.py <src_export> <dst_export> <ccf-offers.json> [
 - copies src -> dst (binary files hard-linked, text files rewritten)
 - applies tools/persona/ccf_copy.py: PAGE rules on their file, then GLOBAL rules on every HTML page; a rule that
   matches nothing fails the run (rules prefixed RE: are raw regexes)
-- inserts the base / offer / subscription picker into the Color Changing Foundation product form; radio values
-  are the NEXT product pks from ccf-offers.json (written by setup_ccf_offers.py)
+- inserts the base picker and the one plan (month-to-month refill, subscription only) into the foundation's
+  product form, and the "love it or your money back" trust row under its button; base radios map to the NEXT
+  variant pks in ccf-offers.json (written by setup_ccf_offers.py)
+- writes sf-subscription.json (ccf_copy.SUBSCRIPTION) for the theme build's Subscription Offer settings
 - <images_dir>/<target file name> replaces that export image (persona images made by tools/persona/images.py)
   under a new content-hashed name, with every reference rewritten (NEXT's CDN caches by file name)
 """
@@ -14,7 +16,7 @@ import hashlib, html, json, os, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import ccf_copy
+import apf_copy, ccf_copy
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
 IMAGES = Path(sys.argv[4]).resolve() if len(sys.argv) > 4 else None
@@ -39,23 +41,15 @@ def compile_rule(old, new):
     return re.compile(loose(old)), html.escape(new, quote=False)
 
 def picker():
-    o, b, sub = ccf_copy.OFFERS, ccf_copy.BASES, ccf_copy.SUBSCRIPTION
-    pk = {'single': OFFERS['foundation']['variants'], 'duo': OFFERS['color-changing-foundation-duo']['variants'],
-          'set': OFFERS['complexion-set']['variants']}
-    names = {'lm': 'Light–Medium', 'md': 'Medium–Deep'}
-    table = {offer: {code: pk[offer].get(names[code]) or pk[offer].get('2 × ' + names[code]) for code in names}
-             for offer in pk}
+    """Base choice + the one plan (a month-to-month refill, pre-selected: the product is sold by subscription only)."""
+    b, sub = ccf_copy.BASES, ccf_copy.SUBSCRIPTION
+    variants = OFFERS['foundation']['variants']
+    table = {code: variants.get(name) for code, name, _ in b}
     bases = ''.join(
         f'<label class="sfp-base"><input type="radio" name="sf_base" value="{code}"{" checked" if i == 0 else ""}>'
         f'<span><strong>{html.escape(name)}</strong><small>{html.escape(desc)}</small></span></label>'
         for i, (code, name, desc) in enumerate(b))
-    offers = ''.join(
-        f'<label class="sfp-offer"><input type="radio" name="sf_offer" value="{key}"{" checked" if key == "single" else ""}>'
-        f'<span class="sfp-offer__main"><strong>{html.escape(v["label"])}</strong><small>{html.escape(v["note"])}</small></span>'
-        f'<span class="sfp-offer__price">{html.escape(v["price"])}</span>'
-        + (f'<em class="sfp-badge">{html.escape(v["badge"])}</em>' if v.get('badge') else '') + '</label>'
-        for key, v in o.items())
-    return f'''<div class="sfp" data-sf-offer-picker data-pks='{json.dumps(table)}'>
+    return f'''<div class="sfp" id="apf-buy" data-sf-offer-picker data-pks='{json.dumps(table)}'>
 <style>
 .sfp{{margin:4px 0 14px;display:grid;gap:14px;font-family:inherit}}
 .sfp-h{{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px;display:flex;justify-content:space-between;align-items:baseline}}
@@ -66,18 +60,16 @@ def picker():
 .sfp label:has(input:checked){{border-color:#000;box-shadow:0 0 0 1px #000}}
 .sfp strong{{display:block;font-size:14px}}
 .sfp small{{display:block;font-size:12px;color:#555;line-height:1.35;margin-top:2px}}
-.sfp-offers{{display:grid;gap:8px}}
+.sfp-plan{{padding:14px 14px 12px !important}}
 .sfp-offer__main{{flex:1}}
-.sfp-offer__price{{font-weight:600;font-size:15px;white-space:nowrap}}
+.sfp-offer__price{{font-weight:600;font-size:18px;white-space:nowrap;line-height:1.2}}
+.sfp-offer__price small{{display:inline;font-size:12px;font-weight:500;color:#555;margin:0}}
 .sfp-badge{{position:absolute;top:-9px;right:12px;background:#000;color:#fff;font-style:normal;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:20px}}
-.sfp-sub[hidden]{{display:none}}
 </style>
 <div><p class="sfp-h">1. Choose your base <a href="/ccf-quiz/">Not sure? 30-second quiz</a></p><div class="sfp-bases">{bases}</div></div>
-<div><p class="sfp-h">2. Choose your offer</p><div class="sfp-offers">{offers}</div></div>
-<div class="sfp-sub" data-sfp-sub><p class="sfp-h">3. How often?</p><div class="sfp-offers">
-<label><input type="radio" name="sf_purchase" value="once" checked><span class="sfp-offer__main"><strong>One-time purchase</strong><small>Just this bottle</small></span><span class="sfp-offer__price">{o['single']['price']}</span></label>
-<label><input type="radio" name="sf_purchase" value="subscribe" data-interval="{sub['interval']}" data-interval-count="{sub['every']}"><span class="sfp-offer__main"><strong>Refill every {sub['every']} days</strong><small>Opt-in only. Skip, pause or cancel anytime</small></span><span class="sfp-offer__price">{sub['price']}</span></label>
-</div></div>
+<div><p class="sfp-h">2. Your plan</p>
+<label class="sfp-plan"><input type="radio" name="sf_purchase" value="subscribe" data-interval="{sub['interval']}" data-interval-count="{sub['every']}" checked><span class="sfp-offer__main"><strong>Monthly refill</strong><small>1 bottle (30 mL) in your base, every month. Switch base, skip a month or cancel any time.</small></span><span class="sfp-offer__price">{sub['amount']}<small>/mo</small></span><em class="sfp-badge">Month to month</em></label>
+</div>
 <script>
 (function () {{
   var root = document.currentScript.parentNode;
@@ -85,18 +77,37 @@ def picker():
   var table = JSON.parse(root.getAttribute('data-pks'));
   function sync() {{
     var base = (root.querySelector('input[name=sf_base]:checked') || {{}}).value || 'lm';
-    var offer = (root.querySelector('input[name=sf_offer]:checked') || {{}}).value || 'single';
     var id = form && form.querySelector('input[name=id]');
-    if (id && table[offer] && table[offer][base]) id.value = table[offer][base];
-    var sub = root.querySelector('[data-sfp-sub]');
-    sub.hidden = offer !== 'single';
-    if (offer !== 'single') root.querySelector('input[name=sf_purchase][value=once]').checked = true;
+    if (id && table[base]) id.value = table[base];
   }}
   root.addEventListener('change', sync);
+  // deep links from the page sections (#apf-buy) scroll here
+  function fromHash() {{
+    if (!/^#apf-buy(?:-[a-z]+)?$/.test(window.location.hash || '')) return;
+    root.scrollIntoView({{ behavior: 'smooth', block: 'center' }});
+  }}
+  window.addEventListener('hashchange', fromHash);
+  document.addEventListener('click', function (e) {{
+    var a = e.target.closest && e.target.closest('a[href*="#apf-buy"]');
+    if (!a || a.pathname.replace(/\\/$/, '') !== window.location.pathname.replace(/\\/$/, '')) return;
+    e.preventDefault(); history.replaceState(null, '', a.hash); fromHash();
+  }});
+  fromHash();
   sync();
 }})();
 </script>
 </div>'''
+
+def trust_block():
+    """Under the add-to-cart button: love it or your money back, the three plan facts and the renewal terms."""
+    return f'<div class="product__block sfp-trust"><style>{apf_copy.TRUST_CSS}</style>{apf_copy.trust_html()}</div>'
+
+def balanced_end(t, start, tag):
+    depth = 0
+    for m in re.finditer(r'<(/?)%s\b[^>]*>' % tag, t[start:]):
+        depth += -1 if m.group(1) else 1
+        if depth == 0: return start + m.end()
+    raise ValueError('unbalanced ' + tag)
 
 def main():
     if DST.exists(): shutil.rmtree(DST)
@@ -132,6 +143,13 @@ def main():
     anchor = '<span data-subscription-watch-price=""></span>'
     if texts[pdp].count(anchor) < 1: missing.append(('picker', anchor))
     texts[pdp] = texts[pdp].replace(anchor, picker() + anchor, 1)
+    cta = texts[pdp].find('<div id="CTA_kopstorm">')
+    if cta < 0: missing.append(('trust block', 'CTA_kopstorm'))
+    else:
+        end = balanced_end(texts[pdp], cta, 'div')
+        texts[pdp] = texts[pdp][:end] + trust_block() + texts[pdp][end:]
+    # the theme build turns this into the "Subscription Offer" theme settings (price text, cadence, product)
+    (DST / 'sf-subscription.json').write_text(json.dumps({'handle': 'color-changing-foundation', **ccf_copy.SUBSCRIPTION}, indent=1))
     for p, t in texts.items(): p.write_text(t, encoding='utf-8', errors='surrogateescape')
     # Replaced images get a new, content-hashed file name and every reference is rewritten: NEXT's CDN keeps
     # serving a cached copy for a re-uploaded file name, so a changed image must never reuse its old name.

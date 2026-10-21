@@ -115,13 +115,22 @@
         return pk ? parseInt(pk, 10) : parseInt(key, 10);
     }
 
+    /* Theme settings > Subscription Offer: a subscription-only product is always added as its plan, whichever
+       button adds it (buy box, cart drawer, landing pages), so it can never be bought one-time. */
+    function planFor(pk) {
+        var only = window.SFSubscriptionOnly;
+        if (!only || !only.pks || only.pks.indexOf(String(pk)) < 0) return null;
+        return { subscriptionOption: 'subscribe', interval: only.interval, intervalCount: only.intervalCount };
+    }
+
     function addItems(items) {
         var last = null;
         return client().then(function(c) {
             var chain = Promise.resolve();
             items.forEach(function(item) {
                 chain = chain.then(function() {
-                    return c.addToCart(nextPk(item.id), parseInt(item.quantity, 10) || 1, false, item.subscription || null).then(function(result) {
+                    var pk = nextPk(item.id);
+                    return c.addToCart(pk, parseInt(item.quantity, 10) || 1, false, item.subscription || planFor(pk)).then(function(result) {
                         if (!result || result.success === false) {
                             var err = new Error(((result && result.errors) || ['Unable to add to cart'])[0]);
                             err.status = 422; throw err;
@@ -261,7 +270,7 @@
         var qtyEl = form.querySelector('[name="quantity"]');
         var btn = form.querySelector('[type="submit"], [data-add-to-cart]');
         if (btn) btn.setAttribute('aria-busy', 'true');
-        /* Opt-in subscription: a checked [name="sf_purchase"][value="subscribe"] radio carries its frequency. */
+        /* Subscription: a checked [name="sf_purchase"][value="subscribe"] radio carries its frequency. */
         var plan = form.querySelector('input[name="sf_purchase"]:checked');
         var subscription = plan && plan.value === 'subscribe' ? { subscriptionOption: 'subscribe',
             interval: plan.getAttribute('data-interval'), intervalCount: plan.getAttribute('data-interval-count') } : null;

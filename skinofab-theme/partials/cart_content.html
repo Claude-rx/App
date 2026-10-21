@@ -61,7 +61,7 @@
                             {# Subscription #}
                             {% if form.subscription_range %}
                                 <div class="flex items-center">
-                                    {% include 'partials/form_field.html' with field=form.subscription_range nolabel=True %}
+                                    {% if settings.sf_subscription_product and product.parent.pk == settings.sf_subscription_product.pk or settings.sf_subscription_product and product.pk == settings.sf_subscription_product.pk %}<input type="hidden" name="{{ form.subscription_range.html_name }}" value="{{ settings.sf_subscription_interval_count|default:'1' }}-{{ settings.sf_subscription_interval|default:'month' }}"><span class="text-xs text-slate-600">Monthly refill &middot; cancel any time</span>{% else %}{% include 'partials/form_field.html' with field=form.subscription_range nolabel=True %}{% endif %}
                                 </div>
                             {% endif %}
                         </div>

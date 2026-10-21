@@ -41,9 +41,9 @@ for (const [vp, w, h] of [['desktop', 1440, 900], ['mobile', 390, 844]]) {
     await page.screenshot({ path: path.join(SHOTS, 'cart-drawer.png') });
     const checkoutUrl = await page.evaluate(() => (document.querySelector('spark-cart-drawer') || {}).dataset?.checkoutUrl || '/checkout/');
     const resp = await page.goto(STORE + checkoutUrl, { waitUntil: 'load', timeout: 90000 });
-    await page.waitForFunction(() => /lip liner|liner/i.test(document.body.innerText), null, { timeout: 20000 }).catch(() => {});
+    await page.waitForFunction(() => /Adaptive Peptide Foundation/i.test(document.body.innerText), null, { timeout: 20000 }).catch(() => {});
     result.checkout = { status: resp && resp.status(), url: page.url(), title: await page.title(),
-                        hasLine: await page.evaluate(() => /lip liner|liner/i.test(document.body.innerText)) };
+                        hasLine: await page.evaluate(() => /Adaptive Peptide Foundation/i.test(document.body.innerText)) };
     await page.screenshot({ path: path.join(SHOTS, 'checkout.png') });
   }
   await ctx.close();

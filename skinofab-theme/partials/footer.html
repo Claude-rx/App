@@ -94,9 +94,7 @@
 <shop-follow-button proxy="true" return-uri="https://skinofab.com/account/redirect" ux-mode="windoid"></shop-follow-button>
 </div></div>
 </div>
-<details class="sf__menu" open=""><summary class="sf__menu-title">Shop</summary><ul>
-<li><a href="{% url 'catalogue:index' %}">Shop all</a></li><li><a href="{{ settings.sf_c_the_hits|default:'/catalogue/' }}">Bestsellers</a></li><li><a href="{{ settings.sf_c_essentials|default:'/catalogue/' }}">Accessories</a></li><li><a href="{{ settings.sf_c_bundles|default:'/catalogue/' }}">Bundles</a></li><li><a href="{% if settings.sf_p_skinofab_gift_card %}{{ settings.sf_p_skinofab_gift_card.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Gift cards</a></li><li><a href="{{ settings.sf_c_sale|default:'/catalogue/' }}">Sale</a></li>
-</ul></details>
+<details class="sf__menu" open=""><summary class="sf__menu-title">Shop</summary><ul> <li><a href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Adaptive Peptide Foundation</a></li><li><a href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}#apf-offer">Monthly refill</a></li><li><a href="/ccf-quiz/">Base quiz</a></li><li><a href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}#apf-guarantee">Love it or your money back</a></li><li><a href="{% url 'customer:summary' %}">My account</a></li> </ul></details>
 <details class="sf__menu" open=""><summary class="sf__menu-title">Customer care</summary><ul>
 <li><a href="/postflows-track-your-order/">Track your order</a></li><li><a href="/contact/">Contact us</a></li><li><a href="/faq/">FAQs</a></li><li><a href="/shipping-policy/">Shipping</a></li><li><a href="/refund-policy/">Returns &amp; refunds</a></li><li><a href="/about-skinofab/">About Skinofab</a></li>
 </ul></details>

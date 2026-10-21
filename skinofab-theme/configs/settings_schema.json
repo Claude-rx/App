@@ -173,6 +173,35 @@
         "help_text": "Must match the shipping rate configured in Dashboard > Settings > Shipping."
       }
     ],
+    "Subscription Offer": [
+      {
+        "name": "sf_subscription_product",
+        "type": "product",
+        "label": "Subscription-only product",
+        "help_text": "Sold by subscription only: every add to cart of this product is the plan below, and its prices show the plan price text. Leave empty to sell everything normally."
+      },
+      {
+        "name": "sf_subscription_interval",
+        "type": "text",
+        "label": "Plan interval",
+        "default": "month",
+        "help_text": "day, week or month. Must be enabled on the product in NEXT."
+      },
+      {
+        "name": "sf_subscription_interval_count",
+        "type": "text",
+        "label": "Plan interval count",
+        "default": "1",
+        "help_text": "Every how many intervals the refill ships (1 = every month). Must be one of the product's interval counts."
+      },
+      {
+        "name": "sf_subscription_price_text",
+        "type": "text",
+        "label": "Plan price text",
+        "default": "",
+        "help_text": "Shown wherever the product's price appears, e.g. $33/mo. Must match the subscription price on the product variants."
+      }
+    ],
     "Collection Links": [
       {
         "name": "sf_c_b2g5",

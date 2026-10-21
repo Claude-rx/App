@@ -6,7 +6,7 @@ Source: Skinofab_Color_Adapting_Foundation_Market_and_Persona_Report.md (21 Oct 
 - Positioning: "The color-adapting serum foundation made for skin after 45. Hydrates, blurs, and treats with
   peptides & PDRN, in one bottle."
 - Compliance (report section 11): no SPF claim, never "matches every skin tone", two adaptive bases plus a
-  shade-match guarantee, opt-in subscription only.
+  shade-match guarantee, a month-to-month refill with a reminder before every bottle.
 
 Each rule is (old, new). `old` is visible text as it appears in the export; whitespace, typographic apostrophes
 and dashes are matched loosely. GLOBAL rules run on every page, PAGE rules on one file. Every rule must match at
@@ -78,7 +78,7 @@ PAGE = {
         ("Say goodbye to shade-matching struggles. This color-changing foundation adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
          "Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines."),
         ("Try it worry-free. If our skin-adapting foundation doesn't blend seamlessly with your tone, you'll get your money back*",
-         "Wear it in your own daylight for 30 days. If your base isn't right, we'll swap it for the other base or refund you. No subscription unless you choose one.*"),
+         "Wear it in your own daylight for 30 days. If your base isn't right, we'll swap it for the other base. If you don't love it, we'll refund you, and your monthly refill cancels with one email.*"),
         ("One shade, verified range", "Two adaptive bases"),
         ("Simpler shade selection within fair-to-medium",
          "Light–Medium or Medium–Deep, so olive, golden and deeper skin don't turn ashy"),
@@ -117,18 +117,15 @@ PAGE = {
     ],
 }
 
-# The offer picker on the product page (report section 10): two bases x three offers, plus the opt-in
-# subscription on the single bottle. Prices mirror tools/persona/setup_ccf_offers.py.
-OFFERS = {
-    'single': {'label': '1 bottle', 'price': '$39', 'note': 'Try it in your own daylight'},
-    'duo': {'label': 'Duo: 2 bottles', 'price': '$64', 'note': 'Save $14 · one for home, one for your bag', 'badge': 'Most popular'},
-    'set': {'label': 'Complexion Set', 'price': '$79', 'note': 'Foundation + Liquid Blender Brush + Under-Eye Reset Patches · save $18'},
-}
+# The offer on the product page: two adaptive bases (report section 10) and one plan, a month-to-month refill
+# (subscription only, at the owner's request; no one-time purchase). One source for every price on the site:
+# setup_ccf_offers.py sets the NEXT subscription price and interval from it, apply_persona.py writes it into the
+# picker and into subscription.json, which the theme build turns into the "Subscription Offer" theme settings.
 BASES = [
     ('lm', 'Light–Medium', 'Fair to medium skin, pink or neutral undertones'),
     ('md', 'Medium–Deep', 'Medium, olive, golden and deeper skin'),
 ]
-SUBSCRIPTION = {'price': '$33', 'every': 60, 'interval': 'day'}
+SUBSCRIPTION = {'price': '33.00', 'text': '$33/mo', 'amount': '$33', 'interval': 'month', 'every': 1}
 
 # Product gallery order on NEXT (first 10 are uploaded): the 45+ women and the "goes on white" demo up front.
 # Entries are file-name prefixes from the product snapshot's image list.

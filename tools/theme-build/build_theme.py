@@ -241,6 +241,7 @@ def link_dtl(href, page):
         if bare == 'checkout': return "{% url 'checkout:index' %}"
         if bare in ('', 'index'): return "{{ homepage_url|default:'/' }}"
         if bare == 'search': return "{% url 'search:search' %}"
+        if bare == 'accounts' or bare.startswith('accounts/'): return "{% url 'customer:summary' %}"   # NEXT account pages (subscriptions live there)
         if re.fullmatch(r'(products|collections|pages|policies|blogs/news)/[a-z0-9][a-z0-9-]*|blogs/news', bare):
             path, page = bare + '.html', 'index.html'
         else:
@@ -691,7 +692,10 @@ blog()
 # ---------------------------------------------------------------- 8. shared partials + base layout
 write('partials/sf_price.html',
       "{# NEXT price for product p in the design's format ($49 USD). retail=1: compare-at price, only when higher. quarter=1: pay-in-4 instalment. #}\n"
-      "{% if p %}{% purchase_info_for_product request p as sf_s %}{% if sf_s.price.exists %}"
+      "{# The subscription-only product (Theme settings > Subscription Offer) shows its plan price text instead, with no compare-at or instalment price. #}\n"
+      "{% if p and settings.sf_subscription_product and settings.sf_subscription_price_text and p.pk == settings.sf_subscription_product.pk %}"
+      "{% if not retail and not quarter %}{{ settings.sf_subscription_price_text }}{% endif %}"
+      "{% elif p %}{% purchase_info_for_product request p as sf_s %}{% if sf_s.price.exists %}"
       "{% if retail %}{% if sf_s.price.price_retail > sf_s.price.price %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price_retail|floatformat:'-2' }} {{ sf_s.price.currency }}{% endif %}"
       "{% elif quarter %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price|dividedby:4|floatformat:'-2' }}"
       "{% else %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price|floatformat:'-2' }} {{ sf_s.price.currency }}{% endif %}"
@@ -722,16 +726,29 @@ base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "    <script>window.SFStore = { currency: \"{{ request.CURRENCY_CODE|default:'USD'|escapejs }}\", symbol: \"{% filter escapejs %}{% currency_symbol request.CURRENCY_CODE|default:'USD' %}{% endfilter %}\", graphqlUrl: \"{{ sf_graphql_url|default:'/api/graphql/'|escapejs }}\" };\n"
     "    window.SFProductJson = {" + product_json + "};\n"
     "    window.SFHandlePk = {" + handle_pk + "};\n"
-    "    window.SFVariantHandle = " + json.dumps(VARIANT2HANDLE, sort_keys=True) + ";</script>\n"
+    "    window.SFVariantHandle = " + json.dumps(VARIANT2HANDLE, sort_keys=True) + ";\n"
+    "    {# Theme settings > Subscription Offer: every add of this product (any variant, any button) is the plan below. #}\n"
+    "    window.SFSubscriptionOnly = {% if settings.sf_subscription_product %}{ pks: [{% for sf_v in settings.sf_subscription_product.children.all %}\"{{ sf_v.pk }}\", {% endfor %}\"{{ settings.sf_subscription_product.pk }}\"], interval: \"{{ settings.sf_subscription_interval|default:'month'|escapejs }}\", intervalCount: \"{{ settings.sf_subscription_interval_count|default:'1'|escapejs }}\" }{% else %}null{% endif %};</script>\n"
     "    <script src=\"{{ 'js/skinofab-commerce.js'|asset_url }}\"></script>\n"
     "    {% block sf_head %}{% endblock sf_head %}")
 base = base.replace('<a href="#main-content" class="skip-to-content">', '{% block sf_lead %}{% endblock sf_lead %}\n    <a href="#MainContent" class="skip-to-content visually-hidden">')
+# The design header script reads [data-main] (first section, transparent header); Spark-native pages use this main.
+base = base.replace('<main id="main-content" tabindex="-1">', '<main id="main-content" tabindex="-1" data-main>', 1)
 # Spark's own theme.js (Spark header/menu/search widgets) would collide with the design's window.theme; the design ships its own.
 base = base.replace("<script type=\"text/javascript\" src=\"{{ 'js/theme.js'|asset_url }}\"></script>", "")
 base = base.replace("{% block extrascripts %}{% endblock %}", "{% block sf_tail %}{% endblock sf_tail %}\n    {% block extrascripts %}{% endblock %}")
 write('layouts/base.html', base)
 
 # Spark-native templates keep Spark styling (Tailwind main.css) inside the SKINOFAB chrome
+# Spark pages under the design stylesheets: the design's .grid{grid-template-columns:var(--grid)} loads after Tailwind
+# and beats its grid-cols utilities, and its list styles number Spark's breadcrumb <ol>. Restore both inside Spark's main.
+SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}'
+               '@media (min-width:40rem){ #main-content .sm\\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}'
+               '@media (min-width:48rem){ #main-content .md\\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}'
+               '#main-content .md\\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}'
+               '#main-content nav ol{list-style:none;margin:0;padding:0}#main-content nav ol li{list-style:none}'
+               '#main-content nav ol li::before,#main-content nav ol li::marker{content:none}</style>')
+
 for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'templates/500.html',
           *[str(p.relative_to(OUT)) for p in (OUT / 'templates').rglob('*.html') if p.parts[-2] in ('reviews', 'support')]]:
     p = OUT / t
@@ -741,6 +758,32 @@ for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'te
         s = s.replace("{% extends 'layouts/base.html' %}", "{% extends 'layouts/base.html' %}\n{% block spark_css %}<link rel=\"stylesheet\" type=\"text/css\" href=\"{{ 'main.css'|asset_url }}\">{% endblock spark_css %}", 1)
         s = s.replace('{% extends "layouts/base.html" %}', '{% extends "layouts/base.html" %}\n{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ \'main.css\'|asset_url }}">{% endblock spark_css %}', 1)
         p.write_text(s)
+    # The layout's design header/footer need the design's stylesheets and scripts, which Spark-native pages don't
+    # carry: borrow a plain design page's head and tail (contact; every simple page has the same ones).
+    # The header script reads the body class on load (hide-header etc.), so the body class and lead come along too.
+    if '{% block sf_head %}' not in s and 'contact' in PAGE_PARTS:
+        s = s.replace('{% endblock spark_css %}', "{% endblock spark_css %}"
+                      "\n{% block body_class %}" + PAGE_PARTS['contact']['body_class'] + "{% endblock body_class %}"
+                      "\n{% block sf_head %}{% include 'partials/sf_pages/contact/head.html' %}" + SPARK_FIXES + "{% endblock sf_head %}"
+                      "\n{% block sf_lead %}{% include 'partials/sf_pages/contact/lead.html' %}{% endblock sf_lead %}"
+                      "\n{% block sf_tail %}{% include 'partials/sf_pages/contact/tail.html' %}{% endblock sf_tail %}", 1)
+        p.write_text(s)
+
+# Cart page: Spark's per-line frequency select offers "One Time"; a line of the subscription-only product
+# (Theme settings > Subscription Offer) keeps the plan instead, as a fixed label + hidden value.
+SUB_ONLY_IF = ("{% if settings.sf_subscription_product and product.parent.pk == settings.sf_subscription_product.pk"
+               " or settings.sf_subscription_product and product.pk == settings.sf_subscription_product.pk %}")
+SUB_FIXED = ('<input type="hidden" name="{{ form.subscription_range.html_name }}" value="{{ settings.sf_subscription_interval_count|default:\'1\' }}-{{ settings.sf_subscription_interval|default:\'month\' }}">'
+             '<span class="text-xs text-slate-600">Monthly refill &middot; cancel any time</span>')
+for rel, old_field in (('templates/cart.html', '{{ form.subscription_range }}'),
+                       ('partials/cart_content.html', "{% include 'partials/form_field.html' with field=form.subscription_range nolabel=True %}")):
+    p = OUT / rel
+    if not p.exists(): continue
+    s = p.read_text()
+    if 'sf_subscription_product' in s: continue
+    if s.count(old_field) != 1: sys.exit(f'{rel}: subscription_range field not found once')
+    s = s.replace(old_field, SUB_ONLY_IF + SUB_FIXED + '{% else %}' + old_field + '{% endif %}')   # both bind `product` to the line's
+    p.write_text(s)
 
 # ---------------------------------------------------------------- 9. settings
 schema = json.loads((OUT / 'configs' / 'settings_schema.json').read_text())
@@ -755,6 +798,14 @@ schema = {'SKINOFAB': {
                           'help_text': 'NEXT product whose price the design quotes for shipping protection (FAQ and buy-box copy).'},
                          {'name': 'sf_shipping_fee_text', 'type': 'text', 'label': 'Shipping Fee (as shown in delivery copy)', 'default': '$2.99 USD',
                           'help_text': 'Must match the shipping rate configured in Dashboard > Settings > Shipping.'}],
+    'Subscription Offer': [{'name': 'sf_subscription_product', 'type': 'product', 'label': 'Subscription-only product',
+                            'help_text': 'Sold by subscription only: every add to cart of this product is the plan below, and its prices show the plan price text. Leave empty to sell everything normally.'},
+                           {'name': 'sf_subscription_interval', 'type': 'text', 'label': 'Plan interval', 'default': 'month',
+                            'help_text': 'day, week or month. Must be enabled on the product in NEXT.'},
+                           {'name': 'sf_subscription_interval_count', 'type': 'text', 'label': 'Plan interval count', 'default': '1',
+                            'help_text': 'Every how many intervals the refill ships (1 = every month). Must be one of the product\'s interval counts.'},
+                           {'name': 'sf_subscription_price_text', 'type': 'text', 'label': 'Plan price text', 'default': '',
+                            'help_text': 'Shown wherever the product\'s price appears, e.g. $33/mo. Must match the subscription price on the product variants.'}],
     'Collection Links': [{'name': f'sf_c_{var(c)}', 'type': 'url', 'label': c.replace('-', ' ').title(), 'default': '/catalogue/',
                           'help_text': f'Where the design\'s "{c}" collection links go (a NEXT category URL).'} for c in collections],
 }, **schema}
@@ -770,6 +821,15 @@ if catalog and Path(catalog).exists():
         if v.get('id'): data[f'sf_p_{var(h)}'] = v['id']
     for c, cid in m.get('categories', {}).items():
         if cid: data[f'sf_c_{var(c)}'] = f'/catalogue/category/{c}_{cid}/'
+sub_cfg = EXPORT / 'sf-subscription.json'   # written by tools/persona/apply_persona.py (ccf_copy.SUBSCRIPTION)
+if sub_cfg.exists():
+    sc = json.loads(sub_cfg.read_text())
+    pid = data.get(f"sf_p_{var(sc['handle'])}")
+    if pid:
+        data.update({'sf_subscription_product': pid, 'sf_subscription_interval': sc['interval'],
+                     'sf_subscription_interval_count': str(sc['every']), 'sf_subscription_price_text': sc['text']})
+    else:
+        sys.exit(f"sf-subscription.json: no NEXT product mapped for {sc['handle']} (set SF_CATALOG)")
 (OUT / 'configs' / 'settings_data.json').write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 
 # ---------------------------------------------------------------- 9b. platform CSS gate (the store compiles CSS with Sass)
@@ -780,6 +840,12 @@ try:
         except Exception as e: LOG.setdefault('css_compile_errors', []).append(f'{f.relative_to(OUT)}: {str(e).splitlines()[0][:160]}')
 except ImportError:
     LOG['css_compile_errors'] = ['libsass not installed (pip install libsass): CSS gate skipped']
+
+# ---------------------------------------------------------------- 9c. DTL comment gate: {# #} must open and close on one line (else it renders as text)
+for f in sorted(OUT.rglob('*.html')):
+    for n, line in enumerate(f.read_text('utf-8', errors='replace').splitlines(), 1):
+        if re.search(r'\{#(?![^\n]*#\})', line):
+            LOG.setdefault('css_compile_errors', []).append(f'{f.relative_to(OUT)}:{n}: multi-line {{# #}} comment renders as text')
 
 # ---------------------------------------------------------------- 10. report
 report = {'templates': sorted(LOG['templates']), 'unbound_prices': LOG['unbound_prices'],

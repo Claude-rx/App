@@ -10,3 +10,9 @@ skinofab-theme/assets/sf/media/
 skinofab-theme/assets/sf/fonts/
 skinofab-handoff/media/
 skinofab-theme*.zip
+
+# Python bytecode
+__pycache__/
+*.pyc
+# source PDF of the product sheet (21 MB); its views are extracted under brand/adaptive-peptide-foundation/
+brand/adaptive-peptide-foundation/product-sheet.pdf
