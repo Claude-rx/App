@@ -121,7 +121,7 @@
             var chain = Promise.resolve();
             items.forEach(function(item) {
                 chain = chain.then(function() {
-                    return c.addToCart(nextPk(item.id), parseInt(item.quantity, 10) || 1).then(function(result) {
+                    return c.addToCart(nextPk(item.id), parseInt(item.quantity, 10) || 1, false, item.subscription || null).then(function(result) {
                         if (!result || result.success === false) {
                             var err = new Error(((result && result.errors) || ['Unable to add to cart'])[0]);
                             err.status = 422; throw err;
@@ -261,7 +261,11 @@
         var qtyEl = form.querySelector('[name="quantity"]');
         var btn = form.querySelector('[type="submit"], [data-add-to-cart]');
         if (btn) btn.setAttribute('aria-busy', 'true');
-        addItems([{ id: idEl && idEl.value, quantity: qtyEl ? qtyEl.value : 1 }]).then(function() {
+        /* Opt-in subscription: a checked [name="sf_purchase"][value="subscribe"] radio carries its frequency. */
+        var plan = form.querySelector('input[name="sf_purchase"]:checked');
+        var subscription = plan && plan.value === 'subscribe' ? { subscriptionOption: 'subscribe',
+            interval: plan.getAttribute('data-interval'), intervalCount: plan.getAttribute('data-interval-count') } : null;
+        addItems([{ id: idEl && idEl.value, quantity: qtyEl ? qtyEl.value : 1, subscription: subscription }]).then(function() {
             if (btn) btn.removeAttribute('aria-busy');
         }, function(err) {
             if (btn) btn.removeAttribute('aria-busy');

@@ -1,6 +1,6 @@
 """Create the SKINOFAB catalog on NEXT through the Admin API (2024-04-01).
 
-usage: NEXT_API_TOKEN=... python3 -I deploy_catalog.py <store_subdomain> <export_dir> <out_mapping.json> [--dry-run] [--replace-images]
+usage: NEXT_API_TOKEN=... python3 -I deploy_catalog.py <store_subdomain> <export_dir> <out_mapping.json> [--dry-run] [--replace-images] [--only=handle,...]
 
 Idempotent: categories and pages are matched by slug, products by the handle -> id mapping of the previous
 run (<out_mapping.json>, checked against the live product list; NEXT re-slugs products from their title and the list
@@ -9,6 +9,7 @@ API does not return the template key) with slug as a fallback, so a re-run never
   - products with variant attributes, variants (SKU, USD price + compare-at, stock), template key = design handle,
     and the design's product images (base64 upload, variant images linked)
   - pages with template key = slug (existing pages with the same slug only get their template set)
+--only=<handles> limits product writes to those handles (others keep their previous mapping).
 --replace-images deletes each product's current images and uploads the export's again (after a rebrand of the
 design's photos). Writes the handle -> product id / variant ids / category ids mapping used for the theme's Product Links settings.
 """
@@ -19,6 +20,7 @@ from bs4 import BeautifulSoup
 STORE, EXPORT, OUT = sys.argv[1], Path(sys.argv[2]).resolve(), Path(sys.argv[3]).resolve()
 DRY = '--dry-run' in sys.argv
 REPLACE = '--replace-images' in sys.argv
+ONLY = next((set(a.split('=', 1)[1].split(',')) for a in sys.argv if a.startswith('--only=')), None)
 TOKEN = os.environ['NEXT_API_TOKEN']
 API = f'https://{STORE}.29next.store/api/admin/'
 LOG = []
@@ -110,6 +112,8 @@ for h, m in prior.items():
         existing[h] = call('GET', f"products/{m['id']}/")
 mapping = {'store': STORE, 'categories': cat_ids, 'products': {}}
 for h in handles:
+    if ONLY is not None and h not in ONLY and h in prior:   # --only: leave the other products untouched
+        mapping['products'][h] = prior[h]; continue
     d = snaps[h]
     options = [o for o in d.get('options', []) if isinstance(o, dict) and o.get('name') != 'Title']
     variants = []
