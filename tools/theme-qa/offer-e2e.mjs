@@ -202,17 +202,29 @@ for (const refill of [false, true]) {
   const b = await s.page.evaluate(() => {
     const f = document.getElementById('frontrow-sticker'), r = document.querySelector('.sf-rating');
     const t = document.querySelector('.product__title');
-    return { frontrowId: window.SFFrontrowId, sticker: f ? { w: f.offsetWidth, h: f.offsetHeight, belowTitle: !!(t && (t.compareDocumentPosition(f) & 4)) } : null,
+    return { frontrowId: window.SFFrontrowId, sticker: f ? { w: f.offsetWidth, h: f.offsetHeight, onGallery: !!f.closest('[data-product-single-media-group]'),
+                                                             shown: getComputedStyle(f).display !== 'none' } : null,
              rating: r ? r.textContent.trim() : null, starColor: r ? getComputedStyle(r.querySelector('.sf-star svg + svg')).color : null,
              pill: (document.querySelector('.product__icon__text') || {}).textContent || '',
              hScroll: document.documentElement.scrollWidth > window.innerWidth };
   });
   const problems = [];
-  if (b.frontrowId && !(b.sticker && b.sticker.h > 40 && b.sticker.belowTitle)) problems.push('frontrow badge missing or misplaced');
+  if (b.frontrowId && !(b.sticker && b.sticker.h > 40 && b.sticker.onGallery && b.sticker.shown)) problems.push('frontrow badge missing or not on the gallery');
+  if (b.sticker) {   // on the first slide only (as on the original store)
+    // the gallery's own controls, as a shopper uses them (its Flickity is bundled, not on window)
+    const shown = () => s.page.evaluate(() => getComputedStyle(document.getElementById('frontrow-sticker')).display !== 'none');
+    const thumbs = s.page.locator('[data-product-thumbnail], .product-single__thumbnail, [data-thumbnail-id]');
+    await thumbs.nth(1).click({ force: true });
+    await s.page.waitForTimeout(1000); b.sticker.onSlide2 = await shown();
+    await thumbs.nth(0).click({ force: true });
+    await s.page.waitForTimeout(1000); b.sticker.backOnSlide1 = await shown();
+    if (b.sticker.onSlide2 || !b.sticker.backOnSlide1) problems.push(`first-slide-only broken: slide2=${b.sticker.onSlide2} slide1=${b.sticker.backOnSlide1}`);
+  }
   if (!b.rating) problems.push('no star rating');
   if (b.hScroll) problems.push('page scrolls sideways');
-  const t = await s.page.locator('.product__title').boundingBox();
-  await s.page.screenshot({ path: path.join(SHOTS, 'badges.png'), clip: { x: Math.max(0, t.x - 30), y: Math.max(0, t.y - 260), width: 560, height: 560 } });
+  await s.page.evaluate(() => window.scrollTo(0, 0));
+  await s.page.waitForTimeout(500);
+  await s.page.screenshot({ path: path.join(SHOTS, 'badges.png') });
   if (b.sticker) {   // the badge opens FrontrowMD's clinicians and FAQ
     await s.page.frameLocator('#frontrow-sticker').locator('text=/learn more/i').first().click({ timeout: 10000 }).catch(e => problems.push('badge click: ' + e.message.slice(0, 80)));
     await s.page.waitForTimeout(3000);

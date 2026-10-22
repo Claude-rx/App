@@ -242,28 +242,48 @@ def rating_block(t):
     return t, True
 
 FRONTROW_CSS = (
-    '.sf-frontrow{min-height:78px;overflow:hidden;margin:2px 0 6px}'
-    '.sf-frontrow #frontrow-sticker{position:static;display:block;width:415px;max-width:none;height:78px;border:0;border-radius:0}'
-    # FrontrowMD's own script appends its modals to <body> and shows them on click; hidden until then
-    # (their documents draw their own dimmed backdrop)
+    # the sticker sits on the gallery's top-left corner, over the first slide (as on the original store)
+    '#frontrow-sticker{position:absolute;z-index:3;border-radius:0 !important;max-width:unset !important;left:0 !important;top:0 !important}'
+    '@media only screen and (max-width:480px){#frontrow-sticker{transform:scale(.7) !important;transform-origin:0 0 !important}}'
+    # narrow phones: a little smaller, so it clears the flag badge in the first photo
+    '@media only screen and (max-width:400px){#frontrow-sticker{transform:scale(.66) !important}}'
+    # FrontrowMD's own script appends its modals to <body> and shows them on click (their documents draw the backdrop)
     '.iframe-modal-frontrow{display:none;position:fixed;z-index:99999999;inset:0;width:100%;height:100%;overflow:hidden}'
     '.iframe.frontrow{display:none;position:fixed;left:0;top:0;z-index:99999997;right:0;bottom:0;width:100%;height:100%;overflow:hidden}')
 
 def frontrow_block():
-    """FrontrowMD's "Clinicians' Choice" sticker under the product title; a click opens its clinicians and FAQ. The
-    listing comes from Theme settings > SKINOFAB > Product Page (window.SFFrontrowId); without one, nothing renders.
-    Its script and iframe load after the page is parsed, into a box sized to the badge (no layout shift)."""
-    return ('<div class="product__block sf-frontrow" data-sf-frontrow></div>'
-            '<script>(function () {'
-            'var host = document.currentScript.previousElementSibling, id = String(window.SFFrontrowId || "");'
-            'if (!/^[0-9]+$/.test(id)) { host.parentNode.removeChild(host); return; }'
+    """FrontrowMD's "Clinicians' Choice" sticker on the product gallery, top-left, while the first slide shows; a
+    click opens its clinicians and FAQ. Same loader as the original store; the listing comes from Theme settings >
+    SKINOFAB > Product Page (window.SFFrontrowId), and without one nothing loads."""
+    return ('<script data-sf-frontrow>(function () {'
+            'var id = String(window.SFFrontrowId || "");'
+            'if (!/^[0-9]+$/.test(id)) return;'
             'var base = "https://app.thefrontrowhealth.com/api/widgets";'
+            'function firstSlideOnly(iframe, gallery) {'
+            'var slider = gallery.querySelector("[data-product-single-media-slider]");'
+            'if (!slider) return;'
+            'function first() {'
+            'var slides = slider.querySelectorAll("[data-product-single-media-wrapper]");'
+            'if (slides.length < 2) return true;'
+            'var selected = slider.querySelector("[data-product-single-media-wrapper].is-selected");'
+            'if (selected) return selected === slides[0];'
+            'var r0 = slides[0].getBoundingClientRect(), rs = slider.getBoundingClientRect();'
+            'return Math.abs(r0.left - rs.left) < r0.width / 2; }'
+            'function update() { iframe.style.display = first() ? "" : "none"; }'
+            'if (typeof MutationObserver === "function") new MutationObserver(update).observe(slider, { attributes: true, subtree: true, attributeFilter: ["class"] });'
+            'slider.addEventListener("scroll", update, { passive: true });'
+            'window.addEventListener("resize", update);'
+            'update(); }'
             'function mount() {'
             'var s = document.createElement("script"); s.async = true;'
             's.src = base + "/script?presentation_type=sticker&product_id=" + id; document.head.appendChild(s);'
             'var f = document.createElement("iframe"); f.id = "frontrow-sticker"; f.className = "iframe-frontrow-sticker";'
-            'f.setAttribute("data-state", "max"); f.frameBorder = "0"; f.title = "Clinicians\u2019 Choice on FrontrowMD";'
-            'f.src = base + "?presentation_type=sticker&product_id=" + id; host.appendChild(f); }'
+            'f.setAttribute("data-state", "max"); f.frameBorder = "0"; f.title = "Clinicians’ Choice on FrontrowMD";'
+            'f.src = base + "?presentation_type=sticker&product_id=" + id;'
+            'var gallery = document.querySelector("[data-product-single-media-group]");'
+            'if (!gallery) return;'
+            'if (getComputedStyle(gallery).position === "static") gallery.style.position = "relative";'
+            'gallery.appendChild(f); firstSlideOnly(f, gallery); }'
             'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount); else mount();'
             '})();</script>')
 
@@ -314,8 +334,8 @@ def main():
     anchor = '<span data-subscription-watch-price=""></span>'
     if texts[pdp].count(anchor) < 1: missing.append(('picker', anchor))
     texts[pdp] = texts[pdp].replace(anchor, picker() + anchor, 1)
-    # the original store's FrontrowMD sticker sat on the gallery: its absolute-position rules go, the badge now
-    # lives under the title (FRONTROW_CSS keeps the modal rules)
+    # the original store's FrontrowMD styles, with the sticker's mobile scale and the modal rules (FRONTROW_CSS); the
+    # loader goes after the title block (it mounts the sticker on the gallery)
     texts[pdp], n = re.subn(r'<style>\s*#frontrow-sticker\s*\{.*?</style>', '<style>' + FRONTROW_CSS + '</style>', texts[pdp], count=1, flags=re.S)
     if not n: missing.append(('frontrow', 'sticker styles'))
     title = re.search(r'<div class="product__block product__title-and-price"[^>]*>', texts[pdp])

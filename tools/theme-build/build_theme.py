@@ -692,11 +692,8 @@ def default_product():
         for sec in [c for c in main.find_all(recursive=False) if c is not keep]: sec.decompose()
         # the foundation's offer picker sets the foundation's own variant ids: never on another product's page
         for el in keep.select('[data-sf-offer-picker]'): el.decompose()
-        # so are its FrontrowMD badge (mount + loader), star rating and purchase count
-        for el in keep.select('[data-sf-frontrow]'):
-            loader = el.find_next_sibling('script')
-            if loader: loader.decompose()
-            el.decompose()
+        # so are its FrontrowMD badge loader, star rating and purchase count
+        for el in keep.select('[data-sf-frontrow]'): el.decompose()
         for el in keep.select('.sf-rating, .social-proof-container'):
             (el.find_parent(class_='product__block') or el).decompose()
         bind_pdp(main, slots)
