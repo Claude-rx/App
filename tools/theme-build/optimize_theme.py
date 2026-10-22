@@ -162,7 +162,10 @@ for p in SCRIPTS + DESIGN_HTML:
     PREFIXES |= set(re.findall(r'["\']([A-Za-z][\w-]*(?:--|__|-))["\']', t))
 PREFIXES = {p for p in PREFIXES if len(p) >= 3}
 # State classes libraries toggle with computed names (Swiper, Flickity, PhotoSwipe, the theme's drawers).
-SAFE_PREFIXES = ('swiper-', 'flickity-', 'pswp', 'is-', 'has-', 'js-', 'no-js', 'aos', 'animate', 'fade', 'slide')
+# classes/ids that only exist at runtime: slider and animation libraries, state classes, and the FrontrowMD widget's
+# iframes (its own script adds them to <body>)
+SAFE_PREFIXES = ('swiper-', 'flickity-', 'pswp', 'is-', 'has-', 'js-', 'no-js', 'aos', 'animate', 'fade', 'slide',
+                 'frontrow', 'iframe')
 
 def used(token):
     if token in TOKENS or token.startswith(SAFE_PREFIXES): return True

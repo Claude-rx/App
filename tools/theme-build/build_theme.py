@@ -692,6 +692,13 @@ def default_product():
         for sec in [c for c in main.find_all(recursive=False) if c is not keep]: sec.decompose()
         # the foundation's offer picker sets the foundation's own variant ids: never on another product's page
         for el in keep.select('[data-sf-offer-picker]'): el.decompose()
+        # so are its FrontrowMD badge (mount + loader), star rating and purchase count
+        for el in keep.select('[data-sf-frontrow]'):
+            loader = el.find_next_sibling('script')
+            if loader: loader.decompose()
+            el.decompose()
+        for el in keep.select('.sf-rating, .social-proof-container'):
+            (el.find_parent(class_='product__block') or el).decompose()
         bind_pdp(main, slots)
         desc = keep.select_one('.product__description, [data-product-description], .rte')
         if desc:
@@ -880,7 +887,11 @@ base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "    window.SFHandlePk = { {% block sf_handle_pk %}{% endblock sf_handle_pk %} };\n"
     "    window.SFVariantHandle = " + json.dumps(VARIANT2HANDLE, sort_keys=True) + ";\n"
     "    {# Theme settings > Subscription Offer: every add of this product (any variant, any button) is the plan below. #}\n"
-    "    window.SFSubscriptionOnly = {% if settings.sf_subscription_product %}{ pks: [{% for sf_v in settings.sf_subscription_product.children.all %}\"{{ sf_v.pk }}\", {% endfor %}\"{{ settings.sf_subscription_product.pk }}\"], interval: \"{{ settings.sf_subscription_interval|default:'month'|escapejs }}\", intervalCount: \"{{ settings.sf_subscription_interval_count|default:'1'|escapejs }}\" }{% else %}null{% endif %};</script>\n"
+    "    window.SFSubscriptionOnly = {% if settings.sf_subscription_product %}{ pks: [{% for sf_v in settings.sf_subscription_product.children.all %}\"{{ sf_v.pk }}\", {% endfor %}\"{{ settings.sf_subscription_product.pk }}\"], interval: \"{{ settings.sf_subscription_interval|default:'month'|escapejs }}\", intervalCount: \"{{ settings.sf_subscription_interval_count|default:'1'|escapejs }}\" }{% else %}null{% endif %};\n"
+    "    {# Theme settings > Product Page: FrontrowMD listing for the Clinicians' Choice badge. #}\n"
+    "    window.SFFrontrowId = \"{{ settings.sf_frontrow_product_id|default:''|escapejs }}\";\n"
+    "    {# Theme settings > Subscription Offer: adds of this product that name no purchase type are the plan below. #}\n"
+    "    window.SFDefaultPlan = {% if settings.sf_refill_default_product %}{ pks: [{% for sf_v in settings.sf_refill_default_product.children.all %}\"{{ sf_v.pk }}\", {% endfor %}\"{{ settings.sf_refill_default_product.pk }}\"], interval: \"{{ settings.sf_subscription_interval|default:'month'|escapejs }}\", intervalCount: \"{{ settings.sf_subscription_interval_count|default:'1'|escapejs }}\" }{% else %}null{% endif %};</script>\n"
     "    {# defer: runs before the design's deferred scripts (document order), after every inline script, never blocks paint #}\n"
     "    <script defer src=\"{{ 'js/skinofab-commerce.js'|asset_url }}\"></script>\n"
     "    {% block sf_head %}{% endblock sf_head %}")
@@ -1025,7 +1036,11 @@ schema = {'SKINOFAB': {
                           'help_text': 'NEXT product whose price the design quotes for shipping protection (FAQ and buy-box copy).'},
                          {'name': 'sf_shipping_fee_text', 'type': 'text', 'label': 'Shipping Fee (as shown in delivery copy)', 'default': '$2.99 USD',
                           'help_text': 'Must match the shipping rate configured in Dashboard > Settings > Shipping.'}],
-    'Subscription Offer': [{'name': 'sf_subscription_product', 'type': 'product', 'label': 'Subscription-only product',
+    'Product Page': [{'name': 'sf_frontrow_product_id', 'type': 'text', 'label': 'FrontrowMD product ID', 'default': '',
+                      'help_text': "Shows FrontrowMD's Clinicians' Choice badge under the product title (its clinicians and FAQ open on click). Leave empty to hide."}],
+    'Subscription Offer': [{'name': 'sf_refill_default_product', 'type': 'product', 'label': 'Refills by default',
+                            'help_text': 'Every add to cart of this product that names no purchase type is the plan below; one-time stays available where a button or the cart page offers it.'},
+                           {'name': 'sf_subscription_product', 'type': 'product', 'label': 'Subscription-only product',
                             'help_text': 'Sold by subscription only: every add to cart of this product is the plan below, and its prices show the plan price text. Leave empty to sell everything normally.'},
                            {'name': 'sf_subscription_interval', 'type': 'text', 'label': 'Plan interval', 'default': 'month',
                             'help_text': 'day, week or month. Must be enabled on the product in NEXT.'},
@@ -1096,6 +1111,10 @@ if offer_cfg.exists():
                  'sf_cart_upgrade_button': oc['upgrade']['button'],
                  'sf_cart_review_text': oc['review']['text'], 'sf_cart_review_name': oc['review']['name']})
     for n, h in enumerate(oc['addons'][:2], 1): data[f'sf_cart_upsell_{n}'] = pid(h)
+    if oc.get('frontrow'): data['sf_frontrow_product_id'] = str(oc['frontrow'])
+    if oc.get('refill', {}).get('default'):
+        data.update({'sf_refill_default_product': pid(oc['product']), 'sf_subscription_interval': oc['refill']['interval'],
+                     'sf_subscription_interval_count': str(oc['refill']['every'])})
 # optional: a subscription-only product (Theme settings > Subscription Offer); the current persona sells one-time or
 # with Automatic Refills, chosen on the product page, so it writes no sf-subscription.json
 sub_cfg = EXPORT / 'sf-subscription.json'

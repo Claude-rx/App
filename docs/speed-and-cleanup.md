@@ -53,6 +53,10 @@ SKINOFAB → Cart Drawer.
 | Shared design CSS | 7 files, 120 KB gzip | 1 file, 47 KB gzip |
 | Font Awesome CSS | 92 KB | 2 KB |
 
+One third party is intentional: FrontrowMD's Clinicians' Choice badge on the product page
+(`app.thefrontrowhealth.com`, Theme settings → SKINOFAB → Product Page). Its script and iframe load after the page
+is parsed, into a box sized to the badge, so it costs no render-blocking time and no layout shift.
+
 What's left is mostly platform-side: the root document takes ~0.7–1.5 s on the preview domain (the mapped domain's
 page cache is faster), and NEXT injects a ~80 KB New Relic browser agent into every page.
 

@@ -41,7 +41,8 @@ ICONS = {
     'seal': ('<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z"/>'
              '<path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'),
     'bell': _SVG + '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>',
-    'cancel': _SVG + '<path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/><path d="m9.5 9.5 5 5m0-5-5 5"/></svg>',
+    # a circular arrow around a parcel: the refill can be stopped
+    'cancel': _SVG + '<path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/><path d="M12 8.3l3.3 1.9v3.7L12 15.8l-3.3-1.9v-3.7z"/><path d="M8.7 10.2 12 12l3.3-1.8M12 12v3.8"/></svg>',
     'renew': _SVG + '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
     'truck': _SVG + '<path d="M1 4h14v12H1z"/><path d="M15 9h4l3 3v4h-7"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="18" cy="18.5" r="1.8"/></svg>',
     'shield': _SVG + '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
@@ -57,18 +58,26 @@ TRUST_CSS = r"""
 .apf-trust__row{list-style:none !important;margin:0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .apf-trust__row li{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:14px;line-height:1.3;color:#2b2b2b}
 .apf-trust__row li:before{content:none !important}
+.apf-trust__row[hidden]{display:none !important}
+.apf-trust__row b{font-weight:600}
 .apf-trust__row svg{width:26px;height:26px;color:#151515}
 .apf-trust__terms{margin:14px auto 0 !important;max-width:470px;font-size:13px !important;line-height:1.45;color:#4a4a4a !important}
 """
 
 def trust_html(terms=True):
-    """'Love it or your money back', then free shipping / 30-day guarantee / secure checkout, and the refill terms:
-    shown for the first pack when refills are on by default (ccf_copy.REFILL['default']), else hidden; the offer
-    picker keeps them in step with the chosen pack and the refills box."""
-    row = ''.join(f'<li>{ICONS[k]}<span>{label}</span></li>' for k, label in
-                  (('truck', 'Free shipping'), ('shield', '30-day guarantee'), ('lock', 'Secure checkout')))
+    """'Love it or your money back', then a row of three facts and the refill terms. While refills are on: refill
+    reminder / cancel any time / renews at the pack's refill price; bought once: free shipping / 30-day guarantee /
+    secure checkout. The page starts in ccf_copy.REFILL['default']; the offer picker keeps rows, price and terms in
+    step with the chosen pack and the refills box."""
+    on = bool(REFILL.get('default'))
+    def row(kind, items, shown):
+        cells = ''.join(f'<li>{ICONS[k]}<span>{label}</span></li>' for k, label in items)
+        return f'<ul class="apf-trust__row" data-sf-trust-row="{kind}"{"" if shown else " hidden"}>{cells}</ul>'
+    renew = f'Renews at <b data-sf-renew>{usd(PACK1["refill"])}</b> every {REFILL["every"]} days'
+    rows = (row('refill', (('bell', 'Refill reminder'), ('cancel', 'Cancel any time'), ('renew', renew)), on) +
+            row('once', (('truck', 'Free shipping'), ('shield', '30-day guarantee'), ('lock', 'Secure checkout')), not on))
     return (f'<div class="apf-trust"><p class="apf-trust__head">{ICONS["seal"]}<span>Love it or your money back</span></p>'
-            f'<ul class="apf-trust__row">{row}</ul>' +
+            f'{rows}' +
             (f'<p class="apf-trust__terms" data-sf-refill-terms="{html_attr(TERMS)}"'
              + (f'>{html_attr(TERMS.replace("{amount}", usd(PACK1["refill"])))}</p>' if REFILL.get('default') else ' hidden></p>')
              if terms else '') + '</div>')

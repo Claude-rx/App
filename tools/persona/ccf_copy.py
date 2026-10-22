@@ -82,7 +82,7 @@ PAGE = {
         (r'RE:(<h3[^>]*>)\s*Natural\-looking\ coverage\s*(</h3>\s*<p[^>]*>)\s*Evens\ out\ your\ complexion\ and\ helps\ fine\ lines\ look\ less\ noticeable\s*(?=</p>)', r'\g<1>Soft-focus powders\g<2>Silica and boron nitride blur the look of lines and pores without a dry, matte finish'),
         (r'RE:alt="Mica"', 'alt="Fragrance-free"'),
         (r'RE:(<h3[^>]*>)\s*Mica\s*(</h3>\s*<p[^>]*>)\s*Natural\ mineral\ pigments\ for\ a\ soft,\ healthy\ glow\.\s*(?=</p>)', r'\g<1>Fragrance-free\g<2>No fragrance, propylene glycol, drying alcohol or parabens, so thinner skin doesn\'t sting'),
-        ("The viral skin tone adapting foundation", "The color-adapting serum foundation made for skin after 45"),
+        ("The viral skin tone adapting foundation", "🇰🇷 Based on Korean beauty innovation"),
         ("Hides imperfections", "Won't settle into lines"),
         ("Say goodbye to shade-matching struggles. This color-changing foundation adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
          "Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines."),
@@ -142,6 +142,11 @@ PACKS = [
 # under the button ("You pay $37 today, then $37 every 28 days until you cancel...") always show while refills are on.
 REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills', 'default': True, 'show_box': False,
           'perks': ['No Commitment', 'Cancel Anytime', 'Refills every 28 days']}
+
+# FrontrowMD "Clinicians' Choice" badge under the product title (Theme settings > SKINOFAB > Product Page). The
+# foundation's FrontrowMD listing, product 4694, from the original store's loader; the owner runs both brands
+# (confirmed 22 Oct 2026). The count, clinicians and FAQ are FrontrowMD's live data for that listing.
+FRONTROW_PRODUCT_ID = 4694
 
 # Cart drawer (Theme settings > SKINOFAB > Cart Drawer): the last step before payment is about trust and order value,
 # not plan terms. Add-ons are design handles (mapped to NEXT by the catalog); the review is one the product page shows.

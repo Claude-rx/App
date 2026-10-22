@@ -173,7 +173,22 @@
         "help_text": "Must match the shipping rate configured in Dashboard > Settings > Shipping."
       }
     ],
+    "Product Page": [
+      {
+        "name": "sf_frontrow_product_id",
+        "type": "text",
+        "label": "FrontrowMD product ID",
+        "default": "",
+        "help_text": "Shows FrontrowMD's Clinicians' Choice badge under the product title (its clinicians and FAQ open on click). Leave empty to hide."
+      }
+    ],
     "Subscription Offer": [
+      {
+        "name": "sf_refill_default_product",
+        "type": "product",
+        "label": "Refills by default",
+        "help_text": "Every add to cart of this product that names no purchase type is the plan below; one-time stays available where a button or the cart page offers it."
+      },
       {
         "name": "sf_subscription_product",
         "type": "product",

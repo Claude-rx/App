@@ -68,6 +68,9 @@ you before every refill" promise is kept automatically.
 3. The checkout should show the logo, black buttons, `Schedule: Every 28 Days` at $37.00, Shipping $0.00, and
    the three policy links with the texts above.
 
+Refills are the default on every button that adds the foundation, not only the product page (Theme settings →
+Subscription Offer → Refills by default); the cart page's frequency menu still offers One Time.
+
 Whether the refills box is shown, and whether it starts ticked, is `REFILL['show_box']` / `REFILL['default']` in
 `tools/persona/ccf_copy.py` (rebuild with `tools/build_store.sh`). Shown and unticked, the page sells one-time first.
 

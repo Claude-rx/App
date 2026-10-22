@@ -115,12 +115,15 @@
         return pk ? parseInt(pk, 10) : parseInt(key, 10);
     }
 
-    /* Theme settings > Subscription Offer: a subscription-only product is always added as its plan, whichever
-       button adds it (buy box, cart drawer, landing pages), so it can never be bought one-time. */
-    function planFor(pk) {
-        var only = window.SFSubscriptionOnly;
-        if (!only || !only.pks || only.pks.indexOf(String(pk)) < 0) return null;
-        return { subscriptionOption: 'subscribe', interval: only.interval, intervalCount: only.intervalCount };
+    /* Theme settings > Subscription Offer. A subscription-only product is always added as its plan, whichever
+       button adds it (buy box, cart drawer, landing pages), so it can never be bought one-time. A refills-by-default
+       product is added as its plan by any button that names no purchase type (landing pages, permalinks, other
+       forms); a button that chose one-time (explicit: false/null) keeps one-time. */
+    function planFor(pk, chosen) {
+        var has = function(cfg) { return cfg && cfg.pks && cfg.pks.indexOf(String(pk)) >= 0; };
+        var cfg = has(window.SFSubscriptionOnly) ? window.SFSubscriptionOnly
+                : (!chosen && has(window.SFDefaultPlan)) ? window.SFDefaultPlan : null;
+        return cfg ? { subscriptionOption: 'subscribe', interval: cfg.interval, intervalCount: cfg.intervalCount } : null;
     }
 
     function addItems(items) {
@@ -130,7 +133,8 @@
             items.forEach(function(item) {
                 chain = chain.then(function() {
                     var pk = nextPk(item.id);
-                    return c.addToCart(pk, parseInt(item.quantity, 10) || 1, false, item.subscription || planFor(pk)).then(function(result) {
+                    var plan = item.subscription || planFor(pk, item.subscription !== undefined);
+                    return c.addToCart(pk, parseInt(item.quantity, 10) || 1, false, plan).then(function(result) {
                         if (!result || result.success === false) {
                             var err = new Error(((result && result.errors) || ['Unable to add to cart'])[0]);
                             err.status = 422; throw err;
@@ -270,10 +274,12 @@
         var qtyEl = form.querySelector('[name="quantity"]');
         var btn = form.querySelector('[type="submit"], [data-add-to-cart]');
         if (btn) btn.setAttribute('aria-busy', 'true');
-        /* Subscription: a checked [name="sf_purchase"][value="subscribe"] radio carries its frequency. */
+        /* Subscription: a checked [name="sf_purchase"][value="subscribe"] input carries its frequency; a form with the
+           input unchecked chose one-time; a form without it chose nothing (the product's default applies). */
         var plan = form.querySelector('input[name="sf_purchase"]:checked');
         var subscription = plan && plan.value === 'subscribe' ? { subscriptionOption: 'subscribe',
-            interval: plan.getAttribute('data-interval'), intervalCount: plan.getAttribute('data-interval-count') } : null;
+            interval: plan.getAttribute('data-interval'), intervalCount: plan.getAttribute('data-interval-count') }
+            : form.querySelector('input[name="sf_purchase"]') ? null : undefined;
         addItems([{ id: idEl && idEl.value, quantity: qtyEl ? qtyEl.value : 1, subscription: subscription }]).then(function() {
             if (btn) btn.removeAttribute('aria-busy');
         }, function(err) {

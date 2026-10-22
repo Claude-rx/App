@@ -160,7 +160,12 @@ def picker():
     if (pct) pct.textContent = Math.round((pick.compare - pick.refill) / pick.compare * 100) + '%';
     if (now) now.textContent = money(sub ? pick.refill : pick.price) + unit;
     if (was) was.textContent = money(pick.compare) + unit;
-    var terms = document.querySelector('[data-sf-refill-terms]');   // under the button: parsed after this script
+    // the trust row under the button (parsed after this script): refill facts while refills are on
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sf-trust-row]'), function (r) {{
+      r.hidden = (r.getAttribute('data-sf-trust-row') === 'refill') !== sub;
+    }});
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sf-renew]'), function (e) {{ e.textContent = money(pick.refill); }});
+    var terms = document.querySelector('[data-sf-refill-terms]');
     if (terms) {{
       terms.hidden = !sub;
       terms.textContent = terms.getAttribute('data-sf-refill-terms').replace(/\\{{amount\\}}/g, money(pick.refill));
@@ -199,7 +204,69 @@ def cart_offer():
     return {'product': cart['product'], 'addons': cart['addons'],
             'upgrade': {'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
                         'text': text, 'button': cart['upgrade_button']},
-            'review': {'text': cart['review_text'], 'name': cart['review_name']}}
+            'review': {'text': cart['review_text'], 'name': cart['review_name']},
+            # refills on by default: every add of the foundation that names no purchase type is the refill plan
+            'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
+                       'every': ccf_copy.REFILL['every']},
+            'frontrow': getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None)}
+
+STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
+        '<path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
+
+def rating_block(t):
+    """The design's Loox rating badge renders nothing without Loox (a Shopify app): the same stars, color and text
+    from its own data attributes, as plain markup, linking to the reviews section."""
+    m = re.search(r'<div class="loox-rating loox-widget"[^>]*></div>', t)
+    if not m: return t, False
+    tag = m.group(0)
+    attr = lambda k, d='': (re.search(r'\b%s="([^"]*)"' % k, tag) or [None, d])[1]
+    rating = float(attr('data-rating', '5') or 5)
+    text = attr('data-pattern') or f'{rating}/5'
+    color = attr('data-color-star') or '#000000'
+    stars = ''
+    for i in range(5):
+        fill = max(0.0, min(1.0, round((rating - i) * 2) / 2))   # half stars, as Loox draws them
+        stars += (f'<span class="sf-star" style="--f:{int(fill * 100)}%">{STAR}{STAR}</span>')
+    block = (f'<span class="sf-rating" style="--sf-star:{html.escape(color)}">'
+             f'<span class="sf-rating__stars" role="img" aria-label="Rated {rating:g} out of 5">{stars}</span>'
+             f'<span class="sf-rating__text">{html.escape(text)}</span></span>'
+             '<style>.sf-rating{display:inline-flex;align-items:center;gap:10px;color:#151515;font-size:17px;line-height:1}'
+             '.sf-rating__stars{display:inline-flex;gap:2px}'
+             '.sf-star{position:relative;display:inline-block;width:20px;height:20px;color:#d8d8d8}'
+             '.sf-star svg{position:absolute;left:0;top:0}'
+             '.sf-star svg+svg{color:var(--sf-star);clip-path:inset(0 calc(100% - var(--f)) 0 0)}</style>')
+    t = t.replace(tag, block, 1)
+    # the badge scrolls to the reviews
+    t = re.sub(r'<a aria-label="Scroll to reviews">', '<a aria-label="Scroll to reviews" href="#sf-reviews" style="text-decoration:none">', t, count=1)
+    t = t.replace('<section class="skinofab-testimonials">', '<section class="skinofab-testimonials" id="sf-reviews">', 1)
+    return t, True
+
+FRONTROW_CSS = (
+    '.sf-frontrow{min-height:78px;overflow:hidden;margin:2px 0 6px}'
+    '.sf-frontrow #frontrow-sticker{position:static;display:block;width:415px;max-width:none;height:78px;border:0;border-radius:0}'
+    # FrontrowMD's own script appends its modals to <body> and shows them on click; hidden until then
+    # (their documents draw their own dimmed backdrop)
+    '.iframe-modal-frontrow{display:none;position:fixed;z-index:99999999;inset:0;width:100%;height:100%;overflow:hidden}'
+    '.iframe.frontrow{display:none;position:fixed;left:0;top:0;z-index:99999997;right:0;bottom:0;width:100%;height:100%;overflow:hidden}')
+
+def frontrow_block():
+    """FrontrowMD's "Clinicians' Choice" sticker under the product title; a click opens its clinicians and FAQ. The
+    listing comes from Theme settings > SKINOFAB > Product Page (window.SFFrontrowId); without one, nothing renders.
+    Its script and iframe load after the page is parsed, into a box sized to the badge (no layout shift)."""
+    return ('<div class="product__block sf-frontrow" data-sf-frontrow></div>'
+            '<script>(function () {'
+            'var host = document.currentScript.previousElementSibling, id = String(window.SFFrontrowId || "");'
+            'if (!/^[0-9]+$/.test(id)) { host.parentNode.removeChild(host); return; }'
+            'var base = "https://app.thefrontrowhealth.com/api/widgets";'
+            'function mount() {'
+            'var s = document.createElement("script"); s.async = true;'
+            's.src = base + "/script?presentation_type=sticker&product_id=" + id; document.head.appendChild(s);'
+            'var f = document.createElement("iframe"); f.id = "frontrow-sticker"; f.className = "iframe-frontrow-sticker";'
+            'f.setAttribute("data-state", "max"); f.frameBorder = "0"; f.title = "Clinicians\u2019 Choice on FrontrowMD";'
+            'f.src = base + "?presentation_type=sticker&product_id=" + id; host.appendChild(f); }'
+            'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount); else mount();'
+            '})();</script>')
+
 
 def trust_block():
     """Under the add-to-cart button: love it or your money back, free shipping / 30-day guarantee / secure checkout,
@@ -247,6 +314,17 @@ def main():
     anchor = '<span data-subscription-watch-price=""></span>'
     if texts[pdp].count(anchor) < 1: missing.append(('picker', anchor))
     texts[pdp] = texts[pdp].replace(anchor, picker() + anchor, 1)
+    # the original store's FrontrowMD sticker sat on the gallery: its absolute-position rules go, the badge now
+    # lives under the title (FRONTROW_CSS keeps the modal rules)
+    texts[pdp], n = re.subn(r'<style>\s*#frontrow-sticker\s*\{.*?</style>', '<style>' + FRONTROW_CSS + '</style>', texts[pdp], count=1, flags=re.S)
+    if not n: missing.append(('frontrow', 'sticker styles'))
+    title = re.search(r'<div class="product__block product__title-and-price"[^>]*>', texts[pdp])
+    if not title: missing.append(('frontrow', 'title block'))
+    else:
+        end = balanced_end(texts[pdp], title.start(), 'div')
+        texts[pdp] = texts[pdp][:end] + frontrow_block() + texts[pdp][end:]
+    texts[pdp], ok = rating_block(texts[pdp])
+    if not ok: missing.append(('rating', 'loox badge'))
     cta = texts[pdp].find('<div id="CTA_kopstorm">')
     if cta < 0: missing.append(('trust block', 'CTA_kopstorm'))
     else:

@@ -183,6 +183,47 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
+// any other button (landing pages, permalinks) names no purchase type: refills by default when the theme says so
+{
+  const s = await session();
+  const dflt = await s.page.evaluate(() => window.SFDefaultPlan);
+  await s.page.evaluate(pk => window.SFCommerce.addItems([{ id: String(pk), quantity: 1 }]), packs['1'].pk);
+  await s.page.waitForTimeout(6000);
+  const ls = lines(s.cart);
+  const problems = checkLine(ls[0], { pk: packs['1'].pk, price: dflt ? packs['1'].refill : packs['1'].price, refill: !!dflt });
+  out.push({ case: `other buttons: ${dflt ? 'refill by default' : 'one-time'}`, defaultPlan: dflt, line: ls[0], errors: s.errors, ok: problems.length === 0, problems });
+  await s.ctx.close();
+}
+
+// the badges under the title: FrontrowMD Clinicians' Choice (when a listing is set) and the black star rating
+{
+  const s = await session(1280, 900);
+  await s.page.waitForTimeout(5000);
+  const b = await s.page.evaluate(() => {
+    const f = document.getElementById('frontrow-sticker'), r = document.querySelector('.sf-rating');
+    const t = document.querySelector('.product__title');
+    return { frontrowId: window.SFFrontrowId, sticker: f ? { w: f.offsetWidth, h: f.offsetHeight, belowTitle: !!(t && (t.compareDocumentPosition(f) & 4)) } : null,
+             rating: r ? r.textContent.trim() : null, starColor: r ? getComputedStyle(r.querySelector('.sf-star svg + svg')).color : null,
+             pill: (document.querySelector('.product__icon__text') || {}).textContent || '',
+             hScroll: document.documentElement.scrollWidth > window.innerWidth };
+  });
+  const problems = [];
+  if (b.frontrowId && !(b.sticker && b.sticker.h > 40 && b.sticker.belowTitle)) problems.push('frontrow badge missing or misplaced');
+  if (!b.rating) problems.push('no star rating');
+  if (b.hScroll) problems.push('page scrolls sideways');
+  const t = await s.page.locator('.product__title').boundingBox();
+  await s.page.screenshot({ path: path.join(SHOTS, 'badges.png'), clip: { x: Math.max(0, t.x - 30), y: Math.max(0, t.y - 260), width: 560, height: 560 } });
+  if (b.sticker) {   // the badge opens FrontrowMD's clinicians and FAQ
+    await s.page.frameLocator('#frontrow-sticker').locator('text=/learn more/i').first().click({ timeout: 10000 }).catch(e => problems.push('badge click: ' + e.message.slice(0, 80)));
+    await s.page.waitForTimeout(3000);
+    b.modalOpen = await s.page.evaluate(() => [...document.querySelectorAll('iframe.iframe.frontrow')].some(f => getComputedStyle(f).display !== 'none'));
+    if (!b.modalOpen) problems.push('badge click opened nothing');
+    await s.page.screenshot({ path: path.join(SHOTS, 'badges-modal.png') });
+  }
+  out.push({ case: 'badges', ...b, errors: s.errors, ok: problems.length === 0, problems });
+  await s.ctx.close();
+}
+
 // a drawer add-on
 {
   const s = await session();
