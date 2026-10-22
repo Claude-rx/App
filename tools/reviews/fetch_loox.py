@@ -16,14 +16,22 @@ PAGES = int(sys.argv[sys.argv.index('--pages') + 1]) if '--pages' in sys.argv el
 
 
 def page(n):
+    """One widget page; retried with backoff (a long fetch meets slow or dropped responses). None when it keeps failing."""
     url = f'https://loox.io/widget/{CLIENT}/reviews/{PRODUCT}?h=&variant=visible&language=en&page={n}'
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    with urllib.request.urlopen(req, timeout=60) as r: return r.read().decode('utf-8', 'replace')
+    for attempt in range(5):
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, timeout=30) as r: return r.read().decode('utf-8', 'replace')
+        except Exception as e:
+            print(f'page {n}: {e}', file=sys.stderr); time.sleep(2 ** (attempt + 1))
+    return None
 
 
 rows, seen = [], set()
 for n in range(1, PAGES + 1):
-    soup = BeautifulSoup(page(n), 'html.parser')
+    raw = page(n)
+    if raw is None: print(f'stopped at page {n}: it keeps failing; saving what was read', file=sys.stderr); break
+    soup = BeautifulSoup(raw, 'html.parser')
     items = soup.select('.grid-item-wrap[data-id]')
     fresh = 0
     for it in items:

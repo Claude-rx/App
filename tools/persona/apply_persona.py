@@ -721,9 +721,21 @@ def honest_counts(texts, summary):
     351,837 reviews; Loox counts 10,512; the serum 61,583 for 22). Every count becomes a real one: the imported
     reviews' total for the foundation and the store-wide lines, each other product's own Loox count. Returns hits."""
     n, five, avg = int(summary['count']), int(summary['distribution'].get('5', summary['distribution'].get(5, 0))), float(summary['average'])
-    floor = lambda v: f'{(v // 1000) * 1000:,}' if v >= 1000 else str(v)
+    floor = lambda v: f'{(v // 100) * 100:,}' if v >= 1000 else str(v)   # 9,996 -> "9,900+": true, and close
+    def loved(m):   # any "Loved by N+" above the real total (the design had 40,000+ to 300,000+) becomes the total
+        return m.group(1) + (floor(n) if int(m.group(2).replace(',', '')) > n else m.group(2)) + '+'
+    def crowd(m):   # "300,000+ women have already switched", "10.000+ customers": above the total -> the total
+        v = int(re.sub(r'[,.]', '', m.group(1)))
+        if v <= n: return m.group(0)
+        noun = 'verified buyers' if m.group(2) == 'women' else m.group(2)
+        return f'{floor(n)}+ {noun}'
     reps = [
-        (r'Loved by 50,000\+', f'Loved by {floor(n)}+'),
+        (r'(Loved by (?:<span class="text-highlight"[^>]*>)?)(\d[\d,]*)\+', loved),
+        (r'(\d{1,3}(?:[,.]\d{3})+)\+ (women|customers|buyers|happy customers|Verified Customers|verified customers)', crowd),
+        # the same with the number highlighted ("<span ...>300,000+</span> women have already switched")
+        (r'(<span[^>]*>)(\d{1,3}(?:[,.]\d{3})+)\+(</span>\s*)women', lambda m: (
+            m.group(0) if int(re.sub(r'[,.]', '', m.group(2))) <= n else f'{m.group(1)}{floor(n)}+{m.group(3)}verified buyers')),
+        (r'Why skinofab works for 10\.000\+ brows', 'Why skinofab works for your brows'),
         (r'50,000\+ customers', f'{floor(n)}+ customers'),
         (r'Over 50,000 5-star reviews', f'Over {floor(five)} 5-star reviews'),
         (r'Trusted by 1,000,000\+ women who finally found something that works', 'From verified buyers who finally found something that works'),
