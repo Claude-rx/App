@@ -5,8 +5,10 @@ Source: Skinofab_Color_Adapting_Foundation_Market_and_Persona_Report.md (21 Oct 
   look fresh and even in a minute, and she distrusts brands that over-promise.
 - Positioning: "The color-adapting serum foundation made for skin after 45. Hydrates, blurs, and treats with
   peptides & PDRN, in one bottle."
-- Compliance (report section 11): no SPF claim, never "matches every skin tone", two adaptive bases plus a
-  shade-match guarantee, a month-to-month refill with a reminder before every bottle.
+- Compliance (report section 11): no SPF claim, never "matches every skin tone" (the copy says it adapts to your
+  tone), a money-back guarantee, and refill terms shown next to the button whenever refills are chosen.
+- Offer (owner, 22 Oct 2026): one product for every skin tone (no bases), 1 or 2 bottles, one-time or with
+  automatic refills every 28 days (PACKS / REFILL below).
 
 Each rule is (old, new). `old` is visible text as it appears in the export; whitespace, typographic apostrophes
 and dashes are matched loosely. GLOBAL rules run on every page, PAGE rules on one file. Every rule must match at
@@ -34,7 +36,7 @@ GLOBAL = [
     (", lasts all day (up to 16 hours), and hydrates skin while protecting it with SPF 15. The Changing Foundation is hypoallergenic, vegan, and waterproof.",
      ", stays comfortable through a full day, and hydrates with hyaluronic acid, ceramide NP and squalane. It's fragrance-free and made for skin after 45."),
     ("Meet the foundation that takes the guesswork out of beauty. Our color-changing formula adjusts seamlessly to fair to medium skin tones, giving you a radiant, natural finish that looks like your skin, only better. It blurs imperfections, softens fine lines, and neutralizes redness in seconds, all while protecting with SPF 15. One shade, endless confidence. Just apply, blend, and watch the transformation.",
-     "Your skin changed after 45: a few sun spots, some redness, a tone that isn't what it was. This foundation goes on white and turns into your skin as you blend, inside the base you choose, Light–Medium or Medium–Deep. A satin serum finish evens out spots and redness and blurs the look of fine lines without sitting in them. No shade guessing, no mask, about a minute with your fingertips."),
+     "Your skin changed after 45: a few sun spots, some redness, a tone that isn't what it was. This foundation goes on white and turns into your skin tone as you blend. A satin serum finish evens out spots and redness and blurs the look of fine lines without sitting in them. No shade guessing, no mask, about a minute with your fingertips."),
     ("With SPF 15", "Fragrance-free"),
     ("SPF protection", "Hydrating, fragrance-free formula"),
     ("— Sun damage accelerates skin aging, so a built-in SPF is a bonus, not a gimmick.",
@@ -57,14 +59,14 @@ PAGE = {
     'index.html': [
         # meta description + og:description (the theme uses it while Settings > SEO has no store description)
         ("Cosmetics made to glow, feel skinofab.",
-         "Adaptive Peptide Foundation: the color-adapting serum foundation made for skin after 45. Goes on white, turns into your skin. $33/mo, cancel any time."),
+         "Adaptive Peptide Foundation: the color-adapting serum foundation made for skin after 45. Goes on white, turns into your skin tone. Free shipping, 30-day money-back guarantee."),
         ("Foundation that adapts to you", "Stop guessing your shade after 45"),
         ("Adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
          "It goes on white and turns into your skin as you blend. A hydrating serum foundation with peptides and PDRN that won't settle into your lines."),
         (">Look visibly younger<", ">Made for 45+<"),
-        ("One shade that finds yours", "Two bases. No more guessing."),
+        ("One shade that finds yours", "One shade. No more guessing."),
         ("Our color-adapting foundation shifts to match your skin tone the moment it touches your skin, then settles into a smooth, natural finish that doesn't sit in fine lines or cake as the day goes on.",
-         "Choose Light–Medium or Medium–Deep once. As you blend, the color adapts to your tone, so sun spots, redness and a sallow cast even out without a white cast or an orange edge. The satin serum base stays comfortable on dry skin and doesn't sink into fine lines, even on a long day or a close-up video call."),
+         "There's no shade to choose. As you blend, the color adapts to your tone, so sun spots, redness and a sallow cast even out without a white cast or an orange edge. The satin serum base stays comfortable on dry skin and doesn't sink into fine lines, even on a long day or a close-up video call."),
         ("Made for mature skin, it's lightweight, hydrating and forgiving, so you look like yourself, just fresher.",
          "Made for skin after 45: fragrance-free, with peptides, PDRN and hyaluronic acid. Fingertips only, about a minute, and you look like yourself, just fresher."),
     ],
@@ -75,7 +77,7 @@ PAGE = {
         (r'RE:alt="Glycerin"', 'alt="Hyaluronic acid + ceramide NP"'),
         (r'RE:(<h3[^>]*>)\s*Glycerin\s*(</h3>\s*<p[^>]*>)\s*This\ ingredient\ helps\ skin\ feel\ hydrated\ and\ comfortable\.\s*(?=</p>)', r'\g<1>Hyaluronic acid + ceramide NP\g<2>Two forms of hyaluronic acid with ceramide NP, squalane and panthenol keep dry skin comfortable all day'),
         (r'RE:alt="Color\ Changing\ Pigments"', 'alt="Color-adapting pigments"'),
-        (r'RE:(<h3[^>]*>)\s*Color\ Changing\ Pigments\s*(</h3>\s*<p[^>]*>)\s*Adapt\ to\ your\ skin\ tone\ as\ you\ blend\s*(?=</p>)', r'\g<1>Color-adapting pigments\g<2>Go on white and shift to your tone as you blend, inside the base you choose'),
+        (r'RE:(<h3[^>]*>)\s*Color\ Changing\ Pigments\s*(</h3>\s*<p[^>]*>)\s*Adapt\ to\ your\ skin\ tone\ as\ you\ blend\s*(?=</p>)', r'\g<1>Color-adapting pigments\g<2>Go on white and shift to your tone as you blend'),
         (r'RE:alt="Natural\-looking\ coverage"', 'alt="Soft-focus powders"'),
         (r'RE:(<h3[^>]*>)\s*Natural\-looking\ coverage\s*(</h3>\s*<p[^>]*>)\s*Evens\ out\ your\ complexion\ and\ helps\ fine\ lines\ look\ less\ noticeable\s*(?=</p>)', r'\g<1>Soft-focus powders\g<2>Silica and boron nitride blur the look of lines and pores without a dry, matte finish'),
         (r'RE:alt="Mica"', 'alt="Fragrance-free"'),
@@ -85,15 +87,15 @@ PAGE = {
         ("Say goodbye to shade-matching struggles. This color-changing foundation adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
          "Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines."),
         ("Try it worry-free. If our skin-adapting foundation doesn't blend seamlessly with your tone, you'll get your money back*",
-         "Wear it in your own daylight for 30 days. If your base isn't right, we'll swap it for the other base. If you don't love it, we'll refund you, and your monthly refill cancels with one email.*"),
-        ("One shade, verified range", "Two adaptive bases"),
+         "Wear it in your own daylight for 30 days. If you don't love it, we'll refund you.*"),
+        ("One shade, verified range", "One adaptive shade"),
         ("Simpler shade selection within fair-to-medium",
-         "Light–Medium or Medium–Deep, so olive, golden and deeper skin don't turn ashy"),
+         "Goes on white and adapts to your tone, so there is no shade to pick"),
         ("Skin-like finish designed for mature-skin preparation", "Satin, skin-like finish made for dry, lined skin after 45"),
         ("Our adaptive pigment formula removes the need to choose a shade. As you blend, micro-encapsulated pigments react to your skin’s warmth and undertones, shifting within seconds to match your unique complexion. Made for fair to medium tones, it evens redness, blurs imperfections, and melts into the skin for a seamless, second-skin finish.",
          "Most color-changing foundations are a basic, drying base with fragrance and nothing in it for your skin. Ours is a serum. Hyaluronic acid, ceramide NP, squalane and panthenol keep dry skin comfortable; peptides (Matrixyl 3000), PDRN and Pro-Xylane are there for the skin underneath; soft-focus powders blur the look of lines and pores. Adaptive pigments go on white and shift to your tone as you blend, inside the base you choose."),
         ("Our Color Changing Foundation is suitable for all skin tones above and in between.",
-         "It comes in two adaptive bases. Light–Medium suits fair to medium skin with pink or neutral undertones. Medium–Deep suits medium, olive, golden and deeper skin. Not sure? Take the 30-second base quiz. If your base isn't right, we'll swap it."),
+         "There is one shade. It goes on white and adapts to your skin tone as you blend, so there is nothing to match or mix. Wear it in your own daylight for 30 days; if you don't love it, we'll refund you."),
         ("Step 1: Create the Perfect Canvas", "Step 1: Moisturizer and sunscreen first"),
         ("Start with moisturized skin. Smooth on your go-to primer or hydrating cream to create an even base that helps your foundation glide on seamlessly.",
          "Apply your usual moisturizer and your daily sunscreen. No primer needed."),
@@ -124,15 +126,31 @@ PAGE = {
     ],
 }
 
-# The offer on the product page: two adaptive bases (report section 10) and one plan, a month-to-month refill
-# (subscription only, at the owner's request; no one-time purchase). One source for every price on the site:
-# setup_ccf_offers.py sets the NEXT subscription price and interval from it, apply_persona.py writes it into the
-# picker and into subscription.json, which the theme build turns into the "Subscription Offer" theme settings.
-BASES = [
-    ('lm', 'Light–Medium', 'Fair to medium skin, pink or neutral undertones'),
-    ('md', 'Medium–Deep', 'Medium, olive, golden and deeper skin'),
+# The offer on the product page (owner's brief, 22 Oct 2026): one product, 1 or 2 bottles, bought once or with
+# automatic refills every 28 days. One source for every price on the site: setup_ccf_offers.py writes these to NEXT
+# (variant price, compare-at and refill price, refill interval); apply_persona.py builds the picker and terms from
+# them and writes sf-offer.json, which the theme build turns into the cart drawer's upgrade offer.
+PACKS = [
+    {'key': '1', 'name': '1 bottle', 'variant': '1 bottle', 'sku': 'SKF-APF-1',
+     'price': '47.00', 'refill': '37.00', 'compare': '59.00', 'note': 'Temporary deal', 'gifts': []},
+    {'key': '2', 'name': '2 bottles', 'variant': '2 bottles + free gifts', 'sku': 'SKF-APF-2-GIFTS',
+     'price': '57.00', 'refill': '47.00', 'compare': '118.00', 'note': 'Temporary deal', 'badge': 'Best value',
+     'gifts': [('blender', 'FREE Skinofab Blender', '9.00'), ('mystery', 'FREE Mystery Gift', '15.00'), ('shipping', 'FREE Shipping', None)]},
 ]
-SUBSCRIPTION = {'price': '33.00', 'text': '$33/mo', 'amount': '$33', 'interval': 'month', 'every': 1}
+REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills',
+          'perks': ['No Commitment', 'Cancel Anytime', 'Refills every 28 days']}
+
+# Cart drawer (Theme settings > SKINOFAB > Cart Drawer): the last step before payment is about trust and order value,
+# not plan terms. Add-ons are design handles (mapped to NEXT by the catalog); the review is one the product page shows.
+CART = {
+    'product': 'color-changing-foundation',
+    'addons': ['reverse-time-peptide-serum', 'under-eye-reset'],
+    'upgrade_title': 'Upgrade to 2 bottles + free gifts',
+    'upgrade_button': 'Upgrade',
+    'review_text': ("I'm 53 and I've never found one that works this well on mature skin—including my own. "
+                    "The way it glides over texture instead of settling into it is remarkable."),
+    'review_name': 'Deborah, 53 · Verified purchase',
+}
 
 # Product gallery order on NEXT (first 10 are uploaded): the 45+ women and the "goes on white" demo up front.
 # Entries are file-name prefixes from the product snapshot's image list.

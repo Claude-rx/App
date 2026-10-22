@@ -6,13 +6,17 @@
  * createItemsFragment, voucherHtml, footerHtml, emptyHtml), loaded by spark-cart-loader in its place
  * (SparkCartAssets.cartRenderer). It also styles the drawer through its open shadow root.
  *
- * What changes for the shopper:
+ * The drawer's job is the last step before payment: reassure, raise the order value, get to checkout.
  *   - the drawer sits above the store's sticky header (its title and close button were hidden under it);
- *   - "Your bag (n)" header, a free-shipping note when the store ships for free;
- *   - lines show the base and the plan in words ("Monthly refill", not "Every 1 month") and the price per month;
- *   - a plan card under a subscription line: refill reminder, cancel any time, money-back guarantee;
+ *   - "Your bag (n)" header and a free-shipping note when the store ships for free;
+ *   - lines show the product, its pack (variant) and the price; a refill line says how often it ships, on its own line;
+ *   - the upgrade: with the 1-bottle pack in the bag, one tap swaps it for 2 bottles + free gifts (same quantity,
+ *     same refill choice), for the price difference the card names (Theme settings > Cart Drawer > Upgrade);
+ *   - "Complete your routine": up to two add-ons (Theme settings product pickers), one tap to add, loaded from the
+ *     storefront API when the drawer first opens (no cost on page render), hidden once they are in the bag;
+ *   - a trust card: the money-back guarantee and a customer review;
  *   - the discount code folds away behind "Have a discount code?" (opens on its own when a code is applied);
- *   - the footer says what is due today and what renews, on a full-width secure checkout button;
+ *   - the footer: totals, a full-width secure checkout button, the cards the checkout accepts;
  *   - an empty bag shows the bottle and a way straight back to it.
  * Text comes from Theme settings > SKINOFAB > Cart Drawer (window.SFCart). Plain ASCII only (the platform runs
  * every theme file through its template engine).
@@ -54,33 +58,24 @@
     }
 
     var ICON = {
-        renew: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
-        bell: '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>',
-        cancel: '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/><path d="m9.5 9.5 5 5m0-5-5 5"/></svg>',
-        seal: '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z"/><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        seal: '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z"/><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
         truck: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h14v12H1z"/><path d="M15 9h4l3 3v4h-7"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="18" cy="18.5" r="1.8"/></svg>',
         lock: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+        shield: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+        star: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>',
+        gift: '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>',
         tag: '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
         close: '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
     };
 
-    /* "Every 1 month" -> "Monthly refill"; anything else keeps the plain cadence */
-    function planName(line) {
+    /* how often a refill line ships: "Refills every 28 days" (its own line, so the price row stays short on phones) */
+    function cadence(line) {
         var count = parseInt(line.intervalCount, 10) || 1;
         var unit = String(line.interval || '').toLowerCase().replace(/s$/, '');
-        var single = { day: 'Daily', week: 'Weekly', month: 'Monthly', year: 'Yearly' }[unit];
-        if (count === 1 && single) return single + ' refill';
-        return 'Refill every ' + count + ' ' + unit + (count === 1 ? '' : 's');
+        return (cfg.refillText || 'Refills every') + ' ' + (count === 1 ? unit : count + ' ' + unit + 's');
     }
 
-    function perUnit(line) {
-        var count = parseInt(line.intervalCount, 10) || 1;
-        var unit = String(line.interval || '').toLowerCase().replace(/s$/, '');
-        var abbr = { day: 'day', week: 'wk', month: 'mo', year: 'yr' }[unit] || unit;
-        return count === 1 ? '/' + abbr : ' every ' + count + ' ' + unit + 's';
-    }
-
-    /* "Adaptive Peptide Foundation - Light-Medium": product name and base on separate lines */
+    /* "Adaptive Peptide Foundation - 1 bottle": product name and pack on separate lines */
     function splitTitle(product) {
         var title = product.title || '';
         var parent = product.parent && product.parent.title;
@@ -109,7 +104,6 @@
         var compare = hasLineDiscount ? linePrice : retail * line.quantity;
         var hasCompare = hasLineDiscount || (retail > 0 && retail > unitPrice);
         var isGift = line.isUpsell;
-        var isPlan = !!line.interval;
         var maxQty = SparkCartClient.MAX_QTY_PER_LINE || 15;
         var removeLabel = fill(label(labels, 'removeItemLabel', 'Remove {title}'), { title: product.title || '' });
 
@@ -118,9 +112,9 @@
             '</a>' +
             '<div class="spark-drawer-item-details">' +
             '<a href="' + escapeHtml(product.url || '#') + '" class="spark-drawer-item-title">' + escapeHtml(names.name) + '</a>' +
-            (names.variant ? '<div class="sf-item-variant">' + escapeHtml(names.variant) + (cfg.variantSuffix ? ' ' + escapeHtml(cfg.variantSuffix) : '') + '</div>' : '') +
+            (names.variant ? '<div class="sf-item-variant">' + escapeHtml(names.variant) + '</div>' : '') +
             (props ? '<div class="sf-item-variant">' + escapeHtml(props) + '</div>' : '') +
-            (isPlan ? '<div class="sf-plan-pill">' + ICON.renew + '<span>' + escapeHtml(planName(line)) + '</span></div>' : '') +
+            (line.interval ? '<div class="sf-item-variant sf-item-every">' + escapeHtml(cadence(line)) + '</div>' : '') +
             '<div class="spark-drawer-item-bottom">';
 
         if (isGift) {
@@ -137,7 +131,7 @@
         html += '<div class="spark-drawer-item-price">' +
             (hasCompare ? '<s class="spark-drawer-item-compare">' + money(compare, currency) + '</s> ' : '') +
             (isGift ? '<span class="spark-drawer-item-free">' + escapeHtml(label(labels, 'freeText', 'Free')) + '</span>'
-                    : '<span>' + money(discounted, currency) + (isPlan ? '<small>' + escapeHtml(perUnit(line)) + '</small>' : '') + '</span>') +
+                    : '<span>' + money(discounted, currency) + '</span>') +
             '</div></div>';
         if (!isGift) {
             html += '<button type="button" class="sf-item-remove" data-action="remove" aria-label="' + escapeHtml(removeLabel) + '">' +
@@ -148,29 +142,155 @@
         return item;
     }
 
-    function planCard() {
-        var rows = [['bell', cfg.reminderTitle, cfg.reminderText], ['cancel', cfg.cancelTitle, cfg.cancelText], ['seal', cfg.guaranteeTitle, cfg.guaranteeText]];
-        var html = '';
-        rows.forEach(function(r) {
-            if (!r[1]) return;
-            html += '<li>' + ICON[r[0]] + '<span><strong>' + escapeHtml(r[1]) + '</strong>' + (r[2] ? ' ' + escapeHtml(r[2]) : '') + '</span></li>';
+    /* ---------- add-ons: storefront API, loaded once, rendered on every drawer render ---------- */
+
+    var upsellData = null, upsellPromise = null, currentLines = [];
+
+    function csrf() {
+        var m = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
+        return m ? decodeURIComponent(m[1]) : '';
+    }
+
+    function loadUpsells() {
+        if (upsellPromise) return upsellPromise;
+        var pks = (cfg.upsellPks || []).map(function(p) { return parseInt(p, 10); }).filter(function(p) { return p > 0; });
+        if (!pks.length) { upsellData = []; return (upsellPromise = Promise.resolve([])); }
+        var query = '{ products(pks: [' + pks.join(', ') + ']) { edges { node { pk title url structure ' +
+            'primaryImage { thumbnail: url(transform: { maxWidth: 160, maxHeight: 160, format: webp, crop: center }) } ' +
+            'purchaseInfo { price { value } priceRetail { value } availableForSale } ' +
+            'children { pk purchaseInfo { availableForSale } } } } } }';
+        upsellPromise = fetch((window.SFStore && window.SFStore.graphqlUrl) || '/api/graphql/', {
+            method: 'POST', credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf() },
+            body: JSON.stringify({ query: query })
+        }).then(function(r) { return r.json(); }).then(function(d) {
+            var nodes = ((((d || {}).data || {}).products || {}).edges || []).map(function(e) { return e.node; });
+            upsellData = pks.map(function(pk) { return nodes.filter(function(n) { return n.pk === pk; })[0]; })
+                .filter(function(n) { return n && n.purchaseInfo && n.purchaseInfo.availableForSale; })
+                .map(function(n) {
+                    var child = (n.children || []).filter(function(c) { return c.purchaseInfo && c.purchaseInfo.availableForSale; })[0];
+                    return {
+                        pk: n.pk, addPk: child ? child.pk : n.pk, ids: [n.pk].concat((n.children || []).map(function(c) { return c.pk; })),
+                        title: n.title, url: String(n.url || '').replace(/^https?:\/\/[^\/]+/, ''),
+                        image: n.primaryImage ? n.primaryImage.thumbnail : '',
+                        price: num(n.purchaseInfo.price && n.purchaseInfo.price.value, 0),
+                        retail: num(n.purchaseInfo.priceRetail && n.purchaseInfo.priceRetail.value, 0)
+                    };
+                });
+            return upsellData;
+        }).catch(function() { upsellData = []; return []; });
+        return upsellPromise;
+    }
+
+    function upsellHtml(currency) {
+        if (!upsellData) return '';
+        var inBag = {};
+        currentLines.forEach(function(l) {
+            var p = l.product || {};
+            inBag[p.pk] = true;
+            if (p.parent) inBag[p.parent.pk] = true;
         });
-        return html ? '<ul class="sf-plan-card">' + html + '</ul>' : '';
+        var offers = upsellData.filter(function(u) { return !u.ids.some(function(id) { return inBag[id]; }); }).slice(0, 2);
+        if (!offers.length) return '';
+        return '<section class="sf-upsell" aria-label="' + escapeHtml(cfg.upsellTitle || 'Complete your routine') + '">' +
+            '<h3 class="sf-upsell-title">' + escapeHtml(cfg.upsellTitle || 'Complete your routine') + '</h3>' +
+            offers.map(function(u) {
+                return '<div class="sf-upsell-item">' +
+                    '<a class="sf-upsell-img" href="' + escapeHtml(u.url) + '" tabindex="-1" aria-hidden="true">' +
+                    (u.image ? '<img src="' + escapeHtml(u.image) + '" alt="" width="64" height="64" loading="lazy" />' : '') + '</a>' +
+                    '<div class="sf-upsell-info"><a class="sf-upsell-name" href="' + escapeHtml(u.url) + '">' + escapeHtml(u.title) + '</a>' +
+                    '<span class="sf-upsell-price">' + (u.retail > u.price ? '<s>' + money(u.retail, currency) + '</s> ' : '') + money(u.price, currency) + '</span></div>' +
+                    '<button type="button" class="sf-upsell-add" data-sf-add="' + u.addPk + '" aria-label="' + escapeHtml((cfg.upsellButton || 'Add') + ' ' + u.title) + '">' +
+                    '+ ' + escapeHtml(cfg.upsellButton || 'Add') + '</button></div>';
+            }).join('') + '</section>';
+    }
+
+    /* ---------- the upgrade: 1 bottle -> 2 bottles + free gifts ---------- */
+
+    var up = cfg.upgrade || {};
+
+    function upgradeLine() {
+        if (!up.from || !up.to) return null;
+        var has = function(pk) { return currentLines.filter(function(l) { return String((l.product || {}).pk) === String(pk); })[0]; };
+        return has(up.to) ? null : has(up.from) || null;
+    }
+
+    function upgradeHtml() {
+        var line = upgradeLine();
+        if (!line || !up.title) return '';
+        return '<div class="sf-upgrade">' + ICON.gift +
+            '<p><strong>' + escapeHtml(up.title) + '</strong>' + (up.text ? '<span>' + escapeHtml(up.text) + '</span>' : '') + '</p>' +
+            '<button type="button" class="sf-upgrade-btn" data-sf-upgrade="' + escapeHtml(line.pk) + '">' + escapeHtml(up.button || 'Upgrade') + '</button></div>';
+    }
+
+    /* the refill choice of a cart line, in the shape addToCart takes ("Every 28 days" stays every 28 days) */
+    function planOf(line) {
+        if (!line.interval) return null;
+        return { subscriptionOption: 'subscribe', interval: String(line.interval).toLowerCase().replace(/s$/, ''),
+                 intervalCount: String(parseInt(line.intervalCount, 10) || 1) };
+    }
+
+    function upgrade(btn) {
+        var drawer = document.querySelector('spark-cart-drawer');
+        var client = drawer && drawer._client, cart = drawer && drawer._cart;
+        var line = cart && (cart.lines || []).filter(function(l) { return String(l.pk) === btn.getAttribute('data-sf-upgrade'); })[0];
+        if (!client || !line) return;
+        btn.setAttribute('aria-busy', 'true');
+        btn.textContent = cfg.upsellAdding || 'Adding...';
+        var show = function(next) {
+            if (next) document.dispatchEvent(new CustomEvent('spark:cart:updated', { detail: { cart: next, action: 'update' }, bubbles: true }));
+        };
+        /* add the 2-bottle pack first, then drop the 1-bottle line: a failure never leaves the bag empty */
+        client.addToCart(Number(up.to), parseInt(line.quantity, 10) || 1, false, planOf(line)).then(function(added) {
+            if (!added || added.success === false || !added.cart) throw new Error('add');
+            return client.removeCartLines(added.cart.id, [line.pk]).then(function(removed) {
+                show((removed && removed.cart) || added.cart);
+            }, function() { show(added.cart); });
+        }).catch(function() {
+            btn.removeAttribute('aria-busy');
+            btn.textContent = up.button || 'Upgrade';
+            var err = document.createElement('span');
+            err.className = 'sf-muted';
+            err.setAttribute('role', 'alert');
+            err.textContent = cfg.upsellError || 'Could not add it. Please try again.';
+            btn.parentNode.appendChild(err);
+        });
+    }
+
+    function trustHtml() {
+        var html = '';
+        if (cfg.guaranteeTitle) {
+            html += '<div class="sf-trust-row">' + ICON.seal + '<p><strong>' + escapeHtml(cfg.guaranteeTitle) + '</strong>' +
+                (cfg.guaranteeText ? '<span>' + escapeHtml(cfg.guaranteeText) + '</span>' : '') + '</p></div>';
+        }
+        if (cfg.reviewText) {
+            html += '<figure class="sf-review"><div class="sf-stars" aria-label="5 out of 5 stars">' + ICON.star + ICON.star + ICON.star + ICON.star + ICON.star + '</div>' +
+                '<blockquote>&ldquo;' + escapeHtml(cfg.reviewText) + '&rdquo;</blockquote>' +
+                (cfg.reviewName ? '<figcaption>' + escapeHtml(cfg.reviewName) + '</figcaption>' : '') + '</figure>';
+        }
+        return html ? '<div class="sf-trust">' + html + '</div>' : '';
     }
 
     function createItemsFragment(lines, currency, doc, labels) {
+        currentLines = lines || [];
         var frag = doc.createDocumentFragment();
-        var hasPlan = false;
-        for (var i = 0; i < lines.length; i++) {
-            frag.appendChild(createCartItemEl(lines[i], currency, doc, labels));
-            if (lines[i].interval) hasPlan = true;
-        }
-        if (hasPlan) {
-            var wrap = doc.createElement('div');
-            wrap.innerHTML = planCard();
-            if (wrap.firstChild) frag.appendChild(wrap.firstChild);
-        }
+        for (var i = 0; i < currentLines.length; i++) frag.appendChild(createCartItemEl(currentLines[i], currency, doc, labels));
+        var wrap = doc.createElement('div');
+        wrap.className = 'sf-extras';
+        wrap.setAttribute('data-currency', currency || '');
+        wrap.innerHTML = upgradeHtml() + '<div data-sf-upsell>' + upsellHtml(currency) + '</div>' + trustHtml();
+        frag.appendChild(wrap);
+        if (!upsellData) loadUpsells().then(paintUpsells);
         return frag;
+    }
+
+    /* fill the add-on slot of the rendered drawer once the data has arrived */
+    function paintUpsells() {
+        var drawer = document.querySelector('spark-cart-drawer');
+        var slot = drawer && drawer.shadowRoot && drawer.shadowRoot.querySelector('[data-sf-upsell]');
+        if (!slot) return;
+        var wrap = slot.closest('.sf-extras');
+        slot.innerHTML = upsellHtml(wrap ? wrap.getAttribute('data-currency') : '');
     }
 
     function voucherHtml(cart, currency, labels) {
@@ -202,8 +322,6 @@
         var discount = num(cart.totalDiscount, 0);
         var subtotal = num(cart.totalExclTaxExclDiscounts, num(cart.totalExclTax, 0));
         var total = num(cart.totalExclTax, 0);
-        var plans = (cart.lines || []).filter(function(l) { return l.interval; });
-        var renew = plans.reduce(function(sum, l) { return sum + num(l.linePriceExclTaxInclDiscounts, num(l.linePriceExclTax, 0)); }, 0);
 
         var html = '<div class="spark-drawer-totals">' +
             '<div class="spark-drawer-total-row"><span>' + escapeHtml(labels.subtotalText) + '</span><span>' + money(subtotal, currency) + '</span></div>';
@@ -213,20 +331,21 @@
         html += '<div class="spark-drawer-total-row"><span>' + escapeHtml(label(labels, 'shippingLabel', 'Shipping')) + '</span>' +
             (cfg.shippingFree ? '<span class="sf-free">' + escapeHtml(label(labels, 'freeText', 'Free')) + '</span>'
                               : '<span class="sf-muted">' + escapeHtml(labels.shippingText) + '</span>') + '</div>' +
-            '<div class="spark-drawer-total-row grand"><span>' + escapeHtml(plans.length ? (cfg.dueTodayText || 'Due today') : label(labels, 'totalLabel', 'Total')) +
-            '</span><span>' + money(total, currency) + '</span></div>';
-        if (plans.length && cfg.renewText) {
-            html += '<p class="sf-renews">' + escapeHtml(fill(cfg.renewText, { amount: money(renew, currency) + perUnit(plans[0]) })) + '</p>';
+            '<div class="spark-drawer-total-row grand"><span>' + escapeHtml(label(labels, 'totalLabel', 'Total')) + '</span><span>' + money(total, currency) + '</span></div>' +
+            '</div>' +
+            '<a href="' + escapeHtml(labels.checkoutUrl) + '" class="spark-drawer-checkout">' + ICON.lock + '<span>' + escapeHtml(cfg.checkoutText || labels.checkoutText) + '</span></a>';
+        if ((cfg.payIcons || []).length) {
+            html += '<ul class="sf-pay" aria-label="' + escapeHtml(cfg.payLabel || 'Accepted payment methods') + '">' +
+                cfg.payIcons.map(function(p) { return '<li><img src="' + escapeHtml(p.src) + '" alt="' + escapeHtml(p.alt) + '" width="38" height="24" /></li>'; }).join('') + '</ul>';
         }
-        html += '</div>' +
-            '<a href="' + escapeHtml(labels.checkoutUrl) + '" class="spark-drawer-checkout">' + ICON.lock + '<span>' + escapeHtml(cfg.checkoutText || labels.checkoutText) + '</span></a>' +
-            (cfg.secureText ? '<p class="sf-secure">' + escapeHtml(cfg.secureText) + '</p>' : '') +
-            '<button type="button" class="spark-drawer-continue" data-action="close">' + escapeHtml(labels.continueCta) + '</button>';
+        if (cfg.secureText) html += '<p class="sf-secure">' + ICON.shield + '<span>' + escapeHtml(cfg.secureText) + '</span></p>';
+        html += '<button type="button" class="spark-drawer-continue" data-action="close">' + escapeHtml(labels.continueCta) + '</button>';
         return html;
     }
 
     function emptyHtml(labels) {
         labels = labels || {};
+        currentLines = [];
         return '<div class="spark-drawer-empty">' +
             (cfg.emptyImage ? '<img class="sf-empty-img" src="' + escapeHtml(cfg.emptyImage) + '" alt="" width="114" height="320" />' : '') +
             '<div class="spark-drawer-empty-title">' + escapeHtml(cfg.emptyTitle || labels.emptyTitle) + '</div>' +
@@ -244,7 +363,7 @@
         emptyHtml: emptyHtml
     };
 
-    /* ---------- drawer chrome: styles in the shadow root, header count, shipping note ---------- */
+    /* ---------- drawer chrome: styles in the shadow root, header count, shipping note, add-on buttons ---------- */
 
     var STYLES = [
         /* above the store's sticky header and announcement bar */
@@ -263,21 +382,51 @@
         '.spark-drawer-item-details { padding-right: 0; gap: 3px; }',
         '.spark-drawer-item-title { font-size: 15px; font-weight: 600; color: #151515; line-height: 1.3; }',
         '.sf-item-variant { font-size: 13px; color: #6a6a6a; }',
-        '.sf-plan-pill { display: inline-flex; align-self: flex-start; align-items: center; gap: 6px; margin-top: 4px; padding: 4px 10px; border-radius: 999px; background: #151515; color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .02em; }',
         '.spark-drawer-item-bottom { margin-top: 10px; }',
         '.spark-drawer-qty-btn { width: 34px; height: 34px; border-color: #d9d9d9; color: #151515; font-size: 16px; }',
         '.spark-drawer-qty-btn:first-child { border-radius: 8px 0 0 8px; }',
         '.spark-drawer-qty-btn:last-child { border-radius: 0 8px 8px 0; }',
         '.spark-drawer-qty-val { width: 38px; height: 34px; border-color: #d9d9d9; font-size: 14px; }',
         '.spark-drawer-item-price { font-size: 15px; font-weight: 600; }',
-        '.spark-drawer-item-price small { font-size: 12px; font-weight: 400; color: #6a6a6a; margin-left: 1px; }',
+        '.spark-drawer-item-price { white-space: nowrap; }',
+        '.sf-item-every { display: flex; align-items: center; gap: 5px; }',
+        '.sf-item-every:before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #1f7a3f; }',
         '.sf-item-remove { align-self: flex-start; margin-top: 8px; padding: 2px 0; background: none; border: 0; font: inherit; font-size: 12px; color: #6a6a6a; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }',
         '.sf-item-remove:hover { color: #151515; }',
-        '.sf-item-remove:focus-visible { outline: 2px solid #151515; outline-offset: 2px; }',
-        '.sf-plan-card { list-style: none; margin: 16px 0 4px; padding: 14px 16px; display: grid; gap: 10px; border-radius: 12px; background: #f4f2ee; }',
-        '.sf-plan-card li { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.4; color: #3b3b3b; }',
-        '.sf-plan-card svg { flex: none; color: #151515; margin-top: 1px; }',
-        '.sf-plan-card strong { color: #151515; font-weight: 600; }',
+        '.sf-item-remove:focus-visible, .sf-upsell-add:focus-visible, .sf-upgrade-btn:focus-visible { outline: 2px solid #151515; outline-offset: 2px; }',
+        /* upgrade */
+        '.sf-upgrade { margin: 18px 0 0; display: flex; align-items: center; gap: 12px; padding: 14px; border: 2px dashed #151515; border-radius: 12px; background: #fff; }',
+        '.sf-upgrade svg { flex: none; color: #151515; }',
+        '.sf-upgrade p { flex: 1; min-width: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13px; line-height: 1.4; color: #3b3b3b; }',
+        '.sf-upgrade strong { font-size: 14px; font-weight: 600; color: #151515; }',
+        '.sf-upgrade-btn { flex: none; padding: 10px 14px; border: 0; border-radius: 8px; background: #151515; color: #fff; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }',
+        '.sf-upgrade-btn:hover { background: #000; }',
+        '.sf-upgrade-btn[aria-busy="true"] { opacity: .6; pointer-events: none; }',
+        /* add-ons */
+        '.sf-upsell { margin: 18px 0 0; }',
+        '.sf-upsell-title { margin: 0 0 10px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #151515; }',
+        '.sf-upsell-item { display: flex; align-items: center; gap: 12px; padding: 10px; border: 1px solid #ececec; border-radius: 12px; }',
+        '.sf-upsell-item + .sf-upsell-item { margin-top: 8px; }',
+        '.sf-upsell-img { flex: none; width: 56px; height: 56px; border-radius: 8px; overflow: hidden; background: #f4f2ee; display: block; }',
+        '.sf-upsell-img img { width: 56px; height: 56px; object-fit: cover; display: block; }',
+        '.sf-upsell-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }',
+        '.sf-upsell-name { font-size: 14px; font-weight: 600; color: #151515; text-decoration: none; line-height: 1.3; }',
+        '.sf-upsell-price { font-size: 13px; color: #3b3b3b; }',
+        '.sf-upsell-price s { color: #8a8a8a; margin-right: 2px; }',
+        '.sf-upsell-add { flex: none; padding: 9px 14px; border: 1px solid #151515; border-radius: 8px; background: #fff; color: #151515; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: background-color 150ms, color 150ms; }',
+        '.sf-upsell-add:hover { background: #151515; color: #fff; }',
+        '.sf-upsell-add[aria-busy="true"] { opacity: .6; pointer-events: none; }',
+        /* trust */
+        '.sf-trust { margin: 18px 0 4px; padding: 14px 16px; border-radius: 12px; background: #f4f2ee; display: grid; gap: 12px; }',
+        '.sf-trust-row { display: flex; gap: 10px; align-items: flex-start; }',
+        '.sf-trust-row svg { flex: none; color: #151515; }',
+        '.sf-trust-row p { margin: 0; font-size: 13px; line-height: 1.4; color: #3b3b3b; display: flex; flex-direction: column; gap: 2px; }',
+        '.sf-trust-row strong { color: #151515; font-size: 14px; font-weight: 600; }',
+        '.sf-review { margin: 0; padding-top: 12px; border-top: 1px solid #e3dfd8; }',
+        '.sf-stars { display: flex; gap: 2px; color: #151515; margin-bottom: 6px; }',
+        '.sf-review blockquote { margin: 0; font-size: 13px; line-height: 1.45; color: #2b2b2b; font-style: italic; }',
+        '.sf-review figcaption { margin-top: 6px; font-size: 12px; color: #6a6a6a; }',
+        /* discount code */
         '.spark-drawer-voucher { border-top: 0; padding: 10px 0 0; }',
         '.sf-voucher summary { cursor: pointer; font-size: 13px; color: #151515; text-decoration: underline; text-underline-offset: 2px; list-style: none; padding: 6px 0; }',
         '.sf-voucher summary::-webkit-details-marker { display: none; }',
@@ -285,23 +434,46 @@
         '.spark-drawer-voucher-input { border-radius: 8px; border-color: #d9d9d9; padding: 10px 12px; font-size: 14px; }',
         '.spark-drawer-voucher-btn { border-radius: 8px; border-color: #151515; color: #151515; }',
         '.spark-drawer-voucher-tag { color: #1f7a3f; }',
-        '.spark-drawer-footer { padding: 16px 22px 18px; border-top: 1px solid #ececec; box-shadow: 0 -8px 24px rgba(0,0,0,.04); }',
+        /* footer */
+        '.spark-drawer-footer { padding: 16px 22px 14px; border-top: 1px solid #ececec; box-shadow: 0 -8px 24px rgba(0,0,0,.04); }',
         '.spark-drawer-totals { gap: 7px; margin-bottom: 14px; }',
         '.spark-drawer-total-row { font-size: 14px; color: #3b3b3b; }',
         '.spark-drawer-total-row.grand { font-size: 17px; color: #151515; padding-top: 7px; border-top: 1px solid #ececec; }',
         '.sf-free { color: #1f7a3f; font-weight: 600; }',
         '.sf-muted { color: #8a8a8a; font-size: 12px; }',
-        '.sf-renews { margin: 0; font-size: 12px; color: #6a6a6a; text-align: right; }',
         '.spark-drawer-checkout { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; border-radius: 10px; background: #151515; font-size: 16px; font-weight: 600; letter-spacing: .02em; }',
         '.spark-drawer-checkout:hover { opacity: 1; background: #000; }',
-        '.sf-secure { margin: 10px 0 0; font-size: 12px; color: #6a6a6a; text-align: center; }',
-        '.spark-drawer-continue { color: #151515; text-decoration: underline; text-underline-offset: 2px; }',
+        '.sf-pay { list-style: none; margin: 12px 0 0; padding: 0; display: flex; justify-content: center; gap: 6px; }',
+        '.sf-pay img { display: block; width: 38px; height: 24px; }',
+        '.sf-secure { margin: 8px 0 0; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; color: #6a6a6a; }',
+        '.spark-drawer-continue { margin-top: 6px; color: #151515; text-decoration: underline; text-underline-offset: 2px; }',
+        /* empty bag */
         '.spark-drawer-empty { padding: 36px 20px; gap: 6px; }',
         '.sf-empty-img { width: 76px; height: auto; margin-bottom: 14px; filter: drop-shadow(0 10px 14px rgba(0,0,0,.18)); }',
         '.spark-drawer-empty-title { font-size: 20px; font-weight: 600; color: #151515; }',
         '.spark-drawer-empty-sub { font-size: 14px; color: #6a6a6a; max-width: 280px; }',
         '.spark-drawer-empty-cta { margin-top: 18px; padding: 14px 26px; border-radius: 10px; background: #151515; font-size: 15px; font-weight: 600; }'
     ].join('\n');
+
+    function addUpsell(btn) {
+        var pk = btn.getAttribute('data-sf-add');
+        btn.setAttribute('aria-busy', 'true');
+        btn.textContent = cfg.upsellAdding || 'Adding...';
+        var done = function() { btn.removeAttribute('aria-busy'); };
+        /* through the commerce adapter: same add path as the buy box, so the drawer re-renders with the new cart */
+        var add = window.SFCommerce && window.SFCommerce.addItems
+            ? window.SFCommerce.addItems([{ id: pk, quantity: 1 }])
+            : Promise.reject(new Error('cart unavailable'));
+        add.then(done, function() {
+            done();
+            btn.textContent = '+ ' + (cfg.upsellButton || 'Add');
+            var err = document.createElement('span');
+            err.className = 'sf-muted';
+            err.setAttribute('role', 'alert');
+            err.textContent = cfg.upsellError || 'Could not add it. Please try again.';
+            btn.parentNode.appendChild(err);
+        });
+    }
 
     function decorate(drawer) {
         var root = drawer && drawer.shadowRoot;
@@ -317,6 +489,12 @@
             note.innerHTML = ICON.truck + '<span>' + escapeHtml(cfg.shippingNote) + '</span>';
             header.parentNode.insertBefore(note, header.nextSibling);
         }
+        root.addEventListener('click', function(e) {
+            var btn = e.target.closest && e.target.closest('[data-sf-add]');
+            if (btn) { e.preventDefault(); addUpsell(btn); return; }
+            var swap = e.target.closest && e.target.closest('[data-sf-upgrade]');
+            if (swap && swap.getAttribute('aria-busy') !== 'true') { e.preventDefault(); upgrade(swap); }
+        });
         var title = root.querySelector('.spark-drawer-header-title');
         var base = title ? title.textContent : '';
         function count() {
@@ -331,6 +509,7 @@
         var body = root.querySelector('.spark-drawer-body');
         if (body && window.MutationObserver) new MutationObserver(count).observe(body, { childList: true });
         count();
+        loadUpsells().then(paintUpsells);
     }
 
     if (window.customElements && customElements.whenDefined) {

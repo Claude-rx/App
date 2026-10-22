@@ -5,9 +5,13 @@ Sources
   sun spots, redness, a tone that shifted; tried 5-10 foundations; fears the wrong shade, looking cakey or
   "done", wasted money and hidden subscriptions; values honesty, women her age, easy returns), the review
   complaints (shade match 52-58% negative, coverage 40-51%, "dries mature skin" 62%, value 47-74%, trust), the
-  product answer (2 adaptive bases, serum base, PDRN + peptides + Pro-Xylane, fragrance-free, shade-match
-  guarantee, transparent subscription) and the compliance rules (no SPF claim, never "matches every skin tone",
+  product answer (one adaptive shade, serum base, PDRN + peptides + Pro-Xylane, fragrance-free, 30-day money-back
+  guarantee, optional Automatic Refills) and the compliance rules (no SPF claim, never "matches every skin tone",
   cosmetic claims only).
+- The offer: ccf_copy.PACKS / REFILL (1 bottle or 2 bottles + free gifts, one-time or with Automatic Refills).
+
+The live store builds with apf_pages.py --classic, which uses only the trust row (trust_html, TRUST_CSS) from here;
+home_sections() and pdp_sections() are the long-form layout.
 - SKINOFAB product sheet: Adaptive Peptide Foundation, PDRN, 30 mL / 1.01 fl oz, matte black airless bottle
   103 mm x 32.5 mm.
 - The 20-part long sales page structure (above the fold 1-5, then 6-20); PDP_SECTIONS follows it in order.
@@ -19,7 +23,15 @@ sheet, persona photos without any product in them) and fills them in.
 import ccf_copy
 
 PRODUCT = 'Adaptive Peptide Foundation'
-SUB = ccf_copy.SUBSCRIPTION
+PACKS, REFILL = ccf_copy.PACKS, ccf_copy.REFILL
+PACK1 = PACKS[0]
+
+def usd(v):
+    f = float(v)
+    return '$%d' % f if f == int(f) else '$%.2f' % f
+
+# prices the long-form sections quote: one bottle bought once, and with Automatic Refills
+ONCE, REFILLED = usd(PACK1['price']), usd(PACK1['refill'])
 
 # line icons (24px grid, drawn as strokes in the text colour); the seal is the brand's filled black badge
 _SVG = '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'
@@ -29,9 +41,13 @@ ICONS = {
     'bell': _SVG + '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>',
     'cancel': _SVG + '<path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/><path d="m9.5 9.5 5 5m0-5-5 5"/></svg>',
     'renew': _SVG + '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
+    'truck': _SVG + '<path d="M1 4h14v12H1z"/><path d="M15 9h4l3 3v4h-7"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="18" cy="18.5" r="1.8"/></svg>',
+    'shield': _SVG + '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+    'lock': _SVG + '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
 }
-TERMS = (f"You pay {SUB['amount']} today, then {SUB['amount']} every month until you cancel. We email you before every refill. "
-         "To switch base, skip a month or cancel, just email hey@skinofab.com. No minimum, no fees.")
+# Refill terms, shown next to the button whenever refills are ticked ({amount} = the chosen pack's refill price)
+TERMS = ("You pay {amount} today, then {amount} every %d days until you cancel. We email you before every refill. "
+         "To skip or cancel, just email hey@skinofab.com. No minimum, no fees." % REFILL['every'])
 TRUST_CSS = r"""
 .apf-trust{text-align:center;margin:16px 0 0;color:#151515}
 .apf-trust__head{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 14px !important;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#151515 !important}
@@ -44,11 +60,16 @@ TRUST_CSS = r"""
 """
 
 def trust_html(terms=True):
-    """'Love it or your money back' + refill reminder / cancel any time / renews at, and the renewal terms."""
+    """'Love it or your money back', then free shipping / 30-day guarantee / secure checkout, and the refill terms
+    (hidden until refills are ticked; the offer picker fills in the amount and shows them)."""
     row = ''.join(f'<li>{ICONS[k]}<span>{label}</span></li>' for k, label in
-                  (('bell', 'Refill reminder'), ('cancel', 'Cancel any time'), ('renew', f"Renews at {SUB['text']}")))
+                  (('truck', 'Free shipping'), ('shield', '30-day guarantee'), ('lock', 'Secure checkout')))
     return (f'<div class="apf-trust"><p class="apf-trust__head">{ICONS["seal"]}<span>Love it or your money back</span></p>'
-            f'<ul class="apf-trust__row">{row}</ul>' + (f'<p class="apf-trust__terms">{TERMS}</p>' if terms else '') + '</div>')
+            f'<ul class="apf-trust__row">{row}</ul>' +
+            (f'<p class="apf-trust__terms" data-sf-refill-terms="{html_attr(TERMS)}" hidden></p>' if terms else '') + '</div>')
+
+def html_attr(text):
+    return text.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;')
 
 CSS = r"""
 .apf{font-family:futura-pt,'Futura Book',Jost,'Helvetica Neue',Arial,sans-serif;color:#151515;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -139,9 +160,6 @@ CSS = r"""
 @keyframes apfBlendDeep{0%,18%{background:#f7f5f1;transform:scale(1)}55%,85%{background:#a57153;box-shadow:none;transform:scale(1.18);opacity:.55}100%{background:#f7f5f1;transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.apf-demo:before{animation:none}}
 .apf-split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-/* bases */
-.apf-base{display:flex;gap:16px;align-items:flex-start}
-.apf-swatch{flex:none;width:46px;height:46px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px #ddd}
 /* compare */
 .apf-table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e6e6e6;font-size:15px}
 .apf-table th,.apf-table td{padding:16px 18px;text-align:left;border-bottom:1px solid #eee;vertical-align:top}
@@ -167,6 +185,7 @@ CSS = r"""
 .apf-review h4{font-size:16px}
 /* offer */
 .apf-offers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.apf-offers--2{grid-template-columns:repeat(2,1fr);max-width:860px;margin:0 auto}
 .apf-offer{position:relative;background:#fff;color:#151515;border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;gap:10px;border:1px solid #e6e6e6}
 .apf-offer--pick{border:2px solid #151515;box-shadow:0 18px 40px rgba(0,0,0,.10)}
 .apf-sec--black .apf-offer p{color:#4a4a4a}
@@ -236,10 +255,10 @@ REVIEWS = [
 ]
 
 FAQ = [
-    ('Which base should I choose?',
-     'Light–Medium suits fair to medium skin with pink or neutral undertones. Medium–Deep suits medium, olive, golden and deeper skin. Between the two, or not sure? Take the 30-second base quiz. And if the base you pick isn\'t right, we\'ll swap it for the other one within 30 days.'),
-    ('How does the monthly refill work?',
-     f"You get one 30 mL bottle in your base every month for {SUB['text'].replace('/mo', '')}, shipped automatically. We email you before every refill. Want to switch base, skip a month or cancel? Email hey@skinofab.com: no minimum, no fees, no questions."),
+    ('Which shade do I choose?',
+     'There\'s no shade to choose. It goes on white and adapts to your skin tone as you blend. If you don\'t love how it looks on you, we\'ll refund you within 30 days.'),
+    ('How do Automatic Refills work?',
+     f"Tick Automatic Refills on the product page and your pack costs less: {REFILLED} instead of {ONCE} for one bottle. It ships again every {REFILL['every']} days, and we email you before every refill. To skip or cancel, email hey@skinofab.com: no minimum, no fees. Prefer to buy once? Leave the box unticked."),
     ('Will it settle into my fine lines?',
      'It\'s designed not to. The base is a satin serum, not a matte formula, and soft-focus powders blur the look of lines instead of filling them with pigment. For the smoothest finish, use one thin layer and skip powder on dry areas.'),
     ('My skin is very dry. Will it look patchy?',
@@ -253,9 +272,9 @@ FAQ = [
     ('How long does it last?',
      'It\'s made to stay even and comfortable through a full day, without turning orange or drying into your lines. If you\'re out from morning to dinner, a light touch-up on the nose and chin is usually all it needs.'),
     ('Can I buy just one bottle?',
-     'We sell it as a month-to-month refill, so a fresh bottle arrives before you run out. If it isn\'t for you, cancel after your first bottle and you\'re never charged again, and that first bottle is covered by our love it or your money back guarantee.'),
+     f"Yes. One bottle is {ONCE}, or {REFILLED} with Automatic Refills. Two bottles come with a free Skinofab Blender, a free Mystery Gift and free shipping."),
     ('How does the guarantee work?',
-     'Wear it in your own daylight for 30 days. If your base isn\'t right, email us and we\'ll send the other base. If you don\'t love it, we\'ll refund your first bottle.'),
+     'Wear it in your own daylight for 30 days. If you don\'t love it, email us and we\'ll refund you.'),
     ('When will my order arrive?',
      'Orders ship within 24–48 hours with tracking. Delivery usually takes 5–7 business days depending on where you live.'),
 ]
@@ -277,29 +296,30 @@ def faq_html(items=FAQ, title='Questions women ask us before they order'):
   <div class="apf-head apf-center"><span class="apf-eyebrow">FAQ</span><h2>{title}</h2></div>
   <div class="apf-faq">{qa}</div></div></section>'''
 
-def offers_html(href, black=True, title='Your monthly refill', sub=None, scarcity=True):
-    sub = sub or 'One plan, month to month. Love it or your money back.'
-    checks = _checks(['One 30 mL bottle in your base, Light–Medium or Medium–Deep',
-                      'A reminder email before every refill',
-                      'Switch base, skip a month or cancel with one email'])
-    card = f'''<div class="apf-offer apf-offer--pick apf-plan"><span class="apf-badge">Month to month</span><h3>Monthly refill</h3>
-  <div class="apf-price">{SUB['amount']}<small>/month</small></div><p>The {PRODUCT}, delivered every month.</p>{checks}
-  <a class="apf-btn" href="{href}#apf-buy">Start my monthly refill</a>{trust_html()}</div>'''
+def offers_html(href, black=True, title='Choose your pack', sub=None, scarcity=True):
+    sub = sub or 'Buy once, or save more with Automatic Refills. Love it or your money back.'
+    def card(p):
+        n = 'One 30 mL bottle' if p['key'] == '1' else 'Two 30 mL bottles'
+        gifts = [label.replace('FREE ', 'Free ') for k, label, v in p['gifts']] or ['Free shipping']
+        badge = f'<span class="apf-badge">{p["badge"]}</span>' if p.get('badge') else ''
+        return (f'<div class="apf-offer apf-offer--pick apf-plan">{badge}<h3>{p["name"].capitalize()}</h3>'
+                f'<div class="apf-price">{usd(p["price"])} <s>{usd(p["compare"])}</s></div>'
+                f'<p>or {usd(p["refill"])} with Automatic Refills, every {REFILL["every"]} days</p>{_checks([n] + gifts)}'
+                f'<a class="apf-btn" href="{href}#apf-buy">Choose {p["name"]}</a></div>')
     note = ('<div class="apf-note"><strong>Launch batch.</strong> We make the foundation in small production runs so every bottle '
             'is fresh. When this first run sells out, new orders wait for the next batch.</div>') if scarcity else ''
     return f'''<section class="apf-sec{' apf-sec--black' if black else ' apf-sec--grey'}" id="apf-offer"><div class="apf-wrap">
   <div class="apf-head apf-center"><span class="apf-eyebrow">Launch offer</span><h2>{title}</h2><p>{sub}</p></div>
-  <div class="apf-plan-wrap">{card}</div>{note}</div></section>'''
+  <div class="apf-offers apf-offers--2">{''.join(card(p) for p in PACKS)}</div>{trust_html(terms=False)}{note}</div></section>'''
 
 def guarantee_html(href, black=False):
     return f'''<section class="apf-sec{' apf-sec--black' if black else ''}" id="apf-guarantee"><div class="apf-wrap apf-narrow apf-center">
   <div class="apf-seal"><b>30</b>day love it<br>guarantee</div>
   <h2>Love it, or your money back.</h2>
-  <p style="margin-top:16px;font-size:18px">Wear it for 30 days in your own bathroom light, in daylight, on a video call. If the base you chose isn't right
-  for your skin, email us and we'll send you the other base. If you don't love it, we'll refund your first bottle. No forms to argue with,
-  and your monthly refill cancels with one email.</p>
+  <p style="margin-top:16px;font-size:18px">Wear it for 30 days in your own bathroom light, in daylight, on a video call. If you don't love it,
+  email us and we'll refund you. No forms to argue with.</p>
   <div style="margin-top:28px"><a class="apf-btn{' apf-btn--white' if black else ''}" href="{href}">Try it risk-free</a></div>
-  {_micro(['30-day shade swap or refund', 'Cancel any time', 'Real people at hey@skinofab.com'])}</div></section>'''
+  {_micro(['30-day money-back guarantee', 'Free shipping', 'Real people at hey@skinofab.com'])}</div></section>'''
 
 
 # ------------------------------------------------------------------------------------------------ homepage
@@ -313,9 +333,9 @@ def home_sections(pdp):
     <h1>Stop guessing your shade after 45.</h1>
     <p class="apf-lede">The {PRODUCT} goes on white and turns into your skin as you blend. A hydrating serum foundation with
     PDRN and peptides that evens out sun spots and redness, without settling into your lines.</p>
-    {_checks(['Two adaptive bases do the shade matching for you', 'Satin serum finish that won\'t crease or cake', 'Fragrance-free, made for thinner, drier skin'])}
-    <a class="apf-btn" href="{pdp}">Start my monthly refill &middot; {SUB['text']}</a>
-    {_micro(['Love it or your money back', 'Cancel any time', 'Fingertips, one minute'])}
+    {_checks(['One adaptive shade: it does the matching for you', 'Satin serum finish that won\'t crease or cake', 'Fragrance-free, made for thinner, drier skin'])}
+    <a class="apf-btn" href="{pdp}">Get yours &middot; {ONCE}</a>
+    {_micro(['Love it or your money back', 'Free shipping', 'Fingertips, one minute'])}
   </div>
   <div class="apf-hero-visual">
     <div class="apf-photo"><img src="{{img:hero}}" alt="SKINOFAB {PRODUCT}, 30 mL" width="1254" height="1254"></div>
@@ -323,7 +343,7 @@ def home_sections(pdp):
   </div>
 </div></div></section>
 
-<div class="apf-strip"><div class="apf-wrap"><ul><li>Made for skin after 45</li><li>2 adaptive bases</li><li>PDRN + peptides</li><li>Fragrance-free</li><li>Love it or your money back</li></ul></div></div>
+<div class="apf-strip"><div class="apf-wrap"><ul><li>Made for skin after 45</li><li>One adaptive shade</li><li>PDRN + peptides</li><li>Fragrance-free</li><li>Love it or your money back</li></ul></div></div>
 
 <section class="apf-sec"><div class="apf-wrap"><div class="apf-grid2">
   <div class="apf-photo apf-photo--tall"><img src="{{img:problem}}" alt="A woman in her late 50s looking at her skin" loading="lazy" width="1080" height="1350"></div>
@@ -345,24 +365,20 @@ def home_sections(pdp):
     <div class="apf-card"><span class="apf-num">1</span><div class="apf-photo apf-photo--wide" style="margin-bottom:18px"><img src="{{img:pump}}" alt="Airless pump of the {PRODUCT}" loading="lazy" width="1254" height="940"></div>
       <h3>One pump, five dots</h3><p>Over your moisturizer and sunscreen, dot one pump on your forehead, cheeks, nose and chin. It looks white. That's the point.</p></div>
     <div class="apf-card"><span class="apf-num">2</span><div class="apf-demo" style="margin-bottom:18px"><span>Goes on white &rarr; turns into your tone</span></div>
-      <h3>Blend and watch it change</h3><p>As you blend, color-adapting pigments shift to your skin tone inside the base you chose, so there's no white cast and no orange edge.</p></div>
+      <h3>Blend and watch it change</h3><p>As you blend, color-adapting pigments shift to your skin tone, so there's no white cast and no orange edge.</p></div>
     <div class="apf-card"><span class="apf-num">3</span><div class="apf-photo apf-photo--wide" style="margin-bottom:18px"><img src="{{img:done}}" alt="A woman in her 50s with even, fresh skin" loading="lazy" width="1080" height="810"></div>
       <h3>Even, fresh, nothing in your lines</h3><p>A satin, skin-like finish that softens sun spots and redness and blurs the look of fine lines. Tap a second layer only where you want it.</p></div>
   </div>
 </div></section>
 
 <section class="apf-sec" id="apf-bases"><div class="apf-wrap"><div class="apf-grid2">
-  <div class="apf-photo apf-photo--sq"><img src="{{img:bases}}" alt="Two bottles of the {PRODUCT}" loading="lazy" width="1254" height="1254"></div>
+  <div class="apf-photo apf-photo--sq"><img src="{{img:bases}}" alt="The {PRODUCT}" loading="lazy" width="1254" height="1254"></div>
   <div>
-    <span class="apf-eyebrow">Two adaptive bases</span>
-    <h2>Two bases. No more guessing.</h2>
-    <p style="margin-top:16px;font-size:18px">"One shade for everyone" is why other color-changing foundations turn ashy on olive, golden and deeper skin.
-    You choose your base once; the formula adapts to your tone within it.</p>
-    <div style="display:grid;gap:18px;margin-top:26px">
-      <div class="apf-base"><span class="apf-swatch" style="background:#e4bea2"></span><div><h4>Light–Medium</h4><p>Fair to medium skin with pink or neutral undertones.</p></div></div>
-      <div class="apf-base"><span class="apf-swatch" style="background:#a9765a"></span><div><h4>Medium–Deep</h4><p>Medium, olive, golden and deeper skin.</p></div></div>
-    </div>
-    <p style="margin-top:22px">Not sure? <a href="pages/ccf-quiz.html"><strong>Take the 30-second base quiz</strong></a>. Picked the wrong one? We'll swap it.</p>
+    <span class="apf-eyebrow">One adaptive shade</span>
+    <h2>One shade. No more guessing.</h2>
+    <p style="margin-top:16px;font-size:18px">Dozens of shades to guess online is why buying foundation goes wrong after 45.
+    This one goes on white and adapts to your skin tone as you blend, so there's nothing to choose.</p>
+    <p style="margin-top:22px">Not happy with how it looks on you? <strong>We'll refund you within 30 days.</strong></p>
   </div>
 </div></div></section>
 
@@ -385,12 +401,12 @@ def home_sections(pdp):
 <section class="apf-sec"><div class="apf-wrap apf-narrow">
   <div class="apf-head apf-center"><span class="apf-eyebrow">Built from your complaints</span><h2>We read what women 45+ said about the foundations they tried. Then we fixed it.</h2></div>
   <div>
-    <div class="apf-fix"><q>&ldquo;Doesn't match my skin tone.&rdquo;</q><b>&rarr;</b><div>Two adaptive bases plus a shade-match guarantee, not one shade for everyone.</div></div>
+    <div class="apf-fix"><q>&ldquo;Doesn't match my skin tone.&rdquo;</q><b>&rarr;</b><div>One adaptive shade that turns into your tone as you blend, and a 30-day money-back guarantee.</div></div>
     <div class="apf-fix"><q>&ldquo;It dried out my skin.&rdquo;</q><b>&rarr;</b><div>A serum base with hyaluronic acid, ceramide NP and squalane.</div></div>
     <div class="apf-fix"><q>&ldquo;Settles into my wrinkles.&rdquo;</q><b>&rarr;</b><div>Satin, never matte, with soft-focus powders that blur instead of fill.</div></div>
     <div class="apf-fix"><q>&ldquo;No coverage for my spots.&rdquo;</q><b>&rarr;</b><div>Buildable medium coverage: a second thin layer only where you want it.</div></div>
-    <div class="apf-fix"><q>&ldquo;Not worth the price.&rdquo;</q><b>&rarr;</b><div>PDRN, peptides and Pro-Xylane for {SUB['amount']} a month, delivered.</div></div>
-    <div class="apf-fix"><q>&ldquo;I couldn't cancel my subscription.&rdquo;</q><b>&rarr;</b><div>Month to month. A reminder before every refill, and one email cancels it.</div></div>
+    <div class="apf-fix"><q>&ldquo;Not worth the price.&rdquo;</q><b>&rarr;</b><div>PDRN, peptides and Pro-Xylane from {REFILLED} a bottle, shipped free.</div></div>
+    <div class="apf-fix"><q>&ldquo;I couldn't cancel my subscription.&rdquo;</q><b>&rarr;</b><div>Buy once, no strings. Refills are optional: a reminder before each one, and one email cancels them.</div></div>
   </div>
 </div></section>
 
@@ -401,8 +417,8 @@ def home_sections(pdp):
 
 <section class="apf-sec apf-sec--black apf-cta-block"><div class="apf-wrap apf-narrow apf-center">
   <h2>Look like yourself again. Just fresher.</h2>
-  <p style="margin-top:14px;font-size:18px">One bottle a month, one minute a day, no shade guessing. Love it or your money back.</p>
-  <div style="margin-top:28px"><a class="apf-btn apf-btn--white" href="{pdp}">Start my monthly refill</a></div>
+  <p style="margin-top:14px;font-size:18px">One minute a day, no shade guessing. Love it or your money back.</p>
+  <div style="margin-top:28px"><a class="apf-btn apf-btn--white" href="{pdp}">Get yours</a></div>
 </div></section>
 </div>'''
 
@@ -445,7 +461,7 @@ def pdp_sections():
     <h2>How the {PRODUCT} works</h2>
     <p style="margin-top:16px;font-size:18px">A color-adapting foundation built on a serum, so it adjusts to your tone and treats the skin underneath.</p>
     <div style="display:grid;gap:14px;margin-top:24px">
-      <div class="apf-card"><h4>1. Color-adapting pigments</h4><p>Encapsulated pigments go on white. As you blend, they release and mix into your tone within your base, Light–Medium or Medium–Deep. No shade to guess.</p></div>
+      <div class="apf-card"><h4>1. Color-adapting pigments</h4><p>Encapsulated pigments go on white. As you blend, they release and mix into your skin tone. No shade to guess.</p></div>
       <div class="apf-card"><h4>2. A hydrating serum base</h4><p>Two forms of hyaluronic acid, ceramide NP, squalane and panthenol keep dry, mature skin comfortable, so the finish stays satin instead of tight or flaky.</p></div>
       <div class="apf-card"><h4>3. PDRN, peptides and Pro-Xylane</h4><p>Skincare actives for thinner skin after 45, with Matrixyl 3000 peptides, niacinamide and adenosine. Named on the bottle, not hidden in a "complex".</p></div>
       <div class="apf-card"><h4>4. Soft-focus powders</h4><p>Silica and boron nitride scatter light to blur the look of lines and pores, without the dry, matte finish that settles into them.</p></div>
@@ -464,12 +480,12 @@ def pdp_sections():
   <div class="apf-scroll"><table class="apf-table">
     <thead><tr><th></th><th class="apf-us">{PRODUCT}</th><th>Regular liquid foundation</th><th>Other color-changing foundations</th></tr></thead>
     <tbody>
-      <tr><td>Choosing a shade</td><td class="apf-us">2 adaptive bases + shade-match guarantee</td><td>Dozens of shades to guess online</td><td>One shade "for everyone"; ashy on olive and deeper skin</td></tr>
+      <tr><td>Choosing a shade</td><td class="apf-us">Nothing to choose: one adaptive shade + 30-day money-back guarantee</td><td>Dozens of shades to guess online</td><td>Often turns ashy or orange, with no guarantee</td></tr>
       <tr><td>On dry, mature skin</td><td class="apf-us">Satin serum base, hydrating</td><td>Matte and long-wear formulas dry out and crack</td><td>Often a basic, drying base</td></tr>
       <tr><td>Fine lines</td><td class="apf-us">Blurs the look of lines, made not to settle</td><td>Pigment collects in lines</td><td>Often settles by midday</td></tr>
       <tr><td>Skincare actives</td><td class="apf-us">PDRN, peptides, Pro-Xylane, hyaluronic acid</td><td>Rarely</td><td>Usually none</td></tr>
       <tr><td>Fragrance</td><td class="apf-us">Fragrance-free</td><td>Often fragranced</td><td>Often contains parfum</td></tr>
-      <tr><td>Subscription</td><td class="apf-us">Month to month, a reminder before every refill, cancel with one email</td><td>&mdash;</td><td>Complaints about surprise charges and hard cancellations</td></tr>
+      <tr><td>Buying</td><td class="apf-us">Buy once, or optional refills: a reminder before each, cancel with one email</td><td>&mdash;</td><td>Complaints about surprise charges and hard cancellations</td></tr>
     </tbody></table></div>
 </div></section>
 
@@ -478,12 +494,12 @@ def pdp_sections():
   <div class="apf-head apf-center"><span class="apf-eyebrow">Why it works</span><h2>Built from the complaints of women 45+</h2>
   <p>We studied what women over 45 wrote about the color-changing foundations they bought, and answered each complaint in the formula.</p></div>
   <div>
-    <div class="apf-fix"><q>&ldquo;Doesn't match my skin tone.&rdquo;</q><b>&rarr;</b><div>Two adaptive bases plus a shade-match guarantee.</div></div>
+    <div class="apf-fix"><q>&ldquo;Doesn't match my skin tone.&rdquo;</q><b>&rarr;</b><div>One adaptive shade and a 30-day money-back guarantee.</div></div>
     <div class="apf-fix"><q>&ldquo;It dried out my skin.&rdquo;</q><b>&rarr;</b><div>A serum base with hyaluronic acid, ceramide NP and squalane.</div></div>
     <div class="apf-fix"><q>&ldquo;Settles into my wrinkles.&rdquo;</q><b>&rarr;</b><div>Satin finish and soft-focus powders that blur instead of fill.</div></div>
     <div class="apf-fix"><q>&ldquo;Doesn't cover my spots.&rdquo;</q><b>&rarr;</b><div>Buildable medium coverage, a second layer just where you need it.</div></div>
     <div class="apf-fix"><q>&ldquo;Stings my sensitive skin.&rdquo;</q><b>&rarr;</b><div>Fragrance-free, without propylene glycol, drying alcohol or parabens.</div></div>
-    <div class="apf-fix"><q>&ldquo;Not worth the price.&rdquo;</q><b>&rarr;</b><div>Real skincare actives for {SUB['amount']} a month, delivered.</div></div>
+    <div class="apf-fix"><q>&ldquo;Not worth the price.&rdquo;</q><b>&rarr;</b><div>Real skincare actives from {REFILLED} a bottle, shipped free.</div></div>
   </div>
 </div></section>
 
@@ -511,8 +527,8 @@ def pdp_sections():
   <div class="apf-grid4">
     <div class="apf-card"><h4>Actives on the label</h4><p>PDRN is printed on the bottle. Peptides, Pro-Xylane and hyaluronic acid are listed in the ingredients.</p></div>
     <div class="apf-card"><h4>Fragrance-free</h4><p>No fragrance, propylene glycol, drying alcohol or parabens, for thinner, reactive skin.</p></div>
-    <div class="apf-card"><h4>Honest shade promise</h4><p>We never claim one shade matches everyone. Two bases, and a swap if yours isn't right.</p></div>
-    <div class="apf-card"><h4>A subscription without traps</h4><p>Month to month, no minimum. We email you before every refill, and one email cancels it.</p></div>
+    <div class="apf-card"><h4>Honest shade promise</h4><p>It adapts to your tone as you blend. If you don't love how it looks on you, we'll refund you within 30 days.</p></div>
+    <div class="apf-card"><h4>Refills without traps</h4><p>Buy once, or tick Automatic Refills to save. We email you before every refill, and one email cancels it.</p></div>
   </div>
 </div></section>
 
@@ -524,7 +540,7 @@ def pdp_sections():
     <h2>Tomorrow at 8 a.m.</h2>
     <p class="apf-promise" style="margin-top:18px">One pump, one minute, fingertips. You look in the mirror and <strong>your skin looks like yours again</strong>: even, fresh,
     nothing sitting in your lines. At lunch it's still there. On the video call, nobody sees makeup. <strong>They just see you, rested.</strong></p>
-    <div style="margin-top:28px"><a class="apf-btn apf-btn--white" href="{buy}">Choose your base</a></div>
+    <div style="margin-top:28px"><a class="apf-btn apf-btn--white" href="{buy}">Choose your pack</a></div>
   </div>
 </div></div></section>
 
@@ -543,7 +559,7 @@ def pdp_sections():
 {guarantee_html(buy, black=False).replace('<section class="apf-sec"', '<section class="apf-sec apf-sec--grey"', 1)}
 
 <!-- 16 + 17. offer with urgency, scarcity -->
-{offers_html('', black=True, title='Your launch offer', sub='One plan, month to month: pick your base at the top of the page. Love it or your money back.')}
+{offers_html('', black=True, title='Your launch offer', sub='Pick your pack at the top of the page: buy once, or save with Automatic Refills. Love it or your money back.')}
 
 <!-- 18. customer reviews with images -->
 {reviews_html()}
@@ -556,13 +572,13 @@ def pdp_sections():
   <div>
     <span class="apf-eyebrow">We're here</span>
     <h2>Real people, real answers</h2>
-    <p style="margin-top:16px;font-size:18px">Questions about your base, your order or your skin? Write to us. A real person on our team replies within one business day,
+    <p style="margin-top:16px;font-size:18px">Questions about your order or your skin? Write to us. A real person on our team replies within one business day,
     Monday to Friday.</p>
     <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px"><a class="apf-btn" href="mailto:hey@skinofab.com">Email hey@skinofab.com</a><a class="apf-btn apf-btn--line" href="../pages/contact.html">Contact page</a></div>
   </div>
   <div class="apf-grid2" style="gap:14px;align-items:stretch">
     <a class="apf-card" style="text-decoration:none" href="../pages/postflows-track-your-order.html"><h4>Track your order</h4><p>Ships in 24–48 hours with tracking.</p></a>
-    <a class="apf-card" style="text-decoration:none" href="../pages/ccf-quiz.html"><h4>Base quiz</h4><p>Not sure about your base? 30 seconds.</p></a>
+    <a class="apf-card" style="text-decoration:none" href="../pages/contact.html"><h4>Ask about your skin</h4><p>Dry, sensitive, very fair or deep? Ask us first.</p></a>
     <a class="apf-card" style="text-decoration:none" href="../policies/shipping-policy.html"><h4>Shipping</h4><p>Delivery in about 5–7 business days.</p></a>
     <a class="apf-card" style="text-decoration:none" href="../policies/refund-policy.html"><h4>Returns &amp; refunds</h4><p>Love it or your money back, 30 days.</p></a>
   </div>
@@ -580,13 +596,12 @@ BUYBOX = [
     ('>Bestseller<', '>New<'),
     ('>Sale<', '>Launch offer<'),
     ('Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn\'t dry you out or settle into your lines.',
-     'Your skin changed after 45, so your old shade looks wrong and settles into your lines. This one goes on white and turns into your skin tone as you blend, inside the base you choose. A hydrating serum base with PDRN and peptides evens out sun spots and redness and blurs the look of fine lines, without drying you out.'),
+     'Your skin changed after 45, so your old shade looks wrong and settles into your lines. This one goes on white and turns into your skin tone as you blend. A hydrating serum base with PDRN and peptides evens out sun spots and redness and blurs the look of fine lines, without drying you out.'),
     ('>30-day money-back guarantee<', '>Love it or your money back<'),
-    ('>Add to Cart<', '>Start my monthly refill<'),
     ('Find your flawless shade with zero risk. Our Color Changing Foundation comes with a complete satisfaction promise: if your shade isn\'t spot-on, we\'ll make it right with a full refund—no questions asked.',
-     'Wear it in your own daylight for 30 days. If the base you chose isn\'t right for your skin, email us and we\'ll send you the other base. If you don\'t love it, we\'ll refund your first bottle.'),
+     'Wear it in your own daylight for 30 days. If you don\'t love it, email us and we\'ll refund you.'),
     ('We know finding the perfect foundation match online can feel like a gamble. That\'s why we\'ve eliminated the risk entirely. Try it on your skin, in your lighting, with your routine. If it\'s not your perfect match, simply let us know within 30 days and we\'ll process your full refund immediately.',
      'We know buying foundation online after 45 feels like a gamble. Try it on your skin, in your lighting, with your routine. Write to hey@skinofab.com within 30 days and a real person will sort it out.'),
     ('All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our',
-     'Shade-match swaps and refunds are handled by email within 30 days of delivery. See our'),
+     'Refunds are handled by email within 30 days of delivery. See our'),
 ]

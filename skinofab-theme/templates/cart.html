@@ -97,7 +97,7 @@
                                         <div class="flex items-center gap-2">
                                             {{ form.quantity }}
                                         </div>
-                                        {% if settings.sf_subscription_product and product.parent.pk == settings.sf_subscription_product.pk or settings.sf_subscription_product and product.pk == settings.sf_subscription_product.pk %}<input type="hidden" name="{{ form.subscription_range.html_name }}" value="{{ settings.sf_subscription_interval_count|default:'1' }}-{{ settings.sf_subscription_interval|default:'month' }}"><span class="text-xs text-slate-600">Monthly refill &middot; cancel any time</span>{% else %}{{ form.subscription_range }}{% endif %}
+                                        {% if settings.sf_subscription_product and product.parent.pk == settings.sf_subscription_product.pk or settings.sf_subscription_product and product.pk == settings.sf_subscription_product.pk %}<input type="hidden" name="{{ form.subscription_range.html_name }}" value="{{ settings.sf_subscription_interval_count|default:'1' }}-{{ settings.sf_subscription_interval|default:'month' }}"><span class="text-xs text-slate-600">Automatic refill &middot; cancel any time</span>{% else %}{{ form.subscription_range }}{% endif %}
                                         <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="remove" class="remove-from-cart text-xs text-slate-400 hover:text-slate-700 ml-auto">
                                             {% t "tables.actions.remove" %}
                                             <div style="display:none">{{ form.DELETE }}</div>

@@ -4,8 +4,8 @@ usage: python3 -I apf_pages.py <export_dir> <images.json> [--classic]
 Runs in place on the persona export (after apply_persona.py), before the theme build.
 
 --classic keeps the persona design as it was (homepage, product page, menus, cart drawer, gallery and images) and only
-applies what the subscription-only offer and the product name need: the plan price under the title (no compare-at),
-no pay-in-4 line, the "Start my monthly refill" button, and the visible product name.
+applies what the offer picker and the product name need: the price under the title left to the picker (pack and
+refill price), no pay-in-4 line (not offered at checkout), and the visible product name.
 
 - every page: desktop + mobile menus and the footer "Shop" column point only at the foundation; the product
   name becomes "Adaptive Peptide Foundation" in visible text (URLs and handles stay)
@@ -209,22 +209,17 @@ def homepage(t, imgs):
     body = apf_copy.home_sections(PDP)
     return t[:s] + '<section class="shopify-section" id="shopify-section-apf-home">' + fill(body, imgs, '') + '</section>' + t[e:]
 
-def subscription_buybox(t):
-    """What the monthly plan needs in the design's buy box, whichever design version is live."""
-    t = text_rule(t, '>Add to Cart<', '>Start my monthly refill<', 'pdp button')
-    # the price under the title is the plan price (rendered by the theme); the design script must not rewrite it
-    # from the variant data (the $39 list price), so its hooks come off
+def offer_buybox(t):
+    """What the offer picker needs in the design's buy box, whichever design version is live."""
+    # the price under the title follows the picker (pack, refills); the design script must not rewrite it from the
+    # design's variant data, so its hooks come off (the theme renders the NEXT price and compare-at price first)
     m = re.search(r'<div class="product__block product__price-and-badge"[^>]*>', t)
     if m:
         end = balanced_end(t, m.start(), 'div')
         block = t[m.start():end].replace(' data-product-price=""', '').replace(' data-compare-price=""', '')
-        block = re.sub(r'<s class="product__price--compare">.*?</s>', '', block, flags=re.S)   # a plan has no compare-at price
         t = t[:m.start()] + block + t[end:]
     else: missing.append(('pdp', 'price block'))
-    # the design script resets the button label from theme.strings on load
-    t, n = re.subn(r'add_to_cart: "Add to Cart"', 'add_to_cart: "Start my monthly refill"', t)
-    if n != 1: missing.append(('pdp', 'theme.strings.add_to_cart'))
-    # "or 4 interest-free payments of ..." does not apply to a monthly plan
+    # "or 4 interest-free payments of ..." (Afterpay) is not offered at this store's checkout
     t, n = re.subn(r'<skinofab-installments\b.*?</skinofab-installments>\s*(?:<script[^>]*skinofab-installments[^>]*></script>)?', '', t, flags=re.S)
     if not n: missing.append(('pdp', 'installments'))
     return t
@@ -233,7 +228,7 @@ def product_page(t, imgs):
     for old, new in apf_copy.BUYBOX:
         if old != '>Add to Cart<': t = text_rule(t, old, new, 'pdp buy box')
     t = rebuild_gallery(t, imgs)
-    t = subscription_buybox(t)
+    t = offer_buybox(t)
     # attributes can come before class, so match class anywhere in the opener
     for marker, opener in (('Selling out fast', r'<div\b[^>]*\bclass="product__block"[^>]*>'),
                            ('12-week customer survey', r'<div\b[^>]*\bclass="product__block customer-survey-results"[^>]*>')):
@@ -275,7 +270,7 @@ def main():
         t = p.read_text(encoding='utf-8', errors='surrogateescape')
         prefix = '../' * rel.count('/')
         if CLASSIC:
-            if rel == PDP: t = subscription_buybox(t)
+            if rel == PDP: t = offer_buybox(t)
             t = re.sub(r'alt="KoreanColorChangingFoundation-Productimages_1_[^"]*"', f'alt="{apf_copy.PRODUCT}"', t)
             p.write_text(visible_rename(t), encoding='utf-8', errors='surrogateescape')
             continue

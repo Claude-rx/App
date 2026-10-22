@@ -5,10 +5,10 @@ usage: python3 -I apply_persona.py <src_export> <dst_export> <ccf-offers.json> [
 - copies src -> dst (binary files hard-linked, text files rewritten)
 - applies tools/persona/ccf_copy.py: PAGE rules on their file, then GLOBAL rules on every HTML page; a rule that
   matches nothing fails the run (rules prefixed RE: are raw regexes)
-- inserts the base picker and the one plan (month-to-month refill, subscription only) into the foundation's
-  product form, and the "love it or your money back" trust row under its button; base radios map to the NEXT
-  variant pks in ccf-offers.json (written by setup_ccf_offers.py)
-- writes sf-subscription.json (ccf_copy.SUBSCRIPTION) for the theme build's Subscription Offer settings
+- inserts the offer picker (1 bottle / 2 bottles + free gifts, and the Automatic Refills box) into the foundation's
+  product form, and the "love it or your money back" trust row under its button; packs map to the NEXT variant
+  pks in ccf-offers.json (written by setup_ccf_offers.py)
+- writes sf-offer.json for the theme build's Cart Drawer settings: the 1 -> 2 bottle upgrade, add-ons and review
 - <images_dir>/<target file name> replaces that export image (persona images made by tools/persona/images.py)
   under a new content-hashed name, with every reference rewritten (NEXT's CDN caches by file name)
 """
@@ -40,45 +40,120 @@ def compile_rule(old, new):
         return re.compile(r'>\s*' + loose(old[1:-1]) + r'\s*<'), '>' + html.escape(new[1:-1], quote=False) + '<'
     return re.compile(loose(old)), html.escape(new, quote=False)
 
+def money(v):
+    f = float(v)
+    return '$%d' % f if f == int(f) else '$%.2f' % f
+
+GIFT_ICONS = Path(__file__).resolve().parent / 'assets'
+
+def gift_icons():
+    """Gift thumbnails, copied into the export under content-hashed names (NEXT's CDN caches by file name)."""
+    out = {}
+    for key in ('blender', 'mystery', 'shipping'):
+        src = GIFT_ICONS / f'offer-gift-{key}.jpg'
+        name = f"offer-gift-{key}-{hashlib.md5(src.read_bytes()).hexdigest()[:6]}.jpg"
+        shutil.copy2(src, DST / 'assets' / 'img' / name)
+        out[key] = '../assets/img/' + name
+    return out
+
 def picker():
-    """Base choice + the one plan (a month-to-month refill, pre-selected: the product is sold by subscription only)."""
-    b, sub = ccf_copy.BASES, ccf_copy.SUBSCRIPTION
+    """The offer, as on the old store: 1 bottle or 2 bottles + free gifts, each a "temporary deal" off the compare-at
+    price, and an Automatic Refills box (unticked by default) that drops both to their refill price.
+
+    Prices come from ccf_copy.PACKS, the same table setup_ccf_offers.py writes to NEXT. The box is
+    data-sf-offer-picker, so the theme build keeps these prices as written instead of binding them to the product."""
+    packs, refill, icons = ccf_copy.PACKS, ccf_copy.REFILL, gift_icons()
     variants = OFFERS['foundation']['variants']
-    table = {code: variants.get(name) for code, name, _ in b}
-    bases = ''.join(
-        f'<label class="sfp-base"><input type="radio" name="sf_base" value="{code}"{" checked" if i == 0 else ""}>'
-        f'<span><strong>{html.escape(name)}</strong><small>{html.escape(desc)}</small></span></label>'
-        for i, (code, name, desc) in enumerate(b))
-    return f'''<div class="sfp" id="apf-buy" data-sf-offer-picker data-pks='{json.dumps(table)}'>
+    table = {p['key']: {'pk': variants[p['key']], 'price': float(p['price']), 'refill': float(p['refill']),
+                        'compare': float(p['compare'])} for p in packs}
+    first = packs[0]
+    pct = round((float(first['compare']) - float(first['refill'])) / float(first['compare']) * 100)
+    cards = []
+    for i, p in enumerate(packs):
+        gifts = ''.join(
+            f'<li><img src="{icons[k]}" alt="" width="40" height="40" loading="lazy" decoding="async">'
+            f'<span>+ {html.escape(label)}</span>' + (f'<s>{money(value)}</s>' if value else '') + '<b>FREE</b></li>'
+            for k, label, value in p['gifts'])
+        cards.append(
+            f'<label class="sfo-card{" sfo-card--gifts" if gifts else ""}">'
+            + (f'<em class="sfo-tab">{html.escape(p["badge"])}</em>' if p.get('badge') else '')
+            + f'<span class="sfo-row"><input type="radio" name="sf_pack" value="{p["key"]}"{" checked" if i == 0 else ""}>'
+            f'<span class="sfo-main"><span class="sfo-name">{html.escape(p["name"])}'
+            f'<span class="sfo-save" data-sfo-save>SAVE {money(float(p["compare"]) - float(p["price"]))}</span></span>'
+            f'<small>{html.escape(p["note"])}</small></span>'
+            f'<span class="sfo-price"><b data-sfo-now>{money(p["price"])}</b><s>{money(p["compare"])}</s></span></span>'
+            + (f'<ul class="sfo-gifts">{gifts}</ul>' if gifts else '') + '</label>')
+    perks = ' <i>|</i> '.join(html.escape(x) for x in refill['perks'])
+    return f"""<div class="sfo" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
 <style>
-.sfp{{margin:4px 0 14px;display:grid;gap:14px;font-family:inherit}}
-.sfp-h{{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px;display:flex;justify-content:space-between;align-items:baseline}}
-.sfp-h a{{font-size:12px;font-weight:500;text-transform:none;letter-spacing:0;color:#000;text-decoration:underline}}
-.sfp-bases{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
-.sfp label{{cursor:pointer;display:flex;gap:10px;align-items:flex-start;border:1px solid #d9d9d9;border-radius:10px;padding:10px 12px;background:#fff;position:relative}}
-.sfp input[type=radio]{{accent-color:#000;margin-top:3px;flex:none}}
-.sfp label:has(input:checked){{border-color:#000;box-shadow:0 0 0 1px #000}}
-.sfp strong{{display:block;font-size:14px}}
-.sfp small{{display:block;font-size:12px;color:#555;line-height:1.35;margin-top:2px}}
-.sfp-plan{{padding:14px 14px 12px !important}}
-.sfp-offer__main{{flex:1}}
-.sfp-offer__price{{font-weight:600;font-size:18px;white-space:nowrap;line-height:1.2}}
-.sfp-offer__price small{{display:inline;font-size:12px;font-weight:500;color:#555;margin:0}}
-.sfp-badge{{position:absolute;top:-9px;right:12px;background:#000;color:#fff;font-style:normal;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:20px}}
+.sfo{{margin:6px 0 16px;display:grid;gap:12px;font-family:inherit;color:#151515}}
+.sfo fieldset{{border:0;margin:0;padding:0;display:grid;gap:12px;min-width:0}}
+.sfo legend{{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+.sfo-card{{position:relative;display:block;cursor:pointer;border:1px solid #e1e1e1;border-radius:12px;background:#f6f6f6;padding:16px 18px;transition:border-color .15s,background .15s}}
+.sfo-card:has(input:checked){{border:2px solid #151515;background:#fff;padding:15px 17px}}
+.sfo-row{{display:flex;align-items:center;gap:14px}}
+.sfo-card input{{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin:0;border:1.5px solid #9a9a9a;border-radius:50%;background:#fff;display:grid;place-content:center}}
+.sfo-card input:checked{{border-color:#151515}}
+.sfo-card input:checked:before{{content:"";width:12px;height:12px;border-radius:50%;background:#151515}}
+.sfo-card input:focus-visible,.sfo-refill input:focus-visible{{outline:2px solid #151515;outline-offset:2px}}
+.sfo-main{{flex:1;min-width:0}}
+.sfo-name{{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:19px;font-weight:600;line-height:1.2}}
+.sfo-save{{font-size:12px;font-weight:500;letter-spacing:.04em;background:#151515;color:#fff;border-radius:999px;padding:3px 10px;white-space:nowrap}}
+.sfo-main small{{display:block;font-size:14px;color:#6a6a6a;margin-top:3px}}
+.sfo-price{{text-align:right;line-height:1.15;white-space:nowrap}}
+.sfo-price b{{display:block;font-size:21px;font-weight:600}}
+.sfo-price s,.sfo-gifts s{{font-size:14px;color:#7a7a7a}}
+.sfo-tab{{position:absolute;top:-13px;right:16px;background:#151515;color:#fff;font-style:normal;font-size:13px;font-weight:600;padding:4px 12px;border-radius:6px;line-height:1.3}}
+.sfo-gifts{{list-style:none!important;margin:14px 0 0!important;padding:12px 0 0!important;border-top:1px solid #e6e6e6;display:grid;gap:8px}}
+.sfo-gifts li{{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600}}
+.sfo-gifts li:before{{content:none!important}}
+.sfo-gifts img{{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none;background:#fff}}
+.sfo-gifts span{{flex:1}}
+.sfo-gifts s{{font-weight:400}}
+.sfo-gifts b{{font-size:12px;letter-spacing:.06em;color:#1f7a3f;min-width:36px;text-align:right}}
+.sfo-refill{{display:flex;align-items:center;gap:16px;cursor:pointer;border:2px dashed #151515;border-radius:12px;padding:14px 18px;background:#fff}}
+.sfo-refill input{{appearance:none;-webkit-appearance:none;flex:none;width:26px;height:26px;margin:0;border:1.5px solid #151515;border-radius:5px;background:#fff;display:grid;place-content:center}}
+.sfo-refill input:checked{{background:#151515}}
+.sfo-refill input:checked:before{{content:"";width:12px;height:7px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:translateY(-2px) rotate(-45deg)}}
+.sfo-refill strong{{display:block;font-size:16px;line-height:1.3}}
+.sfo-refill small{{display:block;font-size:13px;color:#5a5a5a;margin-top:3px;line-height:1.35}}
+.sfo-refill i{{font-style:normal;color:#b5b5b5;margin:0 4px}}
+@media (max-width:420px){{.sfo-card{{padding:14px}}.sfo-card:has(input:checked){{padding:13px}}.sfo-name{{font-size:17px}}.sfo-price b{{font-size:19px}}.sfo-refill{{padding:12px 14px}}}}
 </style>
-<div><p class="sfp-h">1. Choose your base <a href="/ccf-quiz/">Not sure? 30-second quiz</a></p><div class="sfp-bases">{bases}</div></div>
-<div><p class="sfp-h">2. Your plan</p>
-<label class="sfp-plan"><input type="radio" name="sf_purchase" value="subscribe" data-interval="{sub['interval']}" data-interval-count="{sub['every']}" checked><span class="sfp-offer__main"><strong>Monthly refill</strong><small>1 bottle (30 mL) in your base, every month. Switch base, skip a month or cancel any time.</small></span><span class="sfp-offer__price">{sub['amount']}<small>/mo</small></span><em class="sfp-badge">Month to month</em></label>
-</div>
+<fieldset><legend>Choose your pack</legend>{''.join(cards)}</fieldset>
+<label class="sfo-refill"><input type="checkbox" name="sf_purchase" value="subscribe" data-interval="{refill['interval']}" data-interval-count="{refill['every']}">
+<span><strong>Save <span data-sfo-pct>{pct}%</span> with {html.escape(refill['name'])}</strong><small>{perks}</small></span></label>
 <script>
 (function () {{
   var root = document.currentScript.parentNode;
   var form = root.closest('form');
-  var table = JSON.parse(root.getAttribute('data-pks'));
+  var packs = JSON.parse(root.getAttribute('data-packs'));
+  var box = root.querySelector('input[name=sf_purchase]');
+  function money(v) {{ return '$' + (v % 1 ? v.toFixed(2) : String(v)); }}
+  // the price under the product title (the nearest one above the picker)
+  var scope = root, head = null;
+  while (scope && !head) {{ scope = scope.parentElement; head = scope && scope.querySelector('.product__price-and-badge'); }}
+  var now = head && head.querySelector('.product__price--regular');
+  var was = head && head.querySelector('.product__price--compare');
+  var unit = now && / USD\\s*$/.test(now.textContent) ? ' USD' : '';
   function sync() {{
-    var base = (root.querySelector('input[name=sf_base]:checked') || {{}}).value || 'lm';
+    var key = (root.querySelector('input[name=sf_pack]:checked') || {{}}).value || '1';
+    var sub = box.checked, pick = packs[key];
     var id = form && form.querySelector('input[name=id]');
-    if (id && table[base]) id.value = table[base];
+    if (id) id.value = pick.pk;
+    Array.prototype.forEach.call(root.querySelectorAll('input[name=sf_pack]'), function (r) {{
+      var p = packs[r.value], card = r.closest('.sfo-card'), v = sub ? p.refill : p.price;
+      card.querySelector('[data-sfo-now]').textContent = money(v);
+      card.querySelector('[data-sfo-save]').textContent = 'SAVE ' + money(p.compare - v);
+    }});
+    root.querySelector('[data-sfo-pct]').textContent = Math.round((pick.compare - pick.refill) / pick.compare * 100) + '%';
+    if (now) now.textContent = money(sub ? pick.refill : pick.price) + unit;
+    if (was) was.textContent = money(pick.compare) + unit;
+    var terms = document.querySelector('[data-sf-refill-terms]');   // under the button: parsed after this script
+    if (terms) {{
+      terms.hidden = !sub;
+      terms.textContent = terms.getAttribute('data-sf-refill-terms').replace(/\\{{amount\\}}/g, money(pick.refill));
+    }}
   }}
   root.addEventListener('change', sync);
   // deep links from the page sections (#apf-buy) scroll here
@@ -94,12 +169,30 @@ def picker():
   }});
   fromHash();
   sync();
+  // the trust block (with the refill terms) comes after the button: sync again once it is parsed
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sync);
 }})();
 </script>
-</div>'''
+</div>"""
+
+def cart_offer():
+    """The cart drawer's settings for this offer (read by the theme build into Theme settings > Cart Drawer): the
+    1 -> 2 bottle upgrade with its price difference, the add-ons and the review."""
+    one, two = ccf_copy.PACKS[0], ccf_copy.PACKS[1]
+    variants = OFFERS['foundation']['variants']
+    diffs = {float(two['price']) - float(one['price']), float(two['refill']) - float(one['refill'])}
+    extras = ['a second bottle'] + ['a free ' + label.replace('FREE ', '') for k, label, value in two['gifts'] if value]
+    what = ', '.join(extras[:-1]) + ' and ' + extras[-1]
+    text = (f'Just {money(diffs.pop())} more for {what}.' if len(diffs) == 1 else f'Get {what}.')
+    cart = ccf_copy.CART
+    return {'product': cart['product'], 'addons': cart['addons'],
+            'upgrade': {'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
+                        'text': text, 'button': cart['upgrade_button']},
+            'review': {'text': cart['review_text'], 'name': cart['review_name']}}
 
 def trust_block():
-    """Under the add-to-cart button: love it or your money back, the three plan facts and the renewal terms."""
+    """Under the add-to-cart button: love it or your money back, free shipping / 30-day guarantee / secure checkout,
+    and the refill terms (shown by the picker only while Automatic Refills is ticked)."""
     return f'<div class="product__block sfp-trust"><style>{apf_copy.TRUST_CSS}</style>{apf_copy.trust_html()}</div>'
 
 def balanced_end(t, start, tag):
@@ -148,9 +241,9 @@ def main():
     else:
         end = balanced_end(texts[pdp], cta, 'div')
         texts[pdp] = texts[pdp][:end] + trust_block() + texts[pdp][end:]
-    # the theme build turns this into the "Subscription Offer" theme settings (price text, cadence, product)
-    (DST / 'sf-subscription.json').write_text(json.dumps({'handle': 'color-changing-foundation', **ccf_copy.SUBSCRIPTION}, indent=1))
     for p, t in texts.items(): p.write_text(t, encoding='utf-8', errors='surrogateescape')
+    # the theme build turns this into the Cart Drawer theme settings (upgrade, add-ons, review)
+    (DST / 'sf-offer.json').write_text(json.dumps(cart_offer(), indent=1, ensure_ascii=False))
     # Replaced images get a new, content-hashed file name and every reference is rewritten: NEXT's CDN keeps
     # serving a cached copy for a re-uploaded file name, so a changed image must never reuse its old name.
     replaced, renames = 0, {}

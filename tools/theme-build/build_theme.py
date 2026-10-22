@@ -8,7 +8,7 @@ Commerce facts come from NEXT: product links, prices, variants and add-to-cart a
 
 Re-run after any design change; every template in the family is regenerated identically.
 """
-import json, os, posixpath, re, shutil, sys
+import hashlib, json, os, posixpath, re, shutil, sys
 from pathlib import Path
 from bs4 import BeautifulSoup, NavigableString, Comment
 
@@ -54,12 +54,21 @@ OPENERS = {'{%': '{% templatetag openblock %}', '{{': '{% templatetag openvariab
 def dtl_escape(text):
     return re.sub(r'\{[%{#]', lambda m: OPENERS[m.group(0)], text)
 
+# Generated DTL placed before a fragment has its Slots (clean_design runs on the whole page): one shared table,
+# keyed by content, resolved by every Slots.render.
+PAGE_DTL = {}
+def page_dtl(dtl):
+    key = hashlib.md5(dtl.encode()).hexdigest()[:10]
+    PAGE_DTL[key] = dtl
+    return f'SFDTL{key}X'
+
 class Slots:
     """Collects generated DTL behind inert placeholders so escaping never touches it."""
     def __init__(self): self.items = []
     def put(self, dtl): self.items.append(dtl); return f'SFSLOT{len(self.items) - 1}X'
     def render(self, text):
-        return re.sub(r'SFSLOT(\d+)X', lambda m: self.items[int(m.group(1))], dtl_escape(text))
+        text = re.sub(r'SFSLOT(\d+)X', lambda m: self.items[int(m.group(1))], dtl_escape(text))
+        return re.sub(r'SFDTL([0-9a-f]{10})X', lambda m: PAGE_DTL[m.group(1)], text)
 
 def assetize(text, slots):
     """Replace every local asset path in `text` with a slot holding its asset_url tag."""
@@ -328,6 +337,7 @@ def transform(root, page, slots, current=None):
     # prices -> NEXT
     for el in list(root.find_all(True)):
         if el.find(True) or not PRICE_RE.match(el.get_text() or ''): continue
+        if el.find_parent(attrs={'data-sf-offer-picker': True}) is not None: continue   # prices set by the offer table
         if el.find_parent(['script', 'style', 'template']) is not None and el.name not in ('s', 'span', 'div'): continue
         h = card_handle(el, page, current)
         if not h and re.search(r'protection|protect your order', (el.find_parent(['p', 'li', 'div']) or el).get_text(' ', strip=True), re.I):
@@ -414,6 +424,15 @@ DEAD_INLINE = re.compile(r"\(o\.Shopify=o\.Shopify\|\|\{\}\)\.modules|document\.
 OLD_HOSTS = re.compile(r'^(?:https?:)?//(?:www\.)?(?:08f531-2\.myshopify\.com|skinofab\.com|smooche\.com)(?=/|$)', re.I)
 THIRD_PARTY_IMG = re.compile(r'^https?://(?:www\.iubenda\.com|s3\.[a-z0-9-]+\.amazonaws\.com)/', re.I)
 FLAG_IMG = re.compile(r'<img class="shipping-country-flag" src="https://cdn\.shopify\.com/static/images/flags/[^"]*"[^>]*>')
+# Footer payment logos (design SVGs titled pi-<name>) -> the Payment logos setting's names (Spark's img/pay icons), so the
+# footer and the cart drawer show the same, checkout-accurate set. Logos with no setting name are Shopify-only: removed.
+PAY_LOGOS = {'pi-visa': 'visa', 'pi-master': 'mc', 'pi-american_express': 'amex', 'pi-discover': 'discover',
+             'pi-apple_pay': 'applepay', 'pi-google_pay': 'googlepay', 'pi-paypal': 'ppal', 'pi-klarna': 'klarna',
+             'pi-diners_club': 'diners', 'pi-jcb': 'jcb', 'pi-maestro': 'maestro', 'pi-dankort': 'dankort'}
+PAY_ICONS = [('visa', 'Visa'), ('mc', 'Mastercard'), ('amex', 'American Express'), ('discover', 'Discover'),
+             ('applepay', 'Apple Pay'), ('googlepay', 'Google Pay'), ('ppal', 'PayPal'), ('klarna', 'Klarna'),
+             ('diners', 'Diners Club'), ('jcb', 'JCB'), ('maestro', 'Maestro'), ('dankort', 'Dankort')]
+
 FLAG_EMOJI = ('<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint(...normalizedCountryCode.split(\'\')'
               '.map(c => 127397 + c.charCodeAt(0)))}</span>')
 CLEAN = {'removed': 0, 'relinked': 0}
@@ -433,6 +452,12 @@ def clean_design(soup):
         (el.find_parent(class_='follow-on-shop') or el).decompose(); CLEAN['removed'] += 1
     for el in soup.find_all('link', attrs={'fetchpriority': True}):
         if not re.fullmatch(r'high|low|auto', el['fetchpriority']): del el['fetchpriority']   # unrendered app snippet
+    for li in soup.select('.payment-icon-list > li'):
+        t = li.find('title')
+        key = PAY_LOGOS.get(t.get('id') if t else None)
+        if not key: li.decompose(); CLEAN['removed'] += 1; continue
+        li.insert_before(NavigableString(page_dtl("{%% if '%s' in settings.sf_pay_icons %%}" % key)))
+        li.insert_after(NavigableString(page_dtl('{% endif %}')))
     for el in soup.select('img.logo__image'):              # the header logo is the home link's only content
         if not el.get('alt'): el['alt'] = 'SKINOFAB'
     for el in soup.find_all('img', src=THIRD_PARTY_IMG):   # policy-generator provider favicons, hot-linked
@@ -665,6 +690,8 @@ def default_product():
         main = parts['main']
         keep = main.select_one('[id$="__main"].shopify-section--product')
         for sec in [c for c in main.find_all(recursive=False) if c is not keep]: sec.decompose()
+        # the foundation's offer picker sets the foundation's own variant ids: never on another product's page
+        for el in keep.select('[data-sf-offer-picker]'): el.decompose()
         bind_pdp(main, slots)
         desc = keep.select_one('.product__description, [data-product-description], .rte')
         if desc:
@@ -869,24 +896,28 @@ SF_CART = ('''        <script>
         window.SFCart = {
             shippingFree: {% if settings.sf_cart_free_shipping %}true{% else %}false{% endif %},
             shippingNote: "{{ settings.sf_cart_shipping_note|default:''|escapejs }}",
-            reminderTitle: "{{ settings.sf_cart_reminder_title|default:''|escapejs }}", reminderText: "{{ settings.sf_cart_reminder_text|default:''|escapejs }}",
-            cancelTitle: "{{ settings.sf_cart_cancel_title|default:''|escapejs }}", cancelText: "{{ settings.sf_cart_cancel_text|default:''|escapejs }}",
             guaranteeTitle: "{{ settings.sf_cart_guarantee_title|default:''|escapejs }}", guaranteeText: "{{ settings.sf_cart_guarantee_text|default:''|escapejs }}",
-            dueTodayText: "{{ settings.sf_cart_due_today|default:'Due today'|escapejs }}",
-            renewText: "{{ settings.sf_cart_renew_text|default:''|escapejs }}",
+            reviewText: "{{ settings.sf_cart_review_text|default:''|escapejs }}", reviewName: "{{ settings.sf_cart_review_name|default:''|escapejs }}",
+            upsellPks: [{% if settings.sf_cart_upsell_1 %}"{{ settings.sf_cart_upsell_1.pk }}", {% endif %}{% if settings.sf_cart_upsell_2 %}"{{ settings.sf_cart_upsell_2.pk }}"{% endif %}],
+            upsellTitle: "{{ settings.sf_cart_upsell_title|default:''|escapejs }}", upsellButton: "{{ settings.sf_cart_upsell_button|default:'Add'|escapejs }}",
+            upgrade: { from: "{{ settings.sf_cart_upgrade_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade_button|default:'Upgrade'|escapejs }}" },
+            payIcons: [PAY_ICONS_JS],
             checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
             secureText: "{{ settings.sf_cart_secure_text|default:''|escapejs }}",
             couponToggle: "{{ settings.sf_cart_coupon_toggle|default:'Have a discount code?'|escapejs }}",
             removeText: "{{ settings.sf_cart_remove_text|default:'Remove'|escapejs }}",
-            variantSuffix: "{{ settings.sf_cart_variant_suffix|default:''|escapejs }}",
             emptyTitle: "{{ settings.sf_cart_empty_title|default:''|escapejs }}",
             emptyText: "{{ settings.sf_cart_empty_text|default:''|escapejs }}",
             emptyImage: "{{ 'CART_BOTTLE'|asset_url|escapejs }}",
-            shopUrl: "{% if settings.sf_subscription_product %}{{ settings.sf_subscription_product.get_absolute_url|escapejs }}{% else %}{% url 'catalogue:index' %}{% endif %}",
-            shopText: "{% if settings.sf_cart_empty_cta %}{{ settings.sf_cart_empty_cta|escapejs }}{% elif settings.sf_subscription_product %}Shop {{ settings.sf_subscription_product.get_title|escapejs }}{% endif %}"
+            shopUrl: "{% if settings.sf_cart_empty_product %}{{ settings.sf_cart_empty_product.get_absolute_url|escapejs }}{% else %}{% url 'catalogue:index' %}{% endif %}",
+            shopText: "{% if settings.sf_cart_empty_cta %}{{ settings.sf_cart_empty_cta|escapejs }}{% elif settings.sf_cart_empty_product %}Shop {{ settings.sf_cart_empty_product.get_title|escapejs }}{% endif %}"
         };
         </script>
-''').replace('CART_BOTTLE', CART_BOTTLE)
+''').replace('CART_BOTTLE', CART_BOTTLE).replace('PAY_ICONS_JS', ''.join(
+    "{%% if '%s' in settings.sf_pay_icons %%}{ src: \"{{ 'img/pay/%s.svg'|asset_url|escapejs }}\", alt: \"%s\" }, {%% endif %%}" % (k, k, alt)
+    for k, alt in PAY_ICONS))
 base = must_replace(base, "        <script type=\"text/javascript\" src=\"{{ 'js/spark-cart-loader.js'|asset_url }}\"></script>",
                     SF_CART + "        <script type=\"text/javascript\" src=\"{{ 'js/spark-cart-loader.js'|asset_url }}\"></script>", 'cart config')
 base = base.replace("{% block extrascripts %}{% endblock %}", "{% block sf_tail %}{% endblock sf_tail %}\n    {% block extrascripts %}{% endblock %}")
@@ -927,7 +958,7 @@ for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'te
 SUB_ONLY_IF = ("{% if settings.sf_subscription_product and product.parent.pk == settings.sf_subscription_product.pk"
                " or settings.sf_subscription_product and product.pk == settings.sf_subscription_product.pk %}")
 SUB_FIXED = ('<input type="hidden" name="{{ form.subscription_range.html_name }}" value="{{ settings.sf_subscription_interval_count|default:\'1\' }}-{{ settings.sf_subscription_interval|default:\'month\' }}">'
-             '<span class="text-xs text-slate-600">Monthly refill &middot; cancel any time</span>')
+             '<span class="text-xs text-slate-600">Automatic refill &middot; cancel any time</span>')
 for rel, old_field in (('templates/cart.html', '{{ form.subscription_range }}'),
                        ('partials/cart_content.html', "{% include 'partials/form_field.html' with field=form.subscription_range nolabel=True %}")):
     p = OUT / rel
@@ -1007,26 +1038,35 @@ schema = {'SKINOFAB': {
          'help_text': 'Shows "Free" for shipping in the cart. Tick only while every rate in Dashboard > Settings > Shipping is $0.'},
         {'name': 'sf_cart_shipping_note', 'type': 'text', 'label': 'Note under the cart title', 'default': 'Free shipping on every order',
          'help_text': 'Leave empty to hide. Must match your shipping rates.'},
-        {'name': 'sf_cart_reminder_title', 'type': 'text', 'label': 'Plan card: line 1 title', 'default': 'Refill reminder'},
-        {'name': 'sf_cart_reminder_text', 'type': 'text', 'label': 'Plan card: line 1 text', 'default': 'We email you before every refill ships.'},
-        {'name': 'sf_cart_cancel_title', 'type': 'text', 'label': 'Plan card: line 2 title', 'default': 'Cancel any time'},
-        {'name': 'sf_cart_cancel_text', 'type': 'text', 'label': 'Plan card: line 2 text', 'default': 'Skip a month, switch base or cancel with one email. No fees.'},
-        {'name': 'sf_cart_guarantee_title', 'type': 'text', 'label': 'Plan card: line 3 title', 'default': 'Love it or your money back'},
-        {'name': 'sf_cart_guarantee_text', 'type': 'text', 'label': 'Plan card: line 3 text', 'default': '',
-         'help_text': 'Shown under subscription lines only. Must match your refund policy.'},
-        {'name': 'sf_cart_due_today', 'type': 'text', 'label': 'Total label when the cart has a plan', 'default': 'Due today'},
-        {'name': 'sf_cart_renew_text', 'type': 'text', 'label': 'Renewal line', 'default': 'Then {amount}. Cancel any time.',
-         'help_text': '{amount} becomes the plan price per period, e.g. $33.00/mo.'},
+        {'name': 'sf_cart_upgrade_from', 'type': 'text', 'label': 'Upgrade: variant in the bag', 'default': '',
+         'help_text': 'NEXT variant ID. While the bag has it (and not the upgrade), the drawer offers the upgrade. Empty: no upgrade.'},
+        {'name': 'sf_cart_upgrade_to', 'type': 'text', 'label': 'Upgrade: variant it becomes', 'default': '',
+         'help_text': 'NEXT variant ID. Same quantity and the same refill choice as the line it replaces.'},
+        {'name': 'sf_cart_upgrade_title', 'type': 'text', 'label': 'Upgrade: title', 'default': ''},
+        {'name': 'sf_cart_upgrade_text', 'type': 'text', 'label': 'Upgrade: text', 'default': '',
+         'help_text': 'Name the real price difference; it must match the two variants\' prices.'},
+        {'name': 'sf_cart_upgrade_button', 'type': 'text', 'label': 'Upgrade: button', 'default': 'Upgrade'},
+        {'name': 'sf_cart_upsell_1', 'type': 'product', 'label': 'Add-on 1', 'help_text': 'Offered under the bag lines until it is in the bag.'},
+        {'name': 'sf_cart_upsell_2', 'type': 'product', 'label': 'Add-on 2'},
+        {'name': 'sf_cart_upsell_title', 'type': 'text', 'label': 'Add-ons title', 'default': 'Complete your routine'},
+        {'name': 'sf_cart_upsell_button', 'type': 'text', 'label': 'Add-on button', 'default': 'Add'},
+        {'name': 'sf_cart_guarantee_title', 'type': 'text', 'label': 'Guarantee title', 'default': '30-day money-back guarantee'},
+        {'name': 'sf_cart_guarantee_text', 'type': 'text', 'label': 'Guarantee text', 'default': "Wear it for 30 days. If you don't love it, we'll refund you.",
+         'help_text': 'Must match your refund policy.'},
+        {'name': 'sf_cart_review_text', 'type': 'text', 'label': 'Review quote', 'default': '',
+         'help_text': 'A real customer review, word for word. Leave empty to hide.'},
+        {'name': 'sf_cart_review_name', 'type': 'text', 'label': 'Review name', 'default': ''},
         {'name': 'sf_cart_checkout_text', 'type': 'text', 'label': 'Checkout button', 'default': 'Secure checkout'},
-        {'name': 'sf_cart_secure_text', 'type': 'text', 'label': 'Under the checkout button', 'default': 'Encrypted payment. No minimum, no hidden fees.'},
+        {'name': 'sf_pay_icons', 'type': 'text', 'label': 'Payment logos (cart and footer)', 'default': 'visa, mc, amex, discover',
+         'help_text': 'Any of: visa, mc, amex, discover, applepay, googlepay, ppal, klarna, diners, jcb, maestro, dankort. List only what your checkout accepts.'},
+        {'name': 'sf_cart_secure_text', 'type': 'text', 'label': 'Under the checkout button', 'default': 'Secure, encrypted payment'},
         {'name': 'sf_cart_coupon_toggle', 'type': 'text', 'label': 'Discount code link', 'default': 'Have a discount code?'},
         {'name': 'sf_cart_remove_text', 'type': 'text', 'label': 'Remove link', 'default': 'Remove'},
-        {'name': 'sf_cart_variant_suffix', 'type': 'text', 'label': 'After the variant name', 'default': 'base',
-         'help_text': 'e.g. "Light\u2013Medium base". Leave empty to show the variant name alone.'},
         {'name': 'sf_cart_empty_title', 'type': 'text', 'label': 'Empty cart title', 'default': 'Your bag is empty'},
         {'name': 'sf_cart_empty_text', 'type': 'text', 'label': 'Empty cart text', 'default': 'Your shade is about a minute away.'},
+        {'name': 'sf_cart_empty_product', 'type': 'product', 'label': 'Empty cart button goes to'},
         {'name': 'sf_cart_empty_cta', 'type': 'text', 'label': 'Empty cart button', 'default': '',
-         'help_text': 'Leave empty for "Shop <subscription product>".'},
+         'help_text': 'Leave empty for "Shop <product above>".'},
     ],
     'Collection Links': [{'name': f'sf_c_{var(c)}', 'type': 'url', 'label': c.replace('-', ' ').title(), 'default': '/catalogue/',
                           'help_text': f'Where the design\'s "{c}" collection links go (a NEXT category URL).'} for c in collections],
@@ -1044,7 +1084,21 @@ if catalog and Path(catalog).exists():
         if v.get('id'): data[f'sf_p_{var(h)}'] = v['id']
     for c, cid in m.get('categories', {}).items():
         if cid: data[f'sf_c_{var(c)}'] = f'/catalogue/category/{c}_{cid}/'
-sub_cfg = EXPORT / 'sf-subscription.json'   # written by tools/persona/apply_persona.py (ccf_copy.SUBSCRIPTION)
+offer_cfg = EXPORT / 'sf-offer.json'   # written by tools/persona/apply_persona.py: the cart drawer's offer settings
+if offer_cfg.exists():
+    oc = json.loads(offer_cfg.read_text())
+    pid = lambda h: data.get(f'sf_p_{var(h)}')
+    missing_pids = [h for h in [oc['product'], *oc['addons']] if not pid(h)]
+    if missing_pids: sys.exit(f'sf-offer.json: no NEXT product mapped for {missing_pids} (set SF_CATALOG)')
+    data.update({'sf_cart_empty_product': pid(oc['product']),
+                 'sf_cart_upgrade_from': str(oc['upgrade']['from']), 'sf_cart_upgrade_to': str(oc['upgrade']['to']),
+                 'sf_cart_upgrade_title': oc['upgrade']['title'], 'sf_cart_upgrade_text': oc['upgrade']['text'],
+                 'sf_cart_upgrade_button': oc['upgrade']['button'],
+                 'sf_cart_review_text': oc['review']['text'], 'sf_cart_review_name': oc['review']['name']})
+    for n, h in enumerate(oc['addons'][:2], 1): data[f'sf_cart_upsell_{n}'] = pid(h)
+# optional: a subscription-only product (Theme settings > Subscription Offer); the current persona sells one-time or
+# with Automatic Refills, chosen on the product page, so it writes no sf-subscription.json
+sub_cfg = EXPORT / 'sf-subscription.json'
 if sub_cfg.exists():
     sc = json.loads(sub_cfg.read_text())
     pid = data.get(f"sf_p_{var(sc['handle'])}")
@@ -1069,6 +1123,8 @@ for f in sorted(OUT.rglob('*.html')):
     for n, line in enumerate(f.read_text('utf-8', errors='replace').splitlines(), 1):
         if re.search(r'\{#(?![^\n]*#\})', line):
             LOG.setdefault('css_compile_errors', []).append(f'{f.relative_to(OUT)}:{n}: multi-line {{# #}} comment renders as text')
+        if re.search(r'SF(?:SLOT\d+|DTL[0-9a-f]{10})X', line):   # a placeholder no Slots.render resolved
+            LOG.setdefault('css_compile_errors', []).append(f'{f.relative_to(OUT)}:{n}: unresolved DTL placeholder')
 
 # ---------------------------------------------------------------- 10. report
 report = {'templates': sorted(LOG['templates']), 'unbound_prices': LOG['unbound_prices'],
@@ -1080,3 +1136,4 @@ print(f"templates {len(report['templates'])}  unbound prices {len(report['unboun
       f"missing assets {len(report['missing_assets'])}  unmapped links {len(report['unmapped_links'])}  "
       f"fonts {len(FONT_FACES)}  css vars {len(CSS_VARS)}  css compile errors {len(LOG.get('css_compile_errors', []))}")
 for e in LOG.get('css_compile_errors', []): print('  CSS', e)
+if LOG.get('css_compile_errors'): sys.exit('build gate failed: see the CSS lines above')

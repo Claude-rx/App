@@ -218,54 +218,86 @@
         "help_text": "Leave empty to hide. Must match your shipping rates."
       },
       {
-        "name": "sf_cart_reminder_title",
+        "name": "sf_cart_upgrade_from",
         "type": "text",
-        "label": "Plan card: line 1 title",
-        "default": "Refill reminder"
+        "label": "Upgrade: variant in the bag",
+        "default": "",
+        "help_text": "NEXT variant ID. While the bag has it (and not the upgrade), the drawer offers the upgrade. Empty: no upgrade."
       },
       {
-        "name": "sf_cart_reminder_text",
+        "name": "sf_cart_upgrade_to",
         "type": "text",
-        "label": "Plan card: line 1 text",
-        "default": "We email you before every refill ships."
+        "label": "Upgrade: variant it becomes",
+        "default": "",
+        "help_text": "NEXT variant ID. Same quantity and the same refill choice as the line it replaces."
       },
       {
-        "name": "sf_cart_cancel_title",
+        "name": "sf_cart_upgrade_title",
         "type": "text",
-        "label": "Plan card: line 2 title",
-        "default": "Cancel any time"
+        "label": "Upgrade: title",
+        "default": ""
       },
       {
-        "name": "sf_cart_cancel_text",
+        "name": "sf_cart_upgrade_text",
         "type": "text",
-        "label": "Plan card: line 2 text",
-        "default": "Skip a month, switch base or cancel with one email. No fees."
+        "label": "Upgrade: text",
+        "default": "",
+        "help_text": "Name the real price difference; it must match the two variants' prices."
+      },
+      {
+        "name": "sf_cart_upgrade_button",
+        "type": "text",
+        "label": "Upgrade: button",
+        "default": "Upgrade"
+      },
+      {
+        "name": "sf_cart_upsell_1",
+        "type": "product",
+        "label": "Add-on 1",
+        "help_text": "Offered under the bag lines until it is in the bag."
+      },
+      {
+        "name": "sf_cart_upsell_2",
+        "type": "product",
+        "label": "Add-on 2"
+      },
+      {
+        "name": "sf_cart_upsell_title",
+        "type": "text",
+        "label": "Add-ons title",
+        "default": "Complete your routine"
+      },
+      {
+        "name": "sf_cart_upsell_button",
+        "type": "text",
+        "label": "Add-on button",
+        "default": "Add"
       },
       {
         "name": "sf_cart_guarantee_title",
         "type": "text",
-        "label": "Plan card: line 3 title",
-        "default": "Love it or your money back"
+        "label": "Guarantee title",
+        "default": "30-day money-back guarantee"
       },
       {
         "name": "sf_cart_guarantee_text",
         "type": "text",
-        "label": "Plan card: line 3 text",
+        "label": "Guarantee text",
+        "default": "Wear it for 30 days. If you don't love it, we'll refund you.",
+        "help_text": "Must match your refund policy."
+      },
+      {
+        "name": "sf_cart_review_text",
+        "type": "text",
+        "label": "Review quote",
         "default": "",
-        "help_text": "Shown under subscription lines only. Must match your refund policy."
+        "help_text": "A real customer review, word for word. Leave empty to hide."
       },
       {
-        "name": "sf_cart_due_today",
+        "name": "sf_cart_review_name",
         "type": "text",
-        "label": "Total label when the cart has a plan",
-        "default": "Due today"
-      },
-      {
-        "name": "sf_cart_renew_text",
-        "type": "text",
-        "label": "Renewal line",
-        "default": "Then {amount}. Cancel any time.",
-        "help_text": "{amount} becomes the plan price per period, e.g. $33.00/mo."
+        "label": "Review name",
+        "default": ""
       },
       {
         "name": "sf_cart_checkout_text",
@@ -274,10 +306,17 @@
         "default": "Secure checkout"
       },
       {
+        "name": "sf_pay_icons",
+        "type": "text",
+        "label": "Payment logos (cart and footer)",
+        "default": "visa, mc, amex, discover",
+        "help_text": "Any of: visa, mc, amex, discover, applepay, googlepay, ppal, klarna, diners, jcb, maestro, dankort. List only what your checkout accepts."
+      },
+      {
         "name": "sf_cart_secure_text",
         "type": "text",
         "label": "Under the checkout button",
-        "default": "Encrypted payment. No minimum, no hidden fees."
+        "default": "Secure, encrypted payment"
       },
       {
         "name": "sf_cart_coupon_toggle",
@@ -292,13 +331,6 @@
         "default": "Remove"
       },
       {
-        "name": "sf_cart_variant_suffix",
-        "type": "text",
-        "label": "After the variant name",
-        "default": "base",
-        "help_text": "e.g. \"Light–Medium base\". Leave empty to show the variant name alone."
-      },
-      {
         "name": "sf_cart_empty_title",
         "type": "text",
         "label": "Empty cart title",
@@ -311,11 +343,16 @@
         "default": "Your shade is about a minute away."
       },
       {
+        "name": "sf_cart_empty_product",
+        "type": "product",
+        "label": "Empty cart button goes to"
+      },
+      {
         "name": "sf_cart_empty_cta",
         "type": "text",
         "label": "Empty cart button",
         "default": "",
-        "help_text": "Leave empty for \"Shop <subscription product>\"."
+        "help_text": "Leave empty for \"Shop <product above>\"."
       }
     ],
     "Collection Links": [

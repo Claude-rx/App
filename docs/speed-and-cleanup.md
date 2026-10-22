@@ -34,7 +34,11 @@ Report: `theme-optimize-report.json`.
 
 **Cart drawer** (`tools/theme-build/static/skinofab-cart-drawer.js`). Spark's `<spark-cart-drawer>` keeps cart
 state, mutations, focus and events. This file is its renderer (same API as `spark-cart-drawer-renderer.js`)
-and styles it through its open shadow root. The text lives in Theme settings → SKINOFAB → Cart Drawer.
+and styles it through its open shadow root. It is built for the last step before payment: free-shipping note,
+the 1 → 2 bottle upgrade (one tap swaps the line, same refill choice), two add-ons from the storefront API, the
+money-back guarantee with a customer review, totals, a secure checkout button and the accepted cards. The text,
+the upgrade variants, the add-on products and the payment logos (shared with the footer) live in Theme settings →
+SKINOFAB → Cart Drawer.
 
 ## Results (live preview, theme 34)
 
@@ -65,7 +69,7 @@ node tools/theme-qa/visual-diff.mjs before/ after/ shots/ && python3 tools/theme
 # cart drawer (mocked NEXT cart): opens on add, header above the sticky site header, screenshots
 node tools/theme-qa/qa.mjs after/ shots/ --only /products/color-changing-foundation/ --cart [--mobile]
 
-# live subscription flow: both bases, the no-plan add path, cart page, checkout
+# live offer: 1 or 2 bottles x one-time or Automatic Refills, drawer upgrade and add-ons, checkout schedule
 node tools/theme-qa/offer-e2e.mjs https://skinofab.29next.store 34 /catalogue/adaptive-peptide-foundation_14/ shots/
 ```
 

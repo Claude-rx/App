@@ -384,7 +384,7 @@
         base: "\/"
       },
       strings: {
-        add_to_cart: "Start my monthly refill",
+        add_to_cart: "Add to Cart",
         cart_acceptance_error: "You must accept our terms and conditions.",
         cart_empty: "Your cart is currently empty.",
         cart_price: "Price",
@@ -631,7 +631,7 @@
 <div class="product__block product__price-and-badge" style="--PBB:20px;">
 <div class="product__price-and-rating">
 <div class="product__price" data-price-wrapper="" id="productpricetemplate--20029865361564__main">
-<span class="product__price--regular product__price--sale">{% include 'partials/sf_price.html' with p=product %}</span>
+<s class="product__price--compare">{% include 'partials/sf_price.html' with p=product retail=1 %}</s><span class="product__price--regular product__price--sale">{% include 'partials/sf_price.html' with p=product %}</span>
 <span class="product__price--off hidden" data-price-off="">
 <span><p><strong>Bestseller</strong></p></span>
 <span data-price-off-type="" style="display: none">Sale</span>
@@ -681,42 +681,10 @@
   line-height: 1.3;}</style>
 </div><div class="product__block" style="--PBB:0px;"><div class="product__subheading">
 <p>Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines. </p>
-</div></div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_45 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_45 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029865361564__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+</div></div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_46 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_46 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029865361564__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
 <input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
 <div class="shop-pay-terms">
 <shopify-payment-terms shopify-meta='{"type":"product","currency_code":"USD","country_code":"US","variants":[{"id":45097716285596,"price_per_term":"$25","price_per_term_amount":24.5,"full_price":"$49","full_price_amount":49.0,"eligible":true,"available":true,"number_of_payment_terms":2}],"min_price":"$35","min_price_amount":35.0,"max_price":"$30,000","max_price_amount":30000.0,"financing_plans":[{"min_price":"$35","max_price":"$50","terms":[{"apr":0,"loan_type":"split_pay","installments_count":2}],"min_price_amount":35.0,"max_price_amount":49.99},{"min_price":"$50","max_price":"$1,000","terms":[{"apr":0,"loan_type":"split_pay","installments_count":3},{"apr":0,"loan_type":"split_pay","installments_count":4},{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":50.0,"max_price_amount":999.99},{"min_price":"$1,000","max_price":"$30,000","terms":[{"apr":15,"loan_type":"interest","installments_count":3},{"apr":15,"loan_type":"interest","installments_count":6},{"apr":15,"loan_type":"interest","installments_count":12}],"min_price_amount":1000.0,"max_price_amount":30000.0}],"installments_buyer_prequalification_enabled":false,"seller_id":2823039}' variant-id="45097716285596"></shopify-payment-terms>
-</div><div class="sfp" data-pks='{"lm": 15, "md": 103}' data-sf-offer-picker="" id="apf-buy">
-<style>.sfp{margin:4px 0 14px;display:grid;gap:14px;font-family:inherit}.sfp-h{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px;display:flex;justify-content:space-between;align-items:baseline}.sfp-h a{font-size:12px;font-weight:500;text-transform:none;letter-spacing:0;color:#000;text-decoration:underline}.sfp-bases{display:grid;grid-template-columns:1fr 1fr;gap:8px}.sfp label{cursor:pointer;display:flex;gap:10px;align-items:flex-start;border:1px solid #d9d9d9;border-radius:10px;padding:10px 12px;background:#fff;position:relative}.sfp input[type=radio]{accent-color:#000;margin-top:3px;flex:none}.sfp label:has(input:checked){border-color:#000;box-shadow:0 0 0 1px #000}.sfp strong{display:block;font-size:14px}.sfp small{display:block;font-size:12px;color:#555;line-height:1.35;margin-top:2px}.sfp-plan{padding:14px 14px 12px !important}.sfp-offer__main{flex:1}.sfp-offer__price{font-weight:600;font-size:18px;white-space:nowrap;line-height:1.2}.sfp-offer__price small{display:inline;font-size:12px;font-weight:500;color:#555;margin:0}.sfp-badge{position:absolute;top:-9px;right:12px;background:#000;color:#fff;font-style:normal;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:20px}</style>
-<div><p class="sfp-h">1. Choose your base <a href="/ccf-quiz/">Not sure? 30-second quiz</a></p><div class="sfp-bases"><label class="sfp-base"><input checked="" name="sf_base" type="radio" value="lm"/><span><strong>Light–Medium</strong><small>Fair to medium skin, pink or neutral undertones</small></span></label><label class="sfp-base"><input name="sf_base" type="radio" value="md"/><span><strong>Medium–Deep</strong><small>Medium, olive, golden and deeper skin</small></span></label></div></div>
-<div><p class="sfp-h">2. Your plan</p>
-<label class="sfp-plan"><input checked="" data-interval="month" data-interval-count="1" name="sf_purchase" type="radio" value="subscribe"/><span class="sfp-offer__main"><strong>Monthly refill</strong><small>1 bottle (30 mL) in your base, every month. Switch base, skip a month or cancel any time.</small></span><span class="sfp-offer__price">$33<small>/mo</small></span><em class="sfp-badge">Month to month</em></label>
-</div>
-<script>
-(function () {
-  var root = document.currentScript.parentNode;
-  var form = root.closest('form');
-  var table = JSON.parse(root.getAttribute('data-pks'));
-  function sync() {
-    var base = (root.querySelector('input[name=sf_base]:checked') || {}).value || 'lm';
-    var id = form && form.querySelector('input[name=id]');
-    if (id && table[base]) id.value = table[base];
-  }
-  root.addEventListener('change', sync);
-  // deep links from the page sections (#apf-buy) scroll here
-  function fromHash() {
-    if (!/^#apf-buy(?:-[a-z]+)?$/.test(window.location.hash || '')) return;
-    root.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-  window.addEventListener('hashchange', fromHash);
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[href*="#apf-buy"]');
-    if (!a || a.pathname.replace(/\/$/, '') !== window.location.pathname.replace(/\/$/, '')) return;
-    e.preventDefault(); history.replaceState(null, '', a.hash); fromHash();
-  });
-  fromHash();
-  sync();
-})();
-</script>
 </div><span data-subscription-watch-price=""></span><div id="CTA_kopstorm"><div class="product__submit__holder product__submit__holder--notification">
 <div class="product__submit__buttons">
 <div class="product__submit__item">
@@ -744,13 +712,14 @@
       &lt;/div&gt;
     &lt;/div&gt;&lt;/form&gt;&lt;button title='Close (Esc)' class='product__notification__close' data-popup-close&gt;&lt;svg aria-hidden='true' focusable='false' role='presentation' class='icon icon-close' viewBox='0 0 192 192'&gt;&lt;path d='M150 42 42 150M150 150 42 42' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/&gt;&lt;/svg&gt;&lt;/button&gt;
 &lt;/div&gt;" id="AddToCart--template--20029865361564__main" name="add" type="submit">
-<span data-add-to-cart-text="">Start my monthly refill</span>
+<span data-add-to-cart-text="">Add to Cart
+</span>
 <em class="loader loader--line"><em class="loader-indeterminate"></em></em>
 </button>
 </div></div>
 <div class="product__form__errors" data-cart-errors-container="" role="alert"></div>
 </div>
-</div><div class="product__block sfp-trust"><style>.apf-trust{text-align:center;margin:16px 0 0;color:#151515}.apf-trust__head{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 14px !important;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#151515 !important}.apf-trust__head svg{flex:none;color:#151515}.apf-trust__row{list-style:none !important;margin:0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.apf-trust__row li{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:14px;line-height:1.3;color:#2b2b2b}.apf-trust__row li:before{content:none !important}.apf-trust__row svg{width:26px;height:26px;color:#151515}.apf-trust__terms{margin:14px auto 0 !important;max-width:470px;font-size:12px !important;line-height:1.45;color:#6a6a6a !important}</style><div class="apf-trust"><p class="apf-trust__head"><svg aria-hidden="true" focusable="false" height="24" viewbox="0 0 24 24" width="24"><path d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z" fill="currentColor"></path><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span>Love it or your money back</span></p><ul class="apf-trust__row"><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"></path></svg><span>Refill reminder</span></li><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"></path><path d="M3 3v5h5"></path><path d="m9.5 9.5 5 5m0-5-5 5"></path></svg><span>Cancel any time</span></li><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg><span>Renews at $33/mo</span></li></ul><p class="apf-trust__terms">You pay $33 today, then $33 every month until you cancel. We email you before every refill. To switch base, skip a month or cancel, just email hey@skinofab.com. No minimum, no fees.</p></div></div><input name="product-id" type="hidden" value="8462448984220"/><input name="section-id" type="hidden" value="template--20029865361564__main"/></form></div>
+</div><div class="product__block sfp-trust"><style>.apf-trust{text-align:center;margin:16px 0 0;color:#151515}.apf-trust__head{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 14px !important;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#151515 !important}.apf-trust__head svg{flex:none;color:#151515}.apf-trust__row{list-style:none !important;margin:0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.apf-trust__row li{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:14px;line-height:1.3;color:#2b2b2b}.apf-trust__row li:before{content:none !important}.apf-trust__row svg{width:26px;height:26px;color:#151515}.apf-trust__terms{margin:14px auto 0 !important;max-width:470px;font-size:12px !important;line-height:1.45;color:#6a6a6a !important}</style><div class="apf-trust"><p class="apf-trust__head"><svg aria-hidden="true" focusable="false" height="24" viewbox="0 0 24 24" width="24"><path d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z" fill="currentColor"></path><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span>Love it or your money back</span></p><ul class="apf-trust__row"><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="M1 4h14v12H1z"></path><path d="M15 9h4l3 3v4h-7"></path><circle cx="6" cy="18.5" r="1.8"></circle><circle cx="18" cy="18.5" r="1.8"></circle></svg><span>Free shipping</span></li><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg><span>30-day guarantee</span></li><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><rect height="10" rx="2" width="16" x="4" y="11"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span>Secure checkout</span></li></ul><p class="apf-trust__terms" data-sf-refill-terms="You pay {amount} today, then {amount} every 28 days until you cancel. We email you before every refill. To skip or cancel, just email hey@skinofab.com. No minimum, no fees." hidden=""></p></div></div><input name="product-id" type="hidden" value="8462448984220"/><input name="section-id" type="hidden" value="template--20029865361564__main"/></form></div>
 <div class="product__block" data-current-variant-id="45097716285596" data-default-usp="Shipped today" data-shipping-usp="" data-us-delivery-max-days="4" data-us-delivery-min-days="2" data-us-fulfillable-variants="45097716285596," style="--PBB:10px;">
 <p id="stockinfop">
 <span class="stock-left">
@@ -1089,7 +1058,7 @@
 </figure></div></div><div class="product__feature__heading">
 <h5>30-day money-back guarantee</h5>
 </div></div><div class="product__feature__text">
-<p>Wear it in your own daylight for 30 days. If your base isn't right, we'll swap it for the other base. If you don't love it, we'll refund you, and your monthly refill cancels with one email.*</p>
+<p>Wear it in your own daylight for 30 days. If you don't love it, we'll refund you.*</p>
 </div></div>
 </div></div>
 <section aria-labelledby="ProductSuitability--template--20029865361564__main--product_suitability_maison-title" class="product__block product-suitability" id="ProductSuitability--template--20029865361564__main--product_suitability_maison" maison-ab-id="MC_PDP_SUITABILITYEXPECTATIONS_SMOCHE" style="--PBB:0px;">
@@ -1106,9 +1075,9 @@
 <p>Softens the visible look of redness and imperfections</p>
 </div>
 </div>
-<div class="product-suitability__item"><img alt="Two adaptive bases" class="product-suitability__image" height="480" loading="lazy" src="{{ 'sf/img/maison-suitability-verified-range-844d73.png'|asset_url }}" width="480"/><div class="product-suitability__copy">
-<h3>Two adaptive bases</h3>
-<p>Light–Medium or Medium–Deep, so olive, golden and deeper skin don't turn ashy</p>
+<div class="product-suitability__item"><img alt="One adaptive shade" class="product-suitability__image" height="480" loading="lazy" src="{{ 'sf/img/maison-suitability-verified-range-844d73.png'|asset_url }}" width="480"/><div class="product-suitability__copy">
+<h3>One adaptive shade</h3>
+<p>Goes on white and adapts to your tone, so there is no shade to pick</p>
 </div>
 </div>
 <div class="product-suitability__item"><img alt="Built for mature skin" class="product-suitability__image" height="480" loading="lazy" src="{{ 'sf/img/maison-suitability-mature-skin-8d9076.png'|asset_url }}" width="480"/><div class="product-suitability__copy">
@@ -1267,7 +1236,7 @@
 <span id="accordionbefore">Does it work on my skin?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-does-it-work-on-my-skin--template--20029865361564__main--product_accordion_Ytr7Rj">
 <div class="product__accordion__inner rte" data-collapsible-content="">
-<p>It comes in two adaptive bases. Light–Medium suits fair to medium skin with pink or neutral undertones. Medium–Deep suits medium, olive, golden and deeper skin. Not sure? Take the 30-second base quiz. If your base isn't right, we'll swap it.</p>
+<p>There is one shade. It goes on white and adapts to your skin tone as you blend, so there is nothing to match or mix. Wear it in your own daylight for 30 days; if you don't love it, we'll refund you.</p>
 <div class="accordion-content-image">
 <img alt="" loading="lazy" src="{{ 'sf/img/foundation_png_1-800w-f3d51a.png'|asset_url }}" style="width: 100%; height: auto; border-radius: 8px;"/>
 </div></div>

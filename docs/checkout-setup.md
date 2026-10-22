@@ -14,7 +14,7 @@ State found on 21 Oct 2026 (Admin API + a live checkout render):
 | Checkout header | Plain text "Skinofab" | No logo |
 | Terms & Conditions modal | NEXT demo text: "This website is operated by demo.29next.store …" | Legally wrong for this store |
 | Privacy Policy modal | Generic template text | Should be the store's own policy |
-| Subscription Terms modal | Generic "Subscribe & Save … contact customer service" | Doesn't state the $33/month terms shoppers agree to |
+| Subscription Terms modal | Generic "Subscribe & Save … contact customer service" | Doesn't state the Automatic Refills terms (price, every 28 days) shoppers agree to |
 | Shipping | One rate, "Default", $0.00 per order | Free shipping, so the cart drawer says "Free" |
 | Store contact address / tagline | Empty | Used in receipts and the page title |
 
@@ -37,16 +37,20 @@ color `#151515`, logo position left.
 ## 3. Checkout policies
 
 Dashboard → Settings → Policies. Replace the demo text. The subscription terms below match the storefront
-copy, word for word (the PDP terms under the buy button and the cart drawer's plan card):
+copy, word for word (the terms the product page shows under the button when Automatic Refills is ticked, and the
+guarantee in the cart drawer):
 
 > **Subscription Terms**
 >
-> Adaptive Peptide Foundation is sold as a monthly refill. You pay $33 today, then $33 every month until you
-> cancel. We email you before every refill. To switch base, skip a month or cancel, just email
-> hey@skinofab.com. No minimum, no fees.
+> Automatic Refills are optional: tick the box on the product page to pay the refill price. 1 bottle: you pay
+> $37 today, then $37 every 28 days until you cancel. 2 bottles + free gifts: you pay $47 today, then $47 every
+> 28 days until you cancel. We email you before every refill. To skip or cancel, just email hey@skinofab.com.
+> No minimum, no fees.
 >
-> Wear it in your own daylight for 30 days. If your base isn't right, we'll swap it for the other base. If you
-> don't love it, we'll refund you, and your monthly refill cancels with one email.
+> Wear it in your own daylight for 30 days. If you don't love it, we'll refund you.
+
+The free gifts in the 2-bottle pack (Skinofab Blender, Mystery Gift) are not cart lines: the variant is named
+"2 bottles + free gifts" so the order shows them. Make sure fulfilment packs both with every such order.
 
 For Terms & Conditions and Privacy Policy, use the store's own legal texts (the storefront has
 `/terms-of-service/` and `/privacy-policy/` pages from the previous site; have them reviewed before reuse,
@@ -60,6 +64,9 @@ you before every refill" promise is kept automatically.
 ## 5. Check
 
 1. Preview: https://skinofab.29next.store/?preview_theme=34
-2. Add the foundation, open the bag, press **Secure checkout**.
-3. The checkout should show the logo, black buttons, `Schedule: Every 1 Month`, Shipping $0.00, and the
-   three policy links with the texts above.
+2. Pick 1 bottle, tick Automatic Refills, add it, open the bag, press **Secure checkout**.
+3. The checkout should show the logo, black buttons, `Schedule: Every 28 Days` at $37.00, Shipping $0.00, and
+   the three policy links with the texts above. Bought once (box unticked), the line has no schedule.
+
+`node tools/theme-qa/offer-e2e.mjs https://skinofab.29next.store 34 /catalogue/adaptive-peptide-foundation_14/ shots/`
+runs all of this (and the cart drawer's upgrade and add-ons) without placing an order.
