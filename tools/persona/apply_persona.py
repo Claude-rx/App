@@ -56,6 +56,23 @@ def gift_icons():
         out[key] = '../assets/img/' + name
     return out
 
+BRAND = Path(__file__).resolve().parents[2] / 'brand'
+
+def section_image(src, name, size=(1000, 1250)):
+    """A 4:5 crop of a brand image for the problem / solution sections, under a content-hashed name."""
+    from PIL import Image, ImageOps
+    im = ImageOps.fit(Image.open(src).convert('RGB'), size, Image.LANCZOS, centering=(0.5, 0.42))
+    tmp = DST / 'assets' / 'img' / f'{name}.jpg'
+    im.save(tmp, quality=85, optimize=True, progressive=True)
+    final = tmp.with_name(f"{name}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg")
+    tmp.rename(final)
+    return '../assets/img/' + final.name, size[0], size[1]
+
+def problem_solution():
+    return apf_copy.problem_solution_html(
+        section_image(BRAND / 'persona' / 'age-73.jpg', 'skinofab-problem-skin-after-45'),
+        section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle'))
+
 def picker():
     """The offer, as on the old store: 1 bottle or 2 bottles + free gifts, each a "temporary deal" off the compare-at
     price, and an Automatic Refills box that drops both to their refill price. ccf_copy.REFILL decides whether the
@@ -343,6 +360,12 @@ def main():
     else:
         end = balanced_end(texts[pdp], title.start(), 'div')
         texts[pdp] = texts[pdp][:end] + frontrow_block() + texts[pdp][end:]
+    # problem -> root cause -> solution, right after the first customer reviews
+    rev = re.search(r'<div[^>]*id="shopify-section-[^"]*kopstorm_testomonials[^"]*"[^>]*>', texts[pdp])
+    if not rev: missing.append(('problem/solution', 'reviews section'))
+    else:
+        end = balanced_end(texts[pdp], rev.start(), 'div')
+        texts[pdp] = texts[pdp][:end] + '<div class="shopify-section" id="shopify-section-sf-problem-solution">' + problem_solution() + '</div>' + texts[pdp][end:]
     texts[pdp], ok = rating_block(texts[pdp])
     if not ok: missing.append(('rating', 'loox badge'))
     cta = texts[pdp].find('<div id="CTA_kopstorm">')

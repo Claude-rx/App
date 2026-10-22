@@ -623,3 +623,123 @@ BUYBOX = [
     ('All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our',
      'Refunds are handled by email within 30 days of delivery. See our'),
 ]
+
+
+# ------------------------------------------------------------------------------------------------ problem -> solution
+# Product page, right after the first customer reviews (apply_persona.py): what goes wrong with ordinary foundation
+# after 45, the root cause, then how this one is built the other way around. Cosmetic claims only; every ingredient
+# named is one the "What's inside" section lists.
+_X = ('<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="#151515"/>'
+      '<path d="m8.5 8.5 7 7m0-7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>')
+_V = ('<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="#151515"/>'
+      '<path d="m7.5 12.3 3 3 6-6.3" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+PROBLEM_PAINS = [
+    'Dozens of shades to guess online, for a skin tone that has shifted since you last bought one',
+    'Matte, long-wear formulas that cling to dry patches and crack by lunch',
+    'Pigment and powder that settle into fine lines and make them look deeper',
+    'A color that oxidizes orange or turns ashy as the day goes on',
+    'Primer, foundation, concealer, setting powder: four steps just to look like yourself',
+]
+ROOT_CAUSES = [
+    ('Less collagen, less moisture',
+     'In the years around menopause, skin makes less collagen and holds less water. It gets thinner, drier and more '
+     'textured, so a formula built to control oil grips every dry patch and line.'),
+    ('A tone that keeps moving',
+     'Sun spots, redness and an undertone that shifts with age and seasons mean the shade that matched at 35 rarely '
+     'matches now. A fixed shade can\'t follow you.'),
+    ('Formulas made for 25-year-old skin',
+     'Many foundations chase oil control and long wear with mattifying powders, drying alcohol and fragrance: the '
+     'opposite of what drier, more sensitive skin needs.'),
+]
+SOLUTION_FIXES = [
+    ('Guessing your shade', 'One adaptive shade. It goes on white and turns into your skin tone as you blend.'),
+    ('Dry patches and cracking', 'A hydrating serum base with two forms of hyaluronic acid, ceramide NP and squalane.'),
+    ('Settling into lines', 'Soft-focus powders blur the look of lines and pores instead of filling them with pigment.'),
+    ('Makeup that does nothing for your skin', 'Skincare in every layer: Matrixyl 3000 peptides, PDRN and Pro-Xylane.'),
+    ('Four steps every morning', 'One step with your fingertips, in about a minute. Fragrance-free.'),
+]
+
+PROBLEM_SOLUTION_CSS = r"""
+.sfps{color:#151515;font-family:inherit}
+.sfps *{box-sizing:border-box}
+.sfps-sec{padding:72px 0}
+.sfps-sec--grey{background:#f6f6f6}
+.sfps-wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
+.sfps-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.sfps-photo{border-radius:20px;overflow:hidden;background:#eee;aspect-ratio:4/5}
+.sfps-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.sfps-eyebrow{display:block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6a6a6a;margin:0 0 12px}
+.sfps h2{font-size:clamp(28px,3.4vw,42px);line-height:1.15;font-weight:600;letter-spacing:-.01em;margin:0}
+.sfps-mark{background:#151515;color:#fff;border-radius:8px;padding:0 .22em;white-space:nowrap;display:inline-block;line-height:1.2;margin-top:.12em}
+.sfps-lede{font-size:18px;line-height:1.55;color:#3b3b3b;margin:18px 0 0}
+.sfps-list{list-style:none !important;margin:26px 0 0 !important;padding:0 !important;display:grid;gap:14px}
+.sfps-list li{list-style:none;margin:0;padding:0;display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.45}
+.sfps-list li:before{content:none !important}
+.sfps-list svg{flex:none;margin-top:1px}
+.sfps-close{margin:24px 0 0;font-size:16px;line-height:1.5;color:#3b3b3b;font-style:italic}
+.sfps-head{text-align:center;max-width:760px;margin:0 auto 40px}
+.sfps-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.sfps-card{background:#fff;border-radius:18px;padding:28px 26px}
+.sfps-card b{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#151515;color:#fff;font-size:15px;margin:0 0 16px}
+.sfps-card h3{font-size:20px;line-height:1.3;font-weight:600;margin:0 0 10px}
+.sfps-card p{font-size:15.5px;line-height:1.55;color:#3b3b3b;margin:0}
+.sfps-root{max-width:760px;margin:36px auto 0;text-align:center;font-size:19px;line-height:1.5;font-weight:500}
+.sfps-fixes{margin:26px 0 0;display:grid;gap:12px}
+.sfps-fix{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;padding:14px 16px;border:1px solid #e6e6e6;border-radius:14px;background:#fff}
+.sfps-fix s{display:block;font-size:13px;color:#8a8a8a;text-decoration-thickness:1px;margin:0 0 3px}
+.sfps-fix span{display:block;font-size:16px;line-height:1.45}
+.sfps-cta{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:28px 0 0}
+.sfps-btn{display:inline-flex;align-items:center;justify-content:center;padding:16px 34px;border-radius:999px;background:#151515;color:#fff !important;text-decoration:none !important;font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.sfps-btn:hover{background:#000}
+.sfps-note{font-size:14px;color:#3b3b3b}
+@media (max-width:989px){
+ .sfps-sec{padding:52px 0}
+ .sfps-grid{grid-template-columns:1fr;gap:30px}
+ .sfps-grid--rev .sfps-photo{order:-1}
+ .sfps-cards{grid-template-columns:1fr}
+ .sfps-photo{aspect-ratio:4/4.4}
+}
+@media (max-width:599px){
+ .sfps-wrap{width:calc(100% - 32px)}
+ .sfps-lede{font-size:16.5px}
+ .sfps-card{padding:22px 20px}
+ .sfps-root{font-size:17px}
+ .sfps-btn{width:100%}
+}
+"""
+
+def problem_solution_html(img_problem, img_solution, buy_href='#apf-buy'):
+    """Three blocks: the problem (photo + what goes wrong), the root cause (three cards), the solution (problem ->
+    fix rows, the product, a button to the offer). img_*: (src, width, height)."""
+    pains = ''.join(f'<li>{_X}<span>{p}</span></li>' for p in PROBLEM_PAINS)
+    cards = ''.join(f'<div class="sfps-card"><b>{i}</b><h3>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(ROOT_CAUSES, 1))
+    fixes = ''.join(f'<div class="sfps-fix">{_V}<div><s>{was}</s><span>{now}</span></div></div>' for was, now in SOLUTION_FIXES)
+    ip, isol = img_problem, img_solution
+    return f'''<div class="sfps" id="sf-problem-solution"><style>{PROBLEM_SOLUTION_CSS}</style>
+<section class="sfps-sec"><div class="sfps-wrap sfps-grid">
+  <div class="sfps-photo"><img src="{ip[0]}" alt="A woman in her late fifties looking at her skin" width="{ip[1]}" height="{ip[2]}" loading="lazy" decoding="async"></div>
+  <div>
+    <span class="sfps-eyebrow">The problem</span>
+    <h2>Foundation wasn&rsquo;t made for <span class="sfps-mark">skin after 45</span></h2>
+    <p class="sfps-lede">You&rsquo;re not doing it wrong. Most foundations are designed around younger, oilier skin. Then your skin changed, and they stopped working.</p>
+    <ul class="sfps-list">{pains}</ul>
+    <p class="sfps-close">The result: a drawer full of bottles that didn&rsquo;t work, and the feeling that makeup isn&rsquo;t for you anymore.</p>
+  </div>
+</div></section>
+<section class="sfps-sec sfps-sec--grey"><div class="sfps-wrap">
+  <div class="sfps-head"><span class="sfps-eyebrow">The root of it</span><h2>Your skin changed. <span class="sfps-mark">Your foundation didn&rsquo;t.</span></h2></div>
+  <div class="sfps-cards">{cards}</div>
+  <p class="sfps-root">So the problem was never your skin or your technique. It&rsquo;s a formula built for someone else.</p>
+</div></section>
+<section class="sfps-sec"><div class="sfps-wrap sfps-grid sfps-grid--rev">
+  <div>
+    <span class="sfps-eyebrow">The solution</span>
+    <h2>So we built it <span class="sfps-mark">the other way around</span></h2>
+    <p class="sfps-lede">The {PRODUCT} starts from skin after 45, not from a shade chart: Korean color-adapting technology in a skincare serum base.</p>
+    <div class="sfps-fixes">{fixes}</div>
+    <div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">Get yours</a><span class="sfps-note">Love it in your own daylight for 30 days, or your money back.</span></div>
+  </div>
+  <div class="sfps-photo"><img src="{isol[0]}" alt="The {PRODUCT} bottle" width="{isol[1]}" height="{isol[2]}" loading="lazy" decoding="async"></div>
+</div></section>
+</div>'''
