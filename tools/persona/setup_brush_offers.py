@@ -5,6 +5,7 @@ usage: NEXT_API_TOKEN=... python3 -I setup_brush_offers.py <store_subdomain> <wo
   attribute: 1 brush + free case ($24.95), 2 brushes + 2 free cases ($39.95), 3 brushes + 3 free cases + free body
   brush ($49.90); each compare-at is the single-brush price times the brushes (brush_copy.BUNDLES)
 - the free cases and the body brush are named in the variant, so the order shows what to pack (not cart lines)
+- in the same collections as the other face tools (brush_copy.CATEGORIES: Accessories, Face, Skin, Bestsellers)
 - matched by slug on re-runs; variants by SKU
 - writes <work_dir>/brush-offers.json (product and variant pks for the bundle picker and the cart drawer) and adds
   the product to <work_dir>/catalog-rb.json (the theme build's handle -> NEXT product mapping)
@@ -14,7 +15,7 @@ import json, os, sys, time, urllib.request, urllib.error
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from brush_copy import BUNDLES, DESCRIPTION, HANDLE, META_DESCRIPTION, META_TITLE, TITLE
+from brush_copy import BUNDLES, CATEGORIES, DESCRIPTION, HANDLE, META_DESCRIPTION, META_TITLE, TITLE
 
 STORE, WORK = sys.argv[1], Path(sys.argv[2])
 API = f'https://{STORE}.29next.store/api/admin/'
@@ -49,7 +50,10 @@ def variant_body(b):
             'stockrecords': [{'location_id': 1, 'num_in_stock': 1000, 'low_stock_threshold': 0}]}
 
 
-fields = {'title': TITLE, 'slug': HANDLE, 'description': DESCRIPTION, 'is_public': True, 'template': HANDLE,
+cats = {c['slug']: c['id'] for c in call('GET', 'categories/?page_size=100')['results']}
+missing = [c for c in CATEGORIES if c not in cats]
+if missing: raise SystemExit(f'categories not found: {missing}')
+fields = {'title': TITLE, 'slug': HANDLE, 'categories': [cats[c] for c in CATEGORIES], 'description': DESCRIPTION, 'is_public': True, 'template': HANDLE,
           'meta_title': META_TITLE, 'meta_description': META_DESCRIPTION, 'enable_subscription': False,
           'variant_attributes': [{'name': ATTR, 'values': [b['variant'] for b in BUNDLES]}]}
 found = all_products().get(HANDLE)

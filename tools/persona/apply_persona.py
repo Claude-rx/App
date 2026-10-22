@@ -621,30 +621,50 @@ def brush_page(base):
     text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', 'id="the-lymphatic-brush-skinofab"', 1)
     return text
 
-def brush_home(home):
-    """The homepage: the brush after the hero, in the serum section's video story layout (brush_copy.HOME)."""
-    m = re.search(r'<section class="shopify-section fh-section" id="shopify-section-template--[0-9]+__serum">', home)
-    hero = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__hero"', home)
-    if not m or not hero: return home, False
-    sec = home[m.start():home.find('</section>', m.start()) + len('</section>')]
-    h, k = brush_copy.HOME, brush_copy.HOME['video']
-    media = WORK / 'brush' / 'media'
-    mp4 = hashed_copy(media / f'brush-review-{k}.mp4', 'media', f'skinofab-brush-review-{k}')[3:]
-    poster = hashed_copy(media / f'brush-review-{k}.jpg', 'img', f'skinofab-brush-review-{k}-poster')[3:]
-    sec = sec.replace('__serum"', '__brush"').replace('__serum {', '__brush {').replace('__serum"', '__brush"')
-    sec = re.sub(r'id="fh-story-video-[^"]+"', 'id="fh-story-video-brush"', sec)
-    sec = re.sub(r'data-src="[^"]+\.mp4"', f'data-src="{mp4}"', sec, count=1)
-    sec = re.sub(r'<img alt="[^"]*" class="fh-social-poster"[^>]*>',
-                 f'<img alt="Using {html.escape(brush_copy.TITLE)}" class="fh-social-poster" height="960" loading="lazy" '
-                 f'sizes="(max-width: 749px) calc(100vw - 32px), (max-width: 1199px) 50vw, 760px" src="{poster}" width="540"/>', sec, count=1)
-    copy_html = (f'<div class="fh-story-copy"><div class="fh-eyebrow">' + re.search(r'<div class="fh-eyebrow">(<img[^>]*>)', sec).group(1)
-                 + f'<span>{html.escape(h["eyebrow"])}</span></div><h2>{html.escape(h["title"])}</h2><div class="fh-story-body">'
-                 + ''.join(f'<p>{html.escape(p)}</p>' for p in h['paragraphs'])
-                 + f'</div><a class="fh-button" href="products/{brush_copy.HANDLE}.html">{html.escape(h["button"])}</a></div>')
-    sec = re.sub(r'<div class="fh-story-copy">.*?</a></div>', lambda _: copy_html, sec, count=1, flags=re.S)
-    sec = sec.replace('--fh-bg: #f8f8f8', '--fh-bg: #ffffff').replace('--fh-pt: 0px; --fh-pb: 0px;', '--fh-pt: 48px; --fh-pb: 48px;')
-    end = home.find('</section>', hero.start()) + len('</section>')
-    return home[:end] + sec + home[end:], True
+def brush_shelf(home):
+    """The homepage product shelf: the brush's card in the default list (the Bestsellers view) and in the Bestsellers,
+    New and Face tabs, after the product brush_copy.SHELF names (first when None), in each place's own card markup."""
+    m = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__bestsellers"', home)
+    if not m: return home, False
+    end = home.find('</section>', m.start())
+    sec = home[m.start():end]
+    sh, title, href = brush_copy.SHELF, html.escape(brush_copy.TITLE), f'products/{brush_copy.HANDLE}.html'
+    big = hashed_copy(BRUSH_IMG / 'card.jpg', 'img', 'skinofab-lymphatic-brush-card-1080w', (1080, 1080))[3:]
+    small = hashed_copy(BRUSH_IMG / 'card.jpg', 'img', 'skinofab-lymphatic-brush-card-720w', (720, 720))[3:]
+    price = f'<div class="fh-price"><s>{brush_copy.money(brush_copy.COMPARE)} USD</s><span>{brush_copy.money(brush_copy.PRICE)} USD</span></div>'
+    rich = (f'<article class="fh-product">\n<a aria-label="{title}" class="fh-product-image" href="{href}">\n'
+            f'<picture class=""><img alt="{title}" class="fh-upload" height="1080" loading="lazy" sizes="100vw" src="{big}" '
+            f'srcset="{small} 720w, {big} 1080w" width="1080"/>\n</picture>\n'
+            f'<span class="fh-badges"><span>{html.escape(sh["badge"])}</span><span class="fh-saving">{html.escape(sh["saving"])}</span></span></a>\n'
+            f'<div class="fh-product-info"><h3><a href="{href}">{title}</a></h3>\n{price}'
+            '<div class="fh-benefits-tags">' + ''.join(f'<span>{html.escape(x)}</span>' for x in sh['tags']) + '</div></div>\n</article>\n')
+    plain = (f'<article class="fh-product"><a class="fh-product-image" href="{href}"><img alt="{title}" height="720" loading="lazy" '
+             f'sizes="(min-width: 750px) 25vw, 66vw" src="{small}" srcset="{small} 720w" width="720"/></a>'
+             f'<div class="fh-product-info"><h3><a href="{href}">{title}</a></h3>\n{price}</div></article>')
+    def place(block, card, after):
+        """block with card inserted after the article linking to products/<after>.html (first when None)."""
+        arts = [(a.start(), block.find('</article>', a.start()) + len('</article>')) for a in re.finditer(r'<article class="fh-product">', block)]
+        if not arts: return None
+        if after is None: pos = arts[0][0]
+        else:
+            hit = [e for s_, e in arts if f'products/{after}.html"' in block[s_:e]]
+            if not hit: return None
+            pos = hit[0]
+        return block[:pos] + card + block[pos:]
+    ok = True
+    for key, after in sh['after'].items():
+        if key == 'list':
+            mm = re.search(r'<div class="fh-product-list"[^>]*>', sec)
+            card = rich
+        else:
+            mm = re.search(r'<div class="fh-tab-products" data-fh-panel="%s"[^>]*>' % key, sec)
+            card = plain
+        if not mm: ok = False; continue
+        close = balanced_end(sec, mm.start(), 'div')
+        new = place(sec[mm.start():close], card, after)
+        if new is None: ok = False; continue
+        sec = sec[:mm.start()] + new + sec[close:]
+    return home[:m.start()] + sec + home[end:], ok
 
 def brush_snapshot(gallery):
     """products/the-lymphatic-brush.js: the Shopify product JSON shape the theme build reads (handle, ids, prices)."""
@@ -746,10 +766,10 @@ def main():
     else:
         end = balanced_end(texts[pdp], cta, 'div')
         texts[pdp] = texts[pdp][:end] + trust_block() + texts[pdp][end:]
-    # the Lymphatic Brush on the homepage, after the hero
+    # the Lymphatic Brush in the homepage's product shelf, like the other products
     if DST / 'index.html' in texts:
-        texts[DST / 'index.html'], ok = brush_home(texts[DST / 'index.html'])
-        if not ok: missing.append(('brush', 'homepage serum / hero section'))
+        texts[DST / 'index.html'], ok = brush_shelf(texts[DST / 'index.html'])
+        if not ok: missing.append(('brush', 'homepage shelf list or tab'))
     # the Lymphatic Brush's page (brush_copy) and its product snapshot
     brush = DST / 'products' / f'{brush_copy.HANDLE}.html'
     texts[brush] = brush_page(base_pdp)

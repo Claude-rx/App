@@ -12,7 +12,8 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
 | NEXT product 169 | "The Lymphatic Brush", public, one-time purchase (no refills), template `the-lymphatic-brush`, 7 gallery images |
 | Bundles (variants) | 170: 1 brush + free case, $24.95 (was $49.90) · 171: 2 brushes + 2 free cases, $39.95 (was $99.80), chosen by default · 172: 3 brushes + 3 free cases + free body brush, $49.90 (was $149.70) |
 | Product page | Gallery, buyers line, stars (hidden until there are reviews), title and price, free shipping badge, 4 benefits, bundle picker, Add to cart with the bundle price, guarantee, 5 tabs (video tutorial, cleaning, shipping, specifications, returns), review videos, how it works, the copy comparison slider, FAQ, guarantee card, review wall, sticky bar |
-| Homepage | A brush section right after the hero (the foundation stays first), with the 45+ customer video |
+| Homepage | A product card in the shelf like the other products (default list, Bestsellers, New and Face tabs), next to the gua sha and face roller, with a "New" badge |
+| Collections | Accessories, Face, Skin and Bestsellers in NEXT, as the gua sha and the face roller |
 | Menus | "Lymphatic Brush" in the desktop and mobile menus (before Bestsellers) and in the footer's Shop column, on every page |
 | Cart drawer | First add-on (shown while the brush is not in the bag) and its own upgrade card, 1 brush → 2 brushes for $15 |
 
@@ -58,7 +59,7 @@ NEXT_API_TOKEN=... python3 -I tools/persona/upload_gallery.py skinofab 169 <work
 tools/build_store.sh <work_dir>
 ```
 
-Copy, offer, tabs, FAQ and the homepage section live in `tools/persona/brush_copy.py`.
+Copy, offer, tabs, FAQ, the shelf card and the collections live in `tools/persona/brush_copy.py`.
 
 `node tools/theme-qa/offer-e2e.mjs https://skinofab.29next.store 34 /catalogue/adaptive-peptide-foundation_14/ shots/`
 checks the brush without placing an order:
@@ -66,4 +67,4 @@ checks the brush without placing an order:
 - each bundle: its variant and price, a one-time line, the drawer, and checkout for the 2-brush bundle;
 - the drawer's 1 → 2 brushes upgrade;
 - the page: section order, no "Solena", the tabs, the FAQ, the prices, no stars or review wall without reviews;
-- the homepage section and the menu links.
+- the homepage shelf card and the menu links.

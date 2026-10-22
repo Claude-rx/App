@@ -17,8 +17,8 @@
 //        one brush, and never the brush as an add-on while it is in the bag; checkout shows the 2-brush bundle.
 //   upgrade: 1 brush -> 2 brushes in the drawer: one line, one-time.
 //   page: Solena's sections in order, no "Solena" anywhere, five tabs with the how-to video, seven FAQ answers, the
-//        title price with cents, the button price, no stars or review wall without reviews; the homepage section and
-//        the menu link lead to it.
+//        title price with cents, the button price, no stars or review wall without reviews; its card is in the
+//        homepage shelf (default list, Bestsellers, New and Face tabs) at $24.95, and the menu link leads to it.
 import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';
 import fs from 'fs'; import path from 'path';
 
@@ -431,11 +431,20 @@ for (const [key, pack] of Object.entries(brushPacks)) {
   if (pg.hScroll) problems.push('page scrolls sideways');
   // the homepage section and the menu link
   await s.page.goto(`${STORE}/`, { waitUntil: 'networkidle', timeout: 90000 });
-  const home = await s.page.evaluate(() => ({
-    section: (document.querySelector('[id$="__brush"] a.fh-button') || {}).pathname || null,
-    menu: [...document.querySelectorAll('a')].filter(a => /^\s*Lymphatic Brush\s*$/i.test(a.textContent)).map(a => a.pathname)
-  }));
-  if (!home.section || !home.section.includes('the-lymphatic-brush')) problems.push('homepage section link: ' + home.section);
+  const home = await s.page.evaluate(() => {
+    const shelf = document.querySelector('[id$="__bestsellers"]');
+    const has = el => !!el && [...el.querySelectorAll('article h3 a')].some(a => a.pathname.includes('the-lymphatic-brush'));
+    return {
+      section: !!document.querySelector('[id$="__brush"]'),
+      list: has(shelf && shelf.querySelector('.fh-product-list')),
+      tabs: ['bestsellers_0', 'bestsellers_1', 'bestsellers_2'].filter(k => has(shelf && shelf.querySelector(`[data-fh-panel="${k}"]`))),
+      price: ((shelf && [...shelf.querySelectorAll('.fh-product-list article')].find(a => /Lymphatic Brush/.test(a.textContent))) || {}).innerText || '',
+      menu: [...document.querySelectorAll('a')].filter(a => /^\s*Lymphatic Brush\s*$/i.test(a.textContent)).map(a => a.pathname)
+    };
+  });
+  if (home.section) problems.push('the homepage still has a brush section');
+  if (!home.list || home.tabs.length !== 3) problems.push(`homepage shelf: list ${home.list}, tabs ${home.tabs.join(',')}`);
+  if (!/\$24\.95/.test(home.price)) problems.push('shelf card price: ' + home.price.replace(/\s+/g, ' ').slice(0, 80));
   if (!home.menu.length || home.menu.some(p => !p.includes('the-lymphatic-brush'))) problems.push('menu links: ' + home.menu.join(','));
   out.push({ case: 'brush page', ...pg, home, errors: s.errors, ok: problems.length === 0, problems });
   await s.ctx.close();

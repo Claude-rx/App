@@ -440,14 +440,13 @@ def risk_free_html(buy='#apf-buy'):
 
 
 # around the site ---------------------------------------------------------------------------------------------------
-# the homepage section after the hero (the homepage's own video story layout); Solena's words
-HOME = {'eyebrow': 'The Lymphatic Brush', 'title': 'Depuff your face in 3 minutes',
-        'paragraphs': ['Fluid builds up while you sleep, under your eyes, in your cheeks and along your jaw. Thousands of soft '
-                       'bristles move it toward your neck with every stroke, and they bend instead of pressing, so the touch '
-                       'stays light even if you push.',
-                       '100% dry use, no oils, nothing to learn, just 3 minutes. Less puffy from the first use, with a 30-day '
-                       'money-back guarantee.'],
-        'button': 'Shop now', 'video': 3}
+# the homepage product shelf (the Bestsellers list and its tabs): a card like the other products', next to the gua sha
+# and the face roller, in the default list and the Bestsellers, New and Face tabs (the shelf's tab keys)
+SHELF = {'badge': 'New', 'saving': 'Save 50%', 'tags': ['No oils', '3 minutes', 'Less puffy'],
+         'after': {'list': 'color-changing-foundation', 'bestsellers_0': 'color-changing-foundation',
+                   'bestsellers_1': None, 'bestsellers_2': 'under-eye-reset'}}
+# the NEXT collections it is in, as the other face tools (gua sha, face roller): Accessories, Face, Skin, Bestsellers
+CATEGORIES = ['essentials', 'face', 'skin', 'the-hits']
 # menus on every page: a top-level link before Bestsellers (desktop and mobile) and one in the footer's Shop column;
 # raw-regex rules (apply_persona.py), the relative prefix of each page is kept
 NAV_LABEL = 'Lymphatic Brush'

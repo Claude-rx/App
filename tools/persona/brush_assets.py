@@ -3,7 +3,7 @@
 usage: python3 -I brush_assets.py <work_dir>
 - downloads the sources listed in brush_copy.SOURCES into <work_dir>/brush/src/ (kept; a re-run reuses them)
 - images -> brand/lymphatic-brush/ (committed): the 7 gallery images, the "how it works" drawings, the comparison
-  photos, the buyer avatars and the bundle gift photos. Two carried the Solena name and are rebranded here:
+  photos, the buyer avatars, the bundle gift photos and the homepage shelf card (card.jpg). Two carried the Solena name and are rebranded here:
   the case's printed logo (gallery 5 and the case gift photo) becomes the SKINOFAB wordmark, and "THE SOLENA" on
   the comparison chart (gallery 6) becomes "THE SKINOFAB"
 - videos -> <work_dir>/brush/media/ (not committed, like the theme's other media): the six silent review clips at
@@ -118,6 +118,12 @@ def images():
     case = case_logo(rgb('gift-case.png'), (285, 340, 520, 420), 196)
     save(Image.fromarray(np.clip(case, 0, 255).astype(np.uint8)).crop((210, 200, 590, 580)), 'gift-case.jpg', (160, 160))
     save(Image.open(SRC / 'gift-body-brush.png').convert('RGB').crop((120, 120, 680, 680)), 'gift-body-brush.jpg', (160, 160))
+    # the product card (homepage shelf): the brush and its SKINOFAB case from gallery 5, without its heading, on the
+    # same backdrop with room around it (the card crops to its own aspect)
+    g5 = Image.open(OUT / 'gallery-5.jpg').convert('RGB')
+    card = Image.new('RGB', (1080, 1080), tuple(int(c) for c in np.median(np.asarray(g5)[1040:1075, 20:1060].reshape(-1, 3), axis=0)))
+    card.paste(g5.crop((200, 330, 880, 1010)).resize((820, 820), Image.LANCZOS), (130, 140))
+    save(card, 'card.jpg', quality=88)
     for p in sorted(OUT.glob('*.jpg')): print(p.relative_to(ROOT), Image.open(p).size, p.stat().st_size // 1024, 'KB')
 
 

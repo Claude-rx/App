@@ -143,9 +143,9 @@
    "dropped": 4298
   },
   "inline": {
-   "blocks": 1756,
-   "before_kb": 8676.6,
-   "after_kb": 7359.5,
+   "blocks": 1755,
+   "before_kb": 8676.3,
+   "after_kb": 7359.3,
    "skipped": 0
   }
  },
@@ -181,7 +181,7 @@
   "script_tags_deferred": 88
  },
  "images": {
-  "elements": 1017,
+  "elements": 1021,
   "skipped": 1108
  },
  "errors": []
