@@ -1,14 +1,17 @@
 // Adaptive Peptide Foundation offer, end to end on the NEXT preview (no order is placed).
 // usage: node offer-e2e.mjs <store_url> <theme_id> <pdp_path> <shots_dir>
-// The offer (tools/persona/ccf_copy.py PACKS/REFILL): 1 bottle or 2 bottles + free gifts, one-time by default, or
-// with Automatic Refills (a cheaper price, refilled every 28 days). The picker's data-packs table is the expectation.
-//   1-4. every pack x purchase type: the picker's prices and the price under the title follow the choice, the refill
-//        terms show only with refills; the button adds that pack's variant at that price, as a 28-day refill or
-//        one-time (read from the storefront GraphQL responses); the drawer shows no plan talk, the guarantee, a
-//        review, the add-ons, and the upgrade only while the bag holds the 1-bottle pack.
-//   5-6. the drawer upgrade from 1 bottle (one-time and refill): one line, the 2-bottle pack, same purchase type.
-//   7.   a drawer add-on: added as a second line, then no longer offered.
-//   checkout (1 bottle with refills, and 2 bottles one-time): the line, its price and the refill wording.
+// The offer (tools/persona/ccf_copy.py PACKS/REFILL): 1 bottle or 2 bottles + free gifts, one-time or with Automatic
+// Refills (a cheaper price, refilled every 28 days). REFILL decides whether refills start ticked and whether the box
+// is shown; the test reads both from the page. The picker's data-packs table is the expectation.
+//   buy:  every pack in its default purchase type (and the other type too when the box is shown): the picker's prices
+//         and the price under the title follow the choice, the refill terms show exactly while refills are on; the
+//         button adds that pack's variant at that price, as a 28-day refill or one-time (read from the storefront
+//         GraphQL responses); the drawer shows no plan talk, the guarantee, a review, the add-ons, and the upgrade
+//         only while the bag holds the 1-bottle pack.
+//   upgrade: from 1 bottle with refills and bought once (from the box, or with the box hidden through
+//         SFCommerce.addItems, the path other buttons use): one line, the 2-bottle pack, same purchase type.
+//   add-on: added as a second line, then no longer offered.
+//   checkout (1 bottle and 2 bottles, first case of each): the line, its price and the refill wording.
 import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';
 import fs from 'fs'; import path from 'path';
 
@@ -60,20 +63,22 @@ function checkLine(line, want) {
   return p;
 }
 
-async function choose(s, key, refill) {
+// refill: true/false to set the box (it must be shown), null to keep the page's default
+async function choose(s, key, refill = null) {
   const box = s.page.locator(picker);
   await box.scrollIntoViewIfNeeded();
   await box.locator(`input[name=sf_pack][value="${key}"]`).check({ force: true });
   const cb = box.locator('input[name=sf_purchase]');
-  if ((await cb.isChecked()) !== refill) await cb.click({ force: true });
+  if (refill !== null && (await cb.isChecked()) !== refill) await cb.click({ force: true });
   return s.page.evaluate(sel => {
     const root = document.querySelector(sel), form = root.closest('form');
     const head = document.querySelector('.product__price-and-badge');
     const terms = document.querySelector('[data-sf-refill-terms]');
-    return { id: form.querySelector('input[name=id]').value,
+    const cb = root.querySelector('input[name=sf_purchase]'), pct = root.querySelector('[data-sfo-pct]');
+    return { id: form.querySelector('input[name=id]').value, refill: cb.checked, boxShown: !!cb.offsetParent,
              now: head.querySelector('.product__price--regular').textContent.trim(), was: head.querySelector('.product__price--compare').textContent.trim(),
              cards: [...root.querySelectorAll('.sfo-card')].map(c => c.querySelector('[data-sfo-now]').textContent + ' ' + c.querySelector('[data-sfo-save]').textContent),
-             pct: root.querySelector('[data-sfo-pct]').textContent, termsShown: !!terms && !terms.hidden, terms: terms ? terms.textContent : '' };
+             pct: pct ? pct.textContent : null, termsShown: !!terms && !terms.hidden, terms: terms ? terms.textContent : '' };
   }, picker);
 }
 
@@ -103,16 +108,26 @@ async function checkout(s, name) {
 }
 
 const out = [];
-const packs = await (async () => { const s = await session(); const t = JSON.parse(await s.page.getAttribute(picker, 'data-packs')); await s.ctx.close(); return t; })();
+const { packs, start } = await (async () => {
+  const s = await session();
+  const t = JSON.parse(await s.page.getAttribute(picker, 'data-packs'));
+  const ui = await choose(s, '1');
+  await s.ctx.close();
+  return { packs: t, start: ui };
+})();
+console.error(`refills ${start.refill ? 'on' : 'off'} by default, box ${start.boxShown ? 'shown' : 'hidden'}`);
+if (!start.boxShown && !start.refill) console.error('note: the box is hidden and unticked, so refills cannot be bought from the product page');
+const states = start.boxShown ? [start.refill, !start.refill] : [start.refill];
 
 for (const [key, pack] of Object.entries(packs)) {
-  for (const refill of [false, true]) {
+  for (const refill of states) {
     const name = `${key}-${refill ? 'refill' : 'once'}`;
     const s = await session();
-    const ui = await choose(s, key, refill);
+    const ui = await choose(s, key, start.boxShown ? refill : null);
     const want = { pk: pack.pk, price: refill ? pack.refill : pack.price, refill };
     const problems = [];
     if (ui.id !== String(pack.pk)) problems.push(`form id ${ui.id} != ${pack.pk}`);
+    if (ui.refill !== refill) problems.push(`refills ${ui.refill} != ${refill}`);
     if (!ui.now.startsWith(money(want.price))) problems.push(`title price ${ui.now} != ${money(want.price)}`);
     if (!ui.was.startsWith(money(pack.compare))) problems.push(`title compare ${ui.was} != ${money(pack.compare)}`);
     if (ui.termsShown !== refill) problems.push(`refill terms shown=${ui.termsShown}`);
@@ -132,7 +147,7 @@ for (const [key, pack] of Object.entries(packs)) {
     if (!d.guarantee || !d.review) problems.push('trust card incomplete');
     if (d.addons.length < 1) problems.push('no add-ons');
     let co;
-    if ((key === '1' && refill) || (key === '2' && !refill)) {
+    if (refill === states[0]) {
       co = await checkout(s, name);
       if (!co.hasLine) problems.push('checkout has no line');
       if (!co.prices.includes('$' + want.price.toFixed(2))) problems.push(`checkout prices ${co.prices} lack $${want.price.toFixed(2)}`);
@@ -144,11 +159,17 @@ for (const [key, pack] of Object.entries(packs)) {
   }
 }
 
-// 5-6. the upgrade, from both purchase types
+// the upgrade, from both purchase types
 for (const refill of [false, true]) {
   const s = await session();
-  await choose(s, '1', refill);
-  await addToCart(s);
+  if (start.boxShown || refill === start.refill) {
+    await choose(s, '1', start.boxShown ? refill : null);
+    await addToCart(s);
+  } else {   // the box is hidden: this purchase type comes from the site's other buttons
+    await s.page.evaluate(pk => window.SFCommerce.addItems([{ id: String(pk), quantity: 1,
+      subscription: null }]), packs['1'].pk);
+    await s.page.waitForTimeout(6000);
+  }
   await s.page.locator(`${drawer} [data-sf-upgrade]`).click();
   await s.page.waitForTimeout(6000);
   const ls = lines(s.cart);
@@ -162,10 +183,10 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
-// 7. a drawer add-on
+// a drawer add-on
 {
   const s = await session();
-  await choose(s, '2', false);
+  await choose(s, '2');
   await addToCart(s);
   await s.page.waitForTimeout(1500);
   const before = await drawerState(s);
@@ -188,7 +209,7 @@ for (const refill of [false, true]) {
 // mobile buy box and drawer, for the eye
 {
   const s = await session(390, 844);
-  await choose(s, '2', true);
+  await choose(s, '2');
   const bb = await s.page.locator(picker).boundingBox();
   await s.page.screenshot({ path: path.join(SHOTS, 'mobile-buybox.png'), clip: { x: 0, y: Math.max(0, bb.y - 120), width: 390, height: Math.min(1400, bb.height + 520) } });
   await addToCart(s);

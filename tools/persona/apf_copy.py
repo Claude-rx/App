@@ -6,7 +6,7 @@ Sources
   "done", wasted money and hidden subscriptions; values honesty, women her age, easy returns), the review
   complaints (shade match 52-58% negative, coverage 40-51%, "dries mature skin" 62%, value 47-74%, trust), the
   product answer (one adaptive shade, serum base, PDRN + peptides + Pro-Xylane, fragrance-free, 30-day money-back
-  guarantee, optional Automatic Refills) and the compliance rules (no SPF claim, never "matches every skin tone",
+  guarantee, Automatic Refills) and the compliance rules (no SPF claim, never "matches every skin tone",
   cosmetic claims only).
 - The offer: ccf_copy.PACKS / REFILL (1 bottle or 2 bottles + free gifts, one-time or with Automatic Refills).
 
@@ -32,6 +32,8 @@ def usd(v):
 
 # prices the long-form sections quote: one bottle bought once, and with Automatic Refills
 ONCE, REFILLED = usd(PACK1['price']), usd(PACK1['refill'])
+# the product page shows the refills box (buy once or refills) or hides it ticked (refills only)
+CHOICE = REFILL.get('show_box', True)
 
 # line icons (24px grid, drawn as strokes in the text colour); the seal is the brand's filled black badge
 _SVG = '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'
@@ -56,17 +58,20 @@ TRUST_CSS = r"""
 .apf-trust__row li{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:14px;line-height:1.3;color:#2b2b2b}
 .apf-trust__row li:before{content:none !important}
 .apf-trust__row svg{width:26px;height:26px;color:#151515}
-.apf-trust__terms{margin:14px auto 0 !important;max-width:470px;font-size:12px !important;line-height:1.45;color:#6a6a6a !important}
+.apf-trust__terms{margin:14px auto 0 !important;max-width:470px;font-size:13px !important;line-height:1.45;color:#4a4a4a !important}
 """
 
 def trust_html(terms=True):
-    """'Love it or your money back', then free shipping / 30-day guarantee / secure checkout, and the refill terms
-    (hidden until refills are ticked; the offer picker fills in the amount and shows them)."""
+    """'Love it or your money back', then free shipping / 30-day guarantee / secure checkout, and the refill terms:
+    shown for the first pack when refills are on by default (ccf_copy.REFILL['default']), else hidden; the offer
+    picker keeps them in step with the chosen pack and the refills box."""
     row = ''.join(f'<li>{ICONS[k]}<span>{label}</span></li>' for k, label in
                   (('truck', 'Free shipping'), ('shield', '30-day guarantee'), ('lock', 'Secure checkout')))
     return (f'<div class="apf-trust"><p class="apf-trust__head">{ICONS["seal"]}<span>Love it or your money back</span></p>'
             f'<ul class="apf-trust__row">{row}</ul>' +
-            (f'<p class="apf-trust__terms" data-sf-refill-terms="{html_attr(TERMS)}" hidden></p>' if terms else '') + '</div>')
+            (f'<p class="apf-trust__terms" data-sf-refill-terms="{html_attr(TERMS)}"'
+             + (f'>{html_attr(TERMS.replace("{amount}", usd(PACK1["refill"])))}</p>' if REFILL.get('default') else ' hidden></p>')
+             if terms else '') + '</div>')
 
 def html_attr(text):
     return text.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;')
@@ -258,7 +263,10 @@ FAQ = [
     ('Which shade do I choose?',
      'There\'s no shade to choose. It goes on white and adapts to your skin tone as you blend. If you don\'t love how it looks on you, we\'ll refund you within 30 days.'),
     ('How do Automatic Refills work?',
-     f"Tick Automatic Refills on the product page and your pack costs less: {REFILLED} instead of {ONCE} for one bottle. It ships again every {REFILL['every']} days, and we email you before every refill. To skip or cancel, email hey@skinofab.com: no minimum, no fees. Prefer to buy once? Leave the box unticked."),
+     (f"Tick Automatic Refills on the product page and your pack costs less: {REFILLED} instead of {ONCE} for one bottle. " if CHOICE else
+      f"Every pack comes with Automatic Refills at the lower price: {REFILLED} for one bottle. ") +
+     f"It ships again every {REFILL['every']} days, and we email you before every refill. To skip or cancel, email hey@skinofab.com: no minimum, no fees." +
+     (" Prefer to buy once? Leave the box unticked." if CHOICE else "")),
     ('Will it settle into my fine lines?',
      'It\'s designed not to. The base is a satin serum, not a matte formula, and soft-focus powders blur the look of lines instead of filling them with pigment. For the smoothest finish, use one thin layer and skip powder on dry areas.'),
     ('My skin is very dry. Will it look patchy?',
@@ -297,14 +305,15 @@ def faq_html(items=FAQ, title='Questions women ask us before they order'):
   <div class="apf-faq">{qa}</div></div></section>'''
 
 def offers_html(href, black=True, title='Choose your pack', sub=None, scarcity=True):
-    sub = sub or 'Buy once, or save more with Automatic Refills. Love it or your money back.'
+    sub = sub or ('Buy once, or save more with Automatic Refills.' if CHOICE else f'Automatic Refills every {REFILL["every"]} days, cancel any time.') + ' Love it or your money back.'
     def card(p):
         n = 'One 30 mL bottle' if p['key'] == '1' else 'Two 30 mL bottles'
         gifts = [label.replace('FREE ', 'Free ') for k, label, v in p['gifts']] or ['Free shipping']
         badge = f'<span class="apf-badge">{p["badge"]}</span>' if p.get('badge') else ''
         return (f'<div class="apf-offer apf-offer--pick apf-plan">{badge}<h3>{p["name"].capitalize()}</h3>'
-                f'<div class="apf-price">{usd(p["price"])} <s>{usd(p["compare"])}</s></div>'
-                f'<p>or {usd(p["refill"])} with Automatic Refills, every {REFILL["every"]} days</p>{_checks([n] + gifts)}'
+                f'<div class="apf-price">{usd(p["price" if CHOICE else "refill"])} <s>{usd(p["compare"])}</s></div>'
+                + (f'<p>or {usd(p["refill"])} with Automatic Refills, every {REFILL["every"]} days</p>' if CHOICE else
+                   f'<p>Refills every {REFILL["every"]} days, cancel any time</p>') + f'{_checks([n] + gifts)}'
                 f'<a class="apf-btn" href="{href}#apf-buy">Choose {p["name"]}</a></div>')
     note = ('<div class="apf-note"><strong>Launch batch.</strong> We make the foundation in small production runs so every bottle '
             'is fresh. When this first run sells out, new orders wait for the next batch.</div>') if scarcity else ''
@@ -406,7 +415,7 @@ def home_sections(pdp):
     <div class="apf-fix"><q>&ldquo;Settles into my wrinkles.&rdquo;</q><b>&rarr;</b><div>Satin, never matte, with soft-focus powders that blur instead of fill.</div></div>
     <div class="apf-fix"><q>&ldquo;No coverage for my spots.&rdquo;</q><b>&rarr;</b><div>Buildable medium coverage: a second thin layer only where you want it.</div></div>
     <div class="apf-fix"><q>&ldquo;Not worth the price.&rdquo;</q><b>&rarr;</b><div>PDRN, peptides and Pro-Xylane from {REFILLED} a bottle, shipped free.</div></div>
-    <div class="apf-fix"><q>&ldquo;I couldn't cancel my subscription.&rdquo;</q><b>&rarr;</b><div>Buy once, no strings. Refills are optional: a reminder before each one, and one email cancels them.</div></div>
+    <div class="apf-fix"><q>&ldquo;I couldn't cancel my subscription.&rdquo;</q><b>&rarr;</b><div>{'Buy once, no strings. Refills are optional: a' if CHOICE else 'No traps: a'} reminder before each refill, and one email cancels them.</div></div>
   </div>
 </div></section>
 
@@ -485,7 +494,7 @@ def pdp_sections():
       <tr><td>Fine lines</td><td class="apf-us">Blurs the look of lines, made not to settle</td><td>Pigment collects in lines</td><td>Often settles by midday</td></tr>
       <tr><td>Skincare actives</td><td class="apf-us">PDRN, peptides, Pro-Xylane, hyaluronic acid</td><td>Rarely</td><td>Usually none</td></tr>
       <tr><td>Fragrance</td><td class="apf-us">Fragrance-free</td><td>Often fragranced</td><td>Often contains parfum</td></tr>
-      <tr><td>Buying</td><td class="apf-us">Buy once, or optional refills: a reminder before each, cancel with one email</td><td>&mdash;</td><td>Complaints about surprise charges and hard cancellations</td></tr>
+      <tr><td>Buying</td><td class="apf-us">{'Buy once, or optional refills' if CHOICE else 'Refills every %d days' % REFILL['every']}: a reminder before each, cancel with one email</td><td>&mdash;</td><td>Complaints about surprise charges and hard cancellations</td></tr>
     </tbody></table></div>
 </div></section>
 
@@ -528,7 +537,7 @@ def pdp_sections():
     <div class="apf-card"><h4>Actives on the label</h4><p>PDRN is printed on the bottle. Peptides, Pro-Xylane and hyaluronic acid are listed in the ingredients.</p></div>
     <div class="apf-card"><h4>Fragrance-free</h4><p>No fragrance, propylene glycol, drying alcohol or parabens, for thinner, reactive skin.</p></div>
     <div class="apf-card"><h4>Honest shade promise</h4><p>It adapts to your tone as you blend. If you don't love how it looks on you, we'll refund you within 30 days.</p></div>
-    <div class="apf-card"><h4>Refills without traps</h4><p>Buy once, or tick Automatic Refills to save. We email you before every refill, and one email cancels it.</p></div>
+    <div class="apf-card"><h4>Refills without traps</h4><p>{'Buy once, or tick Automatic Refills to save. ' if CHOICE else ''}We email you before every refill, and one email cancels it.</p></div>
   </div>
 </div></section>
 
@@ -559,7 +568,7 @@ def pdp_sections():
 {guarantee_html(buy, black=False).replace('<section class="apf-sec"', '<section class="apf-sec apf-sec--grey"', 1)}
 
 <!-- 16 + 17. offer with urgency, scarcity -->
-{offers_html('', black=True, title='Your launch offer', sub='Pick your pack at the top of the page: buy once, or save with Automatic Refills. Love it or your money back.')}
+{offers_html('', black=True, title='Your launch offer', sub='Pick your pack at the top of the page' + (': buy once, or save with Automatic Refills.' if CHOICE else '.') + ' Love it or your money back.')}
 
 <!-- 18. customer reviews with images -->
 {reviews_html()}

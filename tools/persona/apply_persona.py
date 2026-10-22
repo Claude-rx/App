@@ -58,7 +58,9 @@ def gift_icons():
 
 def picker():
     """The offer, as on the old store: 1 bottle or 2 bottles + free gifts, each a "temporary deal" off the compare-at
-    price, and an Automatic Refills box (unticked by default) that drops both to their refill price.
+    price, and an Automatic Refills box that drops both to their refill price. ccf_copy.REFILL decides whether the
+    box starts ticked ('default') and whether it is shown ('show_box'); hidden and ticked, the product page sells
+    refills only, and the refill terms under the button say so.
 
     Prices come from ccf_copy.PACKS, the same table setup_ccf_offers.py writes to NEXT. The box is
     data-sf-offer-picker, so the theme build keeps these prices as written instead of binding them to the product."""
@@ -68,6 +70,7 @@ def picker():
                         'compare': float(p['compare'])} for p in packs}
     first = packs[0]
     pct = round((float(first['compare']) - float(first['refill'])) / float(first['compare']) * 100)
+    on = bool(refill.get('default'))
     cards = []
     for i, p in enumerate(packs):
         gifts = ''.join(
@@ -79,11 +82,19 @@ def picker():
             + (f'<em class="sfo-tab">{html.escape(p["badge"])}</em>' if p.get('badge') else '')
             + f'<span class="sfo-row"><input type="radio" name="sf_pack" value="{p["key"]}"{" checked" if i == 0 else ""}>'
             f'<span class="sfo-main"><span class="sfo-name">{html.escape(p["name"])}'
-            f'<span class="sfo-save" data-sfo-save>SAVE {money(float(p["compare"]) - float(p["price"]))}</span></span>'
+            f'<span class="sfo-save" data-sfo-save>SAVE {money(float(p["compare"]) - float(p["refill" if on else "price"]))}</span></span>'
             f'<small>{html.escape(p["note"])}</small></span>'
-            f'<span class="sfo-price"><b data-sfo-now>{money(p["price"])}</b><s>{money(p["compare"])}</s></span></span>'
+            f'<span class="sfo-price"><b data-sfo-now>{money(p["refill" if on else "price"])}</b><s>{money(p["compare"])}</s></span></span>'
             + (f'<ul class="sfo-gifts">{gifts}</ul>' if gifts else '') + '</label>')
     perks = ' <i>|</i> '.join(html.escape(x) for x in refill['perks'])
+    box = (f'<input type="checkbox" name="sf_purchase" value="subscribe" data-interval="{refill["interval"]}" '
+           f'data-interval-count="{refill["every"]}"{" checked" if on else ""}')
+    if refill.get('show_box', True):
+        box = (f'<label class="sfo-refill">{box}>\n<span><strong>Save <span data-sfo-pct>{pct}%</span> with '
+               f'{html.escape(refill["name"])}</strong><small>{perks}</small></span></label>')
+    else:
+        # inline !important: the design's stylesheets give inputs display:block, which beats the hidden attribute
+        box += ' hidden style="display:none !important" aria-hidden="true" tabindex="-1">'
     return f"""<div class="sfo" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
 <style>
 .sfo{{margin:6px 0 16px;display:grid;gap:12px;font-family:inherit;color:#151515}}
@@ -121,8 +132,7 @@ def picker():
 @media (max-width:420px){{.sfo-card{{padding:14px}}.sfo-card:has(input:checked){{padding:13px}}.sfo-name{{font-size:17px}}.sfo-price b{{font-size:19px}}.sfo-refill{{padding:12px 14px}}}}
 </style>
 <fieldset><legend>Choose your pack</legend>{''.join(cards)}</fieldset>
-<label class="sfo-refill"><input type="checkbox" name="sf_purchase" value="subscribe" data-interval="{refill['interval']}" data-interval-count="{refill['every']}">
-<span><strong>Save <span data-sfo-pct>{pct}%</span> with {html.escape(refill['name'])}</strong><small>{perks}</small></span></label>
+{box}
 <script>
 (function () {{
   var root = document.currentScript.parentNode;
@@ -146,7 +156,8 @@ def picker():
       card.querySelector('[data-sfo-now]').textContent = money(v);
       card.querySelector('[data-sfo-save]').textContent = 'SAVE ' + money(p.compare - v);
     }});
-    root.querySelector('[data-sfo-pct]').textContent = Math.round((pick.compare - pick.refill) / pick.compare * 100) + '%';
+    var pct = root.querySelector('[data-sfo-pct]');
+    if (pct) pct.textContent = Math.round((pick.compare - pick.refill) / pick.compare * 100) + '%';
     if (now) now.textContent = money(sub ? pick.refill : pick.price) + unit;
     if (was) was.textContent = money(pick.compare) + unit;
     var terms = document.querySelector('[data-sf-refill-terms]');   // under the button: parsed after this script

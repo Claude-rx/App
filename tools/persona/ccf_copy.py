@@ -137,7 +137,10 @@ PACKS = [
      'price': '57.00', 'refill': '47.00', 'compare': '118.00', 'note': 'Temporary deal', 'badge': 'Best value',
      'gifts': [('blender', 'FREE Skinofab Blender', '9.00'), ('mystery', 'FREE Mystery Gift', '15.00'), ('shipping', 'FREE Shipping', None)]},
 ]
-REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills',
+# default: refills are on when the page loads (the cards show the refill prices); show_box: the "Save 37% with
+# Automatic Refills" box is shown (False: hidden, so every pack bought from the product page is a refill). The terms
+# under the button ("You pay $37 today, then $37 every 28 days until you cancel...") always show while refills are on.
+REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills', 'default': True, 'show_box': False,
           'perks': ['No Commitment', 'Cancel Anytime', 'Refills every 28 days']}
 
 # Cart drawer (Theme settings > SKINOFAB > Cart Drawer): the last step before payment is about trust and order value,

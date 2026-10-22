@@ -37,12 +37,12 @@ color `#151515`, logo position left.
 ## 3. Checkout policies
 
 Dashboard → Settings → Policies. Replace the demo text. The subscription terms below match the storefront
-copy, word for word (the terms the product page shows under the button when Automatic Refills is ticked, and the
+copy, word for word (the terms the product page shows under the button while Automatic Refills is on, and the
 guarantee in the cart drawer):
 
 > **Subscription Terms**
 >
-> Automatic Refills are optional: tick the box on the product page to pay the refill price. 1 bottle: you pay
+> Packs bought on the product page come with Automatic Refills at the refill price. 1 bottle: you pay
 > $37 today, then $37 every 28 days until you cancel. 2 bottles + free gifts: you pay $47 today, then $47 every
 > 28 days until you cancel. We email you before every refill. To skip or cancel, just email hey@skinofab.com.
 > No minimum, no fees.
@@ -64,9 +64,12 @@ you before every refill" promise is kept automatically.
 ## 5. Check
 
 1. Preview: https://skinofab.29next.store/?preview_theme=34
-2. Pick 1 bottle, tick Automatic Refills, add it, open the bag, press **Secure checkout**.
+2. Pick 1 bottle (Automatic Refills is on by default, its box hidden), add it, open the bag, press **Secure checkout**.
 3. The checkout should show the logo, black buttons, `Schedule: Every 28 Days` at $37.00, Shipping $0.00, and
-   the three policy links with the texts above. Bought once (box unticked), the line has no schedule.
+   the three policy links with the texts above.
+
+Whether the refills box is shown, and whether it starts ticked, is `REFILL['show_box']` / `REFILL['default']` in
+`tools/persona/ccf_copy.py` (rebuild with `tools/build_store.sh`). Shown and unticked, the page sells one-time first.
 
 `node tools/theme-qa/offer-e2e.mjs https://skinofab.29next.store 34 /catalogue/adaptive-peptide-foundation_14/ shots/`
 runs all of this (and the cart drawer's upgrade and add-ons) without placing an order.
