@@ -236,6 +236,28 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
+// the product page story: problem -> solution, the dermatologist, customer reviews before the FAQ, the refill FAQ
+{
+  const s = await session();
+  const st = await s.page.evaluate(() => {
+    const ids = [...document.querySelectorAll('[id^="shopify-section-"]')].map(e => e.id);
+    const at = k => ids.findIndex(i => i.includes(k));
+    const faq = [...document.querySelectorAll('.accordion__item__title__text')].map(e => e.textContent.trim());
+    return { reviews1: at('kopstorm_testomonials'), problem: at('sf-problem-solution'), derm: at('sf-dermatologist'),
+             reviews2: at('sf-reviews'), faq: at('section_accordions'), faqItems: faq.length,
+             refillsFaq: faq.includes('How do Automatic Refills work?') && faq.includes('Can I buy just once?'),
+             dermName: (document.querySelector('#sf-dermatologist .sfx-sign b') || {}).textContent || '',
+             spfInQuote: /has SPF/i.test((document.querySelector('#sf-dermatologist') || {}).textContent || '') };
+  });
+  const problems = [];
+  if (!(st.reviews1 >= 0 && st.reviews1 < st.problem && st.problem < st.derm && st.derm < st.reviews2 && st.reviews2 < st.faq))
+    problems.push('sections missing or out of order: ' + JSON.stringify(st));
+  if (!st.refillsFaq) problems.push('refill questions missing from the FAQ');
+  if (st.spfInQuote) problems.push('SPF claim in the dermatologist quote');
+  out.push({ case: 'product page story', ...st, errors: s.errors, ok: problems.length === 0, problems });
+  await s.ctx.close();
+}
+
 // a drawer add-on
 {
   const s = await session();

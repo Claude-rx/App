@@ -17,8 +17,10 @@ least once or the build fails, so copy can't silently drift from the design.
 
 GLOBAL = [
     # SPF: the foundation carries no SPF claim (report 11). Sentences first, then the bare chips.
+    # Dr. Mamaeva's quote keeps her own words: the SPF clause is dropped, nothing is put in its place.
     ("The Color Changing Foundation is what I recommend most to patients over forty. It adapts to her tone, it has SPF, and it doesn't turn orange or sink into fine lines.",
-     "The Color Changing Foundation is what I recommend most to patients over forty. It adapts to her tone, it hydrates instead of drying, and it doesn't turn orange or sink into fine lines."),
+     "The Color Changing Foundation is what I recommend most to patients over forty. It adapts to her tone, and it doesn't turn orange or sink into fine lines."),
+    ("I loved not having to layer sunscreen underneath.", "I loved how it felt like skincare, not makeup."),
     ("The SPF 15 is built in, so my skin is protected during everyday exposure without shine or heaviness.",
      "It feels like a serum, so my dry patches stay comfortable all day, without shine or heaviness."),
     ("5. Built-in SPF 15 without the greasy feel", "5. Hydrates like a serum, without the greasy feel"),
@@ -142,6 +144,37 @@ PACKS = [
 # under the button ("You pay $37 today, then $37 every 28 days until you cancel...") always show while refills are on.
 REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills', 'default': True, 'show_box': False,
           'perks': ['No Commitment', 'Cancel Anytime', 'Refills every 28 days']}
+
+# Product page additions taken from the homepage (apply_persona.py): the dermatologist section and the customer video
+# reviews, rebuilt in the product page's style. A homepage review whose story the product page already tells under
+# another name is left out (the makeup artist, 53, is "Deborah, 53" in the product page reviews). The review videos
+# still show the previous brand's bottle (only their posters were re-made), so the cards use the posters as photos.
+PDP_REVIEW_SKIP = ['Olivia M.']
+
+# More questions for the product page FAQ (appended to its two accordion columns): the skin questions women 45+ ask,
+# and how Automatic Refills work and how to buy once.
+PDP_FAQ_SKIN = [
+    ('Which shade do I choose?',
+     "There's no shade to choose. It goes on white and adapts to your skin tone as you blend. If you don't love how it looks on you, we'll refund you within 30 days."),
+    ('Will it settle into my fine lines?',
+     "It's designed not to. The base is a satin serum, not a matte formula, and soft-focus powders blur the look of lines instead of filling them with pigment. For the smoothest finish, use one thin layer and skip powder on dry areas."),
+    ('My skin is very dry. Will it look patchy?',
+     "Dry, mature skin is who we made it for. Two forms of hyaluronic acid, ceramide NP, squalane and panthenol keep the finish comfortable, so it doesn't crack or cling to dry patches. Apply it over your usual moisturizer."),
+]
+def pdp_faq_orders():
+    one, two = PACKS[0], PACKS[1]
+    usd = lambda v: '$%d' % float(v) if float(v) == int(float(v)) else '$%.2f' % float(v)
+    return [
+        ('How do Automatic Refills work?',
+         f"Your pack ships again every {REFILL['every']} days at the refill price: {usd(one['refill'])} for 1 bottle, "
+         f"{usd(two['refill'])} for 2 bottles. We email you before every refill. To skip or cancel, just email "
+         "hey@skinofab.com: no minimum, no fees."),
+        ('Can I buy just once?',
+         f"Yes. In your cart, choose One Time under the bottle before checkout: {usd(one['price'])} for 1 bottle or "
+         f"{usd(two['price'])} for 2 bottles, with no refills."),
+        ('Does it have SPF?',
+         'No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation layers on top without pilling.'),
+    ]
 
 # FrontrowMD "Clinicians' Choice" badge under the product title (Theme settings > SKINOFAB > Product Page). The
 # foundation's FrontrowMD listing, product 4694, from the original store's loader; the owner runs both brands

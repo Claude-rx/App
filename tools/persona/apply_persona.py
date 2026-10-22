@@ -73,6 +73,99 @@ def problem_solution():
         section_image(BRAND / 'persona' / 'age-73.jpg', 'skinofab-problem-skin-after-45'),
         section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle'))
 
+def crop_to(src_path, name, size, centering):
+    """A crop of an export image at `size`, under a content-hashed name (NEXT's CDN caches by file name)."""
+    from PIL import Image, ImageOps
+    im = ImageOps.fit(Image.open(src_path).convert('RGB'), size, Image.LANCZOS, centering=centering)
+    tmp = DST / 'assets' / 'img' / f'{name}.jpg'
+    im.save(tmp, quality=86, optimize=True, progressive=True)
+    final = tmp.with_name(f"{name}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg")
+    tmp.rename(final)
+    return '../assets/img/' + final.name, size[0], size[1]
+
+def subject_center_x(path):
+    """Horizontal center of the person in a studio photo (columns that differ from the backdrop)."""
+    import numpy as np
+    from PIL import Image
+    a = np.asarray(Image.open(path).convert('L')).astype(int)
+    bg = int(np.median(a[:, :20]))
+    cols = (np.abs(a - bg) > 28).sum(0)
+    xs = np.where(cols > a.shape[0] * 0.08)[0]
+    return (xs.min() + xs.max()) / 2 / a.shape[1] if len(xs) else 0.5
+
+def home_section(home, key):
+    m = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__%s"' % key, home)
+    if not m: return None
+    return home[m.start():home.find('</section>', m.start())]
+
+def dermatologist(home):
+    """The homepage dermatologist (her photo, words, name and role) as a product page section."""
+    sec = home_section(home, 'experts')
+    if not sec: return None
+    copy = re.search(r'<div class="fh-expert-copy">(.*?)</div>', sec, re.S).group(1)
+    name = re.search(r'<h3>(.*?)</h3>', copy).group(1)
+    role = re.search(r'<p class="fh-expert-role">(.*?)</p>', copy).group(1)
+    paras = [p for p in re.findall(r'<p>(.*?)</p>', copy, re.S)]
+    photo = re.search(r'class="fh-expert-photo"><img[^>]*src="assets/img/([^"]+)"', sec).group(1)
+    avatar = re.search(r'role="tab"[^>]*>\s*<picture[^>]*><img[^>]*src="assets/img/([^"]+)"', sec).group(1)
+    path = DST / 'assets' / 'img' / photo
+    from PIL import Image
+    w, h = Image.open(path).size
+    pw = int(h * 0.8)
+    ph = crop_to(path, 'skinofab-dermatologist-portrait', (pw, h), (min(max(subject_center_x(path), 0), 1), 0.5))
+    lead, mark = 'Trusted by leading', 'dermatologists'
+    hit = re.search(r'what I recommend most (to [^.]+\.)', ' '.join(paras))
+    if hit: lead, mark = '&hellip;what I recommend most', hit.group(1)
+    return apf_copy.dermatologist_html({'name': name, 'role': role.replace(' SkinClinic', ', SkinClinic'), 'paragraphs': paras,
+                                        'photo': ph, 'avatar': '../assets/img/' + avatar,
+                                        'headline_lead': lead, 'headline_mark': mark})
+
+def video_reviews(home):
+    """The homepage customer reviews (poster photos, words, names) as a product page section."""
+    sec = home_section(home, 'reviews')
+    if not sec: return None
+    eyebrow = re.search(r'class="fh-eyebrow">.*?<span>(.*?)</span>', sec, re.S).group(1)
+    title = re.search(r'<h2>(.*?)</h2>', sec, re.S).group(1)
+    out = []
+    for a in re.findall(r'<article class="fh-review">(.*?)</article>', sec, re.S):
+        name = re.search(r'fh-review-name"><span>(.*?)</span>', a).group(1)
+        if name in ccf_copy.PDP_REVIEW_SKIP: continue
+        poster = re.search(r'<img[^>]*class="fh-social-poster"[^>]*src="assets/img/([^"]+)"|<img[^>]*src="assets/img/([^"]+)"[^>]*class="fh-social-poster"', a)
+        poster = poster.group(1) or poster.group(2)
+        slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
+        out.append({'title': re.search(r'<h3>(.*?)</h3>', a).group(1), 'text': re.search(r'</h3><p>(.*?)</p>', a, re.S).group(1),
+                    'name': name, 'photo': crop_to(DST / 'assets' / 'img' / poster, f'skinofab-review-{slug}', (720, 900), (0.5, 0.32))})
+    return apf_copy.pdp_reviews_html(eyebrow, title, out) if out else None
+
+def faq_more(t):
+    """The product page FAQ (two columns): the skin questions after "How to apply?", then Automatic Refills, buying
+    once and SPF where the second column starts. Items are clones of the design's own (same markup, same
+    collapsible behaviour)."""
+    m = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__section_accordions_[^"]+">', t)
+    if not m: return t, False
+    end = balanced_end(t, m.start(), 'div')
+    sec = t[m.start():end]
+    items = re.findall(r'<li aria-haspopup="true" class="accordion__item accordion__item--padded"[^>]*>.*?</li>', sec, re.S)
+    if not items: return t, False
+    tpl = items[0]
+    def item(k, q, a):
+        li = re.sub(r'id="Accordion--[^"]+"', f'id="Accordion--sf_{k}"', tpl, count=1)
+        li = re.sub(r'Accordions-item--\d+-', f'Accordions-item--sf{k}-', li)
+        li = re.sub(r'(<span class="accordion__item__title__text">).*?(</span>)', lambda mm: mm.group(1) + html.escape(q) + mm.group(2), li, count=1, flags=re.S)
+        return re.sub(r'(<div class="accordion__item__text rte" data-collapsible-content="">).*?(</div>)',
+                      lambda mm: mm.group(1) + '<p>' + html.escape(a) + '</p>' + mm.group(2), li, count=1, flags=re.S)
+    skin = ''.join(item(k, q, a) for k, (q, a) in enumerate(ccf_copy.PDP_FAQ_SKIN))
+    orders = ''.join(item(10 + k, q, a) for k, (q, a) in enumerate(ccf_copy.pdp_faq_orders()))
+    # one list, shown in two columns by the theme's CSS: the skin questions after the first item, the order questions
+    # where the second column starts (the money-back question), so both columns stay balanced
+    lis = [mm.start() for mm in re.finditer(r'<li aria-haspopup="true" class="accordion__item', sec)]
+    if len(lis) < 2: return t, False
+    second_col = next((i for i in lis if 'money back' in sec[i:sec.find('</li>', i)].lower()), lis[len(lis) // 2])
+    first_end = sec.find('</li>', lis[0]) + len('</li>')
+    sec = sec[:second_col] + orders + sec[second_col:]
+    sec = sec[:first_end] + skin + sec[first_end:]
+    return t[:m.start()] + sec + t[end:], True
+
 def picker():
     """The offer, as on the old store: 1 bottle or 2 bottles + free gifts, each a "temporary deal" off the compare-at
     price, and an Automatic Refills box that drops both to their refill price. ccf_copy.REFILL decides whether the
@@ -366,6 +459,22 @@ def main():
     else:
         end = balanced_end(texts[pdp], rev.start(), 'div')
         texts[pdp] = texts[pdp][:end] + '<div class="shopify-section" id="shopify-section-sf-problem-solution">' + problem_solution() + '</div>' + texts[pdp][end:]
+    # the homepage's dermatologist after the solution, its customer reviews before the FAQ, more FAQ answers
+    home = texts.get(DST / 'index.html', '')
+    derm = dermatologist(home)
+    ps_end = texts[pdp].find('id="shopify-section-sf-problem-solution"')
+    if not derm or ps_end < 0: missing.append(('dermatologist', 'homepage section or anchor'))
+    else:
+        start = texts[pdp].rfind('<div', 0, ps_end)
+        end = balanced_end(texts[pdp], start, 'div')
+        texts[pdp] = texts[pdp][:end] + '<div class="shopify-section" id="shopify-section-sf-dermatologist">' + derm + '</div>' + texts[pdp][end:]
+    revs = video_reviews(home)
+    faq = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__section_accordions_', texts[pdp])
+    if not revs or not faq: missing.append(('reviews', 'homepage section or FAQ anchor'))
+    else:
+        texts[pdp] = texts[pdp][:faq.start()] + '<div class="shopify-section" id="shopify-section-sf-reviews">' + revs + '</div>' + texts[pdp][faq.start():]
+    texts[pdp], ok = faq_more(texts[pdp])
+    if not ok: missing.append(('faq', 'accordion columns'))
     texts[pdp], ok = rating_block(texts[pdp])
     if not ok: missing.append(('rating', 'loox badge'))
     cta = texts[pdp].find('<div id="CTA_kopstorm">')

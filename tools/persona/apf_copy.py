@@ -743,3 +743,85 @@ def problem_solution_html(img_problem, img_solution, buy_href='#apf-buy'):
   <div class="sfps-photo"><img src="{isol[0]}" alt="The {PRODUCT} bottle" width="{isol[1]}" height="{isol[2]}" loading="lazy" decoding="async"></div>
 </div></section>
 </div>'''
+
+
+# ------------------------------------------------------------------------------------------------ dermatologist + reviews
+# Product page versions of two homepage sections (apply_persona.py fills them from the homepage, after its copy rules),
+# in the product page's style: same type, black highlight, rounded photos as the problem / solution block.
+PDP_EXTRA_CSS = r"""
+.sfx{color:#151515;font-family:inherit}
+.sfx *{box-sizing:border-box}
+.sfx-sec{padding:72px 0}
+.sfx-sec--grey{background:#f6f6f6}
+.sfx-wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
+.sfx-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:center}
+.sfx-photo{border-radius:20px;overflow:hidden;background:#eee;aspect-ratio:4/5}
+.sfx-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.sfx-eyebrow{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6a6a6a;margin:0 0 12px}
+.sfx h2{font-size:clamp(28px,3.2vw,40px);line-height:1.18;font-weight:600;letter-spacing:-.01em;margin:0}
+.sfx-mark{background:#151515;color:#fff;border-radius:8px;padding:0 .22em;white-space:nowrap;display:inline-block;line-height:1.2;margin-top:.12em}
+.sfx-quote{margin:22px 0 0;padding:0;border:0}
+.sfx-quote p{font-size:17.5px;line-height:1.6;color:#3b3b3b;margin:0 0 14px}
+.sfx-quote strong{color:#151515}
+.sfx-sign{display:flex;align-items:center;gap:14px;margin:24px 0 0;padding:18px 0 0;border-top:1px solid #e6e6e6}
+.sfx-sign img{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #151515}
+.sfx-sign b{display:block;font-size:17px;font-weight:600}
+.sfx-sign span{display:block;font-size:14px;color:#6a6a6a;margin-top:2px}
+.sfx-head{text-align:center;max-width:760px;margin:0 auto 36px}
+.sfx-head .sfx-eyebrow{justify-content:center}
+.sfx-stars{display:inline-flex;gap:2px;color:#151515}
+.sfx-reviews{display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:22px;max-width:calc(var(--n,2) * 400px);margin:0 auto}
+.sfx-review{background:#fff;border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.sfx-review .sfx-photo{border-radius:0;aspect-ratio:4/5}
+.sfx-review-body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.sfx-review h3{font-size:18px;line-height:1.3;font-weight:600;margin:0}
+.sfx-review p{font-size:15.5px;line-height:1.55;color:#3b3b3b;margin:0}
+.sfx-review-name{margin-top:auto;padding-top:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px}
+.sfx-review-name b{font-weight:600}
+.sfx-verified{display:inline-flex;align-items:center;gap:5px;color:#1f7a3f;font-size:13px;font-weight:500}
+@media (max-width:989px){
+ .sfx-sec{padding:52px 0}
+ .sfx-grid{grid-template-columns:1fr;gap:28px}
+ .sfx-photo{aspect-ratio:4/4.4}
+ .sfx-review .sfx-photo{aspect-ratio:4/5}
+}
+@media (max-width:599px){
+ .sfx-wrap{width:calc(100% - 32px)}
+ .sfx-quote p{font-size:16.5px}
+ .sfx-reviews{grid-template-columns:1fr}
+}
+"""
+_STAR = ('<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" '
+         'd="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
+_CHECK = ('<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="currentColor"/>'
+          '<path d="m7.5 12.3 3 3 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+def dermatologist_html(d):
+    """d: name, role, paragraphs (HTML, her words as the homepage shows them), photo (src, w, h), avatar src,
+    headline (a verbatim fragment of her quote)."""
+    paras = ''.join(f'<p>{p}</p>' for p in d['paragraphs'])
+    ph = d['photo']
+    return f'''<div class="sfx" id="sf-dermatologist"><style>{PDP_EXTRA_CSS}</style>
+<section class="sfx-sec sfx-sec--grey"><div class="sfx-wrap sfx-grid">
+  <div class="sfx-photo"><img src="{ph[0]}" alt="{d['name']}" width="{ph[1]}" height="{ph[2]}" loading="lazy" decoding="async"></div>
+  <div>
+    <span class="sfx-eyebrow">Dermatologist recommended</span>
+    <h2>&ldquo;{d['headline_lead']} <span class="sfx-mark">{d['headline_mark']}</span>&rdquo;</h2>
+    <blockquote class="sfx-quote">{paras}</blockquote>
+    <div class="sfx-sign"><img src="{d['avatar']}" alt="" width="52" height="52" loading="lazy" decoding="async"><div><b>{d['name']}</b><span>{d['role']}</span></div></div>
+  </div>
+</div></section></div>'''
+
+def pdp_reviews_html(eyebrow, title, reviews):
+    """reviews: dicts with title, text, name, photo (src, w, h)."""
+    stars = '<span class="sfx-stars" aria-label="5 out of 5 stars">' + _STAR * 5 + '</span>'
+    cards = ''.join(f'''<article class="sfx-review">
+  <div class="sfx-photo"><img src="{r['photo'][0]}" alt="{r['name']} with the {PRODUCT}" width="{r['photo'][1]}" height="{r['photo'][2]}" loading="lazy" decoding="async"></div>
+  <div class="sfx-review-body">{stars}<h3>{r['title']}</h3><p>&ldquo;{r['text']}&rdquo;</p>
+  <div class="sfx-review-name"><b>{r['name']}</b><span class="sfx-verified">{_CHECK}Verified buyer</span></div></div>
+</article>''' for r in reviews)
+    return f'''<div class="sfx" id="sf-video-reviews"><style>{PDP_EXTRA_CSS}</style>
+<section class="sfx-sec sfx-sec--grey"><div class="sfx-wrap">
+  <div class="sfx-head"><span class="sfx-eyebrow">{stars}{eyebrow}</span><h2>{title}</h2></div>
+  <div class="sfx-reviews" style="--n:{len(reviews)}">{cards}</div>
+</div></section></div>'''
