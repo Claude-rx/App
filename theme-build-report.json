@@ -255,6 +255,7 @@
   "templates/catalogue/product.skinofab-gift-card.html",
   "templates/catalogue/product.stick-and-stain.html",
   "templates/catalogue/product.stick-stain3.html",
+  "templates/catalogue/product.the-lymphatic-brush.html",
   "templates/catalogue/product.triple-lip-plumper-bundle.html",
   "templates/catalogue/product.ultra-peptide-collagen-lifting-mask.html",
   "templates/catalogue/product.under-eye-reset.html",
@@ -322,6 +323,6 @@
  "unmapped_links": [],
  "font_faces": 139,
  "css_url_vars": 3,
- "product_json": 26,
+ "product_json": 27,
  "css_compile_errors": []
 }

@@ -661,6 +661,43 @@ SOLUTION_FIXES = [
     ('Four steps every morning', 'One step with your fingertips, in about a minute. Fragrance-free.'),
 ]
 
+# the pack / bundle picker on the product pages (cards with a radio, a price, a tab badge and gift rows)
+OFFER_PICKER_CSS = r"""
+.sfo{margin:6px 0 16px;display:grid;gap:12px;font-family:inherit;color:#151515}
+.sfo fieldset{border:0;margin:0;padding:0;display:grid;gap:12px;min-width:0}
+.sfo legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sfo-card{position:relative;display:block;cursor:pointer;border:1px solid #e1e1e1;border-radius:12px;background:#f6f6f6;padding:16px 18px;transition:border-color .15s,background .15s}
+.sfo-card:has(input:checked){border:2px solid #151515;background:#fff;padding:15px 17px}
+.sfo-row{display:flex;align-items:center;gap:14px}
+.sfo-card input{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin:0;border:1.5px solid #9a9a9a;border-radius:50%;background:#fff;display:grid;place-content:center}
+.sfo-card input:checked{border-color:#151515}
+.sfo-card input:checked:before{content:"";width:12px;height:12px;border-radius:50%;background:#151515}
+.sfo-card input:focus-visible,.sfo-refill input:focus-visible{outline:2px solid #151515;outline-offset:2px}
+.sfo-main{flex:1;min-width:0}
+.sfo-name{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:19px;font-weight:600;line-height:1.2}
+.sfo-save{font-size:12px;font-weight:500;letter-spacing:.04em;background:#151515;color:#fff;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.sfo-main small{display:block;font-size:14px;color:#6a6a6a;margin-top:3px}
+.sfo-price{text-align:right;line-height:1.15;white-space:nowrap}
+.sfo-price b{display:block;font-size:21px;font-weight:600}
+.sfo-price s,.sfo-gifts s{font-size:14px;color:#7a7a7a}
+.sfo-tab{position:absolute;top:-13px;right:16px;background:#151515;color:#fff;font-style:normal;font-size:13px;font-weight:600;padding:4px 12px;border-radius:6px;line-height:1.3}
+.sfo-gifts{list-style:none!important;margin:14px 0 0!important;padding:12px 0 0!important;border-top:1px solid #e6e6e6;display:grid;gap:8px}
+.sfo-gifts li{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600}
+.sfo-gifts li:before{content:none!important}
+.sfo-gifts img{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none;background:#fff}
+.sfo-gifts span{flex:1}
+.sfo-gifts s{font-weight:400}
+.sfo-gifts b{font-size:12px;letter-spacing:.06em;color:#1f7a3f;min-width:36px;text-align:right}
+.sfo-refill{display:flex;align-items:center;gap:16px;cursor:pointer;border:2px dashed #151515;border-radius:12px;padding:14px 18px;background:#fff}
+.sfo-refill input{appearance:none;-webkit-appearance:none;flex:none;width:26px;height:26px;margin:0;border:1.5px solid #151515;border-radius:5px;background:#fff;display:grid;place-content:center}
+.sfo-refill input:checked{background:#151515}
+.sfo-refill input:checked:before{content:"";width:12px;height:7px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:translateY(-2px) rotate(-45deg)}
+.sfo-refill strong{display:block;font-size:16px;line-height:1.3}
+.sfo-refill small{display:block;font-size:13px;color:#5a5a5a;margin-top:3px;line-height:1.35}
+.sfo-refill i{font-style:normal;color:#b5b5b5;margin:0 4px}
+@media (max-width:420px){.sfo-card{padding:14px}.sfo-card:has(input:checked){padding:13px}.sfo-name{font-size:17px}.sfo-price b{font-size:19px}.sfo-refill{padding:12px 14px}}
+"""
+
 PROBLEM_SOLUTION_CSS = r"""
 .sfps{color:#151515;font-family:inherit}
 .sfps *{box-sizing:border-box}

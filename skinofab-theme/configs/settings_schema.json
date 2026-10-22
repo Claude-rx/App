@@ -140,6 +140,12 @@
         "help_text": "NEXT product shown wherever the design links to \"stick-stain3\": links, prices and add to cart. Also set this product's template to \"stick-stain3\"."
       },
       {
+        "name": "sf_p_the_lymphatic_brush",
+        "type": "product",
+        "label": "The Lymphatic Brush",
+        "help_text": "NEXT product shown wherever the design links to \"the-lymphatic-brush\": links, prices and add to cart. Also set this product's template to \"the-lymphatic-brush\"."
+      },
+      {
         "name": "sf_p_triple_lip_plumper_bundle",
         "type": "product",
         "label": "Triple Lip Plumper Bundle",
@@ -266,15 +272,52 @@
         "default": "Upgrade"
       },
       {
+        "name": "sf_cart_upgrade2_from",
+        "type": "text",
+        "label": "Second upgrade: variant in the bag",
+        "default": "",
+        "help_text": "A second product's upgrade (NEXT variant IDs), shown when the first one does not apply. Empty: none."
+      },
+      {
+        "name": "sf_cart_upgrade2_to",
+        "type": "text",
+        "label": "Second upgrade: variant it becomes",
+        "default": ""
+      },
+      {
+        "name": "sf_cart_upgrade2_title",
+        "type": "text",
+        "label": "Second upgrade: title",
+        "default": ""
+      },
+      {
+        "name": "sf_cart_upgrade2_text",
+        "type": "text",
+        "label": "Second upgrade: text",
+        "default": "",
+        "help_text": "Name the real price difference; it must match the two variants' prices."
+      },
+      {
+        "name": "sf_cart_upgrade2_button",
+        "type": "text",
+        "label": "Second upgrade: button",
+        "default": "Upgrade"
+      },
+      {
         "name": "sf_cart_upsell_1",
         "type": "product",
         "label": "Add-on 1",
-        "help_text": "Offered under the bag lines until it is in the bag."
+        "help_text": "Two add-ons not yet in the bag are offered under the bag lines, in this order."
       },
       {
         "name": "sf_cart_upsell_2",
         "type": "product",
         "label": "Add-on 2"
+      },
+      {
+        "name": "sf_cart_upsell_3",
+        "type": "product",
+        "label": "Add-on 3"
       },
       {
         "name": "sf_cart_upsell_title",

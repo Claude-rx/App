@@ -8,6 +8,9 @@
 #   rel3/skinofab-site      export with the CCF offers applied    alpha-renames2.json     alpha rename map
 #   persona-img2/           persona + bottle-swap images           ccf-offers.json         NEXT offer mapping
 #   spark/                  Spark starter checkout                 catalog-rb.json         NEXT catalog mapping
+#   brush-offers.json       Lymphatic Brush bundle pks (tools/persona/setup_brush_offers.py)
+#   brush/media/            Lymphatic Brush videos (tools/persona/brush_assets.py; its images are in brand/lymphatic-brush/)
+#   reviews/                imported reviews of the foundation, if any (tools/reviews/import_reviews.py)
 # Output: skinofab-theme/ (ntk push from there), skinofab-handoff/, theme-build-report.json, theme-optimize-report.json
 set -euo pipefail
 W=$(cd "$1" && pwd)

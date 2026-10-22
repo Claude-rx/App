@@ -10,9 +10,10 @@
  *   - the drawer sits above the store's sticky header (its title and close button were hidden under it);
  *   - "Your bag (n)" header and a free-shipping note when the store ships for free;
  *   - lines show the product, its pack (variant) and the price; a refill line says how often it ships, on its own line;
- *   - the upgrade: with the 1-bottle pack in the bag, one tap swaps it for 2 bottles + free gifts (same quantity,
- *     same refill choice), for the price difference the card names (Theme settings > Cart Drawer > Upgrade);
- *   - "Complete your routine": up to two add-ons (Theme settings product pickers), one tap to add, loaded from the
+ *   - the upgrades: with the 1-bottle pack in the bag, one tap swaps it for 2 bottles + free gifts (same quantity,
+ *     same refill choice), for the price difference the card names (Theme settings > Cart Drawer > Upgrade); a
+ *     second one does the same for the brush (1 -> 2 brushes, Second upgrade); the first that applies is shown;
+ *   - "Complete your routine": two add-ons not yet in the bag, out of three (Theme settings product pickers), one tap to add, loaded from the
  *     storefront API when the drawer first opens (no cost on page render), hidden once they are in the bag;
  *   - a trust card: the money-back guarantee and a customer review;
  *   - the discount code folds away behind "Have a discount code?" (opens on its own when a code is applied);
@@ -205,22 +206,29 @@
             }).join('') + '</section>';
     }
 
-    /* ---------- the upgrade: 1 bottle -> 2 bottles + free gifts ---------- */
+    /* ---------- the upgrades: 1 bottle -> 2 bottles + free gifts, 1 brush -> 2 brushes ---------- */
 
-    var up = cfg.upgrade || {};
+    var ups = (cfg.upgrades || [cfg.upgrade]).filter(function(u) { return u && u.from && u.to && u.title; });
 
-    function upgradeLine() {
-        if (!up.from || !up.to) return null;
+    /* the first upgrade whose smaller pack is in the bag (and its bigger pack is not), with that line */
+    function upgradeFor() {
         var has = function(pk) { return currentLines.filter(function(l) { return String((l.product || {}).pk) === String(pk); })[0]; };
-        return has(up.to) ? null : has(up.from) || null;
+        for (var i = 0; i < ups.length; i++) {
+            if (has(ups[i].to)) continue;
+            var line = has(ups[i].from);
+            if (line) return { up: ups[i], line: line };
+        }
+        return null;
     }
 
     function upgradeHtml() {
-        var line = upgradeLine();
-        if (!line || !up.title) return '';
+        var hit = upgradeFor();
+        if (!hit) return '';
+        var up = hit.up;
         return '<div class="sf-upgrade">' + ICON.gift +
             '<p><strong>' + escapeHtml(up.title) + '</strong>' + (up.text ? '<span>' + escapeHtml(up.text) + '</span>' : '') + '</p>' +
-            '<button type="button" class="sf-upgrade-btn" data-sf-upgrade="' + escapeHtml(line.pk) + '">' + escapeHtml(up.button || 'Upgrade') + '</button></div>';
+            '<button type="button" class="sf-upgrade-btn" data-sf-upgrade="' + escapeHtml(hit.line.pk) + '" data-sf-upgrade-to="' + escapeHtml(up.to) + '">' +
+            escapeHtml(up.button || 'Upgrade') + '</button></div>';
     }
 
     /* the refill choice of a cart line, in the shape addToCart takes ("Every 28 days" stays every 28 days) */
@@ -234,7 +242,8 @@
         var drawer = document.querySelector('spark-cart-drawer');
         var client = drawer && drawer._client, cart = drawer && drawer._cart;
         var line = cart && (cart.lines || []).filter(function(l) { return String(l.pk) === btn.getAttribute('data-sf-upgrade'); })[0];
-        if (!client || !line) return;
+        var up = ups.filter(function(u) { return String(u.to) === btn.getAttribute('data-sf-upgrade-to'); })[0];
+        if (!client || !line || !up) return;
         btn.setAttribute('aria-busy', 'true');
         btn.textContent = cfg.upsellAdding || 'Adding...';
         var show = function(next) {

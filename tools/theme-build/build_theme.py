@@ -917,11 +917,14 @@ SF_CART = ('''        <script>
             shippingNote: "{{ settings.sf_cart_shipping_note|default:''|escapejs }}",
             guaranteeTitle: "{{ settings.sf_cart_guarantee_title|default:''|escapejs }}", guaranteeText: "{{ settings.sf_cart_guarantee_text|default:''|escapejs }}",
             reviewText: "{{ settings.sf_cart_review_text|default:''|escapejs }}", reviewName: "{{ settings.sf_cart_review_name|default:''|escapejs }}",
-            upsellPks: [{% if settings.sf_cart_upsell_1 %}"{{ settings.sf_cart_upsell_1.pk }}", {% endif %}{% if settings.sf_cart_upsell_2 %}"{{ settings.sf_cart_upsell_2.pk }}"{% endif %}],
+            upsellPks: [{% if settings.sf_cart_upsell_1 %}"{{ settings.sf_cart_upsell_1.pk }}", {% endif %}{% if settings.sf_cart_upsell_2 %}"{{ settings.sf_cart_upsell_2.pk }}", {% endif %}{% if settings.sf_cart_upsell_3 %}"{{ settings.sf_cart_upsell_3.pk }}"{% endif %}],
             upsellTitle: "{{ settings.sf_cart_upsell_title|default:''|escapejs }}", upsellButton: "{{ settings.sf_cart_upsell_button|default:'Add'|escapejs }}",
-            upgrade: { from: "{{ settings.sf_cart_upgrade_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade_to|default:''|escapejs }}",
+            upgrades: [{ from: "{{ settings.sf_cart_upgrade_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade_to|default:''|escapejs }}",
                 title: "{{ settings.sf_cart_upgrade_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade_text|default:''|escapejs }}",
                 button: "{{ settings.sf_cart_upgrade_button|default:'Upgrade'|escapejs }}" },
+              { from: "{{ settings.sf_cart_upgrade2_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade2_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade2_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade2_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade2_button|default:'Upgrade'|escapejs }}" }],
             payIcons: [PAY_ICONS_JS],
             checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
             secureText: "{{ settings.sf_cart_secure_text|default:''|escapejs }}",
@@ -1074,8 +1077,16 @@ schema = {'SKINOFAB': {
         {'name': 'sf_cart_upgrade_text', 'type': 'text', 'label': 'Upgrade: text', 'default': '',
          'help_text': 'Name the real price difference; it must match the two variants\' prices.'},
         {'name': 'sf_cart_upgrade_button', 'type': 'text', 'label': 'Upgrade: button', 'default': 'Upgrade'},
-        {'name': 'sf_cart_upsell_1', 'type': 'product', 'label': 'Add-on 1', 'help_text': 'Offered under the bag lines until it is in the bag.'},
+        {'name': 'sf_cart_upgrade2_from', 'type': 'text', 'label': 'Second upgrade: variant in the bag', 'default': '',
+         'help_text': 'A second product\'s upgrade (NEXT variant IDs), shown when the first one does not apply. Empty: none.'},
+        {'name': 'sf_cart_upgrade2_to', 'type': 'text', 'label': 'Second upgrade: variant it becomes', 'default': ''},
+        {'name': 'sf_cart_upgrade2_title', 'type': 'text', 'label': 'Second upgrade: title', 'default': ''},
+        {'name': 'sf_cart_upgrade2_text', 'type': 'text', 'label': 'Second upgrade: text', 'default': '',
+         'help_text': 'Name the real price difference; it must match the two variants\' prices.'},
+        {'name': 'sf_cart_upgrade2_button', 'type': 'text', 'label': 'Second upgrade: button', 'default': 'Upgrade'},
+        {'name': 'sf_cart_upsell_1', 'type': 'product', 'label': 'Add-on 1', 'help_text': 'Two add-ons not yet in the bag are offered under the bag lines, in this order.'},
         {'name': 'sf_cart_upsell_2', 'type': 'product', 'label': 'Add-on 2'},
+        {'name': 'sf_cart_upsell_3', 'type': 'product', 'label': 'Add-on 3'},
         {'name': 'sf_cart_upsell_title', 'type': 'text', 'label': 'Add-ons title', 'default': 'Complete your routine'},
         {'name': 'sf_cart_upsell_button', 'type': 'text', 'label': 'Add-on button', 'default': 'Add'},
         {'name': 'sf_cart_guarantee_title', 'type': 'text', 'label': 'Guarantee title', 'default': '30-day money-back guarantee'},
@@ -1119,11 +1130,12 @@ if offer_cfg.exists():
     missing_pids = [h for h in [oc['product'], *oc['addons']] if not pid(h)]
     if missing_pids: sys.exit(f'sf-offer.json: no NEXT product mapped for {missing_pids} (set SF_CATALOG)')
     data.update({'sf_cart_empty_product': pid(oc['product']),
-                 'sf_cart_upgrade_from': str(oc['upgrade']['from']), 'sf_cart_upgrade_to': str(oc['upgrade']['to']),
-                 'sf_cart_upgrade_title': oc['upgrade']['title'], 'sf_cart_upgrade_text': oc['upgrade']['text'],
-                 'sf_cart_upgrade_button': oc['upgrade']['button'],
                  'sf_cart_review_text': oc['review']['text'], 'sf_cart_review_name': oc['review']['name']})
-    for n, h in enumerate(oc['addons'][:2], 1): data[f'sf_cart_upsell_{n}'] = pid(h)
+    for n, up in enumerate(oc.get('upgrades') or [oc['upgrade']]):
+        key = 'sf_cart_upgrade' + (str(n + 1) if n else '')
+        data.update({f'{key}_from': str(up['from']), f'{key}_to': str(up['to']), f'{key}_title': up['title'],
+                     f'{key}_text': up['text'], f'{key}_button': up['button']})
+    for n, h in enumerate(oc['addons'][:3], 1): data[f'sf_cart_upsell_{n}'] = pid(h)
     if oc.get('frontrow'): data['sf_frontrow_product_id'] = str(oc['frontrow'])
     if oc.get('refill', {}).get('default'):
         data.update({'sf_refill_default_product': pid(oc['product']), 'sf_subscription_interval': oc['refill']['interval'],

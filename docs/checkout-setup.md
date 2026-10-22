@@ -50,7 +50,10 @@ guarantee in the cart drawer):
 > Wear it in your own daylight for 30 days. If you don't love it, we'll refund you.
 
 The free gifts in the 2-bottle pack (Skinofab Blender, Mystery Gift) are not cart lines: the variant is named
-"2 bottles + free gifts" so the order shows them. Make sure fulfilment packs both with every such order.
+"2 bottles + free gifts" so the order shows them. Make sure fulfilment packs both with every such order. The same
+goes for the Lymphatic Brush bundles: "1 brush + free case", "2 brushes + 2 free cases", "3 brushes + 3 free cases
++ free body brush" ([lymphatic-brush.md](lymphatic-brush.md)). The brush is a one-time purchase; the subscription
+terms above only apply to the foundation.
 
 For Terms & Conditions and Privacy Policy, use the store's own legal texts (the storefront has
 `/terms-of-service/` and `/privacy-policy/` pages from the previous site; have them reviewed before reuse,

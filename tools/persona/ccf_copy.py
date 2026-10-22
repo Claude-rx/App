@@ -185,7 +185,7 @@ FRONTROW_PRODUCT_ID = 4694
 # not plan terms. Add-ons are design handles (mapped to NEXT by the catalog); the review is one the product page shows.
 CART = {
     'product': 'color-changing-foundation',
-    'addons': ['reverse-time-peptide-serum', 'under-eye-reset'],
+    'addons': ['the-lymphatic-brush', 'reverse-time-peptide-serum', 'under-eye-reset'],
     'upgrade_title': 'Upgrade to 2 bottles + free gifts',
     'upgrade_button': 'Upgrade',
     'review_text': ("I'm 53 and I've never found one that works this well on mature skin—including my own. "

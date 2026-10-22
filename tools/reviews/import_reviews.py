@@ -2,7 +2,7 @@
 CSV) into the product page review wall.
 
 usage: python3 -I import_reviews.py <export.csv> <work_dir> [--product color-changing-foundation]
-                                     [--exclude-text smooche] [--download-photos]
+                                     [--exclude-text smooche] [--download-photos] [--out reviews]
 
 The reviews are the store owner's own (the same formula, sold before as the Smooche Color Changing Foundation):
 - every review is kept word for word, with its own rating, date and verified flag; nothing is written or edited
@@ -11,9 +11,9 @@ The reviews are the store owner's own (the same formula, sold before as the Smoo
 - unpublished, hidden or rejected reviews are left out
 - photos: --download-photos saves them to <work_dir>/reviews/photos/ with a numbered contact sheet
   (photos-sheet.jpg). Only photos listed in <work_dir>/reviews/photos-approved.txt (one photo id per line) are
-  published, so a photo showing the old bottle never reaches the page: approve the ones that show skin, results or
-  the SKINOFAB bottle, then run again.
-Writes <work_dir>/reviews/reviews.json (newest first, with count, average and the 5..1 star distribution);
+  published, so a photo showing the old bottle or brand never reaches the page: approve the ones that show skin,
+  results or the product without another brand's name, then run again.
+Writes <work_dir>/<out>/reviews.json (--out, default reviews; the brush uses reviews-brush) (newest first, with count, average and the 5..1 star distribution);
 apply_persona.py turns it into the review wall's data file and copies the approved photos.
 """
 import csv, hashlib, io, json, os, re, sys, urllib.request
@@ -28,7 +28,7 @@ SRC, WORK = Path(args[0]), Path(args[1])
 PRODUCT = opt('--product', 'color-changing-foundation')
 EXCLUDE = [w.lower() for w in (opt('--exclude-text', many=True) or ['smooche'])]
 DOWNLOAD = '--download-photos' in args
-OUT = WORK / 'reviews'
+OUT = WORK / opt('--out', 'reviews')
 PHOTOS = OUT / 'photos'
 
 # column names used by the common review apps, first match wins

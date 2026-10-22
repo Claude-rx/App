@@ -8,7 +8,8 @@ star), sorting, "Show more", photo thumbnails with a lightbox, and **Write a rev
 2. **Imported reviews of the same formula** from the Smooche store, word for word, with their own ratings, dates
    and verified flags.
 
-While there are no reviews the wall stays hidden.
+While there are no reviews the wall stays hidden. The Lymphatic Brush's page has the same wall (and its stars under
+the buyers line appear with the first review); its imports go to `<work_dir>/reviews-brush`.
 
 ## Importing the Smooche reviews
 
@@ -27,6 +28,13 @@ While there are no reviews the wall stays hidden.
    `<work_dir>/reviews/photos-approved.txt`: skin, results, or the SKINOFAB bottle. Leave out any photo showing the
    old bottle; customer photos are never edited. Run step 2 again.
 4. Rebuild and push (`tools/build_store.sh <work_dir>`, then push the changed theme files).
+
+For the Lymphatic Brush, import an export of its real reviews with
+`--product the-lymphatic-brush --exclude-text solena --out reviews-brush`. A store's published Judge.me reviews can also
+be read without the dashboard export: `python3 -I tools/reviews/fetch_judgeme.py <shop>.myshopify.com <product id> out.csv`
+writes the same columns. Check where the reviews come from before importing them. Solena's brush reviews were not
+imported: every one predates the product and the store, and none is a verified buyer
+([lymphatic-brush.md](lymphatic-brush.md)).
 
 The imported reviews ship as one small data script that loads only when a shopper scrolls near the wall, so
 hundreds of reviews cost nothing on page load.

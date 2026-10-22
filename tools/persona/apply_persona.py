@@ -9,6 +9,10 @@ usage: python3 -I apply_persona.py <src_export> <dst_export> <ccf-offers.json> [
   product form, and the "love it or your money back" trust row under its button; packs map to the NEXT variant
   pks in ccf-offers.json (written by setup_ccf_offers.py)
 - writes sf-offer.json for the theme build's Cart Drawer settings: the 1 -> 2 bottle upgrade, add-ons and review
+- builds products/the-lymphatic-brush.html (and its .js snapshot) from the foundation page's markup with the brush's
+  page in it (brush_copy.py): gallery, bundle picker (pks in <work_dir>/brush-offers.json, setup_brush_offers.py),
+  tabs and the sections below; images from brand/lymphatic-brush/, videos from <work_dir>/brush/media/
+  (brush_assets.py)
 - <images_dir>/<target file name> replaces that export image (persona images made by tools/persona/images.py)
   under a new content-hashed name, with every reference rewritten (NEXT's CDN caches by file name)
 """
@@ -16,7 +20,7 @@ import hashlib, html, json, os, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, ccf_copy
+import apf_copy, brush_copy, ccf_copy
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
 IMAGES = Path(sys.argv[4]).resolve() if len(sys.argv) > 4 else None
@@ -168,15 +172,16 @@ def faq_more(t):
 
 REVIEWS = Path(sys.argv[3]).resolve().parent / 'reviews'   # tools/reviews/import_reviews.py output (work dir)
 
-def review_wall():
-    """The review wall after the FAQ: NEXT's own reviews (the theme fills them in) plus the imported ones, if any."""
-    data = REVIEWS / 'reviews.json'
+def review_wall(reviews=REVIEWS):
+    """The review wall after the FAQ: NEXT's own reviews (the theme fills them in) plus the imported ones in
+    <reviews>/reviews.json, if any (the foundation: <work_dir>/reviews, the brush: <work_dir>/reviews-brush)."""
+    data = reviews / 'reviews.json'
     if not data.exists(): return apf_copy.review_wall_html()
     d = json.loads(data.read_text())
     photos = {}
     for r in d['reviews']:
         for p in r.get('photos', []):
-            src = REVIEWS / 'photos' / p
+            src = reviews / 'photos' / p
             if not src.exists(): continue
             name = f"review-{src.stem}-{hashlib.md5(src.read_bytes()).hexdigest()[:6]}.jpg"
             from PIL import Image, ImageOps
@@ -232,41 +237,7 @@ def picker():
         # inline !important: the design's stylesheets give inputs display:block, which beats the hidden attribute
         box += ' hidden style="display:none !important" aria-hidden="true" tabindex="-1">'
     return f"""<div class="sfo" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
-<style>
-.sfo{{margin:6px 0 16px;display:grid;gap:12px;font-family:inherit;color:#151515}}
-.sfo fieldset{{border:0;margin:0;padding:0;display:grid;gap:12px;min-width:0}}
-.sfo legend{{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
-.sfo-card{{position:relative;display:block;cursor:pointer;border:1px solid #e1e1e1;border-radius:12px;background:#f6f6f6;padding:16px 18px;transition:border-color .15s,background .15s}}
-.sfo-card:has(input:checked){{border:2px solid #151515;background:#fff;padding:15px 17px}}
-.sfo-row{{display:flex;align-items:center;gap:14px}}
-.sfo-card input{{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin:0;border:1.5px solid #9a9a9a;border-radius:50%;background:#fff;display:grid;place-content:center}}
-.sfo-card input:checked{{border-color:#151515}}
-.sfo-card input:checked:before{{content:"";width:12px;height:12px;border-radius:50%;background:#151515}}
-.sfo-card input:focus-visible,.sfo-refill input:focus-visible{{outline:2px solid #151515;outline-offset:2px}}
-.sfo-main{{flex:1;min-width:0}}
-.sfo-name{{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:19px;font-weight:600;line-height:1.2}}
-.sfo-save{{font-size:12px;font-weight:500;letter-spacing:.04em;background:#151515;color:#fff;border-radius:999px;padding:3px 10px;white-space:nowrap}}
-.sfo-main small{{display:block;font-size:14px;color:#6a6a6a;margin-top:3px}}
-.sfo-price{{text-align:right;line-height:1.15;white-space:nowrap}}
-.sfo-price b{{display:block;font-size:21px;font-weight:600}}
-.sfo-price s,.sfo-gifts s{{font-size:14px;color:#7a7a7a}}
-.sfo-tab{{position:absolute;top:-13px;right:16px;background:#151515;color:#fff;font-style:normal;font-size:13px;font-weight:600;padding:4px 12px;border-radius:6px;line-height:1.3}}
-.sfo-gifts{{list-style:none!important;margin:14px 0 0!important;padding:12px 0 0!important;border-top:1px solid #e6e6e6;display:grid;gap:8px}}
-.sfo-gifts li{{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600}}
-.sfo-gifts li:before{{content:none!important}}
-.sfo-gifts img{{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none;background:#fff}}
-.sfo-gifts span{{flex:1}}
-.sfo-gifts s{{font-weight:400}}
-.sfo-gifts b{{font-size:12px;letter-spacing:.06em;color:#1f7a3f;min-width:36px;text-align:right}}
-.sfo-refill{{display:flex;align-items:center;gap:16px;cursor:pointer;border:2px dashed #151515;border-radius:12px;padding:14px 18px;background:#fff}}
-.sfo-refill input{{appearance:none;-webkit-appearance:none;flex:none;width:26px;height:26px;margin:0;border:1.5px solid #151515;border-radius:5px;background:#fff;display:grid;place-content:center}}
-.sfo-refill input:checked{{background:#151515}}
-.sfo-refill input:checked:before{{content:"";width:12px;height:7px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:translateY(-2px) rotate(-45deg)}}
-.sfo-refill strong{{display:block;font-size:16px;line-height:1.3}}
-.sfo-refill small{{display:block;font-size:13px;color:#5a5a5a;margin-top:3px;line-height:1.35}}
-.sfo-refill i{{font-style:normal;color:#b5b5b5;margin:0 4px}}
-@media (max-width:420px){{.sfo-card{{padding:14px}}.sfo-card:has(input:checked){{padding:13px}}.sfo-name{{font-size:17px}}.sfo-price b{{font-size:19px}}.sfo-refill{{padding:12px 14px}}}}
-</style>
+<style>{apf_copy.OFFER_PICKER_CSS}</style>
 <fieldset><legend>Choose your pack</legend>{''.join(cards)}</fieldset>
 {box}
 <script>
@@ -337,9 +308,14 @@ def cart_offer():
     what = ', '.join(extras[:-1]) + ' and ' + extras[-1]
     text = (f'Just {money(diffs.pop())} more for {what}.' if len(diffs) == 1 else f'Get {what}.')
     cart = ccf_copy.CART
+    brush = json.loads((WORK / 'brush-offers.json').read_text())['variants']
+    b1, b2 = brush_copy.BUNDLES[0], brush_copy.BUNDLES[1]
+    b_text = (f"Just {money(round(float(b2['price']) - float(b1['price']), 2))} more for a second brush and a second free case.")
     return {'product': cart['product'], 'addons': cart['addons'],
-            'upgrade': {'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
-                        'text': text, 'button': cart['upgrade_button']},
+            'upgrades': [{'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
+                          'text': text, 'button': cart['upgrade_button']},
+                         {'from': brush[b1['key']], 'to': brush[b2['key']], 'title': brush_copy.CART_UPGRADE['title'],
+                          'text': b_text, 'button': brush_copy.CART_UPGRADE['button']}],
             'review': {'text': cart['review_text'], 'name': cart['review_name']},
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
@@ -429,6 +405,262 @@ def trust_block():
     and the refill terms (shown by the picker only while Automatic Refills is ticked)."""
     return f'<div class="product__block sfp-trust"><style>{apf_copy.TRUST_CSS}</style>{apf_copy.trust_html()}</div>'
 
+# ---------------------------------------------------------------- the Lymphatic Brush's product page
+WORK = Path(sys.argv[3]).resolve().parent
+BRUSH_IMG = Path(__file__).resolve().parents[2] / 'brand' / 'lymphatic-brush'   # tools/persona/brush_assets.py
+
+def hashed_copy(src, sub, name, size=None):
+    """src copied into the export (assets/<sub>/) as <name>-<hash><ext>, resized to fit `size` if given."""
+    from PIL import Image
+    out = DST / 'assets' / sub
+    out.mkdir(parents=True, exist_ok=True)
+    tmp = out / (name + src.suffix)
+    if size:
+        im = Image.open(src).convert('RGB'); im.thumbnail(size, Image.LANCZOS)
+        im.save(tmp, quality=86, optimize=True, progressive=True)
+    else:
+        shutil.copy2(src, tmp)
+    final = tmp.with_name(f"{name}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}{src.suffix}")
+    tmp.rename(final)
+    return f'../assets/{sub}/{final.name}'
+
+def brush_rating(imported=None):
+    """Stars and count from the product's approved NEXT reviews and its imported ones (count and sum of their ratings),
+    shown only once there are some."""
+    n0, s0 = (imported or {}).get('count', 0), sum(int(k) * v for k, v in ((imported or {}).get('distribution') or {}).items())
+    stars = ''.join(f'<span class="sf-star" style="--f:100%">{STAR}{STAR}</span>' for _ in range(5))
+    return ('<a class="sfb-rating" href="#sf-review-wall" data-sfb-rating hidden style="text-decoration:none">'
+            f'<span class="sf-rating" style="--sf-star:#000000"><span class="sf-rating__stars" role="img">{stars}</span>'
+            '<span class="sf-rating__text"></span></span></a>'
+            '<style>.sfb-rating[hidden]{display:none}.sf-rating{display:inline-flex;align-items:center;gap:10px;color:#151515;font-size:17px;line-height:1}'
+            '.sf-rating__stars{display:inline-flex;gap:2px}'
+            '.sf-star{position:relative;display:inline-block;width:20px;height:20px;color:#d8d8d8}'
+            '.sf-star svg{position:absolute;left:0;top:0}'
+            '.sf-star svg+svg{color:var(--sf-star);clip-path:inset(0 calc(100% - var(--f)) 0 0)}</style>'
+            '<script>(function () {'
+            'var badge = document.currentScript.previousElementSibling.previousElementSibling;'
+            'function show() {'
+            'var el = document.querySelector("[data-sf-native-reviews]"), d = null;'
+            'try { d = JSON.parse(el ? el.textContent : "{}"); } catch (e) { return; }'
+            'var rs = (d && d.reviews || []).filter(function (r) { return +r.score >= 1 && +r.score <= 5; });'
+            f'var n = rs.length + {int(n0)}, sum = rs.reduce(function (s, r) {{ return s + +r.score; }}, {int(s0)});'
+            'if (!n) return;'
+            'var avg = sum / n;'
+            'Array.prototype.forEach.call(badge.querySelectorAll(".sf-star"), function (s, i) {'
+            's.style.setProperty("--f", Math.max(0, Math.min(1, Math.round((avg - i) * 2) / 2)) * 100 + "%"); });'
+            'badge.querySelector(".sf-rating__stars").setAttribute("aria-label", "Rated " + avg.toFixed(1) + " out of 5");'
+            'badge.querySelector(".sf-rating__text").textContent = avg.toFixed(1) + "/5 \\u00b7 " + n.toLocaleString("en-US") + " review" + (n === 1 ? "" : "s");'
+            'badge.hidden = false; }'
+            'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show); else show();'
+            '})();</script>')
+
+def brush_page(base):
+    """products/the-lymphatic-brush.html: the foundation page's chrome and buy box markup with Solena's brush page
+    (brush_copy) in it, and the brush's sections below. Prices, the bundle picker's variants and the cart come from
+    NEXT (brush-offers.json, written by setup_brush_offers.py)."""
+    import copy
+    from bs4 import BeautifulSoup, NavigableString
+    offers = json.loads((WORK / 'brush-offers.json').read_text())
+    soup = BeautifulSoup(base, 'html.parser')
+    frag = lambda h: BeautifulSoup(h, 'html.parser')
+    main = soup.find('main')
+    prod = main.select_one('[id$="__main"].shopify-section--product')
+    faq_src = main.select_one('[id*="__section_accordions_"]')
+    faq_src = copy.copy(faq_src) if faq_src else None
+    for sec in [c for c in main.find_all(recursive=False) if c is not prod and 'section_custom_html' not in (c.get('id') or '')]:
+        sec.decompose()
+    img = lambda k, w: hashed_copy(BRUSH_IMG / f'gallery-{k}.jpg', 'img', f'skinofab-lymphatic-brush-{k}-{w}w', (w, w))
+    # gallery: Solena's seven images, the first one eager
+    slider = prod.select_one('[data-product-single-media-slider]')
+    slides = slider.select('[data-product-single-media-wrapper]')
+    thumbs = prod.select_one('[data-product-single-media-thumbs]')
+    t_slides = [copy.copy(slides[0]), copy.copy(slides[1])]
+    t_thumb = copy.copy(thumbs.select('[data-thumbnail-id]')[0])
+    for s_ in slides: s_.decompose()
+    for t_ in thumbs.select('[data-thumbnail-id]'): t_.decompose()
+    for k in range(1, 8):
+        mid = str(9300000000000 + k)
+        big, mid_src, small = img(k, 1080), img(k, 753), img(k, 178)
+        sl = copy.copy(t_slides[0 if k == 1 else 1])
+        sl['data-id'], sl['data-media-id'] = mid, f'brush-{mid}'
+        sl['id'] = f'FeaturedMedia-brush-{mid}'
+        im = sl.find('img')
+        im['src'], im['srcset'] = big, f'{mid_src} 753w, {big} 1080w'
+        im['alt'], im['data-image-id'] = brush_copy.TITLE, mid
+        slider.append(sl)
+        th = copy.copy(t_thumb)
+        th['data-id'], th['data-thumbnail-id'] = mid, f'brush-{mid}'
+        th.find('a')['aria-label'] = brush_copy.TITLE
+        ti = th.find('img')
+        ti['src'], ti['srcset'], ti['alt'] = small, f'{big} 1080w', brush_copy.TITLE
+        ti['loading'] = 'eager' if k <= 5 else 'lazy'
+        thumbs.append(th)
+    # the buy box, top to bottom
+    blocks = prod.select('.product__block')
+    def text_of(b): return ' '.join(b.get_text(' ', strip=True).split())
+    for b in blocks:
+        cls = b.get('class') or []
+        t = text_of(b)
+        if 'Korean beauty' in t or 'product__subheading' in str(b)[:200] or 'countdown-timer-wrapper' in cls \
+           or b.get('data-default-usp') is not None or b.select_one('[data-serum-subscription-usps]') or b.select_one('hr') \
+           or {'product__features', 'product-suitability', 'customer-survey-results'} & set(cls):
+            b.decompose()
+    social = prod.select_one('.social-proof-container')
+    for n, pi in enumerate(social.select('.profile-image'), 1):
+        pi['style'] = f"background-image:url('{hashed_copy(BRUSH_IMG / f'buyer-{n}.jpg', 'img', f'skinofab-brush-buyer-{n}')}')"
+    social.select_one('.text1').string = ''
+    social.select_one('.text1').append(frag(f'<strong>{brush_copy.esc(brush_copy.BUYERS["name"])}</strong>'))
+    social.select_one('.text2').string = brush_copy.BUYERS['text']
+    brush_reviews = WORK / 'reviews-brush'      # tools/reviews/import_reviews.py ... --product the-lymphatic-brush --out reviews-brush
+    stats = json.loads((brush_reviews / 'reviews.json').read_text()) if (brush_reviews / 'reviews.json').exists() else None
+    app = prod.select_one('.product__block.standard__app')
+    app.clear(); app.append(frag(brush_rating(stats)))
+    price = prod.select_one('.product__price-and-badge [data-price-wrapper]')
+    price.select_one('.product__price--compare').string = brush_copy.money(brush_copy.COMPARE)
+    reg = price.select_one('.product__price--regular')
+    reg.string = brush_copy.money(brush_copy.PRICE)
+    off = price.select_one('.product__price--off')
+    if off: off.decompose()
+    reg.insert_after(frag(f'<span class="sfb-ship">{brush_copy.esc(brush_copy.SHIPPING_BADGE)}</span>'))
+    usp = prod.select_one('.skinofab-usp-grid')
+    usp.replace_with(frag(f'<style>{brush_copy.BUYBOX_CSS}</style>' + brush_copy.chips_html()))
+    form = prod.select_one('form[data-product-form]')
+    form.select_one('input[name=id]')['value'] = str(brush_copy.SHOPIFY_VARIANT)
+    for el in form.select('.shop-pay-terms'): el.decompose()
+    for el in prod.select('skinofab-installments'): el.decompose()   # the foundation's pay-in-4 line
+    for el in soup.select('script.kaching-bundles-product, script.kaching-bundles-deal-block-settings'): el.decompose()
+    btn = form.select_one('[data-add-to-cart]')
+    label = btn.select_one('[data-add-to-cart-text]') if btn else None
+    if label: label.insert_after(frag('<span class="sfb-btn-price" data-sfb-btn-price></span>'))
+    if btn and btn.get('data-notification-popup'):
+        btn['data-notification-popup'] = btn['data-notification-popup'].replace('Adaptive Peptide Foundation', brush_copy.TITLE).replace('Color Changing Foundation', brush_copy.TITLE)
+    gift_imgs = {k: hashed_copy(BRUSH_IMG / f'gift-{f}.jpg', 'img', f'skinofab-brush-gift-{f}') for k, f in (('case', 'case'), ('body', 'body-brush'))}
+    form.select_one('[data-subscription-watch-price]').insert_before(
+        frag(brush_copy.picker_html(offers['variants'], gift_imgs, apf_copy.OFFER_PICKER_CSS)))
+    cta = form.select_one('#CTA_kopstorm')
+    guar = frag(f'<div class="product__block sfb-guar-block"><p class="sfb-guar">{brush_copy._CHECK}<span>{brush_copy.esc(brush_copy.GUARANTEE)}</span></p></div>')
+    cta.insert_after(guar)
+    # the five tabs, in the design's accordion markup
+    accs = prod.select('.product__block.product__accordions')
+    tpl, anchor = copy.copy(accs[0]), accs[-1]
+    media = WORK / 'brush' / 'media'
+    tutorial = (hashed_copy(media / 'brush-how-to.mp4', 'media', 'skinofab-brush-how-to'),
+                hashed_copy(media / 'brush-how-to.jpg', 'img', 'skinofab-brush-how-to-poster'))
+    for k, (title, body) in reversed(list(enumerate(brush_copy.tabs(tutorial)))):
+        a = copy.copy(tpl)
+        a['id'] = f'Block--sfb_tab_{k}'
+        a.select_one('[data-collapsible-trigger]')['aria-controls'] = f'ProductAccordion--sfb-tab-{k}'
+        a.select_one('[data-collapsible-container]')['id'] = f'ProductAccordion--sfb-tab-{k}'
+        span = a.select_one('#accordionbefore'); span.clear(); span.append(frag(title))
+        inner = a.select_one('[data-collapsible-content]'); inner.clear(); inner.append(frag(body))
+        anchor.insert_after(a)
+    for a in accs: a.decompose()
+    # the sticky bar: the brush, its price, back to the bundles
+    sticky = prod.select_one('#sticky_atcs')
+    if sticky:
+        wraps = sticky.select('.wrap')
+        for w in wraps[1:]: w.decompose()
+        w = wraps[0]
+        im = w.find('img'); im['src'], im['alt'] = hashed_copy(BRUSH_IMG / 'gallery-1.jpg', 'img', 'skinofab-lymphatic-brush-180w', (180, 180)), brush_copy.TITLE
+        w.find('h5').string = brush_copy.TITLE
+        w.select_one('.product__price--sale').string = brush_copy.money(brush_copy.PRICE)
+        w.select_one('.product__price--compare').string = brush_copy.money(brush_copy.COMPARE)
+        go = w.select_one('a.product__submit__add'); go['href'] = '#apf-buy'; go.string = brush_copy.STICKY_BUTTON
+    # the foundation's FrontrowMD sticker styles do not belong here
+    for st in prod.find_all('style'):
+        if '#frontrow-sticker' in (st.string or ''): st.decompose()
+    for node in prod.find_all(string=True):
+        if 'Color Changing Foundation' in node or 'Adaptive Peptide Foundation' in node:
+            node.replace_with(node.replace('Color Changing Foundation', brush_copy.TITLE).replace('Adaptive Peptide Foundation', brush_copy.TITLE))
+    for el in prod.find_all(alt=True):
+        el['alt'] = el['alt'].replace('Color Changing Foundation', brush_copy.TITLE).replace('Adaptive Peptide Foundation', brush_copy.TITLE)
+    # the sections below, in Solena's order
+    clips = [(hashed_copy(media / f'brush-review-{k}.mp4', 'media', f'skinofab-brush-review-{k}'),
+              hashed_copy(media / f'brush-review-{k}.jpg', 'img', f'skinofab-brush-review-{k}-poster')) for k in range(1, 7)]
+    how = [hashed_copy(BRUSH_IMG / f'how-{k}.jpg', 'img', f'skinofab-brush-how-{k}') for k in range(1, 4)]
+    cmp_ = [hashed_copy(BRUSH_IMG / f'compare-{k}.jpg', 'img', f'skinofab-brush-compare-{k}') for k in ('ours', 'copy')]
+    out = [f'<div class="shopify-section" id="shopify-section-sf-brush-videos"><style>{brush_copy.SECTIONS_CSS}</style>{brush_copy.videos_html(clips)}</div>',
+           f'<div class="shopify-section" id="shopify-section-sf-brush-how">{brush_copy.how_html(how)}</div>',
+           f'<div class="shopify-section" id="shopify-section-sf-brush-compare">{brush_copy.compare_html(*cmp_)}</div>']
+    if faq_src:
+        lst = faq_src.select('.accordion__list')
+        items = lst[0].select('li.accordion__item')
+        li_tpl = copy.copy(items[0])
+        for l in lst:
+            for li in l.select('li.accordion__item'): li.decompose()
+        for k, (q, a) in enumerate(brush_copy.FAQ['items']):
+            li = copy.copy(li_tpl)
+            li['id'] = f'Accordion--sfb_{k}'
+            li['class'] = [c for c in li.get('class', []) if c != 'accordion__item--first'] + (['accordion__item--first'] if k == 0 else [])
+            li.select_one('[data-collapsible-trigger]')['aria-controls'] = f'Accordions-item--sfb{k}'
+            li.select_one('[data-collapsible-container]')['id'] = f'Accordions-item--sfb{k}'
+            li.select_one('.accordion__item__title__text').string = q
+            body = li.select_one('[data-collapsible-content]'); body.clear(); body.append(frag(f'<p>{a}</p>'))
+            lst[0].append(li)
+        # one centered column, as on Solena's page
+        cols = faq_src.select('.accordion__column')
+        for c in cols[1:]: c.decompose()
+        if cols: cols[0]['style'] = 'width:100%;max-width:760px;margin:0 auto;flex:1 1 100%'
+        h2 = faq_src.select_one('.section__heading')
+        h2.string = brush_copy.FAQ['title']
+        h2.insert_before(frag(f'<span class="sfb-eyebrow" style="display:block;font-size:13px;font-weight:600;letter-spacing:.12em;'
+                              f'text-transform:uppercase;color:#6a6a6a;margin:0 0 12px">{brush_copy.esc(brush_copy.FAQ["eyebrow"])}</span>'))
+        faq_src['id'] = 'shopify-section-sf-brush-faq'
+        out.append(str(faq_src))
+    out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-risk-free">{brush_copy.risk_free_html()}</div>')
+    out.append(f'<div class="shopify-section" id="shopify-section-sf-review-wall">{review_wall(brush_reviews)}</div>')
+    prod.insert_after(frag(''.join(out)))
+    # the design's product JSON (the theme's product script reads prices and variants from it)
+    gallery = [s_.find('img')['src'] for s_ in slider.select('[data-product-single-media-wrapper]')]
+    pj = soup.select_one('script[data-product-json]')
+    if pj: pj.string = json.dumps(brush_snapshot(['/' + g.lstrip('./') for g in gallery]), ensure_ascii=True)
+    # head and body: the brush's own title, description and page id
+    text = str(soup)
+    text = re.sub(r'<title>.*?</title>', f'<title>{html.escape(brush_copy.META_TITLE)}</title>', text, count=1, flags=re.S)
+    text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{html.escape(brush_copy.META_DESCRIPTION)}" name="description"/>', text, count=1)
+    text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', 'id="the-lymphatic-brush-skinofab"', 1)
+    return text
+
+def brush_home(home):
+    """The homepage: the brush after the hero, in the serum section's video story layout (brush_copy.HOME)."""
+    m = re.search(r'<section class="shopify-section fh-section" id="shopify-section-template--[0-9]+__serum">', home)
+    hero = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__hero"', home)
+    if not m or not hero: return home, False
+    sec = home[m.start():home.find('</section>', m.start()) + len('</section>')]
+    h, k = brush_copy.HOME, brush_copy.HOME['video']
+    media = WORK / 'brush' / 'media'
+    mp4 = hashed_copy(media / f'brush-review-{k}.mp4', 'media', f'skinofab-brush-review-{k}')[3:]
+    poster = hashed_copy(media / f'brush-review-{k}.jpg', 'img', f'skinofab-brush-review-{k}-poster')[3:]
+    sec = sec.replace('__serum"', '__brush"').replace('__serum {', '__brush {').replace('__serum"', '__brush"')
+    sec = re.sub(r'id="fh-story-video-[^"]+"', 'id="fh-story-video-brush"', sec)
+    sec = re.sub(r'data-src="[^"]+\.mp4"', f'data-src="{mp4}"', sec, count=1)
+    sec = re.sub(r'<img alt="[^"]*" class="fh-social-poster"[^>]*>',
+                 f'<img alt="Using {html.escape(brush_copy.TITLE)}" class="fh-social-poster" height="960" loading="lazy" '
+                 f'sizes="(max-width: 749px) calc(100vw - 32px), (max-width: 1199px) 50vw, 760px" src="{poster}" width="540"/>', sec, count=1)
+    copy_html = (f'<div class="fh-story-copy"><div class="fh-eyebrow">' + re.search(r'<div class="fh-eyebrow">(<img[^>]*>)', sec).group(1)
+                 + f'<span>{html.escape(h["eyebrow"])}</span></div><h2>{html.escape(h["title"])}</h2><div class="fh-story-body">'
+                 + ''.join(f'<p>{html.escape(p)}</p>' for p in h['paragraphs'])
+                 + f'</div><a class="fh-button" href="products/{brush_copy.HANDLE}.html">{html.escape(h["button"])}</a></div>')
+    sec = re.sub(r'<div class="fh-story-copy">.*?</a></div>', lambda _: copy_html, sec, count=1, flags=re.S)
+    sec = sec.replace('--fh-bg: #f8f8f8', '--fh-bg: #ffffff').replace('--fh-pt: 0px; --fh-pb: 0px;', '--fh-pt: 48px; --fh-pb: 48px;')
+    end = home.find('</section>', hero.start()) + len('</section>')
+    return home[:end] + sec + home[end:], True
+
+def brush_snapshot(gallery):
+    """products/the-lymphatic-brush.js: the Shopify product JSON shape the theme build reads (handle, ids, prices)."""
+    cents = lambda v: int(round(float(v) * 100))
+    v = {'id': brush_copy.SHOPIFY_VARIANT, 'title': 'Default Title', 'option1': 'Default Title', 'option2': None, 'option3': None,
+         'sku': 'SKF-LYB-1', 'requires_shipping': True, 'taxable': True, 'featured_image': None, 'available': True,
+         'name': brush_copy.TITLE, 'public_title': None, 'options': ['Default Title'], 'price': cents(brush_copy.PRICE),
+         'compare_at_price': cents(brush_copy.COMPARE), 'requires_selling_plan': False, 'selling_plan_allocations': []}
+    return {'id': brush_copy.SHOPIFY_ID, 'title': brush_copy.TITLE, 'handle': brush_copy.HANDLE, 'description': brush_copy.DESCRIPTION,
+            'vendor': 'Skinofab', 'type': '', 'tags': [], 'price': v['price'], 'price_min': v['price'], 'price_max': v['price'],
+            'available': True, 'price_varies': False, 'compare_at_price': v['compare_at_price'],
+            'compare_at_price_min': v['compare_at_price'], 'compare_at_price_max': v['compare_at_price'], 'compare_at_price_varies': False,
+            'variants': [v], 'images': gallery, 'featured_image': gallery[0],
+            'options': [{'name': 'Title', 'position': 1, 'values': ['Default Title']}], 'url': f'/products/{brush_copy.HANDLE}',
+            'media': [], 'requires_selling_plan': False, 'selling_plan_groups': []}
+
 def balanced_end(t, start, tag):
     depth = 0
     for m in re.finditer(r'<(/?)%s\b[^>]*>' % tag, t[start:]):
@@ -446,7 +678,7 @@ def main():
             else: os.link(s, t)
     hits, missing = {}, []
     # page rules first: they rewrite whole blocks that the global rules would otherwise half-change
-    rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL]
+    rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL + brush_copy.GLOBAL]
     pages = sorted(DST.rglob('*.html'))
     texts = {p: p.read_text(encoding='utf-8', errors='surrogateescape') for p in pages}
     for scope, old, new in rules:
@@ -467,6 +699,7 @@ def main():
     data['images'] = ordered + [u for u in imgs if u not in ordered]
     snap.write_text(json.dumps(data))
     pdp = DST / 'products' / 'color-changing-foundation.html'
+    base_pdp = texts[pdp]   # the brush page starts from the foundation page before its own sections go in
     anchor = '<span data-subscription-watch-price=""></span>'
     if texts[pdp].count(anchor) < 1: missing.append(('picker', anchor))
     texts[pdp] = texts[pdp].replace(anchor, picker() + anchor, 1)
@@ -513,6 +746,16 @@ def main():
     else:
         end = balanced_end(texts[pdp], cta, 'div')
         texts[pdp] = texts[pdp][:end] + trust_block() + texts[pdp][end:]
+    # the Lymphatic Brush on the homepage, after the hero
+    if DST / 'index.html' in texts:
+        texts[DST / 'index.html'], ok = brush_home(texts[DST / 'index.html'])
+        if not ok: missing.append(('brush', 'homepage serum / hero section'))
+    # the Lymphatic Brush's page (brush_copy) and its product snapshot
+    brush = DST / 'products' / f'{brush_copy.HANDLE}.html'
+    texts[brush] = brush_page(base_pdp)
+    gallery = sorted(set(re.findall(r'\.\./assets/img/(skinofab-lymphatic-brush-\d-1080w-[0-9a-f]{6}\.jpg)', texts[brush])),
+                     key=lambda g: int(g.split('-')[3]))
+    (DST / 'products' / f'{brush_copy.HANDLE}.js').write_text(json.dumps(brush_snapshot(['/assets/img/' + g for g in gallery])))
     for p, t in texts.items(): p.write_text(t, encoding='utf-8', errors='surrogateescape')
     # the theme build turns this into the Cart Drawer theme settings (upgrade, add-ons, review)
     (DST / 'sf-offer.json').write_text(json.dumps(cart_offer(), indent=1, ensure_ascii=False))
