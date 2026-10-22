@@ -14,7 +14,7 @@ const THROTTLE = process.argv.includes('--throttle');
 // the store, its media CDN and the CloudFront host NEXT serves theme CSS/JS and platform scripts from
 const OWN = [new URL(STORE).host, 'cdn.29next.store', 'd1lrxs4saq89c.cloudfront.net'];
 
-const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const report = { store: STORE, theme: THEME, at: new Date().toISOString(), throttle: THROTTLE, pages: [] };
 
 for (const mode of MODES) {

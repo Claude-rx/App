@@ -20,7 +20,7 @@ Images are slot names ({img:slot}); apf_pages.py maps them to files (real produc
 sheet, persona photos without any product in them) and fills them in.
 """
 
-import json
+import html, json
 import ccf_copy
 
 PRODUCT = 'Adaptive Peptide Foundation'
@@ -870,75 +870,77 @@ def pdp_reviews_html(eyebrow, title, reviews):
 # reviews of the same formula (tools/reviews/import_reviews.py -> a data script loaded when the wall comes near).
 # Hidden while there are none. Summary (average, 5..1 distribution) is computed from what is shown.
 REVIEW_WALL_CSS = r"""
-.sfr{color:#151515;font-family:inherit;padding:64px 0;background:#fff}
+.sfr{color:#191919;font-family:inherit;padding:64px 0;background:#fff}
 .sfr[hidden]{display:none !important}
 .sfr *{box-sizing:border-box}
 .sfr-wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
 .sfr-top{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;align-items:start}
 .sfr h2{font-size:clamp(26px,3vw,36px);line-height:1.2;font-weight:600;margin:0 0 18px}
-.sfr-avg{display:flex;align-items:center;gap:14px}
-.sfr-avg b{font-size:48px;line-height:1;font-weight:600}
-.sfr-avg small{display:block;font-size:14px;color:#6a6a6a;margin-top:4px}
-.sfr-stars{display:inline-flex;gap:2px;color:#151515;vertical-align:middle}
-.sfr-stars svg{width:18px;height:18px}
-.sfr-stars i{position:relative;display:inline-block;width:18px;height:18px;color:#d6d6d6}
-.sfr-stars i svg{position:absolute;inset:0}
-.sfr-stars i svg+svg{color:#151515;clip-path:inset(0 calc(100% - var(--f)) 0 0)}
-.sfr-dist{list-style:none !important;margin:18px 0 0 !important;padding:0 !important;display:grid;gap:7px}
-.sfr-dist li{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:34px 1fr 52px;gap:10px;align-items:center;font-size:14px;cursor:pointer}
+.sfr-word{display:block;font-size:26px;font-weight:700;letter-spacing:-.01em;margin:0 0 8px}
+.sfr-avg{display:grid;gap:8px}
+.sfr-avg p{margin:0;font-size:15px;color:#3b3b3b}
+.sfr-avg p b{color:#191919}
+.sfr-tp{display:inline-flex;gap:3px;vertical-align:middle}
+.sfr-tp i{display:inline-grid;place-items:center;width:var(--s,20px);height:var(--s,20px);background:linear-gradient(90deg,#00b67a var(--f),#dcdce6 var(--f))}
+.sfr-tp i svg{width:72%;height:72%;color:#fff}
+.sfr-tp--lg{--s:34px;gap:4px}
+.sfr-dist{list-style:none !important;margin:20px 0 0 !important;padding:0 !important;display:grid;gap:8px}
+.sfr-dist li{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:52px 1fr 56px;gap:10px;align-items:center;font-size:14px;cursor:pointer}
 .sfr-dist li:before{content:none !important}
-.sfr-dist span{height:8px;border-radius:99px;background:#ececec;overflow:hidden}
-.sfr-dist span em{display:block;height:100%;background:#151515;border-radius:99px}
+.sfr-dist li[aria-pressed="true"]{font-weight:700}
+.sfr-dist span{height:9px;border-radius:2px;background:#e5e5dd;overflow:hidden}
+.sfr-dist span em{display:block;height:100%;background:#00b67a}
 .sfr-dist small{color:#6a6a6a;text-align:right}
-.sfr-write{display:inline-flex;margin-top:22px;padding:13px 26px;border-radius:999px;border:1.5px solid #151515;color:#151515 !important;text-decoration:none !important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-.sfr-write:hover{background:#151515;color:#fff !important}
+.sfr-note{margin:16px 0 0;font-size:12.5px;line-height:1.45;color:#6a6a6a}
+.sfr-write{display:inline-flex;margin-top:20px;padding:13px 26px;border-radius:999px;border:1.5px solid #191919;color:#191919 !important;text-decoration:none !important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.sfr-write:hover{background:#191919;color:#fff !important}
 .sfr-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 18px}
 .sfr-chips{display:flex;flex-wrap:wrap;gap:8px}
-.sfr-chip{border:1px solid #d9d9d9;background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;color:#151515;cursor:pointer}
-.sfr-chip[aria-pressed="true"]{background:#151515;border-color:#151515;color:#fff}
-.sfr-sort{border:1px solid #d9d9d9;border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;background:#fff;color:#151515}
+.sfr-chip{border:1px solid #d9d9d9;background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;color:#191919;cursor:pointer}
+.sfr-chip[aria-pressed="true"]{background:#191919;border-color:#191919;color:#fff}
+.sfr-sort{border:1px solid #d9d9d9;border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;background:#fff;color:#191919}
 .sfr-list{display:grid;gap:14px}
-.sfr-card{background:#f6f6f6;border-radius:16px;padding:20px 22px}
-.sfr-head{display:flex;align-items:center;gap:12px;margin:0 0 10px}
-.sfr-ava{width:38px;height:38px;border-radius:50%;background:#151515;color:#fff;display:grid;place-content:center;font-size:14px;font-weight:600;flex:none}
-.sfr-who{flex:1;min-width:0;font-size:14px;line-height:1.35}
-.sfr-who b{font-weight:600}
-.sfr-who small{display:block;color:#6a6a6a;font-size:12.5px}
-.sfr-ver{display:inline-flex;align-items:center;gap:4px;color:#1f7a3f;font-size:12.5px;font-weight:500;margin-left:8px}
-.sfr-card h3{font-size:16px;font-weight:600;margin:8px 0 4px;line-height:1.35}
+.sfr-card{background:#fff;border:1px solid #e5e5dd;border-radius:12px;padding:20px 22px}
+.sfr-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+.sfr-ver{display:inline-flex;align-items:center;gap:5px;color:#191919;font-size:13px;font-weight:500}
+.sfr-ver svg{color:#00b67a}
+.sfr-card h3{font-size:16px;font-weight:700;margin:0 0 6px;line-height:1.35}
 .sfr-body{font-size:15px;line-height:1.55;color:#2b2b2b;margin:0;white-space:pre-line}
 .sfr-body.is-clamped{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
-.sfr-more-text{background:none;border:0;padding:4px 0 0;font:inherit;font-size:13px;font-weight:600;text-decoration:underline;cursor:pointer;color:#151515}
+.sfr-more-text{background:none;border:0;padding:4px 0 0;font:inherit;font-size:13px;font-weight:600;text-decoration:underline;cursor:pointer;color:#191919}
 .sfr-photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.sfr-photos button{padding:0;border:0;background:none;cursor:zoom-in;border-radius:10px;overflow:hidden;width:84px;height:84px}
+.sfr-photos button{padding:0;border:0;background:none;cursor:zoom-in;border-radius:8px;overflow:hidden;width:84px;height:84px}
 .sfr-photos img{width:84px;height:84px;object-fit:cover;display:block}
+.sfr-foot{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid #efefe9;font-size:13.5px}
+.sfr-ava{width:30px;height:30px;border-radius:50%;background:#efefe9;color:#191919;display:grid;place-content:center;font-size:13px;font-weight:700;flex:none}
+.sfr-foot small{color:#6a6a6a;margin-left:auto}
 .sfr-more{display:flex;justify-content:center;margin-top:22px}
-.sfr-more button{padding:14px 30px;border-radius:999px;background:#151515;color:#fff;border:0;font:inherit;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
-.sfr-empty{padding:30px;text-align:center;color:#6a6a6a;background:#f6f6f6;border-radius:16px}
+.sfr-more button{padding:14px 30px;border-radius:999px;background:#191919;color:#fff;border:0;font:inherit;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.sfr-empty{padding:30px;text-align:center;color:#6a6a6a;background:#f6f6f2;border-radius:12px}
 .sfr-box{position:fixed;inset:0;z-index:2147483002;background:rgba(21,21,21,.85);display:flex;align-items:center;justify-content:center;padding:24px}
 .sfr-box[hidden]{display:none}
 .sfr-box img{max-width:min(92vw,900px);max-height:86vh;border-radius:12px}
 .sfr-box button{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:22px;cursor:pointer}
 @media (min-width:990px){.sfr-top>div:first-child{position:sticky;top:120px}}
 @media (max-width:989px){.sfr{padding:48px 0}.sfr-top{grid-template-columns:1fr;gap:26px}}
-@media (max-width:599px){.sfr-wrap{width:calc(100% - 32px)}.sfr-card{padding:18px}.sfr-bar{flex-direction:column;align-items:stretch}.sfr-sort{width:100%}}
+@media (max-width:599px){.sfr-wrap{width:calc(100% - 32px)}.sfr-card{padding:18px}.sfr-bar{flex-direction:column;align-items:stretch}.sfr-sort{width:100%}.sfr-tp--lg{--s:30px}}
 """
-
 REVIEW_WALL_JS = r"""
 (function () {
   var root = document.getElementById('sf-review-wall');
   var sentinel = document.getElementById('sf-review-wall-sentinel');
   if (!root || !sentinel) return;
   var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>';
-  var CHECK = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m7.5 12.3 3 3 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var PAGE = 8, all = [], shown = 0, filter = 'all', sort = 'recent', photoBase = {};
+  var CHECK = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m7.5 12.3 3 3 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var PAGE = 8, all = [], shown = 0, filter = 'all', sort = 'relevant', photoBase = {}, totals = null;
   try { photoBase = JSON.parse((root.querySelector('[data-sf-review-photos]') || {}).textContent || '{}'); } catch (e) {}
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-  function stars(v) {
-    var h = '<span class="sfr-stars" role="img" aria-label="' + v + ' out of 5 stars">';
-    for (var i = 0; i < 5; i++) { var f = Math.max(0, Math.min(1, Math.round((v - i) * 2) / 2)); h += '<i style="--f:' + (f * 100) + '%">' + STAR + STAR + '</i>'; }
+  function stars(v, big) {
+    var h = '<span class="sfr-tp' + (big ? ' sfr-tp--lg' : '') + '" role="img" aria-label="Rated ' + v + ' out of 5">';
+    for (var i = 0; i < 5; i++) { var f = Math.max(0, Math.min(1, Math.round((v - i) * 2) / 2)); h += '<i style="--f:' + (f * 100) + '%">' + STAR + '</i>'; }
     return h + '</span>';
   }
+  function word(v) { return v >= 4.5 ? 'Excellent' : v >= 4 ? 'Great' : v >= 3 ? 'Average' : v >= 2 ? 'Poor' : 'Bad'; }
   function month(d) {
     if (!d) return '';
     var t = new Date(d + (d.length === 10 ? 'T12:00:00' : ''));
@@ -950,23 +952,25 @@ REVIEW_WALL_JS = r"""
       return filter === 'all' || (filter === 'photos' ? r.photos && r.photos.length : String(r.rating) === filter);
     });
     l.sort(function (a, b) {
-      if (sort === 'high') return b.rating - a.rating || (b.date > a.date ? 1 : -1);
-      if (sort === 'low') return a.rating - b.rating || (b.date > a.date ? 1 : -1);
-      if (sort === 'photos') return ((b.photos || []).length ? 1 : 0) - ((a.photos || []).length ? 1 : 0) || (b.date > a.date ? 1 : -1);
-      return b.date > a.date ? 1 : b.date < a.date ? -1 : 0;
+      if (sort === 'high') return b.rating - a.rating || a.i - b.i;
+      if (sort === 'low') return a.rating - b.rating || a.i - b.i;
+      if (sort === 'photos') return ((b.photos || []).length ? 1 : 0) - ((a.photos || []).length ? 1 : 0) || a.i - b.i;
+      if (sort === 'recent') return (b.date || '') > (a.date || '') ? 1 : (b.date || '') < (a.date || '') ? -1 : a.i - b.i;
+      return a.i - b.i;
     });
     return l;
   }
   function card(r) {
     var initial = esc((r.name || '?').charAt(0).toUpperCase());
     var ph = (r.photos || []).map(function (p) { var s = photoSrc(p); return s ? '<button type="button" data-sfr-zoom="' + esc(s) + '"><img src="' + esc(s) + '" alt="Photo from ' + esc(r.name) + '" loading="lazy" decoding="async"></button>' : ''; }).join('');
-    return '<article class="sfr-card"><div class="sfr-head"><span class="sfr-ava" aria-hidden="true">' + initial + '</span>' +
-      '<div class="sfr-who"><b>' + esc(r.name) + '</b>' + (r.verified ? '<span class="sfr-ver">' + CHECK + 'Verified buyer</span>' : '') +
-      '<small>' + esc(month(r.date)) + '</small></div>' + stars(r.rating) + '</div>' +
+    return '<article class="sfr-card"><div class="sfr-card-top">' + stars(r.rating) +
+      (r.verified ? '<span class="sfr-ver">' + CHECK + 'Verified buyer</span>' : '') + '</div>' +
       (r.title ? '<h3>' + esc(r.title) + '</h3>' : '') +
       '<p class="sfr-body' + ((r.body || '').length > 360 ? ' is-clamped' : '') + '">' + esc(r.body) + '</p>' +
       ((r.body || '').length > 360 ? '<button type="button" class="sfr-more-text">Read more</button>' : '') +
-      (ph ? '<div class="sfr-photos">' + ph + '</div>' : '') + '</article>';
+      (ph ? '<div class="sfr-photos">' + ph + '</div>' : '') +
+      '<div class="sfr-foot"><span class="sfr-ava" aria-hidden="true">' + initial + '</span><b>' + esc(r.name) + '</b>' +
+      (r.date ? '<small>' + esc(month(r.date)) + '</small>' : '') + '</div></article>';
   }
   function paint(reset) {
     var l = list(), box = root.querySelector('.sfr-list');
@@ -977,31 +981,45 @@ REVIEW_WALL_JS = r"""
     root.querySelector('.sfr-more').hidden = shown >= l.length;
   }
   function summary() {
-    var n = all.length, sum = 0, dist = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }, photos = 0;
-    all.forEach(function (r) { sum += r.rating; dist[r.rating] = (dist[r.rating] || 0) + 1; if (r.photos && r.photos.length) photos++; });
-    var avg = n ? Math.round(sum / n * 10) / 10 : 0;
-    root.querySelector('[data-sfr-avg]').innerHTML = '<b>' + avg.toFixed(1) + '</b><div>' + stars(avg) + '<small>Based on ' + n.toLocaleString() + ' review' + (n === 1 ? '' : 's') + '</small></div>';
+    var n = totals.count, dist = totals.dist, avg = n ? Math.round(totals.sum / n * 10) / 10 : 0, photos = 0;
+    all.forEach(function (r) { if (r.photos && r.photos.length) photos++; });
+    root.querySelector('[data-sfr-avg]').innerHTML = '<span class="sfr-word">' + word(avg) + '</span>' + stars(avg, true) +
+      '<p><b>' + avg.toFixed(1) + '</b> out of 5 &middot; Based on <b>' + n.toLocaleString('en-US') + '</b> review' + (n === 1 ? '' : 's') + '</p>';
     root.querySelector('.sfr-dist').innerHTML = [5, 4, 3, 2, 1].map(function (s) {
       var c = dist[s] || 0, pct = n ? Math.round(c / n * 100) : 0;
-      return '<li data-sfr-filter="' + s + '" title="Show ' + s + '-star reviews">' + s + ' &#9733;<span><em style="width:' + pct + '%"></em></span><small>' + c.toLocaleString() + '</small></li>';
+      return '<li data-sfr-filter="' + s + '" role="button" tabindex="0" aria-pressed="false" title="Show ' + s + '-star reviews">' + s + '-star<span><em style="width:' + pct + '%"></em></span><small>' + pct + '%</small></li>';
     }).join('');
-    var chips = '<button type="button" class="sfr-chip" data-sfr-filter="all" aria-pressed="true">All (' + n.toLocaleString() + ')</button>';
-    if (photos) chips += '<button type="button" class="sfr-chip" data-sfr-filter="photos" aria-pressed="false">With photos (' + photos + ')</button>';
-    [5, 4, 3, 2, 1].forEach(function (s) { if (dist[s]) chips += '<button type="button" class="sfr-chip" data-sfr-filter="' + s + '" aria-pressed="false">' + s + ' &#9733; (' + dist[s].toLocaleString() + ')</button>'; });
+    var chips = '<button type="button" class="sfr-chip" data-sfr-filter="all" aria-pressed="true">All reviews</button>';
+    if (photos) chips += '<button type="button" class="sfr-chip" data-sfr-filter="photos" aria-pressed="false">With photos (' + photos.toLocaleString('en-US') + ')</button>';
     root.querySelector('.sfr-chips').innerHTML = chips;
+    var note = root.querySelector('.sfr-note');
+    if (note && totals.imported) {
+      note.textContent = 'Includes ' + totals.imported.toLocaleString('en-US') + ' verified reviews of the same formula from our earlier store' +
+        (all.length < n ? '. Showing the ' + all.length.toLocaleString('en-US') + ' most helpful.' : '.');
+      note.hidden = false;
+    }
   }
   function setFilter(f) {
     filter = f;
-    Array.prototype.forEach.call(root.querySelectorAll('.sfr-chip'), function (c) { c.setAttribute('aria-pressed', String(c.getAttribute('data-sfr-filter') === f)); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-sfr-filter]'), function (c) { c.setAttribute('aria-pressed', String(c.getAttribute('data-sfr-filter') === f)); });
     paint(true);
   }
   function start(imported) {
     var nativeEl = root.querySelector('[data-sf-native-reviews]'), native = { reviews: [] };
     try { native = JSON.parse(nativeEl.textContent || '{}'); } catch (e) {}
     if (native.write) { var w = root.querySelector('.sfr-write'); w.href = native.write; w.hidden = false; }
-    all = (native.reviews || []).map(function (r) { return { name: r.name, rating: +r.score || 0, title: r.title, body: r.body, date: (r.date || '').slice(0, 10), verified: false, photos: [] }; })
-      .concat(imported && imported.reviews || []).filter(function (r) { return r.rating >= 1 && r.rating <= 5; });
+    var mine = (native.reviews || []).map(function (r) { return { name: r.name, rating: +r.score || 0, title: r.title, body: r.body, date: (r.date || '').slice(0, 10), verified: false, photos: [] }; })
+      .filter(function (r) { return r.rating >= 1 && r.rating <= 5; });
+    var theirs = (imported && imported.reviews || []).filter(function (r) { return r.rating >= 1 && r.rating <= 5; });
+    all = mine.concat(theirs);
+    all.forEach(function (r, i) { r.i = i; });
     if (!all.length) return;
+    // totals: every NEXT review plus the imported store's full count (the list carries its most helpful reviews)
+    var S = imported && imported.summary, dist = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }, sum = 0;
+    mine.forEach(function (r) { dist[r.rating]++; sum += r.rating; });
+    if (S) { [5, 4, 3, 2, 1].forEach(function (s) { dist[s] += +(S.distribution[s] || 0); }); sum += S.average * S.count; }
+    else theirs.forEach(function (r) { dist[r.rating]++; sum += r.rating; });
+    totals = { count: mine.length + (S ? S.count : theirs.length), dist: dist, sum: sum, imported: S ? S.count : theirs.length };
     root.hidden = false;
     summary(); paint(true);
   }
@@ -1014,6 +1032,10 @@ REVIEW_WALL_JS = r"""
     if (e.target.closest('.sfr-more button')) { paint(false); return; }
     var m = e.target.closest('.sfr-more-text');
     if (m) { m.previousElementSibling.classList.remove('is-clamped'); m.remove(); }
+  });
+  root.addEventListener('keydown', function (e) {
+    var f = e.target.closest && e.target.closest('li[data-sfr-filter]');
+    if (f && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setFilter(f.getAttribute('data-sfr-filter')); }
   });
   root.querySelector('.sfr-sort').addEventListener('change', function (e) { sort = e.target.value; paint(true); });
   // the imported reviews load only when the wall comes near (hundreds of reviews cost nothing on page load)
@@ -1031,9 +1053,14 @@ REVIEW_WALL_JS = r"""
     var io = new IntersectionObserver(function (es) { if (es.some(function (x) { return x.isIntersecting; })) { io.disconnect(); load(); } }, { rootMargin: '800px 0px' });
     io.observe(sentinel);
   } else { load(); }
-  if (/^#sf-reviews-all/.test(location.hash)) load();
+  if (/^#sf-review-wall|^#sf-reviews-all/.test(location.hash)) load();
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href$="#sf-review-wall"]');
+    if (a) load();
+  });
 })();
 """
+
 
 def review_wall_html(data_src='', photos=None):
     """The wall's skeleton; the script fills it. data_src: the imported reviews' data script ('' = NEXT reviews only);
@@ -1044,11 +1071,96 @@ def review_wall_html(data_src='', photos=None):
             f'<script type="application/json" data-sf-review-photos>{json.dumps(photos or {})}</script>'
             '<div class="sfr-wrap"><div class="sfr-top">'
             '<div><h2 id="sfr-title">Customer reviews</h2><div class="sfr-avg" data-sfr-avg></div><ul class="sfr-dist"></ul>'
-            '<a class="sfr-write" href="#" hidden>Write a review</a></div>'
+            '<p class="sfr-note" hidden></p><a class="sfr-write" href="#" hidden>Write a review</a></div>'
             '<div><div class="sfr-bar"><div class="sfr-chips"></div>'
-            '<select class="sfr-sort" aria-label="Sort reviews"><option value="recent">Most recent</option><option value="high">Highest rated</option>'
-            '<option value="low">Lowest rated</option><option value="photos">With photos first</option></select></div>'
+            '<select class="sfr-sort" aria-label="Sort reviews"><option value="relevant">Most helpful</option><option value="recent">Most recent</option>'
+            '<option value="high">Highest rated</option><option value="low">Lowest rated</option><option value="photos">With photos first</option></select></div>'
             '<div class="sfr-list"></div><div class="sfr-more" hidden><button type="button">Show more reviews</button></div></div>'
             '</div></div>'
             '<div class="sfr-box" hidden role="dialog" aria-label="Review photo"><img alt=""><button type="button" aria-label="Close">&times;</button></div>'
             f'<script>{REVIEW_WALL_JS}</script></section>')
+
+
+# a strip of short reviews near the top of the product page, in the same look (built from the imported reviews)
+REVIEW_STRIP_CSS = r"""
+.sfrs{padding:40px 0;background:#f6f6f2;color:#191919;font-family:inherit}
+.sfrs *{box-sizing:border-box}
+.sfrs-wrap{width:min(1180px,calc(100% - 40px));margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;align-items:center}
+.sfrs-sum{text-align:center}
+.sfrs-sum b{display:block;font-size:24px;font-weight:700;margin:0 0 8px}
+.sfrs-sum p{margin:8px 0 0;font-size:13.5px;color:#3b3b3b}
+.sfrs-sum a{color:#191919;font-weight:600}
+.sfrs-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px}
+.sfrs-track::-webkit-scrollbar{display:none}
+.sfrs-card{flex:0 0 268px;scroll-snap-align:start;background:#fff;border:1px solid #e5e5dd;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.sfrs-card p{margin:0;font-size:14.5px;line-height:1.5;color:#2b2b2b;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.sfrs-card small{margin-top:auto;font-size:13px;color:#6a6a6a}
+.sfrs-card small b{color:#191919}
+.sfrs .sfr-tp{display:inline-flex;gap:3px}
+.sfrs .sfr-tp i{display:inline-grid;place-items:center;width:var(--s,18px);height:var(--s,18px);background:linear-gradient(90deg,#00b67a var(--f),#dcdce6 var(--f))}
+.sfrs .sfr-tp i svg{width:72%;height:72%;color:#fff}
+.sfrs .sfr-tp--lg{--s:30px;gap:4px}
+@media (max-width:989px){.sfrs-wrap{grid-template-columns:1fr;gap:18px}.sfrs-card{flex-basis:78%}}
+@media (max-width:599px){.sfrs-wrap{width:calc(100% - 32px)}}
+"""
+_TP_STAR = ('<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" '
+            'd="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
+
+
+def tp_stars(v, big=False):
+    out = ''.join(f'<i style="--f:{int(max(0, min(1, round((v - i) * 2) / 2)) * 100)}%">{_TP_STAR}</i>' for i in range(5))
+    return f'<span class="sfr-tp{" sfr-tp--lg" if big else ""}" role="img" aria-label="Rated {v:g} out of 5">{out}</span>'
+
+
+def review_strip_html(average, count, picks, href='#sf-review-wall'):
+    """picks: [{name, body}] short 5-star reviews, word for word."""
+    word = 'Excellent' if average >= 4.5 else 'Great' if average >= 4 else 'Average'
+    cards = ''.join(f'<article class="sfrs-card">{tp_stars(5)}<p>{html.escape(r["body"])}</p>'
+                    f'<small><b>{html.escape(r["name"])}</b> &middot; Verified buyer</small></article>' for r in picks)
+    return (f'<section class="sfrs" aria-label="Customer reviews"><style>{REVIEW_STRIP_CSS}</style><div class="sfrs-wrap">'
+            f'<div class="sfrs-sum"><b>{word}</b>{tp_stars(average, True)}'
+            f'<p>{average:.1f} out of 5 &middot; <a href="{href}">{count:,} reviews</a></p></div>'
+            f'<div class="sfrs-track">{cards}</div></div></section>')
+
+
+# the K-beauty science section on the product page (no person; every active below is in the ingredient list)
+KBEAUTY = {
+    'eyebrow': 'K-beauty skin science',
+    'lead': 'The Korean skincare actives,', 'mark': 'in your foundation',
+    'lede': ('Korean skincare made PDRN serums and peptide ampoules part of a morning routine. We put the same family of '
+             'actives into the base you wear all day, so your makeup cares for your skin while you wear it.'),
+    'rows': [
+        ('PDRN (sodium DNA)', 'The active behind Korea’s favourite recovery serums, here for tired, thinner skin that needs comfort.'),
+        ('Matrixyl 3000 peptides', 'Palmitoyl tripeptide-1 and tetrapeptide-7: signal peptides that soften the look of fine lines while you wear it.'),
+        ('Adenosine + niacinamide', 'Two mainstays of Korean anti-aging formulas: adenosine for smoother-looking skin, niacinamide for a more even tone.'),
+        ('Pro-Xylane + hyaluronic acid', 'A firming active and a hydrating serum base with ceramide NP and squalane, so the finish never cracks or settles into lines.'),
+    ],
+    'note': 'Fragrance-free. Every active is named in the ingredient list, not hidden in a “complex”.',
+    'button': 'Choose your pack',
+}
+KBEAUTY_CSS = r"""
+.sfkb-rows{list-style:none !important;margin:26px 0 0 !important;padding:0 !important;display:grid;gap:12px}
+.sfkb-rows li{list-style:none;margin:0;padding:16px 18px;border:1px solid #e6e6e6;border-radius:14px;background:#fff;display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start}
+.sfkb-rows li:before{content:none !important}
+.sfkb-rows b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#151515;color:#fff;font-size:13px}
+.sfkb-rows strong{display:block;font-size:16px;line-height:1.3;margin:0 0 3px}
+.sfkb-rows span{display:block;font-size:15px;line-height:1.5;color:#3b3b3b}
+.sfkb-note{margin:18px 0 0;font-size:14px;color:#3b3b3b}
+"""
+
+
+def kbeauty_html(img, buy_href='#apf-buy'):
+    k = KBEAUTY
+    rows = ''.join(f'<li><b>{n}</b><div><strong>{html.escape(t)}</strong><span>{html.escape(d)}</span></div></li>'
+                   for n, (t, d) in enumerate(k['rows'], 1))
+    src, w, h = img
+    return (f'<section class="sfps sfps-sec sfps-sec--grey" id="sf-kbeauty"><style>{PROBLEM_SOLUTION_CSS}{KBEAUTY_CSS}</style>'
+            '<div class="sfps-wrap"><div class="sfps-grid sfps-grid--rev">'
+            f'<div><span class="sfps-eyebrow">{html.escape(k["eyebrow"])}</span>'
+            f'<h2>{html.escape(k["lead"])} <span class="sfps-mark">{html.escape(k["mark"])}</span></h2>'
+            f'<p class="sfps-lede">{html.escape(k["lede"])}</p><ul class="sfkb-rows">{rows}</ul>'
+            f'<p class="sfkb-note">{html.escape(k["note"])}</p>'
+            f'<div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">{html.escape(k["button"])}</a></div></div>'
+            f'<div class="sfps-photo"><img src="{src}" alt="Adaptive Peptide Foundation with PDRN, peptides and Pro-Xylane" '
+            f'width="{w}" height="{h}" loading="lazy" decoding="async"></div>'
+            '</div></div></section>')

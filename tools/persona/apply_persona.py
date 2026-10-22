@@ -172,14 +172,32 @@ def faq_more(t):
 
 REVIEWS = Path(sys.argv[3]).resolve().parent / 'reviews'   # tools/reviews/import_reviews.py output (work dir)
 
+SHIP = 1000   # reviews in the wall's data file; the totals cover every imported review
+
+def review_data(reviews=REVIEWS):
+    """The imported reviews in <reviews>/reviews.json (tools/reviews/import_reviews.py), or None: the list the wall
+    ships (every photo review, every review under 4 stars, then the rest in the importer's order, up to SHIP), the
+    totals of all of them, and short 5-star picks for the strip near the top of the page."""
+    data = reviews / 'reviews.json'
+    if not data.exists(): return None
+    d = json.loads(data.read_text())
+    rs = d['reviews']
+    keep = set(i for i, r in enumerate(rs) if r.get('photos') or r['rating'] <= 3)
+    for i in range(len(rs)):
+        if len(keep) >= SHIP: break
+        keep.add(i)
+    ship = [rs[i] for i in sorted(keep)][:max(SHIP, len(keep))]
+    picks = [r for r in rs if r['rating'] == 5 and r.get('verified') and 70 <= len(r['body']) <= 210 and '\n' not in r['body']][:10]
+    return {'ship': ship, 'summary': {'count': d['count'], 'average': d['average'], 'distribution': d['distribution']},
+            'picks': [{'name': r['name'], 'body': r['body']} for r in picks]}
+
 def review_wall(reviews=REVIEWS):
     """The review wall after the FAQ: NEXT's own reviews (the theme fills them in) plus the imported ones in
     <reviews>/reviews.json, if any (the foundation: <work_dir>/reviews, the brush: <work_dir>/reviews-brush)."""
-    data = reviews / 'reviews.json'
-    if not data.exists(): return apf_copy.review_wall_html()
-    d = json.loads(data.read_text())
+    d = review_data(reviews)
+    if not d: return apf_copy.review_wall_html()
     photos = {}
-    for r in d['reviews']:
+    for r in d['ship']:
         for p in r.get('photos', []):
             src = reviews / 'photos' / p
             if not src.exists(): continue
@@ -189,13 +207,21 @@ def review_wall(reviews=REVIEWS):
             im.save(DST / 'assets' / 'img' / name, quality=84, optimize=True, progressive=True)
             photos[p] = '../assets/img/' + name
     # a data script (theme JS assets run through the template engine: ASCII only, no template openers)
-    payload = json.dumps({'reviews': d['reviews']}, ensure_ascii=True, separators=(',', ':'))
+    slim = [{k: r[k] for k in ('name', 'rating', 'title', 'body', 'date', 'verified', 'photos') if r.get(k)} for r in d['ship']]
+    payload = json.dumps({'summary': d['summary'], 'reviews': slim}, ensure_ascii=True, separators=(',', ':'))
     payload = payload.replace('{%', '{\\u0025').replace('{{', '{\\u007b').replace('{#', '{\\u0023')
     body = 'window.SFReviewsData=' + payload + ';\n'
     name = f"sf-reviews-{hashlib.md5(body.encode()).hexdigest()[:8]}.js"
     (DST / 'assets' / 'js').mkdir(parents=True, exist_ok=True)
     (DST / 'assets' / 'js' / name).write_text(body)
     return apf_copy.review_wall_html('../assets/js/' + name, photos)
+
+def review_strip(reviews=REVIEWS):
+    """The short-review strip for the top of the product page (None without imported reviews)."""
+    d = review_data(reviews)
+    if not d or not d['picks']: return None
+    s = d['summary']
+    return apf_copy.review_strip_html(float(s['average']), int(s['count']), d['picks'])
 
 def picker():
     """The offer, as on the old store: 1 bottle or 2 bottles + free gifts, each a "temporary deal" off the compare-at
@@ -325,15 +351,19 @@ def cart_offer():
 STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
         '<path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
 
-def rating_block(t):
+def rating_block(t, real=None):
     """The design's Loox rating badge renders nothing without Loox (a Shopify app): the same stars, color and text
-    from its own data attributes, as plain markup, linking to the reviews section."""
+    from its own data attributes, as plain markup, linking to the reviews section. real: the imported reviews' totals
+    ({'average', 'count'}), which replace the badge's own text (the design's pattern carried an inflated count)."""
     m = re.search(r'<div class="loox-rating loox-widget"[^>]*></div>', t)
     if not m: return t, False
     tag = m.group(0)
     attr = lambda k, d='': (re.search(r'\b%s="([^"]*)"' % k, tag) or [None, d])[1]
     rating = float(attr('data-rating', '5') or 5)
     text = attr('data-pattern') or f'{rating}/5'
+    if real:
+        rating = round(float(real['average']), 1)
+        text = f"{rating:g}/5 ({int(real['count']):,} reviews)"
     color = attr('data-color-star') or '#000000'
     stars = ''
     for i in range(5):
@@ -396,7 +426,9 @@ def frontrow_block():
             'if (!gallery) return;'
             'if (getComputedStyle(gallery).position === "static") gallery.style.position = "relative";'
             'gallery.appendChild(f); firstSlideOnly(f, gallery); }'
-            'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount); else mount();'
+            # after the page has loaded and gone idle: its third-party scripts stay off the critical path
+            'function later() { (window.requestIdleCallback || function (f) { setTimeout(f, 1) })(mount, { timeout: 3000 }); }'
+            'if (document.readyState === "complete") later(); else window.addEventListener("load", later);'
             '})();</script>')
 
 
@@ -487,6 +519,7 @@ def brush_page(base):
         im = sl.find('img')
         im['src'], im['srcset'] = big, f'{mid_src} 753w, {big} 1080w'
         im['alt'], im['data-image-id'] = brush_copy.TITLE, mid
+        if k > 1: im['fetchpriority'] = 'low'
         slider.append(sl)
         th = copy.copy(t_thumb)
         th['data-id'], th['data-thumbnail-id'] = mid, f'brush-{mid}'
@@ -579,7 +612,9 @@ def brush_page(base):
               hashed_copy(media / f'brush-review-{k}.jpg', 'img', f'skinofab-brush-review-{k}-poster')) for k in range(1, 7)]
     how = [hashed_copy(BRUSH_IMG / f'how-{k}.jpg', 'img', f'skinofab-brush-how-{k}') for k in range(1, 4)]
     cmp_ = [hashed_copy(BRUSH_IMG / f'compare-{k}.jpg', 'img', f'skinofab-brush-compare-{k}') for k in ('ours', 'copy')]
-    out = [f'<div class="shopify-section" id="shopify-section-sf-brush-videos"><style>{brush_copy.SECTIONS_CSS}</style>{brush_copy.videos_html(clips)}</div>',
+    strip = review_strip(brush_reviews)
+    out = ([f'<div class="shopify-section" id="shopify-section-sf-review-strip">{strip}</div>'] if strip else []) + [
+           f'<div class="shopify-section" id="shopify-section-sf-brush-videos"><style>{brush_copy.SECTIONS_CSS}</style>{brush_copy.videos_html(clips)}</div>',
            f'<div class="shopify-section" id="shopify-section-sf-brush-how">{brush_copy.how_html(how)}</div>',
            f'<div class="shopify-section" id="shopify-section-sf-brush-compare">{brush_copy.compare_html(*cmp_)}</div>']
     if faq_src:
@@ -681,6 +716,77 @@ def brush_snapshot(gallery):
             'options': [{'name': 'Title', 'position': 1, 'values': ['Default Title']}], 'url': f'/products/{brush_copy.HANDLE}',
             'media': [], 'requires_selling_plan': False, 'selling_plan_groups': []}
 
+def honest_counts(texts, summary):
+    """The design's review and customer counts were far above what its review app records (the foundation showed
+    351,837 reviews; Loox counts 10,512; the serum 61,583 for 22). Every count becomes a real one: the imported
+    reviews' total for the foundation and the store-wide lines, each other product's own Loox count. Returns hits."""
+    n, five, avg = int(summary['count']), int(summary['distribution'].get('5', summary['distribution'].get(5, 0))), float(summary['average'])
+    floor = lambda v: f'{(v // 1000) * 1000:,}' if v >= 1000 else str(v)
+    reps = [
+        (r'Loved by 50,000\+', f'Loved by {floor(n)}+'),
+        (r'50,000\+ customers', f'{floor(n)}+ customers'),
+        (r'Over 50,000 5-star reviews', f'Over {floor(five)} 5-star reviews'),
+        (r'Trusted by 1,000,000\+ women who finally found something that works', 'From verified buyers who finally found something that works'),
+        (r'Backed by over 1,000,000 customers, 50,000 five-star reviews and data from independent panels run with real customers',
+         f'Backed by over {floor(n)} verified reviews, {avg:.1f} out of 5 on average'),
+        (r'4\.8 \(351,837 reviews\)', f'{avg:.1f} ({n:,} reviews)'),
+    ]
+    hits = {}
+    # each product's own Loox count, from its rating badge (data-raters), for its badge pattern and its cards
+    real = {}
+    for p, txt in texts.items():
+        for m in re.finditer(r'<div class="loox-rating loox-widget"[^>]*>', txt):
+            tag = m.group(0)
+            pat = re.search(r'data-pattern="([^"]*)"', tag); raters = re.search(r'data-raters="(\d+)"', tag); rating = re.search(r'data-rating="([\d.]+)"', tag)
+            if pat and raters and rating:
+                old = re.search(r'\(([\d,]+) reviews\)', pat.group(1))
+                if old and old.group(1) != '351,837': real[old.group(1)] = (float(rating.group(1)), int(raters.group(1)))
+    for p in list(texts):
+        txt = texts[p]
+        for rx, rep in reps:
+            txt, k = re.subn(rx, rep, txt)
+            if k: hits[rx[:30]] = hits.get(rx[:30], 0) + k
+        # the cards' "4.8 (61,583 reviews)" lines: that product's own count
+        def card(m):
+            r = real.get(m.group(1))
+            return f'{r[0]:.1f} ({r[1]:,} reviews)' if r else m.group(0)
+        txt = re.sub(r'4\.8 \(([\d,]+) reviews\)', card, txt)
+        # badge patterns: the real count (only the foundation's badge is drawn, by rating_block)
+        txt = re.sub(r'(<div class="loox-rating loox-widget"[^>]*?)data-pattern="[^"]*"([^>]*?data-raters="(\d+)"[^>]*?data-rating="([\d.]+)")',
+                     lambda m: f'{m.group(1)}data-pattern="{float(m.group(4)):.1f}/5 ({int(m.group(3)):,} reviews)"{m.group(2)}', txt)
+        texts[p] = txt
+    return hits
+
+def faster_home(home):
+    """Homepage speed (measured on a throttled phone: LCP 7.2 s). The hidden second hero slide loaded its 1,680-px image
+    at once and competed with the first; the shelf cards asked for 1,920-px images (sizes 100vw) for a ~260-px card;
+    the phone hero downloaded the whole 1,800-px banner although only a quarter of it shows. Returns (html, changes)."""
+    from PIL import Image, ImageFilter
+    import numpy as np
+    n = {}
+    home, n['lazy hero slides'] = re.subn(r'(<img[^>]*fetchpriority="low"[^>]*?)loading="eager"', r'\1loading="lazy"', home)
+    home, n['card sizes'] = re.subn(r'(<img[^>]*class="fh-upload"[^>]*?)sizes="100vw"', r'\1sizes="(min-width: 990px) 300px, 270px"', home)
+    # phone hero: the same banner at the same size, with everything outside the part a phone shows (62% to 88% of its
+    # width; the layout scales with the screen) flattened into the backdrop, so it compresses to a fraction
+    m = re.search(r'(<picture class="fh-hero-image">\s*)(<img[^>]*class="fh-original"[^>]*fetchpriority="high"[^>]*src="assets/img/([^"]+)")', home)
+    if m:
+        src = DST / 'assets' / 'img' / m.group(3)
+        im = Image.open(src).convert('RGB'); im = im.resize((2400, round(im.height * 2400 / im.width)), Image.LANCZOS)
+        a = np.asarray(im).astype(np.float32)
+        w = a.shape[1]; x = np.arange(w) / w
+        keep = np.clip(np.minimum((x - 0.58) / 0.04, (0.92 - x) / 0.04), 0, 1)[None, :, None]
+        flat = np.asarray(im.filter(ImageFilter.GaussianBlur(60))).astype(np.float32)
+        out = Image.fromarray(np.clip(a * keep + flat * (1 - keep), 0, 255).astype(np.uint8))
+        tmp = DST / 'assets' / 'img' / 'skinofab-hero-phone.jpg'
+        out.save(tmp, quality=80, optimize=True, progressive=True)
+        final = tmp.with_name(f"skinofab-hero-phone-2400w-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg"); tmp.rename(final)
+        sizes = re.search(r'sizes="\(max-width: 749px\) ([0-9.]+vw)', m.group(2))
+        source = (f'<source media="(max-width: 749px)" sizes="{sizes.group(1) if sizes else "349vw"}" '
+                  f'srcset="assets/img/{final.name} 2400w" width="{out.width}" height="{out.height}">')
+        home = home[:m.start(2)] + source + home[m.start(2):]
+        n['phone hero KB'] = round(final.stat().st_size / 1024)
+    return home, n
+
 def balanced_end(t, start, tag):
     depth = 0
     for m in re.finditer(r'<(/?)%s\b[^>]*>' % tag, t[start:]):
@@ -732,6 +838,13 @@ def main():
     else:
         end = balanced_end(texts[pdp], title.start(), 'div')
         texts[pdp] = texts[pdp][:end] + frontrow_block() + texts[pdp][end:]
+    # a strip of short verified reviews right after the buy box
+    strip = review_strip()
+    main_sec = re.search(r'<div class="shopify-section shopify-section--product" id="shopify-section-template--[0-9]+__main">', texts[pdp])
+    if strip and main_sec:
+        end = balanced_end(texts[pdp], main_sec.start(), 'div')
+        texts[pdp] = texts[pdp][:end] + '<div class="shopify-section" id="shopify-section-sf-review-strip">' + strip + '</div>' + texts[pdp][end:]
+    elif strip: missing.append(('review strip', 'buy box section'))
     # problem -> root cause -> solution, right after the first customer reviews
     rev = re.search(r'<div[^>]*id="shopify-section-[^"]*kopstorm_testomonials[^"]*"[^>]*>', texts[pdp])
     if not rev: missing.append(('problem/solution', 'reviews section'))
@@ -747,6 +860,11 @@ def main():
         start = texts[pdp].rfind('<div', 0, ps_end)
         end = balanced_end(texts[pdp], start, 'div')
         texts[pdp] = texts[pdp][:end] + '<div class="shopify-section" id="shopify-section-sf-dermatologist">' + derm + '</div>' + texts[pdp][end:]
+        # the K-beauty skin science after the dermatologist (apf_copy.KBEAUTY: the actives on the label, no person)
+        kb = section_image(BRAND / 'adaptive-peptide-foundation' / 'composites' / 'label-detail.jpg', 'skinofab-kbeauty-label', (465, 581))
+        d_at = texts[pdp].find('id="shopify-section-sf-dermatologist"')
+        d_end = balanced_end(texts[pdp], texts[pdp].rfind('<div', 0, d_at), 'div')
+        texts[pdp] = texts[pdp][:d_end] + '<div class="shopify-section" id="shopify-section-sf-kbeauty">' + apf_copy.kbeauty_html(kb) + '</div>' + texts[pdp][d_end:]
     revs = video_reviews(home)
     faq = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__section_accordions_', texts[pdp])
     if not revs or not faq: missing.append(('reviews', 'homepage section or FAQ anchor'))
@@ -759,13 +877,21 @@ def main():
     if not why: missing.append(('review wall', 'anchor'))
     else:
         texts[pdp] = texts[pdp][:why.start()] + '<div class="shopify-section" id="shopify-section-sf-review-wall">' + review_wall() + '</div>' + texts[pdp][why.start():]
-    texts[pdp], ok = rating_block(texts[pdp])
+    found = review_data()
+    texts[pdp], ok = rating_block(texts[pdp], found and found['summary'])
     if not ok: missing.append(('rating', 'loox badge'))
     cta = texts[pdp].find('<div id="CTA_kopstorm">')
     if cta < 0: missing.append(('trust block', 'CTA_kopstorm'))
     else:
         end = balanced_end(texts[pdp], cta, 'div')
         texts[pdp] = texts[pdp][:end] + trust_block() + texts[pdp][end:]
+    # real review and customer counts everywhere (the foundation's imported reviews are the store's real total)
+    if found:
+        print('honest counts', honest_counts(texts, found['summary']))
+    # homepage speed: lazy hidden hero slides, right-sized shelf cards, a phone hero that only carries what shows
+    if DST / 'index.html' in texts:
+        texts[DST / 'index.html'], sp = faster_home(texts[DST / 'index.html'])
+        print('home speed', sp)
     # the Lymphatic Brush in the homepage's product shelf, like the other products
     if DST / 'index.html' in texts:
         texts[DST / 'index.html'], ok = brush_shelf(texts[DST / 'index.html'])
