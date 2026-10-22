@@ -331,9 +331,20 @@ def product_ref(handle, current):
     if handle == SHIPPING_PROTECTION: return 'settings.sf_shipping_protection'
     return f'settings.sf_p_{var(handle)}'
 
+NATIVE_REVIEWS_DTL = (
+    '{%% if product %%}{"write": "{%% if product|is_review_permitted:user %%}{%% url \'catalogue:reviews-add\' product_slug=product.slug product_pk=product.id %%}#addreview{%% endif %%}", '
+    '"reviews": [{%% for sf_r in product.reviews.approved.all|slice:":300" %%}'
+    '{"name": "{{ sf_r.reviewer_name|escapejs }}", "title": "{{ sf_r.title|escapejs }}", "body": "{{ sf_r.body|striptags|escapejs }}", '
+    '"score": "{{ sf_r.score|escapejs }}", "date": "{{ sf_r.date_created|date:\'Y-m-d\' }}"}{%% if not forloop.last %%},{%% endif %%}'
+    '{%% endfor %%}]}{%% else %%}{"write": "", "reviews": []}{%% endif %%}').replace('%%', '%')
+
 def transform(root, page, slots, current=None):
     """Bind design markup to NEXT: assets, links, prices, add-to-cart ids. `current`: PDP handle."""
     for t in root.find_all(string=lambda s: isinstance(s, Comment)): t.extract()
+    # review wall (tools/persona review_wall_html): NEXT's own approved reviews of the page's product, as JSON, and the
+    # "write a review" link for shoppers NEXT lets review it
+    for el in root.select('script[data-sf-native-reviews]'):
+        el.string = slots.put(NATIVE_REVIEWS_DTL)
     # prices -> NEXT
     for el in list(root.find_all(True)):
         if el.find(True) or not PRICE_RE.match(el.get_text() or ''): continue
@@ -939,7 +950,12 @@ SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1
                '@media (min-width:48rem){ #main-content .md\\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}'
                '#main-content .md\\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}'
                '#main-content nav ol{list-style:none;margin:0;padding:0}#main-content nav ol li{list-style:none}'
-               '#main-content nav ol li::before,#main-content nav ol li::marker{content:none}</style>')
+               '#main-content nav ol li::before,#main-content nav ol li::marker{content:none}'
+               # form fields on these pages (review form, cart, support) were white on white: a visible border
+               '#main-content form input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]),'
+               '#main-content form select,#main-content form textarea{border:1px solid #cfcfcf !important;border-radius:10px !important;background:#fff !important}'
+               '#main-content form select{min-width:140px}'
+               '#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}</style>')
 
 for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'templates/500.html',
           *[str(p.relative_to(OUT)) for p in (OUT / 'templates').rglob('*.html') if p.parts[-2] in ('reviews', 'support')]]:

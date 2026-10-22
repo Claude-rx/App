@@ -166,6 +166,32 @@ def faq_more(t):
     sec = sec[:first_end] + skin + sec[first_end:]
     return t[:m.start()] + sec + t[end:], True
 
+REVIEWS = Path(sys.argv[3]).resolve().parent / 'reviews'   # tools/reviews/import_reviews.py output (work dir)
+
+def review_wall():
+    """The review wall after the FAQ: NEXT's own reviews (the theme fills them in) plus the imported ones, if any."""
+    data = REVIEWS / 'reviews.json'
+    if not data.exists(): return apf_copy.review_wall_html()
+    d = json.loads(data.read_text())
+    photos = {}
+    for r in d['reviews']:
+        for p in r.get('photos', []):
+            src = REVIEWS / 'photos' / p
+            if not src.exists(): continue
+            name = f"review-{src.stem}-{hashlib.md5(src.read_bytes()).hexdigest()[:6]}.jpg"
+            from PIL import Image, ImageOps
+            im = ImageOps.exif_transpose(Image.open(src)).convert('RGB'); im.thumbnail((1200, 1200))
+            im.save(DST / 'assets' / 'img' / name, quality=84, optimize=True, progressive=True)
+            photos[p] = '../assets/img/' + name
+    # a data script (theme JS assets run through the template engine: ASCII only, no template openers)
+    payload = json.dumps({'reviews': d['reviews']}, ensure_ascii=True, separators=(',', ':'))
+    payload = payload.replace('{%', '{\\u0025').replace('{{', '{\\u007b').replace('{#', '{\\u0023')
+    body = 'window.SFReviewsData=' + payload + ';\n'
+    name = f"sf-reviews-{hashlib.md5(body.encode()).hexdigest()[:8]}.js"
+    (DST / 'assets' / 'js').mkdir(parents=True, exist_ok=True)
+    (DST / 'assets' / 'js' / name).write_text(body)
+    return apf_copy.review_wall_html('../assets/js/' + name, photos)
+
 def picker():
     """The offer, as on the old store: 1 bottle or 2 bottles + free gifts, each a "temporary deal" off the compare-at
     price, and an Automatic Refills box that drops both to their refill price. ccf_copy.REFILL decides whether the
@@ -475,6 +501,11 @@ def main():
         texts[pdp] = texts[pdp][:faq.start()] + '<div class="shopify-section" id="shopify-section-sf-reviews">' + revs + '</div>' + texts[pdp][faq.start():]
     texts[pdp], ok = faq_more(texts[pdp])
     if not ok: missing.append(('faq', 'accordion columns'))
+    # the review wall after the FAQ, before "The skinofab difference"
+    why = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__kopstorm_why_', texts[pdp])
+    if not why: missing.append(('review wall', 'anchor'))
+    else:
+        texts[pdp] = texts[pdp][:why.start()] + '<div class="shopify-section" id="shopify-section-sf-review-wall">' + review_wall() + '</div>' + texts[pdp][why.start():]
     texts[pdp], ok = rating_block(texts[pdp])
     if not ok: missing.append(('rating', 'loox badge'))
     cta = texts[pdp].find('<div id="CTA_kopstorm">')
