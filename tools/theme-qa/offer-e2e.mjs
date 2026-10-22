@@ -258,6 +258,54 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
+// the review wall: NEXT's reviews as valid JSON, Write a review linked to NEXT's form, after the FAQ, shown only when
+// there are reviews (the imported ones load when the wall scrolls into view)
+{
+  const s = await session();
+  await s.page.locator('#sf-review-wall-sentinel').scrollIntoViewIfNeeded().catch(() => {});
+  await s.page.waitForTimeout(2500);
+  const w = await s.page.evaluate(() => {
+    const root = document.getElementById('sf-review-wall');
+    if (!root) return { present: false };
+    let native = null;
+    try { native = JSON.parse(root.querySelector('[data-sf-native-reviews]').textContent); } catch (e) {}
+    const ids = [...document.querySelectorAll('[id^="shopify-section-"]')].map(e => e.id);
+    const section = root.closest('[id^="shopify-section-"]');
+    return { present: true, native: native && { write: native.write, reviews: native.reviews.length },
+             imported: root.dataset.src ? (window.SFReviewsData || {}).count ?? 'not loaded' : 0,
+             shown: !root.hidden, cards: root.querySelectorAll('.sfr-card').length,
+             afterFaq: ids.findIndex(i => i.includes('section_accordions')) < ids.indexOf(section && section.id),
+             write: (root.querySelector('.sfr-write:not([hidden])') || {}).href || '' };
+  });
+  const problems = [];
+  if (!w.present) problems.push('no review wall');
+  else {
+    if (!w.native) problems.push('NEXT reviews JSON does not parse');
+    else if (!/\/reviews\/add\//.test(w.native.write)) problems.push('no Write a review link: ' + w.native.write);
+    if (w.imported === 'not loaded') problems.push('imported reviews did not load');
+    const total = (w.native ? w.native.reviews : 0) + (typeof w.imported === 'number' ? w.imported : 0);
+    if (w.shown !== total > 0) problems.push(`wall shown=${w.shown} with ${total} reviews`);
+    if (total > 0 && (!w.cards || !w.write)) problems.push(`wall shown without cards (${w.cards}) or write link`);
+    if (!w.afterFaq) problems.push('wall is not after the FAQ');
+  }
+  // NEXT's own review form, styled inside the SKINOFAB chrome
+  if (w.native && w.native.write) {
+    await s.page.goto(new URL(w.native.write, STORE).href + (w.native.write.includes('?') ? '&' : '?') + `preview_theme=${THEME}`, { waitUntil: 'domcontentloaded' });
+    w.form = await s.page.evaluate(() => {
+      const f = [...document.querySelectorAll('#main-content form')].find(x => x.querySelector('[name="body"]'));
+      if (!f) return null;
+      const field = f.querySelector('[name="title"]');
+      return { fields: ['name', 'email', 'title', 'score', 'body'].filter(n => f.querySelector(`[name="${n}"]`)),
+               border: field ? getComputedStyle(field).borderTopWidth : '' };
+    });
+    if (!w.form) problems.push('review form not found');
+    else if (!w.form.fields.includes('body') || !w.form.fields.includes('score')) problems.push('review form fields: ' + w.form.fields);
+    else if (w.form.border === '0px') problems.push('review form fields have no border');
+  }
+  out.push({ case: 'review wall', ...w, errors: s.errors, ok: problems.length === 0, problems });
+  await s.ctx.close();
+}
+
 // a drawer add-on
 {
   const s = await session();
