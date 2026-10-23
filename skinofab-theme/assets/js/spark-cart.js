@@ -342,9 +342,7 @@
 
         function recreateAndRetry() {
             clearCartId();
-            return self.createCart().then(function(cart) {
-                return doAdd(cart.id, false);
-            });
+            return doAdd(null, false);
         }
 
         function doAdd(cartId, recover) {
@@ -369,14 +367,13 @@
                 };
             }
     
-            var input = {
-                cartId: cartId,
-                lines: [lineInput]
-            };
+            /* no cart yet: createCart takes the lines, one round trip instead of two */
+            var create = !cartId;
+            var input = create ? { lines: [lineInput] } : { cartId: cartId, lines: [lineInput] };
             // Settle the request into an outcome first so the recovery below
             // runs exactly once: a failure inside recreateAndRetry must not
             // re-enter this branch.
-            return self._request(ADD_CART_LINES, { input: input }).then(function(data) {
+            return self._request(create ? CREATE_CART : ADD_CART_LINES, { input: input }).then(function(data) {
                 return { data: data };
             }, function(err) {
                 return { err: err };
@@ -385,7 +382,7 @@
                     if (recover && isCartExpiredError(outcome.err)) return recreateAndRetry();
                     throw outcome.err;
                 }
-                var result = outcome.data.addCartLines;
+                var result = create ? outcome.data.createCart : outcome.data.addCartLines;
                 // The platform answers a consumed cart id with a resolved
                 // `success: false` / `cart_not_found` payload, not a rejection.
                 if (recover && isCartNotFoundResult(result)) return recreateAndRetry();
@@ -398,9 +395,7 @@
             return doAdd(cartId, true);
         }
 
-        return this.createCart().then(function(cart) {
-            return doAdd(cart.id, false);
-        });
+        return doAdd(null, false);
     };
 
     /**

@@ -377,7 +377,26 @@
     var STYLES = [
         /* above the store's sticky header and announcement bar */
         '.spark-drawer-backdrop { z-index: 2147483000; background: rgba(21,21,21,.45); }',
-        '.spark-drawer-panel { z-index: 2147483001; max-width: 440px; color: #151515; box-shadow: -12px 0 40px rgba(0,0,0,.12); }',
+        '.spark-drawer-panel { z-index: 2147483001; max-width: 440px; color: #151515; box-shadow: -12px 0 40px rgba(0,0,0,.12); transition: transform 260ms cubic-bezier(.22,1,.36,1); }',
+        /* the add in flight (skinofab-commerce.js): the drawer opens at the click with the product, the line fills in when
+           the server answers; the totals wait for it */
+        '.sf-pending { display: flex; align-items: center; gap: 14px; padding: 18px 0; border-bottom: 1px solid #ececec; animation: sf-in 180ms ease-out; }',
+        '.sf-pending img { flex: none; width: 88px; height: 88px; border-radius: 10px; object-fit: cover; background: #f4f2ee; }',
+        '.sf-pending div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }',
+        '.sf-pending b { font-size: 15px; font-weight: 600; color: #151515; line-height: 1.3; }',
+        '.sf-pending small { font-size: 13px; color: #6a6a6a; }',
+        '.sf-pending span { margin-top: 4px; font-size: 13px; color: #1f7a3f; }',
+        '.sf-pending i { flex: none; width: 20px; height: 20px; border: 2px solid #e3dfd8; border-top-color: #151515; border-radius: 50%; animation: spark-drawer-spin 700ms linear infinite; }',
+        ':host(.sf-adding) .spark-drawer-empty, :host(.sf-adding) .spark-drawer-loading { display: none; }',
+        ':host(.sf-adding) .spark-drawer-footer { opacity: .5; pointer-events: none; }',
+        '.spark-drawer-footer { transition: opacity 150ms; }',
+        '@keyframes sf-in { from { opacity: 0; transform: translateY(6px); } }',
+        /* buttons: lift on hover, press on tap, ring on keyboard focus */
+        '.spark-drawer-checkout, .sf-upgrade-btn, .sf-upsell-add, .spark-drawer-empty-cta { transition: background-color 150ms, color 150ms, box-shadow 150ms, transform 120ms; -webkit-tap-highlight-color: transparent; }',
+        '@media (hover: hover) { .spark-drawer-checkout:hover, .spark-drawer-empty-cta:hover, .sf-upgrade-btn:hover { box-shadow: 0 8px 20px rgba(0,0,0,.18); } }',
+        '.spark-drawer-checkout:active, .sf-upgrade-btn:active, .sf-upsell-add:active, .spark-drawer-empty-cta:active { transform: scale(.98); box-shadow: none; }',
+        '.spark-drawer-checkout:focus-visible, .spark-drawer-empty-cta:focus-visible { outline: 2px solid #151515; outline-offset: 3px; }',
+        '@media (prefers-reduced-motion: reduce) { .spark-drawer-panel { transition: none; } .sf-pending { animation: none; } }',
         '@media (max-width: 767px) { .spark-drawer-panel { max-width: 100%; } }',
         '.spark-drawer-header { padding: 18px 22px; border-bottom: 1px solid #ececec; }',
         '.spark-drawer-header-title { font-size: 20px; font-weight: 600; letter-spacing: -.01em; }',

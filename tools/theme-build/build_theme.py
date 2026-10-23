@@ -237,6 +237,81 @@ FAVICON = {n: static_asset(f'skinofab-favicon{n}') for n in ('.svg', '-32.png', 
 CART_BOTTLE = static_asset('skinofab-cart-bottle.png')
 # the side cart's renderer (Spark's drawer keeps state and mutations; this draws it in SKINOFAB's look)
 shutil.copy2(HERE / 'static' / 'skinofab-cart-drawer.js', OUT / 'assets' / 'js' / 'skinofab-cart-drawer.js')
+# Spark's cart loader fetched the drawer's six scripts one after another, and only once the add had come back from the
+# server: the drawer opened 1.5 s after the click (2.7 s on a phone). The scripts now download together (still run in
+# order: async=false) and are fetched ahead: once the page is idle where it has a buy button, else on the first touch
+# of a buy or cart control. skinofab-commerce.js opens the drawer at the click.
+loader_f = OUT / 'assets' / 'js' / 'spark-cart-loader.js'
+loader = loader_f.read_text()
+loader = must_replace(loader, """        drawerPromise = loadCartClient()
+            .then(function() { return loadScript('cartRewards', 'SparkCartRewards'); })
+            .then(function() { return loadScript('cartRenderer', 'SparkCartDrawerRenderer'); })
+            .then(function() { return loadScript('progressBar'); })
+            .then(function() { return loadScript('upsellItem'); })
+            .then(function() { return loadScript('cartDrawer'); })
+            .then(waitForDrawerUpgrade)""", """        /* all at once: async=false scripts download in parallel and still run in insertion order */
+        drawerPromise = Promise.all([
+                loadCartClient(),
+                loadScript('cartRewards', 'SparkCartRewards'),
+                loadScript('cartRenderer', 'SparkCartDrawerRenderer'),
+                loadScript('progressBar'),
+                loadScript('upsellItem'),
+                loadScript('cartDrawer')
+            ])
+            .then(waitForDrawerUpgrade)""", 'cart loader: parallel drawer stack')
+loader = must_replace(loader, """    window.SparkCartLoader = {""", """    /* the drawer ready before the shopper asks for it: after load, when the page is idle (pages with a buy button),
+       or on the first touch of a buy or cart control (any page) */
+    var warmed = false;
+    function warm() {
+        if (warmed) return;
+        warmed = true;
+        ensureDrawer().catch(function(err) { warmed = false; reportError('drawer warm-up failed', err, 'warn'); });
+    }
+    var INTENT = '[data-add-to-cart], [data-cart-drawer-toggle], a[href="#cart-modal"], .cart__toggle, #cart-icon, a[href*="#apf-buy"]';
+    ['pointerover', 'pointerdown', 'touchstart', 'focusin'].forEach(function(type) {
+        document.addEventListener(type, function(e) {
+            if (!warmed && e.target && e.target.closest && e.target.closest(INTENT)) warm();
+        }, { passive: true, capture: true });
+    });
+    function whenIdle() {
+        if (!document.querySelector('[data-add-to-cart], form[data-product-form]')) return;
+        if (window.requestIdleCallback) requestIdleCallback(warm, { timeout: 2500 });
+        else setTimeout(warm, 1200);
+    }
+    if (document.readyState === 'complete') whenIdle();
+    else window.addEventListener('load', whenIdle);
+
+    window.SparkCartLoader = {
+        warm: warm,""", 'cart loader: warm-up')
+loader_f.write_text(loader)
+# A first add made two round trips (createCart, then addCartLines). The storefront API's createCart takes the lines:
+# one request creates the cart with the item. A saved cart still takes addCartLines, a consumed one still recreates.
+cart_f = OUT / 'assets' / 'js' / 'spark-cart.js'
+cart_js = cart_f.read_text()
+cart_js = must_replace(cart_js, """            var input = {
+                cartId: cartId,
+                lines: [lineInput]
+            };""", """            /* no cart yet: createCart takes the lines, one round trip instead of two */
+            var create = !cartId;
+            var input = create ? { lines: [lineInput] } : { cartId: cartId, lines: [lineInput] };""", 'cart client: create with lines')
+cart_js = must_replace(cart_js, "return self._request(ADD_CART_LINES, { input: input }).then(function(data) {",
+                       "return self._request(create ? CREATE_CART : ADD_CART_LINES, { input: input }).then(function(data) {",
+                       'cart client: create mutation')
+cart_js = must_replace(cart_js, "var result = outcome.data.addCartLines;",
+                       "var result = create ? outcome.data.createCart : outcome.data.addCartLines;", 'cart client: create result')
+cart_js = must_replace(cart_js, """        function recreateAndRetry() {
+            clearCartId();
+            return self.createCart().then(function(cart) {
+                return doAdd(cart.id, false);
+            });
+        }""", """        function recreateAndRetry() {
+            clearCartId();
+            return doAdd(null, false);
+        }""", 'cart client: recreate with lines')
+cart_js = must_replace(cart_js, """        return this.createCart().then(function(cart) {
+            return doAdd(cart.id, false);
+        });""", """        return doAdd(null, false);""", 'cart client: first add')
+cart_f.write_text(cart_js)
 
 # product JSON snapshots (colour swatches on cards fetch /products/<handle>.js)
 PRODUCT_JSON = {}
@@ -882,10 +957,33 @@ base = must_replace(base, "{% block critical_preloads %}{% endblock critical_pre
                     "    {% block critical_preloads %}{% endblock critical_preloads %}", 'preconnect')
 base = base.replace('<link rel="stylesheet" type="text/css" href="{{ \'main.css\'|asset_url }}">',
                     "{% block spark_css %}{% endblock spark_css %}\n        {% include 'partials/sf_asset_styles.html' %}")
+# One feel for every filled button. The design's .btn hover laid a grey wash over the black (it read as disabled), the
+# home and sticky buttons had no hover at all, and nothing answered a press. Now: hover lifts (mouse only), a press sinks
+# at once (touch too), keyboard focus shows a ring that reads on light and dark, and an add in flight spins.
+BTN_DARK = ('.product__submit__add', '.btn--primary.btn--solid', '.btn--dark', '.input-group__btn', '.fh-button',
+            '.sfps-btn', '.sfb-btn:not(.sfb-btn--light)', '.sf-sticky__btn')
+BTN_ALL = ':is(' + ', '.join(BTN_DARK + ('.sfb-btn--light',)) + ')'
+BTN_CSS = (
+    BTN_ALL + '{transition:background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .14s ease!important;'
+    '-webkit-tap-highlight-color:transparent;touch-action:manipulation}'
+    + BTN_ALL + '::before{display:none!important}'
+    '@media (hover:hover) and (pointer:fine){'
+    ':is(' + ', '.join(BTN_DARK) + '):hover{background-color:#000!important;border-color:#000!important;transform:translateY(-1px);'
+    'box-shadow:0 12px 24px -12px rgba(0,0,0,.6)}'
+    '.sfb-btn--light:hover{background-color:#f4f2ee!important;transform:translateY(-1px);box-shadow:0 12px 24px -14px rgba(0,0,0,.4)}}'
+    + BTN_ALL + ':active{transform:translateY(0) scale(.97)!important;box-shadow:0 2px 8px -4px rgba(0,0,0,.5)!important;transition-duration:.06s!important}'
+    + BTN_ALL + ':focus-visible{outline:2px solid #151515!important;outline-offset:3px!important;box-shadow:0 0 0 3px #fff!important}'
+    + BTN_ALL + '[aria-busy="true"]{position:relative;pointer-events:none;color:transparent!important}'
+    + BTN_ALL + '[aria-busy="true"] *{visibility:hidden}'
+    + BTN_ALL + '[aria-busy="true"]::after{content:"";position:absolute;top:50%;left:50%;width:18px;height:18px;margin:-9px 0 0 -9px;'
+    'border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sf-btn-spin .7s linear infinite}'
+    '.sfb-btn--light[aria-busy="true"]::after{border-color:rgba(21,21,21,.2);border-top-color:#151515}'
+    '@keyframes sf-btn-spin{to{transform:rotate(360deg)}}'
+    '@media (prefers-reduced-motion:reduce){' + BTN_ALL + '{transition:none!important;transform:none!important}}')
 base = base.replace("{% endblock styles %}",
     "{% endblock styles %}\n    {# Spark side cart in the design's look: black controls, design body font. #}\n"
     "    <style>:root{--primary-color:#000000;--primary-color-darker:#000000;--primary-color-lighter:#333333;--accent-color:#000000;"
-    "--font-body:var(--FONT-STACK-BODY, 'Jost', sans-serif);}</style>", 1)
+    "--font-body:var(--FONT-STACK-BODY, 'Jost', sans-serif);}" + BTN_CSS + "</style>", 1)
 base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "{% block extrahead %}{% endblock extrahead %}\n"
     "    {% url 'storefrontapi:graphql' as sf_graphql_url %}\n"

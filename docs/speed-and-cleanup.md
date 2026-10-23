@@ -40,6 +40,28 @@ money-back guarantee with a customer review, totals, a secure checkout button an
 the upgrade variants, the add-on products and the payment logos (shared with the footer) live in Theme settings →
 SKINOFAB → Cart Drawer.
 
+**Add to cart speed.** The drawer used to open 1.5 s after the click on desktop and 2.7 s on a phone. Spark's loader
+fetched the drawer's six scripts one after another and only after the add had come back from the server, and a
+first add made two requests (createCart, then addCartLines). Now (`build_theme.py` patches Spark's loader and cart
+client, `skinofab-commerce.js` opens the drawer):
+
+| Step | Before | Now |
+|---|---|---|
+| Drawer scripts | fetched one by one, after the add | fetched together, ahead of the click: when the page is idle where it has a buy button, else on the first hover or touch of a buy or cart control |
+| First add | 2 requests | 1 request (the storefront API's `createCart` takes the lines) |
+| Drawer | opened when the server answered | opens at the click with the product, its pack and "Adding to your bag…"; the line, upgrade and add-ons fill in when the server answers (totals wait, dimmed) |
+| Click → product in the drawer | 1.5 s desktop, 2.7 s phone | ~15 ms desktop, ~40 ms phone (fully open ~220 / ~290 ms) |
+
+The server's answer (~0.7–1.8 s) is NEXT's. A failed add closes the drawer again (when the bag was empty) and shows
+the error under the button. Drawer actions (quantity, remove, add-on, upgrade) answer within a frame and settle when
+the server does.
+
+**Buttons.** One feel for every filled button (Add to Cart, Shop now, Get yours, Claim offer, Choose your bundle,
+the sticky bars, Sign up, and the drawer's checkout, upgrade and add-on buttons): hover lifts with a shadow (mouse
+only), a press sinks at once (touch too), keyboard focus shows a ring that reads on light and dark backgrounds, and
+an add in flight spins. The design's grey hover wash (it read as disabled) is gone. `BTN_CSS` in `build_theme.py`;
+reduced motion turns the movement off.
+
 ## Results (live preview, theme 34)
 
 | | Before | After |
@@ -72,6 +94,9 @@ node tools/theme-qa/visual-diff.mjs before/ after/ shots/ && python3 tools/theme
 
 # cart drawer (mocked NEXT cart): opens on add, header above the sticky site header, screenshots
 node tools/theme-qa/qa.mjs after/ shots/ --only /products/color-changing-foundation/ --cart [--mobile]
+
+# add to cart speed, live (desktop + throttled phone): click -> product in the drawer -> open -> server's line
+node tools/theme-qa/atc-timing.mjs https://skinofab.29next.store 34
 
 # live offer: 1 or 2 bottles x one-time or Automatic Refills, drawer upgrade and add-ons, checkout schedule
 node tools/theme-qa/offer-e2e.mjs https://skinofab.29next.store 34 /catalogue/adaptive-peptide-foundation_14/ shots/

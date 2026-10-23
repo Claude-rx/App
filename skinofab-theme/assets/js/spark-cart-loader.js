@@ -84,12 +84,15 @@
         if (window.SparkSideCart) return Promise.resolve();
         if (drawerPromise) return drawerPromise;
 
-        drawerPromise = loadCartClient()
-            .then(function() { return loadScript('cartRewards', 'SparkCartRewards'); })
-            .then(function() { return loadScript('cartRenderer', 'SparkCartDrawerRenderer'); })
-            .then(function() { return loadScript('progressBar'); })
-            .then(function() { return loadScript('upsellItem'); })
-            .then(function() { return loadScript('cartDrawer'); })
+        /* all at once: async=false scripts download in parallel and still run in insertion order */
+        drawerPromise = Promise.all([
+                loadCartClient(),
+                loadScript('cartRewards', 'SparkCartRewards'),
+                loadScript('cartRenderer', 'SparkCartDrawerRenderer'),
+                loadScript('progressBar'),
+                loadScript('upsellItem'),
+                loadScript('cartDrawer')
+            ])
             .then(waitForDrawerUpgrade)
             .catch(function(err) {
                 drawerPromise = null;
@@ -212,7 +215,30 @@
         hydrateBadgeFromSavedCart();
     }
 
+    /* the drawer ready before the shopper asks for it: after load, when the page is idle (pages with a buy button),
+       or on the first touch of a buy or cart control (any page) */
+    var warmed = false;
+    function warm() {
+        if (warmed) return;
+        warmed = true;
+        ensureDrawer().catch(function(err) { warmed = false; reportError('drawer warm-up failed', err, 'warn'); });
+    }
+    var INTENT = '[data-add-to-cart], [data-cart-drawer-toggle], a[href="#cart-modal"], .cart__toggle, #cart-icon, a[href*="#apf-buy"]';
+    ['pointerover', 'pointerdown', 'touchstart', 'focusin'].forEach(function(type) {
+        document.addEventListener(type, function(e) {
+            if (!warmed && e.target && e.target.closest && e.target.closest(INTENT)) warm();
+        }, { passive: true, capture: true });
+    });
+    function whenIdle() {
+        if (!document.querySelector('[data-add-to-cart], form[data-product-form]')) return;
+        if (window.requestIdleCallback) requestIdleCallback(warm, { timeout: 2500 });
+        else setTimeout(warm, 1200);
+    }
+    if (document.readyState === 'complete') whenIdle();
+    else window.addEventListener('load', whenIdle);
+
     window.SparkCartLoader = {
+        warm: warm,
         ensureDrawer: ensureDrawer,
         loadCartClient: loadCartClient,
         open: openDrawer,

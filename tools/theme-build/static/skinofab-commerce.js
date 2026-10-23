@@ -269,6 +269,60 @@
             (form.matches('[data-sf-product-form], .product__form, [data-product-form], [data-cart-form], [id^="AddToCartForm"], [action*="/cart/add"]'));
     }
 
+    /* ---------- the drawer at the click ---------- */
+    /* The add takes the server about a second. The drawer opens at once with the product as "Adding to your bag"
+       and fills in when the cart comes back (the drawer renders the cart that spark:cart:added carries). Before the
+       drawer's scripts are there, the loader fetches them alongside the add instead of after it. */
+    var pending = 0;
+    function escText(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+    function pendingHtml(form) {
+        var scope = form.closest('.product-single__wrapper, .shopify-section--product, main') || document;
+        var title = ((scope.querySelector('.product__title, h1') || {}).textContent || '').replace(/\s+/g, ' ').trim();
+        var img = scope.querySelector('[data-product-single-media-wrapper] img, .product__media img');
+        var src = img ? (img.currentSrc || img.src || '') : '';
+        var pack = form.querySelector('input[name="sf_pack"]:checked');
+        var name = pack && pack.closest('label') && pack.closest('label').querySelector('.sfo-name');
+        var packName = name && name.firstChild ? String(name.firstChild.textContent || '').trim() : '';
+        return '<div class="sf-pending" role="status" aria-live="polite">' +
+            (src ? '<img src="' + escText(src) + '" alt="" width="64" height="64">' : '') +
+            '<div><b>' + escText(title) + '</b>' + (packName ? '<small>' + escText(packName) + '</small>' : '') +
+            '<span>Adding to your bag\u2026</span></div><i aria-hidden="true"></i></div>';
+    }
+    function openPending(form) {
+        pending++;
+        var html = pendingHtml(form);
+        function show() {
+            if (!pending) return;
+            var d = document.querySelector('spark-cart-drawer');
+            if (!d || !window.SparkSideCart) return;
+            d.classList.add('sf-adding');
+            if (!d._isOpen) {
+                /* the add brings the cart back: no "load the cart" on open (an empty cart would flash first) */
+                var own = Object.prototype.hasOwnProperty.call(d, '_loadCart'), load = d._loadCart;
+                d._loadCart = function() {};
+                try { window.SparkSideCart.open(); } finally { if (own) d._loadCart = load; else delete d._loadCart; }
+            }
+            var body = d.shadowRoot && d.shadowRoot.querySelector('.spark-drawer-body');
+            if (body && !body.querySelector('.sf-pending')) body.insertAdjacentHTML('afterbegin', html);
+        }
+        if (window.SparkSideCart) show();
+        else if (window.SparkCartLoader && window.SparkCartLoader.ensureDrawer) window.SparkCartLoader.ensureDrawer().then(show, function() {});
+    }
+    function closePending(ok) {
+        pending = Math.max(0, pending - 1);
+        if (pending) return;
+        var d = document.querySelector('spark-cart-drawer');
+        if (!d) return;
+        d.classList.remove('sf-adding');
+        var p = d.shadowRoot && d.shadowRoot.querySelector('.sf-pending');
+        if (p) p.parentNode.removeChild(p);
+        if (!ok && !d._cart && window.SparkSideCart) window.SparkSideCart.close();
+    }
+
     function addFromForm(form) {
         var idEl = form.querySelector('input[name="id"]:checked') || form.querySelector('[name="id"]');
         var qtyEl = form.querySelector('[name="quantity"]');
@@ -280,10 +334,13 @@
         var subscription = plan && plan.value === 'subscribe' ? { subscriptionOption: 'subscribe',
             interval: plan.getAttribute('data-interval'), intervalCount: plan.getAttribute('data-interval-count') }
             : form.querySelector('input[name="sf_purchase"]') ? null : undefined;
+        openPending(form);
         addItems([{ id: idEl && idEl.value, quantity: qtyEl ? qtyEl.value : 1, subscription: subscription }]).then(function() {
             if (btn) btn.removeAttribute('aria-busy');
+            closePending(true);
         }, function(err) {
             if (btn) btn.removeAttribute('aria-busy');
+            closePending(false);
             var box = form.querySelector('[data-cart-errors-container], .errors');
             if (box) { box.textContent = err.message; box.hidden = false; }
             if (window.console) console.warn('[skinofab] add to cart failed', err);
