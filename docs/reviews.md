@@ -22,7 +22,8 @@ the buyers line appear with the first review); its imports go to `<work_dir>/rev
    ```
 
    It keeps only the foundation's published reviews, shows names as "First L.", and leaves out any review that
-   names another brand (`--exclude-text smooche`, the default) instead of editing it. It prints how many were
+   names the old brand in any spelling (Smooch, Smooche, Smoochie), its support team, SPF or sunscreen
+   (`EXCLUDE_DEFAULT`; `--exclude-text` replaces it) instead of editing it. It prints how many were
    kept and skipped, and the average and distribution.
 3. Photos: open `<work_dir>/reviews/photos-sheet.jpg` and list, one id per line, the photos to publish in
    `<work_dir>/reviews/photos-approved.txt`: skin, results, or the SKINOFAB bottle. Leave out any photo showing the

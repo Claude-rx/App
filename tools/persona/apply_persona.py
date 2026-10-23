@@ -216,6 +216,54 @@ def review_wall(reviews=REVIEWS):
     (DST / 'assets' / 'js' / name).write_text(body)
     return apf_copy.review_wall_html('../assets/js/' + name, photos)
 
+def face_crop(src, focus, aspect=4 / 3, width=640):
+    """A review photo cropped to the card's landscape shape with the face (at `focus`, 0 top to 1 bottom of the
+    photo) a little above the middle, so a portrait selfie is not cut through the head."""
+    from PIL import Image, ImageOps
+    im = ImageOps.exif_transpose(Image.open(src)).convert('RGB')
+    w, h = im.size
+    ch = min(h, round(w / aspect))
+    top = max(0, min(h - ch, round(focus * h - ch * 0.46)))
+    return im.crop((0, top, w, top + ch)).resize((width, round(width / aspect)), Image.LANCZOS)
+
+def real_testimonials(t, reviews=REVIEWS):
+    """The product page's testimonial slider showed the design's persona stories ("Margaret, 61") with AI portraits
+    under a "Verified purchase" badge. Each card now carries a real verified review (apf_copy.TESTIMONIALS) word for
+    word: the reviewer's name as the review app shows it, her own photo, her rating. Returns (html, cards replaced)."""
+    data = reviews / 'reviews.json'
+    if not data.exists(): return t, 0
+    by_id = {r['id']: r for r in json.loads(data.read_text())['reviews']}
+    picks = [(by_id[i], f) for i, f in apf_copy.TESTIMONIALS
+             if i in by_id and by_id[i].get('photos') and by_id[i]['rating'] == 5 and by_id[i].get('verified')]
+    m = re.search(r'<section class="skinofab-testimonials"', t)
+    if not m or not picks: return t, 0
+    end = t.find('</section>', m.start())
+    sec = t[m.start():end]
+    slides = list(re.finditer(r'<div class="swiper-slide">\s*<div class="skinofab-testimonials__card">', sec))
+    out, last, done = [], 0, 0
+    for k, s in enumerate(slides):
+        stop = slides[k + 1].start() if k + 1 < len(slides) else len(sec)
+        card = sec[s.start():stop]
+        if k < len(picks):
+            r, focus = picks[k]
+            im = face_crop(reviews / 'photos' / r['photos'][0], focus)
+            tmp = DST / 'assets' / 'img' / f"review-card-{re.sub(r'[^A-Za-z0-9]', '', r['id'])}.jpg"
+            im.save(tmp, quality=84, optimize=True, progressive=True)
+            final = tmp.with_name(f"{tmp.stem}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg"); tmp.rename(final)
+            name = html.escape(r['name'])
+            body = html.escape(' '.join(r['body'].split()))
+            card = re.sub(r'<img alt="[^"]*" loading="lazy" src="[^"]*"/>',
+                          f'<img alt="{name}, verified buyer" loading="lazy" src="../assets/img/{final.name}" width="640" height="480"/>', card, count=1)
+            card = re.sub(r'(<span class="skinofab-testimonials__name">)[^<]*(</span>)', rf'\g<1>{name}\g<2>', card, count=1)
+            card = re.sub(r'(<div class="skinofab-testimonials__text">\s*<p>).*?(</p>)', lambda mm: f'{mm.group(1)}&ldquo;{body}&rdquo;{mm.group(2)}', card, count=1, flags=re.S)
+            card = card.replace('Verified purchase', 'Verified buyer', 1)
+            done += 1
+        else:
+            card = ''                                     # no fewer real reviews than cards: an extra story card goes
+        out.append(sec[last:s.start()] + card); last = stop
+    sec = ''.join(out) + sec[last:] if slides else sec
+    return t[:m.start()] + sec + t[end:], done
+
 def review_strip(reviews=REVIEWS):
     """The short-review strip for the top of the product page (None without imported reviews)."""
     d = review_data(reviews)
@@ -770,19 +818,31 @@ def honest_counts(texts, summary):
     return hits
 
 def faster_home(home):
-    """Homepage speed (measured on a throttled phone: LCP 7.2 s). The hidden second hero slide loaded its 1,680-px image
-    at once and competed with the first; the shelf cards asked for 1,920-px images (sizes 100vw) for a ~260-px card;
+    """Homepage speed (measured on a throttled phone: LCP 7.2 s, then 12.4 s from the rotating slide). The second hero
+    slide loaded its 1,680-px image at once, competed with the first and later became the largest paint; the shelf cards asked for 1,920-px images (sizes 100vw) for a ~260-px card;
     the phone hero downloaded the whole 1,800-px banner although only a quarter of it shows. Returns (html, changes)."""
     from PIL import Image, ImageFilter
     import numpy as np
     n = {}
+    # one hero, the foundation: the serum slide rotated in ~6 s after the slider started, so on a throttled phone it
+    # became the page's largest paint at 12 s (LCP); a single focused message also sells better than a carousel, and
+    # the serum keeps its own section further down. The slider script leaves a one-slide hero alone (no dots, no timer)
+    for cls in ('fh-hero-slide fh-hero-slide--serum', 'fh-hero-controls'):
+        m = re.search(rf'<div[^>]*class="{cls}"', home)
+        if m:
+            home = home[:m.start()] + home[balanced_end(home, m.start(), 'div'):]; n[cls.split()[-1]] = 1
+    # slides start at opacity 0 until the script marks one active, and it skips a one-slide hero: the slide is active
+    # in the HTML, so it shows (and counts as the largest paint) the moment its image arrives, before any script runs
+    home, n['hero active'] = re.subn(r'class="fh-hero-slide fh-hero-slide--foundation"', 'class="fh-hero-slide fh-hero-slide--foundation is-active"', home)
     home, n['lazy hero slides'] = re.subn(r'(<img[^>]*fetchpriority="low"[^>]*?)loading="eager"', r'\1loading="lazy"', home)
     home, n['card sizes'] = re.subn(r'(<img[^>]*class="fh-upload"[^>]*?)sizes="100vw"', r'\1sizes="(min-width: 990px) 300px, 270px"', home)
     # phone hero: the same banner at the same size, with everything outside the part a phone shows (62% to 88% of its
     # width; the layout scales with the screen) flattened into the backdrop, so it compresses to a fraction
     m = re.search(r'(<picture class="fh-hero-image">\s*)(<img[^>]*class="fh-original"[^>]*fetchpriority="high"[^>]*src="assets/img/([^"]+)")', home)
     if m:
-        src = DST / 'assets' / 'img' / m.group(3)
+        # the persona photo when one replaces this banner: the swap below renames files after this runs, so the
+        # export's file here is still the old photo (young model, old bottle)
+        src = IMAGES / m.group(3) if IMAGES and (IMAGES / m.group(3)).exists() else DST / 'assets' / 'img' / m.group(3)
         im = Image.open(src).convert('RGB'); im = im.resize((2400, round(im.height * 2400 / im.width)), Image.LANCZOS)
         a = np.asarray(im).astype(np.float32)
         w = a.shape[1]; x = np.arange(w) / w
@@ -798,6 +858,44 @@ def faster_home(home):
         home = home[:m.start(2)] + source + home[m.start(2):]
         n['phone hero KB'] = round(final.stat().st_size / 1024)
     return home, n
+
+def honest_pdp(t, summary):
+    """The foundation page's buy box and results, without claims nothing backs:
+    - the "89% sold / ends in" countdown and "Selling out fast" (they reset on every visit) go;
+    - "Shipped today" becomes "Free shipping on every order" (every order ships free; the dispatch day is not promised);
+    - the "Real results" cards cited "an eight-week independent customer panel" (97% / 98% / 95%) that no document
+      backs: they show the verified reviews' own numbers instead (average, share of 5 stars, share of 4 and 5 stars);
+    - the gallery slide with the same panel numbers goes."""
+    n = {}
+    for rx in (r'<div class="product__block countdown-timer-wrapper">', r'<div class="product__block"[^>]*><div class="product__subheading">\s*<p><strong>Selling out fast'):
+        m = re.search(rx, t)
+        if m:
+            t = t[:m.start()] + t[balanced_end(t, m.start(), 'div'):]; n[rx[:40]] = 1
+    t, n['shipped today'] = re.subn(r'data-default-usp="Shipped today"', 'data-default-usp="Free shipping on every order"', t)
+    t, k = re.subn(r'(<span id="shippingUspText"[^>]*>)Shipped today(</span>)', r'\1Free shipping on every order\2', t); n['shipped today'] += k
+    if summary:
+        c, d, avg = int(summary['count']), summary['distribution'], float(summary['average'])
+        five, four = int(d.get('5', d.get(5, 0))), int(d.get('4', d.get(4, 0)))
+        pct = lambda v: f'{int(v * 1000 / c) / 10:g}%'          # floored to a tenth: never rounds up
+        cards = [('97%', 'Said it instantly matched their skin tone', f'{avg:.1f}/5', f'Average rating from {c:,} verified reviews'),
+                 ('98%', 'Said their blemishes became invisible', pct(five), 'Gave it the full five stars'),
+                 ('95%', 'Loved that it didn’t feel heavy or mask-like', pct(five + four), 'Rated it four or five stars')]
+        m = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__kopstorm_results_[^"]*">', t)
+        if m:
+            end = balanced_end(t, m.start(), 'div')
+            sec = t[m.start():end]
+            for old_v, old_l, new_v, new_l in cards:
+                sec = sec.replace(f'>{old_v}<', f'>{new_v}<').replace(old_l, new_l)
+            sec = sec.replace('Based on an eight-week independent customer panel', 'From verified buyers of the same formula')
+            n['results'] = int(sec != t[m.start():end])
+            t = t[:m.start()] + sec + t[end:]
+    # the gallery slide (and its thumbnail) that repeats the panel numbers
+    for cls in ('product-single__media-slide', 'product-single__thumbnail'):
+        for m in reversed(list(re.finditer(r'<div class="%s[^"]*"[^>]*>' % cls, t))):
+            end = balanced_end(t, m.start(), 'div')
+            if 'ColorChangingFoundation-Productimagesphotos_2_1791540a' in t[m.start():end]:
+                t = t[:m.start()] + t[end:]; n['panel slide'] = n.get('panel slide', 0) + 1
+    return t, n
 
 def balanced_end(t, start, tag):
     depth = 0
@@ -897,6 +995,13 @@ def main():
     else:
         end = balanced_end(texts[pdp], cta, 'div')
         texts[pdp] = texts[pdp][:end] + trust_block() + texts[pdp][end:]
+    # the testimonial slider: real verified reviews with their own photos instead of the design's persona stories
+    texts[pdp], n_t = real_testimonials(texts[pdp])
+    if n_t < 6: missing.append(('testimonials', f'{n_t} of 6 real reviews'))
+    print('testimonials', n_t)
+    # the foundation page without claims nothing backs (countdown, panel numbers, "Shipped today")
+    texts[pdp], hp = honest_pdp(texts[pdp], found and found['summary'])
+    print('honest pdp', hp)
     # real review and customer counts everywhere (the foundation's imported reviews are the store's real total)
     if found:
         print('honest counts', honest_counts(texts, found['summary']))

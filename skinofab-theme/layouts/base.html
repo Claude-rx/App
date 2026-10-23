@@ -361,5 +361,6 @@
     {% endblock footer_app_hooks %}
     {% block tracking %}{% endblock tracking %}
 
+<script>/* sf lazy backgrounds */(function(){var els=[].slice.call(document.querySelectorAll("[data-sf-bg]"));if(!els.length)return;function show(e){e.style.backgroundImage='url("'+e.getAttribute("data-sf-bg")+'")';e.removeAttribute("data-sf-bg")}if(!("IntersectionObserver"in window)){els.forEach(show);return}var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){io.unobserve(x.target);show(x.target)}})},{rootMargin:"1600px 2400px"});els.forEach(function(e){io.observe(e)})})();</script>
 </body>
 </html>

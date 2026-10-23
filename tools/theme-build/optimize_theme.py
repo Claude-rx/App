@@ -19,6 +19,8 @@ Every step keeps what a visitor sees the same and only changes what the browser 
 5. Responsive images. A srcset of local theme images becomes CDN-resized candidates of its largest source
    (cdn.29next.store resizes on `&width=`; without it the full image is served), sized for the `sizes` the
    design declares, so a 89 px thumbnail stops downloading a 1080 px photo.
+6. Heavy backgrounds. An inline background-image over 60 KB (the browser never lazy-loads those) moves to
+   data-sf-bg, at most 1080 px wide through the CDN, and the base layout sets it when its element nears the screen.
 
 Writes theme-optimize-report.json next to the theme dir. Fails (exit 1) when an output does not compile with
 the platform's Sass compiler or a step's safety check trips.
@@ -479,6 +481,44 @@ if Image:
         if n != t: write(p, n)
 REPORT['images'] = img_stats
 
+# ---------------------------------------------------------------- 6. heavy background images wait for their section
+# An inline background-image downloads with the page wherever it sits (the browser does not lazy-load CSS images):
+# the 1,500-px "why" photo at the bottom of every product page cost 183 KB before anything below the buy box was
+# seen. A background whose file is over BG_LAZY_KB moves to data-sf-bg, at most BG_MAX_W wide through the CDN, and
+# a small script in the base layout sets it when the element comes within ~two screens of the viewport.
+BG = re.compile(r"""background-image:\s*url\((["']?)(\{\{ '(sf/img/[^']+\.(?:jpe?g|png|webp))'\|asset_url \}\})\1\);?\s*""")
+BG_LAZY_KB, BG_MAX_W = 60, 1080
+BG_SCRIPT = ('<script>/* sf lazy backgrounds */(function(){var els=[].slice.call(document.querySelectorAll("[data-sf-bg]"));'
+             'if(!els.length)return;function show(e){e.style.backgroundImage=\'url("\'+e.getAttribute("data-sf-bg")+\'")\';'
+             'e.removeAttribute("data-sf-bg")}if(!("IntersectionObserver"in window)){els.forEach(show);return}'
+             'var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){io.unobserve(x.target);'
+             'show(x.target)}})},{rootMargin:"1600px 2400px"});els.forEach(function(e){io.observe(e)})})();</script>\n')
+bg_stats = {'lazy': 0, 'kb_deferred': 0}
+def lazy_backgrounds(t):
+    out, last = [], 0
+    for m in BG.finditer(t):
+        f = THEME / 'assets' / m.group(3)
+        if not f.exists() or f.stat().st_size < BG_LAZY_KB * 1024 or m.start() < last: continue
+        start = t.rfind('<', 0, m.start())
+        tag = re.match(r'<([a-zA-Z][\w-]*)', t[start:])
+        if not tag or 'data-sf-bg' in t[start:m.start()]: continue
+        url = m.group(2) + (f'&amp;width={BG_MAX_W}' if intrinsic(m.group(3)) > BG_MAX_W else '')
+        at = start + tag.end()
+        out += [t[last:at], f' data-sf-bg="{url}"', t[at:m.start()]]; last = m.end()
+        bg_stats['lazy'] += 1; bg_stats['kb_deferred'] += round(f.stat().st_size / 1024)
+    return ''.join(out) + t[last:] if out else t
+if Image:
+    for p in DESIGN_FILES:
+        t = read(p)
+        n = lazy_backgrounds(t)
+        if n != t: write(p, n)
+    base = THEME / 'layouts' / 'base.html'
+    b = read(base)
+    if bg_stats['lazy'] and '/* sf lazy backgrounds */' not in b:
+        if '\n</body>' not in b: REPORT['errors'].append('lazy backgrounds: no </body> in layouts/base.html')
+        else: write(base, b.replace('\n</body>', '\n' + BG_SCRIPT + '</body>', 1))
+REPORT['backgrounds'] = bg_stats
+
 # ---------------------------------------------------------------- gates + report
 try:
     import sass
@@ -494,6 +534,6 @@ for p in DESIGN_HTML:
 tot_b = sum(v['before_kb'] for k, v in REPORT['css'].items() if k != 'inline')
 tot_a = sum(v['after_kb'] for k, v in REPORT['css'].items() if k != 'inline')
 print(f"css files {tot_b:.0f} KB -> {tot_a:.0f} KB; inline styles {INLINE['before_kb']:.0f} KB -> {INLINE['after_kb']:.0f} KB in {INLINE['blocks']} blocks; "
-      f"bundles {len(bundles)}; fonts {REPORT['fonts']['sf_asset_styles']}; swiper {REPORT['swiper'] or 'unchanged'}; images {img_stats}")
+      f"bundles {len(bundles)}; fonts {REPORT['fonts']['sf_asset_styles']}; swiper {REPORT['swiper'] or 'unchanged'}; images {img_stats}; backgrounds {bg_stats}")
 for e in REPORT['errors']: print('  !', e)
 sys.exit(1 if any(e.startswith('sass:') or 'comment' in e for e in REPORT['errors']) else 0)

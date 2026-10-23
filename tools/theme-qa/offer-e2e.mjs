@@ -280,8 +280,13 @@ for (const refill of [false, true]) {
     const ids = [...document.querySelectorAll('[id^="shopify-section-"]')].map(e => e.id);
     const section = root.closest('[id^="shopify-section-"]');
     return { present: true, native: native && { write: native.write, reviews: native.reviews.length },
-             imported: root.dataset.src ? (window.SFReviewsData || {}).count ?? 'not loaded' : 0,
+             imported: root.dataset.src ? (window.SFReviewsData ? (window.SFReviewsData.summary ? +window.SFReviewsData.summary.count : window.SFReviewsData.reviews.length) : 'not loaded') : 0,
              shown: !root.hidden, cards: root.querySelectorAll('.sfr-card').length,
+             summary: ((root.querySelector('[data-sfr-avg]') || {}).innerText || '').replace(/\s+/g, ' '),
+             badge: (document.querySelector('.sf-rating__text') || {}).textContent || '',
+             strip: ((document.querySelector('#shopify-section-sf-review-strip .sfrs-sum') || {}).innerText || '').replace(/\s+/g, ' '),
+             stripCards: document.querySelectorAll('#shopify-section-sf-review-strip .sfrs-card').length,
+             names: /smooche|solena/i.test(root.innerText),
              afterFaq: ids.findIndex(i => i.includes('section_accordions')) < ids.indexOf(section && section.id),
              write: (root.querySelector('.sfr-write:not([hidden])') || {}).href || '' };
   });
@@ -295,6 +300,14 @@ for (const refill of [false, true]) {
     if (w.shown !== total > 0) problems.push(`wall shown=${w.shown} with ${total} reviews`);
     if (total > 0 && (!w.cards || !w.write)) problems.push(`wall shown without cards (${w.cards}) or write link`);
     if (!w.afterFaq) problems.push('wall is not after the FAQ');
+    // one total everywhere: the wall's summary, the badge under the title and the strip after the buy box
+    if (total > 0) {
+      const n = total.toLocaleString('en-US');
+      if (!w.summary.includes(n)) problems.push(`wall summary "${w.summary}" lacks ${n}`);
+      if (w.badge && !w.badge.includes(n)) problems.push(`badge "${w.badge}" lacks ${n}`);
+      if (w.imported && (!w.strip.includes(n) || w.stripCards < 3)) problems.push(`strip "${w.strip}" (${w.stripCards} cards)`);
+    }
+    if (w.names) problems.push('another brand named in the reviews');
   }
   // NEXT's own review form, styled inside the SKINOFAB chrome
   if (w.native && w.native.write) {

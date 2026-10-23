@@ -16,6 +16,13 @@ least once or the build fails, so copy can't silently drift from the design.
 """
 
 GLOBAL = [
+    # the announcement bar: 60% is the deepest saving on the site (2 bottles on refills, $47 vs $118), not every
+    # product's, and the Mystery Gift comes with the 2-bottle pack; the brush bundles carry their own free gifts
+    ("🍂 Fall Sale: 60% OFF + FREE Mystery Gift", "🍂 Fall Sale: Up to 60% OFF + FREE Gifts"),
+    # one dermatologist speaks on the homepage, not "leading dermatologists worldwide"; the results card is backed by
+    # the verified reviews under it, not by a study
+    ("Trusted by leading dermatologists worldwide", "Recommended by a dermatologist"),
+    ("Proven results on real skin", "Real results on real skin"),
     # SPF: the foundation carries no SPF claim (report 11). Sentences first, then the bare chips.
     # Dr. Mamaeva's quote keeps her own words: the SPF clause is dropped, nothing is put in its place.
     ("The Color Changing Foundation is what I recommend most to patients over forty. It adapts to her tone, it has SPF, and it doesn't turn orange or sink into fine lines.",

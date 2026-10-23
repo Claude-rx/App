@@ -253,7 +253,16 @@ CSS = r"""
 }
 """
 
-# reviews: the six persona stories from the design, kept with the people's first names and ages
+# The product page's testimonial slider: real, verified 5-star reviews of the same formula (imported from the Smooche
+# store, tools/reviews/import_reviews.py), word for word, each with the reviewer's own approved photo. Picked for the
+# buyer: women who give their age (60 to 74) or talk about lines, wrinkles and shades that turn orange. Review ids
+# in <work_dir>/reviews/reviews.json, in slider order, each with where her face sits in her photo (0 top, 1 bottom),
+# so the card's landscape crop keeps the face whole.
+TESTIMONIALS = [('zjPC7IPmY', 0.41), ('DCqk83pSC', 0.47), ('9y5hcA803', 0.42), ('Nr7dIjYVa', 0.40),
+                ('e04zukyRU', 0.46), ('Eu0eKzf2sd', 0.43)]
+
+# reviews_html (the non-classic 20-step page only; the --classic build never shows it): the design's six persona
+# stories. They are design copy, not customer reviews: use TESTIMONIALS' real reviews before publishing that page
 REVIEWS = [
     ('rev-margaret', 'Margaret', 61, 'I thought my foundation days were over',
      'At 61, everything I tried settled into my smile lines within an hour and turned orange by lunch. I had given up and gone back to tinted moisturizer. This one looked like MY skin, just smoother and more even. No lines, no orange, no mask.'),

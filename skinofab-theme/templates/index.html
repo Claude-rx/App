@@ -477,23 +477,14 @@
 <section class="shopify-section fh-section" id="shopify-section-template--22228899201180__hero"><style>#shopify-section-template--22228899201180__hero{--fh-bg: #ffffff; --fh-color: #151515; --fh-width: 1216px; --fh-heading: 56px; --fh-heading-mobile: 40px; --fh-radius: 10px; --fh-pt: 8px; --fh-pb: 8px; --fh-mpt: 8px; --fh-mpb: 8px;}</style>
 <div class="fh fh--all">
 <div aria-label="Featured Skinofab products" aria-roledescription="carousel" class="fh-hero" data-autoplay="true" data-fh-slideshow="" data-interval="6000" role="region" style="--hero-height:508.4px;--hero-mobile-height:797px;--hero-text-width:412px;--hero-button:#151515;--hero-button-text:#ffffff;">
-<div aria-label="1" aria-roledescription="slide" class="fh-hero-slide fh-hero-slide--foundation" data-fh-slide="" role="group"><div class="fh-hero-slide-inner">
-<picture class="fh-hero-image">{% with sf_img='sf/img/skinofab-color-changing-foundation-hero-1800w-p62b05a.jpg'|asset_url %}<img alt="Woman applying Skinofab Color Changing Foundation" class="fh-original" fetchpriority="high" height="1747" loading="eager" sizes="(max-width: 749px) 349vw, 2885px" src="{{ 'sf/img/skinofab-color-changing-foundation-hero-4096w-p43970d.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1800w" width="4096"/>{% endwith %}
-</picture>
-<div class="fh-hero-content">
-<div class="fh-hero-copy"><div class="fh-rating"><img alt="" height="18" src="{{ 'sf/img/figma-51a30-7aff97.svg'|asset_url }}" width="89"/><span>Loved by 50,000+ customers</span></div><h1>Stop guessing your shade after 45</h1><p>It goes on white and turns into your skin as you blend. A hydrating serum foundation with peptides and PDRN that won't settle into your lines.</p><a class="fh-button" href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shop now</a></div>
-<div class="fh-clinicians fh-clinicians--live"></div>
-</div>
-</div></div>
-<div aria-label="2" aria-roledescription="slide" class="fh-hero-slide fh-hero-slide--serum" data-fh-slide="" hidden="" role="group"><div class="fh-hero-slide-inner">
-<picture class="fh-hero-image">{% with sf_img='sf/img/skinofab-reverse-time-peptide-serum-hero-mobile-1680w-a94e98e.png'|asset_url %}<source height="1342" media="(max-width: 749px)" sizes="195vw" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1680w" width="1680">{% endwith %}{% with sf_img='sf/img/skinofab-reverse-time-peptide-serum-hero-1800w-19c378.jpg'|asset_url %}<img alt="Woman holding Skinofab Reverse-Time Peptide Serum" class="fh-original" fetchpriority="low" height="2021" loading="eager" sizes="(max-width: 749px) 100vw, 1512px" src="{{ 'sf/img/skinofab-reverse-time-peptide-serum-hero-3030w-6d6d51.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1800w" width="3030"/>{% endwith %}
+<div aria-label="1" aria-roledescription="slide" class="fh-hero-slide fh-hero-slide--foundation is-active" data-fh-slide="" role="group"><div class="fh-hero-slide-inner">
+<picture class="fh-hero-image">{% with sf_img='sf/img/skinofab-hero-phone-2400w-e5b398.jpg'|asset_url %}<source height="1024" media="(max-width: 749px)" sizes="349vw" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 2400w" width="2400">{% endwith %}{% with sf_img='sf/img/skinofab-color-changing-foundation-hero-1800w-p62b05a.jpg'|asset_url %}<img alt="Woman applying Skinofab Color Changing Foundation" class="fh-original" fetchpriority="high" height="1747" loading="eager" sizes="(max-width: 749px) 349vw, 2885px" src="{{ 'sf/img/skinofab-color-changing-foundation-hero-4096w-p43970d.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1800w" width="4096"/>{% endwith %}
 </source></picture>
 <div class="fh-hero-content">
-<div class="fh-hero-copy"><div class="fh-rating"><img alt="" height="18" src="{{ 'sf/img/figma-51a30-7aff97.svg'|asset_url }}" width="89"/><span>Loved by 50,000+ customers</span></div><h1>The Reverse-Time Peptide Serum</h1><p>One serum for lines, dark spots, and dullness. Peptides smooth, collagen plumps, and vitamin C brightens, so your skin looks fresher in days and firmer in weeks.</p><a class="fh-button" href="{% if settings.sf_p_reverse_time_peptide_serum %}{{ settings.sf_p_reverse_time_peptide_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shop now</a></div>
+<div class="fh-hero-copy"><div class="fh-rating"><img alt="" height="18" src="{{ 'sf/img/figma-51a30-7aff97.svg'|asset_url }}" width="89"/><span>Loved by 9,800+ customers</span></div><h1>Stop guessing your shade after 45</h1><p>It goes on white and turns into your skin as you blend. A hydrating serum foundation with peptides and PDRN that won't settle into your lines.</p><a class="fh-button" href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Shop now</a></div>
 <div class="fh-clinicians fh-clinicians--live"></div>
 </div>
 </div></div>
-<div class="fh-hero-controls"><div aria-label="Choose hero slide" class="fh-hero-dots" role="group"><button aria-label="Show slide 1" aria-pressed="true" data-fh-slide-to="0" type="button"></button><button aria-label="Show slide 2" aria-pressed="false" data-fh-slide-to="1" type="button"></button></div><button aria-label="Pause slideshow" class="fh-hero-pause" data-fh-pause="" data-pause-label="Pause slideshow" data-play-label="Play slideshow" type="button"><span aria-hidden="true">Ⅱ</span></button></div>
 </div>
 </div>
 </section><section class="shopify-section fh-section" id="shopify-section-template--22228899201180__bestsellers"><style>#shopify-section-template--22228899201180__bestsellers{--fh-bg: #ffffff; --fh-color: #151515; --fh-width: 1216px; --fh-heading: 36px; --fh-heading-mobile: 32px; --fh-radius: 10px; --fh-pt: 48px; --fh-pb: 48px; --fh-mpt: 48px; --fh-mpb: 48px;}</style>
@@ -506,10 +497,10 @@
 <div class="fh-product-list" data-fh-track="" id="fh-list-template--22228899201180__bestsellers">
 <article class="fh-product">
 <a aria-label="Color Changing Foundation" class="fh-product-image" href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
-<picture class="">{% with sf_img='sf/img/ColorChangingFoundation-Productimage_31cddf53-0315-41bf-bfe5-1920w-p9d0e1d.jpg'|asset_url %}<img alt="Color Changing Foundation" class="fh-upload" height="2400" loading="lazy" sizes="100vw" src="{{ 'sf/img/ColorChangingFoundation-Productimage_31cddf53-0315-41bf-bfe5-2400w-p9d0e1d.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/ColorChangingFoundation-Productimage_31cddf53-0315-41bf-bfe5-1920w-p9d0e1d.jpg'|asset_url %}<img alt="Color Changing Foundation" class="fh-upload" height="2400" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/ColorChangingFoundation-Productimage_31cddf53-0315-41bf-bfe5-2400w-p9d0e1d.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
 </picture>
 <span class="fh-badges"><span>Bestseller</span><span class="fh-saving">Save 33%</span></span></a>
-<div class="fh-product-info"><div class="fh-product-rating"><img alt="" height="16" src="{{ 'sf/img/figma-d6f92-cf03de.svg'|asset_url }}" width="80"/><span>4.8 (351,837 reviews)</span></div><h3><a href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Adaptive Peptide Foundation</a></h3>
+<div class="fh-product-info"><div class="fh-product-rating"><img alt="" height="16" src="{{ 'sf/img/figma-d6f92-cf03de.svg'|asset_url }}" width="80"/><span>4.8 (9,855 reviews)</span></div><h3><a href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Adaptive Peptide Foundation</a></h3>
 <div class="fh-price"><s>{% include 'partials/sf_price.html' with p=settings.sf_p_color_changing_foundation retail=1 %}</s><span>{% include 'partials/sf_price.html' with p=settings.sf_p_color_changing_foundation %}</span></div><div class="fh-benefits-tags"><span>Made for 45+</span><span>Fragrance-free</span><span>No creasing</span></div></div>
 </article><article class="fh-product">
 <a aria-label="The Lymphatic Brush" class="fh-product-image" href="{% if settings.sf_p_the_lymphatic_brush %}{{ settings.sf_p_the_lymphatic_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
@@ -521,15 +512,15 @@
 </article>
 <article class="fh-product">
 <a aria-label="Reverse-time Peptide Serum" class="fh-product-image" href="{% if settings.sf_p_reverse_time_peptide_serum %}{{ settings.sf_p_reverse_time_peptide_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
-<picture class="">{% with sf_img='sf/img/Group5-1920w-a68c0d.png'|asset_url %}<img alt="Reverse-time Peptide Serum" class="fh-upload" height="2400" loading="lazy" sizes="100vw" src="{{ 'sf/img/Group5-2400w-4ddb00.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1920w" width="2400"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/Group5-1920w-a68c0d.png'|asset_url %}<img alt="Reverse-time Peptide Serum" class="fh-upload" height="2400" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/Group5-2400w-4ddb00.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1920w" width="2400"/>{% endwith %}
 </picture>
 <span class="fh-badges"><span>Bestseller</span><span class="fh-saving">Save 31%</span></span></a>
-<div class="fh-product-info"><div class="fh-product-rating"><img alt="" height="16" src="{{ 'sf/img/figma-d6f92-cf03de.svg'|asset_url }}" width="80"/><span>4.8 (61,583 reviews)</span></div><h3><a href="{% if settings.sf_p_reverse_time_peptide_serum %}{{ settings.sf_p_reverse_time_peptide_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Reverse-time Peptide Serum</a></h3>
+<div class="fh-product-info"><div class="fh-product-rating"><img alt="" height="16" src="{{ 'sf/img/figma-d6f92-cf03de.svg'|asset_url }}" width="80"/><span>4.9 (22 reviews)</span></div><h3><a href="{% if settings.sf_p_reverse_time_peptide_serum %}{{ settings.sf_p_reverse_time_peptide_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Reverse-time Peptide Serum</a></h3>
 <div class="fh-price"><s>{% include 'partials/sf_price.html' with p=settings.sf_p_reverse_time_peptide_serum retail=1 %}</s><span>{% include 'partials/sf_price.html' with p=settings.sf_p_reverse_time_peptide_serum %}</span></div><div class="fh-benefits-tags"><span>Softer lines</span><span>Firmer skin</span><span>Fades Dark Spots</span></div></div>
 </article>
 <article class="fh-product">
 <a aria-label="Peptide &amp; Collagen Lifting Mask" class="fh-product-image" href="{% if settings.sf_p_ultra_peptide_collagen_lifting_mask %}{{ settings.sf_p_ultra_peptide_collagen_lifting_mask.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
-<picture class="">{% with sf_img='sf/img/1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-1920w-636306.jpg'|asset_url %}<img alt="Peptide &amp; Collagen Lifting Mask" class="fh-upload" height="2400" loading="lazy" sizes="100vw" src="{{ 'sf/img/1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-2400w-691fbd.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-1920w-636306.jpg'|asset_url %}<img alt="Peptide &amp; Collagen Lifting Mask" class="fh-upload" height="2400" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-2400w-691fbd.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
 </picture>
 <span class="fh-badges"><span class="fh-saving">Save 25%</span></span></a>
 <div class="fh-product-info"><span class="fh-new">NEW</span><h3><a href="{% if settings.sf_p_ultra_peptide_collagen_lifting_mask %}{{ settings.sf_p_ultra_peptide_collagen_lifting_mask.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Peptide &amp; Collagen Lifting Mask</a></h3>
@@ -537,7 +528,7 @@
 </article>
 <article class="fh-product">
 <a aria-label="Under-eye Reset Patches" class="fh-product-image" href="{% if settings.sf_p_under_eye_reset %}{{ settings.sf_p_under_eye_reset.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
-<picture class="">{% with sf_img='sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1920w-56e486.png'|asset_url %}<img alt="Under-eye Reset Patches" class="fh-upload" height="2400" loading="lazy" sizes="100vw" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-2400w-17bb92.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1920w-56e486.png'|asset_url %}<img alt="Under-eye Reset Patches" class="fh-upload" height="2400" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-2400w-17bb92.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
 </picture>
 <span class="fh-badges"><span class="fh-saving">Save 25%</span></span></a>
 <div class="fh-product-info"><span class="fh-new">NEW</span><h3><a href="{% if settings.sf_p_under_eye_reset %}{{ settings.sf_p_under_eye_reset.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Under-eye Reset Patches</a></h3>
@@ -588,7 +579,7 @@
 </div>
 </section><section class="shopify-section fh-section" id="shopify-section-template--22228899201180__reviews"><style>#shopify-section-template--22228899201180__reviews{--fh-bg: #f9f9f9; --fh-color: #151515; --fh-width: 1216px; --fh-heading: 36px; --fh-heading-mobile: 32px; --fh-radius: 10px; --fh-pt: 32px; --fh-pb: 32px; --fh-mpt: 32px; --fh-mpb: 32px;}</style>
 <div class="fh fh--all">
-<div class="fh-wrap fh-reviews" data-fh-carousel=""><div class="fh-review-heading"><div class="fh-eyebrow"><img alt="" height="16" src="{{ 'sf/img/figma-05a32-cdf6be.svg'|asset_url }}" width="80"/><span>Over 50,000 5-star reviews</span></div><h2>Trusted by 1,000,000+ women who finally found something that works</h2></div><div class="fh-review-track" data-fh-track="" id="fh-reviews-template--22228899201180__reviews"><article class="fh-review"><div class="fh-review-media">
+<div class="fh-wrap fh-reviews" data-fh-carousel=""><div class="fh-review-heading"><div class="fh-eyebrow"><img alt="" height="16" src="{{ 'sf/img/figma-05a32-cdf6be.svg'|asset_url }}" width="80"/><span>Over 7,700 5-star reviews</span></div><h2>Trusted by 9,800+ verified buyers who finally found something that works</h2></div><div class="fh-review-track" data-fh-track="" id="fh-reviews-template--22228899201180__reviews"><article class="fh-review"><div class="fh-review-media">
 <div class="fh-social-video" data-fh-social-video="">
 <video aria-label="Eight hours later it still looked the same" data-src="{{ 'sf/media/43e0f6484a4b45a08fed8078280871e7-HD-1080p-2-5Mbps-97900995-2974e9.mp4'|asset_url }}" id="fh-review-video-template--22228899201180__reviews-reviews_0" loop="" muted="" playsinline="" preload="none" tabindex="0"></video>
 {% with sf_img='sf/img/amber-t-foundation-review-poster-720w-956cc4.jpg'|asset_url %}<img alt="Eight hours later it still looked the same" class="fh-social-poster" height="1280" loading="lazy" sizes="321px" src="{{ 'sf/img/amber-t-foundation-review-poster-720w-956cc4.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=321 321w, {{ sf_img }}&amp;width=642 642w, {{ sf_img }} 720w" width="720"/>{% endwith %}
@@ -706,9 +697,9 @@
 <picture class="">{% with sf_img='sf/img/skinofab-high-performance-formula-texture-190w-ecbf63.jpg'|asset_url %}<img alt="High-performance formulas" class="fh-original" height="190" loading="lazy" sizes="(max-width: 749px) 21vw, 94px" src="{{ 'sf/img/skinofab-high-performance-formula-texture-190w-ecbf63.jpg'|asset_url }}" srcset="{{ sf_img }} 190w" width="190"/>{% endwith %}
 </picture>
 <div><h3>High-performance formulas</h3><p>PDRN, peptides, collagen and vitamin C, at levels that do something. Named on the box, never hidden in a complex.</p></div></div><div class="fh-formula-benefit">
-<picture class="">{% with sf_img='sf/img/skinofab-proven-results-texture-190w-f558ab.jpg'|asset_url %}<img alt="Proven results on real skin" class="fh-original" height="253" loading="lazy" sizes="(max-width: 749px) 21vw, 94px" src="{{ 'sf/img/skinofab-proven-results-texture-190w-f558ab.jpg'|asset_url }}" srcset="{{ sf_img }} 190w" width="190"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/skinofab-proven-results-texture-190w-f558ab.jpg'|asset_url %}<img alt="Real results on real skin" class="fh-original" height="253" loading="lazy" sizes="(max-width: 749px) 21vw, 94px" src="{{ 'sf/img/skinofab-proven-results-texture-190w-f558ab.jpg'|asset_url }}" srcset="{{ sf_img }} 190w" width="190"/>{% endwith %}
 </picture>
-<div><h3>Proven results on real skin</h3><p>Backed by over 1,000,000 customers, 50,000 five-star reviews and data from independent panels run with real customers</p></div></div></div></div>
+<div><h3>Real results on real skin</h3><p>Backed by over 9,800 verified reviews, 4.8 out of 5 on average</p></div></div></div></div>
 <picture class="fh-formula-photo">{% with sf_img='sf/img/skinofab-korean-formulas-foundation-application-mobile-940w-pb8c371.png'|asset_url %}<source height="1662" media="(max-width: 749px)" sizes="110vw" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 940w" width="940">{% endwith %}{% with sf_img='sf/img/skinofab-korean-formulas-foundation-application-1800w-pef88c1.png'|asset_url %}<img alt="Woman applying Skinofab foundation" class="fh-original" height="939" loading="lazy" sizes="(max-width: 749px) 100vw, 1092px" src="{{ 'sf/img/skinofab-korean-formulas-foundation-application-2190w-p7b9660.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1800w" width="2190"/>{% endwith %}
 </source></picture>
 </div></div>
@@ -725,7 +716,7 @@
 </div>
 </section><section class="shopify-section fh-section" id="shopify-section-template--22228899201180__experts"><style>#shopify-section-template--22228899201180__experts{--fh-portrait-border: #000000; --fh-bg: #ffffff; --fh-color: #151515; --fh-width: 1216px; --fh-heading: 36px; --fh-heading-mobile: 32px; --fh-radius: 10px; --fh-pt: 12px; --fh-pb: 6px; --fh-mpt: 0px; --fh-mpb: 0px;}</style>
 <div class="fh fh--all">
-<div class="fh-wrap fh-experts" data-fh-experts=""><h2>Trusted by leading dermatologists worldwide</h2><div aria-label="Trusted by leading dermatologists worldwide" class="fh-expert-tabs" role="tablist"><button aria-controls="fh-expert-experts_0" aria-selected="true" data-fh-expert="experts_0" role="tab" type="button">
+<div class="fh-wrap fh-experts" data-fh-experts=""><h2>Recommended by a dermatologist</h2><div aria-label="Recommended by a dermatologist" class="fh-expert-tabs" role="tablist"><button aria-controls="fh-expert-experts_0" aria-selected="true" data-fh-expert="experts_0" role="tab" type="button">
 <picture class=""><img alt="Dr. Aiza Mamaeva" class="fh-original" height="95" loading="lazy" sizes="(max-width: 749px) 14vw, 47px" src="{{ 'sf/img/skinofab-dr-aiza-mamaeva-avatar-95w-91a09d.png'|asset_url }}" srcset="{{ 'sf/img/skinofab-dr-aiza-mamaeva-avatar-95w-91a09d.png'|asset_url }} 95w" width="95"/>
 </picture>
 </button><span class="fh-expert-secondary">
@@ -746,7 +737,7 @@
 <div class="fh-product-list" data-fh-track="" id="fh-list-template--22228899201180__essentials">
 <article class="fh-product">
 <a aria-label="Liquid Blender Brush" class="fh-product-image" href="{% if settings.sf_p_liquid_blender_brush %}{{ settings.sf_p_liquid_blender_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
-<picture class="">{% with sf_img='sf/img/1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-1920w-19e23e.png'|asset_url %}<img alt="Liquid Blender Brush" class="fh-upload" height="2400" loading="lazy" sizes="100vw" src="{{ 'sf/img/1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-2400w-041931.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-1920w-19e23e.png'|asset_url %}<img alt="Liquid Blender Brush" class="fh-upload" height="2400" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-2400w-041931.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
 </picture>
 <span class="fh-badges"></span></a>
 <div class="fh-product-info"><h3><a href="{% if settings.sf_p_liquid_blender_brush %}{{ settings.sf_p_liquid_blender_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Liquid Blender Brush</a></h3>
@@ -754,7 +745,7 @@
 </article>
 <article class="fh-product">
 <a aria-label="Volume Lip Gloss" class="fh-product-image" href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
-<picture class="">{% with sf_img='sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1920w-0f9718.png'|asset_url %}<img alt="Volume Lip Gloss" class="fh-upload" height="2400" loading="lazy" sizes="100vw" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-2400w-747dad.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-1920w-0f9718.png'|asset_url %}<img alt="Volume Lip Gloss" class="fh-upload" height="2400" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/1_806b81e8-e466-4549-be40-160b224b6b3f-2400w-747dad.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
 </picture>
 <span class="fh-badges"></span></a>
 <div class="fh-product-info"><h3><a href="{% if settings.sf_p_shea_butter_lip_gloss %}{{ settings.sf_p_shea_butter_lip_gloss.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Volume Lip Gloss</a></h3>
@@ -762,7 +753,7 @@
 </article>
 <article class="fh-product">
 <a aria-label="Luxury Lip Liner" class="fh-product-image" href="{% if settings.sf_p_essential_lip_liner %}{{ settings.sf_p_essential_lip_liner.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
-<picture class="">{% with sf_img='sf/img/Espresso-1920w-0cdabb.png'|asset_url %}<img alt="Luxury Lip Liner" class="fh-upload" height="2400" loading="lazy" sizes="100vw" src="{{ 'sf/img/Espresso-2400w-e9e621.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/Espresso-1920w-0cdabb.png'|asset_url %}<img alt="Luxury Lip Liner" class="fh-upload" height="2400" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/Espresso-2400w-e9e621.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
 </picture>
 <span class="fh-badges"></span></a>
 <div class="fh-product-info"><h3><a href="{% if settings.sf_p_essential_lip_liner %}{{ settings.sf_p_essential_lip_liner.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Luxury Lip Liner</a></h3>
@@ -770,7 +761,7 @@
 </article>
 <article class="fh-product">
 <a aria-label="Eyelash Curler" class="fh-product-image" href="{% if settings.sf_p_eyelash_curler %}{{ settings.sf_p_eyelash_curler.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">
-<picture class="">{% with sf_img='sf/img/skinofab-1920w-81fc0b.jpg'|asset_url %}<img alt="Eyelash Curler" class="fh-upload" height="2400" loading="lazy" sizes="100vw" src="{{ 'sf/img/skinofab-2400w-3438c3.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
+<picture class="">{% with sf_img='sf/img/skinofab-1920w-81fc0b.jpg'|asset_url %}<img alt="Eyelash Curler" class="fh-upload" height="2400" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/skinofab-2400w-3438c3.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" width="2400"/>{% endwith %}
 </picture>
 <span class="fh-badges"></span></a>
 <div class="fh-product-info"><h3><a href="{% if settings.sf_p_eyelash_curler %}{{ settings.sf_p_eyelash_curler.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Eyelash Curler</a></h3>
@@ -796,7 +787,7 @@
 <div class="fh-wrap fh-social" data-fh-carousel="">
 <div class="fh-social-heading">
 <h2><span>The</span>
-<picture class=""><img alt="SKINOFAB" class="fh-upload" height="322" loading="lazy" sizes="100vw" src="{{ 'sf/img/skinofab-logo.svg'|asset_url }}" srcset="{{ 'sf/img/skinofab-logo.svg'|asset_url }} 720w, {{ 'sf/img/skinofab-logo.svg'|asset_url }} 1920w" width="2400"/>
+<picture class=""><img alt="SKINOFAB" class="fh-upload" height="322" loading="lazy" sizes="(min-width: 990px) 300px, 270px" src="{{ 'sf/img/skinofab-logo.svg'|asset_url }}" srcset="{{ 'sf/img/skinofab-logo.svg'|asset_url }} 720w, {{ 'sf/img/skinofab-logo.svg'|asset_url }} 1920w" width="2400"/>
 </picture>
 <span>phenomenon</span></h2>
 <div class="fh-desktop-controls">

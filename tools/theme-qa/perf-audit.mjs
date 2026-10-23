@@ -38,9 +38,14 @@ for (const mode of MODES) {
     cdp.on('Network.loadingFinished', e => { const r = reqs.get(e.requestId); if (r) { r.bytes = e.encodedDataLength; r.end = e.timestamp; } });
     cdp.on('Network.loadingFailed', e => { const r = reqs.get(e.requestId); if (r) r.failed = e.errorText; });
     await page.addInitScript(() => {
-      window.__perf = { lcp: null, cls: 0, longTasks: 0 };
-      new PerformanceObserver(l => { const e = l.getEntries().at(-1); window.__perf.lcp = { t: e.startTime, url: e.url || null,
-        el: e.element ? (e.element.tagName + (e.element.id ? '#' + e.element.id : '') + (e.element.className && typeof e.element.className === 'string' ? '.' + e.element.className.trim().split(/\s+/).slice(0, 2).join('.') : '')) : null }; })
+      window.__perf = { lcp: null, lcpAll: [], cls: 0, longTasks: 0 };
+      const name = el => el ? (el.tagName + (el.id ? '#' + el.id : '') + (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : '')) : null;
+      // every candidate, not just the last: a late one (a rotating slide, a revealed heading) names what to fix
+      new PerformanceObserver(l => { for (const e of l.getEntries()) {
+        const c = { t: Math.round(e.startTime), size: e.size, url: e.url || null, el: name(e.element),
+          text: e.element && !e.url ? e.element.textContent.trim().slice(0, 60) : undefined,
+          section: e.element?.closest('[id^="shopify-section"], section')?.id || undefined };
+        window.__perf.lcpAll.push(c); window.__perf.lcp = c; } })
         .observe({ type: 'largest-contentful-paint', buffered: true });
       new PerformanceObserver(l => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__perf.cls += e.value; }).observe({ type: 'layout-shift', buffered: true });
       new PerformanceObserver(l => { for (const e of l.getEntries()) window.__perf.longTasks += Math.max(0, e.duration - 50); }).observe({ type: 'longtask', buffered: true });
@@ -55,7 +60,7 @@ for (const mode of MODES) {
       const fcp = performance.getEntriesByName('first-contentful-paint')[0];
       const blocking = performance.getEntriesByType('resource').filter(r => r.renderBlockingStatus === 'blocking').map(r => r.name);
       return { ttfb: nav.responseStart, dcl: nav.domContentLoadedEventEnd, load: nav.loadEventEnd, fcp: fcp ? fcp.startTime : null,
-        lcp: window.__perf.lcp, cls: +window.__perf.cls.toFixed(3), tbt: Math.round(window.__perf.longTasks), domNodes: document.getElementsByTagName('*').length,
+        lcp: window.__perf.lcp, lcpAll: window.__perf.lcpAll, cls: +window.__perf.cls.toFixed(3), tbt: Math.round(window.__perf.longTasks), domNodes: document.getElementsByTagName('*').length,
         htmlBytes: document.documentElement.outerHTML.length, blocking };
     });
     const all = [...reqs.values()].filter(r => !r.url.startsWith('data:'));

@@ -608,8 +608,10 @@
 <div class="form__wrapper" data-product-info=""><div class="product__block" style="--PBB:16px;">
 <div class="product__icon__row product__icon__row--center" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.9); --bg: #f7f7f7;padding: 5px 10px;"><div class="product__icon__text"><p><strong>🇰🇷 Formulated in Korea</strong></p></div></div>
 </div>
-<style>.product__block.product__images{padding-top: 0px!important;
-     padding-bottom: 0px!important;}.profile-image:nth-child(1){background-image: url("{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-p8adec8.png'|asset_url }}");}.profile-image:nth-child(2){background-image: url("{{ 'sf/img/2_51914231-02fc-4cf3-b29c-1627c2d6ed9a_1000x1000-pf1aa35.png'|asset_url }}");}.profile-image:nth-child(3){background-image: url("{{ 'sf/img/3_99578868-68cd-4fd4-9230-90bcb8d72a8e_1000x1000-p7db3fa.png'|asset_url }}");}</style>
+<style data-sf-bg="{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-p8adec8.png'|asset_url }}">.product__block.product__images{padding-top: 0px!important;
+     padding-bottom: 0px!important;}.profile-image:nth-child(1){ data-sf-bg="{{ 'sf/img/2_51914231-02fc-4cf3-b29c-1627c2d6ed9a_1000x1000-pf1aa35.png'|asset_url }}">.product__block.product__images{padding-top: 0px!important;
+     padding-bottom: 0px!important;}.profile-image:nth-child(1){background-image: url("{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-p8adec8.png'|asset_url }}");}.profile-image:nth-child(2){ data-sf-bg="{{ 'sf/img/3_99578868-68cd-4fd4-9230-90bcb8d72a8e_1000x1000-p7db3fa.png'|asset_url }}">.product__block.product__images{padding-top: 0px!important;
+     padding-bottom: 0px!important;}.profile-image:nth-child(1){background-image: url("{{ 'sf/img/1_42bfe2c2-229b-43b9-83b2-b2d44c53f23d_1000x1000-p8adec8.png'|asset_url }}");}.profile-image:nth-child(2){background-image: url("{{ 'sf/img/2_51914231-02fc-4cf3-b29c-1627c2d6ed9a_1000x1000-pf1aa35.png'|asset_url }}");}.profile-image:nth-child(3){}</style>
 <div class="product__block product__images">
 <div class="social-proof-container">
 <div class="profile-images">
@@ -1676,7 +1678,7 @@ margin-top: 5px;}}</style>
 <section class="skinofab-why-section">
 <div class="wrapper">
 <div class="skinofab-why-inner">
-<div class="skinofab-why__image" style='background-image: url("{{ 'sf/img/7_5b4e859b-a9d0-4d70-9f54-1264d2b3ff0b_1500x1500-p3d4461.jpg'|asset_url }}"); background-position: center center;'></div>
+<div data-sf-bg="{{ 'sf/img/7_5b4e859b-a9d0-4d70-9f54-1264d2b3ff0b_1500x1500-p3d4461.jpg'|asset_url }}" class="skinofab-why__image" style='background-position: center center;'></div>
 <div class="skinofab-why__content">
 <h2 class="section__heading h2">Why is skinofab the best choice?</h2>
 <div class="skinofab-why__features">
@@ -1691,10 +1693,10 @@ margin-top: 5px;}}</style>
 </div>
 <div class="skinofab-why__feature">
 <div class="skinofab-why__feature-icon">
-<img alt="Trusted by 100,000+ women" src="{{ 'sf/img/icons_skinofab_new_12_500x500-488fb2.svg'|asset_url }}"/>
+<img alt="Trusted by 9,800+ verified buyers" src="{{ 'sf/img/icons_skinofab_new_12_500x500-488fb2.svg'|asset_url }}"/>
 </div>
 <div class="skinofab-why__feature-text">
-<div class="skinofab-why__feature-title">Trusted by 100,000+ women</div>
+<div class="skinofab-why__feature-title">Trusted by 9,800+ verified buyers</div>
 <div class="skinofab-why__feature-desc"><p>Join thousands who use skinofab every single day</p></div>
 </div>
 </div>

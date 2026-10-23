@@ -50,9 +50,9 @@
   },
   "figma-home-b8e5e8.css": {
    "before_kb": 41.3,
-   "after_kb": 40.4,
+   "after_kb": 38.7,
    "selectors": 569,
-   "dropped": 16
+   "dropped": 34
   },
   "futura-pt-fallback.css": {
    "before_kb": 0.1,
@@ -144,8 +144,8 @@
   },
   "inline": {
    "blocks": 1755,
-   "before_kb": 8676.3,
-   "after_kb": 7359.3,
+   "before_kb": 8679.2,
+   "after_kb": 7362.6,
    "skipped": 0
   }
  },
@@ -181,8 +181,12 @@
   "script_tags_deferred": 88
  },
  "images": {
-  "elements": 1021,
+  "elements": 1016,
   "skipped": 1108
  },
- "errors": []
+ "errors": [],
+ "backgrounds": {
+  "lazy": 76,
+  "kb_deferred": 20815
+ }
 }

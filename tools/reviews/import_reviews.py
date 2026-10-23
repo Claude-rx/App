@@ -2,12 +2,13 @@
 CSV) into the product page review wall.
 
 usage: python3 -I import_reviews.py <export.csv> <work_dir> [--product color-changing-foundation]
-                                     [--exclude-text smooche] [--download-photos] [--out reviews]
+                                     [--exclude-text WORD ...] [--download-photos] [--out reviews]
 
 The reviews are the store owner's own (the same formula, sold before as the Smooche Color Changing Foundation):
 - every review is kept word for word, with its own rating, date and verified flag; nothing is written or edited
 - names are shown as "First L."
-- a review whose text names another brand (--exclude-text, repeatable) is left out rather than edited
+- a review whose text names another brand or claims sun protection is left out rather than edited (--exclude-text,
+  repeatable, replaces EXCLUDE_DEFAULT: every spelling of the old brand, its support team, SPF and sunscreen)
 - unpublished, hidden or rejected reviews are left out
 - photos: --download-photos saves them to <work_dir>/reviews/photos/ with a numbered contact sheet
   (photos-sheet.jpg). Only photos listed in <work_dir>/reviews/photos-approved.txt (one photo id per line) are
@@ -26,7 +27,10 @@ def opt(name, default=None, many=False):
     return vals if many else (vals[-1] if vals else default)
 SRC, WORK = Path(args[0]), Path(args[1])
 PRODUCT = opt('--product', 'color-changing-foundation')
-EXCLUDE = [w.lower() for w in (opt('--exclude-text', many=True) or ['smooche'])]
+# the old brand in every spelling customers use (Smooch, Smooche, Smoochie, SMOOCH), its support team's name, and sun
+# protection (the old bottle said SPF 15; this formula makes no SPF claim)
+EXCLUDE_DEFAULT = ['smooch', 'genrev', 'spf', 'sunscreen', 'sun screen', 'sun protection', 'sunblock']
+EXCLUDE = [w.lower() for w in (opt('--exclude-text', many=True) or EXCLUDE_DEFAULT)]
 DOWNLOAD = '--download-photos' in args
 OUT = WORK / opt('--out', 'reviews')
 PHOTOS = OUT / 'photos'
