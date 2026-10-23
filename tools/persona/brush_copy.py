@@ -317,14 +317,9 @@ SECTIONS_CSS = r"""
 .sfb-btn:hover{background:#000}
 .sfb-btn--light{background:#fff;color:#151515 !important}
 .sfb-btn--light:hover{background:#ececec}
-.sfb-videos{position:relative}
-.sfb-videos__track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px calc(50% - 150px) 8px}
-.sfb-videos__track::-webkit-scrollbar{display:none}
-.sfb-video{flex:0 0 300px;scroll-snap-align:center;border-radius:18px;overflow:hidden;background:#e9e9e9;aspect-ratio:9/16;position:relative}
+.sfb-videos{display:grid;grid-template-columns:repeat(4,minmax(0,260px));justify-content:center;gap:16px;width:min(1180px,calc(100% - 40px));margin:0 auto}
+.sfb-video{border-radius:18px;overflow:hidden;background:#e9e9e9;aspect-ratio:9/16;position:relative}
 .sfb-video video{width:100%;height:100%;object-fit:cover;display:block}
-.sfb-videos__nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:#151515;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2}
-.sfb-videos__nav--prev{left:max(8px,calc(50% - 560px))}
-.sfb-videos__nav--next{right:max(8px,calc(50% - 560px))}
 .sfb-how{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .sfb-how__card{background:#fff;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
 .sfb-how__card img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;display:block;background:#f1efec}
@@ -389,7 +384,7 @@ SECTIONS_CSS = r"""
 @media (max-width:989px){
  .sfb-sec{padding:52px 0}
  .sfb-how{grid-template-columns:1fr}
- .sfb-videos__nav{display:none}
+ .sfb-videos{grid-template-columns:repeat(2,minmax(0,1fr));max-width:560px;gap:12px}
  .sfb-routine{grid-template-columns:1fr;gap:24px}
  .sfb-routine__video{max-width:300px;margin:0 auto;width:100%}
  .sfb-expect{grid-template-columns:1fr}
@@ -400,8 +395,10 @@ SECTIONS_CSS = r"""
 }
 @media (max-width:599px){
  .sfb-wrap{width:calc(100% - 32px)}
- .sfb-video{flex-basis:240px}
- .sfb-videos__track{padding:4px calc(50% - 120px) 8px}
+ .sfb-videos{width:calc(100% - 32px)}
+ .sfb-head{padding:0 16px;margin-bottom:28px}
+ .sfb h2{font-size:27px}
+ .sfb-cross__rating{flex-wrap:wrap;gap:6px 10px}
  .sfb-risk{padding:36px 20px}
  .sfb-btn{width:100%}
 }
@@ -414,25 +411,19 @@ def _head(eyebrow, lead, mark=None):
 
 
 def videos_html(clips):
-    """The review clips (silent): a centered strip, each clip plays while it is on screen."""
+    """The creator clips (silent), all in view and centered: one row of four on a computer, two by two on a phone.
+    Each plays while it is on screen."""
     items = ''.join(f'<div class="sfb-video"><video muted loop playsinline preload="none" poster="{poster}" width="540" height="960" '
-                    f'aria-label="Customer video {k}"><source src="{mp4}" type="video/mp4"></video></div>'
+                    f'aria-label="Creator video {k}"><source src="{mp4}" type="video/mp4"></video></div>'
                     for k, (mp4, poster) in enumerate(clips, 1))
-    prev, nxt = _CHEV.format(d='m15 18-6-6 6-6'), _CHEV.format(d='m9 18 6-6-6-6')
-    return (f'<section class="sfb sfb-sec" aria-label="Customer videos">{_head(VIDEOS["eyebrow"], VIDEOS["lead"], VIDEOS["mark"])}'
-            f'<div class="sfb-videos" data-sfb-videos><button type="button" class="sfb-videos__nav sfb-videos__nav--prev" aria-label="Previous video">{prev}</button>'
-            f'<div class="sfb-videos__track">{items}</div>'
-            f'<button type="button" class="sfb-videos__nav sfb-videos__nav--next" aria-label="Next video">{nxt}</button>'
+    return (f'<section class="sfb sfb-sec" aria-label="Creator videos">{_head(VIDEOS["eyebrow"], VIDEOS["lead"], VIDEOS["mark"])}'
+            f'<div class="sfb-videos" data-sfb-videos>{items}'
             '<script>(function () {'
-            'var root = document.currentScript.parentNode, track = root.querySelector(".sfb-videos__track");'
-            'var vids = root.querySelectorAll("video");'
-            'function step(d) { var w = vids[0] ? vids[0].parentNode.getBoundingClientRect().width + 16 : 300; track.scrollBy({ left: d * w, behavior: "smooth" }); }'
-            'root.querySelector(".sfb-videos__nav--prev").addEventListener("click", function () { step(-1); });'
-            'root.querySelector(".sfb-videos__nav--next").addEventListener("click", function () { step(1); });'
+            'var root = document.currentScript.parentNode, vids = root.querySelectorAll("video");'
             'if (!("IntersectionObserver" in window)) return;'
             'var io = new IntersectionObserver(function (es) { es.forEach(function (e) {'
-            'var v = e.target; if (e.isIntersecting && e.intersectionRatio > 0.6) { if (v.preload !== "auto") v.preload = "auto"; var p = v.play(); if (p && p.catch) p.catch(function () {}); }'
-            'else v.pause(); }); }, { threshold: [0, 0.6, 1] });'
+            'var v = e.target; if (e.isIntersecting && e.intersectionRatio > 0.5) { if (v.preload !== "auto") v.preload = "auto"; var p = v.play(); if (p && p.catch) p.catch(function () {}); }'
+            'else v.pause(); }); }, { threshold: [0, 0.5, 1] });'
             'Array.prototype.forEach.call(vids, function (v) { io.observe(v); });'
             '})();</script></div></section>')
 
