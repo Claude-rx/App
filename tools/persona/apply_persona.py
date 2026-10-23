@@ -226,6 +226,110 @@ def face_crop(src, focus, aspect=4 / 3, width=640):
     top = max(0, min(h - ch, round(focus * h - ch * 0.46)))
     return im.crop((0, top, w, top + ch)).resize((width, round(width / aspect)), Image.LANCZOS)
 
+PLAYFAIR = Path(__file__).resolve().parents[1] / 'theme-build' / 'static' / 'fonts' / 'playfairdisplay_v40_nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgA.woff2'
+
+def drop_sold_badge(im):
+    """The foundation's main photo carried a "1m+ Sold" badge (a lavender disc) that no sales record backs: the disc
+    is found by its color in the upper right and painted out of the plain backdrop around it."""
+    import cv2, numpy as np
+    a = np.asarray(im.convert('RGB')).astype(np.int16)
+    h, w = a.shape[:2]
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    blue = (b - r > 45) & (b - g > 30) & (b > 150)
+    blue[:int(h * 0.2)] = False; blue[int(h * 0.6):] = False; blue[:, :int(w * 0.6)] = False
+    ys, xs = np.nonzero(blue)
+    if len(ys) < 20: return None
+    cy, cx = ys.mean(), xs.mean()
+    rad = max(np.percentile(np.hypot(ys - cy, xs - cx), 99) * 1.12, 3)
+    yy, xx = np.mgrid[:h, :w]
+    mask = (np.hypot(yy - cy, xx - cx) <= rad).astype(np.uint8) * 255
+    out = cv2.inpaint(np.asarray(im.convert('RGB')), mask, max(3, int(rad * 0.4)), cv2.INPAINT_TELEA)
+    from PIL import Image
+    return Image.fromarray(out)
+
+def loved_by_count(count):
+    """The gallery's before/after board was headed "Loved by 300.000+": the number becomes the real review total
+    (floored to the hundred), set in the same Playfair Display Bold, size and baseline, followed by the original
+    lavender "+". Run on the largest copy; honest_images scales the result to the other widths."""
+    label = f'{(int(count) // 100) * 100:,}'
+    def fix(im):
+        import numpy as np
+        from PIL import Image, ImageDraw, ImageFont
+        im = im.convert('RGB'); orig = im.copy(); a = np.asarray(im).astype(np.int16)
+        h, w = a.shape[:2]
+        band = slice(0, int(h * 0.25))
+        dark = a[band].mean(2) < 90
+        lav = (a[band][..., 2] - a[band][..., 0] > 45) & (a[band][..., 2] > 150)
+        rows = np.nonzero(dark.any(1))[0]
+        if not len(rows) or not lav.any(): return None
+        cols = np.nonzero(dark.any(0))[0]
+        # words: dark column runs split by gaps wider than ~1.5% of the width
+        words, start, prev = [], cols[0], cols[0]
+        for c in cols[1:]:
+            if c - prev > max(2, w * 0.015): words.append((start, prev)); start = c
+            prev = c
+        words.append((start, prev))
+        if len(words) < 3: return None
+        (l0, l1), (n0, _) = words[0], words[2]                  # "Loved" and the number
+        lrows = np.nonzero(dark[:, l0:l1 + 1].any(1))[0]
+        base = lrows.max() + 1                                   # "Loved" has no descender: its bottom is the baseline
+        ly, lx = np.nonzero(lav)
+        gap = lx.min() - words[-1][1]
+        ink = tuple(int(v) for v in np.median(a[band][dark], axis=0))
+        bg = tuple(int(v) for v in np.median(a[band][~dark & ~lav].reshape(-1, 3), axis=0))
+        def font(size):
+            f = ImageFont.truetype(str(PLAYFAIR), size); f.set_variation_by_name('Bold'); return f
+        f = font(100)
+        size = max(6, round(100 * (l1 - l0 + 1) / (f.getbbox('Loved')[2] - f.getbbox('Loved')[0])))
+        f = font(size)
+        top, bottom = max(0, rows.min() - int(h * 0.01)), min(h, rows.max() + int(h * 0.012))
+        d = ImageDraw.Draw(im)
+        # the original "+" (heavier than the font's), moved to follow the new number at its old distance
+        pad = max(1, int(w * 0.004))
+        box = (lx.min() - pad, ly.min() + band.start - pad, lx.max() + 1 + pad, ly.max() + band.start + 1 + pad)
+        plus = orig.crop(box)
+        d.rectangle((n0 - 1, top, min(w, box[2] + int(w * 0.01)), bottom), fill=bg)
+        d.text((n0 - f.getbbox(label, anchor='ls')[0], base), label, font=f, fill=ink, anchor='ls')
+        end = n0 + f.getbbox(label, anchor='ls')[2] - f.getbbox(label, anchor='ls')[0]
+        im.paste(plus, (end + gap - pad, box[1]))
+        return im
+    return fix
+
+def honest_images(summary):
+    """Numbers drawn into gallery images, fixed in the pixels (apply_persona runs this after the persona swap):
+    the main photo's "1m+ Sold" badge goes; "Loved by 300.000+" shows the real review total. Every width of each
+    image is fixed, saved under a new content-hashed name, and every reference is rewritten. Returns the count."""
+    from PIL import Image
+    fixes = [('KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2-', drop_sold_badge)]
+    if summary: fixes.append(('ColorChangingFoundation-Productimagesphotos_4_35e0c406-0a8b-', loved_by_count(summary['count'])))
+    renames = {}
+    for prefix, fixer in fixes:
+        files = [f for f in sorted((DST / 'assets' / 'img').glob(prefix + '*')) if not re.search(r'-f[0-9a-f]{6}$', f.stem)]
+        # the persona copies (-p<hash>) and the export's originals are different photos: one master for each
+        for group in ([f for f in files if re.search(r'-p[0-9a-f]{6}$', f.stem)], [f for f in files if not re.search(r'-p[0-9a-f]{6}$', f.stem)]):
+            if not group: continue
+            sized = [(f, Image.open(f).size) for f in group]
+            master_f, msize = max(sized, key=lambda x: x[1][0] * x[1][1])
+            master = fixer(Image.open(master_f))
+            if master is None: continue
+            for src, size in sized:
+                if abs(size[0] / size[1] - msize[0] / msize[1]) > 0.01: continue
+                out = master if size == msize else master.resize(size, Image.LANCZOS)
+                if src.suffix.lower() == '.png' and Image.open(src).mode in ('RGBA', 'LA', 'P'): out = out.convert('RGBA')
+                stem = re.sub(r'-p?[0-9a-f]{6}$', '', src.stem)
+                tmp = src.with_name(stem + '-fix' + src.suffix)
+                out.save(tmp, **({'quality': 88, 'optimize': True, 'progressive': True} if src.suffix.lower() in ('.jpg', '.jpeg') else {'optimize': True}))
+                new = f"{stem}-f{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}{src.suffix}"
+                tmp.rename(tmp.with_name(new)); renames[src.name] = new
+    if renames:
+        rx = re.compile('|'.join(re.escape(k) for k in sorted(renames, key=len, reverse=True)))
+        for p in DST.rglob('*'):
+            if p.is_file() and p.suffix.lower() in TEXT:
+                t = p.read_text(encoding='utf-8', errors='surrogateescape')
+                n = rx.sub(lambda m: renames[m.group(0)], t)
+                if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
+    return len(renames)
+
 def real_testimonials(t, reviews=REVIEWS):
     """The product page's testimonial slider showed the design's persona stories ("Margaret, 61") with AI portraits
     under a "Verified purchase" badge. Each card now carries a real verified review (apf_copy.TESTIMONIALS) word for
@@ -859,6 +963,15 @@ def faster_home(home):
         n['phone hero KB'] = round(final.stat().st_size / 1024)
     return home, n
 
+def drop_fake_buyers(t):
+    """"Lisa (verified tick) and 1M+ others purchased" above the title: no buyer named Lisa, no million sales. The
+    rating line right under it carries the real proof. Returns (html, blocks removed)."""
+    n = 0
+    while True:
+        m = re.search(r'<div class="product__block product__images">\s*<div class="social-proof-container">', t)
+        if not m: return t, n
+        t = t[:m.start()] + t[balanced_end(t, m.start(), 'div'):]; n += 1
+
 def honest_pdp(t, summary):
     """The foundation page's buy box and results, without claims nothing backs:
     - the "89% sold / ends in" countdown and "Selling out fast" (they reset on every visit) go;
@@ -1002,6 +1115,10 @@ def main():
     # the foundation page without claims nothing backs (countdown, panel numbers, "Shipped today")
     texts[pdp], hp = honest_pdp(texts[pdp], found and found['summary'])
     print('honest pdp', hp)
+    buyers = 0
+    for p in [p for p in texts if p.parent.name == 'products']:
+        texts[p], k = drop_fake_buyers(texts[p]); buyers += k
+    print('fake buyer lines removed', buyers)
     # real review and customer counts everywhere (the foundation's imported reviews are the store's real total)
     if found:
         print('honest counts', honest_counts(texts, found['summary']))
@@ -1015,7 +1132,7 @@ def main():
         if not ok: missing.append(('brush', 'homepage shelf list or tab'))
     # the Lymphatic Brush's page (brush_copy) and its product snapshot
     brush = DST / 'products' / f'{brush_copy.HANDLE}.html'
-    texts[brush] = brush_page(base_pdp)
+    texts[brush], _ = drop_fake_buyers(brush_page(base_pdp))
     gallery = sorted(set(re.findall(r'\.\./assets/img/(skinofab-lymphatic-brush-\d-1080w-[0-9a-f]{6}\.jpg)', texts[brush])),
                      key=lambda g: int(g.split('-')[3]))
     (DST / 'products' / f'{brush_copy.HANDLE}.js').write_text(json.dumps(brush_snapshot(['/assets/img/' + g for g in gallery])))
@@ -1040,6 +1157,9 @@ def main():
                 t = p.read_text(encoding='utf-8', errors='surrogateescape')
                 n = rx.sub(lambda m: renames[m.group(0)], t)
                 if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
+    fixed = honest_images(found and found['summary'])
+    if not fixed: missing.append(('honest images', 'gallery photos to fix'))
+    print('honest images', fixed)
     print(json.dumps({'rules': len(rules), 'replacements': sum(hits.values()), 'images': replaced, 'missing': missing}, ensure_ascii=False, indent=1))
     if missing: sys.exit(1)
 
