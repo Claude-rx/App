@@ -188,5 +188,8 @@
  "backgrounds": {
   "lazy": 19,
   "kb_deferred": 6204
+ },
+ "late_images": {
+  "images": 80
  }
 }

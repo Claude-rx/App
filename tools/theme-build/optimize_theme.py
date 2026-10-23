@@ -17,10 +17,12 @@ Every step keeps what a visitor sees the same and only changes what the browser 
 4. Swiper off the critical path. The 40 KB Swiper library loads with `defer`; inline scripts that build sliders
    while the page parses are rewritten to build them on DOMContentLoaded (defer_inline.mjs, same global names).
 5. Responsive images. A srcset of local theme images becomes CDN-resized candidates of its largest source
-   (cdn.29next.store resizes on `&width=`; without it the full image is served), sized for the `sizes` the
+   (cdn.29next.store resizes on `&width=`; without it the image is served up to 2000 px), sized for the `sizes` the
    design declares, so a 89 px thumbnail stops downloading a 1080 px photo.
 6. Heavy backgrounds. An inline background-image over 60 KB (the browser never lazy-loads those) moves to
    data-sf-bg, at most 1080 px wide through the CDN, and the base layout sets it when its element nears the screen.
+7. The home page's photo first: its lazy images (fetched with the page on a slow network anyway) wait for the page
+   to load unless they come near the screen, so the hero photo has the bandwidth to itself.
 
 Writes theme-optimize-report.json next to the theme dir. Fails (exit 1) when an output does not compile with
 the platform's Sass compiler or a step's safety check trips.
@@ -451,6 +453,7 @@ IMG_TAG = re.compile(r'<(img|source)\b[^>]*\ssrcset="([^"]*)"[^>]*>')
 CAND = re.compile(r"\{\{ '(sf/img/[^']+\.(?:jpe?g|png|webp))'\|asset_url \}\}\s+(\d+)w")
 # up to 4K: the home hero is drawn 150vw (desktop) and 349vw (phone) wide, so a retina screen asks for 2-4K
 STEPS = [360, 540, 720, 1080, 1440, 2160, 2880, 3600]
+CDN_PLAIN_MAX = 2000      # measured: a plain URL of a 4096-px file comes back 2000 px wide, ?width=4096 full size
 widths = {}
 def intrinsic(rel):
     if rel not in widths:
@@ -472,7 +475,9 @@ def responsive(m):
     px = re.fullmatch(r'\s*(\d+)px\s*', sizes.group(1)) if sizes else None
     want = sorted({min(top, int(px.group(1)) * k) for k in (1, 2, 3)} if px else {w for w in STEPS if w < top})
     want = [w for w in want if w < top * 0.9] + [top]
-    new = ', '.join(("{{ sf_img }}&amp;width=%d %dw" % (w, w)) if w != top else ("{{ sf_img }} %dw" % w) for w in want)
+    # the CDN's optimizer caps a plain image URL at 2000 px wide: larger tops ask for their own width
+    new = ', '.join(("{{ sf_img }}&amp;width=%d %dw" % (w, w)) if w != top or top > CDN_PLAIN_MAX else ("{{ sf_img }} %dw" % w)
+                    for w in want)
     img_stats['elements'] += 1
     return "{%% with sf_img='%s'|asset_url %%}" % src + tag.replace(srcset, new, 1) + '{% endwith %}'
 if Image:
@@ -520,6 +525,59 @@ if Image:
         else: write(base, b.replace('\n</body>', '\n' + BG_SCRIPT + '</body>', 1))
 REPORT['backgrounds'] = bg_stats
 
+# ---------------------------------------------------------------- 7. the home page's photo first
+# loading="lazy" still fetches an image within ~2,500 px of the screen on a slow network, so on a phone the home
+# page's shelf cards and testimonial video posters (~430 KB, all below the hero) downloaded alongside the hero photo
+# and pushed its paint from 3.5 s to 4.7 s. On the home page every lazy image keeps a 1-px placeholder (same width
+# and height, nothing moves): before the page has loaded it gets its image only when it comes within 600 px of the
+# screen, after that within 1,250 px, as lazy loading would. It goes by section: a carousel's off-screen slides come
+# with the one on screen, so a swipe never shows a blank card. A <picture>'s sources wait with its img, and slides a
+# carousel clones get theirs after load too.
+LAZY_IMG = re.compile(r'<img\b[^>]*\sloading="lazy"[^>]*>')
+PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+LATE_SCRIPT = ('<script>/* sf late images */(function(){if(!document.querySelector("img[data-sf-src]"))return;'
+               'function show(e){if(!e.hasAttribute("data-sf-src"))return;var p=e.parentNode;if(p&&p.tagName==="PICTURE")'
+               '[].forEach.call(p.querySelectorAll("source[data-sf-srcset]"),function(x){x.setAttribute("srcset",'
+               'x.getAttribute("data-sf-srcset"));x.removeAttribute("data-sf-srcset")});var s=e.getAttribute("data-sf-srcset");'
+               'if(s)e.setAttribute("srcset",s);e.setAttribute("src",e.getAttribute("data-sf-src"));e.removeAttribute("data-sf-src");'
+               'e.removeAttribute("data-sf-srcset")}function pending(){return[].slice.call(document.querySelectorAll("img[data-sf-src]"))}'
+               'if(!("IntersectionObserver"in window)){window.addEventListener("load",function(){pending().forEach(show)});return}'
+               # by section: a carousel's other slides come with the one on screen, so a swipe never shows a blank card
+               'function group(e){return e.closest(".shopify-section,section")||e.parentNode}'
+               'function watch(m){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){'
+               'io.unobserve(x.target);[].forEach.call(x.target.querySelectorAll("img[data-sf-src]"),show)}})},{rootMargin:m});'
+               'var seen=[];pending().forEach(function(e){var g=group(e);if(seen.indexOf(g)<0){seen.push(g);io.observe(g)}});return io}'
+               'var early=null;document.addEventListener("DOMContentLoaded",function(){early=watch("600px")});'
+               'function late(){if(early)early.disconnect();watch("1250px")}'
+               'if(document.readyState==="complete")late();else window.addEventListener("load",late)})();</script>\n')
+LATE_PAGES = {'templates/index.html'}
+late_stats = {'images': 0}
+def late_images(t):
+    def one(m):
+        tag = m.group(0)
+        if 'data-sf-src' in tag or ' src="' not in tag: return tag
+        late_stats['images'] += 1
+        tag = tag.replace(' src="', f' src="{PIXEL}" data-sf-src="', 1)
+        return tag.replace(' srcset="', ' data-sf-srcset="', 1)
+    t = LAZY_IMG.sub(one, t)
+    # a <picture>'s <source> wins over its <img>: its candidates wait with the img
+    def pic(m):
+        block = m.group(0)
+        if 'data-sf-src="' not in block: return block
+        return re.sub(r'(<source\b[^>]*?)\ssrcset="', r'\1 data-sf-srcset="', block)
+    return re.sub(r'<picture\b[^>]*>.*?</picture>', pic, t, flags=re.S)
+for p in DESIGN_FILES:
+    if p.relative_to(THEME).as_posix() not in LATE_PAGES: continue
+    t = read(p)
+    n = late_images(t)
+    if n != t: write(p, n)
+base = THEME / 'layouts' / 'base.html'
+b = read(base)
+if late_stats['images'] and '/* sf late images */' not in b:
+    if '\n</body>' not in b: REPORT['errors'].append('late images: no </body> in layouts/base.html')
+    else: write(base, b.replace('\n</body>', '\n' + LATE_SCRIPT + '</body>', 1))
+REPORT['late_images'] = late_stats
+
 # ---------------------------------------------------------------- gates + report
 try:
     import sass
@@ -535,6 +593,6 @@ for p in DESIGN_HTML:
 tot_b = sum(v['before_kb'] for k, v in REPORT['css'].items() if k != 'inline')
 tot_a = sum(v['after_kb'] for k, v in REPORT['css'].items() if k != 'inline')
 print(f"css files {tot_b:.0f} KB -> {tot_a:.0f} KB; inline styles {INLINE['before_kb']:.0f} KB -> {INLINE['after_kb']:.0f} KB in {INLINE['blocks']} blocks; "
-      f"bundles {len(bundles)}; fonts {REPORT['fonts']['sf_asset_styles']}; swiper {REPORT['swiper'] or 'unchanged'}; images {img_stats}; backgrounds {bg_stats}")
+      f"bundles {len(bundles)}; fonts {REPORT['fonts']['sf_asset_styles']}; swiper {REPORT['swiper'] or 'unchanged'}; images {img_stats}; backgrounds {bg_stats}; late images {late_stats}")
 for e in REPORT['errors']: print('  !', e)
 sys.exit(1 if any(e.startswith('sass:') or 'comment' in e for e in REPORT['errors']) else 0)

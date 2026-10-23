@@ -962,33 +962,35 @@ def faster_home(home):
         # the persona photo when one replaces this banner: the swap below renames files after this runs, so the
         # export's file here is still the old photo (young model, old bottle)
         src = IMAGES / m.group(3) if IMAGES and (IMAGES / m.group(3)).exists() else DST / 'assets' / 'img' / m.group(3)
-        im = Image.open(src).convert('RGB')
-        W = min(4096, im.width)
-        if im.width != W: im = im.resize((W, round(im.height * W / im.width)), Image.LANCZOS)
-        a = np.asarray(im).astype(np.float32)
-        x = np.arange(W) / W
-        small = im.resize((W // 8, im.height // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(8))
-        flat = np.asarray(small.resize(im.size, Image.BILINEAR)).astype(np.float32)
-        def only(lo, hi, name):
+        master = Image.open(src).convert('RGB')
+        def only(width, lo, hi, name):
+            im = master if master.width <= width else master.resize((width, round(master.height * width / master.width)), Image.LANCZOS)
+            a = np.asarray(im).astype(np.float32)
+            x = np.arange(im.width) / im.width
+            small = im.resize((im.width // 8, im.height // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(8))
+            flat = np.asarray(small.resize(im.size, Image.BILINEAR)).astype(np.float32)
             keep = np.clip(np.minimum((x - lo) / 0.03, (hi - x) / 0.03), 0, 1)[None, :, None]
             out = Image.fromarray(np.clip(a * keep + flat * (1 - keep) + 0.5, 0, 255).astype(np.uint8))
-            tmp = DST / 'assets' / 'img' / f'{name}.jpg'
-            out.save(tmp, quality=84, optimize=True, progressive=True)
-            final = tmp.with_name(f"{name}-{W}w-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg"); tmp.rename(final)
-            return final
-        phone, desk = only(0.60, 0.96, 'skinofab-hero-phone'), only(0.30, 1.04, 'skinofab-hero-desktop')
+            # WebP: 45% under a JPEG of the same quality (every browser the store supports reads it; the CDN resizes it)
+            tmp = DST / 'assets' / 'img' / f'{name}.webp'
+            out.save(tmp, 'WEBP', quality=80, method=6)
+            final = tmp.with_name(f"{name}-{im.width}w-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.webp"); tmp.rename(final)
+            return final, out.size
+        # phones top out at 2880 px (a 3x phone gets 2.1 image pixels per point: sharp, and half the bytes of 4096,
+        # which on a slow phone network is the difference between a 3.5 s and a 7 s first paint); desktops up to 4096
+        (phone, psz), (desk, dsz) = only(2880, 0.60, 0.96, 'skinofab-hero-phone'), only(4096, 0.30, 1.04, 'skinofab-hero-desktop')
         sizes = re.search(r'sizes="\(max-width: 749px\) ([0-9.]+vw)', m.group(2))
         phone_vw = sizes.group(1) if sizes else '349vw'
         source = (f'<source media="(max-width: 749px)" sizes="{phone_vw}" '
-                  f'srcset="assets/img/{phone.name} {W}w" width="{W}" height="{im.height}">')
+                  f'srcset="assets/img/{phone.name} {psz[0]}w" width="{psz[0]}" height="{psz[1]}">')
         img = m.group(2)
         img = re.sub(r'\ssrc="[^"]*"', f' src="assets/img/{desk.name}"', img, 1)
-        img = re.sub(r'\ssrcset="[^"]*"', f' srcset="assets/img/{desk.name} {W}w"', img, 1)
+        img = re.sub(r'\ssrcset="[^"]*"', f' srcset="assets/img/{desk.name} {dsz[0]}w"', img, 1)
         img = re.sub(r'\ssizes="[^"]*"', f' sizes="(max-width: 749px) {phone_vw}, 150vw"', img, 1)
-        img = re.sub(r'\swidth="\d+"', f' width="{W}"', img, 1)
-        img = re.sub(r'\sheight="\d+"', f' height="{im.height}"', img, 1)
+        img = re.sub(r'\swidth="\d+"', f' width="{dsz[0]}"', img, 1)
+        img = re.sub(r'\sheight="\d+"', f' height="{dsz[1]}"', img, 1)
         home = home[:m.start(2)] + source + img + home[m.end(2):]
-        n['hero master px'] = W
+        n['hero master px'] = master.width
         n['phone hero KB'] = round(phone.stat().st_size / 1024)
         n['desktop hero KB'] = round(desk.stat().st_size / 1024)
     return home, n
