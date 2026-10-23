@@ -51,7 +51,10 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
   featured in them.
 
 Until then the page says so ("No reviews yet", with the 30-day guarantee as the proof, and a "Write the first
-review" link when NEXT allows it). As soon as real reviews exist, the stars and the review wall appear on their own
+review" link when NEXT allows it). Two real outside sources can be added, both described in [reviews.md](reviews.md): verified
+Solena buyers of this brush (from a dashboard export; the public reviews are all unverified and older than the
+product), and the rating of the owner's own Amazon listing (totals and a link, never copied review text; another
+seller's listing is refused). As soon as real reviews exist, the stars and the review wall appear on their own
 (and the box hides itself): SKINOFAB buyers' reviews through
 NEXT (approve them in the dashboard), or an export of real reviews imported with `tools/reviews/import_reviews.py`
 (see [reviews.md](reviews.md)).

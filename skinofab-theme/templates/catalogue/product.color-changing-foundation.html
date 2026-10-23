@@ -2443,7 +2443,7 @@ document.addEventListener("DOMContentLoaded", function() {
     root.querySelector('.sfr-chips').innerHTML = chips;
     var note = root.querySelector('.sfr-note');
     if (note && totals.imported) {
-      note.textContent = 'Includes ' + totals.imported.toLocaleString('en-US') + ' verified reviews of the same formula from our earlier store' +
+      note.textContent = 'Includes ' + totals.imported.toLocaleString('en-US') + ' verified reviews ' + (totals.note || 'of the same formula from our earlier store') +
         (all.length < n ? '. Showing the ' + all.length.toLocaleString('en-US') + ' most helpful.' : '.');
       note.hidden = false;
     }
@@ -2468,7 +2468,7 @@ document.addEventListener("DOMContentLoaded", function() {
     mine.forEach(function (r) { dist[r.rating]++; sum += r.rating; });
     if (S) { [5, 4, 3, 2, 1].forEach(function (s) { dist[s] += +(S.distribution[s] || 0); }); sum += S.average * S.count; }
     else theirs.forEach(function (r) { dist[r.rating]++; sum += r.rating; });
-    totals = { count: mine.length + (S ? S.count : theirs.length), dist: dist, sum: sum, imported: S ? S.count : theirs.length };
+    totals = { count: mine.length + (S ? S.count : theirs.length), dist: dist, sum: sum, imported: S ? S.count : theirs.length, note: S && S.note };
     root.hidden = false;
     summary(); paint(true);
   }

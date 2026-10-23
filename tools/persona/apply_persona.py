@@ -188,7 +188,9 @@ def review_data(reviews=REVIEWS):
         keep.add(i)
     ship = [rs[i] for i in sorted(keep)][:max(SHIP, len(keep))]
     picks = [r for r in rs if r['rating'] == 5 and r.get('verified') and 70 <= len(r['body']) <= 210 and '\n' not in r['body']][:10]
-    return {'ship': ship, 'summary': {'count': d['count'], 'average': d['average'], 'distribution': d['distribution']},
+    summary = {'count': d['count'], 'average': d['average'], 'distribution': d['distribution']}
+    if d.get('note'): summary['note'] = d['note']        # where the imported reviews come from (import_reviews.py --note)
+    return {'ship': ship, 'summary': summary,
             'picks': [{'name': r['name'], 'body': r['body']} for r in picks]}
 
 def review_wall(reviews=REVIEWS):
@@ -715,7 +717,10 @@ def brush_page(base, summary=None):
     usp.replace_with(frag(f'<style>{brush_copy.BUYBOX_CSS}</style>' + brush_copy.chips_html()))
     # the promise, under the price (the foundation's page has its own description there)
     head = prod.select_one('.product__price-and-badge')
-    if head: head.insert_after(frag(f'<p class="sfb-lead">{brush_copy.esc(brush_copy.LEAD)}</p>'))
+    amazon_f = WORK / 'amazon-brush.json'      # tools/reviews/amazon_rating.mjs: the owner's own listing, or nothing
+    amazon = json.loads(amazon_f.read_text()) if amazon_f.exists() else None
+    if head: head.insert_after(frag(f'<p class="sfb-lead">{brush_copy.esc(brush_copy.LEAD)}</p>'
+                                    + (brush_copy.amazon_line(amazon) if amazon else '')))
     form = prod.select_one('form[data-product-form]')
     form.select_one('input[name=id]')['value'] = str(brush_copy.SHOPIFY_VARIANT)
     for el in form.select('.shop-pay-terms'): el.decompose()
@@ -798,8 +803,9 @@ def brush_page(base, summary=None):
         faq_src['id'] = 'shopify-section-sf-brush-faq'
         out.append(str(faq_src))
     out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-risk-free">{brush_copy.risk_free_html()}</div>')
+    if amazon: out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-amazon">{brush_copy.amazon_html(amazon)}</div>')
     out.append(f'<div class="shopify-section" id="shopify-section-sf-review-wall">{review_wall(brush_reviews)}</div>')
-    if not stats: out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-no-reviews">{brush_copy.no_reviews_html()}</div>')
+    if not stats: out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-no-reviews">{brush_copy.no_reviews_html(amazon=amazon)}</div>')
     prod.insert_after(frag(''.join(out)))
     # the design's product JSON (the theme's product script reads prices and variants from it)
     gallery = [s_.find('img')['src'] for s_ in slider.select('[data-product-single-media-wrapper]')]

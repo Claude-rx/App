@@ -3,6 +3,7 @@ CSV) into the product page review wall.
 
 usage: python3 -I import_reviews.py <export.csv> <work_dir> [--product color-changing-foundation]
                                      [--exclude-text WORD ...] [--download-photos] [--out reviews]
+                                     [--verified-only] [--since YYYY-MM-DD] [--note "of the same brush from our sister store"]
 
 The reviews are the store owner's own (the same formula, sold before as the Smooche Color Changing Foundation):
 - every review is kept word for word, with its own rating, date and verified flag; nothing is written or edited
@@ -10,6 +11,10 @@ The reviews are the store owner's own (the same formula, sold before as the Smoo
 - a review whose text names another brand or claims sun protection is left out rather than edited (--exclude-text,
   repeatable, replaces EXCLUDE_DEFAULT: every spelling of the old brand, its support team, SPF and sunscreen)
 - unpublished, hidden or rejected reviews are left out
+- --verified-only keeps only reviews the app marks as verified buyers; --since keeps only reviews from that day on
+  (the day the product went on sale there: anything older cannot be from a buyer of it)
+- --note says where the reviews come from, under the review wall ("Includes N verified reviews <note>"); the
+  default is the foundation's ("of the same formula from our earlier store")
 - photos: --download-photos saves them to <work_dir>/reviews/photos/ with a numbered contact sheet
   (photos-sheet.jpg). Only photos listed in <work_dir>/reviews/photos-approved.txt (one photo id per line) are
   published, so a photo showing the old bottle or brand never reaches the page: approve the ones that show skin,
@@ -33,6 +38,9 @@ EXCLUDE_DEFAULT = ['smooch', 'genrev', 'spf', 'sunscreen', 'sun screen', 'sun pr
 EXCLUDE = [w.lower() for w in (opt('--exclude-text', many=True) or EXCLUDE_DEFAULT)]
 DOWNLOAD = '--download-photos' in args
 OUT = WORK / opt('--out', 'reviews')
+VERIFIED_ONLY = '--verified-only' in args
+SINCE = opt('--since')
+NOTE = opt('--note')
 PHOTOS = OUT / 'photos'
 
 # column names used by the common review apps, first match wins
@@ -93,7 +101,8 @@ def main():
     if (OUT / 'photos-approved.txt').exists():
         approved = {l.strip() for l in (OUT / 'photos-approved.txt').read_text().splitlines() if l.strip() and not l.startswith('#')}
     PHOTOS.mkdir(parents=True, exist_ok=True)
-    kept, skipped = [], {'other product': 0, 'unpublished': 0, 'names another brand': 0, 'no rating or text': 0}
+    kept, skipped = [], {'other product': 0, 'unpublished': 0, 'names another brand': 0, 'no rating or text': 0,
+                         'not a verified buyer': 0, 'before --since': 0}
     for n, r in enumerate(rows):
         if col['product'] and PRODUCT not in str(r.get(col['product'], '')).lower():
             skipped['other product'] += 1; continue
@@ -107,6 +116,10 @@ def main():
             skipped['no rating or text'] += 1; continue
         if any(w in (body + ' ' + title).lower() for w in EXCLUDE):
             skipped['names another brand'] += 1; continue
+        if VERIFIED_ONLY and not (col['verified'] and truthy(r.get(col['verified']))):
+            skipped['not a verified buyer'] += 1; continue
+        if SINCE and when(r.get(col['date']) if col['date'] else '') < SINCE:
+            skipped['before --since'] += 1; continue
         rid = str(r.get(col['id']) or '').strip() if col['id'] else ''
         rid = rid or hashlib.md5((body + str(n)).encode()).hexdigest()[:10]
         photos = []
@@ -127,6 +140,7 @@ def main():
     dist = {s: sum(1 for x in kept if x['rating'] == s) for s in (5, 4, 3, 2, 1)}
     avg = round(sum(x['rating'] for x in kept) / len(kept), 2) if kept else 0
     data = {'product': PRODUCT, 'count': len(kept), 'average': avg, 'distribution': dist, 'reviews': kept}
+    if NOTE: data['note'] = NOTE
     (OUT / 'reviews.json').write_text(json.dumps(data, ensure_ascii=False, indent=1))
     if DOWNLOAD: contact_sheet()
     print(json.dumps({'kept': len(kept), 'average': avg, 'distribution': dist, 'skipped': skipped,

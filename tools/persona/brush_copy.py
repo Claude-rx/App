@@ -155,7 +155,7 @@ CROSS = {'eyebrow': 'Then, your foundation', 'lead': 'Finish your morning with',
          'button': 'See the foundation'}
 
 # the reviews before there are any: say so, and make the guarantee the proof
-NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews yet',
+NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews yet', 'lead_amazon': 'No SKINOFAB reviews yet',
               'text': 'The Lymphatic Brush is new at SKINOFAB, and we only show reviews from real buyers. Try it for 30 days: '
                       'if you don’t love it, we’ll refund you.',
               'button': 'Try it risk-free', 'write': 'Bought it? Write the first review'}
@@ -373,6 +373,17 @@ SECTIONS_CSS = r"""
 .sfb-cross p{font-size:16px;line-height:1.6;color:#3b3b3b;margin:14px 0 22px}
 .sfb-cross__price{font-size:18px;font-weight:600;margin:0 0 18px}
 .sfb-cross__price s{color:#8a8a8a;font-weight:400;margin-left:8px}
+.sfb-amz{max-width:760px;margin:0 auto;text-align:center;border:1px solid #e7e7e7;border-radius:20px;padding:36px 28px}
+.sfb-tp{display:inline-flex;gap:3px;vertical-align:middle}
+.sfb-tp i{display:grid;place-items:center;width:30px;height:30px;color:#fff;font-style:normal;font-size:18px;line-height:1}
+.sfb-amz .sfb-tp{margin:0 0 14px}
+.sfb-amz b{display:block;font-size:24px;font-weight:700;margin:0 0 6px}
+.sfb-amz p{font-size:15.5px;line-height:1.55;color:#3b3b3b;margin:0 auto 16px;max-width:520px}
+.sfb-amz a{color:#151515;font-weight:600;text-decoration:underline}
+.sfb-amz small{display:block;margin-top:12px;font-size:12.5px;color:#6a6a6a}
+.sfb-amzline{display:inline-flex;align-items:center;gap:8px;margin:10px 0 0;font-size:14.5px;color:#151515;text-decoration:none!important}
+.sfb-amzline .sfb-tp i{width:18px;height:18px;font-size:11px}
+.sfb-amzline span{text-decoration:underline}
 .sfb-noreviews{max-width:760px;margin:0 auto;text-align:center;border:1px solid #e7e7e7;border-radius:20px;padding:40px 28px}
 .sfb-noreviews__stars{display:inline-flex;gap:3px;margin:0 0 14px}
 .sfb-noreviews__stars i{display:grid;place-items:center;width:30px;height:30px;background:#dcdce6;color:#fff;font-style:normal;font-size:18px}
@@ -499,14 +510,39 @@ def cross_html(img, href, price, compare, rating=None):
             f'<a class="sfb-btn" href="{href}">{esc(c["button"])}</a></div></div></div></section>')
 
 
-def no_reviews_html(buy='#apf-buy'):
+def tp_stars(rating):
+    """Five Trustpilot-style boxes, the last one filled in part (4.6 fills 60% of the fifth)."""
+    boxes = []
+    for i in range(5):
+        f = max(0.0, min(1.0, rating - i)) * 100
+        boxes.append(f'<i aria-hidden="true" style="background:linear-gradient(90deg,#00b67a {f:g}%,#dcdce6 {f:g}%)">&#9733;</i>')
+    return f'<span class="sfb-tp" role="img" aria-label="Rated {rating:.1f} out of 5">{"".join(boxes)}</span>'
+
+
+def amazon_html(a):
+    """The owner's own Amazon listing of this brush: its rating and number of ratings (tools/reviews/amazon_rating.mjs,
+    which writes them only when the listing's brand is the owner's), linked to the listing. No review text is copied."""
+    return (f'<section class="sfb sfb-sec" id="sfb-amazon"><div class="sfb-wrap">{_head("Rated on Amazon", "What Amazon buyers say")}'
+            f'<div class="sfb-amz">{tp_stars(float(a["rating"]))}<b>{float(a["rating"]):.1f} out of 5</b>'
+            f'<p>From {int(a["count"]):,} Amazon ratings of this brush, sold there by {esc(a["brand"])}.</p>'
+            f'<a href="{esc(a["url"])}" target="_blank" rel="noopener nofollow">See the ratings on Amazon</a>'
+            f'<small>Checked on {esc(a["checked"])}</small></div></div></section>')
+
+
+def amazon_line(a):
+    """The same rating in the buy box, pointing to the box above."""
+    return (f'<a class="sfb-amzline" href="#sfb-amazon">{tp_stars(float(a["rating"]))}'
+            f'<span>{float(a["rating"]):.1f}/5 on Amazon ({int(a["count"]):,} ratings)</span></a>')
+
+
+def no_reviews_html(buy='#apf-buy', amazon=None):
     """Until the brush has real reviews: an empty Trustpilot-style box that says so, with the guarantee as the proof.
     It hides itself once the store's own reviews of the brush appear (the review wall above then shows them), and
     shows a "Write a review" link when NEXT lets the shopper review the brush."""
     n = NO_REVIEWS
     stars = ''.join('<i aria-hidden="true">&#9733;</i>' for _ in range(5))
     return (f'<section class="sfb sfb-sec" id="sfb-no-reviews"><div class="sfb-wrap">'
-            f'{_head(n["title"], n["lead"])}<div class="sfb-noreviews"><span class="sfb-noreviews__stars">{stars}</span>'
+            f'{_head(n["title"], n["lead_amazon"] if amazon else n["lead"])}<div class="sfb-noreviews"><span class="sfb-noreviews__stars">{stars}</span>'
             f'<p>{esc(n["text"])}</p><a class="sfb-btn" href="{buy}">{esc(n["button"])}</a>'
             f'<p class="sfb-noreviews__write" hidden><a href="#">{esc(n["write"])}</a></p></div></div>'
             '<script>(function () {'
