@@ -37,7 +37,7 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
 
 - **The name.** "Solena" is gone everywhere: the case logo on gallery image 5 and on the case gift photo is now the
   SKINOFAB wordmark, "THE SOLENA" on the comparison chart (gallery 6) is now "THE SKINOFAB", the how-to video has the
-  spoken and captioned "from Solena" cut (0.85 s), and the copy says SKINOFAB. Returns go to hey@skinofab.com.
+  spoken and captioned "from Solena" cut (0.85 s), and the copy says SKINOFAB. Returns go to hello@skinofab.com.
 - **Reviews: not carried over.** Solena's 152 published Judge.me reviews of the brush are dated 2 Nov 2024 to
   23 Feb 2026. Solena's first product went up on 21 Nov 2025 and the brush on 2 Mar 2026, so none of them can be
   from a Solena buyer of this brush. Judge.me marks every one "collected from another provider", with no verified

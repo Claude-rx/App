@@ -175,7 +175,7 @@ def pdp_faq_orders():
         ('How do Automatic Refills work?',
          f"Your pack ships again every {REFILL['every']} days at the refill price: {usd(one['refill'])} for 1 bottle, "
          f"{usd(two['refill'])} for 2 bottles. We email you before every refill. To skip or cancel, just email "
-         "hey@skinofab.com: no minimum, no fees."),
+         "hello@skinofab.com: no minimum, no fees."),
         ('Can I buy just once?',
          f"Yes. In your cart, choose One Time under the bottle before checkout: {usd(one['price'])} for 1 bottle or "
          f"{usd(two['price'])} for 2 bottles, with no refills."),

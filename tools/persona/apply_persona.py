@@ -20,7 +20,7 @@ import hashlib, html, json, os, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, brush_copy, ccf_copy
+import apf_copy, brush_copy, ccf_copy, company
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
 IMAGES = Path(sys.argv[4]).resolve() if len(sys.argv) > 4 else None
@@ -1225,6 +1225,18 @@ def main():
                 t = p.read_text(encoding='utf-8', errors='surrogateescape')
                 n = rx.sub(lambda m: renames[m.group(0)], t)
                 if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
+    # the real company (company.py) on every page and data file: footer, contact and legal pages, FAQs, product data
+    co, co_files = 0, 0
+    for p in sorted(DST.rglob('*')):
+        if p.is_file() and p.suffix.lower() in ('.html', '.js', '.json'):
+            t0 = p.read_text(encoding='utf-8', errors='surrogateescape')
+            t1, k = company.rewrite(p.relative_to(DST).as_posix(), t0)
+            if k: p.write_text(t1, encoding='utf-8', errors='surrogateescape'); co += k; co_files += 1
+    print('company details', co, 'changes in', co_files, 'files')
+    stale = re.compile(r'Skinofab LLC|8605 Santa Monica|West Hollywood|(?:hey|info|contact)@skinofab\.com|Xevio|John M\. Schneider|12345678|HRB 123456|Anna Becker|Musterstra')
+    left = [p.relative_to(DST).as_posix() for p in DST.rglob('*') if p.is_file() and p.suffix.lower() in ('.html', '.js', '.json')
+            and stale.search(p.read_text(encoding='utf-8', errors='surrogateescape'))]
+    if left: missing.append(('company details', 'old details left in ' + ', '.join(left[:8])))
     fixed = honest_images(found and found['summary'])
     if not fixed: missing.append(('honest images', 'gallery photos to fix'))
     print('honest images', fixed)

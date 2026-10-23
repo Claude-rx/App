@@ -17,7 +17,7 @@ HANDLE = 'the-lymphatic-brush'
 TITLE = 'The Lymphatic Brush'
 SHOPIFY_ID, SHOPIFY_VARIANT = 15517563191626, 61233683038538       # Solena's ids (the design markup carries them)
 PRICE, COMPARE = '24.95', '49.90'
-EMAIL = 'hey@skinofab.com'
+EMAIL = 'hello@skinofab.com'
 DESCRIPTION = ('<p>A 3-minute depuffing massage for your morning face. Thousands of ultra-soft bristles sweep from under '
                'your eyes, along your cheeks and jaw and down your neck with a light touch, on dry skin, no oil. '
                'Includes a SKINOFAB travel case.</p>')
@@ -175,7 +175,7 @@ FAQ = {'eyebrow': 'Everything you need to know', 'title': 'Still have questions?
     ('Can I use it before my foundation?',
      'Yes, that’s the best time: brush first on dry skin, then your skincare and foundation.'),
     ('What if it doesn’t work for me?',
-     'Send it back within 30 days for a full refund. Just email hey@skinofab.com.'),
+     'Send it back within 30 days for a full refund. Just email hello@skinofab.com.'),
     ('Is it safe for sensitive skin?',
      'The bristles are soft and the pressure stays light, so it’s gentle on most skin types. Avoid using it on irritated or broken skin, '
      'sunburn or active breakouts. If your swelling doesn’t go away during the day, or if you have a medical condition, check with your doctor first.'),
