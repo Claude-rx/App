@@ -28,6 +28,8 @@ old Shopify store's runtime. Removed on every page:
 | Fonts | Unused and duplicate `@font-face` rules dropped, text fonts swap; landing-page Google Fonts self-hosted (Latin) | — |
 | Swiper | Loads with `defer`; inline slider scripts run on DOMContentLoaded (`defer_inline.mjs`, same global names) | Fails closed: stays render-blocking if any script doesn't parse or a late global is read elsewhere |
 | Images | srcsets use CDN-resized candidates of the largest source (`&width=`, cdn.29next.store) sized from `sizes` | Without the parameter the CDN serves the full image |
+| CDN widths | A plain image URL comes back at most 2000 px wide (the CDN's optimizer): images over 2000 px ask for their width explicitly, and the width steps go up to 3600 px | The 4K home hero and two product pages' large photos were served at 2000 px |
+| Home page: the photo first | Lazy images on the home page keep a 1-px placeholder (same size) until the page has loaded or they come within 600 px of the screen, then load by section (a carousel's slides together) | On a slow phone, lazy loading still fetched ~430 KB of shelf cards and video posters alongside the hero photo |
 | Gates | Every changed stylesheet compiles with libsass (the platform's CSS compiler); no multi-line DTL comments | Build fails |
 
 Report: `theme-optimize-report.json`.

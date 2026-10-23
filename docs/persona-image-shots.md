@@ -89,9 +89,14 @@ about 3.6 times. With no credits and the Studio's storage suspended, it was rebu
    print is erased and the label of the real front render (`skf-apf-01-front.jpg`) is drawn on the bottle, fitted
    to its 4.25° tilt and to the old wordmark's size.
 3. **Master** at 4096 px, saved in the persona image set under the same name. `apply_persona.py faster_home` cuts it
-   into a phone file and a desktop file. Each keeps the part its layout shows (phones 64–92% of the width, desktops
-   the right two thirds) and flattens the rest, which is never on screen. The CDN serves each screen its width
-   (`optimize_theme.py` steps up to 3600 px).
+   into a phone file (2880 px WebP, 112 KB) and a desktop file (4096 px WebP, 214 KB). Each keeps the part its
+   layout shows (phones 64–92% of the width, desktops the right two thirds) and flattens the rest, which is never on
+   screen. The CDN serves each screen its width (`optimize_theme.py` steps up to 3600 px). A 3x phone gets 2.1 image
+   pixels per point: sharp, at half the bytes of 4096.
+
+Result on a 3x phone: 2880 px of real detail where it used to get a 27 KB, 2000 px CDN copy of a photo stretched
+from 1800 px. Throttled phone LCP is 3.7 s (the page's other lazy images now wait for the hero,
+`optimize_theme.py` step 7).
 
 ```bash
 S=<work dir>; sr=$S/srenv/bin/python
