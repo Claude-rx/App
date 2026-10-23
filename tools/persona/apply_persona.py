@@ -952,27 +952,45 @@ def faster_home(home):
     home, n['hero active'] = re.subn(r'class="fh-hero-slide fh-hero-slide--foundation"', 'class="fh-hero-slide fh-hero-slide--foundation is-active"', home)
     home, n['lazy hero slides'] = re.subn(r'(<img[^>]*fetchpriority="low"[^>]*?)loading="eager"', r'\1loading="lazy"', home)
     home, n['card sizes'] = re.subn(r'(<img[^>]*class="fh-upload"[^>]*?)sizes="100vw"', r'\1sizes="(min-width: 990px) 300px, 270px"', home)
-    # phone hero: the same banner at the same size, with everything outside the part a phone shows (62% to 88% of its
-    # width; the layout scales with the screen) flattened into the backdrop, so it compresses to a fraction
-    m = re.search(r'(<picture class="fh-hero-image">\s*)(<img[^>]*class="fh-original"[^>]*fetchpriority="high"[^>]*src="assets/img/([^"]+)")', home)
+    # The hero photo, one file per layout, from the 4096-px master (docs/persona-image-shots.md, "Home hero").
+    # The layout draws it wider than the screen and shows a fixed part of it at every width (measured 360-2560 px):
+    # phones 349vw wide showing 64% to 92% of its width, desktops 150vw wide showing the right two thirds. Each file
+    # keeps that part sharp and flattens the rest (never on screen) into the backdrop, so it compresses to a fraction.
+    # The export said sizes="2885px" for desktops (true only at 1920 px): 150vw lets a 1440-px screen take 2160.
+    m = re.search(r'(<picture class="fh-hero-image">\s*)(<img[^>]*class="fh-original"[^>]*fetchpriority="high"[^>]*src="assets/img/([^"]+)"[^>]*>)', home)
     if m:
         # the persona photo when one replaces this banner: the swap below renames files after this runs, so the
         # export's file here is still the old photo (young model, old bottle)
         src = IMAGES / m.group(3) if IMAGES and (IMAGES / m.group(3)).exists() else DST / 'assets' / 'img' / m.group(3)
-        im = Image.open(src).convert('RGB'); im = im.resize((2400, round(im.height * 2400 / im.width)), Image.LANCZOS)
+        im = Image.open(src).convert('RGB')
+        W = min(4096, im.width)
+        if im.width != W: im = im.resize((W, round(im.height * W / im.width)), Image.LANCZOS)
         a = np.asarray(im).astype(np.float32)
-        w = a.shape[1]; x = np.arange(w) / w
-        keep = np.clip(np.minimum((x - 0.58) / 0.04, (0.92 - x) / 0.04), 0, 1)[None, :, None]
-        flat = np.asarray(im.filter(ImageFilter.GaussianBlur(60))).astype(np.float32)
-        out = Image.fromarray(np.clip(a * keep + flat * (1 - keep), 0, 255).astype(np.uint8))
-        tmp = DST / 'assets' / 'img' / 'skinofab-hero-phone.jpg'
-        out.save(tmp, quality=80, optimize=True, progressive=True)
-        final = tmp.with_name(f"skinofab-hero-phone-2400w-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg"); tmp.rename(final)
+        x = np.arange(W) / W
+        small = im.resize((W // 8, im.height // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(8))
+        flat = np.asarray(small.resize(im.size, Image.BILINEAR)).astype(np.float32)
+        def only(lo, hi, name):
+            keep = np.clip(np.minimum((x - lo) / 0.03, (hi - x) / 0.03), 0, 1)[None, :, None]
+            out = Image.fromarray(np.clip(a * keep + flat * (1 - keep) + 0.5, 0, 255).astype(np.uint8))
+            tmp = DST / 'assets' / 'img' / f'{name}.jpg'
+            out.save(tmp, quality=84, optimize=True, progressive=True)
+            final = tmp.with_name(f"{name}-{W}w-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg"); tmp.rename(final)
+            return final
+        phone, desk = only(0.60, 0.96, 'skinofab-hero-phone'), only(0.30, 1.04, 'skinofab-hero-desktop')
         sizes = re.search(r'sizes="\(max-width: 749px\) ([0-9.]+vw)', m.group(2))
-        source = (f'<source media="(max-width: 749px)" sizes="{sizes.group(1) if sizes else "349vw"}" '
-                  f'srcset="assets/img/{final.name} 2400w" width="{out.width}" height="{out.height}">')
-        home = home[:m.start(2)] + source + home[m.start(2):]
-        n['phone hero KB'] = round(final.stat().st_size / 1024)
+        phone_vw = sizes.group(1) if sizes else '349vw'
+        source = (f'<source media="(max-width: 749px)" sizes="{phone_vw}" '
+                  f'srcset="assets/img/{phone.name} {W}w" width="{W}" height="{im.height}">')
+        img = m.group(2)
+        img = re.sub(r'\ssrc="[^"]*"', f' src="assets/img/{desk.name}"', img, 1)
+        img = re.sub(r'\ssrcset="[^"]*"', f' srcset="assets/img/{desk.name} {W}w"', img, 1)
+        img = re.sub(r'\ssizes="[^"]*"', f' sizes="(max-width: 749px) {phone_vw}, 150vw"', img, 1)
+        img = re.sub(r'\swidth="\d+"', f' width="{W}"', img, 1)
+        img = re.sub(r'\sheight="\d+"', f' height="{im.height}"', img, 1)
+        home = home[:m.start(2)] + source + img + home[m.end(2):]
+        n['hero master px'] = W
+        n['phone hero KB'] = round(phone.stat().st_size / 1024)
+        n['desktop hero KB'] = round(desk.stat().st_size / 1024)
     return home, n
 
 def drop_fake_buyers(t):

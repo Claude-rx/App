@@ -74,3 +74,33 @@ item passes. Then swap it into its slot (tools/persona/apply_persona.py images o
 - [ ] Hands are correct: five fingers, natural grip.
 - [ ] No mirror, no flipped text, no added text.
 - [ ] The crop works at the slot's aspect ratio, on desktop and on mobile.
+
+## Home hero (4K, from the approved photo)
+
+The home slide's photo (woman with the foundation, `skinofab-color-changing-foundation-hero-4096w-*.jpg` in the
+persona image set) existed only at 2000 x 853. The layout draws it far wider than the screen: 349vw on phones (a 3x
+phone needs ~4,100 px across it) and 150vw on desktops. Only 1800 px reached browsers, so phones stretched it
+about 3.6 times. With no credits and the Studio's storage suspended, it was rebuilt locally from the same photo:
+
+1. **Upscale 4x** on the CPU (`tools/persona/upscale.py`), with two models blended: 4x_NMKD-Siax_200k (lashes, hair, real
+   skin texture) and RealESRGAN_x4plus (calmer skin, so the upscale doesn't deepen her lines).
+2. **Real label** (`tools/persona/hero_label.py`): the AI product swap had garbled the small print ("PEPTIOE", and
+   "PDRN" read like another word). That was barely visible when blurry and impossible to miss once sharp. The old
+   print is erased and the label of the real front render (`skf-apf-01-front.jpg`) is drawn on the bottle, fitted
+   to its 4.25° tilt and to the old wordmark's size.
+3. **Master** at 4096 px, saved in the persona image set under the same name. `apply_persona.py faster_home` cuts it
+   into a phone file and a desktop file. Each keeps the part its layout shows (phones 64–92% of the width, desktops
+   the right two thirds) and flattens the rest, which is never on screen. The CDN serves each screen its width
+   (`optimize_theme.py` steps up to 3600 px).
+
+```bash
+S=<work dir>; sr=$S/srenv/bin/python
+$sr tools/persona/upscale.py 4x_NMKD-Siax_200k.pth hero-2000.jpg siax.png
+$sr tools/persona/upscale.py RealESRGAN_x4plus.pth hero-2000.jpg resrgan.png
+$sr tools/persona/upscale.py --blend siax.png resrgan.png 0.4 blend.png
+python3 -I tools/persona/hero_label.py blend.png skf-apf-01-front.jpg labelled.png
+# then: resize to 4096 px wide, save as the persona hero file (JPEG q92), run tools/build_store.sh
+```
+
+When an image route works again, a fresh 4K shot (Nano Banana Pro at 21:9, 4K) can replace it. Keep the same
+framing: face in the right third, bottle in the left hand, the left third free for the headline.

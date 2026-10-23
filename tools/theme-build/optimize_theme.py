@@ -449,7 +449,8 @@ except ImportError:
     Image = None
 IMG_TAG = re.compile(r'<(img|source)\b[^>]*\ssrcset="([^"]*)"[^>]*>')
 CAND = re.compile(r"\{\{ '(sf/img/[^']+\.(?:jpe?g|png|webp))'\|asset_url \}\}\s+(\d+)w")
-STEPS = [360, 540, 720, 1080, 1440]
+# up to 4K: the home hero is drawn 150vw (desktop) and 349vw (phone) wide, so a retina screen asks for 2-4K
+STEPS = [360, 540, 720, 1080, 1440, 2160, 2880, 3600]
 widths = {}
 def intrinsic(rel):
     if rel not in widths:
