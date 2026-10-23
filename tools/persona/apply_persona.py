@@ -638,10 +638,11 @@ def brush_rating(imported=None):
             'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show); else show();'
             '})();</script>')
 
-def brush_page(base):
-    """products/the-lymphatic-brush.html: the foundation page's chrome and buy box markup with Solena's brush page
+def brush_page(base, summary=None):
+    """products/the-lymphatic-brush.html: the foundation page's chrome and buy box markup with the brush page
     (brush_copy) in it, and the brush's sections below. Prices, the bundle picker's variants and the cart come from
-    NEXT (brush-offers.json, written by setup_brush_offers.py)."""
+    NEXT (brush-offers.json, written by setup_brush_offers.py). summary: the foundation's imported review totals, for
+    its rating in the cross-sell."""
     import copy
     from bs4 import BeautifulSoup, NavigableString
     offers = json.loads((WORK / 'brush-offers.json').read_text())
@@ -653,8 +654,10 @@ def brush_page(base):
     faq_src = copy.copy(faq_src) if faq_src else None
     for sec in [c for c in main.find_all(recursive=False) if c is not prod and 'section_custom_html' not in (c.get('id') or '')]:
         sec.decompose()
-    img = lambda k, w: hashed_copy(BRUSH_IMG / f'gallery-{k}.jpg', 'img', f'skinofab-lymphatic-brush-{k}-{w}w', (w, w))
-    # gallery: Solena's seven images, the first one eager
+    img = lambda k, w: hashed_copy(BRUSH_IMG / f'{brush_copy.GALLERY[k - 1]}.jpg', 'img', f'skinofab-lymphatic-brush-{k}-{w}w', (w, w))
+    # the foundation's second gallery photo (a woman over 45 holding the bottle) for the cross-sell, before it goes
+    cross_img = [i.get('src') for i in prod.select('[data-product-single-media-wrapper] img')][1:2]
+    # gallery: brush_copy.GALLERY, the first one eager
     slider = prod.select_one('[data-product-single-media-slider]')
     slides = slider.select('[data-product-single-media-wrapper]')
     thumbs = prod.select_one('[data-product-single-media-thumbs]')
@@ -662,7 +665,7 @@ def brush_page(base):
     t_thumb = copy.copy(thumbs.select('[data-thumbnail-id]')[0])
     for s_ in slides: s_.decompose()
     for t_ in thumbs.select('[data-thumbnail-id]'): t_.decompose()
-    for k in range(1, 8):
+    for k in range(1, len(brush_copy.GALLERY) + 1):
         mid = str(9300000000000 + k)
         big, mid_src, small = img(k, 1080), img(k, 753), img(k, 178)
         sl = copy.copy(t_slides[0 if k == 1 else 1])
@@ -690,12 +693,9 @@ def brush_page(base):
            or b.get('data-default-usp') is not None or b.select_one('[data-serum-subscription-usps]') or b.select_one('hr') \
            or {'product__features', 'product-suitability', 'customer-survey-results'} & set(cls):
             b.decompose()
+    # no "Nicole and 5,000+ others purchased": the brush is new here; its stars appear with its first real review
     social = prod.select_one('.social-proof-container')
-    for n, pi in enumerate(social.select('.profile-image'), 1):
-        pi['style'] = f"background-image:url('{hashed_copy(BRUSH_IMG / f'buyer-{n}.jpg', 'img', f'skinofab-brush-buyer-{n}')}')"
-    social.select_one('.text1').string = ''
-    social.select_one('.text1').append(frag(f'<strong>{brush_copy.esc(brush_copy.BUYERS["name"])}</strong>'))
-    social.select_one('.text2').string = brush_copy.BUYERS['text']
+    if social: (social.find_parent(class_='product__block') or social).decompose()
     brush_reviews = WORK / 'reviews-brush'      # tools/reviews/import_reviews.py ... --product the-lymphatic-brush --out reviews-brush
     stats = json.loads((brush_reviews / 'reviews.json').read_text()) if (brush_reviews / 'reviews.json').exists() else None
     app = prod.select_one('.product__block.standard__app')
@@ -708,7 +708,14 @@ def brush_page(base):
     if off: off.decompose()
     reg.insert_after(frag(f'<span class="sfb-ship">{brush_copy.esc(brush_copy.SHIPPING_BADGE)}</span>'))
     usp = prod.select_one('.skinofab-usp-grid')
+    # the foundation hides its grid with a script in the same block (it always runs): the brush's chips stay
+    block = usp.find_parent(class_='product__block')
+    for sc in (block.find_all('script') if block else []):
+        if 'ccf-v2-hide-usp-grid' in (sc.string or ''): sc.decompose()
     usp.replace_with(frag(f'<style>{brush_copy.BUYBOX_CSS}</style>' + brush_copy.chips_html()))
+    # the promise, under the price (the foundation's page has its own description there)
+    head = prod.select_one('.product__price-and-badge')
+    if head: head.insert_after(frag(f'<p class="sfb-lead">{brush_copy.esc(brush_copy.LEAD)}</p>'))
     form = prod.select_one('form[data-product-form]')
     form.select_one('input[name=id]')['value'] = str(brush_copy.SHOPIFY_VARIANT)
     for el in form.select('.shop-pay-terms'): el.decompose()
@@ -731,7 +738,7 @@ def brush_page(base):
     media = WORK / 'brush' / 'media'
     tutorial = (hashed_copy(media / 'brush-how-to.mp4', 'media', 'skinofab-brush-how-to'),
                 hashed_copy(media / 'brush-how-to.jpg', 'img', 'skinofab-brush-how-to-poster'))
-    for k, (title, body) in reversed(list(enumerate(brush_copy.tabs(tutorial)))):
+    for k, (title, body) in reversed(list(enumerate(brush_copy.tabs()))):
         a = copy.copy(tpl)
         a['id'] = f'Block--sfb_tab_{k}'
         a.select_one('[data-collapsible-trigger]')['aria-controls'] = f'ProductAccordion--sfb-tab-{k}'
@@ -740,17 +747,6 @@ def brush_page(base):
         inner = a.select_one('[data-collapsible-content]'); inner.clear(); inner.append(frag(body))
         anchor.insert_after(a)
     for a in accs: a.decompose()
-    # the sticky bar: the brush, its price, back to the bundles
-    sticky = prod.select_one('#sticky_atcs')
-    if sticky:
-        wraps = sticky.select('.wrap')
-        for w in wraps[1:]: w.decompose()
-        w = wraps[0]
-        im = w.find('img'); im['src'], im['alt'] = hashed_copy(BRUSH_IMG / 'gallery-1.jpg', 'img', 'skinofab-lymphatic-brush-180w', (180, 180)), brush_copy.TITLE
-        w.find('h5').string = brush_copy.TITLE
-        w.select_one('.product__price--sale').string = brush_copy.money(brush_copy.PRICE)
-        w.select_one('.product__price--compare').string = brush_copy.money(brush_copy.COMPARE)
-        go = w.select_one('a.product__submit__add'); go['href'] = '#apf-buy'; go.string = brush_copy.STICKY_BUTTON
     # the foundation's FrontrowMD sticker styles do not belong here
     for st in prod.find_all('style'):
         if '#frontrow-sticker' in (st.string or ''): st.decompose()
@@ -759,16 +755,23 @@ def brush_page(base):
             node.replace_with(node.replace('Color Changing Foundation', brush_copy.TITLE).replace('Adaptive Peptide Foundation', brush_copy.TITLE))
     for el in prod.find_all(alt=True):
         el['alt'] = el['alt'].replace('Color Changing Foundation', brush_copy.TITLE).replace('Adaptive Peptide Foundation', brush_copy.TITLE)
-    # the sections below, in Solena's order
+    # the sections below (brush_copy's order)
     clips = [(hashed_copy(media / f'brush-review-{k}.mp4', 'media', f'skinofab-brush-review-{k}'),
-              hashed_copy(media / f'brush-review-{k}.jpg', 'img', f'skinofab-brush-review-{k}-poster')) for k in range(1, 7)]
+              hashed_copy(media / f'brush-review-{k}.jpg', 'img', f'skinofab-brush-review-{k}-poster')) for k in brush_copy.VIDEOS['clips']]
     how = [hashed_copy(BRUSH_IMG / f'how-{k}.jpg', 'img', f'skinofab-brush-how-{k}') for k in range(1, 4)]
     cmp_ = [hashed_copy(BRUSH_IMG / f'compare-{k}.jpg', 'img', f'skinofab-brush-compare-{k}') for k in ('ours', 'copy')]
     strip = review_strip(brush_reviews)
+    pack = ccf_copy.PACKS[0]
+    once_or_refill = float(pack['refill'] if ccf_copy.REFILL.get('default') else pack['price'])
+    cross = brush_copy.cross_html(cross_img[0] if cross_img else '', 'color-changing-foundation.html', once_or_refill, float(pack['compare']),
+                                  (float(summary['average']), int(summary['count'])) if summary else None)
     out = ([f'<div class="shopify-section" id="shopify-section-sf-review-strip">{strip}</div>'] if strip else []) + [
-           f'<div class="shopify-section" id="shopify-section-sf-brush-videos"><style>{brush_copy.SECTIONS_CSS}</style>{brush_copy.videos_html(clips)}</div>',
+           f'<div class="shopify-section" id="shopify-section-sf-brush-routine"><style>{brush_copy.SECTIONS_CSS}</style>{brush_copy.routine_html(tutorial)}</div>',
+           f'<div class="shopify-section" id="shopify-section-sf-brush-videos">{brush_copy.videos_html(clips)}</div>',
            f'<div class="shopify-section" id="shopify-section-sf-brush-how">{brush_copy.how_html(how)}</div>',
-           f'<div class="shopify-section" id="shopify-section-sf-brush-compare">{brush_copy.compare_html(*cmp_)}</div>']
+           f'<div class="shopify-section" id="shopify-section-sf-brush-expect">{brush_copy.expect_html()}</div>',
+           f'<div class="shopify-section" id="shopify-section-sf-brush-compare">{brush_copy.compare_html(*cmp_)}</div>',
+           f'<div class="shopify-section" id="shopify-section-sf-brush-cross">{cross}</div>']
     if faq_src:
         lst = faq_src.select('.accordion__list')
         items = lst[0].select('li.accordion__item')
@@ -796,6 +799,7 @@ def brush_page(base):
         out.append(str(faq_src))
     out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-risk-free">{brush_copy.risk_free_html()}</div>')
     out.append(f'<div class="shopify-section" id="shopify-section-sf-review-wall">{review_wall(brush_reviews)}</div>')
+    if not stats: out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-no-reviews">{brush_copy.no_reviews_html()}</div>')
     prod.insert_after(frag(''.join(out)))
     # the design's product JSON (the theme's product script reads prices and variants from it)
     gallery = [s_.find('img')['src'] for s_ in slider.select('[data-product-single-media-wrapper]')]
@@ -806,6 +810,8 @@ def brush_page(base):
     text = re.sub(r'<title>.*?</title>', f'<title>{html.escape(brush_copy.META_TITLE)}</title>', text, count=1, flags=re.S)
     text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{html.escape(brush_copy.META_DESCRIPTION)}" name="description"/>', text, count=1)
     text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', 'id="the-lymphatic-brush-skinofab"', 1)
+    text, _ = sticky_bar(text, sticky_thumb(BRUSH_IMG / 'card.jpg', 'skinofab-lymphatic-brush-sticky'), brush_copy.TITLE,
+                         f'From {brush_copy.money(brush_copy.PRICE)} · Free shipping', brush_copy.STICKY_BUTTON)
     return text
 
 def brush_shelf(home):
@@ -972,6 +978,56 @@ def drop_fake_buyers(t):
         if not m: return t, n
         t = t[:m.start()] + t[balanced_end(t, m.start(), 'div'):]; n += 1
 
+STICKY_CSS = """
+.sf-sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#fff;box-shadow:0 -6px 24px rgba(0,0,0,.10);
+ transform:translateY(110%);transition:transform .3s ease;padding:10px 0 calc(10px + env(safe-area-inset-bottom))}
+.sf-sticky.is-on{transform:none}
+.sf-sticky__in{width:min(1180px,calc(100% - 32px));margin:0 auto;display:flex;align-items:center;gap:14px}
+.sf-sticky img{width:52px;height:52px;border-radius:10px;object-fit:cover;background:#f4f4f2;flex:none}
+.sf-sticky__txt{flex:1;min-width:0;line-height:1.3;color:#151515}
+.sf-sticky__txt b{display:block;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sf-sticky__txt span{font-size:13.5px;color:#3b3b3b}
+.sf-sticky__txt i{font-style:normal;color:#00b67a;letter-spacing:1px}
+.sf-sticky__btn{flex:none;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;border-radius:999px;background:#151515;
+ color:#fff!important;text-decoration:none!important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+@media (max-width:599px){.sf-sticky__txt b{font-size:14px}.sf-sticky__btn{padding:13px 18px;font-size:12px}}
+"""
+
+def sticky_bar(t, img, title, price_line, button, rating=None):
+    """The product page's sticky bar, rebuilt: the export's #sticky_atcs was never shown (the app script that showed
+    it did not come with the export) and its prices were bound to the wrong product. This one slides up once the buy
+    box's add-to-cart button has scrolled out of view, and its button goes back to the pack picker (#apf-buy).
+    price_line is plain text ("From $37 · Free shipping"), so the theme build leaves it as written."""
+    m = re.search(r'<div id="sticky_atcs"', t)
+    if not m: return t, False
+    stars = (f' <i aria-hidden="true">&#9733;</i> {rating[0]:.1f} ({int(rating[1]):,})') if rating else ''
+    bar = (f'<style>{STICKY_CSS}</style><div class="sf-sticky" id="sf-sticky" aria-hidden="true">'
+           f'<div class="sf-sticky__in"><img src="{img}" alt="" width="52" height="52" loading="lazy" decoding="async">'
+           f'<div class="sf-sticky__txt"><b>{html.escape(title)}</b><span>{html.escape(price_line)}{stars}</span></div>'
+           f'<a class="sf-sticky__btn" href="#apf-buy" tabindex="-1">{html.escape(button)}</a></div>'
+           '<script>(function () {'
+           'var bar = document.currentScript.parentNode;'
+           'function start() {'
+           'var btn = document.querySelector("form[data-product-form] [data-add-to-cart]") || document.querySelector("#apf-buy");'
+           'if (!btn || !("IntersectionObserver" in window)) return;'
+           'new IntersectionObserver(function (es) { var e = es[0], on = !e.isIntersecting && e.boundingClientRect.top < 0;'
+           'bar.classList.toggle("is-on", on); bar.setAttribute("aria-hidden", on ? "false" : "true");'
+           'bar.querySelector("a").tabIndex = on ? 0 : -1; }).observe(btn); }'
+           'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();'
+           '})();</script></div>')
+    return t[:m.start()] + bar + t[balanced_end(t, m.start(), 'div'):], True
+
+def sticky_thumb(src, name):
+    """A 104 px square thumbnail on white (a transparent packshot would turn black as a JPEG)."""
+    from PIL import Image
+    im = Image.open(src).convert('RGBA')
+    s = max(im.size); sq = Image.new('RGBA', (s, s), (244, 244, 242, 255))
+    sq.alpha_composite(im, ((s - im.width) // 2, (s - im.height) // 2))
+    out = DST / 'assets' / 'img' / f'{name}.jpg'
+    sq.convert('RGB').resize((104, 104), Image.LANCZOS).save(out, quality=86, optimize=True)
+    final = out.with_name(f"{name}-{hashlib.md5(out.read_bytes()).hexdigest()[:6]}.jpg"); out.rename(final)
+    return f'../assets/img/{final.name}'
+
 def honest_pdp(t, summary):
     """The foundation page's buy box and results, without claims nothing backs:
     - the "89% sold / ends in" countdown and "Selling out fast" (they reset on every visit) go;
@@ -1115,6 +1171,12 @@ def main():
     # the foundation page without claims nothing backs (countdown, panel numbers, "Shipped today")
     texts[pdp], hp = honest_pdp(texts[pdp], found and found['summary'])
     print('honest pdp', hp)
+    pack = ccf_copy.PACKS[0]
+    texts[pdp], ok = sticky_bar(texts[pdp], sticky_thumb(BRAND / 'adaptive-peptide-foundation' / '01-front.png', 'skinofab-apf-sticky'),
+                                'Adaptive Peptide Foundation',
+                                f"From {brush_copy.money(pack['refill'] if ccf_copy.REFILL.get('default') else pack['price'])} · Free shipping",
+                                'Choose your pack', found and (float(found['summary']['average']), int(found['summary']['count'])))
+    if not ok: missing.append(('sticky bar', 'foundation #sticky_atcs'))
     buyers = 0
     for p in [p for p in texts if p.parent.name == 'products']:
         texts[p], k = drop_fake_buyers(texts[p]); buyers += k
@@ -1132,7 +1194,7 @@ def main():
         if not ok: missing.append(('brush', 'homepage shelf list or tab'))
     # the Lymphatic Brush's page (brush_copy) and its product snapshot
     brush = DST / 'products' / f'{brush_copy.HANDLE}.html'
-    texts[brush], _ = drop_fake_buyers(brush_page(base_pdp))
+    texts[brush], _ = drop_fake_buyers(brush_page(base_pdp, found and found['summary']))
     gallery = sorted(set(re.findall(r'\.\./assets/img/(skinofab-lymphatic-brush-\d-1080w-[0-9a-f]{6}\.jpg)', texts[brush])),
                      key=lambda g: int(g.split('-')[3]))
     (DST / 'products' / f'{brush_copy.HANDLE}.js').write_text(json.dumps(brush_snapshot(['/assets/img/' + g for g in gallery])))

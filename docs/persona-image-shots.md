@@ -59,9 +59,9 @@ item passes. Then swap it into its slot (tools/persona/apply_persona.py images o
 | F8 | Solution section | Same woman, even skin, holding the SKINOFAB bottle, relaxed smile |
 | F9 | Two-bottle pack | Two bottles side by side on a linen surface, a 50-something woman's hand reaching for one |
 | F10 | Cart drawer / empty bag | Bottle alone, studio, soft shadow (packshot; replaces any old bottle art) |
-| B1 | Brush gallery 1 | 54-year-old woman sweeping the brush from under her eye toward her temple, eyes closed, morning light, case on the counter |
-| B2 | Brush gallery (jaw) | 60-year-old woman sweeping along the jaw toward the ear |
-| B3 | Brush gallery (neck) | 52-year-old woman sweeping down the neck toward the collarbone |
+| B1 | Brush gallery 1 (now a product-only hero, `brand/lymphatic-brush/hero.jpg`) | 54-year-old woman sweeping the brush from under her eye toward her temple, eyes closed, morning light, case on the counter |
+| B2 | Brush gallery 2, new slot after the hero (jaw) | 60-year-old woman sweeping along the jaw toward the ear |
+| B3 | Brush gallery 3, new slot (neck); also the routine section's poster | 52-year-old woman sweeping down the neck toward the collarbone |
 | B4 | Brush homepage card | Brush resting on its open SKINOFAB case on a bathroom shelf, soft daylight |
 | B5 | Brush + foundation | Morning routine flat lay: brush, case and foundation bottle, both logos readable |
 

@@ -423,24 +423,38 @@ for (const [key, pack] of Object.entries(brushPacks)) {
     const head = document.querySelector('.product__price-and-badge');
     let native = { reviews: [] };
     try { native = JSON.parse(document.querySelector('[data-sf-native-reviews]').textContent); } catch (e) {}
-    return { ids, tabs, video: !!document.querySelector('.sfb-tutorial video source[src*=".mp4"]'),
+    const text = document.body.innerText, chips = document.querySelector('.sfb-chips'), cross = document.querySelector('#sfb-cross');
+    const empty = document.getElementById('sfb-no-reviews');
+    return { ids, tabs, video: !!document.querySelector('.sfb-routine__video video source[src*=".mp4"]'),
              faq: document.querySelectorAll('#shopify-section-sf-brush-faq .accordion__item').length,
+             gallery: document.querySelectorAll('[data-product-single-media-slider] [data-product-single-media-wrapper]').length,
+             chips: !!chips && chips.getBoundingClientRect().height > 0, lead: !!document.querySelector('.sfb-lead'),
+             claims: (text.match(/drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention/gi) || []),
+             cross: cross ? { href: (cross.querySelector('a.sfb-btn') || {}).pathname || '', rating: (cross.querySelector('.sfb-cross__rating') || {}).textContent || '' } : null,
+             empty: !!empty && !empty.hidden,
              now: head.querySelector('.product__price--regular').textContent.trim(), was: head.querySelector('.product__price--compare').textContent.trim(),
              solena: /solena/i.test(document.documentElement.outerHTML), afterpay: !!document.querySelector('skinofab-installments'),
              reviews: native.reviews.length, stars: !document.querySelector('[data-sfb-rating]').hidden, wall: !document.getElementById('sf-review-wall').hidden,
              clips: document.querySelectorAll('.sfb-video video').length, hScroll: document.documentElement.scrollWidth > innerWidth + 1 };
   });
   const problems = [];
-  const order = ['main', 'sf-brush-videos', 'sf-brush-how', 'sf-brush-compare', 'sf-brush-faq', 'sf-brush-risk-free', 'sf-review-wall'];
+  const order = ['main', 'sf-brush-routine', 'sf-brush-videos', 'sf-brush-how', 'sf-brush-expect', 'sf-brush-compare', 'sf-brush-cross',
+                 'sf-brush-faq', 'sf-brush-risk-free', 'sf-review-wall'];
   if (order.some((k, i) => pg.ids.indexOf(k) < 0 || (i && pg.ids.indexOf(k) < pg.ids.indexOf(order[i - 1])))) problems.push('sections: ' + pg.ids.join(','));
-  if (pg.tabs.length !== 5 || pg.tabs[0] !== 'Video Tutorial') problems.push('tabs: ' + pg.tabs.join(' | '));
-  if (!pg.video) problems.push('no how-to video');
-  if (pg.faq !== 7) problems.push(`${pg.faq} FAQ answers`);
+  if (pg.tabs.length !== 4 || pg.tabs[0] !== 'How to clean it') problems.push('tabs: ' + pg.tabs.join(' | '));
+  if (!pg.video) problems.push('no how-to video in the routine');
+  if (pg.faq !== 10) problems.push(`${pg.faq} FAQ answers`);
+  if (pg.gallery !== 5) problems.push(`${pg.gallery} gallery images`);
+  if (!pg.chips || !pg.lead) problems.push(`chips ${pg.chips} / lead ${pg.lead}`);
+  if (pg.claims.length) problems.push('claims back on the page: ' + pg.claims.join(', '));
+  if (!pg.cross || !pg.cross.href.includes('adaptive-peptide-foundation') || !/\d\.\d\/5 from [\d,]+ verified reviews/.test(pg.cross.rating))
+    problems.push('foundation cross-sell: ' + JSON.stringify(pg.cross));
+  if (pg.empty === (pg.reviews > 0)) problems.push(`"No reviews yet" box ${pg.empty} with ${pg.reviews} reviews`);
   if (!/^\$24\.95/.test(pg.now) || !/^\$49\.90/.test(pg.was)) problems.push(`title price ${pg.now} / ${pg.was}`);
   if (pg.solena) problems.push('"Solena" on the page');
   if (pg.afterpay) problems.push('pay-in-4 line shown');
   if (pg.stars !== (pg.reviews > 0) || pg.wall !== (pg.reviews > 0)) problems.push(`stars ${pg.stars} / wall ${pg.wall} with ${pg.reviews} reviews`);
-  if (pg.clips !== 6) problems.push(`${pg.clips} review clips`);
+  if (pg.clips !== 4) problems.push(`${pg.clips} creator clips`);
   if (pg.hScroll) problems.push('page scrolls sideways');
   // the homepage section and the menu link
   await s.page.goto(`${STORE}/`, { waitUntil: 'networkidle', timeout: 90000 });
@@ -460,6 +474,26 @@ for (const [key, pack] of Object.entries(brushPacks)) {
   if (!/\$24\.95/.test(home.price)) problems.push('shelf card price: ' + home.price.replace(/\s+/g, ' ').slice(0, 80));
   if (!home.menu.length || home.menu.some(p => !p.includes('the-lymphatic-brush'))) problems.push('menu links: ' + home.menu.join(','));
   out.push({ case: 'brush page', ...pg, home, errors: s.errors, ok: problems.length === 0, problems });
+  await s.ctx.close();
+}
+
+// the sticky bar on both product pages: hidden at the top, shown once the add-to-cart button has scrolled away, and
+// its button brings the pack picker back into view
+for (const [name, route] of [['foundation', PDP], ['brush', BRUSH]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
+  const s = await session(w, h, route);
+  const on = () => s.page.evaluate(() => { const b = document.getElementById('sf-sticky'); return b ? b.classList.contains('is-on') : null; });
+  const problems = [];
+  const atTop = await on();
+  await s.page.evaluate(() => window.scrollTo(0, 3000)); await s.page.waitForTimeout(900);
+  const scrolled = await on();
+  if (atTop !== false) problems.push(`at the top: ${atTop}`);
+  if (scrolled !== true) problems.push(`after scrolling: ${scrolled}`);
+  if (scrolled) {
+    await s.page.click('#sf-sticky a'); await s.page.waitForTimeout(1500);
+    const r = await s.page.evaluate(() => { const e = document.getElementById('apf-buy').getBoundingClientRect(); return [e.top, e.bottom, innerHeight]; });
+    if (r[0] > r[2] || r[1] < 0) problems.push('picker not in view after the sticky button: ' + r.map(Math.round).join(','));
+  }
+  out.push({ case: `sticky bar ${name} ${w}`, errors: s.errors, ok: problems.length === 0, problems });
   await s.ctx.close();
 }
 

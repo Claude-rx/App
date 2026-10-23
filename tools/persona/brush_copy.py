@@ -1,9 +1,12 @@
-"""The Lymphatic Brush: product page copy, offer and sections, from the owner's Solena page
+"""The Lymphatic Brush: product page copy, offer and sections, built from the owner's Solena page
 (https://thesolena.com/products/the-lymphatic-brush), under the SKINOFAB name and in the SKINOFAB look.
 
-The words are Solena's own, kept as written; only the brand name and the contact address change. The page follows
-Solena's order: gallery and buy box (buyers, rating, bundle picker, guarantee, three short reviews, five tabs), the
-review videos, how it works, the copy comparison, the FAQ, the guarantee and the customer reviews.
+Solena's structure and offer, with the claims nothing backs taken out: no "drains fluid", no "less puffy from the first
+use" as a promise, no "10 years younger" or "sculpted face" clips, no buyer counts, no Solena reviews. The brush is a
+light, dry massage for the look of morning puffiness, and the page says so, including what it will not do. Order:
+gallery and buy box (rating once real reviews exist, bundle picker, guarantee, five tabs), the 3-minute routine, the
+creator clips, why faces are puffy in the morning, what to expect, the copy comparison, the foundation for after, the
+FAQ, the guarantee and the reviews (an honest first-review box until there are some).
 
 Read by apply_persona.py (it builds products/the-lymphatic-brush.html from the foundation page's markup) and by
 setup_brush_offers.py (the NEXT product, its three bundles and their prices).
@@ -15,12 +18,17 @@ TITLE = 'The Lymphatic Brush'
 SHOPIFY_ID, SHOPIFY_VARIANT = 15517563191626, 61233683038538       # Solena's ids (the design markup carries them)
 PRICE, COMPARE = '24.95', '49.90'
 EMAIL = 'hey@skinofab.com'
-DESCRIPTION = ('<p>Depuff your face in 3 minutes. Thousands of ultra-soft bristles sweep the fluid that builds up overnight '
-               'from under your eyes, your cheeks and your jaw toward your neck, with a light touch and no oil. Use it on '
-               'clean, dry skin every morning. Includes a clear travel case.</p>')
-META_TITLE = 'The Lymphatic Brush | Depuff your face in 3 minutes | SKINOFAB'
-META_DESCRIPTION = ('Soft bristles drain fluid out of your face: less puffy eyes, cheeks and jaw from the first use. '
-                    '100% dry use, no oils, 3 minutes. 30-day money-back guarantee. Free shipping.')
+DESCRIPTION = ('<p>A 3-minute depuffing massage for your morning face. Thousands of ultra-soft bristles sweep from under '
+               'your eyes, along your cheeks and jaw and down your neck with a light touch, on dry skin, no oil. '
+               'Includes a SKINOFAB travel case.</p>')
+META_TITLE = 'The Lymphatic Brush | A 3-minute depuffing massage | SKINOFAB'
+META_DESCRIPTION = ('A soft-bristle face brush for the look of morning puffiness around the eyes, cheeks and jaw. Dry skin, '
+                    'no oils, 3 minutes. 30-day money-back guarantee. Free shipping.')
+
+# the gallery (brush_assets.py writes brand/lymphatic-brush/<name>.jpg), first one eager
+GALLERY = ['hero', 'case', 'how-to-use', 'features', 'vs-tools']
+HERO = {'title': ['DEPUFF YOUR', 'MORNING FACE'], 'in': 'IN', 'accent': '3 MINUTES',
+        'facts': ['Soft bristles, light touch', 'On dry skin, no oils', 'Eyes, cheeks & jaw']}
 
 # Solena's page media (the owner's files), fetched and rebranded by brush_assets.py
 _CDN = 'https://cdn.shopify.com/s/files/1/0986/6890/4778/files/'
@@ -53,8 +61,9 @@ SOURCES = {
 }
 
 # the buy box --------------------------------------------------------------------------------------------------------
-BUYERS = {'name': 'Nicole', 'text': 'and 5,000+ others purchased'}
 SHIPPING_BADGE = '\U0001F381 FREE SHIPPING'
+LEAD = ('A 3-minute morning massage for puffy-looking eyes, cheeks and jaw. Ultra-soft bristles that bend instead of '
+        'pressing, on dry skin, no oils.')
 _LINE = ('<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" '
          'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">')
 CHIPS = [
@@ -64,7 +73,7 @@ CHIPS = [
     ('Easy to clean', '<path d="M12 3C8.5 7.5 6.5 10.5 6.5 14a5.5 5.5 0 0 0 11 0C17.5 10.5 15.5 7.5 12 3z"/><path d="M9.5 14.5c.4 1.2 1.3 2 2.5 2.2"/>'),
 ]
 # the offer: Solena's three bundles (each a NEXT variant); the free cases and the body brush ship with the order
-GIFTS = {'case': ('Premium Case', 'Premium Cases', '9.95'), 'body': ('Anti-Cellulite Dry Brush', 'Anti-Cellulite Dry Brushes', '24.95')}
+GIFTS = {'case': ('Premium Case', 'Premium Cases', '9.95'), 'body': ('Body Dry Brush', 'Body Dry Brushes', '24.95')}
 BUNDLES = [
     {'key': '1', 'name': 'Buy 1 Brush', 'note': '', 'variant': '1 brush + free case', 'sku': 'SKF-LYB-1',
      'price': '24.95', 'compare': '49.90', 'gifts': [('case', 1)]},
@@ -74,25 +83,14 @@ BUNDLES = [
      'sku': 'SKF-LYB-3', 'price': '49.90', 'compare': '149.70', 'badge': 'Best offer', 'gifts': [('case', 3), ('body', 1)]},
 ]
 GUARANTEE = '30-Day Money-Back Guarantee'
-MINI_REVIEWS = [
-    ('Jessica H.', 'I was embarrassed to go to work with a puffy face. Now the puffiness is down before I leave the house.'),
-    ('Emily C.', 'I could actually see the difference right away, my face looked less swollen and more awake.'),
-    ('Erika N.', 'So soft, so easy and actually relaxing. I use it every morning now because it takes almost no effort.'),
-]
 
 
 def _list(items): return '<ul>' + ''.join(f'<li>{i}</li>' for i in items) + '</ul>'
 
 
-def tabs(video):
-    """The five tabs under the buy box. video: (mp4 path, poster path)."""
-    mp4, poster = video
+def tabs():
+    """The four tabs under the buy box (the tutorial video has its own section, the 3-minute routine)."""
     return [
-        ('Video Tutorial',
-         '<p><em>Use on clean, dry skin. Give the bristles a quick clean before each use and let them dry for a minute.</em></p>'
-         '<p>First time using a Lymphatic Brush from SKINOFAB? This quick video shows the exact steps:</p>'
-         f'<div class="sfb-tutorial"><video controls playsinline preload="none" poster="{poster}" width="720" height="1280">'
-         f'<source src="{mp4}" type="video/mp4"></video></div>'),
         ('How to clean it',
          '<p><strong>Quick clean, before each use (10 seconds)</strong></p>'
          + _list(['Spray a brush cleaner or 70% isopropyl alcohol onto a clean cloth', 'Sweep the bristles across it a few times',
@@ -120,29 +118,64 @@ def tabs(video):
 
 
 # the sections below ------------------------------------------------------------------------------------------------
-VIDEOS = {'eyebrow': 'They love our lymphatic brush', 'lead': 'Real people,', 'mark': 'real results'}
+# creator clips from the owner's Solena page (silent). Clips 1 ("shaving 10 years off") and 6 ("a sculpted face") make
+# promises the brush cannot keep and are left out; the woman in her 50s (clip 3) opens. They are creators, not
+# verified buyers, so the heading shows the routine, not "real results".
+VIDEOS = {'eyebrow': 'See it in action', 'lead': 'Three minutes,', 'mark': 'every morning', 'clips': [3, 5, 4, 2]}
 HOW = {'eyebrow': 'How it works', 'lead': 'Why your face is', 'mark': 'puffy in the morning', 'cards': [
     ('The cause', 'Fluid builds up while you sleep.',
      'When you lie still all night, fluid collects under your eyes, in your cheeks and along your jaw. Salty food, short '
      'nights and age make it leave even slower. <strong>That’s why you wake up with a puffy face.</strong>'),
-    ('What clears it', 'It needs a light touch.',
-     'The tiny channels that clear this fluid sit <strong>just under your skin</strong>. They work best with slow, gentle '
-     'strokes toward your neck. Pressing hard doesn’t help.'),
-    ('Why the brush', 'Soft bristles do it for you.',
-     '<strong>Thousands of soft bristles</strong> move the fluid with every stroke. They bend instead of pressing, so the '
+    ('What helps', 'A light, slow massage.',
+     'Facial massage for puffiness uses <strong>light, slow strokes toward the neck</strong>, the way an aesthetician '
+     'does it by hand. Pressing hard doesn’t help.'),
+    ('Why the brush', 'Soft bristles keep it light.',
+     '<strong>Thousands of soft bristles</strong> sweep the skin with every stroke. They bend instead of pressing, so the '
      'touch stays light even if you push. No oil, nothing to learn, just 3 minutes.'),
-], 'end_lead': 'Less puffy from the', 'end_mark': 'first use.', 'button': 'Choose your bundle'}
+], 'end_lead': 'A fresher-looking face,', 'end_mark': 'before your coffee.', 'button': 'Choose your bundle'}
+
+# the routine, as on the how-to-use card and the tutorial video
+ROUTINE = {'eyebrow': 'How to use it', 'lead': 'Your', 'mark': '3-minute routine',
+           'note': 'On clean, dry skin, with a light touch. Repeat each sweep about 10 times, then do the other side.',
+           'steps': [('Neck', 'Sweep down from under the ear to the collarbone.'),
+                     ('Jaw & cheeks', 'Sweep from your chin along the jaw toward the ear.'),
+                     ('Under the eyes', 'Sweep out from the nose to the temples, very lightly.'),
+                     ('Neck again', 'Finish with a few sweeps down the neck.')]}
+
+# what to expect, said plainly (women past 45 have heard every promise)
+EXPECT = {'eyebrow': 'What to expect', 'lead': 'Honest results,', 'mark': 'no hype',
+          'cards': [('After your first 3 minutes', 'Your face feels awake and the morning puffiness around your eyes and jaw can look softer.'),
+                    ('Every morning', 'The effect is temporary: puffiness comes back after a night’s sleep, a salty dinner or a short night. That’s why it works best as a daily habit.'),
+                    ('What it won’t do', 'It won’t erase wrinkles or reshape your face. It’s a gentle massage, not a treatment. If it isn’t for you, the 30-day guarantee has you covered.')]}
+
+# the foundation, for after (its real rating comes from the imported reviews)
+CROSS = {'eyebrow': 'Then, your foundation', 'lead': 'Finish your morning with', 'mark': 'one adaptive shade',
+         'text': 'The Adaptive Peptide Foundation goes on white and turns into your skin tone as you blend, with peptides and PDRN, '
+                 'made for skin after 45. Brush first, then one pump: done in five minutes.',
+         'button': 'See the foundation'}
+
+# the reviews before there are any: say so, and make the guarantee the proof
+NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews yet',
+              'text': 'The Lymphatic Brush is new at SKINOFAB, and we only show reviews from real buyers. Try it for 30 days: '
+                      'if you don’t love it, we’ll refund you.',
+              'button': 'Try it risk-free', 'write': 'Bought it? Write the first review'}
 COPIES = {'eyebrow': 'Watch out for copies', 'title': 'Not all brushes are made the same',
            'ours': 'Our Lymphatic Brush', 'copy': 'Cheap Copy'}
 FAQ = {'eyebrow': 'Everything you need to know', 'title': 'Still have questions?', 'items': [
     ('When will I see a difference?',
-     'Most people notice their face looks less puffy right after the first use. For the best results, use it every morning as part of your routine.'),
+     'You may see a fresher, less puffy look right after your first 3 minutes. It’s temporary, so it works best every morning. Results vary from person to person.'),
+    ('Does it work on mature skin?',
+     'Yes. The bristles bend instead of pulling, so they don’t drag thinner skin or fine lines. Keep the touch light, especially under the eyes.'),
+    ('Will it scratch or leave red marks?',
+     'No. The bristles are ultra-soft and you only need a light touch. If your skin is very reactive, start with a few sweeps and build up.'),
     ('How long does the effect last?',
      'It helps clear the fluid that builds up overnight. Puffiness can come back after another night of sleep, a salty meal or a short night. '
      'That’s why a quick 3-minute routine every morning works best.'),
-    ('Where does the fluid go?',
-     'Gentle strokes guide fluid toward the lymph nodes in your neck, and your body takes care of the rest naturally.'),
     ('Do I need oil or serum?', 'No. Use it on clean, dry skin. You can apply your skincare right after.'),
+    ('Can I use it before my foundation?',
+     'Yes, that’s the best time: brush first on dry skin, then your skincare and foundation.'),
+    ('What if it doesn’t work for me?',
+     'Send it back within 30 days for a full refund. Just email hey@skinofab.com.'),
     ('Is it safe for sensitive skin?',
      'The bristles are soft and the pressure stays light, so it’s gentle on most skin types. Avoid using it on irritated or broken skin, '
      'sunburn or active breakouts. If your swelling doesn’t go away during the day, or if you have a medical condition, check with your doctor first.'),
@@ -151,8 +184,8 @@ FAQ = {'eyebrow': 'Everything you need to know', 'title': 'Still have questions?
      'Give the bristles a quick clean on a cloth with a brush cleaner or alcohol before each use, and a gentle wash of the tips once a month. '
      'Full steps are in the “How to clean it” tab above.'),
 ]}
-# Solena's card adds "★★★★★ +10,000 Happy Customers", which the same page contradicts ("5,000+ others purchased")
-# and no review backs: left out until the owner gives the real number (set 'proof' to show a line there)
+# Solena's card adds "★★★★★ +10,000 Happy Customers", which nothing backs: left out until there is a real number (set
+# 'proof' to show a line there)
 RISK_FREE = {'eyebrow': 'Try it 100% Risk-Free', 'lead': '30-day money-back', 'mark': 'guarantee',
              'proof': None,
              'text': 'Take your time to try it at home. If you’re not completely in love with your purchase within 30 days, simply '
@@ -176,8 +209,6 @@ _STAR = ('<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" foc
          'd="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
 _CHECK = ('<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="currentColor"/>'
           '<path d="m7.5 12.3 3 3 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>')
-_HEART = ('<svg viewBox="1.6 4 20.2 18" width="12" height="12" aria-hidden="true" focusable="false"><path fill="currentColor" '
-          'd="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2.1 0 3.6 1.2 4.4 2.5C11.8 6.2 13.3 5 15.4 5 19 5 21 8.6 19.6 11.8 17.5 16.4 12 21 12 21z"/></svg>')
 _ARROW = ('<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" '
           'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>')
 _CHEV = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" '
@@ -185,25 +216,13 @@ _CHEV = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" foc
 
 # buy box pieces ----------------------------------------------------------------------------------------------------
 BUYBOX_CSS = r"""
+.sfb-lead{margin:12px 0 0;font-size:16px;line-height:1.55;color:#3b3b3b}
 .sfb-chips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}
 .sfb-chips span{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;background:#f6f6f6;font-size:14px;line-height:1.25;color:#151515}
 .sfb-chips svg{flex:none}
 .sfb-ship{display:inline-block;margin-left:10px;padding:4px 10px;border-radius:999px;background:#151515;color:#fff;font-size:12px;font-weight:600;letter-spacing:.06em;vertical-align:middle;white-space:nowrap}
 .sfb-guar{display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 0 0;font-size:15px;font-weight:600;color:#151515}
 .sfb-guar svg{color:#151515}
-.sfb-minis{position:relative;margin:4px 0 0}
-.sfb-minis__track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px}
-.sfb-minis__track::-webkit-scrollbar{display:none}
-.sfb-mini{flex:0 0 100%;scroll-snap-align:start;display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:14px;background:#f6f6f6}
-.sfb-mini__av{position:relative;flex:none;width:52px;height:52px}
-.sfb-mini__av img{width:52px;height:52px;border-radius:50%;object-fit:cover;display:block}
-.sfb-mini__av i{position:absolute;right:-2px;bottom:-2px;width:20px;height:20px;border-radius:50%;background:#151515;color:#fff;display:grid;place-items:center;border:2px solid #f6f6f6}
-.sfb-mini__top{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
-.sfb-mini__top span{color:#151515;letter-spacing:1px;font-size:13px}
-.sfb-mini p{margin:4px 0 0;font-size:14px;line-height:1.45;color:#3b3b3b}
-.sfb-minis__dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
-.sfb-minis__dots button{width:6px;height:6px;padding:0;border:0;border-radius:99px;background:#d4d4d4;cursor:pointer;transition:width .2s,background .2s}
-.sfb-minis__dots button[aria-current=true]{width:18px;background:#151515}
 .sfb-tutorial{margin:12px 0 4px;max-width:320px;border-radius:14px;overflow:hidden;background:#000}
 .sfb-tutorial video{display:block;width:100%;height:auto;aspect-ratio:9/16}
 .sfo--bundle .sfo-main small:empty{display:none}
@@ -213,30 +232,6 @@ BUYBOX_CSS = r"""
 
 def chips_html():
     return ('<div class="sfb-chips">' + ''.join(f'<span>{_LINE}{svg}</svg>{esc(t)}</span>' for t, svg in CHIPS) + '</div>')
-
-
-def minis_html(avatars):
-    slides = ''.join(
-        f'<div class="sfb-mini"><span class="sfb-mini__av"><img src="{a}" alt="{esc(n)}" width="52" height="52" loading="lazy" decoding="async">'
-        f'<i>{_HEART}</i></span><div><div class="sfb-mini__top">{esc(n)}<span aria-label="5 out of 5 stars">★★★★★</span></div>'
-        f'<p>{esc(t)}</p></div></div>' for (n, t), a in zip(MINI_REVIEWS, avatars))
-    dots = ''.join(f'<button type="button" aria-label="Review {k + 1}"{" aria-current=true" if k == 0 else ""}></button>'
-                   for k in range(len(MINI_REVIEWS)))
-    return (f'<div class="sfb-minis" data-sfb-minis><div class="sfb-minis__track">{slides}</div>'
-            f'<div class="sfb-minis__dots">{dots}</div>'
-            '<script>(function () {'
-            'var root = document.currentScript.parentNode, track = root.querySelector(".sfb-minis__track");'
-            'var dots = root.querySelectorAll(".sfb-minis__dots button"), n = dots.length, at = 0, timer = null;'
-            'function go(i) { at = (i + n) % n; track.scrollTo({ left: track.clientWidth * at, behavior: "smooth" }); }'
-            'track.addEventListener("scroll", function () {'
-            'var i = Math.round(track.scrollLeft / Math.max(track.clientWidth, 1));'
-            'Array.prototype.forEach.call(dots, function (d, k) { d.setAttribute("aria-current", k === i ? "true" : "false"); }); at = i; }, { passive: true });'
-            'Array.prototype.forEach.call(dots, function (d, k) { d.addEventListener("click", function () { go(k); restart(); }); });'
-            'function restart() { if (timer) clearInterval(timer); timer = setInterval(function () { go(at + 1); }, 5000); }'
-            'root.addEventListener("pointerenter", function () { if (timer) clearInterval(timer); });'
-            'root.addEventListener("pointerleave", restart);'
-            'restart();'
-            '})();</script></div>')
 
 
 def picker_html(variants, gift_imgs, css):
@@ -358,10 +353,50 @@ SECTIONS_CSS = r"""
 .sfb-risk__proof{display:flex;align-items:center;justify-content:center;gap:8px;margin:18px 0 0;font-size:15px;font-weight:600}
 .sfb-risk__proof span{display:inline-flex;gap:2px;color:#fff}
 .sfb-risk p{max-width:560px;margin:16px auto 26px;font-size:16px;line-height:1.6;color:#e2e2e2}
+.sfb-routine{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:40px;align-items:center;max-width:960px;margin:0 auto}
+.sfb-steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.sfb-steps li{display:flex;gap:16px;align-items:flex-start;background:#fff;border-radius:16px;padding:18px 20px}
+.sfb-steps b{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#151515;color:#fff;font-size:15px}
+.sfb-steps h3{font-size:17px;font-weight:600;margin:2px 0 4px}
+.sfb-steps p{font-size:15px;line-height:1.5;color:#3b3b3b;margin:0}
+.sfb-routine__note{font-size:14.5px;color:#6a6a6a;margin:16px 0 0}
+.sfb-routine__video{border-radius:18px;overflow:hidden;background:#000;aspect-ratio:9/16}
+.sfb-routine__video video{display:block;width:100%;height:100%;object-fit:cover}
+.sfb-expect{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.sfb-expect article{background:#fff;border:1px solid #e7e7e7;border-radius:20px;padding:26px 24px}
+.sfb-expect h3{font-size:18px;font-weight:600;margin:0 0 10px}
+.sfb-expect p{font-size:15.5px;line-height:1.55;color:#3b3b3b;margin:0}
+.sfb-expect article:last-child{background:#151515;border-color:#151515}
+.sfb-expect article:last-child h3,.sfb-expect article:last-child p{color:#fff}
+.sfb-cross{display:grid;grid-template-columns:420px minmax(0,1fr);gap:44px;align-items:center;max-width:1000px;margin:0 auto}
+.sfb-cross img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:20px;display:block;background:#f1efec}
+.sfb-cross .sfb-eyebrow{text-align:left}
+.sfb-cross h2{text-align:left}
+.sfb-cross__rating{display:flex;align-items:center;gap:10px;margin:16px 0 0;font-size:15px;font-weight:600}
+.sfb-cross__rating span{display:inline-flex;gap:2px}
+.sfb-cross__rating i{display:grid;place-items:center;width:22px;height:22px;background:#00b67a;color:#fff;font-style:normal}
+.sfb-cross p{font-size:16px;line-height:1.6;color:#3b3b3b;margin:14px 0 22px}
+.sfb-cross__price{font-size:18px;font-weight:600;margin:0 0 18px}
+.sfb-cross__price s{color:#8a8a8a;font-weight:400;margin-left:8px}
+.sfb-noreviews{max-width:760px;margin:0 auto;text-align:center;border:1px solid #e7e7e7;border-radius:20px;padding:40px 28px}
+.sfb-noreviews__stars{display:inline-flex;gap:3px;margin:0 0 14px}
+.sfb-noreviews__stars i{display:grid;place-items:center;width:30px;height:30px;background:#dcdce6;color:#fff;font-style:normal;font-size:18px}
+.sfb-noreviews h3{font-size:22px;font-weight:600;margin:0 0 10px}
+.sfb-noreviews p{font-size:16px;line-height:1.6;color:#3b3b3b;margin:0 auto 22px;max-width:560px}
+.sfb-noreviews .sfb-noreviews__write{margin:16px 0 0;font-size:14.5px}
+.sfb-noreviews__write a{color:#151515;text-decoration:underline}
+#sfb-no-reviews[hidden],.sfb-noreviews__write[hidden]{display:none}
 @media (max-width:989px){
  .sfb-sec{padding:52px 0}
  .sfb-how{grid-template-columns:1fr}
  .sfb-videos__nav{display:none}
+ .sfb-routine{grid-template-columns:1fr;gap:24px}
+ .sfb-routine__video{max-width:300px;margin:0 auto;width:100%}
+ .sfb-expect{grid-template-columns:1fr}
+ .sfb-cross{grid-template-columns:1fr;gap:24px}
+ .sfb-cross .sfb-eyebrow,.sfb-cross h2{text-align:center}
+ .sfb-cross__rating{justify-content:center}
+ .sfb-cross p,.sfb-cross__price{text-align:center}
 }
 @media (max-width:599px){
  .sfb-wrap{width:calc(100% - 32px)}
@@ -437,6 +472,62 @@ def risk_free_html(buy='#apf-buy'):
             f'<span class="sfb-eyebrow">{esc(r["eyebrow"])}</span><h2>{esc(r["lead"])} <span class="sfb-mark">{esc(r["mark"])}</span></h2>'
             + (f'<p class="sfb-risk__proof"><span aria-label="5 out of 5 stars">{stars}</span>{esc(r["proof"])}</p>' if r.get('proof') else '') +
             f'<p>{esc(r["text"])}</p><a class="sfb-btn sfb-btn--light" href="{buy}">{esc(r["button"])}</a></div></div></section>')
+
+
+def routine_html(video, buy='#apf-buy'):
+    """The 3-minute routine: four steps (as on the how-to-use card) beside the tutorial video. video: (mp4, poster)."""
+    mp4, poster = video
+    r = ROUTINE
+    steps = ''.join(f'<li><b>{k}</b><div><h3>{esc(h)}</h3><p>{esc(p)}</p></div></li>' for k, (h, p) in enumerate(r['steps'], 1))
+    return (f'<section class="sfb sfb-sec sfb-sec--grey" id="sfb-routine">{_head(r["eyebrow"], r["lead"], r["mark"])}'
+            f'<div class="sfb-wrap"><div class="sfb-routine"><div><ol class="sfb-steps">{steps}</ol>'
+            f'<p class="sfb-routine__note">{esc(r["note"])}</p></div>'
+            f'<div class="sfb-routine__video"><video controls playsinline preload="none" poster="{poster}" width="720" height="1280" '
+            f'aria-label="How to use the Lymphatic Brush"><source src="{mp4}" type="video/mp4"></video></div></div>'
+            f'<div class="sfb-end"><a class="sfb-btn" href="{buy}">{esc(HOW["button"])} {_ARROW}</a></div></div></section>')
+
+
+def expect_html():
+    e = EXPECT
+    cards = ''.join(f'<article><h3>{esc(h)}</h3><p>{esc(p)}</p></article>' for h, p in e['cards'])
+    return (f'<section class="sfb sfb-sec">{_head(e["eyebrow"], e["lead"], e["mark"])}'
+            f'<div class="sfb-wrap"><div class="sfb-expect">{cards}</div></div></section>')
+
+
+def cross_html(img, href, price, compare, rating=None):
+    """The foundation after the brush. rating: (average, count) of its verified reviews, shown in the same green
+    boxed stars as its own page."""
+    c = CROSS
+    stars = ''.join('<i aria-hidden="true">&#9733;</i>' for _ in range(5))
+    proof = (f'<p class="sfb-cross__rating"><span role="img" aria-label="Rated {rating[0]:.1f} out of 5">{stars}</span>'
+             f'{rating[0]:.1f}/5 from {int(rating[1]):,} verified reviews</p>') if rating else ''
+    return (f'<section class="sfb sfb-sec sfb-sec--grey" id="sfb-cross"><div class="sfb-wrap"><div class="sfb-cross">'
+            f'<a href="{href}"><img src="{img}" alt="Adaptive Peptide Foundation" width="1080" height="1080" loading="lazy" decoding="async"></a>'
+            f'<div><span class="sfb-eyebrow">{esc(c["eyebrow"])}</span><h2>{esc(c["lead"])} <span class="sfb-mark">{esc(c["mark"])}</span></h2>'
+            f'{proof}<p>{esc(c["text"])}</p><p class="sfb-cross__price">From {money(price)}<s>{money(compare)}</s></p>'
+            f'<a class="sfb-btn" href="{href}">{esc(c["button"])}</a></div></div></div></section>')
+
+
+def no_reviews_html(buy='#apf-buy'):
+    """Until the brush has real reviews: an empty Trustpilot-style box that says so, with the guarantee as the proof.
+    It hides itself once the store's own reviews of the brush appear (the review wall above then shows them), and
+    shows a "Write a review" link when NEXT lets the shopper review the brush."""
+    n = NO_REVIEWS
+    stars = ''.join('<i aria-hidden="true">&#9733;</i>' for _ in range(5))
+    return (f'<section class="sfb sfb-sec" id="sfb-no-reviews"><div class="sfb-wrap">'
+            f'{_head(n["title"], n["lead"])}<div class="sfb-noreviews"><span class="sfb-noreviews__stars">{stars}</span>'
+            f'<p>{esc(n["text"])}</p><a class="sfb-btn" href="{buy}">{esc(n["button"])}</a>'
+            f'<p class="sfb-noreviews__write" hidden><a href="#">{esc(n["write"])}</a></p></div></div>'
+            '<script>(function () {'
+            'var box = document.currentScript.parentNode;'
+            'function check() {'
+            'var el = document.querySelector("[data-sf-native-reviews]"), d = null;'
+            'try { d = JSON.parse(el ? el.textContent : "{}"); } catch (e) { return; }'
+            'if (d && (d.reviews || []).length) { box.hidden = true; return; }'
+            'if (d && d.write) { var w = box.querySelector(".sfb-noreviews__write"); w.querySelector("a").href = d.write; w.hidden = false; }'
+            '}'
+            'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", check); else check();'
+            '})();</script></section>')
 
 
 # around the site ---------------------------------------------------------------------------------------------------

@@ -1,7 +1,8 @@
 # The Lymphatic Brush
 
 SKINOFAB's second main product, built from the owner's Solena page (https://thesolena.com/products/the-lymphatic-brush):
-the same page and offer, under the SKINOFAB name and in the store's black-and-white look.
+Solena's offer and structure, under the SKINOFAB name and in the store's black-and-white look, with every claim nothing
+backs taken out (below).
 
 Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?preview_theme=34
 
@@ -9,15 +10,30 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
 
 | Where | What |
 |---|---|
-| NEXT product 169 | "The Lymphatic Brush", public, one-time purchase (no refills), template `the-lymphatic-brush`, 7 gallery images |
+| NEXT product 169 | "The Lymphatic Brush", public, one-time purchase (no refills), template `the-lymphatic-brush`, 5 gallery images (the brush and case card first: the cart and checkout thumbnail) |
 | Bundles (variants) | 170: 1 brush + free case, $24.95 (was $49.90) · 171: 2 brushes + 2 free cases, $39.95 (was $99.80), chosen by default · 172: 3 brushes + 3 free cases + free body brush, $49.90 (was $149.70) |
-| Product page | Gallery, buyers line, stars (hidden until there are reviews), title and price, free shipping badge, 4 benefits, bundle picker, Add to cart with the bundle price, guarantee, 5 tabs (video tutorial, cleaning, shipping, specifications, returns), review videos, how it works, the copy comparison slider, FAQ, guarantee card, review wall, sticky bar |
+| Product page | Gallery (hero, case, how to use, features, vs other tools), stars (hidden until there are reviews), title and price, free shipping badge, a one-line promise, 4 benefits, bundle picker, Add to cart with the bundle price, guarantee, 4 tabs (cleaning, shipping, specifications, returns), the 3-minute routine with the tutorial video, creator clips, why faces are puffy in the morning, what to expect (including what it won't do), the copy comparison slider, the foundation for after (its real 4.8/5 rating), FAQ (11 answers), guarantee card, review wall or an honest "No reviews yet" box, sticky bar |
 | Homepage | A product card in the shelf like the other products (default list, Bestsellers, New and Face tabs), next to the gua sha and face roller, with a "New" badge |
 | Collections | Accessories, Face, Skin and Bestsellers in NEXT, as the gua sha and the face roller |
 | Menus | "Lymphatic Brush" in the desktop and mobile menus (before Bestsellers) and in the footer's Shop column, on every page |
 | Cart drawer | First add-on (shown while the brush is not in the bag) and its own upgrade card, 1 brush → 2 brushes for $15 |
 
 ## What changed from Solena's page, and why
+
+- **Claims.** The brush is sold as a light, dry facial massage for the look of morning puffiness, not as drainage:
+  no "soft bristles drain fluid out of your face", no "puffiness goes down after the first use" as a promise, no
+  "water retention" or "supports drainage" (re-set in the same Montserrat in the features and vs-tools images).
+  The "what to expect" section says the effect is temporary and that it won't erase wrinkles or reshape a face.
+- **Gallery.** Gallery 1 is new: the real brush and its SKINOFAB case with an honest headline and the guarantee seal
+  (no model; a 45+ persona photo takes it once generated, [persona-image-shots.md](persona-image-shots.md) B1).
+  Solena's before/after (a face whose wrinkles vanish, which a brush cannot do) and its "Loved by 5,000+" board of
+  before/afters are not used. The NEXT product's images were replaced the same way (old ones in
+  `<work_dir>/brush-gallery-undo.json`).
+- **Creator clips.** "POV: Shaving 10 years off in 5 mins" and "The lazy girl's secret to a sculpted face" are left
+  out; the four others stay, the woman in her 50s first, under "Three minutes, every morning" (they are creators,
+  not verified buyers, so not "Real people, real results").
+- **The buyers line ("Nicole and 5,000+ others purchased"): removed.** The brush is new at SKINOFAB.
+- **The free body brush** is a "Body Dry Brush", not "Anti-Cellulite".
 
 - **The name.** "Solena" is gone everywhere: the case logo on gallery image 5 and on the case gift photo is now the
   SKINOFAB wordmark, "THE SOLENA" on the comparison chart (gallery 6) is now "THE SKINOFAB", the how-to video has the
@@ -34,7 +50,9 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
 - **The "As seen in" press logos** (Cosmopolitan, Allure, Elle, Marie Claire…): left out unless the brush really was
   featured in them.
 
-As soon as real reviews exist, the stars and the review wall appear on their own: SKINOFAB buyers' reviews through
+Until then the page says so ("No reviews yet", with the 30-day guarantee as the proof, and a "Write the first
+review" link when NEXT allows it). As soon as real reviews exist, the stars and the review wall appear on their own
+(and the box hides itself): SKINOFAB buyers' reviews through
 NEXT (approve them in the dashboard), or an export of real reviews imported with `tools/reviews/import_reviews.py`
 (see [reviews.md](reviews.md)).
 
@@ -54,7 +72,8 @@ The work dir is the one `tools/build_store.sh` uses.
 python3 -I tools/persona/brush_assets.py <work_dir>
 # 2. the NEXT product and its bundles (idempotent) -> <work_dir>/brush-offers.json and catalog-rb.json
 NEXT_API_TOKEN=... python3 -I tools/persona/setup_brush_offers.py skinofab <work_dir>
-NEXT_API_TOKEN=... python3 -I tools/persona/upload_gallery.py skinofab 169 <work_dir>/brush-gallery-undo.json brand/lymphatic-brush/gallery-{1..7}.jpg
+NEXT_API_TOKEN=... python3 -I tools/persona/upload_gallery.py skinofab 169 <work_dir>/brush-gallery-undo.json \
+  brand/lymphatic-brush/{card,hero,how-to-use,features,vs-tools}.jpg
 # 3. the theme (apply_persona.py builds the brush page from tools/persona/brush_copy.py)
 tools/build_store.sh <work_dir>
 ```

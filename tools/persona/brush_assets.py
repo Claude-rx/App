@@ -2,10 +2,13 @@
 
 usage: python3 -I brush_assets.py <work_dir>
 - downloads the sources listed in brush_copy.SOURCES into <work_dir>/brush/src/ (kept; a re-run reuses them)
-- images -> brand/lymphatic-brush/ (committed): the 7 gallery images, the "how it works" drawings, the comparison
-  photos, the buyer avatars, the bundle gift photos and the homepage shelf card (card.jpg). Two carried the Solena name and are rebranded here:
-  the case's printed logo (gallery 5 and the case gift photo) becomes the SKINOFAB wordmark, and "THE SOLENA" on
-  the comparison chart (gallery 6) becomes "THE SKINOFAB"
+- images -> brand/lymphatic-brush/ (committed): the gallery in brush_copy.GALLERY order (hero, case, how-to-use,
+  features, vs-tools), the "how it works" drawings, the comparison photos, the bundle gift photos and the homepage
+  shelf card (card.jpg). Claims nothing backs are taken out of the pixels: the hero is new (the real brush and its
+  SKINOFAB case, an honest headline, no model); "water retention" and "move fluid" (features) and "supports drainage"
+  (vs-tools) are re-set in the same Montserrat; the case's printed logo becomes the SKINOFAB wordmark and "THE SOLENA"
+  on the chart becomes "THE SKINOFAB". Solena's before/after photos (wrinkles that vanish) and its "Loved by 5,000+"
+  board are not used.
 - videos -> <work_dir>/brush/media/ (not committed, like the theme's other media): the six silent review clips at
   540 x 960, and the how-to video at 720 x 1280 with the "from Solena" words cut (sound and burned-in caption,
   6.42 s to 7.27 s), each with a poster frame
@@ -17,7 +20,7 @@ import numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from brush_copy import SOURCES
+from brush_copy import SOURCES, GALLERY, HERO
 
 WORK = Path(sys.argv[1]).resolve()
 SRC, MEDIA = WORK / 'brush' / 'src', WORK / 'brush' / 'media'
@@ -25,6 +28,9 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'brand' / 'lymphatic-brush'
 LOGO = ROOT / 'brand' / 'checkout' / 'skinofab-logo-1200.png'
 FONT = Path(__file__).resolve().parent / 'assets' / 'fonts' / 'Montserrat-VF.ttf'
+PLAYFAIR = ROOT / 'tools' / 'theme-build' / 'static' / 'fonts' / 'playfairdisplay_v40_nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgA.woff2'
+BG = (245, 244, 240)                                   # the gallery's cream backdrop
+INK, MAUVE = (45, 34, 30), (156, 92, 101)              # its heading and accent colors
 TUTORIAL_CUT = (6.42, 7.27)     # "from Solena", spoken and captioned
 
 
@@ -88,6 +94,102 @@ def chart_title(img):
     return np.asarray(im).astype(np.float32)
 
 
+def vf(path, size, weight):
+    f = ImageFont.truetype(str(path), size); f.set_variation_by_name(weight); return f
+
+
+def retext(img, region, old_lines, new_lines, weight, align='left', fit=None):
+    """The text lines inside region (x0, y0, x1, y1), on a flat backdrop, re-set as new_lines in Montserrat at the
+    original's size (from the measured width of each old line), on the original baselines and in the original ink."""
+    im = img if isinstance(img, Image.Image) else Image.fromarray(np.clip(img, 0, 255).astype(np.uint8))
+    x0, y0, x1, y1 = region
+    a = np.asarray(im.convert('RGB')).astype(np.int16)
+    sub = a[y0:y1, x0:x1]
+    bg = np.median(np.concatenate([sub[0], sub[-1], sub[:, 0], sub[:, -1]]), axis=0)
+    ink = np.abs(sub - bg).sum(2) > 90
+    bands, start = [], None
+    for y, r in enumerate(list(ink.any(1)) + [False]):
+        if r and start is None: start = y
+        if not r and start is not None:
+            if bands and start - bands[-1][1] < 4: bands[-1] = (bands[-1][0], y)
+            elif y - start > 3: bands.append((start, y))
+            start = None
+    if len(bands) != len(old_lines): raise SystemExit(f'retext: {len(bands)} lines in {region}, expected {len(old_lines)}')
+    lines = []
+    for b0, b1 in bands:
+        cols = np.nonzero(ink[b0:b1].any(0))[0]
+        lines.append((x0 + cols.min(), y0 + b0, x0 + cols.max() + 1, y0 + b1))
+    ref = vf(FONT, 100, weight)
+    w = lambda f, s: f.getbbox(s, anchor='ls')[2] - f.getbbox(s, anchor='ls')[0]
+    size = round(np.mean([100 * (l[2] - l[0]) / w(ref, s) for l, s in zip(lines, old_lines)]))
+    f = vf(FONT, size, weight)
+    px = sub[ink]; lum = px.mean(1)
+    color = tuple(int(v) for v in np.median(px[lum <= np.percentile(lum, 35)], axis=0))   # the core of the strokes
+    out = im.convert('RGB').copy(); d = ImageDraw.Draw(out)
+    d.rectangle(region, fill=tuple(int(v) for v in bg))
+    for (lx0, _, _, ly1), old, new in zip(lines, old_lines, new_lines):
+        base = ly1 - f.getbbox(old, anchor='ls')[3]
+        g = f
+        while fit and w(g, new) > fit and g.size > 6: g = vf(FONT, g.size - 1, weight)
+        bb = g.getbbox(new, anchor='ls')
+        x = (x0 + x1) / 2 - (bb[2] - bb[0]) / 2 - bb[0] if align == 'center' else lx0 - bb[0]
+        d.text((x, base), new, font=g, fill=color, anchor='ls')
+    return np.asarray(out).astype(np.float32)
+
+
+def hero(case_img):
+    """Gallery 1: the real brush and its SKINOFAB case (from the case photo) on the gallery's backdrop, with an honest
+    promise (brush_copy.HERO), three plain facts and the 30-day guarantee seal. No model: a persona photo takes this
+    place once one is generated (docs/persona-image-shots.md, B1)."""
+    W = 1080
+    im = Image.new('RGB', (W, W), BG); d = ImageDraw.Draw(im)
+    src = np.asarray(case_img).astype(np.int16)
+    mask = np.abs(src - np.array(BG)).sum(2) > 30
+    mask[:320] = False                                   # the case photo's own heading
+    ys, xs = np.nonzero(mask)
+    prod = case_img.crop((xs.min() - 6, ys.min() - 6, xs.max() + 7, ys.max() + 7))
+    scale = 640 / prod.height
+    prod = prod.resize((round(prod.width * scale), 640), Image.LANCZOS)
+    im.paste(prod, (W - prod.width - 40, W - prod.height - 70))
+    y = 70
+    for line in HERO['title']:
+        f = vf(FONT, 78, 'Black')
+        while d.textlength(line, font=f) > W - 120: f = vf(FONT, f.size - 2, 'Black')
+        d.text((60, y), line, font=f, fill=INK, anchor='lt'); y += 88
+    small, big = vf(FONT, 40, 'Bold'), vf(PLAYFAIR, 92, 'Bold')
+    d.text((62, y + 66), HERO['in'], font=small, fill=INK, anchor='ls')
+    d.text((62 + d.textlength(HERO['in'] + ' ', font=small), y + 70), HERO['accent'], font=big, fill=MAUVE, anchor='ls')
+    y += 120
+    chip_f = vf(FONT, 27, 'SemiBold')
+    for fact in HERO['facts']:
+        tw = d.textlength(fact, font=chip_f)
+        d.rounded_rectangle((52, y, 52 + 94 + tw + 30, y + 78), radius=39, fill=(233, 228, 220))
+        d.ellipse((66, y + 15, 114, y + 63), fill=(255, 255, 255))
+        d.line([(79, y + 40), (87, y + 48), (102, y + 31)], fill=MAUVE, width=5, joint='curve')
+        d.text((136, y + 40), fact, font=chip_f, fill=(75, 60, 55), anchor='lm'); y += 96
+    seal = guarantee_seal(220)
+    im.paste(seal, (44, W - seal.height - 44), seal)
+    return np.asarray(im).astype(np.float32)
+
+
+def guarantee_seal(size):
+    """The 30-day money-back seal of Solena's first image, redrawn (its photo overlaps the model): a mauve
+    starburst, the text slightly tilted. RGBA, size x size."""
+    import math
+    k = 4                                                # drawn large, scaled down for smooth edges
+    S = size * k
+    seal = Image.new('RGBA', (S, S), (0, 0, 0, 0)); d = ImageDraw.Draw(seal)
+    c, R, r, n = S / 2, S / 2 - 2, S / 2 * 0.86, 24
+    pts = [(c + (R if i % 2 == 0 else r) * math.cos(math.pi * i / n), c + (R if i % 2 == 0 else r) * math.sin(math.pi * i / n)) for i in range(2 * n)]
+    d.polygon(pts, fill=MAUVE + (255,))
+    text = Image.new('RGBA', (S, S), (0, 0, 0, 0)); td = ImageDraw.Draw(text)
+    td.text((c, c - S * 0.11), '30-Day', font=vf(FONT, int(S * 0.17), 'Bold'), fill=(255, 255, 255, 255), anchor='mm')
+    td.text((c, c + S * 0.07), 'Money-Back', font=vf(FONT, int(S * 0.095), 'Medium'), fill=(255, 255, 255, 255), anchor='mm')
+    td.text((c, c + S * 0.19), 'Guarantee', font=vf(FONT, int(S * 0.095), 'Medium'), fill=(255, 255, 255, 255), anchor='mm')
+    seal.alpha_composite(text.rotate(8, resample=Image.BICUBIC, center=(c, c)))
+    return seal.resize((size, size), Image.LANCZOS)
+
+
 def save(arr_or_img, name, size=None, quality=86):
     im = arr_or_img if isinstance(arr_or_img, Image.Image) else Image.fromarray(np.clip(arr_or_img, 0, 255).astype(np.uint8))
     im = im.convert('RGB')
@@ -104,25 +206,31 @@ def square(name, px):
 
 def images():
     OUT.mkdir(parents=True, exist_ok=True)
-    for k in range(1, 8):
-        img = rgb(f'gallery-{k}.png')
-        if k == 5: img = case_logo(img, (400, 750, 690, 836), 252)
-        if k == 6: img = chart_title(img)
-        save(img, f'gallery-{k}.jpg', quality=88)
+    for old in list(OUT.glob('gallery-*.jpg')) + list(OUT.glob('buyer-*.jpg')) + list(OUT.glob('review-*.jpg')): old.unlink()
+    case = case_logo(rgb('gallery-5.png'), (400, 750, 690, 836), 252)
+    case_img = Image.fromarray(np.clip(case, 0, 255).astype(np.uint8))
+    made = {
+        'hero': hero(case_img),
+        'case': case,
+        'how-to-use': rgb('gallery-4.png'),
+        'features': retext(retext(rgb('gallery-3.png'), (60, 112, 1020, 186), ['WATER RETENTION'], ['MORNING PUFFINESS'],
+                                  'ExtraBold', 'center', fit=960),
+                           (220, 425, 515, 515), ['Hundreds of tips move', 'fluid just under the skin,', 'no pressing needed'],
+                           ['Hundreds of soft tips', 'sweep over the skin,', 'no pressing needed'], 'Regular'),
+        'vs-tools': retext(chart_title(rgb('gallery-6.png')), (85, 690, 470, 760), ['Supports drainage with', 'light pressure'],
+                           ['Works with just a', 'light touch'], 'SemiBold'),
+    }
+    for name in GALLERY: save(made[name], f'{name}.jpg', quality=88)
     for k in range(1, 4): save(Image.open(SRC / f'mech-{k}.webp'), f'how-{k}.jpg', (1264, 848))
     save(Image.open(SRC / 'compare-ours.png'), 'compare-ours.jpg', (1000, 1000))
     save(Image.open(SRC / 'compare-copy.png'), 'compare-copy.jpg', (1000, 1000))
-    for k in range(1, 4):
-        save(square(f'avatar-{k}.webp', 96), f'buyer-{k}.jpg')
-        save(square(f'mini-{k}.' + ('avif' if k == 1 else 'webp'), 112), f'review-{k}.jpg')
-    case = case_logo(rgb('gift-case.png'), (285, 340, 520, 420), 196)
-    save(Image.fromarray(np.clip(case, 0, 255).astype(np.uint8)).crop((210, 200, 590, 580)), 'gift-case.jpg', (160, 160))
+    gift = case_logo(rgb('gift-case.png'), (285, 340, 520, 420), 196)
+    save(Image.fromarray(np.clip(gift, 0, 255).astype(np.uint8)).crop((210, 200, 590, 580)), 'gift-case.jpg', (160, 160))
     save(Image.open(SRC / 'gift-body-brush.png').convert('RGB').crop((120, 120, 680, 680)), 'gift-body-brush.jpg', (160, 160))
-    # the product card (homepage shelf): the brush and its SKINOFAB case from gallery 5, without its heading, on the
-    # same backdrop with room around it (the card crops to its own aspect)
-    g5 = Image.open(OUT / 'gallery-5.jpg').convert('RGB')
-    card = Image.new('RGB', (1080, 1080), tuple(int(c) for c in np.median(np.asarray(g5)[1040:1075, 20:1060].reshape(-1, 3), axis=0)))
-    card.paste(g5.crop((200, 330, 880, 1010)).resize((820, 820), Image.LANCZOS), (130, 140))
+    # the product card (homepage shelf): the brush and its SKINOFAB case, without the photo's heading, on the same
+    # backdrop with room around it (the card crops to its own aspect)
+    card = Image.new('RGB', (1080, 1080), BG)
+    card.paste(case_img.crop((200, 330, 880, 1010)).resize((820, 820), Image.LANCZOS), (130, 140))
     save(card, 'card.jpg', quality=88)
     for p in sorted(OUT.glob('*.jpg')): print(p.relative_to(ROOT), Image.open(p).size, p.stat().st_size // 1024, 'KB')
 
