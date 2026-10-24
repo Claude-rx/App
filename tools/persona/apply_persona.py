@@ -65,11 +65,14 @@ def gift_icons():
 
 BRAND = Path(__file__).resolve().parents[2] / 'brand'
 
-def section_image(src, name, size=(1000, 1250), shadow=False):
-    """A 4:5 crop of a brand image for the problem / solution sections, under a content-hashed name, on pure white
-    like every product image (white_bg.matte; shadow: a contact shadow under a bottle that stands on the floor)."""
+def section_image(src, name, size=(1000, 1250), white=False, shadow=False):
+    """A 4:5 crop of a brand image for the problem / solution sections, under a content-hashed name. white: on pure
+    white like every product image (white_bg.matte; shadow: a contact shadow under a bottle that stands on the
+    floor); not for a close-up the product fills (the label detail), which has no backdrop."""
     from PIL import Image, ImageOps
-    im = ImageOps.fit(white_bg.matte(Image.open(src).convert('RGB'), shadow=shadow), size, Image.LANCZOS, centering=(0.5, 0.42))
+    im = Image.open(src).convert('RGB')
+    if white: im = white_bg.matte(im, shadow=shadow)
+    im = ImageOps.fit(im, size, Image.LANCZOS, centering=(0.5, 0.42))
     tmp = DST / 'assets' / 'img' / f'{name}.jpg'
     im.save(tmp, quality=85, optimize=True, progressive=True)
     final = tmp.with_name(f"{name}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg")
@@ -78,8 +81,8 @@ def section_image(src, name, size=(1000, 1250), shadow=False):
 
 def problem_solution():
     return apf_copy.problem_solution_html(
-        section_image(BRAND / 'persona' / 'age-73.jpg', 'skinofab-problem-skin-after-45'),
-        section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle', shadow=True))
+        section_image(BRAND / 'persona' / 'age-73.jpg', 'skinofab-problem-skin-after-45', white=True),
+        section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle', white=True, shadow=True))
 
 def crop_to(src_path, name, size, centering, white=False):
     """A crop of an export image at `size`, under a content-hashed name (NEXT's CDN caches by file name); white: its
@@ -346,6 +349,7 @@ WHITE = [
     ('ColorChangingFoundation-Productimagesphotos_4_35e0c406', 'light'),            # "Loved by", on off-white
     ('6_d0973846', 'light'), ('7_ba7831f0', 'light'),                                # What's inside, The Science
     ('ColorChangingFoundation-Productimagesphotos_1_87f31fb4', 'light'), ('new_iamges', 'light'),
+    ('2_babe5169', 'matte'),                                            # The skinofab difference
     ('ColorChangingFoundation-Productimagesphotos_412bfd2c', 'ink'),   # "Adapts To Your Skin": white on black
     ('8_87ca3242', 'board'),                                            # "skinofab vs. others": white on black
 ]
@@ -370,8 +374,8 @@ def ink_panel(im):
 
 
 def white_backdrops():
-    """Every page's copy of the foundation's photos in WHITE made white by its own pixels (each width is a
-    separate file), saved under a new content-hashed name, every reference rewritten. The black "vs. others" board
+    """Every page's copy of the foundation's photos in WHITE, and every homepage product card's image, made white by
+    its own pixels (each width is a separate file), saved under a new content-hashed name, every reference rewritten. The black "vs. others" board
     becomes brand/adaptive-peptide-foundation/vs-others.jpg (product_photos.py foundation). Results are cached by
     the input's hash in <work_dir>/white-cache. Returns the number of files replaced."""
     from PIL import Image
@@ -382,17 +386,26 @@ def white_backdrops():
     used = set()
     for t in texts.values():
         used.update(re.findall(r'([A-Za-z0-9_.\-]+\.(?:jpg|jpeg|png|webp))', t))
+    # the homepage's product cards (shelf, Essentials, Bundle & Save): packshots on a flat pale grey
+    home = texts.get(DST / 'index.html', '')
+    cards = {n for art in re.findall(r'<article class="fh-product">(.*?)</article>', home, re.S)
+             for n in re.findall(r'assets/img/([^" ,]+\.(?:jpg|jpeg|png|webp))', art)}
     board = BRAND / 'adaptive-peptide-foundation' / 'vs-others.jpg'
     make = {'flood': white_bg.flood, 'matte': white_bg.matte, 'light': white_bg.light, 'ink': ink_panel,
+            'card': lambda im: white_bg.matte(im, flat=True),
             'board': lambda im: Image.open(board).convert('RGB').resize(im.size, Image.LANCZOS)}
     import inspect
     salt = hashlib.md5(Path(white_bg.__file__).read_bytes() + inspect.getsource(ink_panel).encode()).digest()  # code changes: recompute
     renames = {}
     for name in sorted(used):
         src = img_dir / name
-        mode = next((m for prefix, m in WHITE if name.startswith(prefix)), None)
+        mode = next((m for prefix, m in WHITE if name.startswith(prefix)), 'card' if name in cards else None)
         if not mode or not src.is_file() or re.search(r'-w[0-9a-f]{6}$', src.stem): continue
         data = src.read_bytes()
+        if mode == 'card':
+            import numpy as np
+            level = white_bg.backdrop_level(np.asarray(Image.open(src).convert('RGB')).astype(np.float32))
+            if level is not None and level >= 254: continue          # already white (the second products' cards)
         key = cache / f"{hashlib.md5(salt + data + mode.encode() + (board.read_bytes() if mode == 'board' else b'')).hexdigest()}{src.suffix}"
         if not key.exists():
             im = Image.open(src)
@@ -1128,7 +1141,7 @@ def sticky_thumb(src, name):
     """A 104 px square thumbnail on white (a transparent packshot would turn black as a JPEG)."""
     from PIL import Image
     im = Image.open(src).convert('RGBA')
-    s = max(im.size); sq = Image.new('RGBA', (s, s), (244, 244, 242, 255))
+    s = max(im.size); sq = Image.new('RGBA', (s, s), (255, 255, 255, 255))
     sq.alpha_composite(im, ((s - im.width) // 2, (s - im.height) // 2))
     out = DST / 'assets' / 'img' / f'{name}.jpg'
     sq.convert('RGB').resize((104, 104), Image.LANCZOS).save(out, quality=86, optimize=True)
@@ -1279,7 +1292,7 @@ def main():
     texts[pdp], hp = honest_pdp(texts[pdp], found and found['summary'])
     print('honest pdp', hp)
     pack = ccf_copy.PACKS[0]
-    texts[pdp], ok = sticky_bar(texts[pdp], sticky_thumb(BRAND / 'adaptive-peptide-foundation' / '01-front.png', 'skinofab-apf-sticky'),
+    texts[pdp], ok = sticky_bar(texts[pdp], sticky_thumb(BRAND / 'adaptive-peptide-foundation' / 'next' / '01-front.jpg', 'skinofab-apf-sticky'),
                                 'Adaptive Peptide Foundation',
                                 f"From {brush_copy.money(pack['refill'] if ccf_copy.REFILL.get('default') else pack['price'])} · Free shipping",
                                 'Choose your pack', found and (float(found['summary']['average']), int(found['summary']['count'])))

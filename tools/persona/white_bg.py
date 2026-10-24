@@ -16,7 +16,9 @@ matte  for photos whose backdrop a colour rule can't tell from the subject (silv
        a grey gradient): a segmentation model (ISNet, through rembg; the model file is downloaded once into
        ~/.u2net) gives the subject's alpha, hair strands soft; each near-neutral pixel is lifted by (1 - alpha) x
        (255 - the local backdrop), so the backdrop becomes pure white and a strand of hair only as much as it is
-       see-through, with no grey fringe. Warm pixels (skin) are never lifted, even where the model misses them.
+       see-through, with no grey fringe. Warm pixels (skin) and pixels far darker than the backdrop (a black
+       bottle) are never lifted, even where the model misses them.
+       flat=True for a packshot on one flat colour (a shop card): lifted by that colour, so the soft shadow stays.
 """
 import sys
 from pathlib import Path
@@ -95,27 +97,35 @@ def alpha_of(im, model='isnet-general-use'):
     return np.clip((a - 0.03) / 0.94, 0, 1)                         # the model's faint haze over the backdrop goes
 
 
-def matte(im, debug=None, model='isnet-general-use', shadow=False):
+def matte(im, debug=None, model='isnet-general-use', shadow=False, flat=False):
     """shadow: a soft contact shadow under a product that stands on a floor (a render's own floor shadow is part of
-    the grey floor, so it goes with it)."""
+    the grey floor, so it goes with it). flat: the backdrop is one flat colour (a packshot card): every pixel is
+    lifted by that colour's distance to white, so the product's own soft shadow stays, lighter."""
     a = np.asarray(im.convert('RGB')).astype(np.float32)
     alpha = alpha_of(im, model)
+    lum = a @ np.array([.299, .587, .114], np.float32)
     # the backdrop's local colour, from the confident backdrop pixels only (normalised convolution); where the subject
     # covers it, the backdrop's median
     w = (1 - alpha) ** 4
-    num = np.stack([ndimage.gaussian_filter(a[..., c] * w, 24) for c in range(3)], -1)
-    den = ndimage.gaussian_filter(w, 24)[..., None]
     med = np.median(a[w > 0.9], axis=0) if (w > 0.9).any() else np.full(3, 255, np.float32)
-    B = np.where(den > 1e-3, num / np.maximum(den, 1e-3), med)
+    # a pixel far darker than the backdrop is never backdrop, even where the model missed it (a black bottle)
+    g = np.clip((lum - (float(med @ np.array([.299, .587, .114])) - 75)) / 30, 0, 1)
+    w = w * g
+    if flat:
+        B = np.broadcast_to(med, a.shape)
+    else:
+        num = np.stack([ndimage.gaussian_filter(a[..., c] * w, 24) for c in range(3)], -1)
+        den = ndimage.gaussian_filter(w, 24)[..., None]
+        B = np.where(den > 1e-3, num / np.maximum(den, 1e-3), med)
     # only near-neutral pixels are lifted: where the model takes skin for backdrop (a pale neck against a pale wall),
     # the skin's warmth keeps it as it is
     spread = a.max(2) - a.min(2)
     n = np.clip((30 - spread) / 8, 0, 1)
-    out = a + ((1 - alpha) * n)[..., None] * (255 - B)
+    out = a + ((1 - alpha) * n * g)[..., None] * (255 - B)
     # what is left of the backdrop's grain (a floor's mottling) goes white too, only where the subject is see-through
     mn = out.min(2)
     t = np.clip((mn - 228) / 22, 0, 1); t = t * t * (3 - 2 * t)
-    out += (255 - out) * (t * (1 - alpha) * n)[..., None]
+    out += (255 - out) * (t * (1 - alpha) * n * g)[..., None]
     if shadow:                                                   # one per product standing in the photo
         lab, n = ndimage.label(alpha > 0.5)
         h, wd = alpha.shape

@@ -24,6 +24,8 @@ Where it runs:
   (`ink_panel`), beside the photo with its wall made white; "skinofab vs. others" is the same board as the other
   products' (`product_photos.py foundation`), with a blank generic bottle instead of the other brand's.
   Kept as shot: the daylight before/after (a real room) and the skin close-ups.
+- **Homepage cards** (the shelf, Essentials, Bundle & Save): every card image on a pale grey goes through `matte` with
+  `flat=True` (lifted by the backdrop's own colour, so each product's soft shadow stays, lighter).
 - **NEXT galleries** (cart and checkout thumbnails): the brush's, balm's and serum's are their white images; the
   foundation's is `brand/adaptive-peptide-foundation/next/` (`product_photos.py foundation`).
 
