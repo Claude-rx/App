@@ -35,7 +35,9 @@ vector file, `brand/logo/skinofab-wordmark.svg`. Before, most of them didn't:
    colour (wrapped around the cylinder on upright bottles), softened to the photo's sharpness; fingers in front of it
    stay in front.
 
-Every result was checked by eye against the original (before / after crops of each photo).
+Every result was checked by eye against the original: `docs/screenshots/wordmark-before-after.jpg` (each pair is
+before | after: the 16 foundation page photos, the 14 balm photos, two renders). The live shelf with the four cards at
+one size: `docs/screenshots/shelf-even-cards.png`.
 
 ## Where it runs
 
