@@ -18,7 +18,7 @@ Preview: https://skinofab.29next.store/catalogue/egf-nad-firming-serum_206/?prev
 - **Size and dose.** The page says 30 mL / 1.01 fl oz, two drops for the face and two for the neck, morning and night,
   about two months per bottle (`SIZE`, `BUNDLES` notes, FAQ). Change them if your bottle or dropper differs.
 - **Product photos of the real bottle.** The photos are AI-generated with the packaging blank; the label is printed on
-  by `label_composite.py` from the real wordmark (`brand/adaptive-peptide-foundation/00-logo.png`). The bottle in them
+  by `label_composite.py` from the real wordmark (`brand/logo/skinofab-wordmark.svg`, see `docs/real-wordmark.md`). The bottle in them
   is close to, not exactly, the one you will ship. Once the real bottle exists, photograph it on white and swap the
   packshots (`pack`, `tall`, `trio`) first.
 

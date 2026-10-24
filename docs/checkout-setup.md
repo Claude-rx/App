@@ -27,8 +27,9 @@ preview theme with the processor's test card and refund it.
 ## 2. Checkout look
 
 Dashboard → Settings → Branding:
-- **Logo**: `brand/checkout/skinofab-logo-1200.png` (black wordmark on transparent, 1200 × 198).
-- **Icon**: `brand/checkout/skinofab-icon-512.png` (favicon and checkout tab icon; the theme uses it instead of its own once set).
+- **Logo**: `brand/checkout/skinofab-logo-1200.png` (black wordmark on transparent, 1200 × 198; made from the owner's
+  vector file `brand/logo/skinofab-wordmark.svg` by `tools/persona/brand_logo.py`).
+- **Icon**: `brand/checkout/skinofab-icon-512.png` (favicon and checkout tab icon, the wordmark's own S; the theme uses it instead of its own once set).
 - **Primary color** and **Accent color**: `#151515`.
 
 In the dashboard's checkout settings (the source of the page's "Checkout Color Setting" block): button and link

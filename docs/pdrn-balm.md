@@ -65,15 +65,16 @@ Every photo is on pure white (`docs/white-backgrounds.md`: one white for every p
 in the foundation gallery's style. They were made with GPT Image 2.5 through Figma's image generator (the studio's
 GPT Image 2 / Nano Banana Pro route could not store results: its Vercel Blob storage is suspended). That route takes
 text only, so the stick is described in the prompt: matte black, about four times taller than wide, nude-pink balm
-dome, SKINOFAB vertical in a thin serif. Every image was checked for the wordmark's spelling and regenerated when it
-was wrong. Prompts: `tools/persona/image_prompts.json`; sources: `brand/pdrn-balm/source/`.
+dome, SKINOFAB vertical in a thin serif. The wordmark the AI drew on each stick (a different serif every time) is then
+replaced with the brand's own, from its vector file (`relabel_bottles.BALM` → `brand/pdrn-balm/labelled/`; see
+`docs/real-wordmark.md`). Prompts: `tools/persona/image_prompts.json`; sources: `brand/pdrn-balm/source/`.
 
 `tools/persona/product_photos.py` lays them out (Playfair Display headlines as on the foundation's gallery,
 Montserrat small type, the foundation's Korean badge) into `brand/pdrn-balm/*.jpg`; the page's section images are
 crops of the sources made at build time. The before/after photos are illustrations and say so on the image.
 
 ```bash
-python3 -I tools/persona/product_photos.py      # brand/pdrn-balm/source -> brand/pdrn-balm/*.jpg (and the brush's before/after)
+python3 -I tools/persona/product_photos.py balm   # brand/pdrn-balm/source -> labelled/ (the real wordmark) -> brand/pdrn-balm/*.jpg
 ```
 
 ## Rebuilding

@@ -26,6 +26,12 @@ Where it runs:
   Kept as shot: the daylight before/after (a real room) and the skin close-ups.
 - **Homepage cards** (the shelf, Essentials, Bundle & Save): every card image on a pale grey goes through `matte` with
   `flat=True` (lifted by the backdrop's own colour, so each product's soft shadow stays, lighter).
+- **The shelf's four products** (foundation, brush, balm, serum) show at one size: `apply_persona.even_shelf()` fits
+  each product's outline to 70% of the card's height (80% of its width if it is wide), centred on the product, its
+  base at 86% of the card, under the badges; the same 720 and 1080 px copies serve the list and its tabs. Each card
+  has a rating row in the same place: its real stars and count once the product has imported reviews
+  (`<work_dir>/reviews-<key>/reviews.json`), else "New · 30-day money-back guarantee". A product never shows another
+  product's rating.
 - **NEXT galleries** (cart and checkout thumbnails): the brush's, balm's and serum's are their white images; the
   foundation's is `brand/adaptive-peptide-foundation/next/` (`product_photos.py foundation`).
 

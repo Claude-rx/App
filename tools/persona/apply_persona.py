@@ -22,7 +22,7 @@ import hashlib, html, json, os, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, balm_copy, brush_copy, ccf_copy, company, serum_copy, twin, white_bg
+import apf_copy, balm_copy, brush_copy, ccf_copy, company, relabel_bottles, serum_copy, twin, white_bg
 SECOND_PRODUCTS = (brush_copy, balm_copy, serum_copy)
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
@@ -423,6 +423,87 @@ def white_backdrops():
             if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
     return len(renames)
 
+def relabel_bottles_on_pages():
+    """SKINOFAB's real wordmark on every foundation bottle in the pages' photos (relabel_bottles.SITE: the old,
+    stand-in wordmark found, erased and replaced), after white_backdrops: each photo's copies get new content-hashed
+    names (-l<hash>) and every reference is rewritten. Cached in <work_dir>/relabel-cache. Returns the files replaced."""
+    img_dir = DST / 'assets' / 'img'
+    texts = {p: p.read_text(encoding='utf-8', errors='surrogateescape') for p in DST.rglob('*')
+             if p.is_file() and p.suffix.lower() in TEXT}
+    used = set()
+    for t in texts.values():
+        used.update(re.findall(r'([A-Za-z0-9_.\-]+\.(?:jpg|jpeg|png|webp))', t))
+    renames = relabel_bottles.site(img_dir, used, WORK / 'relabel-cache')
+    if renames:
+        rx = re.compile('|'.join(re.escape(k) for k in sorted(renames, key=len, reverse=True)))
+        for p, t in texts.items():
+            n = rx.sub(lambda m: renames[m.group(0)], t)
+            if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
+    return len(renames)
+
+def even_card(im, size, height=0.70, width=0.80, bottom=0.86):
+    """A product card on white with the product at one scale: its outline (everything not white, its soft shadow
+    aside) fitted to height of the card (or width, if it is wide), centred, its base at bottom, so every card in the
+    shelf shows its product the same size, in the same place, under the badges."""
+    import numpy as np
+    from PIL import Image
+    im = im.convert('RGB')
+    a = np.asarray(im).astype(np.int16)
+    ys, xs = np.nonzero(a.min(2) < 225)
+    x0, x1, y0, y1 = xs.min(), xs.max() + 1, ys.min(), ys.max() + 1
+    k = min(height * size / (y1 - y0), width * size / (x1 - x0))
+    dx = np.nonzero(a.min(2) < 160)[1]                    # centred on the product itself, not its shadow beside it
+    cx = (dx.min() + dx.max() + 1) / 2 if len(dx) else (x0 + x1) / 2
+    big = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+    out = Image.new('RGB', (size, size), (255, 255, 255))
+    out.paste(big, (round(size / 2 - cx * k), round(bottom * size - y1 * k)))
+    return out
+
+SHELF_HANDLES = ['color-changing-foundation'] + [P.HANDLE for P in (brush_copy, balm_copy, serum_copy)]
+
+def even_shelf():
+    """The homepage shelf's cards of our four products, each product the same size and in the same place (even_card):
+    the foundation's card photo (as relabelled and whitened), the others' card.jpg. Every card of theirs in the shelf
+    (the list and its tabs) gets the same 720 and 1080 px copies. Returns the cards changed."""
+    from PIL import Image
+    home = DST / 'index.html'
+    t = home.read_text(encoding='utf-8', errors='surrogateescape')
+    m = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__bestsellers"', t)
+    if not m: return 0
+    end = t.find('</section>', m.start())
+    sec = t[m.start():end]
+    arts = list(re.finditer(r'<article class="fh-product">.*?</article>', sec, re.S))
+    def of(a): return next((h for h in SHELF_HANDLES if f'products/{h}.html"' in a.group(0)), None)
+    first = next((a for a in arts if of(a) == SHELF_HANDLES[0] and 'fh-upload' in a.group(0)), None)
+    src = {SHELF_HANDLES[0]: DST / re.search(r'src="([^"]+)"', first.group(0)).group(1)} if first else {}
+    src.update({P.HANDLE: P.IMG / 'card.jpg' for P in (brush_copy, balm_copy, serum_copy)})
+    made = {}
+    for h, path in src.items():
+        im = Image.open(path)
+        for size in (720, 1080):
+            tmp = DST / 'assets' / 'img' / f'skinofab-shelf-{h}-{size}w.jpg'
+            even_card(im, size).save(tmp, quality=88, optimize=True, progressive=True)
+            final = tmp.with_name(f"{tmp.stem}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg"); tmp.rename(final)
+            made[h, size] = 'assets/img/' + final.name
+    out, last, n = [], 0, 0
+    for a in arts:
+        h = of(a)
+        if not h or (h, 720) not in made: continue
+        art = a.group(0)
+        small, big = made[h, 720], made[h, 1080]
+        def img(mm):
+            tag = mm.group(0)
+            rich = 'fh-upload' in tag
+            tag = re.sub(r' src="[^"]*"', f' src="{big if rich else small}"', tag)
+            tag = re.sub(r' srcset="[^"]*"', f' srcset="{small} 720w, {big} 1080w"' if rich else f' srcset="{small} 720w"', tag)
+            tag = re.sub(r' width="\d+"', f' width="{1080 if rich else 720}"', tag)
+            return re.sub(r' height="\d+"', f' height="{1080 if rich else 720}"', tag)
+        art = re.sub(r'<img [^>]*>', img, art, count=1)
+        out.append(sec[last:a.start()] + art); last = a.end(); n += 1
+    sec = ''.join(out) + sec[last:]
+    home.write_text(t[:m.start()] + sec + t[end:], encoding='utf-8', errors='surrogateescape')
+    return n
+
 def real_testimonials(t, reviews=REVIEWS):
     """The product page's testimonial slider showed the design's persona stories ("Margaret, 61") with AI portraits
     under a "Verified purchase" badge. Each card now carries a real verified review (apf_copy.TESTIMONIALS) word for
@@ -756,12 +837,13 @@ def avatar():
 
 
 def twin_context(P, found, stats, amazon):
-    """What twin.sections needs for P: its images (brand/<product>/<name>.jpg, else its source/ photo, cropped to the
-    slot), clips, review strips, wall and "no reviews yet" box."""
+    """What twin.sections needs for P: its images (brand/<product>/<name>.jpg, else its labelled/ or source/ photo,
+    cropped to the slot), clips, review strips, wall and "no reviews yet" box."""
     def img(name, size, centering=(0.5, 0.5)):
         path = P.IMG / f'{name}.jpg'                   # product_photos.py made these white already
         raw = not path.exists()
-        if raw: path = P.IMG / 'source' / f'{name}.jpg'
+        if raw:                                        # the real wordmark on it, if it shows the product (product_photos)
+            path = next(p for p in (P.IMG / 'labelled' / f'{name}.jpg', P.IMG / 'source' / f'{name}.jpg') if p.exists())
         return crop_to(path, f'{P.IMG_PREFIX}-{name}-{size[0]}x{size[1]}', size, centering, white=raw)
     media = WORK / 'brush' / 'media'
     def clip(k):
@@ -912,6 +994,23 @@ def product_page(base, P, final, found=None):
                          f'From {P.money(P.PRICE)} · Free shipping', P.STICKY_BUTTON)
     return text
 
+SHIELD = ('<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="2" '
+          'stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6z"/>'
+          '<path d="M8.5 12l2.5 2.5 4.5-5"/></svg>')
+
+def shelf_rating(P, home):
+    """The rating row every shelf card has, in the same place as the foundation's: P's stars and count once it has
+    real reviews (<work_dir>/<P.REVIEWS_DIR>/reviews.json, imported from its review app), else what is true today:
+    it is new, and it carries the 30-day money-back guarantee. Never another product's rating."""
+    data = WORK / P.REVIEWS_DIR / 'reviews.json'
+    summary = json.loads(data.read_text()).get('summary') if data.exists() else None
+    if summary and int(summary.get('count') or 0):
+        stars = re.search(r'<div class="fh-product-rating"><img alt="" height="16" src="([^"]+)"', home)
+        img = f'<img alt="" height="16" src="{stars.group(1)}" width="80"/>' if stars else ''
+        return (f'<div class="fh-product-rating">{img}<span>{float(summary["average"]):.1f} '
+                f'({int(summary["count"]):,} review{"s" if int(summary["count"]) != 1 else ""})</span></div>')
+    return f'<div class="fh-product-rating">{SHIELD}<span>New · 30-day money-back guarantee</span></div>'
+
 def product_shelf(home, P):
     """The homepage product shelf: the product's card (P: its copy module) in the default list (the Bestsellers view)
     and in the Bestsellers, New and Face tabs, after the product P.SHELF names (first when None), in each place's own
@@ -929,7 +1028,7 @@ def product_shelf(home, P):
             f'<picture class=""><img alt="{title}" class="fh-upload" height="1080" loading="lazy" sizes="100vw" src="{big}" '
             f'srcset="{small} 720w, {big} 1080w" width="1080"/>\n</picture>\n'
             f'<span class="fh-badges"><span>{html.escape(sh["badge"])}</span><span class="fh-saving">{html.escape(sh["saving"])}</span></span></a>\n'
-            f'<div class="fh-product-info"><h3><a href="{href}">{title}</a></h3>\n{price}'
+            f'<div class="fh-product-info">{shelf_rating(P, home)}<h3><a href="{href}">{title}</a></h3>\n{price}'
             '<div class="fh-benefits-tags">' + ''.join(f'<span>{html.escape(x)}</span>' for x in sh['tags']) + '</div></div>\n</article>\n')
     plain = (f'<article class="fh-product"><a class="fh-product-image" href="{href}"><img alt="{title}" height="720" loading="lazy" '
              f'sizes="(min-width: 750px) 25vw, 66vw" src="{small}" srcset="{small} 720w" width="720"/></a>'
@@ -1358,6 +1457,12 @@ def main():
     whitened = white_backdrops()
     if not whitened: missing.append(('white backdrops', 'foundation photos to whiten'))
     print('white backdrops', whitened)
+    relabelled = relabel_bottles_on_pages()
+    if not relabelled: missing.append(('real wordmark', 'foundation bottles to relabel'))
+    print('real wordmark', relabelled)
+    evened = even_shelf()
+    if not evened: missing.append(('even shelf', 'shelf cards to size'))
+    print('even shelf cards', evened)
     print(json.dumps({'rules': len(rules), 'replacements': sum(hits.values()), 'images': replaced, 'missing': missing}, ensure_ascii=False, indent=1))
     if missing: sys.exit(1)
 

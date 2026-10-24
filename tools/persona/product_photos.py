@@ -1,7 +1,8 @@
 """The second products' page images, laid out like the Adaptive Peptide Foundation's gallery, on pure white.
 
 usage: python3 -I product_photos.py [balm] [serum] [brush] [foundation]      # all four when none is named
-  balm   brand/pdrn-balm/source/*.jpg -> brand/pdrn-balm/*.jpg
+  balm   brand/pdrn-balm/source/*.jpg -> brand/pdrn-balm/*.jpg (the AI-drawn wordmark on each stick replaced first:
+         relabel_bottles.BALM -> brand/pdrn-balm/labelled/)
   serum  brand/egf-nad-serum/source/*.jpg -> brand/egf-nad-serum/*.jpg (the real label printed on first, see below)
   brush  brand/lymphatic-brush/source/ba-puffy.jpg -> brand/lymphatic-brush/ba-puffy.jpg
   foundation  its bottle render + source/others.jpg -> brand/adaptive-peptide-foundation/vs-others.jpg (the gallery's
@@ -23,7 +24,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import label_composite, white_bg
+import label_composite, relabel_bottles, white_bg
 BRAND = HERE.parents[1] / 'brand'
 BALM, SERUM, BRUSH = BRAND / 'pdrn-balm', BRAND / 'egf-nad-serum', BRAND / 'lymphatic-brush'
 FOUNDATION = BRAND / 'adaptive-peptide-foundation'
@@ -46,9 +47,11 @@ def sans(size, weight='Medium'):
 
 
 def path_of(product, name):
-    """A product photo: the serum's with its label printed on (brand/egf-nad-serum/<name>.jpg), the foundation's
+    """A product photo: the serum's with its label printed on (brand/egf-nad-serum/<name>.jpg), the balm's with the
+    real wordmark in place of the AI-drawn one (brand/pdrn-balm/labelled/<name>.jpg), the foundation's
     bottle renders (brand/adaptive-peptide-foundation/<name>.png), else the source."""
     if product == SERUM and name in SERUM_LABELS: return product / f'{name}.jpg'
+    if product == BALM and name in relabel_bottles.BALM: return product / 'labelled' / f'{name}.jpg'
     if product == FOUNDATION and (product / f'{name}.png').exists(): return product / f'{name}.png'
     return product / 'source' / f'{name}.jpg'
 
@@ -249,6 +252,10 @@ def plain(product, name, out=None):
 
 def balm():
     P = BALM
+    (P / 'labelled').mkdir(exist_ok=True)
+    for name, ops in relabel_bottles.BALM.items():      # the real wordmark first, on every stick (relabel_bottles.BALM)
+        relabel_bottles.relabel(Image.open(P / 'source' / f'{name}.jpg'), ops).save(P / 'labelled' / f'{name}.jpg', quality=95)
+        print('relabelled', name)
     hero(P, 'pack')
     plain(P, 'hold-cheek')
     before_after(P, 'ba-eye', 'before-after')
