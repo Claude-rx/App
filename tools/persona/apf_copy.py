@@ -65,17 +65,17 @@ TRUST_CSS = r"""
 .apf-trust__terms{margin:14px auto 0 !important;max-width:470px;font-size:13px !important;line-height:1.45;color:#4a4a4a !important}
 """
 
-def trust_html(terms=True):
+def trust_html(terms=True, refills=True):
     """'Love it or your money back', then a row of three facts and the refill terms. While refills are on: refill
     reminder / cancel any time / renews at the pack's refill price; bought once: free shipping / 30-day guarantee /
     secure checkout. The page starts in ccf_copy.REFILL['default']; the offer picker keeps rows, price and terms in
-    step with the chosen pack and the refills box."""
-    on = bool(REFILL.get('default'))
+    step with the chosen pack and the refills box. refills=False: a product sold once only (the bought-once row)."""
+    on = bool(REFILL.get('default')) and refills
     def row(kind, items, shown):
         cells = ''.join(f'<li>{ICONS[k]}<span>{label}</span></li>' for k, label in items)
         return f'<ul class="apf-trust__row" data-sf-trust-row="{kind}"{"" if shown else " hidden"}>{cells}</ul>'
     renew = f'Renews at <b data-sf-renew>{usd(PACK1["refill"])}</b> every {REFILL["every"]} days'
-    rows = (row('refill', (('bell', 'Refill reminder'), ('cancel', 'Cancel any time'), ('renew', renew)), on) +
+    rows = ((row('refill', (('bell', 'Refill reminder'), ('cancel', 'Cancel any time'), ('renew', renew)), on) if refills else '') +
             row('once', (('truck', 'Free shipping'), ('shield', '30-day guarantee'), ('lock', 'Secure checkout')), not on))
     return (f'<div class="apf-trust"><p class="apf-trust__head">{ICONS["seal"]}<span>Love it or your money back</span></p>'
             f'{rows}' +
@@ -756,38 +756,59 @@ PROBLEM_SOLUTION_CSS = r"""
 }
 """
 
-def problem_solution_html(img_problem, img_solution, buy_href='#apf-buy'):
+# the problem / root cause / solution copy (HTML; the second products pass their own dict of the same keys)
+PROBLEM_SOLUTION = {
+    'photo_alt': 'A woman in her late fifties looking at her skin',
+    'problem': ('The problem', 'Foundation wasn&rsquo;t made for', 'skin after 45'),
+    'lede': 'You&rsquo;re not doing it wrong. Most foundations are designed around younger, oilier skin. Then your skin changed, and they stopped working.',
+    'pains': PROBLEM_PAINS,
+    'close': 'The result: a drawer full of bottles that didn&rsquo;t work, and the feeling that makeup isn&rsquo;t for you anymore.',
+    'root': ('The root of it', 'Your skin changed.', 'Your foundation didn&rsquo;t.'),
+    'causes': ROOT_CAUSES,
+    'root_end': 'So the problem was never your skin or your technique. It&rsquo;s a formula built for someone else.',
+    'solution': ('The solution', 'So we built it', 'the other way around'),
+    'solution_lede': f'The {PRODUCT} starts from skin after 45, not from a shade chart: Korean color-adapting technology in a skincare serum base.',
+    'fixes': SOLUTION_FIXES,
+    'button': 'Get yours',
+    'note': 'Love it in your own daylight for 30 days, or your money back.',
+    'product_alt': f'The {PRODUCT} bottle',
+}
+
+
+def problem_solution_html(img_problem, img_solution, buy_href='#apf-buy', c=None):
     """Three blocks: the problem (photo + what goes wrong), the root cause (three cards), the solution (problem ->
-    fix rows, the product, a button to the offer). img_*: (src, width, height)."""
-    pains = ''.join(f'<li>{_X}<span>{p}</span></li>' for p in PROBLEM_PAINS)
-    cards = ''.join(f'<div class="sfps-card"><b>{i}</b><h3>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(ROOT_CAUSES, 1))
-    fixes = ''.join(f'<div class="sfps-fix">{_V}<div><s>{was}</s><span>{now}</span></div></div>' for was, now in SOLUTION_FIXES)
+    fix rows, the product, a button to the offer). img_*: (src, width, height). c: the copy (PROBLEM_SOLUTION's keys)."""
+    c = c or PROBLEM_SOLUTION
+    pains = ''.join(f'<li>{_X}<span>{p}</span></li>' for p in c['pains'])
+    cards = ''.join(f'<div class="sfps-card"><b>{i}</b><h3>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(c['causes'], 1))
+    fixes = ''.join(f'<div class="sfps-fix">{_V}<div><s>{was}</s><span>{now}</span></div></div>' for was, now in c['fixes'])
     ip, isol = img_problem, img_solution
+    (e1, h1, m1), (e2, h2, m2), (e3, h3, m3) = c['problem'], c['root'], c['solution']
     return f'''<div class="sfps" id="sf-problem-solution"><style>{PROBLEM_SOLUTION_CSS}</style>
 <section class="sfps-sec"><div class="sfps-wrap sfps-grid">
-  <div class="sfps-photo"><img src="{ip[0]}" alt="A woman in her late fifties looking at her skin" width="{ip[1]}" height="{ip[2]}" loading="lazy" decoding="async"></div>
+  <div class="sfps-photo"><img src="{ip[0]}" alt="{c['photo_alt']}" width="{ip[1]}" height="{ip[2]}" loading="lazy" decoding="async"></div>
   <div>
-    <span class="sfps-eyebrow">The problem</span>
-    <h2>Foundation wasn&rsquo;t made for <span class="sfps-mark">skin after 45</span></h2>
-    <p class="sfps-lede">You&rsquo;re not doing it wrong. Most foundations are designed around younger, oilier skin. Then your skin changed, and they stopped working.</p>
+    <span class="sfps-eyebrow">{e1}</span>
+    <h2>{h1} <span class="sfps-mark">{m1}</span></h2>
+    <p class="sfps-lede">{c['lede']}</p>
     <ul class="sfps-list">{pains}</ul>
-    <p class="sfps-close">The result: a drawer full of bottles that didn&rsquo;t work, and the feeling that makeup isn&rsquo;t for you anymore.</p>
+    <p class="sfps-close">{c['close']}</p>
   </div>
 </div></section>
 <section class="sfps-sec sfps-sec--grey"><div class="sfps-wrap">
-  <div class="sfps-head"><span class="sfps-eyebrow">The root of it</span><h2>Your skin changed. <span class="sfps-mark">Your foundation didn&rsquo;t.</span></h2></div>
+  <div class="sfps-head"><span class="sfps-eyebrow">{e2}</span><h2>{h2} <span class="sfps-mark">{m2}</span></h2></div>
   <div class="sfps-cards">{cards}</div>
-  <p class="sfps-root">So the problem was never your skin or your technique. It&rsquo;s a formula built for someone else.</p>
+  <p class="sfps-root">{c['root_end']}</p>
 </div></section>
 <section class="sfps-sec"><div class="sfps-wrap sfps-grid sfps-grid--rev">
   <div>
-    <span class="sfps-eyebrow">The solution</span>
-    <h2>So we built it <span class="sfps-mark">the other way around</span></h2>
-    <p class="sfps-lede">The {PRODUCT} starts from skin after 45, not from a shade chart: Korean color-adapting technology in a skincare serum base.</p>
+    <span class="sfps-eyebrow">{e3}</span>
+    <h2>{h3} <span class="sfps-mark">{m3}</span></h2>
+    <p class="sfps-lede">{c['solution_lede']}</p>
     <div class="sfps-fixes">{fixes}</div>
-    <div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">Get yours</a><span class="sfps-note">Love it in your own daylight for 30 days, or your money back.</span></div>
+    <div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">{c['button']}</a><span class="sfps-note">{c['note']}</span></div>
   </div>
-  <div class="sfps-photo"><img src="{isol[0]}" alt="The {PRODUCT} bottle" width="{isol[1]}" height="{isol[2]}" loading="lazy" decoding="async"></div>
+  <div class="sfps-photo"><img src="{isol[0]}" alt="{c['product_alt']}" width="{isol[1]}" height="{isol[2]}" loading="lazy" decoding="async"></div>
 </div></section>
 </div>'''
 
@@ -848,29 +869,60 @@ def dermatologist_html(d):
     headline (a verbatim fragment of her quote)."""
     paras = ''.join(f'<p>{p}</p>' for p in d['paragraphs'])
     ph = d['photo']
-    return f'''<div class="sfx" id="sf-dermatologist"><style>{PDP_EXTRA_CSS}</style>
+    return f'''<div class="sfx" id="{d.get('id', 'sf-dermatologist')}"><style>{PDP_EXTRA_CSS}</style>
 <section class="sfx-sec sfx-sec--grey"><div class="sfx-wrap sfx-grid">
-  <div class="sfx-photo"><img src="{ph[0]}" alt="{d['name']}" width="{ph[1]}" height="{ph[2]}" loading="lazy" decoding="async"></div>
+  <div class="sfx-photo"><img src="{ph[0]}" alt="{d.get('photo_alt', d['name'])}" width="{ph[1]}" height="{ph[2]}" loading="lazy" decoding="async"></div>
   <div>
-    <span class="sfx-eyebrow">Dermatologist recommended</span>
+    <span class="sfx-eyebrow">{d.get('eyebrow', 'Dermatologist recommended')}</span>
     <h2>&ldquo;{d['headline_lead']} <span class="sfx-mark">{d['headline_mark']}</span>&rdquo;</h2>
     <blockquote class="sfx-quote">{paras}</blockquote>
     <div class="sfx-sign"><img src="{d['avatar']}" alt="" width="52" height="52" loading="lazy" decoding="async"><div><b>{d['name']}</b><span>{d['role']}</span></div></div>
   </div>
 </div></section></div>'''
 
-def pdp_reviews_html(eyebrow, title, reviews):
-    """reviews: dicts with title, text, name, photo (src, w, h)."""
+PLAIN_CARDS_CSS = r"""
+.sfx-reviews--plain{max-width:1180px}
+.sfx-review video{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:989px){.sfx-reviews--plain{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
+@media (max-width:599px){.sfx-reviews--plain .sfx-review-body{padding:14px 14px 16px;gap:6px}.sfx-reviews--plain h3{font-size:16px}.sfx-reviews--plain p{font-size:14px}}
+"""
+_AUTOPLAY = ('<script>(function () {'
+             'var root = document.currentScript.parentNode, vids = root.querySelectorAll("video");'
+             'if (!vids.length || !("IntersectionObserver" in window)) return;'
+             'var io = new IntersectionObserver(function (es) { es.forEach(function (e) {'
+             'var v = e.target; if (e.isIntersecting && e.intersectionRatio > 0.5) { if (v.preload !== "auto") v.preload = "auto"; var p = v.play(); if (p && p.catch) p.catch(function () {}); }'
+             'else v.pause(); }); }, { threshold: [0, 0.5, 1] });'
+             'Array.prototype.forEach.call(vids, function (v) { io.observe(v); });'
+             '})();</script>')
+
+
+def pdp_reviews_html(eyebrow, title, reviews, plain=False):
+    """reviews: dicts with title, text, name, photo (src, w, h). plain: cards that are not reviews (a product's uses,
+    creator clips): no stars, no name, no "verified"; a card may carry a silent clip instead (video: (mp4, poster))."""
     stars = '<span class="sfx-stars" aria-label="5 out of 5 stars">' + _STAR * 5 + '</span>'
-    cards = ''.join(f'''<article class="sfx-review">
-  <div class="sfx-photo"><img src="{r['photo'][0]}" alt="{r['name']} with the {PRODUCT}" width="{r['photo'][1]}" height="{r['photo'][2]}" loading="lazy" decoding="async"></div>
+    def media(r):
+        if r.get('video'):
+            mp4, poster = r['video']
+            return (f'<video muted loop playsinline preload="none" poster="{poster}" width="540" height="960" '
+                    f'aria-label="{r["alt"]}"><source src="{mp4}" type="video/mp4"></video>')
+        alt = r.get('alt') or f"{r['name']} with the {PRODUCT}"
+        return f'<img src="{r["photo"][0]}" alt="{alt}" width="{r["photo"][1]}" height="{r["photo"][2]}" loading="lazy" decoding="async">'
+    if plain:
+        cards = ''.join(f'''<article class="sfx-review">
+  <div class="sfx-photo">{media(r)}</div>
+  <div class="sfx-review-body"><h3>{r['title']}</h3><p>{r['text']}</p></div>
+</article>''' for r in reviews)
+    else:
+        cards = ''.join(f'''<article class="sfx-review">
+  <div class="sfx-photo">{media(r)}</div>
   <div class="sfx-review-body">{stars}<h3>{r['title']}</h3><p>&ldquo;{r['text']}&rdquo;</p>
   <div class="sfx-review-name"><b>{r['name']}</b><span class="sfx-verified">{_CHECK}Verified buyer</span></div></div>
 </article>''' for r in reviews)
-    return f'''<div class="sfx" id="sf-video-reviews"><style>{PDP_EXTRA_CSS}</style>
+    css = PDP_EXTRA_CSS + (PLAIN_CARDS_CSS if plain else '')
+    return f'''<div class="sfx" id="sf-video-reviews"><style>{css}</style>
 <section class="sfx-sec sfx-sec--grey"><div class="sfx-wrap">
-  <div class="sfx-head"><span class="sfx-eyebrow">{stars}{eyebrow}</span><h2>{title}</h2></div>
-  <div class="sfx-reviews" style="--n:{len(reviews)}">{cards}</div>
+  <div class="sfx-head"><span class="sfx-eyebrow">{'' if plain else stars}{eyebrow}</span><h2>{title}</h2></div>
+  <div class="sfx-reviews{' sfx-reviews--plain' if plain else ''}" style="--n:{len(reviews)}">{cards}{_AUTOPLAY if plain else ''}</div>
 </div></section></div>'''
 
 
@@ -1121,14 +1173,16 @@ def tp_stars(v, big=False):
     return f'<span class="sfr-tp{" sfr-tp--lg" if big else ""}" role="img" aria-label="Rated {v:g} out of 5">{out}</span>'
 
 
-def review_strip_html(average, count, picks, href='#sf-review-wall'):
-    """picks: [{name, body}] short 5-star reviews, word for word."""
+def review_strip_html(average, count, picks, href='#sf-review-wall', of=None, buyer='Verified buyer'):
+    """picks: [{name, body}] short 5-star reviews, word for word. of: whose reviews they are when they are not this
+    page's product (another product's page shows the foundation's, and says so)."""
     word = 'Excellent' if average >= 4.5 else 'Great' if average >= 4 else 'Average'
     cards = ''.join(f'<article class="sfrs-card">{tp_stars(5)}<p>{html.escape(r["body"])}</p>'
-                    f'<small><b>{html.escape(r["name"])}</b> &middot; Verified buyer</small></article>' for r in picks)
+                    f'<small><b>{html.escape(r["name"])}</b> &middot; {html.escape(buyer)}</small></article>' for r in picks)
+    label = f'{count:,} reviews' + (f' of {html.escape(of)}' if of else '')
     return (f'<section class="sfrs" aria-label="Customer reviews"><style>{REVIEW_STRIP_CSS}</style><div class="sfrs-wrap">'
             f'<div class="sfrs-sum"><b>{word}</b>{tp_stars(average, True)}'
-            f'<p>{average:.1f} out of 5 &middot; <a href="{href}">{count:,} reviews</a></p></div>'
+            f'<p>{average:.1f} out of 5 &middot; <a href="{href}">{label}</a></p></div>'
             f'<div class="sfrs-track">{cards}</div></div></section>')
 
 
@@ -1158,8 +1212,8 @@ KBEAUTY_CSS = r"""
 """
 
 
-def kbeauty_html(img, buy_href='#apf-buy'):
-    k = KBEAUTY
+def kbeauty_html(img, buy_href='#apf-buy', k=None):
+    k = k or KBEAUTY
     rows = ''.join(f'<li><b>{n}</b><div><strong>{html.escape(t)}</strong><span>{html.escape(d)}</span></div></li>'
                    for n, (t, d) in enumerate(k['rows'], 1))
     src, w, h = img
@@ -1170,6 +1224,6 @@ def kbeauty_html(img, buy_href='#apf-buy'):
             f'<p class="sfps-lede">{html.escape(k["lede"])}</p><ul class="sfkb-rows">{rows}</ul>'
             f'<p class="sfkb-note">{html.escape(k["note"])}</p>'
             f'<div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">{html.escape(k["button"])}</a></div></div>'
-            f'<div class="sfps-photo"><img src="{src}" alt="Adaptive Peptide Foundation with PDRN, peptides and Pro-Xylane" '
+            f'<div class="sfps-photo"><img src="{src}" alt="{html.escape(k.get("alt", "Adaptive Peptide Foundation with PDRN, peptides and Pro-Xylane"))}" '
             f'width="{w}" height="{h}" loading="lazy" decoding="async"></div>'
             '</div></div></section>')

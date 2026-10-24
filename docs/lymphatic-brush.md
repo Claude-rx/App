@@ -12,7 +12,7 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
 |---|---|
 | NEXT product 169 | "The Lymphatic Brush", public, one-time purchase (no refills), template `the-lymphatic-brush`, 5 gallery images (the brush and case card first: the cart and checkout thumbnail) |
 | Bundles (variants) | 170: 1 brush + free case, $24.95 (was $49.90) · 171: 2 brushes + 2 free cases, $39.95 (was $99.80), chosen by default · 172: 3 brushes + 3 free cases + free body brush, $49.90 (was $149.70) |
-| Product page | Gallery (hero, case, how to use, features, vs other tools), stars (hidden until there are reviews), title and price, free shipping badge, a one-line promise, 4 benefits, bundle picker, Add to cart with the bundle price, guarantee, 4 tabs (cleaning, shipping, specifications, returns), the 3-minute routine with the tutorial video, creator clips, why faces are puffy in the morning, what to expect (including what it won't do), the copy comparison slider, the foundation for after (its real 4.8/5 rating), FAQ (11 answers), guarantee card, review wall or an honest "No reviews yet" box, sticky bar |
+| Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`): gallery (hero, case, how to use, features, vs other tools); the foundation's buy box (stars once there are reviews, title and price, free shipping badge, the promise, bundle picker, Add to cart with the bundle price, "Love it or your money back", the foundation's six tabs); then the foundation's sections in its order: its review strip (the foundation's reviews, labelled as theirs, until the brush has some), "A fresher face in 3 minutes" photo cards, problem / root cause / solution (a 45+ woman with a puffy morning face), the brand's own note (where the foundation has its dermatologist), how it works, the before/after block (an illustration, labelled), "How does it work?", what to expect, Why skinofab? (vs other tools), what's in the box, the creator clips, FAQ (10 answers), the review wall or an honest "No reviews yet" box, The skinofab difference; sticky bar |
 | Homepage | A product card in the shelf like the other products (default list, Bestsellers, New and Face tabs), next to the gua sha and face roller, with a "New" badge |
 | Collections | Accessories, Face, Skin and Bestsellers in NEXT, as the gua sha and the face roller |
 | Menus | "Lymphatic Brush" in the desktop and mobile menus (before Bestsellers) and in the footer's Shop column, on every page |
@@ -24,6 +24,10 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
   no "soft bristles drain fluid out of your face", no "puffiness goes down after the first use" as a promise, no
   "water retention" or "supports drainage" (re-set in the same Montserrat in the features and vs-tools images).
   The "what to expect" section says the effect is temporary and that it won't erase wrinkles or reshape a face.
+- **Structure.** Since October 2026 the page is built like the foundation's (same sections, same order, same look),
+  with the brush's copy in `TWIN` (`tools/persona/brush_copy.py`). Two new photos with no product in them, made with
+  GPT Image 2.5 (prompts in `tools/persona/image_prompts.json`): the problem portrait and the before/after
+  illustration (`brand/lymphatic-brush/source/`, laid out by `tools/persona/product_photos.py`).
 - **Gallery.** Gallery 1 is new: the real brush and its SKINOFAB case with an honest headline and the guarantee seal
   (no model; a 45+ persona photo takes it once generated, [persona-image-shots.md](persona-image-shots.md) B1).
   Solena's before/after (a face whose wrinkles vanish, which a brush cannot do) and its "Loved by 5,000+" board of
@@ -46,7 +50,7 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
 - **The three short reviews under the button: not carried over.** Solena's own markup labels them as placeholders
   ("Avis 2 : à remplacer", photo alt "PRENOM 2").
 - **"+10,000 Happy Customers" on the guarantee card: left out.** The same page says "5,000+ others purchased".
-  Give the real number and it goes back in (`RISK_FREE['proof']` in `tools/persona/brush_copy.py`).
+  Give the real number and it can go back in (the page's guarantee lines are in `tools/persona/brush_copy.py`).
 - **The "As seen in" press logos** (Cosmopolitan, Allure, Elle, Marie Claire…): left out unless the brush really was
   featured in them.
 

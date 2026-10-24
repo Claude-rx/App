@@ -143,9 +143,9 @@
    "dropped": 4298
   },
   "inline": {
-   "blocks": 1788,
-   "before_kb": 8739.5,
-   "after_kb": 7407.3,
+   "blocks": 1824,
+   "before_kb": 8807.2,
+   "after_kb": 7467.6,
    "skipped": 0
   }
  },
@@ -177,17 +177,17 @@
   }
  },
  "swiper": {
-  "inline_scripts_deferred": 53,
+  "inline_scripts_deferred": 55,
   "script_tags_deferred": 89
  },
  "images": {
-  "elements": 1030,
-  "skipped": 1108
+  "elements": 1042,
+  "skipped": 1120
  },
  "errors": [],
  "backgrounds": {
-  "lazy": 19,
-  "kb_deferred": 6204
+  "lazy": 21,
+  "kb_deferred": 6529
  },
  "late_images": {
   "images": 84

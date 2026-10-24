@@ -12,16 +12,17 @@
 //         SFCommerce.addItems, the path other buttons use): one line, the 2-bottle pack, same purchase type.
 //   add-on: added as a second line, then no longer offered.
 //   checkout (1 bottle and 2 bottles, first case of each): the line, its price and the refill wording.
-// The PDRN Plumping Balm (balm_copy.py BUNDLES; optional 6th argument, its page path): the same bundle and upgrade
-//   checks as the brush (1 -> 2 sticks), and its page: section order, tabs, FAQ, no competitor name or dropped claim,
-//   no "was" price on one stick, the homepage card, the menu link and the sticky bar.
-// The Lymphatic Brush (tools/persona/brush_copy.py BUNDLES; optional 5th argument, its product page path):
-//   buy: each bundle adds its variant at its price, one-time; the drawer offers the 1 -> 2 brushes upgrade only for
-//        one brush, and never the brush as an add-on while it is in the bag; checkout shows the 2-brush bundle.
-//   upgrade: 1 brush -> 2 brushes in the drawer: one line, one-time.
-//   page: Solena's sections in order, no "Solena" anywhere, five tabs with the how-to video, seven FAQ answers, the
-//        title price with cents, the button price, no stars or review wall without reviews; its card is in the
-//        homepage shelf (default list, Bestsellers, New and Face tabs) at $24.95, and the menu link leads to it.
+// The Lymphatic Brush and the PDRN Plumping Balm (brush_copy.py / balm_copy.py BUNDLES; optional 5th and 6th
+// arguments, their page paths):
+//   buy: each bundle adds its variant at its price, one-time; the drawer offers the 1 -> 2 upgrade only for one, and
+//        never the product as an add-on while it is in the bag; checkout shows the 2-pack with its thumbnail.
+//   upgrade: 1 -> 2 in the drawer: one line, one-time.
+//   page: the foundation page's sections in the foundation's order (tools/persona/twin.py), its six tabs, the
+//        product's FAQ; borrowed reviews labelled as the foundation's, photo cards without stars or "verified", the
+//        expert block signed by the brand, before/after photos marked as illustrations; no competitor name or dropped
+//        claim, no broken image after scrolling the whole page, the title price (no "was" on one stick), no stars
+//        without reviews; its card in the homepage shelf (default list, Bestsellers, New and Face tabs) at $24.95,
+//        and the menu links lead to it.
 import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';
 import fs from 'fs'; import path from 'path';
 
@@ -426,132 +427,100 @@ async function bundleCases(name, route, title, label) {
 await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
 await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm');
 
-// ---------------------------------------------------------------- the Lymphatic Brush's page
-{
-  const s = await session(1440, 900, BRUSH);
-  await s.page.locator('#sf-review-wall-sentinel').scrollIntoViewIfNeeded().catch(() => {});
-  await s.page.waitForTimeout(2000);
-  const pg = await s.page.evaluate(() => {
-    const ids = [...document.querySelectorAll('main > [id^="shopify-section-"]')].map(e => e.id.replace(/shopify-section-(template--\d+__)?/, ''));
-    const tabs = [...document.querySelectorAll('.product__accordions #accordionbefore')].map(e => e.textContent.trim());
-    const head = document.querySelector('.product__price-and-badge');
-    let native = { reviews: [] };
-    try { native = JSON.parse(document.querySelector('[data-sf-native-reviews]').textContent); } catch (e) {}
-    const text = document.body.innerText, chips = document.querySelector('.sfb-chips'), cross = document.querySelector('#sfb-cross');
-    const empty = document.getElementById('sfb-no-reviews');
-    return { ids, tabs, video: !!document.querySelector('.sfb-routine__video video source[src*=".mp4"]'),
-             faq: document.querySelectorAll('#shopify-section-sf-brush-faq .accordion__item').length,
-             gallery: document.querySelectorAll('[data-product-single-media-slider] [data-product-single-media-wrapper]').length,
-             chips: !!chips && chips.getBoundingClientRect().height > 0, lead: !!document.querySelector('.sfb-lead'),
-             claims: (text.match(/drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention/gi) || []),
-             cross: cross ? { href: (cross.querySelector('a.sfb-btn') || {}).pathname || '', rating: (cross.querySelector('.sfb-cross__rating') || {}).textContent || '' } : null,
-             empty: !!empty && !empty.hidden,
-             now: head.querySelector('.product__price--regular').textContent.trim(), was: head.querySelector('.product__price--compare').textContent.trim(),
-             solena: /solena/i.test(document.documentElement.outerHTML), afterpay: !!document.querySelector('skinofab-installments'),
-             reviews: native.reviews.length, stars: !document.querySelector('[data-sfb-rating]').hidden, wall: !document.getElementById('sf-review-wall').hidden,
-             clips: document.querySelectorAll('.sfb-video video').length, hScroll: document.documentElement.scrollWidth > innerWidth + 1 };
-  });
-  const problems = [];
-  const order = ['main', 'sf-brush-routine', 'sf-brush-videos', 'sf-brush-how', 'sf-brush-expect', 'sf-brush-compare', 'sf-brush-cross',
-                 'sf-brush-faq', 'sf-brush-risk-free', 'sf-review-wall'];
-  if (order.some((k, i) => pg.ids.indexOf(k) < 0 || (i && pg.ids.indexOf(k) < pg.ids.indexOf(order[i - 1])))) problems.push('sections: ' + pg.ids.join(','));
-  if (pg.tabs.length !== 4 || pg.tabs[0] !== 'How to clean it') problems.push('tabs: ' + pg.tabs.join(' | '));
-  if (!pg.video) problems.push('no how-to video in the routine');
-  if (pg.faq !== 10) problems.push(`${pg.faq} FAQ answers`);
-  if (pg.gallery !== 5) problems.push(`${pg.gallery} gallery images`);
-  if (!pg.chips || !pg.lead) problems.push(`chips ${pg.chips} / lead ${pg.lead}`);
-  if (pg.claims.length) problems.push('claims back on the page: ' + pg.claims.join(', '));
-  if (!pg.cross || !pg.cross.href.includes('adaptive-peptide-foundation') || !/\d\.\d\/5 from [\d,]+ verified reviews/.test(pg.cross.rating))
-    problems.push('foundation cross-sell: ' + JSON.stringify(pg.cross));
-  if (pg.empty === (pg.reviews > 0)) problems.push(`"No reviews yet" box ${pg.empty} with ${pg.reviews} reviews`);
-  if (!/^\$24\.95/.test(pg.now) || !/^\$49\.90/.test(pg.was)) problems.push(`title price ${pg.now} / ${pg.was}`);
-  if (pg.solena) problems.push('"Solena" on the page');
-  if (pg.afterpay) problems.push('pay-in-4 line shown');
-  if (pg.stars !== (pg.reviews > 0) || pg.wall !== (pg.reviews > 0)) problems.push(`stars ${pg.stars} / wall ${pg.wall} with ${pg.reviews} reviews`);
-  if (pg.clips !== 4) problems.push(`${pg.clips} creator clips`);
-  if (pg.hScroll) problems.push('page scrolls sideways');
-  // the homepage section and the menu link
-  await s.page.goto(`${STORE}/`, { waitUntil: 'networkidle', timeout: 90000 });
-  const home = await s.page.evaluate(() => {
-    const shelf = document.querySelector('[id$="__bestsellers"]');
-    const has = el => !!el && [...el.querySelectorAll('article h3 a')].some(a => a.pathname.includes('the-lymphatic-brush'));
-    return {
-      section: !!document.querySelector('[id$="__brush"]'),
-      list: has(shelf && shelf.querySelector('.fh-product-list')),
-      tabs: ['bestsellers_0', 'bestsellers_1', 'bestsellers_2'].filter(k => has(shelf && shelf.querySelector(`[data-fh-panel="${k}"]`))),
-      price: ((shelf && [...shelf.querySelectorAll('.fh-product-list article')].find(a => /Lymphatic Brush/.test(a.textContent))) || {}).innerText || '',
-      menu: [...document.querySelectorAll('a')].filter(a => /^\s*Lymphatic Brush\s*$/i.test(a.textContent)).map(a => a.pathname)
-    };
-  });
-  if (home.section) problems.push('the homepage still has a brush section');
-  if (!home.list || home.tabs.length !== 3) problems.push(`homepage shelf: list ${home.list}, tabs ${home.tabs.join(',')}`);
-  if (!/\$24\.95/.test(home.price)) problems.push('shelf card price: ' + home.price.replace(/\s+/g, ' ').slice(0, 80));
-  if (!home.menu.length || home.menu.some(p => !p.includes('the-lymphatic-brush'))) problems.push('menu links: ' + home.menu.join(','));
-  out.push({ case: 'brush page', ...pg, home, errors: s.errors, ok: problems.length === 0, problems });
-  await s.ctx.close();
+// ---------------------------------------------------------------- the brush's and the balm's pages
+// Both are built on the foundation page's structure (tools/persona/twin.py): the same sections in the same order (the
+// expert block is the brand's own note; the review wall adds an honest "no reviews yet" box while there are none),
+// the foundation's six tabs, the product's FAQ. Borrowed reviews must say they are the foundation's; the photo cards
+// are not reviews (no stars, no "verified"); before/after photos are marked as illustrations.
+const sectionKeys = () => [...document.querySelectorAll('main > [id^="shopify-section-"]')]
+  .map(e => e.id.replace(/^shopify-section-(template--\d+__)?/, '').replace(/_[A-Za-z0-9]{4,}$/, '').replace(/^sf-(brush|balm)-(no-reviews|amazon)$/, '$2'))
+  .filter(k => !/^(section_custom_html|\d+[0-9a-f]+)$/.test(k));
+async function scrollThrough(page) {
+  const h = await page.evaluate(() => document.body.scrollHeight);
+  for (let y = 0; y < h; y += 700) { await page.evaluate(v => window.scrollTo(0, v), y); await page.waitForTimeout(120); }
+  await page.waitForTimeout(2500);
 }
-
-// ---------------------------------------------------------------- the PDRN Plumping Balm's page
-{
-  const s = await session(1440, 900, BALM);
-  await s.page.locator('#sf-review-wall-sentinel').scrollIntoViewIfNeeded().catch(() => {});
-  await s.page.waitForTimeout(2000);
-  const pg = await s.page.evaluate(() => {
-    const ids = [...document.querySelectorAll('main > [id^="shopify-section-"]')].map(e => e.id.replace(/shopify-section-(template--\d+__)?/, ''));
+const foundationKeys = await (async () => {
+  const s = await session(1440, 900, PDP);
+  const keys = await s.page.evaluate(sectionKeys);
+  await s.ctx.close();
+  return keys.map(k => (k === 'sf-dermatologist' ? 'sf-note' : k));
+})();
+async function twinPage(name, route, cfg) {
+  const s = await session(1440, 900, route);
+  await scrollThrough(s.page);
+  const pg = await s.page.evaluate(([keysSrc, claimsSrc]) => {
+    const keys = new Function('return (' + keysSrc + ')')()();
     const tabs = [...document.querySelectorAll('.product__accordions #accordionbefore')].map(e => e.textContent.trim());
     const head = document.querySelector('.product__price-and-badge');
     let native = { reviews: [] };
     try { native = JSON.parse(document.querySelector('[data-sf-native-reviews]').textContent); } catch (e) {}
-    const text = document.body.innerText, cross = document.querySelector('#sfb-cross'), empty = document.getElementById('sfb-no-reviews');
-    return { ids, tabs, faq: document.querySelectorAll('#shopify-section-sf-balm-faq .accordion__item').length,
+    const text = document.body.innerText, empty = document.getElementById('sfb-no-reviews');
+    const strip = document.querySelector('#shopify-section-sf-review-strip');
+    const moments = document.querySelector('[id*="__kopstorm_testomonials_"]');
+    const faqSec = document.querySelector('[id*="__section_accordions_"]');
+    return { keys, tabs, faq: faqSec ? faqSec.querySelectorAll('.accordion__item').length : 0,
              gallery: document.querySelectorAll('[data-product-single-media-slider] [data-product-single-media-wrapper]').length,
              chips: !!document.querySelector('.sfb-chips'), lead: !!document.querySelector('.sfb-lead'),
-             eyebrow: (document.querySelector('.sfp-eyebrow') || {}).textContent || '', title: (document.querySelector('.product__title') || {}).textContent || '',
-             claims: (text.match(/96%|1M\+|bought today|77%|dermatologist|collagen production|clinically|FEM\+|femplus/gi) || []),
-             cross: cross ? { href: (cross.querySelector('a.sfb-btn') || {}).pathname || '', rating: (cross.querySelector('.sfb-cross__rating') || {}).textContent || '' } : null,
+             title: (document.querySelector('.product__title') || {}).textContent || '',
+             claims: text.match(new RegExp(claimsSrc, 'gi')) || [],
+             strip: strip ? strip.innerText.replace(/\s+/g, ' ') : '',
+             momentsReviewish: moments ? moments.querySelectorAll('.skinofab-testimonials__stars, .skinofab-testimonials__verified').length : -1,
+             moments: moments ? moments.querySelectorAll('.swiper-slide').length : 0,
+             note: (document.querySelector('#sf-note .sfx-sign b') || {}).textContent || '', derm: !!document.getElementById('sf-dermatologist'),
+             beforeAfter: [...document.querySelectorAll('main img')].filter(i => /before and after/i.test(i.alt)).map(i => i.alt),
+             clips: document.querySelectorAll('#sf-video-reviews video source[src*=".mp4"]').length,
+             cards: document.querySelectorAll('#sf-video-reviews .sfx-review').length,
              empty: !!empty && !empty.hidden, now: head.querySelector('.product__price--regular').textContent.trim(),
-             was: !!head.querySelector('.product__price--compare'), vs: document.querySelectorAll('#sfp-stick tbody tr').length,
-             ingredients: document.querySelectorAll('#sfp-science .sfp-ing article').length,
-             femplus: /fem\+|femplus/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
+             was: (head.querySelector('.product__price--compare') || {}).textContent || '',
+             competitor: /solena|fem\+|femplus/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
              stars: !document.querySelector('[data-sfb-rating]').hidden, hScroll: document.documentElement.scrollWidth > innerWidth + 1,
              // images that asked for a file and got none (the review lightbox's empty <img> asks for nothing)
              imgs: [...document.querySelectorAll('main img')].filter(i => i.complete && i.naturalWidth === 0 && (i.getAttribute('src') || i.getAttribute('srcset'))
-                                                                     && !/^data:/.test(i.getAttribute('src') || '')).length };
-  });
+                                                                     && !/^data:/.test(i.getAttribute('src') || '')).map(i => i.currentSrc || i.src) };
+  }, [sectionKeys.toString(), cfg.claims]);
   const problems = [];
-  const order = ['main', 'sf-balm-problem', 'sf-balm-science', 'sf-balm-stick', 'sf-balm-how', 'sf-balm-expect', 'sf-balm-cross',
-                 'sf-balm-faq', 'sf-balm-risk-free', 'sf-review-wall'];
-  if (order.some((k, i) => pg.ids.indexOf(k) < 0 || (i && pg.ids.indexOf(k) < pg.ids.indexOf(order[i - 1])))) problems.push('sections: ' + pg.ids.join(','));
-  if (pg.tabs.length !== 5 || pg.tabs[0] !== 'What it does') problems.push('tabs: ' + pg.tabs.join(' | '));
-  if (pg.faq !== 10) problems.push(`${pg.faq} FAQ answers`);
-  if (pg.gallery !== 7) problems.push(`${pg.gallery} gallery images`);
-  if (!pg.chips || !pg.lead) problems.push(`chips ${pg.chips} / lead ${pg.lead}`);
-  if (!/PDRN K-beauty/i.test(pg.eyebrow) || !/PDRN Plumping Balm/.test(pg.title)) problems.push(`eyebrow "${pg.eyebrow}" / title "${pg.title}"`);
+  const want = foundationKeys.flatMap(k => (k === 'sf-review-wall' && !pg.reviews ? [k, 'no-reviews'] : [k]));
+  const got = pg.keys.filter(k => k !== 'amazon');
+  if (got.join() !== want.join()) problems.push(`sections differ from the foundation's:\n  ${got.join(',')}\n  ${want.join(',')}`);
+  if (pg.tabs.length !== 6 || pg.tabs[0] !== 'What makes it different?' || pg.tabs[5] !== 'Shipping and returns') problems.push('tabs: ' + pg.tabs.join(' | '));
+  if (pg.faq !== cfg.faq) problems.push(`${pg.faq} FAQ answers`);
+  if (pg.gallery !== cfg.gallery) problems.push(`${pg.gallery} gallery images`);
+  if (pg.chips || !pg.lead) problems.push(`chips ${pg.chips} / lead ${pg.lead} (the foundation's buy box has a lead, no chips)`);
+  if (!pg.title.includes(cfg.title)) problems.push(`title "${pg.title}"`);
   if (pg.claims.length) problems.push('claims or competitor on the page: ' + pg.claims.join(', '));
-  if (pg.femplus) problems.push('FEM+ in the markup');
-  if (pg.vs !== 6 || pg.ingredients !== 4) problems.push(`stick-vs-jar rows ${pg.vs}, ingredient cards ${pg.ingredients}`);
-  if (!pg.cross || !pg.cross.href.includes('adaptive-peptide-foundation') || !/\d\.\d\/5 from [\d,]+ verified reviews/.test(pg.cross.rating))
-    problems.push('foundation cross-sell: ' + JSON.stringify(pg.cross));
+  if (pg.competitor) problems.push('a competitor name in the markup');
+  if (!pg.reviews && !/of our Adaptive Peptide Foundation/.test(pg.strip)) problems.push('review strip does not say the reviews are the foundation\'s: ' + pg.strip.slice(0, 120));
+  if (!pg.reviews && /Verified buyer(?! of the foundation)/.test(pg.strip)) problems.push('a borrowed review card says "Verified buyer" without "of the foundation"');
+  if (pg.momentsReviewish !== 0 || pg.moments < 4) problems.push(`photo cards: ${pg.moments}, with ${pg.momentsReviewish} stars/verified marks`);
+  if (pg.derm || pg.note !== 'The SKINOFAB team') problems.push(`expert block: dermatologist ${pg.derm}, signed "${pg.note}"`);
+  if (!pg.beforeAfter.length || pg.beforeAfter.some(a => !/illustration/i.test(a))) problems.push('before/after not marked as an illustration: ' + pg.beforeAfter.join(' | '));
+  if (pg.cards !== 4 || pg.clips !== cfg.clips) problems.push(`use cards ${pg.cards}, clips ${pg.clips}`);
   if (pg.empty === (pg.reviews > 0)) problems.push(`"No reviews yet" box ${pg.empty} with ${pg.reviews} reviews`);
-  if (!/^\$24\.95/.test(pg.now) || pg.was) problems.push(`title price ${pg.now}, was-price shown ${pg.was}`);
+  if (!/^\$24\.95/.test(pg.now) || (cfg.was ? !pg.was.startsWith(cfg.was) : !!pg.was.trim())) problems.push(`title price ${pg.now} / was "${pg.was}"`);
   if (pg.stars !== (pg.reviews > 0)) problems.push(`stars ${pg.stars} with ${pg.reviews} reviews`);
   if (pg.hScroll) problems.push('page scrolls sideways');
-  if (pg.imgs) problems.push(`${pg.imgs} broken images`);
+  if (pg.imgs.length) problems.push(`${pg.imgs.length} broken images: ${pg.imgs.slice(0, 3).join(' ')}`);
+  // the homepage shelf card and the menu links
   await s.page.goto(`${STORE}/`, { waitUntil: 'networkidle', timeout: 90000 });
-  const home = await s.page.evaluate(() => {
+  const home = await s.page.evaluate(([handle, title, nav]) => {
     const shelf = document.querySelector('[id$="__bestsellers"]');
-    const has = el => !!el && [...el.querySelectorAll('article h3 a')].some(a => a.pathname.includes('pdrn-plumping-balm'));
+    const has = el => !!el && [...el.querySelectorAll('article h3 a')].some(a => a.pathname.includes(handle));
     return { list: has(shelf && shelf.querySelector('.fh-product-list')),
              tabs: ['bestsellers_0', 'bestsellers_1', 'bestsellers_2'].filter(k => has(shelf && shelf.querySelector(`[data-fh-panel="${k}"]`))),
-             price: ((shelf && [...shelf.querySelectorAll('.fh-product-list article')].find(a => /PDRN Plumping Balm/.test(a.textContent))) || {}).innerText || '',
-             menu: [...document.querySelectorAll('a')].filter(a => /^\s*PDRN Balm\s*$/i.test(a.textContent)).map(a => a.pathname) };
-  });
+             price: ((shelf && [...shelf.querySelectorAll('.fh-product-list article')].find(a => a.textContent.includes(title))) || {}).innerText || '',
+             menu: [...document.querySelectorAll('a')].filter(a => a.textContent.trim().toLowerCase() === nav.toLowerCase()).map(a => a.pathname) };
+  }, [cfg.handle, cfg.title, cfg.nav]);
   if (!home.list || home.tabs.length !== 3) problems.push(`homepage shelf: list ${home.list}, tabs ${home.tabs.join(',')}`);
   if (!/\$24\.95/.test(home.price)) problems.push('shelf card price: ' + home.price.replace(/\s+/g, ' ').slice(0, 80));
-  if (home.menu.length < 2 || home.menu.some(p => !p.includes('pdrn-plumping-balm'))) problems.push('menu links: ' + home.menu.join(','));
-  out.push({ case: 'balm page', ...pg, home, errors: s.errors, ok: problems.length === 0, problems });
+  if (home.menu.length < 2 || home.menu.some(p => !p.includes(cfg.handle))) problems.push('menu links: ' + home.menu.join(','));
+  out.push({ case: `${name} page`, ...pg, home, errors: s.errors, ok: problems.length === 0, problems });
   await s.ctx.close();
 }
+await twinPage('brush', BRUSH, { title: 'The Lymphatic Brush', handle: 'the-lymphatic-brush', nav: 'Lymphatic Brush', gallery: 5, faq: 10,
+                                 clips: 4, was: '$49.90', claims: 'drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention' });
+await twinPage('balm', BALM, { title: 'PDRN Plumping Balm', handle: 'pdrn-plumping-balm', nav: 'PDRN Balm', gallery: 13, faq: 10, clips: 0,
+                               was: '', claims: '96%|1M\\+|bought today|77%|dermatologist|collagen production|clinically' });
 
 // the sticky bar on both product pages: hidden at the top, shown once the add-to-cart button has scrolled away, and
 // its button brings the pack picker back into view

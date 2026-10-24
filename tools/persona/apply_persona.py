@@ -20,7 +20,7 @@ import hashlib, html, json, os, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, balm_copy, brush_copy, ccf_copy, company
+import apf_copy, balm_copy, brush_copy, ccf_copy, company, twin
 SECOND_PRODUCTS = (brush_copy, balm_copy)
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
@@ -646,11 +646,48 @@ def brush_rating(imported=None):
             'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show); else show();'
             '})();</script>')
 
-def product_page(base, P, summary=None):
+def avatar():
+    """The brand's round avatar for its own note (the expert block's signature): a black disc with the S of the
+    wordmark in Playfair Display, under a content-hashed name."""
+    from PIL import Image, ImageDraw, ImageFont
+    im = Image.new('RGB', (190, 190), (21, 21, 21))
+    f = ImageFont.truetype(str(Path(__file__).resolve().parent / 'assets' / 'fonts' / 'PlayfairDisplay-VF.ttf'), 118)
+    f.set_variation_by_name('Medium')
+    ImageDraw.Draw(im).text((95, 99), 'S', font=f, fill=(255, 255, 255), anchor='mm')
+    tmp = DST / 'assets' / 'img' / 'skinofab-avatar.png'
+    im.save(tmp, optimize=True)
+    final = tmp.with_name(f"skinofab-avatar-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.png"); tmp.rename(final)
+    return '../assets/img/' + final.name
+
+
+def twin_context(P, found, stats, amazon):
+    """What twin.sections needs for P: its images (brand/<product>/<name>.jpg, else its source/ photo, cropped to the
+    slot), clips, review strips, wall and "no reviews yet" box."""
+    def img(name, size, centering=(0.5, 0.5)):
+        path = P.IMG / f'{name}.jpg'
+        if not path.exists(): path = P.IMG / 'source' / f'{name}.jpg'
+        return crop_to(path, f'{P.IMG_PREFIX}-{name}-{size[0]}x{size[1]}', size, centering)
+    media = WORK / 'brush' / 'media'
+    def clip(k):
+        return (hashed_copy(media / f'{k}.mp4', 'media', f'skinofab-{k}'),
+                hashed_copy(media / f'{k}.jpg', 'img', f'skinofab-{k}-poster'))
+    reviews = WORK / P.REVIEWS_DIR
+    # until the product has its own reviews: the foundation's, under a label that says whose they are
+    brand = (apf_copy.review_strip_html(float(found['summary']['average']), int(found['summary']['count']), found['picks'],
+                                        href='color-changing-foundation.html#sf-review-wall', of='our Adaptive Peptide Foundation',
+                                        buyer='Verified buyer of the foundation')
+             if found and found['picks'] and not stats else None)
+    wall = (f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-amazon">{P.amazon_html(amazon)}</div>' if amazon else '') + review_wall(reviews)
+    return {'img': img, 'clip': clip, 'avatar': avatar(), 'strip_own': review_strip(reviews), 'strip_brand': brand,
+            'wall': wall, 'no_reviews': None if stats else f'<style>{brush_copy.SECTIONS_CSS}</style>{P.no_reviews_html(amazon=amazon)}'}
+
+
+def product_page(base, P, final, found=None):
     """products/<P.HANDLE>.html for a second product (P: its copy module, the brush's or the balm's): the foundation
-    page's chrome and buy box markup with the product's page in it, and its sections below (P.sections). Prices, the
-    bundle picker's variants and the cart come from NEXT (<work_dir>/<P.OFFERS_FILE>, written by
-    setup_brush_offers.py). summary: the foundation's imported review totals, for its rating in the cross-sell."""
+    page's chrome and buy box markup with the product's buy box in it, and below it every section of the finished
+    foundation page (`final`), in its order and markup, filled with P's copy (twin.py, P.TWIN). Prices, the bundle
+    picker's variants and the cart come from NEXT (<work_dir>/<P.OFFERS_FILE>, written by setup_brush_offers.py).
+    found: the foundation's imported reviews (review_data()), shown as its own until P has reviews."""
     import copy
     from bs4 import BeautifulSoup, NavigableString
     offers = json.loads((WORK / P.OFFERS_FILE).read_text())
@@ -658,13 +695,9 @@ def product_page(base, P, summary=None):
     frag = lambda h: BeautifulSoup(h, 'html.parser')
     main = soup.find('main')
     prod = main.select_one('[id$="__main"].shopify-section--product')
-    faq_src = main.select_one('[id*="__section_accordions_"]')
-    faq_src = copy.copy(faq_src) if faq_src else None
     for sec in [c for c in main.find_all(recursive=False) if c is not prod and 'section_custom_html' not in (c.get('id') or '')]:
         sec.decompose()
     img = lambda k, w: hashed_copy(P.IMG / f'{P.GALLERY[k - 1]}.jpg', 'img', f'{P.IMG_PREFIX}-{k}-{w}w', (w, w))
-    # the foundation's second gallery photo (a woman over 45 holding the bottle) for the cross-sell, before it goes
-    cross_img = [i.get('src') for i in prod.select('[data-product-single-media-wrapper] img')][1:2]
     # gallery: P.GALLERY, the first one eager
     slider = prod.select_one('[data-product-single-media-slider]')
     slides = slider.select('[data-product-single-media-wrapper]')
@@ -697,7 +730,7 @@ def product_page(base, P, summary=None):
     for b in blocks:
         cls = b.get('class') or []
         t = text_of(b)
-        if 'Korean beauty' in t or 'product__subheading' in str(b)[:200] or 'countdown-timer-wrapper' in cls \
+        if ('Korean beauty' in t and not getattr(P, 'KOREAN', False)) or 'product__subheading' in str(b)[:200] or 'countdown-timer-wrapper' in cls \
            or b.get('data-default-usp') is not None or b.select_one('[data-serum-subscription-usps]') or b.select_one('hr') \
            or {'product__features', 'product-suitability', 'customer-survey-results'} & set(cls):
             b.decompose()
@@ -718,11 +751,8 @@ def product_page(base, P, summary=None):
     if off: off.decompose()
     reg.insert_after(frag(f'<span class="sfb-ship">{P.esc(P.SHIPPING_BADGE)}</span>'))
     usp = prod.select_one('.skinofab-usp-grid')
-    # the foundation hides its grid with a script in the same block (it always runs): the brush's chips stay
-    block = usp.find_parent(class_='product__block')
-    for sc in (block.find_all('script') if block else []):
-        if 'ccf-v2-hide-usp-grid' in (sc.string or ''): sc.decompose()
-    usp.replace_with(frag(f'<style>{P.BUYBOX_CSS}</style>' + P.chips_html()))
+    # no icon grid, as on the foundation's page (it hides its own): the block keeps the buy box styles only
+    usp.replace_with(frag(f'<style>{P.BUYBOX_CSS}</style>'))
     # the promise, under the price (the foundation's page has its own description there)
     head = prod.select_one('.product__price-and-badge')
     amazon_f = WORK / P.AMAZON_FILE if P.AMAZON_FILE else None   # tools/reviews/amazon_rating.mjs: the owner's own listing, or nothing
@@ -746,9 +776,10 @@ def product_page(base, P, summary=None):
     form.select_one('[data-subscription-watch-price]').insert_before(
         frag(P.picker_html(offers['variants'], gift_imgs, apf_copy.OFFER_PICKER_CSS)))
     cta = form.select_one('#CTA_kopstorm')
-    guar = frag(f'<div class="product__block sfb-guar-block"><p class="sfb-guar">{P._CHECK}<span>{P.esc(P.GUARANTEE)}</span></p></div>')
-    cta.insert_after(guar)
-    # the five tabs, in the design's accordion markup
+    # "Love it or your money back" and the bought-once facts, as under the foundation's button
+    cta.insert_after(frag(f'<div class="product__block sfp-trust"><style>{apf_copy.TRUST_CSS}</style>'
+                          f'{apf_copy.trust_html(terms=False, refills=False)}</div>'))
+    # the tabs, in the design's accordion markup
     accs = prod.select('.product__block.product__accordions')
     tpl, anchor = copy.copy(accs[0]), accs[-1]
     for k, (title, body) in reversed(list(enumerate(P.tabs()))):
@@ -768,42 +799,9 @@ def product_page(base, P, summary=None):
             node.replace_with(node.replace('Color Changing Foundation', P.TITLE).replace('Adaptive Peptide Foundation', P.TITLE))
     for el in prod.find_all(alt=True):
         el['alt'] = el['alt'].replace('Color Changing Foundation', P.TITLE).replace('Adaptive Peptide Foundation', P.TITLE)
-    # the sections below, in P's order
-    strip = review_strip(brush_reviews)
-    pack = ccf_copy.PACKS[0]
-    once_or_refill = float(pack['refill'] if ccf_copy.REFILL.get('default') else pack['price'])
-    cross = (cross_img[0] if cross_img else '', 'color-changing-foundation.html', once_or_refill, float(pack['compare']),
-             (float(summary['average']), int(summary['count'])) if summary else None)
-    out = P.sections({'copy': hashed_copy, 'work': WORK, 'strip': strip, 'cross': cross})
-    if faq_src:
-        lst = faq_src.select('.accordion__list')
-        items = lst[0].select('li.accordion__item')
-        li_tpl = copy.copy(items[0])
-        for l in lst:
-            for li in l.select('li.accordion__item'): li.decompose()
-        for k, (q, a) in enumerate(P.FAQ['items']):
-            li = copy.copy(li_tpl)
-            li['id'] = f'Accordion--sfb_{k}'
-            li['class'] = [c for c in li.get('class', []) if c != 'accordion__item--first'] + (['accordion__item--first'] if k == 0 else [])
-            li.select_one('[data-collapsible-trigger]')['aria-controls'] = f'Accordions-item--sfb{k}'
-            li.select_one('[data-collapsible-container]')['id'] = f'Accordions-item--sfb{k}'
-            li.select_one('.accordion__item__title__text').string = q
-            body = li.select_one('[data-collapsible-content]'); body.clear(); body.append(frag(f'<p>{a}</p>'))
-            lst[0].append(li)
-        # one centered column, as on Solena's page
-        cols = faq_src.select('.accordion__column')
-        for c in cols[1:]: c.decompose()
-        if cols: cols[0]['style'] = 'width:100%;max-width:760px;margin:0 auto;flex:1 1 100%'
-        h2 = faq_src.select_one('.section__heading')
-        h2.string = P.FAQ['title']
-        h2.insert_before(frag(f'<span class="sfb-eyebrow" style="display:block;font-size:13px;font-weight:600;letter-spacing:.12em;'
-                              f'text-transform:uppercase;color:#6a6a6a;margin:0 0 12px">{P.esc(P.FAQ["eyebrow"])}</span>'))
-        faq_src['id'] = f'shopify-section-sf-{P.KEY}-faq'
-        out.append(str(faq_src))
-    out.append(f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-risk-free">{P.risk_free_html()}</div>')
-    if amazon: out.append(f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-amazon">{P.amazon_html(amazon)}</div>')
-    out.append(f'<div class="shopify-section" id="shopify-section-sf-review-wall">{review_wall(brush_reviews)}</div>')
-    if not stats: out.append(f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-no-reviews">{P.no_reviews_html(amazon=amazon)}</div>')
+    # the sections below: the finished foundation page's, in its order, with P's copy (twin.py)
+    found_main = BeautifulSoup(final, 'html.parser').find('main').find_all(recursive=False)
+    out = twin.sections(found_main, P, twin_context(P, found, stats, amazon))
     prod.insert_after(frag(''.join(out)))
     # the design's product JSON (the theme's product script reads prices and variants from it)
     gallery = [s_.find('img')['src'] for s_ in slider.select('[data-product-single-media-wrapper]')]
@@ -1221,7 +1219,7 @@ def main():
             texts[DST / 'index.html'], ok = product_shelf(texts[DST / 'index.html'], P)
             if not ok: missing.append((P.KEY, 'homepage shelf list or tab'))
         page = DST / 'products' / f'{P.HANDLE}.html'
-        texts[page], _ = drop_fake_buyers(product_page(base_pdp, P, found and found['summary']))
+        texts[page], _ = drop_fake_buyers(product_page(base_pdp, P, texts[pdp], found))
         shots = dict(re.findall(rf'\.\./assets/img/({re.escape(P.IMG_PREFIX)}-(\d+)-1080w-[0-9a-f]{{6}}\.jpg)', texts[page]))
         gallery = sorted(set(shots), key=lambda g: int(shots[g]))
         (DST / 'products' / f'{P.HANDLE}.js').write_text(json.dumps(product_snapshot(P, ['/assets/img/' + g for g in gallery])))

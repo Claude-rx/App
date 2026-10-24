@@ -64,17 +64,16 @@ item passes. Then swap it into its slot (tools/persona/apply_persona.py images o
 | B3 | Brush gallery 3, new slot (neck); also the routine section's poster | 52-year-old woman sweeping down the neck toward the collarbone |
 | B4 | Brush homepage card | Brush resting on its open SKINOFAB case on a bathroom shelf, soft daylight |
 | B5 | Brush + foundation | Morning routine flat lay: brush, case and foundation bottle, both logos readable |
-| P1 | PDRN Balm gallery, after the hero | 55-year-old woman pressing the black stick under her eye, mirror-free, soft morning light, eyes relaxed |
-| P2 | PDRN Balm, where-to-use | 50-something woman touching up her smile line with the stick over makeup, at a café table, stick label facing camera |
-| P3 | PDRN Balm, duo / in your bag | The stick coming out of a leather handbag's inner pocket, a woman's hand (50s, natural nails) holding it |
-| P4 | PDRN Balm + foundation | Bathroom shelf: the balm stick standing next to the foundation bottle, both SKINOFAB logos readable, morning light |
+
+The PDRN Balm's photos (its former P1–P3 shots and more) are done: GPT Image 2.5, prompts in
+`tools/persona/image_prompts.json`, sources in `brand/pdrn-balm/source/` ([pdrn-balm.md](pdrn-balm.md#images)).
 
 ## Review before swapping
 
 - [ ] The face is 45 or older and looks like a real person.
 - [ ] Skin texture is natural, not plastic.
 - [ ] The product matches the references exactly: shape, color, pump or case, logo, label (the balm: brand/pdrn-balm/card.jpg,
-      a matte black twist-up stick, SKINOFAB vertical, never pink).
+      a matte black twist-up stick, SKINOFAB vertical in a thin serif, spelled right; the tube is never pink).
 - [ ] The product is held as described above.
 - [ ] Hands are correct: five fingers, natural grip.
 - [ ] No mirror, no flipped text, no added text.
