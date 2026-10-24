@@ -235,6 +235,7 @@
   "templates/catalogue/product.beauty-mirror.html",
   "templates/catalogue/product.brow-gel.html",
   "templates/catalogue/product.color-changing-foundation.html",
+  "templates/catalogue/product.egf-nad-firming-serum.html",
   "templates/catalogue/product.essential-lip-liner.html",
   "templates/catalogue/product.extreme-lip-plumper.html",
   "templates/catalogue/product.eyebrow-serum.html",
@@ -324,6 +325,6 @@
  "unmapped_links": [],
  "font_faces": 139,
  "css_url_vars": 3,
- "product_json": 28,
+ "product_json": 29,
  "css_compile_errors": []
 }
