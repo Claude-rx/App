@@ -248,6 +248,7 @@
   "templates/catalogue/product.lash-brow-duo.html",
   "templates/catalogue/product.liquid-blender-brush.html",
   "templates/catalogue/product.long-lash-mascara.html",
+  "templates/catalogue/product.pdrn-plumping-balm.html",
   "templates/catalogue/product.peel-off-lip-stain.html",
   "templates/catalogue/product.reverse-time-peptide-serum.html",
   "templates/catalogue/product.shea-butter-lip-gloss.html",
@@ -323,6 +324,6 @@
  "unmapped_links": [],
  "font_faces": 139,
  "css_url_vars": 3,
- "product_json": 27,
+ "product_json": 28,
  "css_compile_errors": []
 }

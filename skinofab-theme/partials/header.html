@@ -110,6 +110,7 @@
 </div></li></ul>
 </div>
 </li><li class="mobile-menu__item mobile-menu__item--level-1">
+<a class="mobile-navlink mobile-navlink--level-1" href="{% if settings.sf_p_pdrn_plumping_balm %}{{ settings.sf_p_pdrn_plumping_balm.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> PDRN Balm </a> </li><li class="mobile-menu__item mobile-menu__item--level-1">
 <a class="mobile-navlink mobile-navlink--level-1" href="{% if settings.sf_p_the_lymphatic_brush %}{{ settings.sf_p_the_lymphatic_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> Lymphatic Brush </a> </li><li class="mobile-menu__item mobile-menu__item--level-1">
 <a class="mobile-navlink mobile-navlink--level-1" href="{{ settings.sf_c_the_hits|default:'/catalogue/' }}">
       Bestsellers
@@ -276,6 +277,7 @@
 </div>
 </div></div>
 <div class="menu__item child" data-hover-disclosure-toggle="" data-nav-item="">
+<a class="navlink navlink--toplevel caps" data-top-link="" href="{% if settings.sf_p_pdrn_plumping_balm %}{{ settings.sf_p_pdrn_plumping_balm.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> <span class="navtext">PDRN Balm</span> </a></div> <div class="menu__item child" data-hover-disclosure-toggle="" data-nav-item="">
 <a class="navlink navlink--toplevel caps" data-top-link="" href="{% if settings.sf_p_the_lymphatic_brush %}{{ settings.sf_p_the_lymphatic_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> <span class="navtext">Lymphatic Brush</span> </a></div> <div class="menu__item child" data-hover-disclosure-toggle="" data-nav-item="">
 <a class="navlink navlink--toplevel caps" data-top-link="" href="{{ settings.sf_c_the_hits|default:'/catalogue/' }}">
 <span class="navtext">Bestsellers</span>

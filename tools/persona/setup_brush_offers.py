@@ -1,6 +1,8 @@
 """The Lymphatic Brush on NEXT: the product, its three bundles and their prices. Idempotent.
 
-usage: NEXT_API_TOKEN=... python3 -I setup_brush_offers.py <store_subdomain> <work_dir>
+usage: NEXT_API_TOKEN=... python3 -I setup_brush_offers.py <store_subdomain> <work_dir> [copy_module]
+copy_module: brush_copy (default) or balm_copy (the PDRN Plumping Balm: 1, 2 or 3 sticks); everything below reads
+the module's BUNDLES, CATEGORIES and texts, and writes its OFFERS_FILE.
 - one product (slug and template key the-lymphatic-brush), public, one-time purchase (no refills), with a Bundle
   attribute: 1 brush + free case ($24.95), 2 brushes + 2 free cases ($39.95), 3 brushes + 3 free cases + free body
   brush ($49.90); each compare-at is the single-brush price times the brushes (brush_copy.BUNDLES)
@@ -11,11 +13,13 @@ usage: NEXT_API_TOKEN=... python3 -I setup_brush_offers.py <store_subdomain> <wo
   the product to <work_dir>/catalog-rb.json (the theme build's handle -> NEXT product mapping)
 Images: upload_gallery.py <store> <pk> <undo.json> brand/lymphatic-brush/gallery-{1..7}.jpg
 """
-import json, os, sys, time, urllib.request, urllib.error
+import importlib, json, os, sys, time, urllib.request, urllib.error
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from brush_copy import BUNDLES, CATEGORIES, DESCRIPTION, HANDLE, META_DESCRIPTION, META_TITLE, TITLE
+P = importlib.import_module(sys.argv[3] if len(sys.argv) > 3 else 'brush_copy')
+BUNDLES, CATEGORIES, DESCRIPTION, HANDLE = P.BUNDLES, P.CATEGORIES, P.DESCRIPTION, P.HANDLE
+META_DESCRIPTION, META_TITLE, TITLE = P.META_DESCRIPTION, P.META_TITLE, P.TITLE
 
 STORE, WORK = sys.argv[1], Path(sys.argv[2])
 API = f'https://{STORE}.29next.store/api/admin/'
@@ -77,7 +81,7 @@ by_sku = {v.get('sku'): v for v in prod['variants']}
 extra = [v['id'] for v in prod['variants'] if v.get('sku') not in {b['sku'] for b in BUNDLES}]
 if extra: raise SystemExit(f'unexpected extra variants on product {pk}: {extra}')
 offers = {'pk': pk, 'variants': {b['key']: by_sku[b['sku']]['id'] for b in BUNDLES}}
-(WORK / 'brush-offers.json').write_text(json.dumps(offers, indent=1))
+(WORK / P.OFFERS_FILE).write_text(json.dumps(offers, indent=1))
 cat_path = WORK / 'catalog-rb.json'
 cat = json.loads(cat_path.read_text())
 ids = [offers['variants'][b['key']] for b in BUNDLES]

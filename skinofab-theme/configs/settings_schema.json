@@ -98,6 +98,12 @@
         "help_text": "NEXT product shown wherever the design links to \"long-lash-mascara\": links, prices and add to cart. Also set this product's template to \"long-lash-mascara\"."
       },
       {
+        "name": "sf_p_pdrn_plumping_balm",
+        "type": "product",
+        "label": "PDRN Plumping Balm",
+        "help_text": "NEXT product shown wherever the design links to \"pdrn-plumping-balm\": links, prices and add to cart. Also set this product's template to \"pdrn-plumping-balm\"."
+      },
+      {
         "name": "sf_p_peel_off_lip_stain",
         "type": "product",
         "label": "Peel-off Lip Stain",
@@ -301,6 +307,38 @@
         "name": "sf_cart_upgrade2_button",
         "type": "text",
         "label": "Second upgrade: button",
+        "default": "Upgrade"
+      },
+      {
+        "name": "sf_cart_upgrade3_from",
+        "type": "text",
+        "label": "Third upgrade: variant in the bag",
+        "default": "",
+        "help_text": "A third product's upgrade (NEXT variant IDs), shown when the first two do not apply. Empty: none."
+      },
+      {
+        "name": "sf_cart_upgrade3_to",
+        "type": "text",
+        "label": "Third upgrade: variant it becomes",
+        "default": ""
+      },
+      {
+        "name": "sf_cart_upgrade3_title",
+        "type": "text",
+        "label": "Third upgrade: title",
+        "default": ""
+      },
+      {
+        "name": "sf_cart_upgrade3_text",
+        "type": "text",
+        "label": "Third upgrade: text",
+        "default": "",
+        "help_text": "Name the real price difference; it must match the two variants' prices."
+      },
+      {
+        "name": "sf_cart_upgrade3_button",
+        "type": "text",
+        "label": "Third upgrade: button",
         "default": "Upgrade"
       },
       {

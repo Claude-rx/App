@@ -564,7 +564,7 @@
     var now = head && head.querySelector('.product__price--regular'), was = head && head.querySelector('.product__price--compare');
     var unit = now && / USD\s*$/.test(now.textContent) ? ' USD' : '';
     if (now) now.textContent = money(24.95) + unit;
-    if (was) was.textContent = money(49.9) + unit;
+    if (was) { if (49.9 > 24.95) was.textContent = money(49.9) + unit; else was.hidden = true; }
   }
   function sync() {
     titlePrice();

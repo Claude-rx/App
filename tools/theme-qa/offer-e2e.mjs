@@ -12,6 +12,9 @@
 //         SFCommerce.addItems, the path other buttons use): one line, the 2-bottle pack, same purchase type.
 //   add-on: added as a second line, then no longer offered.
 //   checkout (1 bottle and 2 bottles, first case of each): the line, its price and the refill wording.
+// The PDRN Plumping Balm (balm_copy.py BUNDLES; optional 6th argument, its page path): the same bundle and upgrade
+//   checks as the brush (1 -> 2 sticks), and its page: section order, tabs, FAQ, no competitor name or dropped claim,
+//   no "was" price on one stick, the homepage card, the menu link and the sticky bar.
 // The Lymphatic Brush (tools/persona/brush_copy.py BUNDLES; optional 5th argument, its product page path):
 //   buy: each bundle adds its variant at its price, one-time; the drawer offers the 1 -> 2 brushes upgrade only for
 //        one brush, and never the brush as an add-on while it is in the bag; checkout shows the 2-brush bundle.
@@ -22,7 +25,7 @@
 import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';
 import fs from 'fs'; import path from 'path';
 
-const [STORE, THEME, PDP, SHOTS, BRUSH = '/catalogue/the-lymphatic-brush_169/'] = process.argv.slice(2);
+const [STORE, THEME, PDP, SHOTS, BRUSH = '/catalogue/the-lymphatic-brush_169/', BALM = '/catalogue/pdrn-plumping-balm_202/'] = process.argv.slice(2);
 fs.mkdirSync(SHOTS, { recursive: true });
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const picker = '[data-sf-offer-picker]';
@@ -110,7 +113,7 @@ async function checkout(s, name, product = 'Adaptive Peptide Foundation') {
   const text = await s.page.evaluate(() => document.body.innerText.replace(/\s+/g, ' '));
   await s.page.screenshot({ path: path.join(SHOTS, `checkout-${name}.png`), fullPage: true });
   return { status: resp && resp.status(), hasLine: text.toLowerCase().includes(product.toLowerCase()),
-           pack: (text.match(/(1 bottle|2 bottles \+ free gifts|1 brush \+ free case|2 brushes \+ 2 free cases|3 brushes \+ 3 free cases \+ free body brush)/i) || [])[0] || null,
+           pack: (text.match(/(1 bottle|2 bottles \+ free gifts|1 brush \+ free case|2 brushes \+ 2 free cases|3 brushes \+ 3 free cases \+ free body brush|1 stick|2 sticks|3 sticks \(buy 2, get 1 free\))/i) || [])[0] || null,
            refillWords: (text.match(/[^.$]{0,40}(every\s+28\s+days?|subscri|recurring|renew)[^.$]{0,40}/gi) || []).slice(0, 3),
            prices: (text.match(/\$\d+\.\d\d/g) || []).slice(0, 6) };
 }
@@ -353,13 +356,13 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
-// ---------------------------------------------------------------- the Lymphatic Brush
-const brushPacks = await (async () => {
-  const s = await session(1440, 900, BRUSH);
+// ---------------------------------------------------------------- the second products' bundles (brush, balm)
+async function packsOf(route) {
+  const s = await session(1440, 900, route);
   const t = JSON.parse(await s.page.getAttribute(picker, 'data-packs'));
   await s.ctx.close();
   return t;
-})();
+}
 async function chooseBundle(s, key) {
   const box = s.page.locator(picker);
   await box.scrollIntoViewIfNeeded();
@@ -369,35 +372,38 @@ async function chooseBundle(s, key) {
     return { id: form.querySelector('input[name=id]').value, button: form.querySelector('[data-add-to-cart]').textContent.replace(/\s+/g, ' ').trim() };
   }, picker);
 }
-for (const [key, pack] of Object.entries(brushPacks)) {
-  const s = await session(1440, 900, BRUSH);
-  const ui = await chooseBundle(s, key);
-  const problems = [];
-  if (ui.id !== String(pack.pk)) problems.push(`form id ${ui.id} != ${pack.pk}`);
-  if (!ui.button.includes(money(pack.price))) problems.push(`button "${ui.button}" lacks ${money(pack.price)}`);
-  await addToCart(s);
-  const ls = lines(s.cart);
-  if (ls.length !== 1) problems.push(`${ls.length} lines`);
-  problems.push(...checkLine(ls[0], { pk: pack.pk, price: pack.price, refill: false }));
-  const d = await drawerState(s);
-  if (!d.open) problems.push('drawer did not open');
-  if (d.upgrade !== (key === '1')) problems.push(`upgrade shown=${d.upgrade}`);
-  if (d.addons.includes('The Lymphatic Brush')) problems.push('brush offered as an add-on while in the bag');
-  if (d.addons.length < 1) problems.push('no add-ons');
-  if (d.planTalk) problems.push('drawer has plan talk');
-  let co = null;
-  if (key === '2') {
-    co = await checkout(s, 'brush-2', 'Lymphatic Brush');
-    if (!co.hasLine) problems.push('checkout has no brush line');
-    if (!co.prices.includes('$' + pack.price.toFixed(2))) problems.push(`checkout prices ${co.prices} lack $${pack.price.toFixed(2)}`);
-    if (co.refillWords.length) problems.push('checkout talks about a plan: ' + co.refillWords[0]);
+// each bundle: its variant and price, one-time, the drawer (its 1 -> 2 upgrade only for one, never itself as an
+// add-on), checkout for the 2-pack; then the drawer upgrade 1 -> 2
+async function bundleCases(name, route, title, label) {
+  const packs = await packsOf(route);
+  for (const [key, pack] of Object.entries(packs)) {
+    const s = await session(1440, 900, route);
+    const ui = await chooseBundle(s, key);
+    const problems = [];
+    if (ui.id !== String(pack.pk)) problems.push(`form id ${ui.id} != ${pack.pk}`);
+    if (!ui.button.includes(money(pack.price))) problems.push(`button "${ui.button}" lacks ${money(pack.price)}`);
+    await addToCart(s);
+    const ls = lines(s.cart);
+    if (ls.length !== 1) problems.push(`${ls.length} lines`);
+    problems.push(...checkLine(ls[0], { pk: pack.pk, price: pack.price, refill: false }));
+    const d = await drawerState(s);
+    if (!d.open) problems.push('drawer did not open');
+    if (d.upgrade !== (key === '1')) problems.push(`upgrade shown=${d.upgrade}`);
+    if (d.addons.includes(title)) problems.push(`${title} offered as an add-on while in the bag`);
+    if (d.addons.length < 1) problems.push('no add-ons');
+    if (d.planTalk) problems.push('drawer has plan talk');
+    let co = null;
+    if (key === '2') {
+      co = await checkout(s, `${name}-2`, label);
+      if (!co.hasLine) problems.push(`checkout has no ${name} line`);
+      if (!co.prices.includes('$' + pack.price.toFixed(2))) problems.push(`checkout prices ${co.prices} lack $${pack.price.toFixed(2)}`);
+      if (co.refillWords.length) problems.push('checkout talks about a plan: ' + co.refillWords[0]);
+    }
+    out.push({ case: `${name} ${key}`, ui, line: ls[0], drawer: { upgrade: d.upgrade, addons: d.addons }, checkout: co, errors: s.errors,
+               ok: problems.length === 0, problems });
+    await s.ctx.close();
   }
-  out.push({ case: `brush ${key}`, ui, line: ls[0], drawer: { upgrade: d.upgrade, addons: d.addons }, checkout: co, errors: s.errors,
-             ok: problems.length === 0, problems });
-  await s.ctx.close();
-}
-{
-  const s = await session(1440, 900, BRUSH);
+  const s = await session(1440, 900, route);
   await chooseBundle(s, '1');
   await addToCart(s);
   const problems = [];
@@ -406,13 +412,17 @@ for (const [key, pack] of Object.entries(brushPacks)) {
   else { await btn.first().click(); await s.page.waitForTimeout(7000); }
   const ls = lines(s.cart);
   if (ls.length !== 1) problems.push(`${ls.length} lines after the upgrade`);
-  problems.push(...checkLine(ls[0], { pk: brushPacks['2'].pk, price: brushPacks['2'].price, refill: false }));
+  problems.push(...checkLine(ls[0], { pk: packs['2'].pk, price: packs['2'].price, refill: false }));
   const d = await drawerState(s);
   if (d.upgrade) problems.push('upgrade still offered');
-  await s.page.screenshot({ path: path.join(SHOTS, 'drawer-brush-upgrade.png') });
-  out.push({ case: 'brush upgrade 1 -> 2', lines: ls, errors: s.errors, ok: problems.length === 0, problems });
+  await s.page.screenshot({ path: path.join(SHOTS, `drawer-${name}-upgrade.png`) });
+  out.push({ case: `${name} upgrade 1 -> 2`, lines: ls, errors: s.errors, ok: problems.length === 0, problems });
   await s.ctx.close();
 }
+await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
+await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm');
+
+// ---------------------------------------------------------------- the Lymphatic Brush's page
 {
   const s = await session(1440, 900, BRUSH);
   await s.page.locator('#sf-review-wall-sentinel').scrollIntoViewIfNeeded().catch(() => {});
@@ -477,9 +487,69 @@ for (const [key, pack] of Object.entries(brushPacks)) {
   await s.ctx.close();
 }
 
+// ---------------------------------------------------------------- the PDRN Plumping Balm's page
+{
+  const s = await session(1440, 900, BALM);
+  await s.page.locator('#sf-review-wall-sentinel').scrollIntoViewIfNeeded().catch(() => {});
+  await s.page.waitForTimeout(2000);
+  const pg = await s.page.evaluate(() => {
+    const ids = [...document.querySelectorAll('main > [id^="shopify-section-"]')].map(e => e.id.replace(/shopify-section-(template--\d+__)?/, ''));
+    const tabs = [...document.querySelectorAll('.product__accordions #accordionbefore')].map(e => e.textContent.trim());
+    const head = document.querySelector('.product__price-and-badge');
+    let native = { reviews: [] };
+    try { native = JSON.parse(document.querySelector('[data-sf-native-reviews]').textContent); } catch (e) {}
+    const text = document.body.innerText, cross = document.querySelector('#sfb-cross'), empty = document.getElementById('sfb-no-reviews');
+    return { ids, tabs, faq: document.querySelectorAll('#shopify-section-sf-balm-faq .accordion__item').length,
+             gallery: document.querySelectorAll('[data-product-single-media-slider] [data-product-single-media-wrapper]').length,
+             chips: !!document.querySelector('.sfb-chips'), lead: !!document.querySelector('.sfb-lead'),
+             eyebrow: (document.querySelector('.sfp-eyebrow') || {}).textContent || '', title: (document.querySelector('.product__title') || {}).textContent || '',
+             claims: (text.match(/96%|1M\+|bought today|77%|dermatologist|collagen production|clinically|FEM\+|femplus/gi) || []),
+             cross: cross ? { href: (cross.querySelector('a.sfb-btn') || {}).pathname || '', rating: (cross.querySelector('.sfb-cross__rating') || {}).textContent || '' } : null,
+             empty: !!empty && !empty.hidden, now: head.querySelector('.product__price--regular').textContent.trim(),
+             was: !!head.querySelector('.product__price--compare'), vs: document.querySelectorAll('#sfp-stick tbody tr').length,
+             ingredients: document.querySelectorAll('#sfp-science .sfp-ing article').length,
+             femplus: /fem\+|femplus/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
+             stars: !document.querySelector('[data-sfb-rating]').hidden, hScroll: document.documentElement.scrollWidth > innerWidth + 1,
+             imgs: [...document.querySelectorAll('main img')].filter(i => i.complete && i.naturalWidth === 0 && !/^data:/.test(i.getAttribute('src') || '')).length };
+  });
+  const problems = [];
+  const order = ['main', 'sf-balm-problem', 'sf-balm-science', 'sf-balm-stick', 'sf-balm-how', 'sf-balm-expect', 'sf-balm-cross',
+                 'sf-balm-faq', 'sf-balm-risk-free', 'sf-review-wall'];
+  if (order.some((k, i) => pg.ids.indexOf(k) < 0 || (i && pg.ids.indexOf(k) < pg.ids.indexOf(order[i - 1])))) problems.push('sections: ' + pg.ids.join(','));
+  if (pg.tabs.length !== 5 || pg.tabs[0] !== 'What it does') problems.push('tabs: ' + pg.tabs.join(' | '));
+  if (pg.faq !== 10) problems.push(`${pg.faq} FAQ answers`);
+  if (pg.gallery !== 7) problems.push(`${pg.gallery} gallery images`);
+  if (!pg.chips || !pg.lead) problems.push(`chips ${pg.chips} / lead ${pg.lead}`);
+  if (!/PDRN K-beauty/i.test(pg.eyebrow) || !/PDRN Plumping Balm/.test(pg.title)) problems.push(`eyebrow "${pg.eyebrow}" / title "${pg.title}"`);
+  if (pg.claims.length) problems.push('claims or competitor on the page: ' + pg.claims.join(', '));
+  if (pg.femplus) problems.push('FEM+ in the markup');
+  if (pg.vs !== 6 || pg.ingredients !== 4) problems.push(`stick-vs-jar rows ${pg.vs}, ingredient cards ${pg.ingredients}`);
+  if (!pg.cross || !pg.cross.href.includes('adaptive-peptide-foundation') || !/\d\.\d\/5 from [\d,]+ verified reviews/.test(pg.cross.rating))
+    problems.push('foundation cross-sell: ' + JSON.stringify(pg.cross));
+  if (pg.empty === (pg.reviews > 0)) problems.push(`"No reviews yet" box ${pg.empty} with ${pg.reviews} reviews`);
+  if (!/^\$24\.95/.test(pg.now) || pg.was) problems.push(`title price ${pg.now}, was-price shown ${pg.was}`);
+  if (pg.stars !== (pg.reviews > 0)) problems.push(`stars ${pg.stars} with ${pg.reviews} reviews`);
+  if (pg.hScroll) problems.push('page scrolls sideways');
+  if (pg.imgs) problems.push(`${pg.imgs} broken images`);
+  await s.page.goto(`${STORE}/`, { waitUntil: 'networkidle', timeout: 90000 });
+  const home = await s.page.evaluate(() => {
+    const shelf = document.querySelector('[id$="__bestsellers"]');
+    const has = el => !!el && [...el.querySelectorAll('article h3 a')].some(a => a.pathname.includes('pdrn-plumping-balm'));
+    return { list: has(shelf && shelf.querySelector('.fh-product-list')),
+             tabs: ['bestsellers_0', 'bestsellers_1', 'bestsellers_2'].filter(k => has(shelf && shelf.querySelector(`[data-fh-panel="${k}"]`))),
+             price: ((shelf && [...shelf.querySelectorAll('.fh-product-list article')].find(a => /PDRN Plumping Balm/.test(a.textContent))) || {}).innerText || '',
+             menu: [...document.querySelectorAll('a')].filter(a => /^\s*PDRN Balm\s*$/i.test(a.textContent)).map(a => a.pathname) };
+  });
+  if (!home.list || home.tabs.length !== 3) problems.push(`homepage shelf: list ${home.list}, tabs ${home.tabs.join(',')}`);
+  if (!/\$24\.95/.test(home.price)) problems.push('shelf card price: ' + home.price.replace(/\s+/g, ' ').slice(0, 80));
+  if (home.menu.length < 2 || home.menu.some(p => !p.includes('pdrn-plumping-balm'))) problems.push('menu links: ' + home.menu.join(','));
+  out.push({ case: 'balm page', ...pg, home, errors: s.errors, ok: problems.length === 0, problems });
+  await s.ctx.close();
+}
+
 // the sticky bar on both product pages: hidden at the top, shown once the add-to-cart button has scrolled away, and
 // its button brings the pack picker back into view
-for (const [name, route] of [['foundation', PDP], ['brush', BRUSH]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
+for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BALM]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
   const s = await session(w, h, route);
   const on = () => s.page.evaluate(() => { const b = document.getElementById('sf-sticky'); return b ? b.classList.contains('is-on') : null; });
   const problems = [];

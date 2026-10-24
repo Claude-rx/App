@@ -20,7 +20,8 @@ import hashlib, html, json, os, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, brush_copy, ccf_copy, company
+import apf_copy, balm_copy, brush_copy, ccf_copy, company
+SECOND_PRODUCTS = (brush_copy, balm_copy)
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
 IMAGES = Path(sys.argv[4]).resolve() if len(sys.argv) > 4 else None
@@ -491,11 +492,17 @@ def cart_offer():
     brush = json.loads((WORK / 'brush-offers.json').read_text())['variants']
     b1, b2 = brush_copy.BUNDLES[0], brush_copy.BUNDLES[1]
     b_text = (f"Just {money(round(float(b2['price']) - float(b1['price']), 2))} more for a second brush and a second free case.")
+    balm = json.loads((WORK / balm_copy.OFFERS_FILE).read_text())['variants']
+    c1, c2 = balm_copy.BUNDLES[0], balm_copy.BUNDLES[1]
+    c_text = f"Just {money(round(float(c2['price']) - float(c1['price']), 2))} more for a second stick: one for home, one for your bag."
+
     return {'product': cart['product'], 'addons': cart['addons'],
             'upgrades': [{'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
                           'text': text, 'button': cart['upgrade_button']},
                          {'from': brush[b1['key']], 'to': brush[b2['key']], 'title': brush_copy.CART_UPGRADE['title'],
-                          'text': b_text, 'button': brush_copy.CART_UPGRADE['button']}],
+                          'text': b_text, 'button': brush_copy.CART_UPGRADE['button']},
+                         {'from': balm[c1['key']], 'to': balm[c2['key']], 'title': balm_copy.CART_UPGRADE['title'],
+                          'text': c_text, 'button': balm_copy.CART_UPGRADE['button']}],
             'review': {'text': cart['review_text'], 'name': cart['review_name']},
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
@@ -593,7 +600,6 @@ def trust_block():
 
 # ---------------------------------------------------------------- the Lymphatic Brush's product page
 WORK = Path(sys.argv[3]).resolve().parent
-BRUSH_IMG = Path(__file__).resolve().parents[2] / 'brand' / 'lymphatic-brush'   # tools/persona/brush_assets.py
 
 def hashed_copy(src, sub, name, size=None):
     """src copied into the export (assets/<sub>/) as <name>-<hash><ext>, resized to fit `size` if given."""
@@ -640,14 +646,14 @@ def brush_rating(imported=None):
             'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show); else show();'
             '})();</script>')
 
-def brush_page(base, summary=None):
-    """products/the-lymphatic-brush.html: the foundation page's chrome and buy box markup with the brush page
-    (brush_copy) in it, and the brush's sections below. Prices, the bundle picker's variants and the cart come from
-    NEXT (brush-offers.json, written by setup_brush_offers.py). summary: the foundation's imported review totals, for
-    its rating in the cross-sell."""
+def product_page(base, P, summary=None):
+    """products/<P.HANDLE>.html for a second product (P: its copy module, the brush's or the balm's): the foundation
+    page's chrome and buy box markup with the product's page in it, and its sections below (P.sections). Prices, the
+    bundle picker's variants and the cart come from NEXT (<work_dir>/<P.OFFERS_FILE>, written by
+    setup_brush_offers.py). summary: the foundation's imported review totals, for its rating in the cross-sell."""
     import copy
     from bs4 import BeautifulSoup, NavigableString
-    offers = json.loads((WORK / 'brush-offers.json').read_text())
+    offers = json.loads((WORK / P.OFFERS_FILE).read_text())
     soup = BeautifulSoup(base, 'html.parser')
     frag = lambda h: BeautifulSoup(h, 'html.parser')
     main = soup.find('main')
@@ -656,10 +662,10 @@ def brush_page(base, summary=None):
     faq_src = copy.copy(faq_src) if faq_src else None
     for sec in [c for c in main.find_all(recursive=False) if c is not prod and 'section_custom_html' not in (c.get('id') or '')]:
         sec.decompose()
-    img = lambda k, w: hashed_copy(BRUSH_IMG / f'{brush_copy.GALLERY[k - 1]}.jpg', 'img', f'skinofab-lymphatic-brush-{k}-{w}w', (w, w))
+    img = lambda k, w: hashed_copy(P.IMG / f'{P.GALLERY[k - 1]}.jpg', 'img', f'{P.IMG_PREFIX}-{k}-{w}w', (w, w))
     # the foundation's second gallery photo (a woman over 45 holding the bottle) for the cross-sell, before it goes
     cross_img = [i.get('src') for i in prod.select('[data-product-single-media-wrapper] img')][1:2]
-    # gallery: brush_copy.GALLERY, the first one eager
+    # gallery: P.GALLERY, the first one eager
     slider = prod.select_one('[data-product-single-media-slider]')
     slides = slider.select('[data-product-single-media-wrapper]')
     thumbs = prod.select_one('[data-product-single-media-thumbs]')
@@ -667,22 +673,22 @@ def brush_page(base, summary=None):
     t_thumb = copy.copy(thumbs.select('[data-thumbnail-id]')[0])
     for s_ in slides: s_.decompose()
     for t_ in thumbs.select('[data-thumbnail-id]'): t_.decompose()
-    for k in range(1, len(brush_copy.GALLERY) + 1):
-        mid = str(9300000000000 + k)
+    for k in range(1, len(P.GALLERY) + 1):
+        mid = str(P.MEDIA_BASE + k)
         big, mid_src, small = img(k, 1080), img(k, 753), img(k, 178)
         sl = copy.copy(t_slides[0 if k == 1 else 1])
-        sl['data-id'], sl['data-media-id'] = mid, f'brush-{mid}'
-        sl['id'] = f'FeaturedMedia-brush-{mid}'
+        sl['data-id'], sl['data-media-id'] = mid, f'{P.KEY}-{mid}'
+        sl['id'] = f'FeaturedMedia-{P.KEY}-{mid}'
         im = sl.find('img')
         im['src'], im['srcset'] = big, f'{mid_src} 753w, {big} 1080w'
-        im['alt'], im['data-image-id'] = brush_copy.TITLE, mid
+        im['alt'], im['data-image-id'] = P.TITLE, mid
         if k > 1: im['fetchpriority'] = 'low'
         slider.append(sl)
         th = copy.copy(t_thumb)
-        th['data-id'], th['data-thumbnail-id'] = mid, f'brush-{mid}'
-        th.find('a')['aria-label'] = brush_copy.TITLE
+        th['data-id'], th['data-thumbnail-id'] = mid, f'{P.KEY}-{mid}'
+        th.find('a')['aria-label'] = P.TITLE
         ti = th.find('img')
-        ti['src'], ti['srcset'], ti['alt'] = small, f'{big} 1080w', brush_copy.TITLE
+        ti['src'], ti['srcset'], ti['alt'] = small, f'{big} 1080w', P.TITLE
         ti['loading'] = 'eager' if k <= 5 else 'lazy'
         thumbs.append(th)
     # the buy box, top to bottom
@@ -695,34 +701,39 @@ def brush_page(base, summary=None):
            or b.get('data-default-usp') is not None or b.select_one('[data-serum-subscription-usps]') or b.select_one('hr') \
            or {'product__features', 'product-suitability', 'customer-survey-results'} & set(cls):
             b.decompose()
-    # no "Nicole and 5,000+ others purchased": the brush is new here; its stars appear with its first real review
+    # no "Nicole and 5,000+ others purchased": the product is new here; its stars appear with its first real review
     social = prod.select_one('.social-proof-container')
     if social: (social.find_parent(class_='product__block') or social).decompose()
-    brush_reviews = WORK / 'reviews-brush'      # tools/reviews/import_reviews.py ... --product the-lymphatic-brush --out reviews-brush
+    brush_reviews = WORK / P.REVIEWS_DIR        # tools/reviews/import_reviews.py ... --product <handle> --out <P.REVIEWS_DIR>
     stats = json.loads((brush_reviews / 'reviews.json').read_text()) if (brush_reviews / 'reviews.json').exists() else None
     app = prod.select_one('.product__block.standard__app')
     app.clear(); app.append(frag(brush_rating(stats)))
     price = prod.select_one('.product__price-and-badge [data-price-wrapper]')
-    price.select_one('.product__price--compare').string = brush_copy.money(brush_copy.COMPARE)
+    was = price.select_one('.product__price--compare')
+    if float(P.COMPARE) > float(P.PRICE): was.string = P.money(P.COMPARE)
+    else: was.decompose()                                  # no saving on one: no "was" price
     reg = price.select_one('.product__price--regular')
-    reg.string = brush_copy.money(brush_copy.PRICE)
+    reg.string = P.money(P.PRICE)
     off = price.select_one('.product__price--off')
     if off: off.decompose()
-    reg.insert_after(frag(f'<span class="sfb-ship">{brush_copy.esc(brush_copy.SHIPPING_BADGE)}</span>'))
+    reg.insert_after(frag(f'<span class="sfb-ship">{P.esc(P.SHIPPING_BADGE)}</span>'))
     usp = prod.select_one('.skinofab-usp-grid')
     # the foundation hides its grid with a script in the same block (it always runs): the brush's chips stay
     block = usp.find_parent(class_='product__block')
     for sc in (block.find_all('script') if block else []):
         if 'ccf-v2-hide-usp-grid' in (sc.string or ''): sc.decompose()
-    usp.replace_with(frag(f'<style>{brush_copy.BUYBOX_CSS}</style>' + brush_copy.chips_html()))
+    usp.replace_with(frag(f'<style>{P.BUYBOX_CSS}</style>' + P.chips_html()))
     # the promise, under the price (the foundation's page has its own description there)
     head = prod.select_one('.product__price-and-badge')
-    amazon_f = WORK / 'amazon-brush.json'      # tools/reviews/amazon_rating.mjs: the owner's own listing, or nothing
-    amazon = json.loads(amazon_f.read_text()) if amazon_f.exists() else None
-    if head: head.insert_after(frag(f'<p class="sfb-lead">{brush_copy.esc(brush_copy.LEAD)}</p>'
-                                    + (brush_copy.amazon_line(amazon) if amazon else '')))
+    amazon_f = WORK / P.AMAZON_FILE if P.AMAZON_FILE else None   # tools/reviews/amazon_rating.mjs: the owner's own listing, or nothing
+    amazon = json.loads(amazon_f.read_text()) if amazon_f and amazon_f.exists() else None
+    if head: head.insert_after(frag(f'<p class="sfb-lead">{P.esc(P.LEAD)}</p>'
+                                    + (P.amazon_line(amazon) if amazon else '')))
+    title_el = prod.select_one('.product__title')
+    if getattr(P, 'EYEBROW', None) and title_el:
+        title_el.insert_before(frag(f'<span class="sfp-eyebrow">{P.esc(P.EYEBROW)}</span>'))
     form = prod.select_one('form[data-product-form]')
-    form.select_one('input[name=id]')['value'] = str(brush_copy.SHOPIFY_VARIANT)
+    form.select_one('input[name=id]')['value'] = str(P.SHOPIFY_VARIANT)
     for el in form.select('.shop-pay-terms'): el.decompose()
     for el in prod.select('skinofab-installments'): el.decompose()   # the foundation's pay-in-4 line
     for el in soup.select('script.kaching-bundles-product, script.kaching-bundles-deal-block-settings'): el.decompose()
@@ -730,20 +741,17 @@ def brush_page(base, summary=None):
     label = btn.select_one('[data-add-to-cart-text]') if btn else None
     if label: label.insert_after(frag('<span class="sfb-btn-price" data-sfb-btn-price></span>'))
     if btn and btn.get('data-notification-popup'):
-        btn['data-notification-popup'] = btn['data-notification-popup'].replace('Adaptive Peptide Foundation', brush_copy.TITLE).replace('Color Changing Foundation', brush_copy.TITLE)
-    gift_imgs = {k: hashed_copy(BRUSH_IMG / f'gift-{f}.jpg', 'img', f'skinofab-brush-gift-{f}') for k, f in (('case', 'case'), ('body', 'body-brush'))}
+        btn['data-notification-popup'] = btn['data-notification-popup'].replace('Adaptive Peptide Foundation', P.TITLE).replace('Color Changing Foundation', P.TITLE)
+    gift_imgs = {k: hashed_copy(P.IMG / f'gift-{f}.jpg', 'img', f'{P.GIFT_PREFIX}-{f}') for k, f in P.GIFT_FILES.items()}
     form.select_one('[data-subscription-watch-price]').insert_before(
-        frag(brush_copy.picker_html(offers['variants'], gift_imgs, apf_copy.OFFER_PICKER_CSS)))
+        frag(P.picker_html(offers['variants'], gift_imgs, apf_copy.OFFER_PICKER_CSS)))
     cta = form.select_one('#CTA_kopstorm')
-    guar = frag(f'<div class="product__block sfb-guar-block"><p class="sfb-guar">{brush_copy._CHECK}<span>{brush_copy.esc(brush_copy.GUARANTEE)}</span></p></div>')
+    guar = frag(f'<div class="product__block sfb-guar-block"><p class="sfb-guar">{P._CHECK}<span>{P.esc(P.GUARANTEE)}</span></p></div>')
     cta.insert_after(guar)
     # the five tabs, in the design's accordion markup
     accs = prod.select('.product__block.product__accordions')
     tpl, anchor = copy.copy(accs[0]), accs[-1]
-    media = WORK / 'brush' / 'media'
-    tutorial = (hashed_copy(media / 'brush-how-to.mp4', 'media', 'skinofab-brush-how-to'),
-                hashed_copy(media / 'brush-how-to.jpg', 'img', 'skinofab-brush-how-to-poster'))
-    for k, (title, body) in reversed(list(enumerate(brush_copy.tabs()))):
+    for k, (title, body) in reversed(list(enumerate(P.tabs()))):
         a = copy.copy(tpl)
         a['id'] = f'Block--sfb_tab_{k}'
         a.select_one('[data-collapsible-trigger]')['aria-controls'] = f'ProductAccordion--sfb-tab-{k}'
@@ -757,33 +765,23 @@ def brush_page(base, summary=None):
         if '#frontrow-sticker' in (st.string or ''): st.decompose()
     for node in prod.find_all(string=True):
         if 'Color Changing Foundation' in node or 'Adaptive Peptide Foundation' in node:
-            node.replace_with(node.replace('Color Changing Foundation', brush_copy.TITLE).replace('Adaptive Peptide Foundation', brush_copy.TITLE))
+            node.replace_with(node.replace('Color Changing Foundation', P.TITLE).replace('Adaptive Peptide Foundation', P.TITLE))
     for el in prod.find_all(alt=True):
-        el['alt'] = el['alt'].replace('Color Changing Foundation', brush_copy.TITLE).replace('Adaptive Peptide Foundation', brush_copy.TITLE)
-    # the sections below (brush_copy's order)
-    clips = [(hashed_copy(media / f'brush-review-{k}.mp4', 'media', f'skinofab-brush-review-{k}'),
-              hashed_copy(media / f'brush-review-{k}.jpg', 'img', f'skinofab-brush-review-{k}-poster')) for k in brush_copy.VIDEOS['clips']]
-    how = [hashed_copy(BRUSH_IMG / f'how-{k}.jpg', 'img', f'skinofab-brush-how-{k}') for k in range(1, 4)]
-    cmp_ = [hashed_copy(BRUSH_IMG / f'compare-{k}.jpg', 'img', f'skinofab-brush-compare-{k}') for k in ('ours', 'copy')]
+        el['alt'] = el['alt'].replace('Color Changing Foundation', P.TITLE).replace('Adaptive Peptide Foundation', P.TITLE)
+    # the sections below, in P's order
     strip = review_strip(brush_reviews)
     pack = ccf_copy.PACKS[0]
     once_or_refill = float(pack['refill'] if ccf_copy.REFILL.get('default') else pack['price'])
-    cross = brush_copy.cross_html(cross_img[0] if cross_img else '', 'color-changing-foundation.html', once_or_refill, float(pack['compare']),
-                                  (float(summary['average']), int(summary['count'])) if summary else None)
-    out = ([f'<div class="shopify-section" id="shopify-section-sf-review-strip">{strip}</div>'] if strip else []) + [
-           f'<div class="shopify-section" id="shopify-section-sf-brush-routine"><style>{brush_copy.SECTIONS_CSS}</style>{brush_copy.routine_html(tutorial)}</div>',
-           f'<div class="shopify-section" id="shopify-section-sf-brush-videos">{brush_copy.videos_html(clips)}</div>',
-           f'<div class="shopify-section" id="shopify-section-sf-brush-how">{brush_copy.how_html(how)}</div>',
-           f'<div class="shopify-section" id="shopify-section-sf-brush-expect">{brush_copy.expect_html()}</div>',
-           f'<div class="shopify-section" id="shopify-section-sf-brush-compare">{brush_copy.compare_html(*cmp_)}</div>',
-           f'<div class="shopify-section" id="shopify-section-sf-brush-cross">{cross}</div>']
+    cross = (cross_img[0] if cross_img else '', 'color-changing-foundation.html', once_or_refill, float(pack['compare']),
+             (float(summary['average']), int(summary['count'])) if summary else None)
+    out = P.sections({'copy': hashed_copy, 'work': WORK, 'strip': strip, 'cross': cross})
     if faq_src:
         lst = faq_src.select('.accordion__list')
         items = lst[0].select('li.accordion__item')
         li_tpl = copy.copy(items[0])
         for l in lst:
             for li in l.select('li.accordion__item'): li.decompose()
-        for k, (q, a) in enumerate(brush_copy.FAQ['items']):
+        for k, (q, a) in enumerate(P.FAQ['items']):
             li = copy.copy(li_tpl)
             li['id'] = f'Accordion--sfb_{k}'
             li['class'] = [c for c in li.get('class', []) if c != 'accordion__item--first'] + (['accordion__item--first'] if k == 0 else [])
@@ -797,40 +795,42 @@ def brush_page(base, summary=None):
         for c in cols[1:]: c.decompose()
         if cols: cols[0]['style'] = 'width:100%;max-width:760px;margin:0 auto;flex:1 1 100%'
         h2 = faq_src.select_one('.section__heading')
-        h2.string = brush_copy.FAQ['title']
+        h2.string = P.FAQ['title']
         h2.insert_before(frag(f'<span class="sfb-eyebrow" style="display:block;font-size:13px;font-weight:600;letter-spacing:.12em;'
-                              f'text-transform:uppercase;color:#6a6a6a;margin:0 0 12px">{brush_copy.esc(brush_copy.FAQ["eyebrow"])}</span>'))
-        faq_src['id'] = 'shopify-section-sf-brush-faq'
+                              f'text-transform:uppercase;color:#6a6a6a;margin:0 0 12px">{P.esc(P.FAQ["eyebrow"])}</span>'))
+        faq_src['id'] = f'shopify-section-sf-{P.KEY}-faq'
         out.append(str(faq_src))
-    out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-risk-free">{brush_copy.risk_free_html()}</div>')
-    if amazon: out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-amazon">{brush_copy.amazon_html(amazon)}</div>')
+    out.append(f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-risk-free">{P.risk_free_html()}</div>')
+    if amazon: out.append(f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-amazon">{P.amazon_html(amazon)}</div>')
     out.append(f'<div class="shopify-section" id="shopify-section-sf-review-wall">{review_wall(brush_reviews)}</div>')
-    if not stats: out.append(f'<div class="shopify-section" id="shopify-section-sf-brush-no-reviews">{brush_copy.no_reviews_html(amazon=amazon)}</div>')
+    if not stats: out.append(f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-no-reviews">{P.no_reviews_html(amazon=amazon)}</div>')
     prod.insert_after(frag(''.join(out)))
     # the design's product JSON (the theme's product script reads prices and variants from it)
     gallery = [s_.find('img')['src'] for s_ in slider.select('[data-product-single-media-wrapper]')]
     pj = soup.select_one('script[data-product-json]')
-    if pj: pj.string = json.dumps(brush_snapshot(['/' + g.lstrip('./') for g in gallery]), ensure_ascii=True)
-    # head and body: the brush's own title, description and page id
+    if pj: pj.string = json.dumps(product_snapshot(P, ['/' + g.lstrip('./') for g in gallery]), ensure_ascii=True)
+    # head and body: the product's own title, description and page id
     text = str(soup)
-    text = re.sub(r'<title>.*?</title>', f'<title>{html.escape(brush_copy.META_TITLE)}</title>', text, count=1, flags=re.S)
-    text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{html.escape(brush_copy.META_DESCRIPTION)}" name="description"/>', text, count=1)
-    text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', 'id="the-lymphatic-brush-skinofab"', 1)
-    text, _ = sticky_bar(text, sticky_thumb(BRUSH_IMG / 'card.jpg', 'skinofab-lymphatic-brush-sticky'), brush_copy.TITLE,
-                         f'From {brush_copy.money(brush_copy.PRICE)} · Free shipping', brush_copy.STICKY_BUTTON)
+    text = re.sub(r'<title>.*?</title>', f'<title>{html.escape(P.META_TITLE)}</title>', text, count=1, flags=re.S)
+    text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{html.escape(P.META_DESCRIPTION)}" name="description"/>', text, count=1)
+    text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', f'id="{P.HANDLE}-skinofab"', 1)
+    text, _ = sticky_bar(text, sticky_thumb(P.IMG / 'card.jpg', f'{P.IMG_PREFIX}-sticky'), P.TITLE,
+                         f'From {P.money(P.PRICE)} · Free shipping', P.STICKY_BUTTON)
     return text
 
-def brush_shelf(home):
-    """The homepage product shelf: the brush's card in the default list (the Bestsellers view) and in the Bestsellers,
-    New and Face tabs, after the product brush_copy.SHELF names (first when None), in each place's own card markup."""
+def product_shelf(home, P):
+    """The homepage product shelf: the product's card (P: its copy module) in the default list (the Bestsellers view)
+    and in the Bestsellers, New and Face tabs, after the product P.SHELF names (first when None), in each place's own
+    card markup."""
     m = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__bestsellers"', home)
     if not m: return home, False
     end = home.find('</section>', m.start())
     sec = home[m.start():end]
-    sh, title, href = brush_copy.SHELF, html.escape(brush_copy.TITLE), f'products/{brush_copy.HANDLE}.html'
-    big = hashed_copy(BRUSH_IMG / 'card.jpg', 'img', 'skinofab-lymphatic-brush-card-1080w', (1080, 1080))[3:]
-    small = hashed_copy(BRUSH_IMG / 'card.jpg', 'img', 'skinofab-lymphatic-brush-card-720w', (720, 720))[3:]
-    price = f'<div class="fh-price"><s>{brush_copy.money(brush_copy.COMPARE)} USD</s><span>{brush_copy.money(brush_copy.PRICE)} USD</span></div>'
+    sh, title, href = P.SHELF, html.escape(P.TITLE), f'products/{P.HANDLE}.html'
+    big = hashed_copy(P.IMG / 'card.jpg', 'img', f'{P.IMG_PREFIX}-card-1080w', (1080, 1080))[3:]
+    small = hashed_copy(P.IMG / 'card.jpg', 'img', f'{P.IMG_PREFIX}-card-720w', (720, 720))[3:]
+    was = f'<s>{P.money(P.COMPARE)} USD</s>' if float(P.COMPARE) > float(P.PRICE) else ''
+    price = f'<div class="fh-price">{was}<span>{P.money(P.PRICE)} USD</span></div>'
     rich = (f'<article class="fh-product">\n<a aria-label="{title}" class="fh-product-image" href="{href}">\n'
             f'<picture class=""><img alt="{title}" class="fh-upload" height="1080" loading="lazy" sizes="100vw" src="{big}" '
             f'srcset="{small} 720w, {big} 1080w" width="1080"/>\n</picture>\n'
@@ -865,19 +865,19 @@ def brush_shelf(home):
         sec = sec[:mm.start()] + new + sec[close:]
     return home[:m.start()] + sec + home[end:], ok
 
-def brush_snapshot(gallery):
-    """products/the-lymphatic-brush.js: the Shopify product JSON shape the theme build reads (handle, ids, prices)."""
+def product_snapshot(P, gallery):
+    """products/<P.HANDLE>.js: the Shopify product JSON shape the theme build reads (handle, ids, prices)."""
     cents = lambda v: int(round(float(v) * 100))
-    v = {'id': brush_copy.SHOPIFY_VARIANT, 'title': 'Default Title', 'option1': 'Default Title', 'option2': None, 'option3': None,
-         'sku': 'SKF-LYB-1', 'requires_shipping': True, 'taxable': True, 'featured_image': None, 'available': True,
-         'name': brush_copy.TITLE, 'public_title': None, 'options': ['Default Title'], 'price': cents(brush_copy.PRICE),
-         'compare_at_price': cents(brush_copy.COMPARE), 'requires_selling_plan': False, 'selling_plan_allocations': []}
-    return {'id': brush_copy.SHOPIFY_ID, 'title': brush_copy.TITLE, 'handle': brush_copy.HANDLE, 'description': brush_copy.DESCRIPTION,
+    v = {'id': P.SHOPIFY_VARIANT, 'title': 'Default Title', 'option1': 'Default Title', 'option2': None, 'option3': None,
+         'sku': P.BUNDLES[0]['sku'], 'requires_shipping': True, 'taxable': True, 'featured_image': None, 'available': True,
+         'name': P.TITLE, 'public_title': None, 'options': ['Default Title'], 'price': cents(P.PRICE),
+         'compare_at_price': cents(P.COMPARE), 'requires_selling_plan': False, 'selling_plan_allocations': []}
+    return {'id': P.SHOPIFY_ID, 'title': P.TITLE, 'handle': P.HANDLE, 'description': P.DESCRIPTION,
             'vendor': 'Skinofab', 'type': '', 'tags': [], 'price': v['price'], 'price_min': v['price'], 'price_max': v['price'],
             'available': True, 'price_varies': False, 'compare_at_price': v['compare_at_price'],
             'compare_at_price_min': v['compare_at_price'], 'compare_at_price_max': v['compare_at_price'], 'compare_at_price_varies': False,
             'variants': [v], 'images': gallery, 'featured_image': gallery[0],
-            'options': [{'name': 'Title', 'position': 1, 'values': ['Default Title']}], 'url': f'/products/{brush_copy.HANDLE}',
+            'options': [{'name': 'Title', 'position': 1, 'values': ['Default Title']}], 'url': f'/products/{P.HANDLE}',
             'media': [], 'requires_selling_plan': False, 'selling_plan_groups': []}
 
 def honest_counts(texts, summary):
@@ -1109,7 +1109,7 @@ def main():
             else: os.link(s, t)
     hits, missing = {}, []
     # page rules first: they rewrite whole blocks that the global rules would otherwise half-change
-    rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL + brush_copy.GLOBAL]
+    rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL + brush_copy.GLOBAL + balm_copy.GLOBAL]
     pages = sorted(DST.rglob('*.html'))
     texts = {p: p.read_text(encoding='utf-8', errors='surrogateescape') for p in pages}
     for scope, old, new in rules:
@@ -1214,16 +1214,17 @@ def main():
     if DST / 'index.html' in texts:
         texts[DST / 'index.html'], sp = faster_home(texts[DST / 'index.html'])
         print('home speed', sp)
-    # the Lymphatic Brush in the homepage's product shelf, like the other products
-    if DST / 'index.html' in texts:
-        texts[DST / 'index.html'], ok = brush_shelf(texts[DST / 'index.html'])
-        if not ok: missing.append(('brush', 'homepage shelf list or tab'))
-    # the Lymphatic Brush's page (brush_copy) and its product snapshot
-    brush = DST / 'products' / f'{brush_copy.HANDLE}.html'
-    texts[brush], _ = drop_fake_buyers(brush_page(base_pdp, found and found['summary']))
-    gallery = sorted(set(re.findall(r'\.\./assets/img/(skinofab-lymphatic-brush-\d-1080w-[0-9a-f]{6}\.jpg)', texts[brush])),
-                     key=lambda g: int(g.split('-')[3]))
-    (DST / 'products' / f'{brush_copy.HANDLE}.js').write_text(json.dumps(brush_snapshot(['/assets/img/' + g for g in gallery])))
+    # the second products (the Lymphatic Brush, the PDRN Plumping Balm): a card in the homepage's product shelf, like
+    # the other products, their pages (brush_copy, balm_copy) and their product snapshots
+    for P in SECOND_PRODUCTS:
+        if DST / 'index.html' in texts:
+            texts[DST / 'index.html'], ok = product_shelf(texts[DST / 'index.html'], P)
+            if not ok: missing.append((P.KEY, 'homepage shelf list or tab'))
+        page = DST / 'products' / f'{P.HANDLE}.html'
+        texts[page], _ = drop_fake_buyers(product_page(base_pdp, P, found and found['summary']))
+        shots = dict(re.findall(rf'\.\./assets/img/({re.escape(P.IMG_PREFIX)}-(\d+)-1080w-[0-9a-f]{{6}}\.jpg)', texts[page]))
+        gallery = sorted(set(shots), key=lambda g: int(shots[g]))
+        (DST / 'products' / f'{P.HANDLE}.js').write_text(json.dumps(product_snapshot(P, ['/assets/img/' + g for g in gallery])))
     for p, t in texts.items(): p.write_text(t, encoding='utf-8', errors='surrogateescape')
     # the theme build turns this into the Cart Drawer theme settings (upgrade, add-ons, review)
     (DST / 'sf-offer.json').write_text(json.dumps(cart_offer(), indent=1, ensure_ascii=False))

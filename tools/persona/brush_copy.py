@@ -12,7 +12,9 @@ Read by apply_persona.py (it builds products/the-lymphatic-brush.html from the f
 setup_brush_offers.py (the NEXT product, its three bundles and their prices).
 """
 import html, json
+from pathlib import Path
 
+KEY, MEDIA_BASE = 'brush', 9300000000000          # section ids, gallery media ids
 HANDLE = 'the-lymphatic-brush'
 TITLE = 'The Lymphatic Brush'
 SHOPIFY_ID, SHOPIFY_VARIANT = 15517563191626, 61233683038538       # Solena's ids (the design markup carries them)
@@ -25,6 +27,10 @@ META_TITLE = 'The Lymphatic Brush | A 3-minute depuffing massage | SKINOFAB'
 META_DESCRIPTION = ('A soft-bristle face brush for the look of morning puffiness around the eyes, cheeks and jaw. Dry skin, '
                     'no oils, 3 minutes. 30-day money-back guarantee. Free shipping.')
 
+IMG = Path(__file__).resolve().parents[2] / 'brand' / 'lymphatic-brush'   # brush_assets.py
+IMG_PREFIX, GIFT_PREFIX = 'skinofab-lymphatic-brush', 'skinofab-brush-gift'
+OFFERS_FILE, REVIEWS_DIR, AMAZON_FILE = 'brush-offers.json', 'reviews-brush', 'amazon-brush.json'
+EYEBROW = None
 # the gallery (brush_assets.py writes brand/lymphatic-brush/<name>.jpg), first one eager
 GALLERY = ['hero', 'case', 'how-to-use', 'features', 'vs-tools']
 HERO = {'title': ['DEPUFF YOUR', 'MORNING FACE'], 'in': 'IN', 'accent': '3 MINUTES',
@@ -82,6 +88,7 @@ BUNDLES = [
     {'key': '3', 'name': 'Buy 2 Brushes + 1 FREE', 'note': '3-Pack', 'variant': '3 brushes + 3 free cases + free body brush',
      'sku': 'SKF-LYB-3', 'price': '49.90', 'compare': '149.70', 'badge': 'Best offer', 'gifts': [('case', 3), ('body', 1)]},
 ]
+GIFT_FILES = {'case': 'case', 'body': 'body-brush'}     # brand/lymphatic-brush/gift-<file>.jpg
 GUARANTEE = '30-Day Money-Back Guarantee'
 
 
@@ -234,30 +241,33 @@ def chips_html():
     return ('<div class="sfb-chips">' + ''.join(f'<span>{_LINE}{svg}</svg>{esc(t)}</span>' for t, svg in CHIPS) + '</div>')
 
 
-def picker_html(variants, gift_imgs, css):
-    """The bundle picker: three cards (Solena's bundles), the middle one chosen. It sets the form's variant and the
-    button's price; brush lines are one-time purchases (no refill choice)."""
-    table = {b['key']: {'pk': variants[b['key']], 'price': float(b['price']), 'compare': float(b['compare'])} for b in BUNDLES}
-    default = next((b['key'] for b in BUNDLES if b.get('default')), BUNDLES[0]['key'])
-    base, base_compare = float(BUNDLES[0]['price']), float(BUNDLES[0]['compare'])
+def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choose your bundle'):
+    """The bundle picker: three cards (Solena's bundles, or another product's `bundles` and `gifts`), the default one
+    chosen. It sets the form's variant and the button's price; these lines are one-time purchases (no refill choice).
+    A bundle shows a saving only when its compare-at price is above its price."""
+    bundles, gifts = bundles or BUNDLES, GIFTS if gifts is None else gifts
+    table = {b['key']: {'pk': variants[b['key']], 'price': float(b['price']), 'compare': float(b['compare'])} for b in bundles}
+    default = next((b['key'] for b in bundles if b.get('default')), bundles[0]['key'])
+    base, base_compare = float(bundles[0]['price']), float(bundles[0]['compare'])
     cards = []
-    for b in BUNDLES:
-        gifts = ''.join(
+    for b in bundles:
+        saves = float(b['compare']) > float(b['price'])
+        gifts_li = ''.join(
             f'<li><img src="{gift_imgs[k]}" alt="" width="40" height="40" loading="lazy" decoding="async">'
-            f'<span>+ {n} FREE {esc(GIFTS[k][0 if n == 1 else 1])}</span><s>{money(float(GIFTS[k][2]) * n)}</s><b>FREE</b></li>'
+            f'<span>+ {n} FREE {esc(gifts[k][0 if n == 1 else 1])}</span><s>{money(float(gifts[k][2]) * n)}</s><b>FREE</b></li>'
             for k, n in b['gifts'])
         cards.append(
             '<label class="sfo-card sfo-card--gifts">'
             + (f'<em class="sfo-tab">{esc(b["badge"])}</em>' if b.get('badge') else '')
             + f'<span class="sfo-row"><input type="radio" name="sf_pack" value="{b["key"]}"{" checked" if b["key"] == default else ""}>'
             f'<span class="sfo-main"><span class="sfo-name">{esc(b["name"])}'
-            f'<span class="sfo-save">SAVE {money(float(b["compare"]) - float(b["price"]))}</span></span>'
+            + (f'<span class="sfo-save">SAVE {money(round(float(b["compare"]) - float(b["price"]), 2))}</span>' if saves else '') + '</span>'
             f'<small>{esc(b["note"])}</small></span>'
-            f'<span class="sfo-price"><b>{money(b["price"])}</b><s>{money(b["compare"])}</s></span></span>'
-            f'<ul class="sfo-gifts">{gifts}</ul></label>')
+            f'<span class="sfo-price"><b>{money(b["price"])}</b>' + (f'<s>{money(b["compare"])}</s>' if saves else '') + '</span></span>'
+            + (f'<ul class="sfo-gifts">{gifts_li}</ul>' if gifts_li else '') + '</label>')
     return (f"""<div class="sfo sfo--bundle" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
 <style>{css}</style>
-<fieldset><legend>Choose your bundle</legend>{''.join(cards)}</fieldset>
+<fieldset><legend>{esc(legend)}</legend>{''.join(cards)}</fieldset>
 <script>
 (function () {{
   var root = document.currentScript.parentNode;
@@ -271,7 +281,7 @@ def picker_html(variants, gift_imgs, css):
     var now = head && head.querySelector('.product__price--regular'), was = head && head.querySelector('.product__price--compare');
     var unit = now && / USD\\s*$/.test(now.textContent) ? ' USD' : '';
     if (now) now.textContent = money({base}) + unit;
-    if (was) was.textContent = money({base_compare}) + unit;
+    if (was) {{ if ({base_compare} > {base}) was.textContent = money({base_compare}) + unit; else was.hidden = true; }}
   }}
   function sync() {{
     titlePrice();
@@ -467,9 +477,9 @@ def compare_html(ours, copy):
             '})();</script></div></div></section>')
 
 
-def risk_free_html(buy='#apf-buy'):
+def risk_free_html(buy='#apf-buy', r=None):
     stars = ''.join(_STAR for _ in range(5))
-    r = RISK_FREE
+    r = r or RISK_FREE
     return (f'<section class="sfb sfb-sec"><div class="sfb-wrap"><div class="sfb-risk">'
             f'<span class="sfb-eyebrow">{esc(r["eyebrow"])}</span><h2>{esc(r["lead"])} <span class="sfb-mark">{esc(r["mark"])}</span></h2>'
             + (f'<p class="sfb-risk__proof"><span aria-label="5 out of 5 stars">{stars}</span>{esc(r["proof"])}</p>' if r.get('proof') else '') +
@@ -489,17 +499,17 @@ def routine_html(video, buy='#apf-buy'):
             f'<div class="sfb-end"><a class="sfb-btn" href="{buy}">{esc(HOW["button"])} {_ARROW}</a></div></div></section>')
 
 
-def expect_html():
-    e = EXPECT
+def expect_html(e=None):
+    e = e or EXPECT
     cards = ''.join(f'<article><h3>{esc(h)}</h3><p>{esc(p)}</p></article>' for h, p in e['cards'])
     return (f'<section class="sfb sfb-sec">{_head(e["eyebrow"], e["lead"], e["mark"])}'
             f'<div class="sfb-wrap"><div class="sfb-expect">{cards}</div></div></section>')
 
 
-def cross_html(img, href, price, compare, rating=None):
-    """The foundation after the brush. rating: (average, count) of its verified reviews, shown in the same green
-    boxed stars as its own page."""
-    c = CROSS
+def cross_html(img, href, price, compare, rating=None, c=None):
+    """The foundation after the brush (or after the product whose copy is `c`). rating: (average, count) of its
+    verified reviews, shown in the same green boxed stars as its own page."""
+    c = c or CROSS
     stars = ''.join('<i aria-hidden="true">&#9733;</i>' for _ in range(5))
     proof = (f'<p class="sfb-cross__rating"><span role="img" aria-label="Rated {rating[0]:.1f} out of 5">{stars}</span>'
              f'{rating[0]:.1f}/5 from {int(rating[1]):,} verified reviews</p>') if rating else ''
@@ -535,11 +545,11 @@ def amazon_line(a):
             f'<span>{float(a["rating"]):.1f}/5 on Amazon ({int(a["count"]):,} ratings)</span></a>')
 
 
-def no_reviews_html(buy='#apf-buy', amazon=None):
+def no_reviews_html(buy='#apf-buy', amazon=None, n=None):
     """Until the brush has real reviews: an empty Trustpilot-style box that says so, with the guarantee as the proof.
     It hides itself once the store's own reviews of the brush appear (the review wall above then shows them), and
     shows a "Write a review" link when NEXT lets the shopper review the brush."""
-    n = NO_REVIEWS
+    n = n or NO_REVIEWS
     stars = ''.join('<i aria-hidden="true">&#9733;</i>' for _ in range(5))
     return (f'<section class="sfb sfb-sec" id="sfb-no-reviews"><div class="sfb-wrap">'
             f'{_head(n["title"], n["lead_amazon"] if amazon else n["lead"])}<div class="sfb-noreviews"><span class="sfb-noreviews__stars">{stars}</span>'
@@ -555,6 +565,26 @@ def no_reviews_html(buy='#apf-buy', amazon=None):
             '}'
             'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", check); else check();'
             '})();</script></section>')
+
+
+def sections(ctx):
+    """The sections under the buy box, in order. ctx: copy(path, sub, name, size) -> url, work (the work dir: its
+    brush/media has the tutorial and the creator clips), strip (review strip html or ''), cross (img, href, price,
+    compare, rating)."""
+    copy, media = ctx['copy'], ctx['work'] / 'brush' / 'media'
+    tutorial = (copy(media / 'brush-how-to.mp4', 'media', 'skinofab-brush-how-to'),
+                copy(media / 'brush-how-to.jpg', 'img', 'skinofab-brush-how-to-poster'))
+    clips = [(copy(media / f'brush-review-{k}.mp4', 'media', f'skinofab-brush-review-{k}'),
+              copy(media / f'brush-review-{k}.jpg', 'img', f'skinofab-brush-review-{k}-poster')) for k in VIDEOS['clips']]
+    how = [copy(IMG / f'how-{k}.jpg', 'img', f'skinofab-brush-how-{k}') for k in range(1, 4)]
+    cmp_ = [copy(IMG / f'compare-{k}.jpg', 'img', f'skinofab-brush-compare-{k}') for k in ('ours', 'copy')]
+    return ([f'<div class="shopify-section" id="shopify-section-sf-review-strip">{ctx["strip"]}</div>'] if ctx['strip'] else []) + [
+        f'<div class="shopify-section" id="shopify-section-sf-brush-routine"><style>{SECTIONS_CSS}</style>{routine_html(tutorial)}</div>',
+        f'<div class="shopify-section" id="shopify-section-sf-brush-videos">{videos_html(clips)}</div>',
+        f'<div class="shopify-section" id="shopify-section-sf-brush-how">{how_html(how)}</div>',
+        f'<div class="shopify-section" id="shopify-section-sf-brush-expect">{expect_html()}</div>',
+        f'<div class="shopify-section" id="shopify-section-sf-brush-compare">{compare_html(*cmp_)}</div>',
+        f'<div class="shopify-section" id="shopify-section-sf-brush-cross">{cross_html(*ctx["cross"])}</div>']
 
 
 # around the site ---------------------------------------------------------------------------------------------------
