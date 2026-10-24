@@ -110,12 +110,15 @@ async function addToCart(s) {
 async function checkout(s, name, product = 'Adaptive Peptide Foundation') {
   const resp = await s.page.goto(`${STORE}/checkout/`, { waitUntil: 'load', timeout: 90000 });
   await s.page.waitForFunction(p => document.body.innerText.toLowerCase().includes(p.toLowerCase()), product, { timeout: 25000 }).catch(() => {});
+  // a new product's line thumbnail is resized on first view: wait for it before the screenshot
+  await s.page.waitForFunction(() => [...document.images].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 20000 }).catch(() => {});
   const text = await s.page.evaluate(() => document.body.innerText.replace(/\s+/g, ' '));
+  const thumbs = await s.page.evaluate(() => [...document.images].filter(i => !/\.svg/.test(i.currentSrc || i.src)).map(i => i.naturalWidth));
   await s.page.screenshot({ path: path.join(SHOTS, `checkout-${name}.png`), fullPage: true });
   return { status: resp && resp.status(), hasLine: text.toLowerCase().includes(product.toLowerCase()),
            pack: (text.match(/(1 bottle|2 bottles \+ free gifts|1 brush \+ free case|2 brushes \+ 2 free cases|3 brushes \+ 3 free cases \+ free body brush|1 stick|2 sticks|3 sticks \(buy 2, get 1 free\))/i) || [])[0] || null,
            refillWords: (text.match(/[^.$]{0,40}(every\s+28\s+days?|subscri|recurring|renew)[^.$]{0,40}/gi) || []).slice(0, 3),
-           prices: (text.match(/\$\d+\.\d\d/g) || []).slice(0, 6) };
+           thumbs, prices: (text.match(/\$\d+\.\d\d/g) || []).slice(0, 6) };
 }
 
 const out = [];
@@ -398,6 +401,7 @@ async function bundleCases(name, route, title, label) {
       if (!co.hasLine) problems.push(`checkout has no ${name} line`);
       if (!co.prices.includes('$' + pack.price.toFixed(2))) problems.push(`checkout prices ${co.prices} lack $${pack.price.toFixed(2)}`);
       if (co.refillWords.length) problems.push('checkout talks about a plan: ' + co.refillWords[0]);
+      if (!co.thumbs.length || co.thumbs.some(w => !w)) problems.push(`checkout line thumbnail missing (${co.thumbs})`);
     }
     out.push({ case: `${name} ${key}`, ui, line: ls[0], drawer: { upgrade: d.upgrade, addons: d.addons }, checkout: co, errors: s.errors,
                ok: problems.length === 0, problems });
@@ -510,7 +514,9 @@ await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm');
              ingredients: document.querySelectorAll('#sfp-science .sfp-ing article').length,
              femplus: /fem\+|femplus/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
              stars: !document.querySelector('[data-sfb-rating]').hidden, hScroll: document.documentElement.scrollWidth > innerWidth + 1,
-             imgs: [...document.querySelectorAll('main img')].filter(i => i.complete && i.naturalWidth === 0 && !/^data:/.test(i.getAttribute('src') || '')).length };
+             // images that asked for a file and got none (the review lightbox's empty <img> asks for nothing)
+             imgs: [...document.querySelectorAll('main img')].filter(i => i.complete && i.naturalWidth === 0 && (i.getAttribute('src') || i.getAttribute('srcset'))
+                                                                     && !/^data:/.test(i.getAttribute('src') || '')).length };
   });
   const problems = [];
   const order = ['main', 'sf-balm-problem', 'sf-balm-science', 'sf-balm-stick', 'sf-balm-how', 'sf-balm-expect', 'sf-balm-cross',

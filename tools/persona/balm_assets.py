@@ -214,7 +214,7 @@ def how_to_use():
 
 # 6. texture --------------------------------------------------------------------------------------------------------
 def texture():
-    im = placed(render('bullet'), 1.0, dy=150); d = ImageDraw.Draw(im)
+    im = placed(render('bullet'), 1.32, dy=40); d = ImageDraw.Draw(im)
     text(d, (W / 2, 70), 'A BALM THAT', 58, 'Black', anchor='mt')
     mark(d, W / 2 - d.textlength('MELTS IN', font=vf(58, 'Black')) / 2 - 20, 144, 'MELTS IN', 58)
     text(d, (W / 2, 268), 'Cushiony, never sticky. A thin layer gives a soft, natural glow.', 26, 'SemiBold', fill=SOFT, anchor='mt')

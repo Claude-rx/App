@@ -84,6 +84,6 @@ tools/build_store.sh <work_dir>
 
 Copy, offer, tabs, FAQ, sections, the shelf card, menus and collections live in `tools/persona/balm_copy.py`.
 `node tools/theme-qa/offer-e2e.mjs https://skinofab.29next.store 34 /catalogue/adaptive-peptide-foundation_14/ shots/`
-checks the balm without placing an order: each pack (variant, price, one-time line, drawer, checkout for 2 sticks),
-the 1 → 2 sticks upgrade, the page (section order, tabs, FAQ, no FEM+ name or dropped claim, no "was" price on one
-stick, broken images), the homepage card, the menu links and the sticky bar.
+checks the balm without placing an order: each pack (variant, price, one-time line, drawer, checkout for 2 sticks with
+its line thumbnail), the 1 → 2 sticks upgrade, the page (section order, tabs, FAQ, no FEM+ name or dropped claim, no
+"was" price on one stick, broken images), the homepage card, the menu links and the sticky bar.
