@@ -61,7 +61,7 @@ Preview: https://skinofab.29next.store/catalogue/pdrn-plumping-balm_202/?preview
 
 ## Images
 
-Every photo is on white, with women past 45 (several ages, skin tones and hair colours) holding and using the stick,
+Every photo is on pure white (`docs/white-backgrounds.md`: one white for every product), with women past 45 (several ages, skin tones and hair colours) holding and using the stick,
 in the foundation gallery's style. They were made with GPT Image 2.5 through Figma's image generator (the studio's
 GPT Image 2 / Nano Banana Pro route could not store results: its Vercel Blob storage is suspended). That route takes
 text only, so the stick is described in the prompt: matte black, about four times taller than wide, nude-pink balm

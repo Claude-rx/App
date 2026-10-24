@@ -15,13 +15,15 @@ usage: python3 -I apply_persona.py <src_export> <dst_export> <ccf-offers.json> [
   (brush_assets.py)
 - <images_dir>/<target file name> replaces that export image (persona images made by tools/persona/images.py)
   under a new content-hashed name, with every reference rewritten (NEXT's CDN caches by file name)
+- puts the foundation's photos on pure white like the other products' (WHITE, white_backdrops(), white_bg.py): grey
+  studio walls and sweeps go white, the two black gallery panels become ink on white
 """
 import hashlib, html, json, os, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, balm_copy, brush_copy, ccf_copy, company, twin
-SECOND_PRODUCTS = (brush_copy, balm_copy)
+import apf_copy, balm_copy, brush_copy, ccf_copy, company, serum_copy, twin, white_bg
+SECOND_PRODUCTS = (brush_copy, balm_copy, serum_copy)
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
 IMAGES = Path(sys.argv[4]).resolve() if len(sys.argv) > 4 else None
@@ -63,10 +65,11 @@ def gift_icons():
 
 BRAND = Path(__file__).resolve().parents[2] / 'brand'
 
-def section_image(src, name, size=(1000, 1250)):
-    """A 4:5 crop of a brand image for the problem / solution sections, under a content-hashed name."""
+def section_image(src, name, size=(1000, 1250), shadow=False):
+    """A 4:5 crop of a brand image for the problem / solution sections, under a content-hashed name, on pure white
+    like every product image (white_bg.matte; shadow: a contact shadow under a bottle that stands on the floor)."""
     from PIL import Image, ImageOps
-    im = ImageOps.fit(Image.open(src).convert('RGB'), size, Image.LANCZOS, centering=(0.5, 0.42))
+    im = ImageOps.fit(white_bg.matte(Image.open(src).convert('RGB'), shadow=shadow), size, Image.LANCZOS, centering=(0.5, 0.42))
     tmp = DST / 'assets' / 'img' / f'{name}.jpg'
     im.save(tmp, quality=85, optimize=True, progressive=True)
     final = tmp.with_name(f"{name}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg")
@@ -76,12 +79,14 @@ def section_image(src, name, size=(1000, 1250)):
 def problem_solution():
     return apf_copy.problem_solution_html(
         section_image(BRAND / 'persona' / 'age-73.jpg', 'skinofab-problem-skin-after-45'),
-        section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle'))
+        section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle', shadow=True))
 
-def crop_to(src_path, name, size, centering):
-    """A crop of an export image at `size`, under a content-hashed name (NEXT's CDN caches by file name)."""
+def crop_to(src_path, name, size, centering, white=False):
+    """A crop of an export image at `size`, under a content-hashed name (NEXT's CDN caches by file name); white: its
+    pale backdrop made pure white first (white_bg.light, a no-op on a scene)."""
     from PIL import Image, ImageOps
-    im = ImageOps.fit(Image.open(src_path).convert('RGB'), size, Image.LANCZOS, centering=centering)
+    im = Image.open(src_path).convert('RGB')
+    im = ImageOps.fit(white_bg.light(im) if white else im, size, Image.LANCZOS, centering=centering)
     tmp = DST / 'assets' / 'img' / f'{name}.jpg'
     im.save(tmp, quality=86, optimize=True, progressive=True)
     final = tmp.with_name(f"{name}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg")
@@ -333,6 +338,78 @@ def honest_images(summary):
                 if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
     return len(renames)
 
+# the foundation's photos on one pure white, like the other products' (white_bg.py): by file-name prefix, how
+WHITE = [
+    ('KoreanColorChangingFoundation-Productimages_1_', 'flood'),     # the packshot on a grey sweep: its floor shadow kept
+    ('2_221c6006', 'matte'), ('21_7a5d845a', 'matte'), ('22_ed20463f', 'matte'),   # the 45+ women with the bottle,
+    ('24_e2816f7f', 'matte'), ('25_2e1854df', 'matte'), ('HIDDEN_1', 'matte'),      # silver hair on a grey wall
+    ('ColorChangingFoundation-Productimagesphotos_4_35e0c406', 'light'),            # "Loved by", on off-white
+    ('6_d0973846', 'light'), ('7_ba7831f0', 'light'),                                # What's inside, The Science
+    ('ColorChangingFoundation-Productimagesphotos_1_87f31fb4', 'light'), ('new_iamges', 'light'),
+    ('ColorChangingFoundation-Productimagesphotos_412bfd2c', 'ink'),   # "Adapts To Your Skin": white on black
+    ('8_87ca3242', 'board'),                                            # "skinofab vs. others": white on black
+]
+# kept as shot: the daylight before/after (a real room) and the close-ups with no backdrop
+
+
+def ink_panel(im):
+    """A gallery panel of white type on black beside a photo: the type turns to ink on white (the same letters,
+    inverted), the photo's grey wall to white (white_bg.matte)."""
+    import numpy as np
+    from PIL import Image
+    a = np.asarray(im.convert('RGB')).astype(np.float32)
+    h, w = a.shape[:2]
+    col = a[: h // 2].mean((0, 2))                             # the photo starts where 20 columns in a row are light
+    x = next((i for i in range(w - 20) if col[i:i + 20].min() > 120), w)   # (the type's columns are mostly black)
+    # black -> white, white type -> the gallery's ink; the black's JPEG ringing (up to ~24) goes white, not a halo
+    left = 255 - np.clip((a[:, :x] - 24) / 227, 0, 1) * (255 - 21)
+    seam = max(2, w // 300)                                     # the photo's first columns are a blend with the black
+    right = np.asarray(white_bg.matte(im.convert('RGB').crop((x + seam, 0, w, h)))).astype(np.float32)
+    pad = np.full((h, seam, 3), 255, np.float32)
+    return Image.fromarray(np.clip(np.concatenate([left, pad, right], 1) + 0.5, 0, 255).astype(np.uint8))
+
+
+def white_backdrops():
+    """Every page's copy of the foundation's photos in WHITE made white by its own pixels (each width is a
+    separate file), saved under a new content-hashed name, every reference rewritten. The black "vs. others" board
+    becomes brand/adaptive-peptide-foundation/vs-others.jpg (product_photos.py foundation). Results are cached by
+    the input's hash in <work_dir>/white-cache. Returns the number of files replaced."""
+    from PIL import Image
+    img_dir, cache = DST / 'assets' / 'img', WORK / 'white-cache'
+    cache.mkdir(exist_ok=True)
+    texts = {p: p.read_text(encoding='utf-8', errors='surrogateescape') for p in DST.rglob('*')
+             if p.is_file() and p.suffix.lower() in TEXT}
+    used = set()
+    for t in texts.values():
+        used.update(re.findall(r'([A-Za-z0-9_.\-]+\.(?:jpg|jpeg|png|webp))', t))
+    board = BRAND / 'adaptive-peptide-foundation' / 'vs-others.jpg'
+    make = {'flood': white_bg.flood, 'matte': white_bg.matte, 'light': white_bg.light, 'ink': ink_panel,
+            'board': lambda im: Image.open(board).convert('RGB').resize(im.size, Image.LANCZOS)}
+    import inspect
+    salt = hashlib.md5(Path(white_bg.__file__).read_bytes() + inspect.getsource(ink_panel).encode()).digest()  # code changes: recompute
+    renames = {}
+    for name in sorted(used):
+        src = img_dir / name
+        mode = next((m for prefix, m in WHITE if name.startswith(prefix)), None)
+        if not mode or not src.is_file() or re.search(r'-w[0-9a-f]{6}$', src.stem): continue
+        data = src.read_bytes()
+        key = cache / f"{hashlib.md5(salt + data + mode.encode() + (board.read_bytes() if mode == 'board' else b'')).hexdigest()}{src.suffix}"
+        if not key.exists():
+            im = Image.open(src)
+            out = make[mode](im.convert('RGB'))
+            if im.mode in ('RGBA', 'LA', 'P') and src.suffix.lower() == '.png':
+                out = out.convert('RGBA'); out.putalpha(im.convert('RGBA').getchannel('A'))
+            out.save(key, **({'quality': 88, 'optimize': True, 'progressive': True} if src.suffix.lower() in ('.jpg', '.jpeg') else {'optimize': True}))
+        stem = re.sub(r'-[pf]?[0-9a-f]{6}$', '', src.stem)
+        new = f"{stem}-w{hashlib.md5(key.read_bytes()).hexdigest()[:6]}{src.suffix}"
+        shutil.copyfile(key, img_dir / new); renames[name] = new
+    if renames:
+        rx = re.compile('|'.join(re.escape(k) for k in sorted(renames, key=len, reverse=True)))
+        for p, t in texts.items():
+            n = rx.sub(lambda m: renames[m.group(0)], t)
+            if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
+    return len(renames)
+
 def real_testimonials(t, reviews=REVIEWS):
     """The product page's testimonial slider showed the design's persona stories ("Margaret, 61") with AI portraits
     under a "Verified purchase" badge. Each card now carries a real verified review (apf_copy.TESTIMONIALS) word for
@@ -495,6 +572,9 @@ def cart_offer():
     balm = json.loads((WORK / balm_copy.OFFERS_FILE).read_text())['variants']
     c1, c2 = balm_copy.BUNDLES[0], balm_copy.BUNDLES[1]
     c_text = f"Just {money(round(float(c2['price']) - float(c1['price']), 2))} more for a second stick: one for home, one for your bag."
+    serum = json.loads((WORK / serum_copy.OFFERS_FILE).read_text())['variants']
+    d1, d2 = serum_copy.BUNDLES[0], serum_copy.BUNDLES[1]
+    d_text = f"Just {money(round(float(d2['price']) - float(d1['price']), 2))} more for a second bottle: about two more months."
 
     return {'product': cart['product'], 'addons': cart['addons'],
             'upgrades': [{'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
@@ -502,7 +582,9 @@ def cart_offer():
                          {'from': brush[b1['key']], 'to': brush[b2['key']], 'title': brush_copy.CART_UPGRADE['title'],
                           'text': b_text, 'button': brush_copy.CART_UPGRADE['button']},
                          {'from': balm[c1['key']], 'to': balm[c2['key']], 'title': balm_copy.CART_UPGRADE['title'],
-                          'text': c_text, 'button': balm_copy.CART_UPGRADE['button']}],
+                          'text': c_text, 'button': balm_copy.CART_UPGRADE['button']},
+                         {'from': serum[d1['key']], 'to': serum[d2['key']], 'title': serum_copy.CART_UPGRADE['title'],
+                          'text': d_text, 'button': serum_copy.CART_UPGRADE['button']}],
             'review': {'text': cart['review_text'], 'name': cart['review_name']},
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
@@ -664,9 +746,10 @@ def twin_context(P, found, stats, amazon):
     """What twin.sections needs for P: its images (brand/<product>/<name>.jpg, else its source/ photo, cropped to the
     slot), clips, review strips, wall and "no reviews yet" box."""
     def img(name, size, centering=(0.5, 0.5)):
-        path = P.IMG / f'{name}.jpg'
-        if not path.exists(): path = P.IMG / 'source' / f'{name}.jpg'
-        return crop_to(path, f'{P.IMG_PREFIX}-{name}-{size[0]}x{size[1]}', size, centering)
+        path = P.IMG / f'{name}.jpg'                   # product_photos.py made these white already
+        raw = not path.exists()
+        if raw: path = P.IMG / 'source' / f'{name}.jpg'
+        return crop_to(path, f'{P.IMG_PREFIX}-{name}-{size[0]}x{size[1]}', size, centering, white=raw)
     media = WORK / 'brush' / 'media'
     def clip(k):
         return (hashed_copy(media / f'{k}.mp4', 'media', f'skinofab-{k}'),
@@ -1107,7 +1190,7 @@ def main():
             else: os.link(s, t)
     hits, missing = {}, []
     # page rules first: they rewrite whole blocks that the global rules would otherwise half-change
-    rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL + brush_copy.GLOBAL + balm_copy.GLOBAL]
+    rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL + brush_copy.GLOBAL + balm_copy.GLOBAL + serum_copy.GLOBAL]
     pages = sorted(DST.rglob('*.html'))
     texts = {p: p.read_text(encoding='utf-8', errors='surrogateescape') for p in pages}
     for scope, old, new in rules:
@@ -1212,8 +1295,8 @@ def main():
     if DST / 'index.html' in texts:
         texts[DST / 'index.html'], sp = faster_home(texts[DST / 'index.html'])
         print('home speed', sp)
-    # the second products (the Lymphatic Brush, the PDRN Plumping Balm): a card in the homepage's product shelf, like
-    # the other products, their pages (brush_copy, balm_copy) and their product snapshots
+    # the second products (the Lymphatic Brush, the PDRN Plumping Balm, the EGF + NAD+ Firming Serum): a card in the
+    # homepage's product shelf, like the other products, their pages (brush_copy, balm_copy, serum_copy) and snapshots
     for P in SECOND_PRODUCTS:
         if DST / 'index.html' in texts:
             texts[DST / 'index.html'], ok = product_shelf(texts[DST / 'index.html'], P)
@@ -1259,6 +1342,9 @@ def main():
     fixed = honest_images(found and found['summary'])
     if not fixed: missing.append(('honest images', 'gallery photos to fix'))
     print('honest images', fixed)
+    whitened = white_backdrops()
+    if not whitened: missing.append(('white backdrops', 'foundation photos to whiten'))
+    print('white backdrops', whitened)
     print(json.dumps({'rules': len(rules), 'replacements': sum(hits.values()), 'images': replaced, 'missing': missing}, ensure_ascii=False, indent=1))
     if missing: sys.exit(1)
 

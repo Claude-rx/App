@@ -21,6 +21,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from brush_copy import SOURCES, GALLERY, HERO
+import white_bg
 
 WORK = Path(sys.argv[1]).resolve()
 SRC, MEDIA = WORK / 'brush' / 'src', WORK / 'brush' / 'media'
@@ -29,7 +30,7 @@ OUT = ROOT / 'brand' / 'lymphatic-brush'
 LOGO = ROOT / 'brand' / 'checkout' / 'skinofab-logo-1200.png'
 FONT = Path(__file__).resolve().parent / 'assets' / 'fonts' / 'Montserrat-VF.ttf'
 PLAYFAIR = ROOT / 'tools' / 'theme-build' / 'static' / 'fonts' / 'playfairdisplay_v40_nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgA.woff2'
-BG = (245, 244, 240)                                   # the gallery's cream backdrop
+BG = (245, 244, 240)                                   # Solena's cream backdrop (save() turns it white)
 INK, MAUVE = (45, 34, 30), (156, 92, 101)              # its heading and accent colors
 TUTORIAL_CUT = (6.42, 7.27)     # "from Solena", spoken and captioned
 
@@ -190,10 +191,13 @@ def guarantee_seal(size):
     return seal.resize((size, size), Image.LANCZOS)
 
 
-def save(arr_or_img, name, size=None, quality=86):
+def save(arr_or_img, name, size=None, quality=86, white=True):
+    """white: the cream backdrop becomes pure white, as on every product's images (white_bg.light); off for the
+    in-hand comparison photos, whose backdrop is a real floor."""
     im = arr_or_img if isinstance(arr_or_img, Image.Image) else Image.fromarray(np.clip(arr_or_img, 0, 255).astype(np.uint8))
     im = im.convert('RGB')
     if size: im.thumbnail(size, Image.LANCZOS)
+    if white: im = white_bg.light(im)
     im.save(OUT / name, quality=quality, optimize=True, progressive=True)
     return OUT / name
 
@@ -222,8 +226,8 @@ def images():
     }
     for name in GALLERY: save(made[name], f'{name}.jpg', quality=88)
     for k in range(1, 4): save(Image.open(SRC / f'mech-{k}.webp'), f'how-{k}.jpg', (1264, 848))
-    save(Image.open(SRC / 'compare-ours.png'), 'compare-ours.jpg', (1000, 1000))
-    save(Image.open(SRC / 'compare-copy.png'), 'compare-copy.jpg', (1000, 1000))
+    save(Image.open(SRC / 'compare-ours.png'), 'compare-ours.jpg', (1000, 1000), white=False)
+    save(Image.open(SRC / 'compare-copy.png'), 'compare-copy.jpg', (1000, 1000), white=False)
     gift = case_logo(rgb('gift-case.png'), (285, 340, 520, 420), 196)
     save(Image.fromarray(np.clip(gift, 0, 255).astype(np.uint8)).crop((210, 200, 590, 580)), 'gift-case.jpg', (160, 160))
     save(Image.open(SRC / 'gift-body-brush.png').convert('RGB').crop((120, 120, 680, 680)), 'gift-body-brush.jpg', (160, 160))

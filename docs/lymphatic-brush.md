@@ -17,6 +17,7 @@ Preview: https://skinofab.29next.store/catalogue/the-lymphatic-brush_169/?previe
 | Collections | Accessories, Face, Skin and Bestsellers in NEXT, as the gua sha and the face roller |
 | Menus | "Lymphatic Brush" in the desktop and mobile menus (before Bestsellers) and in the footer's Shop column, on every page |
 | Cart drawer | First add-on (shown while the brush is not in the bag) and its own upgrade card, 1 brush → 2 brushes for $15 |
+| Images | On pure white like every product's (`docs/white-backgrounds.md`): Solena's cream backdrop goes white as `brush_assets.py` saves each image; the two in-hand comparison photos keep their real floor |
 
 ## What changed from Solena's page, and why
 

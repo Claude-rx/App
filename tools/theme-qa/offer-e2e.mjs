@@ -12,8 +12,8 @@
 //         SFCommerce.addItems, the path other buttons use): one line, the 2-bottle pack, same purchase type.
 //   add-on: added as a second line, then no longer offered.
 //   checkout (1 bottle and 2 bottles, first case of each): the line, its price and the refill wording.
-// The Lymphatic Brush and the PDRN Plumping Balm (brush_copy.py / balm_copy.py BUNDLES; optional 5th and 6th
-// arguments, their page paths):
+// The Lymphatic Brush, the PDRN Plumping Balm and the EGF + NAD+ Firming Serum (brush_copy.py / balm_copy.py /
+// serum_copy.py BUNDLES; optional 5th to 7th arguments, their page paths):
 //   buy: each bundle adds its variant at its price, one-time; the drawer offers the 1 -> 2 upgrade only for one, and
 //        never the product as an add-on while it is in the bag; checkout shows the 2-pack with its thumbnail.
 //   upgrade: 1 -> 2 in the drawer: one line, one-time.
@@ -21,12 +21,13 @@
 //        product's FAQ; borrowed reviews labelled as the foundation's, photo cards without stars or "verified", the
 //        expert block signed by the brand, before/after photos marked as illustrations; no competitor name or dropped
 //        claim, no broken image after scrolling the whole page, the title price (no "was" on one stick), no stars
-//        without reviews; its card in the homepage shelf (default list, Bestsellers, New and Face tabs) at $24.95,
-//        and the menu links lead to it.
+//        without reviews; its card in the homepage shelf (default list, Bestsellers, New and Face tabs) at its
+//        single price ($24.95; the serum $34.95), and the menu links lead to it.
 import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';
 import fs from 'fs'; import path from 'path';
 
-const [STORE, THEME, PDP, SHOTS, BRUSH = '/catalogue/the-lymphatic-brush_169/', BALM = '/catalogue/pdrn-plumping-balm_202/'] = process.argv.slice(2);
+const [STORE, THEME, PDP, SHOTS, BRUSH = '/catalogue/the-lymphatic-brush_169/', BALM = '/catalogue/pdrn-plumping-balm_202/',
+       SERUM = '/catalogue/egf-nad-firming-serum_206/'] = process.argv.slice(2);
 fs.mkdirSync(SHOTS, { recursive: true });
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const picker = '[data-sf-offer-picker]';
@@ -360,7 +361,7 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
-// ---------------------------------------------------------------- the second products' bundles (brush, balm)
+// ---------------------------------------------------------------- the second products' bundles (brush, balm, serum)
 async function packsOf(route) {
   const s = await session(1440, 900, route);
   const t = JSON.parse(await s.page.getAttribute(picker, 'data-packs'));
@@ -426,14 +427,15 @@ async function bundleCases(name, route, title, label) {
 }
 await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
 await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm');
+await bundleCases('serum', SERUM, 'EGF + NAD+ Firming Serum', 'EGF + NAD+ Firming Serum');
 
-// ---------------------------------------------------------------- the brush's and the balm's pages
-// Both are built on the foundation page's structure (tools/persona/twin.py): the same sections in the same order (the
+// ---------------------------------------------------------------- the brush's, the balm's and the serum's pages
+// All are built on the foundation page's structure (tools/persona/twin.py): the same sections in the same order (the
 // expert block is the brand's own note; the review wall adds an honest "no reviews yet" box while there are none),
 // the foundation's six tabs, the product's FAQ. Borrowed reviews must say they are the foundation's; the photo cards
 // are not reviews (no stars, no "verified"); before/after photos are marked as illustrations.
 const sectionKeys = () => [...document.querySelectorAll('main > [id^="shopify-section-"]')]
-  .map(e => e.id.replace(/^shopify-section-(template--\d+__)?/, '').replace(/_[A-Za-z0-9]{4,}$/, '').replace(/^sf-(brush|balm)-(no-reviews|amazon)$/, '$2'))
+  .map(e => e.id.replace(/^shopify-section-(template--\d+__)?/, '').replace(/_[A-Za-z0-9]{4,}$/, '').replace(/^sf-(brush|balm|serum)-(no-reviews|amazon)$/, '$2'))
   .filter(k => !/^(section_custom_html|\d+[0-9a-f]+)$/.test(k));
 async function scrollThrough(page) {
   const h = await page.evaluate(() => document.body.scrollHeight);
@@ -473,7 +475,7 @@ async function twinPage(name, route, cfg) {
              cards: document.querySelectorAll('#sf-video-reviews .sfx-review').length,
              empty: !!empty && !empty.hidden, now: head.querySelector('.product__price--regular').textContent.trim(),
              was: (head.querySelector('.product__price--compare') || {}).textContent || '',
-             competitor: /solena|fem\+|femplus/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
+             competitor: /solena|fem\+|femplus|meimei/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
              stars: !document.querySelector('[data-sfb-rating]').hidden, hScroll: document.documentElement.scrollWidth > innerWidth + 1,
              // images that asked for a file and got none (the review lightbox's empty <img> asks for nothing)
              imgs: [...document.querySelectorAll('main img')].filter(i => i.complete && i.naturalWidth === 0 && (i.getAttribute('src') || i.getAttribute('srcset'))
@@ -497,7 +499,8 @@ async function twinPage(name, route, cfg) {
   if (!pg.beforeAfter.length || pg.beforeAfter.some(a => !/illustration/i.test(a))) problems.push('before/after not marked as an illustration: ' + pg.beforeAfter.join(' | '));
   if (pg.cards !== 4 || pg.clips !== cfg.clips) problems.push(`use cards ${pg.cards}, clips ${pg.clips}`);
   if (pg.empty === (pg.reviews > 0)) problems.push(`"No reviews yet" box ${pg.empty} with ${pg.reviews} reviews`);
-  if (!/^\$24\.95/.test(pg.now) || (cfg.was ? !pg.was.startsWith(cfg.was) : !!pg.was.trim())) problems.push(`title price ${pg.now} / was "${pg.was}"`);
+  const price = cfg.price || '$24.95';
+  if (!pg.now.startsWith(price) || (cfg.was ? !pg.was.startsWith(cfg.was) : !!pg.was.trim())) problems.push(`title price ${pg.now} / was "${pg.was}"`);
   if (pg.stars !== (pg.reviews > 0)) problems.push(`stars ${pg.stars} with ${pg.reviews} reviews`);
   if (pg.hScroll) problems.push('page scrolls sideways');
   if (pg.imgs.length) problems.push(`${pg.imgs.length} broken images: ${pg.imgs.slice(0, 3).join(' ')}`);
@@ -512,7 +515,7 @@ async function twinPage(name, route, cfg) {
              menu: [...document.querySelectorAll('a')].filter(a => a.textContent.trim().toLowerCase() === nav.toLowerCase()).map(a => a.pathname) };
   }, [cfg.handle, cfg.title, cfg.nav]);
   if (!home.list || home.tabs.length !== 3) problems.push(`homepage shelf: list ${home.list}, tabs ${home.tabs.join(',')}`);
-  if (!/\$24\.95/.test(home.price)) problems.push('shelf card price: ' + home.price.replace(/\s+/g, ' ').slice(0, 80));
+  if (!home.price.includes(price)) problems.push('shelf card price: ' + home.price.replace(/\s+/g, ' ').slice(0, 80));
   if (home.menu.length < 2 || home.menu.some(p => !p.includes(cfg.handle))) problems.push('menu links: ' + home.menu.join(','));
   out.push({ case: `${name} page`, ...pg, home, errors: s.errors, ok: problems.length === 0, problems });
   await s.ctx.close();
@@ -521,10 +524,13 @@ await twinPage('brush', BRUSH, { title: 'The Lymphatic Brush', handle: 'the-lymp
                                  clips: 4, was: '$49.90', claims: 'drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention' });
 await twinPage('balm', BALM, { title: 'PDRN Plumping Balm', handle: 'pdrn-plumping-balm', nav: 'PDRN Balm', gallery: 13, faq: 10, clips: 0,
                                was: '', claims: '96%|1M\\+|bought today|77%|dermatologist|collagen production|clinically' });
+await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf-nad-firming-serum', nav: 'Firming Serum', gallery: 13, faq: 10,
+                                 clips: 0, was: '', price: '$34.95',
+                                 claims: '#1 Firming|137,135|10,000\\+|clinically|stimulate collagen|at the source|dermatologist|Madeca|Time Reverse' });
 
 // the sticky bar on both product pages: hidden at the top, shown once the add-to-cart button has scrolled away, and
 // its button brings the pack picker back into view
-for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BALM]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
+for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BALM], ['serum', SERUM]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
   const s = await session(w, h, route);
   const on = () => s.page.evaluate(() => { const b = document.getElementById('sf-sticky'); return b ? b.classList.contains('is-on') : null; });
   const problems = [];

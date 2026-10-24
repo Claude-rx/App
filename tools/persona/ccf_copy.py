@@ -192,8 +192,9 @@ FRONTROW_PRODUCT_ID = 4694
 # not plan terms. Add-ons are design handles (mapped to NEXT by the catalog); the review is one the product page shows.
 CART = {
     'product': 'color-changing-foundation',
-    # the drawer offers the first two not yet in the bag: the brush, then the balm (the new under-eye product)
-    'addons': ['the-lymphatic-brush', 'pdrn-plumping-balm', 'reverse-time-peptide-serum'],
+    # the drawer offers the first two not yet in the bag: the brush, then the balm (the new under-eye product), then the
+    # firming serum
+    'addons': ['the-lymphatic-brush', 'pdrn-plumping-balm', 'egf-nad-firming-serum'],
     'upgrade_title': 'Upgrade to 2 bottles + free gifts',
     'upgrade_button': 'Upgrade',
     'review_text': ("I'm 53 and I've never found one that works this well on mature skin—including my own. "
