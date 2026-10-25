@@ -170,6 +170,12 @@ def customer_voice(home):
                  lambda mm: mm.group(1) + f'<img alt="Three verified buyers of the Adaptive Peptide Foundation" class="fh-original" '
                                           f'height="500" loading="lazy" sizes="(max-width: 749px) 93vw, 698px" src="{photo}" width="901"/>',
                  sec, count=1)
+    # the doctor's portrait filled a tall box (the section's whole height on desktops, 214 px on phones), cover-cropped:
+    # the three buyers' photos would be cut through their faces. The strip keeps its own shape, centred beside the words
+    X = '[id$="__experts"] .fh-experts'
+    sec += (f'<style>{X} .fh-expert-photo{{height:auto;aspect-ratio:901/500}}'
+            f'{X} .fh-expert-photo img{{position:absolute;inset:0;left:0;width:100%;height:100%;object-fit:cover}}'
+            f'@media(min-width:750px){{{X}{{min-height:440px}}{X} .fh-expert-photo{{top:50%;bottom:auto;transform:translateY(-50%)}}}}</style>')
     return home[:m.start()] + sec + home[end:]
 
 def video_reviews(home):
@@ -2182,7 +2188,8 @@ def main():
         hit = next((u for u in imgs if Path(u.split('?')[0]).name.startswith(prefix) and u not in ordered), None)
         if hit: ordered.append(hit)
         else: missing.append(('gallery', prefix))
-    data['images'] = ordered + [u for u in imgs if u not in ordered]
+    gone = ('ColorChangingFoundation-Productimagesphotos_2_1791540a', 'ColorChangingFoundation-Productimagesphotos_1_87f31fb4')
+    data['images'] = [u for u in ordered + [u for u in imgs if u not in ordered] if not any(g in u for g in gone)]
     snap.write_text(json.dumps(data))
     pdp = DST / 'products' / 'color-changing-foundation.html'
     base_pdp = texts[pdp]   # the brush page starts from the foundation page before its own sections go in
