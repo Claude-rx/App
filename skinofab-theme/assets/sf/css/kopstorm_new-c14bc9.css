@@ -1,6 +1,4 @@
-.results_section{max-width: none!important;}.product__complementary{padding: var(--inner) !important;
-    padding-left: 0px !important;
-    padding-right: 0px !important;}#looxReviews{max-width: none!important;}.Ingredients div[aria-disabled="true"]{display: none!important;}.Ingredients div[aria-disabled="true"]{display: none!important;}.Ingredients .swiper-scrollbar{margin-top: 10px;
+.Ingredients div[aria-disabled="true"]{display: none!important;}.Ingredients div[aria-disabled="true"]{display: none!important;}.Ingredients .swiper-scrollbar{margin-top: 10px;
     position: relative !important;}.Ingredients .swiper-button-next{background: #b0b0b0;
     color: #ffffff;
     border-radius: 500px;
@@ -51,5 +49,5 @@
     right: auto;
     margin: 0;
     position: absolute;
-                    top: 39%;}}.ingredientcell img{border-radius: 10px;}.Ingredients{margin-bottom: 10px;
-    margin-top: 5px;}.product-grid-item__rating .rating__star{color: #000000;}body .product-grid-item .loox-rating.custom-rating.index{display: none !important;}
+                    top: 39%;}}.Ingredients{margin-bottom: 10px;
+    margin-top: 5px;}.product-grid-item__rating .rating__star{color: #000000;}

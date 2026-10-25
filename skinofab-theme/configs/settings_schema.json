@@ -2,24 +2,6 @@
   "SKINOFAB": {
     "Product Links": [
       {
-        "name": "sf_p_4_pack_2x_extreme_2x_long_lasting",
-        "type": "product",
-        "label": "Bestseller Duo Kit",
-        "help_text": "NEXT product shown wherever the design links to \"4-pack-2x-extreme-2x-long-lasting\": links, prices and add to cart. Also set this product's template to \"4-pack-2x-extreme-2x-long-lasting\"."
-      },
-      {
-        "name": "sf_p_beauty_mirror",
-        "type": "product",
-        "label": "Beauty Mirror",
-        "help_text": "NEXT product shown wherever the design links to \"beauty-mirror\": links, prices and add to cart. Also set this product's template to \"beauty-mirror\"."
-      },
-      {
-        "name": "sf_p_brow_gel",
-        "type": "product",
-        "label": "Fibre Brow Gel",
-        "help_text": "NEXT product shown wherever the design links to \"brow-gel\": links, prices and add to cart. Also set this product's template to \"brow-gel\"."
-      },
-      {
         "name": "sf_p_color_changing_foundation",
         "type": "product",
         "label": "Color Changing Foundation",
@@ -32,148 +14,16 @@
         "help_text": "NEXT product shown wherever the design links to \"egf-nad-firming-serum\": links, prices and add to cart. Also set this product's template to \"egf-nad-firming-serum\"."
       },
       {
-        "name": "sf_p_essential_lip_liner",
-        "type": "product",
-        "label": "Luxury Lip Liner",
-        "help_text": "NEXT product shown wherever the design links to \"essential-lip-liner\": links, prices and add to cart. Also set this product's template to \"essential-lip-liner\"."
-      },
-      {
-        "name": "sf_p_extreme_lip_plumper",
-        "type": "product",
-        "label": "Extreme Lip Plumper",
-        "help_text": "NEXT product shown wherever the design links to \"extreme-lip-plumper\": links, prices and add to cart. Also set this product's template to \"extreme-lip-plumper\"."
-      },
-      {
-        "name": "sf_p_eyebrow_serum",
-        "type": "product",
-        "label": "Eyebrow Growth Serum",
-        "help_text": "NEXT product shown wherever the design links to \"eyebrow-serum\": links, prices and add to cart. Also set this product's template to \"eyebrow-serum\"."
-      },
-      {
-        "name": "sf_p_eyelash_curler",
-        "type": "product",
-        "label": "Eyelash Curler",
-        "help_text": "NEXT product shown wherever the design links to \"eyelash-curler\": links, prices and add to cart. Also set this product's template to \"eyelash-curler\"."
-      },
-      {
-        "name": "sf_p_eyelash_serum",
-        "type": "product",
-        "label": "Eyelash Growth Serum",
-        "help_text": "NEXT product shown wherever the design links to \"eyelash-serum\": links, prices and add to cart. Also set this product's template to \"eyelash-serum\"."
-      },
-      {
-        "name": "sf_p_face_roller",
-        "type": "product",
-        "label": "Face Roller",
-        "help_text": "NEXT product shown wherever the design links to \"face-roller\": links, prices and add to cart. Also set this product's template to \"face-roller\"."
-      },
-      {
-        "name": "sf_p_foundation_mega_pack",
-        "type": "product",
-        "label": "Foundation Mega Pack",
-        "help_text": "NEXT product shown wherever the design links to \"foundation-mega-pack\": links, prices and add to cart. Also set this product's template to \"foundation-mega-pack\"."
-      },
-      {
-        "name": "sf_p_gua_sha",
-        "type": "product",
-        "label": "Gua Sha",
-        "help_text": "NEXT product shown wherever the design links to \"gua-sha\": links, prices and add to cart. Also set this product's template to \"gua-sha\"."
-      },
-      {
-        "name": "sf_p_hyaluronic_acid_lip_plumper",
-        "type": "product",
-        "label": "Normal Lip Plumper",
-        "help_text": "NEXT product shown wherever the design links to \"hyaluronic-acid-lip-plumper\": links, prices and add to cart. Also set this product's template to \"hyaluronic-acid-lip-plumper\"."
-      },
-      {
-        "name": "sf_p_lash_brow_duo",
-        "type": "product",
-        "label": "Lash & Brow Growth Kit",
-        "help_text": "NEXT product shown wherever the design links to \"lash-brow-duo\": links, prices and add to cart. Also set this product's template to \"lash-brow-duo\"."
-      },
-      {
-        "name": "sf_p_liquid_blender_brush",
-        "type": "product",
-        "label": "Liquid Blender Brush",
-        "help_text": "NEXT product shown wherever the design links to \"liquid-blender-brush\": links, prices and add to cart. Also set this product's template to \"liquid-blender-brush\"."
-      },
-      {
-        "name": "sf_p_long_lash_mascara",
-        "type": "product",
-        "label": "2-in-1 Serum Mascara",
-        "help_text": "NEXT product shown wherever the design links to \"long-lash-mascara\": links, prices and add to cart. Also set this product's template to \"long-lash-mascara\"."
-      },
-      {
         "name": "sf_p_pdrn_plumping_balm",
         "type": "product",
         "label": "PDRN Plumping Balm",
         "help_text": "NEXT product shown wherever the design links to \"pdrn-plumping-balm\": links, prices and add to cart. Also set this product's template to \"pdrn-plumping-balm\"."
       },
       {
-        "name": "sf_p_peel_off_lip_stain",
-        "type": "product",
-        "label": "Peel-off Lip Stain",
-        "help_text": "NEXT product shown wherever the design links to \"peel-off-lip-stain\": links, prices and add to cart. Also set this product's template to \"peel-off-lip-stain\"."
-      },
-      {
-        "name": "sf_p_reverse_time_peptide_serum",
-        "type": "product",
-        "label": "Reverse-time Peptide Serum",
-        "help_text": "NEXT product shown wherever the design links to \"reverse-time-peptide-serum\": links, prices and add to cart. Also set this product's template to \"reverse-time-peptide-serum\"."
-      },
-      {
-        "name": "sf_p_shea_butter_lip_gloss",
-        "type": "product",
-        "label": "Volume Lip Gloss",
-        "help_text": "NEXT product shown wherever the design links to \"shea-butter-lip-gloss\": links, prices and add to cart. Also set this product's template to \"shea-butter-lip-gloss\"."
-      },
-      {
-        "name": "sf_p_skinofab_blender",
-        "type": "product",
-        "label": "Skinofab Blender",
-        "help_text": "NEXT product shown wherever the design links to \"skinofab-blender\": links, prices and add to cart. Also set this product's template to \"skinofab-blender\"."
-      },
-      {
-        "name": "sf_p_skinofab_gift_card",
-        "type": "product",
-        "label": "Skinofab Gift Card",
-        "help_text": "NEXT product shown wherever the design links to \"skinofab-gift-card\": links, prices and add to cart. Also set this product's template to \"skinofab-gift-card\"."
-      },
-      {
-        "name": "sf_p_stick_and_stain",
-        "type": "product",
-        "label": "Peel-off Lip Stain",
-        "help_text": "NEXT product shown wherever the design links to \"stick-and-stain\": links, prices and add to cart. Also set this product's template to \"stick-and-stain\"."
-      },
-      {
-        "name": "sf_p_stick_stain3",
-        "type": "product",
-        "label": "Peel-off Lip Stain",
-        "help_text": "NEXT product shown wherever the design links to \"stick-stain3\": links, prices and add to cart. Also set this product's template to \"stick-stain3\"."
-      },
-      {
         "name": "sf_p_the_lymphatic_brush",
         "type": "product",
         "label": "The Lymphatic Brush",
         "help_text": "NEXT product shown wherever the design links to \"the-lymphatic-brush\": links, prices and add to cart. Also set this product's template to \"the-lymphatic-brush\"."
-      },
-      {
-        "name": "sf_p_triple_lip_plumper_bundle",
-        "type": "product",
-        "label": "Triple Lip Plumper Bundle",
-        "help_text": "NEXT product shown wherever the design links to \"triple-lip-plumper-bundle\": links, prices and add to cart. Also set this product's template to \"triple-lip-plumper-bundle\"."
-      },
-      {
-        "name": "sf_p_ultra_peptide_collagen_lifting_mask",
-        "type": "product",
-        "label": "Ultra Peptide & Collagen Lifting Mask",
-        "help_text": "NEXT product shown wherever the design links to \"ultra-peptide-collagen-lifting-mask\": links, prices and add to cart. Also set this product's template to \"ultra-peptide-collagen-lifting-mask\"."
-      },
-      {
-        "name": "sf_p_under_eye_reset",
-        "type": "product",
-        "label": "Under-eye Reset Patches",
-        "help_text": "NEXT product shown wherever the design links to \"under-eye-reset\": links, prices and add to cart. Also set this product's template to \"under-eye-reset\"."
       }
     ],
     "Checkout Add-ons": [
@@ -491,88 +341,11 @@
     ],
     "Collection Links": [
       {
-        "name": "sf_c_b2g5",
-        "type": "url",
-        "label": "B2G5",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"b2g5\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_brows",
-        "type": "url",
-        "label": "Brows",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"brows\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_bundles",
-        "type": "url",
-        "label": "Bundles",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"bundles\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_canal_products",
-        "type": "url",
-        "label": "Canal Products",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"canal-products\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_essentials",
-        "type": "url",
-        "label": "Essentials",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"essentials\" collection links go (a NEXT category URL)."
-      },
-      {
         "name": "sf_c_face",
         "type": "url",
         "label": "Face",
         "default": "/catalogue/",
         "help_text": "Where the design's \"face\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_homepage_lips",
-        "type": "url",
-        "label": "Homepage Lips",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"homepage-lips\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_lashes",
-        "type": "url",
-        "label": "Lashes",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"lashes\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_lips",
-        "type": "url",
-        "label": "Lips",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"lips\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_lipstain",
-        "type": "url",
-        "label": "Lipstain",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"lipstain\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_sale",
-        "type": "url",
-        "label": "Sale",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"sale\" collection links go (a NEXT category URL)."
-      },
-      {
-        "name": "sf_c_serums",
-        "type": "url",
-        "label": "Serums",
-        "default": "/catalogue/",
-        "help_text": "Where the design's \"serums\" collection links go (a NEXT category URL)."
       },
       {
         "name": "sf_c_skin",

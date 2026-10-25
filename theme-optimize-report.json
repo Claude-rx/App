@@ -50,9 +50,9 @@
   },
   "figma-home-b8e5e8.css": {
    "before_kb": 41.3,
-   "after_kb": 38.7,
+   "after_kb": 37.0,
    "selectors": 569,
-   "dropped": 34
+   "dropped": 59
   },
   "futura-pt-fallback.css": {
    "before_kb": 0.1,
@@ -60,27 +60,27 @@
   },
   "instant-8RjMjnzDwPBzI6Uy-828392.css": {
    "before_kb": 103.2,
-   "after_kb": 89.7,
+   "after_kb": 0.2,
    "selectors": 811,
-   "dropped": 128
+   "dropped": 811
   },
   "instant-PxhePZoFUWBJLP7u-a702fb.css": {
    "before_kb": 45.2,
-   "after_kb": 33.4,
+   "after_kb": 0.2,
    "selectors": 398,
-   "dropped": 108
+   "dropped": 398
   },
   "instant-g5DAKnvfiOF89B1k-e9b7a9.css": {
    "before_kb": 69.3,
-   "after_kb": 55.9,
+   "after_kb": 0.2,
    "selectors": 609,
-   "dropped": 126
+   "dropped": 609
   },
   "instant-gZNzjB8MhezcfyvJ-8f7e8e.css": {
    "before_kb": 83.3,
-   "after_kb": 70.0,
+   "after_kb": 0.2,
    "selectors": 665,
-   "dropped": 126
+   "dropped": 665
   },
   "kaching-bundles-c3094f.css": {
    "before_kb": 1.2,
@@ -90,9 +90,9 @@
   },
   "kopstorm-62aff9.css": {
    "before_kb": 20.7,
-   "after_kb": 13.1,
+   "after_kb": 6.6,
    "selectors": 293,
-   "dropped": 102
+   "dropped": 200
   },
   "kopstorm-V2-ea6148.css": {
    "before_kb": 1.4,
@@ -102,9 +102,9 @@
   },
   "kopstorm_new-c14bc9.css": {
    "before_kb": 2.6,
-   "after_kb": 2.2,
+   "after_kb": 1.9,
    "selectors": 19,
-   "dropped": 1
+   "dropped": 6
   },
   "policy-0e156355-8644b1.css": {
    "before_kb": 0.3,
@@ -126,9 +126,9 @@
   },
   "styles-ba8b6d.css": {
    "before_kb": 93.7,
-   "after_kb": 42.3,
+   "after_kb": 19.4,
    "selectors": 1014,
-   "dropped": 543
+   "dropped": 799
   },
   "swiper-bundle-min-9d0eb7.css": {
    "before_kb": 17.6,
@@ -138,33 +138,32 @@
   },
   "theme-410305.css": {
    "before_kb": 627.7,
-   "after_kb": 257.5,
+   "after_kb": 225.8,
    "selectors": 7384,
-   "dropped": 4298
+   "dropped": 4651
   },
   "inline": {
-   "blocks": 1872,
-   "before_kb": 8894.1,
-   "after_kb": 7544.6,
+   "blocks": 833,
+   "before_kb": 5160.5,
+   "after_kb": 4432.9,
    "skipped": 0
   }
  },
  "fonts": {
   "sf_asset_styles": {
-   "duplicate": 60,
-   "unused": 15,
-   "kept": 25,
-   "url_vars_dropped": 2
+   "duplicate": 44,
+   "unused": 34,
+   "kept": 22,
+   "url_vars_dropped": 3
   },
   "google_fonts_self_hosted": {
-   "css2-d7688d.css": 14,
    "css2-b2dc35.css": 14,
    "css2-70c8a4.css": 20
   }
  },
  "bundles": {
-  "sfb-ea007c56.css": {
-   "kb": 290.4,
+  "sfb-9f5542a1.css": {
+   "kb": 251.7,
    "members": [
     "futura-pt-fallback.css",
     "all-min-2d3b0a.css",
@@ -177,19 +176,19 @@
   }
  },
  "swiper": {
-  "inline_scripts_deferred": 56,
-  "script_tags_deferred": 90
+  "inline_scripts_deferred": 6,
+  "script_tags_deferred": 50
  },
  "images": {
-  "elements": 1072,
-  "skipped": 1126
+  "elements": 225,
+  "skipped": 657
  },
  "errors": [],
  "backgrounds": {
-  "lazy": 22,
-  "kb_deferred": 6796
+  "lazy": 4,
+  "kb_deferred": 979
  },
  "late_images": {
-  "images": 88
+  "images": 42
  }
 }

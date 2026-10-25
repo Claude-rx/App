@@ -1,12 +1,12 @@
 {# SKINOFAB product card (design markup) for NEXT products. Usage: include with product=product #}
 {# Cards are at most ~360 CSS px wide: 360/720 px crops at quality 80 (the tag defaults to 95) #}
 {% with images=product.get_all_images %}{% if images %}{% image_thumbnail images.0.original "360x360" crop="center" quality=80 as sf_card_img0s %}{% image_thumbnail images.0.original "720x720" crop="center" quality=80 as sf_card_img0 %}{% endif %}{% if images.1 %}{% image_thumbnail images.1.original "360x360" crop="center" quality=80 as sf_card_img1s %}{% image_thumbnail images.1.original "720x720" crop="center" quality=80 as sf_card_img1 %}{% elif images %}{% image_thumbnail images.0.original "360x360" crop="center" quality=80 as sf_card_img1s %}{% image_thumbnail images.0.original "720x720" crop="center" quality=80 as sf_card_img1 %}{% endif %}
-<div category="" class="product-grid-item grid__item one-quarter mobile--one-half" data-product-block="" id="product-item-{{ product.pk }}"><div class="product-grid-item__image" data-product-media-container=""><div class="product__media__container" style="--aspect-ratio: 1.0;">
-<a aria-label="{{ product.get_title }}" class="product__media__holder" data-grid-link="" href="{{ product.get_absolute_url }}"><deferred-loading class="product__media__image product__media__image--hover-fade-in" data-deferred-container="[data-product-block]" data-product-media-featured="">
+<div category="" class="product-grid-item grid__item one-quarter mobile--one-half grid-item--even grid-item--second-tablet" data-product-block="" id="product-item-{{ product.pk }}"><div class="product-grid-item__image" data-product-media-container=""><div class="product__media__container" style="--aspect-ratio: 1.0;">
+<a aria-label="{{ product.get_title }}" class="product__media__holder" data-grid-link="" href="{{ product.get_absolute_url }}"><deferred-loading class="product__media__image product__media__image--hover-fade-in" data-product-media-featured="">
 <figure class="lazy-image background-size-cover is-loading product__media product__media--featured-visible" data-grid-image="" data-product-image="" style="">
 <img alt="{{ product.get_title }}" class="is-loading" decoding="async" height="720" loading="{% if forloop.counter > 4 %}lazy{% else %}eager{% endif %}" sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" src="{{ sf_card_img0.url }}" srcset="{{ sf_card_img0s.url }} 360w, {{ sf_card_img0.url }} 720w" width="720"/>
 </figure><span class="visually-hidden">{{ product.get_title }}</span>
-</deferred-loading><deferred-loading class="product__media__hover product__media__hover--fade-in" data-deferred-container="[data-product-block]" data-deferred-triggers="[data-deferred-trigger-element]">
+</deferred-loading><deferred-loading class="product__media__hover product__media__hover--fade-in">
 <figure class="lazy-image background-size-cover is-loading product__media__hover-img product__media__hover-img--visible product__media" data-product-image-hover="" style="">
 <img alt="{{ product.get_title }}" class="is-loading" decoding="async" height="720" loading="lazy" sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" src="{{ sf_card_img1.url }}" srcset="{{ sf_card_img1s.url }} 360w, {{ sf_card_img1.url }} 720w" width="720"/>
 </figure></deferred-loading></a></div>
@@ -14,7 +14,7 @@
 <div class="product-grid-item__info product-grid-item__info--inline">
 <div class="product-grid-item__info-content">
 <a aria-label="{{ product.get_title }}" class="product-grid-item__title font-heading" data-grid-link="" href="{{ product.get_absolute_url }}">{{ product.get_title }}</a> <span class="product-grid-item__info-separator"></span>
- <a class="product-grid-item__price price" data-grid-link="" href="{{ product.get_absolute_url }}">{% include 'partials/sf_price.html' with p=product %}</a>
+<a class="product-grid-item__price price" data-grid-link="" data-subscription-card-compare-price-usd="5900" data-subscription-card-price-usd="3900" href="{{ product.get_absolute_url }}">{% include 'partials/sf_price.html' with p=product %}</a>
 </div></div>
 </div>
 {% endwith %}
