@@ -13,6 +13,7 @@ usage: python3 -I tools/persona/home_images.py
   image model's bottle so it covers it whole
 - celebration.jpg: "Beauty is a celebration", the export's two models as women in their fifties (gpt-image-2)
 - tile-*.jpg (4:5): Shop by category, a woman over 45 holding each product
+- collage-wide.jpg, collage-square.jpg: the listing pages' banners, the four tiles side by side and two by two
 - bundle-*.jpg (1:1): Bundle & Save, each bundle's units on white with soft contact shadows (the foundation from
   its front render, the brush with its case)
 """
@@ -149,6 +150,23 @@ def main():
     save(Image.open(BRAND / 'egf-nad-serum' / 'trio.jpg').convert('RGB').resize((1000, 1000), Image.LANCZOS), 'bundle-serum.jpg')
     save(trio(cutout(BRAND / 'pdrn-balm' / 'card.jpg', keep='tallest'), height=0.62), 'bundle-balm.jpg')
     save(trio(cutout(BRAND / 'lymphatic-brush' / 'card.jpg', keep='all'), height=0.5, spread=0.3, side=0.9), 'bundle-brush.jpg')
+    # ---- banners of the listing pages (the export's showed four young models with products the store no longer
+    # sells): our four women 45+ with their products, side by side (wide) and two by two (phones)
+    tiles = [Image.open(OUT / f'tile-{k}.jpg').convert('RGB') for k in ('foundation', 'serum', 'balm', 'brush')]
+    def cover(im, w, h, fy=0.3):
+        k = max(w / im.width, h / im.height)
+        im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+        x, y = (im.width - w) // 2, int((im.height - h) * fy)
+        return im.crop((x, y, x + w, y + h))
+    wide = Image.new('RGB', (3456, 1408), 'white')
+    for i, tile in enumerate(tiles): wide.paste(cover(tile, 864, 1408), (i * 864, 0))
+    save(wide, 'collage-wide.jpg')
+    # two by two: the brush lower left, where the banner's title sits (its model's face is on the right of her tile, so
+    # the title covers her hand and shoulder, not a face)
+    square = Image.new('RGB', (2000, 2245), 'white')
+    for i, tile in enumerate([tiles[0], tiles[1], tiles[3], tiles[2]]):
+        square.paste(cover(tile, 1000, 1122), ((i % 2) * 1000, (i // 2) * 1123))
+    save(square, 'collage-square.jpg')
     for f in TMP.iterdir(): f.unlink()
     TMP.rmdir()
 

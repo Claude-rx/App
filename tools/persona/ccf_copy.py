@@ -20,6 +20,14 @@ least once or the build fails, so copy can't silently drift from the design.
 ORIGIN = '🇰🇷 Formulated in Korea · Advanced K-beauty formula'
 
 GLOBAL = [
+    # the listing pages' benefit row: claims no product here can back ("100% natural": the foundation's silica and
+    # boron nitride are not; "proven results" with no study named) become what holds for all four products
+    (r'RE:(icons-row__title">)100% natural<', r'\g<1>Formulated in Korea<'),
+    (r'RE:(icons-row__title">)Natural ingredients<', r'\g<1>Formulated in Korea<'),
+    (r'RE:(icons-row__title">)Proven results<', r'\g<1>30-day money-back guarantee<'),
+    (r'RE:(icons-row__title">)Scientifically proven<', r'\g<1>30-day money-back guarantee<'),
+    (r'RE:(icons-row__title">)Quick results<', r'\g<1>30-day money-back guarantee<'),
+    (r'RE:(icons-row__title">)Loved by 100\.000\+<', r'\g<1>Loved by 9,800+ customers<'),
     ('>Korean inspired performance formulas<', '>Formulated in Korea, with advanced K-beauty science<'),
     ('>3. Built in Korea, by the people who invented the science<', '>3. Formulated in Korea, with advanced K-beauty science<'),
     ('a breakthrough foundation from Korean pharmacies,', 'a breakthrough foundation formulated in Korea,'),
@@ -81,13 +89,24 @@ PAGE = {
         ("blurring blemishes, redness, and fine lines in seconds.", "softening the look of blemishes, redness and fine lines as you blend."),
         (">Look visibly younger<", ">Made for 45+<"),
     ],
+    'pages/about-skinofab.html': [
+        # "98% feel more confident" and the rest came from no survey: what holds instead
+        (r'RE:<span class="sa-eyebrow" style="justify-content:center;">The results</span><h2>What our community feels</h2>',
+         '<span class="sa-eyebrow" style="justify-content:center;">Our promise</span><h2>What you can count on</h2>'),
+        (r'RE:<div class="sa-stat__num">98%</div>\s*<div class="sa-stat__label">Feel more confident</div>',
+         '<div class="sa-stat__num">30 days</div> <div class="sa-stat__label">to try it, or your money back</div>'),
+        (r'RE:<div class="sa-stat__num">97%</div>\s*<div class="sa-stat__label">Feel more attractive</div>',
+         '<div class="sa-stat__num">9,800+</div> <div class="sa-stat__label">verified reviews of our foundation</div>'),
+        (r'RE:<div class="sa-stat__num">100%</div>\s*<div class="sa-stat__label">Feel more like themselves</div>',
+         '<div class="sa-stat__num">Korea</div> <div class="sa-stat__label">where all four products are formulated</div>'),
+    ],
     'pages/postflows-track-your-order.html': [
         ("Fill in your order number or tracking code to see where your package currently is.",
          "Fill in your tracking code to see where your package is right now."),
     ],
     'policies/shipping-policy.html': [
-        ("<span>6-8 Business Day</span>", "<span>6-8 Business Days</span>"),
-        ("6-8\xa0 Business Days", "6-8 Business Days"),
+        (r'RE:<span>6-8 Business Day</span>', '<span>6-8 Business Days</span>'),
+        (r'RE:6-8\xa0 Business Days', '6-8 Business Days'),
     ],
     'products/color-changing-foundation.html': [
         # ingredient carousel: photo alt, heading and line change together

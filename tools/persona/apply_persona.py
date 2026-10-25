@@ -88,8 +88,22 @@ def crop_to(src_path, name, size, centering, white=False):
     """A crop of an export image at `size`, under a content-hashed name (NEXT's CDN caches by file name); white: its
     pale backdrop made pure white first (white_bg.light, a no-op on a scene)."""
     from PIL import Image, ImageOps
+    import numpy as np
     im = Image.open(src_path).convert('RGB')
-    im = ImageOps.fit(white_bg.light(im) if white else im, size, Image.LANCZOS, centering=centering)
+    im = white_bg.light(im) if white else im
+    # a drawing on white whose sides the crop would cut (the brush's how-to diagrams: their labels run to the edges):
+    # the whole width, the height cropped or padded with white instead
+    W, H = im.size
+    dx = int(round((W - H * size[0] / size[1]) / 2))
+    a = np.asarray(im.convert('L'))
+    if dx > 0 and np.median(a[:, :4]) > 248 and np.median(a[:, -4:]) > 248 and (a[:, :dx].min() < 200 or a[:, W - dx:].min() < 200):
+        k = size[0] / W
+        fitted = im.resize((size[0], round(H * k)), Image.LANCZOS)
+        canvas = Image.new('RGB', size, (255, 255, 255))
+        canvas.paste(fitted, (0, int((size[1] - fitted.height) * centering[1])))
+        im = canvas
+    else:
+        im = ImageOps.fit(im, size, Image.LANCZOS, centering=centering)
     tmp = DST / 'assets' / 'img' / f'{name}.jpg'
     im.save(tmp, quality=86, optimize=True, progressive=True)
     final = tmp.with_name(f"{name}-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg")
@@ -846,6 +860,33 @@ def home_original():
             f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}}}}'
             f'@media(max-width:749px){{{X} .fh-story-copy{{padding:32px 16px 24px}}}}'))
         t = t[:a] + sec + t[b:]; done['celebration'] = k1 + k2 + k3
+    # ---- the product shelves on tablets: the export laid 4 cards across 704 px (164 px each), so badges were cut and
+    # the rating and guarantee lines ran into the next card; 2.6 cards across, the rest a swipe or an arrow away
+    a, b = section('__bestsellers')
+    if a is not None:
+        sec, k = style(t[a:b], (
+            '@media(min-width:750px) and (max-width:1023px){.fh-shelf .fh-product{flex-basis:calc((100% - 2*var(--fh-gap,16px))/2.6)}}'
+            '.fh-badges{flex-wrap:wrap;justify-content:flex-end;left:12px;right:12px;top:12px;gap:6px}.fh-badges>span{white-space:nowrap}'
+            '.fh-product-rating{min-width:0;overflow:hidden}.fh-product-rating>span:last-child{overflow:hidden;text-overflow:ellipsis}'))
+        t = t[:a] + sec + t[b:]; done['shelf tablets'] = k
+    # ---- "Rested-looking eyes" (the balm's story): a fixed 369 px card with its photo under the copy; on tablets the
+    # copy, then the photo; on small laptops the photo starts where the copy ends
+    a, b = section('__arrivals_desktop')
+    if a is not None:
+        X = '[id$="__arrivals_desktop"] .fh-editorial--arrivals'
+        sec, k = style(t[a:b], (
+            f'@media(min-width:750px) and (max-width:1023px){{{X}{{height:auto;display:flex;flex-direction:column}}'
+            f'{X} .fh-story-copy{{order:1;height:auto;width:100%;margin:0;padding:40px 32px 24px}}'
+            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;width:100%;aspect-ratio:16/9}}'
+            f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}'
+            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:42% 40%}}'
+            f'{X} .fh-story-media:after{{display:none}}}}'
+            f'@media(min-width:1024px) and (max-width:1199px){{{X}{{height:auto;min-height:var(--fh-story-height)}}'
+            f'{X} .fh-story-copy{{height:auto;min-height:var(--fh-story-height);padding:40px 0}}'
+            f'{X} .fh-story-media{{left:calc(min(var(--fh-story-width),45%) + 72px)}}'
+            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:45% 40%;'
+            f'-webkit-mask-image:linear-gradient(to right,transparent,#000 14%);mask-image:linear-gradient(to right,transparent,#000 14%)}}}}'))
+        t = t[:a] + sec + t[b:]; done['arrivals tablets'] = k
     home.write_text(t, encoding='utf-8', errors='surrogateescape')
     return done
 
@@ -927,8 +968,127 @@ def track_form():
     m = re.search(r'(id="Page--template--[0-9]+__main">\s*<div class="wrapper">.*?<div class="rte">)', t, re.S)
     if not m: return 0
     t = t[:m.end()] + TRACK_FORM + t[m.end():]
+    # its banner: a model's face behind white text (the heading ran across her eye at every width, and on phones she
+    # held a lash serum the store does not sell): the heading and line on the page's own light grey, no photo
+    b = re.search(r'<div class="shopify-section supports-transparent-header" id="shopify-section-template--[0-9]+__section_banner_image_[A-Za-z0-9]+">', t)
+    if b:
+        e = t.find('<div class="shopify-section', b.end())
+        sec = re.sub(r'<div class="overlay"></div><div class="banner-image__image-container">.*?</figure></div>\s*</div>', '', t[b.start():e], count=1, flags=re.S)
+        sec = sec.replace('text-light', 'text-dark', 1)
+        sec += ('<style>.banner-image .banner-image__inner.text-dark{min-height:0;height:auto;padding:64px 0 16px;background:#f6f5f3;color:#151515}'
+                '.banner-image__inner.text-dark .banner-image__text-container{position:relative;inset:auto}'
+                '.banner-image__inner.text-dark .banner-image__heading,.banner-image__inner.text-dark .banner-image__content{color:#151515}</style>')
+        t = t[:b.start()] + sec + t[e:]
+    # "You might like these too": the export's featured collection kept one card (the others were products the store
+    # no longer sells); our four, as the homepage shows them
+    f = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__section_collection_[A-Za-z0-9]+">', t)
+    if f:
+        e = t.find('<div class="shopify-section', f.end())
+        t = t[:f.start()] + more_products_html('../') + t[e:]
     page.write_text(t, encoding='utf-8', errors='surrogateescape')
     return 1
+
+def more_products_html(up):
+    """Our four products as a simple grid of cards (photo, name, price), for pages outside the homepage. Prices are
+    bound to NEXT by the theme build (each card links to its product); the foundation's is the one its page shows
+    first, as on the homepage."""
+    one = ccf_copy.PACKS[0]
+    usd = lambda v: f"${float(v):.2f}".replace('.00', '') + ' USD'
+    cards = []
+    for handle, title, path in HOME_ESSENTIALS:
+        src = up + hashed_copy(path, 'img', f'skinofab-home-essential-{handle}-720w', (720, 720))[3:]
+        if handle == 'color-changing-foundation':
+            price = f'<span class="sf-more__price" data-sf-fixed-price=""><s>{usd(one["compare"])}</s><b>{usd(one["refill"])}</b></span>'
+        else:
+            price = f'<span class="sf-more__price"><b>{usd(next(P.PRICE for P in SECOND_PRODUCTS if P.HANDLE == handle))}</b></span>'
+        cards.append(f'<a class="sf-more__card" href="{up}products/{handle}.html"><img alt="{html.escape(title)}" height="720" loading="lazy" '
+                     f'src="{src}" width="720"/><span class="sf-more__title">{html.escape(title)}</span>{price}</a>')
+    return ('<div class="shopify-section" id="shopify-section-sf-more"><section class="sf-more"><div class="sf-more__head">'
+            f'<h2>You might like these too</h2><a href="{up}collections/all-products.html">Shop all</a></div>'
+            f'<div class="sf-more__grid">{"".join(cards)}</div></section>'
+            '<style>.sf-more{width:calc(100% - 40px);max-width:1320px;margin:0 auto;padding:24px 0 64px}'
+            '.sf-more__head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:24px}'
+            '.sf-more__head h2{margin:0;font-size:clamp(26px,3vw,36px)}.sf-more__head a{font-weight:600;text-transform:uppercase;text-decoration:underline;white-space:nowrap}'
+            '.sf-more__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}'
+            '@media(min-width:1024px){.sf-more__grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}}'
+            '.sf-more__card{display:flex;flex-direction:column;gap:8px;color:inherit;text-decoration:none}'
+            '.sf-more__card img{width:100%;height:auto;aspect-ratio:1;object-fit:contain;background:#f7f7f7;border-radius:10px}'
+            '.sf-more__title{font-weight:600;line-height:1.25}.sf-more__price{display:flex;gap:8px;flex-wrap:wrap}'
+            '.sf-more__price s{color:#c8102e}.sf-more__price b{font-weight:400}</style></div>')
+
+# Photos on the other pages that still showed products the store no longer sells, or a young model where the
+# store's buyer is over 45: each file is replaced, at its own size (cover crop), by one of ours. A replaced file gets a
+# new name (NEXT's CDN keeps serving an old name's first upload) and every reference to it is rewritten.
+PAGE_IMAGES = [
+    # the track page's banner: the persona model held the old pink lash serum to her brow; the same photo without it
+    (r'^9_78eacf36-[^/]*\.(?:jpg|png)$', HOME / 'source' / 'track-face.jpg', 0.4),
+    # the about page's first photo: the same, another model
+    (r'^9_8d6072a5-[^/]*\.(?:jpg|png)$', HOME / 'source' / 'about-face.jpg', 0.4),
+    # the about page's "born in a tiny kitchen lab": a young model with lip liner; a woman in her fifties with the balm
+    (r'^rk_2-\d+w-[0-9a-f]{6}\.(?:jpg|png)$', BRAND / 'pdrn-balm' / 'apply-lips.jpg', 0.4),
+    # the listing pages' banner (four young models with masks and patches): our four women 45+ with our products
+    (r'^skin-\d+w-[0-9a-f]{6}\.jpg$', HOME / 'collage-wide.jpg', 0.3),
+    (r'^SM_-_Sales_Banner_-_Mobile_2_[^/]*\.jpg$', HOME / 'collage-square.jpg', 0.3),
+]
+
+def page_images():
+    """PAGE_IMAGES on every page. Returns how many files were replaced."""
+    from PIL import Image
+    imgdir = DST / 'assets' / 'img'
+    renames = {}
+    for pattern, src, fy in PAGE_IMAGES:
+        source = Image.open(src).convert('RGB')
+        for target in sorted(imgdir.iterdir()):
+            if not re.match(pattern, target.name): continue
+            w, h = Image.open(target).size
+            k = max(w / source.width, h / source.height)
+            im = source.resize((max(w, round(source.width * k)), max(h, round(source.height * k))), Image.LANCZOS)
+            x, y = (im.width - w) // 2, int((im.height - h) * fy)
+            im = im.crop((x, y, x + w, y + h))
+            stem, ext = os.path.splitext(target.name)
+            tmp = imgdir / f'.page-image{ext}'
+            im.save(tmp, **({'quality': 86, 'optimize': True, 'progressive': True} if ext.lower() in ('.jpg', '.jpeg') else {'optimize': True}))
+            new = re.sub(r'-[a-z]?[0-9a-f]{6}$', '', stem) + f'-h{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}{ext}'
+            tmp.rename(imgdir / new); renames[target.name] = new
+    if renames:
+        rx = re.compile('|'.join(re.escape(k) for k in sorted(renames, key=len, reverse=True)))
+        for p in DST.rglob('*'):
+            if p.is_file() and p.suffix.lower() in TEXT:
+                t = p.read_text(encoding='utf-8', errors='surrogateescape')
+                n = rx.sub(lambda m: renames[m.group(0)], t)
+                if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
+    return len(renames)
+
+MENU = [('Adaptive Peptide Foundation', 'products/color-changing-foundation.html'),
+        ('EGF + NAD+ Firming Serum', f'products/{serum_copy.HANDLE}.html'),
+        ('PDRN Plumping Balm', f'products/{balm_copy.HANDLE}.html'),
+        ('The Lymphatic Brush', f'products/{brush_copy.HANDLE}.html'),
+        ('Shop all', 'collections/all-products.html'),
+        ('Track your order', 'pages/postflows-track-your-order.html'),
+        ('About', 'pages/about-skinofab.html'),
+        ('Contact', 'pages/contact.html')]
+
+def clean_menu():
+    """The menu kept the export's tree with only our products left in it: "Shop all > Face > Foundation" three taps
+    deep while the other three products sat at the top. Now one level: our four products, Shop all, Track your order,
+    About, Contact (the account entries stay). Returns how many pages."""
+    n = 0
+    for page in DST.rglob('*.html'):
+        t = page.read_text(encoding='utf-8', errors='surrogateescape')
+        m = re.search(r'<ul class="mobile-nav[^"]*">', t)
+        if not m: continue
+        prefix = '../' * (len(page.relative_to(DST).parts) - 1)
+        end = balanced_end(t, m.start(), 'ul'); inner = t[m.end():end - 5]
+        keep, pos = [], 0
+        for li in re.finditer(r'<li\b', inner):
+            if li.start() < pos: continue
+            e = balanced_end(inner, li.start(), 'li'); seg = inner[li.start():e]; pos = e
+            if re.search(r'(?i)account|log in|sign in', re.sub(r'<[^>]+>', ' ', seg)): keep.append(seg)
+        items = ''.join(f'<li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" '
+                        f'data-nav-link-mobile="" href="{prefix}{h}">{html.escape(name)}</a></li>' for name, h in MENU)
+        t = t[:m.end()] + items + ''.join(keep) + '</ul>' + t[end:]
+        page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
+    return n
 
 def serum_copy_img(name): return serum_copy.IMG / f'{name}.jpg'
 def balm_copy_img(name): return balm_copy.IMG / f'{name}.jpg'
@@ -1165,7 +1325,9 @@ def cart_offer():
             'review': {'text': cart['review_text'], 'name': cart['review_name']},
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
-                       'every': ccf_copy.REFILL['every']},
+                       'every': ccf_copy.REFILL['every'],
+                       # cards and listings show the price its page shows first (refills ticked), and its was-price
+                       'price_text': f"${float(ccf_copy.PACKS[0]['refill']):g} USD", 'compare_text': f"${float(ccf_copy.PACKS[0]['compare']):g} USD"},
             'frontrow': getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None)}
 
 STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
@@ -1871,7 +2033,7 @@ def main():
         end = balanced_end(texts[pdp], start, 'div')
         texts[pdp] = texts[pdp][:end] + '<div class="shopify-section" id="shopify-section-sf-dermatologist">' + derm + '</div>' + texts[pdp][end:]
         # the K-beauty skin science after the dermatologist (apf_copy.KBEAUTY: the actives on the label, no person)
-        kb = section_image(BRAND / 'adaptive-peptide-foundation' / 'composites' / 'label-detail.jpg', 'skinofab-kbeauty-label', (465, 581))
+        kb = section_image(BRAND / 'adaptive-peptide-foundation' / 'composites' / 'label-detail-2x.jpg', 'skinofab-kbeauty-label', (930, 1162))   # the whole label, sharp at 2x
         d_at = texts[pdp].find('id="shopify-section-sf-dermatologist"')
         d_end = balanced_end(texts[pdp], texts[pdp].rfind('<div', 0, d_at), 'div')
         texts[pdp] = texts[pdp][:d_end] + '<div class="shopify-section" id="shopify-section-sf-kbeauty">' + apf_copy.kbeauty_html(kb) + '</div>' + texts[pdp][d_end:]
@@ -1951,6 +2113,7 @@ def main():
                 t = p.read_text(encoding='utf-8', errors='surrogateescape')
                 n = rx.sub(lambda m: renames[m.group(0)], t)
                 if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
+    print('page images', page_images())
     # the real company (company.py) on every page and data file: footer, contact and legal pages, FAQs, product data
     co, co_files = 0, 0
     for p in sorted(DST.rglob('*')):
@@ -1983,6 +2146,7 @@ def main():
                          p.read_text(encoding='utf-8', errors='surrogateescape'))]
     if left: missing.append(('other products', 'links left in ' + ', '.join(left[:6])))
     print('only our products', pruned)
+    print('menu', clean_menu())
     evened = even_shelf()
     if not evened: missing.append(('even shelf', 'shelf cards to size'))
     print('even shelf cards', evened)

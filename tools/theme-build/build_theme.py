@@ -859,6 +859,11 @@ def catalogue(template, title_var):
             grid.insert_after(NavigableString(slots.put("{% include 'partials/pagination.html' %}")))
         for h in main.find_all(['h1'])[:1]:
             h.string = slots.put(title_var)
+        # the banner over the grid said "Bestsellers" on every listing (the export's collection): the listing's name
+        for h in main.select('.banner-image__heading .text-highlight__break')[:1]:
+            h.string = slots.put(title_var)
+        # "24 products": the export's own count, not the listing's; NEXT's page shows its products, no count
+        for c in main.select('.collection__products-count'): c.decompose()
         return slots.render(str(transform(main, f, slots)))
     write(template, page_template(f, parts, content, title_dtl='{% firstof category.get_meta_title category.name "Shop all" %} | {{ block.super }}'))
 catalogue('templates/catalogue/category.html', '{{ category.name }}')
@@ -925,13 +930,22 @@ blog()
 write('partials/sf_price.html',
       "{# NEXT price for product p in the design's format ($49 USD). retail=1: compare-at price, only when higher. quarter=1: pay-in-4 instalment. #}\n"
       "{# The subscription-only product (Theme settings > Subscription Offer) shows its plan price text instead, with no compare-at or instalment price. #}\n"
+      "{# The refills-by-default product shows the price its page shows first (refills ticked), and its was-price. #}\n"
       "{% if p and settings.sf_subscription_product and settings.sf_subscription_price_text and p.pk == settings.sf_subscription_product.pk %}"
       "{% if not retail and not quarter %}{{ settings.sf_subscription_price_text }}{% endif %}"
+      "{% elif p and not quarter and settings.sf_refill_default_product and settings.sf_refill_price_text and p.pk == settings.sf_refill_default_product.pk %}"
+      "{% if retail %}{{ settings.sf_refill_compare_text }}{% else %}{{ settings.sf_refill_price_text }}{% endif %}"
       "{% elif p %}{% purchase_info_for_product request p as sf_s %}{% if sf_s.price.exists %}"
       "{% if retail %}{% if sf_s.price.price_retail > sf_s.price.price %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price_retail|floatformat:'-2' }} {{ sf_s.price.currency }}{% endif %}"
       "{% elif quarter %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price|dividedby:4|floatformat:'-2' }}"
       "{% else %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price|floatformat:'-2' }} {{ sf_s.price.currency }}{% endif %}"
       "{% endif %}{% endif %}")
+
+# the same, with the product's purchase info already looked up (sf_s): a page that shows one product's price several
+# times looks it up once (8c)
+write('partials/sf_price_pi.html', (OUT / 'partials' / 'sf_price.html').read_text()
+      .replace("{% purchase_info_for_product request p as sf_s %}", "")
+      .replace("{# NEXT price for product p", "{# sf_price.html with sf_s, the purchase info of p, passed in. NEXT price for product p", 1))
 
 fonts = []
 for block in FONT_FACES:
@@ -1067,6 +1081,12 @@ SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1
                '#main-content form input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]),'
                '#main-content form select,#main-content form textarea{border:1px solid #cfcfcf !important;border-radius:10px !important;background:#fff !important}'
                '#main-content form select{min-width:140px}'
+               # the cart's lines on a phone: quantity and refill choice wrap under each other, and the select may
+               # shrink, so the line total and Remove stay on screen (they were pushed 100 px past its right edge)
+               '#cart_formset .flex.items-center.gap-3.mt-3{flex-wrap:wrap}#cart_formset select{min-width:0;max-width:100%}'
+               # the page's width and margins as the header's and footer's (it started 104 px in on a desktop)
+               '#main-content .container{width:calc(100% - 64px);max-width:1440px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}'
+               '@media (max-width:749px){#main-content .container{width:calc(100% - 32px)}}'
                '#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}</style>')
 
 for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'templates/500.html',
@@ -1148,6 +1168,42 @@ for p in sorted((OUT / 'templates').rglob('*.html')):
     p.write_text(s.replace("{% extends 'layouts/base.html' %}", "{% extends 'layouts/base.html' %}\n{% block sf_handle_pk %}" + body + "{% endblock sf_handle_pk %}", 1))
     LOG.setdefault('handle_pk_pages', {})[str(p.relative_to(OUT))] = len(h) if p.name != 'page.html' else sum(map(len, per.values()))
 
+# ---------------------------------------------------------------- 8c. one lookup per product setting and block
+# A page names a product setting (settings.sf_p_<handle>) wherever it links to the product or shows its price: the
+# homepage did it 140 times, and each one fetched the product again while NEXT rendered the page (its server time
+# was 0.3 s above the other pages'). Each block now fetches each product once ({% with %}) and uses it throughout,
+# and looks up each product's purchase info (its price) once for all of its prices.
+def one_lookup(t):
+    out, pos = [], 0
+    for m in re.finditer(r'\{% block (\w+) %\}', t):
+        if m.start() < pos: continue
+        depth, i = 1, m.end()
+        for n in re.finditer(r'\{% (block \w+|endblock(?: \w+)?) %\}', t[m.end():]):
+            depth += 1 if n.group(1).startswith('block') else -1
+            if depth == 0:
+                end, close = m.end() + n.start(), m.end() + n.end(); break
+        else:
+            continue
+        body = t[m.end():end]
+        names = sorted(set(re.findall(r'settings\.sf_p_(\w+)', body)))
+        if names and len(re.findall(r'settings\.sf_p_\w+', body)) > len(names):
+            body = re.sub(r'settings\.sf_p_(\w+)', r'sf_pp_\1', body)
+            # a product whose price shows more than once: its purchase info once, for every one of its prices
+            inc = lambda n: re.compile(r"\{% include 'partials/sf_price\.html' with p=sf_pp_" + n + r"\b")
+            priced = [n for n in names if len(inc(n).findall(body)) > 1]
+            for n in priced:
+                body = inc(n).sub(lambda m: "{% include 'partials/sf_price_pi.html' with p=sf_pp_" + n + " sf_s=sf_pi_" + n, body)
+            infos = ''.join('{% if sf_pp_' + n + ' %}{% purchase_info_for_product request sf_pp_' + n + ' as sf_pi_' + n + ' %}{% endif %}' for n in priced)
+            body = '{% with ' + ' '.join(f'sf_pp_{n}=settings.sf_p_{n}' for n in names) + ' %}' + infos + body + '{% endwith %}'
+        out.append(t[pos:m.end()] + body + t[end:close]); pos = close
+    out.append(t[pos:])
+    return ''.join(out)
+LOG['one_lookup'] = 0
+for tpl in sorted((OUT / 'templates').rglob('*.html')):
+    t0 = tpl.read_text(encoding='utf-8')
+    t1 = one_lookup(t0)
+    if t1 != t0: tpl.write_text(t1, encoding='utf-8'); LOG['one_lookup'] += 1
+
 # ---------------------------------------------------------------- 9. settings
 schema = json.loads((OUT / 'configs' / 'settings_schema.json').read_text())
 titles = {h: (d.get('title') or h) for h, d in PRODUCT_JSON.items()}
@@ -1165,6 +1221,10 @@ schema = {'SKINOFAB': {
                       'help_text': "Shows FrontrowMD's Clinicians' Choice badge under the product title (its clinicians and FAQ open on click). Leave empty to hide."}],
     'Subscription Offer': [{'name': 'sf_refill_default_product', 'type': 'product', 'label': 'Refills by default',
                             'help_text': 'Every add to cart of this product that names no purchase type is the plan below; one-time stays available where a button or the cart page offers it.'},
+                           {'name': 'sf_refill_price_text', 'type': 'text', 'label': 'Refills by default: price text', 'default': '',
+                            'help_text': 'Shown as that product\'s price on cards and listings, e.g. $37 USD: the price its page shows first, with refills ticked. Empty: its NEXT price.'},
+                           {'name': 'sf_refill_compare_text', 'type': 'text', 'label': 'Refills by default: was-price text', 'default': '',
+                            'help_text': 'Shown struck through next to it, e.g. $59 USD. Empty: none.'},
                            {'name': 'sf_subscription_product', 'type': 'product', 'label': 'Subscription-only product',
                             'help_text': 'Sold by subscription only: every add to cart of this product is the plan below, and its prices show the plan price text. Leave empty to sell everything normally.'},
                            {'name': 'sf_subscription_interval', 'type': 'text', 'label': 'Plan interval', 'default': 'month',
@@ -1267,7 +1327,8 @@ if offer_cfg.exists():
     if oc.get('frontrow'): data['sf_frontrow_product_id'] = str(oc['frontrow'])
     if oc.get('refill', {}).get('default'):
         data.update({'sf_refill_default_product': pid(oc['product']), 'sf_subscription_interval': oc['refill']['interval'],
-                     'sf_subscription_interval_count': str(oc['refill']['every'])})
+                     'sf_subscription_interval_count': str(oc['refill']['every']),
+                     'sf_refill_price_text': oc['refill'].get('price_text', ''), 'sf_refill_compare_text': oc['refill'].get('compare_text', '')})
 # optional: a subscription-only product (Theme settings > Subscription Offer); the current persona sells one-time or
 # with Automatic Refills, chosen on the product page, so it writes no sf-subscription.json
 sub_cfg = EXPORT / 'sf-subscription.json'
