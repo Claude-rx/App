@@ -404,6 +404,25 @@ for name, (text, members) in bundles.items():
 for name, text in PURGED.items():                       # purged copies for what pages still link one by one
     write(CSS_DIR / name, text if text.strip() else '/* no rules in use */\n')
 
+# ---------------------------------------------------------------- 3b. the page's stylesheets requested first
+# A page's own stylesheets sit at the end of its head (block sf_head), after ~45 KB of inline styles: the browser
+# found them only once most of the HTML had arrived, so the first paint waited for the HTML, then the CSS. A preload
+# in base.html's critical_preloads block (the top of the head) starts them with the HTML; the <link> tags stay where
+# they are, so the cascade is unchanged.
+REPORT['css_preloads'] = 0
+for p in DESIGN_HTML:
+    if 'sf_pages' in p.parts: continue
+    t = read(p)
+    m = re.search(r'\{% block sf_head %\}(.*?)\{% endblock sf_head %\}', t, re.S)
+    if not m or '{% block critical_preloads %}' in t: continue
+    hrefs = list(dict.fromkeys(LINK_RE.findall(m.group(1))))
+    if not hrefs: continue
+    ext = re.match(r'\s*\{% extends [^%]+%\}\n?', t)
+    if not ext: continue
+    pre = ('{% block critical_preloads %}' + ''.join('<link rel="preload" as="style" href="{{ \'sf/css/%s\'|asset_url }}">' % h for h in hrefs)
+           + '{% endblock critical_preloads %}\n')
+    write(p, t[:ext.end()] + pre + t[ext.end():]); REPORT['css_preloads'] += 1
+
 # ---------------------------------------------------------------- 4. Swiper with defer
 SWIPER_TAG = re.compile(r"""<script(?![^>]*\bdefer)([^>]*src="\{\{ 'sf/js/swiper-bundle-min-[0-9a-f]+\.js'\|asset_url \}\}"[^>]*)>""")
 INLINE_JS = re.compile(r'(<script(?![^>]*\bsrc=)(?![^>]*type="(?:application/(?:ld\+)?json|text/template|module)")[^>]*>)(.*?)(</script>)', re.S)
