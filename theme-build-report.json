@@ -165,6 +165,7 @@
   "partials/sf_pages/tracking/lead.html",
   "partials/sf_pages/tracking/tail.html",
   "partials/sf_price.html",
+  "partials/sf_price_pi.html",
   "partials/sf_product_card.html",
   "partials/sf_product_card.html",
   "templates/blog/index.html",

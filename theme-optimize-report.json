@@ -138,14 +138,14 @@
   },
   "theme-410305.css": {
    "before_kb": 627.7,
-   "after_kb": 225.8,
+   "after_kb": 223.9,
    "selectors": 7384,
-   "dropped": 4651
+   "dropped": 4672
   },
   "inline": {
-   "blocks": 889,
-   "before_kb": 5213.4,
-   "after_kb": 4485.8,
+   "blocks": 894,
+   "before_kb": 5221.6,
+   "after_kb": 4491.3,
    "skipped": 0
   }
  },
@@ -162,8 +162,8 @@
   }
  },
  "bundles": {
-  "sfb-9f5542a1.css": {
-   "kb": 251.7,
+  "sfb-99b43fbc.css": {
+   "kb": 249.8,
    "members": [
     "futura-pt-fallback.css",
     "all-min-2d3b0a.css",
@@ -180,8 +180,8 @@
   "script_tags_deferred": 50
  },
  "images": {
-  "elements": 234,
-  "skipped": 657
+  "elements": 231,
+  "skipped": 658
  },
  "errors": [],
  "backgrounds": {

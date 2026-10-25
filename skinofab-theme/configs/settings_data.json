@@ -160,6 +160,8 @@
   "sf_shipping_fee_text": "$2.99 USD",
   "sf_frontrow_product_id": "4694",
   "sf_refill_default_product": 14,
+  "sf_refill_price_text": "$37 USD",
+  "sf_refill_compare_text": "$59 USD",
   "sf_subscription_product": null,
   "sf_subscription_interval": "day",
   "sf_subscription_interval_count": "28",

@@ -58,6 +58,20 @@
         "help_text": "Every add to cart of this product that names no purchase type is the plan below; one-time stays available where a button or the cart page offers it."
       },
       {
+        "name": "sf_refill_price_text",
+        "type": "text",
+        "label": "Refills by default: price text",
+        "default": "",
+        "help_text": "Shown as that product's price on cards and listings, e.g. $37 USD: the price its page shows first, with refills ticked. Empty: its NEXT price."
+      },
+      {
+        "name": "sf_refill_compare_text",
+        "type": "text",
+        "label": "Refills by default: was-price text",
+        "default": "",
+        "help_text": "Shown struck through next to it, e.g. $59 USD. Empty: none."
+      },
+      {
         "name": "sf_subscription_product",
         "type": "product",
         "label": "Subscription-only product",

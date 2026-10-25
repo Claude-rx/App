@@ -58,36 +58,7 @@
 <img class="drawer__logo-image" height="20.125223613595708" sizes="(max-width: 300px) 50vw, 150px" src="{{ 'sf/img/skinofab-logo.svg'|asset_url }}" srcset="{{ 'sf/img/skinofab-logo.svg'|asset_url }} 300w" width="150"/>
 </a></div><button aria-controls="nav-drawer" class="drawer__close-button" data-drawer-toggle="" type="button">
 <span class="visually-hidden">Close</span><svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-</div><ul class="mobile-nav mobile-nav--weight-normal"><li aria-haspopup="true" class="mobile-menu__item mobile-menu__item--level-1 mobile-menu__item--has-items">
-<a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% url 'catalogue:index' %}">Shop all</a>
-<button aria-controls="MobileNav--shop-all-0" class="mobile-nav__trigger mobile-nav__trigger--level-1" data-collapsible-trigger="" type="button"><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="fallback-text">See More</span>
-</button>
-<div class="mobile-dropdown" data-collapsible-container="" id="MobileNav--shop-all-0">
-<ul class="mobile-nav__sublist" data-collapsible-content=""><li aria-haspopup="true" class="mobile-menu__item mobile-menu__item--level-2 mobile-menu__item--has-items">
-<a class="mobile-navlink mobile-navlink--level-2" data-nav-link-mobile="" href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"><span>Face</span>
-</a><button aria-controls="MobileNav--shop-all-face-0" class="mobile-nav__trigger mobile-nav__trigger--level-2" data-collapsible-trigger="" type="button"><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="fallback-text">See More</span>
-</button><div class="mobile-dropdown" data-collapsible-container="" id="MobileNav--shop-all-face-0">
-<ul class="mobile-nav__sub-sublist" data-collapsible-content=""><li class="mobile-menu__item mobile-menu__item--level-3">
-<a class="mobile-navlink mobile-navlink--level-3" href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Foundation</a>
-</li></ul>
-</div></li></ul>
-</div>
-</li><li class="mobile-menu__item mobile-menu__item--level-1">
-<a class="mobile-navlink mobile-navlink--level-1" href="{% if settings.sf_p_egf_nad_firming_serum %}{{ settings.sf_p_egf_nad_firming_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> Firming Serum </a> </li><li class="mobile-menu__item mobile-menu__item--level-1">
-<a class="mobile-navlink mobile-navlink--level-1" href="{% if settings.sf_p_pdrn_plumping_balm %}{{ settings.sf_p_pdrn_plumping_balm.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> PDRN Balm </a> </li><li class="mobile-menu__item mobile-menu__item--level-1">
-<a class="mobile-navlink mobile-navlink--level-1" href="{% if settings.sf_p_the_lymphatic_brush %}{{ settings.sf_p_the_lymphatic_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> Lymphatic Brush </a> </li><li class="mobile-menu__item mobile-menu__item--level-1">
-<a class="mobile-navlink mobile-navlink--level-1" href="{{ settings.sf_c_the_hits|default:'/catalogue/' }}">
-      Bestsellers
-    </a>
-</li><li class="mobile-menu__item mobile-menu__item--level-1">
-<a class="mobile-navlink mobile-navlink--level-1" href="/about-skinofab/">
-      About
-    </a>
-</li><li class="mobile-menu__item mobile-menu__item--level-1">
-<a class="mobile-navlink mobile-navlink--level-1" href="/contact/">
-      Contact
-    </a>
-</li></ul><style></style>
+</div><ul class="mobile-nav mobile-nav--weight-normal"><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Adaptive Peptide Foundation</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_egf_nad_firming_serum %}{{ settings.sf_p_egf_nad_firming_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">EGF + NAD+ Firming Serum</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_pdrn_plumping_balm %}{{ settings.sf_p_pdrn_plumping_balm.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">PDRN Plumping Balm</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_the_lymphatic_brush %}{{ settings.sf_p_the_lymphatic_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">The Lymphatic Brush</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% url 'catalogue:index' %}">Shop all</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="/postflows-track-your-order/">Track your order</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="/about-skinofab/">About</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="/contact/">Contact</a></li></ul><style></style>
 <ul class="mobile-nav mobile-nav--bottom mobile-nav--weight-normal"><li class="mobile-menu__item"><a class="mobile-navlink mobile-navlink--small" href="#" id="customer_login_link">Log in</a></li>
 <li class="mobile-menu__item"><a class="mobile-navlink mobile-navlink--small" href="{% url 'customer:summary' %}" id="customer_register_link">Create account</a></li></ul></div>
 <style>[maison-test-id="MC_CART_GUARANTEEBANNER_SKINOFAB"]{width: 100%;
@@ -150,7 +121,7 @@
                   </p></div>
 </div></a>
 <div class="image-fill" style="padding-top: 100%; "><figure class="lazy-image background-size-cover is-loading" style="">
-{% with sf_img='sf/img/SM_-_Sales_Banner_-_Mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-1728w-90643c.jpg'|asset_url %}<img alt="SM_-_Sales_Banner_-_Mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a561e94.png" class="is-loading" fetchpriority="high" height="2940" loading="lazy" sizes="calc(((100vw * 0.5 - 30px - 30px) / 2) * 1)" src="{{ 'sf/img/SM_-_Sales_Banner_-_Mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-2940w-87ac49.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1728w" width="2940"/>{% endwith %}
+{% with sf_img='sf/img/SM_-_Sales_Banner_-_Mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-1728w-h078f21.jpg'|asset_url %}<img alt="SM_-_Sales_Banner_-_Mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a561e94.png" class="is-loading" fetchpriority="high" height="2940" loading="lazy" sizes="calc(((100vw * 0.5 - 30px - 30px) / 2) * 1)" src="{{ 'sf/img/SM_-_Sales_Banner_-_Mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-2940w-he11a93.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }}&amp;width=1440 1440w, {{ sf_img }} 1728w" width="2940"/>{% endwith %}
 </figure></div></div>
 </div>
 </div>
