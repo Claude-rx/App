@@ -128,7 +128,7 @@ def tabs():
 
 # the sections below: the foundation page's, in its order (twin.py), with the brush's copy ------------------------------
 NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews of the brush yet', 'lead_amazon': 'No SKINOFAB reviews yet',
-              'text': 'The reviews at the top of this page are of our Adaptive Peptide Foundation. The Lymphatic Brush is new at SKINOFAB, and we only show reviews from real buyers. Try it for 30 days: '
+              'text': 'The Lymphatic Brush is new at SKINOFAB, and we only show reviews from real buyers. Try it for 30 days: '
                       'if you don’t love it, we’ll refund you.',
               'button': 'Try it risk-free', 'write': 'Bought it? Write the first review'}
 FAQ = {'items': [
@@ -252,12 +252,9 @@ TWIN = {
                          ('how-2', 'A light touch', 'Just under the skin, where morning puffiness sits'),
                          ('how-1', 'Eyes, cheeks and jaw', 'The spots where fluid builds up overnight'),
                          ('card', 'A protective case', 'Keeps the bristles clean between uses')]},
-    # the foundation's customer clips: creator clips of the routine (silent), in the same cards
-    'cards': {'eyebrow': 'See it in action', 'title': 'Three minutes, every morning', 'items': [
-        {'video': 'brush-review-3', 'title': 'Under the eyes', 'text': 'Light sweeps from the nose out to the temples.', 'alt': 'Creator video: under the eyes'},
-        {'video': 'brush-review-5', 'title': 'Next to the nose', 'text': 'Start where the puffiness sits, then sweep out.', 'alt': 'Creator video: next to the nose'},
-        {'video': 'brush-review-4', 'title': 'After 3 minutes', 'text': 'A fresher look before makeup.', 'alt': 'Creator video: after the routine'},
-        {'video': 'brush-review-2', 'title': 'Along the cheeks', 'text': 'Sweep toward the ear, then down the neck.', 'alt': 'Creator video: along the cheeks'}]},
+    # the foundation's customer clips: none. The creator clips of the routine showed women in their twenties and
+    # thirties, with TikTok captions burned in ("the difference is insane"); the brush has no buyers' clips yet
+    'cards': None,
     'why': {'title': 'The skinofab difference', 'img': 'card', 'button': 'Claim offer',
             'features': [('Fresher-looking in 3 minutes', 'A light morning massage for eyes, cheeks and jaw'),
                          ('No oils, no mess', 'Use it on dry skin, then your skincare'),

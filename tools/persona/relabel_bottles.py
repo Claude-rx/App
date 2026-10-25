@@ -31,25 +31,32 @@ from PIL import Image, ImageDraw
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import label_composite as L
+import label_fix
 
 FOUNDATION = HERE.parents[1] / 'brand' / 'adaptive-peptide-foundation'
 ORIGINALS = FOUNDATION / 'source' / 'renders'
 
 RENDERS = {
-    '01-front.png': [('auto', None, 0, {})],
+    # legible / retype: the small PDRN line set again at the label's size (label_fix): printed as rendered, its D
+    # closes into an O when the bottle is shown small, and it reads PORN
+    '01-front.png': [('auto', None, 0, {}), ('legible',)],
     '02-three-quarter-left.png': [('auto', None, 0, {})],
     '03-three-quarter-right.png': [('auto', None, 0, {})],
-    'composites/two-bottles.jpg': [('auto', (0.12, 0.04, 0.45, 0.96), 0, {}), ('auto', (0.56, 0.04, 0.88, 0.96), 0, {})],
-    'composites/duo-square.jpg': [('auto', (0.0, 0.0, 0.5, 1.0), 0, {}), ('auto', (0.5, 0.0, 1.0, 1.0), 0, {})],
+    'composites/two-bottles.jpg': [('auto', (0.12, 0.04, 0.45, 0.96), 0, {}), ('auto', (0.56, 0.04, 0.88, 0.96), 0, {}),
+                                   ('retype', (332, 1048, 392, 1075), 'PDRN'), ('retype', (893, 1048, 952, 1075), 'PDRN')],
+    'composites/duo-square.jpg': [('auto', (0.0, 0.0, 0.5, 1.0), 0, {}), ('auto', (0.5, 0.0, 1.0, 1.0), 0, {}),
+                                  ('retype', (332, 1061, 392, 1090), 'PDRN'), ('retype', (893, 1061, 952, 1090), 'PDRN')],
     'composites/label-detail.jpg': [('auto', None, 0, {'lit_max': 175})],   # a close-up: its highlight band is lighter
 }
 # not relabelled (no wordmark in view, or not on the site): 04-08 (profile, rear, top, base), 09-pump-detail (the
-# pump only), composites/set-tiles.jpg (the old pink set)
+# pump only), composites/set-tiles.jpg (the old pink set). The three-quarter renders keep their PDRN line as
+# rendered: it wraps around the turned cylinder (slanted, foreshortened), and they are only shown large
 
 # the PDRN balm's photos (brand/pdrn-balm/source/<name>.jpg, 1024 px): an AI-drawn wordmark on each stick
 BALM = {
-    'pack': [('box', (420, 330, 490, 680), (452, 340))],
-    'tall': [('box', (455, 520, 565, 1170), (510, 540))],
+    # retype: the AI-drawn "PDRN · VOLUFILINE" line set again, legible at a thumbnail's size (label_fix.retype_line)
+    'pack': [('box', (420, 330, 490, 680), (452, 340)), ('retype', (384, 794, 524, 815), 'PDRN · VOLUFILINE')],
+    'tall': [('box', (455, 520, 565, 1170), (510, 540)), ('retype', (402, 1303, 622, 1328), 'PDRN · VOLUFILINE')],
     'hold-cheek': [('box', (290, 400, 360, 565), (310, 550))],
     'panel': [('box', (850, 440, 935, 585), (872, 450))],
     'swatch': [('box', (660, 50, 980, 320), (690, 290))],
@@ -103,6 +110,14 @@ def relabel(im, ops, ref=None):
             for line, base in zip(L.ORIGIN_LINES, (b1, b2)):
                 d.text((cx * k, base * k), line, font=L.sans(max(8, round(size * k)), 'Regular'), fill=(38, 38, 38), anchor='ms')
             continue
+        if op[0] == 'legible':
+            out = Image.fromarray(np.clip(label_fix.legible_pdrn(np.asarray(out).astype(np.float32)) + 0.5, 0, 255).astype(np.uint8))
+            continue
+        if op[0] == 'retype':
+            _, box, text = op
+            a = label_fix.retype_line(np.asarray(out).astype(np.float32), [round(v * k) for v in box], text)
+            out = Image.fromarray(np.clip(a + 0.5, 0, 255).astype(np.uint8))
+            continue
         if op[0] == 'box':
             _, box, first = op
             p0, p1, h = L.measure_print(out, [v * k for v in box], (first[0] * k, first[1] * k))
@@ -120,7 +135,8 @@ def relabel(im, ops, ref=None):
 
 def salt():
     """The code and the logo the results depend on: a change to either recomputes them."""
-    return hashlib.md5(Path(L.__file__).read_bytes() + L.LOGO.read_bytes() + Path(__file__).read_bytes()).digest()
+    return hashlib.md5(Path(L.__file__).read_bytes() + L.LOGO.read_bytes() + Path(__file__).read_bytes()
+                       + Path(label_fix.__file__).read_bytes()).digest()
 
 
 def save(im, path, like=None):

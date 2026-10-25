@@ -204,12 +204,12 @@ def sections(found_main, P, ctx):
             c = t['problem']
             out.append(wrap('sf-problem-solution', apf_copy.problem_solution_html(
                 img(c['img_problem'], (1000, 1250), (0.5, 0.42)), img(c['img_solution'], (1000, 1250), (0.5, 0.5)), c=c)))
-        elif sid == 'shopify-section-sf-dermatologist':
+        elif sid == 'shopify-section-sf-kbeauty':
+            # the product's note ("Why we made it") first, where the foundation's page once had its dermatologist
             n = dict(t['note'])
             n['photo'] = img(n['photo'], (800, 1000), (0.5, 0.4))
             n['avatar'] = ctx['avatar']
             out.append(wrap('sf-note', apf_copy.dermatologist_html(n)))
-        elif sid == 'shopify-section-sf-kbeauty':
             k = t['science']
             out.append(wrap('sf-kbeauty', apf_copy.kbeauty_html(img(k['img'], (930, 1162), (0.5, 0.45)), k=k)))
         elif '__section_image_with_text_' in sid:
@@ -222,6 +222,7 @@ def sections(found_main, P, ctx):
             out.append(inside(raw, t['inside'], img))
         elif sid == 'shopify-section-sf-reviews':
             c = t['cards']
+            if not c: continue                          # no clips or photos of the product in use yet
             items = []
             for it in c['items']:
                 d = {'title': it['title'], 'text': it['text'], 'alt': it['alt'], 'name': ''}

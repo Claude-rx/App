@@ -4,7 +4,7 @@ FOUNDATION / PDRN / 30 mL / 1.01 fl oz), and the face, hands, framing and light 
 
 usage: python3 -I held_bottle.py <photo> <out> (--roi x0,y0,x1,y1 --pump up|down|left|right | --line bx,by,px,py --w px)
                                  [--render brand/adaptive-peptide-foundation/01-front.png] [--width 1.0]
-                                 [--anchor base|pump|centre] [--shift dx,dy] [--debug <dir>]
+                                 [--anchor base|pump|centre] [--shift dx,dy] [--fingers left|right] [--debug <dir>]
 - roi: a box around the old bottle (photo px); in it the old bottle is the largest neutral black object (brown hair
   and grey shadows are not), thin attachments trimmed off
 - line, w: the old bottle measured by hand instead: the centre of its base end, the centre of its pump end, its width
@@ -13,6 +13,8 @@ usage: python3 -I held_bottle.py <photo> <out> (--roi x0,y0,x1,y1 --pump up|down
   its width (x --width); its length comes from the render's own proportions, measured from the --anchor end (base: the
   end in the hand stays put, so a slimmer, taller bottle grows past the old cap); --shift moves it (photo px)
 - in front of it stays what was in front of the old bottle and is skin: the fingers and thumb holding it
+- fingers: the side the hand holds it from (in the photo); skin there that the new bottle covers and that runs on from
+  the hand outside it (a fingertip at the old bottle's edge, under a wider new one) stays in front too
 - what is left of the old bottle outside the new one is filled from around it (inpainting the whole old bottle from
   outside it, so the fill is the background and skin beside it, never the old bottle's own black)
 - the new bottle gets the photo's tones (the old bottle's dark and highlight levels) and its softness
@@ -37,6 +39,7 @@ PUMP = opt('--pump', 'up')
 RENDER = Path(opt('--render', Path(__file__).resolve().parents[2] / 'brand' / 'adaptive-peptide-foundation' / '01-front.png'))
 WIDTH, ANCHOR = float(opt('--width', 1.0)), opt('--anchor', 'base')
 SHIFT = np.array([float(v) for v in opt('--shift', '0,0').split(',')])
+FINGERS = opt('--fingers')
 DEBUG = Path(opt('--debug')) if opt('--debug') else None
 lum = lambda a: a[..., 0] * .299 + a[..., 1] * .587 + a[..., 2] * .114
 
@@ -132,6 +135,15 @@ ys, xs = np.nonzero(old)
 cv2.fillConvexPoly(hull, cv2.convexHull(np.stack([xs, ys], 1).astype(np.int32)), 1)
 reach = cv2.erode(hull, np.ones((5, 5), np.uint8)) > 0             # well inside it: skin at its edge is beside it
 front = ndimage.binary_opening(skin & reach & new, iterations=1)
+if FINGERS:
+    # the hand's side of the new bottle: skin there that runs on from skin outside the bottle (its finger)
+    yy, xx = np.mgrid[0:H, 0:W]
+    across_new = (np.stack([xx - top[0], yy - top[1]], -1) @ v)
+    side = (across_new < 0) if (FINGERS == 'left') == (v[0] > 0) else (across_new > 0)
+    lab, n = ndimage.label(ndimage.binary_opening(skin, iterations=1))
+    outside = np.unique(lab[(lab > 0) & ~(cv2.dilate(new.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0)])
+    tips = new & side & np.isin(lab, outside) & ~front
+    front = front | tips
 lab, n = ndimage.label(front)                                         # fingers, not specks of warm print on the old one
 if n:
     keep = np.nonzero(ndimage.sum(front, lab, range(1, n + 1)) >= 0.03 * w_old ** 2)[0] + 1

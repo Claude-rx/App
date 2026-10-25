@@ -22,7 +22,7 @@ import hashlib, html, json, os, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, balm_copy, brush_copy, ccf_copy, company, relabel_bottles, serum_copy, twin, white_bg
+import apf_copy, balm_copy, brush_copy, ccf_copy, company, relabel_bottles, serum_copy, support_copy, twin, white_bg
 SECOND_PRODUCTS = (brush_copy, balm_copy, serum_copy)
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
@@ -125,27 +125,52 @@ def home_section(home, key):
     if not m: return None
     return home[m.start():home.find('</section>', m.start())]
 
-def dermatologist(home):
-    """The homepage dermatologist (her photo, words, name and role) as a product page section."""
-    sec = home_section(home, 'experts')
-    if not sec: return None
-    copy = re.search(r'<div class="fh-expert-copy">(.*?)</div>', sec, re.S).group(1)
-    name = re.search(r'<h3>(.*?)</h3>', copy).group(1)
-    role = re.search(r'<p class="fh-expert-role">(.*?)</p>', copy).group(1)
-    paras = [p for p in re.findall(r'<p>(.*?)</p>', copy, re.S)]
-    photo = re.search(r'class="fh-expert-photo"><img[^>]*src="assets/img/([^"]+)"', sec).group(1)
-    avatar = re.search(r'role="tab"[^>]*>\s*<picture[^>]*><img[^>]*src="assets/img/([^"]+)"', sec).group(1)
-    path = DST / 'assets' / 'img' / photo
-    from PIL import Image
-    w, h = Image.open(path).size
-    pw = int(h * 0.8)
-    ph = crop_to(path, 'skinofab-dermatologist-portrait', (pw, h), (min(max(subject_center_x(path), 0), 1), 0.5))
-    lead, mark = 'Trusted by leading', 'dermatologists'
-    hit = re.search(r'what I recommend most (to [^.]+\.)', ' '.join(paras))
-    if hit: lead, mark = '&hellip;what I recommend most', hit.group(1)
-    return apf_copy.dermatologist_html({'name': name, 'role': role.replace(' SkinClinic', ', SkinClinic'), 'paragraphs': paras,
-                                        'photo': ph, 'avatar': '../assets/img/' + avatar,
-                                        'headline_lead': lead, 'headline_mark': mark})
+# The homepage's expert section quoted a dermatologist, a real doctor, with the product's and the brand's names put into
+# her words by the rebrand: an endorsement she never gave SKINOFAB. In its place, in the same layout, a verified buyer
+# of the foundation in her own words (the imported reviews, tools/reviews/import_reviews.py), her photo in the tab
+# and three verified buyers' photos (photos-approved.txt) where the doctor's portrait was.
+CUSTOMER_VOICE = {
+    'heading': 'In our customers’ words',
+    'name': 'Maria R.', 'role': 'Verified buyer, 56',
+    'paragraphs': ['I love how the texture and feel is not greasy or heavy. At 56, I also am happy it doesn’t cake or '
+                   'settle in fine lines.',
+                   'I do love the product, it’s my skin but better, more coverage than a tinted moisturizer but not '
+                   'oily or too dewy feeling like many of them.'],
+    'avatar': 'OOv6J0c2A-0', 'photos': ['OOv6J0c2A-0', '2E8YCdyRL-0', 'OGPUmf6ae-0'],   # Maria R., Kelly G., Linda M.
+}
+
+def customer_voice(home):
+    """CUSTOMER_VOICE in the homepage's expert section. Returns the page."""
+    from PIL import Image, ImageOps
+    m = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__experts"', home)
+    if not m: return home
+    end = home.find('</section>', m.start())
+    sec = home[m.start():end]
+    cv, photos = CUSTOMER_VOICE, REVIEWS / 'photos'
+    av = ImageOps.fit(Image.open(photos / f"{cv['avatar']}.jpg").convert('RGB'), (190, 190), Image.LANCZOS, centering=(0.5, 0.3))
+    tmp = WORK / 'customer-avatar.jpg'; av.save(tmp, quality=88)
+    avatar = hashed_copy(tmp, 'img', 'skinofab-customer-avatar-190w')[3:]
+    tiles = [ImageOps.fit(Image.open(photos / f'{p}.jpg').convert('RGB'), (295, 500), Image.LANCZOS, centering=(0.5, 0.35))
+             for p in cv['photos']]
+    strip = Image.new('RGB', (295 * 3 + 16, 500), (255, 255, 255))
+    for i, t in enumerate(tiles): strip.paste(t, (i * 303, 0))
+    tmp = WORK / 'customer-strip.jpg'; strip.save(tmp, quality=88, optimize=True, progressive=True)
+    photo = hashed_copy(tmp, 'img', 'skinofab-customer-photos-901w')[3:]
+    sec = re.sub(r'<h2>.*?</h2>', f"<h2>{cv['heading']}</h2>", sec, count=1, flags=re.S)
+    sec = re.sub(r'(<div aria-label=")[^"]*(" class="fh-expert-tabs")', lambda mm: mm.group(1) + cv['heading'] + mm.group(2), sec, count=1)
+    sec = re.sub(r'(role="tab"[^>]*>\s*<picture[^>]*>)<img[^>]*>',
+                 lambda mm: mm.group(1) + f'<img alt="{cv["name"]}" class="fh-original" height="190" loading="lazy" sizes="47px" '
+                                          f'src="{avatar}" width="190"/>', sec, count=1)
+    sec = re.sub(r'<span class="fh-expert-secondary">.*?</span>', '', sec, flags=re.S)   # the doctor's two colleagues
+    paras = ''.join(f'<p>{html.escape(p)}</p>' for p in cv['paragraphs'])
+    sec = re.sub(r'<div class="fh-expert-copy">.*?</div>',
+                 f'<div class="fh-expert-copy">{paras}<h3>{cv["name"]}</h3><p class="fh-expert-role">{cv["role"]}</p></div>',
+                 sec, count=1, flags=re.S)
+    sec = re.sub(r'(<picture class="fh-expert-photo">)<img[^>]*>',
+                 lambda mm: mm.group(1) + f'<img alt="Three verified buyers of the Adaptive Peptide Foundation" class="fh-original" '
+                                          f'height="500" loading="lazy" sizes="(max-width: 749px) 93vw, 698px" src="{photo}" width="901"/>',
+                 sec, count=1)
+    return home[:m.start()] + sec + home[end:]
 
 def video_reviews(home):
     """The homepage customer reviews (poster photos, words, names) as a product page section."""
@@ -477,7 +502,7 @@ SHELF_HANDLES = ['color-changing-foundation'] + [P.HANDLE for P in (brush_copy, 
 
 def even_shelf():
     """The homepage shelf's cards of our four products, each product the same size and in the same place (even_card):
-    the foundation's card photo (as relabelled and whitened), the others' card.jpg. Every card of theirs in the shelf
+    the foundation's from brand/home/card-foundation.jpg, the others' card.jpg. Every card of theirs in the shelf
     (the list and its tabs) gets the same 720 and 1080 px copies. Returns the cards changed."""
     from PIL import Image
     home = DST / 'index.html'
@@ -489,7 +514,8 @@ def even_shelf():
     arts = list(re.finditer(r'<article class="fh-product">.*?</article>', sec, re.S))
     def of(a): return next((h for h in SHELF_HANDLES if f'products/{h}.html"' in a.group(0)), None)
     first = next((a for a in arts if of(a) == SHELF_HANDLES[0] and 'fh-upload' in a.group(0)), None)
-    src = {SHELF_HANDLES[0]: DST / re.search(r'src="([^"]+)"', first.group(0)).group(1)} if first else {}
+    # the foundation: one bottle from its front render, PDRN legible, a soft contact shadow (home_images.py)
+    src = {SHELF_HANDLES[0]: HOME / 'card-foundation.jpg'} if first else {}
     src.update({P.HANDLE: P.IMG / 'card.jpg' for P in (brush_copy, balm_copy, serum_copy)})
     made = {}
     for h, path in src.items():
@@ -601,6 +627,121 @@ def strip_gone(soup, page=''):
         n += 1
     return n
 
+# "The SKINOFAB phenomenon": the export's eight cards showed women in their twenties and thirties and products the store
+# does not sell (under-eye patches, lip gloss, pink tubes). Each card is now a woman over 45 with one of our four
+# products, linked to it: (source, crop centre across the photo, product handle, alt). The cards are 260 x 400.
+PHENOMENON = [
+    ('persona:2_9c7e1c85-81c7-4ffb-8ccb-a246f8658467_800x800-d920b1.jpg', .42, 'color-changing-foundation',
+     'A woman in her fifties taking a selfie with the Adaptive Peptide Foundation'),
+    ('serum:mirror.jpg', .5, serum_copy.HANDLE, 'A woman applying the EGF + NAD+ Firming Serum at her bathroom mirror'),
+    ('balm:bag.jpg', .5, balm_copy.HANDLE, 'The PDRN Plumping Balm going into a handbag'),
+    ('persona:39279355-93ee-4899-bdeb-ee8ce659ab45-1800w-e1c742.jpg', .5, 'color-changing-foundation',
+     'A woman holding the Adaptive Peptide Foundation'),
+    ('serum:hold-cheek.jpg', .3, serum_copy.HANDLE, 'A woman holding the EGF + NAD+ Firming Serum by her cheek'),
+    ('balm:apply-lips.jpg', .45, balm_copy.HANDLE, 'A woman pressing the PDRN Plumping Balm on her lips'),
+    ('persona:5_9146d931-fc02-41ef-80bc-663d593c60b8_800x800-970513.jpg', .62, 'color-changing-foundation',
+     'A woman at home with the Adaptive Peptide Foundation'),
+    ('home:source/brush-ai.jpg', .38, brush_copy.HANDLE, 'A woman sweeping The Lymphatic Brush over her cheek'),
+]
+
+def home_phenomenon():
+    """PHENOMENON in the homepage's carousel, in place of its cards (photos and videos). Returns the cards written."""
+    from PIL import Image
+    home = DST / 'index.html'
+    t = home.read_text(encoding='utf-8', errors='surrogateescape')
+    m = re.search(r'<div class="fh-social-track"[^>]*>', t)
+    if not m: return 0
+    end = balanced_end(t, m.start(), 'div')
+    roots = {'persona': IMAGES, 'serum': serum_copy.IMG, 'balm': balm_copy.IMG,
+             'home': Path(__file__).resolve().parents[2] / 'brand' / 'home'}
+    cards = []
+    for i, (src, cx, handle, alt) in enumerate(PHENOMENON, 1):
+        root, name = src.split(':', 1)
+        im = Image.open(roots[root] / name).convert('RGB')
+        cw = round(min(im.height * 13 / 20, im.width))
+        x0 = round((im.width - cw) * cx)
+        im = im.crop((x0, 0, x0 + cw, im.height))
+        if im.height > 1000: im = im.resize((650, 1000), Image.LANCZOS)
+        tmp = WORK / f'phenomenon-{i}.jpg'; im.save(tmp, quality=86, optimize=True, progressive=True)
+        url = hashed_copy(tmp, 'img', f'skinofab-phenomenon-{i}')[3:]
+        cards.append(f'<div class="fh-social-card"><a href="products/{handle}.html"><img alt="{html.escape(alt)}" '
+                     f'height="{im.height}" loading="lazy" sizes="260px" src="{url}" width="{im.width}"/></a></div>')
+    t = t[:m.end()] + ''.join(cards) + t[end - len('</div>'):]
+    home.write_text(t, encoding='utf-8', errors='surrogateescape')
+    return len(cards)
+
+def support_pages():
+    """support_copy's FAQ answers, contact-page answers, refund policy and shipping policy in place of the export's.
+    Returns what changed; a question or a page it expected and did not find is reported as missing."""
+    from bs4 import BeautifulSoup
+    done, gone = {}, []
+    norm = lambda s: re.sub(r'\s+', ' ', s).strip().lower()
+    for rel, items, q_sel, a_sel, item_sel in (
+            ('pages/faq.html', support_copy.FAQ, '.faq-question span', '.faq-answer-inner', '.faq-item'),
+            ('pages/contact.html', support_copy.CONTACT, '.accordion__item__title__text', '.accordion__item__text', '.accordion__item')):
+        f = DST / rel
+        soup = BeautifulSoup(f.read_text(encoding='utf-8', errors='surrogateescape'), 'html.parser')
+        found = soup.select(item_sel)
+        n = 0
+        for start, q, a in items:
+            hits = [it for it in found if it.select_one(q_sel) and norm(it.select_one(q_sel).get_text()).startswith(norm(start))]
+            if not hits: gone.append((rel, start)); continue
+            for it in hits:
+                if a is None: it.decompose(); n += 1; continue
+                if q: it.select_one(q_sel).string = q
+                box = it.select_one(a_sel)
+                box.clear(); box.append(BeautifulSoup(a, 'html.parser')); n += 1
+        f.write_text(str(soup), encoding='utf-8', errors='surrogateescape'); done[rel] = n
+    for rel, body in (('policies/refund-policy.html', support_copy.REFUND), ('policies/shipping-policy.html', support_copy.SHIPPING)):
+        f = DST / rel
+        t = f.read_text(encoding='utf-8', errors='surrogateescape')
+        m = re.search(r'<div class="shopify-policy__body">\s*<div class="rte">', t)
+        if not m: gone.append((rel, 'policy body')); continue
+        end = balanced_end(t, m.end() - len('<div class="rte">'), 'div')
+        t = t[:m.end()] + body + '</div>' + t[end:]
+        f.write_text(t, encoding='utf-8', errors='surrogateescape'); done[rel] = 1
+    return done, gone
+
+# image descriptions that still named the old store's products, or were a file name
+OLD_PRODUCT_ALT = re.compile(r'eyelash|lash serum|brow serum|lip stain|lip gloss|lip plumper|lip liner|mascara|under-eye patch|'
+                             r'lifting mask|reverse.time|stick (?:&|and) stain|blender brush', re.I)
+
+def clean_alts():
+    """Every page's alt texts: "Color Changing Foundation" (the product's old name) becomes the Adaptive Peptide
+    Foundation, "| Skinofab" suffixes go, an alt that names a product the store does not sell or is a file name is
+    emptied (the images left with one are decorative: the persona photos have their own). Returns alts changed."""
+    n = 0
+    def fix(m):
+        nonlocal n
+        a = html.unescape(m.group(1))
+        b = a.replace('Color Changing Foundation', 'Adaptive Peptide Foundation').replace(' | Skinofab', '')
+        if OLD_PRODUCT_ALT.search(b) or re.search(r'\.(?:png|jpe?g|webp|gif)$|_-_|[0-9a-f]{8}-[0-9a-f]{4}', b, re.I): b = ''
+        if b == a: return m.group(0)
+        n += 1
+        return 'alt="' + html.escape(b) + '"'
+    for f in DST.rglob('*.html'):
+        t = f.read_text(encoding='utf-8', errors='surrogateescape')
+        u = re.sub(r'alt="([^"]*)"', fix, t)
+        if u != t: f.write_text(u, encoding='utf-8', errors='surrogateescape')
+    return n
+
+def drop_dead_social():
+    """The footer's Instagram, TikTok and Facebook icons and the contact page's "Follow along" links all pointed to #:
+    the store has no social accounts set up yet. They go until it does. Returns pages changed."""
+    n = 0
+    for f in DST.rglob('*.html'):
+        t = f.read_text(encoding='utf-8', errors='surrogateescape')
+        u = t
+        for rx in (r'<div class="social-sharing-wrapper">', r'<div class="cs-info__item">\s*<div class="cs-info__label">Follow along</div>'):
+            while True:
+                m = re.search(rx, u)
+                if not m: break
+                seg = u[m.start():balanced_end(u, m.start(), 'div')]
+                if re.search(r'href="(?!#")[^"]+"', seg): break          # a real link: leave the block
+                u = u[:m.start()] + u[m.start() + len(seg):]
+        if u != t: f.write_text(u, encoding='utf-8', errors='surrogateescape'); n += 1
+    return n
+
 def home_features():
     """Two homepage stories the design gave to products the store no longer sells, given to ours: the Reverse-time
     serum's video story becomes the EGF + NAD+ Firming Serum's (a photo of it in use), the lifting mask's "New
@@ -643,6 +784,11 @@ def home_features():
         tmp = WORK / 'home-balm-banner.jpg'; ban.save(tmp, quality=88, optimize=True, progressive=True)
         big = hashed_copy(tmp, 'img', 'skinofab-home-balm-3360w')[3:]
         small = hashed_copy(tmp, 'img', 'skinofab-home-balm-1680w', (1680, 1680))[3:]
+        # under 1200 px the copy and the photo no longer share a wide banner: there it is the photo of her alone
+        eye_src = hashed_copy(balm_copy_img('apply-eye'), 'img', 'skinofab-home-balm-eye-1080w')[3:]
+        sec = re.sub(r'<img alt="" class="fh-original"[^>]*/>',
+                     lambda m: f'<source height="1080" media="(max-width: 1199px)" sizes="(max-width: 1023px) 100vw, 50vw" '
+                     f'srcset="{eye_src} 1080w" width="1080">' + m.group(0), sec, count=1)
         sec = re.sub(r'<img alt="" class="fh-original"[^>]*/>',
                      f'<img alt="A woman pressing the PDRN Plumping Balm under her eye, and the stick" class="fh-original" '
                      f'height="1013" loading="lazy" sizes="(max-width: 749px) 269vw, 1680px" src="{big}" '
@@ -662,7 +808,8 @@ HOME = BRAND / 'home'          # the homepage's photos in its original design (t
 # Bundle & Save: each product's best-value bundle, priced as on its page's picker (its copy module's bundles)
 HOME_BUNDLES = [
     ('color-changing-foundation', 'Foundation Duo', 'bundle-foundation', 'Two bottles of the Adaptive Peptide Foundation',
-     'Two bottles of your one adaptive shade, at the 2-bottle price.', None, None),
+     f"Two bottles of your one adaptive shade, with {ccf_copy.REFILL['every']}-day refills (cancel anytime), or "
+     f"${float(ccf_copy.PACKS[1]['price']):g} once.", None, None),
     (serum_copy.HANDLE, 'Firming Serum Trio', 'bundle-serum', 'Three bottles of the EGF + NAD+ Firming Serum',
      'Buy 2, get 1 free: about six months, morning and night.', None, None),
     (balm_copy.HANDLE, 'Plumping Balm Trio', 'bundle-balm', 'Three PDRN Plumping Balm sticks',
@@ -762,8 +909,11 @@ def home_original():
     # The foundation's cards show its price as its page shows it first (Automatic Refills ticked, the default):
     # 1 bottle $37, was $59. NEXT's own price for it is the one-time $47, which the page shows when refills are off;
     # a card saying $47 above a page saying $37 read as two prices for one bottle.
+    # The card says so: "with 28-day refills" under the price (the page's own terms say the rest)
     one = ccf_copy.PACKS[0]
-    fixed = f'<div class="fh-price" data-sf-fixed-price=""><s>{usd(one["compare"])}</s><span>{usd(one["refill"])}</span></div>'
+    fixed = (f'<div class="fh-price" data-sf-fixed-price=""><s>{usd(one["compare"])}</s><span>{usd(one["refill"])}</span></div>'
+             f'<p class="sf-refill-note" style="margin:2px 0 0;font-size:12px;line-height:16px;color:#5a5a5a">with '
+             f'{ccf_copy.REFILL["every"]}-day refills, cancel anytime</p>')
     def foundation_price(m):
         art = m.group(0)
         if 'products/color-changing-foundation.html' not in art: return art
@@ -804,7 +954,7 @@ def home_original():
             f'{X} .fh-story-media{{right:calc(min(var(--fh-story-width),42%) + 64px);width:auto}}'
             f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}'
             f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;width:100%;height:100%;transform:none;object-fit:cover;object-position:0 35%;'
-            f'-webkit-mask-image:linear-gradient(to right,#000 88%,transparent);mask-image:linear-gradient(to right,#000 88%,transparent)}}}}'
+            f'-webkit-mask-image:linear-gradient(to right,#000 94%,transparent);mask-image:linear-gradient(to right,#000 94%,transparent)}}}}'
             # under 1024 px: the copy, then the photo under it across the card
             f'@media(max-width:1023px){{{X}{{height:auto;min-height:0;display:flex;flex-direction:column}}'
             f'{X} .fh-story-copy{{order:1;height:auto;min-height:0;width:100%;margin:0;padding:32px 32px 8px}}'
@@ -819,12 +969,13 @@ def home_original():
     a, b = section('__formulas')
     if a is not None:
         sec = t[a:b]
-        src, srcset = img('formulas.jpg', (1200, 2400, 3344))
+        src, srcset = img('formulas.jpg', (1200, 1600, 2400, 3344))
         sec, k1 = re.subn(r'<source height="1662" media="\(max-width: 749px\)" sizes="110vw" srcset="[^"]*" width="940"/?>',
                           f'<source height="1882" media="(max-width: 749px)" sizes="150vw" srcset="{srcset}" width="3344">', sec, count=1)
         sec, k2 = re.subn(r'<img alt="[^"]*" class="fh-original" height="939"[^>]*>',
                           f'<img alt="A woman pressing the Adaptive Peptide Foundation to her forehead, a stripe of it on her cheek" class="fh-original" '
-                          f'height="1882" loading="lazy" sizes="(max-width: 1023px) 100vw, 700px" src="{src}" srcset="{srcset}" width="3344"/>', sec, count=1)
+                          f'height="1882" loading="lazy" sizes="(max-width: 1023px) 100vw, (max-width: 1439px) 90vw, 1300px" src="{src}" '
+                          f'srcset="{srcset}" width="3344"/>', sec, count=1)   # from 1024 px it covers a box ~0.9 screens wide
         X = '[id$="__formulas"]'
         sec, k3 = style(sec, (
             f'@media(min-width:1024px){{{X} .fh-formula-photo{{left:0;top:0;bottom:0;width:58%;height:auto;'
@@ -869,19 +1020,37 @@ def home_original():
             '.fh-badges{flex-wrap:wrap;justify-content:flex-end;left:12px;right:12px;top:12px;gap:6px}.fh-badges>span{white-space:nowrap}'
             '.fh-product-rating{min-width:0;overflow:hidden}.fh-product-rating>span:last-child{overflow:hidden;text-overflow:ellipsis}'))
         t = t[:a] + sec + t[b:]; done['shelf tablets'] = k
-    # ---- "Rested-looking eyes" (the balm's story): a fixed 369 px card with its photo under the copy; under 1200 px
-    # the copy, then the photo
+    # ---- "Firmer-looking skin" (the serum's story): two columns from 750 px, the card fixed at 519 px; at tablet
+    # widths its copy wraps taller than that and the button was cut off at the card's foot: the card grows with it
+    a, b = section('__serum')
+    if a is not None:
+        X = '[id$="__serum"] .fh-editorial--serum'
+        sec, k = style(t[a:b], (
+            f'@media(min-width:750px) and (max-width:1199px){{{X}{{height:auto;min-height:var(--fh-story-height)}}'
+            f'{X} .fh-story-copy{{height:auto;padding-top:48px;padding-bottom:48px}}'
+            f'{X} .fh-story-media{{height:auto;min-height:420px}}}}'))
+        t = t[:a] + sec + t[b:]; done['serum tablets'] = k
+    # ---- "Rested-looking eyes" (the balm's story): on desktops a fixed 369 px card, its banner (white for the copy,
+    # her, then the stick) behind the copy. Under 1200 px the photo is her alone (its own source): phones and tablets
+    # the copy, then the photo (square on phones, 4:3 on tablets); small laptops the copy and the photo side by side.
+    # Its white studio backdrop is multiplied into the card's grey, so photo and card are one surface
     a, b = section('__arrivals_desktop')
     if a is not None:
         X = '[id$="__arrivals_desktop"] .fh-editorial--arrivals'
+        img = (f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;transform:none;'
+               f'object-fit:cover;object-position:50% 30%;mix-blend-mode:multiply;-webkit-mask-image:none;mask-image:none}}')
         sec, k = style(t[a:b], (
-            f'@media(min-width:750px) and (max-width:1199px){{{X}{{height:auto;display:flex;flex-direction:column}}'
-            f'{X} .fh-story-copy{{order:1;height:auto;width:100%;margin:0;padding:40px 32px 24px}}'
-            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;width:100%;aspect-ratio:4/3;background:#e9e9e9}}'
-            f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}'
-            # her and the stick in her hand (the packshot at the photo's far right stays out); its white studio
-            # backdrop multiplied into the card's grey, so photo and card are one surface
-            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:62% 40%;mix-blend-mode:multiply}}'
+            f'@media(max-width:1023px){{{X}{{height:auto;min-height:0;display:flex;flex-direction:column}}'
+            f'{X} .fh-story-copy{{position:relative;order:1;height:auto;width:100%;margin:0;padding:40px 32px 24px}}'
+            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;top:auto;left:auto;right:auto;bottom:auto;width:100%;aspect-ratio:4/3;background:#e9e9e9}}'
+            f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}{img}'
+            f'{X} .fh-story-media:after{{display:none}}}}'
+            f'@media(max-width:749px){{{X} .fh-story-copy{{padding:32px 16px 16px}}{X} .fh-story-media{{aspect-ratio:1/1}}}}'
+            f'@media(min-width:1024px) and (max-width:1199px){{{X}{{height:auto;min-height:var(--fh-story-height);display:grid;'
+            f'grid-template-columns:1fr 1fr;align-items:stretch}}'
+            f'{X} .fh-story-copy{{position:relative;order:1;height:auto;width:auto;margin:0;padding:48px 40px;justify-content:center}}'
+            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;top:auto;left:auto;right:auto;bottom:auto;width:auto;min-height:440px;background:#e9e9e9}}'
+            f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}{img}'
             f'{X} .fh-story-media:after{{display:none}}}}'))
         t = t[:a] + sec + t[b:]; done['arrivals tablets'] = k
     home.write_text(t, encoding='utf-8', errors='surrogateescape')
@@ -935,6 +1104,8 @@ def local_location():
         if 'browsing_context_suggestions' not in t: continue
         u = fetch.sub(lambda m: local, t)
         u = flag.sub(lambda m: emoji, u)
+        # the line beside it already says "Free shipping on every order": this half says where it ships
+        u = u.replace('<span class="shipping_usp">Free shipping to <span', '<span class="shipping_usp">Ships to <span')
         if u != t:
             page.write_text(u, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
@@ -970,7 +1141,9 @@ def track_form():
     b = re.search(r'<div class="shopify-section supports-transparent-header" id="shopify-section-template--[0-9]+__section_banner_image_[A-Za-z0-9]+">', t)
     if b:
         e = t.find('<div class="shopify-section', b.end())
-        sec = re.sub(r'<div class="overlay"></div><div class="banner-image__image-container">.*?</figure></div>\s*</div>', '', t[b.start():e], count=1, flags=re.S)
+        # (an empty [data-banner-image] stays: the theme's banner script looks for it and threw on the page without it)
+        sec = re.sub(r'<div class="overlay"></div><div class="banner-image__image-container">.*?</figure></div>\s*</div>',
+                     '<div data-banner-image="" hidden></div>', t[b.start():e], count=1, flags=re.S)
         sec = sec.replace('text-light', 'text-dark', 1)
         sec += ('<style>.banner-image .banner-image__inner.text-dark{min-height:0;height:auto;padding:64px 0 16px;background:#f6f5f3;color:#151515}'
                 '.banner-image__inner.text-dark .banner-image__text-container{position:relative;inset:auto}'
@@ -1024,7 +1197,9 @@ PAGE_IMAGES = [
     # the about page's "born in a tiny kitchen lab": a young model with lip liner; a woman in her fifties with the balm
     (r'^rk_2-\d+w-[0-9a-f]{6}\.(?:jpg|png)$', BRAND / 'pdrn-balm' / 'apply-lips.jpg', 0.4),
     # the listing pages' banner (four young models with masks and patches): our four women 45+ with our products
-    (r'^skin-\d+w-[0-9a-f]{6}\.jpg$', HOME / 'collage-wide.jpg', 0.3),
+    # (from 768 px the banner covers a box taller than the photo's shape, so it is drawn ~1.45x the screen's width:
+    # twice the file's size, and sizes to match, or it showed soft)
+    (r'^skin-\d+w-[0-9a-f]{6}\.jpg$', HOME / 'collage-wide.jpg', 0.3, 2, '(max-width: 1199px) 150vw, 105vw'),
     (r'^SM_-_Sales_Banner_-_Mobile_2_[^/]*\.jpg$', HOME / 'collage-square.jpg', 0.3),
 ]
 
@@ -1033,11 +1208,14 @@ def page_images():
     from PIL import Image
     imgdir = DST / 'assets' / 'img'
     renames = {}
-    for pattern, src, fy in PAGE_IMAGES:
+    sizes = {}
+    for pattern, src, fy, *more in PAGE_IMAGES:
+        scale, size_attr = (more + [1, None])[:2]
         source = Image.open(src).convert('RGB')
         for target in sorted(imgdir.iterdir()):
             if not re.match(pattern, target.name): continue
             w, h = Image.open(target).size
+            if scale > 1 and source.width >= w * scale and source.height >= h * scale: w, h = w * scale, h * scale
             k = max(w / source.width, h / source.height)
             im = source.resize((max(w, round(source.width * k)), max(h, round(source.height * k))), Image.LANCZOS)
             x, y = (im.width - w) // 2, int((im.height - h) * fy)
@@ -1047,12 +1225,16 @@ def page_images():
             im.save(tmp, **({'quality': 86, 'optimize': True, 'progressive': True} if ext.lower() in ('.jpg', '.jpeg') else {'optimize': True}))
             new = re.sub(r'-[a-z]?[0-9a-f]{6}$', '', stem) + f'-h{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}{ext}'
             tmp.rename(imgdir / new); renames[target.name] = new
+            if size_attr: sizes[new] = size_attr
     if renames:
         rx = re.compile('|'.join(re.escape(k) for k in sorted(renames, key=len, reverse=True)))
         for p in DST.rglob('*'):
             if p.is_file() and p.suffix.lower() in TEXT:
                 t = p.read_text(encoding='utf-8', errors='surrogateescape')
                 n = rx.sub(lambda m: renames[m.group(0)], t)
+                for name, attr in sizes.items():
+                    n = re.sub(r'<(?:img|source)\b[^>]*%s[^>]*>' % re.escape(name),
+                               lambda m: re.sub(r'\ssizes="[^"]*"', f' sizes="{attr}"', m.group(0)), n)
                 if n != t: p.write_text(n, encoding='utf-8', errors='surrogateescape')
     return len(renames)
 
@@ -1084,6 +1266,13 @@ def clean_menu():
         items = ''.join(f'<li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" '
                         f'data-nav-link-mobile="" href="{prefix}{h}">{html.escape(name)}</a></li>' for name, h in MENU)
         t = t[:m.end()] + items + ''.join(keep) + '</ul>' + t[end:]
+        # the header's own list (the design keeps it hidden: the menu opens from the button at every width) had the
+        # old tree ("Face", "NEW Skinofab Skin"): the same flat list
+        d = re.search(r'<div class="menu__items" data-takes-space="">', t)
+        if d:
+            flat = ''.join(f'<div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" '
+                           f'href="{prefix}{h}"> <span class="navtext">{html.escape(name)}</span> </a></div>' for name, h in MENU)
+            t = t[:d.end()] + flat + '</div>' + t[balanced_end(t, d.start(), 'div'):]
         page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
 
@@ -1492,11 +1681,8 @@ def twin_context(P, found, stats, amazon):
         return (hashed_copy(media / f'{k}.mp4', 'media', f'skinofab-{k}'),
                 hashed_copy(media / f'{k}.jpg', 'img', f'skinofab-{k}-poster'))
     reviews = WORK / P.REVIEWS_DIR
-    # until the product has its own reviews: the foundation's, under a label that says whose they are
-    brand = (apf_copy.review_strip_html(float(found['summary']['average']), int(found['summary']['count']), found['picks'],
-                                        href='color-changing-foundation.html#sf-review-wall', of='our Adaptive Peptide Foundation',
-                                        buyer='Verified buyer of the foundation')
-             if found and found['picks'] and not stats else None)
+    # until the product has its own reviews, its page shows none: the foundation's, even labelled, read as this product's
+    brand = None
     wall = (f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-amazon">{P.amazon_html(amazon)}</div>' if amazon else '') + review_wall(reviews)
     return {'img': img, 'clip': clip, 'avatar': avatar(), 'strip_own': review_strip(reviews), 'strip_brand': brand,
             'wall': wall, 'no_reviews': None if stats else f'<style>{brush_copy.SECTIONS_CSS}</style>{P.no_reviews_html(amazon=amazon)}'}
@@ -1813,9 +1999,9 @@ def faster_home(home):
             return final, out.size
         # phones top out at 2880 px (a 3x phone gets 2.1 image pixels per point: sharp, and half the bytes of 4096,
         # which on a slow phone network is the difference between a 3.5 s and a 7 s first paint); desktops up to 4096
-        # phones: a 4:5 window on her, from the bottle's left edge to her hair's right (the CSS below), so 63% to 100%
-        (phone, psz), (desk, dsz) = only(2880, 0.63, 1.04, 'skinofab-hero-phone'), only(4096, 0.30, 1.04, 'skinofab-hero-desktop')
-        phone_vw = '290vw'                       # the 4:5 window shows 0.34 of the photo's width: it is drawn 1/0.34 screens wide
+        # phones: an 11:12 window on her, from the hand holding the bottle to her hair's right (the CSS below), 59% to 99%
+        (phone, psz), (desk, dsz) = only(2880, 0.585, 1.04, 'skinofab-hero-phone'), only(4096, 0.30, 1.04, 'skinofab-hero-desktop')
+        phone_vw = '256vw'                       # the 11:12 window shows 0.39 of the photo's width: it is drawn 1/0.39 screens wide
         source = (f'<source media="(max-width: 749px)" sizes="{phone_vw}" '
                   f'srcset="assets/img/{phone.name} {psz[0]}w" width="{psz[0]}" height="{psz[1]}">')
         img = m.group(2)
@@ -1827,15 +2013,16 @@ def faster_home(home):
         home = home[:m.start(2)] + source + img + home[m.end(2):]
         # On phones the export laid the photo 349% wide at fixed offsets under copy of a fixed height (797 px): what
         # showed of her depended on the copy's length and the screen, and it cut her face at its right edge. The slide
-        # now stacks: the copy, then a 4:5 window on the photo that always holds the bottle and her whole face, its top
+        # now stacks: the copy, then an 11:12 window on the photo that always holds the hand with the bottle and her
+        # whole face (a taller 4:5 one showed less of the photo's width and cut her hand at the left edge), its top
         # faded into the hero's grey under the button.
         X = '[id$="__hero"]'
         css = (f'@media(max-width:749px){{{X} .fh-hero{{height:auto}}'
                f'{X} .fh-hero-slide--foundation,{X} .fh-hero-slide--foundation .fh-hero-slide-inner{{position:relative;inset:auto;height:auto;'
                f'display:flex;flex-direction:column}}'
                f'{X} .fh-hero-slide--foundation .fh-hero-content{{order:1;height:auto;padding:32px 0 0;justify-content:flex-start}}'
-               f'{X} .fh-hero-slide--foundation .fh-hero-image{{position:relative;order:2;inset:auto;display:block;width:100%;aspect-ratio:4/5;margin-top:-24px}}'
-               f'{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:98.5% 0}}'
+               f'{X} .fh-hero-slide--foundation .fh-hero-image{{position:relative;order:2;inset:auto;display:block;width:100%;aspect-ratio:11/12;margin-top:-24px}}'
+               f'{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:98.2% 0}}'
                f'{X} .fh-hero-slide--foundation .fh-hero-image:after{{background:linear-gradient(to bottom,#ededef 0,rgba(237,237,239,0) 14%)}}}}'
                # tablets: the copy, then a 16:10 window on the photo (bottle and face, cropped from its left)
                f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-hero{{height:auto}}'
@@ -1902,7 +2089,9 @@ def sticky_bar(t, img, title, price_line, button, rating=None):
            'if (!btn || !("IntersectionObserver" in window)) return;'
            'new IntersectionObserver(function (es) { var e = es[0], on = !e.isIntersecting && e.boundingClientRect.top < 0;'
            'bar.classList.toggle("is-on", on); bar.setAttribute("aria-hidden", on ? "false" : "true");'
-           'bar.querySelector("a").tabIndex = on ? 0 : -1; }).observe(btn); }'
+           'bar.querySelector("a").tabIndex = on ? 0 : -1;'
+           # while it shows, the page ends that much lower: the footer's last line and the payment icons stay above it
+           'document.body.style.paddingBottom = on ? bar.offsetHeight + "px" : ""; }).observe(btn); }'
            'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();'
            '})();</script></div>')
     return t[:m.start()] + bar + t[balanced_end(t, m.start(), 'div'):], True
@@ -1948,12 +2137,14 @@ def honest_pdp(t, summary):
             sec = sec.replace('Based on an eight-week independent customer panel', 'From verified buyers of the same formula')
             n['results'] = int(sec != t[m.start():end])
             t = t[:m.start()] + sec + t[end:]
-    # the gallery slide (and its thumbnail) that repeats the panel numbers
+    # the gallery slides (and their thumbnails) that repeat the panel numbers, and "Even better together": the
+    # foundation with a pink blending brush the store does not sell (its free gift is a sponge)
     for cls in ('product-single__media-slide', 'product-single__thumbnail'):
         for m in reversed(list(re.finditer(r'<div class="%s[^"]*"[^>]*>' % cls, t))):
             end = balanced_end(t, m.start(), 'div')
-            if 'ColorChangingFoundation-Productimagesphotos_2_1791540a' in t[m.start():end]:
-                t = t[:m.start()] + t[end:]; n['panel slide'] = n.get('panel slide', 0) + 1
+            if any(k in t[m.start():end] for k in ('ColorChangingFoundation-Productimagesphotos_2_1791540a',
+                                                   'ColorChangingFoundation-Productimagesphotos_1_87f31fb4')):
+                t = t[:m.start()] + t[end:]; n['gone slides'] = n.get('gone slides', 0) + 1
     return t, n
 
 def balanced_end(t, start, tag):
@@ -2020,20 +2211,17 @@ def main():
     else:
         end = balanced_end(texts[pdp], rev.start(), 'div')
         texts[pdp] = texts[pdp][:end] + '<div class="shopify-section" id="shopify-section-sf-problem-solution">' + problem_solution() + '</div>' + texts[pdp][end:]
-    # the homepage's dermatologist after the solution, its customer reviews before the FAQ, more FAQ answers
-    home = texts.get(DST / 'index.html', '')
-    derm = dermatologist(home)
-    ps_end = texts[pdp].find('id="shopify-section-sf-problem-solution"')
-    if not derm or ps_end < 0: missing.append(('dermatologist', 'homepage section or anchor'))
+    # the homepage's "Recommended by a dermatologist" is a verified buyer's words now (customer_voice); the product
+    # page goes from the solution to the K-beauty science (apf_copy.KBEAUTY: the actives on the label, no person),
+    # its customer reviews before the FAQ, more FAQ answers
+    texts[DST / 'index.html'] = customer_voice(texts.get(DST / 'index.html', ''))
+    home = texts[DST / 'index.html']
+    ps_at = texts[pdp].find('id="shopify-section-sf-problem-solution"')
+    if ps_at < 0: missing.append(('k-beauty', 'problem/solution anchor'))
     else:
-        start = texts[pdp].rfind('<div', 0, ps_end)
-        end = balanced_end(texts[pdp], start, 'div')
-        texts[pdp] = texts[pdp][:end] + '<div class="shopify-section" id="shopify-section-sf-dermatologist">' + derm + '</div>' + texts[pdp][end:]
-        # the K-beauty skin science after the dermatologist (apf_copy.KBEAUTY: the actives on the label, no person)
         kb = section_image(BRAND / 'adaptive-peptide-foundation' / 'composites' / 'label-detail-2x.jpg', 'skinofab-kbeauty-label', (930, 1162))   # the whole label, sharp at 2x
-        d_at = texts[pdp].find('id="shopify-section-sf-dermatologist"')
-        d_end = balanced_end(texts[pdp], texts[pdp].rfind('<div', 0, d_at), 'div')
-        texts[pdp] = texts[pdp][:d_end] + '<div class="shopify-section" id="shopify-section-sf-kbeauty">' + apf_copy.kbeauty_html(kb) + '</div>' + texts[pdp][d_end:]
+        ps_end = balanced_end(texts[pdp], texts[pdp].rfind('<div', 0, ps_at), 'div')
+        texts[pdp] = texts[pdp][:ps_end] + '<div class="shopify-section" id="shopify-section-sf-kbeauty">' + apf_copy.kbeauty_html(kb) + '</div>' + texts[pdp][ps_end:]
     revs = video_reviews(home)
     faq = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__section_accordions_', texts[pdp])
     if not revs or not faq: missing.append(('reviews', 'homepage section or FAQ anchor'))
@@ -2133,6 +2321,10 @@ def main():
     if not relabelled: missing.append(('real wordmark', 'foundation bottles to relabel'))
     print('real wordmark', relabelled)
     print('home features', home_features())
+    print('home phenomenon', home_phenomenon())
+    sp, sp_gone = support_pages()
+    missing.extend(('support pages', f'{r}: {q}') for r, q in sp_gone)
+    print('support pages', sp)
     print('home original', home_original())
     print('layout fixes', layout_fixes())
     print('local location', local_location())
@@ -2144,6 +2336,8 @@ def main():
     if left: missing.append(('other products', 'links left in ' + ', '.join(left[:6])))
     print('only our products', pruned)
     print('menu', clean_menu())
+    print('alts', clean_alts())
+    print('dead social links', drop_dead_social())
     evened = even_shelf()
     if not evened: missing.append(('even shelf', 'shelf cards to size'))
     print('even shelf cards', evened)

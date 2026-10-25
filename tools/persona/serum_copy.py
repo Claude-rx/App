@@ -118,7 +118,7 @@ def tabs():
 
 # the sections below: the foundation page's, in its order (twin.py), with the serum's copy -----------------------------
 NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews of the serum yet', 'lead_amazon': 'No SKINOFAB reviews yet',
-              'text': 'The reviews at the top of this page are of our Adaptive Peptide Foundation. The EGF + NAD+ Firming Serum is new at SKINOFAB, and we only show reviews from real buyers. Try it for '
+              'text': 'The EGF + NAD+ Firming Serum is new at SKINOFAB, and we only show reviews from real buyers. Try it for '
                       '30 days: if you don’t see a difference, we’ll refund you.',
               'button': 'Try it risk-free', 'write': 'Bought it? Write the first review'}
 FAQ = {'items': [

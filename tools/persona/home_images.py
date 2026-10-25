@@ -15,7 +15,7 @@ usage: python3 -I tools/persona/home_images.py
 - tile-*.jpg (4:5): Shop by category, a woman over 45 holding each product
 - collage-wide.jpg, collage-square.jpg: the listing pages' banners, the four tiles side by side and two by two
 - bundle-*.jpg (1:1): Bundle & Save, each bundle's units on white with soft contact shadows (the foundation from
-  its front render, the brush with its case)
+  its front render, the brush with its case); card-foundation.jpg, the shelf's foundation card, one bottle the same way
 """
 import subprocess, sys
 from pathlib import Path
@@ -82,13 +82,13 @@ def foundation_unit():
 
 
 def trio(unit, height=0.66, size=1000, spread=0.27, side=0.9, count=3):
-    """Three (or two) of a product on white, side by side on one floor line, the middle one in front, soft contact
-    shadows."""
+    """Three (or two, or one) of a product on white, side by side on one floor line, the middle one in front, soft
+    contact shadows."""
     canvas = Image.new('RGB', (size, size), (255, 255, 255))
     floor = int(size * 0.84)
     shadow = Image.new('L', (size, size), 0)
     placed = []
-    spots = ((-spread, side), (spread, side), (0.0, 1.0)) if count == 3 else ((-spread, 1.0), (spread, 1.0))
+    spots = {3: ((-spread, side), (spread, side), (0.0, 1.0)), 2: ((-spread, 1.0), (spread, 1.0)), 1: ((0.0, 1.0),)}[count]
     for dx, k in spots:                                                   # the middle one drawn last, in front
         h = int(size * height * k); w = int(unit.width * h / unit.height)
         u = unit.resize((w, h), Image.LANCZOS)
@@ -114,7 +114,8 @@ def main():
     OUT.mkdir(exist_ok=True); TMP.mkdir(exist_ok=True)
     # ---- One shade: the bottle at her temple, measured by hand (its base, its pump end, its width); ours is a little
     # wider than the image model's, so it covers it whole
-    held(SRC / 'oneshade-ai.jpg', TMP / 'oneshade.jpg', '--line', '183,937,251,412', '--w', '152', '--width', '1.11', '--anchor', 'centre')
+    held(SRC / 'oneshade-ai.jpg', TMP / 'oneshade.jpg', '--line', '183,937,251,412', '--w', '152', '--width', '1.11', '--anchor', 'centre',
+         '--fingers', 'left')                                       # her fingertip at its edge stays in front
     one = Image.open(TMP / 'oneshade.jpg').convert('RGB')                               # 1024 x 1536
     a = np.asarray(one).astype(np.float32)
     white = (a.min(2) > 238) & (a.max(2) - a.min(2) < 10)
@@ -147,6 +148,9 @@ def main():
     save(crop45(SRC / 'brush-ai.jpg', (102, 0, 921, 1024)), 'tile-brush.jpg')
     # ---- Bundle & Save
     save(trio(foundation_unit(), height=0.7, spread=0.2, count=2), 'bundle-foundation.jpg')
+    # the shelf's foundation card: the bottle alone, as the bundle's (the export's card photo cast a long grey shadow
+    # off to one side)
+    save(trio(foundation_unit(), height=0.7, count=1), 'card-foundation.jpg')
     save(Image.open(BRAND / 'egf-nad-serum' / 'trio.jpg').convert('RGB').resize((1000, 1000), Image.LANCZOS), 'bundle-serum.jpg')
     save(trio(cutout(BRAND / 'pdrn-balm' / 'card.jpg', keep='tallest'), height=0.62), 'bundle-balm.jpg')
     save(trio(cutout(BRAND / 'lymphatic-brush' / 'card.jpg', keep='all'), height=0.5, spread=0.3, side=0.9), 'bundle-brush.jpg')

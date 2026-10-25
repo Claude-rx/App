@@ -119,7 +119,7 @@ Pages route at `/<slug>/`. Verify one with `curl -I https://<store>.29next.store
 Create the posts in **Dashboard > Content > Blog** (title, slug, content). The theme's `blog/post.html` renders them in the design layout.
 
 ## 5. Offers that the design's copy promises (operator-approved ledger)
-- **Fall Sale: Up to 60% OFF + FREE Gifts** (announcement bar), **SAVE x%** badges, and bundle savings need matching
+- **Fall Sale: Up to 67% OFF + FREE Gifts** (announcement bar), **SAVE x%** badges, and bundle savings need matching
   Offers in **Dashboard > Marketing > Offers**. Without them checkout charges full price.
 - **Shipping:** the delivery copy quotes the Theme setting *Shipping Fee*; keep it equal to your shipping rate.
 - **Shipping protection:** create the product and pick it under **SKINOFAB > Checkout Add-ons**.

@@ -970,9 +970,12 @@ base = must_replace(base, """                <link rel="shortcut icon" href="{{ 
             <link rel="icon" type="image/png" sizes="32x32" href="{{ 'FAV_32'|asset_url }}">
             <link rel="apple-touch-icon" href="{{ 'FAV_180'|asset_url }}">
         {% endif %}""".replace('FAV_SVG', FAVICON['.svg']).replace('FAV_32', FAVICON['-32.png']).replace('FAV_180', FAVICON['-180.png']), 'favicon')
-# Media (images, fonts, video) come from cdn.29next.store: open that connection before the HTML asks for it.
+# Media (images, fonts, video) come from cdn.29next.store, the theme's CSS and scripts from NEXT's static host on
+# CloudFront: open both connections before the HTML asks for them (the render-blocking CSS waited ~150 ms for its own
+# DNS, TCP and TLS handshake after the HTML arrived).
 base = must_replace(base, "{% block critical_preloads %}{% endblock critical_preloads %}",
-                    '<link rel="preconnect" href="https://cdn.29next.store">\n    <link rel="preconnect" href="https://cdn.29next.store" crossorigin>\n'
+                    '<link rel="preconnect" href="https://d1lrxs4saq89c.cloudfront.net">\n'
+                    '    <link rel="preconnect" href="https://cdn.29next.store">\n    <link rel="preconnect" href="https://cdn.29next.store" crossorigin>\n'
                     "    {% block critical_preloads %}{% endblock critical_preloads %}", 'preconnect')
 base = base.replace('<link rel="stylesheet" type="text/css" href="{{ \'main.css\'|asset_url }}">',
                     "{% block spark_css %}{% endblock spark_css %}\n        {% include 'partials/sf_asset_styles.html' %}")
@@ -1081,9 +1084,11 @@ SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1
                '#main-content form input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]),'
                '#main-content form select,#main-content form textarea{border:1px solid #cfcfcf !important;border-radius:10px !important;background:#fff !important}'
                '#main-content form select{min-width:140px}'
-               # the cart's lines on a phone: quantity and refill choice wrap under each other, and the select may
-               # shrink, so the line total and Remove stay on screen (they were pushed 100 px past its right edge)
-               '#cart_formset .flex.items-center.gap-3.mt-3{flex-wrap:wrap}#cart_formset select{min-width:0;max-width:100%}'
+               # the cart's lines on a phone: quantity, refill choice and Remove wrap onto a second line, and the
+               # selects drop the 140 px minimum above (same id, so they need the higher specificity), so the line
+               # total and Remove stay on screen (they were pushed 100 px past its right edge)
+               '#cart_formset .flex.items-center.mt-3{flex-wrap:wrap;row-gap:8px}'
+               '#main-content #cart_formset select{min-width:0;max-width:100%}'
                # the page's width and margins as the header's and footer's (it started 104 px in on a desktop)
                '#main-content .container{width:calc(100% - 64px);max-width:1440px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}'
                '@media (max-width:749px){ #main-content .container{width:calc(100% - 32px)}}'   # "{ #": "{#" opens a DTL comment

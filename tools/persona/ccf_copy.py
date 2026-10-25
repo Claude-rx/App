@@ -20,6 +20,23 @@ least once or the build fails, so copy can't silently drift from the design.
 ORIGIN = '🇰🇷 Formulated in Korea · Advanced K-beauty formula'
 
 GLOBAL = [
+    # the product gallery's image sizes: from 768 to 1023 px the gallery is one column, the page's whole width
+    # (apply_persona.LAYOUT_FIXES), not 60% of it, so it asked for a file half the size it shows
+    (r'RE:sizes="\(min-width: 1400px\) 762px, \(min-width: 768px\) calc\(\(100vw - 40px\) \* 0\.6 - 30px\), calc\(100vw - 40px\)"',
+     'sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)"'),
+    # the product page's "How does it work?": the old store's "intelligent mineral pigments", in the product's words
+    (r'RE:Our (?:Skin-Tone Adapting|Color Changing|Color-Adapting|Adaptive Peptide) Foundation uses intelligent mineral pigments that adjust as you blend\.',
+     'Our Adaptive Peptide Foundation goes on white and adapts to your skin tone as you blend.'),
+    (r'RE:At first touch, the pigments look soft and neutral\. As you smooth the formula across your skin, these micro-pigments disperse and warm up, revealing the natural blend of tones your complexion needs\.',
+     'Its color-adapting pigments are encapsulated. As you smooth the formula across your skin, they release and mix into your own tone in about a minute.'),
+    # the money-back icon was a warped photo of a seal ("% 100 %"): a drawn 30-day badge, crisp at 50 px
+    (r'RE:<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover"[^>]*'
+     r'Color_Changing_Foundation_-_Product_images_photos_2-[^>]*>\s*</figure>',
+     '<svg class="product__icon__img" viewBox="0 0 100 100" width="50" height="50" role="img" aria-label="30-day money-back guarantee" '
+     'style="display:block;width:100%;height:100%"><circle cx="50" cy="50" r="48" fill="#151515"/>'
+     '<circle cx="50" cy="50" r="40" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="2.5 3.5"/>'
+     '<text x="50" y="54" text-anchor="middle" font-family="Jost,Arial,sans-serif" font-weight="700" font-size="34" fill="#fff">30</text>'
+     '<text x="50" y="73" text-anchor="middle" font-family="Jost,Arial,sans-serif" font-weight="600" font-size="12" letter-spacing="1.5" fill="#fff">DAYS</text></svg>'),
     # the listing pages' benefit row: claims no product here can back ("100% natural": the foundation's silica and
     # boron nitride are not; "proven results" with no study named) become what holds for all four products
     (r'RE:(icons-row__title">)100% natural<', r'\g<1>Formulated in Korea<'),
@@ -31,9 +48,10 @@ GLOBAL = [
     ('>Korean inspired performance formulas<', '>Formulated in Korea, with advanced K-beauty science<'),
     ('>3. Built in Korea, by the people who invented the science<', '>3. Formulated in Korea, with advanced K-beauty science<'),
     ('a breakthrough foundation from Korean pharmacies,', 'a breakthrough foundation formulated in Korea,'),
-    # the announcement bar: 60% is the deepest saving on the site (2 bottles on refills, $47 vs $118), not every
-    # product's, and the Mystery Gift comes with the 2-bottle pack; the brush bundles carry their own free gifts
-    ("🍂 Fall Sale: 60% OFF + FREE Mystery Gift", "🍂 Fall Sale: Up to 60% OFF + FREE Gifts"),
+    # the announcement bar: 67% is the deepest saving on the site (the Lymphatic Brush 3-pack, $49.90 vs $149.70;
+    # the foundation's 2 bottles on refills save 60%), not every product's, and the Mystery Gift comes with the
+    # 2-bottle pack; the brush bundles carry their own free gifts
+    ("🍂 Fall Sale: 60% OFF + FREE Mystery Gift", "🍂 Fall Sale: Up to 67% OFF + FREE Gifts"),
     # one dermatologist speaks on the homepage, not "leading dermatologists worldwide"; the results card is backed by
     # the verified reviews under it, not by a study
     ("Trusted by leading dermatologists worldwide", "Recommended by a dermatologist"),
