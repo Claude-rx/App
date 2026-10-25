@@ -30,3 +30,4 @@ python3 scripts/check-dtl.py --require
 python3 scripts/check-templates.py
 python3 scripts/check-theme-contract.py
 python3 scripts/check-settings-parity.py
+python3 -I ../tools/theme-qa/video_brand_gate.py .

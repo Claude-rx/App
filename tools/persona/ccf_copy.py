@@ -107,6 +107,14 @@ PAGE = {
         ("blurring blemishes, redness, and fine lines in seconds.", "softening the look of blemishes, redness and fine lines as you blend."),
         (">Look visibly younger<", ">Made for 45+<"),
     ],
+    'pages/bestfoundation-2.html': [
+        # reason 7's clip is the old brand's bottle (SMOOCHE, "With SPF 15", "16+ hours"): the page's own photo of a
+        # woman blending our bottle in its place, in the markup of the page's other reasons
+        (r'RE:<div class="bf-media bf-video" data-bf-video="">\s*<video [^>]*9d634628[^>]*></video>\s*'
+         r'<div class="bf-video-controls">.*?</div>\s*</div>',
+         '<picture class="bf-media"><img alt="Blending the Adaptive Peptide Foundation" height="405" loading="lazy" '
+         'src="../assets/img/9be7e268-4413-428c-b92c-b660e1331473-433765.jpg" width="405"/></picture>'),
+    ],
     'pages/about-skinofab.html': [
         # "98% feel more confident" and the rest came from no survey: what holds instead
         (r'RE:<span class="sa-eyebrow" style="justify-content:center;">The results</span><h2>What our community feels</h2>',

@@ -7,7 +7,7 @@ The hero photo's bottle came from an AI product swap: its wordmark is right, but
 and "PDRN" reads like another word). Blurry it passed; a 4K upscale sharpens it. This erases the bottle's printed text
 and draws the label of the real product render (SKINOFAB, ADAPTIVE PEPTIDE FOUNDATION, PDRN, 30 mL / 1.01 fl oz) in its
 place, fitted to the bottle: same tilt, same wordmark size, same span as the old print. The render's small PDRN line
-is set again at the label's size first (label_fix.legible_pdrn): drawn as printed, its D closed into an O (PORN).
+is set again first (label_fix.legible_pdrn), larger and bolder: drawn as printed, its D closed into an O (PORN).
 
 Geometry is measured on the 2000 x 853 hero master (skinofab-color-changing-foundation-hero-4096w, persona set) and
 the 1254 x 1254 front render (skf-apf-01-front.jpg). <upscaled.png> is that master upscaled by <scale> (default 4),
@@ -55,9 +55,11 @@ feather = cv2.GaussianBlur(old.astype(np.float32), (0, 0), k)[..., None]
 clean = clean * (1 - feather) + cv2.GaussianBlur(clean, (0, 0), 1.5 * k) * feather
 
 # --- 2. the real label as an alpha mask, warped onto the bottle ----------------------------------------------
-# the render's PDRN line is set again at the label's size first, so at a hand's size it never reads PORN (label_fix.py)
+# the render's PDRN line is set again first, so at a hand's size it never reads PORN (label_fix.py): here larger and
+# bolder than the label's own size, because a phone draws this bottle at a quarter of the master's pixels and the line
+# lands 5-7 device pixels tall (at the render's 15 px, its D blurs into an O there)
 lab = np.asarray(Image.open(label_path).convert('RGB')).astype(np.float32)
-if lab.shape[:2] == (1254, 1254): lab = legible_pdrn(lab)
+if lab.shape[:2] == (1254, 1254): lab = legible_pdrn(lab, cap=22, weight=720, track=0.18)
 lab = lab.mean(2)
 x0, y0, x1, y1 = TEXT_RENDER
 alpha_r = np.zeros_like(lab)

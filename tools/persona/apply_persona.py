@@ -178,6 +178,9 @@ def customer_voice(home):
             f'@media(min-width:750px){{{X}{{min-height:440px}}{X} .fh-expert-photo{{top:50%;bottom:auto;transform:translateY(-50%)}}}}</style>')
     return home[:m.start()] + sec + home[end:]
 
+ROOT = Path(__file__).resolve().parents[2]
+VIDEO_SWAPS = Path(__file__).resolve().parent / 'queue' / 'video-swaps.json'   # {export media file: Genjutsu re-make}
+
 def video_reviews(home):
     """The homepage's video cards (their clips and posters, ccf_copy.VIDEO_DEMOS' captions) as a product page section:
     illustrative videos of the foundation on skin, labelled as such, the real reviews right after them."""
@@ -188,9 +191,14 @@ def video_reviews(home):
         clip = re.search(r'<video[^>]*data-src="(assets/media/[^"]+\.mp4)"', a)
         poster = re.search(r'<img[^>]*class="fh-social-poster"[^>]*src="(assets/img/[^"]+)"|<img[^>]*src="(assets/img/[^"]+)"[^>]*class="fh-social-poster"', a)
         if not clip or not poster: continue
-        src = DST / clip.group(1)
-        stem = 'skinofab-demo-' + hashlib.md5(src.read_bytes()).hexdigest()[:6]
-        mp4, webm = card_clip(src, stem, 'mp4'), card_clip(src, stem, 'webm')
+        # the clip as the store shows it: its Genjutsu re-make when it has one (the export's own shows the old brand's
+        # bottle; apf_pages.swap_videos points the pages at the re-make only after this script has run)
+        src, swaps = DST / clip.group(1), json.loads(VIDEO_SWAPS.read_text()) if VIDEO_SWAPS.exists() else {}
+        if src.name in swaps: src = ROOT / swaps[src.name]
+        mp4 = webm = None
+        if src.exists():                       # a re-make not made yet: the page keeps the export's file, which
+            stem = 'skinofab-demo-' + hashlib.md5(src.read_bytes()).hexdigest()[:6]     # swap_videos then reports
+            mp4, webm = card_clip(src, stem, 'mp4'), card_clip(src, stem, 'webm')
         out.append({'title': html.escape(title), 'text': html.escape(text), 'alt': html.escape(title),
                     'video': (mp4 or '../' + clip.group(1), '../' + (poster.group(1) or poster.group(2))) + ((webm,) if webm else ())})
     return apf_copy.pdp_reviews_html('On skin', 'See how it blends', out, plain=True,
