@@ -9,6 +9,8 @@ file says where the bottles are in each photo:
   angle degrees; label_composite.composite(relabel=True) finds the old print on it and wraps ours around the cylinder
 - ('box', box, first): a print on a stick or a small bottle: its letters are found in box (x0, y0, x1, y1, px), first
   is a point at its first letter (which way it reads); label_composite.measure_print + swap_flat
+- ('badge', box, cx, base1, base2, size): the origin badge under the Korean flag, cleared (box, on white) and set
+  again as label_composite.ORIGIN_LINES, centred on cx, on the two baselines, Montserrat at size px
 - ('flat', p0, p1, h): a print too small, turned or cut out for that (a photo on pure black, a bottle seen end-on):
   the old wordmark runs from p0 to p1 (its first and last letters' outer ends), h px tall, in the reference size's px;
   label_composite.swap_flat sets ours flat on the same line
@@ -24,7 +26,7 @@ usage: python3 -I tools/persona/relabel_bottles.py renders
 import hashlib, re, shutil, sys
 from pathlib import Path
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -64,7 +66,8 @@ BALM = {
 
 # file-name prefix -> (the reference copy's size, the bottles in it); the longest prefix whose aspect matches wins
 SITE = {
-    'KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2-': ((1080, 1080), [('auto', (0.38, 0.23, 0.62, 0.87), 0, {})]),
+    'KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2-': ((1080, 1080), [('auto', (0.38, 0.23, 0.62, 0.87), 0, {}),
+        ('badge', (846, 212, 1062, 284), 952, 243, 267, 21)]),     # its flag badge: "Based on Korean / Beauty Innovation"
     'skinofab-hero-phone': ((2880, 1228), [('auto', (0.655, 0.27, 0.75, 0.70), 7, {})]),
     'skinofab-hero-desktop': ((4096, 1747), [('auto', (0.655, 0.27, 0.75, 0.70), 6, {})]),
     'ColorChangingFoundation-Productimage_31cddf53-0315-41bf-bfe5': ((1080, 1080), [('auto', (0.46, 0.21, 0.68, 0.79), 0, {})]),
@@ -93,6 +96,13 @@ def relabel(im, ops, ref=None):
     W, H = out.size
     k = W / ref[0] if ref else 1.0
     for op in ops:
+        if op[0] == 'badge':                                   # the origin badge's two lines under the flag, rewritten
+            _, (x0, y0, x1, y1), cx, b1, b2, size = op
+            out = out.copy(); d = ImageDraw.Draw(out)
+            d.rectangle((x0 * k, y0 * k, x1 * k, y1 * k), fill=(255, 255, 255))
+            for line, base in zip(L.ORIGIN_LINES, (b1, b2)):
+                d.text((cx * k, base * k), line, font=L.sans(max(8, round(size * k)), 'Regular'), fill=(38, 38, 38), anchor='ms')
+            continue
         if op[0] == 'box':
             _, box, first = op
             p0, p1, h = L.measure_print(out, [v * k for v in box], (first[0] * k, first[1] * k))

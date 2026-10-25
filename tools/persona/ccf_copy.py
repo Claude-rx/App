@@ -15,7 +15,14 @@ and dashes are matched loosely. GLOBAL rules run on every page, PAGE rules on on
 least once or the build fails, so copy can't silently drift from the design.
 """
 
+# where every SKINOFAB formula is made: the buy box's line, the gallery badges (product_photos.korea_badge) and the
+# pages say formulated in Korea, never made in Korea
+ORIGIN = '🇰🇷 Formulated in Korea · Advanced K-beauty formula'
+
 GLOBAL = [
+    ('>Korean inspired performance formulas<', '>Formulated in Korea, with advanced K-beauty science<'),
+    ('>3. Built in Korea, by the people who invented the science<', '>3. Formulated in Korea, with advanced K-beauty science<'),
+    ('a breakthrough foundation from Korean pharmacies,', 'a breakthrough foundation formulated in Korea,'),
     # the announcement bar: 60% is the deepest saving on the site (2 bottles on refills, $47 vs $118), not every
     # product's, and the Mystery Gift comes with the 2-bottle pack; the brush bundles carry their own free gifts
     ("🍂 Fall Sale: 60% OFF + FREE Mystery Gift", "🍂 Fall Sale: Up to 60% OFF + FREE Gifts"),
@@ -91,7 +98,7 @@ PAGE = {
         (r'RE:(<h3[^>]*>)\s*Natural\-looking\ coverage\s*(</h3>\s*<p[^>]*>)\s*Evens\ out\ your\ complexion\ and\ helps\ fine\ lines\ look\ less\ noticeable\s*(?=</p>)', r'\g<1>Soft-focus powders\g<2>Silica and boron nitride blur the look of lines and pores without a dry, matte finish'),
         (r'RE:alt="Mica"', 'alt="Fragrance-free"'),
         (r'RE:(<h3[^>]*>)\s*Mica\s*(</h3>\s*<p[^>]*>)\s*Natural\ mineral\ pigments\ for\ a\ soft,\ healthy\ glow\.\s*(?=</p>)', r'\g<1>Fragrance-free\g<2>No fragrance, propylene glycol, drying alcohol or parabens, so thinner skin doesn\'t sting'),
-        ("The viral skin tone adapting foundation", "🇰🇷 Based on Korean beauty innovation"),
+        ("The viral skin tone adapting foundation", ORIGIN),
         ("Hides imperfections", "Won't settle into lines"),
         ("Say goodbye to shade-matching struggles. This color-changing foundation adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
          "Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines."),

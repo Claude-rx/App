@@ -767,7 +767,7 @@ PROBLEM_SOLUTION = {
     'causes': ROOT_CAUSES,
     'root_end': 'So the problem was never your skin or your technique. It&rsquo;s a formula built for someone else.',
     'solution': ('The solution', 'So we built it', 'the other way around'),
-    'solution_lede': f'The {PRODUCT} starts from skin after 45, not from a shade chart: Korean color-adapting technology in a skincare serum base.',
+    'solution_lede': f'The {PRODUCT} starts from skin after 45, not from a shade chart: color-adapting technology in a skincare serum base, formulated in Korea.',
     'fixes': SOLUTION_FIXES,
     'button': 'Get yours',
     'note': 'Love it in your own daylight for 30 days, or your money back.',

@@ -123,15 +123,19 @@ def icon(d, kind, cx, cy, r=24):
         d.ellipse((cx - r * .16, cy - r * 1.05, cx + r * .16, cy - r * .45), outline=INK, width=w)
 
 
+BADGE_LINES = label_composite.ORIGIN_LINES
+
+
 def korea_badge(im, cx=948, cy=148):
-    """The foundation hero's badge: the flag circle and "Based on Korean / Beauty Innovation" under it."""
+    """The gallery's origin badge: the flag circle (cut from the foundation's hero photo) and "Formulated in Korea /
+    Advanced formula" under it."""
     flag = Image.open(HERE / 'assets' / 'korea-badge.png').convert('RGBA')
     shadow = Image.new('L', im.size, 0)
     ImageDraw.Draw(shadow).ellipse((cx - 72, cy - 68, cx + 72, cy + 78), fill=55)
     im.paste((0, 0, 0), mask=shadow.filter(ImageFilter.GaussianBlur(9)))
     im.paste(flag, (cx - flag.width // 2, cy - flag.height // 2), flag)
     d = ImageDraw.Draw(im)
-    for k, line in enumerate(('Based on Korean', 'Beauty Innovation')):
+    for k, line in enumerate(BADGE_LINES):
         d.text((cx, cy + 108 + k * 29), line, font=sans(23, 'Regular'), fill=INK, anchor='ms')
 
 

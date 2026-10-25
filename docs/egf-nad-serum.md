@@ -67,7 +67,10 @@ Every photo is on pure white, with women past 45 (several ages, skin tones and h
 serum, in the foundation gallery's style. They were made with GPT Image 2.5 through Figma's image generator, with the
 bottle and carton **blank**: `tools/persona/label_composite.py` then prints SKINOFAB's real wordmark and label on
 every bottle (wrapped around the cylinder, shaded by the bottle's own light, behind the fingers that hold it) and on
-the carton's front, so the logo is ours to the pixel instead of an AI's guess. The before/after photos are
+the carton's front, so the logo is ours to the pixel instead of an AI's guess. The label reads across the bottle
+(`LABELS['serum']`, layout `across`): the wordmark upright and small, half the bottle's width; a hairline; EGF + NAD+ /
+FIRMING SERUM / WITH COLLAGEN; at the base FORMULATED IN KOREA and 30 mL / 1.01 fl oz. The carton has the same layout,
+the wordmark across the upper third of its face. The before/after photos are
 illustrations and say so on the image. Prompts: `tools/persona/image_prompts.json`; sources:
 `brand/egf-nad-serum/source/`.
 

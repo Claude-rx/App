@@ -47,7 +47,7 @@ META_DESCRIPTION = ('EGF, NAD+ and collagen in one light serum for skin after 45
 # image, first one eager; the card is the shelf, cart and sticky-bar image
 GALLERY = ['hero', 'hold-cheek', 'before-after', 'look-firmer', 'results-grid', 'whats-inside', 'science', 'vs-others',
            'drop', 'hold-black', 'friends', 'apply-neck', 'trio']
-KOREAN = True          # the foundation's "Based on Korean beauty innovation" line stays in the buy box
+KOREAN = True          # the foundation's "Formulated in Korea" line stays in the buy box
 
 # the buy box --------------------------------------------------------------------------------------------------------
 EYEBROW = None

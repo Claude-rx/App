@@ -1234,13 +1234,18 @@ for group in schema['SKINOFAB'].values():
     for field in group:
         data.setdefault(field['name'], field.get('default') if field['type'] != 'product' else None)
 data.setdefault('cart_header_title', 'Your bag')
+# a product or collection link the theme no longer has (the store dropped it): its old value goes too
+_names = {f['name'] for group in schema['SKINOFAB'].values() for f in group}
+for k in [k for k in data if k.startswith(('sf_p_', 'sf_c_')) and k not in _names]: del data[k]
 catalog = os.environ.get('SF_CATALOG')  # deploy mapping (tools/next-deploy) -> Product / Collection Links
 if catalog and Path(catalog).exists():
     m = json.loads(Path(catalog).read_text())['mapping']
+    # only what the theme still has a setting for: the catalog also lists products and categories the store dropped
+    names = _names
     for h, v in m.get('products', {}).items():
-        if v.get('id'): data[f'sf_p_{var(h)}'] = v['id']
+        if v.get('id') and f'sf_p_{var(h)}' in names: data[f'sf_p_{var(h)}'] = v['id']
     for c, cid in m.get('categories', {}).items():
-        if cid: data[f'sf_c_{var(c)}'] = f'/catalogue/category/{c}_{cid}/'
+        if cid and f'sf_c_{var(c)}' in names: data[f'sf_c_{var(c)}'] = f'/catalogue/category/{c}_{cid}/'
 offer_cfg = EXPORT / 'sf-offer.json'   # written by tools/persona/apply_persona.py: the cart drawer's offer settings
 if offer_cfg.exists():
     oc = json.loads(offer_cfg.read_text())

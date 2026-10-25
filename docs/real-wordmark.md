@@ -7,7 +7,7 @@ vector file, `brand/logo/skinofab-wordmark.svg`. Before, most of them didn't:
 |---|---|---|
 | Adaptive Peptide Foundation | a stand-in serif (Trajan-like) on the product-sheet renders, the composites and every photo made from them; "SKINOFAS" on two AI photos | the SVG wordmark, found and replaced on 6 renders and composites and 16 page photos (all their widths) |
 | PDRN Plumping Balm | AI-drawn wordmarks, a different serif on each photo, spaced out on one ("S K I N O F A B") | the SVG wordmark on all 14 photos of the stick |
-| EGF + NAD+ Firming Serum | already the real wordmark (printed on blank bottles by `label_composite.py`) | reprinted from the SVG itself |
+| EGF + NAD+ Firming Serum | the real wordmark, but set vertically, very large and stretched by the wrap | a new label: the wordmark upright and small (half the bottle's width), a hairline, the name, "Formulated in Korea" at the base; the carton the same |
 | Lymphatic Brush | already the real wordmark on the case (the checkout logo file) | unchanged; the checkout logo is now generated from the SVG |
 
 ## The files
@@ -73,3 +73,11 @@ The older products further along the shelf after the four (Reverse-time Peptide 
 under-eye patches, the lip, lash and brow products, the gua sha and face roller …) are the old design's photos, in
 its pink packaging with its own lettering. They are not among the four current products and were not relabelled;
 take them off the shelf, or reshoot them, before selling them.
+
+## Formulated in Korea
+
+Every product says where it is formulated, never "made in Korea": the buy box's line on the foundation, balm and serum
+pages (`ccf_copy.ORIGIN`: "🇰🇷 Formulated in Korea · Advanced K-beauty formula"), the flag badge on the gallery photos
+("Formulated in Korea / Advanced formula": `label_composite.ORIGIN_LINES`, drawn by `product_photos.korea_badge` and,
+on the foundation's packshot, rewritten by `relabel_bottles` `'badge'`), the serum's bottle and carton, the homepage's
+formulas section and the advertorials. The brush is a tool, not a formula: it makes no origin claim.

@@ -33,11 +33,15 @@ HERE = Path(__file__).resolve().parent
 LOGO = HERE.parents[1] / 'brand' / 'logo' / 'skinofab-wordmark-black.png'
 FONT = HERE / 'assets' / 'fonts' / 'Montserrat-VF.ttf'
 DEBUG = False
+# the gallery's origin badge under the Korean flag (product_photos.korea_badge, relabel_bottles 'badge')
+ORIGIN_LINES = ('Formulated in Korea', 'Advanced formula')
 # logo: the wordmark's letter height as a share of the bottle's width; start: where the label starts, as a share of
 # the body's height (a blank bottle; a relabelled one keeps its old label's place)
 LABELS = {
-    'serum': {'lines': [('EGF + NAD+', 'Medium'), ('FIRMING SERUM', 'Medium')], 'sub': 'COLLAGEN', 'size': '30 mL / 1.01 fl oz',
-              'logo': 0.27, 'start': 0.14},
+    # the serum's label reads across the bottle: the wordmark upright and small (logo: its width as a share of the
+    # bottle's), a hairline, the name, and at the base where it is formulated and the size
+    'serum': {'layout': 'across', 'lines': [('EGF + NAD+', 'Medium'), ('FIRMING SERUM', 'Medium')], 'sub': 'WITH COLLAGEN',
+              'origin': 'FORMULATED IN KOREA', 'size': '30 mL / 1.01 fl oz', 'logo': 0.50, 'start': 0.10},
     'foundation': {'lines': [('ADAPTIVE PEPTIDE', 'Medium'), ('FOUNDATION', 'Medium')], 'sub': 'PDRN', 'size': '30 mL / 1.01 fl oz',
                    'logo': 0.22, 'start': 0.41},
     'balm': {'lines': [('PLUMPING', 'Medium'), ('BALM', 'Medium')], 'sub': 'PDRN · VOLUFILINE', 'size': '10 g / 0.35 oz',
@@ -62,6 +66,8 @@ def label_art(product, w, logo_px=None, logo_only=False, theta=0.0):
     printed lines under it stay); theta: where around the cylinder the wordmark's middle sits (radians, 0 = facing)."""
     spec = LABELS[product]
     S = 4
+    if spec.get('layout') == 'across' and not logo_only:
+        return label_across(spec, w)
     logo = logo_alpha().rotate(-90, expand=True)                 # reads top to bottom, S at the top
     lw = int((logo_px if logo_px else w * spec['logo']) * S)
     logo = logo.resize((lw, int(logo.height * lw / logo.width)), Image.LANCZOS)
@@ -88,6 +94,42 @@ def label_art(product, w, logo_px=None, logo_only=False, theta=0.0):
         y += int(line * 1.4); spaced(text, line, weight, y)
     y += int(line * 2.1); spaced(spec['sub'], int(line * 0.8), 'Medium', y)
     y += int(line * 2.1); spaced(spec['size'], int(line * 0.8), 'Medium', y, 0.08)
+    return m, H
+
+
+def spaced_text(d, cx, y, text, size, weight='Medium', track=0.16, fill=255):
+    """text centred on cx with its baseline at y, letter-spaced by track x size."""
+    f = sans(size, weight)
+    widths = [d.textlength(ch, font=f) for ch in text]
+    x = cx - (sum(widths) + track * size * (len(text) - 1)) / 2
+    for ch, cw in zip(text, widths):
+        d.text((x, y), ch, font=f, fill=fill, anchor='ls'); x += cw + track * size
+
+
+def label_across(spec, w):
+    """A label that reads across the bottle (spec['layout'] == 'across'), at 4x for a body w px wide: the wordmark
+    upright, spec['logo'] of the width, then a hairline, the name, its sub line, and at the base the origin and the
+    size. Its columns are arc length around the cylinder, as label_art's, so composite wraps it the same way."""
+    S = 4
+    A = int(w * S * np.pi / 2)
+    lw = int(w * S * spec['logo'])
+    logo = logo_alpha()
+    logo = logo.resize((lw, int(logo.height * lw / logo.width)), Image.LANCZOS)
+    line = w * S * 0.050
+    H = int(logo.height + w * S * 0.95)
+    m = Image.new('L', (A, H), 0)
+    m.paste(logo, ((A - lw) // 2, 0))
+    d = ImageDraw.Draw(m)
+    y = logo.height + w * S * 0.085
+    rule = w * S * 0.11
+    d.rectangle((A / 2 - rule / 2, y, A / 2 + rule / 2, y + max(1, w * S * 0.0035)), fill=255)
+    y += w * S * 0.045
+    for text, weight in spec['lines']:
+        y += line * 1.35; spaced_text(d, A / 2, y, text, int(line), weight)
+    y += line * 1.6; spaced_text(d, A / 2, y, spec['sub'], int(line * 0.62), 'Medium', 0.22)
+    y = H - line * 1.25
+    spaced_text(d, A / 2, y - line * 1.15, spec['origin'], int(line * 0.58), 'Medium', 0.22)
+    spaced_text(d, A / 2, y, spec['size'], int(line * 0.58), 'Medium', 0.10)
     return m, H
 
 
@@ -415,6 +457,29 @@ def carton(a, product, box):
     spec = LABELS[product]
     S = 4
     m = Image.new('L', (w * S, h * S), 0)
+    if spec.get('layout') == 'across':
+        # the wordmark upright across the face's upper third, a hairline, the name; the origin and size at its base
+        lw = int(w * S * 0.64)
+        logo = logo_alpha(); logo = logo.resize((lw, int(logo.height * lw / logo.width)), Image.LANCZOS)
+        y = int(h * S * 0.22)
+        m.paste(logo, ((w * S - lw) // 2, y))
+        d = ImageDraw.Draw(m)
+        y += logo.height + w * S * 0.10
+        d.rectangle((w * S / 2 - w * S * 0.07, y, w * S / 2 + w * S * 0.07, y + max(1, w * S * 0.004)), fill=255)
+        line = w * S * 0.060
+        y += w * S * 0.05
+        for text, weight in spec['lines']:
+            y += line * 1.4; spaced_text(d, w * S / 2, y, text, int(line), weight)
+        y += line * 1.7; spaced_text(d, w * S / 2, y, spec['sub'], int(line * 0.62), 'Medium', 0.22)
+        spaced_text(d, w * S / 2, h * S * 0.90, spec['origin'], int(line * 0.6), 'Medium', 0.22)
+        spaced_text(d, w * S / 2, h * S * 0.90 + line * 1.2, spec['size'], int(line * 0.6), 'Medium', 0.10)
+        m = m.resize((w, h), Image.LANCZOS).filter(ImageFilter.GaussianBlur(0.45))
+        ink = np.asarray(m).astype(np.float32) / 255 * 0.92
+        reg = a[y0:y1, x0:x1]
+        for ch in range(3):
+            reg[..., ch] = reg[..., ch] * (1 - ink) + 228 * ink
+        a[y0:y1, x0:x1] = reg
+        return a
     logo = logo_alpha().rotate(-90, expand=True)
     lw = int(w * S * 0.30)
     logo = logo.resize((lw, int(logo.height * lw / logo.width)), Image.LANCZOS)

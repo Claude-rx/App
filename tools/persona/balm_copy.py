@@ -44,7 +44,7 @@ META_DESCRIPTION = ('A PDRN, Volufiline and collagen balm stick for tired-lookin
 # first one eager; the card is the shelf, cart and sticky-bar image
 GALLERY = ['hero', 'hold-cheek', 'before-after', 'look-less-tired', 'results-grid', 'whats-inside', 'science', 'vs-others',
            'apply-eye', 'hold-chin', 'friends', 'apply-lips', 'bag']
-KOREAN = True          # the foundation's "Based on Korean beauty innovation" line stays in the buy box
+KOREAN = True          # the foundation's "Formulated in Korea" line stays in the buy box
 
 # the buy box --------------------------------------------------------------------------------------------------------
 EYEBROW = None

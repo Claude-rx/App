@@ -504,6 +504,203 @@ def even_shelf():
     home.write_text(t[:m.start()] + sec + t[end:], encoding='utf-8', errors='surrogateescape')
     return n
 
+# the store sells four products; every other one the design carried is gone from the pages (and from NEXT:
+# prune_catalog.py), and so are the pages that sold only those
+OUR_PRODUCTS = {'color-changing-foundation'} | {P.HANDLE for P in SECOND_PRODUCTS}
+LEGACY_PAGES = {'aging-brows', 'aging-brows2', 'facemask', 'srm01', 'srm01-2026-10-11-02-01-51-pm', 'page',
+                'fuller-lips-without-fillers-copy-copy', 'fullerbutnatural', 'plumper-quiz', 'shadequiz',
+                'lip-stain-restock-sign-up', 'top5stains', 'bundle-builder', 'skinofab-how-to-use',
+                'complete-your-order'}    # an old checkout funnel: a brow gel add-on and an invented review count
+# the design's collections that held only the other products (the store's categories that are empty now), and the
+# ones left with one or two of ours (Accessories: the brush; Sale and B2G5: the foundation), which the menus drop too
+EMPTY_COLLECTIONS = {'brows', 'bundles', 'canal-products', 'homepage-lips', 'lashes', 'lips', 'lipstain', 'serums',
+                     'essentials', 'sale', 'b2g5'}
+# FAQ answers about the other products (the contact page's General questions were all about lip plumpers)
+LEGACY_WORDS = re.compile(r'lip plumper|plumping gloss|lip stain|lip gloss|lip liner|\bbrows?\b|eyebrow|\blash(?:es)?\b|eyelash|'
+                          r'mascara|lifting mask|under-eye (?:patches|reset)|reverse-time|gua sha|face roller', re.I)
+# the brand's own words that named the other products
+LEGACY_TEXT = [
+    ('What started with a single lip gloss formula quickly evolved into a full-range beauty brand, from luscious lip '
+     'plumpers to advanced brow serums.',
+     'What started with a single formula grew into a focused line for skin after 45: an adaptive peptide foundation, a '
+     'PDRN plumping balm, an EGF + NAD+ firming serum and a lymphatic brush.'),
+    ('<p>From lip plumpers to brow serums — results you can see and feel.</p>',
+     '<p>From an adaptive foundation to a firming serum — results you can see and feel.</p>'),
+    ('A movement towards embracing your unique beauty — one lip plumper at a time.',
+     'A movement towards embracing your unique beauty — one ritual at a time.'),
+    ('From a single lip gloss in a tiny kitchen lab to a full-range beauty house — built on heart, not hype.',
+     'From a tiny kitchen lab to a skincare-first line for skin after 45 — built on heart, not hype.'),
+    ('high-impact formulas, on-trend shades and products designed to become everyday favourites — from complexion to lips, '
+     'brows and beyond.', 'high-impact formulas designed to become everyday favourites, starting with an adaptive peptide '
+     'foundation for skin after 45.'),
+    ('<p><strong>Beauty Tools &amp; Accessories</strong><br/>The finishing touch to every beauty routine. Smart, easy-to-use '
+     'tools and accessories designed', '<p><strong>Beauty Tools</strong><br/>The finishing touch to every beauty routine. '
+     'Smart, easy-to-use tools, like our lymphatic brush, designed'),
+    ('While our products, including lip plumpers and other cosmetic items, have been used',
+     'While our products, including our foundation and skincare, have been used'),
+]
+# the homepage sections that showed only the other products (Shop by category, Bundle & Save, Essentials)
+HOME_DROP = ('__categories', '__bundles', '__essentials')
+STRUCTURAL = {'[document]', 'html', 'body', 'main', 'section', 'header', 'footer', 'nav', 'template', 'form', 'details'}
+
+def resolve(href, page=''):
+    """href as an export path (a bare "essentials.html" on collections/face.html is collections/essentials.html)."""
+    h = (href or '').split('#')[0].split('?')[0]
+    if page and h and not h.startswith(('/', 'http:', 'https:', '#', 'mailto:', 'tel:', 'javascript:', 'data:')):
+        import posixpath
+        h = posixpath.normpath(posixpath.join(posixpath.dirname(page), h))
+    return h
+
+def gone(href, page=''):
+    """True when href points at something the store no longer has: another product, a page that sold only those, or
+    a collection that held only those. page: the export path of the page the link is on."""
+    h = resolve(href, page)
+    m = re.search(r'(?:^|/)products/([a-z0-9][a-z0-9-]*?)(?:\.html|\.js)?$', h)
+    if m: return m.group(1) not in OUR_PRODUCTS
+    m = re.search(r'(?:^|/)pages/([a-z0-9][a-z0-9-]*?)(?:\.html)?$', h)
+    if m: return m.group(1) in LEGACY_PAGES
+    m = re.search(r'(?:^|/)collections/([a-z0-9][a-z0-9-]*?)(?:\.html)?$', h)
+    if m: return m.group(1) in EMPTY_COLLECTIONS
+    return False
+
+def keeps(el, page=''):
+    """el links to one of our products."""
+    return any(re.search(r'(?:^|/)products/(?:%s)(?:\.html)?$' % '|'.join(map(re.escape, OUR_PRODUCTS)), resolve(a['href'], page))
+               for a in el.find_all('a', href=True))
+
+def strip_gone(soup, page=''):
+    """Every card, menu item, slide or tile that links only to something gone is removed: the largest element around
+    the link that holds no link to our products and no prose of its own. A link inside prose is unwrapped (its words
+    stay). Returns the number of changes."""
+    n = 0
+    for a in list(soup.find_all('a', href=lambda h: gone(h, page))):
+        if a.parent is None or not gone(a.get('href'), page): continue   # already removed with an earlier card
+        node, own = a, len(a.get_text(' ', strip=True))
+        while node.parent is not None and node.parent.name not in STRUCTURAL:
+            p = node.parent
+            if keeps(p, page) or len(p.get_text(' ', strip=True)) > max(500, 4 * own + 300): break
+            node = p
+        if node is a and a.parent is not None and len(a.parent.get_text(' ', strip=True)) > own + 40:
+            a.unwrap()
+        else:
+            node.decompose()
+        n += 1
+    return n
+
+def home_features():
+    """Two homepage stories the design gave to products the store no longer sells, given to ours: the Reverse-time
+    serum's video story becomes the EGF + NAD+ Firming Serum's (a photo of it in use), the lifting mask's "New
+    arrivals" banner becomes the PDRN Plumping Balm's. Returns the stories changed."""
+    from PIL import Image
+    home = DST / 'index.html'
+    t = home.read_text(encoding='utf-8', errors='surrogateescape')
+    done = 0
+    def section(key):
+        m = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+%s"' % key, t)
+        return (m.start(), t.find('</section>', m.start())) if m else (None, None)
+    a, b = section('__serum')
+    if a is not None:
+        sec = t[a:b]
+        img = hashed_copy(serum_copy_img('drop'), 'img', 'skinofab-home-serum-1080w', (1080, 1080))[3:]
+        sec = re.sub(r'<div class="fh-story-media" data-fh-editorial-video=""( style="[^"]*")?>.*?</div>\s*</div>',
+                     lambda m: f'<div class="fh-story-media"{m.group(1) or ""}><img alt="A woman in her sixties applying the EGF + NAD+ Firming Serum" '
+                     f'class="fh-social-poster" height="1080" loading="lazy" sizes="(max-width: 749px) calc(100vw - 32px), 760px" '
+                     f'src="{img}" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%" width="1080"/></div>', sec, count=1, flags=re.S)
+        sec = re.sub(r'<div class="fh-story-copy">.*?</a></div>',
+                     '<div class="fh-story-copy"><div class="fh-eyebrow"><span>EGF + NAD+ Firming Serum</span></div>'
+                     '<h2>Firmer-looking skin, face and neck</h2><div class="fh-story-body">'
+                     '<p>EGF, NAD+ and collagen in a light serum that sinks in within a minute. Two drops for your face, two for '
+                     'your neck, morning and night.</p><p>Skin looks smoother, firmer and more radiant with daily use, and it '
+                     'layers under your foundation without pilling.</p></div>'
+                     f'<a class="fh-button" href="products/{serum_copy.HANDLE}.html">Learn more</a></div>', sec, count=1, flags=re.S)
+        t = t[:a] + sec + t[b:]; done += 1
+    a, b = section('__arrivals_desktop')
+    if a is not None:
+        sec = t[a:b]
+        # the banner: white on the left for the copy, the balm in use and its stick on the right (photos on white)
+        W, H = 3360, 1013
+        ban = Image.new('RGB', (W, H), (255, 255, 255))
+        x0 = int(W * 0.46)                                   # clear of the copy column (the left 40% on desktop)
+        eye = Image.open(balm_copy_img('apply-eye')).convert('RGB').resize((H, H), Image.LANCZOS)
+        ban.paste(eye, (x0, 0))
+        stick = Image.open(balm_copy_img('card')).convert('RGB').resize((H, H), Image.LANCZOS)
+        rest = W - (x0 + H)
+        ban.paste(stick.crop(((H - rest) // 2, 0, (H - rest) // 2 + rest, H)), (x0 + H, 0))
+        tmp = WORK / 'home-balm-banner.jpg'; ban.save(tmp, quality=88, optimize=True, progressive=True)
+        big = hashed_copy(tmp, 'img', 'skinofab-home-balm-3360w')[3:]
+        small = hashed_copy(tmp, 'img', 'skinofab-home-balm-1680w', (1680, 1680))[3:]
+        sec = re.sub(r'<img alt="" class="fh-original"[^>]*/>',
+                     f'<img alt="A woman pressing the PDRN Plumping Balm under her eye, and the stick" class="fh-original" '
+                     f'height="1013" loading="lazy" sizes="(max-width: 749px) 269vw, 1680px" src="{big}" '
+                     f'srcset="{small} 1680w, {big} 3360w" width="3360"/>', sec, count=1)
+        sec = re.sub(r'<div class="fh-story-copy">.*?</a></div>',
+                     '<div class="fh-story-copy"><div class="fh-eyebrow"><span>New arrival</span></div>'
+                     '<h2>Rested-looking eyes in 10 seconds</h2><div class="fh-story-body">'
+                     '<p>The PDRN Plumping Balm puts PDRN, Volufiline™, collagen and hyaluronic acid in a stick you press on '
+                     'under your eyes, on smile lines and around your lips.</p><p>No fingers, no mess, over or under makeup: '
+                     'skin looks smoother, fuller and more rested.</p></div>'
+                     f'<a class="fh-button" href="products/{balm_copy.HANDLE}.html">Shop now</a></div>', sec, count=1, flags=re.S)
+        t = t[:a] + sec + t[b:]; done += 1
+    home.write_text(t, encoding='utf-8', errors='surrogateescape')
+    return done
+
+def serum_copy_img(name): return serum_copy.IMG / f'{name}.jpg'
+def balm_copy_img(name): return balm_copy.IMG / f'{name}.jpg'
+
+def only_our_products():
+    """The pages keep only our four products: the other products' pages and data, the pages that sold only them and
+    the empty collections are deleted from the export, every link to them is removed (strip_gone), the homepage
+    sections that showed only them are dropped, and the shelf's tabs that are left empty go. Returns a summary."""
+    from bs4 import BeautifulSoup
+    out = {'files': 0, 'links': 0, 'sections': 0, 'tabs': 0}
+    for f in list((DST / 'products').glob('*')):
+        if f.stem not in OUR_PRODUCTS: f.unlink(); out['files'] += 1
+    for slug in LEGACY_PAGES:
+        f = DST / 'pages' / f'{slug}.html'
+        if f.exists(): f.unlink(); out['files'] += 1
+    for c in EMPTY_COLLECTIONS:
+        f = DST / 'collections' / f'{c}.html'
+        if f.exists(): f.unlink(); out['files'] += 1
+    # the design's product quick-view fragments for the other products (the lifting mask, the under-eye patches)
+    for f in list((DST / 'recommendations').glob('*.html')) if (DST / 'recommendations').exists() else []:
+        names = re.findall(r'data-product-image="" height|<img alt="([^"]+)" class="is-loading img-object-cover"', f.read_text(encoding='utf-8', errors='surrogateescape'))
+        names = [n for n in names if n]
+        if names and not any(n in {apf_copy.PRODUCT, 'Adaptive Peptide Foundation', 'Color Changing Foundation'} | {P.TITLE for P in SECOND_PRODUCTS} for n in names):
+            f.unlink(); out['files'] += 1
+    for p in sorted(DST.rglob('*.html')):
+        t0 = p.read_text(encoding='utf-8', errors='surrogateescape')
+        t = t0
+        for old, new in LEGACY_TEXT: t = t.replace(old, new)
+        # the footer's Shop column names the brush, balm and serum: the foundation goes first
+        t = re.sub(r'(<li><a href="((?:\.\./)*)collections/all-products\.html">Shop all</a></li>)(?!<li><a href="(?:\.\./)*products/color-changing-foundation)',
+                   r'\1<li><a href="\2products/color-changing-foundation.html">Adaptive Peptide Foundation</a></li>', t)
+        if not re.search(r'(?:products|pages|collections)/', t) and 'accordion__item' not in t:
+            if t != t0: p.write_text(t, encoding='utf-8', errors='surrogateescape')
+            continue
+        soup = BeautifulSoup(t, 'html.parser')
+        k = strip_gone(soup, p.relative_to(DST).as_posix()) + (t != t0)
+        for li in soup.select('li.accordion__item'):
+            if LEGACY_WORDS.search(li.get_text(' ')):                    # a question or answer about another product
+                li.decompose(); k += 1
+        for lst in soup.select('ul.accordion__list'):
+            if not lst.select('li'):
+                sec = lst.find_parent('section') or lst.find_parent(class_=re.compile('shopify-section'))
+                (sec or lst).decompose()
+        if p == DST / 'index.html':
+            for sec in soup.find_all('section', id=True):
+                if sec['id'].endswith(HOME_DROP):
+                    sec.decompose(); out['sections'] += 1
+            # the shelf's tabs whose products are all gone: the panel (if strip_gone left it) and its tab button
+            for panel in soup.select('[data-fh-panel]'):
+                if not panel.select('article'): panel.decompose()
+            panels = {pn['data-fh-panel'] for pn in soup.select('[data-fh-panel]')}
+            for b in soup.select('[data-fh-tab]'):
+                if b['data-fh-tab'] not in panels: b.decompose(); out['tabs'] += 1
+        if k or p == DST / 'index.html':
+            p.write_text(str(soup), encoding='utf-8', errors='surrogateescape')
+            out['links'] += k
+    return out
+
 def real_testimonials(t, reviews=REVIEWS):
     """The product page's testimonial slider showed the design's persona stories ("Margaret, 61") with AI portraits
     under a "Verified purchase" badge. Each card now carries a real verified review (apf_copy.TESTIMONIALS) word for
@@ -908,7 +1105,7 @@ def product_page(base, P, final, found=None):
     for b in blocks:
         cls = b.get('class') or []
         t = text_of(b)
-        if ('Korean beauty' in t and not getattr(P, 'KOREAN', False)) or 'product__subheading' in str(b)[:200] or 'countdown-timer-wrapper' in cls \
+        if ('Formulated in Korea' in t and not getattr(P, 'KOREAN', False)) or 'product__subheading' in str(b)[:200] or 'countdown-timer-wrapper' in cls \
            or b.get('data-default-usp') is not None or b.select_one('[data-serum-subscription-usps]') or b.select_one('hr') \
            or {'product__features', 'product-suitability', 'customer-survey-results'} & set(cls):
             b.decompose()
@@ -1460,6 +1657,13 @@ def main():
     relabelled = relabel_bottles_on_pages()
     if not relabelled: missing.append(('real wordmark', 'foundation bottles to relabel'))
     print('real wordmark', relabelled)
+    print('home features', home_features())
+    pruned = only_our_products()
+    left = [p.relative_to(DST).as_posix() for p in DST.rglob('*.html')
+            if re.search(r'href="[^"]*products/(?!(?:%s)\.html)[a-z0-9-]+\.html' % '|'.join(map(re.escape, OUR_PRODUCTS)),
+                         p.read_text(encoding='utf-8', errors='surrogateescape'))]
+    if left: missing.append(('other products', 'links left in ' + ', '.join(left[:6])))
+    print('only our products', pruned)
     evened = even_shelf()
     if not evened: missing.append(('even shelf', 'shelf cards to size'))
     print('even shelf cards', evened)
