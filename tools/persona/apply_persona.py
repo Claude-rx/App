@@ -881,7 +881,7 @@ def home_original():
             f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}'
             # her and the stick in her hand (the packshot at the photo's far right stays out); its white studio
             # backdrop multiplied into the card's grey, so photo and card are one surface
-            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:48% 40%;mix-blend-mode:multiply}}'
+            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:62% 40%;mix-blend-mode:multiply}}'
             f'{X} .fh-story-media:after{{display:none}}}}'))
         t = t[:a] + sec + t[b:]; done['arrivals tablets'] = k
     home.write_text(t, encoding='utf-8', errors='surrogateescape')
