@@ -11,8 +11,10 @@ usage: HF_API_KEY_ID=... HF_API_KEY_SECRET=... NEXT_API_TOKEN=... \
 - parts are joined back and the ORIGINAL soundtrack is laid over the result: <work_dir>/<key>.mp4, kept in
   brand/videos/<key>.mp4 and mapped in queue/video-swaps.json, which apf_pages.py uses on the next build
 - state (request ids, results) is kept in <work_dir>/state.json, so a re-run never resubmits finished parts
-- --results <results.json> ({part name: result video url}): the parts were swapped through the Higgsfield connector
-  instead (queue "higgsfield_mcp" has their media ids); download them and do only the joining and publishing
+- --results <results.json> ({part name or whole video name: result video url, or {"url", "final": true} for a video
+  already finished elsewhere, e.g. trimmed or spliced, which is published as it is}): the videos were swapped elsewhere
+  (the studio's genjutsu tool returns whole videos; the connector route returns parts, queue "higgsfield_mcp"); download
+  them and do only the joining and publishing
 Key: Authorization: Key <id>:<secret> (docs.higgsfield.ai). The key is read from the environment only.
 """
 import json, math, os, subprocess, sys, time, urllib.error, urllib.request, uuid
@@ -85,8 +87,17 @@ print(f'{total:.0f} s of video at {res}: about ${total * RATE[res]:.2f} at list 
 RESULTS = json.load(open(sys.argv[sys.argv.index('--results') + 1])) if '--results' in sys.argv else None
 if not (GO or RESULTS): sys.exit()
 
-if RESULTS:                       # parts already swapped elsewhere (the Higgsfield connector): {part name: result url}
+WHOLE = {}                        # job key: a whole swapped video (the studio splits and joins long ones itself)
+FINAL = {}                        # job key: a video already finished elsewhere, published without stretching or new sound
+if RESULTS:                       # swapped elsewhere (studio, connector): {part name or whole video name: result url}
     for job, src, parts in plan:
+        r = RESULTS.get(job['video'])
+        if isinstance(r, dict) and r.get('final'):         # finished elsewhere (trimmed, spliced): published as it is
+            FINAL[job['key']] = WORK / f"final-{job['key']}.mp4"
+            urllib.request.urlretrieve(r['url'], FINAL[job['key']]); print('fetched final', job['key']); continue
+        if r and (len(parts) > 1 or job['video'] == parts[0]['name']):
+            WHOLE[job['key']] = WORK / f"out-whole-{job['key']}.mp4"
+            urllib.request.urlretrieve(r if isinstance(r, str) else r['url'], WHOLE[job['key']]); print('fetched whole', job['key']); continue
         for p in parts:
             if p['name'] not in RESULTS: continue
             urllib.request.urlretrieve(RESULTS[p['name']], WORK / f"out-{p['name']}")
@@ -118,7 +129,10 @@ while pending:
     if pending: time.sleep(delay); delay = min(delay * 1.4, 20)
 
 for job, src, parts in plan:                                        # join parts, original soundtrack on top
-    outs = [WORK / f"out-{p['name']}" for p in parts]
+    if job['key'] in FINAL:
+        STATE.setdefault('finals', {})[job['key']] = {'source': job['video'], 'file': str(FINAL[job['key']])}; save()
+        print('final (as is)', FINAL[job['key']], round(duration(FINAL[job['key']]), 1), 's'); continue
+    outs = [WHOLE[job['key']]] if job['key'] in WHOLE else [WORK / f"out-{p['name']}" for p in parts]
     if not all(o.exists() for o in outs): print('incomplete', job['key']); continue
     joined = WORK / f"{job['key']}-video.mp4"
     if len(outs) == 1: joined = outs[0]
@@ -127,8 +141,12 @@ for job, src, parts in plan:                                        # join parts
         sh('ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', str(lst), '-an', '-c:v', 'libx264', '-preset', 'veryfast',
            '-crf', '18', '-pix_fmt', 'yuv420p', str(joined))
     final = WORK / f"{job['key']}.mp4"
-    sh('ffmpeg', '-v', 'error', '-y', '-i', str(joined), '-i', str(src), '-map', '0:v:0', '-map', '1:a:0?', '-c:v', 'copy', '-c:a', 'aac',
-       '-shortest', '-movflags', '+faststart', str(final))
+    # Genjutsu returns 24 fps and runs a little fast (10.0 s comes back as 9.7 s, the drift growing linearly to the end):
+    # stretch the picture back to the source's length so her lips meet the original soundtrack again
+    k = duration(src) / duration(joined)
+    sh('ffmpeg', '-v', 'error', '-y', '-i', str(joined), '-i', str(src), '-map', '0:v:0', '-map', '1:a:0?',
+       '-filter:v', f'setpts={k:.6f}*PTS', '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p',
+       '-c:a', 'aac', '-b:a', '128k', '-t', f'{duration(src):.3f}', '-movflags', '+faststart', str(final))
     STATE.setdefault('finals', {})[job['key']] = {'source': job['video'], 'file': str(final)}; save()
     print('final', final, round(duration(final), 1), 's')
 
