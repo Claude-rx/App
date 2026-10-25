@@ -807,7 +807,7 @@
     const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
     const validCountryCode = /^[A-Z]{2}$/.test(normalizedCountryCode);
     const flagMarkup = validCountryCode
-      ? `<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint(...normalizedCountryCode.split('').map(c => 127397 + c.charCodeAt(0)))}</span>`
+      ? `<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint.apply(null, normalizedCountryCode.split('').map(function (c) { return 127397 + c.charCodeAt(0); }))}</span>`
       : '<span aria-hidden="true">📦</span>';
     const countryLabel = validCountryCode ? normalizedCountryCode : 'your country';
     const locationInfoP = document.getElementById('locationinfop');
@@ -920,17 +920,10 @@
   }
 
   // This function fetches the browsing context suggestions and updates the p tag
-  async function fetchLocationInfo() {
-    try {
-      const response = await fetch('/browsing_context_suggestions.json');
-      const data = await response.json();
-      const countryCode = data.detected_values.country.handle;
-      const countryName = data.detected_values.country.name;
-
-      setLocationInfo(countryCode, countryName);
-    } catch (error) {
-      console.error('Error fetching location info:', error);
-    }
+  function fetchLocationInfo() {
+    var loc = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    var m = /[-_]([A-Za-z]{2})$/.exec(loc);
+    setLocationInfo(m ? m[1] : '', '');
   }
 
   document.addEventListener('DOMContentLoaded', (event) => {
@@ -2749,7 +2742,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Re-initialize for Shopify sections (if using Section Rendering API)
   document.addEventListener('shopify:section:load', initAccordionPopups);
 })();
-    </script>
+    </script><style data-sf-layout-fixes="">.skinofab-why-inner>*{min-width:0}@media(min-width:768px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}.skinofab-why-inner--square-image .skinofab-why__image{aspect-ratio:16/10}}.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}.product-single__gallery{position:static!important;height:auto!important}}.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}.rte__table-wrapper table{height:auto!important}.rte__table-wrapper td{width:auto!important;height:auto!important}</style>
 <script type="application/json" id="sf-variant-options">[{% for field in variant_form %}{% if 'attr' in field.id_for_label %}{"code": "{{ field.html_name|slice:'5:'|escapejs }}", "label": "{{ field.label|escapejs }}", "choices": [{% for c in field.field.choices %}["{{ c.0|escapejs }}", "{{ c.1|escapejs }}"]{% if not forloop.last %},{% endif %}{% endfor %}]},{% endif %}{% endfor %}null]</script>
 {{ product.data|json_script:'product-data' }}
 {% app_hook "view_product" %}

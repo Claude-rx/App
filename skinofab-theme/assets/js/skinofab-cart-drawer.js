@@ -378,6 +378,10 @@
         /* above the store's sticky header and announcement bar */
         '.spark-drawer-backdrop { z-index: 2147483000; background: rgba(21,21,21,.45); }',
         '.spark-drawer-panel { z-index: 2147483001; max-width: 440px; color: #151515; box-shadow: -12px 0 40px rgba(0,0,0,.12); transition: transform 260ms cubic-bezier(.22,1,.36,1); }',
+        /* closed, the panel waits off-screen: without its shadow (it darkened the page's right edge) and hidden (no tab
+           stops in it); both come back as it slides in and go once it has slid out */
+        ':host(:not([data-open="true"])) .spark-drawer-panel { box-shadow: none; visibility: hidden; transition: transform 260ms cubic-bezier(.22,1,.36,1), visibility 0s linear 260ms, box-shadow 0s linear 260ms; }',
+        ':host([data-open="true"]) .spark-drawer-panel { visibility: visible; transition: transform 260ms cubic-bezier(.22,1,.36,1), visibility 0s; }',
         /* the add in flight (skinofab-commerce.js): the drawer opens at the click with the product, the line fills in when
            the server answers; the totals wait for it */
         '.sf-pending { display: flex; align-items: center; gap: 14px; padding: 18px 0; border-bottom: 1px solid #ececec; animation: sf-in 180ms ease-out; }',
@@ -537,6 +541,20 @@
         var body = root.querySelector('.spark-drawer-body');
         if (body && window.MutationObserver) new MutationObserver(count).observe(body, { childList: true });
         count();
+        /* the page under the open drawer stays put: no scrolling behind it (the scrollbar's width is kept, so
+           nothing shifts) */
+        function lock() {
+            var de = document.documentElement;
+            if (drawer.getAttribute('data-open') === 'true') {
+                var bar = window.innerWidth - de.clientWidth;
+                de.style.overflow = 'hidden';
+                if (bar > 0) de.style.paddingRight = bar + 'px';
+            } else {
+                de.style.overflow = '';
+                de.style.paddingRight = '';
+            }
+        }
+        if (window.MutationObserver) new MutationObserver(lock).observe(drawer, { attributes: true, attributeFilter: ['data-open'] });
         loadUpsells().then(paintUpsells);
     }
 

@@ -76,15 +76,18 @@ PAGE = {
         # meta description + og:description (the theme uses it while Settings > SEO has no store description)
         ("Cosmetics made to glow, feel skinofab.",
          "Adaptive Peptide Foundation: the color-adapting serum foundation made for skin after 45. Goes on white, turns into your skin tone. Free shipping, 30-day money-back guarantee."),
-        ("Foundation that adapts to you", "Stop guessing your shade after 45"),
-        ("Adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
-         "It goes on white and turns into your skin as you blend. A hydrating serum foundation with peptides and PDRN that won't settle into your lines."),
+        # the hero and "One shade that finds yours" keep the export's own words (the homepage is its original
+        # design), with one claim made accurate: it softens the look of lines as it blends, not "in seconds"
+        ("blurring blemishes, redness, and fine lines in seconds.", "softening the look of blemishes, redness and fine lines as you blend."),
         (">Look visibly younger<", ">Made for 45+<"),
-        ("One shade that finds yours", "One shade. No more guessing."),
-        ("Our color-adapting foundation shifts to match your skin tone the moment it touches your skin, then settles into a smooth, natural finish that doesn't sit in fine lines or cake as the day goes on.",
-         "There's no shade to choose. As you blend, the color adapts to your tone, so sun spots, redness and a sallow cast even out without a white cast or an orange edge. The satin serum base stays comfortable on dry skin and doesn't sink into fine lines, even on a long day or a close-up video call."),
-        ("Made for mature skin, it's lightweight, hydrating and forgiving, so you look like yourself, just fresher.",
-         "Made for skin after 45: fragrance-free, with peptides, PDRN and hyaluronic acid. Fingertips only, about a minute, and you look like yourself, just fresher."),
+    ],
+    'pages/postflows-track-your-order.html': [
+        ("Fill in your order number or tracking code to see where your package currently is.",
+         "Fill in your tracking code to see where your package is right now."),
+    ],
+    'policies/shipping-policy.html': [
+        ("<span>6-8 Business Day</span>", "<span>6-8 Business Days</span>"),
+        ("6-8\xa0 Business Days", "6-8 Business Days"),
     ],
     'products/color-changing-foundation.html': [
         # ingredient carousel: photo alt, heading and line change together

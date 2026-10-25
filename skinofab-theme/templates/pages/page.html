@@ -674,7 +674,7 @@
   // Re-initialize for Shopify sections (if using Section Rendering API)
   document.addEventListener('shopify:section:load', initAccordionPopups);
 })();
-    </script>
+    </script><style data-sf-layout-fixes="">.skinofab-why-inner>*{min-width:0}@media(min-width:768px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}.skinofab-why-inner--square-image .skinofab-why__image{aspect-ratio:16/10}}.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}.product-single__gallery{position:static!important;height:auto!important}}.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}.rte__table-wrapper table{height:auto!important}.rte__table-wrapper td{width:auto!important;height:auto!important}</style>
 {% endif %}{% endblock sf_tail %}
 {% block nav_header %}{% if page.slug == 'bestfoundation-2' %}{% else %}{{ block.super }}{% endif %}{% endblock nav_header %}
 {% block footer %}{% if page.slug == 'bestfoundation-2' %}{% else %}{{ block.super }}{% endif %}{% endblock footer %}

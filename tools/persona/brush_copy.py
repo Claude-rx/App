@@ -127,8 +127,8 @@ def tabs():
 
 
 # the sections below: the foundation page's, in its order (twin.py), with the brush's copy ------------------------------
-NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews yet', 'lead_amazon': 'No SKINOFAB reviews yet',
-              'text': 'The Lymphatic Brush is new at SKINOFAB, and we only show reviews from real buyers. Try it for 30 days: '
+NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews of the brush yet', 'lead_amazon': 'No SKINOFAB reviews yet',
+              'text': 'The reviews at the top of this page are of our Adaptive Peptide Foundation. The Lymphatic Brush is new at SKINOFAB, and we only show reviews from real buyers. Try it for 30 days: '
                       'if you don’t love it, we’ll refund you.',
               'button': 'Try it risk-free', 'write': 'Bought it? Write the first review'}
 FAQ = {'items': [

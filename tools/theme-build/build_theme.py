@@ -428,6 +428,7 @@ def transform(root, page, slots, current=None):
     for el in list(root.find_all(True)):
         if el.find(True) or not PRICE_RE.match(el.get_text() or ''): continue
         if el.find_parent(attrs={'data-sf-offer-picker': True}) is not None: continue   # prices set by the offer table
+        if el.find_parent(attrs={'data-sf-fixed-price': True}) is not None: continue    # a bundle's own price, as written
         if el.find_parent(['script', 'style', 'template']) is not None and el.name not in ('s', 'span', 'div'): continue
         h = card_handle(el, page, current)
         if not h and re.search(r'protection|protect your order', (el.find_parent(['p', 'li', 'div']) or el).get_text(' ', strip=True), re.I):
