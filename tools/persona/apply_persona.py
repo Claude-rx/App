@@ -869,23 +869,18 @@ def home_original():
             '.fh-badges{flex-wrap:wrap;justify-content:flex-end;left:12px;right:12px;top:12px;gap:6px}.fh-badges>span{white-space:nowrap}'
             '.fh-product-rating{min-width:0;overflow:hidden}.fh-product-rating>span:last-child{overflow:hidden;text-overflow:ellipsis}'))
         t = t[:a] + sec + t[b:]; done['shelf tablets'] = k
-    # ---- "Rested-looking eyes" (the balm's story): a fixed 369 px card with its photo under the copy; on tablets the
-    # copy, then the photo; on small laptops the photo starts where the copy ends
+    # ---- "Rested-looking eyes" (the balm's story): a fixed 369 px card with its photo under the copy; under 1200 px
+    # the copy, then the photo (the part with her and the stick: the photo's left is the copy's blank backdrop)
     a, b = section('__arrivals_desktop')
     if a is not None:
         X = '[id$="__arrivals_desktop"] .fh-editorial--arrivals'
         sec, k = style(t[a:b], (
-            f'@media(min-width:750px) and (max-width:1023px){{{X}{{height:auto;display:flex;flex-direction:column}}'
+            f'@media(min-width:750px) and (max-width:1199px){{{X}{{height:auto;display:flex;flex-direction:column}}'
             f'{X} .fh-story-copy{{order:1;height:auto;width:100%;margin:0;padding:40px 32px 24px}}'
             f'{X} .fh-story-media{{position:relative;order:2;inset:auto;width:100%;aspect-ratio:16/9}}'
             f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}'
-            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:42% 40%}}'
-            f'{X} .fh-story-media:after{{display:none}}}}'
-            f'@media(min-width:1024px) and (max-width:1199px){{{X}{{height:auto;min-height:var(--fh-story-height)}}'
-            f'{X} .fh-story-copy{{height:auto;min-height:var(--fh-story-height);padding:40px 0}}'
-            f'{X} .fh-story-media{{left:calc(min(var(--fh-story-width),45%) + 72px)}}'
-            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:45% 40%;'
-            f'-webkit-mask-image:linear-gradient(to right,transparent,#000 14%);mask-image:linear-gradient(to right,transparent,#000 14%)}}}}'))
+            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:72% 40%}}'
+            f'{X} .fh-story-media:after{{display:none}}}}'))
         t = t[:a] + sec + t[b:]; done['arrivals tablets'] = k
     home.write_text(t, encoding='utf-8', errors='surrogateescape')
     return done
