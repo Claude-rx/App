@@ -11,6 +11,8 @@ usage: HF_API_KEY_ID=... HF_API_KEY_SECRET=... NEXT_API_TOKEN=... \
 - parts are joined back and the ORIGINAL soundtrack is laid over the result: <work_dir>/<key>.mp4, kept in
   brand/videos/<key>.mp4 and mapped in queue/video-swaps.json, which apf_pages.py uses on the next build
 - state (request ids, results) is kept in <work_dir>/state.json, so a re-run never resubmits finished parts
+- --results <results.json> ({part name: result video url}): the parts were swapped through the Higgsfield connector
+  instead (queue "higgsfield_mcp" has their media ids); download them and do only the joining and publishing
 Key: Authorization: Key <id>:<secret> (docs.higgsfield.ai). The key is read from the environment only.
 """
 import json, math, os, subprocess, sys, time, urllib.error, urllib.request
@@ -79,19 +81,29 @@ for job in JOBS['jobs']:
 res = JOBS.get('resolution', '720p')
 print(json.dumps([{'key': j['key'], 'parts': [(p['name'], round(p['seconds'], 1)) for p in ps]} for j, _, ps in plan], indent=1))
 print(f'{total:.0f} s of video at {res}: about ${total * RATE[res]:.2f} at list price')
-if not GO: sys.exit()
+RESULTS = json.load(open(sys.argv[sys.argv.index('--results') + 1])) if '--results' in sys.argv else None
+if not (GO or RESULTS): sys.exit()
 
-auth()
-push([str(Path(p['local']).relative_to(THEME)) for _, _, ps in plan for p in ps if p['name'].startswith('gj-src-')])
-for job, src, parts in plan:                                        # submit everything first, then poll
-    for p in parts:
-        st = STATE.setdefault(p['name'], {})
-        if st.get('request_id') and st.get('status') not in ('failed', 'nsfw', 'canceled'): continue
-        r = call('POST', f'{API}/{ENDPOINT}', {'video_url': p['url'], 'image_urls': JOBS['refs'], 'prompt': job.get('prompt') or JOBS['prompt'],
-                                               'resolution': res})
-        st.update(request_id=r['request_id'], status_url=r['status_url'], status=r.get('status')); save()
-        print('submitted', p['name'], r['request_id'])
-pending = {p['name'] for _, _, ps in plan for p in ps if STATE[p['name']].get('status') != 'completed'}
+if RESULTS:                       # parts already swapped elsewhere (the Higgsfield connector): {part name: result url}
+    for job, src, parts in plan:
+        for p in parts:
+            if p['name'] not in RESULTS: continue
+            urllib.request.urlretrieve(RESULTS[p['name']], WORK / f"out-{p['name']}")
+            STATE.setdefault(p['name'], {}).update(status='completed', video_url=RESULTS[p['name']]); save()
+            print('fetched', p['name'])
+else:
+    auth()
+    push([str(Path(p['local']).relative_to(THEME)) for _, _, ps in plan for p in ps if p['name'].startswith('gj-src-')])
+    for job, src, parts in plan:                                    # submit everything first, then poll
+        for p in parts:
+            st = STATE.setdefault(p['name'], {})
+            if st.get('request_id') and st.get('status') not in ('failed', 'nsfw', 'canceled'): continue
+            r = call('POST', f'{API}/{ENDPOINT}', {'video_url': p['url'], 'image_urls': JOBS['refs'],
+                                                   'prompt': job.get('prompt') or JOBS['prompt'], 'resolution': res})
+            st.update(request_id=r['request_id'], status_url=r['status_url'], status=r.get('status')); save()
+            print('submitted', p['name'], r['request_id'])
+pending = {p['name'] for _, _, ps in plan for p in ps if STATE.get(p['name'], {}).get('status') != 'completed'}
+if RESULTS: pending = set()                                         # nothing submitted here: nothing to poll
 delay = 5.0
 while pending:
     for name in sorted(pending):
