@@ -2,11 +2,16 @@
  "endpoint": "higgsfield/genjutsu/object-swap/v1.0",
  "resolution": "720p",
  "refs": [
-  "https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-c018bb.jpg",
-  "https://cdn.29next.store/media/skinofab/images/products/2026/10/03-three-quarter-right-6848a0.jpg",
-  "https://cdn.29next.store/media/skinofab/images/products/2026/10/09-pump-detail-8569c9.jpg"
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-01-front.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-02-left-three-quarter.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-03-right-three-quarter.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-09-pump-detail.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-10-label-detail.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-04-left-profile.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-06-rear.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-07-top.jpg"
  ],
- "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact bottle in the reference images, in every frame where it appears: a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring, SKINOFAB printed vertically in a white serif typeface, and under it only ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz in small white letters. Keep everything else exactly the same: the woman, her face, skin, hair, hands, grip, gestures, makeup application, the room, lighting, camera motion and timing. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic.",
+ "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact SKINOFAB Adaptive Peptide Foundation bottle shown in the reference images, in every frame where it appears, from every angle the video shows. The bottle: a straight matte black cylinder 103 mm tall and 32.5 mm wide (height to width 3.17 to 1), a matte black cap of the same width above a thin horizontal seam, a recessed pump slot with a small white-and-steel nozzle ring at the top, a dark grey top disc. Front print in white: SKINOFAB set vertically in the serif wordmark, S at the top and B at the bottom, and under it only ADAPTIVE PEPTIDE FOUNDATION (two lines), PDRN and 30 mL / 1.01 fl oz, exactly as in the label close-up; no other text on the bottle; the rear and sides are plain matte black. Keep its real size fixed against her hands and face (about the length of her palm), never stretched, widened or shrunk. Keep everything else exactly the same: the woman, her face, skin, hair, hands, fingers, grip, gestures, makeup application, the room, lighting, camera motion and timing. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic.",
  "how_to_run": "HF_API_KEY_ID / HF_API_KEY_SECRET in the environment, then: python3 -I tools/persona/genjutsu_direct.py tools/persona/queue/genjutsu-queue.json skinofab-theme <work_dir> --go",
  "not_swapped": {
   "67378f79": "pink SMOOCHE serum (Reverse-time Peptide Serum), not the foundation",
@@ -16,7 +21,7 @@
   {
    "key": "gj-2ff54da7",
    "video": "2ff54da7c0a546d9a1ac06160b9df70a-HD-1080p-2-5Mbps-97954776-f31cb3.mp4",
-   "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact bottle in the reference images, in every frame where it appears: a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring, SKINOFAB printed vertically in a white serif typeface, and under it only ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz in small white letters. Keep everything else exactly the same: the woman, her face, skin, hair, hands, grip, gestures, makeup application, the room, lighting, camera motion and timing. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic. Also change the white on-screen text SMOOCHE to SKINOFAB in the same font, size and position."
+   "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact SKINOFAB Adaptive Peptide Foundation bottle shown in the reference images, in every frame where it appears, from every angle the video shows. The bottle: a straight matte black cylinder 103 mm tall and 32.5 mm wide (height to width 3.17 to 1), a matte black cap of the same width above a thin horizontal seam, a recessed pump slot with a small white-and-steel nozzle ring at the top, a dark grey top disc. Front print in white: SKINOFAB set vertically in the serif wordmark, S at the top and B at the bottom, and under it only ADAPTIVE PEPTIDE FOUNDATION (two lines), PDRN and 30 mL / 1.01 fl oz, exactly as in the label close-up; no other text on the bottle; the rear and sides are plain matte black. Keep its real size fixed against her hands and face (about the length of her palm), never stretched, widened or shrunk. Keep everything else exactly the same: the woman, her face, skin, hair, hands, fingers, grip, gestures, makeup application, the room, lighting, camera motion and timing. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic. Also change the white on-screen text SMOOCHE to SKINOFAB in the same font, size and position."
   },
   {
    "key": "gj-41b77ec4",
@@ -102,5 +107,5 @@
   },
   "total_credits": 1057
  },
- "refs_note": "The NEXT gallery of product 14: the bottle with the real SKINOFAB wordmark on white (front, three-quarter, pump close-up). Genjutsu needs source videos of at least 409,600 px per frame; all seven pass (606x1080, 576x720)."
+ "refs_note": "From the owner's product sheet (skinofab-product-sheet-text-and-size.pdf, 21 Oct 2026): front, both three-quarters, pump close-up, the label text at 4x, left profile, rear and top. Genjutsu needs source videos of at least 409,600 px per frame; all seven pass (606x1080, 576x720)."
 }
