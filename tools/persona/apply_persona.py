@@ -870,16 +870,18 @@ def home_original():
             '.fh-product-rating{min-width:0;overflow:hidden}.fh-product-rating>span:last-child{overflow:hidden;text-overflow:ellipsis}'))
         t = t[:a] + sec + t[b:]; done['shelf tablets'] = k
     # ---- "Rested-looking eyes" (the balm's story): a fixed 369 px card with its photo under the copy; under 1200 px
-    # the copy, then the photo (the part with her and the stick: the photo's left is the copy's blank backdrop)
+    # the copy, then the photo
     a, b = section('__arrivals_desktop')
     if a is not None:
         X = '[id$="__arrivals_desktop"] .fh-editorial--arrivals'
         sec, k = style(t[a:b], (
             f'@media(min-width:750px) and (max-width:1199px){{{X}{{height:auto;display:flex;flex-direction:column}}'
             f'{X} .fh-story-copy{{order:1;height:auto;width:100%;margin:0;padding:40px 32px 24px}}'
-            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;width:100%;aspect-ratio:16/9}}'
+            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;width:100%;aspect-ratio:4/3;background:#e9e9e9}}'
             f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}'
-            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:72% 40%}}'
+            # her and the stick in her hand (the packshot at the photo's far right stays out); its white studio
+            # backdrop multiplied into the card's grey, so photo and card are one surface
+            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:48% 40%;mix-blend-mode:multiply}}'
             f'{X} .fh-story-media:after{{display:none}}}}'))
         t = t[:a] + sec + t[b:]; done['arrivals tablets'] = k
     home.write_text(t, encoding='utf-8', errors='surrogateescape')
