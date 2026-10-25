@@ -50,9 +50,9 @@
   },
   "figma-home-b8e5e8.css": {
    "before_kb": 41.3,
-   "after_kb": 38.6,
+   "after_kb": 38.2,
    "selectors": 569,
-   "dropped": 35
+   "dropped": 41
   },
   "futura-pt-fallback.css": {
    "before_kb": 0.1,
@@ -138,14 +138,14 @@
   },
   "theme-410305.css": {
    "before_kb": 627.7,
-   "after_kb": 223.9,
+   "after_kb": 215.8,
    "selectors": 7384,
-   "dropped": 4672
+   "dropped": 4768
   },
   "inline": {
-   "blocks": 894,
-   "before_kb": 5220.9,
-   "after_kb": 4490.7,
+   "blocks": 888,
+   "before_kb": 5211.9,
+   "after_kb": 4475.6,
    "skipped": 0
   }
  },
@@ -162,8 +162,8 @@
   }
  },
  "bundles": {
-  "sfb-99b43fbc.css": {
-   "kb": 249.8,
+  "sfb-1c7c8e14.css": {
+   "kb": 241.7,
    "members": [
     "futura-pt-fallback.css",
     "all-min-2d3b0a.css",
@@ -180,8 +180,8 @@
   "script_tags_deferred": 50
  },
  "images": {
-  "elements": 231,
-  "skipped": 658
+  "elements": 216,
+  "skipped": 655
  },
  "errors": [],
  "backgrounds": {
@@ -189,6 +189,6 @@
   "kb_deferred": 967
  },
  "late_images": {
-  "images": 54
+  "images": 52
  }
 }

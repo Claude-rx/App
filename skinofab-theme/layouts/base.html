@@ -33,6 +33,7 @@
     {% endblock favicon %}
 
     {# 2. Critical preloads. Page templates should only preload LCP assets here. #}
+    <link rel="preconnect" href="https://d1lrxs4saq89c.cloudfront.net">
     <link rel="preconnect" href="https://cdn.29next.store">
     <link rel="preconnect" href="https://cdn.29next.store" crossorigin>
     {% block critical_preloads %}{% endblock critical_preloads %}
