@@ -5,6 +5,7 @@ FOUNDATION / PDRN / 30 mL / 1.01 fl oz), and the face, hands, framing and light 
 usage: python3 -I held_bottle.py <photo> <out> (--roi x0,y0,x1,y1 --pump up|down|left|right | --line bx,by,px,py --w px)
                                  [--render brand/adaptive-peptide-foundation/01-front.png] [--width 1.0]
                                  [--anchor base|pump|centre] [--shift dx,dy] [--fingers left|right] [--tone photo|render]
+                                 [--pdrn label|bold]
                                  [--debug <dir>]
 - roi: a box around the old bottle (photo px); in it the old bottle is the largest neutral black object (brown hair
   and grey shadows are not), thin attachments trimmed off
@@ -21,7 +22,7 @@ usage: python3 -I held_bottle.py <photo> <out> (--roi x0,y0,x1,y1 --pump up|down
 - the new bottle gets the photo's tones (the old bottle's dark and highlight levels) and its softness; --tone render
   keeps the render's own (for a photo whose old bottle was lit flatter than the real one: its label would turn grey)
 - the render's small PDRN line is set again at the label's other lines' size first, so it never reads PORN
-  (label_fix.legible_pdrn)
+  (label_fix.legible_pdrn); --pdrn bold sets it larger and heavier, for a bottle shown only ~100 px wide
 """
 import sys
 from pathlib import Path
@@ -43,6 +44,7 @@ WIDTH, ANCHOR = float(opt('--width', 1.0)), opt('--anchor', 'base')
 SHIFT = np.array([float(v) for v in opt('--shift', '0,0').split(',')])
 FINGERS = opt('--fingers')
 TONE = opt('--tone', 'photo')
+PDRN = opt('--pdrn', 'label')
 DEBUG = Path(opt('--debug')) if opt('--debug') else None
 lum = lambda a: a[..., 0] * .299 + a[..., 1] * .587 + a[..., 2] * .114
 
@@ -89,7 +91,9 @@ else:
 
 # ---------------------------------------------------------------- 2. the real bottle, cut out of the render
 r = np.asarray(Image.open(RENDER).convert('RGB')).astype(np.float32)
-if RENDER.name == '01-front.png' and r.shape[:2] == (1254, 1254): r = legible_pdrn(r)   # label_fix.py
+# label_fix.py; --pdrn bold: larger and heavier, for a bottle a card shows only ~100 px wide (as the home hero's)
+if RENDER.name == '01-front.png' and r.shape[:2] == (1254, 1254):
+    r = legible_pdrn(r, **({'cap': 22, 'weight': 720, 'track': 0.18} if PDRN == 'bold' else {}))
 rl = lum(r)
 bg = np.median(np.concatenate([rl[:20].ravel(), rl[:, :20].ravel(), rl[:, -20:].ravel()]))
 rd = rl < bg * 0.62

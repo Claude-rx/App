@@ -35,6 +35,15 @@ def delivery_list():
     return '<ul>' + ''.join(f'<li><strong>{html.escape(w)}:</strong> {d}</li>' for w, d in DELIVERY) + '</ul>'
 
 
+# the same terms in a product page's "Shipping and returns" tab and its FAQ answers (plain text, no links)
+SHIPPING_SHORT = (f'We process orders within {PROCESSING} and ship them free, with tracking. Standard delivery after that: '
+                  'United States 2–4 business days; the UK, Canada, Australia, New Zealand and the EU 6–9; the rest of '
+                  'the world 8–12.')
+RETURNS_SHORT = (f'Try it for 30 days from the day it arrives. If you don’t love it, email {E} with your order number and '
+                 'we’ll refund the product’s price in full, even if you’ve opened and used it.')
+SHIPPING_TAB_HTML = (f'<p><strong>Processing and delivery</strong><br/>{html.escape(SHIPPING_SHORT, quote=False)}</p>'
+                     f'<p><strong>Returns</strong><br/>{html.escape(RETURNS_SHORT, quote=False)}</p>')
+
 GUARANTEE = (f'Try any SKINOFAB product for 30 days from the day it arrives. If you don’t love it, email {MAIL} with your '
              'order number within those 30 days and we’ll refund the product’s price in full, even if you’ve opened '
              'and used it. There is no restocking fee.')
@@ -43,7 +52,8 @@ GUARANTEE = (f'Try any SKINOFAB product for 30 days from the day it arrives. If 
 # drop the question). Matched against the question as the page shows it after the copy rules.
 FAQ = [
     ('What is Skinofab', 'What is SKINOFAB?',
-     f'<p>SKINOFAB makes four products for skin after 45, all formulated in Korea: {PRODUCTS}.</p>'),
+     '<p>SKINOFAB makes four products for skin after 45: three formulas made in Korea, the Adaptive Peptide Foundation, '
+     'the EGF + NAD+ Firming Serum and the PDRN Plumping Balm, and The Lymphatic Brush.</p>'),
     ('How do I contact Skinofab', 'How do I contact SKINOFAB?',
      f'<p>Email us at {MAIL}, or use the form on our <a href="contact.html">Contact page</a>. We answer every message.</p>'),
     ('How does the', 'How does the Adaptive Peptide Foundation work?',

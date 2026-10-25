@@ -12,6 +12,7 @@ setup_brush_offers.py (the NEXT product, its three bundles and their prices).
 """
 import html, json
 from pathlib import Path
+import support_copy
 
 KEY, MEDIA_BASE = 'brush', 9300000000000          # section ids, gallery media ids
 HANDLE = 'the-lymphatic-brush'
@@ -86,10 +87,7 @@ def _list(items): return '<ul>' + ''.join(f'<li>{i}</li>' for i in items) + '</u
 
 
 # the store's shipping terms (the balm's page has the same tab)
-SHIPPING_TAB = ('Shipping and returns',
-                '<p><strong>Processing</strong><br>Orders are carefully packed and shipped within 2–4 business days after you place your order.</p>'
-                '<p><strong>Shipping</strong><br>We offer <strong>free shipping</strong> on all orders.</p>'
-                '<p><strong>Delivery estimates</strong><br>Worldwide: 5–8 business days once your order has been shipped.</p>')
+SHIPPING_TAB = ('Shipping and returns', support_copy.SHIPPING_TAB_HTML)      # the shipping policy's terms (support_copy.py)
 
 
 def tabs():

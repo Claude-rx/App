@@ -384,6 +384,9 @@ def handle_of(href, page):
 # ---------------------------------------------------------------- 4. fragment transform
 PRICE_RE = re.compile(r'^\s*\$\s?\d[\d,]*(?:\.\d{2})?(?:\s*USD)?\s*$')
 NEXT_PRICE = "{%% include 'partials/sf_price.html' with p=%s%s %%}"
+REFILL_NOTE = ("{% if product and settings.sf_refill_default_product and settings.sf_refill_price_text and product.pk == settings.sf_refill_default_product.pk %}"
+               '<p class="sf-refill-note" style="margin:2px 0 0;font-size:12px;line-height:16px;color:#5a5a5a">with '
+               '{{ settings.sf_subscription_interval_count }}-{{ settings.sf_subscription_interval }} refills, cancel anytime</p>{% endif %}')
 
 def card_handle(el, page, current):
     """The product a price/form belongs to.
@@ -411,7 +414,7 @@ def product_ref(handle, current):
     return f'settings.sf_p_{var(handle)}'
 
 NATIVE_REVIEWS_DTL = (
-    '{%% if product %%}{"write": "{%% if product|is_review_permitted:user %%}{%% url \'catalogue:reviews-add\' product_slug=product.slug product_pk=product.id %%}#addreview{%% endif %%}", '
+    '{%% if product %%}{"write": "{%% if product|is_review_permitted:user %%}{%% url \'catalogue:reviews-add\' product_slug=product.slug product_pk=product.id %%}{%% endif %%}", '
     '"reviews": [{%% for sf_r in product.reviews.approved.all|slice:":300" %%}'
     '{"name": "{{ sf_r.reviewer_name|escapejs }}", "title": "{{ sf_r.title|escapejs }}", "body": "{{ sf_r.body|striptags|escapejs }}", '
     '"score": "{{ sf_r.score|escapejs }}", "date": "{{ sf_r.date_created|date:\'Y-m-d\' }}"}{%% if not forloop.last %%},{%% endif %%}'
@@ -830,7 +833,11 @@ def build_card(card):
         img['alt'] = slots.put('{{ product.get_title }}')
     for s in card.select('.visually-hidden'): s.string = slots.put('{{ product.get_title }}')
     price = card.select_one('.product-grid-item__price')
-    if price: price.clear(); price.append(slots.put("{% include 'partials/sf_price.html' with p=product %}"))
+    if price:
+        price.clear(); price.append(slots.put("{% include 'partials/sf_price.html' with p=product %}"))
+        # the refills-by-default product's card shows its refill price (sf_price.html): say so under it, as the
+        # homepage's cards do
+        price.insert_after(NavigableString(slots.put(REFILL_NOTE)))
     card['id'] = slots.put('product-item-{{ product.pk }}')
     body = slots.render(str(card))
     CARD_PARTIAL = ("{# SKINOFAB product card (design markup) for NEXT products. Usage: include with product=product #}\n"
@@ -850,6 +857,11 @@ def catalogue(template, title_var):
     parts = decompose(f)
     def content(slots):
         main = parts['main']
+        # the export's "Sort by" bar and filter drawer: Shopify's sort values, which NEXT's listing ignores (the same
+        # four products in the same order for each), and while it is on the page the theme unpins the header (it
+        # pins the bar instead): both go, the header stays pinned as on every other page
+        for el in main.select('[data-collection-sticky-bar], [data-collection-filters]'):
+            if not el.select('[data-product-block]'): el.decompose()
         cards = main.select('[data-product-block]')
         if cards:
             grid = cards[0].parent
@@ -1089,6 +1101,10 @@ SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1
                # total and Remove stay on screen (they were pushed 100 px past its right edge)
                '#cart_formset .flex.items-center.mt-3{flex-wrap:wrap;row-gap:8px}'
                '#main-content #cart_formset select{min-width:0;max-width:100%}'
+               # a line's title and its total share a row: when the title wraps on a phone the total ran into it
+               # ("Foundation - 1$37.00 bottle"); a gap, and the total never wraps or shrinks
+               '#cart_formset .flex.items-start.justify-between{gap:16px}'
+               '#cart_formset .flex.items-start.justify-between>div:last-child{white-space:nowrap;flex-shrink:0}'
                # the page's width and margins as the header's and footer's (it started 104 px in on a desktop)
                '#main-content .container{width:calc(100% - 64px);max-width:1440px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}'
                '@media (max-width:749px){ #main-content .container{width:calc(100% - 32px)}}'   # "{ #": "{#" opens a DTL comment
@@ -1113,6 +1129,25 @@ for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'te
                       "\n{% block sf_lead %}{% include 'partials/sf_pages/contact/lead.html' %}{% endblock sf_lead %}"
                       "\n{% block sf_tail %}{% include 'partials/sf_pages/contact/tail.html' %}{% endblock sf_tail %}", 1)
         p.write_text(s)
+
+# Review form: the score was a plain select of "---------", 0, 1 ... 5 (a 0-star review was one choice): five stars
+# to click instead (1-5, required; radio inputs, so it works without script and by keyboard)
+SCORE_FIELD = "{% include 'partials/form_field.html' with field=form.score %}"
+SCORE_STARS = ('<fieldset class="sf-score"><legend class="block text-sm font-medium text-slate-700 mb-1">{{ form.score.label }} '
+               '<span class="text-red-500">*</span></legend><div class="sf-stars">'
+               '{% for v in "54321" %}<input type="radio" id="sf-score-{{ v }}" name="{{ form.score.html_name }}" value="{{ v }}" required'
+               '{% if form.score.value == v %} checked{% endif %}><label for="sf-score-{{ v }}" title="{{ v }} of 5 stars">&#9733;</label>{% endfor %}</div>'
+               '{% for error in form.score.errors %}<p class="text-xs text-red-500 mt-1">{{ error }}</p>{% endfor %}</fieldset>'
+               '<style>.sf-score{border:0;margin:0;padding:0}.sf-stars{display:inline-flex;flex-direction:row-reverse;gap:6px}'
+               '.sf-stars input{position:absolute;opacity:0;width:1px;height:1px}'
+               '.sf-stars label{font-size:34px;line-height:1;color:#d6d6d6;cursor:pointer}'
+               '.sf-stars input:checked~label,.sf-stars label:hover,.sf-stars label:hover~label{color:#151515}'
+               '.sf-stars input:focus-visible+label{outline:2px solid #151515;outline-offset:2px;border-radius:4px}</style>')
+p_form = OUT / 'templates' / 'reviews' / 'form.html'
+if p_form.exists():
+    s = p_form.read_text()
+    if s.count(SCORE_FIELD) != 1: sys.exit('templates/reviews/form.html: score field not found once')
+    p_form.write_text(s.replace(SCORE_FIELD, SCORE_STARS))
 
 # Cart page: Spark's per-line frequency select offers "One Time"; a line of the subscription-only product
 # (Theme settings > Subscription Offer) keeps the plan instead, as a fixed label + hidden value.

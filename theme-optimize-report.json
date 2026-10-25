@@ -50,9 +50,9 @@
   },
   "figma-home-b8e5e8.css": {
    "before_kb": 41.3,
-   "after_kb": 38.2,
+   "after_kb": 38.0,
    "selectors": 569,
-   "dropped": 41
+   "dropped": 43
   },
   "futura-pt-fallback.css": {
    "before_kb": 0.1,
@@ -90,9 +90,9 @@
   },
   "kopstorm-62aff9.css": {
    "before_kb": 20.7,
-   "after_kb": 6.6,
+   "after_kb": 6.5,
    "selectors": 293,
-   "dropped": 200
+   "dropped": 202
   },
   "kopstorm-V2-ea6148.css": {
    "before_kb": 1.4,
@@ -138,14 +138,14 @@
   },
   "theme-410305.css": {
    "before_kb": 627.7,
-   "after_kb": 215.8,
+   "after_kb": 202.0,
    "selectors": 7384,
-   "dropped": 4768
+   "dropped": 4893
   },
   "inline": {
-   "blocks": 890,
-   "before_kb": 5218.4,
-   "after_kb": 4479.8,
+   "blocks": 895,
+   "before_kb": 5220.7,
+   "after_kb": 4480.8,
    "skipped": 0
   }
  },
@@ -162,8 +162,8 @@
   }
  },
  "bundles": {
-  "sfb-1c7c8e14.css": {
-   "kb": 241.7,
+  "sfb-0ad58b59.css": {
+   "kb": 227.9,
    "members": [
     "futura-pt-fallback.css",
     "all-min-2d3b0a.css",

@@ -223,7 +223,9 @@
  ],
  "unbound_prices": [],
  "missing_assets": [],
- "unmapped_links": [],
+ "unmapped_links": [
+  "accounts"
+ ],
  "font_faces": 139,
  "css_url_vars": 3,
  "product_json": 4,

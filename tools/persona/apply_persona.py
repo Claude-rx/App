@@ -226,6 +226,9 @@ def honest_video_cards():
         out.append(sec[last:a.start()] + art); last = a.end(); n += 1
     sec = ''.join(out) + sec[last:]
     sec = re.sub(r'<h2>Trusted by 9,800\+ verified buyers who finally found something that works</h2>', '<h2>See how it blends</h2>', sec, count=1)
+    # its eyebrow (stars and "Over 7,700 5-star reviews") made the illustrative videos under it read as reviews
+    sec = re.sub(r'<div class="fh-eyebrow"><img alt="" height="16" src="[^"]*" width="80"/><span>Over [\d,]+ 5-star reviews</span></div>',
+                 '<div class="fh-eyebrow"><span>On skin</span></div>', sec, count=1)
     home.write_text(t[:m.start()] + sec + t[end:], encoding='utf-8', errors='surrogateescape')
     return n
 
@@ -579,6 +582,11 @@ def even_shelf():
             tag = re.sub(r' width="\d+"', f' width="{1080 if rich else 720}"', tag)
             return re.sub(r' height="\d+"', f' height="{1080 if rich else 720}"', tag)
         art = re.sub(r'<img [^>]*>', img, art, count=1)
+        if h == SHELF_HANDLES[0]:
+            # the export's badge said "Save 33%" (its old prices); the card shows $59 -> $37 (with refills): 37%
+            pk = apf_copy.PACK1
+            save = round(100 * (1 - float(pk['refill']) / float(pk['compare'])))
+            art = re.sub(r'(<span class="fh-saving">)Save \d+%(</span>)', lambda mm: f'{mm.group(1)}Save {save}%{mm.group(2)}', art)
         out.append(sec[last:a.start()] + art); last = a.end(); n += 1
     sec = ''.join(out) + sec[last:]
     home.write_text(t[:m.start()] + sec + t[end:], encoding='utf-8', errors='surrogateescape')
@@ -675,12 +683,12 @@ PHENOMENON = [
      'A woman in her fifties taking a selfie with the Adaptive Peptide Foundation'),
     ('serum:mirror.jpg', .5, serum_copy.HANDLE, 'A woman applying the EGF + NAD+ Firming Serum at her bathroom mirror'),
     ('balm:bag.jpg', .5, balm_copy.HANDLE, 'The PDRN Plumping Balm going into a handbag'),
-    ('persona:39279355-93ee-4899-bdeb-ee8ce659ab45-1800w-e1c742.jpg', .5, 'color-changing-foundation',
+    ('home:phenomenon-4.jpg', .5, 'color-changing-foundation',             # home_images.py: the real bottle on it
      'A woman holding the Adaptive Peptide Foundation'),
     ('serum:hold-cheek.jpg', .3, serum_copy.HANDLE, 'A woman holding the EGF + NAD+ Firming Serum by her cheek'),
     ('balm:apply-lips.jpg', .45, balm_copy.HANDLE, 'A woman pressing the PDRN Plumping Balm on her lips'),
-    ('persona:5_9146d931-fc02-41ef-80bc-663d593c60b8_800x800-970513.jpg', .62, 'color-changing-foundation',
-     'A woman at home with the Adaptive Peptide Foundation'),
+    ('home:phenomenon-7.jpg', .5, 'color-changing-foundation',             # her face and the bottle both in the card
+     'A woman with short grey hair holding the Adaptive Peptide Foundation'),
     ('home:source/brush-ai.jpg', .38, brush_copy.HANDLE, 'A woman sweeping The Lymphatic Brush over her cheek'),
 ]
 
@@ -812,15 +820,20 @@ def home_features():
     a, b = section('__arrivals_desktop')
     if a is not None:
         sec = t[a:b]
-        # the banner: white on the left for the copy, the balm in use and its stick on the right (photos on white)
+        # the banner: her photo widened to a landscape (home_images.py, balm-wide.jpg) at the right edge, and on the
+        # left, behind the copy, its own studio background carried on row by row, so no edge of the photo shows
+        import numpy as np
         W, H = 3360, 1013
-        ban = Image.new('RGB', (W, H), (255, 255, 255))
-        x0 = int(W * 0.46)                                   # clear of the copy column (the left 40% on desktop)
-        eye = Image.open(balm_copy_img('apply-eye')).convert('RGB').resize((H, H), Image.LANCZOS)
-        ban.paste(eye, (x0, 0))
-        stick = Image.open(balm_copy_img('card')).convert('RGB').resize((H, H), Image.LANCZOS)
-        rest = W - (x0 + H)
-        ban.paste(stick.crop(((H - rest) // 2, 0, (H - rest) // 2 + rest, H)), (x0 + H, 0))
+        wide = Image.open(HOME / 'balm-wide.jpg').convert('RGB')
+        wide = np.asarray(wide.resize((round(wide.width * H / wide.height), H), Image.LANCZOS)).astype(np.float32)
+        x0 = W - wide.shape[1]
+        edge, y = wide[:, :24].mean(1), np.arange(H)                         # the photo's left edge, each row, as
+        edge = np.stack([np.polyval(np.polyfit(y, edge[:, c], 2), y) for c in range(3)], 1)   # a smooth gradient
+        field = np.repeat(edge[:, None, :], W, 1)
+        ramp = np.clip(np.arange(wide.shape[1]) / 240, 0, 1)[None, :, None]  # 240 px into the photo, its own pixels
+        field[:, x0:] = field[:, x0:] * (1 - ramp) + wide * ramp
+        field += np.random.default_rng(3).normal(0, 0.8, field.shape)       # a grain, so the gradient never bands
+        ban = Image.fromarray(np.clip(field + 0.5, 0, 255).astype(np.uint8))
         tmp = WORK / 'home-balm-banner.jpg'; ban.save(tmp, quality=88, optimize=True, progressive=True)
         big = hashed_copy(tmp, 'img', 'skinofab-home-balm-3360w')[3:]
         small = hashed_copy(tmp, 'img', 'skinofab-home-balm-1680w', (1680, 1680))[3:]
@@ -830,7 +843,7 @@ def home_features():
                      lambda m: f'<source height="1080" media="(max-width: 1199px)" sizes="(max-width: 1023px) 100vw, 50vw" '
                      f'srcset="{eye_src} 1080w" width="1080">' + m.group(0), sec, count=1)
         sec = re.sub(r'<img alt="" class="fh-original"[^>]*/>',
-                     f'<img alt="A woman pressing the PDRN Plumping Balm under her eye, and the stick" class="fh-original" '
+                     f'<img alt="A woman in her sixties pressing the PDRN Plumping Balm under her eye" class="fh-original" '
                      f'height="1013" loading="lazy" sizes="(max-width: 749px) 269vw, 1680px" src="{big}" '
                      f'srcset="{small} 1680w, {big} 3360w" width="3360"/>', sec, count=1)
         sec = re.sub(r'<div class="fh-story-copy">.*?</a></div>',
@@ -907,10 +920,17 @@ def home_original():
         m = re.search(r'(<div class="fh-category-grid"[^>]*>)', sec)
         end = balanced_end(sec, m.start(), 'div')
         sec = sec[:m.end()] + ''.join(tiles) + '</div>' + sec[end:]
-        # the tiles keep their photos' 4:5 shape at every width from 750 px (the export's fixed 450 px height cut the
-        # product out of a narrow tile on tablets), two to a row under 1024 px
+        # each tile is its photo, whole at 4:5 (the export's fixed heights cut the product out of a narrow tile), with
+        # the name and the button under it: the export set them in white on the photo, over a dark gradient across
+        # its lower 60%, on the product the woman holds. Two to a row under 1024 px from 750 px
         X = '[id$="__categories"]'
-        sec, _ = style(sec, (f'@media(min-width:750px){{{X} .fh-category{{height:auto;aspect-ratio:4/5}}{X} .fh-category .fh-original{{object-position:50% 20%}}}}'
+        sec, _ = style(sec, (f'{X} .fh-category{{height:auto;overflow:visible;border-radius:0;display:flex;flex-direction:column;gap:14px;text-decoration:none}}'
+                             f'{X} .fh-category:after{{display:none}}'
+                             f'{X} .fh-category picture{{position:relative;inset:auto;display:block;aspect-ratio:4/5;border-radius:var(--fh-radius);overflow:hidden}}'
+                             f'{X} .fh-category img{{width:100%;height:100%;object-fit:cover;object-position:50% 20%}}'
+                             f'{X} .fh-category>div{{position:static;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:0 2px}}'
+                             f'{X} .fh-category h3{{color:#151515;font-size:26px}}'
+                             f'{X} .fh-category .fh-button--white{{background:#151515;color:#fff;border-color:#151515}}'
                              f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-category-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}'))
         t = t[:a] + sec + t[b:]; done['categories'] = len(tiles)
     t = t.replace('alt="Woman applying Skinofab Color Changing Foundation"', 'alt="A woman in her fifties holding the Adaptive Peptide Foundation"')
@@ -1165,6 +1185,102 @@ TRACK_FORM = (
     '.sf-track-note,.sf-track-help{font-size:14px;line-height:1.5;color:#555;margin-top:12px}.sf-track-help a{text-decoration:underline}</style>'
 )
 
+MAILTO_JS = ("<script>document.addEventListener('submit', function (e) {"
+             "var f = e.target, kind = f.getAttribute && f.getAttribute('data-sf-mailto'); if (!kind) return;"
+             "e.preventDefault(); if (f.reportValidity && !f.reportValidity()) return;"
+             "var v = function (n) { var el = f.querySelector('[name=\"' + n + '\"]'); return el ? el.value.trim() : ''; };"
+             "var email = v('contact[email]'), name = v('contact[name]'), subject, body;"
+             "if (kind === 'newsletter') { subject = 'Newsletter sign-up'; body = 'Please add ' + email + ' to the SKINOFAB newsletter.'; }"
+             "else { subject = 'Message from ' + (name || email); body = v('contact[body]') + '\\n\\n' + [name, email, v('contact[phone]')].filter(Boolean).join('\\n'); }"
+             "location.href = f.getAttribute('action') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);"
+             "});</script>")
+
+def working_forms():
+    """The forms the old Shopify store left: the footer's newsletter and the contact page's form posted to "#" with
+    no token (NEXT answered 403 Forbidden), and NEXT has no newsletter or contact endpoint; the footer's country
+    picker was Shopify's 108 markets (NEXT sells in one currency; the checkout asks the country) and posted the same
+    way; the menu's "Log in" was a link to "#". Now the two forms open the shopper's email app with the message
+    written, to the store's address (the line under the button says so; without script the form opens it too), the
+    country picker goes, and "Log in" opens the account (NEXT asks for the email code there). Returns the pages changed."""
+    mail = company.EMAIL
+    n = 0
+    for page in sorted(DST.rglob('*.html')):
+        t = page.read_text(encoding='utf-8', errors='surrogateescape')
+        o = t
+        t = re.sub(r'<form accept-charset="UTF-8" action="#" class="newsletter-form"([^>]*) method="post">\s*'
+                   r'<input name="form_type" type="hidden" value="customer"/>\s*<input name="utf8" type="hidden" value="✓"/>\s*'
+                   r'<input name="contact\[accepts_marketing\]" type="hidden" value="true"/>',
+                   lambda m: f'<form accept-charset="UTF-8" action="mailto:{mail}" class="newsletter-form"{m.group(1)} '
+                             'data-sf-mailto="newsletter" method="get">', t)
+        t = t.replace('<div class="errors">Email is invalid or already taken.</div>',
+                      '<p class="sf-mailto-note" style="margin:10px 0 0;font-size:13px;opacity:.75">Opens your email app '
+                      'with the sign-up written: press Send there.</p>')
+        t = re.sub(r'<form accept-charset="UTF-8" action="#" class="contact-form" id="([^"]+)" method="post">\s*'
+                   r'<input name="form_type" type="hidden" value="contact"/>\s*<input name="utf8" type="hidden" value="✓"/>',
+                   lambda m: f'<form accept-charset="UTF-8" action="mailto:{mail}" class="contact-form" data-sf-mailto="contact" '
+                             f'id="{m.group(1)}" method="get">', t)
+        t = t.replace('<button class="cs-btn" type="submit">Send message</button>',
+                      '<button class="cs-btn" type="submit">Send message</button>'
+                      f'<p class="sf-mailto-note" style="margin:12px 0 0;font-size:14px;color:#5a5a5a">Opens your email app '
+                      f'with your message to {mail}: press Send there.</p>')
+        m = re.search(r'<form accept-charset="UTF-8" action="#" class="localization-form"', t)
+        if m:
+            e = t.find('</form>', m.start())
+            if e > 0: t = t[:m.start()] + t[e + len('</form>'):]
+        t = t.replace('href="#" id="customer_login_link"', 'href="/accounts/" id="customer_login_link"')   # NEXT's account page
+        if 'data-sf-mailto=' in t and MAILTO_JS not in t:
+            t = t.replace('</body>', MAILTO_JS + '</body>', 1)
+        if t != o:
+            page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
+    return n
+
+# the listing pages' banner (Shop, Skin, The hits): a 650 px box the collage was drawn wider than (cut at the right on a
+# laptop, slicing a face), darkened by an overlay, the title in white on a model's chin. The title now on the page above,
+# the collage under it at its own shape (wide from 768 px, two by two on phones), whole, no overlay
+LISTING_BANNER_CSS = ('<style>.banner-image__inner.sf-listing-banner{display:flex;flex-direction:column;min-height:0;height:auto}'
+                      '.sf-listing-banner .banner-image__text-container{order:-1;min-height:0;padding:40px 0 22px}'
+                      '.sf-listing-banner .banner-image__heading{color:#151515}'
+                      '.sf-listing-banner .banner-image__image-container{position:relative;min-height:0;padding-top:0;aspect-ratio:3456/1408}'
+                      '.sf-listing-banner .banner-image__image-inner{transform:none;animation:none}'
+                      '@media (max-width:767px){.sf-listing-banner .banner-image__image-container{aspect-ratio:2000/2245}'
+                      '.sf-listing-banner .banner-image__text-container{padding:28px 0 16px}}</style>')
+
+def listing_banners():
+    """LISTING_BANNER_CSS on the listing pages' banner. Returns the pages changed."""
+    n = 0
+    for page in sorted((DST / 'collections').glob('*.html')):
+        t = page.read_text(encoding='utf-8', errors='surrogateescape')
+        b = re.search(r'<div class="shopify-section supports-transparent-header" id="shopify-section-template--[0-9]+__section_banner_image_[A-Za-z0-9]+">', t)
+        if not b or 'sf-listing-banner' in t: continue
+        e = t.find('<div class="shopify-section', b.end())
+        sec = t[b.start():e]
+        sec, k = re.subn(r'class="banner-image__inner six-fifty-height original-height-mobile (item--[a-z-]+) text-light"',
+                         r'class="banner-image__inner sf-listing-banner \1 text-dark"', sec, count=1)
+        if not k: continue
+        sec = sec.replace('<div class="overlay"></div>', '', 1).replace('sizes="(max-width: 1199px) 150vw, 105vw"', 'sizes="100vw"')
+        page.write_text(t[:b.start()] + sec + LISTING_BANNER_CSS + t[e:], encoding='utf-8', errors='surrogateescape'); n += 1
+    return n
+
+def zoom_links():
+    """The product galleries' lightbox said "The image could not be loaded." on every slide: each slide's zoom link
+    (the image the lightbox opens) pointed to "#" (the export's went to the old store's CDN). Each now points to its
+    slide's own largest image. Returns the links set."""
+    n = 0
+    for page in sorted((DST / 'products').glob('*.html')):
+        t = page.read_text(encoding='utf-8', errors='surrogateescape')
+        out, last = [], 0
+        for m in re.finditer(r'<a class="product-single__media-link"([^>]*?) href="#"', t):
+            imgs = list(re.finditer(r'<img [^>]*>', t[last:m.start()]))
+            if not imgs: continue
+            tag = imgs[-1].group(0)                 # the slide's image comes just before its zoom link
+            ss = re.search(r'srcset="([^"]*)"', tag)
+            cands = [(int(w), u) for u, w in re.findall(r'(\S+)\s+(\d+)w', ss.group(1))] if ss else []
+            src = max(cands)[1] if cands else (re.search(r' src="([^"]+)"', tag) or [None, None])[1]
+            if not src: continue
+            out.append(t[last:m.start()] + f'<a class="product-single__media-link"{m.group(1)} href="{src}"'); last = m.end(); n += 1
+        if out: page.write_text(''.join(out) + t[last:], encoding='utf-8', errors='surrogateescape')
+    return n
+
 def track_form():
     """The track-your-order page promised a form ("Fill in your tracking code...") but had none: its tracking app was
     the old Shopify store's. Now a tracking-code form that opens the parcel on 17TRACK (every carrier), and an email
@@ -1208,7 +1324,9 @@ def more_products_html(up):
     for handle, title, path in HOME_ESSENTIALS:
         src = up + hashed_copy(path, 'img', f'skinofab-home-essential-{handle}-720w', (720, 720))[3:]
         if handle == 'color-changing-foundation':
-            price = f'<span class="sf-more__price" data-sf-fixed-price=""><s>{usd(one["compare"])}</s><b>{usd(one["refill"])}</b></span>'
+            price = (f'<span class="sf-more__price" data-sf-fixed-price=""><s>{usd(one["compare"])}</s><b>{usd(one["refill"])}</b></span>'
+                     f'<span class="sf-refill-note" style="font-size:12px;line-height:16px;color:#5a5a5a">with '
+                     f'{ccf_copy.REFILL["every"]}-day refills, cancel anytime</span>')
         else:
             price = f'<span class="sf-more__price"><b>{usd(next(P.PRICE for P in SECOND_PRODUCTS if P.HANDLE == handle))}</b></span>'
         cards.append(f'<a class="sf-more__card" href="{up}products/{handle}.html"><img alt="{html.escape(title)}" height="720" loading="lazy" '
@@ -2396,6 +2514,12 @@ def main():
     print('layout fixes', layout_fixes())
     print('local location', local_location())
     print('track form', track_form())
+    forms = working_forms()
+    if not forms: missing.append(('forms', 'newsletter / contact / country forms'))
+    print('working forms', forms)
+    banners = listing_banners()
+    if not banners: missing.append(('listing banners', 'collections banner'))
+    print('listing banners', banners)
     pruned = only_our_products()
     left = [p.relative_to(DST).as_posix() for p in DST.rglob('*.html')
             if re.search(r'href="[^"]*products/(?!(?:%s)\.html)[a-z0-9-]+\.html' % '|'.join(map(re.escape, OUR_PRODUCTS)),
@@ -2408,6 +2532,9 @@ def main():
     evened = even_shelf()
     if not evened: missing.append(('even shelf', 'shelf cards to size'))
     print('even shelf cards', evened)
+    zoomed = zoom_links()
+    if not zoomed: missing.append(('lightbox', 'gallery zoom links'))
+    print('gallery zoom links', zoomed)
     print(json.dumps({'rules': len(rules), 'replacements': sum(hits.values()), 'images': replaced, 'missing': missing}, ensure_ascii=False, indent=1))
     if missing: sys.exit(1)
 

@@ -14,7 +14,7 @@
 <div class="product-grid-item__info product-grid-item__info--inline">
 <div class="product-grid-item__info-content">
 <a aria-label="{{ product.get_title }}" class="product-grid-item__title font-heading" data-grid-link="" href="{{ product.get_absolute_url }}">{{ product.get_title }}</a> <span class="product-grid-item__info-separator"></span>
-<a class="product-grid-item__price price" data-grid-link="" data-subscription-card-compare-price-usd="5900" data-subscription-card-price-usd="3900" href="{{ product.get_absolute_url }}">{% include 'partials/sf_price.html' with p=product %}</a>
+<a class="product-grid-item__price price" data-grid-link="" data-subscription-card-compare-price-usd="5900" data-subscription-card-price-usd="3900" href="{{ product.get_absolute_url }}">{% include 'partials/sf_price.html' with p=product %}</a>{% if product and settings.sf_refill_default_product and settings.sf_refill_price_text and product.pk == settings.sf_refill_default_product.pk %}<p class="sf-refill-note" style="margin:2px 0 0;font-size:12px;line-height:16px;color:#5a5a5a">with {{ settings.sf_subscription_interval_count }}-{{ settings.sf_subscription_interval }} refills, cancel anytime</p>{% endif %}
 </div></div>
 </div>
 {% endwith %}

@@ -51,7 +51,13 @@ def loved(sec, c):
     brk.insert(0, c['lead'] + ' ')
     icon = hl.select_one('.text-highlight__icon')
     hl.clear(); hl.append(c['mark'])
-    if icon: hl.append(icon)
+    if icon:
+        # the design's oval is sized from its width: round one word ("9,800+") it fits the line, round two ("after
+        # 45") it grew taller than the line and crossed the one above. Stretched to the words' own box instead
+        for svg in icon.select('svg'): svg['preserveAspectRatio'] = 'none'
+        hl.append(icon)
+        brk.append(frag('<style>.text-highlight__break .text-highlight__icon{height:112%}'
+                        '.text-highlight__break .text-highlight__icon svg{width:100%;height:100%;transform:translate(-50%,-50%)}</style>'))
     return str(s)
 
 

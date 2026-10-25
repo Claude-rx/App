@@ -11,6 +11,9 @@ usage: python3 -I tools/persona/home_images.py
 - formulas.jpg: the "Korean formulas" photo (source/formulas-ai-2x.jpg: the original model with her neck and shoulder
   completed, so no cut edge shows at any width; Real-ESRGAN 2x), the real bottle laid on it, a little wider than the
   image model's bottle so it covers it whole
+- phenomenon-4.jpg, phenomenon-7.jpg: two of "The SKINOFAB phenomenon" cards (source/phenomenon-*-ai.jpg), the real
+  bottle laid on them
+- balm-wide.jpg: the balm banner's photo from 1200 px (pdrn-balm/source/apply-eye-wide-ai.png)
 - celebration.jpg: "Beauty is a celebration", the export's two models as women in their fifties (gpt-image-2)
 - tile-*.jpg (4:5): Shop by category, a woman over 45 holding each product
 - adaptive-peptide-foundation/doctor.jpg: the foundation page's "Formulated in Korea" photo, a model in a lab coat
@@ -31,6 +34,7 @@ SRC, OUT, BRAND = ROOT / 'brand' / 'home' / 'source', ROOT / 'brand' / 'home', R
 HELD = Path(__file__).resolve().parent / 'held_bottle.py'
 sys.path.insert(0, str(HELD.parent))
 from label_fix import legible_pdrn
+import relabel_bottles
 TMP = OUT / '.work'
 
 
@@ -145,6 +149,20 @@ def main():
     # real bottle laid in her hand, its own tones kept (the image model's bottle was lit flatter)
     held(BRAND / 'adaptive-peptide-foundation' / 'source' / 'doctor-ai.png', BRAND / 'adaptive-peptide-foundation' / 'doctor.jpg',
          '--line', '269,925,269,566', '--w', '97', '--width', '1.15', '--anchor', 'centre', '--fingers', 'left', '--tone', 'render')
+    # ---- "The SKINOFAB phenomenon" cards 4 and 7: persona photos whose bottles printed the old "COLOR CHANGING
+    # FOUNDATION / 15 SPF" (4) or a PDRN that read PORN at the card's size; the real bottle laid on them, its PDRN line
+    # set large enough for a bottle the card shows ~100 px wide (card 7: the photo frames her whole face and the bottle
+    # in the card's 13:20, which the old card 7's selfie could not)
+    held(SRC / 'phenomenon-4-ai.jpg', OUT / 'phenomenon-4.jpg', '--roi', '420,540,600,945', '--pump', 'up', '--anchor', 'centre',
+         '--tone', 'render', '--pdrn', 'bold')
+    held(SRC / 'phenomenon-7-ai.jpg', OUT / 'phenomenon-7.jpg', '--line', '411,1053,401,544', '--w', '127', '--width', '1.23',
+         '--anchor', 'base', '--fingers', 'left', '--tone', 'render', '--pdrn', 'bold')
+    # ---- the balm banner (from 1200 px): the balm eye photo widened to a landscape by gpt-image-2
+    # (pdrn-balm/source/apply-eye-wide-ai.png: her whole head in frame, studio background to her left; the square
+    # original was framed so tight that her temple and hair ran into its edges, which showed as a pasted rectangle),
+    # the brand's wordmark set on the stick
+    wide = Image.open(BRAND / 'pdrn-balm' / 'source' / 'apply-eye-wide-ai.png').convert('RGB')
+    save(relabel_bottles.relabel(wide, [('box', (1198, 536, 1264, 664), (1230, 552))]), 'balm-wide.jpg')
     # ---- Beauty is a celebration: the export's two models as women in their fifties (gpt-image-2, source/celebration-ai.jpg)
     save(Image.open(SRC / 'celebration-ai.jpg').convert('RGB'), 'celebration.jpg')
     # ---- Shop by category: 4:5 crops, face and product in the upper two thirds (the name and button sit low left)

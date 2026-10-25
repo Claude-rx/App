@@ -22,6 +22,7 @@ sheet, persona photos without any product in them) and fills them in.
 
 import html, json
 import ccf_copy
+import support_copy
 
 PRODUCT = 'Adaptive Peptide Foundation'
 PACKS, REFILL = ccf_copy.PACKS, ccf_copy.REFILL
@@ -303,7 +304,7 @@ FAQ = [
     ('How does the guarantee work?',
      'Wear it in your own daylight for 30 days. If you don\'t love it, email us and we\'ll refund you.'),
     ('When will my order arrive?',
-     'Orders ship within 24–48 hours with tracking. Delivery usually takes 5–7 business days depending on where you live.'),
+     support_copy.SHIPPING_SHORT),
 ]
 
 def _checks(items): return '<ul class="apf-checks">' + ''.join(f'<li>{i}</li>' for i in items) + '</ul>'
@@ -605,9 +606,9 @@ def pdp_sections():
     <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px"><a class="apf-btn" href="mailto:hello@skinofab.com">Email hello@skinofab.com</a><a class="apf-btn apf-btn--line" href="../pages/contact.html">Contact page</a></div>
   </div>
   <div class="apf-grid2" style="gap:14px;align-items:stretch">
-    <a class="apf-card" style="text-decoration:none" href="../pages/postflows-track-your-order.html"><h4>Track your order</h4><p>Ships in 24–48 hours with tracking.</p></a>
+    <a class="apf-card" style="text-decoration:none" href="../pages/postflows-track-your-order.html"><h4>Track your order</h4><p>Ships within 1 business day, with tracking.</p></a>
     <a class="apf-card" style="text-decoration:none" href="../pages/contact.html"><h4>Ask about your skin</h4><p>Dry, sensitive, very fair or deep? Ask us first.</p></a>
-    <a class="apf-card" style="text-decoration:none" href="../policies/shipping-policy.html"><h4>Shipping</h4><p>Delivery in about 5–7 business days.</p></a>
+    <a class="apf-card" style="text-decoration:none" href="../policies/shipping-policy.html"><h4>Shipping</h4><p>Free: 2–4 business days in the US, 6–12 elsewhere.</p></a>
     <a class="apf-card" style="text-decoration:none" href="../policies/refund-policy.html"><h4>Returns &amp; refunds</h4><p>Love it or your money back, 30 days.</p></a>
   </div>
 </div></div></section>

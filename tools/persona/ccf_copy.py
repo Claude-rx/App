@@ -14,6 +14,7 @@ Each rule is (old, new). `old` is visible text as it appears in the export; whit
 and dashes are matched loosely. GLOBAL rules run on every page, PAGE rules on one file. Every rule must match at
 least once or the build fails, so copy can't silently drift from the design.
 """
+import support_copy
 
 # where every SKINOFAB formula is made: the buy box's line, the gallery badges (product_photos.korea_badge) and the
 # pages say formulated in Korea, never made in Korea
@@ -99,6 +100,13 @@ GLOBAL = [
 
 PAGE = {
     'index.html': [
+        # "Formulated in Korea" cards: "ceramides, panthenol and glycerin in every formula", "vitamin C": no product lists
+        # vitamin C, the serum has neither ceramides nor panthenol, only the foundation says fragrance-free
+        ('Ceramides, panthenol and glycerin in every formula. Fragrance-free, so nothing fights your barrier while the rest works.',
+         'Hydrating bases for dry, mature skin: hyaluronic acid in the foundation and the balm, glycerin in the serum. The '
+         'foundation is fragrance-free.'),
+        ('PDRN, peptides, collagen and vitamin C, at levels that do something. Named on the box, never hidden in a complex.',
+         'PDRN, peptides, EGF, NAD+ and collagen, each named on its box, never hidden in a complex.'),
         # meta description + og:description (the theme uses it while Settings > SEO has no store description)
         ("Cosmetics made to glow, feel skinofab.",
          "Adaptive Peptide Foundation: the color-adapting serum foundation made for skin after 45. Goes on white, turns into your skin tone. Free shipping, 30-day money-back guarantee."),
@@ -115,6 +123,27 @@ PAGE = {
          '<picture class="bf-media"><img alt="Blending the Adaptive Peptide Foundation" height="405" loading="lazy" '
          'src="../assets/img/9be7e268-4413-428c-b92c-b660e1331473-433765.jpg" width="405"/></picture>'),
     ],
+    # the policies (iubenda's, from the old store): their icons loaded from iubenda's own path on this domain (404, a
+    # console error each), the processors' logos were signed links that expire a week after export (empty bullets),
+    # and a bullet showed a logo only. iubenda's copies of the icons, its generic icon for the logos, and the names
+    'pages/privacy-policy.html': [
+        (r'RE:src="/assets/site/legal_docs/', 'src="https://www.iubenda.com/assets/site/legal_docs/'),
+        (r'RE:src="https://s3\.eu-west-1\.amazonaws\.com/prd\.mater/uploads/service_provider_icons/[^"]*"',
+         'src="https://www.iubenda.com/assets/site/favicons/default_thirdparty_icon-7c0e4af091131d326a69845f5900e1fbf9fdea8b8cecbe7e7aaecf6dbf0da741.svg"'),
+        (r'RE:<li class="third-parties-item"><img alt="\s*([^"]*?)\s*"[^>]*/></li>',
+         r'<li class="third-parties-item" style="display:inline-block;margin:0 6px 6px 0;padding:3px 10px;border:1px solid #d9d9d9;border-radius:999px;font-size:13px;line-height:1.5">\1</li>'),
+    ],
+    'pages/cookie-policy.html': [
+        (r'RE:src="https://s3\.eu-west-1\.amazonaws\.com/prd\.mater/uploads/service_provider_icons/[^"]*"',
+         'src="https://www.iubenda.com/assets/site/favicons/default_thirdparty_icon-7c0e4af091131d326a69845f5900e1fbf9fdea8b8cecbe7e7aaecf6dbf0da741.svg"'),
+    ],
+    'pages/terms-of-service.html': [
+        # the generator's "1 days", and a 30-day delivery default beside the shipping policy's own times
+        ('Terminations shall take effect 1 days after', 'Terminations shall take effect 1 day after'),
+        ('The notice period is 1 days.', 'The notice period is 1 day.'),
+        ('Unless otherwise specified on this Application or agreed with Users, Products shall be delivered within thirty (30) days from purchase.',
+         'Products are shipped within 1 business day of purchase and delivered within the times our Shipping Policy gives for each destination.'),
+    ],
     'pages/about-skinofab.html': [
         # "98% feel more confident" and the rest came from no survey: what holds instead
         (r'RE:<span class="sa-eyebrow" style="justify-content:center;">The results</span><h2>What our community feels</h2>',
@@ -124,7 +153,8 @@ PAGE = {
         (r'RE:<div class="sa-stat__num">97%</div>\s*<div class="sa-stat__label">Feel more attractive</div>',
          '<div class="sa-stat__num">9,800+</div> <div class="sa-stat__label">verified reviews of our foundation</div>'),
         (r'RE:<div class="sa-stat__num">100%</div>\s*<div class="sa-stat__label">Feel more like themselves</div>',
-         '<div class="sa-stat__num">Korea</div> <div class="sa-stat__label">where all four products are formulated</div>'),
+         # (the three formulas: the fourth product is a brush)
+         '<div class="sa-stat__num">Korea</div> <div class="sa-stat__label">where our three formulas are made</div>'),
     ],
     'pages/postflows-track-your-order.html': [
         ("Fill in your order number or tracking code to see where your package currently is.",
@@ -135,6 +165,16 @@ PAGE = {
         (r'RE:6-8\xa0 Business Days', '6-8 Business Days'),
     ],
     'products/color-changing-foundation.html': [
+        # "Shipping and returns" and two FAQ answers came from the old store: 24-48 h dispatch, 5-7 days, "65+ countries",
+        # returns "new, unused, in their original packaging". The store's terms instead (support_copy.py, as the
+        # shipping and refund policies say them)
+        (r'RE:(?s)<div id="shippingAccordionContent">.*?</p></div>',
+         '<div id="shippingAccordionContent">' + support_copy.SHIPPING_TAB_HTML + '</div>'),
+        ('We offer free worldwide shipping to 65+ countries. Please see our',
+         'Shipping is free to every country offered at checkout, with tracking: 2–4 business days in the US, 6–12 '
+         'elsewhere. See our'),
+        ('All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, '
+         'and in their original packaging. See our', support_copy.RETURNS_SHORT + ' See our'),
         # ingredient carousel: photo alt, heading and line change together
         (r'RE:alt="SPF\ 15"', 'alt="Peptides + PDRN"'),
         (r'RE:(<h3[^>]*>)\s*SPF\ 15\s*(</h3>\s*<p[^>]*>)\s*Helps\ protect\ skin\ from\ everyday\ UV\ exposure\s*(?=</p>)', r'\g<1>Peptides + PDRN\g<2>Matrixyl 3000 peptides, PDRN and Pro-Xylane: skincare for thinner skin after 45, not just color on top'),
