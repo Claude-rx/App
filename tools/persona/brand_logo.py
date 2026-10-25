@@ -1,7 +1,7 @@
 """SKINOFAB's logo files, all from the owner's vector wordmark (brand/logo/skinofab-wordmark.svg):
 
   brand/logo/skinofab-wordmark-black.png    black on transparent, 3902 px wide, cropped to the letters: what
-                                            label_composite.py prints on every bottle, stick and carton
+                                            label_composite.py prints on every bottle and stick
   brand/checkout/skinofab-logo-1200.png     the checkout and email logo, 1200 x 198, black on transparent
   brand/checkout/skinofab-icon-512.png      the favicon and checkout tab icon: the wordmark's own S, white on a black
                                             rounded square

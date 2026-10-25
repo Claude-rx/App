@@ -11,7 +11,7 @@ usage: python3 -I product_photos.py [balm] [serum] [brush] [foundation]      # a
 
 Sources (brand/<product>/source/) are photoreal images made with GPT Image 2.5 (Figma's image generator); their
 prompts are in image_prompts.json. The serum's were made with its packaging blank: label_composite.py prints
-SKINOFAB's real wordmark and label on each bottle and carton (SERUM_LABELS: where they are in each photo), so the logo
+SKINOFAB's real wordmark and label on each bottle (SERUM_LABELS: where it is in each photo), so the logo
 is ours to the pixel. This script then crops and lays them out: the headline type is Playfair Display (the foundation
 gallery's serif), the small type Montserrat, the Korean badge the one cut from the foundation's hero photo
 (assets/korea-badge.png). The before/after photos are illustrations, and say so on the image, as the foundation's
@@ -279,32 +279,33 @@ def balm():
     plain(P, 'pack', 'card')
 
 
-# where the serum's blank bottle (roi) and carton front (box) are in each photo; blur: out-of-focus bottles
+# where the serum's blank bottle is in each photo (roi, px); blur: out-of-focus bottles. The bottle is the brand's
+# matte black cylinder (the foundation's, with a dropper); there is no carton, as for the other products
 SERUM_LABELS = {
-    'pack': [dict(roi=(225, 160, 478, 905), box=(492, 150, 738, 848))],
+    'pack': [dict(roi=(380, 40, 650, 960))],
     'tall': [dict()],
-    'hold-cheek': [dict(roi=(200, 300, 360, 690))],
-    'hold-black': [dict(roi=(140, 320, 310, 740))],
-    'drop': [dict(roi=(190, 640, 400, 1024), blur=0.8)],
-    'friends': [dict(roi=(770, 320, 860, 600))],
-    'panel': [dict(roi=(550, 410, 670, 730))],
-    'mirror': [dict(roi=(520, 600, 620, 890), blur=0.4)],
-    'temple': [dict(roi=(140, 180, 300, 600))],
-    'swatch': [dict(roi=(540, 0, 850, 630), blur=0.5)],
-    'trio': [dict(roi=(100, 120, 355, 870)), dict(roi=(365, 120, 620, 870)), dict(roi=(628, 120, 885, 870))],
+    'hold-cheek': [dict(roi=(150, 290, 320, 750))],
+    'hold-black': [dict(roi=(150, 270, 300, 710))],
+    'drop': [dict(roi=(290, 600, 540, 1024), blur=0.6)],
+    'friends': [dict(roi=(820, 320, 960, 670))],
+    'panel': [dict(roi=(630, 360, 770, 740))],
+    'mirror': [dict(roi=(310, 640, 430, 920), blur=0.3)],
+    'temple': [dict(roi=(150, 160, 300, 600))],
+    'swatch': [dict(roi=(560, 120, 820, 830))],
+    'trio': [dict(roi=(120, 130, 350, 890)), dict(roi=(380, 130, 640, 890)), dict(roi=(670, 130, 900, 890))],
 }
 
 
 def serum():
     P = SERUM
-    for name, bottles in SERUM_LABELS.items():         # the real label first, on every bottle and carton
+    for name, bottles in SERUM_LABELS.items():         # the real label first, on every bottle
         im = Image.open(P / 'source' / f'{name}.jpg')
         for b in bottles:
-            im = label_composite.composite(im, 'serum', b.get('roi'), b.get('box'), blur=b.get('blur', 0.0))
+            im = label_composite.composite(im, 'serum', b.get('roi'), blur=b.get('blur', 0.0))
         im = white_bg.light(im)
         im.save(P / f'{name}.jpg', quality=92, optimize=True, progressive=True)
         print('labelled', name)
-    hero(P, 'pack', badge=(140, 132))                 # the carton fills the top right
+    hero(P, 'pack')
     plain(P, 'hold-cheek')
     before_after(P, 'ba-jaw', 'before-after')
     panel(P, 'panel', ('Firmer-Looking', 'Skin'), [('sparkle', 'Smoother-looking', 'with daily use'), ('drop', 'Deep, light', 'hydration'),

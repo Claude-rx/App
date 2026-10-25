@@ -1,9 +1,10 @@
 # The EGF + NAD+ Firming Serum
 
-SKINOFAB's fourth product: a light firming serum for face and neck in a matte black dropper bottle and a black carton.
+SKINOFAB's fourth product: a light firming serum for face and neck, in the brand's packaging: the
+foundation's matte black cylinder, here with a dropper bulb, and the foundation's vertical label.
 Inspired by Meimei's "NAD+ Firming Serum" (https://officialmeimei.com/products/egf-nad-firming-serum), rebuilt for
 SKINOFAB: the Adaptive Peptide Foundation page's structure and look, photos of women past 45 using the serum on white,
-SKINOFAB's real wordmark on every bottle and carton, and nothing on the page that we can't stand behind.
+SKINOFAB's real wordmark on every bottle, and nothing on the page that we can't stand behind.
 
 Preview: https://skinofab.29next.store/catalogue/egf-nad-firming-serum_206/?preview_theme=34
 
@@ -56,7 +57,7 @@ Preview: https://skinofab.29next.store/catalogue/egf-nad-firming-serum_206/?prev
 |---|---|
 | NEXT product 206 | "EGF + NAD+ Firming Serum", public, one-time purchase, template `egf-nad-firming-serum`, Face / Skin / Bestsellers |
 | Bundles (variants) | 207: 1 bottle $34.95 · 208: 2 bottles $59.95 (default; compare $69.90) · 209: 3 bottles (buy 2, get 1 free) $69.90 (compare $104.85) |
-| Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`): gallery (13 photos, in the foundation gallery's order: packshot and carton with the Korean badge, a woman holding it, before/after, "Firmer-looking skin", the before/after board, what's inside, the science, vs others, five photos of women using it and the three-bottle pack); the foundation's buy box; then the foundation's sections in its order: its review strip (the foundation's reviews, labelled as theirs), "Made for real life after 45" photo cards, problem / root cause / solution, the brand's own note (where the foundation has its dermatologist), K-beauty skin science, the before/after block, "How does it work?", what to expect, Why skinofab? (vs basic serums), what's inside, how to use it, FAQ (10), an honest "No reviews yet" box, The skinofab difference; sticky bar |
+| Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`): gallery (13 photos, in the foundation gallery's order: packshot with the Korean badge, a woman holding it, before/after, "Firmer-looking skin", the before/after board, what's inside, the science, vs others, five photos of women using it and the three-bottle pack); the foundation's buy box; then the foundation's sections in its order: its review strip (the foundation's reviews, labelled as theirs), "Made for real life after 45" photo cards, problem / root cause / solution, the brand's own note (where the foundation has its dermatologist), K-beauty skin science, the before/after block, "How does it work?", what to expect, Why skinofab? (vs basic serums), what's inside, how to use it, FAQ (10), an honest "No reviews yet" box, The skinofab difference; sticky bar |
 | Homepage | A card in the product shelf after the balm (default list, Bestsellers, New and Face tabs), "New" and "Buy 2, get 1 free" badges |
 | Menus | "Firming Serum" in the desktop and mobile menus (before PDRN Balm) and in the footer's Shop column (after it) |
 | Cart drawer | Third add-on (after the brush and the balm), and its own upgrade card, 1 → 2 bottles for $25 (Theme settings → Cart Drawer → Fourth upgrade) |
@@ -65,13 +66,16 @@ Preview: https://skinofab.29next.store/catalogue/egf-nad-firming-serum_206/?prev
 
 Every photo is on pure white, with women past 45 (several ages, skin tones and hair colours) holding and using the
 serum, in the foundation gallery's style. They were made with GPT Image 2.5 through Figma's image generator, with the
-bottle and carton **blank**: `tools/persona/label_composite.py` then prints SKINOFAB's real wordmark and label on
-every bottle (wrapped around the cylinder, shaded by the bottle's own light, behind the fingers that hold it) and on
-the carton's front, so the logo is ours to the pixel instead of an AI's guess. The label reads across the bottle
-(`LABELS['serum']`, layout `across`): the wordmark upright and small, half the bottle's width; a hairline; EGF + NAD+ /
-FIRMING SERUM / WITH COLLAGEN; at the base FORMULATED IN KOREA and 30 mL / 1.01 fl oz. The carton has the same layout,
-the wordmark across the upper third of its face. The before/after photos are
-illustrations and say so on the image. Prompts: `tools/persona/image_prompts.json`; sources:
+bottle **blank**: `tools/persona/label_composite.py` then prints SKINOFAB's real wordmark and label on every bottle
+(wrapped around the cylinder, shaded by the bottle's own light, behind the fingers that hold it), so the logo is ours
+to the pixel instead of an AI's guess. The before/after photos are illustrations and say so on the image.
+
+**One packaging system.** The serum is the foundation's bottle with a dropper: the same straight matte black cylinder,
+a full-width cap above a thin seam, and the foundation's label (`LABELS['serum']`): the wordmark set vertically,
+starting just under the seam, at the foundation's size, then EGF + NAD+ / FIRMING SERUM, COLLAGEN and 30 mL /
+1.01 fl oz in Montserrat. Like the foundation, the balm and the brush, it is shown without a carton. "Formulated in
+Korea" is on the gallery's flag badge and in the buy box, as for the other products. Side by side with the foundation:
+`docs/screenshots/serum-brand-harmony.jpg`. Prompts: `tools/persona/image_prompts.json`; sources:
 `brand/egf-nad-serum/source/`.
 
 ## Rebuilding

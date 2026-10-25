@@ -1,13 +1,13 @@
 # SKINOFAB's real wordmark on every product
 
-Every SKINOFAB bottle, stick, case and carton in the store's photos carries the brand's own wordmark: the owner's
+Every SKINOFAB bottle, stick and case in the store's photos carries the brand's own wordmark: the owner's
 vector file, `brand/logo/skinofab-wordmark.svg`. Before, most of them didn't:
 
 | Product | What was printed | Now |
 |---|---|---|
 | Adaptive Peptide Foundation | a stand-in serif (Trajan-like) on the product-sheet renders, the composites and every photo made from them; "SKINOFAS" on two AI photos | the SVG wordmark, found and replaced on 6 renders and composites and 16 page photos (all their widths) |
 | PDRN Plumping Balm | AI-drawn wordmarks, a different serif on each photo, spaced out on one ("S K I N O F A B") | the SVG wordmark on all 14 photos of the stick |
-| EGF + NAD+ Firming Serum | the real wordmark, but set vertically, very large and stretched by the wrap | a new label: the wordmark upright and small (half the bottle's width), a hairline, the name, "Formulated in Korea" at the base; the carton the same |
+| EGF + NAD+ Firming Serum | the real wordmark, but very large and stretched by the wrap, on a round-shouldered bottle and a carton | the foundation's bottle and label: a straight matte black cylinder with a full-width cap and a dropper, the wordmark set vertically at the foundation's size, the product lines under it; no carton, like the other products |
 | Lymphatic Brush | already the real wordmark on the case (the checkout logo file) | unchanged; the checkout logo is now generated from the SVG |
 
 ## The files
@@ -53,7 +53,7 @@ one size: `docs/screenshots/shelf-even-cards.png`.
 - **Balm photos**: `product_photos.py balm` relabels each source photo of the stick first
   (`relabel_bottles.BALM` → `brand/pdrn-balm/labelled/`), then lays out the gallery; the page's section crops take
   the labelled photo when there is one (`apply_persona.twin_context`).
-- **Serum photos**: `product_photos.py serum` prints the label on the blank bottles and the carton (`SERUM_LABELS`).
+- **Serum photos**: `product_photos.py serum` prints the label on the blank bottles (`SERUM_LABELS`).
 
 ```bash
 python3 -I tools/persona/brand_logo.py                 # logo files from the SVG
@@ -69,15 +69,13 @@ A new photo of a foundation bottle with the old print: add its file-name prefix,
 
 ## Not covered
 
-The older products further along the shelf after the four (Reverse-time Peptide Serum, the lifting mask, the
-under-eye patches, the lip, lash and brow products, the gua sha and face roller …) are the old design's photos, in
-its pink packaging with its own lettering. They are not among the four current products and were not relabelled;
-take them off the shelf, or reshoot them, before selling them.
+Nothing on sale: the older products in the old design's pink packaging are no longer in the store
+(`docs/four-products.md`).
 
 ## Formulated in Korea
 
 Every product says where it is formulated, never "made in Korea": the buy box's line on the foundation, balm and serum
 pages (`ccf_copy.ORIGIN`: "🇰🇷 Formulated in Korea · Advanced K-beauty formula"), the flag badge on the gallery photos
 ("Formulated in Korea / Advanced formula": `label_composite.ORIGIN_LINES`, drawn by `product_photos.korea_badge` and,
-on the foundation's packshot, rewritten by `relabel_bottles` `'badge'`), the serum's bottle and carton, the homepage's
+on the foundation's packshot, rewritten by `relabel_bottles` `'badge'`), the homepage's
 formulas section and the advertorials. The brush is a tool, not a formula: it makes no origin claim.

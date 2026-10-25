@@ -1,7 +1,7 @@
 """The EGF + NAD+ Firming Serum: product page copy, offer and sections. Inspired by Meimei's "NAD+ Firming Serum" page
 (https://officialmeimei.com/products/egf-nad-firming-serum, teardown in docs/egf-nad-serum.md), written new for SKINOFAB
-and women past 45, in the foundation's black packaging: a black dropper bottle and a black carton with SKINOFAB's real
-wordmark (label_composite.py prints it on every photo).
+and women past 45, in the brand's packaging system: the foundation's matte black cylinder, here with a dropper, and its vertical label
+with SKINOFAB's real wordmark (label_composite.py prints it on every photo).
 
 The page has the Adaptive Peptide Foundation page's structure, section by section (twin.py, TWIN below), with its
 photos on white: women past 45 holding and using the serum, before/after illustrations (labelled as such) and the
