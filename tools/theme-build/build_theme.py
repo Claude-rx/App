@@ -1086,7 +1086,7 @@ SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1
                '#cart_formset .flex.items-center.gap-3.mt-3{flex-wrap:wrap}#cart_formset select{min-width:0;max-width:100%}'
                # the page's width and margins as the header's and footer's (it started 104 px in on a desktop)
                '#main-content .container{width:calc(100% - 64px);max-width:1440px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}'
-               '@media (max-width:749px){#main-content .container{width:calc(100% - 32px)}}'
+               '@media (max-width:749px){ #main-content .container{width:calc(100% - 32px)}}'   # "{ #": "{#" opens a DTL comment
                '#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}</style>')
 
 for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'templates/500.html',
