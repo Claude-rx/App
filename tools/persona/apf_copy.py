@@ -885,7 +885,18 @@ PLAIN_CARDS_CSS = r"""
 .sfx-review video{width:100%;height:100%;object-fit:cover;display:block}
 @media (max-width:989px){.sfx-reviews--plain{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
 @media (max-width:599px){.sfx-reviews--plain .sfx-review-body{padding:14px 14px 16px;gap:6px}.sfx-reviews--plain h3{font-size:16px}.sfx-reviews--plain p{font-size:14px}}
+/* three cards: one row of three on a tablet, a row to swipe on a phone (a 2-column grid would leave one alone) */
+@media (max-width:989px){.sfx-reviews--row{display:flex;gap:14px;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+ .sfx-reviews--row::-webkit-scrollbar{display:none}
+ .sfx-reviews--row>.sfx-review{flex:0 0 calc((100% - 28px) / 3);scroll-snap-align:start}}
+@media (max-width:599px){.sfx-reviews--row>.sfx-review{flex-basis:74%}}
 """
+def _webm(src):
+    """The VP9 copy as a second <source> (src: [] or [url]): a browser plays the first it can, so H.264 stays first and
+    a browser without it (Chromium builds, some Linux Firefox) takes this one."""
+    return f'<source src="{src[0]}" type="video/webm">' if src and src[0] else ''
+
+
 _AUTOPLAY = ('<script>(function () {'
              'var root = document.currentScript.parentNode, vids = root.querySelectorAll("video");'
              'if (!vids.length || !("IntersectionObserver" in window)) return;'
@@ -898,13 +909,13 @@ _AUTOPLAY = ('<script>(function () {'
 
 def pdp_reviews_html(eyebrow, title, reviews, plain=False, note=None):
     """reviews: dicts with title, text, name, photo (src, w, h). plain: cards that are not reviews (a product's uses,
-    creator clips): no stars, no name, no "verified"; a card may carry a silent clip instead (video: (mp4, poster))."""
+    creator clips): no stars, no name, no "verified"; a card may carry a silent clip instead (video: (mp4, poster[, webm]))."""
     stars = '<span class="sfx-stars" aria-label="5 out of 5 stars">' + _STAR * 5 + '</span>'
     def media(r):
         if r.get('video'):
-            mp4, poster = r['video']
+            mp4, poster, *webm = r['video']
             return (f'<video muted loop playsinline preload="none" poster="{poster}" width="540" height="960" '
-                    f'aria-label="{r["alt"]}"><source src="{mp4}" type="video/mp4"></video>')
+                    f'aria-label="{r["alt"]}"><source src="{mp4}" type="video/mp4">{_webm(webm)}</video>')
         alt = r.get('alt') or f"{r['name']} with the {PRODUCT}"
         return f'<img src="{r["photo"][0]}" alt="{alt}" width="{r["photo"][1]}" height="{r["photo"][2]}" loading="lazy" decoding="async">'
     if plain:
@@ -922,7 +933,7 @@ def pdp_reviews_html(eyebrow, title, reviews, plain=False, note=None):
     return f'''<div class="sfx" id="sf-video-reviews"><style>{css}</style>
 <section class="sfx-sec sfx-sec--grey"><div class="sfx-wrap">
   <div class="sfx-head"><span class="sfx-eyebrow">{'' if plain else stars}{eyebrow}</span><h2>{title}</h2></div>
-  <div class="sfx-reviews{' sfx-reviews--plain' if plain else ''}" style="--n:{len(reviews)}">{cards}{_AUTOPLAY if plain else ''}</div>
+  <div class="sfx-reviews{' sfx-reviews--plain' if plain else ''}{' sfx-reviews--row' if plain and len(reviews) == 3 else ''}" style="--n:{len(reviews)}">{cards}{_AUTOPLAY if plain else ''}</div>
   {f'<p class="sfx-note" style="margin:18px auto 0;max-width:720px;text-align:center;font-size:13.5px;color:#5a5a5a">{note}</p>' if note else ''}
 </div></section></div>'''
 
@@ -1248,7 +1259,7 @@ KBEAUTY_CSS = r"""
 
 
 def kbeauty_html(img, buy_href='#apf-buy', k=None, video=None):
-    """video: (mp4, poster, w, h, label): a silent loop in the photo's place, played while it is on screen."""
+    """video: (mp4, poster, w, h, label[, webm]): a silent loop in the photo's place, played while it is on screen."""
     k = k or KBEAUTY
     rows = ''.join(f'<li><b>{n}</b><div><strong>{html.escape(t)}</strong><span>{html.escape(d)}</span></div></li>'
                    for n, (t, d) in enumerate(k['rows'], 1))
@@ -1261,7 +1272,7 @@ def kbeauty_html(img, buy_href='#apf-buy', k=None, video=None):
             f'<p class="sfkb-note">{html.escape(k["note"])}</p>'
             f'<div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">{html.escape(k["button"])}</a></div></div>'
             + (f'<div class="sfps-photo sfps-photo--video"><video muted loop playsinline preload="none" poster="{video[1]}" '
-               f'width="{video[2]}" height="{video[3]}" aria-label="{html.escape(video[4])}"><source src="{video[0]}" type="video/mp4"></video>'
+               f'width="{video[2]}" height="{video[3]}" aria-label="{html.escape(video[4])}"><source src="{video[0]}" type="video/mp4">{_webm(video[5:])}</video>'
                f'{_AUTOPLAY}</div>' if video else
                f'<div class="sfps-photo"><img src="{src}" alt="{html.escape(k.get("alt", "Adaptive Peptide Foundation with PDRN, peptides and Pro-Xylane"))}" '
                f'width="{w}" height="{h}" loading="lazy" decoding="async"></div>')

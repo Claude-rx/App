@@ -6,8 +6,9 @@ usage: python3 -I tools/persona/howto_video.py
 Sources (brand/adaptive-peptide-foundation/source/): howto-dots.jpg, the page's photo as the store shows it (1350 px);
 howto-clean-ai.png, the same photo with the dots removed (gpt-image-2 edit). Only the dots' areas are taken from the
 edit, aligned to the photo (ECC): every other pixel is the photo's own, so nothing else moves.
-Writes brand/adaptive-peptide-foundation/howto/howto.mp4 (H.264, 864 x 1080, 24 fps, 9 s, silent, faststart) and
-howto-poster.jpg (its first frame). It is an illustration and says so in its corner.
+Writes brand/adaptive-peptide-foundation/howto/howto.mp4 (H.264, 864 x 1080, 24 fps, 9 s, silent, faststart),
+howto.webm (the same in VP9, the page's second source) and howto-poster.jpg (its first frame). It is an illustration
+and says so in its corner.
 """
 import subprocess, shutil, tempfile
 from pathlib import Path
@@ -93,8 +94,12 @@ def main():
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(FPS), '-i', str(tmp / 'f%04d.jpg'),
                     '-c:v', 'libx264', '-preset', 'slow', '-crf', '24', '-pix_fmt', 'yuv420p', '-movflags', '+faststart',
                     '-an', str(OUT / 'howto.mp4')], check=True)
+    # the same frames as VP9, for browsers that ship without H.264 (Chromium builds, some Linux Firefox)
+    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(FPS), '-i', str(tmp / 'f%04d.jpg'),
+                    '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '38', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '2',
+                    '-pix_fmt', 'yuv420p', '-an', str(OUT / 'howto.webm')], check=True)
     shutil.rmtree(tmp)
-    print(OUT / 'howto.mp4', (OUT / 'howto.mp4').stat().st_size // 1024, 'KB')
+    for f in ('howto.mp4', 'howto.webm'): print(OUT / f, (OUT / f).stat().st_size // 1024, 'KB')
 
 
 main()

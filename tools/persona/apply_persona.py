@@ -18,7 +18,7 @@ usage: python3 -I apply_persona.py <src_export> <dst_export> <ccf-offers.json> [
 - puts the foundation's photos on pure white like the other products' (WHITE, white_backdrops(), white_bg.py): grey
   studio walls and sweeps go white, the two black gallery panels become ink on white
 """
-import hashlib, html, json, os, re, shutil, sys
+import hashlib, html, json, os, re, shutil, subprocess, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -188,8 +188,11 @@ def video_reviews(home):
         clip = re.search(r'<video[^>]*data-src="(assets/media/[^"]+\.mp4)"', a)
         poster = re.search(r'<img[^>]*class="fh-social-poster"[^>]*src="(assets/img/[^"]+)"|<img[^>]*src="(assets/img/[^"]+)"[^>]*class="fh-social-poster"', a)
         if not clip or not poster: continue
+        src = DST / clip.group(1)
+        stem = 'skinofab-demo-' + hashlib.md5(src.read_bytes()).hexdigest()[:6]
+        mp4, webm = card_clip(src, stem, 'mp4'), card_clip(src, stem, 'webm')
         out.append({'title': html.escape(title), 'text': html.escape(text), 'alt': html.escape(title),
-                    'video': ('../' + clip.group(1), '../' + (poster.group(1) or poster.group(2)))})
+                    'video': (mp4 or '../' + clip.group(1), '../' + (poster.group(1) or poster.group(2))) + ((webm,) if webm else ())})
     return apf_copy.pdp_reviews_html('On skin', 'See how it blends', out, plain=True,
                                      note=html.escape(ccf_copy.VIDEO_DEMO_NOTE)) if out else None
 
@@ -1652,6 +1655,24 @@ def hashed_copy(src, sub, name, size=None):
     tmp.rename(final)
     return f'../assets/{sub}/{final.name}'
 
+CLIP_ARGS = {'mp4': ['-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-pix_fmt', 'yuv420p', '-movflags', '+faststart'],
+             'webm': ['-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '37', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '4', '-pix_fmt', 'yuv420p']}
+
+def card_clip(src, name, kind, width=540):
+    """A silent `width` px copy of a clip for a card that plays it muted (the export's clips are 1080p with sound):
+    'mp4' (H.264) or 'webm' (VP9, for browsers without H.264). Made once with ffmpeg, cached in WORK/clips by the
+    source's bytes, then copied into the export like hashed_copy. None if ffmpeg can't make it."""
+    key = hashlib.md5(src.read_bytes()).hexdigest()[:12]
+    cache = WORK / 'clips' / f'{key}-{width}.{kind}'
+    if not cache.exists():
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        part = cache.with_name('part-' + cache.name)
+        r = subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(src), '-vf', f'scale={width}:-2', '-an',
+                            *CLIP_ARGS[kind], str(part)])
+        if r.returncode or not part.exists(): return None
+        part.rename(cache)
+    return hashed_copy(cache, 'media', name)
+
 def brush_rating(imported=None):
     """Stars and count from the product's approved NEXT reviews and its imported ones (count and sum of their ratings),
     shown only once there are some."""
@@ -2253,7 +2274,9 @@ def main():
         # its picture is the "how it works" loop (tools/persona/howto_video.py), the label close-up its fallback
         howto = BRAND / 'adaptive-peptide-foundation' / 'howto'
         video = ((hashed_copy(howto / 'howto.mp4', 'media', 'skinofab-howto-foundation'), hashed_copy(howto / 'howto-poster.jpg', 'img', 'skinofab-howto-poster'),
-                  864, 1080, 'Illustration: the foundation goes on white and blends into her skin tone') if (howto / 'howto.mp4').exists() else None)
+                  864, 1080, 'Illustration: the foundation goes on white and blends into her skin tone')
+                 + ((hashed_copy(howto / 'howto.webm', 'media', 'skinofab-howto-foundation'),) if (howto / 'howto.webm').exists() else ())
+                 if (howto / 'howto.mp4').exists() else None)
         ps_end = balanced_end(texts[pdp], texts[pdp].rfind('<div', 0, ps_at), 'div')
         texts[pdp] = texts[pdp][:ps_end] + '<div class="shopify-section" id="shopify-section-sf-kbeauty">' + apf_copy.kbeauty_html(kb, video=video) + '</div>' + texts[pdp][ps_end:]
     revs = video_reviews(home)
