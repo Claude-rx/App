@@ -13,7 +13,7 @@ The eighth video (a bag of lip products, no foundation) is unchanged.
 |---|---|---|
 | `b705ce67` blonde woman, grey robe | 10.0 s | the bottle in every frame; at the pump close-up (about 1 s) the top keeps the old bottle's rounded shape in black |
 | `41b77ec4` woman in black, brushes | 21.5 s | the bottle in every frame; at the end (19.2 s on) she held the bottle and its pink SMOOCHE box: that shot was re-made so she holds two SKINOFAB bottles (the 2-bottle pack), spliced in at the cut |
-| `43e0f648` blonde woman, navy top | 60.3 s | the bottle in every frame (three 20 s parts, joined) |
+| `43e0f648` blonde woman, navy top | 60.3 s | the bottle in the first and last 20 s (Genjutsu parts, joined frame-exact); the middle 20 s shows no bottle and is the original, because Genjutsu had also wiped the white foundation dots off her face there (the "goes on white, adapts to your skin" demo) |
 | `88d49199` silver-haired woman | 22.5 s | the bottle in every frame |
 | `de65acac` dark-haired woman, striped shirt | 8.2 s | the bottle in every frame; Genjutsu also made her pink lip pencil black |
 | `f8efa52f` dark-haired woman, cream cardigan | 11.6 s | the bottle in every frame; Genjutsu also made her white lip gloss black |
@@ -38,8 +38,16 @@ The lip pencil and lip gloss are the old range's products (no longer sold); in b
    `brand/videos/`, maps them in `tools/persona/queue/video-swaps.json` (which the build uses from then on) and
    pushes them with the homepage pointing at them.
 
+## Checks
+
+Before/after from the live files: `docs/screenshots/genjutsu-before-after.jpg`. Every published video is the source's
+exact length with its original soundtrack, and the drift check finds the picture within one frame of the sound from
+start to end. A rebuild (`tools/build_store.sh`) reproduces the same video files and homepage, from
+`tools/persona/queue/video-swaps.json`.
+
 ## Cost
 
-Higgsfield list price, 720p ($0.681 per second of input video, before the account's discount): the seven videos about
-$100, plus two test takes of `b705ce67` ($15) and the 41b77ec4 ending ($3.41). The content-filter rejections were not
-charged.
+Higgsfield list price, 720p ($0.681 per second of input video, before the account's discount): about $106 in all, for
+the seven videos, a second take of `b705ce67` ($7.49, not used: it turned her pink brush black) and the 41b77ec4 ending
+($3.41). The content-filter rejections were not charged; the studio stalled on the 60 s video's second part, so it was
+cancelled after its first part and the other two parts were run directly.
