@@ -2,9 +2,9 @@
  "endpoint": "higgsfield/genjutsu/object-swap/v1.0",
  "resolution": "720p",
  "refs": [
-  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-01-front.jpg",
-  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-03-three-quarter-right.jpg",
-  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-apf-09-pump-detail.jpg"
+  "https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-c018bb.jpg",
+  "https://cdn.29next.store/media/skinofab/images/products/2026/10/03-three-quarter-right-6848a0.jpg",
+  "https://cdn.29next.store/media/skinofab/images/products/2026/10/09-pump-detail-8569c9.jpg"
  ],
  "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact bottle in the reference images, in every frame where it appears: a matte black slim cylindrical airless bottle (about 3.2 times taller than wide) with a matte black pump head and a small white nozzle ring, SKINOFAB printed vertically in a white serif typeface, and under it only ADAPTIVE PEPTIDE FOUNDATION, PDRN and 30 mL / 1.01 fl oz in small white letters. Keep everything else exactly the same: the woman, her face, skin, hair, hands, grip, gestures, makeup application, the room, lighting, camera motion and timing. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic.",
  "how_to_run": "HF_API_KEY_ID / HF_API_KEY_SECRET in the environment, then: python3 -I tools/persona/genjutsu_direct.py tools/persona/queue/genjutsu-queue.json skinofab-theme <work_dir> --go",
@@ -101,5 +101,6 @@
    }
   },
   "total_credits": 1057
- }
+ },
+ "refs_note": "The NEXT gallery of product 14: the bottle with the real SKINOFAB wordmark on white (front, three-quarter, pump close-up). Genjutsu needs source videos of at least 409,600 px per frame; all seven pass (606x1080, 576x720)."
 }

@@ -15,7 +15,7 @@ usage: HF_API_KEY_ID=... HF_API_KEY_SECRET=... NEXT_API_TOKEN=... \
   instead (queue "higgsfield_mcp" has their media ids); download them and do only the joining and publishing
 Key: Authorization: Key <id>:<secret> (docs.higgsfield.ai). The key is read from the environment only.
 """
-import json, math, os, subprocess, sys, time, urllib.error, urllib.request
+import json, math, os, subprocess, sys, time, urllib.error, urllib.request, uuid
 from pathlib import Path
 
 JOBS, THEME, WORK = json.load(open(sys.argv[1])), Path(sys.argv[2]), Path(sys.argv[3])
@@ -42,10 +42,11 @@ def auth():
     if not (kid and sec): sys.exit('Set HF_API_KEY_ID and HF_API_KEY_SECRET (Higgsfield API key) in the environment.')
     return f'Key {kid}:{sec}'
 
-def call(method, url, body=None):
+def call(method, url, body=None, idem=None):
     for attempt in range(5):
         req = urllib.request.Request(url, method=method, data=json.dumps(body).encode() if body is not None else None,
-                                     headers={'Authorization': auth(), 'Content-Type': 'application/json', 'Accept': 'application/json'})
+                                     headers={'Authorization': auth(), 'Content-Type': 'application/json', 'Accept': 'application/json',
+                                              **({'Idempotency-Key': idem} if idem else {})})   # a retried POST is not charged twice
         try:
             with urllib.request.urlopen(req, timeout=120) as r: return json.loads(r.read() or b'{}')
         except urllib.error.HTTPError as e:
@@ -98,8 +99,8 @@ else:
         for p in parts:
             st = STATE.setdefault(p['name'], {})
             if st.get('request_id') and st.get('status') not in ('failed', 'nsfw', 'canceled'): continue
-            r = call('POST', f'{API}/{ENDPOINT}', {'video_url': p['url'], 'image_urls': JOBS['refs'],
-                                                   'prompt': job.get('prompt') or JOBS['prompt'], 'resolution': res})
+            body = {'video_url': p['url'], 'image_urls': JOBS['refs'], 'prompt': job.get('prompt') or JOBS['prompt'], 'resolution': res}
+            r = call('POST', f'{API}/{ENDPOINT}', body, idem=str(uuid.uuid5(uuid.NAMESPACE_URL, json.dumps(body, sort_keys=True))))
             st.update(request_id=r['request_id'], status_url=r['status_url'], status=r.get('status')); save()
             print('submitted', p['name'], r['request_id'])
 pending = {p['name'] for _, _, ps in plan for p in ps if STATE.get(p['name'], {}).get('status') != 'completed'}
