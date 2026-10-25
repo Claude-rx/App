@@ -179,21 +179,44 @@ def customer_voice(home):
     return home[:m.start()] + sec + home[end:]
 
 def video_reviews(home):
-    """The homepage customer reviews (poster photos, words, names) as a product page section."""
+    """The homepage's video cards (their clips and posters, ccf_copy.VIDEO_DEMOS' captions) as a product page section:
+    illustrative videos of the foundation on skin, labelled as such, the real reviews right after them."""
     sec = home_section(home, 'reviews')
     if not sec: return None
-    eyebrow = re.search(r'class="fh-eyebrow">.*?<span>(.*?)</span>', sec, re.S).group(1)
-    title = re.search(r'<h2>(.*?)</h2>', sec, re.S).group(1)
     out = []
-    for a in re.findall(r'<article class="fh-review">(.*?)</article>', sec, re.S):
-        name = re.search(r'fh-review-name"><span>(.*?)</span>', a).group(1)
-        if name in ccf_copy.PDP_REVIEW_SKIP: continue
-        poster = re.search(r'<img[^>]*class="fh-social-poster"[^>]*src="assets/img/([^"]+)"|<img[^>]*src="assets/img/([^"]+)"[^>]*class="fh-social-poster"', a)
-        poster = poster.group(1) or poster.group(2)
-        slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
-        out.append({'title': re.search(r'<h3>(.*?)</h3>', a).group(1), 'text': re.search(r'</h3><p>(.*?)</p>', a, re.S).group(1),
-                    'name': name, 'photo': crop_to(DST / 'assets' / 'img' / poster, f'skinofab-review-{slug}', (720, 900), (0.5, 0.32))})
-    return apf_copy.pdp_reviews_html(eyebrow, title, out) if out else None
+    for a, (title, text) in zip(re.findall(r'<article class="fh-review">(.*?)</article>', sec, re.S), ccf_copy.VIDEO_DEMOS):
+        clip = re.search(r'<video[^>]*data-src="(assets/media/[^"]+\.mp4)"', a)
+        poster = re.search(r'<img[^>]*class="fh-social-poster"[^>]*src="(assets/img/[^"]+)"|<img[^>]*src="(assets/img/[^"]+)"[^>]*class="fh-social-poster"', a)
+        if not clip or not poster: continue
+        out.append({'title': html.escape(title), 'text': html.escape(text), 'alt': html.escape(title),
+                    'video': ('../' + clip.group(1), '../' + (poster.group(1) or poster.group(2)))})
+    return apf_copy.pdp_reviews_html('On skin', 'See how it blends', out, plain=True,
+                                     note=html.escape(ccf_copy.VIDEO_DEMO_NOTE)) if out else None
+
+def honest_video_cards():
+    """The homepage's video cards: VIDEO_DEMOS' captions and label in place of the names, stars and "Verified buyer"
+    of people who are not buyers; the section's heading says what the cards are. Returns the cards changed."""
+    home = DST / 'index.html'
+    t = home.read_text(encoding='utf-8', errors='surrogateescape')
+    m = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__reviews"', t)
+    if not m: return 0
+    end = t.find('</section>', m.start())
+    sec = t[m.start():end]
+    arts = list(re.finditer(r'<article class="fh-review">.*?</article>', sec, re.S))
+    out, last, n = [], 0, 0
+    for a, (title, text) in zip(arts, ccf_copy.VIDEO_DEMOS):
+        art = a.group(0)
+        art = re.sub(r'(<div class="fh-review-card">)<img alt="" height="20"[^>]*>', r'\1', art, count=1)      # the stars
+        art = re.sub(r'<h3>.*?</h3><p>.*?</p>', f'<h3>{html.escape(title)}</h3><p>{html.escape(text)}</p>', art, count=1, flags=re.S)
+        art = re.sub(r'<div class="fh-review-name">.*?</div>', f'<div class="fh-review-name"><span>{html.escape(ccf_copy.VIDEO_DEMO_LABEL)}</span></div>',
+                     art, count=1, flags=re.S)
+        art = re.sub(r'aria-label="[^"]*"', lambda _: f'aria-label="Illustrative video: {html.escape(title)}"', art)
+        art = re.sub(r'(<img alt=")[^"]*(" class="fh-social-poster")', lambda mm: mm.group(1) + html.escape(title) + mm.group(2), art)
+        out.append(sec[last:a.start()] + art); last = a.end(); n += 1
+    sec = ''.join(out) + sec[last:]
+    sec = re.sub(r'<h2>Trusted by 9,800\+ verified buyers who finally found something that works</h2>', '<h2>See how it blends</h2>', sec, count=1)
+    home.write_text(t[:m.start()] + sec + t[end:], encoding='utf-8', errors='surrogateescape')
+    return n
 
 def faq_more(t):
     """The product page FAQ (two columns): the skin questions after "How to apply?", then Automatic Refills, buying
@@ -2227,20 +2250,25 @@ def main():
     if ps_at < 0: missing.append(('k-beauty', 'problem/solution anchor'))
     else:
         kb = section_image(BRAND / 'adaptive-peptide-foundation' / 'composites' / 'label-detail-2x.jpg', 'skinofab-kbeauty-label', (930, 1162))   # the whole label, sharp at 2x
+        # its picture is the "how it works" loop (tools/persona/howto_video.py), the label close-up its fallback
+        howto = BRAND / 'adaptive-peptide-foundation' / 'howto'
+        video = ((hashed_copy(howto / 'howto.mp4', 'media', 'skinofab-howto-foundation'), hashed_copy(howto / 'howto-poster.jpg', 'img', 'skinofab-howto-poster'),
+                  864, 1080, 'Illustration: the foundation goes on white and blends into her skin tone') if (howto / 'howto.mp4').exists() else None)
         ps_end = balanced_end(texts[pdp], texts[pdp].rfind('<div', 0, ps_at), 'div')
-        texts[pdp] = texts[pdp][:ps_end] + '<div class="shopify-section" id="shopify-section-sf-kbeauty">' + apf_copy.kbeauty_html(kb) + '</div>' + texts[pdp][ps_end:]
+        texts[pdp] = texts[pdp][:ps_end] + '<div class="shopify-section" id="shopify-section-sf-kbeauty">' + apf_copy.kbeauty_html(kb, video=video) + '</div>' + texts[pdp][ps_end:]
     revs = video_reviews(home)
     faq = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__section_accordions_', texts[pdp])
     if not revs or not faq: missing.append(('reviews', 'homepage section or FAQ anchor'))
     else:
-        texts[pdp] = texts[pdp][:faq.start()] + '<div class="shopify-section" id="shopify-section-sf-reviews">' + revs + '</div>' + texts[pdp][faq.start():]
+        # before the FAQ: "Formulated in Korea" (a model in a lab coat with the bottle), the clips, then the review wall
+        doctor = BRAND / 'adaptive-peptide-foundation' / 'doctor.jpg'
+        korea = ('<div class="shopify-section" id="shopify-section-sf-korea">'
+                 + apf_copy.korea_html(crop_to(doctor, 'skinofab-korea-lab', (1000, 1250), (0.5, 0.3))) + '</div>') if doctor.exists() else ''
+        if not korea: missing.append(('korea', 'doctor.jpg'))
+        texts[pdp] = (texts[pdp][:faq.start()] + korea + '<div class="shopify-section" id="shopify-section-sf-reviews">' + revs + '</div>'
+                      + '<div class="shopify-section" id="shopify-section-sf-review-wall">' + review_wall() + '</div>' + texts[pdp][faq.start():])
     texts[pdp], ok = faq_more(texts[pdp])
     if not ok: missing.append(('faq', 'accordion columns'))
-    # the review wall after the FAQ, before "The skinofab difference"
-    why = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__kopstorm_why_', texts[pdp])
-    if not why: missing.append(('review wall', 'anchor'))
-    else:
-        texts[pdp] = texts[pdp][:why.start()] + '<div class="shopify-section" id="shopify-section-sf-review-wall">' + review_wall() + '</div>' + texts[pdp][why.start():]
     found = review_data()
     texts[pdp], ok = rating_block(texts[pdp], found and found['summary'])
     if not ok: missing.append(('rating', 'loox badge'))
@@ -2329,6 +2357,7 @@ def main():
     print('real wordmark', relabelled)
     print('home features', home_features())
     print('home phenomenon', home_phenomenon())
+    print('video cards', honest_video_cards())
     sp, sp_gone = support_pages()
     missing.extend(('support pages', f'{r}: {q}') for r, q in sp_gone)
     print('support pages', sp)

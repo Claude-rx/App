@@ -75,8 +75,8 @@ BALM = {
 SITE = {
     'KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2-': ((1080, 1080), [('auto', (0.38, 0.23, 0.62, 0.87), 0, {}),
         ('badge', (846, 212, 1062, 284), 952, 243, 267, 21)]),     # its flag badge: "Based on Korean / Beauty Innovation"
-    'skinofab-hero-phone': ((2880, 1228), [('auto', (0.655, 0.27, 0.75, 0.70), 7, {})]),
-    'skinofab-hero-desktop': ((4096, 1747), [('auto', (0.655, 0.27, 0.75, 0.70), 6, {})]),
+    # (the home hero's files are not relabelled here: hero_label.py draws the real label on its master, flat and at
+    # the logo's own proportions; wrapping a second wordmark around its cylinder made the letters wobble)
     'ColorChangingFoundation-Productimage_31cddf53-0315-41bf-bfe5': ((1080, 1080), [('auto', (0.46, 0.21, 0.68, 0.79), 0, {})]),
     'skinofab-color-changing-foundation-model-mobile': ((660, 1182), [('flat', (153.6, 528.4), (161.4, 611.6), 15)]),
     'skinofab-color-changing-foundation-model': ((1460, 1825), [('flat', (968, 1252), (968, 1153), 19),

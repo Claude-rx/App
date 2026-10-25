@@ -204,6 +204,18 @@ REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills', 'default'
 # another name is left out (the makeup artist, 53, is "Deborah, 53" in the product page reviews). The review videos
 # still show the previous brand's bottle (only their posters were re-made), so the cards use the posters as photos.
 PDP_REVIEW_SKIP = ['Olivia M.']
+# The homepage's three video "reviews" (Amber T., Olivia M., Claire R., "Verified buyer") are creator clips re-cast
+# with AI models: no such buyers are among the imported reviews, and Olivia M.'s real review says something else.
+# They stay as what they are, illustrative videos of the foundation on skin, captioned in the store's own words; the
+# buyers' own words are the review wall's. (title, caption) per card, in the section's order.
+VIDEO_DEMOS = [
+    ('Goes on white, turns into your tone', 'Dots on the back of the hand, blended in: the white shifts to your skin as you work it in.'),
+    ('Glides over texture', 'A thin layer on cheeks and smile lines that blends over texture instead of settling into it.'),
+    ('Soft on fine lines', 'A little around the eyes, pressed in with a fingertip, for a smoother-looking finish.'),
+]
+VIDEO_DEMO_LABEL = 'Illustrative video · AI model'
+VIDEO_DEMO_NOTE = 'Illustrative videos made with AI models, not customer reviews. Real buyers’ reviews are just below.'
+
 
 # More questions for the product page FAQ (appended to its two accordion columns): the skin questions women 45+ ask,
 # and how Automatic Refills work and how to buy once.

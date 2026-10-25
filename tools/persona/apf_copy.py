@@ -896,7 +896,7 @@ _AUTOPLAY = ('<script>(function () {'
              '})();</script>')
 
 
-def pdp_reviews_html(eyebrow, title, reviews, plain=False):
+def pdp_reviews_html(eyebrow, title, reviews, plain=False, note=None):
     """reviews: dicts with title, text, name, photo (src, w, h). plain: cards that are not reviews (a product's uses,
     creator clips): no stars, no name, no "verified"; a card may carry a silent clip instead (video: (mp4, poster))."""
     stars = '<span class="sfx-stars" aria-label="5 out of 5 stars">' + _STAR * 5 + '</span>'
@@ -923,6 +923,7 @@ def pdp_reviews_html(eyebrow, title, reviews, plain=False):
 <section class="sfx-sec sfx-sec--grey"><div class="sfx-wrap">
   <div class="sfx-head"><span class="sfx-eyebrow">{'' if plain else stars}{eyebrow}</span><h2>{title}</h2></div>
   <div class="sfx-reviews{' sfx-reviews--plain' if plain else ''}" style="--n:{len(reviews)}">{cards}{_AUTOPLAY if plain else ''}</div>
+  {f'<p class="sfx-note" style="margin:18px auto 0;max-width:720px;text-align:center;font-size:13.5px;color:#5a5a5a">{note}</p>' if note else ''}
 </div></section></div>'''
 
 
@@ -1186,6 +1187,39 @@ def review_strip_html(average, count, picks, href='#sf-review-wall', of=None, bu
             f'<div class="sfrs-track">{cards}</div></div></section>')
 
 
+# "Formulated in Korea": a photo of a model in a lab coat with the foundation (a portrayal, said so on the photo: no
+# doctor, no name, no endorsement), before the reviews
+KOREA = {
+    'eyebrow': 'Formulated in Korea',
+    'lead': 'Made where makeup', 'mark': 'starts as skincare',
+    'lede': ('Korean beauty treats foundation as the last step of your skincare, not a mask over it. The Adaptive '
+             'Peptide Foundation is formulated in Korea on a serum base, so the shade that adapts to you sits on top of '
+             'actives your skin can use all day.'),
+    'rows': [('A serum base', 'Hyaluronic acid, ceramide NP, squalane and panthenol keep dry, mature skin comfortable.'),
+             ('K-beauty actives', 'PDRN, Matrixyl 3000 peptides and Pro-Xylane, each named on the ingredient list.'),
+             ('One adaptive shade', 'It goes on white and shifts to your tone as you blend.')],
+    'note': 'Model portrayal.',
+    'button': 'Choose your pack',
+    'alt': 'A model in a lab coat holding the Adaptive Peptide Foundation',
+}
+
+def korea_html(img, buy_href='#apf-buy', k=None):
+    k = k or KOREA
+    rows = ''.join(f'<li><b>{n}</b><div><strong>{html.escape(t)}</strong><span>{html.escape(d)}</span></div></li>'
+                   for n, (t, d) in enumerate(k['rows'], 1))
+    src, w, h = img
+    return (f'<section class="sfps sfps-sec" id="sf-korea"><style>{PROBLEM_SOLUTION_CSS}{KBEAUTY_CSS}'
+            '.sfps-photo--note{position:relative}.sfps-photo--note small{position:absolute;right:12px;bottom:12px;padding:4px 10px;'
+            'border-radius:999px;background:rgba(255,255,255,.82);font-size:12px;color:#3b3b3b}</style>'
+            '<div class="sfps-wrap"><div class="sfps-grid">'
+            f'<div class="sfps-photo sfps-photo--note"><img src="{src}" alt="{html.escape(k["alt"])}" width="{w}" height="{h}" '
+            f'loading="lazy" decoding="async"><small>{html.escape(k["note"])}</small></div>'
+            f'<div><span class="sfps-eyebrow">{html.escape(k["eyebrow"])}</span>'
+            f'<h2>{html.escape(k["lead"])} <span class="sfps-mark">{html.escape(k["mark"])}</span></h2>'
+            f'<p class="sfps-lede">{html.escape(k["lede"])}</p><ul class="sfkb-rows">{rows}</ul>'
+            f'<div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">{html.escape(k["button"])}</a></div></div>'
+            '</div></div></section>')
+
 # the K-beauty science section on the product page (no person; every active below is in the ingredient list)
 KBEAUTY = {
     'eyebrow': 'K-beauty skin science',
@@ -1202,6 +1236,7 @@ KBEAUTY = {
     'button': 'Choose your pack',
 }
 KBEAUTY_CSS = r"""
+.sfps-photo--video video{width:100%;height:100%;object-fit:cover;display:block}
 .sfkb-rows{list-style:none !important;margin:26px 0 0 !important;padding:0 !important;display:grid;gap:12px}
 .sfkb-rows li{list-style:none;margin:0;padding:16px 18px;border:1px solid #e6e6e6;border-radius:14px;background:#fff;display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start}
 .sfkb-rows li:before{content:none !important}
@@ -1212,7 +1247,8 @@ KBEAUTY_CSS = r"""
 """
 
 
-def kbeauty_html(img, buy_href='#apf-buy', k=None):
+def kbeauty_html(img, buy_href='#apf-buy', k=None, video=None):
+    """video: (mp4, poster, w, h, label): a silent loop in the photo's place, played while it is on screen."""
     k = k or KBEAUTY
     rows = ''.join(f'<li><b>{n}</b><div><strong>{html.escape(t)}</strong><span>{html.escape(d)}</span></div></li>'
                    for n, (t, d) in enumerate(k['rows'], 1))
@@ -1224,6 +1260,9 @@ def kbeauty_html(img, buy_href='#apf-buy', k=None):
             f'<p class="sfps-lede">{html.escape(k["lede"])}</p><ul class="sfkb-rows">{rows}</ul>'
             f'<p class="sfkb-note">{html.escape(k["note"])}</p>'
             f'<div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">{html.escape(k["button"])}</a></div></div>'
-            f'<div class="sfps-photo"><img src="{src}" alt="{html.escape(k.get("alt", "Adaptive Peptide Foundation with PDRN, peptides and Pro-Xylane"))}" '
-            f'width="{w}" height="{h}" loading="lazy" decoding="async"></div>'
-            '</div></div></section>')
+            + (f'<div class="sfps-photo sfps-photo--video"><video muted loop playsinline preload="none" poster="{video[1]}" '
+               f'width="{video[2]}" height="{video[3]}" aria-label="{html.escape(video[4])}"><source src="{video[0]}" type="video/mp4"></video>'
+               f'{_AUTOPLAY}</div>' if video else
+               f'<div class="sfps-photo"><img src="{src}" alt="{html.escape(k.get("alt", "Adaptive Peptide Foundation with PDRN, peptides and Pro-Xylane"))}" '
+               f'width="{w}" height="{h}" loading="lazy" decoding="async"></div>')
+            + '</div></div></section>')

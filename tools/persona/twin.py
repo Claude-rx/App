@@ -220,6 +220,8 @@ def sections(found_main, P, ctx):
             out.append(compare(raw, t['compare']))
         elif '__kopstorm_ingredients_' in sid:
             out.append(inside(raw, t['inside'], img))
+        elif sid == 'shopify-section-sf-korea':
+            continue                                    # the foundation's own (its bottle in the photo)
         elif sid == 'shopify-section-sf-reviews':
             c = t['cards']
             if not c: continue                          # no clips or photos of the product in use yet

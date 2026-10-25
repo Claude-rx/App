@@ -13,6 +13,8 @@ usage: python3 -I tools/persona/home_images.py
   image model's bottle so it covers it whole
 - celebration.jpg: "Beauty is a celebration", the export's two models as women in their fifties (gpt-image-2)
 - tile-*.jpg (4:5): Shop by category, a woman over 45 holding each product
+- adaptive-peptide-foundation/doctor.jpg: the foundation page's "Formulated in Korea" photo, a model in a lab coat
+  (a portrayal, said so on the page) with the real bottle
 - collage-wide.jpg, collage-square.jpg: the listing pages' banners, the four tiles side by side and two by two
 - bundle-*.jpg (1:1): Bundle & Save, each bundle's units on white with soft contact shadows (the foundation from
   its front render, the brush with its case); card-foundation.jpg, the shelf's foundation card, one bottle the same way
@@ -139,6 +141,10 @@ def main():
     box = cv2.dilate(box, np.ones((5, 5), np.uint8))
     Image.fromarray(cv2.inpaint(src, box * 255, 5, cv2.INPAINT_TELEA)).save(TMP / 'formulas-src.jpg', quality=95)
     held(TMP / 'formulas-src.jpg', OUT / 'formulas.jpg', '--line', '1607,1105,1235,475', '--w', '178', '--width', '1.27', '--anchor', 'centre')
+    # ---- the foundation page's "Formulated in Korea": a model in a lab coat (gpt-image-2, source/doctor-ai.png), the
+    # real bottle laid in her hand, its own tones kept (the image model's bottle was lit flatter)
+    held(BRAND / 'adaptive-peptide-foundation' / 'source' / 'doctor-ai.png', BRAND / 'adaptive-peptide-foundation' / 'doctor.jpg',
+         '--line', '269,925,269,566', '--w', '97', '--width', '1.15', '--anchor', 'centre', '--fingers', 'left', '--tone', 'render')
     # ---- Beauty is a celebration: the export's two models as women in their fifties (gpt-image-2, source/celebration-ai.jpg)
     save(Image.open(SRC / 'celebration-ai.jpg').convert('RGB'), 'celebration.jpg')
     # ---- Shop by category: 4:5 crops, face and product in the upper two thirds (the name and button sit low left)

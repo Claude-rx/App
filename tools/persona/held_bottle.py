@@ -4,7 +4,8 @@ FOUNDATION / PDRN / 30 mL / 1.01 fl oz), and the face, hands, framing and light 
 
 usage: python3 -I held_bottle.py <photo> <out> (--roi x0,y0,x1,y1 --pump up|down|left|right | --line bx,by,px,py --w px)
                                  [--render brand/adaptive-peptide-foundation/01-front.png] [--width 1.0]
-                                 [--anchor base|pump|centre] [--shift dx,dy] [--fingers left|right] [--debug <dir>]
+                                 [--anchor base|pump|centre] [--shift dx,dy] [--fingers left|right] [--tone photo|render]
+                                 [--debug <dir>]
 - roi: a box around the old bottle (photo px); in it the old bottle is the largest neutral black object (brown hair
   and grey shadows are not), thin attachments trimmed off
 - line, w: the old bottle measured by hand instead: the centre of its base end, the centre of its pump end, its width
@@ -17,7 +18,8 @@ usage: python3 -I held_bottle.py <photo> <out> (--roi x0,y0,x1,y1 --pump up|down
   the hand outside it (a fingertip at the old bottle's edge, under a wider new one) stays in front too
 - what is left of the old bottle outside the new one is filled from around it (inpainting the whole old bottle from
   outside it, so the fill is the background and skin beside it, never the old bottle's own black)
-- the new bottle gets the photo's tones (the old bottle's dark and highlight levels) and its softness
+- the new bottle gets the photo's tones (the old bottle's dark and highlight levels) and its softness; --tone render
+  keeps the render's own (for a photo whose old bottle was lit flatter than the real one: its label would turn grey)
 - the render's small PDRN line is set again at the label's other lines' size first, so it never reads PORN
   (label_fix.legible_pdrn)
 """
@@ -40,6 +42,7 @@ RENDER = Path(opt('--render', Path(__file__).resolve().parents[2] / 'brand' / 'a
 WIDTH, ANCHOR = float(opt('--width', 1.0)), opt('--anchor', 'base')
 SHIFT = np.array([float(v) for v in opt('--shift', '0,0').split(',')])
 FINGERS = opt('--fingers')
+TONE = opt('--tone', 'photo')
 DEBUG = Path(opt('--debug')) if opt('--debug') else None
 lum = lambda a: a[..., 0] * .299 + a[..., 1] * .587 + a[..., 2] * .114
 
@@ -121,8 +124,8 @@ def levels(img, mask):
 old_body = old & black
 p_lo, p_hi = levels(photo, old_body)
 r_lo, r_hi = levels(sharp, new & (lum(sharp) < 85))
-gain = float(np.clip((p_hi - p_lo) / max(r_hi - r_lo, 1), 0.6, 1.4))
-toned = np.clip((sharp - r_lo) * gain + p_lo, 0, 255)
+gain = float(np.clip((p_hi - p_lo) / max(r_hi - r_lo, 1), 0.6, 1.4)) if TONE == 'photo' else 1.0
+toned = np.clip((sharp - r_lo) * gain + p_lo, 0, 255) if TONE == 'photo' else sharp
 toned = cv2.GaussianBlur(toned, (0, 0), 0.6)                                 # the photo is a touch soft too
 
 # ---------------------------------------------------------------- 5. in front: the fingers; behind: the rest

@@ -1,6 +1,7 @@
 """Put the real SKINOFAB label on the bottle in the home hero photo.
 
-usage: python3 -I hero_label.py <upscaled.png> <label_render.jpg> <out.png> [ox oy scale]
+usage: python3 -I hero_label.py <upscaled.png> <label_render> <out.png> [ox oy scale]
+       label_render: brand/adaptive-peptide-foundation/01-front.png (the real wordmark and label, PDRN legible)
 
 The hero photo's bottle came from an AI product swap: its wordmark is right, but the small print is garbled ("PEPTIOE",
 and "PDRN" reads like another word). Blurry it passed; a 4K upscale sharpens it. This erases the bottle's printed text
@@ -24,7 +25,8 @@ ox, oy, k = (float(v) for v in sys.argv[4:7]) if len(sys.argv) > 6 else (0.0, 0.
 
 # --- geometry (master pixels) --------------------------------------------------------------------------------
 TILT = np.deg2rad(4.25)                       # the bottle leans right: its axis is x = 1396 - 0.0743 (y - 437)
-SX, SY = 0.27, 0.30                           # render -> master: old wordmark letter height 16.5 px, length 108 px
+SX = SY = 0.27                                # render -> master: the bottle's width; one scale both ways, so the
+                                              # wordmark keeps its proportions (0.30 along the axis made it squat)
 LABEL_C_RENDER = (627.5, 843.5)               # render: label block centre (SKINOFAB top 556 .. "30 mL" bottom 1131)
 LABEL_C_HERO = (1393.5, 470.0)                # master: on the bottle axis, old print 383 .. 557.5
 # the bottle body where the old print sits (master), left of x 1358 the fingers hold it
