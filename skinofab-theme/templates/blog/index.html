@@ -1,4 +1,5 @@
 {% extends 'layouts/base.html' %}
+{% block critical_preloads %}<link rel="preload" as="style" href="{{ 'sf/css/sfb-1c7c8e14.css'|asset_url }}">{% endblock critical_preloads %}
 {% block title %}{% t "navigation.main.blog" %} | {{ block.super }}{% endblock %}
 {% block body_id %}{% firstof "news" %}{% endblock %}
 {% block body_class %}{% firstof "template-blog body--rounded-corners palette--light no-outline" %}{% endblock %}

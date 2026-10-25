@@ -1,4 +1,5 @@
 {% extends 'layouts/base.html' %}
+{% block critical_preloads %}<link rel="preload" as="style" href="{{ 'sf/css/sfb-1c7c8e14.css'|asset_url }}">{% endblock critical_preloads %}
 {% block title %}{% firstof "Search – SKINOFAB" %}{% endblock %}
 {% block body_id %}{% firstof "search" %}{% endblock %}
 {% block body_class %}{% firstof "template-search body--rounded-corners palette--light no-outline" %}{% endblock %}

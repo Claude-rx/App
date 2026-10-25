@@ -1,4 +1,5 @@
 {% extends 'layouts/base.html' %}
+{% block critical_preloads %}<link rel="preload" as="style" href="{{ 'sf/css/sfb-1c7c8e14.css'|asset_url }}">{% endblock critical_preloads %}
 {% block sf_handle_pk %}{% with sf_pp_color_changing_foundation=settings.sf_p_color_changing_foundation sf_pp_the_lymphatic_brush=settings.sf_p_the_lymphatic_brush %}"color-changing-foundation":"{% firstof sf_pp_color_changing_foundation.children.first.pk sf_pp_color_changing_foundation.pk %}","the-lymphatic-brush":"{% firstof sf_pp_the_lymphatic_brush.children.first.pk sf_pp_the_lymphatic_brush.pk %}"{% endwith %}{% endblock sf_handle_pk %}
 {% block title %}{% if store.name|upper in product.get_meta_title|upper %}{{ product.get_meta_title }}{% else %}{{ product.get_meta_title }} | {{ block.super }}{% endif %}{% endblock %}
 {% block body_id %}{% firstof "the-lymphatic-brush-skinofab" %}{% endblock %}

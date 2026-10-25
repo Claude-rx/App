@@ -143,9 +143,9 @@
    "dropped": 4768
   },
   "inline": {
-   "blocks": 888,
-   "before_kb": 5211.9,
-   "after_kb": 4475.6,
+   "blocks": 889,
+   "before_kb": 5212.2,
+   "after_kb": 4476.0,
    "skipped": 0
   }
  },
@@ -184,6 +184,7 @@
   "skipped": 655
  },
  "errors": [],
+ "css_preloads": 12,
  "backgrounds": {
   "lazy": 4,
   "kb_deferred": 967
