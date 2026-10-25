@@ -91,7 +91,9 @@ about 3.6 times. With no credits and the Studio's storage suspended, it was rebu
 2. **Real label** (`tools/persona/hero_label.py`): the AI product swap had garbled the small print ("PEPTIOE", and
    "PDRN" read like another word). That was barely visible when blurry and impossible to miss once sharp. The old
    print is erased and the label of the real front render (`skf-apf-01-front.jpg`) is drawn on the bottle, fitted
-   to its 4.25° tilt and to the old wordmark's size.
+   to its 4.25° tilt and to the old wordmark's size. The render's PDRN line is set again first at the label's size
+   (`label_fix.legible_pdrn`): drawn as rendered, the phone and desktop files' downscale closed its D into an O and
+   it read "PORN" (review of 25 Oct 2026).
 3. **Master** at 4096 px, saved in the persona image set under the same name. `apply_persona.py faster_home` cuts it
    into a phone file (2880 px WebP, 112 KB) and a desktop file (4096 px WebP, 214 KB). Each keeps the part its
    layout shows (phones 64–92% of the width, desktops the right two thirds) and flattens the rest, which is never on
