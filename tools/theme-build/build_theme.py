@@ -234,6 +234,10 @@ def static_asset(name):
     (OUT / 'assets' / rel).write_bytes(data)
     return rel
 FAVICON = {n: static_asset(f'skinofab-favicon{n}') for n in ('.svg', '-32.png', '-180.png')}
+# the product sheet's bottle views, which no page shows: Genjutsu reads them from the theme CDN as the swap references
+# (tools/persona/queue/genjutsu-queue.json), so they keep their fixed names
+for f in sorted((HERE.parents[1] / 'brand' / 'adaptive-peptide-foundation' / 'sheet').glob('*.jpg')):
+    shutil.copy2(f, OUT / 'assets' / f'skf-sheet-{f.name}')
 CART_BOTTLE = static_asset('skinofab-cart-bottle.png')
 # the side cart's renderer (Spark's drawer keeps state and mutations; this draws it in SKINOFAB's look)
 shutil.copy2(HERE / 'static' / 'skinofab-cart-drawer.js', OUT / 'assets' / 'js' / 'skinofab-cart-drawer.js')
