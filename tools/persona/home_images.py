@@ -175,16 +175,18 @@ def main():
     # texture, and the bottle (the left column) the plain resize alone (the upscaler garbled its small print); its
     # PDRN line set again bold, as on the other cards
     r = np.asarray(Image.open(SRC / 'phenomenon-1-sr.jpg').convert('RGB')).astype(np.float32)
-    label_fix.bold_line_rot(r, (86, 931), 0, (44, 16), 'PDRN', 11, weight=760, track=0.2)
+    # (a laptop shows the card's bottle so small that even the bold line read PORN, review 7: the line left out, the
+    # wordmark kept; label_fix.NONE)
+    label_fix.bold_line_rot(r, (86, 931), 0, (44, 16), '', 11)
     save(Image.fromarray(np.clip(r + 0.5, 0, 255).astype(np.uint8)), 'phenomenon-1.jpg')
     # ---- "The SKINOFAB phenomenon" cards 4 and 7: persona photos whose bottles printed the old "COLOR CHANGING
     # FOUNDATION / 15 SPF" (4) or a PDRN that read PORN at the card's size; the real bottle laid on them, its PDRN line
     # set large enough for a bottle the card shows ~45 px wide on a 1440 px screen, --pdrn xl (review 4; card 7: the
     # photo frames her whole face and the bottle in the card's 13:20, which the old card 7's selfie could not)
     held(SRC / 'phenomenon-4-ai.jpg', OUT / 'phenomenon-4.jpg', '--roi', '420,540,600,945', '--pump', 'up', '--anchor', 'centre',
-         '--tone', 'render', '--pdrn', 'xl')
+         '--tone', 'render', '--pdrn', 'none')
     held(SRC / 'phenomenon-7-ai.jpg', OUT / 'phenomenon-7.jpg', '--line', '411,1053,401,544', '--w', '127', '--width', '1.23',
-         '--anchor', 'base', '--fingers', 'left', '--tone', 'render', '--pdrn', 'xl')
+         '--anchor', 'base', '--fingers', 'left', '--tone', 'render', '--pdrn', 'none')
     # ---- the balm banner (from 1200 px): the balm eye photo widened to a landscape by gpt-image-2
     # (pdrn-balm/source/apply-eye-wide-ai.png: her whole head in frame, studio background to her left; the square
     # original was framed so tight that her temple and hair ran into its edges, which showed as a pasted rectangle),
@@ -197,7 +199,9 @@ def main():
     # the foundation's tile: its bottle's small PDRN line (8 px at the source) read PORN at the tile's size, on the
     # homepage and in the listing banners built from it (review 6): set again bold, twice the size
     r = np.asarray(Image.open(SRC / 'tile-foundation.jpg').convert('RGB')).astype(np.float32)
-    label_fix.bold_line_rot(r, (514, 1095), 3, (64, 22), 'PDRN', 16, weight=760, track=0.2)
+    # (a 1x laptop shows it 3 px tall in the five-tile row and the listing banner: even set bold it read PORN there,
+    # review 7; the line left out, label_fix.NONE)
+    label_fix.bold_line_rot(r, (514, 1095), 3, (64, 22), '', 16)
     tf = TMP / 'tile-foundation-bold.jpg'
     Image.fromarray(np.clip(r + 0.5, 0, 255).astype(np.uint8)).save(tf, quality=95)
     save(crop45(tf, (0, 0, 1397, 1747)), 'tile-foundation.jpg')

@@ -94,9 +94,9 @@ else:
 # ---------------------------------------------------------------- 2. the real bottle, cut out of the render
 r = np.asarray(Image.open(RENDER).convert('RGB')).astype(np.float32)
 # label_fix.py; --pdrn bold: larger and heavier, for a bottle a card shows only ~100 px wide (as the home hero's); xl
-# for one shown ~40-80 px wide
+# for one shown ~40-80 px wide; none: the line left out, for one a laptop shows smaller still
 if RENDER.name == '01-front.png' and r.shape[:2] == (1254, 1254):
-    r = legible_pdrn(r, **{'bold': label_fix.BOLD, 'xl': label_fix.XL}.get(PDRN, {}))
+    r = legible_pdrn(r, **{'bold': label_fix.BOLD, 'xl': label_fix.XL, 'none': label_fix.NONE}.get(PDRN, {}))
 rl = lum(r)
 bg = np.median(np.concatenate([rl[:20].ravel(), rl[:, :20].ravel(), rl[:, -20:].ravel()]))
 rd = rl < bg * 0.62

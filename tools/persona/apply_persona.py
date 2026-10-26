@@ -144,9 +144,12 @@ CUSTOMER_VOICE = {
     'name': 'Maria R.', 'role': 'Verified buyer, 56',
     'paragraphs': ['I love how the texture and feel is not greasy or heavy. At 56, I also am happy it doesn’t cake or '
                    'settle in fine lines.',
-                   'I do love the product, it’s my skin but better, more coverage than a tinted moisturizer but not '
-                   'oily or too dewy feeling like many of them.'],
-    'avatar': 'OOv6J0c2A-0', 'photos': ['OOv6J0c2A-0', '2E8YCdyRL-0', 'OGPUmf6ae-0'],   # Maria R., Kelly G., Linda M.
+                   # (the ellipsis: her review's middle is left out, review 7)
+                   '… I do love the product, it’s my skin but better, more coverage than a tinted moisturizer but not '
+                   'oily/too dewy feeling like many of them.'],
+    'avatar': 'OOv6J0c2A-0', 'photos': ['OOv6J0c2A-0', '2E8YCdyRL-0', 'OGPUmf6ae-0'],
+    # each photo carries its buyer's name: beside Maria R.'s words, the three read as hers (review 7)
+    'photo_names': ['Maria R.', 'Kelly G.', 'Linda M.']
 }
 
 def customer_voice(home):
@@ -164,6 +167,14 @@ def customer_voice(home):
              for p in cv['photos']]
     strip = Image.new('RGB', (295 * 3 + 16, 500), (255, 255, 255))
     for i, t in enumerate(tiles): strip.paste(t, (i * 303, 0))
+    from PIL import ImageDraw, ImageFilter, ImageFont
+    font = ImageFont.truetype(str(Path(__file__).resolve().parent / 'assets' / 'fonts' / 'Montserrat-VF.ttf'), 26)
+    font.set_variation_by_axes([600])
+    shade = Image.new('L', strip.size, 0); ds = ImageDraw.Draw(shade)
+    for i, name in enumerate(cv.get('photo_names', [])): ds.text((i * 303 + 18, 478), name, font=font, fill=200, anchor='ls')
+    strip.paste((0, 0, 0), (0, 0), shade.filter(ImageFilter.GaussianBlur(3)))
+    d = ImageDraw.Draw(strip)
+    for i, name in enumerate(cv.get('photo_names', [])): d.text((i * 303 + 18, 478), name, font=font, fill=(255, 255, 255), anchor='ls')
     tmp = WORK / 'customer-strip.jpg'; strip.save(tmp, quality=88, optimize=True, progressive=True)
     photo = hashed_copy(tmp, 'img', 'skinofab-customer-photos-901w')[3:]
     sec = re.sub(r'<h2>.*?</h2>', f"<h2>{cv['heading']}</h2>", sec, count=1, flags=re.S)
@@ -408,7 +419,9 @@ OFF_TOPIC_BRANDS = (r"bare ?minerals|clinique|i'?l ?makiage|victoria jackson|est
                     r"\btarte\b|clarins|bobbi brown|neutrogena|\bolay\b|\bno ?7\b|max factor|rimmel|e\.l\.f|smashbox|too faced|"
                     r"urban decay|laura mercier|la mer\b|shiseido|sk-?ii|physicians formula|dermablend|jane iredale|mary kay|"
                     r"avon\b|almay|wet n wild|nyx\b|milani|kylie|huda|giorgio|dolce|ysl|yves saint|sephora|ulta\b|boots\b|superdrug")
-OFF_TOPIC = re.compile(r"(?i)\bbrush|\bs\.?\s?p\.?\s?f\b|\bsf ?\d|sun ?screen|sun ?block|sun ?protection|smooch|" + OFF_TOPIC_BRANDS)
+# (and links, which led to the earlier store's own videos, and its other products: lip plumper, bubble mask, review 7)
+OFF_TOPIC = re.compile(r"(?i)\bbrush|\bs\.?\s?p\.?\s?f\b|\bsf ?\d|sun ?screen|sun ?block|sun ?protection|smooch|"
+                       r"https?:|www\.|youtu|lip ?pl?u?mper|lip pumper|bubble mask|lip stain|lip gloss|" + OFF_TOPIC_BRANDS)
 on_topic = lambda r: not OFF_TOPIC.search((r.get('title') or '') + ' ' + r['body'])
 
 def review_data(reviews=REVIEWS):
@@ -766,7 +779,7 @@ LEGACY_TEXT = [
     ('A movement towards embracing your unique beauty — one lip plumper at a time.',
      'A movement towards embracing your unique beauty — one ritual at a time.'),
     ('From a single lip gloss in a tiny kitchen lab to a full-range beauty house — built on heart, not hype.',
-     'From a small studio to a skincare-first line for skin after 45, with formulas made in Korea — built on heart, not hype.'),
+     'From a small studio to a skincare-first line for skin after 45, with its skincare formulated in Korea — built on heart, not hype.'),
     # the story's heading: the line is made in Korea (the stats below), not in a kitchen; the text says "a small studio"
     ('Born in a <em>tiny kitchen lab</em>.', 'Born in a <em>small studio</em>.'),
     ('high-impact formulas, on-trend shades and products designed to become everyday favourites — from complexion to lips, '
@@ -1107,9 +1120,10 @@ def home_original():
                              f'grid-auto-columns:42%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}}{X} .fh-category{{scroll-snap-align:start}}}}'
                              # four equal columns: the export's 1fr tracks grew to their name-and-button row, so at 1024 the
                              # tiles came out 223 to 291 px wide and the last ran off the screen. Under 1280 px a quarter is
-                             # too narrow for the name and the button side by side: the button goes under the name
+                             # too narrow for the name and the button side by side: the button goes under the name (to 1599 px:
+                             # five tiles at 1440 wrapped "Shop now" onto two lines beside "Foundation", review 7)
                              f'@media(min-width:1024px){{{X} .fh-category-grid{{grid-template-columns:repeat(var(--fh-columns),minmax(0,1fr))}}}}'
-                             f'@media(min-width:1024px) and (max-width:1279px){{{X} .fh-category>div{{flex-direction:column;align-items:stretch;gap:10px}}'
+                             f'@media(min-width:1024px) and (max-width:1599px){{{X} .fh-category>div{{flex-direction:column;align-items:stretch;gap:10px}}'
                              f'{X} .fh-category .fh-button{{width:100%}}}}'))
         t = t[:a] + sec + t[b:]; done['categories'] = len(tiles)
     t = t.replace('alt="Woman applying Skinofab Color Changing Foundation"', 'alt="A woman in her fifties holding the Adaptive Peptide Foundation"')
@@ -1374,11 +1388,6 @@ LAYOUT_FIXES = (
     '.skinofab-results__slider,.skinofab-results__nav,.skinofab-results .swiper-button-prev,.skinofab-results .swiper-button-next'
     '{display:none!important}.skinofab-results__card{padding:22px 20px}.skinofab-results__percentage{font-size:48px}}'
     '@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:44px}}'
-    # the product gallery before its slider script starts: the square first photo and one row of thumbnails, as after
-    # it (all its photos stacked made the page 4,300 px taller, then jump: CLS 0.49 on phones, stick review 2). Clipped,
-    # not hidden, so the script still measures every slide
-    '[data-product-single-media-slider]:not(.flickity-enabled){aspect-ratio:1/1;overflow:hidden}'
-    '[data-product-single-media-thumbs]:not(.flickity-enabled){height:100px;overflow:hidden;margin-top:5px}'
     # "The SKINOFAB difference" from 1024 px: the photo as tall as the text beside it (a square left a white gap under
     # it at 1024, stick review 2)
     '@media(min-width:1024px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:auto!important;min-height:460px;'
@@ -1408,6 +1417,15 @@ def layout_fixes():
     for page in DST.rglob('*.html'):
         t = page.read_text(encoding='utf-8', errors='surrogateescape')
         if 'data-sf-layout-fixes' in t or '</body>' not in t: continue
+        # the product gallery before its slider script starts: the square first photo and one row of thumbnails, as
+        # after it (all its photos stacked made the page 4,300 px taller, then jump: CLS 0.49 on phones, stick review
+        # 2). Clipped, not hidden, so the script still measures every slide; just before the gallery, so it holds from
+        # its first paint (at the end of the body it came too late)
+        if 'data-sf-gallery-reserve' not in t:
+            t = re.sub(r'(<[a-z]+\b[^>]*\bdata-product-single-media-group\b[^>]*>)', lambda m: '<style data-sf-gallery-reserve>'
+                       '[data-product-single-media-slider]:not(.flickity-enabled){aspect-ratio:1/1;overflow:hidden}'
+                       '[data-product-single-media-thumbs]:not(.flickity-enabled){height:100px;overflow:hidden;margin-top:5px}'
+                       '</style>' + m.group(1), t, count=1)
         t = t.replace('</body>', f'<style data-sf-layout-fixes>{LAYOUT_FIXES}</style>'
                       + (CIRCLE_ROOM_JS if 'text-highlight-wrapper--circle' in t else '') + '</body>', 1)
         t = BEFORE_AFTER_IMG.sub(lambda m: f'<div class="skinofab-iwt__image sf-has-note">{m.group(1)}{BEFORE_AFTER_NOTE}', t)
@@ -2086,7 +2104,12 @@ def frontrow_block(into=None):
             'var f = document.createElement("iframe"); f.id = "frontrow-sticker"; f.className = "iframe-frontrow-sticker";'
             'f.setAttribute("data-state", "max"); f.frameBorder = "0"; f.title = "Clinicians’ Choice on FrontrowMD";'
             'f.src = base + "?presentation_type=sticker&product_id=" + id;'
-            + (f'var spot = document.querySelector({json.dumps(into)}); if (!spot) return; spot.insertBefore(f, spot.firstChild); }}'
+            # (into: its slot keeps a fixed height while it loads, then takes the sticker's drawn height; the
+            # sticker's own width is clipped by the slot: FrontrowMD scales it down from 415 px with a transform)
+            + (f'var spot = document.querySelector({json.dumps(into)}); if (!spot) return; spot.appendChild(f);'
+               'function fit() { var h = f.getBoundingClientRect().height; if (h > 20) spot.style.height = Math.round(h) + "px"; }'
+               'if (typeof MutationObserver === "function") new MutationObserver(fit).observe(f, { attributes: true, attributeFilter: ["style"] });'
+               'f.addEventListener("load", function () { setTimeout(fit, 300); }); window.addEventListener("resize", fit); }'
                if into else
             'var gallery = document.querySelector("[data-product-single-media-group]");'
             'if (!gallery) return;'
@@ -2297,11 +2320,12 @@ def product_page(base, P, final, found=None):
     # hid its white tip, stick review 2)
     if getattr(P, 'FRONTROW_NOTE', None) and getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None):
         app.insert_after(frag(f'<style>{FRONTROW_CSS}'
-                              '.sfb-frontrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 2px}'
-                              '.sfb-frontrow #frontrow-sticker{position:static !important;flex:none;transform:none !important}'
-                              '</style>' + frontrow_block('.sfb-frontrow')
-                              + '<div class="sfb-frontrow"><p class="sfb-frontrow-note" style="margin:0;font-size:14px;'
-                              f'line-height:1.4;color:#3d3d3d">{P.esc(P.FRONTROW_NOTE)}</p></div>'))
+                              '.sfb-frontrow{margin:10px 0 2px}'
+                              '.sfb-frontrow__badge{height:58px;overflow:hidden;margin:0 0 6px}'
+                              '.sfb-frontrow__badge #frontrow-sticker{position:static !important;display:block;transform-origin:0 0 !important}'
+                              '</style>' + frontrow_block('.sfb-frontrow__badge')
+                              + '<div class="sfb-frontrow"><div class="sfb-frontrow__badge"></div><p class="sfb-frontrow-note" '
+                              f'style="margin:0;font-size:14px;line-height:1.4;color:#3d3d3d">{P.esc(P.FRONTROW_NOTE)}</p></div>'))
     price = prod.select_one('.product__price-and-badge [data-price-wrapper]')
     was = price.select_one('.product__price--compare')
     # sold with Automatic Refills (P.REFILL, on by default): the single pack at its refill price against its one-time
@@ -2573,6 +2597,12 @@ def faster_home(home):
         # export's file here is still the old photo (young model, old bottle)
         src = IMAGES / m.group(3) if IMAGES and (IMAGES / m.group(3)).exists() else DST / 'assets' / 'img' / m.group(3)
         master = Image.open(src).convert('RGB')
+        # the bottle's PDRN line set again lighter and spaced out: drawn bold (hero_label.py) a 1x laptop's downscale
+        # closed its D into an O (review 7); medium weight with wide tracking keeps the D's straight back at that size
+        if master.size == (4096, 1747):
+            r = np.asarray(master).astype(np.float32).copy()
+            label_fix.bold_line_rot(r, (2844, 1082), 4.25, (100, 24), 'PDRN', 13, weight=560, track=0.5)
+            master = Image.fromarray(np.clip(r + 0.5, 0, 255).astype(np.uint8))
         def only(width, lo, hi, name):
             im = master if master.width <= width else master.resize((width, round(master.height * width / master.width)), Image.LANCZOS)
             a = np.asarray(im).astype(np.float32)

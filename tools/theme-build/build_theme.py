@@ -1348,6 +1348,15 @@ if p_cart.exists():
     if 'data-sf-refill-labels' not in t:
         p_cart.write_text(must_replace(t, '                </form>', '                </form>' + REFILL_LABELS, 'templates/cart.html refill labels'))
 
+# Cart page: the checkout button's words on one line (at 768 px the summary column wrapped "Proceed to checkout"
+# onto two, review 7)
+if p_cart.exists():
+    t = p_cart.read_text()
+    old_btn = 'class="btn btn-primary w-full mt-6 py-3 text-base">'
+    if 'data-sf-checkout-nowrap' not in t:
+        p_cart.write_text(must_replace(t, old_btn, old_btn[:-1] + ' data-sf-checkout-nowrap style="white-space:nowrap">',
+                                       'templates/cart.html checkout button'))
+
 # Cart page: the layout already shows the page's messages above its content; the cart's own copy showed each one twice
 # (an unknown coupon: the same error at the top and above the lines, review 5). The AJAX partial keeps its own.
 if p_cart.exists():

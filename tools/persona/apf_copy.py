@@ -73,6 +73,7 @@ def trust_html(terms=True, refills=True, plan=None):
     step with the chosen pack and the refills box. refills=False: a product sold once only (the bought-once row).
     plan: another product's refills {'refill': its REFILL, 'amount': the shown pack's refill price, 'every': its
     days, 'terms': its terms with {amount} and {every}}; None: the foundation's."""
+    given = plan is not None
     plan = plan or {'refill': REFILL, 'amount': PACK1['refill'], 'every': REFILL['every'], 'terms': TERMS}
     refill, amount, terms_text = plan['refill'], plan['amount'], plan['terms']
     on = bool(refill.get('default')) and refills
@@ -85,7 +86,10 @@ def trust_html(terms=True, refills=True, plan=None):
     rows = ((row('refill', (('bell', 'Refill reminder'), ('cancel', 'Cancel any time'), ('renew', renew)), on) if refills else '') +
             row('once', (('truck', 'Free shipping'), ('shield', '30-day guarantee'), ('lock', 'Secure checkout')), not on))
     shown = terms_text.replace('{amount}', usd(amount)).replace('{every}', str(plan['every']))
-    return (f'<div class="apf-trust"><p class="apf-trust__head">{ICONS["seal"]}<span>Love it or your money back</span></p>'
+    # (another product's plan: its prices as written, the default pack's; the theme build bound them to the single
+    # pack's refill price, so the first paint said "$27.95 every 112 days" until the picker ran, review 7)
+    fixed = ' data-sf-fixed-price=""' if given else ''
+    return (f'<div class="apf-trust"{fixed}><p class="apf-trust__head">{ICONS["seal"]}<span>Love it or your money back</span></p>'
             f'{rows}' +
             (f'<p class="apf-trust__terms" data-sf-refill-terms="{html_attr(terms_text)}"'
              + (f'>{html_attr(shown)}</p>' if refill.get('default') else ' hidden></p>')
@@ -1142,10 +1146,16 @@ REVIEW_WALL_JS = r"""
     var io = new IntersectionObserver(function (es) { if (es.some(function (x) { return x.isIntersecting; })) { io.disconnect(); load(); } }, { rootMargin: '800px 0px' });
     io.observe(sentinel);
   } else { load(); }
-  if (/^#sf-review-wall|^#sf-reviews-all/.test(location.hash)) load();
+  // the review counts' links: the wall stays hidden until its reviews load, so the browser's own jump to it went
+  // nowhere on the first tap (review 7): load it and scroll to its sentinel, which is always there
+  function go() { sentinel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  if (/^#sf-review-wall|^#sf-reviews-all/.test(location.hash)) { load(); setTimeout(go, 600); }
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href$="#sf-review-wall"]');
-    if (a) load();
+    if (!a) return;
+    load();
+    if (a.pathname.replace(/\/$/, '') !== location.pathname.replace(/\/$/, '')) return;    // another page's wall
+    e.preventDefault(); history.replaceState(null, '', '#sf-review-wall'); go();
   });
 })();
 """

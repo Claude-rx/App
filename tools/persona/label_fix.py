@@ -12,6 +12,9 @@ FONT = Path(__file__).resolve().parent / 'assets' / 'fonts' / 'Montserrat-VF.ttf
 # XL for ~40-80 px (the phenomenon cards, the shelf and bundle cards, the catalogue thumbnail; review 4)
 BOLD = {'cap': 22, 'weight': 720, 'track': 0.18}
 XL = {'cap': 40, 'weight': 800, 'track': 0.12}
+# for a bottle shown so small (a 1x laptop: the line 3-6 px tall) that no PDRN survives: a downscale closes its D into
+# an O at every weight and spacing tried (review 7), so the line is left out; the wordmark and the other lines stay
+NONE = {'cap': 0}
 
 
 def legible_pdrn(r, cap=15, weight=620, track=0.1):
@@ -26,6 +29,7 @@ def legible_pdrn(r, cap=15, weight=620, track=0.1):
     for i, y in enumerate(range(y0, y1)):
         k = (i + .5) / (y1 - y0)
         r[y, x0:x1] = up[x0:x1] * (1 - k) + dn[x0:x1] * k
+    if cap <= 0: return r              # (cap 0: the line left out, for a bottle shown so small no line survives)
     SS, size = 4, 10.0
     while True:
         f = ImageFont.truetype(str(FONT), int(size * SS)); f.set_variation_by_axes([weight])

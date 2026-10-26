@@ -87,9 +87,11 @@ INGREDIENTS = [
     ('Centella asiatica', 'A calming plant extract',
      'Also called cica or gotu kola: a soothing botanical for sensitive-feeling skin.'),
 ]
+# (with the foundation's word for very fair and very deep skin: ask first, review 7)
 SHADE_FAQ = ('It’s made to adapt to a wide range of skin tones without picking a shade: the cream goes on white and its '
-             'pigments shift toward your tone as you blend. Try it along your jaw in daylight. If it isn’t right for you, '
-             f'email {EMAIL} within 30 days for a full refund.')
+             f'pigments shift toward your tone as you blend. If your skin is very fair or very deep, email {EMAIL} first '
+             'and we’ll tell you honestly how it suits you. Try it along your jaw in daylight; if it isn’t right for you, '
+             'email us within 30 days for a full refund.')
 
 
 def _list(items): return '<ul>' + ''.join(f'<li>{i}</li>' for i in items) + '</ul>'
@@ -183,7 +185,6 @@ TWIN = {
         ('buff-jaw', 'The brush is built in', 'Buff it in with the other end of the stick.', 'A woman in her sixties buffing foundation along her jaw with the brush end'),
         ('friends', 'One to keep, one to share', 'The 3-stick pack: one at home, one in your bag, one to share.', 'Two women in their fifties and sixties with the stick'),
         ('bag', 'Touch-ups anywhere', 'No pump, no spills, no sponge to carry.', 'The stick going into a handbag'),
-        ('hold-chin', 'Even-looking, not masked', 'A thin layer evens the look of redness and spots.', 'A woman in her fifties holding the stick under her jaw'),
     ],
     'problem': {
         'img_problem': 'problem', 'img_solution': 'card',
@@ -291,11 +292,12 @@ BUYBOX_CSS = _b.BUYBOX_CSS
 # around the site ---------------------------------------------------------------------------------------------------
 # the shelf: after the foundation in the default list and the Bestsellers and Face tabs, first in the New tab (it is
 # the newest, and that tab has no foundation card)
+# (not in the Bestsellers tab or collection: a new product has no sales to rank it by, review 7)
 SHELF = {'badge': 'New', 'saving': 'Buy 2, get 1 free', 'tags': ['Adapts to you', 'Brush built in', 'Cream stick'],
-         'after': {'list': 'color-changing-foundation', 'bestsellers_0': 'color-changing-foundation',
+         'after': {'list': 'color-changing-foundation', 'bestsellers_0': None,
                    'bestsellers_1': None, 'bestsellers_2': 'color-changing-foundation'}}
 # the NEXT collections (as the foundation): Face, Skin, Bestsellers
-CATEGORIES = ['face', 'skin', 'the-hits']
+CATEGORIES = ['face', 'skin']
 # menus: apply_persona.py's MENU puts the stick after the foundation (desktop and mobile), and its footer's Shop column
 # after the foundation; no page-wide copy rules of its own
 GLOBAL = []

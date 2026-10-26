@@ -264,11 +264,12 @@ BUYBOX_CSS = _b.BUYBOX_CSS
 
 
 # around the site ---------------------------------------------------------------------------------------------------
+# (not in the Bestsellers tab or collection: a new product has no sales to rank it by, review 7)
 SHELF = {'badge': 'New', 'saving': 'Buy 2, get 1 free', 'tags': ['EGF', 'NAD+', 'Face & neck'],
-         'after': {'list': 'pdrn-plumping-balm', 'bestsellers_0': 'pdrn-plumping-balm',
+         'after': {'list': 'pdrn-plumping-balm', 'bestsellers_0': None,
                    'bestsellers_1': 'pdrn-plumping-balm', 'bestsellers_2': 'pdrn-plumping-balm'}}
 # the NEXT collections (as the foundation and the other face skincare): Face, Skin, Bestsellers
-CATEGORIES = ['face', 'skin', 'the-hits']
+CATEGORIES = ['face', 'skin']
 # menus on every page (after the balm's rules ran): a top-level link before the balm (desktop and mobile) and one after
 # it in the footer's Shop column
 GLOBAL = [

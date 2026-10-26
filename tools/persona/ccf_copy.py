@@ -23,6 +23,15 @@ ORIGIN = '🇰🇷 Formulated in Korea · Advanced K-beauty formula'
 GLOBAL = [
     # "The skinofab difference" button: there is no offer to claim, it scrolls to the packs (stick review 1)
     (r'RE:(<a class="btn btn--dark" href="#product">)Claim offer(</a>)', r'\g<1>Choose your pack\g<2>'),
+    # the home hero's line: the number is the formula's verified reviews from the earlier store, not SKINOFAB's
+    # customers (review 7; the listing row says the same)
+    (r'RE:<span>Loved by [\d,]+\+ customers</span>', '<span>9,800+ verified reviews</span>'),
+    # the old store's product name where a screen reader or the page's data still says it (review 7): the gallery's
+    # thumbnails and the home card's image link, the product data's name and image alts, the old SKU
+    (r'RE:aria-label="Color Changing Foundation"', 'aria-label="Adaptive Peptide Foundation"'),
+    (r'RE:"(name|title)":"Color Changing Foundation"', r'"\g<1>":"Adaptive Peptide Foundation"'),
+    (r'RE:Color Changing Foundation — lifestyle photo \| Skinofab', 'Adaptive Peptide Foundation, lifestyle photo'),
+    (r'RE:"sku":"SMO-CCF-001"', '"sku":""'),
     # the brand's name in capitals in the product page's headings, as in the wordmark (stick review 2)
     ('Why skinofab?', 'Why SKINOFAB?'),
     ('The skinofab difference', 'The SKINOFAB difference'),
@@ -52,8 +61,8 @@ GLOBAL = [
      '<text x="50" y="73" text-anchor="middle" font-family="Jost,Arial,sans-serif" font-weight="600" font-size="12" letter-spacing="1.5" fill="#fff">DAYS</text></svg>'),
     # the listing pages' benefit row: claims no product here can back ("100% natural": the foundation's silica and
     # boron nitride are not; "proven results" with no study named) become what holds for all four products
-    (r'RE:(icons-row__title">)100% natural<', r'\g<1>Formulated in Korea<'),
-    (r'RE:(icons-row__title">)Natural ingredients<', r'\g<1>Formulated in Korea<'),
+    (r'RE:(icons-row__title">)100% natural<', r'\g<1>Made for skin after 45<'),
+    (r'RE:(icons-row__title">)Natural ingredients<', r'\g<1>Made for skin after 45<'),
     (r'RE:(icons-row__title">)Proven results<', r'\g<1>30-day money-back guarantee<'),
     (r'RE:(icons-row__title">)Scientifically proven<', r'\g<1>30-day money-back guarantee<'),
     (r'RE:(icons-row__title">)Quick results<', r'\g<1>30-day money-back guarantee<'),

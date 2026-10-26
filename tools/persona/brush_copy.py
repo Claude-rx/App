@@ -33,7 +33,8 @@ OFFERS_FILE, REVIEWS_DIR, AMAZON_FILE = 'brush-offers.json', 'reviews-brush', 'a
 EYEBROW = None
 # the gallery (brush_assets.py writes brand/lymphatic-brush/<name>.jpg), first one eager
 GALLERY = ['hero', 'case', 'how-to-use', 'features', 'vs-tools']
-HERO = {'title': ['DEPUFF YOUR', 'MORNING FACE'], 'in': 'IN', 'accent': '3 MINUTES',
+# (the look, not a result: "depuff your face" claimed more than the page's own careful copy, review 7)
+HERO = {'title': ['A FRESHER', 'MORNING LOOK'], 'in': 'IN', 'accent': '3 MINUTES',
         'facts': ['Soft bristles, light touch', 'On dry skin, no oils', 'Eyes, cheeks & jaw']}
 
 # Solena's page media (the owner's files), fetched and rebranded by brush_assets.py
@@ -344,9 +345,9 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     # under the cards, while refills are on: what the prices are, and the one-time prices (stick review 2: the cards
     # and their savings did not say they were refill prices)
     off = min(round(100 * (1 - float(b['refill']) / float(b['price']))) for b in bundles) if on else 0
-    note = (f'<p class="sfo-refill-note">Prices with Automatic Refills, {off}% off. Prefer to buy once? '
+    note = (f'<p class="sfo-refill-note">Prices with Automatic Refills, {off}% off. One-time: '
             + ' · '.join(f"{esc(b['name'].split(':')[0])} {money(b['price'])}" for b in bundles)
-            + ', in your bag.</p>') if on else ''
+            + ' (switch in your bag).</p>') if on else ''
     return (f"""<div class="sfo sfo--bundle" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
 <style>{css}</style>
 <fieldset><legend>{esc(legend)}</legend>{''.join(cards)}</fieldset>
@@ -395,15 +396,6 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     var a = e.target.closest && e.target.closest('a[href*="#apf-buy"]');
     if (!a || a.pathname.replace(/\\/$/, '') !== window.location.pathname.replace(/\\/$/, '')) return;
     e.preventDefault(); history.replaceState(null, '', a.hash); fromHash();
-  }});
-  // the review counts' links: the wall stays hidden until its reviews load, so the browser's own jump went nowhere on
-  // the first tap (stick review 2); its 1 px sentinel just above it is always there
-  document.addEventListener('click', function (e) {{
-    var a = e.target.closest && e.target.closest('a[href$="#sf-review-wall"]');
-    var wall = a && (document.getElementById('sf-review-wall-sentinel') || document.getElementById('sf-review-wall'));
-    if (!wall) return;
-    e.preventDefault(); history.replaceState(null, '', '#sf-review-wall');
-    wall.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }});
   fromHash();
   sync();

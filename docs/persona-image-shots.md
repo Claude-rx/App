@@ -97,6 +97,10 @@ about 3.6 times. With no credits and the Studio's storage suspended, it was rebu
    where the line lands 5–7 device pixels tall, and on a 1x desktop screen, so the hero sets it at 22 px, weight 720,
    tracking 0.18: a touch bolder than the label's other lines, and a clear PDRN at every width (checked at 2x and 3x
    phones and a 1x desktop).
+   At 1x on a laptop that bold line still closed its D (review 7, 26 Oct): `apply_persona.py faster_home` sets it
+   again on the master before cutting, weight 560 with wide tracking, which keeps the D's straight back at that
+   size. Bottles shown smaller still (the Foundation tile, the listing banners, the phenomenon cards) leave the
+   PDRN line out (`label_fix.NONE`, `held_bottle.py --pdrn none`): at 3-6 px no weight or spacing kept it PDRN.
 3. **Master** at 4096 px, saved in the persona image set under the same name. `apply_persona.py faster_home` cuts it
    into a phone file (2880 px WebP, 112 KB) and a desktop file (4096 px WebP, 214 KB). Each keeps the part its
    layout shows (phones 64–92% of the width, desktops the right two thirds) and flattens the rest, which is never on
