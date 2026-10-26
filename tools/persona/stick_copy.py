@@ -16,8 +16,9 @@ review app behind them, several from women under 45). The stick is new at SKINOF
 foundation's, labelled as theirs, and the review wall says "no reviews yet" until real buyers write some. Bundle
 savings are real (the single-stick price times the sticks).
 
-Before launch (owner): the ingredients (INGREDIENTS), the shade range it adapts to (SHADE_FAQ, and the photos of
-women with deep skin), the net weight (NET) and where it is formulated (KOREAN) must match the supplier's sheet.
+Before launch (owner): the ingredients (INGREDIENTS), the shade range it adapts to (SHADE_FAQ and the tones panel:
+fair to medium, as the stick's maker states, until the supplier confirms more), the net weight (NET) and where it is
+formulated (KOREAN) must match the supplier's sheet.
 
 Read by apply_persona.py (it builds products/adaptive-foundation-stick.html from the foundation page's markup,
 product_page()) and by setup_brush_offers.py (the NEXT product, its three bundles and their prices).
@@ -68,9 +69,9 @@ SHIPPING_BADGE = '\U0001F381 FREE SHIPPING'
 ANNOUNCEMENT = 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee'
 # three lines under the lead, what she checks first (stick review 4: the first phone screen named no benefit); the
 # lead says what she gets, the lines how (stick review 5: the lead and the lines said the same three things)
-BULLETS = ['No shade to choose: it goes on white and adapts as you blend', 'Kabuki brush built into the other end',
+BULLETS = ['Kabuki brush built into the other end', 'Creamy, made not to cake on dry skin',
            'No pump, no spills: it fits in your bag']
-LEAD = 'Even, natural coverage in about a minute, in a creamy stick made for dry, mature skin.'
+LEAD = 'Stop guessing your shade: it goes on white and adapts to your tone as you blend, for an even, natural finish.'
 BUNDLES = [
     {'key': '1', 'name': '1 Stick', 'note': 'Foundation + brush in one', 'variant': '1 stick', 'sku': 'SKF-AFS-1',
      'price': '39.00', 'refill': '31.00', 'every': 28, 'compare': '39.00', 'gifts': []},
@@ -87,7 +88,8 @@ REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills', 'default'
 GIFTS = {}
 GIFT_FILES = {}
 # the boxed guarantee under the button (as the foundation's)
-GUARANTEE = 'Wear it in your own daylight for 30 days. If it isn’t right for you, we’ll refund you, even opened.'
+GUARANTEE = ('Not your match? Wear it in your own daylight for 30 days; if it isn’t right for you, we’ll refund you in '
+             'full, even opened.')
 STICKY_BUTTON = 'Choose your pack'
 CART_UPGRADE = {'title': 'Upgrade to 2 sticks', 'button': 'Upgrade'}
 CART_UPGRADE_3 = {'title': 'Make it 3 sticks: buy 2, get 1 free', 'button': 'Upgrade'}   # from the 2-stick pack
@@ -105,11 +107,12 @@ INGREDIENTS = [
     ('Centella asiatica', 'A calming plant extract',
      'Also called cica or gotu kola: a soothing botanical for sensitive-feeling skin.'),
 ]
-# (with the foundation's word for very fair and very deep skin: ask first, review 7)
-SHADE_FAQ = ('It’s made to adapt to a wide range of skin tones without picking a shade: the cream goes on white and its '
-             'pigments shift toward your tone as you blend. Try it along your jaw in daylight. Not your match? Email us '
-             f'within 30 days for a full refund, even opened. If your skin is very fair or very deep, you can also email {EMAIL} '
-             'before you order and we’ll tell you honestly how it suits you.')
+# fair to medium: the range the stick's maker states for it (stick review 6: the page showed a deep-skin result it
+# could not back); deeper skin asks first
+SHADE_FAQ = ('It’s made for fair to medium skin tones, without picking a shade: the cream goes on white and its pigments '
+             'shift toward your tone as you blend. Try it along your jaw in daylight. Not your match? Email us within 30 '
+             f'days for a full refund, even opened. If your skin is deeper than medium, email {EMAIL} before you order and '
+             'we’ll tell you honestly how it suits you.')
 
 
 def _list(items): return '<ul>' + ''.join(f'<li>{i}</li>' for i in items) + '</ul>'
@@ -129,8 +132,8 @@ def tabs():
          f'<p>{esc(SHADE_FAQ)}</p>'
          '<p>If your skin reacts easily, try it on a small area first.</p>'),
         ('How do I use it?',
-         _list(['Twist up a little foundation', 'Dot a little on your cheeks, forehead and chin: it looks white at first',
-                'Turn the stick and buff it in with the brush, in small circles, until it shifts to your tone',
+         _list(['Twist up a little foundation', 'Dot a little on your cheeks and forehead: it looks white at first',
+                'Flip the stick over and buff it in with the brush end, in small circles, until it shifts to your tone',
                 'Add a second thin layer where you want more coverage: spots, redness, under the eyes'])
          + '<p><strong>Less is more:</strong> two thin layers look more natural than one thick one.</p>'),
         ('How does the money-back guarantee work?',
@@ -172,7 +175,7 @@ FAQ = {'items': [
      'Use it in thin layers and buff it in with the brush: a thin, creamy layer moves with your skin instead of collecting in '
      'lines. Starting with moisturized skin helps too.'),
     ('Will it look cakey or heavy?',
-     'Not in thin layers. It’s a cream, not a powder, so it doesn’t crack on dry skin. Build only where you need it.'),
+     'Not in thin layers. It’s a cream, not a powder, so it’s made not to crack on dry skin. Build only where you need it.'),
     ('Is it good for dry skin?',
      'That’s who it’s made for: hyaluronic acid, squalane and vitamin E in a creamy base that keeps dry, mature skin comfortable.'),
     ('Can it cover spots and redness?',
@@ -182,9 +185,9 @@ FAQ = {'items': [
      'It’s made to wear from morning to evening as a thin, flexible layer that doesn’t settle into lines. On a long day, '
      'buff the brush end over your nose and chin to refresh it; there’s no need to add more.'),
     ('Stick or bottle: which one is for me?',
-     'Both go on white and shift toward your tone as you blend. The Adaptive Peptide Foundation is a liquid in a serum base '
-     'with peptides and PDRN, blended with your fingertips. The stick is a cream with hyaluronic acid, niacinamide and '
-     'squalane, with the brush built in, made for quick mornings and touch-ups on the go.'),
+     'Both go on white and shift toward your tone as you blend. The Adaptive Peptide Foundation is the liquid you blend '
+     'with your fingertips; the stick is the solid cream with the brush built in, made for quick mornings and touch-ups '
+     'on the go.'),
     ('Does it have SPF?',
      'No. Wear your daily sunscreen first and let it settle for a minute; the stick goes on top.'),
     ('How do I clean the brush?',
@@ -221,7 +224,7 @@ TWIN = {
     # (the handbag second: on a phone the second card peeks in by a third, and the bag's left third has no face to
     # cut, stick review 5)
     'moments': [
-        ('daylight', 'Check it in daylight', 'Blended in, it shifts toward your own tone.', 'A woman in her sixties touching her jawline, the stick in her other hand'),
+        ('daylight', 'It meets your tone', 'Blended in, it shifts toward your own tone. Check it in daylight.', 'A woman in her sixties touching her jawline, the stick in her other hand'),
         ('bag', 'Touch-ups anywhere', 'No pump, no spills, no sponge to carry.', 'The stick going into a handbag'),
         ('buff-jaw', 'The brush is built in', 'Buff it in with the other end of the stick.', 'A woman in her sixties buffing foundation along her jaw with the brush end'),
         ('friends', 'Home, bag and one to share', 'The 3-stick pack: one at home, one in your bag, one for a friend.', 'Two women in their fifties and sixties with the stick'),
@@ -267,10 +270,10 @@ TWIN = {
              'paragraphs': ['We make SKINOFAB for skin after 45. The women we talk to don’t want more makeup: they want the '
                             'foundation they already wear to stop turning orange, stop settling into lines and stop needing three tools.',
                             'That’s why we put a foundation that adapts to your tone and a kabuki brush into one stick: '
-                            '<strong>swipe it on, buff it in, done.</strong>',
+                            '<strong>dot it on, buff it in, done.</strong>',
                             'It won’t make you look 30, and we won’t pretend it will. It evens out the look of your skin and lets the rest of you show.'],
              'name': 'The SKINOFAB team', 'role': 'Made for skin after 45'},
-    'science': {'img': 'tones-tall', 'alt': 'Three women, fair, medium and deep skin, before and after the same light foundation (AI illustration)',
+    'science': {'img': 'tones-tall', 'alt': 'Three women with fair to medium skin, before and after the same light foundation (AI illustration)',
                 'eyebrow': 'Adaptive color science', 'lead': 'One shade', 'mark': 'that meets your skin',
                 'lede': 'The color pigments are wrapped in tiny capsules in a white cream. As you blend, the capsules break and '
                         'the color shifts toward your own tone, so there is no shade to pick.',
@@ -281,19 +284,19 @@ TWIN = {
         {'img': 'wear-day', 'alt': 'The same woman at 10 AM and at 10 PM wearing the stick (AI illustration)',
          'lead': 'From 10 AM', 'mark': 'to 10 PM',
          'paras': ['A thin, creamy layer moves with your skin instead of drying on top of it, so it is made to look the same at '
-                   'dinner as it did at breakfast: no orange by the window, no lines it found by lunch. Out late? Buff the brush '
+                   'dinner as it did at breakfast: no orange by the window, no settling into lines by lunch. Out late? Buff the brush '
                    'end over your nose and chin and you are done. Results vary from person to person.'],
          'usps': [('Made to wear all day', 'clock'), ('Touch up with the brush', 'brush')]},
         {'img': 'swatch', 'alt': 'A stripe of the stick’s white cream and the same stripe blended into the skin (AI illustration)',
          'lead': 'How does it work?', 'mark': None,
-         'paras': ['Dot a little on your cheeks, forehead and chin. It looks white: that’s the capsules, still closed.',
-                   'Turn the stick and buff with the brush in small circles. The capsules break and the color shifts toward your '
+         'paras': ['Dot a little on your cheeks and forehead. It looks white: that’s the capsules, still closed.',
+                   'Flip the stick over and buff with the brush end in small circles. The capsules break and the color shifts toward your '
                    'own tone in about a minute.',
                    'Add a second thin layer where you want more coverage. That’s it: no sponge, no shade, no mess.'],
          'usps': [('Goes on white, blends to you', 'tones'), ('Brush in the stick', 'stick')]},
     ],
     'results': {'title': 'What to expect',
-                'cards': [('1 min', 'From white to your tone', 'Swipe on, then buff with the brush'),
+                'cards': [('2 steps', 'Dot it on, buff it in', 'No sponge, no separate brush'),
                           ('0', 'Shades to choose', 'One stick adapts as you blend'),
                           ('30 days', 'To try it risk-free', 'Love it, or your money back')]},
     'compare': {'title': 'Why SKINOFAB?', 'others': 'Your old foundation',
@@ -311,7 +314,7 @@ TWIN = {
         {'img': 'twist', 'title': 'Twist up a little', 'text': 'A few millimeters is all you need.', 'alt': 'Hands twisting up the white foundation end of the stick'},
         {'img': 'dots', 'title': 'Dot it on', 'text': 'A few dots on your cheeks and forehead. It looks white at first.', 'alt': 'A woman with three white dots of the foundation on her face, the stick in her hand'},
         {'img': 'blend', 'title': 'Buff it in', 'text': 'Small circles with the brush end until it shifts to your tone.', 'alt': 'Buffing the foundation in with the brush end'},
-        {'img': 'apply-cheek', 'title': 'Build where you need it', 'text': 'A second thin swipe on spots and redness, then buff the edges.', 'alt': 'Swiping the white foundation along a cheekbone'}]},
+        {'img': 'apply-cheek', 'title': 'Build where you need it', 'text': 'A little more on spots and redness, then buff the edges.', 'alt': 'Swiping the white foundation along a cheekbone'}]},
     'why': {'title': 'The SKINOFAB difference', 'img': 'hold-cheek', 'button': 'Choose your pack',
             'features': [('Your shade, without guessing', 'It goes on white and adapts to your tone as you blend', 'tones'),
                          ('The brush is built in', 'A dense kabuki brush on the other end of the stick', 'brush'),

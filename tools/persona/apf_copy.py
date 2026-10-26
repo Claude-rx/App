@@ -1005,7 +1005,7 @@ REVIEW_WALL_CSS = r"""
 .sfr-more-text{background:none;border:0;padding:4px 0 0;font:inherit;font-size:13px;font-weight:600;text-decoration:underline;cursor:pointer;color:#191919}
 .sfr-photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .sfr-photos button{padding:0;border:0;background:none;cursor:zoom-in;border-radius:8px;overflow:hidden;width:84px;height:84px}
-.sfr-photos img{width:84px;height:84px;object-fit:cover;display:block}
+.sfr-photos img{width:84px;height:84px;object-fit:cover;object-position:50% 28%;display:block}
 .sfr-foot{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid #efefe9;font-size:13.5px}
 .sfr-ava{width:30px;height:30px;border-radius:50%;background:#efefe9;color:#191919;display:grid;place-content:center;font-size:13px;font-weight:700;flex:none}
 .sfr-foot small{color:#6a6a6a;margin-left:auto}
@@ -1116,7 +1116,8 @@ REVIEW_WALL_JS = r"""
     var note = root.querySelector('.sfr-note');
     if (note && totals.imported) {
       // whose reviews they are: data-note on another product's page ("of our Adaptive Peptide Foundation ...")
-      note.textContent = 'Includes ' + totals.imported.toLocaleString('en-US') + ' verified reviews ' + (root.getAttribute('data-note') || totals.note || 'of the same formula from our earlier store') +
+      // "Includes" only when the store's own reviews are counted too (all from the earlier store, it misled, stick review 6)
+      note.textContent = (totals.count > totals.imported ? 'Includes ' : '') + totals.imported.toLocaleString('en-US') + ' verified reviews ' + (root.getAttribute('data-note') || totals.note || 'of the same formula from our earlier store') +
         (all.length < n ? '. Showing the ' + all.length.toLocaleString('en-US') + ' most helpful.' : '.');
       note.hidden = false;
     }
@@ -1199,15 +1200,17 @@ REVIEW_WALL_JS = r"""
 def review_wall_html(data_src='', photos=None):
     """The wall's skeleton; the script fills it. data_src: the imported reviews' data script ('' = NEXT reviews only);
     photos: {photo name: page-relative path} (the theme build turns the paths into asset URLs)."""
-    return (f'<div id="sf-review-wall-sentinel" aria-hidden="true" style="height:1px"></div>'
+    # (scroll-margin: the sticky header covered the wall's title, the line saying whose reviews they are, stick review 6)
+    return (f'<div id="sf-review-wall-sentinel" aria-hidden="true" style="height:1px;scroll-margin-top:96px"></div>'
             f'<section class="sfr" id="sf-review-wall" data-src="{data_src}" hidden aria-labelledby="sfr-title"><style>{REVIEW_WALL_CSS}</style>'
             '<script type="application/json" data-sf-native-reviews>{"write": "", "reviews": []}</script>'
             f'<script type="application/json" data-sf-review-photos>{json.dumps(photos or {})}</script>'
             '<div class="sfr-wrap"><div class="sfr-top">'
             '<div><h2 id="sfr-title">Customer reviews</h2><div class="sfr-avg" data-sfr-avg></div><ul class="sfr-dist"></ul>'
             '<p class="sfr-note" hidden></p><a class="sfr-write" hidden>Write a review</a></div>'
+            # (no "Most recent": the cards show no dates, stick review 6)
             '<div><div class="sfr-bar"><div class="sfr-chips"></div>'
-            '<select class="sfr-sort" aria-label="Sort reviews"><option value="relevant">Most helpful</option><option value="recent">Most recent</option>'
+            '<select class="sfr-sort" aria-label="Sort reviews"><option value="relevant">Most helpful</option>'
             '<option value="high">Highest rated</option><option value="low">Lowest rated</option><option value="photos">With photos first</option></select></div>'
             '<div class="sfr-list"></div><div class="sfr-more" hidden><button type="button">Show more reviews</button></div></div>'
             '</div></div>'

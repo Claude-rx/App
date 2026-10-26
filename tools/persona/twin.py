@@ -69,6 +69,10 @@ def moments(sec, cards, img):
     s = frag(sec)
     root = s.select_one('section.skinofab-testimonials')
     if root and root.get('id') == 'sf-reviews': del root['id']          # the foundation's rating link target
+    # the photos at their own 4:3 at every width (a fixed 220 px height made them nearly square at 1024 and cut a
+    # face out of the two friends, stick review 6)
+    if root: root.insert(0, frag('<style>.skinofab-testimonials .skinofab-testimonials__image:has(img[src*="-960x720-"])'
+                                 '{height:auto!important;aspect-ratio:4/3}</style>'))
     slides = s.select('.swiper-slide')
     for k, sl in enumerate(slides):
         if k >= len(cards): sl.decompose(); continue

@@ -200,7 +200,7 @@ SKIN_TONES = ['#f3dac8', '#ecc9b2', '#e2b898', '#d6a683', '#cb9572', '#bd8462', 
               '#734731', '#5e3a27', '#4a2e1f']
 
 
-def tones_panel(product, cols, title, out, tall=False):
+def tones_panel(product, cols, title, out, tall=False, tones=SKIN_TONES):
     """A white panel (1080 square, or 1080 x 1350 for a 4:5 slot): a serif title, a row of skin-tone swatches and
     cols [(before, after)] side by side, each woman's photo before and after the same edit, with the AI line."""
     H = round(W * 1.25) if tall else W
@@ -210,12 +210,12 @@ def tones_panel(product, cols, title, out, tall=False):
     # title and the AI line were cut there, stick review 2)
     top = 96 if not tall else 160
     d.text((W // 2, top), title[0], font=serif(54 if not tall else 60, 'Bold'), fill=INK, anchor='ms')
-    d.text((W // 2, top + 46), title[1], font=sans(26, 'Regular'), fill=SOFT, anchor='ms')
+    d.text((W // 2, top + 50), title[1], font=sans(32, 'Regular'), fill=SOFT, anchor='ms')
     # the tones as one smooth bar, fair to deep: a row of dots read as so many shades (stick review 2)
     r = 26
     cy = top + (106 if not tall else 100)
     x0b, x1b, bh = 60, W - 60, 34
-    stops = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in SKIN_TONES]
+    stops = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in tones]
     xs = np.linspace(0, len(stops) - 1, x1b - x0b)
     lo = np.floor(xs).astype(int).clip(0, len(stops) - 2); f = (xs - lo)[:, None]
     row = (np.array(stops)[lo] * (1 - f) + np.array(stops)[lo + 1] * f).astype(np.uint8)
@@ -292,33 +292,38 @@ def whats_inside(product, name, rows, size=700, note_left=False, shadow=False):
     d = ImageDraw.Draw(im)
     d.text((64, 150), 'What’s', font=serif(80, 'Bold'), fill=INK, anchor='ls')
     d.text((64, 240), 'inside', font=serif(80, 'Bold'), fill=INK, anchor='ls')
+    # (the rows and captions sized for a phone, where the image is 350 px wide: 19 px read as 6, stick review 6)
     for k, (a, b) in enumerate(rows):
-        y = 380 + k * 126
-        d.text((64, y), a, font=sans(31, 'Medium'), fill=INK, anchor='ls')
+        y = 372 + k * 146
+        d.text((64, y), a, font=sans(38, 'Medium'), fill=INK, anchor='ls')
         # each line runs on to the product itself, a dot where it meets it (they stopped 200 px short and pointed at
         # nothing, stick review 5)
-        end = 64 + d.textlength(a, font=sans(31, 'Medium')) + 16
+        end = 64 + d.textlength(a, font=sans(38, 'Medium')) + 16
         tx, ty = edge(sy0 + (sy1 - sy0) * (.16 + .2 * k))
         tx -= 8
         if end < tx - 40:
             d.line([(end, y - 10), (tx - 70, y - 10), (tx, ty)], fill=INK, width=2, joint='curve')
             d.ellipse((tx - 5, ty - 5, tx + 5, ty + 5), fill=INK)
-        d.text((64, y + 34), b, font=sans(19, 'Regular'), fill=SOFT, anchor='ls')
+        d.text((64, y + 42), b, font=sans(28, 'Regular'), fill=SOFT, anchor='ls')
     # note_left: on the white side (a photo that runs to the bottom-right corner hid it)
-    if note_left: note(d, (64, W - 28), anchor='ls')
-    else: note(d, (W - 60, W - 28), anchor='rs')
+    if note_left: note(d, (64, W - 28), anchor='ls', size=26)
+    else: note(d, (W - 60, W - 28), anchor='rs', size=26)
     save(im, product, 'whats-inside')
 
 
 def science(product, name, lines):
     im = src(product, name)
-    fade = Image.linear_gradient('L').resize((W, 330)).point(lambda v: 255 - v)       # opaque at the top
-    im.paste(PAPER, (0, 0, W, 330), fade.point(lambda v: min(255, int(v * 1.35))))
+    fade = Image.linear_gradient('L').resize((W, 360)).point(lambda v: 255 - v)       # opaque at the top
+    im.paste(PAPER, (0, 0, W, 360), fade.point(lambda v: min(255, int(v * 1.35))))
     d = ImageDraw.Draw(im)
     d.text((W // 2, 120), 'The Science', font=serif(76, 'Bold'), fill=INK, anchor='ms')
+    # the lines as large as the width allows, up to 32 px (27 px read as 8 px on a phone, stick review 6), on the
+    # white above the picture
+    size = 32
+    while size > 27 and max(d.textlength(line, font=sans(size, 'Regular')) for line in lines) > W - 140: size -= 1
     for k, line in enumerate(lines):
-        d.text((W // 2, 190 + k * 40), line, font=sans(27, 'Regular'), fill=INK, anchor='ms')
-    note(d, (W // 2, W - 26))
+        d.text((W // 2, 190 + round(k * size * 1.32)), line, font=sans(size, 'Regular'), fill=INK, anchor='ms')
+    note(d, (W // 2, W - 26), size=26)
     save(im, product, 'science')
 
 
@@ -470,23 +475,33 @@ def stick():
     wear.paste(mc, (0, 0)); wear.paste(match_color(ec, mc), (w // 2, 0))
     wear.save(P / 'labelled' / 'ba-wear.jpg', quality=95)
     before_after(P, 'ba-wear', 'wear-day', dark=True, words=('10 AM · Morning', '10 PM · Evening'))
-    tones = [('tone-fair-b', 'tone-fair-a'), ('tone-med-b', 'tone-med-a'), ('tone-deep-b', 'tone-deep-a')]
-    tones_panel(P, tones, ('One stick, many skin tones', 'It goes on white and blends into your own tone'), 'tones')
-    tones_panel(P, tones, ('One stick, many skin tones', 'It goes on white and blends into your own tone'), 'tones-tall', tall=True)
+    # fair to medium, the range the stick's own maker states (its gallery: "For fair to medium skin tones"); a deep
+    # skin result shown before the supplier confirms it was a claim the page could not back (stick review 6)
+    tones = [('tone-fair-b', 'tone-fair-a'), ('tone-light-b', 'tone-light-a'), ('tone-med-b', 'tone-med-a')]
+    title = ('One stick, fair to medium skin', 'It goes on white and blends into your own tone')
+    tones_panel(P, tones, title, 'tones', tones=SKIN_TONES[:7])
+    tones_panel(P, tones, title, 'tones-tall', tall=True, tones=SKIN_TONES[:7])
     panel(P, 'panel-wide', ('One Stick,', 'Your Shade'), [('sparkle', 'Goes on white,', 'blends to your tone'),
                                                           ('drop', 'Creamy, made for', 'dry, mature skin'),
-                                                          ('stick', 'Swipe, buff,', 'done in a minute')], 'one-stick')
+                                                          ('stick', 'Dot, buff,', 'done in a minute')], 'one-stick')
     # on the stick itself (the swatch photo is "How does it work?" further down: the same photo twice, stick review 3)
     whats_inside(P, 'single', [('Hyaluronic acid', 'Keeps dry skin comfortable'), ('Niacinamide', 'For a more even-looking tone'),
-                               ('Squalane + vitamin E', 'Soft and supple, never tight')], note_left=True, shadow=True)
+                               ('Squalane + vitamin E', 'Soft and supple, not tight')], note_left=True, shadow=True)
     science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',
                            'and the white cream shifts toward your own skin tone:',
                            'one shade that meets your skin where it is.'))
     vs_others(P, 'single', 'liquid', 'Your old foundation', [('Why one stick', False), ('works where a', False), ('bottle doesn’t', True)],
               ['Adapts to your\nskin tone', 'Kabuki brush\nbuilt in', 'No spills, fits\nyour bag', 'Creamy, made for\ndry skin'])
-    for n in ('apply-cheek', 'blend', 'temple', 'friends', 'hold-chin', 'bag', 'tips', 'swatch', 'twist', 'dots', 'daylight',
+    for n in ('apply-cheek', 'blend', 'temple', 'friends', 'hold-chin', 'bag', 'tips', 'twist', 'dots', 'daylight',
               'buff-jaw'):
         plain(P, n)
+    # the swatch shows the result, the white stripe and the same stripe blended in: an illustration, and it says so on
+    # the photo, as the other result pictures do (stick review 6: only its alt text said it)
+    sw = src(P, 'swatch'); d = ImageDraw.Draw(sw)
+    f = sans(30, 'Regular'); tw = d.textlength(AI_NOTE + '.', font=f)
+    d.rounded_rectangle((28, W - 76, 28 + tw + 32, W - 22), 27, fill=PAPER)       # on white: the hand runs to the corner
+    note(d, (44, W - 38), AI_NOTE + '.', anchor='ls', size=30)
+    save(sw, P, 'swatch')
     plain(P, 'single', 'card')
 
 

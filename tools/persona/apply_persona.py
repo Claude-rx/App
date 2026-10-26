@@ -457,7 +457,11 @@ def review_data(reviews=REVIEWS):
     typo = re.compile(r"\s[,.!?]|\bi\b|\s{2}|I['’]m don['’]t|liked to be|recommened|dissapoint|adopted to|It['’]s us\b"
                       r"|(?<![\w'’.])[b-hj-zB-HJ-Z](?![\w'’.])")
     picks = [r for r in rs if r['rating'] == 5 and r.get('verified') and 70 <= len(r['body']) <= 210 and '\n' not in r['body']
-             and not typo.search(r['body'])][:10]
+             and not typo.search(r['body'])]
+    # those where she says her age (45 and over) first: "I'm 65 and...", the buyer reading them (stick review 6)
+    age = re.compile(r"(?i)\b(?:I['’]?m|I am|at|age)\s+(4[5-9]|[5-8]\d)\b|\b(4[5-9]|[5-8]\d)\s*(?:years? old|yrs? old|y/?o)\b"
+                     r"|\bin my (?:fifties|sixties|seventies|50s|60s|70s)\b")
+    picks = sorted(picks, key=lambda r: not age.search(r['body']))[:10]
     summary = {'count': d['count'], 'average': d['average'], 'distribution': d['distribution']}
     if d.get('note'): summary['note'] = d['note']        # where the imported reviews come from (import_reviews.py --note)
     return {'ship': ship, 'summary': summary,
@@ -2128,19 +2132,21 @@ def cart_offer():
         if not getattr(P, 'REFILL', None): return f"Just {money(once)} more for {what}."
         refill = round(float(b['refill']) - float(a['refill']), 2)
         if refill == once: return f"Just {money(once)} more for {what}."
-        return f"{what[0].upper() + what[1:]} for {money(refill)} more with refills, {money(once)} more bought once."
+        # (the price after a colon: "a second stick: one at home, one in your bag for $16 more" read as the bag's
+        # stick costing $16, stick review 6)
+        return f"{what[0].upper() + what[1:]}: {money(refill)} more with refills, {money(once)} more bought once."
     def every_of(P):
         # a refill line upgraded to the 2-pack ships as often as the 2-pack does (it lasts twice as long)
         return P.BUNDLES[1]['every'] if getattr(P, 'REFILL', None) else None
     balm = json.loads((WORK / balm_copy.OFFERS_FILE).read_text())['variants']
     c1, c2 = balm_copy.BUNDLES[0], balm_copy.BUNDLES[1]
-    c_text = step_text(balm_copy, 'a second stick: one for home, one for your bag')
+    c_text = step_text(balm_copy, 'a second stick, one for home and one for your bag')
     serum = json.loads((WORK / serum_copy.OFFERS_FILE).read_text())['variants']
     d1, d2 = serum_copy.BUNDLES[0], serum_copy.BUNDLES[1]
-    d_text = step_text(serum_copy, 'a second bottle: about two more months')
+    d_text = step_text(serum_copy, 'a second bottle, about two more months')
     stick = json.loads((WORK / stick_copy.OFFERS_FILE).read_text())['variants']
     e1, e2 = stick_copy.BUNDLES[0], stick_copy.BUNDLES[1]
-    e_text = step_text(stick_copy, 'a second stick: one at home, one in your bag')
+    e_text = step_text(stick_copy, 'a second stick, one for home and one for your bag')
     # and from the 2-stick pack, the default, to the 3-stick pack (buy 2, get 1 free): most bags hold the 2-pack, and
     # the drawer offered nothing from it (stick review 5)
     e3 = stick_copy.BUNDLES[2]
@@ -2567,7 +2573,8 @@ def product_page(base, P, final, found=None):
     # foundation's variant ids and scripts
     trust = prod.select_one('.sfp-trust')
     trust.insert_after(frag(assure_html(getattr(P, 'GUARANTEE', None))))
-    if frontrow_html: prod.select_one('.sfb-assure').insert_after(frag(frontrow_html))
+    # (the foundation's FrontrowMD listing goes with the foundation's reviews, below: in the stick's buy box it read
+    # as the stick's own, stick review 6)
     # the tabs, in the design's accordion markup
     accs = prod.select('.product__block.product__accordions')
     tpl, anchor = copy.copy(accs[0]), accs[-1]
@@ -2594,6 +2601,10 @@ def product_page(base, P, final, found=None):
     found_main = BeautifulSoup(final, 'html.parser').find('main').find_all(recursive=False)
     out = twin.sections(found_main, P, twin_context(P, found, stats, amazon))
     prod.insert_after(frag(''.join(out)))
+    if frontrow_html:
+        strip = soup.select_one('#shopify-section-sf-review-strip .sfrs-wrap') or soup.select_one('.sfrs .sfrs-wrap')
+        if strip: strip.append(frag(f'<div class="sfrs-frontrow" style="max-width:560px;margin:18px auto 0">{frontrow_html}</div>'))
+        else: prod.select_one('.sfb-assure').insert_after(frag(frontrow_html))
     # the design's product JSON (the theme's product script reads prices and variants from it)
     gallery = [s_.find('img')['src'] for s_ in slider.select('[data-product-single-media-wrapper]')]
     pj = soup.select_one('script[data-product-json]')
@@ -2915,8 +2926,9 @@ STICKY_CSS = """
 def sticky_bar(t, img, title, price_line, button, rating=None):
     """The product page's sticky bar, rebuilt: the export's #sticky_atcs was never shown (the app script that showed
     it did not come with the export) and its prices were bound to the wrong product. This one shows whenever the buy
-    box's add-to-cart button is out of view, above or below (on a phone or a tablet the page opens with it below the
-    fold: there was no buy button on the first screen, review 5), and its button goes to the pack picker (#apf-buy).
+    box's add-to-cart button is out of view, above or below on a phone or a tablet (the page opens with it below the
+    fold: there was no buy button on the first screen, review 5), above on a laptop; its button goes to the pack
+    picker (#apf-buy).
     price_line is plain text ("From $37 · Free shipping"), so the theme build leaves it as written."""
     m = re.search(r'<div id="sticky_atcs"', t)
     if not m: return t, False
@@ -2931,7 +2943,9 @@ def sticky_bar(t, img, title, price_line, button, rating=None):
            'function start() {'
            'var btn = document.querySelector("form[data-product-form] [data-add-to-cart]") || document.querySelector("#apf-buy");'
            'if (!btn || !("IntersectionObserver" in window)) return;'
-           'new IntersectionObserver(function (es) { var e = es[0], on = !e.isIntersecting;'
+           # (on a laptop only once the button has gone up off the screen: shown while it was still below, the bar
+           # covered the pack cards' prices in the first screen, stick review 6)
+           'new IntersectionObserver(function (es) { var e = es[0], on = !e.isIntersecting && (innerWidth < 1024 || e.boundingClientRect.top < 0);'
            'bar.classList.toggle("is-on", on); bar.setAttribute("aria-hidden", on ? "false" : "true");'
            'bar.querySelector("a").tabIndex = on ? 0 : -1;'
            # while it shows, the page ends that much lower: the footer's last line and the payment icons stay above it

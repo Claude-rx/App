@@ -414,6 +414,16 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     if (!a || a.pathname.replace(/\\/$/, '') !== window.location.pathname.replace(/\\/$/, '')) return;
     e.preventDefault(); history.replaceState(null, '', a.hash); fromHash();
   }});
+  // a link to one pack (the cart's line links carry its variant, ?variant-id=238): that pack chosen (it opened on
+  // the default pack whichever was in the bag, stick review 6)
+  (function () {{
+    var q = new URLSearchParams(window.location.search), v = q.get('variant-id') || q.get('variant');
+    if (!v) return;
+    Object.keys(packs).forEach(function (k) {{
+      var r = root.querySelector('input[name=sf_pack][value="' + k + '"]');
+      if (r && String(packs[k].pk) === v) r.checked = true;
+    }});
+  }})();
   fromHash();
   sync();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sync);

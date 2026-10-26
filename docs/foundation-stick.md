@@ -18,10 +18,13 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   ingredients Facelove's page names. Facelove publishes no full ingredient list: check the supplier's INCI list and
   correct `INGREDIENTS` and `TWIN['inside']` in `stick_copy.py` if it differs. The tab says "The full ingredient list
   is printed on the box".
-- **Shade range.** Facelove's page says both "16 skin tones" and "fair to medium" (its own image). Our page says only
-  that it is made to adapt to "a wide range of skin tones" and tells her to try it along her jaw in daylight, with the
-  30-day refund (`SHADE_FAQ`). Two photos (`temple`, `friends`) show women with deep skin: if the supplier's range
-  stops at medium, say so in `SHADE_FAQ` and swap those two photos.
+- **Shade range.** Facelove's page says both "16 skin tones" and, in its own gallery, "For fair to medium skin tones".
+  Since stick review 6 the page says fair to medium: `SHADE_FAQ` ("made for fair to medium skin tones"; deeper skin
+  emails first; a full refund within 30 days, even opened), the tones panel (fair, light-medium and medium women before
+  and after, the tone bar stopping at medium: "One stick, fair to medium skin"), and the `temple` and `friends` photos
+  re-made with light-medium models (a deep-skin result was a claim the page could not back). The earlier photos (a deep
+  before/after pair, and women with deep skin in `temple` and `friends`) are in git history: if the supplier confirms
+  a wider range, bring them back with `SHADE_FAQ` and the panel's title.
 - **Net weight** (`NET`): shown in the Ingredients tab once set.
 - **Where it is made** (`KOREAN`): off. The foundation, balm and serum say "Formulated in Korea"; the stick doesn't
   until the supplier confirms it.
@@ -29,9 +32,11 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   56 days for 2, $62 every 84 days for 3 (20% under the one-time price; one-time stays a choice on the cart page). How
   long a stick lasts decides the 28 days: change `BUNDLES[*]['refill'|'every']` and `REFILL['every']` in
   `stick_copy.py`, then rerun `setup_brush_offers.py skinofab <work> stick_copy` and the build.
-- **"16 skin tones".** The owner's reference shows "One stick for 16 skin tones". The page says "One stick, many skin
-  tones" (12 swatches, no number) until the supplier confirms the range: then put the number in the `tones_panel`
-  titles in `product_photos.py stick` and in `SHADE_FAQ`.
+- **"16 skin tones".** The owner's reference shows "One stick for 16 skin tones". The page gives no number and says
+  fair to medium (above) until the supplier confirms the range: then put it in the `tones_panel` titles in
+  `product_photos.py stick` and in `SHADE_FAQ`.
+- **Reviews' 3-star share.** The wall shows 0% 3-star reviews: that is the earlier store's own export (7,719 five,
+  2,132 four, 0 three, 1 two, 3 one), not a filter.
 - **Same formula.** The reviews near the top and in the wall are the Adaptive Peptide Foundation's, labelled "Verified
   buyer of the foundation", because the owner states the stick is the same adaptive formula. If the supplier's stick
   formula differs, set `BORROW_REVIEWS = None` and `FRONTROW_NOTE = None` in `stick_copy.py` and the page shows its

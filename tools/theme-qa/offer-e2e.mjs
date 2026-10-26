@@ -575,10 +575,11 @@ await twinPage('stick', STICK, { title: 'Adaptive Foundation Stick', handle: 'ad
                                  announce: 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee',
                                  claims: '97%|93%|50,000|pieces remain|11:59|16 skin tones|anti-aging|reduces redness|clinically|dermatologist|Changing Foundation' });
 
-// the sticky bar on every product page: shown exactly while the add-to-cart button is out of view (at the top on a
-// phone the button is below the fold: the bar shows; on a computer it is in view: hidden), shown once it has
-// scrolled away, and its button brings the pack picker back into view
-for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BALM], ['serum', SERUM], ['stick', STICK]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
+// the sticky bar on every product page: shown while the add-to-cart button is out of view on a phone or a tablet
+// (at the top on a phone the button is below the fold: the bar shows), on a laptop only once the button has scrolled
+// up off the screen (shown while it was below, it covered the pack cards, stick review 6); its button brings the
+// pack picker back into view
+for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BALM], ['serum', SERUM], ['stick', STICK]]) for (const [w, h] of [[390, 844], [1024, 900], [1440, 900]]) {
   const s = await session(w, h, route);
   const on = () => s.page.evaluate(() => { const b = document.getElementById('sf-sticky'); return b ? b.classList.contains('is-on') : null; });
   const problems = [];
@@ -588,7 +589,7 @@ for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BAL
     const r = b.getBoundingClientRect(); return r.top >= innerHeight || r.bottom <= 0; });
   await s.page.evaluate(() => window.scrollTo(0, 3000)); await s.page.waitForTimeout(900);
   const scrolled = await on();
-  if (atTop !== atcOut) problems.push(`at the top: bar ${atTop}, add-to-cart out of view ${atcOut}`);
+  if (atTop !== (atcOut && w < 1024)) problems.push(`at the top: bar ${atTop}, add-to-cart out of view ${atcOut} at ${w}`);
   // on the first screen the bar covers neither the title nor the price (stick review 3)
   if (atTop) {
     const cover = await s.page.evaluate(() => { const bar = document.getElementById('sf-sticky'), top = innerHeight - bar.offsetHeight;
