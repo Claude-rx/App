@@ -281,7 +281,7 @@
         "name": "sf_cart_guarantee_text",
         "type": "text",
         "label": "Guarantee text",
-        "default": "Wear it for 30 days. If you don't love it, we'll refund you.",
+        "default": "Try it for 30 days. If you don't love it, we'll refund you.",
         "help_text": "Must match your refund policy."
       },
       {
@@ -298,10 +298,23 @@
         "default": ""
       },
       {
+        "name": "sf_cart_review_product",
+        "type": "product",
+        "label": "Review is about",
+        "help_text": "The quote shows only while this product is in the bag. Empty: always."
+      },
+      {
         "name": "sf_cart_checkout_text",
         "type": "text",
         "label": "Checkout button",
         "default": "Secure checkout"
+      },
+      {
+        "name": "sf_cart_change_text",
+        "type": "text",
+        "label": "Refill line: link to change it",
+        "default": "Change",
+        "help_text": "After \"Refills every 28 days\": opens the bag page, where the shopper picks One Time or refills."
       },
       {
         "name": "sf_pay_icons",

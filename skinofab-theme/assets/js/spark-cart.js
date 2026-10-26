@@ -118,7 +118,7 @@
         '    pk title url metadata',
         '    primaryImage { thumbnail: url(transform: { maxWidth: 150, maxHeight: 150, format: webp, crop: center }) }',
         '    subscriptionInfo { interval intervalCount }',
-        '    parent { pk title metadata }',
+        '    parent { pk title url metadata }',
         '    purchaseInfo { priceRetail { value format currency } availableForSale availability }',
         '  }',
         '}'

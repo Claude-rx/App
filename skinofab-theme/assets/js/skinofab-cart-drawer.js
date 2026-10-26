@@ -87,6 +87,11 @@
         return cut > 0 ? { name: title.slice(0, cut), variant: title.slice(cut + 3) } : { name: title, variant: '' };
     }
 
+    /* the API's urls are on the store's primary domain: keep the shopper (and the bag) on this host */
+    function localUrl(url) {
+        return String(url || '').replace(/^https?:\/\/[^\/]+/, '') || '#';
+    }
+
     function createCartItemEl(line, currency, doc, labels) {
         labels = labels || {};
         var item = doc.createElement('div');
@@ -108,14 +113,17 @@
         var maxQty = SparkCartClient.MAX_QTY_PER_LINE || 15;
         var removeLabel = fill(label(labels, 'removeItemLabel', 'Remove {title}'), { title: product.title || '' });
 
-        var html = '<a class="spark-drawer-item-image" href="' + escapeHtml(product.url || '#') + '" tabindex="-1" aria-hidden="true">' +
+        var href = localUrl((product.parent && product.parent.url) || product.url);
+        var html = '<a class="spark-drawer-item-image" href="' + escapeHtml(href) + '" tabindex="-1" aria-hidden="true">' +
             (image ? '<img src="' + escapeHtml(image) + '" alt="" width="88" height="88" loading="lazy" />' : '') +
             '</a>' +
             '<div class="spark-drawer-item-details">' +
-            '<a href="' + escapeHtml(product.url || '#') + '" class="spark-drawer-item-title">' + escapeHtml(names.name) + '</a>' +
+            '<a href="' + escapeHtml(href) + '" class="spark-drawer-item-title">' + escapeHtml(names.name) + '</a>' +
             (names.variant ? '<div class="sf-item-variant">' + escapeHtml(names.variant) + '</div>' : '') +
             (props ? '<div class="sf-item-variant">' + escapeHtml(props) + '</div>' : '') +
-            (line.interval ? '<div class="sf-item-variant sf-item-every">' + escapeHtml(cadence(line)) + '</div>' : '') +
+            (line.interval ? '<div class="sf-item-variant sf-item-every">' + escapeHtml(cadence(line)) +
+                (cfg.cartUrl ? '<a class="sf-item-change" href="' + escapeHtml(cfg.cartUrl) + '">' + escapeHtml(cfg.changeText || 'Change') + '</a>' : '') +
+                '</div>' : '') +
             '<div class="spark-drawer-item-bottom">';
 
         if (isGift) {
@@ -172,7 +180,7 @@
                     var child = (n.children || []).filter(function(c) { return c.purchaseInfo && c.purchaseInfo.availableForSale; })[0];
                     return {
                         pk: n.pk, addPk: child ? child.pk : n.pk, ids: [n.pk].concat((n.children || []).map(function(c) { return c.pk; })),
-                        title: n.title, url: String(n.url || '').replace(/^https?:\/\/[^\/]+/, ''),
+                        title: n.title, url: localUrl(n.url),
                         image: n.primaryImage ? n.primaryImage.thumbnail : '',
                         price: num(n.purchaseInfo.price && n.purchaseInfo.price.value, 0),
                         retail: num(n.purchaseInfo.priceRetail && n.purchaseInfo.priceRetail.value, 0)
@@ -210,13 +218,14 @@
 
     var ups = (cfg.upgrades || [cfg.upgrade]).filter(function(u) { return u && u.from && u.to && u.title; });
 
-    /* the first upgrade whose smaller pack is in the bag (and its bigger pack is not), with that line */
+    /* the first upgrade whose smaller pack is in the bag once (and its bigger pack is not), with that line. The text
+       names the price step from one small pack to one big one: with two small packs in the bag it would be wrong */
     function upgradeFor() {
         var has = function(pk) { return currentLines.filter(function(l) { return String((l.product || {}).pk) === String(pk); })[0]; };
         for (var i = 0; i < ups.length; i++) {
             if (has(ups[i].to)) continue;
             var line = has(ups[i].from);
-            if (line) return { up: ups[i], line: line };
+            if (line && parseInt(line.quantity, 10) === 1) return { up: ups[i], line: line };
         }
         return null;
     }
@@ -250,7 +259,7 @@
             if (next) document.dispatchEvent(new CustomEvent('spark:cart:updated', { detail: { cart: next, action: 'update' }, bubbles: true }));
         };
         /* add the 2-bottle pack first, then drop the 1-bottle line: a failure never leaves the bag empty */
-        client.addToCart(Number(up.to), parseInt(line.quantity, 10) || 1, false, planOf(line)).then(function(added) {
+        client.addToCart(Number(up.to), 1, false, planOf(line)).then(function(added) {
             if (!added || added.success === false || !added.cart) throw new Error('add');
             return client.removeCartLines(added.cart.id, [line.pk]).then(function(removed) {
                 show((removed && removed.cart) || added.cart);
@@ -272,7 +281,13 @@
             html += '<div class="sf-trust-row">' + ICON.seal + '<p><strong>' + escapeHtml(cfg.guaranteeTitle) + '</strong>' +
                 (cfg.guaranteeText ? '<span>' + escapeHtml(cfg.guaranteeText) + '</span>' : '') + '</p></div>';
         }
-        if (cfg.reviewText) {
+        /* the review is about one product: it shows while that product (any of its packs) is in the bag */
+        var about = parseInt(cfg.reviewPk, 10);
+        var reviewed = !about || currentLines.some(function(l) {
+            var p = l.product || {};
+            return p.pk === about || (p.parent && p.parent.pk === about);
+        });
+        if (cfg.reviewText && reviewed) {
             html += '<figure class="sf-review"><div class="sf-stars" aria-label="5 out of 5 stars">' + ICON.star + ICON.star + ICON.star + ICON.star + ICON.star + '</div>' +
                 '<blockquote>&ldquo;' + escapeHtml(cfg.reviewText) + '&rdquo;</blockquote>' +
                 (cfg.reviewName ? '<figcaption>' + escapeHtml(cfg.reviewName) + '</figcaption>' : '') + '</figure>';
@@ -423,6 +438,8 @@
         '.spark-drawer-item-price { white-space: nowrap; }',
         '.sf-item-every { display: flex; align-items: center; gap: 5px; }',
         '.sf-item-every:before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #1f7a3f; }',
+        /* to one-time: the bag page's plan choice (the drawer only shows the plan) */
+        '.sf-item-change { color: #151515; text-decoration: underline; text-underline-offset: 2px; margin-left: 4px; }',
         '.sf-item-remove { align-self: flex-start; margin-top: 8px; padding: 2px 0; background: none; border: 0; font: inherit; font-size: 12px; color: #6a6a6a; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }',
         '.sf-item-remove:hover { color: #151515; }',
         '.sf-item-remove:focus-visible, .sf-upsell-add:focus-visible, .sf-upgrade-btn:focus-visible { outline: 2px solid #151515; outline-offset: 2px; }',

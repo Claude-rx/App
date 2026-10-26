@@ -168,6 +168,7 @@
   "partials/sf_price_pi.html",
   "partials/sf_product_card.html",
   "partials/sf_product_card.html",
+  "partials/sf_was.html",
   "templates/blog/index.html",
   "templates/blog/post.html",
   "templates/catalogue/category.html",

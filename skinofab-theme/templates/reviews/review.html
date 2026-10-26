@@ -15,14 +15,8 @@
         <ol class="flex items-center gap-2 text-xs text-slate-400">
             <li><a href="{{ homepage_url }}" class="hover:text-slate-600">{% t "navigation.main.home" %}</a></li>
             <li>/</li>
-            {% with category=product.categories.all.0 %}
-                {% if category %}
-                    {% for c in category.get_ancestors_and_self %}
-                        <li><a href="{{ c.get_absolute_url }}" class="hover:text-slate-600">{{ c.name }}</a></li>
-                        <li>/</li>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+            <li><a href="{% url 'catalogue:index' %}" class="hover:text-slate-600">Shop</a></li>
+            <li>/</li>
             <li><a href="{{ product.get_absolute_url }}" class="hover:text-slate-600">{{ product.title }}</a></li>
             <li>/</li>
             <li><a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.pk %}" class="hover:text-slate-600">{% t "store.review.all_reviews" %}</a></li>
@@ -50,18 +44,6 @@
             <h3 class="text-lg font-semibold text-slate-800 mb-1">
                 <a href="{{ product.get_absolute_url }}">{{ product.get_title }}</a>
             </h3>
-
-            {% purchase_info_for_product request product as session %}
-            {% if session.price.exists %}
-                {% if session.price.price_retail > session.price.price %}
-                    <del class="text-sm text-slate-400">{{ session.price.price_retail|currency:session.price.currency }}</del>
-                {% endif %}
-                {% if session.price.price == 0 %}
-                    <span class="text-lg font-medium">{% t "store.catalogue.free" %}</span>
-                {% else %}
-                    <span class="text-lg font-medium">{{ session.price.price|currency:session.price.currency }}</span>
-                {% endif %}
-            {% endif %}
 
             {% if product.rating != None %}
                 <div class="flex items-center gap-3 mt-2">
