@@ -1295,20 +1295,33 @@ for rel, old_field in (('templates/cart.html', '{{ form.subscription_range }}'),
     s = p.read_text()
     if 'sf_subscription_product' in s: continue
     if s.count(old_field) != 1: sys.exit(f'{rel}: subscription_range field not found once')
-    s = s.replace(old_field, SUB_ONLY_IF + SUB_FIXED + '{% else %}' + old_field + '{% endif %}')   # both bind `product` to the line's
+    # (with the line's SKU beside the select: REFILL_LABELS keeps the pack's own refill schedule)
+    s = s.replace(old_field, SUB_ONLY_IF + SUB_FIXED + '{% else %}' + old_field
+                  + '<i hidden data-sf-sku="{{ product.sku }}"></i>{% endif %}')   # both bind `product` to the line's
     p.write_text(s)
 
 # Cart page: Spark's frequency select read "One Time" / "28 Days", a bare number with nothing saying it repeats. The
 # options say what they are ("One-time purchase", "Refill every 28 days") and a refill line says, under it, that it
-# ships and is charged on that schedule until cancelled (the cart may redraw its lines: the observer relabels them)
+# ships and is charged on that schedule until cancelled (the cart may redraw its lines: the observer relabels them).
+# A refill pack (sf-offer.json's pack_every, by SKU) offers one-time or its own schedule only: NEXT keeps one list of
+# intervals per product, so a 2-stick pack could be set to the 1-stick schedule at the same price (stick review 2).
+_oc_path = EXPORT / 'sf-offer.json'
+PACK_EVERY = (json.loads(_oc_path.read_text()).get('pack_every') or {}) if _oc_path.exists() else {}
 REFILL_LABELS = ('<script data-sf-refill-labels>(function () {'
+    f'var EVERY = {json.dumps(PACK_EVERY)};'
     'function set(el, prop, v) { if (el[prop] !== v) el[prop] = v; }'
+    'function sku(s) { for (var p = s.parentNode, k = 0; p && k < 3; p = p.parentNode, k++) {'
+    ' var m = p.querySelector("[data-sf-sku]"); if (m) return m.getAttribute("data-sf-sku"); } return ""; }'
     'function label() {'
     ' Array.prototype.forEach.call(document.querySelectorAll(\'select[name$="subscription_range"]\'), function (s) {'
     # a product with no refill plan had a select with its one option: the words instead
     '  if (s.options.length < 2) { if (!s.getAttribute("data-sf-single")) { s.setAttribute("data-sf-single", "1"); s.style.display = "none";'
     '   var w = document.createElement("span"); w.className = "text-xs text-slate-600"; w.textContent = "One-time purchase";'
     '   s.parentNode.insertBefore(w, s.nextSibling); } return; }'
+    '  var every = EVERY[sku(s)];'
+    '  if (every) Array.prototype.slice.call(s.options).forEach(function (o) {'
+    '   var d = (o.textContent.match(/(\\d+)\\s*day/i) || [])[1];'
+    '   if (d && +d !== every && !o.selected) s.removeChild(o); });'
     '  Array.prototype.forEach.call(s.options, function (o) {'
     '   var t = o.textContent.trim(), m = t.match(/^(\\d+)\\s+(day|week|month|year)s?$/i);'
     '   if (/^one time$/i.test(t)) set(o, "textContent", "One-time purchase");'

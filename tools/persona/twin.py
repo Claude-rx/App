@@ -122,6 +122,11 @@ def image_with_text(sec, c, img):
         text, name = (t, None) if isinstance(t, str) else t
         _set_text(u.select_one('.skinofab-iwt__usp-text'), f'<p>{esc(text)}</p>')
         if name and u.find('img'): u.find('img')['src'] = icon_src(name)
+    # c['note']: a line under the photo (an AI illustration says so in the page's own text, not only in the picture)
+    if c.get('note'):
+        box = s.select_one('.skinofab-iwt__image')
+        box['class'] = box.get('class', []) + ['sf-has-note']
+        box.append(frag(f'<p class="sf-illustration-note">{esc(c["note"])}</p>'))
     return str(s)
 
 

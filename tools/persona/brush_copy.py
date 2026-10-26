@@ -241,7 +241,7 @@ TWIN = {
                 'cards': [('3 min', 'Every morning, on dry skin', 'Neck, jaw, under the eyes, neck again'),
                           ('Day 1', 'Your face feels awake', 'Morning puffiness can look softer after the first 3 minutes'),
                           ('Daily', 'Works best as a habit', 'Puffiness comes back overnight, so does the routine')]},
-    'compare': {'title': 'Why skinofab?', 'others': 'Other tools',
+    'compare': {'title': 'Why SKINOFAB?', 'others': 'Other tools',
                 # rows other tools (gua sha, rollers: the gallery's chart) really lack; the chart ticks rollers for dry
                 # skin and no red marks, so the table no longer says otherwise (review 6)
                 'rows': ['Hundreds of soft contact points', 'Works with just a light touch', 'Flexible bristles adapt to your face',
@@ -255,7 +255,7 @@ TWIN = {
     # the foundation's customer clips: none. The creator clips of the routine showed women in their twenties and
     # thirties, with TikTok captions burned in ("the difference is insane"); the brush has no buyers' clips yet
     'cards': None,
-    'why': {'title': 'The skinofab difference', 'img': 'card', 'button': 'Choose your pack',
+    'why': {'title': 'The SKINOFAB difference', 'img': 'card', 'button': 'Choose your pack',
             'features': [('Fresher-looking in 3 minutes', 'A light morning massage for eyes, cheeks and jaw'),
                          ('No oils, no mess', 'Use it on dry skin, then your skincare'),
                          ('30-day money-back guarantee', 'Love it, or email us for a full refund')]},
@@ -294,7 +294,8 @@ def refill_faq(bundles, refill, email='hello@skinofab.com'):
     every = ', '.join(f"{money(b['refill'])} every {b['every']} days for {n(b)}" for b in bundles)
     once = ', '.join(f"{money(b['price'])} for {n(b)}" for b in bundles)
     return [('How do Automatic Refills work?',
-             f'Your pack ships again when it runs out, at the refill price: {every}. We email you before every refill. '
+             f'Your pack ships again on a set schedule, about when it runs out, at the refill price: {every}. We email you '
+             f'before every refill. '
              f'To skip, delay or cancel, just email {email}: no minimum, no fees.'),
             ('Can I buy just once?',
              f'Yes. In your bag, tap Change under the {unit}, then on the cart page set it to One-time purchase before '
@@ -340,12 +341,16 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     box = (f'<input type="checkbox" name="sf_purchase" value="subscribe" data-interval="{refill["interval"]}" '
            f'data-interval-count="{first["every"]}" checked hidden style="display:none !important" aria-hidden="true" tabindex="-1">'
            if on else '')
-    # the title price: the single pack's, at the refill price against the one-time price while refills are on
-    title_now, title_was = (float(bundles[0]['refill']), base) if on else (base, base_compare)
+    # under the cards, while refills are on: what the prices are, and the one-time prices (stick review 2: the cards
+    # and their savings did not say they were refill prices)
+    off = min(round(100 * (1 - float(b['refill']) / float(b['price']))) for b in bundles) if on else 0
+    note = (f'<p class="sfo-refill-note">Prices with Automatic Refills, {off}% off. Prefer to buy once? '
+            + ' · '.join(f"{esc(b['name'].split(':')[0])} {money(b['price'])}" for b in bundles)
+            + ', in your bag.</p>') if on else ''
     return (f"""<div class="sfo sfo--bundle" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
 <style>{css}</style>
 <fieldset><legend>{esc(legend)}</legend>{''.join(cards)}</fieldset>
-{box}
+{note}{box}
 <script>
 (function () {{
   var root = document.currentScript.parentNode;
@@ -353,22 +358,23 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
   var packs = JSON.parse(root.getAttribute('data-packs'));
   var box = root.querySelector('input[name=sf_purchase]');
   function money(v) {{ return '$' + (v % 1 ? v.toFixed(2) : String(v)); }}
-  // the title price is the single pack's, with cents: the design's money format drops them
+  // the title price follows the chosen pack (as the button does), against its compare-at price, with cents: the
+  // design's money format drops them (stick review 2: it stayed at the single pack's while the button showed $47)
   var scope = root, head = null;
   while (scope && !head) {{ scope = scope.parentElement; head = scope && scope.querySelector('.product__price-and-badge'); }}
-  function titlePrice() {{
-    var now = head && head.querySelector('.product__price--regular'), was = head && head.querySelector('.product__price--compare');
-    var unit = now && / USD\\s*$/.test(now.textContent) ? ' USD' : '';
-    if (now) now.textContent = money({title_now}) + unit;
-    if (was) {{ if ({title_was} > {title_now}) was.textContent = money({title_was}) + unit; else was.hidden = true; }}
+  function titlePrice(now, compare) {{
+    var a = head && head.querySelector('.product__price--regular'), was = head && head.querySelector('.product__price--compare');
+    var unit = a && / USD\\s*$/.test(a.textContent) ? ' USD' : '';
+    if (a) a.textContent = money(now) + unit;
+    if (was) {{ was.hidden = !(compare > now); if (compare > now) was.textContent = money(compare) + unit; }}
   }}
   function sync() {{
-    titlePrice();
     var key = (root.querySelector('input[name=sf_pack]:checked') || {{}}).value || '{default}';
     var pick = packs[key];
     var id = form && form.querySelector('input[name=id]');
     if (id) id.value = pick.pk;
     var sub = !!(box && box.checked), now = sub ? pick.refill : pick.price;
+    titlePrice(now, pick.compare);
     var price = form && form.querySelector('[data-sfb-btn-price]');
     if (price) price.textContent = ' | ' + money(now);
     if (!sub) return;
@@ -389,6 +395,15 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     var a = e.target.closest && e.target.closest('a[href*="#apf-buy"]');
     if (!a || a.pathname.replace(/\\/$/, '') !== window.location.pathname.replace(/\\/$/, '')) return;
     e.preventDefault(); history.replaceState(null, '', a.hash); fromHash();
+  }});
+  // the review counts' links: the wall stays hidden until its reviews load, so the browser's own jump went nowhere on
+  // the first tap (stick review 2); its 1 px sentinel just above it is always there
+  document.addEventListener('click', function (e) {{
+    var a = e.target.closest && e.target.closest('a[href$="#sf-review-wall"]');
+    var wall = a && (document.getElementById('sf-review-wall-sentinel') || document.getElementById('sf-review-wall'));
+    if (!wall) return;
+    e.preventDefault(); history.replaceState(null, '', '#sf-review-wall');
+    wall.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }});
   fromHash();
   sync();

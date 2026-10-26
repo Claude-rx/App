@@ -36,6 +36,14 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   buyer of the foundation", because the owner states the stick is the same adaptive formula. If the supplier's stick
   formula differs, set `BORROW_REVIEWS = None` and `FRONTROW_NOTE = None` in `stick_copy.py` and the page shows its
   own (empty) reviews again.
+- **Same formula, different ingredient lists.** The page lists hyaluronic acid, niacinamide, squalane, vitamin E and
+  centella (Facelove's list); the foundation's page lists PDRN, Matrixyl 3000, Pro-Xylane, adenosine and ceramide NP.
+  An independent review (26 Oct) flagged that "the same adaptive formula" and two different lists contradict each
+  other. Either the stick is the foundation's formula (then `INGREDIENTS`, `TWIN['inside']` and the science rows
+  take the foundation's actives) or it shares only the colour technology (then the reviews' labels say "of our
+  Adaptive Peptide Foundation" without "same formula", or the stick shows only its own reviews).
+- **Wear claim.** "From 10 AM to 10 PM" and "made to wear all day" are the owner's elements; a wear test (even an
+  in-house one) would back them.
 - **Real photos.** The photos are AI-generated; the wordmark is printed on every stick by `relabel_bottles.py` from
   the real wordmark (`docs/real-wordmark.md`). Once the real stick exists, photograph it on white and swap `pack` and
   `single` first.
@@ -53,8 +61,8 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 | $39 | 1 stick $39 · 2 sticks $59 (recommended, compare $78) · 3 sticks: buy 2, get 1 free $78 (compare $117, exactly 3 × $39); with Automatic Refills $31 / $47 / $62 |
 | "10 AM Morning / 10 PM Evening" | The `wear-day` photo (the same woman, morning and evening, labelled an illustration) and "From 10 AM to 10 PM", said as "made to wear all day" |
 | "One stick for 16 skin tones" + three before/afters | The `tones` panel: 12 swatches and three women, fair, medium and deep, before and after (illustrations) |
-| Linda S. and the other testimonials | The foundation's real imported reviews (same formula), labelled as the foundation's |
-| FrontrowMD "Clinicians' Choice" | The foundation's FrontrowMD listing, with a line saying it is the foundation's |
+| Linda S. and the other testimonials | The foundation's real imported reviews (same formula), labelled as the foundation's, in green boxed stars (the owner's request; no review site's name or logo) |
+| FrontrowMD "Clinicians' Choice" | The foundation's FrontrowMD sticker in the buy box, beside a line saying it is the foundation's listing (not on the stick's photo) |
 | "Love it or your money back · Refill reminder · Cancel any time · Renews at $66/mo" | The same trust row under the button, with the stick's own refill price and days |
 
 ## What we left out, and why
@@ -90,7 +98,7 @@ brush, sensitive skin, layering, refunds). It doesn't promise she will look 30.
 
 | Where | What |
 |---|---|
-| NEXT product 235 | "Adaptive Foundation Stick", public, subscriptions on (every 28, 56 or 84 days), template `adaptive-foundation-stick`, Face / Skin / Bestsellers; a gallery of 12 photos on the page |
+| NEXT product 235 | "Adaptive Foundation Stick", public, subscriptions on (every 28, 56 or 84 days), template `adaptive-foundation-stick`, Face / Skin / Bestsellers; a gallery of 6 photos on the page (none repeated in the sections, no two-tube packshot) |
 | Bundles (variants) | 236: 1 stick $39, refills $31 · 237: 2 sticks $59, refills $47 (default; compare $78) · 238: 3 sticks (buy 2, get 1 free) $78, refills $62 (compare $117) |
 | Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`), with `stick_copy.py`'s copy and `brand/foundation-stick/` photos |
 | Homepage | A card in the product shelf after the foundation (default list, Bestsellers, New and Face tabs), "New" and "Buy 2, get 1 free" badges; a card in Essentials |

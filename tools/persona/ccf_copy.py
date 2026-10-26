@@ -23,6 +23,9 @@ ORIGIN = '🇰🇷 Formulated in Korea · Advanced K-beauty formula'
 GLOBAL = [
     # "The skinofab difference" button: there is no offer to claim, it scrolls to the packs (stick review 1)
     (r'RE:(<a class="btn btn--dark" href="#product">)Claim offer(</a>)', r'\g<1>Choose your pack\g<2>'),
+    # the brand's name in capitals in the product page's headings, as in the wordmark (stick review 2)
+    ('Why skinofab?', 'Why SKINOFAB?'),
+    ('The skinofab difference', 'The SKINOFAB difference'),
     # the contact page's answer pointed to the form "below": it sits above the questions (review 6)
     ('You can contact us by filling in the contact form below', 'You can contact us by filling in the contact form above'),
     # the policies' "the Personal Data strictly necessary" link (privacy, cookie and terms pages, all in pages/) opened
@@ -63,7 +66,7 @@ GLOBAL = [
     # the announcement bar: 60% is the deepest saving on the site (the foundation's 2 bottles on refills, $47 vs
     # $118; every other pack saves at most a third: a new product has no "was" price of its own), not every
     # product's, and the gifts come with the 2-bottle pack and the brush 3-pack
-    ("🍂 Fall Sale: 60% OFF + FREE Mystery Gift", "🍂 Fall Sale: Up to 60% OFF + FREE Gifts"),
+    ("🍂 Fall Sale: 60% OFF + FREE Mystery Gift", "🍂 Fall Sale: Up to 60% OFF + FREE Gifts on Select Packs"),
     # one dermatologist speaks on the homepage, not "leading dermatologists worldwide"; the results card is backed by
     # the verified reviews under it, not by a study
     ("Trusted by leading dermatologists worldwide", "Recommended by a dermatologist"),

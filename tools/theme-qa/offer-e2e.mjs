@@ -535,14 +535,14 @@ async function twinPage(name, route, cfg) {
   await s.ctx.close();
 }
 await twinPage('brush', BRUSH, { title: 'The Lymphatic Brush', handle: 'the-lymphatic-brush', nav: 'The Lymphatic Brush', gallery: 5, faq: 10,
-                                 clips: 0, cards: 0, was: '', claims: 'drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention' });
+                                 clips: 0, cards: 0, price: '$39.95', was: '$49.90', claims: 'drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention' });
 await twinPage('balm', BALM, { title: 'PDRN Plumping Balm', handle: 'pdrn-plumping-balm', nav: 'PDRN Plumping Balm', gallery: 13, faq: 12, clips: 0,
-                               price: '$19.95', was: '$24.95', claims: '96%|1M\\+|bought today|77%|dermatologist|collagen production|clinically' });
+                               price: '$31.95', was: '$49.90', claims: '96%|1M\\+|bought today|77%|dermatologist|collagen production|clinically' });
 await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf-nad-firming-serum', nav: 'EGF + NAD+ Firming Serum', gallery: 13, faq: 12,
-                                 clips: 0, was: '$34.95', price: '$27.95',
+                                 clips: 0, was: '$69.90', price: '$47.95',
                                  claims: '#1 Firming|137,135|10,000\\+|clinically|stimulate collagen|at the source|dermatologist|Madeca|Time Reverse' });
 await twinPage('stick', STICK, { title: 'Adaptive Foundation Stick', handle: 'adaptive-foundation-stick', nav: 'Adaptive Foundation Stick',
-                                 gallery: 12, faq: 14, clips: 0, was: '$39', price: '$31', borrowed: true,
+                                 gallery: 6, faq: 14, clips: 0, was: '$78', price: '$47', borrowed: true,
                                  claims: '97%|93%|50,000|pieces remain|11:59|16 skin tones|anti-aging|reduces redness|clinically|dermatologist|Changing Foundation' });
 
 // the sticky bar on every product page: shown exactly while the add-to-cart button is out of view (at the top on a

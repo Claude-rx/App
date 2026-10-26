@@ -79,7 +79,9 @@ def trust_html(terms=True, refills=True, plan=None):
     def row(kind, items, shown):
         cells = ''.join(f'<li>{ICONS[k]}<span>{label}</span></li>' for k, label in items)
         return f'<ul class="apf-trust__row" data-sf-trust-row="{kind}"{"" if shown else " hidden"}>{cells}</ul>'
-    renew = f'Renews at <b data-sf-renew>{usd(amount)}</b> every <span data-sf-renew-every>{plan["every"]}</span> days'
+    # ("every N days" on one line: at 1440 "days" wrapped alone, stick review 2)
+    renew = (f'Renews at <b data-sf-renew>{usd(amount)}</b> <span style="white-space:nowrap">every '
+             f'<span data-sf-renew-every>{plan["every"]}</span> days</span>')
     rows = ((row('refill', (('bell', 'Refill reminder'), ('cancel', 'Cancel any time'), ('renew', renew)), on) if refills else '') +
             row('once', (('truck', 'Free shipping'), ('shield', '30-day guarantee'), ('lock', 'Secure checkout')), not on))
     shown = terms_text.replace('{amount}', usd(amount)).replace('{every}', str(plan['every']))
@@ -693,6 +695,7 @@ OFFER_PICKER_CSS = r"""
 .sfo-save{font-size:12px;font-weight:500;letter-spacing:.04em;background:#151515;color:#fff;border-radius:999px;padding:3px 10px;white-space:nowrap}
 .sfo-main small{display:block;font-size:14px;color:#6a6a6a;margin-top:3px}
 .sfo-price{text-align:right;line-height:1.15;white-space:nowrap}
+.sfo-refill-note{margin:10px 2px 0;font-size:13px;line-height:1.45;color:#555}
 .sfo-price b{display:block;font-size:21px;font-weight:600}
 .sfo-price s,.sfo-gifts s{font-size:14px;color:#7a7a7a}
 .sfo-tab{position:absolute;top:-13px;right:16px;background:#151515;color:#fff;font-style:normal;font-size:13px;font-weight:600;padding:4px 12px;border-radius:6px;line-height:1.3}
@@ -1010,6 +1013,8 @@ REVIEW_WALL_JS = r"""
   var sentinel = document.getElementById('sf-review-wall-sentinel');
   if (!root || !sentinel) return;
   var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>';
+  // whose buyers they are, when the reviews are another product's (data-buyer: "Verified buyer of the foundation")
+  var BUYER = root.getAttribute('data-buyer') || 'Verified buyer';
   var CHECK = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m7.5 12.3 3 3 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var PAGE = 8, all = [], shown = 0, filter = 'all', sort = 'relevant', photoBase = {}, totals = null;
   try { photoBase = JSON.parse((root.querySelector('[data-sf-review-photos]') || {}).textContent || '{}'); } catch (e) {}
@@ -1025,6 +1030,7 @@ REVIEW_WALL_JS = r"""
     var t = new Date(d + (d.length === 10 ? 'T12:00:00' : ''));
     return isNaN(t) ? '' : t.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
   }
+  function helpful(r) { return ((r.photos || []).length ? 2 : 0) + Math.min((r.body || '').length, 400) / 400; }
   function photoSrc(p) { return /^https?:|^\//.test(p) ? p : (photoBase[p] || ''); }
   function list() {
     var l = all.filter(function (r) {
@@ -1035,7 +1041,9 @@ REVIEW_WALL_JS = r"""
       if (sort === 'low') return a.rating - b.rating || a.i - b.i;
       if (sort === 'photos') return ((b.photos || []).length ? 1 : 0) - ((a.photos || []).length ? 1 : 0) || a.i - b.i;
       if (sort === 'recent') return (b.date || '') > (a.date || '') ? 1 : (b.date || '') < (a.date || '') ? -1 : a.i - b.i;
-      return a.i - b.i;
+      // most helpful: the reviews that tell her most first (photos, then the fuller text); the imported ones carry
+      // no votes, so the list was the same as Most recent (stick review 2)
+      return helpful(b) - helpful(a) || a.i - b.i;
     });
     return l;
   }
@@ -1043,7 +1051,7 @@ REVIEW_WALL_JS = r"""
     var initial = esc((r.name || '?').charAt(0).toUpperCase());
     var ph = (r.photos || []).map(function (p) { var s = photoSrc(p); return s ? '<button type="button" data-sfr-zoom="' + esc(s) + '"><img src="' + esc(s) + '" alt="Photo from ' + esc(r.name) + '" loading="lazy" decoding="async"></button>' : ''; }).join('');
     return '<article class="sfr-card"><div class="sfr-card-top">' + stars(r.rating) +
-      (r.verified ? '<span class="sfr-ver">' + CHECK + 'Verified buyer</span>' : '') + '</div>' +
+      (r.verified ? '<span class="sfr-ver">' + CHECK + esc(BUYER) + '</span>' : '') + '</div>' +
       (r.title ? '<h3>' + esc(r.title) + '</h3>' : '') +
       '<p class="sfr-body' + ((r.body || '').length > 360 ? ' is-clamped' : '') + '">' + esc(r.body) + '</p>' +
       ((r.body || '').length > 360 ? '<button type="button" class="sfr-more-text">Read more</button>' : '') +
@@ -1065,8 +1073,9 @@ REVIEW_WALL_JS = r"""
     root.querySelector('[data-sfr-avg]').innerHTML = '<span class="sfr-word">' + word(avg) + '</span>' + stars(avg, true) +
       '<p><b>' + avg.toFixed(1) + '</b> out of 5 &middot; Based on <b>' + n.toLocaleString('en-US') + '</b> review' + (n === 1 ? '' : 's') + '</p>';
     root.querySelector('.sfr-dist').innerHTML = [5, 4, 3, 2, 1].map(function (s) {
-      var c = dist[s] || 0, pct = n ? Math.round(c / n * 100) : 0;
-      return '<li data-sfr-filter="' + s + '" role="button" tabindex="0" aria-pressed="false" title="Show ' + s + '-star reviews">' + s + '-star<span><em style="width:' + pct + '%"></em></span><small>' + pct + '%</small></li>';
+      // a star count that rounds to 0 % but is there shows as "<1%" (stick review 2: 0 % beside a filter that lists 3)
+      var c = dist[s] || 0, pct = n ? Math.round(c / n * 100) : 0, label = c && !pct ? '&lt;1%' : pct + '%';
+      return '<li data-sfr-filter="' + s + '" role="button" tabindex="0" aria-pressed="false" title="Show ' + s + '-star reviews">' + s + '-star<span><em style="width:' + (c && !pct ? 1 : pct) + '%"></em></span><small>' + label + '</small></li>';
     }).join('');
     var chips = '<button type="button" class="sfr-chip" data-sfr-filter="all" aria-pressed="true">All reviews</button>';
     if (photos) chips += '<button type="button" class="sfr-chip" data-sfr-filter="photos" aria-pressed="false">With photos (' + photos.toLocaleString('en-US') + ')</button>';

@@ -424,7 +424,10 @@ def review_data(reviews=REVIEWS):
         if len(keep) >= SHIP: break
         keep.add(i)
     ship = [rs[i] for i in sorted(keep)][:max(SHIP, len(keep))]
-    picks = [r for r in rs if r['rating'] == 5 and r.get('verified') and 70 <= len(r['body']) <= 210 and '\n' not in r['body']][:10]
+    # (and written cleanly: the strip is the page's first proof, a typo there reads as careless, stick review 2)
+    typo = re.compile(r"\s[,.!?]|\bi\b|\s{2}|I'm don't|liked to be|recommened|dissapoint|adopted to|\bu\b")
+    picks = [r for r in rs if r['rating'] == 5 and r.get('verified') and 70 <= len(r['body']) <= 210 and '\n' not in r['body']
+             and not typo.search(r['body'])][:10]
     summary = {'count': d['count'], 'average': d['average'], 'distribution': d['distribution']}
     if d.get('note'): summary['note'] = d['note']        # where the imported reviews come from (import_reviews.py --note)
     return {'ship': ship, 'summary': summary,
@@ -1364,6 +1367,22 @@ LAYOUT_FIXES = (
     '.accordion__item__title{min-height:44px}'
     # an image + text heading's highlight stays on one line: "to 10 PM" broke into "to 10" / "PM" at 768 (stick review 2)
     '.skinofab-iwt__highlight{white-space:nowrap}'
+    # "What to expect" on phones: the three cards stacked, not a slider whose arrows sat on "30 days" (stick review 2);
+    # each number on one line at every width
+    '.skinofab-results__percentage{white-space:nowrap}'
+    '@media(max-width:767px){.skinofab-results__grid{display:grid!important;grid-template-columns:1fr!important;gap:12px}'
+    '.skinofab-results__slider,.skinofab-results__nav,.skinofab-results .swiper-button-prev,.skinofab-results .swiper-button-next'
+    '{display:none!important}.skinofab-results__card{padding:22px 20px}.skinofab-results__percentage{font-size:48px}}'
+    '@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:44px}}'
+    # the product gallery before its slider script starts: the square first photo and one row of thumbnails, as after
+    # it (all its photos stacked made the page 4,300 px taller, then jump: CLS 0.49 on phones, stick review 2). Clipped,
+    # not hidden, so the script still measures every slide
+    '[data-product-single-media-slider]:not(.flickity-enabled){aspect-ratio:1/1;overflow:hidden}'
+    '[data-product-single-media-thumbs]:not(.flickity-enabled){height:100px;overflow:hidden;margin-top:5px}'
+    # "The SKINOFAB difference" from 1024 px: the photo as tall as the text beside it (a square left a white gap under
+    # it at 1024, stick review 2)
+    '@media(min-width:1024px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:auto!important;min-height:460px;'
+    'height:auto;align-self:stretch}}'
 )
 
 # The before/after photos in the product pages' image + text blocks (the foundation's, the serum's, the balm's and
@@ -1474,8 +1493,9 @@ def working_forms():
         t = t.replace('name="contact[email]" placeholder="Your email" type="email" value=""/>',
                       'name="contact[email]" placeholder="Your email" required type="email" value=""/>')
         t = t.replace('<div class="errors">Email is invalid or already taken.</div>',
-                      '<p class="sf-mailto-note" style="margin:10px 0 0;font-size:13px;opacity:.75">Opens your email app '
-                      f'with the sign-up written: press Send there. No email app? Write to {mail} with “Newsletter”.</p>')
+                      # (in full sentences, colour not opacity: stick review 2 read "press Send there" as unfinished)
+                      '<p class="sf-mailto-note" style="margin:10px 0 0;font-size:13px;color:#5a5a5a">Signing up opens an '
+                      f'email to us, ready to send. No email app? Write to {mail} with “Newsletter” in the subject.</p>')
         t = re.sub(r'<form accept-charset="UTF-8" action="#" class="contact-form" id="([^"]+)" method="post">\s*'
                    r'<input name="form_type" type="hidden" value="contact"/>\s*<input name="utf8" type="hidden" value="✓"/>',
                    lambda m: f'<form accept-charset="UTF-8" class="contact-form" data-sf-mailto="contact" data-sf-to="{mail}" '
@@ -1483,7 +1503,7 @@ def working_forms():
         t = t.replace('<button class="cs-btn" type="submit">Send message</button>',
                       '<button class="cs-btn" type="submit">Send message</button>'
                       f'<p class="sf-mailto-note" style="margin:12px 0 0;font-size:14px;color:#5a5a5a">Opens your email app '
-                      f'with your message to {mail}: press Send there. No email app? Write to us at {mail}.</p>')
+                      f'with your message to {mail}, ready to send. No email app? Write to us at {mail}.</p>')
         m = re.search(r'<form accept-charset="UTF-8" action="#" class="localization-form"', t)
         if m:
             e = t.find('</form>', m.start())
@@ -1980,7 +2000,11 @@ def cart_offer():
             # refill price against its one-time price, and how often it ships (Theme settings > Subscription Offer)
             'refill_products': [{'handle': P.HANDLE, 'price_text': f"${float(P.BUNDLES[0]['refill']):g} USD",
                                  'compare_text': f"${float(P.BUNDLES[0]['price']):g} USD", 'every': P.BUNDLES[0]['every']}
-                                for P in SECOND_PRODUCTS if (getattr(P, 'REFILL', None) or {}).get('default')]}
+                                for P in SECOND_PRODUCTS if (getattr(P, 'REFILL', None) or {}).get('default')],
+            # each refill pack's schedule by SKU: NEXT keeps one list of intervals per product, so the cart page
+            # offered a 2-stick pack every 28 days at the price of 56 (stick review 2); the cart keeps the pack's own
+            'pack_every': {b['sku']: int(b['every']) for P in SECOND_PRODUCTS
+                           if (getattr(P, 'REFILL', None) or {}).get('default') for b in P.BUNDLES}}
 
 STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
         '<path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
@@ -2030,10 +2054,13 @@ FRONTROW_CSS = (
     '.iframe-modal-frontrow{display:none;position:fixed;z-index:99999999;inset:0;width:100%;height:100%;overflow:hidden}'
     '.iframe.frontrow{display:none;position:fixed;left:0;top:0;z-index:99999997;right:0;bottom:0;width:100%;height:100%;overflow:hidden}')
 
-def frontrow_block():
+def frontrow_block(into=None):
     """FrontrowMD's "Clinicians' Choice" sticker on the product gallery, top-left, while the first slide shows; a
     click opens its clinicians and FAQ. Same loader as the original store; the listing comes from Theme settings >
-    SKINOFAB > Product Page (window.SFFrontrowId), and without one nothing loads."""
+    SKINOFAB > Product Page (window.SFFrontrowId), and without one nothing loads.
+
+    into: a selector to put the sticker in instead (another product's page showing the foundation's listing: next to
+    the line saying whose listing it is, not on that product's own photo)."""
     return ('<script data-sf-frontrow>(function () {'
             'var id = String(window.SFFrontrowId || "");'
             'if (!/^[0-9]+$/.test(id)) return;'
@@ -2059,10 +2086,12 @@ def frontrow_block():
             'var f = document.createElement("iframe"); f.id = "frontrow-sticker"; f.className = "iframe-frontrow-sticker";'
             'f.setAttribute("data-state", "max"); f.frameBorder = "0"; f.title = "Clinicians’ Choice on FrontrowMD";'
             'f.src = base + "?presentation_type=sticker&product_id=" + id;'
+            + (f'var spot = document.querySelector({json.dumps(into)}); if (!spot) return; spot.insertBefore(f, spot.firstChild); }}'
+               if into else
             'var gallery = document.querySelector("[data-product-single-media-group]");'
             'if (!gallery) return;'
             'if (getComputedStyle(gallery).position === "static") gallery.style.position = "relative";'
-            'gallery.appendChild(f); firstSlideOnly(f, gallery); }'
+            'gallery.appendChild(f); firstSlideOnly(f, gallery); }') +
             # after the page has loaded and gone idle: its third-party scripts stay off the critical path
             'function later() { (window.requestIdleCallback || function (f) { setTimeout(f, 1) })(mount, { timeout: 3000 }); }'
             'if (document.readyState === "complete") later(); else window.addEventListener("load", later);'
@@ -2182,9 +2211,12 @@ def twin_context(P, found, stats, amazon):
         own = review_wall(REVIEWS)
         head = '<h2 id="sfr-title">Customer reviews</h2>'
         if own.count(head) != 1: missing.append((P.KEY, 'review wall title'))
+        sec = '<section class="sfr" id="sf-review-wall"'
+        if own.count(sec) != 1: missing.append((P.KEY, 'review wall section'))
         wall += own.replace(head, f'<h2 id="sfr-title">{html.escape(borrow["title"])}</h2>'
                                   f'<p class="sfr-of" style="margin:6px 0 14px;color:#4a4a4a;font-size:15px;line-height:1.5">'
-                                  f'{html.escape(borrow["note"])}</p>', 1)
+                                  f'{html.escape(borrow["note"])}</p>', 1).replace(
+            sec, f'{sec} data-buyer="{html.escape(borrow["buyer"])}"', 1)     # each card: whose buyer she was
     else: wall += review_wall(reviews)
     return {'img': img, 'clip': clip, 'avatar': avatar(), 'strip_own': review_strip(reviews), 'strip_brand': brand,
             'wall': wall, 'no_reviews': None if (stats or borrow) else f'<style>{brush_copy.SECTIONS_CSS}</style>{P.no_reviews_html(amazon=amazon)}'}
@@ -2261,10 +2293,15 @@ def product_page(base, P, final, found=None):
                         '.sfb-rating .sf-star svg+svg{display:none}</style>'))
     # the foundation's FrontrowMD listing (P.FRONTROW_NOTE: the owner's same-product word), its sticker on the
     # gallery as on the foundation's page, and a line under the title naming whose listing it is
+    # (the sticker beside that line, in the buy box: on the stick's own photo it read as the stick's listing and
+    # hid its white tip, stick review 2)
     if getattr(P, 'FRONTROW_NOTE', None) and getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None):
-        app.insert_after(frag(f'<style>{FRONTROW_CSS}</style>{frontrow_block()}'
-                              f'<p class="sfb-frontrow-note" style="margin:6px 0 0;font-size:13px;line-height:1.4;color:#4a4a4a">'
-                              f'{P.esc(P.FRONTROW_NOTE)}</p>'))
+        app.insert_after(frag(f'<style>{FRONTROW_CSS}'
+                              '.sfb-frontrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 2px}'
+                              '.sfb-frontrow #frontrow-sticker{position:static !important;flex:none;transform:none !important}'
+                              '</style>' + frontrow_block('.sfb-frontrow')
+                              + '<div class="sfb-frontrow"><p class="sfb-frontrow-note" style="margin:0;font-size:14px;'
+                              f'line-height:1.4;color:#3d3d3d">{P.esc(P.FRONTROW_NOTE)}</p></div>'))
     price = prod.select_one('.product__price-and-badge [data-price-wrapper]')
     was = price.select_one('.product__price--compare')
     # sold with Automatic Refills (P.REFILL, on by default): the single pack at its refill price against its one-time

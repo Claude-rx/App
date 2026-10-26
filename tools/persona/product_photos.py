@@ -172,14 +172,14 @@ def before_after(product, name, out, note_text=AI_NOTE, dark=False, words=('Befo
     im = src(product, name)
     if not dark:
         labels(im, [(34, W - 84, words[0]), (W // 2 + 34, W - 84, words[1])])
-        labels(im, [(34, W - 34, note_text)], size=30)
+        labels(im, [(34, W - 34, note_text)], size=40)        # 40: legible where a phone shows it (stick review 2)
         return save(im, product, out)
     d = ImageDraw.Draw(im)
     d.rectangle((W // 2 - 3, 0, W // 2 + 3, W), fill=PAPER)
     d.rectangle((0, W - 132, W, W), fill=PAPER)
     d.text((34, W - 78), words[0], font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
     d.text((W // 2 + 34, W - 78), words[1], font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
-    note(d, (34, W - 28), note_text, anchor='ls', size=30)
+    note(d, (34, W - 28), note_text, anchor='ls', size=40)
     save(im, product, out)
 
 
@@ -199,12 +199,17 @@ def tones_panel(product, cols, title, out, tall=False):
     top = 96 if not tall else 160
     d.text((W // 2, top), title[0], font=serif(54 if not tall else 60, 'Bold'), fill=INK, anchor='ms')
     d.text((W // 2, top + 46), title[1], font=sans(26, 'Regular'), fill=SOFT, anchor='ms')
-    n, r = len(SKIN_TONES), 26
-    gap = (W - 120 - n * 2 * r) / (n - 1)
+    # the tones as one smooth bar, fair to deep: a row of dots read as so many shades (stick review 2)
+    r = 26
     cy = top + (106 if not tall else 100)
-    for k, c in enumerate(SKIN_TONES):
-        cx = 60 + r + k * (2 * r + gap)
-        d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=c)
+    x0b, x1b, bh = 60, W - 60, 34
+    stops = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in SKIN_TONES]
+    xs = np.linspace(0, len(stops) - 1, x1b - x0b)
+    lo = np.floor(xs).astype(int).clip(0, len(stops) - 2); f = (xs - lo)[:, None]
+    row = (np.array(stops)[lo] * (1 - f) + np.array(stops)[lo + 1] * f).astype(np.uint8)
+    bar = Image.fromarray(np.repeat(row[None], bh, 0), 'RGB')
+    mask = Image.new('L', bar.size, 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, bar.width - 1, bh - 1), bh // 2, fill=255)
+    im.paste(bar, (x0b, cy - bh // 2), mask)
     cw, g = 316, 26
     x0 = (W - 3 * cw - 2 * g) // 2
     y0 = cy + r + (40 if not tall else 34)
@@ -215,7 +220,7 @@ def tones_panel(product, cols, title, out, tall=False):
             y = y0 + j * (ph + 54)
             im.paste(ImageOps.fit(photo(product, name), (cw, ph), Image.LANCZOS, centering=(0.5, 0.35)), (x, y))
             d.text((x + 4, y + ph + 34), word, font=sans(26, 'SemiBold'), fill=INK, anchor='ls')
-    note(d, (W // 2, H - 26 if not tall else y0 + 2 * ph + 54 + 80), AI_NOTE + '. Results vary.', size=28)
+    note(d, (W // 2, H - 26 if not tall else y0 + 2 * ph + 54 + 80), AI_NOTE + '. Results vary.', size=38)
     save(im, product, out)
 
 
@@ -247,7 +252,7 @@ def results_grid(product, pairs, title):
         im.paste(ImageOps.fit(photo(product, name), (tw, th), Image.LANCZOS), (x, y))
         d.text((x + 6, y + th + 32), 'Before', font=sans(21, 'Regular'), fill=SOFT, anchor='ls')
         d.text((x + tw // 2 + 6, y + th + 32), 'After', font=sans(21, 'Regular'), fill=SOFT, anchor='ls')
-    note(d, (W // 2, W - 24), AI_NOTE + '. Results vary.', size=28)
+    note(d, (W // 2, W - 24), AI_NOTE + '. Results vary.', size=36)
     save(im, product, 'results-grid')
 
 
