@@ -186,14 +186,14 @@ def main():
         im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
         x, y = (im.width - w) // 2, int((im.height - h) * fy)
         return im.crop((x, y, x + w, y + h))
-    wide = Image.new('RGB', (3456, 1408), 'white')
-    for i, tile in enumerate(tiles): wide.paste(cover(tile, 864, 1408), (i * 864, 0))
+    # each tile whole, at its own 4:5 (narrower panels cut the brush model's face at the right; the page shows the
+    # collage at its own shape, the title above it: apply_persona.listing_banners)
+    wide = Image.new('RGB', (3456, 1080), 'white')
+    for i, tile in enumerate(tiles): wide.paste(cover(tile, 864, 1080), (i * 864, 0))
     save(wide, 'collage-wide.jpg')
-    # two by two: the brush lower left, where the banner's title sits (its model's face is on the right of her tile, so
-    # the title covers her hand and shoulder, not a face)
-    square = Image.new('RGB', (2000, 2245), 'white')
+    square = Image.new('RGB', (2000, 2500), 'white')
     for i, tile in enumerate([tiles[0], tiles[1], tiles[3], tiles[2]]):
-        square.paste(cover(tile, 1000, 1122), ((i % 2) * 1000, (i // 2) * 1123))
+        square.paste(cover(tile, 1000, 1250), ((i % 2) * 1000, (i // 2) * 1250))
     save(square, 'collage-square.jpg')
     for f in TMP.iterdir(): f.unlink()
     TMP.rmdir()

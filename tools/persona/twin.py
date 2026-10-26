@@ -56,8 +56,10 @@ def loved(sec, c):
         # 45") it grew taller than the line and crossed the one above. Stretched to the words' own box instead
         for svg in icon.select('svg'): svg['preserveAspectRatio'] = 'none'
         hl.append(icon)
-        brk.append(frag('<style>.text-highlight__break .text-highlight__icon{height:112%}'
-                        '.text-highlight__break .text-highlight__icon svg{width:100%;height:100%;transform:translate(-50%,-50%)}</style>'))
+        # (an ellipse clears a word's corners at ~1.35x its box; the heading's lines get the room for it)
+        brk.append(frag('<style>main .text-highlight-wrapper--circle{line-height:1.32}'
+                        'main .text-highlight-wrapper--circle .text-highlight__icon{width:136%;height:136%}'
+                        'main .text-highlight-wrapper--circle .text-highlight__icon svg{width:100%;height:100%;transform:translate(-50%,-50%)}</style>'))
     return str(s)
 
 

@@ -930,7 +930,7 @@ def home_original():
                              f'{X} .fh-category img{{width:100%;height:100%;object-fit:cover;object-position:50% 20%}}'
                              f'{X} .fh-category>div{{position:static;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:0 2px}}'
                              f'{X} .fh-category h3{{color:#151515;font-size:26px}}'
-                             f'{X} .fh-category .fh-button--white{{background:#151515;color:#fff;border-color:#151515}}'
+                             f'{X} .fh-category .fh-button--white{{background:#151515;color:#fff !important;border-color:#151515}}'   # the export: #151515 !important
                              f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-category-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}'))
         t = t[:a] + sec + t[b:]; done['categories'] = len(tiles)
     t = t.replace('alt="Woman applying Skinofab Color Changing Foundation"', 'alt="A woman in her fifties holding the Adaptive Peptide Foundation"')
@@ -1240,9 +1240,9 @@ def working_forms():
 LISTING_BANNER_CSS = ('<style>.banner-image__inner.sf-listing-banner{display:flex;flex-direction:column;min-height:0;height:auto}'
                       '.sf-listing-banner .banner-image__text-container{order:-1;min-height:0;padding:40px 0 22px}'
                       '.sf-listing-banner .banner-image__heading{color:#151515}'
-                      '.sf-listing-banner .banner-image__image-container{position:relative;min-height:0;padding-top:0;aspect-ratio:3456/1408}'
+                      '.sf-listing-banner .banner-image__image-container{position:relative;min-height:0;padding-top:0;aspect-ratio:3456/1080}'
                       '.sf-listing-banner .banner-image__image-inner{transform:none;animation:none}'
-                      '@media (max-width:767px){.sf-listing-banner .banner-image__image-container{aspect-ratio:2000/2245}'
+                      '@media (max-width:767px){.sf-listing-banner .banner-image__image-container{aspect-ratio:2000/2500}'
                       '.sf-listing-banner .banner-image__text-container{padding:28px 0 16px}}</style>')
 
 def listing_banners():
@@ -1354,11 +1354,10 @@ PAGE_IMAGES = [
     (r'^9_8d6072a5-[^/]*\.(?:jpg|png)$', HOME / 'source' / 'about-face.jpg', 0.4),
     # the about page's "born in a tiny kitchen lab": a young model with lip liner; a woman in her fifties with the balm
     (r'^rk_2-\d+w-[0-9a-f]{6}\.(?:jpg|png)$', BRAND / 'pdrn-balm' / 'apply-lips.jpg', 0.4),
-    # the listing pages' banner (four young models with masks and patches): our four women 45+ with our products
-    # (from 768 px the banner covers a box taller than the photo's shape, so it is drawn ~1.45x the screen's width:
-    # twice the file's size, and sizes to match, or it showed soft)
-    (r'^skin-\d+w-[0-9a-f]{6}\.jpg$', HOME / 'collage-wide.jpg', 0.3, 2, '(max-width: 1199px) 150vw, 105vw'),
-    (r'^SM_-_Sales_Banner_-_Mobile_2_[^/]*\.jpg$', HOME / 'collage-square.jpg', 0.3),
+    # the listing pages' banner (four young models with masks and patches): our four women 45+ with our products,
+    # each file at the collage's own shape (keep: the page shows it whole, listing_banners), the screen's width
+    (r'^skin-\d+w-[0-9a-f]{6}\.jpg$', HOME / 'collage-wide.jpg', 0.3, 1, '100vw', True),
+    (r'^SM_-_Sales_Banner_-_Mobile_2_[^/]*\.jpg$', HOME / 'collage-square.jpg', 0.3, 1, None, True),
 ]
 
 def page_images():
@@ -1368,11 +1367,12 @@ def page_images():
     renames = {}
     sizes = {}
     for pattern, src, fy, *more in PAGE_IMAGES:
-        scale, size_attr = (more + [1, None])[:2]
+        scale, size_attr, keep = (more + [1, None, False])[:3]
         source = Image.open(src).convert('RGB')
         for target in sorted(imgdir.iterdir()):
             if not re.match(pattern, target.name): continue
             w, h = Image.open(target).size
+            if keep: h = round(w * source.height / source.width)        # its width, the source's shape
             if scale > 1 and source.width >= w * scale and source.height >= h * scale: w, h = w * scale, h * scale
             k = max(w / source.width, h / source.height)
             im = source.resize((max(w, round(source.width * k)), max(h, round(source.height * k))), Image.LANCZOS)
