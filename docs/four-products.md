@@ -1,6 +1,6 @@
-# Four products, nothing else
+# Five products, nothing else
 
-The store sells SKINOFAB's four products and nothing else:
+The store sells SKINOFAB's five products and nothing else (the stick, added on 26 Oct 2026: `docs/foundation-stick.md`):
 
 | Product | NEXT id | Page |
 |---|---|---|
@@ -8,6 +8,7 @@ The store sells SKINOFAB's four products and nothing else:
 | The Lymphatic Brush | 169 | `/catalogue/the-lymphatic-brush_169/` |
 | PDRN Plumping Balm | 202 | `/catalogue/pdrn-plumping-balm_202/` |
 | EGF + NAD+ Firming Serum | 206 | `/catalogue/egf-nad-firming-serum_206/` |
+| Adaptive Foundation Stick | 235 | `/catalogue/adaptive-foundation-stick_235/` |
 
 Every other product the old store carried (lip plumpers, lip stains and glosses, brow and lash products, the
 reverse-time serum, the lifting mask, the under-eye patches, the gua sha and face roller, the old bundles, the
@@ -20,7 +21,7 @@ Catalogue → Categories.
 
 ## In NEXT
 
-`tools/persona/prune_catalog.py` keeps products 14, 169, 202 and 206 with their variants, and deletes the rest. Every
+`tools/persona/prune_catalog.py` keeps products 14, 169, 202, 206 and 235 with their variants, and deletes the rest. Every
 record it deletes is saved first, in full, to the backup file it is given; the one from 25 Oct 2026 is
 `docs/catalog-backup/2026-10-25-removed-products-pages.json` (28 products with their variants, prices and images, 15
 pages, 9 categories), so any one can be recreated from it.
@@ -44,7 +45,7 @@ variant ("2 bottles + free gifts"), packed with the order, not products in the s
 - the homepage drops Shop by Category, Bundle & Save and Essentials, and the shelf's Lips, Lashes and Brows tabs; the
   Reverse-time serum story becomes the EGF + NAD+ Firming Serum's and the lifting mask's "New arrivals" banner the
   PDRN Plumping Balm's (`home_features()`);
-- the menus drop Accessories and Sale; the footer's Shop column lists the four products;
+- the menus drop Accessories and Sale; the footer's Shop column lists the five products;
 - FAQ answers about the other products go, and the brand's own words that named them (the About page, the
   disclaimer, the retailer post) now name the four.
 

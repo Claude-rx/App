@@ -173,6 +173,7 @@
   "templates/blog/post.html",
   "templates/catalogue/category.html",
   "templates/catalogue/index.html",
+  "templates/catalogue/product.adaptive-foundation-stick.html",
   "templates/catalogue/product.color-changing-foundation.html",
   "templates/catalogue/product.egf-nad-firming-serum.html",
   "templates/catalogue/product.html",
@@ -227,6 +228,6 @@
  "unmapped_links": [],
  "font_faces": 139,
  "css_url_vars": 3,
- "product_json": 4,
+ "product_json": 5,
  "css_compile_errors": []
 }

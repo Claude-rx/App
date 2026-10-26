@@ -1,9 +1,9 @@
-"""Keep only SKINOFAB's four products in NEXT: delete every other product, the pages that sold only those products,
+"""Keep only SKINOFAB's five products in NEXT: delete every other product, the pages that sold only those products,
 and the categories they leave empty. Everything deleted is saved first, in full, to <backup.json>.
 
 usage: NEXT_API_TOKEN=... python3 -I prune_catalog.py <store_subdomain> <backup.json> [--apply]
-- kept: the Adaptive Peptide Foundation (14), the Lymphatic Brush (169), the PDRN Plumping Balm (202) and the EGF + NAD+
-  Firming Serum (206), with their variants
+- kept: the Adaptive Peptide Foundation (14), the Lymphatic Brush (169), the PDRN Plumping Balm (202), the EGF + NAD+
+  Firming Serum (206) and the Adaptive Foundation Stick (235), with their variants
 - pages: apply_persona.LEGACY_PAGES (the advertorials and quizzes for lip plumpers, brows, the collagen mask, the
   reverse-time serum, the old bundle builder and checkout funnel), when NEXT has a page with that slug
 - categories: those with no product left once the others are gone (Lips, Lashes, Brows, Bundles …)
@@ -18,7 +18,7 @@ APPLY = '--apply' in sys.argv
 API = f'https://{STORE}.29next.store/api/admin/'
 HDR = {'Authorization': f"Bearer {os.environ['NEXT_API_TOKEN']}", 'X-29next-API-Version': '2024-04-01',
        'Content-Type': 'application/json', 'Accept': 'application/json'}
-KEEP = {14, 169, 202, 206}
+KEEP = {14, 169, 202, 206, 235}
 # the same list as apply_persona.LEGACY_PAGES (the theme drops these pages; NEXT's page records go here)
 LEGACY_PAGES = {'aging-brows', 'aging-brows2', 'facemask', 'srm01', 'srm01-2026-10-11-02-01-51-pm', 'page',
                 'fuller-lips-without-fillers-copy-copy', 'fullerbutnatural', 'plumper-quiz', 'shadequiz',

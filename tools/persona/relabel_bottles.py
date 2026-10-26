@@ -73,6 +73,27 @@ BALM = {
     'temple': [('box', (150, 330, 285, 485), (170, 470))],
 }
 
+# the Adaptive Foundation Stick's photos (brand/foundation-stick/source/<name>.jpg, 1254 px, GPT Image 2 with the
+# packshot as reference): the AI-drawn SKINOFAB on each tube, a box round it and a point on its first letter
+STICK = {
+    'pack': [('box', (420, 520, 500, 870), (460, 550)), ('box', (750, 520, 830, 870), (790, 550))],
+    'single': [('box', (585, 480, 670, 840), (626, 510))],
+    'tips': [('box', (360, 830, 445, 1215), (402, 860)), ('box', (790, 860, 875, 1230), (832, 890))],
+    'hold-cheek': [('box', (240, 670, 360, 890), (283, 700))],
+    'apply-cheek': [('box', (220, 630, 370, 780), (336, 656))],
+    'blend': [('flat', (426, 694), (341, 797), 21)],              # dim, lit print: measured by hand
+    'swatch': [('box', (930, 580, 1080, 890), (1030, 612))],
+    'temple': [('flat', (303, 540), (279, 691), 22)],
+    'friends': [('box', (570, 805, 655, 1000), (612, 832))],
+    'bag': [('box', (680, 500, 830, 725), (780, 528))],
+    'hold-chin': [('box', (320, 810, 430, 990), (390, 838))],
+    'panel': [('box', (700, 725, 800, 895), (742, 752))],
+    'twist': [('box', (598, 480, 662, 772), (629, 498))],
+    'dots': [('box', (395, 840, 440, 995), (417, 856))],
+    'daylight': [('flat', (275, 810), (301, 946), 14)],
+    'buff-jaw': [('flat', (510, 910), (405, 982), 16)],
+}
+
 # file-name prefix -> (the reference copy's size, the bottles in it); the longest prefix whose aspect matches wins
 SITE = {
     'KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2-': ((1080, 1080), [('auto', (0.38, 0.23, 0.62, 0.87), 0, {}),

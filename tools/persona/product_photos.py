@@ -1,10 +1,12 @@
 """The second products' page images, laid out like the Adaptive Peptide Foundation's gallery, on pure white.
 
-usage: python3 -I product_photos.py [balm] [serum] [brush] [foundation]      # all four when none is named
+usage: python3 -I product_photos.py [balm] [serum] [brush] [foundation] [stick]     # all when none is named
   balm   brand/pdrn-balm/source/*.jpg -> brand/pdrn-balm/*.jpg (the AI-drawn wordmark on each stick replaced first:
          relabel_bottles.BALM -> brand/pdrn-balm/labelled/)
   serum  brand/egf-nad-serum/source/*.jpg -> brand/egf-nad-serum/*.jpg (the real label printed on first, see below)
   brush  brand/lymphatic-brush/source/ba-puffy.jpg -> brand/lymphatic-brush/ba-puffy.jpg
+  stick  brand/foundation-stick/source/*.jpg -> brand/foundation-stick/*.jpg (the real wordmark on every tube first:
+         relabel_bottles.STICK -> brand/foundation-stick/labelled/)
   foundation  its bottle render + source/others.jpg -> brand/adaptive-peptide-foundation/vs-others.jpg (the gallery's
          "skinofab vs. others" on white; apply_persona.py puts it in place of the black one), and the NEXT product's
          gallery on white -> brand/adaptive-peptide-foundation/next/*.jpg (FOUNDATION_NEXT)
@@ -28,6 +30,7 @@ import label_composite, label_fix, relabel_bottles, white_bg
 import numpy as np
 BRAND = HERE.parents[1] / 'brand'
 BALM, SERUM, BRUSH = BRAND / 'pdrn-balm', BRAND / 'egf-nad-serum', BRAND / 'lymphatic-brush'
+STICK = BRAND / 'foundation-stick'
 FOUNDATION = BRAND / 'adaptive-peptide-foundation'
 FONTS = HERE / 'assets' / 'fonts'
 W = 1080
@@ -53,6 +56,7 @@ def path_of(product, name):
     bottle renders (brand/adaptive-peptide-foundation/<name>.png), else the source."""
     if product == SERUM and name in SERUM_LABELS: return product / f'{name}.jpg'
     if product == BALM and name in relabel_bottles.BALM: return product / 'labelled' / f'{name}.jpg'
+    if product == STICK and (product / 'labelled' / f'{name}.jpg').exists(): return product / 'labelled' / f'{name}.jpg'
     if product == FOUNDATION and (product / f'{name}.png').exists(): return product / f'{name}.png'
     return product / 'source' / f'{name}.jpg'
 
@@ -156,10 +160,20 @@ def hero(product, name, badge=(948, 148)):
     save(im, product, 'hero')
 
 
-def before_after(product, name, out, note_text=ILLUSTRATIVE):
+def before_after(product, name, out, note_text=ILLUSTRATIVE, dark=False):
+    """dark: the words in ink on a white band at the foot (for photos whose lower edge is white: white words were lost
+    on a white t-shirt), and a white line between the halves."""
     im = src(product, name)
-    labels(im, [(34, W - 40, 'Before'), (W // 2 + 34, W - 40, 'After')])
-    labels(im, [(W // 2 + 34, W - 82, note_text)], size=17)
+    if not dark:
+        labels(im, [(34, W - 40, 'Before'), (W // 2 + 34, W - 40, 'After')])
+        labels(im, [(W // 2 + 34, W - 82, note_text)], size=17)
+        return save(im, product, out)
+    d = ImageDraw.Draw(im)
+    d.rectangle((W // 2 - 3, 0, W // 2 + 3, W), fill=PAPER)
+    d.rectangle((0, W - 92, W, W), fill=PAPER)
+    d.text((34, W - 40), 'Before', font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
+    d.text((W // 2 + 34, W - 40), 'After', font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
+    note(d, (W - 34, W - 40), note_text, anchor='rs')
     save(im, product, out)
 
 
@@ -314,6 +328,52 @@ SERUM_LABELS = {
 }
 
 
+def stick():
+    """The Adaptive Foundation Stick: brand/foundation-stick/source -> labelled/ (the real wordmark on every tube,
+    relabel_bottles.STICK, and the two composites below) -> brand/foundation-stick/*.jpg."""
+    P = STICK
+    (P / 'labelled').mkdir(exist_ok=True)
+    for name, ops in relabel_bottles.STICK.items():
+        relabel_bottles.relabel(Image.open(P / 'source' / f'{name}.jpg'), ops).save(P / 'labelled' / f'{name}.jpg', quality=95)
+        print('relabelled', name)
+    # the before/after illustration: one woman, the same photo twice (the after is an image edit of the before: her
+    # hair, pose, light and lines unchanged, only the foundation added), the middle half of each side by side
+    b, a = photo(P, 'before'), photo(P, 'after')
+    w, h = b.size
+    ba = Image.new('RGB', (w, h), PAPER)
+    ba.paste(b.crop((w // 4, 0, w // 4 + w // 2, h)), (0, 0)); ba.paste(a.crop((w // 4, 0, w // 4 + w // 2, h)), (w // 2, 0))
+    ba.save(P / 'labelled' / 'ba-even.jpg', quality=95)
+    # the panel: the woman (already at the frame's right) scaled to 85 % into the lower right, so the title and the
+    # rows on the left never touch her hair
+    pn = photo(P, 'panel'); s = pn.resize((round(pn.width * .85), round(pn.height * .85)), Image.LANCZOS)
+    wide = Image.new('RGB', pn.size, PAPER); wide.paste(s, (pn.width - s.width, pn.height - s.height))
+    wide.save(P / 'labelled' / 'panel-wide.jpg', quality=95)
+    # the science block's picture: the cream stroke turning from white to a skin tone (no stick, so no wordmark for a
+    # crop to cut), at 4:5 with white round it, so the block's 4:5 and 4:4.4 crops keep the whole stroke
+    sc = photo(P, 'science'); k = .93
+    s = sc.resize((round(sc.width * k), round(sc.height * k)), Image.LANCZOS)
+    tall = Image.new('RGB', (sc.width, round(sc.width * 1.25)), PAPER)
+    tall.paste(s, ((tall.width - s.width) // 2, (tall.height - s.height) // 2))
+    tall.save(P / 'labelled' / 'science-tall.jpg', quality=95)
+    plain(P, 'pack', 'hero')
+    plain(P, 'hold-cheek')
+    before_after(P, 'ba-even', 'before-after', dark=True)
+    panel(P, 'panel-wide', ('One Stick,', 'Your Shade'), [('sparkle', 'Goes on white,', 'blends to your tone'),
+                                                          ('drop', 'Creamy, made for', 'dry, mature skin'),
+                                                          ('stick', 'Swipe, buff,', 'done in a minute')], 'one-stick')
+    whats_inside(P, 'swatch', [('Hyaluronic acid', 'Keeps dry skin comfortable'), ('Niacinamide', 'For a more even-looking tone'),
+                               ('Squalane + vitamin E', 'Soft and supple, never tight')])
+    science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',
+                           'and the white cream shifts toward your own skin tone:',
+                           'one shade that meets your skin where it is.'))
+    vs_others(P, 'single', 'liquid', 'A liquid foundation', [('Why one stick', False), ('works where a', False), ('bottle doesn’t', True)],
+              ['Adapts to your\nskin tone', 'Kabuki brush\nbuilt in', 'No spills, fits\nyour bag', 'Creamy, made for\ndry skin'])
+    for n in ('apply-cheek', 'blend', 'temple', 'friends', 'hold-chin', 'bag', 'tips', 'swatch', 'twist', 'dots', 'daylight',
+              'buff-jaw'):
+        plain(P, n)
+    plain(P, 'single', 'card')
+
+
 def serum():
     P = SERUM
     for name, bottles in SERUM_LABELS.items():         # the real label first, on every bottle
@@ -377,5 +437,5 @@ def foundation():
 
 
 if __name__ == '__main__':
-    which = sys.argv[1:] or ['balm', 'serum', 'brush', 'foundation']
-    for w in which: {'balm': balm, 'serum': serum, 'brush': brush, 'foundation': foundation}[w]()
+    which = sys.argv[1:] or ['balm', 'serum', 'brush', 'foundation', 'stick']
+    for w in which: {'balm': balm, 'serum': serum, 'brush': brush, 'foundation': foundation, 'stick': stick}[w]()

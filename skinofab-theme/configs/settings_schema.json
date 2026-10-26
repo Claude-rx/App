@@ -2,6 +2,12 @@
   "SKINOFAB": {
     "Product Links": [
       {
+        "name": "sf_p_adaptive_foundation_stick",
+        "type": "product",
+        "label": "Adaptive Foundation Stick",
+        "help_text": "NEXT product shown wherever the design links to \"adaptive-foundation-stick\": links, prices and add to cart. Also set this product's template to \"adaptive-foundation-stick\"."
+      },
+      {
         "name": "sf_p_color_changing_foundation",
         "type": "product",
         "label": "Color Changing Foundation",
@@ -241,6 +247,38 @@
         "name": "sf_cart_upgrade4_button",
         "type": "text",
         "label": "Fourth upgrade: button",
+        "default": "Upgrade"
+      },
+      {
+        "name": "sf_cart_upgrade5_from",
+        "type": "text",
+        "label": "Fifth upgrade: variant in the bag",
+        "default": "",
+        "help_text": "A fifth product's upgrade (NEXT variant IDs), shown when the first four do not apply. Empty: none."
+      },
+      {
+        "name": "sf_cart_upgrade5_to",
+        "type": "text",
+        "label": "Fifth upgrade: variant it becomes",
+        "default": ""
+      },
+      {
+        "name": "sf_cart_upgrade5_title",
+        "type": "text",
+        "label": "Fifth upgrade: title",
+        "default": ""
+      },
+      {
+        "name": "sf_cart_upgrade5_text",
+        "type": "text",
+        "label": "Fifth upgrade: text",
+        "default": "",
+        "help_text": "Name the real price difference; it must match the two variants' prices."
+      },
+      {
+        "name": "sf_cart_upgrade5_button",
+        "type": "text",
+        "label": "Fifth upgrade: button",
         "default": "Upgrade"
       },
       {

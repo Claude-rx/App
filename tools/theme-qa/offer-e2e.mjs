@@ -12,22 +12,22 @@
 //         SFCommerce.addItems, the path other buttons use): one line, the 2-bottle pack, same purchase type.
 //   add-on: added as a second line, then no longer offered.
 //   checkout (1 bottle and 2 bottles, first case of each): the line, its price and the refill wording.
-// The Lymphatic Brush, the PDRN Plumping Balm and the EGF + NAD+ Firming Serum (brush_copy.py / balm_copy.py /
-// serum_copy.py BUNDLES; optional 5th to 7th arguments, their page paths):
+// The Lymphatic Brush, the PDRN Plumping Balm, the EGF + NAD+ Firming Serum and the Adaptive Foundation Stick
+// (brush_copy.py / balm_copy.py / serum_copy.py / stick_copy.py BUNDLES; optional 5th to 8th arguments, their page paths):
 //   buy: each bundle adds its variant at its price, one-time; the drawer offers the 1 -> 2 upgrade only for one, and
 //        never the product as an add-on while it is in the bag; checkout shows the 2-pack with its thumbnail.
 //   upgrade: 1 -> 2 in the drawer: one line, one-time.
 //   page: the foundation page's sections in the foundation's order (tools/persona/twin.py), its six tabs, the
-//        product's FAQ; borrowed reviews labelled as the foundation's, photo cards without stars or "verified", the
+//        product's FAQ; no other product's reviews while it has none of its own, photo cards without stars or "verified", the
 //        expert block signed by the brand, before/after photos marked as illustrations; no competitor name or dropped
 //        claim, no broken image after scrolling the whole page, the title price (no "was" on one stick), no stars
 //        without reviews; its card in the homepage shelf (default list, Bestsellers, New and Face tabs) at its
-//        single price ($24.95; the serum $34.95), and the menu links lead to it.
+//        single price ($24.95; the serum $34.95; the stick $39), and the menu links lead to it.
 import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';
 import fs from 'fs'; import path from 'path';
 
 const [STORE, THEME, PDP, SHOTS, BRUSH = '/catalogue/the-lymphatic-brush_169/', BALM = '/catalogue/pdrn-plumping-balm_202/',
-       SERUM = '/catalogue/egf-nad-firming-serum_206/'] = process.argv.slice(2);
+       SERUM = '/catalogue/egf-nad-firming-serum_206/', STICK = '/catalogue/adaptive-foundation-stick_235/'] = process.argv.slice(2);
 fs.mkdirSync(SHOTS, { recursive: true });
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const picker = '[data-sf-offer-picker]';
@@ -252,21 +252,22 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
-// the product page story: problem -> solution, the dermatologist, customer reviews before the FAQ, the refill FAQ
+// the product page story: problem -> solution, the Korean doctor photo (a model, no endorsement; no dermatologist
+// block), customer reviews before the FAQ (the owner's request of 25 Oct), the refill FAQ
 {
   const s = await session();
   const st = await s.page.evaluate(() => {
     const ids = [...document.querySelectorAll('[id^="shopify-section-"]')].map(e => e.id);
     const at = k => ids.findIndex(i => i.includes(k));
     const faq = [...document.querySelectorAll('.accordion__item__title__text')].map(e => e.textContent.trim());
-    return { reviews1: at('kopstorm_testomonials'), problem: at('sf-problem-solution'), derm: at('sf-dermatologist'),
+    return { reviews1: at('kopstorm_testomonials'), problem: at('sf-problem-solution'), derm: at('sf-dermatologist'), korea: at('sf-korea'),
              reviews2: at('sf-reviews'), faq: at('section_accordions'), faqItems: faq.length,
              refillsFaq: faq.includes('How do Automatic Refills work?') && faq.includes('Can I buy just once?'),
              dermName: (document.querySelector('#sf-dermatologist .sfx-sign b') || {}).textContent || '',
              spfInQuote: /has SPF/i.test((document.querySelector('#sf-dermatologist') || {}).textContent || '') };
   });
   const problems = [];
-  if (!(st.reviews1 >= 0 && st.reviews1 < st.problem && st.problem < st.derm && st.derm < st.reviews2 && st.reviews2 < st.faq))
+  if (!(st.reviews1 >= 0 && st.reviews1 < st.problem && st.problem < st.korea && st.korea < st.reviews2 && st.reviews2 < st.faq && st.derm === -1))
     problems.push('sections missing or out of order: ' + JSON.stringify(st));
   if (!st.refillsFaq) problems.push('refill questions missing from the FAQ');
   if (st.spfInQuote) problems.push('SPF claim in the dermatologist quote');
@@ -274,7 +275,7 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
-// the review wall: NEXT's reviews as valid JSON, Write a review linked to NEXT's form, after the FAQ, shown only when
+// the review wall: NEXT's reviews as valid JSON, Write a review linked to NEXT's form, before the FAQ, shown only when
 // there are reviews (the imported ones load when the wall scrolls into view)
 {
   const s = await session();
@@ -295,7 +296,7 @@ for (const refill of [false, true]) {
              strip: ((document.querySelector('#shopify-section-sf-review-strip .sfrs-sum') || {}).innerText || '').replace(/\s+/g, ' '),
              stripCards: document.querySelectorAll('#shopify-section-sf-review-strip .sfrs-card').length,
              names: /smooche|solena/i.test(root.innerText),
-             afterFaq: ids.findIndex(i => i.includes('section_accordions')) < ids.indexOf(section && section.id),
+             beforeFaq: ids.indexOf(section && section.id) < ids.findIndex(i => i.includes('section_accordions')),
              write: (root.querySelector('.sfr-write:not([hidden])') || {}).href || '' };
   });
   const problems = [];
@@ -307,7 +308,7 @@ for (const refill of [false, true]) {
     const total = (w.native ? w.native.reviews : 0) + (typeof w.imported === 'number' ? w.imported : 0);
     if (w.shown !== total > 0) problems.push(`wall shown=${w.shown} with ${total} reviews`);
     if (total > 0 && (!w.cards || !w.write)) problems.push(`wall shown without cards (${w.cards}) or write link`);
-    if (!w.afterFaq) problems.push('wall is not after the FAQ');
+    if (!w.beforeFaq) problems.push('wall is not before the FAQ');
     // one total everywhere: the wall's summary, the badge under the title and the strip after the buy box
     if (total > 0) {
       const n = total.toLocaleString('en-US');
@@ -361,7 +362,7 @@ for (const refill of [false, true]) {
   await s.ctx.close();
 }
 
-// ---------------------------------------------------------------- the second products' bundles (brush, balm, serum)
+// ---------------------------------------------------------------- the second products' bundles (brush, balm, serum, stick)
 async function packsOf(route) {
   const s = await session(1440, 900, route);
   const t = JSON.parse(await s.page.getAttribute(picker, 'data-packs'));
@@ -428,14 +429,15 @@ async function bundleCases(name, route, title, label) {
 await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
 await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm');
 await bundleCases('serum', SERUM, 'EGF + NAD+ Firming Serum', 'EGF + NAD+ Firming Serum');
+await bundleCases('stick', STICK, 'Adaptive Foundation Stick', 'Adaptive Foundation Stick');
 
-// ---------------------------------------------------------------- the brush's, the balm's and the serum's pages
+// ---------------------------------------------------------------- the brush's, the balm's, the serum's and the stick's pages
 // All are built on the foundation page's structure (tools/persona/twin.py): the same sections in the same order (the
 // expert block is the brand's own note; the review wall adds an honest "no reviews yet" box while there are none),
 // the foundation's six tabs, the product's FAQ. Borrowed reviews must say they are the foundation's; the photo cards
 // are not reviews (no stars, no "verified"); before/after photos are marked as illustrations.
 const sectionKeys = () => [...document.querySelectorAll('main > [id^="shopify-section-"]')]
-  .map(e => e.id.replace(/^shopify-section-(template--\d+__)?/, '').replace(/_[A-Za-z0-9]{4,}$/, '').replace(/^sf-(brush|balm|serum)-(no-reviews|amazon)$/, '$2'))
+  .map(e => e.id.replace(/^shopify-section-(template--\d+__)?/, '').replace(/_[A-Za-z0-9]{4,}$/, '').replace(/^sf-(brush|balm|serum|stick)-(no-reviews|amazon)$/, '$2'))
   .filter(k => !/^(section_custom_html|\d+[0-9a-f]+)$/.test(k));
 async function scrollThrough(page) {
   const h = await page.evaluate(() => document.body.scrollHeight);
@@ -475,14 +477,18 @@ async function twinPage(name, route, cfg) {
              cards: document.querySelectorAll('#sf-video-reviews .sfx-review').length,
              empty: !!empty && !empty.hidden, now: head.querySelector('.product__price--regular').textContent.trim(),
              was: (head.querySelector('.product__price--compare') || {}).textContent || '',
-             competitor: /solena|fem\+|femplus|meimei/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
+             competitor: /solena|fem\+|femplus|meimei|facelove/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
              stars: !document.querySelector('[data-sfb-rating]').hidden, hScroll: document.documentElement.scrollWidth > innerWidth + 1,
              // images that asked for a file and got none (the review lightbox's empty <img> asks for nothing)
              imgs: [...document.querySelectorAll('main img')].filter(i => i.complete && i.naturalWidth === 0 && (i.getAttribute('src') || i.getAttribute('srcset'))
                                                                      && !/^data:/.test(i.getAttribute('src') || '')).map(i => i.currentSrc || i.src) };
   }, [sectionKeys.toString(), cfg.claims]);
   const problems = [];
-  const want = foundationKeys.flatMap(k => (k === 'sf-review-wall' && !pg.reviews ? [k, 'no-reviews'] : [k]));
+  // the foundation's sections, less its own: the Korean doctor photo (its bottle), its review strip while the product
+  // has no reviews of its own (borrowed reviews read as this product's), the use cards when the product has none; the
+  // brand's own note after the problem/solution, and the honest "no reviews yet" box after the wall
+  const want = foundationKeys.filter(k => k !== 'sf-korea' && (pg.reviews || k !== 'sf-review-strip') && (cfg.cards !== 0 || k !== 'sf-reviews'))
+    .flatMap(k => (k === 'sf-review-wall' && !pg.reviews ? [k, 'no-reviews'] : k === 'sf-problem-solution' ? [k, 'sf-note'] : [k]));
   const got = pg.keys.filter(k => k !== 'amazon');
   if (got.join() !== want.join()) problems.push(`sections differ from the foundation's:\n  ${got.join(',')}\n  ${want.join(',')}`);
   if (pg.tabs.length !== 6 || pg.tabs[0] !== 'What makes it different?' || pg.tabs[5] !== 'Shipping and returns') problems.push('tabs: ' + pg.tabs.join(' | '));
@@ -492,12 +498,11 @@ async function twinPage(name, route, cfg) {
   if (!pg.title.includes(cfg.title)) problems.push(`title "${pg.title}"`);
   if (pg.claims.length) problems.push('claims or competitor on the page: ' + pg.claims.join(', '));
   if (pg.competitor) problems.push('a competitor name in the markup');
-  if (!pg.reviews && !/of our Adaptive Peptide Foundation/.test(pg.strip)) problems.push('review strip does not say the reviews are the foundation\'s: ' + pg.strip.slice(0, 120));
-  if (!pg.reviews && /Verified buyer(?! of the foundation)/.test(pg.strip)) problems.push('a borrowed review card says "Verified buyer" without "of the foundation"');
+  if (!pg.reviews && pg.strip) problems.push('another product\'s reviews on the page: ' + pg.strip.slice(0, 120));
   if (pg.momentsReviewish !== 0 || pg.moments < 4) problems.push(`photo cards: ${pg.moments}, with ${pg.momentsReviewish} stars/verified marks`);
   if (pg.derm || pg.note !== 'The SKINOFAB team') problems.push(`expert block: dermatologist ${pg.derm}, signed "${pg.note}"`);
   if (!pg.beforeAfter.length || pg.beforeAfter.some(a => !/illustration/i.test(a))) problems.push('before/after not marked as an illustration: ' + pg.beforeAfter.join(' | '));
-  if (pg.cards !== 4 || pg.clips !== cfg.clips) problems.push(`use cards ${pg.cards}, clips ${pg.clips}`);
+  if (pg.cards !== (cfg.cards ?? 4) || pg.clips !== cfg.clips) problems.push(`use cards ${pg.cards}, clips ${pg.clips}`);
   if (pg.empty === (pg.reviews > 0)) problems.push(`"No reviews yet" box ${pg.empty} with ${pg.reviews} reviews`);
   const price = cfg.price || '$24.95';
   if (!pg.now.startsWith(price) || (cfg.was ? !pg.was.startsWith(cfg.was) : !!pg.was.trim())) problems.push(`title price ${pg.now} / was "${pg.was}"`);
@@ -520,18 +525,21 @@ async function twinPage(name, route, cfg) {
   out.push({ case: `${name} page`, ...pg, home, errors: s.errors, ok: problems.length === 0, problems });
   await s.ctx.close();
 }
-await twinPage('brush', BRUSH, { title: 'The Lymphatic Brush', handle: 'the-lymphatic-brush', nav: 'Lymphatic Brush', gallery: 5, faq: 10,
-                                 clips: 4, was: '$49.90', claims: 'drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention' });
-await twinPage('balm', BALM, { title: 'PDRN Plumping Balm', handle: 'pdrn-plumping-balm', nav: 'PDRN Balm', gallery: 13, faq: 10, clips: 0,
+await twinPage('brush', BRUSH, { title: 'The Lymphatic Brush', handle: 'the-lymphatic-brush', nav: 'The Lymphatic Brush', gallery: 5, faq: 10,
+                                 clips: 0, cards: 0, was: '', claims: 'drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention' });
+await twinPage('balm', BALM, { title: 'PDRN Plumping Balm', handle: 'pdrn-plumping-balm', nav: 'PDRN Plumping Balm', gallery: 13, faq: 10, clips: 0,
                                was: '', claims: '96%|1M\\+|bought today|77%|dermatologist|collagen production|clinically' });
-await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf-nad-firming-serum', nav: 'Firming Serum', gallery: 13, faq: 10,
+await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf-nad-firming-serum', nav: 'EGF + NAD+ Firming Serum', gallery: 13, faq: 10,
                                  clips: 0, was: '', price: '$34.95',
                                  claims: '#1 Firming|137,135|10,000\\+|clinically|stimulate collagen|at the source|dermatologist|Madeca|Time Reverse' });
+await twinPage('stick', STICK, { title: 'Adaptive Foundation Stick', handle: 'adaptive-foundation-stick', nav: 'Adaptive Foundation Stick',
+                                 gallery: 15, faq: 10, clips: 0, was: '', price: '$39',
+                                 claims: '97%|93%|50,000|pieces remain|11:59|16 skin tones|anti-aging|reduces redness|clinically|dermatologist|Changing Foundation' });
 
 // the sticky bar on every product page: shown exactly while the add-to-cart button is out of view (at the top on a
 // phone the button is below the fold: the bar shows; on a computer it is in view: hidden), shown once it has
 // scrolled away, and its button brings the pack picker back into view
-for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BALM], ['serum', SERUM]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
+for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BALM], ['serum', SERUM], ['stick', STICK]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
   const s = await session(w, h, route);
   const on = () => s.page.evaluate(() => { const b = document.getElementById('sf-sticky'); return b ? b.classList.contains('is-on') : null; });
   const problems = [];

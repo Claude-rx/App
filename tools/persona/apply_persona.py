@@ -22,8 +22,8 @@ import hashlib, html, json, os, re, shutil, subprocess, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, balm_copy, brush_copy, ccf_copy, company, label_fix, relabel_bottles, serum_copy, support_copy, twin, white_bg
-SECOND_PRODUCTS = (brush_copy, balm_copy, serum_copy)
+import apf_copy, balm_copy, brush_copy, ccf_copy, company, label_fix, relabel_bottles, serum_copy, stick_copy, support_copy, twin, white_bg
+SECOND_PRODUCTS = (brush_copy, balm_copy, serum_copy, stick_copy)
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
 IMAGES = Path(sys.argv[4]).resolve() if len(sys.argv) > 4 else None
@@ -687,10 +687,10 @@ def even_card(im, size, height=0.70, width=0.80, bottom=0.86):
     out.paste(big, (round(size / 2 - cx * k), round(bottom * size - y1 * k)))
     return out
 
-SHELF_HANDLES = ['color-changing-foundation'] + [P.HANDLE for P in (brush_copy, balm_copy, serum_copy)]
+SHELF_HANDLES = ['color-changing-foundation'] + [P.HANDLE for P in SECOND_PRODUCTS]
 
 def even_shelf():
-    """The homepage shelf's cards of our four products, each product the same size and in the same place (even_card):
+    """The homepage shelf's cards of our five products, each product the same size and in the same place (even_card):
     the foundation's from brand/home/card-foundation.jpg, the others' card.jpg. Every card of theirs in the shelf
     (the list and its tabs) gets the same 720 and 1080 px copies. Returns the cards changed."""
     from PIL import Image
@@ -705,7 +705,7 @@ def even_shelf():
     first = next((a for a in arts if of(a) == SHELF_HANDLES[0] and 'fh-upload' in a.group(0)), None)
     # the foundation: one bottle from its front render, PDRN legible, a soft contact shadow (home_images.py)
     src = {SHELF_HANDLES[0]: HOME / 'card-foundation.jpg'} if first else {}
-    src.update({P.HANDLE: P.IMG / 'card.jpg' for P in (brush_copy, balm_copy, serum_copy)})
+    src.update({P.HANDLE: P.IMG / 'card.jpg' for P in SECOND_PRODUCTS})
     made = {}
     for h, path in src.items():
         im = Image.open(path)
@@ -738,7 +738,7 @@ def even_shelf():
     home.write_text(t[:m.start()] + sec + t[end:], encoding='utf-8', errors='surrogateescape')
     return n
 
-# the store sells four products; every other one the design carried is gone from the pages (and from NEXT:
+# the store sells five products; every other one the design carried is gone from the pages (and from NEXT:
 # prune_catalog.py), and so are the pages that sold only those
 OUR_PRODUCTS = {'color-changing-foundation'} | {P.HANDLE for P in SECOND_PRODUCTS}
 LEGACY_PAGES = {'aging-brows', 'aging-brows2', 'facemask', 'srm01', 'srm01-2026-10-11-02-01-51-pm', 'page',
@@ -824,7 +824,7 @@ def strip_gone(soup, page=''):
     return n
 
 # "The SKINOFAB phenomenon": the export's eight cards showed women in their twenties and thirties and products the store
-# does not sell (under-eye patches, lip gloss, pink tubes). Each card is now a woman over 45 with one of our four
+# does not sell (under-eye patches, lip gloss, pink tubes). Each card is now a woman over 45 with one of our
 # products, linked to it: (source, crop centre across the photo, product handle, alt). The cards are 260 x 400.
 PHENOMENON = [
     ('home:phenomenon-1.jpg', .5, 'color-changing-foundation',             # home_images.py: the persona selfie at 2x
@@ -1027,14 +1027,15 @@ HOME_TILES = [('color-changing-foundation', 'Foundation', 'tile-foundation', 'A 
               (balm_copy.HANDLE, 'Balm', 'tile-balm', 'A woman in her fifties holding the PDRN Plumping Balm to her cheek'),
               (brush_copy.HANDLE, 'Brush', 'tile-brush', 'A woman in her sixties sweeping the Lymphatic Brush along her cheekbone')]
 HOME_ESSENTIALS = [('color-changing-foundation', apf_copy.PRODUCT, BRAND / 'adaptive-peptide-foundation' / 'next' / '01-front.jpg'),
+                   (stick_copy.HANDLE, stick_copy.TITLE, stick_copy.IMG / 'card.jpg'),
                    (serum_copy.HANDLE, serum_copy.TITLE, serum_copy.IMG / 'card.jpg'),
                    (balm_copy.HANDLE, balm_copy.TITLE, balm_copy.IMG / 'card.jpg'),
                    (brush_copy.HANDLE, brush_copy.TITLE, brush_copy.IMG / 'card.jpg')]
 
 def home_original():
     """The homepage in its original design (the export's sections, in their order and look), with our products where it
-    showed the old ones: Shop by category shows our four, each in the hands of a woman over 45; Bundle & Save each
-    product's best-value bundle; Essentials our four; the banner, "One shade" and "Korean formulas" keep their
+    showed the old ones: Shop by category shows four (the foundation, the serum, the balm, the brush), each in the
+    hands of a woman over 45; Bundle & Save four products' best-value bundles; Essentials all five; the banner, "One shade" and "Korean formulas" keep their
     models with the real bottle in hand (brand/home/, home_images.py). No section is dropped. Returns what changed."""
     home = DST / 'index.html'
     t = home.read_text(encoding='utf-8', errors='surrogateescape')
@@ -1534,7 +1535,7 @@ def track_form():
                 '.banner-image__inner.text-dark .banner-image__heading,.banner-image__inner.text-dark .banner-image__content{color:#151515}</style>')
         t = t[:b.start()] + sec + t[e:]
     # "You might like these too": the export's featured collection kept one card (the others were products the store
-    # no longer sells); our four, as the homepage shows them
+    # no longer sells); our five, as the homepage shows them
     f = re.search(r'<div class="shopify-section" id="shopify-section-template--[0-9]+__section_collection_[A-Za-z0-9]+">', t)
     if f:
         e = t.find('<div class="shopify-section', f.end())
@@ -1543,7 +1544,7 @@ def track_form():
     return 1
 
 def more_products_html(up):
-    """Our four products as a simple grid of cards (photo, name, price), for pages outside the homepage. Prices are
+    """Our five products as a row of cards (photo, name, price), for pages outside the homepage. Prices are
     bound to NEXT by the theme build (each card links to its product); the foundation's is the one its page shows
     first, as on the homepage."""
     one = ccf_copy.PACKS[0]
@@ -1565,8 +1566,12 @@ def more_products_html(up):
             '<style>.sf-more{width:calc(100% - 40px);max-width:1320px;margin:0 auto;padding:24px 0 64px}'
             '.sf-more__head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:24px}'
             '.sf-more__head h2{margin:0;font-size:clamp(26px,3vw,36px)}.sf-more__head a{font-weight:600;text-transform:uppercase;text-decoration:underline;white-space:nowrap}'
-            '.sf-more__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}'
-            '@media(min-width:1024px){.sf-more__grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}}'
+            # five cards: under 1024 px a row that scrolls sideways (two and a bit cards on a phone, so the next one
+            # shows there is more; no card left alone on a last line), five columns from 1024
+            '.sf-more__grid{display:grid;grid-auto-flow:column;grid-auto-columns:42%;gap:16px;overflow-x:auto;'
+            'scroll-snap-type:x mandatory;padding-bottom:8px}.sf-more__card{scroll-snap-align:start}'
+            '@media(min-width:750px){.sf-more__grid{grid-auto-columns:30%}}'
+            '@media(min-width:1024px){.sf-more__grid{grid-auto-flow:row;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px;overflow:visible;padding-bottom:0}}'
             '.sf-more__card{display:flex;flex-direction:column;gap:8px;color:inherit;text-decoration:none}'
             '.sf-more__card img{width:100%;height:auto;aspect-ratio:1;object-fit:contain;background:#f7f7f7;border-radius:10px}'
             '.sf-more__title{font-weight:600;line-height:1.25}.sf-more__price{display:flex;gap:8px;flex-wrap:wrap}'
@@ -1625,6 +1630,7 @@ def page_images():
     return len(renames)
 
 MENU = [('Adaptive Peptide Foundation', 'products/color-changing-foundation.html'),
+        (stick_copy.TITLE, f'products/{stick_copy.HANDLE}.html'),
         ('EGF + NAD+ Firming Serum', f'products/{serum_copy.HANDLE}.html'),
         ('PDRN Plumping Balm', f'products/{balm_copy.HANDLE}.html'),
         ('The Lymphatic Brush', f'products/{brush_copy.HANDLE}.html'),
@@ -1635,7 +1641,7 @@ MENU = [('Adaptive Peptide Foundation', 'products/color-changing-foundation.html
 
 def clean_menu():
     """The menu kept the export's tree with only our products left in it: "Shop all > Face > Foundation" three taps
-    deep while the other three products sat at the top. Now one level: our four products, Shop all, Track your order,
+    deep while the other three products sat at the top. Now one level: our five products, Shop all, Track your order,
     About, Contact (the account entries stay). Returns how many pages."""
     n = 0
     for page in DST.rglob('*.html'):
@@ -1689,9 +1695,11 @@ def only_our_products():
         t0 = p.read_text(encoding='utf-8', errors='surrogateescape')
         t = t0
         for old, new in LEGACY_TEXT: t = t.replace(old, new)
-        # the footer's Shop column names the brush, balm and serum: the foundation goes first
+        # the footer's Shop column names the brush, balm and serum: the foundation goes first, the foundation stick
+        # after it
         t = re.sub(r'(<li><a href="((?:\.\./)*)collections/all-products\.html">Shop all</a></li>)(?!<li><a href="(?:\.\./)*products/color-changing-foundation)',
-                   r'\1<li><a href="\2products/color-changing-foundation.html">Adaptive Peptide Foundation</a></li>', t)
+                   r'\1<li><a href="\2products/color-changing-foundation.html">Adaptive Peptide Foundation</a></li>'
+                   rf'<li><a href="\2products/{stick_copy.HANDLE}.html">{stick_copy.NAV_LABEL}</a></li>', t)
         if not re.search(r'(?:products|pages|collections)/', t) and 'accordion__item' not in t:
             if t != t0: p.write_text(t, encoding='utf-8', errors='surrogateescape')
             continue
@@ -1886,6 +1894,9 @@ def cart_offer():
     serum = json.loads((WORK / serum_copy.OFFERS_FILE).read_text())['variants']
     d1, d2 = serum_copy.BUNDLES[0], serum_copy.BUNDLES[1]
     d_text = f"Just {money(round(float(d2['price']) - float(d1['price']), 2))} more for a second bottle: about two more months."
+    stick = json.loads((WORK / stick_copy.OFFERS_FILE).read_text())['variants']
+    e1, e2 = stick_copy.BUNDLES[0], stick_copy.BUNDLES[1]
+    e_text = f"Just {money(round(float(e2['price']) - float(e1['price']), 2))} more for a second stick: one at home, one in your bag."
 
     return {'product': cart['product'], 'addons': cart['addons'],
             'upgrades': [{'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
@@ -1895,7 +1906,9 @@ def cart_offer():
                          {'from': balm[c1['key']], 'to': balm[c2['key']], 'title': balm_copy.CART_UPGRADE['title'],
                           'text': c_text, 'button': balm_copy.CART_UPGRADE['button']},
                          {'from': serum[d1['key']], 'to': serum[d2['key']], 'title': serum_copy.CART_UPGRADE['title'],
-                          'text': d_text, 'button': serum_copy.CART_UPGRADE['button']}],
+                          'text': d_text, 'button': serum_copy.CART_UPGRADE['button']},
+                         {'from': stick[e1['key']], 'to': stick[e2['key']], 'title': stick_copy.CART_UPGRADE['title'],
+                          'text': e_text, 'button': stick_copy.CART_UPGRADE['button']}],
             'review': {'text': cart['review_text'], 'name': cart['review_name']}, 'guarantee_text': cart['guarantee_text'],
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
@@ -2592,7 +2605,7 @@ def main():
     hits = {}
     del missing[:]
     # page rules first: they rewrite whole blocks that the global rules would otherwise half-change
-    rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL + brush_copy.GLOBAL + balm_copy.GLOBAL + serum_copy.GLOBAL]
+    rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL + [r for P in SECOND_PRODUCTS for r in P.GLOBAL]]
     pages = sorted(DST.rglob('*.html'))
     texts = {p: p.read_text(encoding='utf-8', errors='surrogateescape') for p in pages}
     for scope, old, new in rules:
@@ -2702,8 +2715,9 @@ def main():
     if DST / 'index.html' in texts:
         texts[DST / 'index.html'], sp = faster_home(texts[DST / 'index.html'])
         print('home speed', sp)
-    # the second products (the Lymphatic Brush, the PDRN Plumping Balm, the EGF + NAD+ Firming Serum): a card in the
-    # homepage's product shelf, like the other products, their pages (brush_copy, balm_copy, serum_copy) and snapshots
+    # the second products (the Lymphatic Brush, the PDRN Plumping Balm, the EGF + NAD+ Firming Serum, the Adaptive
+    # Foundation Stick): a card in the homepage's product shelf, like the other products, their pages (brush_copy,
+    # balm_copy, serum_copy, stick_copy) and snapshots
     for P in SECOND_PRODUCTS:
         if DST / 'index.html' in texts:
             texts[DST / 'index.html'], ok = product_shelf(texts[DST / 'index.html'], P)

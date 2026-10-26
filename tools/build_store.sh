@@ -18,7 +18,7 @@ W=$(cd "$1" && pwd)
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 cd "$ROOT"
 
-python3 -I tools/persona/apply_persona.py "$W/rel3/skinofab-site" "$W/rel4/skinofab-site" "$W/ccf-offers.json" "$W/persona-img2" | tail -3
+python3 -I tools/persona/apply_persona.py "$W/rel3/skinofab-site" "$W/rel4/skinofab-site" "$W/ccf-offers.json" "$W/persona-img2" | tail -30   # its summary: on a failure, what it missed
 python3 -I tools/persona/policy_texts.py "$W/rel4/skinofab-site" docs/checkout-policies   # paste-ready checkout policies
 python3 -I tools/rebrand/fresh_alpha_names.py "$W/rb/groups.json" "$W/rel2/skinofab-site" "$W/rel4/skinofab-site" "$W/alpha-renames2.json"
 python3 -I tools/persona/apf_pages.py "$W/rel4/skinofab-site" tools/persona/apf-images.json --classic | tail -2

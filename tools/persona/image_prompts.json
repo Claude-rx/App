@@ -60,5 +60,33 @@
  },
  "adaptive-peptide-foundation": {
   "others": "Photorealistic studio product photo of one plain generic liquid foundation bottle: a short square frosted glass bottle filled with beige foundation, with a matte beige cap. Completely blank, no label, no text, no logo, no brand. Standing upright, centred, seen straight on, on a pure white seamless background with a soft natural contact shadow. Soft even lighting, sharp focus, e-commerce packshot."
+ },
+ "foundation-stick": {
+  "_how": "GPT Image 2 through the studio's 4SToken route (run_provider 4stoken gpt-image-2, 1024 x 1024, about $0.009 an image, 26 Oct 2026). Every photo of the stick passes pack.jpg as its reference image, so the stick is the same in every one; prompts below are abridged where they repeat the product description: \"Use the reference image only for the product ... the exact same product ... The word SKINOFAB printed vertically in thin white serif on the tube, nothing else written. Whole head and chin in frame with space above the hair, soft daylight, natural skin texture, 85mm.\" ing-ha.jpg is the balm's.",
+  "pack": "Professional e-commerce studio packshot on a pure white seamless background, soft natural contact shadows. Two identical dual-ended foundation sticks standing upright side by side, slightly apart. Each stick is a slim matte black cylinder about 4.5 times taller than wide, with a thin satin seam one third from the top. Left stick: its top cap removed, showing a twist-up solid white cream foundation stick with a softly domed top. Right stick: its top cap removed, showing a dense rounded black synthetic kabuki brush dome, the same diameter as the tube. On each tube the word SKINOFAB printed vertically in a thin elegant white serif font, reading from top to bottom, centered, and nothing else written. Photorealistic product photography, sharp focus, 85mm lens, high-end K-beauty brand look, minimal, no props, no other text.",
+  "single (ref)": "ONE of the black dual-ended foundation sticks from the reference, standing upright, centered, front view, its matte black cap ON ... The word SKINOFAB printed vertically in a thin elegant white serif, centered on the tube, and nothing else written.",
+  "tips (ref)": "The two open ends side by side: the twist-up solid WHITE cream foundation with a softly domed top, and the dense rounded BLACK kabuki brush dome ...",
+  "hold-cheek (ref)": "A real woman about 58, natural silver-blonde shoulder-length hair, visible fine lines and a few sun spots, light natural makeup, warm smile; holds one stick, brush end up, near her cheek. Whole head in frame.",
+  "apply-cheek (ref)": "A real woman about 55, light-medium skin with fine lines, some redness and sun spots, dark brown bob with grey strands; glides the WHITE foundation end along her cheekbone, leaving a short soft white stripe.",
+  "blend (ref)": "A real woman about 62, short silver-grey hair, eyes softly closed; buffs her cheek in small circles with the BLACK KABUKI BRUSH end; the foundation already blended into her own tone.",
+  "swatch (ref)": "The back of a mature woman's hand: a stripe of white foundation as it comes out of the stick, and the same stripe blended into her skin tone; the stick beside the hand.",
+  "before": "Unretouched studio portrait on white: a real woman about 57, medium olive skin, shoulder-length dark hair with grey roots behind her ears, no makeup, uneven tone, redness, sun spots, fine lines.",
+  "after (edit of before.jpg)": "Keep the exact same person, hair, expression, t-shirt, pose, crop, lighting and background. The only change: a light, natural foundation: more even tone, redness and dark spots softened; fine lines, pores and texture still visible; no smoothing, no glow, no other makeup.",
+  "temple (ref)": "A real Black woman about 60, short natural salt-and-pepper hair, deep brown skin, small gold earrings; holds the capped stick near her temple.",
+  "friends (ref)": "Two real women friends cheek to cheek: a Black woman about 60 with short grey hair and an East Asian woman about 53 with a black bob; one holds the stick, brush end up.",
+  "bag (ref)": "A mature woman's hand slipping the capped stick into the inside pocket of a black leather handbag on white, reading glasses and keys beside it.",
+  "hold-chin (ref)": "A real East Asian woman about 52, sleek black bob with grey strands; holds the stick, white foundation end up, under her jaw.",
+  "problem": "A real woman about 56, honey-blonde hair with grey roots, looking into a hand mirror, disappointed: her liquid foundation slightly too orange, settled into fine lines, a line at the jaw. No product, no text.",
+  "panel (ref)": "A real woman about 59, wavy chestnut-and-grey hair, in the right half of the frame, the left half empty white; holds the stick, white end up, by her cheek.",
+  "ing-niacinamide": "A soft swirl of silky white niacinamide cream with scattered white powder grains, on white.",
+  "ing-vite": "Translucent golden vitamin E softgel capsules, one cut open with a drop of golden oil, on white.",
+  "ing-squalane": "A large clear glossy drop of light squalane oil and a small olive branch, on white.",
+  "ing-centella": "Fresh Centella asiatica leaves with water droplets and a dab of pale green gel, on white.",
+  "liquid": "A generic clear glass liquid foundation bottle, beige liquid, plain black pump, completely unbranded: no text, no logo, no label; on white.",
+  "science": "Soft watercolor-style illustration on white, the top 35% empty: one cream stroke, white on the left, turning into warm skin tones to the right, tiny microcapsules releasing pigment. No text, no product.",
+  "twist (ref)": "Close-up on white: the hands of a real woman about 60 (short natural nails, a thin gold ring) twisting the base of the capped-off stick so the white cream foundation rises a few millimetres; the cap lies beside her hands. 100mm macro.",
+  "dots (ref)": "A real woman about 57, fair skin with fine lines, a little redness and sun spots, honey-brown hair with grey at the temples, amused smile; three small dots of WHITE foundation on her forehead and cheekbones, not yet blended; holds the stick, white end up, by her chin.",
+  "buff-jaw (ref)": "A real woman about 66, white hair in a loose low bun, natural wrinkles, pearl earrings; buffs along her jaw and chin in small circles with the BLACK KABUKI BRUSH end; skin even and natural, texture visible.",
+  "daylight (ref)": "A real woman about 63, light-medium warm skin, fine lines and freckles, auburn bob with grey strands, in bright side daylight; touches her jawline where the foundation is blended with no line at the jaw; holds the stick, brush end up, at chest height."
  }
 }
