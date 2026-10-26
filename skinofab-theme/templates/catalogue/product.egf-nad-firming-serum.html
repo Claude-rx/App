@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html' %}
-{% block critical_preloads %}<link rel="preload" as="style" href="{{ 'sf/css/sfb-a4af35a4.css'|asset_url }}">{% endblock critical_preloads %}
+{% block critical_preloads %}<link rel="preload" as="style" href="{{ 'sf/css/sfb-48747223.css'|asset_url }}">{% endblock critical_preloads %}
 {% block sf_handle_pk %}{% with sf_pp_color_changing_foundation=settings.sf_p_color_changing_foundation sf_pp_egf_nad_firming_serum=settings.sf_p_egf_nad_firming_serum %}"color-changing-foundation":"{% firstof sf_pp_color_changing_foundation.children.first.pk sf_pp_color_changing_foundation.pk %}","egf-nad-firming-serum":"{% firstof sf_pp_egf_nad_firming_serum.children.first.pk sf_pp_egf_nad_firming_serum.pk %}"{% endwith %}{% endblock sf_handle_pk %}
 {% block title %}{% if store.name|upper in product.get_meta_title|upper %}{{ product.get_meta_title }}{% else %}{{ product.get_meta_title }} | {{ block.super }}{% endif %}{% endblock %}
 {% block body_id %}{% firstof "egf-nad-firming-serum-skinofab" %}{% endblock %}
@@ -347,7 +347,7 @@
 
   
 --filter-bg: .97;
-  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-a4af35a4.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
+  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-48747223.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
     if (window.MSInputMethodContext && document.documentMode) {
       var scripts = document.getElementsByTagName('script')[0];
       var polyfill = document.createElement("script");
@@ -746,7 +746,7 @@
     const separator = showSeparator ? '<span aria-hidden="true">|</span>' : '';
 
     // Create shipping message for the location info span
-    const shippingMessage = `${flagMarkup}${separator}<span class="shipping_usp">Ships in 1 business day, tracked</span>`;
+    const shippingMessage = `${flagMarkup} <span class="shipping_usp">Ships in 1 business day, tracked</span>`;
     const shippingMessageCart = `to ${flagMarkup} ${countryLabel}`;
 
     for (const [element, message] of [[locationInfoP, shippingMessage], [locationInfoCart, shippingMessageCart]]) {
@@ -1082,7 +1082,7 @@
 <button aria-controls="ProductAccordion--sfb-tab-3" class="product__accordion__title font-heading" data-collapsible-trigger="">
 <span id="accordionbefore">How does the money-back guarantee work?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--sfb-tab-3">
-<div class="product__accordion__inner rte" data-collapsible-content=""><p>Use it for <strong>30 days</strong>. If you don’t see a difference, send it back for a <strong>full refund</strong>, no hassle, no questions asked.</p><p>Please email us at <a href="mailto:hello@skinofab.com">hello@skinofab.com</a> to receive return instructions.</p></div>
+<div class="product__accordion__inner rte" data-collapsible-content=""><p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:hello@skinofab.com">hello@skinofab.com</a> and we’ll refund it in <strong>full</strong>, even opened, with no need to send it back.</p></div>
 </div>
 </div></div><div class="product__block product__accordions" id="Block--sfb_tab_4" style="--PBB:10px;"><div class="product__accordion">
 <button aria-controls="ProductAccordion--sfb-tab-4" class="product__accordion__title font-heading" data-collapsible-trigger="">
@@ -2114,7 +2114,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <button aria-controls="Accordions-item--sfp9" class="accordion__item__title" data-collapsible-trigger="">
 <span class="accordion__item__title__text">What if it doesn’t work for me?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <div aria-expanded="false" class="accordion__item__text-wrapper" data-collapsible-container="" id="Accordions-item--sfp9">
-<div class="accordion__item__text rte" data-collapsible-content=""><p>Send it back within 30 days for a full refund. Just email hello@skinofab.com.</p></div>
+<div class="accordion__item__text rte" data-collapsible-content=""><p>Email hello@skinofab.com within 30 days and we’ll refund it in full. No need to send it back.</p></div>
 </div>
 </li></ul>
 </div>
@@ -2171,7 +2171,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="skinofab-why__features">
 <div class="skinofab-why__feature">
 <div class="skinofab-why__feature-icon">
-<img alt="Visible results in seconds" src="{{ 'sf/img/icons_skinofab_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
+<img alt="" src="{{ 'sf/img/icons_skinofab_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045_500-baeae2.svg'|asset_url }}"/>
 </div>
 <div class="skinofab-why__feature-text">
 <div class="skinofab-why__feature-title">Three actives, one step</div>
@@ -2180,7 +2180,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 <div class="skinofab-why__feature">
 <div class="skinofab-why__feature-icon">
-<img alt="Trusted by 9,800+ verified buyers" src="{{ 'sf/img/icons_skinofab_new_12_500x500-488fb2.svg'|asset_url }}"/>
+<img alt="" src="{{ 'sf/img/icons_skinofab_new_12_500x500-488fb2.svg'|asset_url }}"/>
 </div>
 <div class="skinofab-why__feature-text">
 <div class="skinofab-why__feature-title">Made for skin after 45</div>
@@ -2189,11 +2189,11 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 <div class="skinofab-why__feature">
 <div class="skinofab-why__feature-icon">
-<img alt="Fragrance-free serum base" src="{{ 'sf/img/icons_skinofab_new_13_500x500-c4009e.svg'|asset_url }}"/>
+<img alt="" src="{{ 'sf/img/icons_skinofab_new_13_500x500-c4009e.svg'|asset_url }}"/>
 </div>
 <div class="skinofab-why__feature-text">
 <div class="skinofab-why__feature-title">30-day money-back guarantee</div>
-<div class="skinofab-why__feature-desc"><p>Love it or send it back for a full refund</p></div>
+<div class="skinofab-why__feature-desc"><p>Love it, or email us for a full refund</p></div>
 </div>
 </div>
 </div>
@@ -2415,7 +2415,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Re-initialize for Shopify sections (if using Section Rendering API)
   document.addEventListener('shopify:section:load', initAccordionPopups);
 })();
-    </script><style data-sf-layout-fixes="">.skinofab-why-inner>*{min-width:0}@media(min-width:768px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}.skinofab-why-inner--square-image .skinofab-why__image{aspect-ratio:16/10}}.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}.product-single__gallery{position:static!important;height:auto!important}}.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}</style><script>document.addEventListener('submit', function (e) {var f = e.target, kind = f.getAttribute && f.getAttribute('data-sf-mailto'); if (!kind) return;e.preventDefault(); if (f.reportValidity && !f.reportValidity()) return;var v = function (n) { var el = f.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };var email = v('contact[email]'), name = v('contact[name]'), subject, body;if (kind === 'newsletter') { subject = 'Newsletter sign-up'; body = 'Please add ' + email + ' to the SKINOFAB newsletter.'; }else { subject = 'Message from ' + (name || email); body = v('contact[body]') + '\n\n' + [name, email, v('contact[phone]')].filter(Boolean).join('\n'); }location.href = 'mailto:' + f.getAttribute('data-sf-to') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);});</script>
+    </script><style data-sf-layout-fixes="">.skinofab-why-inner>*{min-width:0}@media(min-width:768px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}.skinofab-why-inner--square-image .skinofab-why__image{aspect-ratio:16/10}}.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}.product-single__gallery{position:static!important;height:auto!important}}.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}</style><script data-sf-circle-room="">(function () {function room() { Array.prototype.forEach.call(document.querySelectorAll(".text-highlight-wrapper--circle .text-highlight"), function (e) { e.style.marginLeft = Math.round(e.offsetWidth * 0.18 + 6) + "px"; }); }if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", room); else room();if (document.fonts && document.fonts.ready) document.fonts.ready.then(room);})();</script><script>document.addEventListener('submit', function (e) {var f = e.target, kind = f.getAttribute && f.getAttribute('data-sf-mailto'); if (!kind) return;e.preventDefault(); if (f.reportValidity && !f.reportValidity()) return;var v = function (n) { var el = f.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };var email = v('contact[email]'), name = v('contact[name]'), subject, body;if (kind === 'newsletter') { subject = 'Newsletter sign-up'; body = 'Please add ' + email + ' to the SKINOFAB newsletter.'; }else { subject = 'Message from ' + (name || email); body = v('contact[body]') + '\n\n' + [name, email, v('contact[phone]')].filter(Boolean).join('\n'); }location.href = 'mailto:' + f.getAttribute('data-sf-to') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);var note = f.nextElementSibling; if (!note || note.className !== 'sf-mail-sent') {note = document.createElement('p'); note.className = 'sf-mail-sent'; note.setAttribute('role', 'status');note.style.cssText = 'margin:10px 0 0;font-size:14px;line-height:1.45'; f.parentNode.insertBefore(note, f.nextSibling); }note.textContent = 'Your email app should now open with the message written: press send there to finish. '+ 'No email app? Write to ' + f.getAttribute('data-sf-to') + '.';});</script>
 <script type="application/json" id="sf-variant-options">[{% for field in variant_form %}{% if 'attr' in field.id_for_label %}{"code": "{{ field.html_name|slice:'5:'|escapejs }}", "label": "{{ field.label|escapejs }}", "choices": [{% for c in field.field.choices %}["{{ c.0|escapejs }}", "{{ c.1|escapejs }}"]{% if not forloop.last %},{% endif %}{% endfor %}]},{% endif %}{% endfor %}null]</script>
 {{ product.data|json_script:'product-data' }}
 {% app_hook "view_product" %}

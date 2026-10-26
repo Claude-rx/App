@@ -90,9 +90,9 @@
   },
   "kopstorm-62aff9.css": {
    "before_kb": 20.7,
-   "after_kb": 6.5,
+   "after_kb": 6.1,
    "selectors": 293,
-   "dropped": 203
+   "dropped": 209
   },
   "kopstorm-V2-ea6148.css": {
    "before_kb": 1.4,
@@ -144,8 +144,8 @@
   },
   "inline": {
    "blocks": 895,
-   "before_kb": 5222.0,
-   "after_kb": 4482.2,
+   "before_kb": 5222.2,
+   "after_kb": 4482.4,
    "skipped": 0
   }
  },
@@ -162,8 +162,8 @@
   }
  },
  "bundles": {
-  "sfb-a4af35a4.css": {
-   "kb": 227.9,
+  "sfb-48747223.css": {
+   "kb": 227.5,
    "members": [
     "futura-pt-fallback.css",
     "all-min-2d3b0a.css",

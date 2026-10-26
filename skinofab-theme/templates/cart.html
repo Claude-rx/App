@@ -107,7 +107,7 @@
                             </div>
                         {% endwith %}
                     {% endfor %}
-                </form>
+                </form><script data-sf-refill-labels>(function () {function set(el, prop, v) { if (el[prop] !== v) el[prop] = v; }function label() { Array.prototype.forEach.call(document.querySelectorAll('select[name$="subscription_range"]'), function (s) {  Array.prototype.forEach.call(s.options, function (o) {   var t = o.textContent.trim(), m = t.match(/^(\d+)\s+(day|week|month|year)s?$/i);   if (/^one time$/i.test(t)) set(o, "textContent", "One-time purchase");   else if (m) set(o, "textContent", "Refill every " + (m[1] === "1" ? "" : m[1] + " ") + m[2].toLowerCase() + (m[1] === "1" ? "" : "s"));  });  var row = s.parentNode, note = row.querySelector(".sf-refill-note");  if (!note) { note = document.createElement("p"); note.className = "sf-refill-note text-xs text-slate-600";   note.style.cssText = "flex-basis:100%;margin:0"; row.appendChild(note); }  var o = s.options[s.selectedIndex], on = !!o && /^Refill every/.test(o.textContent);  set(note, "textContent", on ? "Automatic refill: we ship and charge it " + o.textContent.replace("Refill every", "every")   + " until you cancel. Skip or cancel any time by email." : "");  set(note, "hidden", !on);  if (!s.getAttribute("data-sf-refill")) { s.setAttribute("data-sf-refill", "1"); s.addEventListener("change", label); } });}label();var queued = false;new MutationObserver(function () { if (queued) return; queued = true; requestAnimationFrame(function () { queued = false; label(); }); }).observe(document.body, { childList: true, subtree: true });})();</script>
 
                 {# Voucher form #}
                 {% if voucher_form %}
