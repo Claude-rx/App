@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html' %}
-{% block critical_preloads %}<link rel="preload" as="style" href="{{ 'sf/css/sfb-48747223.css'|asset_url }}">{% endblock critical_preloads %}
+{% block critical_preloads %}<link rel="preload" as="style" href="{{ 'sf/css/sfb-a7807184.css'|asset_url }}">{% endblock critical_preloads %}
 {% block sf_handle_pk %}{% with sf_pp_color_changing_foundation=settings.sf_p_color_changing_foundation %}{% if page.slug == 'advertorial-glp-1' %}"color-changing-foundation":"{% firstof sf_pp_color_changing_foundation.children.first.pk sf_pp_color_changing_foundation.pk %}"{% elif page.slug == 'skinofabvip' %}"color-changing-foundation":"{% firstof sf_pp_color_changing_foundation.children.first.pk sf_pp_color_changing_foundation.pk %}"{% elif page.slug == 'tracking' %}"color-changing-foundation":"{% firstof sf_pp_color_changing_foundation.children.first.pk sf_pp_color_changing_foundation.pk %}"{% else %}{{ block.super }}{% endif %}{% endwith %}{% endblock sf_handle_pk %}
 {# Pages: dispatch on page.slug to the design page partials (partials/sf_pages/<slug>/); generic layout otherwise. #}
 {% block title %}{% if page.slug == 'about-skinofab' %}{% firstof "About SKINOFAB | American Beauty & Cosmetics Brand" %}{% elif page.slug == 'advertorial-glp-1' %}{% firstof "Advertorial GLP-1 – SKINOFAB" %}{% elif page.slug == 'become-a-reseller' %}{% firstof "Become a reseller – SKINOFAB" %}{% elif page.slug == 'best-foundation-story' %}{% firstof "Best Foundation Story – SKINOFAB" %}{% elif page.slug == 'bestfoundation' %}{% firstof "I Tried 7 Different Foundations. Only One Actually Worked. – SKINOFAB" %}{% elif page.slug == 'bestfoundation-2' %}{% firstof "I Tried 7 Different Foundations. Only One Actually Worked. – SKINOFAB" %}{% elif page.slug == 'bestfoundation-2026-08-21-08-53-40-am' %}{% firstof "I Tried 7 Different Foundations. Only One Actually Worked. – SKINOFAB" %}{% elif page.slug == 'bestfoundation-v2' %}{% firstof "I Tried 7 Different Foundations. Only One Actually Worked. – SKINOFAB" %}{% elif page.slug == 'careers' %}{% firstof "Careers – SKINOFAB" %}{% elif page.slug == 'ccf-quiz' %}{% firstof "Find the best foundation for you – SKINOFAB" %}{% elif page.slug == 'collabs' %}{% firstof "Collabs – SKINOFAB" %}{% elif page.slug == 'contact' %}{% firstof "Contact – SKINOFAB" %}{% elif page.slug == 'contact-information' %}{% firstof "Contact information – SKINOFAB" %}{% elif page.slug == 'cookie-policy' %}{% firstof "Cookie Policy – SKINOFAB" %}{% elif page.slug == 'data-sharing-opt-out' %}{% firstof "Your Privacy Choices – SKINOFAB" %}{% elif page.slug == 'disclaimer-and-legal-information' %}{% firstof "Disclaimer and Legal Information – SKINOFAB" %}{% elif page.slug == 'faq' %}{% firstof "FAQ — Frequently Asked Questions | SKINOFAB" %}{% elif page.slug == 'foundation-look-older' %}{% firstof "Foundation Look Older – SKINOFAB" %}{% elif page.slug == 'foundation-quiz' %}{% firstof "Foundation Quiz — Find Your Perfect Match | SKINOFAB" %}{% elif page.slug == 'guarantee' %}{% firstof "100% results guarantee – SKINOFAB" %}{% elif page.slug == 'impressum' %}{% firstof "Impressum – SKINOFAB" %}{% elif page.slug == 'impressum-1' %}{% firstof "Impressum – SKINOFAB" %}{% elif page.slug == 'jowls' %}{% firstof "7 foundations made me look older. So I created my own. – SKINOFAB" %}{% elif page.slug == 'makeupartist' %}{% firstof "This Korean foundation makes women look 10 years younger – SKINOFAB" %}{% elif page.slug == 'makeupartist-old' %}{% firstof "This Korean foundation makes women look 10 years younger – SKINOFAB" %}{% elif page.slug == 'makeupartist-v2-2026-06-30-05-35-33-pm' %}{% firstof "This Korean foundation makes women look 10 years younger – SKINOFAB" %}{% elif page.slug == 'muav2' %}{% firstof "This Korean foundation makes women look 10 years younger – SKINOFAB" %}{% elif page.slug == 'postflows-track-your-order' %}{% firstof "Track Your Order – SKINOFAB" %}{% elif page.slug == 'privacy-policy' %}{% firstof "Privacy Policy – SKINOFAB" %}{% elif page.slug == 'refund-policy' %}{% firstof "Refund policy – SKINOFAB" %}{% elif page.slug == 'reverse-checkoutchamp' %}{% firstof "Dermatologists Shocked: This Korean Pharmacy Foundation Erases Years Off Aging Skin. Here's 7 Reasons Why. – SKINOFAB" %}{% elif page.slug == 'review-submitted' %}{% firstof "Review submitted – SKINOFAB" %}{% elif page.slug == 'reviews' %}{% firstof "Reviews – SKINOFAB" %}{% elif page.slug == 'rlp' %}{% firstof "7 foundations made me look older. So I created my own. – SKINOFAB" %}{% elif page.slug == 'shipping-policy' %}{% firstof "Shipping policy – SKINOFAB" %}{% elif page.slug == 'skinofab-collaborations' %}{% firstof "Collaborations – SKINOFAB" %}{% elif page.slug == 'skinofabvip' %}{% firstof "SKINOFAB VIP Sign-up" %}{% elif page.slug == 'terms-of-service' %}{% firstof "Terms of Service – SKINOFAB" %}{% elif page.slug == 'top5foundations' %}{% firstof "The 5 most popular foundations – SKINOFAB" %}{% elif page.slug == 'tracking' %}{% firstof "Track your order – SKINOFAB" %}{% else %}{% firstof page.title flatpage.title %} | {{ block.super }}{% endif %}{% endblock title %}
@@ -8,7 +8,7 @@
 {% block sf_head %}{% if page.slug == 'about-skinofab' %}{% include 'partials/sf_pages/about-skinofab/head.html' %}{% elif page.slug == 'advertorial-glp-1' %}{% include 'partials/sf_pages/advertorial-glp-1/head.html' %}{% elif page.slug == 'become-a-reseller' %}{% include 'partials/sf_pages/become-a-reseller/head.html' %}{% elif page.slug == 'best-foundation-story' %}{% include 'partials/sf_pages/best-foundation-story/head.html' %}{% elif page.slug == 'bestfoundation' %}{% include 'partials/sf_pages/bestfoundation/head.html' %}{% elif page.slug == 'bestfoundation-2' %}{% include 'partials/sf_pages/bestfoundation-2/head.html' %}{% elif page.slug == 'bestfoundation-2026-08-21-08-53-40-am' %}{% include 'partials/sf_pages/bestfoundation-2026-08-21-08-53-40-am/head.html' %}{% elif page.slug == 'bestfoundation-v2' %}{% include 'partials/sf_pages/bestfoundation-v2/head.html' %}{% elif page.slug == 'careers' %}{% include 'partials/sf_pages/careers/head.html' %}{% elif page.slug == 'ccf-quiz' %}{% include 'partials/sf_pages/ccf-quiz/head.html' %}{% elif page.slug == 'collabs' %}{% include 'partials/sf_pages/collabs/head.html' %}{% elif page.slug == 'contact' %}{% include 'partials/sf_pages/contact/head.html' %}{% elif page.slug == 'contact-information' %}{% include 'partials/sf_pages/contact-information/head.html' %}{% elif page.slug == 'cookie-policy' %}{% include 'partials/sf_pages/cookie-policy/head.html' %}{% elif page.slug == 'data-sharing-opt-out' %}{% include 'partials/sf_pages/data-sharing-opt-out/head.html' %}{% elif page.slug == 'disclaimer-and-legal-information' %}{% include 'partials/sf_pages/disclaimer-and-legal-information/head.html' %}{% elif page.slug == 'faq' %}{% include 'partials/sf_pages/faq/head.html' %}{% elif page.slug == 'foundation-look-older' %}{% include 'partials/sf_pages/foundation-look-older/head.html' %}{% elif page.slug == 'foundation-quiz' %}{% include 'partials/sf_pages/foundation-quiz/head.html' %}{% elif page.slug == 'guarantee' %}{% include 'partials/sf_pages/guarantee/head.html' %}{% elif page.slug == 'impressum' %}{% include 'partials/sf_pages/impressum/head.html' %}{% elif page.slug == 'impressum-1' %}{% include 'partials/sf_pages/impressum-1/head.html' %}{% elif page.slug == 'jowls' %}{% include 'partials/sf_pages/jowls/head.html' %}{% elif page.slug == 'makeupartist' %}{% include 'partials/sf_pages/makeupartist/head.html' %}{% elif page.slug == 'makeupartist-old' %}{% include 'partials/sf_pages/makeupartist-old/head.html' %}{% elif page.slug == 'makeupartist-v2-2026-06-30-05-35-33-pm' %}{% include 'partials/sf_pages/makeupartist-v2-2026-06-30-05-35-33-pm/head.html' %}{% elif page.slug == 'muav2' %}{% include 'partials/sf_pages/muav2/head.html' %}{% elif page.slug == 'postflows-track-your-order' %}{% include 'partials/sf_pages/postflows-track-your-order/head.html' %}{% elif page.slug == 'privacy-policy' %}{% include 'partials/sf_pages/privacy-policy/head.html' %}{% elif page.slug == 'refund-policy' %}{% include 'partials/sf_pages/refund-policy/head.html' %}{% elif page.slug == 'reverse-checkoutchamp' %}{% include 'partials/sf_pages/reverse-checkoutchamp/head.html' %}{% elif page.slug == 'review-submitted' %}{% include 'partials/sf_pages/review-submitted/head.html' %}{% elif page.slug == 'reviews' %}{% include 'partials/sf_pages/reviews/head.html' %}{% elif page.slug == 'rlp' %}{% include 'partials/sf_pages/rlp/head.html' %}{% elif page.slug == 'shipping-policy' %}{% include 'partials/sf_pages/shipping-policy/head.html' %}{% elif page.slug == 'skinofab-collaborations' %}{% include 'partials/sf_pages/skinofab-collaborations/head.html' %}{% elif page.slug == 'skinofabvip' %}{% include 'partials/sf_pages/skinofabvip/head.html' %}{% elif page.slug == 'terms-of-service' %}{% include 'partials/sf_pages/terms-of-service/head.html' %}{% elif page.slug == 'top5foundations' %}{% include 'partials/sf_pages/top5foundations/head.html' %}{% elif page.slug == 'tracking' %}{% include 'partials/sf_pages/tracking/head.html' %}{% else %}
 <style></style><style>.product__form .btn--submit,#locationinfop,.btn,.btn--primary,input.btn{border-radius: 10px!important;}.input-group{border-radius: 10px!important;}#SiteFooter .input-group__fields input{border-top-left-radius: 10px!important;
         border-bottom-left-radius: 10px!important;}.input-group__btn{border-top-right-radius: 10px!important;
-        border-bottom-right-radius: 10px!important;}button[aria-expanded=true] #accordionbefore:before{background-color: #f7f7f7!important;}@media only screen and (max-width: 767px){.product-single .product__title{font-size: clamp(26px, 7.1vw, 29px);
+        border-bottom-right-radius: 10px!important;}@media only screen and (max-width: 767px){.product-single .product__title{font-size: clamp(26px, 7.1vw, 29px);
           line-height: 1.12;}}body.js-drawer-open-cart .announcement-bar-static,body:has(#cart-drawer.is-open) .announcement-bar-static{z-index: 8999 !important;}body.js-drawer-open .announcement-bar-static,body.js-quick-view-from-cart .announcement-bar-static,body.js-quick-view-visible .announcement-bar-static,body:has(#nav-drawer.is-open) .announcement-bar-static,body:has(.drawer.is-open) .announcement-bar-static{display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
@@ -348,7 +348,7 @@
 
   
 --filter-bg: .97;
-  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-48747223.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
+  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-a7807184.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
     if (window.MSInputMethodContext && document.documentMode) {
       var scripts = document.getElementsByTagName('script')[0];
       var polyfill = document.createElement("script");
@@ -555,27 +555,27 @@
 </div>
 </div>
 </div><script>
-      // Function to update the price element with the new variant price
+      
       function updateProductPrice(newPrice) {
         const priceElement = document.getElementById('productpricingnew');
         if (!priceElement) return;
         priceElement.textContent = newPrice;
       }
 
-      // Event listener to detect changes in the variant selection
+      
       document.addEventListener('DOMContentLoaded', function () {
-        // Assuming the variant change triggers an update on the element with class 'product__price--regular'
+        
         const regularPriceElement = document.querySelector('.product__price--regular');
 
         if (regularPriceElement && document.getElementById('productpricingnew')) {
           const observer = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
-              // Update the `productpricingnew` element with the new price when it changes
+              
               updateProductPrice(mutation.target.textContent);
             });
           });
 
-          // Observe changes in the regular price element
+          
           observer.observe(regularPriceElement, {
             childList: true,
             subtree: true,
@@ -584,15 +584,15 @@
       });
     </script><script>
       document.addEventListener('DOMContentLoaded', () => {
-        // Get all swatch labels
+        
         const swatchLabels = document.querySelectorAll('.swatch__label');
 
         swatchLabels.forEach((label) => {
           label.addEventListener('click', (event) => {
-            // Get the value of selected-swatch from the clicked label
+            
             const selectedSwatch = label.getAttribute('selected-swatch');
 
-            // Update the .selected-swatch content
+            
             const selectedSwatchElement = document.querySelector('.selected-swatch');
             if (selectedSwatchElement && selectedSwatch) {
               selectedSwatchElement.textContent = selectedSwatch;
@@ -601,15 +601,15 @@
         });
       });
     </script><script>
-      /* Accordion Popup JavaScript - Moves modals to body for proper z-index stacking */
+       
 
 (function() {
   'use strict';
 
-  // Move all popup modals to body for proper z-index stacking
+  
   function movePopupsToBody() {
     document.querySelectorAll('.popup-modal[data-popup-modal]').forEach(function(popup) {
-      // Only move if not already a direct child of body
+      
       if (popup.parentElement !== document.body) {
         document.body.appendChild(popup);
       }
@@ -617,17 +617,17 @@
   }
 
   function initAccordionPopups() {
-    // First, move popups to body level
+    
     movePopupsToBody();
 
-    // Open popup via trigger link
+    
     document.querySelectorAll('[data-popup-trigger]').forEach(function(trigger) {
-      // Remove existing listeners to prevent duplicates
+      
       trigger.removeEventListener('click', handleTriggerClick);
       trigger.addEventListener('click', handleTriggerClick);
     });
 
-    // Close popup via close button or overlay click
+    
     document.querySelectorAll('[data-popup-close]').forEach(function(closeBtn) {
       closeBtn.removeEventListener('click', handleCloseClick);
       closeBtn.addEventListener('click', handleCloseClick);
@@ -654,7 +654,7 @@
     }
   }
 
-  // Close on escape key (only add once)
+  
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       var activePopup = document.querySelector('.popup-modal.is-active');
@@ -665,17 +665,17 @@
     }
   });
 
-  // Initialize on DOM ready
+  
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAccordionPopups);
   } else {
     initAccordionPopups();
   }
 
-  // Re-initialize for Shopify sections (if using Section Rendering API)
+  
   document.addEventListener('shopify:section:load', initAccordionPopups);
 })();
-    </script><style data-sf-layout-fixes="">.skinofab-results__subtitle{color:#5c5c5c}.sfo-price s{color:#666}#shippingUspText{color:#15803d!important}.skinofab-testimonials__verified{font-size:12.5px}.si__dots{gap:0!important}.si__dot{box-sizing:content-box!important;padding:18px 8px!important;background-clip:content-box!important}.si__dot:not([aria-current="true"]){background-color:#b3b3b3!important}.sfb-rating{padding-top:10px;padding-bottom:6px;margin-top:-10px;margin-bottom:4px}.skinofab-testimonials .swiper-slide{height:auto}.skinofab-testimonials__card{height:100%}@media (max-width:1023px){.skinofab-testimonials{overflow:hidden}.skinofab-testimonials__nav{padding-left:0!important;padding-right:0!important}.skinofab-testimonials .skinofab-testimonials-swiper{overflow:visible}}@media (max-width:599px){.pswp__button--arrow--left,.pswp__button--arrow--right{display:none!important}}.product__accordions [data-collapsible-trigger]{-webkit-tap-highlight-color:transparent}.product__accordions [data-collapsible-trigger]:focus:not(:focus-visible){outline:none;background:none;box-shadow:none}@media (max-width:1023px){.skinofab-testimonials-prev,.skinofab-testimonials-next{display:none!important}}@media(min-width:768px) and (max-width:1023px){[data-product-single-media-thumbs]{padding-left:20px;padding-right:20px}}.skinofab-why-inner>*{min-width:0}@media(min-width:768px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}}@media(max-width:1023px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:1/1;min-height:0;background-size:cover;background-position:center 25%!important}}.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}.product-single__gallery{position:relative!important;top:0!important;height:auto!important}}.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}.template-index .sf__policies,.template-index .sf__legal-bottom{font-size:12px;line-height:18px}.fh-social-play{top:auto;right:auto;left:14px;bottom:14px;margin:0;width:52px;height:52px}@media(min-width:750px){.fh-review-track>.fh-review{width:auto;min-width:0;grid-template-columns:186.36px minmax(0,1fr)}}@media(min-width:750px) and (max-width:1023px){.fh-review-track>.fh-review{flex:0 0 100%}}@media(min-width:1024px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 12px) / 2)}}@media(min-width:1400px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 24px) / 3)}}.skinofab-iwt__image.sf-has-note{border-radius:0;overflow:visible}.skinofab-iwt__image.sf-has-note img{border-radius:16px}.sf-illustration-note{margin:8px 0 0;font-size:12px;line-height:1.4;color:#595959;text-align:center}.accordion__item__title{min-height:44px}.skinofab-iwt__highlight{white-space:nowrap}.skinofab-results__percentage{white-space:nowrap}@media(max-width:767px){.skinofab-results__grid{display:grid!important;grid-template-columns:1fr!important;gap:12px}.skinofab-results__slider,.skinofab-results__nav,.skinofab-results .swiper-button-prev,.skinofab-results .swiper-button-next{display:none!important}.skinofab-results__card{padding:22px 20px}.skinofab-results__percentage{font-size:48px}}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:44px}}@media(min-width:1024px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:auto!important;min-height:460px;height:auto;align-self:stretch}}</style><script>document.addEventListener('submit', function (e) {var f = e.target, kind = f.getAttribute && f.getAttribute('data-sf-mailto'); if (!kind) return;e.preventDefault(); if (f.reportValidity && !f.reportValidity()) return;var v = function (n) { var el = f.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };var email = v('contact[email]'), name = v('contact[name]'), subject, body;if (kind === 'newsletter') { subject = 'Newsletter sign-up'; body = 'Please add ' + email + ' to the SKINOFAB newsletter.'; }else { subject = 'Message from ' + (name || email); body = v('contact[body]') + '\n\n' + [name, email, v('contact[phone]')].filter(Boolean).join('\n'); }location.href = 'mailto:' + f.getAttribute('data-sf-to') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);var note = f.nextElementSibling; if (!note || note.className !== 'sf-mail-sent') {note = document.createElement('p'); note.className = 'sf-mail-sent'; note.setAttribute('role', 'status');note.style.cssText = 'margin:10px 0 0;font-size:14px;line-height:1.45'; f.parentNode.insertBefore(note, f.nextSibling); }note.textContent = 'Your email app should now open with the message written: press send there to finish. '+ 'No email app? Write to ' + f.getAttribute('data-sf-to') + '.';});</script>
+    </script><style data-sf-layout-fixes="">.skinofab-results__subtitle{color:#5c5c5c}.sfo-price s{color:#666}#shippingUspText{color:#15803d!important}.skinofab-testimonials__verified{font-size:12.5px}.si__dots{gap:0!important}.si__dot{box-sizing:content-box!important;padding:18px 8px!important;background-clip:content-box!important}.si__dot:not([aria-current="true"]){background-color:#b3b3b3!important}.sfb-rating{padding-top:10px;padding-bottom:6px;margin-top:-10px;margin-bottom:4px}.skinofab-testimonials .swiper-slide{height:auto}.skinofab-testimonials__card{height:100%}@media (max-width:1023px){.skinofab-testimonials{overflow:hidden}.skinofab-testimonials__nav{padding-left:0!important;padding-right:0!important}.skinofab-testimonials .skinofab-testimonials-swiper{overflow:visible}}@media (max-width:599px){.pswp__button--arrow--left,.pswp__button--arrow--right{display:none!important}}.product__accordions [data-collapsible-trigger]{-webkit-tap-highlight-color:transparent}.product__accordions [data-collapsible-trigger]:focus:not(:focus-visible){outline:none;background:none;box-shadow:none}@media (max-width:1023px){.skinofab-testimonials-prev,.skinofab-testimonials-next{display:none!important}}@media(min-width:768px) and (max-width:1023px){[data-product-single-media-thumbs]{padding-left:20px;padding-right:20px}}.skinofab-why-inner>*{min-width:0}@media(min-width:768px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}}@media(max-width:1023px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:1/1;min-height:0;background-size:cover;background-position:center 25%!important}}.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}@media(min-width:1024px) and (max-width:1339px){.skinofab-results__percentage{font-size:60px}}.skinofab-compare-table th,.skinofab-compare-table td{font-size:14px!important}.si__body{font-size:14px}.skinofab-results__subtitle{font-size:14px}.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}.template-index .sf__policies,.template-index .sf__legal-bottom{font-size:12px;line-height:18px}.fh-social-play{top:auto;right:auto;left:14px;bottom:14px;margin:0;width:52px;height:52px}@media(min-width:750px){.fh-review-track>.fh-review{width:auto;min-width:0;grid-template-columns:186.36px minmax(0,1fr)}}@media(min-width:750px) and (max-width:1023px){.fh-review-track>.fh-review{flex:0 0 100%}}@media(min-width:1024px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 12px) / 2)}}@media(min-width:1400px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 24px) / 3)}}.skinofab-iwt__image.sf-has-note{border-radius:0;overflow:visible}.skinofab-iwt__image.sf-has-note img{border-radius:16px}.sf-illustration-note{margin:8px 0 0;font-size:12px;line-height:1.4;color:#595959;text-align:center}.accordion__item__title{min-height:44px}.skinofab-iwt__highlight{white-space:nowrap}.skinofab-results__percentage{white-space:nowrap}@media(max-width:767px){.skinofab-results__grid{display:grid!important;grid-template-columns:1fr!important;gap:12px}.skinofab-results__slider,.skinofab-results__nav,.skinofab-results .swiper-button-prev,.skinofab-results .swiper-button-next{display:none!important}.skinofab-results__card{padding:22px 20px}.skinofab-results__percentage{font-size:48px}}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:44px}}@media(min-width:1024px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:auto!important;min-height:460px;height:auto;align-self:stretch}}</style><script>document.addEventListener('submit', function (e) {var f = e.target, kind = f.getAttribute && f.getAttribute('data-sf-mailto'); if (!kind) return;e.preventDefault(); if (f.reportValidity && !f.reportValidity()) return;var v = function (n) { var el = f.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };var email = v('contact[email]'), name = v('contact[name]'), subject, body;if (kind === 'newsletter') { subject = 'Newsletter sign-up'; body = 'Please add ' + email + ' to the SKINOFAB newsletter.'; }else { subject = 'Message from ' + (name || email); body = v('contact[body]') + '\n\n' + [name, email, v('contact[phone]')].filter(Boolean).join('\n'); }location.href = 'mailto:' + f.getAttribute('data-sf-to') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);var note = f.nextElementSibling; if (!note || note.className !== 'sf-mail-sent') {note = document.createElement('p'); note.className = 'sf-mail-sent'; note.setAttribute('role', 'status');note.style.cssText = 'margin:10px 0 0;font-size:14px;line-height:1.45'; f.parentNode.insertBefore(note, f.nextSibling); }note.textContent = 'Your email app should now open with the message written: press send there to finish. '+ 'No email app? Write to ' + f.getAttribute('data-sf-to') + '.';});</script>
 {% endif %}{% endblock sf_tail %}
 {% block nav_header %}{% if page.slug == 'bestfoundation-2' %}{% else %}{{ block.super }}{% endif %}{% endblock nav_header %}
 {% block footer %}{% if page.slug == 'bestfoundation-2' or page.slug == 'postflows-track-your-order' %}{% else %}{{ block.super }}{% endif %}{% endblock footer %}

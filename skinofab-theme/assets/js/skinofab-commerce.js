@@ -1,19 +1,5 @@
-/**
- * SKINOFAB commerce adapter
- *
- * The storefront markup, CSS and JS come from the exported design (Palo Alto
- * theme). That code speaks the Shopify AJAX cart API. This adapter answers it
- * with NEXT commerce, so the original UI keeps working unchanged:
- *
- *   - product form submit / quick add  -> SparkCartClient.addToCart (GraphQL)
- *   - fetch('/cart/add.js' | '/cart.js' | '/cart/change.js' | '/cart/update.js' | '/cart/clear.js')
- *                                       -> SparkCartClient, answered in Shopify cart JSON
- *   - cart icons [data-cart-drawer-toggle] -> Spark side cart (spark:cart:toggle)
- *   - PDP ProductJson (Shopify shape)    -> re-keyed to NEXT variants from #product-data
- *   - section rendering / recommendations / predictive search requests -> 404 (theme hides them)
- *
- * Load order: in <head>, before the design's theme.js. Plain ASCII only.
- */
+
+
 (function() {
     'use strict';
 
@@ -22,7 +8,7 @@
     var symbol = store.symbol || '$';
     var graphqlUrl = store.graphqlUrl || '/api/graphql/';
 
-    /* ---------- money ---------- */
+     
 
     function moneyText(amount) {
         var n = Number(amount);
@@ -45,7 +31,7 @@
     }
     applyMoneyFormat();
 
-    /* ---------- Spark cart client ---------- */
+     
 
     var clientPromise = null;
     function loadScript(src) {
@@ -107,7 +93,7 @@
         });
     }
 
-    /* Design scripts carry Shopify variant ids; translate them to the NEXT product chosen in Theme settings. */
+     
     function nextPk(id) {
         var key = String(id);
         var handle = (window.SFVariantHandle || {})[key];
@@ -115,10 +101,8 @@
         return pk ? parseInt(pk, 10) : parseInt(key, 10);
     }
 
-    /* Theme settings > Subscription Offer. A subscription-only product is always added as its plan, whichever
-       button adds it (buy box, cart drawer, landing pages), so it can never be bought one-time. A refills-by-default
-       product is added as its plan by any button that names no purchase type (landing pages, permalinks, other
-       forms); a button that chose one-time (explicit: false/null) keeps one-time. */
+    
+
     function planFor(pk, chosen) {
         var has = function(cfg) { return cfg && cfg.pks && cfg.pks.indexOf(String(pk)) >= 0; };
         var cfg = has(window.SFSubscriptionOnly) ? window.SFSubscriptionOnly
@@ -165,7 +149,7 @@
         });
     }
 
-    /* ---------- request body parsing ---------- */
+     
 
     function readBody(init) {
         var body = init && init.body;
@@ -198,7 +182,7 @@
     }
     function notFound() { return Promise.resolve(new Response('', { status: 404 })); }
 
-    /* ---------- fetch bridge ---------- */
+     
 
     var nativeFetch = window.fetch && window.fetch.bind(window);
     window.fetch = function(input, init) {
@@ -251,7 +235,7 @@
             return src ? nativeFetch(src) : notFound();
         }
         if (/^\/recommendations/.test(bare)) {
-            /* The design's related/complementary blocks hide themselves on an empty result; a 404 makes them throw. */
+             
             return Promise.resolve(new Response('<div data-related-products></div><div data-complementary-products></div>',
                 { status: 200, headers: { 'Content-Type': 'text/html' } }));
         }
@@ -262,17 +246,16 @@
         return nativeFetch(input, init);
     };
 
-    /* ---------- DOM wiring ---------- */
+     
 
     function isProductForm(form) {
         return form && form.tagName === 'FORM' && form.querySelector('input[name="id"]') &&
             (form.matches('[data-sf-product-form], .product__form, [data-product-form], [data-cart-form], [id^="AddToCartForm"], [action*="/cart/add"]'));
     }
 
-    /* ---------- the drawer at the click ---------- */
-    /* The add takes the server about a second. The drawer opens at once with the product as "Adding to your bag"
-       and fills in when the cart comes back (the drawer renders the cart that spark:cart:added carries). Before the
-       drawer's scripts are there, the loader fetches them alongside the add instead of after it. */
+     
+    
+
     var pending = 0;
     function escText(s) {
         return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
@@ -301,7 +284,7 @@
             if (!d || !window.SparkSideCart) return;
             d.classList.add('sf-adding');
             if (!d._isOpen) {
-                /* the add brings the cart back: no "load the cart" on open (an empty cart would flash first) */
+                 
                 var own = Object.prototype.hasOwnProperty.call(d, '_loadCart'), load = d._loadCart;
                 d._loadCart = function() {};
                 try { window.SparkSideCart.open(); } finally { if (own) d._loadCart = load; else delete d._loadCart; }
@@ -330,8 +313,8 @@
         if (btn) btn.setAttribute('aria-busy', 'true');
         var shown = form.querySelector('.sf-atc-error');
         if (shown) shown.hidden = true;
-        /* Subscription: a checked [name="sf_purchase"][value="subscribe"] input carries its frequency; a form with the
-           input unchecked chose one-time; a form without it chose nothing (the product's default applies). */
+        
+
         var plan = form.querySelector('input[name="sf_purchase"]:checked');
         var subscription = plan && plan.value === 'subscribe' ? { subscriptionOption: 'subscribe',
             interval: plan.getAttribute('data-interval'), intervalCount: plan.getAttribute('data-interval-count') }
@@ -343,10 +326,10 @@
         }, function(err) {
             if (btn) btn.removeAttribute('aria-busy');
             closePending(false);
-            /* in words she can act on, by the button (a failed request said nothing: the button reset and no bag
-               opened, store audit 8); the request's own error goes to the console */
+            
+
             var msg = 'Sorry, we could not add this to your bag. Please check your connection and try again.';
-            var box = null;          /* our own line: the design's error boxes are hidden by its styles */
+            var box = null;           
             if (btn) {
                 box = form.querySelector('.sf-atc-error');
                 if (!box) {
@@ -362,9 +345,8 @@
         });
     }
 
-    /* The design submits product forms through a click handler on [data-add-to-cart] (then renders its own
-       Shopify cart drawer); keyboard submits go through the form. Both are taken over here, before the design's
-       handlers run, so the add goes to NEXT and the Spark side cart is the only drawer. */
+    
+
     document.addEventListener('submit', function(e) {
         if (!isProductForm(e.target)) return;
         e.preventDefault();
@@ -405,7 +387,7 @@
         });
     });
 
-    /* ---------- PDP: re-key the design's Shopify-shaped ProductJson to NEXT variants ---------- */
+     
 
     function readJson(id) {
         var el = document.getElementById(id);
@@ -419,7 +401,7 @@
         (readJson('sf-variant-options') || []).forEach(function(o) { if (o && o.code) optionsDef[o.code] = o; });
         var nodes = document.querySelectorAll('script[data-product-json]');
         if (!next || !nodes.length) return;
-        var labels = {};  // attr code -> { value id -> label }
+        var labels = {};  
         Object.keys(optionsDef).forEach(function(code) {
             labels[code] = {};
             (optionsDef[code].choices || []).forEach(function(c) { labels[code][String(c[0])] = String(c[1]); });
@@ -474,7 +456,7 @@
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', onReady);
     else onReady();
 
-    /* Shopify cart permalink ("/cart/<id>:<qty>,<id>:<qty>"): add the items, then open the side cart. */
+     
     function addPermalink(spec) {
         var items = String(spec || '').replace(/^\/?cart\//, '').split('?')[0].split(',').map(function(pair) {
             var bits = pair.split(':');

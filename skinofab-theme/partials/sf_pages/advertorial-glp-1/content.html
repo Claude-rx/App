@@ -76,7 +76,7 @@
     font-size: 20px;
     line-height: 1.3;
     text-transform: uppercase;
-    /* Reserve two digit slots so the bar does not reflow every second. */
+     
     min-width: 2ch;
     text-align: center;}.sb-skinofab-adv-template--21843380732060__main .adv__countdown-label{font-family: var(--adv-font);
     font-weight: 400;
@@ -200,8 +200,7 @@ Verified
     border-radius: 50%;
     background: var(--adv-pink);
     font-family: var(--adv-font);
-    /* Figma calls this run Futura PT Heavy. See the weight note in the parent
-       section: Heavy maps to 600 in the article, not to the kit's 800. */
+     
     font-weight: 600;
     font-size: 22px;
     line-height: 1;
@@ -361,8 +360,7 @@ Verified
     border-radius: 50%;
     background: var(--adv-pink);
     font-family: var(--adv-font);
-    /* Figma calls this run Futura PT Heavy. See the weight note in the parent
-       section: Heavy maps to 600 in the article, not to the kit's 800. */
+     
     font-weight: 600;
     font-size: 22px;
     line-height: 1;
@@ -481,8 +479,7 @@ Verified
     border-radius: 50%;
     background: var(--adv-pink);
     font-family: var(--adv-font);
-    /* Figma calls this run Futura PT Heavy. See the weight note in the parent
-       section: Heavy maps to 600 in the article, not to the kit's 800. */
+     
     font-weight: 600;
     font-size: 22px;
     line-height: 1;
@@ -601,8 +598,7 @@ Verified
     border-radius: 50%;
     background: var(--adv-pink);
     font-family: var(--adv-font);
-    /* Figma calls this run Futura PT Heavy. See the weight note in the parent
-       section: Heavy maps to 600 in the article, not to the kit's 800. */
+     
     font-weight: 600;
     font-size: 22px;
     line-height: 1;
@@ -721,8 +717,7 @@ Verified
     border-radius: 50%;
     background: var(--adv-pink);
     font-family: var(--adv-font);
-    /* Figma calls this run Futura PT Heavy. See the weight note in the parent
-       section: Heavy maps to 600 in the article, not to the kit's 800. */
+     
     font-weight: 600;
     font-size: 22px;
     line-height: 1;
@@ -841,8 +836,7 @@ Verified
     border-radius: 50%;
     background: var(--adv-pink);
     font-family: var(--adv-font);
-    /* Figma calls this run Futura PT Heavy. See the weight note in the parent
-       section: Heavy maps to 600 in the article, not to the kit's 800. */
+     
     font-weight: 600;
     font-size: 22px;
     line-height: 1;
@@ -977,8 +971,7 @@ Verified
     border-radius: 50%;
     background: var(--adv-pink);
     font-family: var(--adv-font);
-    /* Figma calls this run Futura PT Heavy. See the weight note in the parent
-       section: Heavy maps to 600 in the article, not to the kit's 800. */
+     
     font-weight: 600;
     font-size: 22px;
     line-height: 1;
@@ -1110,13 +1103,7 @@ Verified
       background: #fff;
       color: var(--sbb-ink);
       font-family: var(--sbb-font);
-      /* Split from the original padding-block: 3rem (2026-08-26): with
-         the real theme header hidden on this page, this is the very top
-         of the visible viewport, and 3rem/4rem (see the desktop override
-         below) of pure whitespace above the rating row was pushing the
-         sticky gallery's own content (image + thumbnail row) down enough
-         to run past the fold — reduced on top only, bottom kept as-is so
-         spacing before the next section on the page is untouched. */
+       
       padding-top: 1.5rem;
       padding-bottom: 3rem;
       padding-inline: 1rem;}.sb-buybox-template--21843380732060__buy_box *{box-sizing: border-box;
@@ -1145,32 +1132,15 @@ Verified
       overflow-wrap: break-word;}.sb-buybox-template--21843380732060__buy_box .product-single__gallery{display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      /* .sb-buybox__layout's own grid `gap: 1.5rem` (24px) puts that same
-         24px above every stacked block on mobile, including this one right
-         below .sb-buybox__top — pulled up to a client-requested 12px here
-         instead, without touching the shared grid gap (which every other
-         block still needs). Cancelled out again at the desktop breakpoint
-         below, where this sits in its own grid-row/column placement instead
-         of the mobile stacking order, and this margin would just shift it
-         out of alignment with .sb-buybox__top's row. */
+       
       margin-top: -12px;
-      /* Found via DevTools (2026-08-26): assets/theme.css has its own
-         global `.product-single__gallery { margin-bottom: var(--gutter-
-         mobile) }` inside `@media (max-width: 767px)`, tuned for the real
-         PDP layout, not ours. Our own rule here never overrode it because
-         it never declared margin-bottom at all — a more specific selector
-         only wins on properties it actually sets; leaving one unset just
-         lets the less-specific rule through unchallenged. Zeroed out
-         explicitly instead of just accepting whatever --gutter-mobile
-         happens to resolve to on this page. */
+       
       margin-bottom: 0;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__slider{position: relative;
       aspect-ratio: 1 / 1;
       border-radius: 5px;
       overflow: hidden;
       background: var(--sbb-panel-grey);
-      /* Horizontal drag belongs to the gallery, vertical stays with the
-         page. Without this the browser claims both axes and the swipe
-         either never fires or fights the page scroll. */
+       
       touch-action: pan-y;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__track{display: flex;
       width: 100%;
       height: 100%;
@@ -1206,11 +1176,7 @@ Verified
       outline-offset: 2px;}.sb-buybox-template--21843380732060__buy_box .is-nav-selected .product-single__thumbnail-link{border-color: var(--sbb-ink);}.sb-buybox-template--21843380732060__buy_box .product-single__thumbnail-link{padding: 0;
       background: var(--sbb-panel-grey);
       cursor: pointer;}.sb-buybox-template--21843380732060__buy_box .product-single__thumbnail-link:focus-visible{outline: 2px solid var(--sbb-pink);
-      outline-offset: 2px;}@media screen and (max-width: 989px){.sb-buybox-template--21843380732060__buy_box .product-single__thumbnails{/* 4px, not the original 8px per the client's spec: 8px was
-           confirmed uncontested by any donor rule (verified 2026-08-22,
-           no competing gap/margin declaration anywhere in theme.css) but
-           still read as too loose once seen live at the 63px thumbnail
-           size, so this is a straight visual adjustment, not a bug fix. */
+      outline-offset: 2px;}@media screen and (max-width: 989px){.sb-buybox-template--21843380732060__buy_box .product-single__thumbnails{ 
         gap: 4px;}.sb-buybox-template--21843380732060__buy_box .product-single__thumbnails:not(.flickity-enabled) .product-single__thumbnail{flex: 0 0 63px;
         min-width: 0;
         padding: 0;}.sb-buybox-template--21843380732060__buy_box .product-single__thumbnail-link{width: 63px;
@@ -1236,21 +1202,9 @@ Verified
       align-items: center;
       flex-wrap: wrap;
       gap: 0.75rem;
-      /* Real PDP match (2026-08-22, sections/product.liquid +
-         theme.css): .product__price sets one font-size that both
-         .product__price--compare and .product__price--regular simply
-         inherit, neither declares its own. Set here on the shared row
-         instead of on each price span for the same reason — so the two
-         can never independently drift apart again — and .compare-price /
-         .price below no longer set font-size at all. */
+       
       font-size: 1.625rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__compare-price{font-weight: 500;
-      /* Solid red, not the donor PDP's opacity: 0.5 mute (tried first,
-         based on theme.css's .product__price--compare) — corrected
-         2026-08-22 per a real screenshot of this block's own Figma
-         design, which shows the compare price as a fully opaque red,
-         not a faded ink color. Reuses --sbb-danger, the same red this
-         file already uses for the countdown digits and urgency track,
-         rather than inventing a second red token for the same color. */
+       
       color: var(--sbb-danger);
       text-decoration: line-through;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__price{font-weight: 700;
       color: var(--sbb-ink);}.sb-buybox-template--21843380732060__buy_box .sb-buybox__save-badge{display: inline-flex;
@@ -1268,9 +1222,7 @@ Verified
       color: var(--sbb-muted);
       text-decoration: none;
       margin: 0;
-      /* The whole line is made clickable via JS (forwards the click to
-         the real trigger the payment_terms widget renders inside it),
-         not just its own "?" icon — cursor:pointer signals that. */
+       
       cursor: pointer;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__installments:empty{display: none;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__faq{display: flex;
       flex-direction: column;
       width: 100%;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__faq-item{border-bottom: 1px solid var(--sbb-border);}.sb-buybox-template--21843380732060__buy_box .sb-buybox__faq-item-heading{margin: 0;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__faq-trigger{display: flex;
@@ -1348,13 +1300,7 @@ Verified
       flex-direction: column;
       align-items: center;
       gap: 0.625rem;
-      /* Was a fixed width: 6.5rem (104px) on all three items. In the 358px
-         mobile column that is 3 * 104 + 2 * 24 of gap = 360px, so the row
-         overflowed by 2px and flex-wrap dropped the third item onto its own
-         line. Figma sizes the three differently (90 / 118 / 101) precisely so
-         they fit. Sharing the row with flex-basis 0 reproduces that, and
-         max-width keeps desktop byte-identical: the column there is wide
-         enough that all three still resolve to 104px. */
+       
       flex: 1 1 0;
       min-width: 0;
       max-width: 6.5rem;
@@ -1370,16 +1316,10 @@ Verified
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      width: 100%;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency-heading{/* futura-pt only ships 400/500/600/700 on this theme (confirmed,
-         see BUILD_NOTES.md), 800 silently falls back to the closest
-         available weight in the browser; declaring the real weight
-         explicitly instead of relying on that fallback. */
+      width: 100%;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency-heading{ 
       font-weight: 700;
       font-size: 0.875rem;
-      /* Figma: heading-to-subtext is 4px, tighter than every other gap in
-         this block (8px, from .sb-buybox__urgency's own gap). Negative
-         margin trims just this one pair instead of splitting the block
-         into a second flex context. */
+       
       margin: 0 0 -4px;
       color: #010101;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency-subtext{font-weight: 400;
       font-size: 0.875rem;
@@ -1442,39 +1382,14 @@ Verified
       flex-wrap: nowrap;
       align-items: center;
       justify-content: center;
-      /* 32px at every size, not 24px on mobile: the gap between the
-         brand/rating group and the verified/wordmark group measures the
-         same 32px on both the desktop (12:750) and mobile (68:567) node,
-         confirmed by inspecting both directly. */
+       
       gap: 2rem;
       width: 100%;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-brand{display: flex;
-      /* flex-start, not Figma's own literal items-center: the review
-         text ("4.0 out of 5 based on 6,371 reviews") wraps to 2 lines on
-         mobile by design (confirmed against the real Figma screenshot,
-         node 68:567 — one line on desktop, 12:750), making the rating
-         column taller than the logo column. center would center the two
-         columns against EACH OTHER's height, pulling the avatars/logo
-         row down/up out of alignment by however much the wrap adds —
-         worse on a narrower buy box than Figma's own reference frame
-         happened to render at. flex-start keeps the Trustpilot wordmark
-         and the avatars on the same top edge regardless of how many
-         lines the text wraps to; on desktop, where both columns are the
-         same height (one line), flex-start and center are visually
-         identical, so this loses nothing there. */
+       
       align-items: flex-start;
-      /* 10px on mobile (Figma 68:568), 12px on desktop (Figma 37:6263) —
-         genuinely two different values, see the desktop override below. */
+       
       gap: 0.625rem;
-      /* Grows to fill on mobile (Figma 68:568 is flex-[1_0_0]) but NOT on
-         desktop (37:6263 is shrink-0, fixed-size): the desktop override
-         below switches this back to 0 0 auto so both groups stay a
-         fixed-size pair centered by .sb-buybox__trustpilot's own
-         justify-content: center, instead of this one stretching to fill
-         the row and pushing the other group out to the far edge — which
-         is what was actually happening before this fix, since this rule
-         had flex: 1 1 auto unconditionally with no desktop override at
-         all despite the desktop comment two rules down already
-         documenting the intended centered-pair layout. */
+       
       flex: 1 1 auto;
       min-width: 0;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-logo{display: flex;
       flex-direction: column;
@@ -1485,17 +1400,10 @@ Verified
       flex-direction: column;
       align-items: flex-start;
       gap: 5px;
-      /* Grows to fill on mobile (Figma 68:577 is flex-[1_0_0]); the
-         desktop override below switches to a fixed 201px (Figma 68:462),
-         matching .trustpilot-brand's own mobile/desktop grow switch
-         above. */
+       
       flex: 1 1 auto;
       min-width: 0;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-avatars{display: flex;
-      align-items: center;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-avatars span{/* 19px on mobile (Figma 68:579/580/581, Ellipse 226/227/228 under
-         node 68:567, measures 19.406px), 24px on desktop (Figma
-         68:458/459/460 under node 12:750, measures 23.685px) — genuinely
-         two different sizes, not the same avatar scaled by eye. See the
-         desktop override below for the 24px value. */
+      align-items: center;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-avatars span{ 
       display: block;
       width: 19px;
       height: 19px;
@@ -1506,26 +1414,18 @@ Verified
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-text{/* margin: 0 resets the <p> tag's own default browser margin (shown
-         as the orange box-model highlight in DevTools, ~1em top/bottom)
-         — every other <p> in this file already has this reset
-         (.sb-buybox__stats-heading, __stats-footnote, etc.), this one
-         was just missed. */
+      object-position: center;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-text{ 
       margin: 0;
-      /* 10px on mobile (Figma 68:582), 14px on desktop (Figma 12:759) —
-         see the desktop override below for the larger value. */
+       
       font-size: 0.625rem;
       line-height: 1.3;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-side{display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      /* 8px on mobile (Figma 68:583), 6px on desktop (Figma 37:6290) —
-         see the desktop override below. */
+       
       gap: 0.5rem;
       flex: 0 0 auto;
-      /* Fixed 111px on mobile (Figma 68:583); desktop has no fixed width
-         at all (37:6290 is shrink-0, sized purely by its own content) —
-         see the desktop override below. */
+       
       width: 111px;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__verified-pill{display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -1537,14 +1437,7 @@ Verified
       line-height: 1.2;
       text-transform: uppercase;
       font-weight: 400;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__skinofab-wordmark{display: block;
-      /* Figma ships a genuinely bigger wordmark asset on mobile (68:1483,
-         109 x 14.176px) than desktop (68:1482, 97.941 x 12.738px) — not
-         the same asset scaled, an intentional size difference. Overridden
-         here rather than in the <svg> tag's own width/height attributes
-         because CSS always wins over those regardless (same reason the
-         gallery images are sized this way), so the real responsive value
-         has to live here to mean anything. See the desktop override
-         below for the smaller value. */
+       
       width: 109px;
       height: 14.176px;}.sb-buybox-template--21843380732060__buy_box .visually-hidden{position: absolute;
       width: 1px;
@@ -1554,12 +1447,7 @@ Verified
       overflow: hidden;
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
-      border: 0;}@media screen and (min-width: 990px){.sb-buybox-template--21843380732060__buy_box{/* Same split as the base rule above, same reason: 4rem (64px) of
-           top whitespace above the rating row, at desktop width, on a page
-           with no visible header, was leaving too little room for the
-           sticky gallery's image + thumbnail row to fit inside a typical
-           viewport height before scrolling — cropping the thumbnails.
-           Bottom kept at 4rem, only top reduced. */
+      border: 0;}@media screen and (min-width: 990px){.sb-buybox-template--21843380732060__buy_box{ 
         padding-top: 2rem;
         padding-bottom: 4rem;
         padding-inline: 1.5rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__layout{grid-template-columns: minmax(0, 1fr) minmax(320px, 515px);
@@ -1567,42 +1455,20 @@ Verified
         row-gap: 1.5rem;
         align-items: start;}.sb-buybox-template--21843380732060__buy_box .product-single__gallery{grid-column: 1;
         grid-row: 1 / span 2;
-        /* Cancels the mobile-only -12px above (see that rule's own
-           comment): here the gallery is positioned by grid-row/column
-           beside .sb-buybox__top, not stacked below it, so the negative
-           margin has no stacking gap to close and would just misalign it. */
+         
         margin-top: 0;
-        /* Found by reading assets/kopstorm.css directly (2026-08-26):
-           its own global `.product-single__gallery { position: sticky
-           !important; top: 85px !important; }` (also @media min-width:
-           767px) is tuned for the real PDP, where the theme's own ~85px
-           sticky header sits above the gallery and the gallery sticks
-           right below it. This page hides that header entirely, so the
-           same 85px just became a dead gap above the pinned gallery once
-           scrolled into its stuck position — not a padding/margin on our
-           own markup, which is why reducing padding-top above didn't
-           touch it. Overridden back to flush with the viewport top here;
-           wins over kopstorm's !important because this selector is more
-           specific, not because of source order. */
+         
         top: 0 !important;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__top{grid-column: 2;
         grid-row: 1;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__info{grid-column: 2;
         grid-row: 2;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__title{font-size: 2.25rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__price-row{font-size: 1.875rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__save-badge{font-size: 0.6875rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__atc{font-size: 1.125rem;
-        padding: 1.125rem 2rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency{padding: 0.75rem 1rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency-heading,.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency-subtext{font-size: 1rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__stats-heading{font-size: 2rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__stat-percent{font-size: 2rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__stat-label{font-size: 1.125rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__stat-track{height: 9px;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot{/* Figma (12:750, desktop 515px column): the brand/rating group
-           and the verified/wordmark group are centered as a pair with a
-           fixed 32px gap between them — that gap is now also the mobile
-           base value above (confirmed identical on both nodes), so only
-           the padding differs here: 12px on all four sides, not the
-           mobile rule's 12px/16px split. */
+        padding: 1.125rem 2rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency{padding: 0.75rem 1rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency-heading,.sb-buybox-template--21843380732060__buy_box .sb-buybox__urgency-subtext{font-size: 1rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__stats-heading{font-size: 2rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__stat-percent{font-size: 2rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__stat-label{font-size: 1.125rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__stat-track{height: 9px;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot{ 
         padding: 0.75rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-brand{gap: 0.75rem;
-        /* Fixed-size at desktop (Figma 37:6263 is shrink-0), not the
-           mobile rule's flex: 1 1 auto grow — see its comment above. */
-        flex: 0 0 auto;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-rating{/* Fixed 201px at desktop (Figma 68:462), not the mobile rule's
-           grow — see its comment above. */
+         
+        flex: 0 0 auto;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-rating{ 
         flex: 0 0 auto;
         width: 201px;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-avatars span{width: 24px;
         height: 24px;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-text{font-size: 0.875rem;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__trustpilot-side{gap: 0.375rem;
-        /* No fixed width at desktop (Figma 37:6290 is shrink-0, sized by
-           its own content) — the mobile rule's 111px doesn't apply. */
+         
         width: auto;}.sb-buybox-template--21843380732060__buy_box .sb-buybox__skinofab-wordmark{width: 97.941px;
         height: 12.738px;}}</style><sb-buy-box class="sb-buybox sb-buybox-template--21843380732060__buy_box" data-kaching-enabled="" data-sb-buy-box="">
 <div class="sb-buybox__inner">

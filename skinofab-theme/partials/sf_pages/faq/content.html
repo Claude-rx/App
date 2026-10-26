@@ -344,14 +344,14 @@
   questions.forEach(function(btn) {
     btn.addEventListener('click', function() {
       var isOpen = this.getAttribute('aria-expanded') === 'true';
-      // Close all
+      
       questions.forEach(function(q) {
         q.setAttribute('aria-expanded', 'false');
         var answerId = q.getAttribute('aria-controls');
         var answer = document.getElementById(answerId);
         if (answer) answer.classList.remove('is-open');
       });
-      // Open clicked if it was closed
+      
       if (!isOpen) {
         this.setAttribute('aria-expanded', 'true');
         var answerId = this.getAttribute('aria-controls');

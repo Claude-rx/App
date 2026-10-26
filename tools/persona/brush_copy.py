@@ -273,9 +273,11 @@ def esc(s): return html.escape(s, quote=False)
 
 
 # buy box pieces ----------------------------------------------------------------------------------------------------
+# the free-shipping badge on its own line under the price, at every width: inline, it fitted beside the prices in
+# the fallback font and wrapped once Jost loaded (a 0.1 layout shift at 1024, stick review 5)
 BUYBOX_CSS = r"""
 .sfb-lead{margin:12px 0 0;font-size:16px;line-height:1.55;color:#3b3b3b}
-.sfb-ship{display:inline-block;margin-left:0;padding:4px 10px;border-radius:999px;background:#151515;color:#fff;font-size:12px;font-weight:600;letter-spacing:.06em;vertical-align:middle;white-space:nowrap}
+.product__price[data-sf-fixed-price]:before{content:'';flex-basis:100%;order:1;height:0}.product__price[data-sf-fixed-price] .sfb-ship{order:2}.sfb-ship{display:inline-block;margin-left:0;padding:4px 10px;border-radius:999px;background:#151515;color:#fff;font-size:12px;font-weight:600;letter-spacing:.06em;vertical-align:middle;white-space:nowrap}
 .sfo--bundle .sfo-main small:empty{display:none}
 .sfo--bundle .sfo-gifts{margin-top:12px!important;padding-top:10px!important}
 """

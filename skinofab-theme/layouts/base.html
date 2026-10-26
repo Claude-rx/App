@@ -138,7 +138,7 @@
             var r = parseInt(hex.substr(0,2),16)/255;
             var g = parseInt(hex.substr(2,2),16)/255;
             var b = parseInt(hex.substr(4,2),16)/255;
-            // Relative luminance (WCAG)
+            
             r = r <= 0.03928 ? r/12.92 : Math.pow((r+0.055)/1.055, 2.4);
             g = g <= 0.03928 ? g/12.92 : Math.pow((g+0.055)/1.055, 2.4);
             b = b <= 0.03928 ? b/12.92 : Math.pow((b+0.055)/1.055, 2.4);
@@ -284,7 +284,10 @@
                 button: "{{ settings.sf_cart_upgrade4_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade4_every|default:''|escapejs }}" },
               { from: "{{ settings.sf_cart_upgrade5_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade5_to|default:''|escapejs }}",
                 title: "{{ settings.sf_cart_upgrade5_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade5_text|default:''|escapejs }}",
-                button: "{{ settings.sf_cart_upgrade5_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade5_every|default:''|escapejs }}" }],
+                button: "{{ settings.sf_cart_upgrade5_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade5_every|default:''|escapejs }}" },
+              { from: "{{ settings.sf_cart_upgrade6_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade6_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade6_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade6_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade6_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade6_every|default:''|escapejs }}" }],
             payIcons: [{% if 'visa' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/visa.svg'|asset_url|escapejs }}", alt: "Visa" }, {% endif %}{% if 'mc' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/mc.svg'|asset_url|escapejs }}", alt: "Mastercard" }, {% endif %}{% if 'amex' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/amex.svg'|asset_url|escapejs }}", alt: "American Express" }, {% endif %}{% if 'discover' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/discover.svg'|asset_url|escapejs }}", alt: "Discover" }, {% endif %}{% if 'applepay' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/applepay.svg'|asset_url|escapejs }}", alt: "Apple Pay" }, {% endif %}{% if 'googlepay' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/googlepay.svg'|asset_url|escapejs }}", alt: "Google Pay" }, {% endif %}{% if 'ppal' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/ppal.svg'|asset_url|escapejs }}", alt: "PayPal" }, {% endif %}{% if 'klarna' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/klarna.svg'|asset_url|escapejs }}", alt: "Klarna" }, {% endif %}{% if 'diners' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/diners.svg'|asset_url|escapejs }}", alt: "Diners Club" }, {% endif %}{% if 'jcb' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/jcb.svg'|asset_url|escapejs }}", alt: "JCB" }, {% endif %}{% if 'maestro' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/maestro.svg'|asset_url|escapejs }}", alt: "Maestro" }, {% endif %}{% if 'dankort' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/dankort.svg'|asset_url|escapejs }}", alt: "Dankort" }, {% endif %}],
             checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
             cartUrl: "/cart/", changeText: "{{ settings.sf_cart_change_text|default:'Change'|escapejs }}",
@@ -340,7 +343,7 @@
     {# Delight: skeleton dismiss + keyboard nav #}
     <script>
     (function(){
-        // Skeleton: hide once product grid is rendered
+        
         var skel = document.getElementById('product-skeleton');
         if (skel) {
             var grid = document.getElementById('product-grid');
@@ -351,7 +354,7 @@
             }
         }
 
-        // Keyboard nav: product grid — Enter on focused card navigates to PDP
+        
         document.querySelectorAll('.product-card').forEach(function(card) {
             if (!card.getAttribute('tabindex')) card.setAttribute('tabindex', '0');
             card.addEventListener('keydown', function(e) {
@@ -373,7 +376,7 @@
     {% endblock footer_app_hooks %}
     {% block tracking %}{% endblock tracking %}
 
-<script>/* sf lazy backgrounds */(function(){var els=[].slice.call(document.querySelectorAll("[data-sf-bg]"));if(!els.length)return;function show(e){e.style.backgroundImage='url("'+e.getAttribute("data-sf-bg")+'")';e.removeAttribute("data-sf-bg")}if(!("IntersectionObserver"in window)){els.forEach(show);return}var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){io.unobserve(x.target);show(x.target)}})},{rootMargin:"1600px 2400px"});els.forEach(function(e){io.observe(e)})})();</script>
-<script>/* sf late images */(function(){if(!document.querySelector("img[data-sf-src]"))return;function show(e){if(!e.hasAttribute("data-sf-src"))return;var p=e.parentNode;if(p&&p.tagName==="PICTURE")[].forEach.call(p.querySelectorAll("source[data-sf-srcset]"),function(x){x.setAttribute("srcset",x.getAttribute("data-sf-srcset"));x.removeAttribute("data-sf-srcset")});var s=e.getAttribute("data-sf-srcset");if(s)e.setAttribute("srcset",s);e.setAttribute("src",e.getAttribute("data-sf-src"));e.removeAttribute("data-sf-src");e.removeAttribute("data-sf-srcset")}function pending(){return[].slice.call(document.querySelectorAll("img[data-sf-src]"))}if(!("IntersectionObserver"in window)){window.addEventListener("load",function(){pending().forEach(show)});return}function group(e){return e.closest(".shopify-section,section")||e.parentNode}function watch(m){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){io.unobserve(x.target);[].forEach.call(x.target.querySelectorAll("img[data-sf-src]"),show)}})},{rootMargin:m});var seen=[];pending().forEach(function(e){var g=group(e);if(seen.indexOf(g)<0){seen.push(g);io.observe(g)}});return io}var early=null;document.addEventListener("DOMContentLoaded",function(){early=watch("600px")});function late(){if(early)early.disconnect();watch("1250px")}if(document.readyState==="complete")late();else window.addEventListener("load",late)})();</script>
+<script> (function(){var els=[].slice.call(document.querySelectorAll("[data-sf-bg]"));if(!els.length)return;function show(e){e.style.backgroundImage='url("'+e.getAttribute("data-sf-bg")+'")';e.removeAttribute("data-sf-bg")}if(!("IntersectionObserver"in window)){els.forEach(show);return}var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){io.unobserve(x.target);show(x.target)}})},{rootMargin:"1600px 2400px"});els.forEach(function(e){io.observe(e)})})();</script>
+<script> (function(){if(!document.querySelector("img[data-sf-src]"))return;function show(e){if(!e.hasAttribute("data-sf-src"))return;var p=e.parentNode;if(p&&p.tagName==="PICTURE")[].forEach.call(p.querySelectorAll("source[data-sf-srcset]"),function(x){x.setAttribute("srcset",x.getAttribute("data-sf-srcset"));x.removeAttribute("data-sf-srcset")});var s=e.getAttribute("data-sf-srcset");if(s)e.setAttribute("srcset",s);e.setAttribute("src",e.getAttribute("data-sf-src"));e.removeAttribute("data-sf-src");e.removeAttribute("data-sf-srcset")}function pending(){return[].slice.call(document.querySelectorAll("img[data-sf-src]"))}if(!("IntersectionObserver"in window)){window.addEventListener("load",function(){pending().forEach(show)});return}function group(e){return e.closest(".shopify-section,section")||e.parentNode}function watch(m){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){io.unobserve(x.target);[].forEach.call(x.target.querySelectorAll("img[data-sf-src]"),show)}})},{rootMargin:m});var seen=[];pending().forEach(function(e){var g=group(e);if(seen.indexOf(g)<0){seen.push(g);io.observe(g)}});return io}var early=null;document.addEventListener("DOMContentLoaded",function(){early=watch("600px")});function late(){if(early)early.disconnect();watch("1250px")}if(document.readyState==="complete")late();else window.addEventListener("load",late)})();</script>
 </body>
 </html>

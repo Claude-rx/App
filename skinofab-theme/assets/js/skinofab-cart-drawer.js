@@ -1,27 +1,5 @@
-/**
- * SKINOFAB cart drawer
- *
- * Spark's <spark-cart-drawer> owns cart state, GraphQL mutations, focus, gifts and events. It renders its markup
- * through window.SparkCartDrawerRenderer; this module is that renderer (same API: escapeHtml, createCartItemEl,
- * createItemsFragment, voucherHtml, footerHtml, emptyHtml), loaded by spark-cart-loader in its place
- * (SparkCartAssets.cartRenderer). It also styles the drawer through its open shadow root.
- *
- * The drawer's job is the last step before payment: reassure, raise the order value, get to checkout.
- *   - the drawer sits above the store's sticky header (its title and close button were hidden under it);
- *   - "Your bag (n)" header and a free-shipping note when the store ships for free;
- *   - lines show the product, its pack (variant) and the price; a refill line says how often it ships, on its own line;
- *   - the upgrades: with the 1-bottle pack in the bag, one tap swaps it for 2 bottles + free gifts (same quantity,
- *     same refill choice), for the price difference the card names (Theme settings > Cart Drawer > Upgrade); a
- *     second one does the same for the brush (1 -> 2 brushes, Second upgrade); the first that applies is shown;
- *   - "Complete your routine": two add-ons not yet in the bag, out of three (Theme settings product pickers), one tap to add, loaded from the
- *     storefront API when the drawer first opens (no cost on page render), hidden once they are in the bag;
- *   - a trust card: the money-back guarantee and a customer review;
- *   - the discount code folds away behind "Have a discount code?" (opens on its own when a code is applied);
- *   - the footer: totals, a full-width secure checkout button, the cards the checkout accepts;
- *   - an empty bag shows the bottle and a way straight back to it.
- * Text comes from Theme settings > SKINOFAB > Cart Drawer (window.SFCart). Plain ASCII only (the platform runs
- * every theme file through its template engine).
- */
+
+
 (function() {
     'use strict';
 
@@ -69,14 +47,14 @@
         close: '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
     };
 
-    /* how often a refill line ships: "Refills every 28 days" (its own line, so the price row stays short on phones) */
+     
     function cadence(line) {
         var count = parseInt(line.intervalCount, 10) || 1;
         var unit = String(line.interval || '').toLowerCase().replace(/s$/, '');
         return (cfg.refillText || 'Refills every') + ' ' + (count === 1 ? unit : count + ' ' + unit + 's');
     }
 
-    /* "Adaptive Peptide Foundation - 1 bottle": product name and pack on separate lines */
+     
     function splitTitle(product) {
         var title = product.title || '';
         var parent = product.parent && product.parent.title;
@@ -87,7 +65,7 @@
         return cut > 0 ? { name: title.slice(0, cut), variant: title.slice(cut + 3) } : { name: title, variant: '' };
     }
 
-    /* the API's urls are on the store's primary domain: keep the shopper (and the bag) on this host */
+     
     function localUrl(url) {
         return String(url || '').replace(/^https?:\/\/[^\/]+/, '') || '#';
     }
@@ -151,7 +129,7 @@
         return item;
     }
 
-    /* ---------- add-ons: storefront API, loaded once, rendered on every drawer render ---------- */
+     
 
     var upsellData = null, upsellPromise = null, currentLines = [];
 
@@ -214,12 +192,12 @@
             }).join('') + '</section>';
     }
 
-    /* ---------- the upgrades: 1 bottle -> 2 bottles + free gifts, 1 brush -> 2 brushes ---------- */
+     
 
     var ups = (cfg.upgrades || [cfg.upgrade]).filter(function(u) { return u && u.from && u.to && u.title; });
 
-    /* the first upgrade whose smaller pack is in the bag once (and its bigger pack is not), with that line. The text
-       names the price step from one small pack to one big one: with two small packs in the bag it would be wrong */
+    
+
     function upgradeFor() {
         var has = function(pk) { return currentLines.filter(function(l) { return String((l.product || {}).pk) === String(pk); })[0]; };
         for (var i = 0; i < ups.length; i++) {
@@ -240,7 +218,7 @@
             escapeHtml(up.button || 'Upgrade') + '</button></div>';
     }
 
-    /* the refill choice of a cart line, in the shape addToCart takes ("Every 28 days" stays every 28 days) */
+     
     function planOf(line) {
         if (!line.interval) return null;
         return { subscriptionOption: 'subscribe', interval: String(line.interval).toLowerCase().replace(/s$/, ''),
@@ -258,10 +236,10 @@
         var show = function(next) {
             if (next) document.dispatchEvent(new CustomEvent('spark:cart:updated', { detail: { cart: next, action: 'update' }, bubbles: true }));
         };
-        /* a refill line stays a refill; the bigger pack ships as often as it runs out (up.every days), when set */
+         
         var plan = planOf(line);
         if (plan && parseInt(up.every, 10) > 0) plan.intervalCount = String(parseInt(up.every, 10));
-        /* add the 2-bottle pack first, then drop the 1-bottle line: a failure never leaves the bag empty */
+         
         client.addToCart(Number(up.to), 1, false, plan).then(function(added) {
             if (!added || added.success === false || !added.cart) throw new Error('add');
             return client.removeCartLines(added.cart.id, [line.pk]).then(function(removed) {
@@ -279,12 +257,10 @@
     }
 
     function trustHtml() {
+        
+
         var html = '';
-        if (cfg.guaranteeTitle) {
-            html += '<div class="sf-trust-row">' + ICON.seal + '<p><strong>' + escapeHtml(cfg.guaranteeTitle) + '</strong>' +
-                (cfg.guaranteeText ? '<span>' + escapeHtml(cfg.guaranteeText) + '</span>' : '') + '</p></div>';
-        }
-        /* the review is about one product: it shows while that product (any of its packs) is in the bag */
+         
         var about = parseInt(cfg.reviewPk, 10);
         var reviewed = !about || currentLines.some(function(l) {
             var p = l.product || {};
@@ -311,7 +287,7 @@
         return frag;
     }
 
-    /* fill the add-on slot of the rendered drawer once the data has arrived */
+     
     function paintUpsells() {
         var drawer = document.querySelector('spark-cart-drawer');
         var slot = drawer && drawer.shadowRoot && drawer.shadowRoot.querySelector('[data-sf-upsell]');
@@ -337,7 +313,7 @@
                 '" aria-label="' + escapeHtml(label(labels, 'removeVoucherLabel', 'Remove voucher')) + '">' + ICON.close + '</button></div>';
         });
         return '<div class="spark-drawer-voucher">' + applied +
-            /* opened at the foot of the list, the field sat under the totals: it scrolls into view, focused */
+             
             '<details class="sf-voucher"' + (applied ? ' open' : '') + ' ontoggle="if(this.open){var f=this.querySelector(\'input\');' +
             'if(f){f.scrollIntoView({block:\'center\',behavior:\'smooth\'});f.focus({preventScroll:true});}}"><summary>' + escapeHtml(cfg.couponToggle || 'Have a discount code?') + '</summary>' +
             '<div class="spark-drawer-voucher-form">' +
@@ -363,6 +339,7 @@
             '<div class="spark-drawer-total-row grand"><span>' + escapeHtml(label(labels, 'totalLabel', 'Total')) + '</span><span>' + money(total, currency) + '</span></div>' +
             '</div>' +
             '<a href="' + escapeHtml(labels.checkoutUrl) + '" class="spark-drawer-checkout">' + ICON.lock + '<span>' + escapeHtml(cfg.checkoutText || labels.checkoutText) + '</span></a>';
+        if (cfg.guaranteeTitle) html += '<p class="sf-secure sf-guarantee">' + ICON.seal + '<span>' + escapeHtml(cfg.guaranteeTitle) + '</span></p>';
         if ((cfg.payIcons || []).length) {
             html += '<ul class="sf-pay" aria-label="' + escapeHtml(cfg.payLabel || 'Accepted payment methods') + '">' +
                 cfg.payIcons.map(function(p) { return '<li><img src="' + escapeHtml(p.src) + '" alt="' + escapeHtml(p.alt) + '" width="38" height="24" /></li>'; }).join('') + '</ul>';
@@ -392,18 +369,18 @@
         emptyHtml: emptyHtml
     };
 
-    /* ---------- drawer chrome: styles in the shadow root, header count, shipping note, add-on buttons ---------- */
+     
 
     var STYLES = [
-        /* above the store's sticky header and announcement bar */
+         
         '.spark-drawer-backdrop { z-index: 2147483000; background: rgba(21,21,21,.45); }',
         '.spark-drawer-panel { z-index: 2147483001; max-width: 440px; color: #151515; box-shadow: -12px 0 40px rgba(0,0,0,.12); transition: transform 260ms cubic-bezier(.22,1,.36,1); }',
-        /* closed, the panel waits off-screen: without its shadow (it darkened the page's right edge) and hidden (no tab
-           stops in it); both come back as it slides in and go once it has slid out */
+        
+
         ':host(:not([data-open="true"])) .spark-drawer-panel { box-shadow: none; visibility: hidden; transition: transform 260ms cubic-bezier(.22,1,.36,1), visibility 0s linear 260ms, box-shadow 0s linear 260ms; }',
         ':host([data-open="true"]) .spark-drawer-panel { visibility: visible; transition: transform 260ms cubic-bezier(.22,1,.36,1), visibility 0s; }',
-        /* the add in flight (skinofab-commerce.js): the drawer opens at the click with the product, the line fills in when
-           the server answers; the totals wait for it */
+        
+
         '.sf-pending { display: flex; align-items: center; gap: 14px; padding: 18px 0; border-bottom: 1px solid #ececec; animation: sf-in 180ms ease-out; }',
         '.sf-pending img { flex: none; width: 88px; height: 88px; border-radius: 10px; object-fit: cover; background: #f4f2ee; }',
         '.sf-pending div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }',
@@ -415,7 +392,7 @@
         ':host(.sf-adding) .spark-drawer-footer { opacity: .5; pointer-events: none; }',
         '.spark-drawer-footer { transition: opacity 150ms; }',
         '@keyframes sf-in { from { opacity: 0; transform: translateY(6px); } }',
-        /* buttons: lift on hover, press on tap, ring on keyboard focus */
+         
         '.spark-drawer-checkout, .sf-upgrade-btn, .sf-upsell-add, .spark-drawer-empty-cta { transition: background-color 150ms, color 150ms, box-shadow 150ms, transform 120ms; -webkit-tap-highlight-color: transparent; }',
         '@media (hover: hover) { .spark-drawer-checkout:hover, .spark-drawer-empty-cta:hover, .sf-upgrade-btn:hover { box-shadow: 0 8px 20px rgba(0,0,0,.18); } }',
         '.spark-drawer-checkout:active, .sf-upgrade-btn:active, .sf-upsell-add:active, .spark-drawer-empty-cta:active { transform: scale(.98); box-shadow: none; }',
@@ -443,12 +420,12 @@
         '.spark-drawer-item-price { white-space: nowrap; }',
         '.sf-item-every { display: flex; align-items: center; gap: 5px; }',
         '.sf-item-every:before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #1f7a3f; }',
-        /* to one-time: the bag page's plan choice (the drawer only shows the plan) */
+         
         '.sf-item-change { color: #151515; text-decoration: underline; text-underline-offset: 2px; margin-left: 4px; }',
         '.sf-item-remove { align-self: flex-start; margin-top: 8px; padding: 2px 0; background: none; border: 0; font: inherit; font-size: 12px; color: #6a6a6a; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }',
         '.sf-item-remove:hover { color: #151515; }',
         '.sf-item-remove:focus-visible, .sf-upsell-add:focus-visible, .sf-upgrade-btn:focus-visible { outline: 2px solid #151515; outline-offset: 2px; }',
-        /* upgrade */
+         
         '.sf-upgrade { margin: 18px 0 0; display: flex; align-items: center; gap: 12px; padding: 14px; border: 2px dashed #151515; border-radius: 12px; background: #fff; }',
         '.sf-upgrade svg { flex: none; color: #151515; }',
         '.sf-upgrade p { flex: 1; min-width: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13px; line-height: 1.4; color: #3b3b3b; }',
@@ -456,7 +433,7 @@
         '.sf-upgrade-btn { flex: none; padding: 10px 14px; border: 0; border-radius: 8px; background: #151515; color: #fff; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }',
         '.sf-upgrade-btn:hover { background: #000; }',
         '.sf-upgrade-btn[aria-busy="true"] { opacity: .6; pointer-events: none; }',
-        /* add-ons */
+         
         '.sf-upsell { margin: 18px 0 0; }',
         '.sf-upsell-title { margin: 0 0 10px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #151515; }',
         '.sf-upsell-item { display: flex; align-items: center; gap: 12px; padding: 10px; border: 1px solid #ececec; border-radius: 12px; }',
@@ -470,7 +447,7 @@
         '.sf-upsell-add { flex: none; padding: 9px 14px; border: 1px solid #151515; border-radius: 8px; background: #fff; color: #151515; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: background-color 150ms, color 150ms; }',
         '.sf-upsell-add:hover { background: #151515; color: #fff; }',
         '.sf-upsell-add[aria-busy="true"] { opacity: .6; pointer-events: none; }',
-        /* trust */
+         
         '.sf-trust { margin: 18px 0 4px; padding: 14px 16px; border-radius: 12px; background: #f4f2ee; display: grid; gap: 12px; }',
         '.sf-trust-row { display: flex; gap: 10px; align-items: flex-start; }',
         '.sf-trust-row svg { flex: none; color: #151515; }',
@@ -480,7 +457,7 @@
         '.sf-stars { display: flex; gap: 2px; color: #151515; margin-bottom: 6px; }',
         '.sf-review blockquote { margin: 0; font-size: 13px; line-height: 1.45; color: #2b2b2b; font-style: italic; }',
         '.sf-review figcaption { margin-top: 6px; font-size: 12px; color: #6a6a6a; }',
-        /* discount code */
+         
         '.spark-drawer-voucher { border-top: 0; padding: 10px 0 0; }',
         '.sf-voucher summary { cursor: pointer; font-size: 13px; color: #151515; text-decoration: underline; text-underline-offset: 2px; list-style: none; padding: 6px 0; }',
         '.sf-voucher summary::-webkit-details-marker { display: none; }',
@@ -488,7 +465,7 @@
         '.spark-drawer-voucher-input { border-radius: 8px; border-color: #d9d9d9; padding: 10px 12px; font-size: 14px; }',
         '.spark-drawer-voucher-btn { border-radius: 8px; border-color: #151515; color: #151515; }',
         '.spark-drawer-voucher-tag { color: #1f7a3f; }',
-        /* footer */
+         
         '.spark-drawer-footer { padding: 16px 22px 14px; border-top: 1px solid #ececec; box-shadow: 0 -8px 24px rgba(0,0,0,.04); }',
         '.spark-drawer-totals { gap: 7px; margin-bottom: 14px; }',
         '.spark-drawer-total-row { font-size: 14px; color: #3b3b3b; }',
@@ -500,8 +477,10 @@
         '.sf-pay { list-style: none; margin: 12px 0 0; padding: 0; display: flex; justify-content: center; gap: 6px; }',
         '.sf-pay img { display: block; width: 38px; height: 24px; }',
         '.sf-secure { margin: 8px 0 0; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; color: #6a6a6a; }',
+        '.sf-guarantee { margin-top: 10px; font-size: 14px; font-weight: 600; color: #151515; }',
+        '.sf-guarantee svg { width: 18px; height: 18px; flex: none; }',
         '.spark-drawer-continue { margin-top: 6px; color: #151515; text-decoration: underline; text-underline-offset: 2px; }',
-        /* empty bag */
+         
         '.spark-drawer-empty { padding: 36px 20px; gap: 6px; }',
         '.sf-empty-img { width: 76px; height: auto; margin-bottom: 14px; filter: drop-shadow(0 10px 14px rgba(0,0,0,.18)); }',
         '.spark-drawer-empty-title { font-size: 20px; font-weight: 600; color: #151515; }',
@@ -514,7 +493,7 @@
         btn.setAttribute('aria-busy', 'true');
         btn.textContent = cfg.upsellAdding || 'Adding...';
         var done = function() { btn.removeAttribute('aria-busy'); };
-        /* through the commerce adapter: same add path as the buy box, so the drawer re-renders with the new cart */
+         
         var add = window.SFCommerce && window.SFCommerce.addItems
             ? window.SFCommerce.addItems([{ id: pk, quantity: 1 }])
             : Promise.reject(new Error('cart unavailable'));
@@ -559,12 +538,12 @@
         ['spark:cart:updated', 'spark:cart:added'].forEach(function(name) {
             document.addEventListener(name, function() { setTimeout(count, 0); });
         });
-        /* the drawer re-renders its body after its own mutations without an event: follow the body */
+         
         var body = root.querySelector('.spark-drawer-body');
         if (body && window.MutationObserver) new MutationObserver(count).observe(body, { childList: true });
         count();
-        /* the page under the open drawer stays put: no scrolling behind it (the scrollbar's width is kept, so
-           nothing shifts) */
+        
+
         function lock() {
             var de = document.documentElement;
             if (drawer.getAttribute('data-open') === 'true') {

@@ -389,6 +389,45 @@
         "help_text": "A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before."
       },
       {
+        "name": "sf_cart_upgrade6_from",
+        "type": "text",
+        "label": "Sixth upgrade: variant in the bag",
+        "default": "",
+        "help_text": "One more upgrade (NEXT variant IDs), such as a 2-pack to a 3-pack, shown when the others do not apply. Empty: none."
+      },
+      {
+        "name": "sf_cart_upgrade6_to",
+        "type": "text",
+        "label": "Sixth upgrade: variant it becomes",
+        "default": ""
+      },
+      {
+        "name": "sf_cart_upgrade6_title",
+        "type": "text",
+        "label": "Sixth upgrade: title",
+        "default": ""
+      },
+      {
+        "name": "sf_cart_upgrade6_text",
+        "type": "text",
+        "label": "Sixth upgrade: text",
+        "default": "",
+        "help_text": "Name the real price difference; it must match the two variants' prices."
+      },
+      {
+        "name": "sf_cart_upgrade6_button",
+        "type": "text",
+        "label": "Sixth upgrade: button",
+        "default": "Upgrade"
+      },
+      {
+        "name": "sf_cart_upgrade6_every",
+        "type": "text",
+        "label": "Sixth upgrade: refill days of the bigger pack",
+        "default": "",
+        "help_text": "A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before."
+      },
+      {
         "name": "sf_cart_upsell_1",
         "type": "product",
         "label": "Add-on 1",
