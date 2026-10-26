@@ -879,6 +879,12 @@ def catalogue(template, title_var):
             h.string = slots.put(title_var)
         # "24 products": the export's own count, not the listing's; NEXT's page shows its products, no count
         for c in main.select('.collection__products-count'): c.decompose()
+        # the banner's photo shows our four products, each in a woman's hand: a category with fewer of them (Skin:
+        # the balm, the serum and the brush) shows its name without the photo
+        if template.endswith('category.html'):
+            for box in main.select('.banner-image__image-container')[:1]:
+                box.insert_before(NavigableString(slots.put('{% if products|length >= 4 %}')))
+                box.insert_after(NavigableString(slots.put('{% endif %}')))
         return slots.render(str(transform(main, f, slots)))
     write(template, page_template(f, parts, content, title_dtl='{% firstof category.get_meta_title category.name "Shop all" %} | {{ block.super }}'))
 catalogue('templates/catalogue/category.html', '{{ category.name }}')
@@ -1203,6 +1209,39 @@ for rel, old_field in (('templates/cart.html', '{{ form.subscription_range }}'),
     if s.count(old_field) != 1: sys.exit(f'{rel}: subscription_range field not found once')
     s = s.replace(old_field, SUB_ONLY_IF + SUB_FIXED + '{% else %}' + old_field + '{% endif %}')   # both bind `product` to the line's
     p.write_text(s)
+
+# Cart page: Spark's frequency select read "One Time" / "28 Days", a bare number with nothing saying it repeats. The
+# options say what they are ("One-time purchase", "Refill every 28 days") and a refill line says, under it, that it
+# ships and is charged on that schedule until cancelled (the cart may redraw its lines: the observer relabels them)
+REFILL_LABELS = ('<script data-sf-refill-labels>(function () {'
+    'function set(el, prop, v) { if (el[prop] !== v) el[prop] = v; }'
+    'function label() {'
+    ' Array.prototype.forEach.call(document.querySelectorAll(\'select[name$="subscription_range"]\'), function (s) {'
+    '  Array.prototype.forEach.call(s.options, function (o) {'
+    '   var t = o.textContent.trim(), m = t.match(/^(\\d+)\\s+(day|week|month|year)s?$/i);'
+    '   if (/^one time$/i.test(t)) set(o, "textContent", "One-time purchase");'
+    '   else if (m) set(o, "textContent", "Refill every " + (m[1] === "1" ? "" : m[1] + " ") + m[2].toLowerCase() + (m[1] === "1" ? "" : "s"));'
+    '  });'
+    '  var row = s.parentNode, note = row.querySelector(".sf-refill-note");'
+    '  if (!note) { note = document.createElement("p"); note.className = "sf-refill-note text-xs text-slate-600";'
+    '   note.style.cssText = "flex-basis:100%;margin:0"; row.appendChild(note); }'
+    '  var o = s.options[s.selectedIndex], on = !!o && /^Refill every/.test(o.textContent);'
+    '  set(note, "textContent", on ? "Automatic refill: we ship and charge it " + o.textContent.replace("Refill every", "every")'
+    '   + " until you cancel. Skip or cancel any time by email." : "");'
+    '  set(note, "hidden", !on);'
+    '  if (!s.getAttribute("data-sf-refill")) { s.setAttribute("data-sf-refill", "1"); s.addEventListener("change", label); }'
+    ' });'
+    '}'
+    'label();'
+    'var queued = false;'
+    'new MutationObserver(function () { if (queued) return; queued = true;'
+    ' requestAnimationFrame(function () { queued = false; label(); }); }).observe(document.body, { childList: true, subtree: true });'
+    '})();</script>')
+p_cart = OUT / 'templates/cart.html'
+if p_cart.exists():
+    t = p_cart.read_text()
+    if 'data-sf-refill-labels' not in t:
+        p_cart.write_text(must_replace(t, '                </form>', '                </form>' + REFILL_LABELS, 'templates/cart.html refill labels'))
 
 # Cart page: free shipping said plainly when the store ships for free (Theme settings > SKINOFAB > Cart Drawer)
 FREE_SHIP = "{% if settings.sf_cart_free_shipping %}<span class=\"text-xs font-semibold\" style=\"color:#1f7a3f\">{% t 'store.catalogue.free' %}</span>{% else %}"

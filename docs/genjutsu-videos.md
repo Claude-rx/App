@@ -33,6 +33,19 @@ The lip pencil and lip gloss are the old range's products (no longer sold); in b
   end, dotted on her cheeks and forehead and buffed in with a brush. `ccf_copy.VIDEO_DEMO_CLIPS` sets it for card 2 on
   both pages, with a frame at 0.3 s as the poster, and the caption says what it shows.
 
+### Changes after review 4 (26 Oct 2026)
+
+- **`41b77ec4`, the ending.** Its last 2.2 s (from 19.3 s) show her holding two bottles whose small PDRN line the video
+  model drew as "PORN", while she says "Click the link below to check it out for yourself." (a TikTok call that means
+  nothing on the store). `clip_cuts.py` ends it at 19.09 s, the pause after "I'll never have to look for the right
+  shade again.": `brand/videos/gj-41b77ec4-cut.mp4` (19.1 s), mapped in `video-swaps.json`. Its poster (the swapped
+  still of her pumping the bottle) had the same line: `relabel_bottles.SITE` sets it again as a bold "PDRN" along the
+  label's 31° slant (`label_fix.bold_line_rot`).
+- **The homepage cards play 540 px clips with a WebM copy**, as the product page's demo row does
+  (`apply_persona.honest_video_cards`, `card_clip`): the 1080p re-makes with sound were 2.5-12 MB each for a card about
+  360 px wide, and the card script (`figma-home*.js`, `patch_card_loader`) takes `data-src-webm` in a browser without
+  H.264.
+
 ## Her voice in the 60 s video (`43e0f648`)
 
 | When | She said | Now |

@@ -113,8 +113,9 @@ FAQ = [
     # the checkout takes cards (no PayPal, Apple Pay or Google Pay there, review 3); the cards are the ones the cart
     # and the footer show (Theme settings > Payment logos)
     ('What payment methods', None,
-     '<p>We accept major credit and debit cards: Visa, Mastercard, American Express and Discover. Your card details '
-     'go straight to our payment processor over an encrypted connection.</p>'),
+     '<p>We accept major credit and debit cards: Visa, Mastercard, American Express and Discover. On a phone or '
+     'browser that supports them, the checkout also offers Apple Pay and Google Pay. Your card details go straight '
+     'to our payment processor over an encrypted connection.</p>'),
 ]
 
 # the contact page's questions: (the start of the question, the question or None to keep it, the answer HTML or None
@@ -141,8 +142,8 @@ arrived damaged.</p>
 <p>If your order arrived damaged, defective or with the wrong item, email {MAIL} with your order number and a photo
 within 30 days of delivery. We send a replacement or a full refund, your choice, at no cost to you.</p>
 <h3>Exchanges</h3>
-<p>Exchanges are for products of equal value. If the new product costs more or less, we charge or refund the
-difference.</p>
+<p>You can exchange an unopened product for another SKINOFAB product. If the new product costs more or less, we
+charge or refund the difference.</p>
 <h3>Automatic Refills</h3>
 <p>You can skip or cancel your Automatic Refills at any time before the next refill date by emailing {MAIL}. A refill
 that has already shipped is covered by the same 30-day guarantee.</p>

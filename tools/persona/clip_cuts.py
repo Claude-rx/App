@@ -10,12 +10,17 @@ gj-43e0f648 ("Goes on white", 60 s): at 53.4-54.9 s a hand drops a Giorgio Arman
 into a bin while she says "I won't be needing these anymore." (review 3, 26 Oct 2026). The cut runs from the pause
 after "bronzer." (53.18-53.46 s) to the pause before "I'll be buying this on repeat." (54.86-55.08 s); the orchid shot
 with the SKINOFAB bottle follows straight on.
+
+gj-41b77ec4 ("all white", 21.5 s): its last 2.2 s, from 19.3 s, show her holding two bottles whose small PDRN line
+the video model drew as "PORN", while she says "Click the link below to check it out for yourself." (a TikTok
+caption's call, review 4). The clip now ends at the pause after "I'll never have to look for the right shade again."
+(19.02-19.16 s), on the brushing shot.
 """
 import subprocess
 from pathlib import Path
 
 VIDEOS = Path(__file__).resolve().parents[2] / 'brand' / 'videos'
-CUTS = {'gj-43e0f648.mp4': [(53.32, 54.97)]}
+CUTS = {'gj-43e0f648.mp4': [(53.32, 54.97)], 'gj-41b77ec4.mp4': [(19.09, 99.0)]}
 
 
 def keep(spans):

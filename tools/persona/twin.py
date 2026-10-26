@@ -185,6 +185,7 @@ def why(sec, c, img):
     s.select_one('.section__heading').string = c['title']
     for f, (title, desc) in zip(s.select('.skinofab-why__feature'), c['features']):
         f.select_one('.skinofab-why__feature-title').string = title
+        f.select_one('.skinofab-why__feature-icon img')['alt'] = ''      # decorative: the title says it
         _set_text(f.select_one('.skinofab-why__feature-desc'), f'<p>{esc(desc)}</p>')
     a = s.select_one('.skinofab-why__cta a')
     a.string, a['href'] = c['button'], '#apf-buy'

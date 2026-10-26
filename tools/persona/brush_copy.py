@@ -20,7 +20,7 @@ TITLE = 'The Lymphatic Brush'
 SHOPIFY_ID, SHOPIFY_VARIANT = 15517563191626, 61233683038538       # Solena's ids (the design markup carries them)
 PRICE, COMPARE = '24.95', '49.90'
 EMAIL = 'hello@skinofab.com'
-DESCRIPTION = ('<p>A 3-minute depuffing massage for your morning face. Thousands of ultra-soft bristles sweep from under '
+DESCRIPTION = ('<p>A 3-minute depuffing massage for your morning face. Hundreds of ultra-soft tips sweep from under '
                'your eyes, along your cheeks and jaw and down your neck with a light touch, on dry skin, no oil. '
                'Includes a SKINOFAB travel case.</p>')
 META_TITLE = 'The Lymphatic Brush | A 3-minute depuffing massage | SKINOFAB'
@@ -94,8 +94,8 @@ def tabs():
     """The tabs under the buy box, the foundation's six."""
     return [
         ('What makes it different?',
-         '<p>Rollers, stones and gua sha need oil, pressure and a tutorial. The Lymphatic Brush gives your face the light, '
-         'slow sweeps that facial massage for puffiness uses, with thousands of ultra-soft bristles that bend instead of pressing.</p>'
+         '<p>Gua sha needs oil, and rollers and stones need pressure. The Lymphatic Brush gives your face the light, '
+         'slow sweeps that facial massage for puffiness uses, with hundreds of ultra-soft tips that bend instead of pressing.</p>'
          + _list(['On dry skin, no oils', '3 minutes, every morning', 'Eyes, cheeks, jaw and neck', 'A protective case with every brush'])),
         ('Does it work on my skin?',
          '<p>Yes, it’s made for mature skin: the bristles bend instead of pulling, so they don’t drag thinner skin or fine lines. '
@@ -109,17 +109,15 @@ def tabs():
          + '<p>Repeat each sweep about 10 times, then do the other side.</p>'
          '<p><strong>Keep it clean:</strong> before each use, sweep the bristles on a cloth with a brush cleaner or 70% alcohol; '
          'once a month, wash only the tips on a damp, soapy cloth, rinse the same way and dry overnight, bristles down. Never '
-         'soak it, wet the handle or use hot water.</p>'),
+         'soak it, wet the back or use hot water.</p>'),
         ('How does the money-back guarantee work?',
-         '<p>Take your time to try it at home. If you’re not completely in love with your purchase within <strong>30 days</strong>, '
-         'simply send it back for a <strong>full refund</strong> – no hassle, no questions asked.</p>'
-         f'<p>Please email us at <a href="mailto:{EMAIL}">{EMAIL}</a> to receive return instructions.</p>'),
+         f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll refund it in <strong>full</strong>, even opened, with no need to send it back.</p>'),
         ('Product specifications',
          '<p><strong>Bristles:</strong> Ultra-soft, vegan fibers.</p>'
-         '<p><strong>Handle:</strong> Ergonomic premium grip designed for precise control.</p>'
+         '<p><strong>Shape:</strong> A curved, half-moon head that sits between your fingers, no handle to grip.</p>'
          '<p><strong>Dimensions:</strong> Travel-friendly size. Brush: 3.35" x 2.36" (8 x 6 cm) | Case: 3.54" x 2.56" (9 x 6.5 cm).</p>'
          '<p><strong>Usage:</strong> 100% dry-brushing compatible (No oils required).</p>'
-         '<p><strong>Bonus:</strong> Includes a durable, clear travel case for on-the-go convenience.</p>'),
+         '<p><strong>Bonus:</strong> Includes a protective SKINOFAB travel case that keeps the bristles clean.</p>'),
         SHIPPING_TAB,
     ]
 
@@ -143,14 +141,14 @@ FAQ = {'items': [
     ('Can I use it before my foundation?',
      'Yes, that’s the best time: brush first on dry skin, then your skincare and foundation.'),
     ('What if it doesn’t work for me?',
-     'Send it back within 30 days for a full refund. Just email hello@skinofab.com.'),
+     'Email hello@skinofab.com within 30 days and we’ll refund it in full. No need to send it back.'),
     ('Is it safe for sensitive skin?',
      'The bristles are soft and the pressure stays light, so it’s gentle on most skin types. Avoid using it on irritated or broken skin, '
      'sunburn or active breakouts. If your swelling doesn’t go away during the day, or if you have a medical condition, check with your doctor first.'),
     ('How often should I use it?', 'Once a day, in the morning, for about 3 minutes. Twice a day is the maximum.'),
     ('How do I keep it clean?',
      'Give the bristles a quick clean on a cloth with a brush cleaner or alcohol before each use, and a gentle wash of the tips once a month. '
-     'Full steps are in the “How to clean it” tab above.'),
+     'Full steps are in the “How do I use it?” tab above.'),
 ]}
 STICKY_BUTTON = 'Choose your bundle'
 
@@ -165,7 +163,7 @@ TWIN = {
     'moments': [
         ('how-1', 'The cause', 'Fluid builds up while you sleep, under the eyes and along the jaw.', 'Where fluid builds up overnight'),
         ('how-2', 'What helps', 'Light, slow strokes toward the neck, the way an aesthetician does it by hand.', 'A light massage just under the skin'),
-        ('how-3', 'Why the brush', 'Thousands of soft bristles bend instead of pressing.', 'Soft bristles sweeping toward the neck'),
+        ('how-3', 'Why the brush', 'Hundreds of soft tips bend instead of pressing.', 'Soft bristles sweeping toward the neck'),
         ('compare-ours', 'Raised, soft tufts', 'They follow your jaw and cheekbones in one stroke.', 'The Lymphatic Brush in hand'),
         ('card', 'Clean between uses', 'Every brush comes with its own protective case.', 'The Lymphatic Brush and its case'),
     ],
@@ -195,7 +193,7 @@ TWIN = {
         'solution': ('The solution', 'So we made it', 'light and quick'),
         'solution_lede': 'The Lymphatic Brush gives your face the light, slow massage an aesthetician would, in 3 minutes, on dry skin.',
         'fixes': [('Oils and serums to glide', 'Works on dry skin: nothing to wash off.'),
-                  ('Pressing too hard', 'Thousands of soft bristles bend instead of pressing.'),
+                  ('Pressing too hard', 'Hundreds of soft tips bend instead of pressing.'),
                   ('A tutorial to follow', 'Four sweeps: neck, jaw, under the eyes, neck again.'),
                   ('Twenty minutes in the mirror', '3 minutes, before your coffee.'),
                   ('A tool rolling around the counter', 'A protective case comes with every brush.')],
@@ -206,8 +204,8 @@ TWIN = {
     'note': {'id': 'sf-note', 'eyebrow': 'Why we made it', 'photo': 'compare-ours', 'photo_alt': 'The Lymphatic Brush in hand',
              'headline_lead': '&hellip;a fresher-looking face,', 'headline_mark': 'before your coffee.',
              'paragraphs': ['We make SKINOFAB for skin after 45. Morning puffiness is one of the first things that changes, and '
-                            'the tools for it, rollers, stones, ice, ask for oil, pressure and time.',
-                            'So we made a brush instead: thousands of ultra-soft bristles that bend instead of pressing, for the '
+                            'the tools for it, gua sha, rollers, ice, ask for oil, pressure or time.',
+                            'So we made a brush instead: hundreds of ultra-soft tips that bend instead of pressing, for the '
                             'light, slow sweeps toward the neck that facial massage uses. <strong>On dry skin, in 3 minutes.</strong>',
                             'It’s a gentle massage, not a treatment, and we won’t pretend otherwise. If it isn’t for you, the 30-day '
                             'guarantee has you covered.'],
@@ -256,7 +254,7 @@ TWIN = {
     'why': {'title': 'The skinofab difference', 'img': 'card', 'button': 'Claim offer',
             'features': [('Fresher-looking in 3 minutes', 'A light morning massage for eyes, cheeks and jaw'),
                          ('No oils, no mess', 'Use it on dry skin, then your skincare'),
-                         ('30-day money-back guarantee', 'Love it or send it back for a full refund')]},
+                         ('30-day money-back guarantee', 'Love it, or email us for a full refund')]},
 }
 
 

@@ -22,7 +22,7 @@ import hashlib, html, json, os, re, shutil, subprocess, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import apf_copy, balm_copy, brush_copy, ccf_copy, company, relabel_bottles, serum_copy, support_copy, twin, white_bg
+import apf_copy, balm_copy, brush_copy, ccf_copy, company, label_fix, relabel_bottles, serum_copy, support_copy, twin, white_bg
 SECOND_PRODUCTS = (brush_copy, balm_copy, serum_copy)
 
 SRC, DST, OFFERS = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), json.load(open(sys.argv[3]))
@@ -65,12 +65,13 @@ def gift_icons():
 
 BRAND = Path(__file__).resolve().parents[2] / 'brand'
 
-def section_image(src, name, size=(1000, 1250), white=False, shadow=False):
+def section_image(src, name, size=(1000, 1250), white=False, shadow=False, prep=None):
     """A 4:5 crop of a brand image for the problem / solution sections, under a content-hashed name. white: on pure
     white like every product image (white_bg.matte; shadow: a contact shadow under a bottle that stands on the
     floor); not for a close-up the product fills (the label detail), which has no backdrop."""
     from PIL import Image, ImageOps
     im = Image.open(src).convert('RGB')
+    if prep: im = prep(im)
     if white: im = white_bg.matte(im, shadow=shadow)
     im = ImageOps.fit(im, size, Image.LANCZOS, centering=(0.5, 0.42))
     tmp = DST / 'assets' / 'img' / f'{name}.jpg'
@@ -82,7 +83,16 @@ def section_image(src, name, size=(1000, 1250), white=False, shadow=False):
 def problem_solution():
     return apf_copy.problem_solution_html(
         section_image(BRAND / 'persona' / 'age-73.jpg', 'skinofab-problem-skin-after-45', white=True),
-        section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle', white=True, shadow=True))
+        section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle', white=True, shadow=True,
+                      prep=bold_pdrn_three_quarter))
+
+def bold_pdrn_three_quarter(im):
+    """The three-quarter render (1254 px) with its PDRN line set again bold: the solution section shows it ~360 px wide
+    on a phone, where the render's own line reads PORN (review 4)."""
+    import numpy as np
+    from PIL import Image
+    a = label_fix.bold_line(np.asarray(im).astype(np.float32), (466, 1038, 566, 1072), 'PDRN', 19, weight=720, track=0.18)
+    return Image.fromarray(np.clip(a + 0.5, 0, 255).astype(np.uint8))
 
 def crop_to(src_path, name, size, centering, white=False):
     """A crop of an export image at `size`, under a content-hashed name (NEXT's CDN caches by file name); white: its
@@ -180,6 +190,7 @@ def customer_voice(home):
 
 ROOT = Path(__file__).resolve().parents[2]
 VIDEO_SWAPS = Path(__file__).resolve().parent / 'queue' / 'video-swaps.json'   # {export media file: Genjutsu re-make}
+missing = []           # what a step expected and did not find: main() reports it (the helpers add to it too)
 
 def demo_override(i):
     """Card i's replacement clip (ccf_copy.VIDEO_DEMO_CLIPS) and its poster, a frame of it at the card's 720 x 1280
@@ -224,6 +235,74 @@ def video_reviews(home):
     return apf_copy.pdp_reviews_html('On skin', 'See how it blends', out, plain=True,
                                      note=html.escape(ccf_copy.VIDEO_DEMO_NOTE)) if out else None
 
+def patch_card_loader():
+    """The homepage's card script (figma-home*.js) set each card's video.src from data-src, an MP4 (H.264): a browser
+    without H.264 showed the poster and an error. It now takes data-src-webm (VP9) there when the card has one.
+    Returns the scripts changed."""
+    pick = lambda v: f'{v}.src=({v}.dataset.srcWebm&&!{v}.canPlayType(\'video/mp4; codecs="avc1.42E01E"\')?{v}.dataset.srcWebm:{v}.dataset.src)'
+    n = 0
+    for js in sorted((DST / 'assets' / 'js').glob('figma-home*.js')):
+        t = js.read_text(encoding='utf-8')
+        o = t
+        for v in ('video', 'video2'):
+            t = t.replace(f'{v}.src={v}.dataset.src', pick(v))
+        if t != o: js.write_text(t, encoding='utf-8'); n += 1
+        elif 'srcWebm' not in t: missing.append(('card loader', js.name))
+    return n
+
+def _service(name, company, place, text, data, link):
+    """A third-party service as the policies' generator (iubenda) lays one out: a <details> card."""
+    keys = ''.join(f'<li>{d}</li>\n' for d in data)
+    return ('<details class="legalDoc__accordion">\n<summary>\n<figure>\n\n</figure>\n<div>\n'
+            f'<h4>{name}</h4>\n<div class="accordion__meta">\n'
+            f'<p class="meta__company"><span class="sr-only">Company: </span>{company}</p>\n'
+            f'<p class="meta__location"><span class="sr-only">Place of processing: </span>{place}</p>\n'
+            f'<p class="meta__keys"><span class="sr-only">Personal Data processed: </span> {data[0]} +{len(data) - 1}</p>\n'
+            '</div>\n</div>\n</summary>\n<div class="accordion__body">\n'
+            f'<p>{text}</p>\n<div class="body__details-box">\n<h5>Personal Data processed:</h5>\n<ul>\n{keys}</ul>\n'
+            f'<h5>Service provided by:</h5>\n<ul>\n<li>{company} ({place}) – '
+            f'<a href="{link}" rel="noopener noreferrer" target="_blank">Privacy Policy</a></li>\n</ul>\n</div>\n</div>\n</details>')
+
+POLICY_DROP = {'AfterPay.com', 'PayPal', 'Shopify Analytics'}
+NEXT_PLATFORM = _service('NEXT Commerce', 'Next Commerce Pte. Ltd.', 'Singapore',
+                         'NEXT Commerce is a platform provided by Next Commerce Pte. Ltd. that allows the Owner to build, run '
+                         'and host an e-commerce website and its checkout. This service may place Trackers on the User’s device.',
+                         ['device information', 'Trackers', 'Usage Data'], 'https://29next.com/privacy-policy')
+CARD_SERVICES = (
+    _service('Spreedly', 'Spreedly, Inc.', 'United States',
+             'Spreedly is a payment service provided by Spreedly, Inc.: the checkout’s card fields send the card details '
+             'to it, and the Owner never receives them.', ['payment info', 'Usage Data'], 'https://www.spreedly.com/privacy-policy')
+    + '\n' + _service('Stripe', 'Stripe, Inc.', 'United States',
+                      'Stripe is a payment service provided by Stripe, Inc. that processes card and wallet payments '
+                      '(such as Apple Pay and Google Pay) at checkout. This service may place Trackers on the User’s device.',
+                      ['payment info', 'Trackers', 'Usage Data'], 'https://stripe.com/privacy'))
+POLICY_NAMES = [('Afterpay US, Inc.', 'Stripe, Inc.'), ('PayPal Inc.', 'Spreedly, Inc.'), ('Shopify Inc.', 'Next Commerce Pte. Ltd.')]
+
+def policy_services():
+    """The privacy and cookie policies were generated for the old Shopify store: they named Shopify as the host, and
+    Afterpay and PayPal, which this checkout does not offer. The services the store runs on now: NEXT Commerce (the
+    platform and its checkout), Spreedly (the card fields) and Stripe (cards and wallets, with Apple Pay). Afterpay,
+    PayPal and Shopify Analytics go; Shopify's card becomes NEXT's; Spreedly and Stripe follow Apple Pay; the lists of
+    third parties name them in the old ones' places. Returns the pages changed."""
+    n = 0
+    for rel in ('pages/privacy-policy.html', 'pages/cookie-policy.html'):
+        page = DST / rel
+        if not page.exists(): missing.append(('policy services', rel)); continue
+        t = page.read_text(encoding='utf-8', errors='surrogateescape')
+        def card(m):
+            name = re.search(r'<h4>(.*?)</h4>', m.group(0)).group(1).strip()
+            if name in POLICY_DROP: return ''
+            if name == 'Shopify': return NEXT_PLATFORM
+            if name == 'Apple Pay': return m.group(0) + '\n' + CARD_SERVICES
+            return m.group(0)
+        o = t
+        t = re.sub(r'<details class="legalDoc__accordion">.*?</details>', card, t, flags=re.S)
+        for old, new in POLICY_NAMES: t = t.replace(old, new)
+        if re.search(r'Shopify|Afterpay|AfterPay|PayPal', re.sub(r'<[^>]+>', ' ', t)):
+            missing.append(('policy services: old service still named', rel))
+        if t != o: page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
+    return n
+
 def honest_video_cards():
     """The homepage's video cards: VIDEO_DEMOS' captions and label in place of the names, stars and "Verified buyer"
     of people who are not buyers; the section's heading says what the cards are. Returns the cards changed."""
@@ -235,16 +314,29 @@ def honest_video_cards():
     sec = t[m.start():end]
     arts = list(re.finditer(r'<article class="fh-review">.*?</article>', sec, re.S))
     out, last, n = [], 0, 0
+    swaps = json.loads(VIDEO_SWAPS.read_text()) if VIDEO_SWAPS.exists() else {}
     for i, (a, (title, text)) in enumerate(zip(arts, ccf_copy.VIDEO_DEMOS)):
         art = a.group(0)
         override = demo_override(i)
-        if override:          # the card's replacement clip, and a frame of it as its poster
-            clip = hashed_copy(override[0], 'media', 'skinofab-demo-clip')[3:]
+        # the clip the card plays (its replacement, else the export's clip's Genjutsu re-make) as the product page's
+        # cards play it: 540 px, silent, H.264 with a VP9 copy for browsers without H.264 (data-src-webm: the card
+        # script picks it, patch_card_loader); the export's were 1080p with sound, for a card ~360 px wide
+        m = re.search(r'<video[^>]*data-src="(assets/media/[^"]+\.mp4)"', art)
+        src = override[0] if override else (DST / m.group(1) if m else None)
+        if src is not None and not override and src.name in swaps: src = ROOT / swaps[src.name]
+        if m and src is not None and src.exists():
+            stem = 'skinofab-demo-' + hashlib.md5(src.read_bytes()).hexdigest()[:6]
+            mp4, webm = card_clip(src, stem, 'mp4'), card_clip(src, stem, 'webm')
+            if mp4:
+                extra = f' data-src-webm="{webm[3:]}"' if webm else ''
+                art = art.replace(f'data-src="{m.group(1)}"', f'data-src="{mp4[3:]}"{extra}', 1)
+            else: missing.append(('video card clip', title))
+        elif override: missing.append(('video card clip', title))
+        if override:          # a frame of the card's replacement clip as its poster
             still = hashed_copy(override[1], 'img', 'skinofab-demo-poster')[3:]
-            art, k = re.subn(r'(<video[^>]*data-src=")assets/media/[^"]+\.mp4"', lambda mm: mm.group(1) + clip + '"', art, count=1)
             art, j = re.subn(r'(<img[^>]*class="fh-social-poster"[^>]*?)src="[^"]*" srcset="[^"]*"',
                              lambda mm: mm.group(1) + f'src="{still}" srcset="{still} 720w"', art, count=1)
-            if not (k and j): missing.append(('video card clip', title))
+            if not j: missing.append(('video card poster', title))
         art = re.sub(r'(<div class="fh-review-card">)<img alt="" height="20"[^>]*>', r'\1', art, count=1)      # the stars
         art = re.sub(r'<h3>.*?</h3><p>.*?</p>', f'<h3>{html.escape(title)}</h3><p>{html.escape(text)}</p>', art, count=1, flags=re.S)
         art = re.sub(r'<div class="fh-review-name">.*?</div>', f'<div class="fh-review-name"><span>{html.escape(ccf_copy.VIDEO_DEMO_LABEL)}</span></div>',
@@ -645,7 +737,9 @@ LEGACY_TEXT = [
     ('A movement towards embracing your unique beauty — one lip plumper at a time.',
      'A movement towards embracing your unique beauty — one ritual at a time.'),
     ('From a single lip gloss in a tiny kitchen lab to a full-range beauty house — built on heart, not hype.',
-     'From a tiny kitchen lab to a skincare-first line for skin after 45 — built on heart, not hype.'),
+     'From a small studio to a skincare-first line for skin after 45, with formulas made in Korea — built on heart, not hype.'),
+    # the story's heading: the line is made in Korea (the stats below), not in a kitchen; the text says "a small studio"
+    ('Born in a <em>tiny kitchen lab</em>.', 'Born in a <em>small studio</em>.'),
     ('high-impact formulas, on-trend shades and products designed to become everyday favourites — from complexion to lips, '
      'brows and beyond.', 'high-impact formulas designed to become everyday favourites, starting with an adaptive peptide '
      'foundation for skin after 45.'),
@@ -865,11 +959,12 @@ def home_features():
         tmp = WORK / 'home-balm-banner.jpg'; ban.save(tmp, quality=88, optimize=True, progressive=True)
         big = hashed_copy(tmp, 'img', 'skinofab-home-balm-3360w')[3:]
         small = hashed_copy(tmp, 'img', 'skinofab-home-balm-1680w', (1680, 1680))[3:]
-        # under 1200 px the copy and the photo no longer share a wide banner: there it is the photo of her alone
-        eye_src = hashed_copy(balm_copy_img('apply-eye'), 'img', 'skinofab-home-balm-eye-1080w')[3:]
+        # under 1200 px the copy and the photo no longer share a wide banner: there it is the wide photo of her, cut
+        # to its right part (her whole head: the square close-up cut her forehead at its top edge, review 4)
+        eye_src = hashed_copy(HOME / 'balm-wide.jpg', 'img', 'skinofab-home-balm-wide-1536w')[3:]
         sec = re.sub(r'<img alt="" class="fh-original"[^>]*/>',
-                     lambda m: f'<source height="1080" media="(max-width: 1199px)" sizes="(max-width: 1023px) 100vw, 50vw" '
-                     f'srcset="{eye_src} 1080w" width="1080">' + m.group(0), sec, count=1)
+                     lambda m: f'<source height="1024" media="(max-width: 1199px)" sizes="(max-width: 1023px) 150vw, 75vw" '
+                     f'srcset="{eye_src} 1536w" width="1536">' + m.group(0), sec, count=1)
         sec = re.sub(r'<img alt="" class="fh-original"[^>]*/>',
                      f'<img alt="A woman in her sixties pressing the PDRN Plumping Balm under her eye" class="fh-original" '
                      f'height="1013" loading="lazy" sizes="(max-width: 749px) 269vw, 1680px" src="{big}" '
@@ -1032,16 +1127,16 @@ def home_original():
     a, b = section('__foundation')
     if a is not None:
         sec = t[a:b]
-        mob = hashed_copy(HOME / 'oneshade-mobile.webp', 'img', 'skinofab-home-oneshade-mobile-860w')[3:]
-        desk = hashed_copy(HOME / 'oneshade-desktop.jpg', 'img', 'skinofab-home-oneshade-desktop-1024w')[3:]
+        mob = hashed_copy(HOME / 'oneshade-mobile.webp', 'img', 'skinofab-home-oneshade-mobile-1290w')[3:]
+        desk = hashed_copy(HOME / 'oneshade-desktop.jpg', 'img', 'skinofab-home-oneshade-desktop-2048w')[3:]
         # under 1200 px the keyed portrait, whole: the wide photo, cropped to a tablet's or a small laptop's box, cut the
         # top of her head (under a fade, 768 px) or her far eye (under the fade into the copy, 1024 px; review 3)
         sec, k1 = re.subn(r'<source height="1182" media="\(max-width: 749px\)" sizes="85vw" srcset="[^"]*" width="660"/?>',
-                          f'<source height="1130" media="(max-width: 1199px)" sizes="(max-width: 749px) 100vw, 60vw" srcset="{mob} 860w" '
-                          f'type="image/webp" width="860">', sec, count=1)
+                          f'<source height="1695" media="(max-width: 1199px)" sizes="(max-width: 1023px) 100vw, 45vw" srcset="{mob} 1290w" '
+                          f'type="image/webp" width="1290">', sec, count=1)
         sec, k2 = re.subn(r'<img alt="[^"]*" class="fh-original" height="1825"[^>]*>',
-                          f'<img alt="A woman in her fifties holding the Adaptive Peptide Foundation to her temple" class="fh-original" height="780" '
-                          f'loading="lazy" sizes="880px" src="{desk}" srcset="{desk} 1024w" width="1024"/>', sec, count=1)
+                          f'<img alt="A woman in her fifties holding the Adaptive Peptide Foundation to her temple" class="fh-original" height="1560" '
+                          f'loading="lazy" sizes="880px" src="{desk}" srcset="{desk} 2048w" width="2048"/>', sec, count=1)
         X = '[id$="__foundation"] .fh-editorial--foundation'
         sec, k3 = style(sec, (
             # 1024 px and up: the photo beside the copy; the card is as tall as the copy, or as the photo at its own
@@ -1061,13 +1156,16 @@ def home_original():
             f'-webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%);mask-image:linear-gradient(to bottom,transparent,#000 12%)}}}}'
             f'@media(max-width:749px){{{X} .fh-story-copy{{padding:32px 16px 8px}}{X} .fh-story-media{{aspect-ratio:860/1130}}'
             f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'
-            # tablets and small laptops: the keyed portrait whole, in the card's lower left corner, where the photo's own
+            # small laptops (1024-1199, beside the copy): the keyed portrait whole, in the card's lower left corner, where the photo's own
             # edges (her forearm on the left, her shoulders below) meet the card's (centred, the cut forearm stood
             # in the middle of the card). The image is sized to the portrait (its width/height attributes are the
             # desktop photo's), so its right edge, where the photo cuts her shoulder, fades into the card below her
             # head: two mask layers, added, the top 55% never faded
-            f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-story-media{{aspect-ratio:4/3}}}}'
-            f'@media(min-width:750px) and (max-width:1199px){{{X} .fh-story-media .fh-original{{object-fit:contain;object-position:0 100%;'
+            # tablets (750-1023, the photo under the copy): the portrait across the card's width as on phones, its
+            # left, right and lower edges the card's (in a 4:3 box beside empty card it left the right half bare)
+            f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-story-media{{aspect-ratio:860/1130}}'
+            f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'
+            f'@media(min-width:1024px) and (max-width:1199px){{{X} .fh-story-media .fh-original{{object-fit:contain;object-position:0 100%;'
             f'inset:auto;left:0;bottom:0;top:auto;right:auto;width:auto;max-width:100%;height:100%;aspect-ratio:860/1130;'
             f'-webkit-mask-image:linear-gradient(to left,transparent,#000 12%),linear-gradient(to bottom,#000 55%,transparent 72%);'
             f'mask-image:linear-gradient(to left,transparent,#000 12%),linear-gradient(to bottom,#000 55%,transparent 72%)}}}}'))
@@ -1144,8 +1242,9 @@ def home_original():
     a, b = section('__arrivals_desktop')
     if a is not None:
         X = '[id$="__arrivals_desktop"] .fh-editorial--arrivals'
-        img = (f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;transform:none;'
-               f'object-fit:cover;object-position:50% 30%;mix-blend-mode:multiply;-webkit-mask-image:none;mask-image:none}}')
+        # the wide photo anchored at her (its right), a little below the box's top so her hair has air above it
+        img = (f'{X} .fh-story-media .fh-original{{position:absolute;inset:auto;left:0;top:auto;bottom:0;width:100%;height:96%;transform:none;'
+               f'object-fit:cover;object-position:100% 0;mix-blend-mode:multiply;-webkit-mask-image:none;mask-image:none}}')
         sec, k = style(t[a:b], (
             f'@media(max-width:1023px){{{X}{{height:auto;min-height:0;display:flex;flex-direction:column}}'
             f'{X} .fh-story-copy{{position:relative;order:1;height:auto;width:100%;margin:0;padding:40px 32px 24px}}'
@@ -1176,11 +1275,22 @@ LAYOUT_FIXES = (
     # product pages on tablets: the gallery above the buy box (side by side the buy box was 261 px wide), not sticky
     '@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}'
     '.product-single__gallery{position:static!important;height:auto!important}}'
-    # a circled word: room on both sides so the drawn ellipse never crosses the word before it
+    # a circled word: room on both sides so the drawn ellipse never crosses the word before it (CIRCLE_ROOM_JS sets
+    # the left room from the word's width once it is laid out: the ellipse is 136% of it)
     '.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}'
     # policy tables: the export's fixed column widths and row heights (inline) squeezed "Express Shipping" onto 3 lines
     '.rte__table-wrapper table{height:auto!important}.rte__table-wrapper td{width:auto!important;height:auto!important}'
 )
+
+# The drawn ellipse round a circled word is 136% of the word's width, centred on it: it reaches 18% of that width
+# past each side, past a fixed margin when the word is long ("3 minutes" crossed the "n" of "in", review 4). The left
+# room is set from the word's own width, after the web font is in.
+CIRCLE_ROOM_JS = ('<script data-sf-circle-room>(function () {'
+                  'function room() { Array.prototype.forEach.call(document.querySelectorAll(".text-highlight-wrapper--circle .text-highlight"),'
+                  ' function (e) { e.style.marginLeft = Math.round(e.offsetWidth * 0.18 + 6) + "px"; }); }'
+                  'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", room); else room();'
+                  'if (document.fonts && document.fonts.ready) document.fonts.ready.then(room);'
+                  '})();</script>')
 
 def layout_fixes():
     """Every page gets LAYOUT_FIXES at the end of its body, after the sections' own styles, so it wins over them
@@ -1189,7 +1299,8 @@ def layout_fixes():
     for page in DST.rglob('*.html'):
         t = page.read_text(encoding='utf-8', errors='surrogateescape')
         if 'data-sf-layout-fixes' in t or '</body>' not in t: continue
-        t = t.replace('</body>', f'<style data-sf-layout-fixes>{LAYOUT_FIXES}</style></body>', 1)
+        t = t.replace('</body>', f'<style data-sf-layout-fixes>{LAYOUT_FIXES}</style>'
+                      + (CIRCLE_ROOM_JS if 'text-highlight-wrapper--circle' in t else '') + '</body>', 1)
         page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
 
@@ -1242,6 +1353,11 @@ MAILTO_JS = ("<script>document.addEventListener('submit', function (e) {"
              "if (kind === 'newsletter') { subject = 'Newsletter sign-up'; body = 'Please add ' + email + ' to the SKINOFAB newsletter.'; }"
              "else { subject = 'Message from ' + (name || email); body = v('contact[body]') + '\\n\\n' + [name, email, v('contact[phone]')].filter(Boolean).join('\\n'); }"
              "location.href = 'mailto:' + f.getAttribute('data-sf-to') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);"
+             "var note = f.nextElementSibling; if (!note || note.className !== 'sf-mail-sent') {"
+             "note = document.createElement('p'); note.className = 'sf-mail-sent'; note.setAttribute('role', 'status');"
+             "note.style.cssText = 'margin:10px 0 0;font-size:14px;line-height:1.45'; f.parentNode.insertBefore(note, f.nextSibling); }"
+             "note.textContent = 'Your email app should now open with the message written: press send there to finish. '"
+             "+ 'No email app? Write to ' + f.getAttribute('data-sf-to') + '.';"
              "});</script>")
 
 def working_forms():
@@ -2403,7 +2519,8 @@ def main():
             s, t = Path(d) / f, out / f
             if s.suffix.lower() in TEXT: shutil.copy2(s, t)
             else: os.link(s, t)
-    hits, missing = {}, []
+    hits = {}
+    del missing[:]
     # page rules first: they rewrite whole blocks that the global rules would otherwise half-change
     rules = [(f, o, n) for f, rs in ccf_copy.PAGE.items() for o, n in rs] + [(None, o, n) for o, n in ccf_copy.GLOBAL + brush_copy.GLOBAL + balm_copy.GLOBAL + serum_copy.GLOBAL]
     pages = sorted(DST.rglob('*.html'))
@@ -2572,6 +2689,8 @@ def main():
     print('home features', home_features())
     print('home phenomenon', home_phenomenon())
     print('video cards', honest_video_cards())
+    print('card loader', patch_card_loader())
+    print('policy services', policy_services())
     sp, sp_gone = support_pages()
     missing.extend(('support pages', f'{r}: {q}') for r, q in sp_gone)
     print('support pages', sp)

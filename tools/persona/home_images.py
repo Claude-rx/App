@@ -4,11 +4,11 @@ photo of the build's image set, a woman of about 55 holding the real bottle: app
 
 usage: python3 -I tools/persona/home_images.py
 
-- oneshade-mobile.webp, oneshade-desktop.jpg, oneshade-narrow.jpg: the "One shade" model (source/oneshade-ai.jpg: the original photo, its
+- oneshade-mobile.webp, oneshade-desktop.jpg: the "One shade" model (source/oneshade-ai.jpg: the original photo, its
   model made a woman of about 57 by gpt-image-2, her bottle's small print garbled), the real bottle laid on it. The
   phone file (also tablets and small laptops, under 1200 px) is its backdrop keyed out, the gaps between her fingers
   and between her arm and neck too (the card's grey gradient behind her, as behind the original cut-out); the desktop
-  file is a landscape crop of it (oneshade-narrow.jpg, a squarer one, is no longer used)
+  file is a landscape crop of it; both from source/oneshade-ai-2x.jpg (Real-ESRGAN 2x, docs/persona-image-shots.md)
 - formulas.jpg: the "Korean formulas" photo (source/formulas-ai-2x.jpg: the original model with her neck and shoulder
   completed, so no cut edge shows at any width; Real-ESRGAN 2x), the real bottle laid on it, a little wider than the
   image model's bottle so it covers it whole
@@ -34,13 +34,17 @@ ROOT = Path(__file__).resolve().parents[2]
 SRC, OUT, BRAND = ROOT / 'brand' / 'home' / 'source', ROOT / 'brand' / 'home', ROOT / 'brand'
 HELD = Path(__file__).resolve().parent / 'held_bottle.py'
 sys.path.insert(0, str(HELD.parent))
+import label_fix
 from label_fix import legible_pdrn
 import relabel_bottles
 TMP = OUT / '.work'
 
 
 def held(src, out, *geometry):
-    subprocess.run([sys.executable, '-I', str(HELD), str(src), str(out), *geometry], check=True)
+    """held_bottle.py on a photo; its PDRN line bold (--pdrn bold) unless geometry says otherwise: every one of these
+    photos shows the bottle a few hundred px tall at most, where the label's own line reads PORN (review 4)."""
+    pdrn = () if '--pdrn' in geometry else ('--pdrn', 'bold')
+    subprocess.run([sys.executable, '-I', str(HELD), str(src), str(out), *geometry, *pdrn], check=True)
 
 
 def save(im, name, **kw):
@@ -75,8 +79,10 @@ def cutout(path, keep='largest'):
 
 
 def foundation_unit():
-    """The Adaptive Peptide Foundation bottle cut out of its front render (its grey sweep dropped), PDRN legible."""
-    r = legible_pdrn(np.asarray(Image.open(BRAND / 'adaptive-peptide-foundation' / '01-front.png').convert('RGB')).astype(np.float32))
+    """The Adaptive Peptide Foundation bottle cut out of its front render (its grey sweep dropped), its PDRN line at
+    label_fix.XL: the shelf card and the bundle card show it ~60 px wide on a 1440 px screen."""
+    r = legible_pdrn(np.asarray(Image.open(BRAND / 'adaptive-peptide-foundation' / '01-front.png').convert('RGB')).astype(np.float32),
+                     **label_fix.XL)
     l = r.mean(2)
     bg = np.median(np.concatenate([l[:20].ravel(), l[:, :20].ravel(), l[:, -20:].ravel()]))
     lab, n = ndimage.label(l < bg * 0.62)
@@ -119,11 +125,12 @@ def crop45(path, box):
 
 def main():
     OUT.mkdir(exist_ok=True); TMP.mkdir(exist_ok=True)
-    # ---- One shade: the bottle at her temple, measured by hand (its base, its pump end, its width); ours is a little
-    # wider than the image model's, so it covers it whole
-    held(SRC / 'oneshade-ai.jpg', TMP / 'oneshade.jpg', '--line', '183,937,251,412', '--w', '152', '--width', '1.11', '--anchor', 'centre',
+    # ---- One shade: the bottle at her temple, measured by hand (its base, its pump end, its width; at 2x: the photo is
+    # source/oneshade-ai-2x.jpg, Real-ESRGAN 2x of oneshade-ai.jpg, so a 2x screen's 880 px box gets real detail); ours is
+    # a little wider than the image model's, so it covers it whole
+    held(SRC / 'oneshade-ai-2x.jpg', TMP / 'oneshade.jpg', '--line', '366,1874,502,824', '--w', '304', '--width', '1.11', '--anchor', 'centre',
          '--fingers', 'left')                                       # her fingertip at its edge stays in front
-    one = Image.open(TMP / 'oneshade.jpg').convert('RGB')                               # 1024 x 1536
+    one = Image.open(TMP / 'oneshade.jpg').convert('RGB')                               # 2048 x 3072
     a = np.asarray(one).astype(np.float32)
     white = (a.min(2) > 238) & (a.max(2) - a.min(2) < 10)
     lab, n = ndimage.label(white)
@@ -132,15 +139,14 @@ def main():
     # bottle, between her arm and her neck: 11,000-13,000 px each), which showed as a white box on the card's grey
     # (review 3); the bottle's printed letters are far smaller
     size = ndimage.sum(white, lab, range(n + 1))
-    bg = np.isin(lab, [i for i in range(1, n + 1) if i in edge or size[i] > 4000])
-    alpha = 1 - ndimage.gaussian_filter(bg.astype(np.float32), 1.2)
+    bg = np.isin(lab, [i for i in range(1, n + 1) if i in edge or size[i] > 16000])     # 4,000 px at 1x
+    alpha = 1 - ndimage.gaussian_filter(bg.astype(np.float32), 2.4)
     rgba = Image.fromarray(np.dstack([a.astype(np.uint8), (np.clip(alpha, 0, 1) * 255).astype(np.uint8)]), 'RGBA')
     # phones: her head and shoulders from the hair down, keyed (the card's grey gradient shows behind her)
-    save(rgba.crop((0, 190, 1024, 1536)).resize((860, 1130), Image.LANCZOS), 'oneshade-mobile.webp', quality=86, method=6)
-    # wide screens and tablets: bottle and face, chin included (1.31:1); 1024-1199 px, where the card leaves the
-    # photo a near-square box: a squarer crop of the same (1.1:1)
-    save(one.crop((0, 360, 1024, 1140)), 'oneshade-desktop.jpg')
-    save(one.crop((40, 330, 940, 1150)), 'oneshade-narrow.jpg')
+    # (1290 px wide: a tablet shows it across the card, ~700 px, at 2x)
+    save(rgba.crop((0, 380, 2048, 3072)).resize((1290, 1695), Image.LANCZOS), 'oneshade-mobile.webp', quality=84, method=6)
+    # wide screens: bottle and face, chin included (1.31:1), 2048 px for the 880 px box at 2x
+    save(one.crop((0, 720, 2048, 2280)), 'oneshade-desktop.jpg')
     # ---- Korean formulas: the bottle at her forehead, measured by hand at 2x
     # (its old bottle is slimmer than ours, 178 px to our 226 at the same length: ours covers it whole, the fingers that
     # crossed the old one stay in front); first a white wedge the image model left on her nose is filled from the skin
@@ -156,12 +162,12 @@ def main():
          '--line', '269,925,269,566', '--w', '97', '--width', '1.15', '--anchor', 'centre', '--fingers', 'left', '--tone', 'render')
     # ---- "The SKINOFAB phenomenon" cards 4 and 7: persona photos whose bottles printed the old "COLOR CHANGING
     # FOUNDATION / 15 SPF" (4) or a PDRN that read PORN at the card's size; the real bottle laid on them, its PDRN line
-    # set large enough for a bottle the card shows ~100 px wide (card 7: the photo frames her whole face and the bottle
-    # in the card's 13:20, which the old card 7's selfie could not)
+    # set large enough for a bottle the card shows ~45 px wide on a 1440 px screen, --pdrn xl (review 4; card 7: the
+    # photo frames her whole face and the bottle in the card's 13:20, which the old card 7's selfie could not)
     held(SRC / 'phenomenon-4-ai.jpg', OUT / 'phenomenon-4.jpg', '--roi', '420,540,600,945', '--pump', 'up', '--anchor', 'centre',
-         '--tone', 'render', '--pdrn', 'bold')
+         '--tone', 'render', '--pdrn', 'xl')
     held(SRC / 'phenomenon-7-ai.jpg', OUT / 'phenomenon-7.jpg', '--line', '411,1053,401,544', '--w', '127', '--width', '1.23',
-         '--anchor', 'base', '--fingers', 'left', '--tone', 'render', '--pdrn', 'bold')
+         '--anchor', 'base', '--fingers', 'left', '--tone', 'render', '--pdrn', 'xl')
     # ---- the balm banner (from 1200 px): the balm eye photo widened to a landscape by gpt-image-2
     # (pdrn-balm/source/apply-eye-wide-ai.png: her whole head in frame, studio background to her left; the square
     # original was framed so tight that her temple and hair ran into its edges, which showed as a pasted rectangle),

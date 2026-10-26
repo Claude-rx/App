@@ -11,6 +11,8 @@ file says where the bottles are in each photo:
   is a point at its first letter (which way it reads); label_composite.measure_print + swap_flat
 - ('badge', box, cx, base1, base2, size): the origin badge under the Korean flag, cleared (box, on white) and set
   again as label_composite.ORIGIN_LINES, centred on cx, on the two baselines, Montserrat at size px
+- ('boldrot', centre, angle, (w, h), text, cap): a small line printed at a slant (degrees clockwise), set again
+  bold at cap px (label_fix.bold_line_rot)
 - ('flat', p0, p1, h): a print too small, turned or cut out for that (a photo on pure black, a bottle seen end-on):
   the old wordmark runs from p0 to p1 (its first and last letters' outer ends), h px tall, in the reference size's px;
   label_composite.swap_flat sets ours flat on the same line
@@ -74,7 +76,8 @@ BALM = {
 # file-name prefix -> (the reference copy's size, the bottles in it); the longest prefix whose aspect matches wins
 SITE = {
     'KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2-': ((1080, 1080), [('auto', (0.38, 0.23, 0.62, 0.87), 0, {}),
-        ('badge', (846, 212, 1062, 284), 952, 243, 267, 21)]),     # its flag badge: "Based on Korean / Beauty Innovation"
+        ('badge', (846, 212, 1062, 284), 952, 243, 267, 21),       # its flag badge: "Based on Korean / Beauty Innovation"
+        ('boldrot', (540.5, 832), 0, (80, 20), 'PDRN', 12)]),       # its 6 px PDRN line read PORN on a phone (review 4)
     # (the home hero's files are not relabelled here: hero_label.py draws the real label on its master, flat and at
     # the logo's own proportions; wrapping a second wordmark around its cylinder made the letters wobble)
     'ColorChangingFoundation-Productimage_31cddf53-0315-41bf-bfe5': ((1080, 1080), [('auto', (0.46, 0.21, 0.68, 0.79), 0, {})]),
@@ -94,6 +97,9 @@ SITE = {
     '22_ed20463f-1b63-4206-8734-81f1bfc33ec4': ((1350, 1350), [('auto', (0.07, 0.34, 0.32, 0.96), -6, {})]),
     '24_e2816f7f-0236-4d48-8794-a7b92c9b627d': ((1350, 1350), [('auto', (0.225, 0.385, 0.385, 0.83), -5, {})]),
     '2_babe5169': ((1500, 1500), [('flat', (584.3, 203.6), (830.9, 105.3), 42)]),
+    # the "Soft on fine lines" clip's poster (the swapped bottle, tilted in her hand): its small PDRN line, a few px
+    # tall, was drawn as PORN; set again bold along the label's slant (review 4)
+    'softer-lines-foundation-review-poster-720w-p': ((720, 1280), [('boldrot', (42.5, 1072.5), 31, (24, 9), 'PDRN', 5.5)]),
 }
 
 
@@ -112,6 +118,12 @@ def relabel(im, ops, ref=None):
             continue
         if op[0] == 'legible':
             out = Image.fromarray(np.clip(label_fix.legible_pdrn(np.asarray(out).astype(np.float32)) + 0.5, 0, 255).astype(np.uint8))
+            continue
+        if op[0] == 'boldrot':                                 # a small line at a slant, set again bold (label_fix)
+            _, (cx, cy), angle, (w, h), text, cap = op
+            a = label_fix.bold_line_rot(np.asarray(out).astype(np.float32), (cx * k, cy * k), angle,
+                                        (round(w * k), round(h * k)), text, cap * k, weight=760, track=0.2)
+            out = Image.fromarray(np.clip(a + 0.5, 0, 255).astype(np.uint8))
             continue
         if op[0] == 'retype':
             _, box, text = op

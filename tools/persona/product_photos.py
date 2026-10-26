@@ -24,7 +24,8 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import label_composite, relabel_bottles, white_bg
+import label_composite, label_fix, relabel_bottles, white_bg
+import numpy as np
 BRAND = HERE.parents[1] / 'brand'
 BALM, SERUM, BRUSH = BRAND / 'pdrn-balm', BRAND / 'egf-nad-serum', BRAND / 'lymphatic-brush'
 FOUNDATION = BRAND / 'adaptive-peptide-foundation'
@@ -139,9 +140,10 @@ def korea_badge(im, cx=948, cy=148):
         d.text((cx, cy + 108 + k * 29), line, font=sans(23, 'Regular'), fill=INK, anchor='ms')
 
 
-def cutout(product, name, thresh=244):
-    """The product on a white photo, as RGBA (everything near-white goes transparent, edges feathered)."""
-    im = photo(product, name)
+def cutout(product, name, thresh=244, im=None):
+    """The product on a white photo, as RGBA (everything near-white goes transparent, edges feathered). im: the
+    photo already loaded (and changed), else photo(product, name)."""
+    im = photo(product, name) if im is None else im
     g = ImageOps.grayscale(im).point(lambda v: 255 if v < thresh else 0).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(1.2))
     out = im.convert('RGBA'); out.putalpha(g)
     return out.crop(g.getbbox())
@@ -221,15 +223,22 @@ def science(product, name, lines):
     save(im, product, 'science')
 
 
-def vs_others(product, ours, others, others_label, why, rows, others_thresh=240, others_h=200):
-    """'skinofab vs. others': the product in a light highlight column, a generic one beside it, tick rows."""
+def vs_others(product, ours, others, others_label, why, rows, others_thresh=240, others_h=200, small_print=None):
+    """'skinofab vs. others': the product in a light highlight column, a generic one beside it, tick rows.
+    small_print: (box, text, cap) in the photo of ours: its small print set again, larger and bold (label_fix.bold_line),
+    before the product is scaled down to the column (a third of its size: the old line would be a few px tall)."""
     im = Image.new('RGB', (W, W), PAPER)
     d = ImageDraw.Draw(im)
     d.text((W // 2, 112), 'skinofab', font=serif(70, 'Bold', italic=True), fill=INK, anchor='rs')
     d.text((W // 2 + 14, 112), 'vs. others', font=serif(70, 'Bold', italic=True), fill=INK, anchor='ls')
     col1, col2, top = 640, 880, 170
     d.rounded_rectangle((col1 - 110, top, col1 + 110, W - 110), radius=26, fill=(240, 240, 239))
-    ours_im = cutout(product, ours); ours_im.thumbnail((150, 300), Image.LANCZOS)
+    ours_photo = photo(product, ours)
+    if small_print:
+        box, text, cap = small_print
+        a = label_fix.bold_line(np.asarray(ours_photo).astype(np.float32), box, text, cap)
+        ours_photo = Image.fromarray(np.clip(a + 0.5, 0, 255).astype(np.uint8))
+    ours_im = cutout(product, ours, im=ours_photo); ours_im.thumbnail((150, 300), Image.LANCZOS)
     im.paste(ours_im, (col1 - ours_im.width // 2, top + 24), ours_im)
     oth = cutout(product, others, others_thresh); oth.thumbnail((200, others_h), Image.LANCZOS)
     im.paste(oth, (col2 - oth.width // 2, top + 24 + 300 - oth.height), oth)
@@ -272,7 +281,8 @@ def balm():
                            'Press it on: it cushions the look of hollows and lines',
                            'while it hydrates, right where you need it.'))
     vs_others(P, 'tall', 'jar', 'A jar of cream', [('Why a press-on', False), ('stick works where', False), ('a jar doesn’t', True)],
-              ['Goes exactly where\nyou need it', 'No fingers, no mess', 'Fits in your bag', 'Works over makeup'])
+              ['Goes exactly where\nyou need it', 'No fingers, no mess', 'Fits in your bag', 'Works over makeup'],
+              small_print=((402, 1300, 622, 1331), 'PDRN', 22))   # the line relabel_bottles retypes, as one bold word
     for n in ('apply-eye', 'hold-chin', 'friends', 'apply-lips', 'bag'):
         plain(P, n)
     before_after(P, 'ba-smile', 'ba-smile')
@@ -335,6 +345,9 @@ FOUNDATION_NEXT = [(FOUNDATION / '01-front.png', True), (FOUNDATION / '03-three-
                    (FOUNDATION / '02-three-quarter-left.png', True), (BRAND / 'persona' / 'age-109.jpg', False),
                    (BRAND / 'persona' / 'pdp-duo-women.jpg', False)]
 
+NEXT_BOLD = {'01-front.png': lambda a: label_fix.legible_pdrn(a, **label_fix.XL),
+             '03-three-quarter-right.png': lambda a: label_fix.bold_line(a, (466, 1038, 566, 1072), 'PDRN', 19, weight=720, track=0.18)}
+
 
 def foundation():
     """The foundation gallery's "skinofab vs. others" was white on black: the same board on white, as the other
@@ -346,7 +359,11 @@ def foundation():
     # the NEXT product's gallery (cart and checkout thumbnails, in this order) on the same white: next/<name>.jpg
     out = FOUNDATION / 'next'; out.mkdir(exist_ok=True)
     for path, shadow in FOUNDATION_NEXT:
-        im = white_bg.matte(Image.open(path).convert('RGB'), shadow=shadow)
+        im = Image.open(path).convert('RGB')
+        # the renders' PDRN line bold: the catalogue card and the cart show them ~165 px wide (review 4)
+        if path.name in NEXT_BOLD:
+            im = Image.fromarray(np.clip(NEXT_BOLD[path.name](np.asarray(im).astype(np.float32)) + 0.5, 0, 255).astype(np.uint8))
+        im = white_bg.matte(im, shadow=shadow)
         im.save(out / f'{path.stem}.jpg', quality=92, optimize=True, progressive=True)
         print('next', path.stem, im.size)
 

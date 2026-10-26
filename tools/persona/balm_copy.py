@@ -100,9 +100,7 @@ def tabs():
                 'Press it in with the stick or tap with a fingertip, no rubbing', 'Morning and night; at night you can go a little thicker'])
          + '<p><strong>Less is more:</strong> a thin layer looks smooth; too much looks shiny.</p>'),
         ('How does the money-back guarantee work?',
-         '<p>Use it for <strong>30 days</strong>. If you don’t see a difference, send it back for a <strong>full refund</strong>, '
-         'no hassle, no questions asked.</p>'
-         f'<p>Please email us at <a href="mailto:{EMAIL}">{EMAIL}</a> to receive return instructions.</p>'),
+         f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll refund it in <strong>full</strong>, even opened, with no need to send it back.</p>'),
         ('Ingredients',
          ''.join(f'<p><strong>{esc(n)}:</strong> {esc(t)}.</p>' for n, t, _ in INGREDIENTS)
          + f'<p>{esc(ADENOSINE)}</p>'
@@ -140,7 +138,7 @@ FAQ = {'items': [
      'It’s gentle on most skin, but try it on a small area first if your skin reacts easily. Don’t use it on broken or irritated skin. '
      'It contains salmon-derived DNA (PDRN): if you have a fish allergy, ask your doctor first.'),
     ('What if it doesn’t work for me?',
-     f'Send it back within 30 days for a full refund. Just email {EMAIL}.'),
+     f'Email {EMAIL} within 30 days and we’ll refund it in full. No need to send it back.'),
 ]}
 # section by section, in the foundation page's order (twin.py names each slot); images are brand/pdrn-balm/<name>.jpg or
 # its source/ photo. The before/after photos are illustrations and say so on the image.
@@ -243,7 +241,7 @@ TWIN = {
     'why': {'title': 'The skinofab difference', 'img': 'temple', 'button': 'Claim offer',
             'features': [('Visible in seconds', 'Smoother, more rested-looking under-eyes the moment you press it on'),
                          ('Four K-beauty actives', 'PDRN, Volufiline™, collagen and hyaluronic acid'),
-                         ('30-day money-back guarantee', 'Love it or send it back for a full refund')]},
+                         ('30-day money-back guarantee', 'Love it, or email us for a full refund')]},
 }
 
 

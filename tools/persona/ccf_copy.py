@@ -30,11 +30,13 @@ GLOBAL = [
      'Our Adaptive Peptide Foundation goes on white and adapts to your skin tone as you blend.'),
     (r'RE:At first touch, the pigments look soft and neutral\. As you smooth the formula across your skin, these micro-pigments disperse and warm up, revealing the natural blend of tones your complexion needs\.',
      'Its color-adapting pigments are encapsulated. As you smooth the formula across your skin, they release and mix into your own tone in about a minute.'),
-    # the money-back icon was a warped photo of a seal ("% 100 %"): a drawn 30-day badge, crisp at 50 px
+    # the money-back icon was a warped photo of a seal ("% 100 %"): a drawn 30-day badge, crisp at 50 px. It fills
+    # its holder the way the photo's figure did (the holder is 0 px tall with a padding-top ratio: a 100%-tall svg
+    # in it drew nothing, review 4)
     (r'RE:<figure class="lazy-image is-loading lazy-image--cover"><img class="is-loading product__icon__img img-object-cover"[^>]*'
      r'Color_Changing_Foundation_-_Product_images_photos_2-[^>]*>\s*</figure>',
      '<svg class="product__icon__img" viewBox="0 0 100 100" width="50" height="50" role="img" aria-label="30-day money-back guarantee" '
-     'style="display:block;width:100%;height:100%"><circle cx="50" cy="50" r="48" fill="#151515"/>'
+     'style="display:block;position:absolute;top:0;left:0;width:100%;height:100%"><circle cx="50" cy="50" r="48" fill="#151515"/>'
      '<circle cx="50" cy="50" r="40" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="2.5 3.5"/>'
      '<text x="50" y="54" text-anchor="middle" font-family="Jost,Arial,sans-serif" font-weight="700" font-size="34" fill="#fff">30</text>'
      '<text x="50" y="73" text-anchor="middle" font-family="Jost,Arial,sans-serif" font-weight="600" font-size="12" letter-spacing="1.5" fill="#fff">DAYS</text></svg>'),
@@ -100,6 +102,11 @@ GLOBAL = [
 
 PAGE = {
     'index.html': [
+        # the one-shade card: the tint shifts as you blend, in about a minute (the PDP's own wording), not on contact
+        ("Our color-adapting foundation shifts to match your skin tone the moment it touches your skin, then settles"
+         " into a smooth, natural finish",
+         "Our color-adapting foundation goes on white and shifts to your skin tone as you blend, in about a minute, "
+         "then settles into a smooth, natural finish"),
         # "Formulated in Korea" cards: "ceramides, panthenol and glycerin in every formula", "vitamin C": no product lists
         # vitamin C, the serum has neither ceramides nor panthenol, only the foundation says fragrance-free
         ('Ceramides, panthenol and glycerin in every formula. Fragrance-free, so nothing fights your barrier while the rest works.',
@@ -183,6 +190,17 @@ PAGE = {
         (r'RE:6-8\xa0 Business Days', '6-8 Business Days'),
     ],
     'products/color-changing-foundation.html': [
+        # 'The skinofab difference': the shade takes about a minute of blending, as the page says everywhere else
+        ('Visible results in seconds', 'Your shade in about a minute'),
+        ('Watch it adapt to your exact skin tone as you blend', 'It goes on white and shifts toward your skin tone as you blend'),
+        (r'RE:(skinofab-why__feature-icon">\s*<img) alt="[^"]*"', r'\g<1> alt=""'),     # decorative icons
+        # the guarantee tab: the refund policy's terms (an email within 30 days, a full refund once approved, no return)
+        ("We know finding the perfect foundation match online can feel like a gamble. That's why we've eliminated the risk "
+         "entirely. Try it on your skin, in your lighting, with your routine. If it's not your perfect match, simply let us "
+         "know within 30 days and we'll process your full refund immediately.",
+         "Buying foundation online after 45 feels like a gamble, so try it on your skin, in your lighting, with your "
+         "routine. If you don't love it, email hello@skinofab.com within 30 days and we'll refund it in full, even "
+         "opened, with no need to send it back."),
         # "Shipping and returns" and two FAQ answers came from the old store: 24-48 h dispatch, 5-7 days, "65+ countries",
         # returns "new, unused, in their original packaging". The store's terms instead (support_copy.py, as the
         # shipping and refund policies say them)
