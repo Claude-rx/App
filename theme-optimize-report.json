@@ -144,8 +144,8 @@
   },
   "inline": {
    "blocks": 947,
-   "before_kb": 5383.0,
-   "after_kb": 4629.8,
+   "before_kb": 5426.5,
+   "after_kb": 4673.3,
    "skipped": 0
   }
  },
@@ -180,14 +180,14 @@
   "script_tags_deferred": 51
  },
  "images": {
-  "elements": 236,
+  "elements": 224,
   "skipped": 661
  },
  "errors": [],
  "css_preloads": 13,
  "backgrounds": {
   "lazy": 5,
-  "kb_deferred": 1179
+  "kb_deferred": 1232
  },
  "late_images": {
   "images": 59
