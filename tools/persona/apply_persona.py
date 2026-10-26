@@ -1063,10 +1063,14 @@ def home_original():
             f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'
             # tablets and small laptops: the keyed portrait whole, in the card's lower left corner, where the photo's own
             # edges (her forearm on the left, her shoulders below) meet the card's (centred, the cut forearm stood
-            # in the middle of the card)
+            # in the middle of the card). The image is sized to the portrait (its width/height attributes are the
+            # desktop photo's), so its right edge, where the photo cuts her shoulder, fades into the card below her
+            # head: two mask layers, added, the top 55% never faded
             f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-story-media{{aspect-ratio:4/3}}}}'
             f'@media(min-width:750px) and (max-width:1199px){{{X} .fh-story-media .fh-original{{object-fit:contain;object-position:0 100%;'
-            f'-webkit-mask-image:none;mask-image:none}}}}'))
+            f'inset:auto;left:0;bottom:0;top:auto;right:auto;width:auto;max-width:100%;height:100%;aspect-ratio:860/1130;'
+            f'-webkit-mask-image:linear-gradient(to left,transparent,#000 12%),linear-gradient(to bottom,#000 55%,transparent 72%);'
+            f'mask-image:linear-gradient(to left,transparent,#000 12%),linear-gradient(to bottom,#000 55%,transparent 72%)}}}}'))
         t = t[:a] + sec + t[b:]; done['one shade'] = k1 + k2 + k3
     # ---- Korean formulas: one complete photo (her neck and shoulder whole, so no cut edge), the real bottle in hand
     a, b = section('__formulas')
