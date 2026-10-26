@@ -1420,6 +1420,9 @@ LAYOUT_FIXES = (
     '.fh-social-play{top:auto;right:auto;left:14px;bottom:14px;margin:0;width:52px;height:52px}'
     # the homepage's video cards were 574 px at every width, so the last one in view was always cut mid-sentence
     # ("Glides Over Textur", review 5): whole cards, one in view on tablets, two from 1024 px, all three from 1400
+    # (on a phone the design's track kept its own 728 px height, 85 to 110 px taller than the cards: an empty band
+    # above the slider's controls, review 6; the posters' width and height hold their room)
+    '@media(max-width:749px){.fh-review-track{min-height:0}}'
     '@media(min-width:750px){.fh-review-track>.fh-review{width:auto;min-width:0;grid-template-columns:186.36px minmax(0,1fr)}}'
     '@media(min-width:750px) and (max-width:1023px){.fh-review-track>.fh-review{flex:0 0 100%}}'
     '@media(min-width:1024px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 12px) / 2)}}'
