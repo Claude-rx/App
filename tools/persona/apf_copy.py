@@ -761,6 +761,11 @@ PROBLEM_SOLUTION_CSS = r"""
  .sfps-cards{grid-template-columns:1fr}
  .sfps-photo{aspect-ratio:4/4.4}
 }
+/* stacked on a tablet: the photo at most 560 px wide, so a 1000 px file covers it at 2x density (full width, 728 px,
+   it was shown at 1.46 times its size and looked soft, store review 6) */
+@media (min-width:600px) and (max-width:989px){
+ .sfps-grid>.sfps-photo{justify-self:center;width:100%;max-width:560px}
+}
 @media (max-width:599px){
  .sfps-wrap{width:calc(100% - 32px)}
  .sfps-lede{font-size:16.5px}
@@ -866,6 +871,9 @@ PDP_EXTRA_CSS = r"""
  .sfx-grid{grid-template-columns:1fr;gap:28px}
  .sfx-photo{aspect-ratio:4/4.4}
  .sfx-review .sfx-photo{aspect-ratio:4/5}
+}
+@media (min-width:600px) and (max-width:989px){
+ .sfx-grid>.sfx-photo{justify-self:center;width:100%;max-width:560px}
 }
 @media (max-width:599px){
  .sfx-wrap{width:calc(100% - 32px)}
