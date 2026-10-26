@@ -243,7 +243,8 @@ def sections(found_main, P, ctx):
         elif sid == 'shopify-section-sf-kbeauty':
             # the product's note ("Why we made it") first, where the foundation's page once had its dermatologist
             n = dict(t['note'])
-            n['photo'] = img(n['photo'], (800, 1000), (0.5, 0.4))
+            # 1000 px wide: a phone at 3x shows it about 1074 px wide (800 was enlarged 1.34x, stick review 4)
+            n['photo'] = img(n['photo'], (1000, 1250), (0.5, 0.4))
             n['avatar'] = ctx['avatar']
             out.append(wrap('sf-note', apf_copy.dermatologist_html(n)))
             k = t['science']

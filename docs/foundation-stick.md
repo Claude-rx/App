@@ -52,7 +52,7 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 
 | Facelove device | Here |
 |---|---|
-| "The stick that makes mature skin glow again" | The buy box lead: the foundation that finds your shade for you, the brush on the other end, a minute, nothing to spill |
+| "The stick that makes mature skin glow again" | The buy box lead: the foundation that finds your shade for you, the brush on the other end, a minute, nothing to spill; three checks under it (`BULLETS`: no shade to choose, the brush built in, creamy for dry skin); under the title's price, what it is ("2 Sticks with Automatic Refills, $23.50 a stick", kept in step with the chosen pack) |
 | "5 reasons" (natural finish, automatic shade, mature skin, light wear, skincare) | Problem / root cause / solution with five fixes, "The skinofab difference", the compare table and the six tabs |
 | "No orange, grey or yellow tint", "no time wasted on color choices" | The problem ("orange in daylight, grey by the window"), "No shade to guess", "0 shades to choose" |
 | "Does not settle into wrinkles", "no cakey, dry or tight feeling" | Said as how to get it: thin layers, buffed in with the brush, on moisturised skin (FAQ, tabs) |

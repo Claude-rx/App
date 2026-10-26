@@ -226,7 +226,9 @@ def images():
     }
     for name in GALLERY: save(made[name], f'{name}.jpg', quality=88)
     for k in range(1, 4): save(Image.open(SRC / f'mech-{k}.webp'), f'how-{k}.jpg', (1264, 848))
-    save(Image.open(SRC / 'compare-ours.png'), 'compare-ours.jpg', (1000, 1000), white=False)
+    # "in hand": a studio photo of the brush in a hand past 50, on white (source/in-hand.jpg, GPT Image 2 from the
+    # brush's own render): the original phone photo showed frayed, stray bristles over a stained floor (store audit 8)
+    save(Image.open(OUT / 'source' / 'in-hand.jpg'), 'compare-ours.jpg', (1000, 1000), white=False)
     save(Image.open(SRC / 'compare-copy.png'), 'compare-copy.jpg', (1000, 1000), white=False)
     gift = case_logo(rgb('gift-case.png'), (285, 340, 520, 420), 196)
     save(Image.fromarray(np.clip(gift, 0, 255).astype(np.uint8)).crop((210, 200, 590, 580)), 'gift-case.jpg', (160, 160))

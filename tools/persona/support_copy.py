@@ -24,9 +24,11 @@ import company
 E = company.EMAIL
 MAIL = f'<a href="mailto:{E}">{E}</a>'
 PROCESSING = '1 business day'
+# (the EU's six fastest first, then the rest of Europe with the other English-speaking countries: "the UK ... and the
+# rest of the EU" read as if the UK were in it, store audit 8)
 DELIVERY = [('United States', '2–4 business days'),
-            ('United Kingdom, Canada, Australia, New Zealand and the rest of the EU', '6–9 business days'),
             ('Netherlands, Belgium, France, Germany, Austria and Luxembourg', '6–8 business days'),
+            ('Other EU countries, the United Kingdom, Canada, Australia and New Zealand', '6–9 business days'),
             ('Rest of the world', '8–12 business days')]
 PRODUCTS = 'the Adaptive Peptide Foundation, the EGF + NAD+ Firming Serum, the PDRN Plumping Balm and The Lymphatic Brush'
 
@@ -37,8 +39,8 @@ def delivery_list():
 
 # the same terms in a product page's "Shipping and returns" tab and its FAQ answers (plain text, no links)
 SHIPPING_SHORT = (f'We process orders within {PROCESSING} and ship them free, with tracking. Standard delivery after that: '
-                  'United States 2–4 business days; the UK, Canada, Australia, New Zealand and the EU 6–9; the rest of '
-                  'the world 8–12.')
+                  'United States 2–4 business days; Europe, the UK, Canada, Australia and New Zealand 6–9 (6–8 to the '
+                  'Netherlands, Belgium, France, Germany, Austria and Luxembourg); the rest of the world 8–12.')
 RETURNS_SHORT = (f'Try it for 30 days from the day it arrives. If you don’t love it, email {E} with your order number and '
                  'we’ll refund the product’s price in full, even if you’ve opened and used it.')
 SHIPPING_TAB_HTML = (f'<p><strong>Processing and delivery</strong><br/>{html.escape(SHIPPING_SHORT, quote=False)}</p>'
@@ -89,16 +91,16 @@ FAQ = [
      '<p>Weather, customs or carrier delays can add a few days.</p>'),
     ('Do you offer free shipping', None, '<p>Yes. Shipping is free on every order.</p>'),
     ('What is your return policy', None,
-     f'<p>{GUARANTEE}</p><p>Unopened products can also be returned within 30 days of delivery for a refund, store '
-     'credit or an exchange. See our <a href="../policies/refund-policy.html">refund policy</a>.</p>'),
+     f'<p>{GUARANTEE}</p><p>Rather have store credit or another SKINOFAB product? That works too, for an unopened '
+     'product within 30 days of delivery. See our <a href="../policies/refund-policy.html">refund policy</a>.</p>'),
     ('How do I return a product', None,
      f'<p>Email {MAIL} with your order number and what you’d like: a refund, store credit or an exchange. We reply with '
      'what to do next.</p>'),
     # the export's answer: "products of equal value", the customer pays any difference: the refund policy's terms instead
     ('Do you offer exchanges', None,
      f'<p>Yes, for an unopened product, within 30 days of delivery: email {MAIL} with your order number and the SKINOFAB '
-     'product you would like instead. If it costs more or less, we charge or refund the difference. As with any '
-     'unopened return, you pay the return shipping, unless we sent the wrong item or it arrived damaged.</p>'),
+     'product you would like instead. If it costs more or less, we charge or refund the difference. You send the '
+     'unopened product back and pay that shipping, unless we sent the wrong item or it arrived damaged.</p>'),
     ('When will I receive my refund', None,
      '<p>Once your refund is approved we send it to your original payment method straight away. Your bank or card '
      'provider usually shows it within 5 to 10 business days.</p>'),
@@ -141,10 +143,10 @@ CONTACT = [
 REFUND = f"""<p>Every SKINOFAB product comes with a 30-day money-back guarantee.</p>
 <h3>30-day money-back guarantee</h3>
 <p>{GUARANTEE}</p>
-<h3>Unopened products</h3>
-<p>You can return an unopened product within 30 days of delivery for a refund, store credit or an exchange. Email {MAIL}
-with your order number. For an unopened return you pay the return shipping, unless we sent the wrong item or it
-arrived damaged.</p>
+<h3>Store credit and exchanges</h3>
+<p>Instead of a refund, you can choose store credit or an exchange for an unopened product within 30 days of delivery.
+Email {MAIL} with your order number. For an exchange you send the unopened product back and pay that shipping, unless
+we sent the wrong item or it arrived damaged.</p>
 <h3>Damaged, defective or wrong items</h3>
 <p>If your order arrived damaged, defective or with the wrong item, email {MAIL} with your order number and a photo
 within 30 days of delivery. We send a replacement or a full refund, your choice, at no cost to you.</p>

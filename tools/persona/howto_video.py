@@ -17,6 +17,10 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from scipy import ndimage
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import label_fix
+
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / 'brand' / 'adaptive-peptide-foundation' / 'source'
 OUT = ROOT / 'brand' / 'adaptive-peptide-foundation' / 'howto'
@@ -51,6 +55,9 @@ def chip(draw, num, text, alpha, x=36, y=40):
 def main():
     dots = np.asarray(Image.open(SRC / 'howto-dots.jpg').convert('RGB')).astype(np.float32)
     H, W = dots.shape[:2]
+    # the bottle's small PDRN line left out: the page shows the loop 562 px wide on a 1x computer, where it read PORN
+    # (store audit 8); relabel_bottles.SITE's 'boldrot' line for this photo, erased at the same place
+    label_fix.bold_line_rot(dots, (282.5, 1169), -7, (52, 20), '', 11.5)
     edit = np.asarray(Image.open(SRC / 'howto-clean-ai.png').convert('RGB').resize((W, H), Image.LANCZOS)).astype(np.float32)
     g1, g2 = (cv2.cvtColor(x.astype(np.uint8), cv2.COLOR_RGB2GRAY).astype(np.float32) for x in (dots, edit))
     warp = np.eye(2, 3, dtype=np.float32)

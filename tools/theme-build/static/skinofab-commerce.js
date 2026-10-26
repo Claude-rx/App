@@ -328,6 +328,8 @@
         var qtyEl = form.querySelector('[name="quantity"]');
         var btn = form.querySelector('[type="submit"], [data-add-to-cart]');
         if (btn) btn.setAttribute('aria-busy', 'true');
+        var shown = form.querySelector('.sf-atc-error');
+        if (shown) shown.hidden = true;
         /* Subscription: a checked [name="sf_purchase"][value="subscribe"] input carries its frequency; a form with the
            input unchecked chose one-time; a form without it chose nothing (the product's default applies). */
         var plan = form.querySelector('input[name="sf_purchase"]:checked');
@@ -341,8 +343,21 @@
         }, function(err) {
             if (btn) btn.removeAttribute('aria-busy');
             closePending(false);
-            var box = form.querySelector('[data-cart-errors-container], .errors');
-            if (box) { box.textContent = err.message; box.hidden = false; }
+            /* in words she can act on, by the button (a failed request said nothing: the button reset and no bag
+               opened, store audit 8); the request's own error goes to the console */
+            var msg = 'Sorry, we could not add this to your bag. Please check your connection and try again.';
+            var box = null;          /* our own line: the design's error boxes are hidden by its styles */
+            if (btn) {
+                box = form.querySelector('.sf-atc-error');
+                if (!box) {
+                    box = document.createElement('p');
+                    box.className = 'sf-atc-error';
+                    box.setAttribute('role', 'alert');
+                    box.style.cssText = 'margin:10px 0 0;font-size:14px;line-height:1.4;color:#b42318';
+                    btn.parentNode.insertBefore(box, btn.nextSibling);
+                }
+            }
+            if (box) { box.textContent = msg; box.hidden = false; box.style.display = ''; }
             if (window.console) console.warn('[skinofab] add to cart failed', err);
         });
     }

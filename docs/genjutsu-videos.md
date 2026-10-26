@@ -41,6 +41,12 @@ The lip pencil and lip gloss are the old range's products (no longer sold); in b
   shade again.": `brand/videos/gj-41b77ec4-cut.mp4` (19.1 s), mapped in `video-swaps.json`. Its poster (the swapped
   still of her pumping the bottle) had the same line: `relabel_bottles.SITE` sets it again as a bold "PDRN" along the
   label's 31° slant (`label_fix.bold_line_rot`).
+- **`41b77ec4`, the bottle's small print (store audit 8).** From 11.9 s to 15.3 s she holds the bottle to camera, and
+  under the SKINOFAB wordmark the video model kept the old store's print: "COLOR CHANGING FOUNDATION", "15 SPF" and
+  the size. `clean_video_label.py` finds the wordmark in every frame (template matching at small turns and scales)
+  and paints the print below it out from the bottle around it, so only the wordmark stays; the audio is copied:
+  `brand/videos/gj-41b77ec4-clean.mp4`, mapped in `video-swaps.json` in place of the cut. The frames from 12.7 s to
+  13.1 s, where the bottle turns its label edge-on, keep their streaks (no letter can be read there).
 - **`f8efa52f`, the opening shot.** Its first 0.54 s (13 frames) hold the bottle to camera with the small PDRN line
   drawn as "PORN" (a frame-by-frame label scan of every clip found no other such span). `clip_cuts.py` starts it at
   the hard cut into the next shot: `brand/videos/gj-f8efa52f-cut.mp4` (11.05 s). No page plays it today (the social

@@ -138,7 +138,7 @@ FAQ = {'items': [
     ('Will it scratch or leave red marks?',
      'No. The bristles are ultra-soft and you only need a light touch. If your skin is very reactive, start with a few sweeps and build up.'),
     ('How long does the effect last?',
-     'It helps clear the fluid that builds up overnight. Puffiness can come back after another night of sleep, a salty meal or a short night. '
+     'The fresher look lasts through the morning. Puffiness can come back after another night of sleep, a salty meal or a short night. '
      'That’s why a quick 3-minute routine every morning works best.'),
     ('Do I need oil or serum?', 'No. Use it on clean, dry skin. You can apply your skincare right after.'),
     ('Can I use it before my foundation?',
@@ -164,7 +164,7 @@ CART_UPGRADE = {'title': 'Upgrade to 2 brushes + 2 free cases', 'button': 'Upgra
 TWIN = {
     'loved': {'lead': 'A fresher face in', 'mark': '3 minutes'},
     'moments': [
-        ('how-1', 'The cause', 'Fluid builds up while you sleep, under the eyes and along the jaw.', 'Where fluid builds up overnight'),
+        ('how-1', 'Where it shows', 'Morning puffiness shows under the eyes and along the jaw.', 'Where morning puffiness shows'),
         ('how-2', 'What helps', 'Light, slow strokes toward the neck, the way an aesthetician does it by hand.', 'A light massage just under the skin'),
         ('how-3', 'Why the brush', 'Hundreds of soft tips bend instead of pressing.', 'Soft bristles sweeping toward the neck'),
         ('compare-ours', 'Raised, soft tufts', 'They follow your jaw and cheekbones in one stroke.', 'The Lymphatic Brush in hand'),
@@ -182,17 +182,17 @@ TWIN = {
                   'Gua sha stones that need oil and a tutorial, rollers that cover one narrow line at a time',
                   'Cold spoons and ice cubes that help for five minutes'],
         'close': 'The result: a face that looks tired before your day has even started.',
-        'root': ('The root of it', 'It’s not your face.', 'It’s fluid.'),
-        'causes': [('Fluid builds up while you sleep',
-                    'When you lie still all night, fluid collects under your eyes, in your cheeks and along your jaw. Salty food, '
-                    'short nights and age make it leave even slower.'),
+        'root': ('The root of it', 'It’s not your face.', 'It’s the night.'),
+        'causes': [('Puffiness shows up while you sleep',
+                    'Lying still all night, your face can wake up looking puffy under the eyes, in the cheeks and along the jaw. '
+                    'Salty food and short nights make it worse, and with age it takes longer to fade.'),
                    ('Pressing hard doesn’t help',
                     'Facial massage for puffiness uses light, slow strokes toward the neck, the way an aesthetician does it by hand. '
                     'A gua sha stone needs oil to glide and pressure to work; a roller presses one hard line at a time.'),
                    ('It comes back every morning',
                     'Puffiness returns after a night’s sleep, a salty dinner or a short night. That’s why a quick daily habit works '
                     'better than a one-off treatment.')],
-        'root_end': 'So the problem was never you. It’s fluid that needs a light touch, every morning.',
+        'root_end': 'So the problem was never you. It’s morning puffiness, and it calls for a light touch every morning.',
         'solution': ('The solution', 'So we made it', 'light and quick'),
         'solution_lede': 'The Lymphatic Brush gives your face the light, slow massage an aesthetician would, in 3 minutes, on dry skin.',
         'fixes': [('Oils and serums to glide', 'Works on dry skin: nothing to wash off.'),
@@ -251,7 +251,7 @@ TWIN = {
                'intro': 'The Lymphatic Brush is made for one thing: a light, quick massage for the look of morning puffiness.',
                'cards': [('compare-ours', 'Ultra-soft bristles', 'Vegan fibers that bend instead of pressing'),
                          ('how-2', 'A light touch', 'Just under the skin, where morning puffiness sits'),
-                         ('how-1', 'Eyes, cheeks and jaw', 'The spots where fluid builds up overnight'),
+                         ('how-1', 'Eyes, cheeks and jaw', 'Where morning puffiness shows first'),
                          ('card', 'A protective case', 'Keeps the bristles clean between uses')]},
     # the foundation's customer clips: none. The creator clips of the routine showed women in their twenties and
     # thirties, with TikTok captions burned in ("the difference is insane"); the brush has no buyers' clips yet
@@ -315,12 +315,13 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     lines are one-time purchases (no refill choice)."""
     bundles, gifts = bundles or BUNDLES, GIFTS if gifts is None else gifts
     on = bool(refill)
+    units = lambda b: int(b.get('units') or (b['key'] if b['key'].isdigit() else 1))
     table = {b['key']: {'pk': variants[b['key']], 'price': float(b['price']), 'compare': float(b['compare']),
+                        'label': b['name'].split(':')[0], 'units': units(b),
                         **({'refill': float(b['refill']), 'every': int(b['every'])} if on else {})} for b in bundles}
     default = next((b['key'] for b in bundles if b.get('default')), bundles[0]['key'])
     base, base_compare = float(bundles[0]['price']), float(bundles[0]['compare'])
     now_of = lambda b: float(b['refill' if on else 'price'])
-    units = lambda b: int(b.get('units') or (b['key'] if b['key'].isdigit() else 1))
     cards = []
     for b in bundles:
         saves = float(b['compare']) > now_of(b)
@@ -385,6 +386,10 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     if (id) id.value = pick.pk;
     var sub = !!(box && box.checked), now = sub ? pick.refill : pick.price;
     titlePrice(now, pick.compare);
+    // what the title's price is: the chosen pack, with refills (stick review 4: "$47 USD" said neither)
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sf-title-note]'), function (e) {{
+      e.textContent = pick.label + (sub ? ' with Automatic Refills' + (pick.units > 1 ? ', ' + money(Math.round(now / pick.units * 100) / 100) + ' a ' + e.getAttribute('data-unit') : '') : '');
+    }});
     var price = form && form.querySelector('[data-sfb-btn-price]');
     if (price) price.textContent = ' | ' + money(now);
     if (!sub) return;

@@ -199,6 +199,13 @@ PAGE = {
         ('href="//www.iubenda.com/app/privacy-policy/10395211/cookie-policy"', 'href="cookie-policy.html"'),
     ],
     'pages/cookie-policy.html': [
+        # the browsers' cookie help and the opt-out sites, at their current addresses (a retired Windows Vista page and
+        # http:// links that no longer load, store audit 8)
+        ('href="http://windows.microsoft.com/en-us/windows-vista/block-or-allow-cookies"',
+         'href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09"'),
+        ('>Microsoft Internet Explorer<', '>Microsoft Edge<'),
+        ('href="http://www.ddai.info/optout"', 'href="https://www.ddai.info/optout"'),
+        ('href="http://www.youronlinechoices.eu/"', 'href="https://www.youronlinechoices.eu/"'),
         (r'RE:src="https://s3\.eu-west-1\.amazonaws\.com/prd\.mater/uploads/service_provider_icons/[^"]*"',
          'src="https://www.iubenda.com/assets/site/favicons/default_thirdparty_icon-7c0e4af091131d326a69845f5900e1fbf9fdea8b8cecbe7e7aaecf6dbf0da741.svg"'),
     ],
@@ -208,13 +215,18 @@ PAGE = {
         ('The notice period is 1 days.', 'The notice period is 1 day.'),
         ('Unless otherwise specified on this Application or agreed with Users, Products shall be delivered within thirty (30) days from purchase.',
          'Products are shipped within 1 business day of purchase and delivered within the times our Shipping Policy gives for each destination.'),
-        # the money-back guarantee as the refund policy, FAQ and product pages give it: no return needed, opened or
-        # not (the generator's text had the goods sent back at the buyer's cost, unused and in their packaging)
+        # the money-back guarantee as the refund policy, FAQ and product pages give it: a full refund, opened or not
+        # (the generator's text had the goods sent back at the buyer's cost, unused and in their packaging; a "no need
+        # to send it back" here was a promise the owner never made, and the refund policy did not say it, store audit 8)
         (r'RE:<p>Within the same period of time stated above, Users must also return the purchased goods to the Owner at their own '
          r'expense, making sure that they are undamaged, clean and fit for resale\. Goods must be returned inside the original packaging\.<br/>\s*'
          r'Upon receipt of the goods, the Owner will verify that all conditions applicable to the money-back-guarantee are fulfilled and, if so, refund the purchase price\.</p>',
-         '<p>Users do not need to send the goods back: the Owner refunds the price of the Product in full, even if it has been '
-         'opened and used, as set out in the Owner’s refund policy.</p>'),
+         '<p>Under this guarantee the Owner refunds the price of the Product in full, even if it has been opened and used, '
+         'as set out in the Owner’s refund policy.</p>'),
+        # a second delivery is not part of the free shipping (the generator's line read as if shipping cost something)
+        ('Unless otherwise agreed, any delivery attempt starting from the second shall be at the User’s expense.',
+         'Shipping is free. Unless otherwise agreed, a new delivery after a failed or uncollected first delivery is at the '
+         'User’s expense.'),
         # prices as the FAQ and the product pages state them (the generator's "exclusive or inclusive, depending on
         # the section")
         (r'RE:<p>Prices on this Application are displayed:</p>\s*<ul>\s*<li>either exclusive or inclusive of any applicable fees, '
@@ -263,8 +275,8 @@ PAGE = {
         (r'RE:(?s)<div id="shippingAccordionContent">.*?</p></div>',
          '<div id="shippingAccordionContent">' + support_copy.SHIPPING_TAB_HTML + '</div>'),
         ('We offer free worldwide shipping to 65+ countries. Please see our',
-         'Shipping is free to every country offered at checkout, with tracking: 2–4 business days in the US, 6–12 '
-         'elsewhere. See our'),
+         'Shipping is free to every country offered at checkout, with tracking: 2–4 business days in the US, 6–9 to '
+         'Europe, the UK, Canada, Australia and New Zealand, 8–12 elsewhere. See our'),
         ('All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, '
          'and in their original packaging. See our', support_copy.RETURNS_SHORT + ' See our'),
         # ingredient carousel: photo alt, heading and line change together
@@ -330,10 +342,11 @@ PAGE = {
 # them and writes sf-offer.json, which the theme build turns into the cart drawer's upgrade offer.
 PACKS = [
     {'key': '1', 'name': '1 bottle', 'variant': '1 bottle', 'sku': 'SKF-APF-1',
-     'price': '47.00', 'refill': '37.00', 'compare': '59.00', 'note': 'Temporary deal', 'gifts': []},
+     # (the export's "Temporary deal" had no end and no deal it was taken from: what the pack is, store audit 8)
+     'price': '47.00', 'refill': '37.00', 'compare': '59.00', 'note': 'Free shipping, 30-day guarantee', 'gifts': []},
     {'key': '2', 'name': '2 bottles', 'variant': '2 bottles + free gifts', 'sku': 'SKF-APF-2-GIFTS',
-     'price': '57.00', 'refill': '47.00', 'compare': '118.00', 'note': 'Temporary deal', 'badge': 'Best value',
-     'gifts': [('blender', 'FREE Skinofab Blender', '9.00'), ('mystery', 'FREE Mystery Gift', '15.00'), ('shipping', 'FREE Shipping', None)]},
+     'price': '57.00', 'refill': '47.00', 'compare': '118.00', 'note': 'The lowest price per bottle', 'badge': 'Best value',
+     'gifts': [('blender', 'FREE SKINOFAB Blender', '9.00'), ('mystery', 'FREE Mystery Gift', '15.00'), ('shipping', 'FREE Shipping', None)]},
 ]
 # default: refills are on when the page loads (the cards show the refill prices); show_box: the "Save 37% with
 # Automatic Refills" box is shown (False: hidden, so every pack bought from the product page is a refill). The terms
@@ -350,6 +363,9 @@ PDP_REVIEW_SKIP = ['Olivia M.']
 # with AI models: no such buyers are among the imported reviews, and Olivia M.'s real review says something else.
 # They stay as what they are, illustrative videos of the foundation on skin, captioned in the store's own words; the
 # buyers' own words are the review wall's. (title, caption) per card, in the section's order.
+# the header's line on the cart page (apply_persona: the sale line is the foundation's offer)
+CART_ANNOUNCEMENT = 'Free shipping on every order · 30-day money-back guarantee'
+
 VIDEO_DEMOS = [
     ('Goes on white, turns into your tone', 'Dots on the back of the hand, blended in: the white shifts to your skin as you work it in.'),
     ('Glides over texture', 'Dotted on cheeks and forehead and buffed in: a thin layer that blends over texture instead of settling into it.'),

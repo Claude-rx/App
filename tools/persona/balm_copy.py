@@ -31,6 +31,8 @@ PRICE, COMPARE = '24.95', '24.95'                                # one stick; no
 EMAIL = 'hello@skinofab.com'
 NET = '10 g / 0.35 oz'
 IMG = Path(__file__).resolve().parents[2] / 'brand' / 'pdrn-balm'     # product_photos.py writes the images here
+# the card's "PDRN" line (in card.jpg's pixels), left out of the sticky bar's 52 px thumbnail, where it read PORN
+STICKY_ERASE = [(392, 832, 570, 866)]
 IMG_PREFIX, GIFT_PREFIX = 'skinofab-pdrn-balm', 'skinofab-balm-gift'
 OFFERS_FILE, REVIEWS_DIR, AMAZON_FILE = 'balm-offers.json', 'reviews-balm', None
 DESCRIPTION = ('<p>A press-on PDRN balm stick for under-eyes, smile lines and lip lines. PDRN, Volufiline™, collagen and '

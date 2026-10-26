@@ -88,13 +88,14 @@ STICK = {
     'temple': [('flat', (303, 540), (279, 691), 22)],
     'friends': [('box', (570, 805, 655, 1000), (612, 832))],
     'bag': [('box', (680, 500, 830, 725), (780, 528))],
-    'hold-chin': [('box', (320, 810, 430, 990), (390, 838))],
+    # (aged up with GPT Image 2, store audit 8 / stick review 4: its re-drawn print is letter-spaced, measured by hand)
+    'hold-chin': [('flat', (386, 826), (372, 973), 21)],
     'panel': [('box', (700, 725, 800, 895), (742, 752))],
     'twist': [('box', (598, 480, 662, 772), (629, 498))],
     'dots': [('box', (395, 840, 440, 995), (417, 856))],
     'daylight': [('flat', (275, 810), (301, 946), 14)],
     'buff-jaw': [('flat', (510, 910), (405, 982), 16)],
-    'duo-ends': [('flat', (548, 657), (752, 450), 28)],
+    'duo-ends': [('flat', (545, 660), (755, 447), 34)],   # the band wide enough to clear the AI print's ends (stick review 4)
 }
 
 # file-name prefix -> (the reference copy's size, the bottles in it); the longest prefix whose aspect matches wins

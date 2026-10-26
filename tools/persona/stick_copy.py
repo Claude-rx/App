@@ -66,6 +66,8 @@ SHIPPING_BADGE = '\U0001F381 FREE SHIPPING'
 # the header's line on this page (the store's "Up to 60% OFF + FREE Gifts" names gifts and savings the stick has
 # not got, stick review 3): what every stick order does get
 ANNOUNCEMENT = 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee'
+# three lines under the lead, what she checks first (stick review 4: the first phone screen named no benefit)
+BULLETS = ['No shade to choose: it adapts as you blend', 'Kabuki brush built into the other end', 'Creamy, made for dry, mature skin']
 LEAD = ('No shade to guess: it goes on white and shifts toward your own tone as you blend, with the brush on the other '
         'end. Even, natural coverage in about a minute, and nothing to spill.')
 BUNDLES = [
@@ -73,7 +75,7 @@ BUNDLES = [
      'price': '39.00', 'refill': '31.00', 'every': 28, 'compare': '39.00', 'gifts': []},
     {'key': '2', 'name': '2 Sticks', 'note': 'One at home, one in your bag', 'variant': '2 sticks', 'sku': 'SKF-AFS-2',
      'price': '59.00', 'refill': '47.00', 'every': 56, 'compare': '78.00', 'badge': 'Recommended', 'default': True, 'gifts': []},
-    {'key': '3', 'name': '3 Sticks: Buy 2, Get 1 Free', 'note': 'Home, bag, and one to share', 'variant': '3 sticks (buy 2, get 1 free)',
+    {'key': '3', 'name': '3 Sticks: Buy 2, Get 1 Free', 'note': 'Home, bag and one to share', 'variant': '3 sticks (buy 2, get 1 free)',
      'sku': 'SKF-AFS-3', 'price': '78.00', 'refill': '62.00', 'every': 84, 'compare': '117.00', 'badge': 'Best value', 'gifts': []},
 ]
 # Automatic Refills (the owner's brief of 26 Oct 2026: every product but the brush is sold with refills, as the
@@ -189,6 +191,13 @@ FAQ = {'items': [
     ('Will it rub off on my collar?',
      'Give it a minute to set after you buff it in. It’s a cream, so where a collar or a scarf rubs, a light dusting of '
      'powder on the jaw and neck keeps it in place.'),
+    ('How much coverage does it give?',
+     'Light to medium in one thin layer, buildable: tap a second layer where you want more and buff the edges. It’s a '
+     'natural finish that still looks like skin.'),
+    ('Where do you ship, and are there import duties?',
+     'Free shipping, with tracking, to every country offered at checkout: 2–4 business days in the US, 6–9 to Europe, '
+     'the UK, Canada, Australia and New Zealand, 8–12 elsewhere. The price at checkout is the full price: nothing more to '
+     'pay at delivery.'),
     ('How do I take it off at night?',
      'With your usual cleanser. On a day you built up a second layer, a cleansing balm or micellar water first, then '
      'your cleanser.'),
@@ -203,7 +212,7 @@ TWIN = {
     'moments': [
         ('daylight', 'Check it in daylight', 'Blended in, it shifts toward your own tone.', 'A woman in her sixties touching her jawline, the stick in her other hand'),
         ('buff-jaw', 'The brush is built in', 'Buff it in with the other end of the stick.', 'A woman in her sixties buffing foundation along her jaw with the brush end'),
-        ('friends', 'Home, bag, and one to share', 'The 3-stick pack: one at home, one in your bag, one for a friend.', 'Two women in their fifties and sixties with the stick'),
+        ('friends', 'Home, bag and one to share', 'The 3-stick pack: one at home, one in your bag, one for a friend.', 'Two women in their fifties and sixties with the stick'),
         ('bag', 'Touch-ups anywhere', 'No pump, no spills, no sponge to carry.', 'The stick going into a handbag'),
     ],
     'problem': {

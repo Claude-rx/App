@@ -714,7 +714,9 @@ for n in hdr_nodes:
     # a product's own line on its page ({handle: text}, tools/persona: the store's sale line does not fit every product)
     for sp in n.select('[data-sf-ann]'):
         own = json.loads(sp['data-sf-ann']); del sp['data-sf-ann']
-        branches = ''.join(f"{{% {'if' if not i else 'elif'} '/{h}_' in request.path %}}{html.escape(t)}" for i, (h, t) in enumerate(own.items()))
+        # a handle: its product page ('/<handle>_' in the path); a key starting with '/': that page's path
+        cond = lambda h: f"request.path == '{h}'" if h.startswith('/') else f"'/{h}_' in request.path"
+        branches = ''.join(f"{{% {'if' if not i else 'elif'} {cond(h)} %}}{html.escape(t)}" for i, (h, t) in enumerate(own.items()))
         sp.string = slots.put(f"{branches}{{% else %}}{html.escape(sp.get_text())}{{% endif %}}")
 header_html = slots.render(frag_html(hdr_nodes, 'index.html', slots))
 write('partials/header.html', "{# SKINOFAB header: design markup (announcement bar, navigation, mobile drawer). Cart opens the Spark side cart. #}\n" + header_html + '\n')
@@ -1361,6 +1363,18 @@ if p_cart.exists():
     if 'data-sf-checkout-nowrap' not in t:
         p_cart.write_text(must_replace(t, old_btn, old_btn[:-1] + ' data-sf-checkout-nowrap style="white-space:nowrap">',
                                        'templates/cart.html checkout button'))
+
+# Cart page: the lines and the summary side by side from 1024 px, not 768: at 768 the summary column was 171 px and
+# its one-line "Proceed to checkout" (above) ran out of the button ("PROCEED TO CHECK", store audit 8). Under 1024 px
+# the summary goes under the lines, full width.
+if p_cart.exists():
+    t = p_cart.read_text()
+    if 'sf-cart-grid' not in t:
+        t = must_replace(t, '<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">',
+                         '<style>@media (min-width:64rem){#main-content .sf-cart-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem}'
+                         '#main-content .sf-cart-lines{grid-column:span 2/span 2}}</style>'
+                         '<div class="grid grid-cols-1 gap-8 sf-cart-grid">', 'templates/cart.html grid')
+        p_cart.write_text(must_replace(t, '<div class="md:col-span-2">', '<div class="sf-cart-lines">', 'templates/cart.html lines column'))
 
 # Cart page: the layout already shows the page's messages above its content; the cart's own copy showed each one twice
 # (an unknown coupon: the same error at the top and above the lines, review 5). The AJAX partial keeps its own.

@@ -83,15 +83,16 @@ def section_image(src, name, size=(1000, 1250), white=False, shadow=False, prep=
 def problem_solution():
     return apf_copy.problem_solution_html(
         section_image(BRAND / 'persona' / 'age-73.jpg', 'skinofab-problem-skin-after-45', white=True),
-        section_image(BRAND / 'adaptive-peptide-foundation' / '03-three-quarter-right.png', 'skinofab-solution-bottle', white=True, shadow=True,
-                      prep=bold_pdrn_three_quarter))
+        section_image(BRAND / 'adaptive-peptide-foundation' / '01-front.png', 'skinofab-solution-bottle', white=True, shadow=True,
+                      prep=no_pdrn_front))
 
-def bold_pdrn_three_quarter(im):
-    """The three-quarter render (1254 px) with its PDRN line set again bold: the solution section shows it ~360 px wide
-    on a phone, where the render's own line reads PORN (review 4)."""
+def no_pdrn_front(im):
+    """The front render (1254 px), its label centred (the three-quarter one's label ran flat to the bottle's edge and
+    looked pasted on, store audit 8), without its small PDRN line: the section shows the bottle about 360 px wide, where
+    a line that size reads PORN at some densities (review 4); the wordmark and the product name stay."""
     import numpy as np
     from PIL import Image
-    a = label_fix.bold_line(np.asarray(im).astype(np.float32), (466, 1038, 566, 1072), 'PDRN', 19, weight=720, track=0.18)
+    a = label_fix.bold_line(np.asarray(im).astype(np.float32), (585, 1049, 668, 1072), '', 14)
     return Image.fromarray(np.clip(a + 0.5, 0, 255).astype(np.uint8))
 
 def crop_to(src_path, name, size, centering, white=False):
@@ -106,7 +107,10 @@ def crop_to(src_path, name, size, centering, white=False):
     W, H = im.size
     dx = int(round((W - H * size[0] / size[1]) / 2))
     a = np.asarray(im.convert('L'))
-    if dx > 0 and np.median(a[:, :4]) > 248 and np.median(a[:, -4:]) > 248 and (a[:, :dx].min() < 200 or a[:, W - dx:].min() < 200):
+    # (only a drawing whose bottom edge is white too: a photo whose subject runs off the bottom, a woman cut at the
+    # chest, padded under that edge showed a hard line and a white band, stick review 4)
+    ends_white = (a[-3:] < 235).mean() < 0.02 and (a[:3] < 235).mean() < 0.02
+    if dx > 0 and ends_white and np.median(a[:, :4]) > 248 and np.median(a[:, -4:]) > 248 and (a[:, :dx].min() < 200 or a[:, W - dx:].min() < 200):
         k = size[0] / W
         fitted = im.resize((size[0], round(H * k)), Image.LANCZOS)
         canvas = Image.new('RGB', size, (255, 255, 255))
@@ -438,7 +442,9 @@ def review_data(reviews=REVIEWS):
         keep.add(i)
     ship = [rs[i] for i in sorted(keep)][:max(SHIP, len(keep))]
     # (and written cleanly: the strip is the page's first proof, a typo there reads as careless, stick review 2)
-    typo = re.compile(r"\s[,.!?]|\bi\b|\s{2}|I'm don't|liked to be|recommened|dissapoint|adopted to|\bu\b")
+    # (either apostrophe; a stray one-letter word such as "with s friend", stick review 4)
+    typo = re.compile(r"\s[,.!?]|\bi\b|\s{2}|I['’]m don['’]t|liked to be|recommened|dissapoint|adopted to|It['’]s us\b"
+                      r"|(?<![\w'’.])[b-hj-zB-HJ-Z](?![\w'’.])")
     picks = [r for r in rs if r['rating'] == 5 and r.get('verified') and 70 <= len(r['body']) <= 210 and '\n' not in r['body']
              and not typo.search(r['body'])][:10]
     summary = {'count': d['count'], 'average': d['average'], 'distribution': d['distribution']}
@@ -1100,6 +1106,17 @@ def home_original():
         m = re.search(r'(<div class="fh-category-grid"[^>]*>)', sec)
         end = balanced_end(sec, m.start(), 'div')
         sec = sec[:m.end()] + ''.join(tiles) + '</div>' + sec[end:]
+        # 750 to 1023 px the tiles are a row that scrolls sideways (below): its arrows, as the other rows have (the
+        # homepage script runs any [data-fh-carousel] with a [data-fh-track] and [data-fh-prev] / [data-fh-next] in it),
+        # so a mouse reaches the last tiles (store audit 8); the arrow icons are the shelves' own
+        arrows = re.search(r'<div class="fh-arrows">.*?</div>', t[t.find('__bundles"'):], re.S)
+        sec, k1 = re.subn(r'<div class="fh-category-grid"', '<div class="fh-category-grid" data-fh-track="" id="fh-list-categories"', sec, count=1)
+        sec, k2 = re.subn(r'(<div class="fh-wrap[^"]*")', r'\1 data-fh-carousel=""', sec, count=1)
+        if arrows and k1 and k2:
+            end = balanced_end(sec, sec.find('<div class="fh-category-grid"'), 'div')
+            sec = (sec[:end] + '<div class="fh-cat-controls"><div class="fh-controls">'
+                   + re.sub(r'aria-controls="[^"]*"', 'aria-controls="fh-list-categories"', arrows.group(0)) + '</div></div>' + sec[end:])
+        else: missing.append(('categories', 'row arrows'))
         # one column per tile from 1024 px (five products: the export's four)
         sec, k = re.subn(r'--fh-columns:\s*4\b', f'--fh-columns:{len(HOME_TILES)}', sec)
         if not k: missing.append(('categories', '--fh-columns'))
@@ -1118,6 +1135,8 @@ def home_original():
                              # left the last one alone)
                              f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-category-grid{{grid-template-columns:none;grid-auto-flow:column;'
                              f'grid-auto-columns:42%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}}{X} .fh-category{{scroll-snap-align:start}}}}'
+                             f'{X} .fh-cat-controls{{display:none;margin-top:20px}}'
+                             f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-cat-controls{{display:block}}}}'
                              # four equal columns: the export's 1fr tracks grew to their name-and-button row, so at 1024 the
                              # tiles came out 223 to 291 px wide and the last ran off the screen. Under 1280 px a quarter is
                              # too narrow for the name and the button side by side: the button goes under the name (to 1599 px:
@@ -1136,6 +1155,10 @@ def home_original():
         m = re.search(r'(<div class="fh-product-list"[^>]*>)', sec)
         end = balanced_end(sec, m.start(), 'div')
         sec = sec[:m.end()] + ''.join(items) + '</div>' + sec[end:]
+        # five cards where the design had four: from 750 px they run past the row's edge, and the row's arrows (its
+        # phone controls) were hidden there, so a mouse could not reach the fifth (store audit 8): shown at every width
+        sec, k = style(sec, f'@media(min-width:750px){{.fh-shelf--{key.strip("_")} .fh-mobile-controls{{display:block}}}}')
+        if not k or 'data-fh-prev' not in sec: missing.append((key, 'row arrows'))
         t = t[:a] + sec + t[b:]
         return len(items)
     items = []
@@ -1341,7 +1364,20 @@ LAYOUT_FIXES = (
     # its tap area, stick review 3); the buy box's rating link 43 px tall without moving the title
     '.si__dots{gap:0!important}.si__dot{box-sizing:content-box!important;padding:18px 8px!important;background-clip:content-box!important}'
     '.si__dot:not([aria-current="true"]){background-color:#b3b3b3!important}'
-    '.sfb-rating{padding-top:10px;padding-bottom:10px;margin-top:-10px;margin-bottom:-10px}'
+    '.sfb-rating{padding-top:10px;padding-bottom:6px;margin-top:-10px;margin-bottom:4px}'
+    # (its tap area no longer runs under the title: stick review 4); on a phone the stars on one line, the words
+    # under them, not wrapped beside them
+    '@media (max-width:599px){.sfb-rating .sf-rating{flex-wrap:wrap;row-gap:4px}.sfb-rating .sf-rating__text{flex-basis:100%}}'
+    # the photo cards one height (a longer line made one card taller, stick review 4); under 1024 px the row runs to
+    # the screen's edge, its arrows gone (below), so the next card shows where it continues
+    '.skinofab-testimonials .swiper-slide{height:auto}.skinofab-testimonials__card{height:100%}'
+    '@media (max-width:1023px){.skinofab-testimonials{overflow:hidden}.skinofab-testimonials__nav{padding-left:0!important;padding-right:0!important}'
+    '.skinofab-testimonials .skinofab-testimonials-swiper{overflow:visible}}'
+    # the photo viewer's arrows sat on the photo on a phone, which swipes (stick review 4)
+    '@media (max-width:599px){.pswp__button--arrow--left,.pswp__button--arrow--right{display:none!important}}'
+    # a tapped accordion title kept a grey focus box, part of the title wide (stick review 4): the keyboard's outline only
+    '.product__accordions [data-collapsible-trigger]{-webkit-tap-highlight-color:transparent}'
+    '.product__accordions [data-collapsible-trigger]:focus:not(:focus-visible){outline:none;background:none;box-shadow:none}'
     # the photo cards' arrows sat on the photos on a tablet (stick review 3): a finger swipes them (the next card
     # peeks in); from 1024 px all cards show and the slider has nothing to scroll
     '@media (max-width:1023px){.skinofab-testimonials-prev,.skinofab-testimonials-next{display:none!important}}'
@@ -1416,6 +1452,51 @@ CIRCLE_ROOM_JS = ('<script data-sf-circle-room>(function () {'
                   'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", room); else room();'
                   'if (document.fonts && document.fonts.ready) document.fonts.ready.then(room);'
                   '})();</script>')
+
+# small print on a gallery slide that is not a bottle's label (its box in the slide's own px at its reference width):
+# the "What's inside" panel's "+ PDRN" after "Peptides"
+THUMB_ERASE = {'6_d0973846-a064-4cd2-9242-119e14c8d593': (1080, [(292, 422, 432, 470)])}
+
+def pdrn_free_thumbs():
+    """The foundation gallery's thumbnails (89 px) from their own copy of each slide, its small PDRN line left out: the
+    store's image service shrank the slide itself, and at 89 px on a tablet or a 1x computer the line, even set bold,
+    read PORN (store audit 8). Each bottle's line is the one relabel_bottles.SITE sets bold ('boldrot', erased here at
+    the same place); THUMB_ERASE has the rest. The copy is 267 px (3x); the slides keep their PDRN line.
+    Returns the thumbnails changed."""
+    import numpy as np
+    from PIL import Image, ImageOps
+    page = DST / 'products' / 'color-changing-foundation.html'
+    t = page.read_text(encoding='utf-8', errors='surrogateescape')
+    n = 0
+    def fix(m):
+        nonlocal n
+        tag = m.group(0)
+        big = re.search(r'srcset="\.\./assets/img/([^" ]+) \d+w"', tag)
+        if not big or '-thumb-' in big.group(1): return tag
+        src = DST / 'assets' / 'img' / big.group(1)
+        im = Image.open(src).convert('RGB')
+        a = np.asarray(im).astype(np.float32)
+        key = relabel_bottles.match(src.name, im.size)
+        ops = [op for op in (relabel_bottles.SITE[key][1] if key else []) if op[0] == 'boldrot']
+        k = im.size[0] / relabel_bottles.SITE[key][0][0] if key else 1.0
+        for _, (cx, cy), angle, (w, h), _text, cap in ops:
+            label_fix.bold_line_rot(a, (cx * k, cy * k), angle, (round(w * k), round(h * k)), '', cap * k)
+        extra = next((v for p, v in THUMB_ERASE.items() if src.name.startswith(p)), None)
+        if extra:
+            ref, boxes = extra
+            for box in boxes: label_fix.bold_line(a, [round(v * im.size[0] / ref) for v in box], '', 10)
+        if not ops and not extra: return tag
+        thumb = ImageOps.fit(Image.fromarray(np.clip(a + 0.5, 0, 255).astype(np.uint8)), (267, 267), Image.LANCZOS)
+        stem = re.sub(r'-\d+w-[a-z]?[0-9a-f]{6}$', '', src.stem)
+        tmp = src.with_name(f'{stem}-thumb.jpg')
+        thumb.save(tmp, quality=88, optimize=True, progressive=True)
+        final = tmp.with_name(f'{stem}-thumb-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg'); tmp.replace(final)
+        n += 1
+        tag = re.sub(r'\bsrc="[^"]*"', f'src="../assets/img/{final.name}"', tag, count=1)
+        return re.sub(r'\bsrcset="[^"]*"', f'srcset="../assets/img/{final.name} 267w"', tag, count=1)
+    t = re.sub(r'<img[^>]*product-single__thumbnail-img[^>]*>', fix, t)
+    page.write_text(t, encoding='utf-8', errors='surrogateescape')
+    return n
 
 def layout_fixes():
     """Every page gets LAYOUT_FIXES at the end of its body, after the sections' own styles, so it wins over them
@@ -2374,8 +2455,22 @@ def product_page(base, P, final, found=None):
     head = prod.select_one('.product__price-and-badge')
     amazon_f = WORK / P.AMAZON_FILE if P.AMAZON_FILE else None   # tools/reviews/amazon_rating.mjs: the owner's own listing, or nothing
     amazon = json.loads(amazon_f.read_text()) if amazon_f and amazon_f.exists() else None
-    if head: head.insert_after(frag(f'<p class="sfb-lead">{P.esc(P.LEAD)}</p>'
+    bullets = getattr(P, 'BULLETS', None)
+    bullets_html = ('<ul class="sfb-bullets" style="list-style:none;margin:0 0 12px;padding:0;font-size:15px;line-height:1.45;color:#2b2b2b">'
+                    + ''.join(f'<li style="position:relative;padding-left:24px;margin:4px 0"><span aria-hidden="true" '
+                              f'style="position:absolute;left:0;top:0;font-weight:700">&#10003;</span>{P.esc(b)}</li>' for b in bullets)
+                    + '</ul>') if bullets else ''
+    if head: head.insert_after(frag(f'<p class="sfb-lead">{P.esc(P.LEAD)}</p>' + bullets_html
                                     + (P.amazon_line(amazon) if amazon else '')))
+    # what the title's price is: the chosen pack, and with refills its price a stick (the picker keeps it in step;
+    # "$47 USD" alone said neither, stick review 4)
+    if head:
+        unit = P.REFILL['unit'] if refill_on else ''
+        n_units = int(pick.get('units') or (pick['key'] if pick['key'].isdigit() else 1))
+        note = pick['name'].split(':')[0] + (' with Automatic Refills' + (f', {P.money(round(float(now_p) / n_units, 2))} a {unit}' if n_units > 1 else '')
+                                             if refill_on else '')
+        head.insert_after(frag(f'<p class="sfb-price-note" data-sf-title-note data-unit="{P.esc(unit)}" '
+                               f'style="margin:2px 0 10px;font-size:14px;line-height:1.4;color:#4a4a4a">{P.esc(note)}</p>'))
     title_el = prod.select_one('.product__title')
     if getattr(P, 'EYEBROW', None) and title_el:
         title_el.insert_before(frag(f'<span class="sfp-eyebrow">{P.esc(P.EYEBROW)}</span>'))
@@ -2436,7 +2531,7 @@ def product_page(base, P, final, found=None):
     if len(P.META_DESCRIPTION) > 155: missing.append(('meta description over 155 characters', P.META_DESCRIPTION[:60]))
     text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{html.escape(P.META_DESCRIPTION)}" name="description"/>', text, count=1)
     text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', f'id="{P.HANDLE}-skinofab"', 1)
-    text, _ = sticky_bar(text, sticky_thumb(P.IMG / 'card.jpg', f'{P.IMG_PREFIX}-sticky'), P.TITLE,
+    text, _ = sticky_bar(text, sticky_thumb(P.IMG / 'card.jpg', f'{P.IMG_PREFIX}-sticky', getattr(P, 'STICKY_ERASE', ())), P.TITLE,
                          f'From {P.money(refill_price(P)[0])} · Free shipping', P.STICKY_BUTTON)
     return text
 
@@ -2784,11 +2879,19 @@ def footer_names(t):
                                     for h in sorted(found, key=order.index))
     return re.sub(r'(<li><a href="((?:\.\./)*)collections/all-products\.html">Shop all</a></li>)((?:\s*' + li + r')+)', rebuild, t)
 
-def sticky_thumb(src, name):
+def sticky_thumb(src, name, erase=()):
     """A 156 px square thumbnail on white (a transparent packshot would turn black as a JPEG): the bar shows it 52 px
-    wide, so a 3x phone gets its own pixels (104 px was stretched 1.5x, review 5)."""
+    wide, so a 3x phone gets its own pixels (104 px was stretched 1.5x, review 5). erase: label lines (boxes in src's
+    pixels) cleared first, filled from the bottle above and below: at 52 px the balm's bold "PDRN" read PORN (store
+    audit 8)."""
     from PIL import Image
-    im = Image.open(src).convert('RGBA')
+    import numpy as np
+    im = Image.open(src).convert('RGB')
+    if erase:
+        a = np.asarray(im).astype(np.float32)
+        for box in erase: label_fix.bold_line(a, box, '', 10)
+        im = Image.fromarray(np.clip(a + 0.5, 0, 255).astype(np.uint8))
+    im = im.convert('RGBA')
     s = max(im.size); sq = Image.new('RGBA', (s, s), (255, 255, 255, 255))
     sq.alpha_composite(im, ((s - im.width) // 2, (s - im.height) // 2))
     out = DST / 'assets' / 'img' / f'{name}.jpg'
@@ -2916,6 +3019,9 @@ def main():
     # product does not have (the stick, stick review 3). The theme build shows it on that product's page only
     # (build_theme.py: data-sf-ann on the header's line)
     ann = {P.HANDLE: P.ANNOUNCEMENT for P in SECOND_PRODUCTS if getattr(P, 'ANNOUNCEMENT', None)}
+    # the cart page (any product in it): what every order gets, not one product's sale (a stick buyer read "FREE
+    # Gifts" there, stick review 4); a key with a slash is a page's path
+    ann['/cart/'] = ccf_copy.CART_ANNOUNCEMENT
     if ann:
         texts[DST / 'index.html'], n = re.subn(r'<span class="text-highlight__break">(?=\U0001F342 Fall Sale)',
                                                 lambda m: f'<span class="text-highlight__break" data-sf-ann="{html.escape(json.dumps(ann, ensure_ascii=False))}">',
@@ -3044,6 +3150,9 @@ def main():
     print('support pages', sp)
     print('home original', home_original())
     print('layout fixes', layout_fixes())
+    n_thumbs = pdrn_free_thumbs()
+    if not n_thumbs: missing.append(('gallery thumbnails', 'foundation thumbnails without the PDRN line'))
+    print('gallery thumbnails', n_thumbs)
     print('local location', local_location())
     print('track form', track_form())
     forms = working_forms()

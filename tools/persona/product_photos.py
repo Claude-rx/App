@@ -488,8 +488,10 @@ FOUNDATION_NEXT = [(FOUNDATION / '01-front.png', True), (FOUNDATION / '03-three-
                    (FOUNDATION / '02-three-quarter-left.png', True), (BRAND / 'persona' / 'age-109.jpg', False),
                    (BRAND / 'persona' / 'pdp-duo-women.jpg', False)]
 
-NEXT_BOLD = {'01-front.png': lambda a: label_fix.legible_pdrn(a, **label_fix.XL),
-             '03-three-quarter-right.png': lambda a: label_fix.bold_line(a, (466, 1038, 566, 1072), 'PDRN', 19, weight=720, track=0.18)}
+# the renders' PDRN line left out: the cart, the bag and the checkout show the first one 80 to 100 px wide, where even a
+# bold PDRN blurred to PORN on a 1x screen (store audit 8); the sticky bar's thumbnail is cut from it too
+NEXT_BOLD = {'01-front.png': lambda a: label_fix.bold_line(a, (585, 1049, 668, 1072), '', 14),
+             '03-three-quarter-right.png': lambda a: label_fix.bold_line(a, (466, 1038, 566, 1072), '', 14)}
 
 
 def foundation():
@@ -503,7 +505,6 @@ def foundation():
     out = FOUNDATION / 'next'; out.mkdir(exist_ok=True)
     for path, shadow in FOUNDATION_NEXT:
         im = Image.open(path).convert('RGB')
-        # the renders' PDRN line bold: the catalogue card and the cart show them ~165 px wide (review 4)
         if path.name in NEXT_BOLD:
             im = Image.fromarray(np.clip(NEXT_BOLD[path.name](np.asarray(im).astype(np.float32)) + 0.5, 0, 255).astype(np.uint8))
         im = white_bg.matte(im, shadow=shadow)

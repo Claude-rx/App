@@ -311,7 +311,7 @@ FAQ = [
     ('How long does it last?',
      'It\'s made to stay even and comfortable through a full day, without turning orange or drying into your lines. If you\'re out from morning to dinner, a light touch-up on the nose and chin is usually all it needs.'),
     ('Can I buy just one bottle?',
-     f"Yes. One bottle is {ONCE}, or {REFILLED} with Automatic Refills. Two bottles come with a free Skinofab Blender, a free Mystery Gift and free shipping."),
+     f"Yes. One bottle is {ONCE}, or {REFILLED} with Automatic Refills. Two bottles come with a free SKINOFAB Blender, a free Mystery Gift and free shipping."),
     ('How does the guarantee work?',
      'Wear it in your own daylight for 30 days. If you don\'t love it, email us and we\'ll refund you.'),
     ('When will my order arrive?',
@@ -619,7 +619,7 @@ def pdp_sections():
   <div class="apf-grid2" style="gap:14px;align-items:stretch">
     <a class="apf-card" style="text-decoration:none" href="../pages/postflows-track-your-order.html"><h4>Track your order</h4><p>Ships within 1 business day, with tracking.</p></a>
     <a class="apf-card" style="text-decoration:none" href="../pages/contact.html"><h4>Ask about your skin</h4><p>Dry, sensitive, very fair or deep? Ask us first.</p></a>
-    <a class="apf-card" style="text-decoration:none" href="../policies/shipping-policy.html"><h4>Shipping</h4><p>Free: 2–4 business days in the US, 6–12 elsewhere.</p></a>
+    <a class="apf-card" style="text-decoration:none" href="../policies/shipping-policy.html"><h4>Shipping</h4><p>Free: 2–4 business days in the US, 6–9 to Europe, 8–12 elsewhere.</p></a>
     <a class="apf-card" style="text-decoration:none" href="../policies/refund-policy.html"><h4>Returns &amp; refunds</h4><p>Love it or your money back, 30 days.</p></a>
   </div>
 </div></div></section>
@@ -1040,11 +1040,14 @@ REVIEW_WALL_JS = r"""
   // the list (stick review 3)
   var AGE = /\b(i'?m|i am|at|aged?)\s*(4[5-9]|[5-8]\d)\b|\b(4[5-9]|[5-8]\d)\s*(years|yrs|yo\b|y\/o)|fifties|sixties|seventies|mature skin|menopaus/i,
       WORRY = /shade|match|skin tone|fine lines|wrinkle|settl|creas|dry skin|cakey|natural/i,
-      CONDITION = /acne|rosacea|eczema|psoriasis|dermatitis|\bcur(e|ed|es)\b|\bheal(s|ed|ing)?\b|prescription|medication|\bscar(s|ring)?\b/i;
+      CONDITION = /acne|rosacea|eczema|psoriasis|dermatitis|\bcur(e|ed|es)\b|\bheal(s|ed|ing)?\b|prescription|medication|\bscar(s|ring)?\b/i,
+      // the earlier store's deliveries (weeks to arrive): about its shipping, not the product, and not this store's
+      // times (stick review 4); still shown, under Most recent and the ratings
+      SHIPPING = /took (about |around |over )?\w+( to \w+)? (weeks?|days) to (arrive|come|get here)|arriv\w* (late|after \w+ weeks)|shipping (took|was slow)|weeks to (arrive|come)/i;
   function helpful(r) {
     var t = (r.title || '') + ' ' + (r.body || '');
     return ((r.photos || []).length ? 2 : 0) + Math.min((r.body || '').length, 400) / 400 + (r.rating || 0) / 5
-      + (AGE.test(t) ? 1 : 0) + (WORRY.test(t) ? 0.6 : 0) - (CONDITION.test(t) ? 4 : 0);
+      + (AGE.test(t) ? 1 : 0) + (WORRY.test(t) ? 0.6 : 0) - (CONDITION.test(t) ? 4 : 0) - (SHIPPING.test(t) ? 1.5 : 0);
   }
   function photoSrc(p) { return /^https?:|^\//.test(p) ? p : (photoBase[p] || ''); }
   function list() {
@@ -1072,7 +1075,9 @@ REVIEW_WALL_JS = r"""
       ((r.body || '').length > 360 ? '<button type="button" class="sfr-more-text">Read more</button>' : '') +
       (ph ? '<div class="sfr-photos">' + ph + '</div>' : '') +
       '<div class="sfr-foot"><span class="sfr-ava" aria-hidden="true">' + initial + '</span><b>' + esc(r.name) + '</b>' +
-      (r.date ? '<small>' + esc(month(r.date)) + '</small>' : '') + '</div></article>';
+      // no date on any card: the imported reviews mostly have none (252 of 9,855), and dates on some only read as
+      // if the low-rated ones were kept undated (stick review 4); Most recent still sorts by the dates there are
+      '</div></article>';
   }
   function paint(reset) {
     var l = list(), box = root.querySelector('.sfr-list');
@@ -1212,6 +1217,8 @@ REVIEW_STRIP_CSS = r"""
 .sfrs-arrow:disabled{opacity:.35;cursor:default}
 .sfrs-arrow svg{width:18px;height:18px}
 @media (max-width:599px){.sfrs-nav{display:none}}
+/* the last card in view fades out where the row goes on (cut at the edge it read as a sliced card, stick review 4) */
+@media (min-width:600px){.sfrs-track:not(.sfrs-end){-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 64px),transparent)}}
 .sfrs-card small{margin-top:auto;font-size:13px;color:#6a6a6a}
 .sfrs-card small b{color:#191919}
 .sfrs .sfr-tp{display:inline-flex;gap:3px}
@@ -1248,7 +1255,8 @@ def review_strip_html(average, count, picks, href='#sf-review-wall', of=None, bu
             + '</div></div></div><script>(function () {'
             'var s = document.currentScript.closest(".sfrs"), t = s.querySelector(".sfrs-track"), nav = s.querySelector(".sfrs-nav"), b = nav.querySelectorAll("button");'
             'function step() { var c = t.querySelector(".sfrs-card"); return c ? c.offsetWidth + 14 : t.clientWidth * .8; }'
-            'function upd() { var max = t.scrollWidth - t.clientWidth - 2; nav.hidden = max <= 0; b[0].disabled = t.scrollLeft <= 2; b[1].disabled = t.scrollLeft >= max; }'
+            'function upd() { var max = t.scrollWidth - t.clientWidth - 2; nav.hidden = max <= 0; b[0].disabled = t.scrollLeft <= 2; b[1].disabled = t.scrollLeft >= max;'
+            ' t.classList.toggle("sfrs-end", max <= 0 || t.scrollLeft >= max); }'
             'b[0].addEventListener("click", function () { t.scrollBy({ left: -step(), behavior: "smooth" }); });'
             'b[1].addEventListener("click", function () { t.scrollBy({ left: step(), behavior: "smooth" }); });'
             't.addEventListener("scroll", upd, { passive: true }); window.addEventListener("resize", upd); upd();'
