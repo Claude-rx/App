@@ -275,7 +275,7 @@ def esc(s): return html.escape(s, quote=False)
 # buy box pieces ----------------------------------------------------------------------------------------------------
 BUYBOX_CSS = r"""
 .sfb-lead{margin:12px 0 0;font-size:16px;line-height:1.55;color:#3b3b3b}
-.sfb-ship{display:inline-block;margin-left:10px;padding:4px 10px;border-radius:999px;background:#151515;color:#fff;font-size:12px;font-weight:600;letter-spacing:.06em;vertical-align:middle;white-space:nowrap}
+.sfb-ship{display:inline-block;margin-left:0;padding:4px 10px;border-radius:999px;background:#151515;color:#fff;font-size:12px;font-weight:600;letter-spacing:.06em;vertical-align:middle;white-space:nowrap}
 .sfo--bundle .sfo-main small:empty{display:none}
 .sfo--bundle .sfo-gifts{margin-top:12px!important;padding-top:10px!important}
 """
