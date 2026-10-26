@@ -6,8 +6,9 @@ usage: python3 -I tools/persona/home_images.py
 
 - oneshade-mobile.webp, oneshade-desktop.jpg, oneshade-narrow.jpg: the "One shade" model (source/oneshade-ai.jpg: the original photo, its
   model made a woman of about 57 by gpt-image-2, her bottle's small print garbled), the real bottle laid on it. The
-  phone file is its backdrop keyed out (the card's grey gradient behind her, as behind the original cut-out); the
-  desktop files are a landscape and a squarer crop of it
+  phone file (also tablets and small laptops, under 1200 px) is its backdrop keyed out, the gaps between her fingers
+  and between her arm and neck too (the card's grey gradient behind her, as behind the original cut-out); the desktop
+  file is a landscape crop of it (oneshade-narrow.jpg, a squarer one, is no longer used)
 - formulas.jpg: the "Korean formulas" photo (source/formulas-ai-2x.jpg: the original model with her neck and shoulder
   completed, so no cut edge shows at any width; Real-ESRGAN 2x), the real bottle laid on it, a little wider than the
   image model's bottle so it covers it whole
@@ -127,7 +128,11 @@ def main():
     white = (a.min(2) > 238) & (a.max(2) - a.min(2) < 10)
     lab, n = ndimage.label(white)
     edge = set(lab[0]) | set(lab[-1]) | set(lab[:, 0]) | set(lab[:, -1])
-    bg = np.isin(lab, [i for i in edge if i])                                            # the backdrop: white, touching the edges
+    # the backdrop: white, touching the edges, and the white it shows through the gaps (between her fingers under the
+    # bottle, between her arm and her neck: 11,000-13,000 px each), which showed as a white box on the card's grey
+    # (review 3); the bottle's printed letters are far smaller
+    size = ndimage.sum(white, lab, range(n + 1))
+    bg = np.isin(lab, [i for i in range(1, n + 1) if i in edge or size[i] > 4000])
     alpha = 1 - ndimage.gaussian_filter(bg.astype(np.float32), 1.2)
     rgba = Image.fromarray(np.dstack([a.astype(np.uint8), (np.clip(alpha, 0, 1) * 255).astype(np.uint8)]), 'RGBA')
     # phones: her head and shoulders from the hair down, keyed (the card's grey gradient shows behind her)

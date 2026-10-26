@@ -2260,10 +2260,13 @@ def faster_home(home):
                f'display:flex;flex-direction:column}}'
                f'{X} .fh-hero-slide--foundation .fh-hero-content{{order:1;height:auto;padding:48px 0 24px;justify-content:flex-start}}'
                f'{X} .fh-hero-slide--foundation .fh-hero-image{{position:relative;order:2;inset:auto;display:block;width:100%;aspect-ratio:16/10}}'
-               # the photo stands 6% below the window's top (her hair reaches the photo's edge): the fade softens the
-               # seam on the grey above her head, not her hair (the 14% fade washed it out, review 3)
-               f'{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:0;top:auto;bottom:0;width:100%;height:94%;object-fit:cover;object-position:100% 0}}'
-               f'{X} .fh-hero-slide--foundation .fh-hero-image:after{{background:linear-gradient(to bottom,#ededef 0,#ededef 5%,rgba(237,237,239,0) 9%)}}}}'
+               # her hair reaches the photo's top edge: its top fades into the grey only across the empty wall on the
+               # left (two mask layers, added: the right part, her head, is never faded). A fade across the whole
+               # width washed out her hair, a hard edge drew a line across the hero (review 3)
+               f'{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:100% 0;'
+               f'-webkit-mask-image:linear-gradient(to bottom,transparent,#000 16%),linear-gradient(to right,transparent 34%,#000 52%);'
+               f'mask-image:linear-gradient(to bottom,transparent,#000 16%),linear-gradient(to right,transparent 34%,#000 52%)}}'
+               f'{X} .fh-hero-slide--foundation .fh-hero-image:after{{display:none}}}}'
                # small laptops: the export's 150%-wide photo cut her face at the right edge; the photo now fills the
                # right 62% of the banner, cropped from its right, its left edge faded into the grey
                f'@media(min-width:1024px) and (max-width:1199px){{{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:auto;right:0;top:0;'
