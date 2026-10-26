@@ -181,26 +181,46 @@ def customer_voice(home):
 ROOT = Path(__file__).resolve().parents[2]
 VIDEO_SWAPS = Path(__file__).resolve().parent / 'queue' / 'video-swaps.json'   # {export media file: Genjutsu re-make}
 
+def demo_override(i):
+    """Card i's replacement clip (ccf_copy.VIDEO_DEMO_CLIPS) and its poster, a frame of it at the card's 720 x 1280
+    (made once, cached in WORK/clips), or None."""
+    if i not in ccf_copy.VIDEO_DEMO_CLIPS: return None
+    from PIL import Image, ImageOps
+    rel, t = ccf_copy.VIDEO_DEMO_CLIPS[i]
+    clip = ROOT / rel
+    poster = WORK / 'clips' / f'{hashlib.md5(clip.read_bytes()).hexdigest()[:12]}-poster-{t}.jpg'
+    if not poster.exists():
+        poster.parent.mkdir(parents=True, exist_ok=True)
+        png = poster.with_suffix('.png')
+        subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', str(t), '-i', str(clip), '-frames:v', '1', str(png)], check=True)
+        ImageOps.fit(Image.open(png).convert('RGB'), (720, 1280), Image.LANCZOS).save(poster, quality=88, optimize=True, progressive=True)
+        png.unlink()
+    return clip, poster
+
 def video_reviews(home):
     """The homepage's video cards (their clips and posters, ccf_copy.VIDEO_DEMOS' captions) as a product page section:
     illustrative videos of the foundation on skin, labelled as such, the real reviews right after them."""
     sec = home_section(home, 'reviews')
     if not sec: return None
     out = []
-    for a, (title, text) in zip(re.findall(r'<article class="fh-review">(.*?)</article>', sec, re.S), ccf_copy.VIDEO_DEMOS):
+    for i, (a, (title, text)) in enumerate(zip(re.findall(r'<article class="fh-review">(.*?)</article>', sec, re.S), ccf_copy.VIDEO_DEMOS)):
         clip = re.search(r'<video[^>]*data-src="(assets/media/[^"]+\.mp4)"', a)
         poster = re.search(r'<img[^>]*class="fh-social-poster"[^>]*src="(assets/img/[^"]+)"|<img[^>]*src="(assets/img/[^"]+)"[^>]*class="fh-social-poster"', a)
         if not clip or not poster: continue
         # the clip as the store shows it: its Genjutsu re-make when it has one (the export's own shows the old brand's
-        # bottle; apf_pages.swap_videos points the pages at the re-make only after this script has run)
+        # bottle; apf_pages.swap_videos points the pages at the re-make only after this script has run), or the card's
+        # replacement clip
         src, swaps = DST / clip.group(1), json.loads(VIDEO_SWAPS.read_text()) if VIDEO_SWAPS.exists() else {}
         if src.name in swaps: src = ROOT / swaps[src.name]
+        override = demo_override(i)
+        if override: src = override[0]
         mp4 = webm = None
         if src.exists():                       # a re-make not made yet: the page keeps the export's file, which
             stem = 'skinofab-demo-' + hashlib.md5(src.read_bytes()).hexdigest()[:6]     # swap_videos then reports
             mp4, webm = card_clip(src, stem, 'mp4'), card_clip(src, stem, 'webm')
+        still = hashed_copy(override[1], 'img', 'skinofab-demo-poster') if override else '../' + (poster.group(1) or poster.group(2))
         out.append({'title': html.escape(title), 'text': html.escape(text), 'alt': html.escape(title),
-                    'video': (mp4 or '../' + clip.group(1), '../' + (poster.group(1) or poster.group(2))) + ((webm,) if webm else ())})
+                    'video': (mp4 or '../' + clip.group(1), still) + ((webm,) if webm else ())})
     return apf_copy.pdp_reviews_html('On skin', 'See how it blends', out, plain=True,
                                      note=html.escape(ccf_copy.VIDEO_DEMO_NOTE)) if out else None
 
@@ -215,8 +235,16 @@ def honest_video_cards():
     sec = t[m.start():end]
     arts = list(re.finditer(r'<article class="fh-review">.*?</article>', sec, re.S))
     out, last, n = [], 0, 0
-    for a, (title, text) in zip(arts, ccf_copy.VIDEO_DEMOS):
+    for i, (a, (title, text)) in enumerate(zip(arts, ccf_copy.VIDEO_DEMOS)):
         art = a.group(0)
+        override = demo_override(i)
+        if override:          # the card's replacement clip, and a frame of it as its poster
+            clip = hashed_copy(override[0], 'media', 'skinofab-demo-clip')[3:]
+            still = hashed_copy(override[1], 'img', 'skinofab-demo-poster')[3:]
+            art, k = re.subn(r'(<video[^>]*data-src=")assets/media/[^"]+\.mp4"', lambda mm: mm.group(1) + clip + '"', art, count=1)
+            art, j = re.subn(r'(<img[^>]*class="fh-social-poster"[^>]*?)src="[^"]*" srcset="[^"]*"',
+                             lambda mm: mm.group(1) + f'src="{still}" srcset="{still} 720w"', art, count=1)
+            if not (k and j): missing.append(('video card clip', title))
         art = re.sub(r'(<div class="fh-review-card">)<img alt="" height="20"[^>]*>', r'\1', art, count=1)      # the stars
         art = re.sub(r'<h3>.*?</h3><p>.*?</p>', f'<h3>{html.escape(title)}</h3><p>{html.escape(text)}</p>', art, count=1, flags=re.S)
         art = re.sub(r'<div class="fh-review-name">.*?</div>', f'<div class="fh-review-name"><span>{html.escape(ccf_copy.VIDEO_DEMO_LABEL)}</span></div>',
@@ -931,7 +959,13 @@ def home_original():
                              f'{X} .fh-category>div{{position:static;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:0 2px}}'
                              f'{X} .fh-category h3{{color:#151515;font-size:26px}}'
                              f'{X} .fh-category .fh-button--white{{background:#151515;color:#fff !important;border-color:#151515}}'   # the export: #151515 !important
-                             f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-category-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}'))
+                             f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-category-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}'
+                             # four equal columns: the export's 1fr tracks grew to their name-and-button row, so at 1024 the
+                             # tiles came out 223 to 291 px wide and the last ran off the screen. Under 1280 px a quarter is
+                             # too narrow for the name and the button side by side: the button goes under the name
+                             f'@media(min-width:1024px){{{X} .fh-category-grid{{grid-template-columns:repeat(var(--fh-columns),minmax(0,1fr))}}}}'
+                             f'@media(min-width:1024px) and (max-width:1279px){{{X} .fh-category>div{{flex-direction:column;align-items:stretch;gap:10px}}'
+                             f'{X} .fh-category .fh-button{{width:100%}}}}'))
         t = t[:a] + sec + t[b:]; done['categories'] = len(tiles)
     t = t.replace('alt="Woman applying Skinofab Color Changing Foundation"', 'alt="A woman in her fifties holding the Adaptive Peptide Foundation"')
     # ---- Bundle & Save and Essentials: the shelf's card markup, our products in it
@@ -960,11 +994,14 @@ def home_original():
     items = []
     for handle, title, path in HOME_ESSENTIALS:
         src = hashed_copy(path, 'img', f'skinofab-home-essential-{handle}-720w', (720, 720))[3:]
-        price = next((P.PRICE for P in SECOND_PRODUCTS if P.HANDLE == handle), apf_copy.PACK1['price'])   # NEXT binds it
+        P = next((P for P in SECOND_PRODUCTS if P.HANDLE == handle), None)
+        price = P.PRICE if P else apf_copy.PACK1['price']                       # NEXT binds it
+        # its was-price as its bestseller card and its page show it (the foundation's: foundation_price below)
+        was = f'<s>{usd(P.COMPARE)}</s>' if P and float(P.COMPARE) > float(P.PRICE) else ''
         items.append(f'<article class="fh-product"> <a aria-label="{title}" class="fh-product-image" href="products/{handle}.html"> '
                      f'<picture class=""><img alt="{title}" class="fh-original" height="720" loading="lazy" sizes="(max-width: 749px) 66vw, 300px" '
                      f'src="{src}" width="720"/> </picture> <span class="fh-badges"></span></a> <div class="fh-product-info"><h3>'
-                     f'<a href="products/{handle}.html">{title}</a></h3> <div class="fh-price"><span>{usd(price)}</span></div></div> </article>')
+                     f'<a href="products/{handle}.html">{title}</a></h3> <div class="fh-price">{was}<span>{usd(price)}</span></div></div> </article>')
     done['essentials'] = cards('__essentials', items)
     # The foundation's cards show its price as its page shows it first (Automatic Refills ticked, the default):
     # 1 bottle $37, was $59. NEXT's own price for it is the one-time $47, which the page shows when refills are off;
@@ -997,11 +1034,11 @@ def home_original():
         sec = t[a:b]
         mob = hashed_copy(HOME / 'oneshade-mobile.webp', 'img', 'skinofab-home-oneshade-mobile-860w')[3:]
         desk = hashed_copy(HOME / 'oneshade-desktop.jpg', 'img', 'skinofab-home-oneshade-desktop-1024w')[3:]
-        narrow = hashed_copy(HOME / 'oneshade-narrow.jpg', 'img', 'skinofab-home-oneshade-narrow-900w')[3:]
+        # under 1200 px the keyed portrait, whole: the wide photo, cropped to a tablet's or a small laptop's box, cut the
+        # top of her head (under a fade, 768 px) or her far eye (under the fade into the copy, 1024 px; review 3)
         sec, k1 = re.subn(r'<source height="1182" media="\(max-width: 749px\)" sizes="85vw" srcset="[^"]*" width="660"/?>',
-                          f'<source height="1130" media="(max-width: 749px)" sizes="100vw" srcset="{mob} 860w" type="image/webp" width="860">'
-                          f'<source height="780" media="(max-width: 1023px)" sizes="100vw" srcset="{desk} 1024w" width="1024">'
-                          f'<source height="820" media="(max-width: 1199px)" sizes="50vw" srcset="{narrow} 900w" width="900">', sec, count=1)
+                          f'<source height="1130" media="(max-width: 1199px)" sizes="(max-width: 749px) 100vw, 60vw" srcset="{mob} 860w" '
+                          f'type="image/webp" width="860">', sec, count=1)
         sec, k2 = re.subn(r'<img alt="[^"]*" class="fh-original" height="1825"[^>]*>',
                           f'<img alt="A woman in her fifties holding the Adaptive Peptide Foundation to her temple" class="fh-original" height="780" '
                           f'loading="lazy" sizes="880px" src="{desk}" srcset="{desk} 1024w" width="1024"/>', sec, count=1)
@@ -1023,7 +1060,11 @@ def home_original():
             f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;top:0;left:0;width:100%;height:100%;transform:none;object-fit:cover;'
             f'-webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%);mask-image:linear-gradient(to bottom,transparent,#000 12%)}}}}'
             f'@media(max-width:749px){{{X} .fh-story-copy{{padding:32px 16px 8px}}{X} .fh-story-media{{aspect-ratio:860/1130}}'
-            f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'))
+            f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'
+            # tablets and small laptops: the keyed portrait whole, standing on the card's lower edge (no fade, no crop)
+            f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-story-media{{aspect-ratio:4/3}}}}'
+            f'@media(min-width:750px) and (max-width:1199px){{{X} .fh-story-media .fh-original{{object-fit:contain;object-position:50% 100%;'
+            f'-webkit-mask-image:none;mask-image:none}}}}'))
         t = t[:a] + sec + t[b:]; done['one shade'] = k1 + k2 + k3
     # ---- Korean formulas: one complete photo (her neck and shoulder whole, so no cut edge), the real bottle in hand
     a, b = section('__formulas')
@@ -1148,13 +1189,14 @@ def layout_fixes():
 
 def local_location():
     """The product pages' "Free shipping to <country>" line asked Shopify's /browsing_context_suggestions.json, which
-    NEXT does not have (a 404 and a console error on every product page): the country now comes from the browser's
-    language (en-US: US; none: "your country"), and its flag is the emoji flag, not a Shopify CDN image. Returns how
-    many pages changed."""
+    NEXT does not have (a 404 and a console error on every product page): it now guesses no country and says the same
+    to everyone, "Ships in 1 business day, tracked" (the flag, when a country is ever set, is the emoji flag, not a
+    Shopify CDN image). Returns how many pages changed."""
     fetch = re.compile(r"async function fetchLocationInfo\(\) \{\s*try \{\s*const response = await fetch\('/browsing_context_suggestions\.json'\);"
                        r".*?console\.error\('Error fetching location info:', error\);\s*\}\s*\}", re.S)
-    local = ("function fetchLocationInfo() {\n    var loc = (navigator.languages && navigator.languages[0]) || navigator.language || '';\n"
-             "    var m = /[-_]([A-Za-z]{2})$/.exec(loc);\n    setLocationInfo(m ? m[1] : '', '');\n  }")
+    # no guess at all: the browser's language is not where the shopper lives (an en-US browser in the UK read "Ships to
+    # US" and US delivery dates; one without a region read "Ships to your country", review 3)
+    local = "function fetchLocationInfo() {\n    setLocationInfo('', '');\n  }"
     flag = re.compile(r'<img class="shipping-country-flag" src="https://cdn\.shopify\.com/static/images/flags/\$\{normalizedCountryCode\.toLowerCase\(\)\}\.svg\?width=32"[^`]*?>')
     emoji = ('<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint.apply(null, normalizedCountryCode.split(\'\')'
              '.map(function (c) { return 127397 + c.charCodeAt(0); }))}</span>')
@@ -1164,8 +1206,9 @@ def local_location():
         if 'browsing_context_suggestions' not in t: continue
         u = fetch.sub(lambda m: local, t)
         u = flag.sub(lambda m: emoji, u)
-        # the line beside it already says "Free shipping on every order": this half says where it ships
-        u = u.replace('<span class="shipping_usp">Free shipping to <span', '<span class="shipping_usp">Ships to <span')
+        # the line beside it already says "Free shipping on every order": this half says how it ships, the same for everyone
+        u = re.sub(r'const shippingMessage = `\$\{flagMarkup\}\$\{separator\}<span class="shipping_usp">Free shipping to <span[^`]*`;',
+                   lambda m: "const shippingMessage = `${flagMarkup}${separator}<span class=\"shipping_usp\">Ships in 1 business day, tracked</span>`;", u)
         if u != t:
             page.write_text(u, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
@@ -1192,7 +1235,7 @@ MAILTO_JS = ("<script>document.addEventListener('submit', function (e) {"
              "var email = v('contact[email]'), name = v('contact[name]'), subject, body;"
              "if (kind === 'newsletter') { subject = 'Newsletter sign-up'; body = 'Please add ' + email + ' to the SKINOFAB newsletter.'; }"
              "else { subject = 'Message from ' + (name || email); body = v('contact[body]') + '\\n\\n' + [name, email, v('contact[phone]')].filter(Boolean).join('\\n'); }"
-             "location.href = f.getAttribute('action') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);"
+             "location.href = 'mailto:' + f.getAttribute('data-sf-to') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);"
              "});</script>")
 
 def working_forms():
@@ -1200,7 +1243,8 @@ def working_forms():
     no token (NEXT answered 403 Forbidden), and NEXT has no newsletter or contact endpoint; the footer's country
     picker was Shopify's 108 markets (NEXT sells in one currency; the checkout asks the country) and posted the same
     way; the menu's "Log in" was a link to "#". Now the two forms open the shopper's email app with the message
-    written, to the store's address (the line under the button says so; without script the form opens it too), the
+    written, to the store's address (data-sf-to: a mailto: action draws Chrome's "Mixed Content" warning on every page;
+    the line under the button says so and gives the address for shoppers without an email app), the
     country picker goes, and "Log in" opens the account (NEXT asks for the email code there). Returns the pages changed."""
     mail = company.EMAIL
     n = 0
@@ -1210,24 +1254,32 @@ def working_forms():
         t = re.sub(r'<form accept-charset="UTF-8" action="#" class="newsletter-form"([^>]*) method="post">\s*'
                    r'<input name="form_type" type="hidden" value="customer"/>\s*<input name="utf8" type="hidden" value="✓"/>\s*'
                    r'<input name="contact\[accepts_marketing\]" type="hidden" value="true"/>',
-                   lambda m: f'<form accept-charset="UTF-8" action="mailto:{mail}" class="newsletter-form"{m.group(1)} '
-                             'data-sf-mailto="newsletter" method="get">', t)
+                   lambda m: f'<form accept-charset="UTF-8" class="newsletter-form"{m.group(1)} '
+                             f'data-sf-mailto="newsletter" data-sf-to="{mail}" method="get">', t)
+        # an empty field opened a mail asking to add "" to the list: the address is required (and checked as one)
+        t = t.replace('name="contact[email]" placeholder="Your email" type="email" value=""/>',
+                      'name="contact[email]" placeholder="Your email" required type="email" value=""/>')
         t = t.replace('<div class="errors">Email is invalid or already taken.</div>',
                       '<p class="sf-mailto-note" style="margin:10px 0 0;font-size:13px;opacity:.75">Opens your email app '
-                      'with the sign-up written: press Send there.</p>')
+                      f'with the sign-up written: press Send there. No email app? Write to {mail} with “Newsletter”.</p>')
         t = re.sub(r'<form accept-charset="UTF-8" action="#" class="contact-form" id="([^"]+)" method="post">\s*'
                    r'<input name="form_type" type="hidden" value="contact"/>\s*<input name="utf8" type="hidden" value="✓"/>',
-                   lambda m: f'<form accept-charset="UTF-8" action="mailto:{mail}" class="contact-form" data-sf-mailto="contact" '
+                   lambda m: f'<form accept-charset="UTF-8" class="contact-form" data-sf-mailto="contact" data-sf-to="{mail}" '
                              f'id="{m.group(1)}" method="get">', t)
         t = t.replace('<button class="cs-btn" type="submit">Send message</button>',
                       '<button class="cs-btn" type="submit">Send message</button>'
                       f'<p class="sf-mailto-note" style="margin:12px 0 0;font-size:14px;color:#5a5a5a">Opens your email app '
-                      f'with your message to {mail}: press Send there.</p>')
+                      f'with your message to {mail}: press Send there. No email app? Write to us at {mail}.</p>')
         m = re.search(r'<form accept-charset="UTF-8" action="#" class="localization-form"', t)
         if m:
             e = t.find('</form>', m.start())
             if e > 0: t = t[:m.start()] + t[e + len('</form>'):]
         t = t.replace('href="#" id="customer_login_link"', 'href="/accounts/" id="customer_login_link"')   # NEXT's account page
+        # "Log in" and "Create account" both opened the same page (NEXT signs in and signs up with one email code): one
+        # link, named for both
+        t = re.sub(r'(<a class="mobile-navlink mobile-navlink--small" href="/accounts/" id="customer_login_link">)Log in(</a></li>)\s*'
+                   r'<li class="mobile-menu__item"><a class="mobile-navlink mobile-navlink--small" href="[^"]*" id="customer_register_link">Create account</a></li>',
+                   r'\1Log in or create an account\2', t)
         if 'data-sf-mailto=' in t and MAILTO_JS not in t:
             t = t.replace('</body>', MAILTO_JS + '</body>', 1)
         if t != o:
@@ -1666,7 +1718,7 @@ def cart_offer():
                           'text': c_text, 'button': balm_copy.CART_UPGRADE['button']},
                          {'from': serum[d1['key']], 'to': serum[d2['key']], 'title': serum_copy.CART_UPGRADE['title'],
                           'text': d_text, 'button': serum_copy.CART_UPGRADE['button']}],
-            'review': {'text': cart['review_text'], 'name': cart['review_name']},
+            'review': {'text': cart['review_text'], 'name': cart['review_name']}, 'guarantee_text': cart['guarantee_text'],
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
                        'every': ccf_copy.REFILL['every'],
@@ -2013,7 +2065,8 @@ def shelf_rating(P, home):
         img = f'<img alt="" height="16" src="{stars.group(1)}" width="80"/>' if stars else ''
         return (f'<div class="fh-product-rating">{img}<span>{float(summary["average"]):.1f} '
                 f'({int(summary["count"]):,} review{"s" if int(summary["count"]) != 1 else ""})</span></div>')
-    return f'<div class="fh-product-rating">{SHIELD}<span>New · 30-day money-back guarantee</span></div>'
+    # short enough for a quarter of a 1024 px row (the longer "30-day money-back guarantee" ended in an ellipsis)
+    return f'<div class="fh-product-rating">{SHIELD}<span>New · 30-day guarantee</span></div>'
 
 def product_shelf(home, P):
     """The homepage product shelf: the product's card (P: its copy module) in the default list (the Bestsellers view)
@@ -2101,7 +2154,8 @@ def honest_counts(texts, summary):
         (r'Over 50,000 5-star reviews', f'Over {floor(five)} 5-star reviews'),
         (r'Trusted by 1,000,000\+ women who finally found something that works', 'From verified buyers who finally found something that works'),
         (r'Backed by over 1,000,000 customers, 50,000 five-star reviews and data from independent panels run with real customers',
-         f'Backed by over {floor(n)} verified reviews, {avg:.1f} out of 5 on average'),
+         # where they come from, as the product page's review wall says it (review 3: only that page said so)
+         f'Backed by over {floor(n)} verified reviews of the same formula from our earlier store, {avg:.1f} out of 5 on average'),
         (r'4\.8 \(351,837 reviews\)', f'{avg:.1f} ({n:,} reviews)'),
     ]
     hits = {}
@@ -2206,8 +2260,10 @@ def faster_home(home):
                f'display:flex;flex-direction:column}}'
                f'{X} .fh-hero-slide--foundation .fh-hero-content{{order:1;height:auto;padding:48px 0 24px;justify-content:flex-start}}'
                f'{X} .fh-hero-slide--foundation .fh-hero-image{{position:relative;order:2;inset:auto;display:block;width:100%;aspect-ratio:16/10}}'
-               f'{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:100% 20%}}'
-               f'{X} .fh-hero-slide--foundation .fh-hero-image:after{{background:linear-gradient(to bottom,#ededef 0,rgba(237,237,239,0) 14%)}}}}'
+               # the photo stands 6% below the window's top (her hair reaches the photo's edge): the fade softens the
+               # seam on the grey above her head, not her hair (the 14% fade washed it out, review 3)
+               f'{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:0;top:auto;bottom:0;width:100%;height:94%;object-fit:cover;object-position:100% 0}}'
+               f'{X} .fh-hero-slide--foundation .fh-hero-image:after{{background:linear-gradient(to bottom,#ededef 0,#ededef 5%,rgba(237,237,239,0) 9%)}}}}'
                # small laptops: the export's 150%-wide photo cut her face at the right edge; the photo now fills the
                # right 62% of the banner, cropped from its right, its left edge faded into the grey
                f'@media(min-width:1024px) and (max-width:1199px){{{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:auto;right:0;top:0;'

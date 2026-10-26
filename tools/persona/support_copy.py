@@ -107,7 +107,14 @@ FAQ = [
      'minute.</li><li><strong>Add a second thin layer</strong> where you want more coverage.</li></ol>'),
     ('Can I use the products if I have sensitive skin', None,
      '<p>The foundation is fragrance-free, with a hydrating serum base. If your skin is sensitive, test a little behind '
-     'your ear or along your jaw for 24 hours before using it on your face.</p>'),
+     'your ear or along your jaw for 24 hours before using it on your face.</p>'
+     '<p>The foundation and the PDRN Plumping Balm contain salmon-derived DNA (PDRN): if you have a fish allergy, ask '
+     'your doctor first.</p>'),
+    # the checkout takes cards (no PayPal, Apple Pay or Google Pay there, review 3); the cards are the ones the cart
+    # and the footer show (Theme settings > Payment logos)
+    ('What payment methods', None,
+     '<p>We accept major credit and debit cards: Visa, Mastercard, American Express and Discover. Your card details '
+     'go straight to our payment processor over an encrypted connection.</p>'),
 ]
 
 # the contact page's questions: (the start of the question, the question or None to keep it, the answer HTML or None

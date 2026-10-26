@@ -315,6 +315,9 @@ cart_js = must_replace(cart_js, """        function recreateAndRetry() {
 cart_js = must_replace(cart_js, """        return this.createCart().then(function(cart) {
             return doAdd(cart.id, false);
         });""", """        return doAdd(null, false);""", 'cart client: first add')
+# a line's product is the variant: its url is the store's primary domain's (another host, where the bag is empty) and
+# the variant's page only redirects to the product's. The drawer links the product's page, on this host.
+cart_js = must_replace(cart_js, "'    parent { pk title metadata }',", "'    parent { pk title url metadata }',", 'cart client: parent url')
 cart_f.write_text(cart_js)
 
 # product JSON snapshots (colour swatches on cards fetch /products/<handle>.js)
@@ -834,7 +837,7 @@ def build_card(card):
     for s in card.select('.visually-hidden'): s.string = slots.put('{{ product.get_title }}')
     price = card.select_one('.product-grid-item__price')
     if price:
-        price.clear(); price.append(slots.put("{% include 'partials/sf_price.html' with p=product %}"))
+        price.clear(); price.append(slots.put("{% include 'partials/sf_was.html' with p=product %}{% include 'partials/sf_price.html' with p=product %}"))
         # the refills-by-default product's card shows its refill price (sf_price.html): say so under it, as the
         # homepage's cards do
         price.insert_after(NavigableString(slots.put(REFILL_NOTE)))
@@ -953,6 +956,17 @@ write('partials/sf_price.html',
       "{% else %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price|floatformat:'-2' }} {{ sf_s.price.currency }}{% endif %}"
       "{% endif %}{% endif %}")
 
+# a listing card's was-price, struck through before its price, only when it has one: the homepage's cards show the
+# compare-at price and the listing pages showed none (review 3). The refills-by-default product's is its page's.
+write('partials/sf_was.html',
+      "{# Card was-price for product p: <s> with the compare-at price, or nothing. #}\n"
+      "{% if p and settings.sf_subscription_product and settings.sf_subscription_price_text and p.pk == settings.sf_subscription_product.pk %}"
+      "{% elif p and settings.sf_refill_default_product and settings.sf_refill_price_text and p.pk == settings.sf_refill_default_product.pk %}"
+      "{% if settings.sf_refill_compare_text %}<s class=\"sf-was\" style=\"color:#8a8a8a;font-weight:400;margin-right:6px\">{{ settings.sf_refill_compare_text }}</s>{% endif %}"
+      "{% elif p %}{% purchase_info_for_product request p as sf_s %}{% if sf_s.price.exists and sf_s.price.price_retail > sf_s.price.price %}"
+      "<s class=\"sf-was\" style=\"color:#8a8a8a;font-weight:400;margin-right:6px\">{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price_retail|floatformat:'-2' }} {{ sf_s.price.currency }}</s>"
+      "{% endif %}{% endif %}")
+
 # the same, with the product's purchase info already looked up (sf_s): a page that shows one product's price several
 # times looks it up once (8c)
 write('partials/sf_price_pi.html', (OUT / 'partials' / 'sf_price.html').read_text()
@@ -1049,6 +1063,7 @@ SF_CART = ('''        <script>
             shippingNote: "{{ settings.sf_cart_shipping_note|default:''|escapejs }}",
             guaranteeTitle: "{{ settings.sf_cart_guarantee_title|default:''|escapejs }}", guaranteeText: "{{ settings.sf_cart_guarantee_text|default:''|escapejs }}",
             reviewText: "{{ settings.sf_cart_review_text|default:''|escapejs }}", reviewName: "{{ settings.sf_cart_review_name|default:''|escapejs }}",
+            reviewPk: "{% if settings.sf_cart_review_product %}{{ settings.sf_cart_review_product.pk }}{% endif %}",
             upsellPks: [{% if settings.sf_cart_upsell_1 %}"{{ settings.sf_cart_upsell_1.pk }}", {% endif %}{% if settings.sf_cart_upsell_2 %}"{{ settings.sf_cart_upsell_2.pk }}", {% endif %}{% if settings.sf_cart_upsell_3 %}"{{ settings.sf_cart_upsell_3.pk }}"{% endif %}],
             upsellTitle: "{{ settings.sf_cart_upsell_title|default:''|escapejs }}", upsellButton: "{{ settings.sf_cart_upsell_button|default:'Add'|escapejs }}",
             upgrades: [{ from: "{{ settings.sf_cart_upgrade_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade_to|default:''|escapejs }}",
@@ -1065,6 +1080,7 @@ SF_CART = ('''        <script>
                 button: "{{ settings.sf_cart_upgrade4_button|default:'Upgrade'|escapejs }}" }],
             payIcons: [PAY_ICONS_JS],
             checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
+            cartUrl: "/cart/", changeText: "{{ settings.sf_cart_change_text|default:'Change'|escapejs }}",
             secureText: "{{ settings.sf_cart_secure_text|default:''|escapejs }}",
             couponToggle: "{{ settings.sf_cart_coupon_toggle|default:'Have a discount code?'|escapejs }}",
             removeText: "{{ settings.sf_cart_remove_text|default:'Remove'|escapejs }}",
@@ -1148,6 +1164,29 @@ if p_form.exists():
     s = p_form.read_text()
     if s.count(SCORE_FIELD) != 1: sys.exit('templates/reviews/form.html: score field not found once')
     p_form.write_text(s.replace(SCORE_FIELD, SCORE_STARS))
+
+# Review pages (the list, the form, one review): a product's first category is a NEXT grouping that is not a shop
+# section (the foundation's is "B2G5"), so the breadcrumb goes Home / Shop / product; the product's base price is not
+# what its page sells it for (refill and pack prices), so they show none; and "no reviews yet" spoke over the imported
+# reviews the product page shows, so it points there.
+REVIEW_CRUMB = re.compile(r'\{% with category=product\.categories\.all\.0 %\}.*?\{% endwith %\}', re.S)
+REVIEW_PRICE = re.compile(r'\{% purchase_info_for_product request product as session %\}\s*\{% if session\.price\.exists %\}.*?'
+                          r'\{% endif %\}\s*\{% endif %\}\s*', re.S)
+SHOP_CRUMB = ('<li><a href="{% url \'catalogue:index\' %}" class="hover:text-slate-600">Shop</a></li>\n            <li>/</li>')
+NO_REVIEWS = '<p class="text-slate-500">{% t "store.review.no_reviews" %}</p>'
+SEE_REVIEWS = ('<p class="text-slate-600">Read what customers say on the <a href="{{ product.get_absolute_url }}#sf-review-wall" '
+               'class="underline">{{ product.get_title }} page</a>.</p>')
+for name in ('index.html', 'review.html'):
+    f = OUT / 'templates' / 'reviews' / name
+    if not f.exists(): continue
+    s = f.read_text()
+    s, a = REVIEW_CRUMB.subn(SHOP_CRUMB, s, count=1)
+    s, b = REVIEW_PRICE.subn('', s, count=1)
+    if not (a and b): sys.exit(f'templates/reviews/{name}: breadcrumb or price block not found')
+    if name == 'index.html':
+        if s.count(NO_REVIEWS) != 1: sys.exit('templates/reviews/index.html: empty state not found once')
+        s = s.replace(NO_REVIEWS, SEE_REVIEWS)
+    f.write_text(s)
 
 # Cart page: Spark's per-line frequency select offers "One Time"; a line of the subscription-only product
 # (Theme settings > Subscription Offer) keeps the plan instead, as a fixed label + hidden value.
@@ -1313,12 +1352,16 @@ schema = {'SKINOFAB': {
         {'name': 'sf_cart_upsell_title', 'type': 'text', 'label': 'Add-ons title', 'default': 'Complete your routine'},
         {'name': 'sf_cart_upsell_button', 'type': 'text', 'label': 'Add-on button', 'default': 'Add'},
         {'name': 'sf_cart_guarantee_title', 'type': 'text', 'label': 'Guarantee title', 'default': '30-day money-back guarantee'},
-        {'name': 'sf_cart_guarantee_text', 'type': 'text', 'label': 'Guarantee text', 'default': "Wear it for 30 days. If you don't love it, we'll refund you.",
+        {'name': 'sf_cart_guarantee_text', 'type': 'text', 'label': 'Guarantee text', 'default': "Try it for 30 days. If you don't love it, we'll refund you.",
          'help_text': 'Must match your refund policy.'},
         {'name': 'sf_cart_review_text', 'type': 'text', 'label': 'Review quote', 'default': '',
          'help_text': 'A real customer review, word for word. Leave empty to hide.'},
         {'name': 'sf_cart_review_name', 'type': 'text', 'label': 'Review name', 'default': ''},
+        {'name': 'sf_cart_review_product', 'type': 'product', 'label': 'Review is about',
+         'help_text': 'The quote shows only while this product is in the bag. Empty: always.'},
         {'name': 'sf_cart_checkout_text', 'type': 'text', 'label': 'Checkout button', 'default': 'Secure checkout'},
+        {'name': 'sf_cart_change_text', 'type': 'text', 'label': 'Refill line: link to change it', 'default': 'Change',
+         'help_text': 'After "Refills every 28 days": opens the bag page, where the shopper picks One Time or refills.'},
         {'name': 'sf_pay_icons', 'type': 'text', 'label': 'Payment logos (cart and footer)', 'default': 'visa, mc, amex, discover',
          'help_text': 'Any of: visa, mc, amex, discover, applepay, googlepay, ppal, klarna, diners, jcb, maestro, dankort. List only what your checkout accepts.'},
         {'name': 'sf_cart_secure_text', 'type': 'text', 'label': 'Under the checkout button', 'default': 'Secure, encrypted payment'},
@@ -1357,8 +1400,9 @@ if offer_cfg.exists():
     pid = lambda h: data.get(f'sf_p_{var(h)}')
     missing_pids = [h for h in [oc['product'], *oc['addons']] if not pid(h)]
     if missing_pids: sys.exit(f'sf-offer.json: no NEXT product mapped for {missing_pids} (set SF_CATALOG)')
-    data.update({'sf_cart_empty_product': pid(oc['product']),
+    data.update({'sf_cart_empty_product': pid(oc['product']), 'sf_cart_review_product': pid(oc['product']),
                  'sf_cart_review_text': oc['review']['text'], 'sf_cart_review_name': oc['review']['name']})
+    if oc.get('guarantee_text'): data['sf_cart_guarantee_text'] = oc['guarantee_text']
     for n, up in enumerate(oc.get('upgrades') or [oc['upgrade']]):
         key = 'sf_cart_upgrade' + (str(n + 1) if n else '')
         data.update({f'{key}_from': str(up['from']), f'{key}_to': str(up['to']), f'{key}_title': up['title'],

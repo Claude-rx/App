@@ -21,6 +21,18 @@ The eighth video (a bag of lip products, no foundation) is unchanged.
 
 The lip pencil and lip gloss are the old range's products (no longer sold); in black they carry no old branding.
 
+### Changes after review 3 (26 Oct 2026)
+
+- **`43e0f648`, the bin shot.** At 53.4–54.9 s a hand drops a Giorgio Armani foundation and a Dolce concealer into a
+  bin while she says "I won't be needing these anymore." `tools/persona/clip_cuts.py` cuts 53.32–54.97 s, picture and
+  sound together, at the pauses around that sentence. It writes `brand/videos/gj-43e0f648-cut.mp4` (58.7 s), and
+  `video-swaps.json` points the export's clip at it: the homepage card, the product page's demo row and any other page
+  play the cut. It goes from "…a very light layer of bronzer." straight to the orchid shot with the SKINOFAB bottle.
+- **The "Glides over texture" card plays `b705ce67`.** Its own clip (`88d49199`) shows a glossy angled pump with no
+  SKINOFAB wordmark, only on the back of the hand. `b705ce67` shows the bottle, wordmark to camera, at its start and
+  end, dotted on her cheeks and forehead and buffed in with a brush. `ccf_copy.VIDEO_DEMO_CLIPS` sets it for card 2 on
+  both pages, with a frame at 0.3 s as the poster, and the caption says what it shows.
+
 ## Her voice in the 60 s video (`43e0f648`)
 
 | When | She said | Now |

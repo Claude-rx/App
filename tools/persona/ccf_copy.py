@@ -113,6 +113,8 @@ PAGE = {
         # the hero and "One shade that finds yours" keep the export's own words (the homepage is its original
         # design), with one claim made accurate: it softens the look of lines as it blends, not "in seconds"
         ("blurring blemishes, redness, and fine lines in seconds.", "softening the look of blemishes, redness and fine lines as you blend."),
+        # "flawlessly" beside the FAQ's honest word for very fair and deep skin (review 3)
+        ("Adapts flawlessly to your unique skin tone,", "Adapts to your unique skin tone,"),
         (">Look visibly younger<", ">Made for 45+<"),
     ],
     'pages/bestfoundation-2.html': [
@@ -143,6 +145,22 @@ PAGE = {
         ('The notice period is 1 days.', 'The notice period is 1 day.'),
         ('Unless otherwise specified on this Application or agreed with Users, Products shall be delivered within thirty (30) days from purchase.',
          'Products are shipped within 1 business day of purchase and delivered within the times our Shipping Policy gives for each destination.'),
+        # the money-back guarantee as the refund policy, FAQ and product pages give it: no return needed, opened or
+        # not (the generator's text had the goods sent back at the buyer's cost, unused and in their packaging)
+        (r'RE:<p>Within the same period of time stated above, Users must also return the purchased goods to the Owner at their own '
+         r'expense, making sure that they are undamaged, clean and fit for resale\. Goods must be returned inside the original packaging\.<br/>\s*'
+         r'Upon receipt of the goods, the Owner will verify that all conditions applicable to the money-back-guarantee are fulfilled and, if so, refund the purchase price\.</p>',
+         '<p>Users do not need to send the goods back: the Owner refunds the price of the Product in full, even if it has been '
+         'opened and used, as set out in the Owner’s refund policy.</p>'),
+        # prices as the FAQ and the product pages state them (the generator's "exclusive or inclusive, depending on
+        # the section")
+        (r'RE:<p>Prices on this Application are displayed:</p>\s*<ul>\s*<li>either exclusive or inclusive of any applicable fees, '
+         r'taxes and costs, depending on the section the User is browsing\.</li>\s*</ul>',
+         '<p>The price shown at checkout is the full price: it includes any applicable fees, taxes and costs, and there are '
+         'no import duties or charges to pay at delivery.</p>'),
+        # payment methods the checkout does not offer (it takes cards)
+        (r'RE:(?s)<h3 id="payment-of-price-in-installments">Payment of price in installments</h3>\s*<p>.*?</p>\s*', ''),
+        (r'RE:(?s)<h3 id="authorization-for-future-paypal-payment">Authorization for future PayPal payment</h3>\s*<p>.*?</p>\s*<p>.*?</p>\s*', ''),
     ],
     'pages/about-skinofab.html': [
         # "98% feel more confident" and the rest came from no survey: what holds instead
@@ -151,7 +169,7 @@ PAGE = {
         (r'RE:<div class="sa-stat__num">98%</div>\s*<div class="sa-stat__label">Feel more confident</div>',
          '<div class="sa-stat__num">30 days</div> <div class="sa-stat__label">to try it, or your money back</div>'),
         (r'RE:<div class="sa-stat__num">97%</div>\s*<div class="sa-stat__label">Feel more attractive</div>',
-         '<div class="sa-stat__num">9,800+</div> <div class="sa-stat__label">verified reviews of our foundation</div>'),
+         '<div class="sa-stat__num">9,800+</div> <div class="sa-stat__label">verified reviews of our foundation’s formula, from our earlier store</div>'),
         (r'RE:<div class="sa-stat__num">100%</div>\s*<div class="sa-stat__label">Feel more like themselves</div>',
          # (the three formulas: the fourth product is a brush)
          '<div class="sa-stat__num">Korea</div> <div class="sa-stat__label">where our three formulas are made</div>'),
@@ -191,7 +209,7 @@ PAGE = {
         ("Say goodbye to shade-matching struggles. This color-changing foundation adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
          "Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines."),
         ("Try it worry-free. If our skin-adapting foundation doesn't blend seamlessly with your tone, you'll get your money back*",
-         "Wear it in your own daylight for 30 days. If you don't love it, we'll refund you.*"),
+         "Wear it in your own daylight for 30 days. If you don't love it, we'll refund you."),     # (the export's * had no footnote)
         ("One shade, verified range", "One adaptive shade"),
         ("Simpler shade selection within fair-to-medium",
          "Goes on white and adapts to your tone, so there is no shade to pick"),
@@ -199,7 +217,9 @@ PAGE = {
         ("Our adaptive pigment formula removes the need to choose a shade. As you blend, micro-encapsulated pigments react to your skin’s warmth and undertones, shifting within seconds to match your unique complexion. Made for fair to medium tones, it evens redness, blurs imperfections, and melts into the skin for a seamless, second-skin finish.",
          "Most color-changing foundations are a basic, drying base with fragrance and nothing in it for your skin. Ours is a serum. Hyaluronic acid, ceramide NP, squalane and panthenol keep dry skin comfortable; peptides (Matrixyl 3000), PDRN and Pro-Xylane are there for the skin underneath; soft-focus powders blur the look of lines and pores. Adaptive pigments go on white and shift to your tone as you blend, inside the base you choose."),
         ("Our Color Changing Foundation is suitable for all skin tones above and in between.",
-         "There is one shade. It goes on white and adapts to your skin tone as you blend, so there is nothing to match or mix. Wear it in your own daylight for 30 days; if you don't love it, we'll refund you."),
+         "There is one shade. It goes on white and adapts to your skin tone as you blend, so there is nothing to match or mix. If your skin is very fair or deep, email us first at hello@skinofab.com and we'll tell you honestly how it's likely to look. Either way, wear it in your own daylight for 30 days; if you don't love it, we'll refund you."),
+        # under "There is one shade", 14 fair-to-medium swatches read as a shade chart (review 3)
+        (r'RE:<div class="accordion-content-image">\s*<img alt="" loading="lazy" src="\.\./assets/img/foundation_png_1-[^"]+"[^>]*/>\s*</div>', ''),
         ("Step 1: Create the Perfect Canvas", "Step 1: Moisturizer and sunscreen first"),
         ("Start with moisturized skin. Smooth on your go-to primer or hydrating cream to create an even base that helps your foundation glide on seamlessly.",
          "Apply your usual moisturizer and your daily sunscreen. No primer needed."),
@@ -220,11 +240,11 @@ PAGE = {
         (">Vitamin E<", ">Hyaluronic acid + ceramide NP<"),
         (": Nourishes and protects with skin-soothing Vitamin E", ": keep dry skin comfortable, so the finish never cracks"),
         ("Water, Titanium Dioxide, Alumina, Silica, Propylene Glycol, Ethylhexyl Palmitate, Isononyl Isononanoate, Glycerin, Peg-30 Dipolyhydroxystearate, Cetyl Peg/Ppg-10/1 Dimethicone, Triethylhexanoin, Mica, C12-15 Alkyl Benzoate, Disteardimonium Hectorite, Ci 77491, Ci 77492, Ci 77499, Tocopheryl Acetate, Phenoxyethanol, Ethylhexylglycerin, Parfum",
-         "Key ingredients: Sodium Hyaluronate, Sodium Hyaluronate Crosspolymer, Ceramide NP, Squalane, Panthenol, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Sodium DNA (PDRN), Hydroxypropyl Tetrahydropyrantriol (Pro-Xylane), Niacinamide, Adenosine, Silica, Boron Nitride, Mica, Iron Oxides. Fragrance-free. No propylene glycol, drying alcohol or parabens. The full ingredient list is printed on the box."),
+         "Key ingredients: Sodium Hyaluronate, Sodium Hyaluronate Crosspolymer, Ceramide NP, Squalane, Panthenol, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Sodium DNA (PDRN, from salmon), Hydroxypropyl Tetrahydropyrantriol (Pro-Xylane), Niacinamide, Adenosine, Silica, Boron Nitride, Mica, Iron Oxides. Fragrance-free. No propylene glycol, drying alcohol or parabens. The full ingredient list is printed on the box."),
         ("Our long-wear formula is designed to stay put for up to 16 hours without fading, oxidizing, or transferring onto clothes or masks. The breathable, lightweight texture locks onto skin while still feeling comfortable, so you get all-day coverage that looks as fresh at 8 PM as it did at 8 AM.",
          "It's made to stay even and comfortable through a full day, without turning orange or drying into your lines. If you're out from morning to dinner, a light touch-up on the nose and chin is usually all it needs."),
         ("Our formula is dermatologist-tested, non-comedogenic (won't clog pores), and free from harsh irritants. We've also excluded common sensitizers like parabens, sulfates, and synthetic fragrances. In fact, 88% of users in our clinical study reported improved skin texture after just 2 weeks of use—it's skincare and makeup in one.",
-         "It's fragrance-free and made without propylene glycol, drying alcohol or parabens, the usual reasons thinner skin stings. As with anything new, try it on your jawline first."),
+         "It's fragrance-free and made without propylene glycol, drying alcohol or parabens, the usual reasons thinner skin stings. As with anything new, try it on your jawline first. It contains salmon-derived DNA (PDRN): if you have a fish allergy, ask your doctor first."),
         ("Clean & cruelty free", "Fragrance-free serum base"),
         ("Vegan formula with skin-nourishing ingredients", "With peptides, PDRN and hyaluronic acid"),
     ],
@@ -258,9 +278,14 @@ PDP_REVIEW_SKIP = ['Olivia M.']
 # buyers' own words are the review wall's. (title, caption) per card, in the section's order.
 VIDEO_DEMOS = [
     ('Goes on white, turns into your tone', 'Dots on the back of the hand, blended in: the white shifts to your skin as you work it in.'),
-    ('Glides over texture', 'A thin layer on cheeks and smile lines that blends over texture instead of settling into it.'),
+    ('Glides over texture', 'Dotted on cheeks and forehead and buffed in: a thin layer that blends over texture instead of settling into it.'),
     ('Soft on fine lines', 'A little around the eyes, pressed in with a fingertip, for a smoother-looking finish.'),
 ]
+# A card whose own clip does not show the product: another re-make in its place, (clip, poster frame in seconds), by
+# card. The second card's clip (gj-88d49199) shows a glossy angled pump with no SKINOFAB wordmark, only on the back
+# of the hand (review 3, 26 Oct 2026); gj-b705ce67 shows the SKINOFAB bottle at its start and end, dotted on her
+# cheeks and forehead and buffed in with a brush.
+VIDEO_DEMO_CLIPS = {1: ('brand/videos/gj-b705ce67.mp4', 0.3)}
 VIDEO_DEMO_LABEL = 'Illustrative video · AI model'
 VIDEO_DEMO_NOTE = 'Illustrative videos made with AI models, not customer reviews. Real buyers’ reviews are just below.'
 
@@ -284,7 +309,7 @@ def pdp_faq_orders():
          f"{usd(two['refill'])} for 2 bottles. We email you before every refill. To skip or cancel, just email "
          "hello@skinofab.com: no minimum, no fees."),
         ('Can I buy just once?',
-         f"Yes. In your cart, choose One Time under the bottle before checkout: {usd(one['price'])} for 1 bottle or "
+         f"Yes. In your bag, tap Change under the bottle and pick One Time before checkout: {usd(one['price'])} for 1 bottle or "
          f"{usd(two['price'])} for 2 bottles, with no refills."),
         ('Does it have SPF?',
          'No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation layers on top without pilling.'),
@@ -296,7 +321,9 @@ def pdp_faq_orders():
 FRONTROW_PRODUCT_ID = 4694
 
 # Cart drawer (Theme settings > SKINOFAB > Cart Drawer): the last step before payment is about trust and order value,
-# not plan terms. Add-ons are design handles (mapped to NEXT by the catalog); the review is one the product page shows.
+# not plan terms. Add-ons are design handles (mapped to NEXT by the catalog). The review is an imported verified review
+# that the product page shows, word for word (Lora Z., reviews.json id zjPC7IPmY, the first testimonial card); the
+# drawer shows it only while the foundation is in the bag. The guarantee line is every product's (refund policy).
 CART = {
     'product': 'color-changing-foundation',
     # the drawer offers the first two not yet in the bag: the brush, then the balm (the new under-eye product), then the
@@ -304,9 +331,10 @@ CART = {
     'addons': ['the-lymphatic-brush', 'pdrn-plumping-balm', 'egf-nad-firming-serum'],
     'upgrade_title': 'Upgrade to 2 bottles + free gifts',
     'upgrade_button': 'Upgrade',
-    'review_text': ("I'm 53 and I've never found one that works this well on mature skin—including my own. "
-                    "The way it glides over texture instead of settling into it is remarkable."),
-    'review_name': 'Deborah, 53 · Verified purchase',
+    'review_text': ("I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the "
+                    "perfect color match—never too light or orange! I’m very pleased!"),
+    'review_name': 'Lora Z. · Verified buyer',
+    'guarantee_text': "Try it for 30 days. If you don't love it, we'll refund you, even if it's opened.",
 }
 
 # Product gallery order on NEXT (first 10 are uploaded): the 45+ women and the "goes on white" demo up front.

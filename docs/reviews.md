@@ -8,6 +8,14 @@ star), sorting, "Show more", photo thumbnails with a lightbox, and **Write a rev
 2. **Imported reviews of the same formula** from the Smooche store, word for word, with their own ratings, dates
    and verified flags.
 
+**Write a review** opens NEXT's form page, whose breadcrumb is Home / Shop / product (not the product's first NEXT
+category), with no price (the product page's refill and pack prices are what it sells at) and, while it has no NEXT
+reviews yet, a link back to the product page's wall. The link has no `href` until the wall's script sets it: the
+theme cancels clicks on every `a[href="#"]` it finds when the page loads.
+
+The cart drawer quotes one review, an imported verified one the product page shows word for word (Lora Z., 65), and
+only while the foundation is in the bag (Theme settings > Cart Drawer > Review is about).
+
 While there are no reviews the wall stays hidden. The Lymphatic Brush's page has the same wall (and its stars under
 the buyers line appear with the first review); its imports go to `<work_dir>/reviews-brush`.
 

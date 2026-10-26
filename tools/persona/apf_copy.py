@@ -294,7 +294,7 @@ FAQ = [
     ('Will it cover sun spots and redness?',
      'One pump gives an even, natural, medium coverage that softens sun spots and redness. For a darker spot, tap a second thin layer just there. It builds without looking heavy.'),
     ('I have sensitive skin. Will it sting?',
-     'It\'s fragrance-free and made without propylene glycol, drying alcohol or parabens, the usual reasons thinner skin stings. As with anything new, try it on your jawline first.'),
+     'It\'s fragrance-free and made without propylene glycol, drying alcohol or parabens, the usual reasons thinner skin stings. As with anything new, try it on your jawline first. It contains salmon-derived DNA (PDRN): if you have a fish allergy, ask your doctor first.'),
     ('Does it have SPF?',
      'No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation layers on top without pilling.'),
     ('How long does it last?',
@@ -1081,6 +1081,7 @@ REVIEW_WALL_JS = r"""
   function start(imported) {
     var nativeEl = root.querySelector('[data-sf-native-reviews]'), native = { reviews: [] };
     try { native = JSON.parse(nativeEl.textContent || '{}'); } catch (e) {}
+    /* the link has no href until here: the theme cancels clicks on every a[href="#"] it finds at load */
     if (native.write) { var w = root.querySelector('.sfr-write'); w.href = native.write; w.hidden = false; }
     var mine = (native.reviews || []).map(function (r) { return { name: r.name, rating: +r.score || 0, title: r.title, body: r.body, date: (r.date || '').slice(0, 10), verified: false, photos: [] }; })
       .filter(function (r) { return r.rating >= 1 && r.rating <= 5; });
@@ -1145,7 +1146,7 @@ def review_wall_html(data_src='', photos=None):
             f'<script type="application/json" data-sf-review-photos>{json.dumps(photos or {})}</script>'
             '<div class="sfr-wrap"><div class="sfr-top">'
             '<div><h2 id="sfr-title">Customer reviews</h2><div class="sfr-avg" data-sfr-avg></div><ul class="sfr-dist"></ul>'
-            '<p class="sfr-note" hidden></p><a class="sfr-write" href="#" hidden>Write a review</a></div>'
+            '<p class="sfr-note" hidden></p><a class="sfr-write" hidden>Write a review</a></div>'
             '<div><div class="sfr-bar"><div class="sfr-chips"></div>'
             '<select class="sfr-sort" aria-label="Sort reviews"><option value="relevant">Most helpful</option><option value="recent">Most recent</option>'
             '<option value="high">Highest rated</option><option value="low">Lowest rated</option><option value="photos">With photos first</option></select></div>'
@@ -1272,7 +1273,9 @@ def kbeauty_html(img, buy_href='#apf-buy', k=None, video=None):
             f'<p class="sfps-lede">{html.escape(k["lede"])}</p><ul class="sfkb-rows">{rows}</ul>'
             f'<p class="sfkb-note">{html.escape(k["note"])}</p>'
             f'<div class="sfps-cta"><a class="sfps-btn" href="{buy_href}">{html.escape(k["button"])}</a></div></div>'
-            + (f'<div class="sfps-photo sfps-photo--video"><video muted loop playsinline preload="none" poster="{video[1]}" '
+            # the loop keeps its own shape at every width (the section's photos go 4:4.4 under 990 px, which cut its
+            # burnt-in captions)
+            + (f'<div class="sfps-photo sfps-photo--video" style="aspect-ratio:{video[2]}/{video[3]}"><video muted loop playsinline preload="none" poster="{video[1]}" '
                f'width="{video[2]}" height="{video[3]}" aria-label="{html.escape(video[4])}"><source src="{video[0]}" type="video/mp4">{_webm(video[5:])}</video>'
                f'{_AUTOPLAY}</div>' if video else
                f'<div class="sfps-photo"><img src="{src}" alt="{html.escape(k.get("alt", "Adaptive Peptide Foundation with PDRN, peptides and Pro-Xylane"))}" '
