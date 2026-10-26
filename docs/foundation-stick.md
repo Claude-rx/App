@@ -39,9 +39,27 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 - **Same formula, different ingredient lists.** The page lists hyaluronic acid, niacinamide, squalane, vitamin E and
   centella (Facelove's list); the foundation's page lists PDRN, Matrixyl 3000, Pro-Xylane, adenosine and ceramide NP.
   An independent review (26 Oct) flagged that "the same adaptive formula" and two different lists contradict each
-  other. Either the stick is the foundation's formula (then `INGREDIENTS`, `TWIN['inside']` and the science rows
-  take the foundation's actives) or it shares only the colour technology (then the reviews' labels say "of our
-  Adaptive Peptide Foundation" without "same formula", or the stick shows only its own reviews).
+  other. Since stick review 5 the page claims only what both share, the colour technology: the reviews are "of our
+  Adaptive Peptide Foundation, which adapts to your tone the same way", the FrontrowMD line names "the liquid that
+  adapts to your tone the same way this stick does", and the FAQ "Stick or bottle" names each one's base (the
+  foundation's serum with peptides and PDRN, the stick's cream with hyaluronic acid, niacinamide and squalane). If the
+  supplier's INCI shows the stick is the foundation's formula, the copy can say so again; if it shows a different
+  colour technology, set `BORROW_REVIEWS = None` and `FRONTROW_NOTE = None`.
+- **Size.** The close-up product photos have nothing to give scale, and the in-hand photos show a stick about a
+  palm long; the page states no size. Once the supplier gives the length and net weight, add them to the
+  Ingredients tab (`NET`) and an FAQ ("How big is it? How long does a stick last?").
+- **Import duties.** The FAQ and the terms no longer promise "nothing more to pay at delivery" in every country
+  (nothing shows the checkout collects duties): outside the US, "your country may charge import duties or taxes at
+  delivery; email us before you order". If the checkout collects duties (duties paid), say so again in `FAQ` and in
+  `ccf_copy.py`'s terms rule.
+- **FrontrowMD's pop-up** says "Clinicians who shared this product" without naming it (FrontrowMD's own page, in a
+  frame the store cannot change): the line above the badge says it is the foundation's listing. Ask FrontrowMD for a
+  stick listing, or remove `FRONTROW_NOTE` to drop the badge from the stick's page.
+- **Payment wallets.** The page and the drawer show the cards the checkout takes (Visa, Mastercard, Amex, Discover);
+  if the checkout adds PayPal, Apple Pay or Google Pay, add their icons in Theme settings → Cart Drawer.
+- **Proof.** The only demonstrations of "goes on white, turns into your tone" are AI illustrations, labelled as such.
+  A 10–15 second real, unretouched clip of the stick on two or three women over 45 (fair, medium, deep) would be the
+  page's strongest proof: gallery slide 2 and "How does it work?".
 - **Wear claim.** "From 10 AM to 10 PM" and "made to wear all day" are the owner's elements; a wear test (even an
   in-house one) would back them.
 - **Real photos.** The photos are AI-generated; the wordmark is printed on every stick by `relabel_bottles.py` from
@@ -57,11 +75,11 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 | "No orange, grey or yellow tint", "no time wasted on color choices" | The problem ("orange in daylight, grey by the window"), "No shade to guess", "0 shades to choose" |
 | "Does not settle into wrinkles", "no cakey, dry or tight feeling" | Said as how to get it: thin layers, buffed in with the brush, on moisturised skin (FAQ, tabs) |
 | The five ingredient cards | The ingredient carousel, the science block and the Ingredients tab, as cosmetic effects |
-| 30-day money-back guarantee, free shipping | The store's 30-day guarantee (a full refund, even opened, no questions asked: the original store's own words; nothing promises she keeps it, which the refund policy does not say) and free shipping. The header's line on this page says what a stick order gets ("Buy 2, get 1 free · Free shipping · 30-day money-back guarantee", `ANNOUNCEMENT`), not the store's sale line with its gifts and 60% |
+| 30-day money-back guarantee, free shipping | Under the button, as on the foundation: the trust row, then "Free shipping on every order · Ships in 1 business day, tracked" and the boxed 30-day guarantee. The store's 30-day guarantee (a full refund, even opened, no questions asked: the original store's own words; nothing promises she keeps it, which the refund policy does not say) and free shipping. The header's line on this page says what a stick order gets ("Buy 2, get 1 free · Free shipping · 30-day money-back guarantee", `ANNOUNCEMENT`), not the store's sale line with its gifts and 60% |
 | $39 | 1 stick $39 · 2 sticks $59 (recommended, compare $78) · 3 sticks: buy 2, get 1 free $78 (compare $117, exactly 3 × $39); with Automatic Refills $31 / $47 / $62. Each card of several shows its price per stick, and the note under the cards says the crossed-out prices are sticks bought one at a time ($39 each) and that one-time is chosen on the cart page |
 | "10 AM Morning / 10 PM Evening" | The `wear-day` photo (the same woman, morning and evening, labelled an illustration on the image; the evening half colour-matched to the morning's, since the page says it does not turn orange) and "From 10 AM to 10 PM", said as "made to wear all day" |
 | "One stick for 16 skin tones" + three before/afters | The `tones` panel: 12 swatches and three women, fair, medium and deep, before and after (illustrations) |
-| Linda S. and the other testimonials | The foundation's real imported reviews (same formula), labelled as the foundation's, in green boxed stars (the owner's request; no review site's name or logo). "Most helpful" puts first the reviews that tell her most: photos, fuller text, her age (45+) and her worries (shade, lines, dry skin); a review about a skin condition (acne, rosacea...) goes last, since a cosmetic treats none |
+| Linda S. and the other testimonials | The foundation's real imported reviews (it adapts to her tone the same way), labelled as the foundation's, in green boxed stars (the owner's request; no review site's name or logo). "Most helpful" puts first the reviews that tell her most: photos, fuller text, her age (45+) and her worries (shade, lines, dry skin); a review about a skin condition (acne, rosacea...) goes last, since a cosmetic treats none |
 | FrontrowMD "Clinicians' Choice" | The foundation's FrontrowMD sticker in a box under the add-to-cart button, after a line saying it is the foundation's listing (not on the stick's photo, not under the title, where it read as the stick's and pushed the price under the phone's sticky bar); its × closes the whole box |
 | "Love it or your money back · Refill reminder · Cancel any time · Renews at $66/mo" | The same trust row under the button, with the stick's own refill price and days |
 
@@ -103,7 +121,7 @@ brush, sensitive skin, layering, refunds). It doesn't promise she will look 30.
 | Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`), with `stick_copy.py`'s copy and `brand/foundation-stick/` photos |
 | Homepage | A card in the product shelf after the foundation (default list, Bestsellers, New and Face tabs), "New" and "Buy 2, get 1 free" badges; a card in Essentials |
 | Menus | "Adaptive Foundation Stick" after the foundation in the menu and in the footer's Shop column (the footer uses the menu's names, in its order) |
-| Cart drawer | Its own upgrade card, 1 → 2 sticks for $20 (Theme settings → Cart Drawer → Fifth upgrade); not an add-on to the foundation (one foundation is enough) |
+| Cart drawer | Its own upgrade cards: 1 → 2 sticks ($16 more with refills, $20 bought once; Theme settings → Cart Drawer → Fifth upgrade) and, with the 2-stick pack in the bag, 2 → 3 sticks, buy 2, get 1 free ($15 more with refills, $19 bought once; Sixth upgrade); not an add-on to the foundation (one foundation is enough). The 30-day guarantee sits in the drawer's footer, under the checkout button |
 
 ## Images
 

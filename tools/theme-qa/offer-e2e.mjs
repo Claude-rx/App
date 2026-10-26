@@ -383,8 +383,9 @@ async function chooseBundle(s, key) {
   }, picker);
 }
 // each bundle: its variant and price, one-time, the drawer (its 1 -> 2 upgrade only for one, never itself as an
-// add-on), checkout for the 2-pack; then the drawer upgrade 1 -> 2
-async function bundleCases(name, route, title, label, refills = false) {
+// add-on), checkout for the 2-pack; then the drawer upgrade 1 -> 2. to3: the 2-pack is offered 2 -> 3 as well (the
+// stick, stick review 5), and the upgraded bag then takes it
+async function bundleCases(name, route, title, label, refills = false, to3 = false) {
   const packs = await packsOf(route);
   const want = pack => (refills ? { price: pack.refill, refill: true, every: pack.every } : { price: pack.price, refill: false });
   for (const [key, pack] of Object.entries(packs)) {
@@ -399,7 +400,7 @@ async function bundleCases(name, route, title, label, refills = false) {
     problems.push(...checkLine(ls[0], { pk: pack.pk, ...want(pack) }));
     const d = await drawerState(s);
     if (!d.open) problems.push('drawer did not open');
-    if (d.upgrade !== (key === '1')) problems.push(`upgrade shown=${d.upgrade}`);
+    if (d.upgrade !== (key === '1' || (to3 && key === '2'))) problems.push(`upgrade shown=${d.upgrade}`);
     if (d.addons.includes(title)) problems.push(`${title} offered as an add-on while in the bag`);
     if (d.addons.length < 1) problems.push('no add-ons');
     if (d.planTalk) problems.push('drawer has plan talk');
@@ -427,9 +428,19 @@ async function bundleCases(name, route, title, label, refills = false) {
   if (ls.length !== 1) problems.push(`${ls.length} lines after the upgrade`);
   problems.push(...checkLine(ls[0], { pk: packs['2'].pk, ...want(packs['2']) }));
   const d = await drawerState(s);
-  if (d.upgrade) problems.push('upgrade still offered');
+  if (d.upgrade !== to3) problems.push(`upgrade offered after 1 -> 2: ${d.upgrade}`);
   await s.page.screenshot({ path: path.join(SHOTS, `drawer-${name}-upgrade.png`) });
   out.push({ case: `${name} upgrade 1 -> 2`, lines: ls, errors: s.errors, ok: problems.length === 0, problems });
+  if (to3 && d.upgrade) {
+    const p3 = [];
+    await s.page.locator(`${drawer} [data-sf-upgrade]`).first().click(); await s.page.waitForTimeout(7000);
+    const l3 = lines(s.cart);
+    if (l3.length !== 1) p3.push(`${l3.length} lines after the upgrade`);
+    p3.push(...checkLine(l3[0], { pk: packs['3'].pk, ...want(packs['3']) }));
+    if ((await drawerState(s)).upgrade) p3.push('an upgrade still offered with the 3-pack in the bag');
+    await s.page.screenshot({ path: path.join(SHOTS, `drawer-${name}-upgrade-3.png`) });
+    out.push({ case: `${name} upgrade 2 -> 3`, lines: l3, errors: s.errors, ok: p3.length === 0, problems: p3 });
+  }
   await s.ctx.close();
 }
 await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
@@ -437,7 +448,7 @@ await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
 // its refill price, every its own days; the brush is one-time only
 await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm', true);
 await bundleCases('serum', SERUM, 'EGF + NAD+ Firming Serum', 'EGF + NAD+ Firming Serum', true);
-await bundleCases('stick', STICK, 'Adaptive Foundation Stick', 'Adaptive Foundation Stick', true);
+await bundleCases('stick', STICK, 'Adaptive Foundation Stick', 'Adaptive Foundation Stick', true, true);
 
 // ---------------------------------------------------------------- the brush's, the balm's, the serum's and the stick's pages
 // All are built on the foundation page's structure (tools/persona/twin.py): the same sections in the same order (the
@@ -489,6 +500,10 @@ async function twinPage(name, route, cfg) {
              competitor: /solena|fem\+|femplus|meimei|facelove/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
              announce: ((document.querySelector('.announcement .text-highlight__break') || {}).textContent || '').trim(),
              stars: !document.querySelector('[data-sfb-rating]').hidden, hScroll: document.documentElement.scrollWidth > innerWidth + 1,
+             // under the trust row, as on the foundation: free shipping and the boxed 30-day guarantee (stick review 5)
+             assure: (() => { const a = document.querySelector('.sfb-assure'), t = document.querySelector('.sfp-trust');
+               return !!a && !!a.querySelector('.sfb-guarantee') && /Free shipping/.test(a.textContent) && !!t
+                 && !!(t.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING); })(),
              // another product's FrontrowMD listing: in a box under the add-to-cart button, the line naming whose first
              frontrow: (() => { const b = document.querySelector('.sfb-frontrow'), a = document.querySelector('form[data-product-form] [data-add-to-cart]');
                if (!b || !a) return null; const note = b.querySelector('.sfb-frontrow-note'), badge = b.querySelector('.sfb-frontrow__badge');
@@ -530,6 +545,7 @@ async function twinPage(name, route, cfg) {
   if (!cfg.announce && !/Fall Sale/.test(pg.announce)) problems.push('announcement (the store\'s line): ' + pg.announce);
   if (!!cfg.frontrow !== !!pg.frontrow || (pg.frontrow && !(pg.frontrow.belowAtc && pg.frontrow.noteFirst))) problems.push('FrontrowMD box: ' + JSON.stringify(pg.frontrow));
   if (pg.imgs.length) problems.push(`${pg.imgs.length} broken images: ${pg.imgs.slice(0, 3).join(' ')}`);
+  if (!pg.assure) problems.push('no free-shipping row and boxed guarantee under the trust row');
   // the homepage shelf card and the menu links
   await s.page.goto(`${STORE}/`, { waitUntil: 'networkidle', timeout: 90000 });
   const home = await s.page.evaluate(([handle, title, nav]) => {
