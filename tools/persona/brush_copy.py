@@ -10,6 +10,7 @@ its own, the reviews near the top are the foundation's, labelled as theirs, and 
 Read by apply_persona.py (it builds products/the-lymphatic-brush.html from the foundation page's markup) and by
 setup_brush_offers.py (the NEXT product, its three bundles and their prices).
 """
+import re
 import html, json
 from pathlib import Path
 import support_copy
@@ -305,6 +306,11 @@ def refill_faq(bundles, refill, email='hello@skinofab.com'):
              f'checkout: {once}, with no refills.')]
 
 
+def pack_label(name):
+    """A pack's name without its offer: '3 sticks (buy 2, get 1 free)' or '3 Sticks: buy 2, get 1 free' -> '3 sticks'."""
+    return re.split(r':| \(', name)[0]
+
+
 def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choose your bundle', refill=None):
     """The bundle picker: three cards (Solena's bundles, or another product's `bundles` and `gifts`), the default one
     chosen. It sets the form's variant and the button's price. A bundle shows a saving only when its compare-at price
@@ -319,7 +325,7 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     on = bool(refill)
     units = lambda b: int(b.get('units') or (b['key'] if b['key'].isdigit() else 1))
     table = {b['key']: {'pk': variants[b['key']], 'price': float(b['price']), 'compare': float(b['compare']),
-                        'label': b['name'].split(':')[0], 'units': units(b),
+                        'label': pack_label(b['name']), 'units': units(b),
                         **({'refill': float(b['refill']), 'every': int(b['every'])} if on else {})} for b in bundles}
     default = next((b['key'] for b in bundles if b.get('default')), bundles[0]['key'])
     base, base_compare = float(bundles[0]['price']), float(bundles[0]['compare'])
@@ -358,7 +364,7 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     note = (f'<p class="sfo-refill-note">Prices with Automatic Refills, {off}% off.'
             + (f' Crossed out: {money(base)} a {esc(refill["unit"])}, bought one at a time.' if one_each else '')
             + ' One-time packs: '
-            + ' · '.join(f"{esc(b['name'].split(':')[0])} {money(b['price'])}" for b in bundles)
+            + ' · '.join(f"{esc(pack_label(b['name']))} {money(b['price'])}" for b in bundles)
             + ' (choose one-time on the cart page).</p>') if on else ''
     return (f"""<div class="sfo sfo--bundle" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
 <style>{css}</style>
@@ -395,6 +401,9 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     }});
     var price = form && form.querySelector('[data-sfb-btn-price]');
     if (price) price.textContent = ' | ' + money(now);
+    // the sticky bar names the chosen pack and its price (stick review 7: "From $31" under a title price of $47)
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sf-sticky-pack]'), function (e) {{ e.textContent = pick.label; }});
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sf-sticky-now]'), function (e) {{ e.textContent = money(now); }});
     if (!sub) return;
     // the refill: how often the chosen pack ships, and the row and terms under the button
     box.setAttribute('data-interval-count', String(pick.every));

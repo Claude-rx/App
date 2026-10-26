@@ -462,6 +462,10 @@ def review_data(reviews=REVIEWS):
     age = re.compile(r"(?i)\b(?:I['’]?m|I am|at|age)\s+(4[5-9]|[5-8]\d)\b|\b(4[5-9]|[5-8]\d)\s*(?:years? old|yrs? old|y/?o)\b"
                      r"|\bin my (?:fifties|sixties|seventies|50s|60s|70s)\b")
     picks = sorted(picks, key=lambda r: not age.search(r['body']))[:10]
+    # the strip's reviews go to the end of the wall's "Most helpful" order, so none shows twice in a few screens
+    # (stick review 7: Diane O.'s "I am 60 years old..." in the strip and again in the wall's first eight)
+    top = {(r['name'], r['body']) for r in picks}
+    ship = [dict(r, top=1) if (r['name'], r['body']) in top else r for r in ship]
     summary = {'count': d['count'], 'average': d['average'], 'distribution': d['distribution']}
     if d.get('note'): summary['note'] = d['note']        # where the imported reviews come from (import_reviews.py --note)
     return {'ship': ship, 'summary': summary,
@@ -483,7 +487,7 @@ def review_wall(reviews=REVIEWS):
             im.save(DST / 'assets' / 'img' / name, quality=84, optimize=True, progressive=True)
             photos[p] = '../assets/img/' + name
     # a data script (theme JS assets run through the template engine: ASCII only, no template openers)
-    slim = [{k: r[k] for k in ('name', 'rating', 'title', 'body', 'date', 'verified', 'photos') if r.get(k)} for r in d['ship']]
+    slim = [{k: r[k] for k in ('name', 'rating', 'title', 'body', 'date', 'verified', 'photos', 'top') if r.get(k)} for r in d['ship']]
     payload = json.dumps({'summary': d['summary'], 'reviews': slim}, ensure_ascii=True, separators=(',', ':'))
     payload = payload.replace('{%', '{\\u0025').replace('{{', '{\\u007b').replace('{#', '{\\u0023')
     body = 'window.SFReviewsData=' + payload + ';\n'
@@ -1539,7 +1543,7 @@ def layout_fixes():
                        # (full width it was 833 px tall and the screen held no buy box, stick review 3)
                        '@media (min-width:768px) and (max-width:1023px){[data-product-single-media-group]{max-width:560px;'
                        'margin-left:auto!important;margin-right:auto!important}}'
-                       + TABLET_STACK + '</style>' + m.group(1), t, count=1)
+                       + TABLET_STACK + LAPTOP_COLUMNS + '</style>' + m.group(1), t, count=1)
         t = t.replace('</body>', f'<style data-sf-layout-fixes>{LAYOUT_FIXES}</style>'
                       + (CIRCLE_ROOM_JS if 'text-highlight-wrapper--circle' in t else '') + '</body>', 1)
         t = BEFORE_AFTER_IMG.sub(lambda m: f'<div class="skinofab-iwt__image sf-has-note">{m.group(1)}{BEFORE_AFTER_NOTE}', t)
@@ -1552,6 +1556,11 @@ def layout_fixes():
 # (relative, not static: FrontrowMD's sticker sits in it; static, it was placed against the page, under the header,
 # at 768: review 6) (top 0: the design's sticky gallery keeps top 85 px, which as relative moved it 85 px down onto
 # the title and rating, stick review 2)
+# a small laptop (1024 to 1279 px): the gallery and the buy box half and half, not 60/40. The buy box was 323 px
+# wide there: the title, the rating and the pack names each on two lines, and the add-to-cart button at 1,075 px,
+# under the first screen (stick review 7). Here, with the gallery's reserve, so the columns hold from the first paint
+LAPTOP_COLUMNS = ('@media(min-width:1024px) and (max-width:1279px){.product-single__wrapper--large{'
+                  'grid-template-columns:repeat(2,minmax(0,1fr))!important}}')
 TABLET_STACK = ('@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}'
                 '.product-single__gallery{position:relative!important;top:0!important;height:auto!important}}')
 
@@ -2180,7 +2189,11 @@ def cart_offer():
             # each refill pack's schedule by SKU: NEXT keeps one list of intervals per product, so the cart page
             # offered a 2-stick pack every 28 days at the price of 56 (stick review 2); the cart keeps the pack's own
             'pack_every': {b['sku']: int(b['every']) for P in SECOND_PRODUCTS
-                           if (getattr(P, 'REFILL', None) or {}).get('default') for b in P.BUNDLES}}
+                           if (getattr(P, 'REFILL', None) or {}).get('default') for b in P.BUNDLES},
+            # and its two prices, one-time and refill, for the cart page's choice (stick review 7: "One-time
+            # purchase" there named no price)
+            'pack_prices': {b['sku']: [float(b['price']), float(b['refill'])] for P in SECOND_PRODUCTS
+                            if (getattr(P, 'REFILL', None) or {}).get('default') for b in P.BUNDLES}}
 
 STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
         '<path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
@@ -2542,7 +2555,7 @@ def product_page(base, P, final, found=None):
     if head:
         unit = P.REFILL['unit'] if refill_on else ''
         n_units = int(pick.get('units') or (pick['key'] if pick['key'].isdigit() else 1))
-        note = pick['name'].split(':')[0] + (' with Automatic Refills' + (f', {P.money(round(float(now_p) / n_units, 2))} a {unit}' if n_units > 1 else '')
+        note = brush_copy.pack_label(pick['name']) + (' with Automatic Refills' + (f', {P.money(round(float(now_p) / n_units, 2))} a {unit}' if n_units > 1 else '')
                                              if refill_on else '')
         head.insert_after(frag(f'<p class="sfb-price-note" data-sf-title-note data-unit="{P.esc(unit)}" '
                                f'style="margin:2px 0 10px;font-size:14px;line-height:1.4;color:#4a4a4a">{P.esc(note)}</p>'))
@@ -2573,6 +2586,19 @@ def product_page(base, P, final, found=None):
     # foundation's variant ids and scripts
     trust = prod.select_one('.sfp-trust')
     trust.insert_after(frag(assure_html(getattr(P, 'GUARANTEE', None))))
+    # the refill prices' note (what the prices are, the one-time prices) right under the button, where she agrees to
+    # the refills, and out of the way above it: over the cards it pushed the button below a laptop's first screen
+    # (911 px at 1440 x 900, stick review 7)
+    rn = form.select_one('.sfo-refill-note')
+    if rn: cta.insert_after(rn.extract())
+    # the foundation's leftovers in the design's buy box: its id on the form (the commerce adapter mapped it to the
+    # foundation's handle on this page) and its USP grid, kept hidden by a script that tests that id (stick review 7)
+    pid = form.select_one('input[name=product-id]')
+    if pid: pid['value'] = str(P.SHOPIFY_ID)
+    for sc in prod.find_all('script'):
+        if 'ccf-v2-hide-usp-grid' in (sc.string or ''):
+            blk = sc.find_parent(class_='product__block')
+            if blk: blk.decompose()
     # (the foundation's FrontrowMD listing goes with the foundation's reviews, below: in the stick's buy box it read
     # as the stick's own, stick review 6)
     # the tabs, in the design's accordion markup
@@ -2619,8 +2645,12 @@ def product_page(base, P, final, found=None):
     if len(P.META_DESCRIPTION) > 155: missing.append(('meta description over 155 characters', P.META_DESCRIPTION[:60]))
     text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{html.escape(P.META_DESCRIPTION)}" name="description"/>', text, count=1)
     text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', f'id="{P.HANDLE}-skinofab"', 1)
+    first = next((b for b in P.BUNDLES if b.get('default')), P.BUNDLES[0])
+    on = bool(getattr(P, 'REFILL', None) and P.REFILL.get('default'))
     text, _ = sticky_bar(text, sticky_thumb(P.IMG / 'card.jpg', f'{P.IMG_PREFIX}-sticky', getattr(P, 'STICKY_ERASE', ())), P.TITLE,
-                         f'From {P.money(refill_price(P)[0])} · Free shipping', P.STICKY_BUTTON)
+                         f'From {P.money(refill_price(P)[0])} · Free shipping', P.STICKY_BUTTON,
+                         live=(brush_copy.pack_label(first['name']), P.money(first['refill'] if on else first['price']),
+                               ' with refills' if on else ''))
     return text
 
 def refill_price(P):
@@ -2926,21 +2956,31 @@ STICKY_CSS = """
 .sf-sticky img,.sf-sticky__txt{display:none}.sf-sticky__btn{flex:1;padding:14px 16px}.sf-sticky__from{display:inline}}
 """
 
-def sticky_bar(t, img, title, price_line, button, rating=None):
+def sticky_bar(t, img, title, price_line, button, rating=None, live=None):
     """The product page's sticky bar, rebuilt: the export's #sticky_atcs was never shown (the app script that showed
     it did not come with the export) and its prices were bound to the wrong product. This one shows whenever the buy
     box's add-to-cart button is out of view, above or below on a phone or a tablet (the page opens with it below the
     fold: there was no buy button on the first screen, review 5), above on a laptop; its button goes to the pack
     picker (#apf-buy).
-    price_line is plain text ("From $37 · Free shipping"), so the theme build leaves it as written."""
+    price_line is plain text ("From $37 · Free shipping"), so the theme build leaves it as written.
+    live: (pack, price, tail) of the pack the picker starts on ("2 sticks", "$47", " with refills"): the bar names
+    that pack and its price, and the picker keeps them in step ([data-sf-sticky-pack], [data-sf-sticky-now]); "From
+    $31" beside a title price of $47 put two prices on the first phone screen (stick review 7)."""
     m = re.search(r'<div id="sticky_atcs"', t)
     if not m: return t, False
     stars = (f' <i aria-hidden="true">&#9733;</i> {rating[0]:.1f} ({int(rating[1]):,})') if rating else ''
+    if live:
+        pack, now, tail = (html.escape(x) for x in live)
+        line = (f'<span data-sf-sticky-pack>{pack}</span> · <span data-sf-sticky-now>{now}</span>{tail} · '
+                + html.escape(price_line.split(' · ')[-1]))
+        short = f'<span data-sf-sticky-now>{now}</span>'
+    else:
+        line, short = html.escape(price_line), html.escape(price_line.split(' · ')[0])
     bar = (f'<style>{STICKY_CSS}</style><div class="sf-sticky" id="sf-sticky" aria-hidden="true">'
            f'<div class="sf-sticky__in"><img src="{img}" alt="" width="52" height="52" loading="lazy" decoding="async">'
-           f'<div class="sf-sticky__txt"><b>{html.escape(title)}</b><span>{html.escape(price_line)}{stars}</span></div>'
+           f'<div class="sf-sticky__txt"><b>{html.escape(title)}</b><span>{line}{stars}</span></div>'
            f'<a class="sf-sticky__btn" href="#apf-buy" tabindex="-1">{html.escape(button)}'
-           f'<span class="sf-sticky__from">&nbsp;· {html.escape(price_line.split(" · ")[0])}</span></a></div>'
+           f'<span class="sf-sticky__from">&nbsp;· {short}</span></a></div>'
            '<script>(function () {'
            'var bar = document.currentScript.parentNode;'
            'function start() {'

@@ -88,7 +88,10 @@ def moments(sec, cards, img):
         p.string = text
     # on a tablet, 2.2 cards, not 2.5: the half card at the screen's edge cut a face in two (stick review 5); the
     # card that peeks in now shows its first fifth (each photo's own margin, before the face)
-    return str(s).replace('767: { slidesPerView: 2.5,', '767: { slidesPerView: 2.2,')
+    # on a computer, three cards, not four: at 1440 a card was 315 px wide, the stick's wordmark 4 to 6 px tall
+    # (stick review 7); the arrows show the fourth
+    return (str(s).replace('767: { slidesPerView: 2.5,', '767: { slidesPerView: 2.2,')
+            .replace('1000: { slidesPerView: 4', '1000: { slidesPerView: 3'))
 
 
 # line icons for the twin pages, drawn to say what their line says (the design's icons were the foundation's own: a
@@ -160,9 +163,19 @@ def compare(sec, c):
     rows = body.select('tr')
     tpl = copy.copy(rows[0])
     for r in rows: r.decompose()
-    for label in c['rows']:
+    # a row may be (label, True): the other one has it too, ticked in grey (stick review 7: every row crossed out
+    # against "your old foundation", a creamy row included)
+    yes = ('<svg aria-label="Yes" fill="none" height="20" role="img" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">'
+           '<circle cx="10" cy="10" fill="#8a8a8a" r="10"></circle><path d="M6 10.4l2.7 2.7L14.2 7.4" stroke="white" '
+           'stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>')
+    for row in c['rows']:
+        label, both = (row, False) if isinstance(row, str) else row
         r = copy.copy(tpl)
         r.select('td')[0].string = label
+        if both:
+            for td in r.select('td')[2:]:
+                icon = td.select_one('.compare-icon')
+                if icon: icon.clear(); icon.append(frag(yes))
         body.append(r)
     return str(s)
 

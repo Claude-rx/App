@@ -182,16 +182,18 @@ def before_after(product, name, out, note_text=AI_NOTE, dark=False, words=('Befo
     the AI line. dark: the words in ink on a white band at the foot (for photos whose lower edge is white: white words
     were lost on a white t-shirt), and a white line between the halves."""
     im = src(product, name)
+    # the words at 42 px and the AI line at 48: a phone shows the photo about 360 px wide, where 34 and 40 px read as
+    # 7 to 10 px (stick review 7; 40 was already up from 28, stick review 2)
     if not dark:
-        labels(im, [(34, W - 84, words[0]), (W // 2 + 34, W - 84, words[1])])
-        labels(im, [(34, W - 34, note_text)], size=40)        # 40: legible where a phone shows it (stick review 2)
+        labels(im, [(34, W - 96, words[0]), (W // 2 + 34, W - 96, words[1])], size=42)
+        labels(im, [(34, W - 34, note_text)], size=48)
         return save(im, product, out)
     d = ImageDraw.Draw(im)
     d.rectangle((W // 2 - 3, 0, W // 2 + 3, W), fill=PAPER)
-    d.rectangle((0, W - 132, W, W), fill=PAPER)
-    d.text((34, W - 78), words[0], font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
-    d.text((W // 2 + 34, W - 78), words[1], font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
-    note(d, (34, W - 28), note_text, anchor='ls', size=40)
+    d.rectangle((0, W - 158, W, W), fill=PAPER)
+    d.text((34, W - 94), words[0], font=sans(42, 'SemiBold'), fill=INK, anchor='ls')
+    d.text((W // 2 + 34, W - 94), words[1], font=sans(42, 'SemiBold'), fill=INK, anchor='ls')
+    note(d, (34, W - 30), note_text, anchor='ls', size=48)
     save(im, product, out)
 
 
@@ -231,8 +233,11 @@ def tones_panel(product, cols, title, out, tall=False, tones=SKIN_TONES):
         for j, (name, word) in enumerate(((b, 'Before'), (a, 'After'))):
             y = y0 + j * (ph + 54)
             im.paste(ImageOps.fit(photo(product, name), (cw, ph), Image.LANCZOS, centering=(0.5, 0.35)), (x, y))
-            d.text((x + 4, y + ph + 34), word, font=sans(26, 'SemiBold'), fill=INK, anchor='ls')
-    note(d, (W // 2, H - 26 if not tall else y0 + 2 * ph + 54 + 80), AI_NOTE + '. Results vary.', size=38)
+            d.text((x + 4, y + ph + 36), word, font=sans(32, 'SemiBold'), fill=INK, anchor='ls')
+    # the AI line as large as the width allows, up to 46 px (38 px read as 10 px on a phone, stick review 7)
+    line, size = AI_NOTE + '. Results vary.', 46
+    while size > 36 and d.textlength(line, font=sans(size, 'Regular')) > W - 60: size -= 1
+    note(d, (W // 2, H - 26 if not tall else y0 + 2 * ph + 54 + 80), line, size=size)
     save(im, product, out)
 
 
@@ -350,12 +355,13 @@ def vs_others(product, ours, others, others_label, why, rows, others_thresh=240,
         d.text((64, top + 150 + k * 56), text, font=serif(44, 'Bold', italic=italic), fill=INK, anchor='ls')
     d.text((col1, top + 368), 'SKINOFAB', font=sans(22, 'SemiBold'), fill=INK, anchor='ms')
     d.text((col2, top + 368), others_label, font=sans(22, 'Regular'), fill=SOFT, anchor='ms')
-    for k, text in enumerate(rows):
+    for k, row in enumerate(rows):
+        text, both = (row, False) if isinstance(row, str) else row
         y = top + 440 + k * 112
         d.line([(64, y - 52), (W - 64, y - 52)], fill=LINE, width=1)
         d.multiline_text((64, y - 8 - (16 if '\n' in text else 0)), text, font=sans(30, 'Medium'), fill=INK, anchor='ls', spacing=8)
         check(d, col1, y - 14, 22, True)
-        check(d, col2, y - 14, 22, False, (200, 200, 200))
+        check(d, col2, y - 14, 22, both, (200, 200, 200) if not both else (150, 150, 150))
     save(im, product, 'vs-others')
 
 
@@ -483,24 +489,26 @@ def stick():
     tones_panel(P, tones, title, 'tones-tall', tall=True, tones=SKIN_TONES[:7])
     panel(P, 'panel-wide', ('One Stick,', 'Your Shade'), [('sparkle', 'Goes on white,', 'blends to your tone'),
                                                           ('drop', 'Creamy, made for', 'dry, mature skin'),
-                                                          ('stick', 'Dot, buff,', 'done in a minute')], 'one-stick')
+                                                          ('stick', 'Twist, dot, buff:', 'no sponge needed')], 'one-stick')
     # on the stick itself (the swatch photo is "How does it work?" further down: the same photo twice, stick review 3)
     whats_inside(P, 'single', [('Hyaluronic acid', 'Keeps dry skin comfortable'), ('Niacinamide', 'For a more even-looking tone'),
                                ('Squalane + vitamin E', 'Soft and supple, not tight')], note_left=True, shadow=True)
     science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',
                            'and the white cream shifts toward your own skin tone:',
                            'one shade that meets your skin where it is.'))
-    vs_others(P, 'single', 'liquid', 'Your old foundation', [('Why one stick', False), ('works where a', False), ('bottle doesn’t', True)],
-              ['Adapts to your\nskin tone', 'Kabuki brush\nbuilt in', 'No spills, fits\nyour bag', 'Creamy, made for\ndry skin'])
+    # against a typical liquid foundation, each row as it is: a liquid can build coverage too (stick review 7: every
+    # row crossed out against "your old foundation", the creamy row and the pump row included)
+    vs_others(P, 'single', 'liquid', 'Typical liquid', [('One stick,', False), ('your shade,', False), ('brush built in', True)],
+              ['Adapts to your\nskin tone', 'Kabuki brush\nbuilt in', 'Touch-ups from\nyour bag', ('Buildable,\nnatural finish', True)])
     for n in ('apply-cheek', 'blend', 'temple', 'friends', 'hold-chin', 'bag', 'tips', 'twist', 'dots', 'daylight',
               'buff-jaw'):
         plain(P, n)
     # the swatch shows the result, the white stripe and the same stripe blended in: an illustration, and it says so on
     # the photo, as the other result pictures do (stick review 6: only its alt text said it)
     sw = src(P, 'swatch'); d = ImageDraw.Draw(sw)
-    f = sans(30, 'Regular'); tw = d.textlength(AI_NOTE + '.', font=f)
-    d.rounded_rectangle((28, W - 76, 28 + tw + 32, W - 22), 27, fill=PAPER)       # on white: the hand runs to the corner
-    note(d, (44, W - 38), AI_NOTE + '.', anchor='ls', size=30)
+    f = sans(40, 'Regular'); tw = d.textlength(AI_NOTE + '.', font=f)   # 40 px: 30 read as 10 px on a phone (stick review 7)
+    d.rounded_rectangle((28, W - 90, 28 + tw + 36, W - 20), 35, fill=PAPER)       # on white: the hand runs to the corner
+    note(d, (46, W - 40), AI_NOTE + '.', anchor='ls', size=40)
     save(sw, P, 'swatch')
     plain(P, 'single', 'card')
 

@@ -1055,7 +1055,9 @@ REVIEW_WALL_JS = r"""
   function helpful(r) {
     var t = (r.title || '') + ' ' + (r.body || '');
     return ((r.photos || []).length ? 2 : 0) + Math.min((r.body || '').length, 400) / 400 + (r.rating || 0) / 5
-      + (AGE.test(t) ? 1 : 0) + (WORRY.test(t) ? 0.6 : 0) - (CONDITION.test(t) ? 4 : 0) - (SHIPPING.test(t) ? 1.5 : 0);
+      + (AGE.test(t) ? 1 : 0) + (WORRY.test(t) ? 0.6 : 0) - (CONDITION.test(t) ? 4 : 0) - (SHIPPING.test(t) ? 1.5 : 0)
+      // the reviews the strip near the top already shows: last (stick review 7: the same review twice)
+      - (r.top ? 10 : 0);
   }
   function photoSrc(p) { return /^https?:|^\//.test(p) ? p : (photoBase[p] || ''); }
   function list() {
@@ -1106,9 +1108,11 @@ REVIEW_WALL_JS = r"""
     root.querySelector('[data-sfr-avg]').innerHTML = '<span class="sfr-word">' + word(avg) + '</span>' + stars(avg, true) +
       '<p><b>' + avg.toFixed(1) + '</b> out of 5 &middot; Based on <b>' + n.toLocaleString('en-US') + '</b> review' + (n === 1 ? '' : 's') + '</p>';
     root.querySelector('.sfr-dist').innerHTML = [5, 4, 3, 2, 1].map(function (s) {
-      // a star count that rounds to 0 % but is there shows as "<1%" (stick review 2: 0 % beside a filter that lists 3)
-      var c = dist[s] || 0, pct = n ? Math.round(c / n * 100) : 0, label = c && !pct ? '&lt;1%' : pct + '%';
-      return '<li data-sfr-filter="' + s + '" role="button" tabindex="0" aria-pressed="false" title="Show ' + s + '-star reviews">' + s + '-star<span><em style="width:' + (c && !pct ? 1 : pct) + '%"></em></span><small>' + label + '</small></li>';
+      // a star count that rounds to 0 % but is there shows as "<0.1%" (stick review 2: 0 % beside a filter that
+      // lists 3); one decimal, so the shares add up as they are (stick review 7: 78 % and 22 % made 100 % with five
+      // reviews more under 3 stars, too neat)
+      var c = dist[s] || 0, pct = n ? Math.round(c / n * 1000) / 10 : 0, label = c && !pct ? '&lt;0.1%' : pct.toFixed(c && c < n ? 1 : 0) + '%';
+      return '<li data-sfr-filter="' + s + '" role="button" tabindex="0" aria-pressed="false" title="Show ' + s + '-star reviews">' + s + '-star<span><em style="width:' + (c && pct < 1 ? 1 : pct) + '%"></em></span><small>' + label + '</small></li>';
     }).join('');
     var chips = '<button type="button" class="sfr-chip" data-sfr-filter="all" aria-pressed="true">All reviews</button>';
     if (photos) chips += '<button type="button" class="sfr-chip" data-sfr-filter="photos" aria-pressed="false">With photos (' + photos.toLocaleString('en-US') + ')</button>';
@@ -1241,6 +1245,9 @@ REVIEW_STRIP_CSS = r"""
 @media (max-width:599px){.sfrs-nav{display:none}}
 /* the last card in view fades out where the row goes on (cut at the edge it read as a sliced card, stick review 4) */
 @media (min-width:600px){.sfrs-track:not(.sfrs-end){-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 64px),transparent)}}
+/* a laptop or wider: three whole cards, the arrows for the rest (stick review 7: a fourth card cut mid-word at the
+   rail's edge, under the fade) */
+@media (min-width:1100px){.sfrs-card{flex-basis:calc((100% - 28px) / 3)}.sfrs-track:not(.sfrs-end){-webkit-mask-image:none;mask-image:none}}
 .sfrs-card small{margin-top:auto;font-size:13px;color:#6a6a6a}
 .sfrs-card small b{color:#191919}
 .sfrs .sfr-tp{display:inline-flex;gap:3px}

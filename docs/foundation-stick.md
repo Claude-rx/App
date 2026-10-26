@@ -15,9 +15,12 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   Adaptive Peptide Foundation (Facelove's name is "Changing Foundation Stick"). To change it: `TITLE` and `NAV_LABEL`
   in `tools/persona/stick_copy.py`, then rerun `setup_brush_offers.py skinofab <work> stick_copy` and the build.
 - **Formula.** The page names hyaluronic acid, niacinamide, squalane, vitamin E and centella asiatica, the five
-  ingredients Facelove's page names. Facelove publishes no full ingredient list: check the supplier's INCI list and
-  correct `INGREDIENTS` and `TWIN['inside']` in `stick_copy.py` if it differs. The tab says "The full ingredient list
-  is printed on the box".
+  key ingredients Facelove's page names for the same stick; the Ingredients tab says so ("The key ingredients, as the
+  stick's maker lists them") and "The full ingredient list is printed on the box". Facelove publishes no full
+  ingredient list: check the supplier's INCI list and correct `INGREDIENTS` and `TWIN['inside']` in `stick_copy.py`
+  if it differs. Since stick review 7 the page says what each one is and how the cream feels, nothing over time (no
+  "helps the complexion look more even over time"), and the "Adaptive color science" block explains the color
+  capsules (what the stick shares with the foundation), not a third ingredient list.
 - **Shade range.** Facelove's page says both "16 skin tones" and, in its own gallery, "For fair to medium skin tones".
   Since stick review 6 the page says fair to medium: `SHADE_FAQ` ("made for fair to medium skin tones"; deeper skin
   emails first; a full refund within 30 days, even opened), the tones panel (fair, light-medium and medium women before
@@ -64,7 +67,7 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   if the checkout adds PayPal, Apple Pay or Google Pay, add their icons in Theme settings → Cart Drawer.
 - **Proof.** The only demonstrations of "goes on white, turns into your tone" are AI illustrations, labelled as such.
   A 10–15 second real, unretouched clip of the stick on two or three women over 45 (fair, medium, deep) would be the
-  page's strongest proof: gallery slide 2 and "How does it work?".
+  page's strongest proof: gallery slide 3 (after the shade range) and "How does it work?".
 - **Wear claim.** "From 10 AM to 10 PM" and "made to wear all day" are the owner's elements; a wear test (even an
   in-house one) would back them.
 - **Real photos.** The photos are AI-generated; the wordmark is printed on every stick by `relabel_bottles.py` from
@@ -75,7 +78,7 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 
 | Facelove device | Here |
 |---|---|
-| "The stick that makes mature skin glow again" | The buy box lead: the foundation that finds your shade for you, the brush on the other end, a minute, nothing to spill; three checks under it (`BULLETS`: no shade to choose, the brush built in, creamy for dry skin); under the title's price, what it is ("2 Sticks with Automatic Refills, $23.50 a stick", kept in step with the chosen pack) |
+| "The stick that makes mature skin glow again" | The buy box lead: stop guessing your shade, it goes on white and adapts to your tone; three checks under it (`BULLETS`: for fair to medium skin tones, the brush built in, creamy for dry skin); under the title's price, what it is ("2 sticks with Automatic Refills, $23.50 a stick", kept in step with the chosen pack); the note on the refill and one-time prices under the button, where she agrees to the refills |
 | "5 reasons" (natural finish, automatic shade, mature skin, light wear, skincare) | Problem / root cause / solution with five fixes, "The skinofab difference", the compare table and the six tabs |
 | "No orange, grey or yellow tint", "no time wasted on color choices" | The problem ("orange in daylight, grey by the window"), "No shade to guess", "0 shades to choose" |
 | "Does not settle into wrinkles", "no cakey, dry or tight feeling" | Said as how to get it: thin layers, buffed in with the brush, on moisturised skin (FAQ, tabs) |
@@ -83,9 +86,10 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 | 30-day money-back guarantee, free shipping | Under the button, as on the foundation: the trust row, then "Free shipping on every order · Ships in 1 business day, tracked" and the boxed 30-day guarantee. The store's 30-day guarantee (a full refund, even opened, no questions asked: the original store's own words; nothing promises she keeps it, which the refund policy does not say) and free shipping. The header's line on this page says what a stick order gets ("Buy 2, get 1 free · Free shipping · 30-day money-back guarantee", `ANNOUNCEMENT`), not the store's sale line with its gifts and 60% |
 | $39 | 1 stick $39 · 2 sticks $59 (recommended, compare $78) · 3 sticks: buy 2, get 1 free $78 (compare $117, exactly 3 × $39); with Automatic Refills $31 / $47 / $62. Each card of several shows its price per stick, and the note under the cards says the crossed-out prices are sticks bought one at a time ($39 each) and that one-time is chosen on the cart page |
 | "10 AM Morning / 10 PM Evening" | The `wear-day` photo (the same woman, morning and evening, labelled an illustration on the image; the evening half colour-matched to the morning's, since the page says it does not turn orange) and "From 10 AM to 10 PM", said as "made to wear all day" |
-| "One stick for 16 skin tones" + three before/afters | The `tones` panel: 12 swatches and three women, fair, medium and deep, before and after (illustrations) |
+| "One stick for 16 skin tones" + three before/afters | The `tones` panel, gallery slide 2: a tone bar from fair to medium and three women, fair, light-medium and medium, before and after (illustrations) |
+| "Your old foundation" comparison | "Why SKINOFAB?" against a typical liquid foundation, each row as it is: no shade to choose, the brush built in, touch-ups from your bag (crossed for the liquid), buildable, natural coverage (ticked for both). Nothing knocks a pump bottle: the brand's own foundation is one |
 | Linda S. and the other testimonials | The foundation's real imported reviews (it adapts to her tone the same way), labelled as the foundation's, in green boxed stars (the owner's request; no review site's name or logo). "Most helpful" puts first the reviews that tell her most: photos, fuller text, her age (45+) and her worries (shade, lines, dry skin); a review about a skin condition (acne, rosacea...) goes last, since a cosmetic treats none |
-| FrontrowMD "Clinicians' Choice" | The foundation's FrontrowMD sticker in a box under the add-to-cart button, after a line saying it is the foundation's listing (not on the stick's photo, not under the title, where it read as the stick's and pushed the price under the phone's sticky bar); its × closes the whole box |
+| FrontrowMD "Clinicians' Choice" | The foundation's FrontrowMD sticker in a box under the foundation's review strip (since stick review 6; in the buy box it read as the stick's own), after a line saying it is the foundation's listing (not on the stick's photo, not under the title, where it read as the stick's and pushed the price under the phone's sticky bar); its × closes the whole box |
 | "Love it or your money back · Refill reminder · Cancel any time · Renews at $66/mo" | The same trust row under the button, with the stick's own refill price and days |
 
 ## What we left out, and why
@@ -113,8 +117,8 @@ fears are the wrong shade, looking made-up, and wasting money again.
 
 The page answers in that order: her problem in her words ("Your foundation used to work. Your skin changed."), why it
 happens (her tone moved, her skin got drier, too many tools), then the stick as the answer (one shade that adapts,
-creamy for dry skin, buffed in thin, the brush built in), how to use it in three steps, what to expect (1 minute, 0
-shades, 30 days to try it), and the ten objections she will have (shade, lines, cakey, dry skin, spots, SPF, the
+creamy for dry skin, buffed in thin, the brush built in), how to use it in three steps (twist, dot, buff, the same three everywhere on the page), what to expect (3 steps,
+0 shades, 30 days to try it), and the ten objections she will have (shade, lines, cakey, dry skin, spots, SPF, the
 brush, sensitive skin, layering, refunds). It doesn't promise she will look 30.
 
 ## What is on the site
@@ -122,7 +126,7 @@ brush, sensitive skin, layering, refunds). It doesn't promise she will look 30.
 | Where | What |
 |---|---|
 | NEXT product 235 | "Adaptive Foundation Stick", public, subscriptions on (every 28, 56 or 84 days), template `adaptive-foundation-stick`, Face / Skin / Bestsellers; a gallery of 6 photos on the page, a woman past 50 with the stick first (none repeated in the sections, no two-tube packshot, each with its own alt text) |
-| Bundles (variants) | 236: 1 stick $39, refills $31 · 237: 2 sticks $59, refills $47 (default; compare $78) · 238: 3 sticks (buy 2, get 1 free) $78, refills $62 (compare $117) |
+| Bundles (variants) | 236: 1 stick $39, refills $31 · 237: 2 sticks $59, refills $47 (default; compare $78) · 238: 3 sticks (buy 2, get 1 free) $78, refills $62 (compare $117); the buy box's cards use these names, as the bag and the cart do. The cart page's choice says each price ("One-time purchase · $59", "Refill every 56 days · $47") |
 | Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`), with `stick_copy.py`'s copy and `brand/foundation-stick/` photos |
 | Homepage | A card in the product shelf after the foundation (default list, Bestsellers, New and Face tabs), "New" and "Buy 2, get 1 free" badges; a card in Essentials |
 | Menus | "Adaptive Foundation Stick" after the foundation in the menu and in the footer's Shop column (the footer uses the menu's names, in its order) |
