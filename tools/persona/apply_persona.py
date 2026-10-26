@@ -2167,10 +2167,16 @@ def brush_rating(imported=None, of=None):
     shown only once there are some. of: whose reviews they are when they are another product's (the stick shows the
     foundation's: "4.8/5 · 9,855 reviews of the foundation's formula")."""
     n0, s0 = (imported or {}).get('count', 0), sum(int(k) * v for k, v in ((imported or {}).get('distribution') or {}).items())
-    stars = ''.join(f'<span class="sf-star" style="--f:100%">{STAR}{STAR}</span>' for _ in range(5))
-    return ('<a class="sfb-rating" href="#sf-review-wall" data-sfb-rating hidden style="text-decoration:none">'
-            f'<span class="sf-rating" style="--sf-star:#000000"><span class="sf-rating__stars" role="img">{stars}</span>'
-            '<span class="sf-rating__text"></span></span></a>'
+    # with imported reviews the badge is drawn from them as the page loads (its script then adds NEXT's own): hidden
+    # until the script ran, it pushed the title down when it appeared (review 7)
+    avg0 = s0 / n0 if n0 else 0
+    fill = lambda i: max(0, min(1, round((avg0 - i) * 2) / 2)) * 100 if n0 else 100
+    stars = ''.join(f'<span class="sf-star" style="--f:{fill(i):g}%">{STAR}{STAR}</span>' for i in range(5))
+    text0 = f'{avg0:.1f}/5 · {n0:,} review{"" if n0 == 1 else "s"}' + (f' {of}' if of else '') if n0 else ''
+    return (f'<a class="sfb-rating" href="#sf-review-wall" data-sfb-rating{"" if n0 else " hidden"} style="text-decoration:none">'
+            f'<span class="sf-rating" style="--sf-star:#000000"><span class="sf-rating__stars" role="img"'
+            f'{f" aria-label=\"Rated {avg0:.1f} out of 5\"" if n0 else ""}>{stars}</span>'
+            f'<span class="sf-rating__text">{html.escape(text0)}</span></span></a>'
             '<style>.sfb-rating[hidden]{display:none}.sf-rating{display:inline-flex;align-items:center;gap:10px;color:#151515;font-size:17px;line-height:1}'
             '.sf-rating__stars{display:inline-flex;gap:2px}'
             '.sf-star{position:relative;display:inline-block;width:20px;height:20px;color:#d8d8d8}'
@@ -2597,14 +2603,20 @@ def faster_home(home):
         # export's file here is still the old photo (young model, old bottle)
         src = IMAGES / m.group(3) if IMAGES and (IMAGES / m.group(3)).exists() else DST / 'assets' / 'img' / m.group(3)
         master = Image.open(src).convert('RGB')
-        # the bottle's PDRN line set again lighter and spaced out: drawn bold (hero_label.py) a 1x laptop's downscale
-        # closed its D into an O (review 7); medium weight with wide tracking keeps the D's straight back at that size
+        # the bottle's PDRN line: drawn bold (hero_label.py), a 1x laptop's downscale closed its D into an O and it read
+        # PORN (review 7). The phone file (2x and 3x screens: 6 device px and more) has it set again lighter and spaced
+        # out, which keeps the D's straight back; the desktop file (1x laptops: under 5 px, where no weight or spacing
+        # tried kept it PDRN) leaves the line out (label_fix.NONE); the wordmark and the other lines stay
+        desk_master = master
         if master.size == (4096, 1747):
-            r = np.asarray(master).astype(np.float32).copy()
+            r = np.asarray(master).astype(np.float32).copy(); r0 = r.copy()
             label_fix.bold_line_rot(r, (2844, 1082), 4.25, (100, 24), 'PDRN', 13, weight=560, track=0.5)
+            label_fix.bold_line_rot(r0, (2844, 1082), 4.25, (100, 24), '', 13)
             master = Image.fromarray(np.clip(r + 0.5, 0, 255).astype(np.uint8))
-        def only(width, lo, hi, name):
-            im = master if master.width <= width else master.resize((width, round(master.height * width / master.width)), Image.LANCZOS)
+            desk_master = Image.fromarray(np.clip(r0 + 0.5, 0, 255).astype(np.uint8))
+        def only(width, lo, hi, name, src_im=None):
+            src_im = src_im or master
+            im = src_im if src_im.width <= width else src_im.resize((width, round(src_im.height * width / src_im.width)), Image.LANCZOS)
             a = np.asarray(im).astype(np.float32)
             x = np.arange(im.width) / im.width
             small = im.resize((im.width // 8, im.height // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(8))
@@ -2619,7 +2631,7 @@ def faster_home(home):
         # phones top out at 2880 px (a 3x phone gets 2.1 image pixels per point: sharp, and half the bytes of 4096,
         # which on a slow phone network is the difference between a 3.5 s and a 7 s first paint); desktops up to 4096
         # phones: an 11:12 window on her, from the hand holding the bottle to her hair's right (the CSS below), 59% to 99%
-        (phone, psz), (desk, dsz) = only(2880, 0.585, 1.04, 'skinofab-hero-phone'), only(4096, 0.30, 1.04, 'skinofab-hero-desktop')
+        (phone, psz), (desk, dsz) = only(2880, 0.585, 1.04, 'skinofab-hero-phone'), only(4096, 0.30, 1.04, 'skinofab-hero-desktop', desk_master)
         phone_vw = '256vw'                       # the 11:12 window shows 0.39 of the photo's width: it is drawn 1/0.39 screens wide
         source = (f'<source media="(max-width: 749px)" sizes="{phone_vw}" '
                   f'srcset="assets/img/{phone.name} {psz[0]}w" width="{psz[0]}" height="{psz[1]}">')

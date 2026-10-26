@@ -292,9 +292,10 @@ BUYBOX_CSS = _b.BUYBOX_CSS
 # around the site ---------------------------------------------------------------------------------------------------
 # the shelf: after the foundation in the default list and the Bestsellers and Face tabs, first in the New tab (it is
 # the newest, and that tab has no foundation card)
-# (not in the Bestsellers tab or collection: a new product has no sales to rank it by, review 7)
+# (not in the NEXT Bestsellers collection: a new product has no sales to rank it by; the homepage shelf is
+# "Shop the range", review 7)
 SHELF = {'badge': 'New', 'saving': 'Buy 2, get 1 free', 'tags': ['Adapts to you', 'Brush built in', 'Cream stick'],
-         'after': {'list': 'color-changing-foundation', 'bestsellers_0': None,
+         'after': {'list': 'color-changing-foundation', 'bestsellers_0': 'color-changing-foundation',
                    'bestsellers_1': None, 'bestsellers_2': 'color-changing-foundation'}}
 # the NEXT collections (as the foundation): Face, Skin, Bestsellers
 CATEGORIES = ['face', 'skin']

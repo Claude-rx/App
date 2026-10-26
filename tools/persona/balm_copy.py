@@ -260,9 +260,10 @@ BUYBOX_CSS = _b.BUYBOX_CSS
 
 
 # around the site ---------------------------------------------------------------------------------------------------
-# (not in the Bestsellers tab or collection: a new product has no sales to rank it by, review 7)
+# (not in the NEXT Bestsellers collection: a new product has no sales to rank it by; the homepage shelf is
+# "Shop the range", review 7)
 SHELF = {'badge': 'New', 'saving': 'Buy 2, get 1 free', 'tags': ['PDRN', 'Under-eyes', 'Press-on'],
-         'after': {'list': 'the-lymphatic-brush', 'bestsellers_0': None,
+         'after': {'list': 'the-lymphatic-brush', 'bestsellers_0': 'the-lymphatic-brush',
                    'bestsellers_1': None, 'bestsellers_2': 'the-lymphatic-brush'}}
 # the NEXT collections (as the foundation and the other face skincare): Face, Skin, Bestsellers
 CATEGORIES = ['face', 'skin']

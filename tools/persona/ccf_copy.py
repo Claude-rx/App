@@ -140,6 +140,10 @@ GLOBAL = [
 
 PAGE = {
     'index.html': [
+        # the product shelf: four of its five products are new, so it is the range, not "Bestsellers" (review 7)
+        (r'RE:<h2>Bestsellers</h2>', '<h2>Shop the range</h2>'),
+        (r'RE:aria-label="Bestsellers"( class="fh-tabs")', r'aria-label="Shop the range"\g<1>'),
+        (r'RE:(data-fh-tab="bestsellers_0" role="tab" type="button">)Bestsellers<', r'\g<1>All<'),
         # the one-shade card: the tint shifts as you blend, in about a minute (the PDP's own wording), not on contact
         ("Our color-adapting foundation shifts to match your skin tone the moment it touches your skin, then settles"
          " into a smooth, natural finish",
