@@ -258,8 +258,11 @@
         var show = function(next) {
             if (next) document.dispatchEvent(new CustomEvent('spark:cart:updated', { detail: { cart: next, action: 'update' }, bubbles: true }));
         };
+        /* a refill line stays a refill; the bigger pack ships as often as it runs out (up.every days), when set */
+        var plan = planOf(line);
+        if (plan && parseInt(up.every, 10) > 0) plan.intervalCount = String(parseInt(up.every, 10));
         /* add the 2-bottle pack first, then drop the 1-bottle line: a failure never leaves the bag empty */
-        client.addToCart(Number(up.to), 1, false, planOf(line)).then(function(added) {
+        client.addToCart(Number(up.to), 1, false, plan).then(function(added) {
             if (!added || added.success === false || !added.cart) throw new Error('add');
             return client.removeCartLines(added.cart.id, [line.pk]).then(function(removed) {
                 show((removed && removed.cart) || added.cart);

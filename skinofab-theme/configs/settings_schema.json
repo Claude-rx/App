@@ -78,6 +78,78 @@
         "help_text": "Shown struck through next to it, e.g. $59 USD. Empty: none."
       },
       {
+        "name": "sf_refill_product_2",
+        "type": "product",
+        "label": "Refills by default (2)",
+        "help_text": "Another product sold with refills by default (its product page adds it as a refill): its cards and listings show the texts below."
+      },
+      {
+        "name": "sf_refill_price_text_2",
+        "type": "text",
+        "label": "Refills by default (2): price text",
+        "default": ""
+      },
+      {
+        "name": "sf_refill_compare_text_2",
+        "type": "text",
+        "label": "Refills by default (2): was-price text",
+        "default": ""
+      },
+      {
+        "name": "sf_refill_every_2",
+        "type": "text",
+        "label": "Refills by default (2): days between refills",
+        "default": ""
+      },
+      {
+        "name": "sf_refill_product_3",
+        "type": "product",
+        "label": "Refills by default (3)",
+        "help_text": "Another product sold with refills by default (its product page adds it as a refill): its cards and listings show the texts below."
+      },
+      {
+        "name": "sf_refill_price_text_3",
+        "type": "text",
+        "label": "Refills by default (3): price text",
+        "default": ""
+      },
+      {
+        "name": "sf_refill_compare_text_3",
+        "type": "text",
+        "label": "Refills by default (3): was-price text",
+        "default": ""
+      },
+      {
+        "name": "sf_refill_every_3",
+        "type": "text",
+        "label": "Refills by default (3): days between refills",
+        "default": ""
+      },
+      {
+        "name": "sf_refill_product_4",
+        "type": "product",
+        "label": "Refills by default (4)",
+        "help_text": "Another product sold with refills by default (its product page adds it as a refill): its cards and listings show the texts below."
+      },
+      {
+        "name": "sf_refill_price_text_4",
+        "type": "text",
+        "label": "Refills by default (4): price text",
+        "default": ""
+      },
+      {
+        "name": "sf_refill_compare_text_4",
+        "type": "text",
+        "label": "Refills by default (4): was-price text",
+        "default": ""
+      },
+      {
+        "name": "sf_refill_every_4",
+        "type": "text",
+        "label": "Refills by default (4): days between refills",
+        "default": ""
+      },
+      {
         "name": "sf_subscription_product",
         "type": "product",
         "label": "Subscription-only product",
@@ -154,6 +226,13 @@
         "default": "Upgrade"
       },
       {
+        "name": "sf_cart_upgrade_every",
+        "type": "text",
+        "label": "Upgrade: refill days of the bigger pack",
+        "default": "",
+        "help_text": "A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before."
+      },
+      {
         "name": "sf_cart_upgrade2_from",
         "type": "text",
         "label": "Second upgrade: variant in the bag",
@@ -184,6 +263,13 @@
         "type": "text",
         "label": "Second upgrade: button",
         "default": "Upgrade"
+      },
+      {
+        "name": "sf_cart_upgrade2_every",
+        "type": "text",
+        "label": "Second upgrade: refill days of the bigger pack",
+        "default": "",
+        "help_text": "A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before."
       },
       {
         "name": "sf_cart_upgrade3_from",
@@ -218,6 +304,13 @@
         "default": "Upgrade"
       },
       {
+        "name": "sf_cart_upgrade3_every",
+        "type": "text",
+        "label": "Third upgrade: refill days of the bigger pack",
+        "default": "",
+        "help_text": "A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before."
+      },
+      {
         "name": "sf_cart_upgrade4_from",
         "type": "text",
         "label": "Fourth upgrade: variant in the bag",
@@ -250,6 +343,13 @@
         "default": "Upgrade"
       },
       {
+        "name": "sf_cart_upgrade4_every",
+        "type": "text",
+        "label": "Fourth upgrade: refill days of the bigger pack",
+        "default": "",
+        "help_text": "A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before."
+      },
+      {
         "name": "sf_cart_upgrade5_from",
         "type": "text",
         "label": "Fifth upgrade: variant in the bag",
@@ -280,6 +380,13 @@
         "type": "text",
         "label": "Fifth upgrade: button",
         "default": "Upgrade"
+      },
+      {
+        "name": "sf_cart_upgrade5_every",
+        "type": "text",
+        "label": "Fifth upgrade: refill days of the bigger pack",
+        "default": "",
+        "help_text": "A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before."
       },
       {
         "name": "sf_cart_upsell_1",
