@@ -21,6 +21,17 @@ import support_copy
 ORIGIN = '🇰🇷 Formulated in Korea · Advanced K-beauty formula'
 
 GLOBAL = [
+    # the footer: the brand's name as its logo writes it, and a line that says what the brand makes and for whom,
+    # not a generic one (stick review 3)
+    ('A little more Skinofab in your inbox.', 'A little more SKINOFAB in your inbox.'),
+    ('>About Skinofab<', '>About SKINOFAB<'),
+    (r'RE:<p><em><strong>Skinofab</strong> is a solutions-oriented beauty brand, creating a world where everybody feels confident\.</em></p>',
+     '<p><em><strong>SKINOFAB</strong> makes makeup and skincare for skin after 45: simple to use, comfortable on dry skin, '
+     'and honest about what each product does.</em></p>'),
+    # the comparison table's "no" mark: a white cross on light grey (#e0e0e0) all but vanished on white (stick
+    # review 3); a mid grey carries it (3.4:1 against white, its white cross 3.4:1), and it says "No" to a screen reader
+    (r'RE:<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" fill="#e0e0e0" r="10">',
+     '<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="No"><circle cx="10" cy="10" fill="#8a8a8a" r="10">'),
     # "The skinofab difference" button: there is no offer to claim, it scrolls to the packs (stick review 1)
     (r'RE:(<a class="btn btn--dark" href="#product">)Claim offer(</a>)', r'\g<1>Choose your pack\g<2>'),
     # the home hero's line: the number is the formula's verified reviews from the earlier store, not SKINOFAB's
@@ -245,7 +256,7 @@ PAGE = {
          "know within 30 days and we'll process your full refund immediately.",
          "Buying foundation online after 45 feels like a gamble, so try it on your skin, in your lighting, with your "
          "routine. If you don't love it, email hello@skinofab.com within 30 days and we'll refund it in full, even "
-         "opened, with no need to send it back."),
+         "opened, no questions asked."),
         # "Shipping and returns" and two FAQ answers came from the old store: 24-48 h dispatch, 5-7 days, "65+ countries",
         # returns "new, unused, in their original packaging". The store's terms instead (support_copy.py, as the
         # shipping and refund policies say them)

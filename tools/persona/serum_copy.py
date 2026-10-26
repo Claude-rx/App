@@ -41,7 +41,7 @@ DESCRIPTION = ('<p>A light firming serum for face and neck. EGF (sh-Oligopeptide
                f'with daily use. {SIZE}, about two months of daily use.</p>')
 META_TITLE = 'EGF + NAD+ Firming Serum | Light firming serum for face and neck after 45 | SKINOFAB'
 META_DESCRIPTION = ('EGF, NAD+ and collagen in one light serum for skin after 45. Two drops for the face, two for the neck, '
-                    'morning and night. 30-day money-back guarantee. Free shipping.')
+                    'morning and night. 30-day money-back guarantee.')
 
 # the gallery (product_photos.py writes brand/egf-nad-serum/<name>.jpg): the foundation gallery's order and kinds of
 # image, first one eager; the card is the shelf, cart and sticky-bar image
@@ -108,7 +108,7 @@ def tabs():
                 'Two more drops, swept down your neck', 'Morning and night: then your moisturiser, and SPF in the morning'])
          + '<p><strong>Less is more:</strong> two drops cover the whole face.</p>'),
         ('How does the money-back guarantee work?',
-         f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll refund it in <strong>full</strong>, even opened, with no need to send it back.</p>'),
+         f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll refund it in <strong>full</strong>, even opened, no questions asked.</p>'),
         ('Ingredients',
          ''.join(f'<p><strong>{esc(n)}:</strong> {esc(t)}.</p>' for n, t, _ in INGREDIENTS)
          + f'<p>{esc(TEXTURE)}</p>'
@@ -148,7 +148,7 @@ FAQ = {'items': [
      'sh-Oligopeptide-1: a peptide made in the lab, not taken from human or animal cells. If you are pregnant, breastfeeding '
      'or under treatment for a skin condition, ask your doctor before use.'),
     ('What if it doesn’t work for me?',
-     f'Email {EMAIL} within 30 days and we’ll refund it in full. No need to send it back.'),
+     f'Email {EMAIL} within 30 days and we’ll refund it in full, even opened. No questions asked.'),
 ]}
 FAQ['items'][-1:-1] = _b.refill_faq(BUNDLES, REFILL)     # how refills work, how to buy once
 # section by section, in the foundation page's order (twin.py names each slot); images are brand/egf-nad-serum/<name>.jpg

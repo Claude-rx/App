@@ -25,7 +25,7 @@ DESCRIPTION = ('<p>A 3-minute depuffing massage for your morning face. Hundreds 
                'Includes a SKINOFAB travel case.</p>')
 META_TITLE = 'The Lymphatic Brush | A 3-minute depuffing massage | SKINOFAB'
 META_DESCRIPTION = ('A soft-bristle face brush for the look of morning puffiness around the eyes, cheeks and jaw. Dry skin, '
-                    'no oils, 3 minutes. 30-day money-back guarantee. Free shipping.')
+                    'no oils, 3 minutes. 30-day money-back guarantee.')
 
 IMG = Path(__file__).resolve().parents[2] / 'brand' / 'lymphatic-brush'   # brush_assets.py
 IMG_PREFIX, GIFT_PREFIX = 'skinofab-lymphatic-brush', 'skinofab-brush-gift'
@@ -114,7 +114,7 @@ def tabs():
          'once a month, wash only the tips on a damp, soapy cloth, rinse the same way and dry overnight, bristles down. Never '
          'soak it, wet the back or use hot water.</p>'),
         ('How does the money-back guarantee work?',
-         f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll refund it in <strong>full</strong>, even opened, with no need to send it back.</p>'),
+         f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll refund it in <strong>full</strong>, even opened, no questions asked.</p>'),
         ('Product specifications',
          '<p><strong>Bristles:</strong> Ultra-soft, vegan fibers.</p>'
          '<p><strong>Shape:</strong> A curved, half-moon head that sits between your fingers, no handle to grip.</p>'
@@ -144,7 +144,7 @@ FAQ = {'items': [
     ('Can I use it before my foundation?',
      'Yes, that’s the best time: brush first on dry skin, then your skincare and foundation.'),
     ('What if it doesn’t work for me?',
-     'Email hello@skinofab.com within 30 days and we’ll refund it in full. No need to send it back.'),
+     'Email hello@skinofab.com within 30 days and we’ll refund it in full, even opened. No questions asked.'),
     ('Is it safe for sensitive skin?',
      'The bristles are soft and the pressure stays light, so it’s gentle on most skin types. Avoid using it on irritated or broken skin, '
      'sunburn or active breakouts. If your swelling doesn’t go away during the day, or if you have a medical condition, check with your doctor first.'),
@@ -320,6 +320,7 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     default = next((b['key'] for b in bundles if b.get('default')), bundles[0]['key'])
     base, base_compare = float(bundles[0]['price']), float(bundles[0]['compare'])
     now_of = lambda b: float(b['refill' if on else 'price'])
+    units = lambda b: int(b.get('units') or (b['key'] if b['key'].isdigit() else 1))
     cards = []
     for b in bundles:
         saves = float(b['compare']) > now_of(b)
@@ -335,7 +336,10 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
             f'<span class="sfo-main"><span class="sfo-name">{esc(b["name"])}'
             + (f'<span class="sfo-save">SAVE {money(round(float(b["compare"]) - now_of(b), 2))}</span>' if saves else '') + '</span>'
             f'<small>{esc(b["note"])}</small></span>'
-            f'<span class="sfo-price"><b>{money(now_of(b))}</b>' + (f'<s>{money(b["compare"])}</s>' if saves else '') + '</span></span>'
+            f'<span class="sfo-price"><b>{money(now_of(b))}</b>' + (f'<s>{money(b["compare"])}</s>' if saves else '')
+            # a pack of several: its price per stick or bottle (stick review 3: two reference prices, no unit price)
+            + (f'<small class="sfo-per">{money(round(now_of(b) / units(b), 2))} / {esc(refill["unit"])}</small>'
+               if on and refill.get('unit') and units(b) > 1 else '') + '</span></span>'
             + (f'<ul class="sfo-gifts">{gifts_li}</ul>' if gifts_li else '') + '</label>')
     first = next(b for b in bundles if b['key'] == default)
     # inline !important: the design's stylesheets give inputs display:block, which beats the hidden attribute
@@ -344,10 +348,15 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
            if on else '')
     # under the cards, while refills are on: what the prices are, and the one-time prices (stick review 2: the cards
     # and their savings did not say they were refill prices)
+    # what the crossed-out prices are (every pack's compare-at price is its count bought one at a time), and where
+    # one-time is chosen: the cart page, from the drawer's "Change" link (stick review 3: "in your bag" was not it)
     off = min(round(100 * (1 - float(b['refill']) / float(b['price']))) for b in bundles) if on else 0
-    note = (f'<p class="sfo-refill-note">Prices with Automatic Refills, {off}% off. One-time: '
+    one_each = on and refill.get('unit') and all(abs(float(b['compare']) - units(b) * base) < 0.01 for b in bundles)
+    note = (f'<p class="sfo-refill-note">Prices with Automatic Refills, {off}% off.'
+            + (f' Crossed out: {money(base)} a {esc(refill["unit"])}, bought one at a time.' if one_each else '')
+            + ' One-time packs: '
             + ' · '.join(f"{esc(b['name'].split(':')[0])} {money(b['price'])}" for b in bundles)
-            + ' (switch in your bag).</p>') if on else ''
+            + ' (choose one-time on the cart page).</p>') if on else ''
     return (f"""<div class="sfo sfo--bundle" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
 <style>{css}</style>
 <fieldset><legend>{esc(legend)}</legend>{''.join(cards)}</fieldset>

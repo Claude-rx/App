@@ -57,12 +57,12 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 | "No orange, grey or yellow tint", "no time wasted on color choices" | The problem ("orange in daylight, grey by the window"), "No shade to guess", "0 shades to choose" |
 | "Does not settle into wrinkles", "no cakey, dry or tight feeling" | Said as how to get it: thin layers, buffed in with the brush, on moisturised skin (FAQ, tabs) |
 | The five ingredient cards | The ingredient carousel, the science block and the Ingredients tab, as cosmetic effects |
-| 30-day money-back guarantee, free shipping | The store's 30-day guarantee (no need to send it back) and free shipping |
-| $39 | 1 stick $39 · 2 sticks $59 (recommended, compare $78) · 3 sticks: buy 2, get 1 free $78 (compare $117, exactly 3 × $39); with Automatic Refills $31 / $47 / $62 |
-| "10 AM Morning / 10 PM Evening" | The `wear-day` photo (the same woman, morning and evening, labelled an illustration) and "From 10 AM to 10 PM", said as "made to wear all day" |
+| 30-day money-back guarantee, free shipping | The store's 30-day guarantee (a full refund, even opened, no questions asked: the original store's own words; nothing promises she keeps it, which the refund policy does not say) and free shipping. The header's line on this page says what a stick order gets ("Buy 2, get 1 free · Free shipping · 30-day money-back guarantee", `ANNOUNCEMENT`), not the store's sale line with its gifts and 60% |
+| $39 | 1 stick $39 · 2 sticks $59 (recommended, compare $78) · 3 sticks: buy 2, get 1 free $78 (compare $117, exactly 3 × $39); with Automatic Refills $31 / $47 / $62. Each card of several shows its price per stick, and the note under the cards says the crossed-out prices are sticks bought one at a time ($39 each) and that one-time is chosen on the cart page |
+| "10 AM Morning / 10 PM Evening" | The `wear-day` photo (the same woman, morning and evening, labelled an illustration on the image; the evening half colour-matched to the morning's, since the page says it does not turn orange) and "From 10 AM to 10 PM", said as "made to wear all day" |
 | "One stick for 16 skin tones" + three before/afters | The `tones` panel: 12 swatches and three women, fair, medium and deep, before and after (illustrations) |
-| Linda S. and the other testimonials | The foundation's real imported reviews (same formula), labelled as the foundation's, in green boxed stars (the owner's request; no review site's name or logo) |
-| FrontrowMD "Clinicians' Choice" | The foundation's FrontrowMD sticker in the buy box, beside a line saying it is the foundation's listing (not on the stick's photo) |
+| Linda S. and the other testimonials | The foundation's real imported reviews (same formula), labelled as the foundation's, in green boxed stars (the owner's request; no review site's name or logo). "Most helpful" puts first the reviews that tell her most: photos, fuller text, her age (45+) and her worries (shade, lines, dry skin); a review about a skin condition (acne, rosacea...) goes last, since a cosmetic treats none |
+| FrontrowMD "Clinicians' Choice" | The foundation's FrontrowMD sticker in a box under the add-to-cart button, after a line saying it is the foundation's listing (not on the stick's photo, not under the title, where it read as the stick's and pushed the price under the phone's sticky bar); its × closes the whole box |
 | "Love it or your money back · Refill reminder · Cancel any time · Renews at $66/mo" | The same trust row under the button, with the stick's own refill price and days |
 
 ## What we left out, and why
@@ -98,11 +98,11 @@ brush, sensitive skin, layering, refunds). It doesn't promise she will look 30.
 
 | Where | What |
 |---|---|
-| NEXT product 235 | "Adaptive Foundation Stick", public, subscriptions on (every 28, 56 or 84 days), template `adaptive-foundation-stick`, Face / Skin / Bestsellers; a gallery of 6 photos on the page (none repeated in the sections, no two-tube packshot) |
+| NEXT product 235 | "Adaptive Foundation Stick", public, subscriptions on (every 28, 56 or 84 days), template `adaptive-foundation-stick`, Face / Skin / Bestsellers; a gallery of 6 photos on the page, a woman past 50 with the stick first (none repeated in the sections, no two-tube packshot, each with its own alt text) |
 | Bundles (variants) | 236: 1 stick $39, refills $31 · 237: 2 sticks $59, refills $47 (default; compare $78) · 238: 3 sticks (buy 2, get 1 free) $78, refills $62 (compare $117) |
 | Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`), with `stick_copy.py`'s copy and `brand/foundation-stick/` photos |
 | Homepage | A card in the product shelf after the foundation (default list, Bestsellers, New and Face tabs), "New" and "Buy 2, get 1 free" badges; a card in Essentials |
-| Menus | "Adaptive Foundation Stick" after the foundation in the menu; "Foundation Stick" after it in the footer's Shop column |
+| Menus | "Adaptive Foundation Stick" after the foundation in the menu and in the footer's Shop column (the footer uses the menu's names, in its order) |
 | Cart drawer | Its own upgrade card, 1 → 2 sticks for $20 (Theme settings → Cart Drawer → Fifth upgrade); not an add-on to the foundation (one foundation is enough) |
 
 ## Images

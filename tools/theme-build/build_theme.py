@@ -8,7 +8,7 @@ Commerce facts come from NEXT: product links, prices, variants and add-to-cart a
 
 Re-run after any design change; every template in the family is regenerated identically.
 """
-import hashlib, json, os, posixpath, re, shutil, sys
+import hashlib, html, json, os, posixpath, re, shutil, sys
 from pathlib import Path
 from bs4 import BeautifulSoup, NavigableString, Comment
 
@@ -711,6 +711,11 @@ for n in hdr_nodes:
         badge = hsoup.new_tag('span', id='cart-badge', attrs={'class': 'cart-badge', 'aria-live': 'polite', 'style': 'display: none;'})
         t.append(badge)
     ann = n.select_one('.announcement__text, [data-announcement-text], .announcement__bar-holder') if (n.get('id') or '').endswith('__announcement-bar') else None
+    # a product's own line on its page ({handle: text}, tools/persona: the store's sale line does not fit every product)
+    for sp in n.select('[data-sf-ann]'):
+        own = json.loads(sp['data-sf-ann']); del sp['data-sf-ann']
+        branches = ''.join(f"{{% {'if' if not i else 'elif'} '/{h}_' in request.path %}}{html.escape(t)}" for i, (h, t) in enumerate(own.items()))
+        sp.string = slots.put(f"{branches}{{% else %}}{html.escape(sp.get_text())}{{% endif %}}")
 header_html = slots.render(frag_html(hdr_nodes, 'index.html', slots))
 write('partials/header.html', "{# SKINOFAB header: design markup (announcement bar, navigation, mobile drawer). Cart opens the Spark side cart. #}\n" + header_html + '\n')
 slots = Slots()

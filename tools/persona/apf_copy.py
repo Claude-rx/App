@@ -702,6 +702,7 @@ OFFER_PICKER_CSS = r"""
 .sfo-refill-note{margin:10px 2px 0;font-size:13px;line-height:1.45;color:#555}
 .sfo-price b{display:block;font-size:21px;font-weight:600}
 .sfo-price s,.sfo-gifts s{font-size:14px;color:#7a7a7a}
+.sfo-price .sfo-per{display:block;font-size:12.5px;color:#555;margin-top:2px}
 .sfo-tab{position:absolute;top:-13px;right:16px;background:#151515;color:#fff;font-style:normal;font-size:13px;font-weight:600;padding:4px 12px;border-radius:6px;line-height:1.3}
 .sfo-gifts{list-style:none!important;margin:14px 0 0!important;padding:12px 0 0!important;border-top:1px solid #e6e6e6;display:grid;gap:8px}
 .sfo-gifts li{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600}
@@ -1034,7 +1035,17 @@ REVIEW_WALL_JS = r"""
     var t = new Date(d + (d.length === 10 ? 'T12:00:00' : ''));
     return isNaN(t) ? '' : t.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
   }
-  function helpful(r) { return ((r.photos || []).length ? 2 : 0) + Math.min((r.body || '').length, 400) / 400; }
+  // most helpful, for her: photos and fuller text, her age (45+, mature skin) and her worries (shade, lines, dry
+  // skin) first; a review about a skin condition (acne, rosacea...) last: a cosmetic does not treat one, and it led
+  // the list (stick review 3)
+  var AGE = /\b(i'?m|i am|at|aged?)\s*(4[5-9]|[5-8]\d)\b|\b(4[5-9]|[5-8]\d)\s*(years|yrs|yo\b|y\/o)|fifties|sixties|seventies|mature skin|menopaus/i,
+      WORRY = /shade|match|skin tone|fine lines|wrinkle|settl|creas|dry skin|cakey|natural/i,
+      CONDITION = /acne|rosacea|eczema|psoriasis|dermatitis|\bcur(e|ed|es)\b|\bheal(s|ed|ing)?\b|prescription|medication|\bscar(s|ring)?\b/i;
+  function helpful(r) {
+    var t = (r.title || '') + ' ' + (r.body || '');
+    return ((r.photos || []).length ? 2 : 0) + Math.min((r.body || '').length, 400) / 400 + (r.rating || 0) / 5
+      + (AGE.test(t) ? 1 : 0) + (WORRY.test(t) ? 0.6 : 0) - (CONDITION.test(t) ? 4 : 0);
+  }
   function photoSrc(p) { return /^https?:|^\//.test(p) ? p : (photoBase[p] || ''); }
   function list() {
     var l = all.filter(function (r) {
@@ -1192,7 +1203,15 @@ REVIEW_STRIP_CSS = r"""
 .sfrs-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px}
 .sfrs-track::-webkit-scrollbar{display:none}
 .sfrs-card{flex:0 0 268px;scroll-snap-align:start;background:#fff;border:1px solid #e5e5dd;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
-.sfrs-card p{margin:0;font-size:14.5px;line-height:1.5;color:#2b2b2b;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.sfrs-card p{margin:0;font-size:14.5px;line-height:1.5;color:#2b2b2b;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
+.sfrs-rail{min-width:0}
+/* a mouse has no swipe: arrows under the cards, from a tablet up (stick review 3) */
+.sfrs-nav{display:flex;justify-content:flex-end;gap:10px;margin-top:12px}
+.sfrs-nav[hidden]{display:none}
+.sfrs-arrow{width:44px;height:44px;border-radius:50%;border:1px solid #cfcfc6;background:#fff;color:#191919;display:grid;place-items:center;cursor:pointer;padding:0}
+.sfrs-arrow:disabled{opacity:.35;cursor:default}
+.sfrs-arrow svg{width:18px;height:18px}
+@media (max-width:599px){.sfrs-nav{display:none}}
 .sfrs-card small{margin-top:auto;font-size:13px;color:#6a6a6a}
 .sfrs-card small b{color:#191919}
 .sfrs .sfr-tp{display:inline-flex;gap:3px}
@@ -1221,7 +1240,19 @@ def review_strip_html(average, count, picks, href='#sf-review-wall', of=None, bu
     return (f'<section class="sfrs" aria-label="Customer reviews"><style>{REVIEW_STRIP_CSS}</style><div class="sfrs-wrap">'
             f'<div class="sfrs-sum"><b>{word}</b>{tp_stars(average, True)}'
             f'<p>{average:.1f} out of 5 &middot; <a href="{href}">{label}</a></p></div>'
-            f'<div class="sfrs-track">{cards}</div></div></section>')
+            f'<div class="sfrs-rail"><div class="sfrs-track" tabindex="0" aria-label="Review cards, scroll sideways">{cards}</div>'
+            '<div class="sfrs-nav" hidden>'
+            + ''.join(f'<button type="button" class="sfrs-arrow" aria-label="{lab}"><svg viewBox="0 0 24 24" aria-hidden="true">'
+                      f'<path d="{d}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'
+                      for lab, d in (('Previous reviews', 'M15 5l-7 7 7 7'), ('Next reviews', 'M9 5l7 7-7 7')))
+            + '</div></div></div><script>(function () {'
+            'var s = document.currentScript.closest(".sfrs"), t = s.querySelector(".sfrs-track"), nav = s.querySelector(".sfrs-nav"), b = nav.querySelectorAll("button");'
+            'function step() { var c = t.querySelector(".sfrs-card"); return c ? c.offsetWidth + 14 : t.clientWidth * .8; }'
+            'function upd() { var max = t.scrollWidth - t.clientWidth - 2; nav.hidden = max <= 0; b[0].disabled = t.scrollLeft <= 2; b[1].disabled = t.scrollLeft >= max; }'
+            'b[0].addEventListener("click", function () { t.scrollBy({ left: -step(), behavior: "smooth" }); });'
+            'b[1].addEventListener("click", function () { t.scrollBy({ left: step(), behavior: "smooth" }); });'
+            't.addEventListener("scroll", upd, { passive: true }); window.addEventListener("resize", upd); upd();'
+            '})();</script></section>')
 
 
 # "Formulated in Korea": a photo of a model in a lab coat with the foundation (a portrayal, said so on the photo: no

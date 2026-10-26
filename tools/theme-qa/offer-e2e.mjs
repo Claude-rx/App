@@ -484,7 +484,13 @@ async function twinPage(name, route, cfg) {
              empty: !!empty && !empty.hidden, now: head.querySelector('.product__price--regular').textContent.trim(),
              was: (head.querySelector('.product__price--compare') || {}).textContent || '',
              competitor: /solena|fem\+|femplus|meimei|facelove/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
+             announce: ((document.querySelector('.announcement .text-highlight__break') || {}).textContent || '').trim(),
              stars: !document.querySelector('[data-sfb-rating]').hidden, hScroll: document.documentElement.scrollWidth > innerWidth + 1,
+             // another product's FrontrowMD listing: in a box under the add-to-cart button, the line naming whose first
+             frontrow: (() => { const b = document.querySelector('.sfb-frontrow'), a = document.querySelector('form[data-product-form] [data-add-to-cart]');
+               if (!b || !a) return null; const note = b.querySelector('.sfb-frontrow-note'), badge = b.querySelector('.sfb-frontrow__badge');
+               return { belowAtc: b.getBoundingClientRect().top >= a.getBoundingClientRect().bottom - 1,
+                        noteFirst: !!(note && badge && note.compareDocumentPosition(badge) & Node.DOCUMENT_POSITION_FOLLOWING) }; })(),
              // images that asked for a file and got none (the review lightbox's empty <img> asks for nothing)
              imgs: [...document.querySelectorAll('main img')].filter(i => i.complete && i.naturalWidth === 0 && (i.getAttribute('src') || i.getAttribute('srcset'))
                                                                      && !/^data:/.test(i.getAttribute('src') || '')).map(i => i.currentSrc || i.src) };
@@ -517,6 +523,9 @@ async function twinPage(name, route, cfg) {
   if (!pg.now.startsWith(price) || (cfg.was ? !pg.was.startsWith(cfg.was) : !!pg.was.trim())) problems.push(`title price ${pg.now} / was "${pg.was}"`);
   if (pg.stars !== (pg.reviews > 0 || !!cfg.borrowed)) problems.push(`stars ${pg.stars} with ${pg.reviews} reviews`);
   if (pg.hScroll) problems.push('page scrolls sideways');
+  if (cfg.announce && pg.announce !== cfg.announce) problems.push('announcement: ' + pg.announce);
+  if (!cfg.announce && !/Fall Sale/.test(pg.announce)) problems.push('announcement (the store\'s line): ' + pg.announce);
+  if (!!cfg.frontrow !== !!pg.frontrow || (pg.frontrow && !(pg.frontrow.belowAtc && pg.frontrow.noteFirst))) problems.push('FrontrowMD box: ' + JSON.stringify(pg.frontrow));
   if (pg.imgs.length) problems.push(`${pg.imgs.length} broken images: ${pg.imgs.slice(0, 3).join(' ')}`);
   // the homepage shelf card and the menu links
   await s.page.goto(`${STORE}/`, { waitUntil: 'networkidle', timeout: 90000 });
@@ -542,7 +551,8 @@ await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf
                                  clips: 0, was: '$69.90', price: '$47.95',
                                  claims: '#1 Firming|137,135|10,000\\+|clinically|stimulate collagen|at the source|dermatologist|Madeca|Time Reverse' });
 await twinPage('stick', STICK, { title: 'Adaptive Foundation Stick', handle: 'adaptive-foundation-stick', nav: 'Adaptive Foundation Stick',
-                                 gallery: 6, faq: 14, clips: 0, was: '$78', price: '$47', borrowed: true,
+                                 gallery: 6, faq: 16, clips: 0, was: '$78', price: '$47', borrowed: true, frontrow: true,
+                                 announce: 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee',
                                  claims: '97%|93%|50,000|pieces remain|11:59|16 skin tones|anti-aging|reduces redness|clinically|dermatologist|Changing Foundation' });
 
 // the sticky bar on every product page: shown exactly while the add-to-cart button is out of view (at the top on a
@@ -559,6 +569,13 @@ for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BAL
   await s.page.evaluate(() => window.scrollTo(0, 3000)); await s.page.waitForTimeout(900);
   const scrolled = await on();
   if (atTop !== atcOut) problems.push(`at the top: bar ${atTop}, add-to-cart out of view ${atcOut}`);
+  // on the first screen the bar covers neither the title nor the price (stick review 3)
+  if (atTop) {
+    const cover = await s.page.evaluate(() => { const bar = document.getElementById('sf-sticky'), top = innerHeight - bar.offsetHeight;
+      return ['.product__title', '.product__price-and-badge'].map(q => document.querySelector(q)).filter(e => e && e.getBoundingClientRect().bottom > top)
+        .map(e => e.className + ' ' + Math.round(e.getBoundingClientRect().bottom) + '>' + Math.round(top)); });
+    if (cover.length) problems.push('the sticky bar covers ' + cover.join(', '));
+  }
   if (scrolled !== true) problems.push(`after scrolling: ${scrolled}`);
   if (scrolled) {
     await s.page.click('#sf-sticky a'); await s.page.waitForTimeout(1500);

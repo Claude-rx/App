@@ -37,8 +37,8 @@ DESCRIPTION = ('<p>A press-on PDRN balm stick for under-eyes, smile lines and li
                'hyaluronic acid in a melting balm: skin looks smoother, plumper and rested in seconds, and softer with daily use. '
                f'{NET}, about a month of daily use.</p>')
 META_TITLE = 'PDRN Plumping Balm | Press-on stick for tired-looking under-eyes | SKINOFAB'
-META_DESCRIPTION = ('A PDRN, Volufiline and collagen balm stick for tired-looking under-eyes, smile lines and lip lines. '
-                    'Swipe, press, done in 10 seconds. 30-day money-back guarantee. Free shipping.')
+META_DESCRIPTION = ('A PDRN, Volufiline and collagen balm stick for tired-looking under-eyes, smile and lip lines. '
+                    'Swipe and press: 10 seconds. 30-day money-back guarantee.')
 
 # the gallery (product_photos.py writes brand/pdrn-balm/<name>.jpg): the foundation gallery's order and kinds of image,
 # first one eager; the card is the shelf, cart and sticky-bar image
@@ -103,7 +103,7 @@ def tabs():
                 'Press it in with the stick or tap with a fingertip, no rubbing', 'Morning and night; at night you can go a little thicker'])
          + '<p><strong>Less is more:</strong> a thin layer looks smooth; too much looks shiny.</p>'),
         ('How does the money-back guarantee work?',
-         f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll refund it in <strong>full</strong>, even opened, with no need to send it back.</p>'),
+         f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll refund it in <strong>full</strong>, even opened, no questions asked.</p>'),
         ('Ingredients',
          ''.join(f'<p><strong>{esc(n)}:</strong> {esc(t)}.</p>' for n, t, _ in INGREDIENTS)
          + f'<p>{esc(ADENOSINE)}</p>'
@@ -141,7 +141,7 @@ FAQ = {'items': [
      'It’s gentle on most skin, but try it on a small area first if your skin reacts easily. Don’t use it on broken or irritated skin. '
      'It contains salmon-derived DNA (PDRN): if you have a fish allergy, ask your doctor first.'),
     ('What if it doesn’t work for me?',
-     f'Email {EMAIL} within 30 days and we’ll refund it in full. No need to send it back.'),
+     f'Email {EMAIL} within 30 days and we’ll refund it in full, even opened. No questions asked.'),
 ]}
 FAQ['items'][-1:-1] = _b.refill_faq(BUNDLES, REFILL)     # how refills work, how to buy once
 # section by section, in the foundation page's order (twin.py names each slot); images are brand/pdrn-balm/<name>.jpg or

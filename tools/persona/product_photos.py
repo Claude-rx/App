@@ -165,6 +165,18 @@ def hero(product, name, badge=(948, 148)):
 AI_NOTE = 'AI illustration, not a customer photo'
 
 
+def match_color(im, ref):
+    """im with ref's color balance: each channel scaled so the face area (the middle of the frame) has ref's mean,
+    so the brightness may differ but not the cast. The evening half of the 10 AM / 10 PM photo came out warmer, the
+    orange the page says the stick does not turn (stick review 3)."""
+    import numpy as np
+    a, r = np.asarray(im, dtype=np.float32), np.asarray(ref, dtype=np.float32)
+    def face(x): h, w = x.shape[:2]; return x[int(h * .2):int(h * .7), int(w * .2):int(w * .8)].reshape(-1, 3)
+    fa, fr = face(a), face(r)
+    gain = (fr.mean(0) / fr.mean()) / (fa.mean(0) / fa.mean())     # the cast only: overall brightness stays im's
+    return Image.fromarray(np.clip(a * gain, 0, 255).astype(np.uint8))
+
+
 def before_after(product, name, out, note_text=AI_NOTE, dark=False, words=('Before', 'After')):
     """The two halves with their words (words: 'Before' / 'After', or e.g. '10 AM · Morning' / '10 PM · Evening') and
     the AI line. dark: the words in ink on a white band at the foot (for photos whose lower edge is white: white words
@@ -256,7 +268,7 @@ def results_grid(product, pairs, title):
     save(im, product, 'results-grid')
 
 
-def whats_inside(product, name, rows, size=700):
+def whats_inside(product, name, rows, size=700, note_left=False):
     im = Image.new('RGB', (W, W), PAPER)
     im.paste(src(product, name, size), (W - size, W - size))
     d = ImageDraw.Draw(im)
@@ -268,7 +280,9 @@ def whats_inside(product, name, rows, size=700):
         end = 64 + d.textlength(a, font=sans(31, 'Medium')) + 16
         if end < 400: d.line([(end, y - 10), (460, y - 10)], fill=INK, width=2)
         d.text((64, y + 34), b, font=sans(19, 'Regular'), fill=SOFT, anchor='ls')
-    note(d, (W - 60, W - 28), anchor='rs')
+    # note_left: on the white side (a photo that runs to the bottom-right corner hid it)
+    if note_left: note(d, (64, W - 28), anchor='ls')
+    else: note(d, (W - 60, W - 28), anchor='rs')
     save(im, product, 'whats-inside')
 
 
@@ -411,7 +425,8 @@ def stick():
     m, e = photo(P, 'wear-morning'), photo(P, 'wear-evening')
     w, h = m.size
     wear = Image.new('RGB', (w, h), PAPER)
-    wear.paste(m.crop((w // 4, 0, w // 4 + w // 2, h)), (0, 0)); wear.paste(e.crop((w // 4, 0, w // 4 + w // 2, h)), (w // 2, 0))
+    mc, ec = m.crop((w // 4, 0, w // 4 + w // 2, h)), e.crop((w // 4, 0, w // 4 + w // 2, h))
+    wear.paste(mc, (0, 0)); wear.paste(match_color(ec, mc), (w // 2, 0))
     wear.save(P / 'labelled' / 'ba-wear.jpg', quality=95)
     before_after(P, 'ba-wear', 'wear-day', dark=True, words=('10 AM · Morning', '10 PM · Evening'))
     tones = [('tone-fair-b', 'tone-fair-a'), ('tone-med-b', 'tone-med-a'), ('tone-deep-b', 'tone-deep-a')]
@@ -420,8 +435,9 @@ def stick():
     panel(P, 'panel-wide', ('One Stick,', 'Your Shade'), [('sparkle', 'Goes on white,', 'blends to your tone'),
                                                           ('drop', 'Creamy, made for', 'dry, mature skin'),
                                                           ('stick', 'Swipe, buff,', 'done in a minute')], 'one-stick')
-    whats_inside(P, 'swatch', [('Hyaluronic acid', 'Keeps dry skin comfortable'), ('Niacinamide', 'For a more even-looking tone'),
-                               ('Squalane + vitamin E', 'Soft and supple, never tight')])
+    # on the stick itself (the swatch photo is "How does it work?" further down: the same photo twice, stick review 3)
+    whats_inside(P, 'single', [('Hyaluronic acid', 'Keeps dry skin comfortable'), ('Niacinamide', 'For a more even-looking tone'),
+                               ('Squalane + vitamin E', 'Soft and supple, never tight')], note_left=True)
     science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',
                            'and the white cream shifts toward your own skin tone:',
                            'one shade that meets your skin where it is.'))

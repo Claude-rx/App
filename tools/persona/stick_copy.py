@@ -48,12 +48,24 @@ META_DESCRIPTION = ('A foundation stick that goes on white and blends into your 
 # kinds of image, first one eager; the card is the shelf, cart and sticky-bar image
 # (6: no photo the sections below show again, and none of the two-tube packshots, which read as two products:
 # the stick is one stick, foundation at one end, brush at the other; stick reviews 1 and 2)
-GALLERY = ['duo-ends', 'before-after', 'one-stick', 'whats-inside', 'science', 'card']
+# first a woman past 50 with the stick and what it does (stick review 3: the first phone screen did not sell), then the
+# stick open at both ends; no slide repeats a photo used further down the page (the packshot was the Solution's, the
+# swatch hand "How does it work?", stick review 3)
+GALLERY = ['one-stick', 'duo-ends', 'before-after', 'whats-inside', 'science', 'hold-chin']
+GALLERY_ALT = {'one-stick': 'A woman in her fifties holding the Adaptive Foundation Stick: goes on white, blends to your tone',
+               'duo-ends': 'The Adaptive Foundation Stick open at both ends: the white cream and the kabuki brush',
+               'before-after': 'Before and after the stick on dry, mature skin (AI illustration)',
+               'whats-inside': 'What is inside: hyaluronic acid, niacinamide, squalane and vitamin E',
+               'science': 'How it works: color capsules break as you blend',
+               'hold-chin': 'A woman in her fifties holding the Adaptive Foundation Stick by her chin'}
 KOREAN = False         # no "Formulated in Korea" line until the supplier confirms where it is formulated
 
 # the buy box --------------------------------------------------------------------------------------------------------
 EYEBROW = None
 SHIPPING_BADGE = '\U0001F381 FREE SHIPPING'
+# the header's line on this page (the store's "Up to 60% OFF + FREE Gifts" names gifts and savings the stick has
+# not got, stick review 3): what every stick order does get
+ANNOUNCEMENT = 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee'
 LEAD = ('No shade to guess: it goes on white and shifts toward your own tone as you blend, with the brush on the other '
         'end. Even, natural coverage in about a minute, and nothing to spill.')
 BUNDLES = [
@@ -117,7 +129,7 @@ def tabs():
          + '<p><strong>Less is more:</strong> two thin layers look more natural than one thick one.</p>'),
         ('How does the money-back guarantee work?',
          f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll '
-         'refund it in <strong>full</strong>, even opened, with no need to send it back.</p>'),
+         'refund it in <strong>full</strong>, even opened, no questions asked.</p>'),
         ('Ingredients',
          ''.join(f'<p><strong>{esc(n)}:</strong> {esc(t)}.</p>' for n, t, _ in INGREDIENTS)
          + '<p>The full ingredient list is printed on the box.</p>'
@@ -138,7 +150,7 @@ BORROW_REVIEWS = {'of': 'our Adaptive Peptide Foundation, the same adaptive form
 # the reviews' stars, bars and checks in the review-site look the owner asked for (26 Oct 2026): green boxed stars,
 # with no review site's name or logo (the reviews are the store's own imports, and the page says so)
 REVIEW_STARS = '#00b67a'
-FRONTROW_NOTE = 'Clinicians’ Choice listing of our Adaptive Peptide Foundation, the same adaptive formula.'
+FRONTROW_NOTE = 'This FrontrowMD Clinicians’ Choice listing is for our Adaptive Peptide Foundation, the same adaptive formula as this stick.'
 NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews of the stick yet', 'lead_amazon': 'No SKINOFAB reviews yet',
               'text': 'The Adaptive Foundation Stick is new at SKINOFAB, and we only show reviews from real buyers. Try it for 30 days: '
                       'if it isn’t the easiest foundation you’ve worn, we’ll refund you.',
@@ -172,8 +184,16 @@ FAQ = {'items': [
      'and don’t use it on broken or irritated skin.'),
     ('Can I wear it over skincare and under powder?',
      'Yes. Apply it after your moisturizer and sunscreen. If you like powder, a light dusting on top is fine.'),
+    # her last two questions before buying a cream foundation (stick review 3); no transfer-proof claim: nothing
+    # tested says so
+    ('Will it rub off on my collar?',
+     'Give it a minute to set after you buff it in. It’s a cream, so where a collar or a scarf rubs, a light dusting of '
+     'powder on the jaw and neck keeps it in place.'),
+    ('How do I take it off at night?',
+     'With your usual cleanser. On a day you built up a second layer, a cleansing balm or micellar water first, then '
+     'your cleanser.'),
     ('What if it doesn’t work for me?',
-     f'Email {EMAIL} within 30 days and we’ll refund it in full. No need to send it back.'),
+     f'Email {EMAIL} within 30 days and we’ll refund it in full, even opened. No questions asked.'),
 ]}
 FAQ['items'][-1:-1] = _b.refill_faq(BUNDLES, REFILL)     # how refills work, how to buy once
 # section by section, in the foundation page's order (twin.py names each slot); images are brand/foundation-stick/
@@ -183,7 +203,7 @@ TWIN = {
     'moments': [
         ('daylight', 'Check it in daylight', 'Blended in, it shifts toward your own tone.', 'A woman in her sixties touching her jawline, the stick in her other hand'),
         ('buff-jaw', 'The brush is built in', 'Buff it in with the other end of the stick.', 'A woman in her sixties buffing foundation along her jaw with the brush end'),
-        ('friends', 'One to keep, one to share', 'The 3-stick pack: one at home, one in your bag, one to share.', 'Two women in their fifties and sixties with the stick'),
+        ('friends', 'Home, bag, and one to share', 'The 3-stick pack: one at home, one in your bag, one for a friend.', 'Two women in their fifties and sixties with the stick'),
         ('bag', 'Touch-ups anywhere', 'No pump, no spills, no sponge to carry.', 'The stick going into a handbag'),
     ],
     'problem': {
@@ -238,7 +258,6 @@ TWIN = {
                 'button': 'Choose your pack'},
     'iwt': [
         {'img': 'wear-day', 'alt': 'The same woman at 10 AM and at 10 PM wearing the stick (AI illustration)',
-         'note': 'Illustration made with AI, not a customer photo. Results vary.',
          'lead': 'From 10 AM', 'mark': 'to 10 PM',
          'paras': ['A thin, creamy layer moves with your skin instead of drying on top of it, so it is made to look the same at '
                    'dinner as it did at breakfast: no orange by the window, no lines it found by lunch. Out late? Buff the brush '

@@ -1337,7 +1337,14 @@ LAYOUT_FIXES = (
     # carousel's 22 x 8 px dots with a finger-sized tap area
     '.skinofab-results__subtitle{color:#5c5c5c}.sfo-price s{color:#666}#shippingUspText{color:#15803d!important}'
     '.skinofab-testimonials__verified{font-size:12.5px}'
-    '.si__dot{position:relative}.si__dot:after{content:"";position:absolute;inset:-12px -3px}'
+    # (the dot itself a finger's size, 24 x 44, its 8 px mark drawn in the middle: a box around it did not count as
+    # its tap area, stick review 3); the buy box's rating link 43 px tall without moving the title
+    '.si__dots{gap:0!important}.si__dot{box-sizing:content-box!important;padding:18px 8px!important;background-clip:content-box!important}'
+    '.si__dot:not([aria-current="true"]){background-color:#b3b3b3!important}'
+    '.sfb-rating{padding-top:10px;padding-bottom:10px;margin-top:-10px;margin-bottom:-10px}'
+    # the photo cards' arrows sat on the photos on a tablet (stick review 3): a finger swipes them (the next card
+    # peeks in); from 1024 px all cards show and the slider has nothing to scroll
+    '@media (max-width:1023px){.skinofab-testimonials-prev,.skinofab-testimonials-next{display:none!important}}'
     # product pages on tablets: the thumbnails under the gallery keep the photo's 20 px gutter (they started at x 0)
     '@media(min-width:768px) and (max-width:1023px){[data-product-single-media-thumbs]{padding-left:20px;padding-right:20px}}'
     # "The skinofab difference" (product pages): its 1fr 1fr grid grew to the square photo's height-sized width
@@ -1425,6 +1432,10 @@ def layout_fixes():
             t = re.sub(r'(<[a-z]+\b[^>]*\bdata-product-single-media-group\b[^>]*>)', lambda m: '<style data-sf-gallery-reserve>'
                        '[data-product-single-media-slider]:not(.flickity-enabled){aspect-ratio:1/1;overflow:hidden}'
                        '[data-product-single-media-thumbs]:not(.flickity-enabled){height:100px;overflow:hidden;margin-top:5px}'
+                       # a tablet: the gallery 560 px wide, centred, so the title and price reach the first screen
+                       # (full width it was 833 px tall and the screen held no buy box, stick review 3)
+                       '@media (min-width:768px) and (max-width:1023px){[data-product-single-media-group]{max-width:560px;'
+                       'margin-left:auto!important;margin-right:auto!important}}'
                        '</style>' + m.group(1), t, count=1)
         t = t.replace('</body>', f'<style data-sf-layout-fixes>{LAYOUT_FIXES}</style>'
                       + (CIRCLE_ROOM_JS if 'text-highlight-wrapper--circle' in t else '') + '</body>', 1)
@@ -1787,6 +1798,7 @@ def only_our_products():
         t = re.sub(r'(<li><a href="((?:\.\./)*)collections/all-products\.html">Shop all</a></li>)(?!<li><a href="(?:\.\./)*products/color-changing-foundation)',
                    r'\1<li><a href="\2products/color-changing-foundation.html">Adaptive Peptide Foundation</a></li>'
                    rf'<li><a href="\2products/{stick_copy.HANDLE}.html">{stick_copy.NAV_LABEL}</a></li>', t)
+        t = footer_names(t)
         if not re.search(r'(?:products|pages|collections)/', t) and 'accordion__item' not in t:
             if t != t0: p.write_text(t, encoding='utf-8', errors='surrogateescape')
             continue
@@ -2107,8 +2119,11 @@ def frontrow_block(into=None):
             # (into: its slot keeps a fixed height while it loads, then takes the sticker's drawn height; the
             # sticker's own width is clipped by the slot: FrontrowMD scales it down from 415 px with a transform)
             + (f'var spot = document.querySelector({json.dumps(into)}); if (!spot) return; spot.appendChild(f);'
-               'function fit() { var h = f.getBoundingClientRect().height; if (h > 20) spot.style.height = Math.round(h) + "px"; }'
-               'if (typeof MutationObserver === "function") new MutationObserver(fit).observe(f, { attributes: true, attributeFilter: ["style"] });'
+               # its × minimizes it to a 40 px icon (data-state="min"): the box with the line naming its listing goes
+               # with it, else the line stood alone beside a stray icon (stick review 3)
+               'function fit() { if (f.getAttribute("data-state") === "min") { var box = spot.closest(".sfb-frontrow"); if (box) box.style.display = "none"; return; }'
+               'var h = f.getBoundingClientRect().height; if (h > 20) spot.style.height = Math.round(h) + "px"; }'
+               'if (typeof MutationObserver === "function") new MutationObserver(fit).observe(f, { attributes: true, attributeFilter: ["style", "data-state"] });'
                'f.addEventListener("load", function () { setTimeout(fit, 300); }); window.addEventListener("resize", fit); }'
                if into else
             'var gallery = document.querySelector("[data-product-single-media-group]");'
@@ -2283,7 +2298,8 @@ def product_page(base, P, final, found=None):
         sl['id'] = f'FeaturedMedia-{P.KEY}-{mid}'
         im = sl.find('img')
         im['src'], im['srcset'] = big, f'{mid_src} 753w, {big} 1080w'
-        im['alt'], im['data-image-id'] = P.TITLE, mid
+        # P.GALLERY_ALT: what a slide shows, for a screen reader (else the product's name)
+        im['alt'], im['data-image-id'] = getattr(P, 'GALLERY_ALT', {}).get(P.GALLERY[k - 1], P.TITLE), mid
         if k > 1: im['fetchpriority'] = 'low'
         slider.append(sl)
         th = copy.copy(t_thumb)
@@ -2320,18 +2336,20 @@ def product_page(base, P, final, found=None):
                         'background:linear-gradient(90deg,var(--sf-tp) var(--f),#dcdce6 var(--f))}'
                         '.sfb-rating .sf-star svg{width:72%;height:72%;left:14%;top:14%}'
                         '.sfb-rating .sf-star svg+svg{display:none}</style>'))
-    # the foundation's FrontrowMD listing (P.FRONTROW_NOTE: the owner's same-product word), its sticker on the
-    # gallery as on the foundation's page, and a line under the title naming whose listing it is
-    # (the sticker beside that line, in the buy box: on the stick's own photo it read as the stick's listing and
-    # hid its white tip, stick review 2)
+    # the foundation's FrontrowMD listing (P.FRONTROW_NOTE: the owner's same-product word): a box under the
+    # add-to-cart button (added there, below), the line naming whose listing it is first, then the sticker
+    # (on the stick's own photo it read as the stick's listing and hid its white tip, stick review 2; under the title
+    # it still read as the stick's and pushed the title and price under the phone's sticky bar, stick review 3)
+    frontrow_html = ''
     if getattr(P, 'FRONTROW_NOTE', None) and getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None):
-        app.insert_after(frag(f'<style>{FRONTROW_CSS}'
-                              '.sfb-frontrow{margin:10px 0 2px}'
-                              '.sfb-frontrow__badge{height:58px;overflow:hidden;margin:0 0 6px}'
-                              '.sfb-frontrow__badge #frontrow-sticker{position:static !important;display:block;transform-origin:0 0 !important}'
-                              '</style>' + frontrow_block('.sfb-frontrow__badge')
-                              + '<div class="sfb-frontrow"><div class="sfb-frontrow__badge"></div><p class="sfb-frontrow-note" '
-                              f'style="margin:0;font-size:14px;line-height:1.4;color:#3d3d3d">{P.esc(P.FRONTROW_NOTE)}</p></div>'))
+        frontrow_html = (f'<style>{FRONTROW_CSS}'
+                         '.sfb-frontrow{margin:14px 0 4px;padding:12px 14px 10px;border:1px solid #e4e4e4;border-radius:12px}'
+                         '.sfb-frontrow__badge{height:58px;overflow:hidden;margin:8px 0 0}'
+                         '.sfb-frontrow__badge #frontrow-sticker{position:static !important;display:block;transform-origin:0 0 !important}'
+                         '</style>' + frontrow_block('.sfb-frontrow__badge')
+                         + '<div class="sfb-frontrow"><p class="sfb-frontrow-note" '
+                         f'style="margin:0;font-size:14px;line-height:1.4;color:#3d3d3d">{P.esc(P.FRONTROW_NOTE)}</p>'
+                         '<div class="sfb-frontrow__badge"></div></div>')
     price = prod.select_one('.product__price-and-badge [data-price-wrapper]')
     was = price.select_one('.product__price--compare')
     # sold with Automatic Refills (P.REFILL, on by default): the single pack at its refill price against its one-time
@@ -2375,6 +2393,7 @@ def product_page(base, P, final, found=None):
     plan = refill_plan(P)
     cta.insert_after(frag(f'<div class="product__block sfp-trust"><style>{apf_copy.TRUST_CSS}</style>'
                           f'{apf_copy.trust_html(terms=bool(plan), refills=bool(plan), plan=plan)}</div>'))
+    if frontrow_html: prod.select_one('.sfp-trust').insert_after(frag(frontrow_html))
     # the tabs, in the design's accordion markup
     accs = prod.select('.product__block.product__accordions')
     tpl, anchor = copy.copy(accs[0]), accs[-1]
@@ -2408,6 +2427,8 @@ def product_page(base, P, final, found=None):
     # head and body: the product's own title, description and page id
     text = str(soup)
     text = re.sub(r'<title>.*?</title>', f'<title>{html.escape(P.META_TITLE)}</title>', text, count=1, flags=re.S)
+    # (the store cuts a description at 160 characters: "...guarantee. Free" on the stick's page, stick review 3)
+    if len(P.META_DESCRIPTION) > 155: missing.append(('meta description over 155 characters', P.META_DESCRIPTION[:60]))
     text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{html.escape(P.META_DESCRIPTION)}" name="description"/>', text, count=1)
     text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', f'id="{P.HANDLE}-skinofab"', 1)
     text, _ = sticky_bar(text, sticky_thumb(P.IMG / 'card.jpg', f'{P.IMG_PREFIX}-sticky'), P.TITLE,
@@ -2745,6 +2766,19 @@ def sticky_bar(t, img, title, price_line, button, rating=None):
            '})();</script></div>')
     return t[:m.start()] + bar + t[balanced_end(t, m.start(), 'div'):], True
 
+def footer_names(t):
+    """The footer's Shop column with the menu's names, in the menu's order (stick review 3: "Foundation Stick",
+    "PDRN Balm"... in another order than the menu's full names)."""
+    order = ['color-changing-foundation', stick_copy.HANDLE, serum_copy.HANDLE, balm_copy.HANDLE, brush_copy.HANDLE]
+    names = {'color-changing-foundation': 'Adaptive Peptide Foundation', **{P.HANDLE: P.TITLE for P in SECOND_PRODUCTS}}
+    li = r'<li><a href="(?:\.\./)*products/([a-z0-9-]+)\.html">[^<]*</a></li>'
+    def rebuild(m):
+        found = re.findall(li, m.group(3))
+        if set(found) - set(names): return m.group(0)
+        return m.group(1) + ''.join(f'<li><a href="{m.group(2)}products/{h}.html">{html.escape(names[h])}</a></li>'
+                                    for h in sorted(found, key=order.index))
+    return re.sub(r'(<li><a href="((?:\.\./)*)collections/all-products\.html">Shop all</a></li>)((?:\s*' + li + r')+)', rebuild, t)
+
 def sticky_thumb(src, name):
     """A 156 px square thumbnail on white (a transparent packshot would turn black as a JPEG): the bar shows it 52 px
     wide, so a 3x phone gets its own pixels (104 px was stretched 1.5x, review 5)."""
@@ -2873,6 +2907,15 @@ def main():
     # page goes from the solution to the K-beauty science (apf_copy.KBEAUTY: the actives on the label, no person),
     # its customer reviews before the FAQ, more FAQ answers
     texts[DST / 'index.html'] = customer_voice(texts.get(DST / 'index.html', ''))
+    # a product's own announcement line (P.ANNOUNCEMENT): the store's sale line names gifts and a 60% saving that
+    # product does not have (the stick, stick review 3). The theme build shows it on that product's page only
+    # (build_theme.py: data-sf-ann on the header's line)
+    ann = {P.HANDLE: P.ANNOUNCEMENT for P in SECOND_PRODUCTS if getattr(P, 'ANNOUNCEMENT', None)}
+    if ann:
+        texts[DST / 'index.html'], n = re.subn(r'<span class="text-highlight__break">(?=\U0001F342 Fall Sale)',
+                                                lambda m: f'<span class="text-highlight__break" data-sf-ann="{html.escape(json.dumps(ann, ensure_ascii=False))}">',
+                                                texts[DST / 'index.html'], count=1)
+        if not n: missing.append(('announcement', 'the sale line'))
     home = texts[DST / 'index.html']
     ps_at = texts[pdp].find('id="shopify-section-sf-problem-solution"')
     if ps_at < 0: missing.append(('k-beauty', 'problem/solution anchor'))
