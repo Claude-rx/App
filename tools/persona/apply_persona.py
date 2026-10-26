@@ -2595,10 +2595,18 @@ def product_page(base, P, final, found=None):
     # foundation's handle on this page) and its USP grid, kept hidden by a script that tests that id (stick review 7)
     pid = form.select_one('input[name=product-id]')
     if pid: pid['value'] = str(P.SHOPIFY_ID)
+    # (the script and the grid's styles only: the buy box's own styles were put in the same block, and went with it
+    # in build 45: the "FREE SHIPPING" pill lost its look)
     for sc in prod.find_all('script'):
         if 'ccf-v2-hide-usp-grid' in (sc.string or ''):
             blk = sc.find_parent(class_='product__block')
-            if blk: blk.decompose()
+            sc.decompose()
+            if not blk: continue
+            for st in blk.find_all('style'):
+                if 'ccf-v2-hide-usp-grid' in (st.string or '') or '.skinofab-usp-grid' in (st.string or ''): st.decompose()
+            # the block was hidden: its other styles go before it, and the block goes
+            for st in blk.find_all('style'): blk.insert_before(st.extract())
+            blk.decompose()
     # (the foundation's FrontrowMD listing goes with the foundation's reviews, below: in the stick's buy box it read
     # as the stick's own, stick review 6)
     # the tabs, in the design's accordion markup
