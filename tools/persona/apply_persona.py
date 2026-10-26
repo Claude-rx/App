@@ -304,32 +304,6 @@ def policy_services():
         if t != o: page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
 
-def social_clips():
-    """The homepage's social carousel: each card's clip (its Genjutsu re-make, or a cut of it: video-swaps.json) as a
-    540 px silent H.264 copy with a VP9 one beside it (data-src-webm), as the video cards above it play: the 1080p files
-    with sound were 2.5-12 MB for a card 260 px wide. Returns the cards changed."""
-    home = DST / 'index.html'
-    t = home.read_text(encoding='utf-8', errors='surrogateescape')
-    swaps = json.loads(VIDEO_SWAPS.read_text()) if VIDEO_SWAPS.exists() else {}
-    n = 0
-    def card(mm):
-        nonlocal n
-        tag = mm.group(0)
-        if 'data-src-webm' in tag: return tag
-        rel = mm.group(1)
-        src = DST / rel
-        if src.name in swaps: src = ROOT / swaps[src.name]
-        if not src.exists(): missing.append(('social clip', rel)); return tag
-        stem = 'skinofab-social-' + hashlib.md5(src.read_bytes()).hexdigest()[:6]
-        mp4, webm = card_clip(src, stem, 'mp4'), card_clip(src, stem, 'webm')
-        if not mp4: missing.append(('social clip', rel)); return tag
-        n += 1
-        return tag.replace(f'data-src="{rel}"', f'data-src="{mp4[3:]}"' + (f' data-src-webm="{webm[3:]}"' if webm else ''), 1)
-    t = re.sub(r'(?<=<div class="fh-social-card">\n<div class="fh-social-video" data-fh-social-video="">\n)<video [^>]*data-src="(assets/media/[^"]+\.mp4)"[^>]*>',
-               card, t)
-    home.write_text(t, encoding='utf-8', errors='surrogateescape')
-    return n
-
 def honest_video_cards():
     """The homepage's video cards: VIDEO_DEMOS' captions and label in place of the names, stars and "Verified buyer"
     of people who are not buyers; the section's heading says what the cards are. Returns the cards changed."""
@@ -1351,8 +1325,9 @@ def local_location():
         u = fetch.sub(lambda m: local, t)
         u = flag.sub(lambda m: emoji, u)
         # the line beside it already says "Free shipping on every order": this half says how it ships, the same for everyone
+        # (after the parcel icon, no "|": it separated a flag from "Free shipping to <country>")
         u = re.sub(r'const shippingMessage = `\$\{flagMarkup\}\$\{separator\}<span class="shipping_usp">Free shipping to <span[^`]*`;',
-                   lambda m: "const shippingMessage = `${flagMarkup}${separator}<span class=\"shipping_usp\">Ships in 1 business day, tracked</span>`;", u)
+                   lambda m: "const shippingMessage = `${flagMarkup} <span class=\"shipping_usp\">Ships in 1 business day, tracked</span>`;", u)
         if u != t:
             page.write_text(u, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
@@ -2716,7 +2691,6 @@ def main():
     print('home features', home_features())
     print('home phenomenon', home_phenomenon())
     print('video cards', honest_video_cards())
-    print('social clips', social_clips())
     print('card loader', patch_card_loader())
     print('policy services', policy_services())
     sp, sp_gone = support_pages()

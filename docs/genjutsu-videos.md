@@ -43,9 +43,10 @@ The lip pencil and lip gloss are the old range's products (no longer sold); in b
   label's 31° slant (`label_fix.bold_line_rot`).
 - **`f8efa52f`, the opening shot.** Its first 0.54 s (13 frames) hold the bottle to camera with the small PDRN line
   drawn as "PORN" (a frame-by-frame label scan of every clip found no other such span). `clip_cuts.py` starts it at
-  the hard cut into the next shot: `brand/videos/gj-f8efa52f-cut.mp4` (11.05 s). The social carousel plays it muted.
+  the hard cut into the next shot: `brand/videos/gj-f8efa52f-cut.mp4` (11.05 s). No page plays it today (the social
+  carousel shows the phenomenon photos), so the cut only keeps the mapped re-make clean.
 - **The homepage cards play 540 px clips with a WebM copy**, as the product page's demo row does
-  (`apply_persona.honest_video_cards`, `social_clips`, `card_clip`): the 1080p re-makes with sound were 2.5-12 MB each for a card about
+  (`apply_persona.honest_video_cards`, `card_clip`): the 1080p re-makes with sound were 2.5-12 MB each for a card about
   360 px wide, and the card script (`figma-home*.js`, `patch_card_loader`) takes `data-src-webm` in a browser without
   H.264.
 
