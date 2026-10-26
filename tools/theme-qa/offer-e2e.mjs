@@ -101,7 +101,7 @@ async function drawerState(s) {
   return s.page.evaluate(sel => {
     const r = document.querySelector(sel).shadowRoot, text = r.querySelector('.spark-drawer-panel').innerText.replace(/\s+/g, ' ');
     return { open: getComputedStyle(r.querySelector('.spark-drawer-panel')).visibility !== 'hidden', text: text.slice(0, 900),
-             upgrade: !!r.querySelector('[data-sf-upgrade]'), addons: [...r.querySelectorAll('.sf-upsell-name')].map(a => a.textContent),
+             upgrade: !!r.querySelector('.sf-upgrade-btn[data-sf-upgrade]'), plus: !!r.querySelector('.spark-drawer-qty-btn[data-sf-upgrade]'), addons: [...r.querySelectorAll('.sf-upsell-name')].map(a => a.textContent),
              review: !!r.querySelector('.sf-review'), guarantee: !!r.querySelector('.spark-drawer-footer .sf-guarantee, .sf-guarantee'), pay: r.querySelectorAll('.sf-pay img').length,
              planTalk: /refill reminder|cancel any time|due today|switch base/i.test(text) };
   }, drawer);
@@ -190,7 +190,7 @@ for (const refill of [false, true]) {
       subscription: null }]), packs['1'].pk);
     await s.page.waitForTimeout(6000);
   }
-  await s.page.locator(`${drawer} [data-sf-upgrade]`).click();
+  await s.page.locator(`${drawer} .sf-upgrade-btn[data-sf-upgrade]`).click();
   await s.page.waitForTimeout(6000);
   const ls = lines(s.cart);
   const want = { pk: packs['2'].pk, price: refill ? packs['2'].refill : packs['2'].price, refill };
@@ -401,6 +401,8 @@ async function bundleCases(name, route, title, label, refills = false, to3 = fal
     const d = await drawerState(s);
     if (!d.open) problems.push('drawer did not open');
     if (d.upgrade !== (key === '1' || (to3 && key === '2'))) problems.push(`upgrade shown=${d.upgrade}`);
+    // a line of one pack that has a bigger pack above it: its "+" moves it up a pack instead of adding a second line
+    if (d.plus !== d.upgrade) problems.push(`"+" upgrades=${d.plus}, banner=${d.upgrade}`);
     if (d.addons.includes(title)) problems.push(`${title} offered as an add-on while in the bag`);
     if (d.addons.length < 1) problems.push('no add-ons');
     if (d.planTalk) problems.push('drawer has plan talk');
@@ -421,7 +423,7 @@ async function bundleCases(name, route, title, label, refills = false, to3 = fal
   await chooseBundle(s, '1');
   await addToCart(s);
   const problems = [];
-  const btn = s.page.locator(`${drawer} [data-sf-upgrade]`);
+  const btn = s.page.locator(`${drawer} .sf-upgrade-btn[data-sf-upgrade]`);
   if (!(await btn.count())) problems.push('no upgrade button');
   else { await btn.first().click(); await s.page.waitForTimeout(7000); }
   const ls = lines(s.cart);
@@ -433,7 +435,7 @@ async function bundleCases(name, route, title, label, refills = false, to3 = fal
   out.push({ case: `${name} upgrade 1 -> 2`, lines: ls, errors: s.errors, ok: problems.length === 0, problems });
   if (to3 && d.upgrade) {
     const p3 = [];
-    await s.page.locator(`${drawer} [data-sf-upgrade]`).first().click(); await s.page.waitForTimeout(7000);
+    await s.page.locator(`${drawer} .sf-upgrade-btn[data-sf-upgrade]`).first().click(); await s.page.waitForTimeout(7000);
     const l3 = lines(s.cart);
     if (l3.length !== 1) p3.push(`${l3.length} lines after the upgrade`);
     p3.push(...checkLine(l3[0], { pk: packs['3'].pk, ...want(packs['3']) }));
@@ -442,6 +444,19 @@ async function bundleCases(name, route, title, label, refills = false, to3 = fal
     out.push({ case: `${name} upgrade 2 -> 3`, lines: l3, errors: s.errors, ok: p3.length === 0, problems: p3 });
   }
   await s.ctx.close();
+  // the "+" on a single pack: one line of the next pack up at its price, not two lines of one
+  const q = await session(390, 844, route), pq = [];
+  await chooseBundle(q, '1');
+  await addToCart(q);
+  const plus = q.page.locator(`${drawer} .spark-drawer-qty-btn[data-sf-upgrade]`);
+  if (!(await plus.count())) pq.push('no "+" upgrade on the single pack');
+  else { await plus.first().click(); await q.page.waitForTimeout(7000); }
+  const lq = lines(q.cart);
+  if (lq.length !== 1) pq.push(`${lq.length} lines after "+"`);
+  pq.push(...checkLine(lq[0], { pk: packs['2'].pk, ...want(packs['2']) }));
+  await q.page.screenshot({ path: path.join(SHOTS, `drawer-${name}-plus.png`) });
+  out.push({ case: `${name} "+" 1 -> 2`, lines: lq, errors: q.errors, ok: pq.length === 0, problems: pq });
+  await q.ctx.close();
 }
 await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
 // the balm, serum and stick sell with Automatic Refills on by default (26 Oct 2026): every pack adds as a refill at
