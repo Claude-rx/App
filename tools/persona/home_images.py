@@ -194,12 +194,20 @@ def main():
     # ---- Beauty is a celebration: the export's two models as women in their fifties (gpt-image-2, source/celebration-ai.jpg)
     save(Image.open(SRC / 'celebration-ai.jpg').convert('RGB'), 'celebration.jpg')
     # ---- Shop by category: 4:5 crops, face and product in the upper two thirds (the name and button sit low left)
-    save(crop45(SRC / 'tile-foundation.jpg', (0, 0, 1397, 1747)), 'tile-foundation.jpg')
+    # the foundation's tile: its bottle's small PDRN line (8 px at the source) read PORN at the tile's size, on the
+    # homepage and in the listing banners built from it (review 6): set again bold, twice the size
+    r = np.asarray(Image.open(SRC / 'tile-foundation.jpg').convert('RGB')).astype(np.float32)
+    label_fix.bold_line_rot(r, (514, 1095), 3, (64, 22), 'PDRN', 16, weight=760, track=0.2)
+    tf = TMP / 'tile-foundation-bold.jpg'
+    Image.fromarray(np.clip(r + 0.5, 0, 255).astype(np.uint8)).save(tf, quality=95)
+    save(crop45(tf, (0, 0, 1397, 1747)), 'tile-foundation.jpg')
     save(crop45(BRAND / 'egf-nad-serum' / 'hold-cheek.jpg', (108, 0, 972, 1080)), 'tile-serum.jpg')
     save(crop45(BRAND / 'pdrn-balm' / 'hold-cheek.jpg', (150, 0, 1014, 1080)), 'tile-balm.jpg')
     # her whole head and the brush in her hand (1254 px source: the old box, measured on a 1024 px one, cut her hair
     # and ear at the tile's right edge, review 5)
     save(crop45(SRC / 'brush-ai.jpg', (150, 0, 1153, 1254)), 'tile-brush.jpg')
+    # the foundation stick (the fifth product): the woman holding it by her cheek, her whole head in the tile
+    save(crop45(BRAND / 'foundation-stick' / 'hold-cheek.jpg', (130, 0, 994, 1080)), 'tile-stick.jpg')
     # ---- Bundle & Save
     save(trio(foundation_unit(), height=0.7, spread=0.2, count=2), 'bundle-foundation.jpg')
     # the shelf's foundation card: the bottle alone, as the bundle's (the export's card photo cast a long grey shadow
@@ -214,6 +222,7 @@ def main():
     save(Image.open(BRAND / 'egf-nad-serum' / 'trio.jpg').convert('RGB').resize((1000, 1000), Image.LANCZOS), 'bundle-serum.jpg')
     save(trio(cutout(BRAND / 'pdrn-balm' / 'card.jpg', keep='tallest'), height=0.62), 'bundle-balm.jpg')
     save(trio(cutout(BRAND / 'lymphatic-brush' / 'card.jpg', keep='all'), height=0.5, spread=0.3, side=0.9), 'bundle-brush.jpg')
+    save(trio(cutout(BRAND / 'foundation-stick' / 'card.jpg', keep='tallest'), height=0.62), 'bundle-stick.jpg')
     # ---- banners of the listing pages (the export's showed four young models with products the store no longer
     # sells): our four women 45+ with their products, side by side (wide) and two by two (phones)
     tiles = [Image.open(OUT / f'tile-{k}.jpg').convert('RGB') for k in ('foundation', 'serum', 'balm', 'brush')]

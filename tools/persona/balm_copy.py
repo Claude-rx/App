@@ -53,12 +53,15 @@ LEAD = ('The 10-second pick-me-up for the spots that make you look tired: hollow
         'around your lips. Swipe it on, press it in, and skin looks smoother, fuller and rested.')
 BUNDLES = [
     {'key': '1', 'name': '1 Stick', 'note': 'About 1 month', 'variant': '1 stick', 'sku': 'SKF-PDB-1',
-     'price': '24.95', 'compare': '24.95', 'gifts': []},
+     'price': '24.95', 'refill': '19.95', 'every': 28, 'compare': '24.95', 'gifts': []},
     {'key': '2', 'name': '2 Sticks', 'note': 'About 2 months · one for your bag', 'variant': '2 sticks', 'sku': 'SKF-PDB-2',
-     'price': '39.95', 'compare': '49.90', 'badge': 'Most popular', 'default': True, 'gifts': []},
+     'price': '39.95', 'refill': '31.95', 'every': 56, 'compare': '49.90', 'badge': 'Recommended', 'default': True, 'gifts': []},
     {'key': '3', 'name': 'Buy 2, Get 1 Free', 'note': 'About 3 months · best value', 'variant': '3 sticks (buy 2, get 1 free)',
-     'sku': 'SKF-PDB-3', 'price': '49.90', 'compare': '74.85', 'badge': 'Best value', 'gifts': []},
+     'sku': 'SKF-PDB-3', 'price': '49.90', 'refill': '39.90', 'every': 84, 'compare': '74.85', 'badge': 'Best value', 'gifts': []},
 ]
+# Automatic Refills (the owner's brief of 26 Oct 2026, as the foundation): on by default at 20% under the one-time
+# price; one-time stays a choice on the cart page. A pack ships again when it runs out (its note: about a month a stick)
+REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills', 'default': True, 'unit': 'stick'}
 GIFTS = {}
 GIFT_FILES = {}
 STICKY_BUTTON = 'Choose your pack'
@@ -140,6 +143,7 @@ FAQ = {'items': [
     ('What if it doesn’t work for me?',
      f'Email {EMAIL} within 30 days and we’ll refund it in full. No need to send it back.'),
 ]}
+FAQ['items'][-1:-1] = _b.refill_faq(BUNDLES, REFILL)     # how refills work, how to buy once
 # section by section, in the foundation page's order (twin.py names each slot); images are brand/pdrn-balm/<name>.jpg or
 # its source/ photo. The before/after photos are illustrations and say so on the image.
 TWIN = {
@@ -147,7 +151,7 @@ TWIN = {
     'moments': [
         ('hold-cheek', 'Before makeup', 'A swipe under the eyes, then your foundation.', 'A woman in her late fifties holding the PDRN Plumping Balm'),
         ('hold-chin', 'Before a long day', 'Rested-looking eyes in 10 seconds.', 'A woman in her fifties holding the PDRN Plumping Balm'),
-        ('friends', 'One to keep, one to share', 'The 2-stick pack: one at home, one in your bag.', 'Two women in their fifties and sixties with the balm'),
+        ('friends', 'One to keep, one to share', 'The 2-stick pack: one for you, one for a friend.', 'Two women in their fifties and sixties with the balm'),
         ('mirror', 'At night', 'A slightly thicker layer before bed.', 'A woman touching up under her eye at the bathroom mirror'),
         ('bag', 'Over makeup, anywhere', 'Tap it on to refresh your under-eyes during the day.', 'The balm taken out of a handbag'),
         ('apply-brows', 'Between the brows', 'Press it on frown and forehead lines too.', 'A woman pressing the balm between her eyebrows'),
@@ -183,7 +187,7 @@ TWIN = {
                   ('Dry, deeper-looking lines', 'Collagen and hyaluronic acid cushion and hydrate smile and lip lines.'),
                   ('Messy fingers and jars', 'Swipe, press, done: 10 seconds, nothing on your fingers.'),
                   ('A different cream for every spot', 'One stick for under-eyes, smile lines, lips and brows. It fits in your bag.')],
-        'button': 'Get yours', 'note': 'Use it for 30 days, or your money back.',
+        'button': 'Get yours', 'note': 'Try it for 30 days: love it, or your money back.',
         'product_alt': 'The PDRN Plumping Balm',
     },
     # the foundation's expert block: here the brand's own note, signed as the brand (no invented expert)
@@ -238,7 +242,7 @@ TWIN = {
         {'img': 'apply-smile', 'title': 'Smile lines', 'text': 'From the nose to the corners of the mouth.', 'alt': 'Gliding the balm along a smile line'},
         {'img': 'apply-lips', 'title': 'Around the lips', 'text': 'Lip lines and dry lips.', 'alt': 'Tracing the balm above the upper lip'},
         {'img': 'apply-brows', 'title': 'Between the brows', 'text': 'Frown lines and the forehead.', 'alt': 'Pressing the balm between the eyebrows'}]},
-    'why': {'title': 'The skinofab difference', 'img': 'temple', 'button': 'Claim offer',
+    'why': {'title': 'The skinofab difference', 'img': 'temple', 'button': 'Choose your pack',
             'features': [('Visible in seconds', 'Smoother, more rested-looking under-eyes the moment you press it on'),
                          ('Four K-beauty actives', 'PDRN, Volufiline™, collagen and hyaluronic acid'),
                          ('30-day money-back guarantee', 'Love it, or email us for a full refund')]},
@@ -246,7 +250,7 @@ TWIN = {
 
 
 def picker_html(variants, gift_imgs, css):
-    return _b.picker_html(variants, gift_imgs, css, bundles=BUNDLES, gifts=GIFTS, legend='Choose your pack')
+    return _b.picker_html(variants, gift_imgs, css, bundles=BUNDLES, gifts=GIFTS, legend='Choose your pack', refill=REFILL)
 
 
 def no_reviews_html(buy='#apf-buy', amazon=None): return _b.no_reviews_html(buy, amazon, NO_REVIEWS)

@@ -1,5 +1,5 @@
 """The store's help pages in one voice: the FAQ, the contact page's questions, the refund policy and the shipping
-policy say the same thing about the same four products, and nothing the product pages do not.
+policy say the same thing about the same five products, and nothing the product pages do not.
 
 The export's pages came from the store this one was rebuilt from: a "viral Color-Adapting Foundation" with glycerin,
 mica and vitamin E, "clinical study" and "independent panel" percentages, 16-hour wear, "vegan" (the foundation and
@@ -52,8 +52,9 @@ GUARANTEE = (f'Try any SKINOFAB product for 30 days from the day it arrives. If 
 # drop the question). Matched against the question as the page shows it after the copy rules.
 FAQ = [
     ('What is Skinofab', 'What is SKINOFAB?',
-     '<p>SKINOFAB makes four products for skin after 45: three formulas made in Korea, the Adaptive Peptide Foundation, '
-     'the EGF + NAD+ Firming Serum and the PDRN Plumping Balm, and The Lymphatic Brush.</p>'),
+     '<p>SKINOFAB makes five products for skin after 45: the Adaptive Peptide Foundation, the Adaptive Foundation Stick, '
+     'the EGF + NAD+ Firming Serum, the PDRN Plumping Balm and The Lymphatic Brush. The foundation, the serum and the balm '
+     'are formulated in Korea.</p>'),
     ('How do I contact Skinofab', 'How do I contact SKINOFAB?',
      f'<p>Email us at {MAIL}, or use the form on our <a href="contact.html">Contact page</a>. We answer every message.</p>'),
     ('How does the', 'How does the Adaptive Peptide Foundation work?',
@@ -67,7 +68,8 @@ FAQ = [
      f'30 days: if you don’t love how it looks, we’ll refund you.</p>'),
     ('Is Skinofab cruelty-free and vegan', 'Are SKINOFAB products vegan?',
      '<p>No. The PDRN in the Adaptive Peptide Foundation and the PDRN Plumping Balm comes from salmon DNA, and the balm '
-     'and the EGF + NAD+ Firming Serum contain collagen.</p>'),
+     'and the EGF + NAD+ Firming Serum contain collagen. The Adaptive Foundation Stick’s full ingredient list is printed '
+     f'on its box; if you avoid animal-derived ingredients, email {MAIL} before you order and we’ll send it to you.</p>'),
     ('What are the key ingredients', 'What are the key ingredients in the Adaptive Peptide Foundation?',
      '<ul><li><strong>Peptides (Matrixyl 3000), PDRN and Pro-Xylane</strong>: K-beauty actives for the skin underneath.</li>'
      '<li><strong>Hyaluronic acid, ceramide NP, squalane and panthenol</strong>: a hydrating serum base for dry, mature '

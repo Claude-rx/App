@@ -160,20 +160,62 @@ def hero(product, name, badge=(948, 148)):
     save(im, product, 'hero')
 
 
-def before_after(product, name, out, note_text=ILLUSTRATIVE, dark=False):
-    """dark: the words in ink on a white band at the foot (for photos whose lower edge is white: white words were lost
-    on a white t-shirt), and a white line between the halves."""
+# the line on every AI before/after picture: big enough to read in the gallery on a phone (a 1080 px image shows
+# about 350 px wide there: 30 px is about 10 px on the screen; the old 17 px line read as a smudge, review 6)
+AI_NOTE = 'AI illustration, not a customer photo'
+
+
+def before_after(product, name, out, note_text=AI_NOTE, dark=False, words=('Before', 'After')):
+    """The two halves with their words (words: 'Before' / 'After', or e.g. '10 AM · Morning' / '10 PM · Evening') and
+    the AI line. dark: the words in ink on a white band at the foot (for photos whose lower edge is white: white words
+    were lost on a white t-shirt), and a white line between the halves."""
     im = src(product, name)
     if not dark:
-        labels(im, [(34, W - 40, 'Before'), (W // 2 + 34, W - 40, 'After')])
-        labels(im, [(W // 2 + 34, W - 82, note_text)], size=17)
+        labels(im, [(34, W - 84, words[0]), (W // 2 + 34, W - 84, words[1])])
+        labels(im, [(34, W - 34, note_text)], size=30)
         return save(im, product, out)
     d = ImageDraw.Draw(im)
     d.rectangle((W // 2 - 3, 0, W // 2 + 3, W), fill=PAPER)
-    d.rectangle((0, W - 92, W, W), fill=PAPER)
-    d.text((34, W - 40), 'Before', font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
-    d.text((W // 2 + 34, W - 40), 'After', font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
-    note(d, (W - 34, W - 40), note_text, anchor='rs')
+    d.rectangle((0, W - 132, W, W), fill=PAPER)
+    d.text((34, W - 78), words[0], font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
+    d.text((W // 2 + 34, W - 78), words[1], font=sans(34, 'SemiBold'), fill=INK, anchor='ls')
+    note(d, (34, W - 28), note_text, anchor='ls', size=30)
+    save(im, product, out)
+
+
+# the stick's shade range panel: swatches from fair to deep, then three women (fair, medium, deep) before and after
+SKIN_TONES = ['#f3dac8', '#ecc9b2', '#e2b898', '#d6a683', '#cb9572', '#bd8462', '#ad7454', '#9b6447', '#87553b',
+              '#734731', '#5e3a27', '#4a2e1f']
+
+
+def tones_panel(product, cols, title, out, tall=False):
+    """A white panel (1080 square, or 1080 x 1350 for a 4:5 slot): a serif title, a row of skin-tone swatches and
+    cols [(before, after)] side by side, each woman's photo before and after the same edit, with the AI line."""
+    H = round(W * 1.25) if tall else W
+    im = Image.new('RGB', (W, H), PAPER)
+    d = ImageDraw.Draw(im)
+    # tall: everything inside the middle 1170 px, since phones show this panel in a 4:4.4 box, center-cropped (the
+    # title and the AI line were cut there, stick review 2)
+    top = 96 if not tall else 160
+    d.text((W // 2, top), title[0], font=serif(54 if not tall else 60, 'Bold'), fill=INK, anchor='ms')
+    d.text((W // 2, top + 46), title[1], font=sans(26, 'Regular'), fill=SOFT, anchor='ms')
+    n, r = len(SKIN_TONES), 26
+    gap = (W - 120 - n * 2 * r) / (n - 1)
+    cy = top + (106 if not tall else 100)
+    for k, c in enumerate(SKIN_TONES):
+        cx = 60 + r + k * (2 * r + gap)
+        d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=c)
+    cw, g = 316, 26
+    x0 = (W - 3 * cw - 2 * g) // 2
+    y0 = cy + r + (40 if not tall else 34)
+    ph = cw if not tall else round(cw * 1.26)        # the 4:5 panel's height: taller photos, no empty foot
+    for k, (b, a) in enumerate(cols):
+        x = x0 + k * (cw + g)
+        for j, (name, word) in enumerate(((b, 'Before'), (a, 'After'))):
+            y = y0 + j * (ph + 54)
+            im.paste(ImageOps.fit(photo(product, name), (cw, ph), Image.LANCZOS, centering=(0.5, 0.35)), (x, y))
+            d.text((x + 4, y + ph + 34), word, font=sans(26, 'SemiBold'), fill=INK, anchor='ls')
+    note(d, (W // 2, H - 26 if not tall else y0 + 2 * ph + 54 + 80), AI_NOTE + '. Results vary.', size=28)
     save(im, product, out)
 
 
@@ -205,7 +247,7 @@ def results_grid(product, pairs, title):
         im.paste(ImageOps.fit(photo(product, name), (tw, th), Image.LANCZOS), (x, y))
         d.text((x + 6, y + th + 32), 'Before', font=sans(21, 'Regular'), fill=SOFT, anchor='ls')
         d.text((x + tw // 2 + 6, y + th + 32), 'After', font=sans(21, 'Regular'), fill=SOFT, anchor='ls')
-    note(d, (W // 2, W - 22), ILLUSTRATIVE + '. Results vary.')
+    note(d, (W // 2, W - 24), AI_NOTE + '. Results vary.', size=28)
     save(im, product, 'results-grid')
 
 
@@ -356,8 +398,20 @@ def stick():
     tall.paste(s, ((tall.width - s.width) // 2, (tall.height - s.height) // 2))
     tall.save(P / 'labelled' / 'science-tall.jpg', quality=95)
     plain(P, 'pack', 'hero')
+    plain(P, 'duo-ends')                 # one stick, both ends open: what "foundation + brush in one" means
     plain(P, 'hold-cheek')
     before_after(P, 'ba-even', 'before-after', dark=True)
+    # from 10 AM to 10 PM: one portrait in the morning and the same photo edited to the evening's light, the middle
+    # half of each side by side (named ba-: the page captions it as an AI illustration)
+    m, e = photo(P, 'wear-morning'), photo(P, 'wear-evening')
+    w, h = m.size
+    wear = Image.new('RGB', (w, h), PAPER)
+    wear.paste(m.crop((w // 4, 0, w // 4 + w // 2, h)), (0, 0)); wear.paste(e.crop((w // 4, 0, w // 4 + w // 2, h)), (w // 2, 0))
+    wear.save(P / 'labelled' / 'ba-wear.jpg', quality=95)
+    before_after(P, 'ba-wear', 'wear-day', dark=True, words=('10 AM · Morning', '10 PM · Evening'))
+    tones = [('tone-fair-b', 'tone-fair-a'), ('tone-med-b', 'tone-med-a'), ('tone-deep-b', 'tone-deep-a')]
+    tones_panel(P, tones, ('One stick, many skin tones', 'It goes on white and blends into your own tone'), 'tones')
+    tones_panel(P, tones, ('One stick, many skin tones', 'It goes on white and blends into your own tone'), 'tones-tall', tall=True)
     panel(P, 'panel-wide', ('One Stick,', 'Your Shade'), [('sparkle', 'Goes on white,', 'blends to your tone'),
                                                           ('drop', 'Creamy, made for', 'dry, mature skin'),
                                                           ('stick', 'Swipe, buff,', 'done in a minute')], 'one-stick')
@@ -366,7 +420,7 @@ def stick():
     science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',
                            'and the white cream shifts toward your own skin tone:',
                            'one shade that meets your skin where it is.'))
-    vs_others(P, 'single', 'liquid', 'A liquid foundation', [('Why one stick', False), ('works where a', False), ('bottle doesn’t', True)],
+    vs_others(P, 'single', 'liquid', 'Your old foundation', [('Why one stick', False), ('works where a', False), ('bottle doesn’t', True)],
               ['Adapts to your\nskin tone', 'Kabuki brush\nbuilt in', 'No spills, fits\nyour bag', 'Creamy, made for\ndry skin'])
     for n in ('apply-cheek', 'blend', 'temple', 'friends', 'hold-chin', 'bag', 'tips', 'swatch', 'twist', 'dots', 'daylight',
               'buff-jaw'):

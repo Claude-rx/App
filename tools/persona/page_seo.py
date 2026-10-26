@@ -12,8 +12,8 @@ import json, os, sys, time, urllib.request
 from pathlib import Path
 
 DESCRIPTIONS = {
-    'about-skinofab': 'SKINOFAB makes skincare-first beauty for skin after 45: a foundation that adapts to your skin tone, '
-                      'a firming serum, a plumping balm and a lymphatic brush.',
+    'about-skinofab': 'Skincare-first beauty for skin after 45: an adaptive foundation in a bottle or a stick, a firming '
+                      'serum, a plumping balm and a lymphatic brush.',
     'faq': 'Answers about SKINOFAB orders, free shipping, refills and returns, how the Adaptive Peptide Foundation '
            'adapts to your skin, and our 30-day guarantee.',
     'contact': 'Questions about an order, a refill, a return or our products? Email hello@skinofab.com and the SKINOFAB '

@@ -78,7 +78,7 @@ BUNDLES = [
     {'key': '1', 'name': 'Buy 1 Brush', 'note': '', 'variant': '1 brush + free case', 'sku': 'SKF-LYB-1',
      'price': '24.95', 'compare': '24.95', 'gifts': [('case', 1)]},
     {'key': '2', 'name': 'Buy 2 Brushes', 'note': '2-Pack', 'variant': '2 brushes + 2 free cases', 'sku': 'SKF-LYB-2',
-     'price': '39.95', 'compare': '49.90', 'badge': 'Most popular', 'default': True, 'gifts': [('case', 2)]},
+     'price': '39.95', 'compare': '49.90', 'badge': 'Recommended', 'default': True, 'gifts': [('case', 2)]},
     {'key': '3', 'name': 'Buy 2 Brushes + 1 FREE', 'note': '3-Pack', 'variant': '3 brushes + 3 free cases + free body brush',
      'sku': 'SKF-LYB-3', 'price': '49.90', 'compare': '74.85', 'badge': 'Best offer', 'gifts': [('case', 3), ('body', 1)]},
 ]
@@ -178,7 +178,7 @@ TWIN = {
         'pains': ['Puffy, swollen-looking under-eyes first thing in the morning',
                   'A jawline and cheekbones that look softer than they used to',
                   'Concealer that only makes puffy eyes look bigger',
-                  'Rollers and gua sha stones that need oil, pressure and a tutorial',
+                  'Gua sha stones that need oil and a tutorial, rollers that cover one narrow line at a time',
                   'Cold spoons and ice cubes that help for five minutes'],
         'close': 'The result: a face that looks tired before your day has even started.',
         'root': ('The root of it', 'It’s not your face.', 'It’s fluid.'),
@@ -187,7 +187,7 @@ TWIN = {
                     'short nights and age make it leave even slower.'),
                    ('Pressing hard doesn’t help',
                     'Facial massage for puffiness uses light, slow strokes toward the neck, the way an aesthetician does it by hand. '
-                    'Rollers and stones push harder and need oil to glide.'),
+                    'A gua sha stone needs oil to glide and pressure to work; a roller presses one hard line at a time.'),
                    ('It comes back every morning',
                     'Puffiness returns after a night’s sleep, a salty dinner or a short night. That’s why a quick daily habit works '
                     'better than a one-off treatment.')],
@@ -242,8 +242,10 @@ TWIN = {
                           ('Day 1', 'Your face feels awake', 'Morning puffiness can look softer after the first 3 minutes'),
                           ('Daily', 'Works best as a habit', 'Puffiness comes back overnight, so does the routine')]},
     'compare': {'title': 'Why skinofab?', 'others': 'Other tools',
-                'rows': ['Works on dry skin, no oil', 'Hundreds of soft contact points', 'Works with just a light touch',
-                         'Flexible bristles adapt to your face', 'Gentle on skin, no red marks']},
+                # rows other tools (gua sha, rollers: the gallery's chart) really lack; the chart ticks rollers for dry
+                # skin and no red marks, so the table no longer says otherwise (review 6)
+                'rows': ['Hundreds of soft contact points', 'Works with just a light touch', 'Flexible bristles adapt to your face',
+                         'Four sweeps, no tutorial', 'A protective case included']},
     'inside': {'title': 'What’s in the box, and why it works',
                'intro': 'The Lymphatic Brush is made for one thing: a light, quick massage for the look of morning puffiness.',
                'cards': [('compare-ours', 'Ultra-soft bristles', 'Vegan fibers that bend instead of pressing'),
@@ -253,7 +255,7 @@ TWIN = {
     # the foundation's customer clips: none. The creator clips of the routine showed women in their twenties and
     # thirties, with TikTok captions burned in ("the difference is insane"); the brush has no buyers' clips yet
     'cards': None,
-    'why': {'title': 'The skinofab difference', 'img': 'card', 'button': 'Claim offer',
+    'why': {'title': 'The skinofab difference', 'img': 'card', 'button': 'Choose your pack',
             'features': [('Fresher-looking in 3 minutes', 'A light morning massage for eyes, cheeks and jaw'),
                          ('No oils, no mess', 'Use it on dry skin, then your skincare'),
                          ('30-day money-back guarantee', 'Love it, or email us for a full refund')]},
@@ -280,17 +282,45 @@ BUYBOX_CSS = r"""
 
 
 
-def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choose your bundle'):
+REFILL_TERMS = ('You pay {amount} today, then {amount} every {every} days until you cancel. We email you before every '
+                'refill. To skip or cancel, just email hello@skinofab.com. No minimum, no fees.')
+
+
+def refill_faq(bundles, refill, email='hello@skinofab.com'):
+    """The two refill questions the foundation's FAQ answers, for a product sold with Automatic Refills (P.REFILL):
+    how they work (each pack's refill price and how often it ships) and how to buy once."""
+    unit = refill.get('unit', 'item')
+    n = lambda b: b['variant'].split(' (')[0]
+    every = ', '.join(f"{money(b['refill'])} every {b['every']} days for {n(b)}" for b in bundles)
+    once = ', '.join(f"{money(b['price'])} for {n(b)}" for b in bundles)
+    return [('How do Automatic Refills work?',
+             f'Your pack ships again when it runs out, at the refill price: {every}. We email you before every refill. '
+             f'To skip, delay or cancel, just email {email}: no minimum, no fees.'),
+            ('Can I buy just once?',
+             f'Yes. In your bag, tap Change under the {unit}, then on the cart page set it to One-time purchase before '
+             f'checkout: {once}, with no refills.')]
+
+
+def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choose your bundle', refill=None):
     """The bundle picker: three cards (Solena's bundles, or another product's `bundles` and `gifts`), the default one
-    chosen. It sets the form's variant and the button's price; these lines are one-time purchases (no refill choice).
-    A bundle shows a saving only when its compare-at price is above its price."""
+    chosen. It sets the form's variant and the button's price. A bundle shows a saving only when its compare-at price
+    is above its price.
+
+    refill (the product's REFILL, its bundles carrying 'refill' prices and 'every' days): sold with Automatic Refills
+    as the foundation is. A hidden, ticked refill box (the form adds the pack as a refill, every 'every' days of the
+    chosen pack), the cards and the title at the refill price against the one-time price, and the refill row and
+    terms under the button ([data-sf-renew], [data-sf-refill-terms]) kept in step with the chosen pack. Without it the
+    lines are one-time purchases (no refill choice)."""
     bundles, gifts = bundles or BUNDLES, GIFTS if gifts is None else gifts
-    table = {b['key']: {'pk': variants[b['key']], 'price': float(b['price']), 'compare': float(b['compare'])} for b in bundles}
+    on = bool(refill)
+    table = {b['key']: {'pk': variants[b['key']], 'price': float(b['price']), 'compare': float(b['compare']),
+                        **({'refill': float(b['refill']), 'every': int(b['every'])} if on else {})} for b in bundles}
     default = next((b['key'] for b in bundles if b.get('default')), bundles[0]['key'])
     base, base_compare = float(bundles[0]['price']), float(bundles[0]['compare'])
+    now_of = lambda b: float(b['refill' if on else 'price'])
     cards = []
     for b in bundles:
-        saves = float(b['compare']) > float(b['price'])
+        saves = float(b['compare']) > now_of(b)
         gifts_li = ''.join(
             f'<li><img src="{gift_imgs[k]}" alt="" width="40" height="40" loading="lazy" decoding="async">'
             + (f'<span>+ {n} FREE {esc(gifts[k][0 if n == 1 else 1])}</span><s>{money(float(gifts[k][2]) * n)}</s><b>FREE</b></li>'
@@ -301,27 +331,36 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
             + (f'<em class="sfo-tab">{esc(b["badge"])}</em>' if b.get('badge') else '')
             + f'<span class="sfo-row"><input type="radio" name="sf_pack" value="{b["key"]}"{" checked" if b["key"] == default else ""}>'
             f'<span class="sfo-main"><span class="sfo-name">{esc(b["name"])}'
-            + (f'<span class="sfo-save">SAVE {money(round(float(b["compare"]) - float(b["price"]), 2))}</span>' if saves else '') + '</span>'
+            + (f'<span class="sfo-save">SAVE {money(round(float(b["compare"]) - now_of(b), 2))}</span>' if saves else '') + '</span>'
             f'<small>{esc(b["note"])}</small></span>'
-            f'<span class="sfo-price"><b>{money(b["price"])}</b>' + (f'<s>{money(b["compare"])}</s>' if saves else '') + '</span></span>'
+            f'<span class="sfo-price"><b>{money(now_of(b))}</b>' + (f'<s>{money(b["compare"])}</s>' if saves else '') + '</span></span>'
             + (f'<ul class="sfo-gifts">{gifts_li}</ul>' if gifts_li else '') + '</label>')
+    first = next(b for b in bundles if b['key'] == default)
+    # inline !important: the design's stylesheets give inputs display:block, which beats the hidden attribute
+    box = (f'<input type="checkbox" name="sf_purchase" value="subscribe" data-interval="{refill["interval"]}" '
+           f'data-interval-count="{first["every"]}" checked hidden style="display:none !important" aria-hidden="true" tabindex="-1">'
+           if on else '')
+    # the title price: the single pack's, at the refill price against the one-time price while refills are on
+    title_now, title_was = (float(bundles[0]['refill']), base) if on else (base, base_compare)
     return (f"""<div class="sfo sfo--bundle" id="apf-buy" data-sf-offer-picker data-packs='{json.dumps(table)}'>
 <style>{css}</style>
 <fieldset><legend>{esc(legend)}</legend>{''.join(cards)}</fieldset>
+{box}
 <script>
 (function () {{
   var root = document.currentScript.parentNode;
   var form = root.closest('form');
   var packs = JSON.parse(root.getAttribute('data-packs'));
+  var box = root.querySelector('input[name=sf_purchase]');
   function money(v) {{ return '$' + (v % 1 ? v.toFixed(2) : String(v)); }}
-  // the title price is the single brush, with cents: the design's money format drops them
+  // the title price is the single pack's, with cents: the design's money format drops them
   var scope = root, head = null;
   while (scope && !head) {{ scope = scope.parentElement; head = scope && scope.querySelector('.product__price-and-badge'); }}
   function titlePrice() {{
     var now = head && head.querySelector('.product__price--regular'), was = head && head.querySelector('.product__price--compare');
     var unit = now && / USD\\s*$/.test(now.textContent) ? ' USD' : '';
-    if (now) now.textContent = money({base}) + unit;
-    if (was) {{ if ({base_compare} > {base}) was.textContent = money({base_compare}) + unit; else was.hidden = true; }}
+    if (now) now.textContent = money({title_now}) + unit;
+    if (was) {{ if ({title_was} > {title_now}) was.textContent = money({title_was}) + unit; else was.hidden = true; }}
   }}
   function sync() {{
     titlePrice();
@@ -329,8 +368,16 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     var pick = packs[key];
     var id = form && form.querySelector('input[name=id]');
     if (id) id.value = pick.pk;
+    var sub = !!(box && box.checked), now = sub ? pick.refill : pick.price;
     var price = form && form.querySelector('[data-sfb-btn-price]');
-    if (price) price.textContent = ' | ' + money(pick.price);
+    if (price) price.textContent = ' | ' + money(now);
+    if (!sub) return;
+    // the refill: how often the chosen pack ships, and the row and terms under the button
+    box.setAttribute('data-interval-count', String(pick.every));
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sf-renew]'), function (e) {{ e.textContent = money(pick.refill); }});
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sf-renew-every]'), function (e) {{ e.textContent = String(pick.every); }});
+    var terms = document.querySelector('[data-sf-refill-terms]');
+    if (terms) terms.textContent = terms.getAttribute('data-sf-refill-terms').replace(/\\{{amount\\}}/g, money(pick.refill)).replace(/\\{{every\\}}/g, String(pick.every));
   }}
   root.addEventListener('change', sync);
   function fromHash() {{
@@ -413,7 +460,7 @@ def tp_stars(rating):
     boxes = []
     for i in range(5):
         f = max(0.0, min(1.0, rating - i)) * 100
-        boxes.append(f'<i aria-hidden="true" style="background:linear-gradient(90deg,#00b67a {f:g}%,#dcdce6 {f:g}%)">&#9733;</i>')
+        boxes.append(f'<i aria-hidden="true" style="background:linear-gradient(90deg,#151515 {f:g}%,#dcdce6 {f:g}%)">&#9733;</i>')
     return f'<span class="sfb-tp" role="img" aria-label="Rated {rating:.1f} out of 5">{"".join(boxes)}</span>'
 
 

@@ -56,12 +56,16 @@ LEAD = ('One light step for skin that looks less firm, drier and duller: EGF, NA
         'within a minute. Two drops for your face, two for your neck.')
 BUNDLES = [
     {'key': '1', 'name': '1 Bottle', 'note': 'About 2 months', 'variant': '1 bottle', 'sku': 'SKF-ENS-1',
-     'price': '34.95', 'compare': '34.95', 'gifts': []},
+     'price': '34.95', 'refill': '27.95', 'every': 56, 'compare': '34.95', 'gifts': []},
     {'key': '2', 'name': '2 Bottles', 'note': 'About 4 months · or share one', 'variant': '2 bottles', 'sku': 'SKF-ENS-2',
-     'price': '59.95', 'compare': '69.90', 'badge': 'Most popular', 'default': True, 'gifts': []},
+     'price': '59.95', 'refill': '47.95', 'every': 112, 'compare': '69.90', 'badge': 'Recommended', 'default': True, 'gifts': []},
     {'key': '3', 'name': 'Buy 2, Get 1 Free', 'note': 'About 6 months · best value', 'variant': '3 bottles (buy 2, get 1 free)',
-     'sku': 'SKF-ENS-3', 'price': '69.90', 'compare': '104.85', 'badge': 'Best value', 'gifts': []},
+     'sku': 'SKF-ENS-3', 'price': '69.90', 'refill': '55.90', 'every': 168, 'compare': '104.85', 'badge': 'Best value', 'gifts': []},
 ]
+# Automatic Refills (the owner's brief of 26 Oct 2026, as the foundation): on by default at 20% under the one-time
+# price; one-time stays a choice on the cart page. A pack ships again when it runs out (its note: about two months a
+# bottle)
+REFILL = {'interval': 'day', 'every': 56, 'name': 'Automatic Refills', 'default': True, 'unit': 'bottle'}
 GIFTS = {}
 GIFT_FILES = {}
 STICKY_BUTTON = 'Choose your pack'
@@ -146,6 +150,7 @@ FAQ = {'items': [
     ('What if it doesn’t work for me?',
      f'Email {EMAIL} within 30 days and we’ll refund it in full. No need to send it back.'),
 ]}
+FAQ['items'][-1:-1] = _b.refill_faq(BUNDLES, REFILL)     # how refills work, how to buy once
 # section by section, in the foundation page's order (twin.py names each slot); images are brand/egf-nad-serum/<name>.jpg
 # or its source/ photo. The before/after photos are illustrations and say so on the image.
 TWIN = {
@@ -187,7 +192,7 @@ TWIN = {
                   ('Dry, deeper-looking lines', 'Glycerin and collagen hydrate, so fine lines look softer.'),
                   ('Heavy creams that pill', 'A light, water-based serum: it sinks in and sits well under makeup.'),
                   ('A routine that skips the neck', 'Two drops for the face, two for the neck: one step for both.')],
-        'button': 'Get yours', 'note': 'Use it for 30 days, or your money back.',
+        'button': 'Get yours', 'note': 'Try it for 30 days: love it, or your money back.',
         'product_alt': 'The EGF + NAD+ Firming Serum',
     },
     # the foundation's expert block: here the brand's own note, signed as the brand (no invented expert)
@@ -241,7 +246,7 @@ TWIN = {
         {'img': 'apply-cheeks', 'title': 'Press it in', 'text': 'Over your face, no rubbing: it sinks in within a minute.', 'alt': 'A woman pressing the serum into her cheeks'},
         {'img': 'apply-neck', 'title': 'Down the neck', 'text': 'Two more drops, swept down toward the chest.', 'alt': 'A woman smoothing the serum down her neck'},
         {'img': 'mirror', 'title': 'Morning and night', 'text': 'Then your moisturiser, and SPF in the morning.', 'alt': 'A woman applying the serum at her mirror'}]},
-    'why': {'title': 'The skinofab difference', 'img': 'temple', 'button': 'Claim offer',
+    'why': {'title': 'The skinofab difference', 'img': 'temple', 'button': 'Choose your pack',
             'features': [('Three actives, one step', 'EGF, NAD+ and collagen in one light serum'),
                          ('Made for skin after 45', 'For skin that looks less firm, drier and duller'),
                          ('30-day money-back guarantee', 'Love it, or email us for a full refund')]},
@@ -249,7 +254,7 @@ TWIN = {
 
 
 def picker_html(variants, gift_imgs, css):
-    return _b.picker_html(variants, gift_imgs, css, bundles=BUNDLES, gifts=GIFTS, legend='Choose your pack')
+    return _b.picker_html(variants, gift_imgs, css, bundles=BUNDLES, gifts=GIFTS, legend='Choose your pack', refill=REFILL)
 
 
 def no_reviews_html(buy='#apf-buy', amazon=None): return _b.no_reviews_html(buy, amazon, NO_REVIEWS)

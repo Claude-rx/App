@@ -31,6 +31,25 @@ NEXT_API_TOKEN=... python3 -I tools/persona/prune_catalog.py skinofab <work_dir>
 NEXT_API_TOKEN=... python3 -I tools/persona/prune_catalog.py skinofab <work_dir>/catalog/prune-backup.json --apply   # do it
 ```
 
+### Automatic Refills (subscriptions)
+
+Every product but The Lymphatic Brush is sold with Automatic Refills on by default (the owner's brief of 26 Oct
+2026); one-time purchase stays a choice on the cart page. Refills cost 20% less than the one-time price, and each pack
+ships again when it runs out:
+
+| Product | Packs: one-time → refill, every | NEXT |
+|---|---|---|
+| Adaptive Peptide Foundation (14) | 1 $47 → $37 · 2 + gifts $57 → $47, every 28 days | on, 28 days |
+| PDRN Plumping Balm (202) | 1 $24.95 → $19.95, 28 days · 2 $39.95 → $31.95, 56 · 3 $49.90 → $39.90, 84 | on, 28/56/84 days |
+| EGF + NAD+ Firming Serum (206) | 1 $34.95 → $27.95, 56 days · 2 $59.95 → $47.95, 112 · 3 $69.90 → $55.90, 168 | on, 56/112/168 days |
+| Adaptive Foundation Stick (235) | 1 $39 → $31, 28 days · 2 $59 → $47, 56 · 3 $78 → $62, 84 | on, 28/56/84 days |
+| The Lymphatic Brush (169) | one-time only (it lasts) | off |
+
+The prices and days live in each product's `*_copy.py` (`BUNDLES[*]['refill']`, `['every']`, `REFILL`);
+`setup_brush_offers.py skinofab <work> <module>` writes them to NEXT (`enable_subscription`, `interval`,
+`interval_counts`, each variant's subscription price) and the build puts them on the page, in the cart drawer and in
+the subscription terms (`policy_texts.py`). The days are estimates of how long a pack lasts: the owner to confirm.
+
 The foundation's 2-bottle pack still says it comes with a free blender and a mystery gift: those are part of that
 variant ("2 bottles + free gifts"), packed with the order, not products in the store.
 

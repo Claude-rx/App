@@ -756,8 +756,8 @@ LEGACY_WORDS = re.compile(r'lip plumper|plumping gloss|lip stain|lip gloss|lip l
 LEGACY_TEXT = [
     ('What started with a single lip gloss formula quickly evolved into a full-range beauty brand, from luscious lip '
      'plumpers to advanced brow serums.',
-     'What started with a single formula grew into a focused line for skin after 45: an adaptive peptide foundation, a '
-     'PDRN plumping balm, an EGF + NAD+ firming serum and a lymphatic brush.'),
+     'What started with a single formula grew into a focused line for skin after 45: an adaptive peptide foundation, '
+     'an adaptive foundation stick, a PDRN plumping balm, an EGF + NAD+ firming serum and a lymphatic brush.'),
     ('<p>From lip plumpers to brow serums — results you can see and feel.</p>',
      '<p>From an adaptive foundation to a firming serum — results you can see and feel.</p>'),
     ('A movement towards embracing your unique beauty — one lip plumper at a time.',
@@ -1021,11 +1021,14 @@ HOME_BUNDLES = [
      'Buy 2, get 1 free: one for home, one for your bag, one to share.', None, None),
     (brush_copy.HANDLE, 'Lymphatic Brush Trio', 'bundle-brush', 'Three Lymphatic Brushes',
      'Buy 2, get 1 free, each with its travel case.', None, None),
+    (stick_copy.HANDLE, 'Foundation Stick Trio', 'bundle-stick', 'Three Adaptive Foundation Sticks',
+     'Buy 2, get 1 free: home, bag, and one to share.', None, None),
 ]
 HOME_TILES = [('color-changing-foundation', 'Foundation', 'tile-foundation', 'A woman in her fifties holding the Adaptive Peptide Foundation'),
               (serum_copy.HANDLE, 'Serum', 'tile-serum', 'A woman in her sixties holding the EGF + NAD+ Firming Serum'),
               (balm_copy.HANDLE, 'Balm', 'tile-balm', 'A woman in her fifties holding the PDRN Plumping Balm to her cheek'),
-              (brush_copy.HANDLE, 'Brush', 'tile-brush', 'A woman in her sixties sweeping the Lymphatic Brush along her cheekbone')]
+              (brush_copy.HANDLE, 'Brush', 'tile-brush', 'A woman in her sixties sweeping the Lymphatic Brush along her cheekbone'),
+              (stick_copy.HANDLE, 'Stick', 'tile-stick', 'A woman in her late fifties holding the Adaptive Foundation Stick by her cheek')]
 HOME_ESSENTIALS = [('color-changing-foundation', apf_copy.PRODUCT, BRAND / 'adaptive-peptide-foundation' / 'next' / '01-front.jpg'),
                    (stick_copy.HANDLE, stick_copy.TITLE, stick_copy.IMG / 'card.jpg'),
                    (serum_copy.HANDLE, serum_copy.TITLE, serum_copy.IMG / 'card.jpg'),
@@ -1058,7 +1061,15 @@ def home_original():
             return ccf_copy.PACKS[1]['refill'], ccf_copy.PACKS[1]['compare']
         P = next(P for P in SECOND_PRODUCTS if P.HANDLE == handle)
         b = P.BUNDLES[-1]
-        return b['price'], b['compare']
+        refill = getattr(P, 'REFILL', None)
+        return (b['refill'] if refill and refill.get('default') else b['price']), b['compare']
+    def bundle_line(handle, line):
+        # sold with refills (on by default, as its page shows it): how often it ships, and its one-time price
+        P = next((P for P in SECOND_PRODUCTS if P.HANDLE == handle), None)
+        refill = getattr(P, 'REFILL', None) if P else None
+        if not (refill and refill.get('default')): return line
+        b = P.BUNDLES[-1]
+        return f"{line} With {b['every']}-day refills (cancel anytime), or {P.money(b['price'])} once."
     usd = lambda v: f"${float(v):.2f}".replace('.00', '') + ' USD'
     # ---- Shop by category
     a, b = section('__categories')
@@ -1073,6 +1084,9 @@ def home_original():
         m = re.search(r'(<div class="fh-category-grid"[^>]*>)', sec)
         end = balanced_end(sec, m.start(), 'div')
         sec = sec[:m.end()] + ''.join(tiles) + '</div>' + sec[end:]
+        # one column per tile from 1024 px (five products: the export's four)
+        sec, k = re.subn(r'--fh-columns:\s*4\b', f'--fh-columns:{len(HOME_TILES)}', sec)
+        if not k: missing.append(('categories', '--fh-columns'))
         # each tile is its photo, whole at 4:5 (the export's fixed heights cut the product out of a narrow tile), with
         # the name and the button under it: the export set them in white on the photo, over a dark gradient across
         # its lower 60%, on the product the woman holds. Two to a row under 1024 px from 750 px
@@ -1084,7 +1098,10 @@ def home_original():
                              f'{X} .fh-category>div{{position:static;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:0 2px}}'
                              f'{X} .fh-category h3{{color:#151515;font-size:26px}}'
                              f'{X} .fh-category .fh-button--white{{background:#151515;color:#fff !important;border-color:#151515}}'   # the export: #151515 !important
-                             f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-category-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}'
+                             # 750 to 1023 px: a row that scrolls sideways, two and a bit tiles in view (five tiles two to a row
+                             # left the last one alone)
+                             f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-category-grid{{grid-template-columns:none;grid-auto-flow:column;'
+                             f'grid-auto-columns:42%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}}{X} .fh-category{{scroll-snap-align:start}}}}'
                              # four equal columns: the export's 1fr tracks grew to their name-and-button row, so at 1024 the
                              # tiles came out 223 to 291 px wide and the last ran off the screen. Under 1280 px a quarter is
                              # too narrow for the name and the button side by side: the button goes under the name
@@ -1107,6 +1124,7 @@ def home_original():
     items = []
     for handle, title, file, alt, line, price, compare in HOME_BUNDLES:
         price, compare = bundle_offer(handle, price, compare)
+        line = bundle_line(handle, line)
         save = round(100 * (1 - float(price) / float(compare)))
         src, srcset = img(f'{file}.jpg', (500, 1000))
         # data-sf-fixed-price: the bundle's own price (its NEXT variant), as its page's picker shows it, not the product's
@@ -1120,13 +1138,16 @@ def home_original():
     for handle, title, path in HOME_ESSENTIALS:
         src = hashed_copy(path, 'img', f'skinofab-home-essential-{handle}-720w', (720, 720))[3:]
         P = next((P for P in SECOND_PRODUCTS if P.HANDLE == handle), None)
-        price = P.PRICE if P else apf_copy.PACK1['price']                       # NEXT binds it
-        # its was-price as its bestseller card and its page show it (the foundation's: foundation_price below)
-        was = f'<s>{usd(P.COMPARE)}</s>' if P and float(P.COMPARE) > float(P.PRICE) else ''
+        # its price and was-price as its bestseller card and its page show them first (the foundation's:
+        # foundation_price below; with refills on: the refill price, kept as written, and how often it ships)
+        price, was_p = refill_price(P) if P else (apf_copy.PACK1['price'], apf_copy.PACK1['price'])   # NEXT binds a plain one
+        was = f'<s>{usd(was_p)}</s>' if float(was_p) > float(price) else ''
+        note = refill_note(P) if P else ''
         items.append(f'<article class="fh-product"> <a aria-label="{title}" class="fh-product-image" href="products/{handle}.html"> '
                      f'<picture class=""><img alt="{title}" class="fh-original" height="720" loading="lazy" sizes="(max-width: 749px) 66vw, 300px" '
                      f'src="{src}" width="720"/> </picture> <span class="fh-badges"></span></a> <div class="fh-product-info"><h3>'
-                     f'<a href="products/{handle}.html">{title}</a></h3> <div class="fh-price">{was}<span>{usd(price)}</span></div></div> </article>')
+                     f'<a href="products/{handle}.html">{title}</a></h3> <div class="fh-price"{" data-sf-fixed-price" if note else ""}>{was}'
+                     f'<span>{usd(price)}</span></div>{note}</div> </article>')
     done['essentials'] = cards('__essentials', items)
     # The foundation's cards show its price as its page shows it first (Automatic Refills ticked, the default):
     # 1 bottle $37, was $59. NEXT's own price for it is the one-time $47, which the page shows when refills are off;
@@ -1294,18 +1315,33 @@ def home_original():
     return done
 
 LAYOUT_FIXES = (
+    # contrast and size (review 6): grey captions and strike-through prices at 4.5:1 or more, the green shipping line
+    # darker (its colour is inline), the testimonial cards' "Verified buyer" no longer 11 px, and the ingredient
+    # carousel's 22 x 8 px dots with a finger-sized tap area
+    '.skinofab-results__subtitle{color:#5c5c5c}.sfo-price s{color:#666}#shippingUspText{color:#15803d!important}'
+    '.skinofab-testimonials__verified{font-size:12.5px}'
+    '.si__dot{position:relative}.si__dot:after{content:"";position:absolute;inset:-12px -3px}'
+    # product pages on tablets: the thumbnails under the gallery keep the photo's 20 px gutter (they started at x 0)
+    '@media(min-width:768px) and (max-width:1023px){[data-product-single-media-thumbs]{padding-left:20px;padding-right:20px}}'
     # "The skinofab difference" (product pages): its 1fr 1fr grid grew to the square photo's height-sized width
     # (723 + 286 px in a 728 px box at 768), hiding the copy; equal columns that can shrink, one column under 1024 px
     '.skinofab-why-inner>*{min-width:0}'
     '@media(min-width:768px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}'
-    '@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}'
-    '.skinofab-why-inner--square-image .skinofab-why__image{aspect-ratio:16/10}}'
+    '@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}}'
+    # under 1024 px the square photo shows whole, at its own shape: a 16:10 box at 768 and a 280 px one on phones cut
+    # the women's faces and the brush's wordmark (review 6)
+    '@media(max-width:1023px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:1/1;min-height:0;background-size:cover;'
+    'background-position:center 25%!important}}'
     # the results cards: three equal columns whatever the width of their numbers (they pushed the page sideways at 768)
     '.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}'
     '@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}'
     # product pages on tablets: the gallery above the buy box (side by side the buy box was 261 px wide), not sticky
     '@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}'
-    '.product-single__gallery{position:static!important;height:auto!important}}'
+    # (relative, not static: FrontrowMD's sticker sits in it; static, it was placed against the page, under the
+    # header, at 768: review 6)
+    # (top 0: the design's sticky gallery keeps top 85 px, which as relative moved it 85 px down onto the title and
+    # rating, stick review 2)
+    '.product-single__gallery{position:relative!important;top:0!important;height:auto!important}}'
     # a circled word: room on both sides so the drawn ellipse never crosses the word before it (CIRCLE_ROOM_JS sets
     # the left room from the word's width once it is laid out: the ellipse is 136% of it)
     '.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}'
@@ -1324,6 +1360,10 @@ LAYOUT_FIXES = (
     # the before/after photos' "illustration" line under the photo (BEFORE_AFTER_NOTE), the photo keeping its corners
     '.skinofab-iwt__image.sf-has-note{border-radius:0;overflow:visible}.skinofab-iwt__image.sf-has-note img{border-radius:16px}'
     '.sf-illustration-note{margin:8px 0 0;font-size:12px;line-height:1.4;color:#595959;text-align:center}'
+    # the FAQ questions: a finger-sized row (44 px) even when the question fits on one line (stick review 1)
+    '.accordion__item__title{min-height:44px}'
+    # an image + text heading's highlight stays on one line: "to 10 PM" broke into "to 10" / "PM" at 768 (stick review 2)
+    '.skinofab-iwt__highlight{white-space:nowrap}'
 )
 
 # The before/after photos in the product pages' image + text blocks (the foundation's, the serum's, the balm's and
@@ -1557,7 +1597,13 @@ def more_products_html(up):
                      f'<span class="sf-refill-note" style="font-size:12px;line-height:16px;color:#5a5a5a">with '
                      f'{ccf_copy.REFILL["every"]}-day refills, cancel anytime</span>')
         else:
-            price = f'<span class="sf-more__price"><b>{usd(next(P.PRICE for P in SECOND_PRODUCTS if P.HANDLE == handle))}</b></span>'
+            P = next(P for P in SECOND_PRODUCTS if P.HANDLE == handle)
+            now, was = refill_price(P)
+            note = refill_note(P)
+            price = (f'<span class="sf-more__price"{" data-sf-fixed-price" if note else ""}>'
+                     + (f'<s>{usd(was)}</s>' if float(was) > float(now) else '') + f'<b>{usd(now)}</b></span>'
+                     + (f'<span class="sf-refill-note" style="font-size:12px;line-height:16px;color:#5a5a5a">with '
+                        f'{P.BUNDLES[0]["every"]}-day refills, cancel anytime</span>' if note else ''))
         cards.append(f'<a class="sf-more__card" href="{up}products/{handle}.html"><img alt="{html.escape(title)}" height="720" loading="lazy" '
                      f'src="{src}" width="720"/><span class="sf-more__title">{html.escape(title)}</span>{price}</a>')
     return ('<div class="shopify-section" id="shopify-section-sf-more"><section class="sf-more"><div class="sf-more__head">'
@@ -1591,6 +1637,9 @@ PAGE_IMAGES = [
     # each file at the collage's own shape (keep: the page shows it whole, listing_banners), the screen's width
     (r'^skin-\d+w-[0-9a-f]{6}\.jpg$', HOME / 'collage-wide.jpg', 0.3, 1, '100vw', True),
     (r'^SM_-_Sales_Banner_-_Mobile_2_[^/]*\.jpg$', HOME / 'collage-square.jpg', 0.3, 1, None, True),
+    # the foundation's "How does it work?": the old store's pink brush on her cheek; the same photo, the brush black
+    # (an image edit of that photo, review 6)
+    (r'^new_iamges_1200x1200-p?[0-9a-f]{6}\.jpg$', HOME / 'source' / 'how-black-brush.jpg', 0.4),
 ]
 
 def page_images():
@@ -1888,15 +1937,26 @@ def cart_offer():
     brush = json.loads((WORK / 'brush-offers.json').read_text())['variants']
     b1, b2 = brush_copy.BUNDLES[0], brush_copy.BUNDLES[1]
     b_text = (f"Just {money(round(float(b2['price']) - float(b1['price']), 2))} more for a second brush and a second free case.")
+    def step_text(P, what):
+        # the price step from the 1-pack to the 2-pack: one number when it is the same bought once and with refills
+        a, b = P.BUNDLES[0], P.BUNDLES[1]
+        once = round(float(b['price']) - float(a['price']), 2)
+        if not getattr(P, 'REFILL', None): return f"Just {money(once)} more for {what}."
+        refill = round(float(b['refill']) - float(a['refill']), 2)
+        if refill == once: return f"Just {money(once)} more for {what}."
+        return f"{what[0].upper() + what[1:]} for {money(refill)} more with refills, {money(once)} more bought once."
+    def every_of(P):
+        # a refill line upgraded to the 2-pack ships as often as the 2-pack does (it lasts twice as long)
+        return P.BUNDLES[1]['every'] if getattr(P, 'REFILL', None) else None
     balm = json.loads((WORK / balm_copy.OFFERS_FILE).read_text())['variants']
     c1, c2 = balm_copy.BUNDLES[0], balm_copy.BUNDLES[1]
-    c_text = f"Just {money(round(float(c2['price']) - float(c1['price']), 2))} more for a second stick: one for home, one for your bag."
+    c_text = step_text(balm_copy, 'a second stick: one for home, one for your bag')
     serum = json.loads((WORK / serum_copy.OFFERS_FILE).read_text())['variants']
     d1, d2 = serum_copy.BUNDLES[0], serum_copy.BUNDLES[1]
-    d_text = f"Just {money(round(float(d2['price']) - float(d1['price']), 2))} more for a second bottle: about two more months."
+    d_text = step_text(serum_copy, 'a second bottle: about two more months')
     stick = json.loads((WORK / stick_copy.OFFERS_FILE).read_text())['variants']
     e1, e2 = stick_copy.BUNDLES[0], stick_copy.BUNDLES[1]
-    e_text = f"Just {money(round(float(e2['price']) - float(e1['price']), 2))} more for a second stick: one at home, one in your bag."
+    e_text = step_text(stick_copy, 'a second stick: one at home, one in your bag')
 
     return {'product': cart['product'], 'addons': cart['addons'],
             'upgrades': [{'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
@@ -1904,18 +1964,23 @@ def cart_offer():
                          {'from': brush[b1['key']], 'to': brush[b2['key']], 'title': brush_copy.CART_UPGRADE['title'],
                           'text': b_text, 'button': brush_copy.CART_UPGRADE['button']},
                          {'from': balm[c1['key']], 'to': balm[c2['key']], 'title': balm_copy.CART_UPGRADE['title'],
-                          'text': c_text, 'button': balm_copy.CART_UPGRADE['button']},
+                          'text': c_text, 'button': balm_copy.CART_UPGRADE['button'], 'every': every_of(balm_copy)},
                          {'from': serum[d1['key']], 'to': serum[d2['key']], 'title': serum_copy.CART_UPGRADE['title'],
-                          'text': d_text, 'button': serum_copy.CART_UPGRADE['button']},
+                          'text': d_text, 'button': serum_copy.CART_UPGRADE['button'], 'every': every_of(serum_copy)},
                          {'from': stick[e1['key']], 'to': stick[e2['key']], 'title': stick_copy.CART_UPGRADE['title'],
-                          'text': e_text, 'button': stick_copy.CART_UPGRADE['button']}],
+                          'text': e_text, 'button': stick_copy.CART_UPGRADE['button'], 'every': every_of(stick_copy)}],
             'review': {'text': cart['review_text'], 'name': cart['review_name']}, 'guarantee_text': cart['guarantee_text'],
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
                        'every': ccf_copy.REFILL['every'],
                        # cards and listings show the price its page shows first (refills ticked), and its was-price
                        'price_text': f"${float(ccf_copy.PACKS[0]['refill']):g} USD", 'compare_text': f"${float(ccf_copy.PACKS[0]['compare']):g} USD"},
-            'frontrow': getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None)}
+            'frontrow': getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None),
+            # the other products sold with refills by default: their cards and listings show the single pack's
+            # refill price against its one-time price, and how often it ships (Theme settings > Subscription Offer)
+            'refill_products': [{'handle': P.HANDLE, 'price_text': f"${float(P.BUNDLES[0]['refill']):g} USD",
+                                 'compare_text': f"${float(P.BUNDLES[0]['price']):g} USD", 'every': P.BUNDLES[0]['every']}
+                                for P in SECOND_PRODUCTS if (getattr(P, 'REFILL', None) or {}).get('default')]}
 
 STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
         '<path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
@@ -1955,6 +2020,9 @@ def rating_block(t, real=None):
 FRONTROW_CSS = (
     # the sticker sits on the gallery's top-left corner, over the first slide (as on the original store)
     '#frontrow-sticker{position:absolute;z-index:3;border-radius:0 !important;max-width:unset !important;left:0 !important;top:0 !important}'
+    # under 1024 px the gallery is static (the design's CSS beats the loader's inline style): at 768 the sticker
+    # was placed against the page, under the header (review 6); the gallery is its box at every width
+    '@media (max-width:1023px){.product-single__gallery[data-product-single-media-group]{position:relative !important;top:0 !important}}'
     '@media only screen and (max-width:480px){#frontrow-sticker{transform:scale(.7) !important;transform-origin:0 0 !important}}'
     # narrow phones: a little smaller, so it clears the flag badge in the first photo
     '@media only screen and (max-width:400px){#frontrow-sticker{transform:scale(.66) !important}}'
@@ -2042,9 +2110,10 @@ def card_clip(src, name, kind, width=540):
         part.rename(cache)
     return hashed_copy(cache, 'media', name)
 
-def brush_rating(imported=None):
+def brush_rating(imported=None, of=None):
     """Stars and count from the product's approved NEXT reviews and its imported ones (count and sum of their ratings),
-    shown only once there are some."""
+    shown only once there are some. of: whose reviews they are when they are another product's (the stick shows the
+    foundation's: "4.8/5 · 9,855 reviews of the foundation's formula")."""
     n0, s0 = (imported or {}).get('count', 0), sum(int(k) * v for k, v in ((imported or {}).get('distribution') or {}).items())
     stars = ''.join(f'<span class="sf-star" style="--f:100%">{STAR}{STAR}</span>' for _ in range(5))
     return ('<a class="sfb-rating" href="#sf-review-wall" data-sfb-rating hidden style="text-decoration:none">'
@@ -2067,7 +2136,8 @@ def brush_rating(imported=None):
             'Array.prototype.forEach.call(badge.querySelectorAll(".sf-star"), function (s, i) {'
             's.style.setProperty("--f", Math.max(0, Math.min(1, Math.round((avg - i) * 2) / 2)) * 100 + "%"); });'
             'badge.querySelector(".sf-rating__stars").setAttribute("aria-label", "Rated " + avg.toFixed(1) + " out of 5");'
-            'badge.querySelector(".sf-rating__text").textContent = avg.toFixed(1) + "/5 \\u00b7 " + n.toLocaleString("en-US") + " review" + (n === 1 ? "" : "s");'
+            'badge.querySelector(".sf-rating__text").textContent = avg.toFixed(1) + "/5 \\u00b7 " + n.toLocaleString("en-US") + " review" + (n === 1 ? "" : "s")'
+            + (f' + {json.dumps(" " + of)}' if of else '') + ';'
             'badge.hidden = false; }'
             'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show); else show();'
             '})();</script>')
@@ -2100,11 +2170,24 @@ def twin_context(P, found, stats, amazon):
         return (hashed_copy(media / f'{k}.mp4', 'media', f'skinofab-{k}'),
                 hashed_copy(media / f'{k}.jpg', 'img', f'skinofab-{k}-poster'))
     reviews = WORK / P.REVIEWS_DIR
-    # until the product has its own reviews, its page shows none: the foundation's, even labelled, read as this product's
-    brand = None
-    wall = (f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-amazon">{P.amazon_html(amazon)}</div>' if amazon else '') + review_wall(reviews)
+    # until the product has its own reviews, its page shows none (the foundation's, even labelled, read as this
+    # product's), unless the owner says it is the same product (P.BORROW_REVIEWS: the stick): then the foundation's,
+    # labelled as the foundation's in the strip, the wall's title and note, and the stars under the title
+    borrow = getattr(P, 'BORROW_REVIEWS', None) if not stats and found else None
+    brand = (apf_copy.review_strip_html(float(found['summary']['average']), int(found['summary']['count']), found['picks'],
+                                        href='#sf-review-wall', of=borrow['of'], buyer=borrow['buyer'])
+             if borrow and found['picks'] else None)
+    wall = (f'<div class="shopify-section" id="shopify-section-sf-{P.KEY}-amazon">{P.amazon_html(amazon)}</div>' if amazon else '')
+    if borrow:
+        own = review_wall(REVIEWS)
+        head = '<h2 id="sfr-title">Customer reviews</h2>'
+        if own.count(head) != 1: missing.append((P.KEY, 'review wall title'))
+        wall += own.replace(head, f'<h2 id="sfr-title">{html.escape(borrow["title"])}</h2>'
+                                  f'<p class="sfr-of" style="margin:6px 0 14px;color:#4a4a4a;font-size:15px;line-height:1.5">'
+                                  f'{html.escape(borrow["note"])}</p>', 1)
+    else: wall += review_wall(reviews)
     return {'img': img, 'clip': clip, 'avatar': avatar(), 'strip_own': review_strip(reviews), 'strip_brand': brand,
-            'wall': wall, 'no_reviews': None if stats else f'<style>{brush_copy.SECTIONS_CSS}</style>{P.no_reviews_html(amazon=amazon)}'}
+            'wall': wall, 'no_reviews': None if (stats or borrow) else f'<style>{brush_copy.SECTIONS_CSS}</style>{P.no_reviews_html(amazon=amazon)}'}
 
 
 def product_page(base, P, final, found=None):
@@ -2165,13 +2248,23 @@ def product_page(base, P, final, found=None):
     brush_reviews = WORK / P.REVIEWS_DIR        # tools/reviews/import_reviews.py ... --product <handle> --out <P.REVIEWS_DIR>
     stats = json.loads((brush_reviews / 'reviews.json').read_text()) if (brush_reviews / 'reviews.json').exists() else None
     app = prod.select_one('.product__block.standard__app')
-    app.clear(); app.append(frag(brush_rating(stats)))
+    borrow = getattr(P, 'BORROW_REVIEWS', None) if not stats and found else None
+    app.clear(); app.append(frag(brush_rating(found['summary'], of=borrow['badge']) if borrow else brush_rating(stats)))
+    # the foundation's FrontrowMD listing (P.FRONTROW_NOTE: the owner's same-product word), its sticker on the
+    # gallery as on the foundation's page, and a line under the title naming whose listing it is
+    if getattr(P, 'FRONTROW_NOTE', None) and getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None):
+        app.insert_after(frag(f'<style>{FRONTROW_CSS}</style>{frontrow_block()}'
+                              f'<p class="sfb-frontrow-note" style="margin:6px 0 0;font-size:13px;line-height:1.4;color:#4a4a4a">'
+                              f'{P.esc(P.FRONTROW_NOTE)}</p>'))
     price = prod.select_one('.product__price-and-badge [data-price-wrapper]')
     was = price.select_one('.product__price--compare')
-    if float(P.COMPARE) > float(P.PRICE): was.string = P.money(P.COMPARE)
+    # sold with Automatic Refills (P.REFILL, on by default): the single pack at its refill price against its one-time
+    # price, as the foundation's title shows its refill price; else the single pack's price
+    now_p, was_p = refill_price(P)
+    if float(was_p) > float(now_p): was.string = P.money(was_p)
     else: was.decompose()                                  # no saving on one: no "was" price
     reg = price.select_one('.product__price--regular')
-    reg.string = P.money(P.PRICE)
+    reg.string = P.money(now_p)
     off = price.select_one('.product__price--off')
     if off: off.decompose()
     reg.insert_after(frag(f'<span class="sfb-ship">{P.esc(P.SHIPPING_BADGE)}</span>'))
@@ -2201,9 +2294,11 @@ def product_page(base, P, final, found=None):
     form.select_one('[data-subscription-watch-price]').insert_before(
         frag(P.picker_html(offers['variants'], gift_imgs, apf_copy.OFFER_PICKER_CSS)))
     cta = form.select_one('#CTA_kopstorm')
-    # "Love it or your money back" and the bought-once facts, as under the foundation's button
+    # "Love it or your money back" and the refill facts and terms (refill reminder, cancel any time, renews at the
+    # chosen pack's refill price), as under the foundation's button; a product sold once only: the bought-once facts
+    plan = refill_plan(P)
     cta.insert_after(frag(f'<div class="product__block sfp-trust"><style>{apf_copy.TRUST_CSS}</style>'
-                          f'{apf_copy.trust_html(terms=False, refills=False)}</div>'))
+                          f'{apf_copy.trust_html(terms=bool(plan), refills=bool(plan), plan=plan)}</div>'))
     # the tabs, in the design's accordion markup
     accs = prod.select('.product__block.product__accordions')
     tpl, anchor = copy.copy(accs[0]), accs[-1]
@@ -2216,10 +2311,12 @@ def product_page(base, P, final, found=None):
         inner = a.select_one('[data-collapsible-content]'); inner.clear(); inner.append(frag(body))
         anchor.insert_after(a)
     for a in accs: a.decompose()
-    # the foundation's FrontrowMD sticker styles do not belong here
-    for st in prod.find_all('style'):
-        if '#frontrow-sticker' in (st.string or ''): st.decompose()
+    # the foundation's FrontrowMD sticker styles do not belong here (unless the page shows its listing, added above)
+    if not getattr(P, 'FRONTROW_NOTE', None):
+        for st in prod.find_all('style'):
+            if '#frontrow-sticker' in (st.string or ''): st.decompose()
     for node in prod.find_all(string=True):
+        if node.find_parent(class_='sfb-frontrow-note'): continue       # names the foundation on purpose
         if 'Color Changing Foundation' in node or 'Adaptive Peptide Foundation' in node:
             node.replace_with(node.replace('Color Changing Foundation', P.TITLE).replace('Adaptive Peptide Foundation', P.TITLE))
     for el in prod.find_all(alt=True):
@@ -2238,8 +2335,29 @@ def product_page(base, P, final, found=None):
     text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{html.escape(P.META_DESCRIPTION)}" name="description"/>', text, count=1)
     text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', f'id="{P.HANDLE}-skinofab"', 1)
     text, _ = sticky_bar(text, sticky_thumb(P.IMG / 'card.jpg', f'{P.IMG_PREFIX}-sticky'), P.TITLE,
-                         f'From {P.money(P.PRICE)} · Free shipping', P.STICKY_BUTTON)
+                         f'From {P.money(refill_price(P)[0])} · Free shipping', P.STICKY_BUTTON)
     return text
+
+def refill_price(P):
+    """(price shown first, its was-price) for one pack of P: with Automatic Refills on by default (P.REFILL), its
+    refill price against its one-time price; else its price against its compare-at price."""
+    refill = getattr(P, 'REFILL', None)
+    if refill and refill.get('default'): return P.BUNDLES[0]['refill'], P.BUNDLES[0]['price']
+    return P.PRICE, P.COMPARE
+
+def refill_plan(P):
+    """apf_copy.trust_html's plan for P (its refills, the default pack's refill price and days, its terms), or None
+    for a product sold once only."""
+    refill = getattr(P, 'REFILL', None)
+    if not refill: return None
+    b = next((b for b in P.BUNDLES if b.get('default')), P.BUNDLES[0])
+    return {'refill': refill, 'amount': b['refill'], 'every': b['every'], 'terms': brush_copy.REFILL_TERMS}
+
+def refill_note(P):
+    """The line under a card's price while P sells with refills: how often one pack ships."""
+    refill = getattr(P, 'REFILL', None)
+    return (f'<p class="sf-refill-note" style="margin:2px 0 0;font-size:12px;line-height:16px;color:#5a5a5a">with '
+            f'{P.BUNDLES[0]["every"]}-day refills, cancel anytime</p>') if refill and refill.get('default') else ''
 
 SHIELD = ('<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="2" '
           'stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6z"/>'
@@ -2270,8 +2388,12 @@ def product_shelf(home, P):
     sh, title, href = P.SHELF, html.escape(P.TITLE), f'products/{P.HANDLE}.html'
     big = hashed_copy(P.IMG / 'card.jpg', 'img', f'{P.IMG_PREFIX}-card-1080w', (1080, 1080))[3:]
     small = hashed_copy(P.IMG / 'card.jpg', 'img', f'{P.IMG_PREFIX}-card-720w', (720, 720))[3:]
-    was = f'<s>{P.money(P.COMPARE)} USD</s>' if float(P.COMPARE) > float(P.PRICE) else ''
-    price = f'<div class="fh-price">{was}<span>{P.money(P.PRICE)} USD</span></div>'
+    # the price its page shows first: with refills on, the refill price against the one-time price, kept as written
+    # (the theme binds a plain one to NEXT's one-time price), and how often it ships
+    now_p, was_p = refill_price(P)
+    note = refill_note(P)
+    was = f'<s>{P.money(was_p)} USD</s>' if float(was_p) > float(now_p) else ''
+    price = f'<div class="fh-price"{" data-sf-fixed-price" if note else ""}>{was}<span>{P.money(now_p)} USD</span></div>{note}'
     rich = (f'<article class="fh-product">\n<a aria-label="{title}" class="fh-product-image" href="{href}">\n'
             f'<picture class=""><img alt="{title}" class="fh-upload" height="1080" loading="lazy" sizes="100vw" src="{big}" '
             f'srcset="{small} 720w, {big} 1080w" width="1080"/>\n</picture>\n'
@@ -2496,10 +2618,15 @@ STICKY_CSS = """
 .sf-sticky__txt{flex:1;min-width:0;line-height:1.3;color:#151515}
 .sf-sticky__txt b{display:block;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sf-sticky__txt span{font-size:13.5px;color:#3b3b3b}
-.sf-sticky__txt i{font-style:normal;color:#00b67a;letter-spacing:1px}
+.sf-sticky__txt i{font-style:normal;color:#151515;letter-spacing:1px}
 .sf-sticky__btn{flex:none;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;border-radius:999px;background:#151515;
  color:#fff!important;text-decoration:none!important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 @media (max-width:599px){.sf-sticky__txt b{font-size:14px}.sf-sticky__btn{padding:13px 18px;font-size:12px}}
+.sf-sticky__from{display:none}
+/* phones: one full-width button that carries the price, so the bar is one slim row: the old two-line text beside a
+   thumbnail wrapped to four lines, cut the name ("Adaptive Pept...") and covered the price under the title (review 6) */
+@media (max-width:599px){.sf-sticky{padding:8px 0 calc(8px + env(safe-area-inset-bottom))}
+.sf-sticky img,.sf-sticky__txt{display:none}.sf-sticky__btn{flex:1;padding:14px 16px}.sf-sticky__from{display:inline}}
 """
 
 def sticky_bar(t, img, title, price_line, button, rating=None):
@@ -2514,7 +2641,8 @@ def sticky_bar(t, img, title, price_line, button, rating=None):
     bar = (f'<style>{STICKY_CSS}</style><div class="sf-sticky" id="sf-sticky" aria-hidden="true">'
            f'<div class="sf-sticky__in"><img src="{img}" alt="" width="52" height="52" loading="lazy" decoding="async">'
            f'<div class="sf-sticky__txt"><b>{html.escape(title)}</b><span>{html.escape(price_line)}{stars}</span></div>'
-           f'<a class="sf-sticky__btn" href="#apf-buy" tabindex="-1">{html.escape(button)}</a></div>'
+           f'<a class="sf-sticky__btn" href="#apf-buy" tabindex="-1">{html.escape(button)}'
+           f'<span class="sf-sticky__from">&nbsp;· {html.escape(price_line.split(" · ")[0])}</span></a></div>'
            '<script>(function () {'
            'var bar = document.currentScript.parentNode;'
            'function start() {'

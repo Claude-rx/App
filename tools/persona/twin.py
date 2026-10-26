@@ -84,6 +84,25 @@ def moments(sec, cards, img):
     return str(s)
 
 
+# line icons for the twin pages, drawn to say what their line says (the design's icons were the foundation's own: a
+# paw-print heart beside "30-day money-back guarantee", a sunrise beside "Brush in the stick", review 6); a line names
+# one as its last item, else the design's icon stays
+_SVG = {
+    'shield': '<path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+    'brush': '<path d="M7 11a5 5 0 0 1 10 0v1H7z"/><path d="M9.5 12v8h5v-8"/>',
+    'drop': '<path d="M12 3.5c3.2 4 5.5 7 5.5 10a5.5 5.5 0 0 1-11 0c0-3 2.3-6 5.5-10z"/>',
+    'tones': '<circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/>',
+    'clock': '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+    'sparkle': '<path d="M12 4l1.8 5.2L19 11l-5.2 1.8L12 18l-1.8-5.2L5 11l5.2-1.8z"/>',
+    'stick': '<rect x="9" y="3" width="6" height="18" rx="2"/><path d="M9 8h6"/>',
+    'leaf': '<path d="M5 19c0-8 6-13 14-14-1 8-6 14-14 14z"/><path d="M5 19l7-7"/>',
+}
+def icon_src(name):
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.6" '
+           f'stroke-linecap="round" stroke-linejoin="round">{_SVG[name]}</svg>')
+    return 'data:image/svg+xml,' + svg.replace('"', "'").replace('<', '%3C').replace('>', '%3E').replace('#', '%23')
+
+
 def image_with_text(sec, c, img):
     """One of the design's image + text blocks: the photo, the heading (with its highlighted part), the paragraphs and
     the two icon lines (the foundation's icons kept)."""
@@ -99,8 +118,10 @@ def image_with_text(sec, c, img):
         hl = hl or s.new_tag('span', attrs={'class': 'skinofab-iwt__highlight'})
         hl.clear(); hl.append(c['mark']); h2.append(hl)
     _set_text(s.select_one('.skinofab-iwt__text'), ''.join(f'<p>{p}</p>' for p in c['paras']))
-    for el, t in zip(s.select('.skinofab-iwt__usp-text'), c['usps']):
-        _set_text(el, f'<p>{esc(t)}</p>')
+    for u, t in zip(s.select('.skinofab-iwt__usp'), c['usps']):
+        text, name = (t, None) if isinstance(t, str) else t
+        _set_text(u.select_one('.skinofab-iwt__usp-text'), f'<p>{esc(text)}</p>')
+        if name and u.find('img'): u.find('img')['src'] = icon_src(name)
     return str(s)
 
 
@@ -183,9 +204,10 @@ def why(sec, c, img):
     box = s.select_one('.skinofab-why__image')
     box['style'] = re.sub(r'url\("[^"]*"\)', f'url("{src}")', box.get('style', ''))
     s.select_one('.section__heading').string = c['title']
-    for f, (title, desc) in zip(s.select('.skinofab-why__feature'), c['features']):
+    for f, (title, desc, *name) in zip(s.select('.skinofab-why__feature'), c['features']):
         f.select_one('.skinofab-why__feature-title').string = title
         f.select_one('.skinofab-why__feature-icon img')['alt'] = ''      # decorative: the title says it
+        if name: f.select_one('.skinofab-why__feature-icon img')['src'] = icon_src(name[0])
         _set_text(f.select_one('.skinofab-why__feature-desc'), f'<p>{esc(desc)}</p>')
     a = s.select_one('.skinofab-why__cta a')
     a.string, a['href'] = c['button'], '#apf-buy'

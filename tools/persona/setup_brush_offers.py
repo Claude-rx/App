@@ -3,7 +3,9 @@
 usage: NEXT_API_TOKEN=... python3 -I setup_brush_offers.py <store_subdomain> <work_dir> [copy_module]
 copy_module: brush_copy (default) or balm_copy (the PDRN Plumping Balm: 1, 2 or 3 sticks); everything below reads
 the module's BUNDLES, CATEGORIES and texts, and writes its OFFERS_FILE.
-- one product (slug and template key the-lymphatic-brush), public, one-time purchase (no refills), with a Bundle
+- one product (slug and template key the-lymphatic-brush), public, one-time purchase (no refills; a module with
+  REFILL, the balm, serum and stick: subscriptions on, each pack's refill days allowed, each variant's subscription
+  price its refill price), with a Bundle
   attribute: 1 brush + free case ($24.95), 2 brushes + 2 free cases ($39.95), 3 brushes + 3 free cases + free body
   brush ($49.90); each compare-at is the single-brush price times the brushes (brush_copy.BUNDLES)
 - the free cases and the body brush are named in the variant, so the order shows what to pack (not cart lines)
@@ -47,9 +49,14 @@ def all_products():
     return {p['slug']: p for p in out}
 
 
+REFILL = getattr(P, 'REFILL', None)   # sold with Automatic Refills: each variant's subscription price is its refill price
+
+
 def variant_body(b):
+    price = {'currency': 'USD', 'price': b['price'], 'retail': b['compare']}
+    if REFILL: price['subscription'] = b['refill']
     return {'sku': b['sku'], 'variant_attribute_values': [{'name': ATTR, 'value': b['variant']}],
-            'prices': [{'currency': 'USD', 'price': b['price'], 'retail': b['compare']}],
+            'prices': [price],
             'track_stock': False, 'allow_backorders': True, 'requires_shipping': True,
             'stockrecords': [{'location_id': 1, 'num_in_stock': 1000, 'low_stock_threshold': 0}]}
 
@@ -58,8 +65,10 @@ cats = {c['slug']: c['id'] for c in call('GET', 'categories/?page_size=100')['re
 missing = [c for c in CATEGORIES if c not in cats]
 if missing: raise SystemExit(f'categories not found: {missing}')
 fields = {'title': TITLE, 'slug': HANDLE, 'categories': [cats[c] for c in CATEGORIES], 'description': DESCRIPTION, 'is_public': True, 'template': HANDLE,
-          'meta_title': META_TITLE, 'meta_description': META_DESCRIPTION, 'enable_subscription': False,
+          'meta_title': META_TITLE, 'meta_description': META_DESCRIPTION, 'enable_subscription': bool(REFILL),
           'variant_attributes': [{'name': ATTR, 'values': [b['variant'] for b in BUNDLES]}]}
+# refills: every pack ships again when it runs out, so each pack's interval count is allowed (P.BUNDLES 'every')
+if REFILL: fields.update({'interval': REFILL['interval'], 'interval_counts': sorted({int(b['every']) for b in BUNDLES})})
 found = all_products().get(HANDLE)
 if found:
     pk = found['id']

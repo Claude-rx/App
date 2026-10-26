@@ -25,6 +25,17 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 - **Net weight** (`NET`): shown in the Ingredients tab once set.
 - **Where it is made** (`KOREAN`): off. The foundation, balm and serum say "Formulated in Korea"; the stick doesn't
   until the supplier confirms it.
+- **Refills.** Automatic Refills are on by default, as on the foundation: $31 every 28 days for 1 stick, $47 every
+  56 days for 2, $62 every 84 days for 3 (20% under the one-time price; one-time stays a choice on the cart page). How
+  long a stick lasts decides the 28 days: change `BUNDLES[*]['refill'|'every']` and `REFILL['every']` in
+  `stick_copy.py`, then rerun `setup_brush_offers.py skinofab <work> stick_copy` and the build.
+- **"16 skin tones".** The owner's reference shows "One stick for 16 skin tones". The page says "One stick, many skin
+  tones" (12 swatches, no number) until the supplier confirms the range: then put the number in the `tones_panel`
+  titles in `product_photos.py stick` and in `SHADE_FAQ`.
+- **Same formula.** The reviews near the top and in the wall are the Adaptive Peptide Foundation's, labelled "Verified
+  buyer of the foundation", because the owner states the stick is the same adaptive formula. If the supplier's stick
+  formula differs, set `BORROW_REVIEWS = None` and `FRONTROW_NOTE = None` in `stick_copy.py` and the page shows its
+  own (empty) reviews again.
 - **Real photos.** The photos are AI-generated; the wordmark is printed on every stick by `relabel_bottles.py` from
   the real wordmark (`docs/real-wordmark.md`). Once the real stick exists, photograph it on white and swap `pack` and
   `single` first.
@@ -39,7 +50,12 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 | "Does not settle into wrinkles", "no cakey, dry or tight feeling" | Said as how to get it: thin layers, buffed in with the brush, on moisturised skin (FAQ, tabs) |
 | The five ingredient cards | The ingredient carousel, the science block and the Ingredients tab, as cosmetic effects |
 | 30-day money-back guarantee, free shipping | The store's 30-day guarantee (no need to send it back) and free shipping |
-| $39 | 1 stick $39 · 2 sticks $59 (most popular, compare $78) · Buy 2, get 1 free $78 (compare $117, exactly 3 × $39) |
+| $39 | 1 stick $39 · 2 sticks $59 (recommended, compare $78) · 3 sticks: buy 2, get 1 free $78 (compare $117, exactly 3 × $39); with Automatic Refills $31 / $47 / $62 |
+| "10 AM Morning / 10 PM Evening" | The `wear-day` photo (the same woman, morning and evening, labelled an illustration) and "From 10 AM to 10 PM", said as "made to wear all day" |
+| "One stick for 16 skin tones" + three before/afters | The `tones` panel: 12 swatches and three women, fair, medium and deep, before and after (illustrations) |
+| Linda S. and the other testimonials | The foundation's real imported reviews (same formula), labelled as the foundation's |
+| FrontrowMD "Clinicians' Choice" | The foundation's FrontrowMD listing, with a line saying it is the foundation's |
+| "Love it or your money back · Refill reminder · Cancel any time · Renews at $66/mo" | The same trust row under the button, with the stick's own refill price and days |
 
 ## What we left out, and why
 
@@ -48,9 +64,9 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   price times the sticks).
 - **"More than 50,000 women", "Loved by thousands"**: their count, not ours.
 - **Its testimonials** (Linda S., Sarah 42, Claudia 38, Monica 52, Pamela 67): no review app behind them, several
-  from women under 45, and not our customers (16 CFR 465). The stick shows "No reviews of the stick yet" until real
-  SKINOFAB buyers review it; the reviews near the top are the foundation's, labelled as theirs.
-- **"16 skin tones"**: its own image says "fair to medium".
+  from women under 45, and not our customers (16 CFR 465). In their place: the foundation's real imported reviews,
+  labelled as the foundation's.
+- **The number in "16 skin tones"**: its own image says "fair to medium" (see Before launch).
 - **"Anti-aging", "reduces redness", "supports the skin barrier", "supports recovery", "refines pores"**: skincare
   effects that need tests, some of them drug claims. A makeup evens the *look* of redness and spots, and that is what
   the page says.
@@ -74,8 +90,8 @@ brush, sensitive skin, layering, refunds). It doesn't promise she will look 30.
 
 | Where | What |
 |---|---|
-| NEXT product 235 | "Adaptive Foundation Stick", public, one-time purchase, template `adaptive-foundation-stick`, Face / Skin / Bestsellers; gallery of 15 photos |
-| Bundles (variants) | 236: 1 stick $39 · 237: 2 sticks $59 (default; compare $78) · 238: 3 sticks (buy 2, get 1 free) $78 (compare $117) |
+| NEXT product 235 | "Adaptive Foundation Stick", public, subscriptions on (every 28, 56 or 84 days), template `adaptive-foundation-stick`, Face / Skin / Bestsellers; a gallery of 12 photos on the page |
+| Bundles (variants) | 236: 1 stick $39, refills $31 · 237: 2 sticks $59, refills $47 (default; compare $78) · 238: 3 sticks (buy 2, get 1 free) $78, refills $62 (compare $117) |
 | Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`), with `stick_copy.py`'s copy and `brand/foundation-stick/` photos |
 | Homepage | A card in the product shelf after the foundation (default list, Bestsellers, New and Face tabs), "New" and "Buy 2, get 1 free" badges; a card in Essentials |
 | Menus | "Adaptive Foundation Stick" after the foundation in the menu; "Foundation Stick" after it in the footer's Shop column |

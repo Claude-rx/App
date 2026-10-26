@@ -70,7 +70,8 @@ function checkLine(line, want) {
   if (!line) return ['no cart line'];
   if (line.product !== want.pk) p.push(`variant ${line.product} != ${want.pk}`);
   if (Math.abs(line.price - want.price) > 0.005) p.push(`price ${line.price} != ${want.price}`);
-  if (want.refill && !(String(line.interval).toLowerCase().startsWith('day') && line.intervalCount === 28)) p.push(`not a 28-day refill: ${line.interval} ${line.intervalCount}`);
+  const every = want.every || 28;
+  if (want.refill && !(String(line.interval).toLowerCase().startsWith('day') && line.intervalCount === every)) p.push(`not a ${every}-day refill: ${line.interval} ${line.intervalCount}`);
   if (!want.refill && line.interval) p.push(`one-time line has interval ${line.interval} ${line.intervalCount}`);
   return p;
 }
@@ -119,7 +120,7 @@ async function checkout(s, name, product = 'Adaptive Peptide Foundation') {
   await s.page.screenshot({ path: path.join(SHOTS, `checkout-${name}.png`), fullPage: true });
   return { status: resp && resp.status(), hasLine: text.toLowerCase().includes(product.toLowerCase()),
            pack: (text.match(/(1 bottle|2 bottles \+ free gifts|1 brush \+ free case|2 brushes \+ 2 free cases|3 brushes \+ 3 free cases \+ free body brush|1 stick|2 sticks|3 sticks \(buy 2, get 1 free\))/i) || [])[0] || null,
-           refillWords: (text.match(/[^.$]{0,40}(every\s+28\s+days?|subscri|recurring|renew)[^.$]{0,40}/gi) || []).slice(0, 3),
+           refillWords: (text.match(/[^.$]{0,40}(every\s+\d+\s+days?|subscri|recurring|renew)[^.$]{0,40}/gi) || []).slice(0, 3),
            thumbs, prices: (text.match(/\$\d+\.\d\d/g) || []).slice(0, 6) };
 }
 
@@ -380,18 +381,19 @@ async function chooseBundle(s, key) {
 }
 // each bundle: its variant and price, one-time, the drawer (its 1 -> 2 upgrade only for one, never itself as an
 // add-on), checkout for the 2-pack; then the drawer upgrade 1 -> 2
-async function bundleCases(name, route, title, label) {
+async function bundleCases(name, route, title, label, refills = false) {
   const packs = await packsOf(route);
+  const want = pack => (refills ? { price: pack.refill, refill: true, every: pack.every } : { price: pack.price, refill: false });
   for (const [key, pack] of Object.entries(packs)) {
     const s = await session(1440, 900, route);
     const ui = await chooseBundle(s, key);
     const problems = [];
     if (ui.id !== String(pack.pk)) problems.push(`form id ${ui.id} != ${pack.pk}`);
-    if (!ui.button.includes(money(pack.price))) problems.push(`button "${ui.button}" lacks ${money(pack.price)}`);
+    if (!ui.button.includes(money(want(pack).price))) problems.push(`button "${ui.button}" lacks ${money(want(pack).price)}`);
     await addToCart(s);
     const ls = lines(s.cart);
     if (ls.length !== 1) problems.push(`${ls.length} lines`);
-    problems.push(...checkLine(ls[0], { pk: pack.pk, price: pack.price, refill: false }));
+    problems.push(...checkLine(ls[0], { pk: pack.pk, ...want(pack) }));
     const d = await drawerState(s);
     if (!d.open) problems.push('drawer did not open');
     if (d.upgrade !== (key === '1')) problems.push(`upgrade shown=${d.upgrade}`);
@@ -402,8 +404,9 @@ async function bundleCases(name, route, title, label) {
     if (key === '2') {
       co = await checkout(s, `${name}-2`, label);
       if (!co.hasLine) problems.push(`checkout has no ${name} line`);
-      if (!co.prices.includes('$' + pack.price.toFixed(2))) problems.push(`checkout prices ${co.prices} lack $${pack.price.toFixed(2)}`);
-      if (co.refillWords.length) problems.push('checkout talks about a plan: ' + co.refillWords[0]);
+      if (!co.prices.includes('$' + want(pack).price.toFixed(2))) problems.push(`checkout prices ${co.prices} lack $${want(pack).price.toFixed(2)}`);
+      if (!refills && co.refillWords.length) problems.push('checkout talks about a plan: ' + co.refillWords[0]);
+      if (refills && !co.refillWords.length) problems.push('checkout does not say the refill cadence');
       if (!co.thumbs.length || co.thumbs.some(w => !w)) problems.push(`checkout line thumbnail missing (${co.thumbs})`);
     }
     out.push({ case: `${name} ${key}`, ui, line: ls[0], drawer: { upgrade: d.upgrade, addons: d.addons }, checkout: co, errors: s.errors,
@@ -419,7 +422,7 @@ async function bundleCases(name, route, title, label) {
   else { await btn.first().click(); await s.page.waitForTimeout(7000); }
   const ls = lines(s.cart);
   if (ls.length !== 1) problems.push(`${ls.length} lines after the upgrade`);
-  problems.push(...checkLine(ls[0], { pk: packs['2'].pk, price: packs['2'].price, refill: false }));
+  problems.push(...checkLine(ls[0], { pk: packs['2'].pk, ...want(packs['2']) }));
   const d = await drawerState(s);
   if (d.upgrade) problems.push('upgrade still offered');
   await s.page.screenshot({ path: path.join(SHOTS, `drawer-${name}-upgrade.png`) });
@@ -427,9 +430,11 @@ async function bundleCases(name, route, title, label) {
   await s.ctx.close();
 }
 await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
-await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm');
-await bundleCases('serum', SERUM, 'EGF + NAD+ Firming Serum', 'EGF + NAD+ Firming Serum');
-await bundleCases('stick', STICK, 'Adaptive Foundation Stick', 'Adaptive Foundation Stick');
+// the balm, serum and stick sell with Automatic Refills on by default (26 Oct 2026): every pack adds as a refill at
+// its refill price, every its own days; the brush is one-time only
+await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm', true);
+await bundleCases('serum', SERUM, 'EGF + NAD+ Firming Serum', 'EGF + NAD+ Firming Serum', true);
+await bundleCases('stick', STICK, 'Adaptive Foundation Stick', 'Adaptive Foundation Stick', true);
 
 // ---------------------------------------------------------------- the brush's, the balm's, the serum's and the stick's pages
 // All are built on the foundation page's structure (tools/persona/twin.py): the same sections in the same order (the
@@ -467,7 +472,8 @@ async function twinPage(name, route, cfg) {
              gallery: document.querySelectorAll('[data-product-single-media-slider] [data-product-single-media-wrapper]').length,
              chips: !!document.querySelector('.sfb-chips'), lead: !!document.querySelector('.sfb-lead'),
              title: (document.querySelector('.product__title') || {}).textContent || '',
-             claims: text.match(new RegExp(claimsSrc, 'gi')) || [],
+             // the page's own words (a review wall of another product's buyers is theirs, not a claim of the page)
+             claims: text.replace((document.getElementById('sf-review-wall') || {}).innerText || '', '').match(new RegExp(claimsSrc, 'gi')) || [],
              strip: strip ? strip.innerText.replace(/\s+/g, ' ') : '',
              momentsReviewish: moments ? moments.querySelectorAll('.skinofab-testimonials__stars, .skinofab-testimonials__verified').length : -1,
              moments: moments ? moments.querySelectorAll('.swiper-slide').length : 0,
@@ -487,8 +493,9 @@ async function twinPage(name, route, cfg) {
   // the foundation's sections, less its own: the Korean doctor photo (its bottle), its review strip while the product
   // has no reviews of its own (borrowed reviews read as this product's), the use cards when the product has none; the
   // brand's own note after the problem/solution, and the honest "no reviews yet" box after the wall
-  const want = foundationKeys.filter(k => k !== 'sf-korea' && (pg.reviews || k !== 'sf-review-strip') && (cfg.cards !== 0 || k !== 'sf-reviews'))
-    .flatMap(k => (k === 'sf-review-wall' && !pg.reviews ? [k, 'no-reviews'] : k === 'sf-problem-solution' ? [k, 'sf-note'] : [k]));
+  const own = pg.reviews || cfg.borrowed;       // a page with reviews: its own, or the foundation's labelled (the stick)
+  const want = foundationKeys.filter(k => k !== 'sf-korea' && (own || k !== 'sf-review-strip') && (cfg.cards !== 0 || k !== 'sf-reviews'))
+    .flatMap(k => (k === 'sf-review-wall' && !own ? [k, 'no-reviews'] : k === 'sf-problem-solution' ? [k, 'sf-note'] : [k]));
   const got = pg.keys.filter(k => k !== 'amazon');
   if (got.join() !== want.join()) problems.push(`sections differ from the foundation's:\n  ${got.join(',')}\n  ${want.join(',')}`);
   if (pg.tabs.length !== 6 || pg.tabs[0] !== 'What makes it different?' || pg.tabs[5] !== 'Shipping and returns') problems.push('tabs: ' + pg.tabs.join(' | '));
@@ -498,15 +505,17 @@ async function twinPage(name, route, cfg) {
   if (!pg.title.includes(cfg.title)) problems.push(`title "${pg.title}"`);
   if (pg.claims.length) problems.push('claims or competitor on the page: ' + pg.claims.join(', '));
   if (pg.competitor) problems.push('a competitor name in the markup');
-  if (!pg.reviews && pg.strip) problems.push('another product\'s reviews on the page: ' + pg.strip.slice(0, 120));
+  if (!pg.reviews && !cfg.borrowed && pg.strip) problems.push('another product\'s reviews on the page: ' + pg.strip.slice(0, 120));
+  if (cfg.borrowed && !/of our Adaptive Peptide Foundation/.test(pg.strip)) problems.push('borrowed review strip does not say whose: ' + pg.strip.slice(0, 120));
+  if (cfg.borrowed && /Verified buyer(?! of the foundation)/.test(pg.strip)) problems.push('a borrowed review card says "Verified buyer" without "of the foundation"');
   if (pg.momentsReviewish !== 0 || pg.moments < 4) problems.push(`photo cards: ${pg.moments}, with ${pg.momentsReviewish} stars/verified marks`);
   if (pg.derm || pg.note !== 'The SKINOFAB team') problems.push(`expert block: dermatologist ${pg.derm}, signed "${pg.note}"`);
   if (!pg.beforeAfter.length || pg.beforeAfter.some(a => !/illustration/i.test(a))) problems.push('before/after not marked as an illustration: ' + pg.beforeAfter.join(' | '));
   if (pg.cards !== (cfg.cards ?? 4) || pg.clips !== cfg.clips) problems.push(`use cards ${pg.cards}, clips ${pg.clips}`);
-  if (pg.empty === (pg.reviews > 0)) problems.push(`"No reviews yet" box ${pg.empty} with ${pg.reviews} reviews`);
+  if (pg.empty === (pg.reviews > 0 || !!cfg.borrowed)) problems.push(`"No reviews yet" box ${pg.empty} with ${pg.reviews} reviews`);
   const price = cfg.price || '$24.95';
   if (!pg.now.startsWith(price) || (cfg.was ? !pg.was.startsWith(cfg.was) : !!pg.was.trim())) problems.push(`title price ${pg.now} / was "${pg.was}"`);
-  if (pg.stars !== (pg.reviews > 0)) problems.push(`stars ${pg.stars} with ${pg.reviews} reviews`);
+  if (pg.stars !== (pg.reviews > 0 || !!cfg.borrowed)) problems.push(`stars ${pg.stars} with ${pg.reviews} reviews`);
   if (pg.hScroll) problems.push('page scrolls sideways');
   if (pg.imgs.length) problems.push(`${pg.imgs.length} broken images: ${pg.imgs.slice(0, 3).join(' ')}`);
   // the homepage shelf card and the menu links
@@ -527,13 +536,13 @@ async function twinPage(name, route, cfg) {
 }
 await twinPage('brush', BRUSH, { title: 'The Lymphatic Brush', handle: 'the-lymphatic-brush', nav: 'The Lymphatic Brush', gallery: 5, faq: 10,
                                  clips: 0, cards: 0, was: '', claims: 'drain|5,000|Nicole|10 years|Anti-Cellulite|sculpted|water retention' });
-await twinPage('balm', BALM, { title: 'PDRN Plumping Balm', handle: 'pdrn-plumping-balm', nav: 'PDRN Plumping Balm', gallery: 13, faq: 10, clips: 0,
-                               was: '', claims: '96%|1M\\+|bought today|77%|dermatologist|collagen production|clinically' });
-await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf-nad-firming-serum', nav: 'EGF + NAD+ Firming Serum', gallery: 13, faq: 10,
-                                 clips: 0, was: '', price: '$34.95',
+await twinPage('balm', BALM, { title: 'PDRN Plumping Balm', handle: 'pdrn-plumping-balm', nav: 'PDRN Plumping Balm', gallery: 13, faq: 12, clips: 0,
+                               price: '$19.95', was: '$24.95', claims: '96%|1M\\+|bought today|77%|dermatologist|collagen production|clinically' });
+await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf-nad-firming-serum', nav: 'EGF + NAD+ Firming Serum', gallery: 13, faq: 12,
+                                 clips: 0, was: '$34.95', price: '$27.95',
                                  claims: '#1 Firming|137,135|10,000\\+|clinically|stimulate collagen|at the source|dermatologist|Madeca|Time Reverse' });
 await twinPage('stick', STICK, { title: 'Adaptive Foundation Stick', handle: 'adaptive-foundation-stick', nav: 'Adaptive Foundation Stick',
-                                 gallery: 15, faq: 10, clips: 0, was: '', price: '$39',
+                                 gallery: 12, faq: 14, clips: 0, was: '$39', price: '$31', borrowed: true,
                                  claims: '97%|93%|50,000|pieces remain|11:59|16 skin tones|anti-aging|reduces redness|clinically|dermatologist|Changing Foundation' });
 
 // the sticky bar on every product page: shown exactly while the add-to-cart button is out of view (at the top on a

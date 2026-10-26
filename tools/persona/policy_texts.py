@@ -53,19 +53,29 @@ for name, (rel, sel) in SOURCES.items():
 # the Automatic Refills terms, as the product page states them (nothing more is promised)
 usd = lambda v: '$%d' % float(v) if float(v) == int(float(v)) else '$%.2f' % float(v)
 one, two, every = ccf_copy.PACKS[0], ccf_copy.PACKS[1], ccf_copy.REFILL['every']
+# the other products sold with Automatic Refills (their copy modules' REFILL and bundles): each pack's refill price and days
+import stick_copy, serum_copy, balm_copy
+refill_lines = '\n'.join(
+    f"<li>{P.TITLE}: " + ', '.join(f"{usd(b['refill'])} every {b['every']} days for {b['variant'].split(' (')[0]}" for b in P.BUNDLES) + '.</li>'
+    for P in (stick_copy, serum_copy, balm_copy) if getattr(P, 'REFILL', None))
 sub = f"""<h2>Automatic Refills: subscription terms</h2>
 <p>{company.BRAND} is a brand of {company.LEGAL_NAME}, a {company.STATE} corporation, {company.ADDRESS_LINE}.</p>
 <h3>What you agree to</h3>
-<p>When you choose Automatic Refills for the Adaptive Peptide Foundation, you authorize {company.LEGAL_NAME} to charge your
-payment method today and then every {every} days at the refill price of your pack: {usd(one['refill'])} for 1 bottle or
-{usd(two['refill'])} for 2 bottles, plus any applicable taxes. Shipping is free. Each refill ships after it is charged.</p>
+<p>When you choose Automatic Refills, you authorize {company.LEGAL_NAME} to charge your payment method today and then
+again each time your pack is due, at the refill price of your pack, plus any applicable taxes. Shipping is free. Each
+refill ships after it is charged.</p>
+<ul>
+<li>Adaptive Peptide Foundation, every {every} days: {usd(one['refill'])} for 1 bottle, {usd(two['refill'])} for 2 bottles.</li>
+{refill_lines}
+</ul>
 <h3>Reminders</h3>
 <p>We email you before every refill.</p>
 <h3>Skip or cancel anytime</h3>
 <p>To skip a refill or cancel, email <a href="mailto:{company.EMAIL}">{company.EMAIL}</a> before your next refill date.
 There is no minimum number of refills and no cancellation fee.</p>
 <h3>Buying once instead</h3>
-<p>You can buy without refills: in your bag, tap Change under the bottle, then on the cart page set it to One-time purchase before checkout ({usd(one['price'])} for 1 bottle,
+<p>You can buy without refills: in your bag, tap Change under the product, then on the cart page set it to One-time
+purchase before checkout, at the one-time price its product page shows (the foundation: {usd(one['price'])} for 1 bottle,
 {usd(two['price'])} for 2 bottles).</p>
 <h3>Refunds</h3>
 <p>Refunds follow our refund policy and the 30-day money-back guarantee shown on the product page.</p>

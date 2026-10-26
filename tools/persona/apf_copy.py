@@ -66,22 +66,27 @@ TRUST_CSS = r"""
 .apf-trust__terms{margin:14px auto 0 !important;max-width:470px;font-size:13px !important;line-height:1.45;color:#4a4a4a !important}
 """
 
-def trust_html(terms=True, refills=True):
+def trust_html(terms=True, refills=True, plan=None):
     """'Love it or your money back', then a row of three facts and the refill terms. While refills are on: refill
     reminder / cancel any time / renews at the pack's refill price; bought once: free shipping / 30-day guarantee /
-    secure checkout. The page starts in ccf_copy.REFILL['default']; the offer picker keeps rows, price and terms in
-    step with the chosen pack and the refills box. refills=False: a product sold once only (the bought-once row)."""
-    on = bool(REFILL.get('default')) and refills
+    secure checkout. The page starts in its plan's REFILL['default']; the offer picker keeps rows, price and terms in
+    step with the chosen pack and the refills box. refills=False: a product sold once only (the bought-once row).
+    plan: another product's refills {'refill': its REFILL, 'amount': the shown pack's refill price, 'every': its
+    days, 'terms': its terms with {amount} and {every}}; None: the foundation's."""
+    plan = plan or {'refill': REFILL, 'amount': PACK1['refill'], 'every': REFILL['every'], 'terms': TERMS}
+    refill, amount, terms_text = plan['refill'], plan['amount'], plan['terms']
+    on = bool(refill.get('default')) and refills
     def row(kind, items, shown):
         cells = ''.join(f'<li>{ICONS[k]}<span>{label}</span></li>' for k, label in items)
         return f'<ul class="apf-trust__row" data-sf-trust-row="{kind}"{"" if shown else " hidden"}>{cells}</ul>'
-    renew = f'Renews at <b data-sf-renew>{usd(PACK1["refill"])}</b> every {REFILL["every"]} days'
+    renew = f'Renews at <b data-sf-renew>{usd(amount)}</b> every <span data-sf-renew-every>{plan["every"]}</span> days'
     rows = ((row('refill', (('bell', 'Refill reminder'), ('cancel', 'Cancel any time'), ('renew', renew)), on) if refills else '') +
             row('once', (('truck', 'Free shipping'), ('shield', '30-day guarantee'), ('lock', 'Secure checkout')), not on))
+    shown = terms_text.replace('{amount}', usd(amount)).replace('{every}', str(plan['every']))
     return (f'<div class="apf-trust"><p class="apf-trust__head">{ICONS["seal"]}<span>Love it or your money back</span></p>'
             f'{rows}' +
-            (f'<p class="apf-trust__terms" data-sf-refill-terms="{html_attr(TERMS)}"'
-             + (f'>{html_attr(TERMS.replace("{amount}", usd(PACK1["refill"])))}</p>' if REFILL.get('default') else ' hidden></p>')
+            (f'<p class="apf-trust__terms" data-sf-refill-terms="{html_attr(terms_text)}"'
+             + (f'>{html_attr(shown)}</p>' if refill.get('default') else ' hidden></p>')
              if terms else '') + '</div>')
 
 def html_attr(text):
@@ -147,7 +152,7 @@ CSS = r"""
 .apf-sec--black .apf-checks li{color:#e9e9e9}.apf-sec--black .apf-checks li:before{background:#fff;color:#151515}
 .apf-pains{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
 .apf-pains span{padding:9px 14px;border-radius:30px;background:#fff;border:1px solid #e2e2e2;font-size:14px;font-weight:500}
-.apf-pains span:before{content:'\2715';margin-right:8px;font-size:11px;color:#8a8a8a}
+.apf-pains span:before{content:'\2715';margin-right:8px;font-size:11px;color:#666}
 /* hero */
 .apf-hero{padding:56px 0 64px;background:linear-gradient(#f3f3f3,#fafafa)}
 .apf-hero .apf-grid2{grid-template-columns:1.05fr .95fr}
@@ -735,7 +740,7 @@ PROBLEM_SOLUTION_CSS = r"""
 .sfps-root{max-width:760px;margin:36px auto 0;text-align:center;font-size:19px;line-height:1.5;font-weight:500}
 .sfps-fixes{margin:26px 0 0;display:grid;gap:12px}
 .sfps-fix{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;padding:14px 16px;border:1px solid #e6e6e6;border-radius:14px;background:#fff}
-.sfps-fix s{display:block;font-size:13px;color:#8a8a8a;text-decoration-thickness:1px;margin:0 0 3px}
+.sfps-fix s{display:block;font-size:13px;color:#666;text-decoration-thickness:1px;margin:0 0 3px}
 .sfps-fix span{display:block;font-size:16px;line-height:1.45}
 .sfps-cta{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:28px 0 0}
 .sfps-btn{display:inline-flex;align-items:center;justify-content:center;padding:16px 34px;border-radius:999px;background:#151515;color:#fff !important;text-decoration:none !important;font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
@@ -955,7 +960,7 @@ REVIEW_WALL_CSS = r"""
 .sfr-avg p{margin:0;font-size:15px;color:#3b3b3b}
 .sfr-avg p b{color:#191919}
 .sfr-tp{display:inline-flex;gap:3px;vertical-align:middle}
-.sfr-tp i{display:inline-grid;place-items:center;width:var(--s,20px);height:var(--s,20px);background:linear-gradient(90deg,#00b67a var(--f),#dcdce6 var(--f))}
+.sfr-tp i{display:inline-grid;place-items:center;width:var(--s,20px);height:var(--s,20px);background:linear-gradient(90deg,#151515 var(--f),#dcdce6 var(--f))}
 .sfr-tp i svg{width:72%;height:72%;color:#fff}
 .sfr-tp--lg{--s:34px;gap:4px}
 .sfr-dist{list-style:none !important;margin:20px 0 0 !important;padding:0 !important;display:grid;gap:8px}
@@ -963,7 +968,7 @@ REVIEW_WALL_CSS = r"""
 .sfr-dist li:before{content:none !important}
 .sfr-dist li[aria-pressed="true"]{font-weight:700}
 .sfr-dist span{height:9px;border-radius:2px;background:#e5e5dd;overflow:hidden}
-.sfr-dist span em{display:block;height:100%;background:#00b67a}
+.sfr-dist span em{display:block;height:100%;background:#151515}
 .sfr-dist small{color:#6a6a6a;text-align:right}
 .sfr-note{margin:16px 0 0;font-size:12.5px;line-height:1.45;color:#6a6a6a}
 .sfr-write{display:inline-flex;margin-top:20px;padding:13px 26px;border-radius:999px;border:1.5px solid #191919;color:#191919 !important;text-decoration:none !important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
@@ -977,7 +982,7 @@ REVIEW_WALL_CSS = r"""
 .sfr-card{background:#fff;border:1px solid #e5e5dd;border-radius:12px;padding:20px 22px}
 .sfr-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
 .sfr-ver{display:inline-flex;align-items:center;gap:5px;color:#191919;font-size:13px;font-weight:500}
-.sfr-ver svg{color:#00b67a}
+.sfr-ver svg{color:#151515}
 .sfr-card h3{font-size:16px;font-weight:700;margin:0 0 6px;line-height:1.35}
 .sfr-body{font-size:15px;line-height:1.55;color:#2b2b2b;margin:0;white-space:pre-line}
 .sfr-body.is-clamped{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
@@ -1172,7 +1177,7 @@ REVIEW_STRIP_CSS = r"""
 .sfrs-card small{margin-top:auto;font-size:13px;color:#6a6a6a}
 .sfrs-card small b{color:#191919}
 .sfrs .sfr-tp{display:inline-flex;gap:3px}
-.sfrs .sfr-tp i{display:inline-grid;place-items:center;width:var(--s,18px);height:var(--s,18px);background:linear-gradient(90deg,#00b67a var(--f),#dcdce6 var(--f))}
+.sfrs .sfr-tp i{display:inline-grid;place-items:center;width:var(--s,18px);height:var(--s,18px);background:linear-gradient(90deg,#151515 var(--f),#dcdce6 var(--f))}
 .sfrs .sfr-tp i svg{width:72%;height:72%;color:#fff}
 .sfrs .sfr-tp--lg{--s:30px;gap:4px}
 @media (max-width:989px){.sfrs-wrap{grid-template-columns:1fr;gap:18px}.sfrs-card{flex-basis:78%}}

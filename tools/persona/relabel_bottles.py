@@ -57,7 +57,9 @@ RENDERS = {
 # the PDRN balm's photos (brand/pdrn-balm/source/<name>.jpg, 1024 px): an AI-drawn wordmark on each stick
 BALM = {
     # retype: the AI-drawn "PDRN · VOLUFILINE" line set again, legible at a thumbnail's size (label_fix.retype_line)
-    'pack': [('box', (420, 330, 490, 680), (452, 340)), ('retype', (384, 794, 524, 815), 'PDRN · VOLUFILINE')],
+    # the hero (NEXT's first photo: the listing cards show it 360 px wide): "PDRN" alone, bold and larger, where
+    # "PDRN · VOLUFILINE" (14 px caps) read PORN at that size (review 6)
+    'pack': [('box', (420, 330, 490, 680), (452, 340)), ('boldrot', (454, 805), 0, (156, 30), 'PDRN', 17)],
     'tall': [('box', (455, 520, 565, 1170), (510, 540)), ('retype', (402, 1303, 622, 1328), 'PDRN · VOLUFILINE')],
     'hold-cheek': [('box', (290, 400, 360, 565), (310, 550))],
     'panel': [('box', (850, 440, 935, 585), (872, 450))],
@@ -92,6 +94,7 @@ STICK = {
     'dots': [('box', (395, 840, 440, 995), (417, 856))],
     'daylight': [('flat', (275, 810), (301, 946), 14)],
     'buff-jaw': [('flat', (510, 910), (405, 982), 16)],
+    'duo-ends': [('flat', (548, 657), (752, 450), 28)],
 }
 
 # file-name prefix -> (the reference copy's size, the bottles in it); the longest prefix whose aspect matches wins

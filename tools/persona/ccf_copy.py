@@ -21,6 +21,13 @@ import support_copy
 ORIGIN = '🇰🇷 Formulated in Korea · Advanced K-beauty formula'
 
 GLOBAL = [
+    # "The skinofab difference" button: there is no offer to claim, it scrolls to the packs (stick review 1)
+    (r'RE:(<a class="btn btn--dark" href="#product">)Claim offer(</a>)', r'\g<1>Choose your pack\g<2>'),
+    # the contact page's answer pointed to the form "below": it sits above the questions (review 6)
+    ('You can contact us by filling in the contact form below', 'You can contact us by filling in the contact form above'),
+    # the policies' "the Personal Data strictly necessary" link (privacy, cookie and terms pages, all in pages/) opened
+    # iubenda's hosted copy of another store's policy (review 6): this store's cookie policy
+    ('href="https://www.iubenda.com/privacy-policy/65675001" target="_blank"', 'href="cookie-policy.html"'),
     # the product gallery's image sizes: from 768 to 1023 px the gallery is one column, the page's whole width
     # (apply_persona.LAYOUT_FIXES), not 60% of it, so it asked for a file half the size it shows
     (r'RE:sizes="\(min-width: 1400px\) 762px, \(min-width: 768px\) calc\(\(100vw - 40px\) \* 0\.6 - 30px\), calc\(100vw - 40px\)"',
@@ -47,7 +54,9 @@ GLOBAL = [
     (r'RE:(icons-row__title">)Proven results<', r'\g<1>30-day money-back guarantee<'),
     (r'RE:(icons-row__title">)Scientifically proven<', r'\g<1>30-day money-back guarantee<'),
     (r'RE:(icons-row__title">)Quick results<', r'\g<1>30-day money-back guarantee<'),
-    (r'RE:(icons-row__title">)Loved by 100\.000\+<', r'\g<1>Loved by 9,800+ customers<'),
+    # 9,800+ is the count of the foundation formula's verified reviews from the earlier store, not of SKINOFAB's
+    # customers (review 6): the row says what the number is
+    (r'RE:(icons-row__title">)Loved by 100\.000\+<', r'\g<1>9,800+ verified reviews<'),
     ('>Korean inspired performance formulas<', '>Formulated in Korea, with advanced K-beauty science<'),
     ('>3. Built in Korea, by the people who invented the science<', '>3. Formulated in Korea, with advanced K-beauty science<'),
     ('a breakthrough foundation from Korean pharmacies,', 'a breakthrough foundation formulated in Korea,'),
@@ -158,6 +167,9 @@ PAGE = {
          'src="https://www.iubenda.com/assets/site/favicons/default_thirdparty_icon-7c0e4af091131d326a69845f5900e1fbf9fdea8b8cecbe7e7aaecf6dbf0da741.svg"'),
         (r'RE:<li class="third-parties-item"><img alt="\s*([^"]*?)\s*"[^>]*/></li>',
          r'<li class="third-parties-item" style="display:inline-block;margin:0 6px 6px 0;padding:3px 10px;border:1px solid #d9d9d9;border-radius:999px;font-size:13px;line-height:1.5">\1</li>'),
+        # its links to "the Cookie Policy" and to "the Personal Data strictly necessary" opened iubenda's hosted copies
+        # of the old store's policies (smooche.com, Smooche LLC, review 6): this store's own cookie policy instead
+        ('href="//www.iubenda.com/app/privacy-policy/10395211/cookie-policy"', 'href="cookie-policy.html"'),
     ],
     'pages/cookie-policy.html': [
         (r'RE:src="https://s3\.eu-west-1\.amazonaws\.com/prd\.mater/uploads/service_provider_icons/[^"]*"',
@@ -195,8 +207,8 @@ PAGE = {
         (r'RE:<div class="sa-stat__num">97%</div>\s*<div class="sa-stat__label">Feel more attractive</div>',
          '<div class="sa-stat__num">9,800+</div> <div class="sa-stat__label">verified reviews of our foundation’s formula, from our earlier store</div>'),
         (r'RE:<div class="sa-stat__num">100%</div>\s*<div class="sa-stat__label">Feel more like themselves</div>',
-         # (the three formulas: the fourth product is a brush)
-         '<div class="sa-stat__num">Korea</div> <div class="sa-stat__label">where our three formulas are made</div>'),
+         # (the foundation, serum and balm: the stick's origin is not confirmed yet, and the brush is a tool)
+         '<div class="sa-stat__num">Korea</div> <div class="sa-stat__label">where our foundation, serum and balm are formulated</div>'),
     ],
     'pages/postflows-track-your-order.html': [
         ("Fill in your order number or tracking code to see where your package currently is.",
@@ -238,7 +250,7 @@ PAGE = {
         (r'RE:alt="Natural\-looking\ coverage"', 'alt="Soft-focus powders"'),
         (r'RE:(<h3[^>]*>)\s*Natural\-looking\ coverage\s*(</h3>\s*<p[^>]*>)\s*Evens\ out\ your\ complexion\ and\ helps\ fine\ lines\ look\ less\ noticeable\s*(?=</p>)', r'\g<1>Soft-focus powders\g<2>Silica and boron nitride blur the look of lines and pores without a dry, matte finish'),
         (r'RE:alt="Mica"', 'alt="Fragrance-free"'),
-        (r'RE:(<h3[^>]*>)\s*Mica\s*(</h3>\s*<p[^>]*>)\s*Natural\ mineral\ pigments\ for\ a\ soft,\ healthy\ glow\.\s*(?=</p>)', r'\g<1>Fragrance-free\g<2>No fragrance, propylene glycol, drying alcohol or parabens, so thinner skin doesn\'t sting'),
+        (r'RE:(<h3[^>]*>)\s*Mica\s*(</h3>\s*<p[^>]*>)\s*Natural\ mineral\ pigments\ for\ a\ soft,\ healthy\ glow\.\s*(?=</p>)', r'\g<1>Fragrance-free\g<2>No fragrance, propylene glycol, drying alcohol or parabens, so thinner skin doesn’t sting'),
         ("The viral skin tone adapting foundation", ORIGIN),
         ("Hides imperfections", "Won't settle into lines"),
         ("Say goodbye to shade-matching struggles. This color-changing foundation adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
@@ -314,7 +326,10 @@ PDP_REVIEW_SKIP = ['Olivia M.']
 VIDEO_DEMOS = [
     ('Goes on white, turns into your tone', 'Dots on the back of the hand, blended in: the white shifts to your skin as you work it in.'),
     ('Glides over texture', 'Dotted on cheeks and forehead and buffed in: a thin layer that blends over texture instead of settling into it.'),
-    ('Soft on fine lines', 'A little around the eyes, pressed in with a fingertip, for a smoother-looking finish.'),
+    # (the clip: dotted on the back of her hand, then buffed over her cheeks with a brush; no fingertip, no eye area,
+    # review 6)
+    ('Soft on fine lines', 'Warmed on the back of the hand, then buffed over the cheeks with a brush: one thin layer '
+     'that blurs the look of fine lines.'),
 ]
 # A card whose own clip does not show the product: another re-make in its place, (clip, poster frame in seconds), by
 # card. The second card's clip (gj-88d49199) shows a glossy angled pump with no SKINOFAB wordmark, only on the back

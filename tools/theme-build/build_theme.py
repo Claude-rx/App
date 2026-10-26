@@ -433,9 +433,19 @@ def handle_of(href, page):
 # ---------------------------------------------------------------- 4. fragment transform
 PRICE_RE = re.compile(r'^\s*\$\s?\d[\d,]*(?:\.\d{2})?(?:\s*USD)?\s*$')
 NEXT_PRICE = "{%% include 'partials/sf_price.html' with p=%s%s %%}"
+# the other products sold with refills by default (Theme settings > Subscription Offer, slots 2 to 4): their own
+# product, price texts and refill days
+REFILL_SLOTS = (2, 3, 4)
+def refill_slot(n, var='p'):
+    return (f"{var} and settings.sf_refill_product_{n} and settings.sf_refill_price_text_{n} "
+            f"and {var}.pk == settings.sf_refill_product_{n}.pk")
 REFILL_NOTE = ("{% if product and settings.sf_refill_default_product and settings.sf_refill_price_text and product.pk == settings.sf_refill_default_product.pk %}"
                '<p class="sf-refill-note" style="margin:2px 0 0;font-size:12px;line-height:16px;color:#5a5a5a">with '
-               '{{ settings.sf_subscription_interval_count }}-{{ settings.sf_subscription_interval }} refills, cancel anytime</p>{% endif %}')
+               '{{ settings.sf_subscription_interval_count }}-{{ settings.sf_subscription_interval }} refills, cancel anytime</p>'
+               + ''.join("{%% elif %s %%}" % refill_slot(n, 'product')
+                         + '<p class="sf-refill-note" style="margin:2px 0 0;font-size:12px;line-height:16px;color:#5a5a5a">with '
+                         + "{{ settings.sf_refill_every_%d }}-day refills, cancel anytime</p>" % n for n in REFILL_SLOTS)
+               + '{% endif %}')
 
 def card_handle(el, page, current):
     """The product a price/form belongs to.
@@ -1016,6 +1026,9 @@ write('partials/sf_price.html',
       "{% if not retail and not quarter %}{{ settings.sf_subscription_price_text }}{% endif %}"
       "{% elif p and not quarter and settings.sf_refill_default_product and settings.sf_refill_price_text and p.pk == settings.sf_refill_default_product.pk %}"
       "{% if retail %}{{ settings.sf_refill_compare_text }}{% else %}{{ settings.sf_refill_price_text }}{% endif %}"
+      + ''.join("{%% elif not quarter and %s %%}" % refill_slot(n)
+                + "{%% if retail %%}{{ settings.sf_refill_compare_text_%d }}{%% else %%}{{ settings.sf_refill_price_text_%d }}{%% endif %%}" % (n, n)
+                for n in REFILL_SLOTS) +
       "{% elif p %}{% purchase_info_for_product request p as sf_s %}{% if sf_s.price.exists %}"
       "{% if retail %}{% if sf_s.price.price_retail > sf_s.price.price %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price_retail|floatformat:'-2' }} {{ sf_s.price.currency }}{% endif %}"
       "{% elif quarter %}{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price|dividedby:4|floatformat:'-2' }}"
@@ -1029,6 +1042,9 @@ write('partials/sf_was.html',
       "{% if p and settings.sf_subscription_product and settings.sf_subscription_price_text and p.pk == settings.sf_subscription_product.pk %}"
       "{% elif p and settings.sf_refill_default_product and settings.sf_refill_price_text and p.pk == settings.sf_refill_default_product.pk %}"
       "{% if settings.sf_refill_compare_text %}<s class=\"sf-was\" style=\"color:#8a8a8a;font-weight:400;margin-right:6px\">{{ settings.sf_refill_compare_text }}</s>{% endif %}"
+      + ''.join("{%% elif %s %%}" % refill_slot(n)
+                + "{%% if settings.sf_refill_compare_text_%d %%}<s class=\"sf-was\" style=\"color:#8a8a8a;font-weight:400;margin-right:6px\">{{ settings.sf_refill_compare_text_%d }}</s>{%% endif %%}" % (n, n)
+                for n in REFILL_SLOTS) +
       "{% elif p %}{% purchase_info_for_product request p as sf_s %}{% if sf_s.price.exists and sf_s.price.price_retail > sf_s.price.price %}"
       "<s class=\"sf-was\" style=\"color:#8a8a8a;font-weight:400;margin-right:6px\">{% currency_symbol sf_s.price.currency %}{{ sf_s.price.price_retail|floatformat:'-2' }} {{ sf_s.price.currency }}</s>"
       "{% endif %}{% endif %}")
@@ -1135,19 +1151,19 @@ SF_CART = ('''        <script>
             upsellTitle: "{{ settings.sf_cart_upsell_title|default:''|escapejs }}", upsellButton: "{{ settings.sf_cart_upsell_button|default:'Add'|escapejs }}",
             upgrades: [{ from: "{{ settings.sf_cart_upgrade_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade_to|default:''|escapejs }}",
                 title: "{{ settings.sf_cart_upgrade_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade_text|default:''|escapejs }}",
-                button: "{{ settings.sf_cart_upgrade_button|default:'Upgrade'|escapejs }}" },
+                button: "{{ settings.sf_cart_upgrade_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade_every|default:''|escapejs }}" },
               { from: "{{ settings.sf_cart_upgrade2_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade2_to|default:''|escapejs }}",
                 title: "{{ settings.sf_cart_upgrade2_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade2_text|default:''|escapejs }}",
-                button: "{{ settings.sf_cart_upgrade2_button|default:'Upgrade'|escapejs }}" },
+                button: "{{ settings.sf_cart_upgrade2_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade2_every|default:''|escapejs }}" },
               { from: "{{ settings.sf_cart_upgrade3_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade3_to|default:''|escapejs }}",
                 title: "{{ settings.sf_cart_upgrade3_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade3_text|default:''|escapejs }}",
-                button: "{{ settings.sf_cart_upgrade3_button|default:'Upgrade'|escapejs }}" },
+                button: "{{ settings.sf_cart_upgrade3_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade3_every|default:''|escapejs }}" },
               { from: "{{ settings.sf_cart_upgrade4_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade4_to|default:''|escapejs }}",
                 title: "{{ settings.sf_cart_upgrade4_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade4_text|default:''|escapejs }}",
-                button: "{{ settings.sf_cart_upgrade4_button|default:'Upgrade'|escapejs }}" },
+                button: "{{ settings.sf_cart_upgrade4_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade4_every|default:''|escapejs }}" },
               { from: "{{ settings.sf_cart_upgrade5_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade5_to|default:''|escapejs }}",
                 title: "{{ settings.sf_cart_upgrade5_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade5_text|default:''|escapejs }}",
-                button: "{{ settings.sf_cart_upgrade5_button|default:'Upgrade'|escapejs }}" }],
+                button: "{{ settings.sf_cart_upgrade5_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade5_every|default:''|escapejs }}" }],
             payIcons: [PAY_ICONS_JS],
             checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
             cartUrl: "/cart/", changeText: "{{ settings.sf_cart_change_text|default:'Change'|escapejs }}",
@@ -1439,6 +1455,12 @@ schema = {'SKINOFAB': {
                             'help_text': 'Shown as that product\'s price on cards and listings, e.g. $37 USD: the price its page shows first, with refills ticked. Empty: its NEXT price.'},
                            {'name': 'sf_refill_compare_text', 'type': 'text', 'label': 'Refills by default: was-price text', 'default': '',
                             'help_text': 'Shown struck through next to it, e.g. $59 USD. Empty: none.'},
+                           *[s for k in REFILL_SLOTS for s in (
+                               {'name': f'sf_refill_product_{k}', 'type': 'product', 'label': f'Refills by default ({k})',
+                                'help_text': 'Another product sold with refills by default (its product page adds it as a refill): its cards and listings show the texts below.'},
+                               {'name': f'sf_refill_price_text_{k}', 'type': 'text', 'label': f'Refills by default ({k}): price text', 'default': ''},
+                               {'name': f'sf_refill_compare_text_{k}', 'type': 'text', 'label': f'Refills by default ({k}): was-price text', 'default': ''},
+                               {'name': f'sf_refill_every_{k}', 'type': 'text', 'label': f'Refills by default ({k}): days between refills', 'default': ''})],
                            {'name': 'sf_subscription_product', 'type': 'product', 'label': 'Subscription-only product',
                             'help_text': 'Sold by subscription only: every add to cart of this product is the plan below, and its prices show the plan price text. Leave empty to sell everything normally.'},
                            {'name': 'sf_subscription_interval', 'type': 'text', 'label': 'Plan interval', 'default': 'month',
@@ -1460,6 +1482,8 @@ schema = {'SKINOFAB': {
         {'name': 'sf_cart_upgrade_text', 'type': 'text', 'label': 'Upgrade: text', 'default': '',
          'help_text': 'Name the real price difference; it must match the two variants\' prices.'},
         {'name': 'sf_cart_upgrade_button', 'type': 'text', 'label': 'Upgrade: button', 'default': 'Upgrade'},
+        {'name': 'sf_cart_upgrade_every', 'type': 'text', 'label': 'Upgrade: refill days of the bigger pack', 'default': '',
+         'help_text': 'A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before.'},
         {'name': 'sf_cart_upgrade2_from', 'type': 'text', 'label': 'Second upgrade: variant in the bag', 'default': '',
          'help_text': 'A second product\'s upgrade (NEXT variant IDs), shown when the first one does not apply. Empty: none.'},
         {'name': 'sf_cart_upgrade2_to', 'type': 'text', 'label': 'Second upgrade: variant it becomes', 'default': ''},
@@ -1467,6 +1491,8 @@ schema = {'SKINOFAB': {
         {'name': 'sf_cart_upgrade2_text', 'type': 'text', 'label': 'Second upgrade: text', 'default': '',
          'help_text': 'Name the real price difference; it must match the two variants\' prices.'},
         {'name': 'sf_cart_upgrade2_button', 'type': 'text', 'label': 'Second upgrade: button', 'default': 'Upgrade'},
+        {'name': 'sf_cart_upgrade2_every', 'type': 'text', 'label': 'Second upgrade: refill days of the bigger pack', 'default': '',
+         'help_text': 'A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before.'},
         {'name': 'sf_cart_upgrade3_from', 'type': 'text', 'label': 'Third upgrade: variant in the bag', 'default': '',
          'help_text': 'A third product\'s upgrade (NEXT variant IDs), shown when the first two do not apply. Empty: none.'},
         {'name': 'sf_cart_upgrade3_to', 'type': 'text', 'label': 'Third upgrade: variant it becomes', 'default': ''},
@@ -1474,6 +1500,8 @@ schema = {'SKINOFAB': {
         {'name': 'sf_cart_upgrade3_text', 'type': 'text', 'label': 'Third upgrade: text', 'default': '',
          'help_text': 'Name the real price difference; it must match the two variants\' prices.'},
         {'name': 'sf_cart_upgrade3_button', 'type': 'text', 'label': 'Third upgrade: button', 'default': 'Upgrade'},
+        {'name': 'sf_cart_upgrade3_every', 'type': 'text', 'label': 'Third upgrade: refill days of the bigger pack', 'default': '',
+         'help_text': 'A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before.'},
         {'name': 'sf_cart_upgrade4_from', 'type': 'text', 'label': 'Fourth upgrade: variant in the bag', 'default': '',
          'help_text': 'A fourth product\'s upgrade (NEXT variant IDs), shown when the first three do not apply. Empty: none.'},
         {'name': 'sf_cart_upgrade4_to', 'type': 'text', 'label': 'Fourth upgrade: variant it becomes', 'default': ''},
@@ -1481,6 +1509,8 @@ schema = {'SKINOFAB': {
         {'name': 'sf_cart_upgrade4_text', 'type': 'text', 'label': 'Fourth upgrade: text', 'default': '',
          'help_text': 'Name the real price difference; it must match the two variants\' prices.'},
         {'name': 'sf_cart_upgrade4_button', 'type': 'text', 'label': 'Fourth upgrade: button', 'default': 'Upgrade'},
+        {'name': 'sf_cart_upgrade4_every', 'type': 'text', 'label': 'Fourth upgrade: refill days of the bigger pack', 'default': '',
+         'help_text': 'A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before.'},
         {'name': 'sf_cart_upgrade5_from', 'type': 'text', 'label': 'Fifth upgrade: variant in the bag', 'default': '',
          'help_text': 'A fifth product\'s upgrade (NEXT variant IDs), shown when the first four do not apply. Empty: none.'},
         {'name': 'sf_cart_upgrade5_to', 'type': 'text', 'label': 'Fifth upgrade: variant it becomes', 'default': ''},
@@ -1488,6 +1518,8 @@ schema = {'SKINOFAB': {
         {'name': 'sf_cart_upgrade5_text', 'type': 'text', 'label': 'Fifth upgrade: text', 'default': '',
          'help_text': 'Name the real price difference; it must match the two variants\' prices.'},
         {'name': 'sf_cart_upgrade5_button', 'type': 'text', 'label': 'Fifth upgrade: button', 'default': 'Upgrade'},
+        {'name': 'sf_cart_upgrade5_every', 'type': 'text', 'label': 'Fifth upgrade: refill days of the bigger pack', 'default': '',
+         'help_text': 'A refill line upgraded to the bigger pack ships every this many days (it lasts longer). Empty: as often as before.'},
         {'name': 'sf_cart_upsell_1', 'type': 'product', 'label': 'Add-on 1', 'help_text': 'Two add-ons not yet in the bag are offered under the bag lines, in this order.'},
         {'name': 'sf_cart_upsell_2', 'type': 'product', 'label': 'Add-on 2'},
         {'name': 'sf_cart_upsell_3', 'type': 'product', 'label': 'Add-on 3'},
@@ -1548,9 +1580,13 @@ if offer_cfg.exists():
     for n, up in enumerate(oc.get('upgrades') or [oc['upgrade']]):
         key = 'sf_cart_upgrade' + (str(n + 1) if n else '')
         data.update({f'{key}_from': str(up['from']), f'{key}_to': str(up['to']), f'{key}_title': up['title'],
-                     f'{key}_text': up['text'], f'{key}_button': up['button']})
+                     f'{key}_text': up['text'], f'{key}_button': up['button'], f'{key}_every': str(up.get('every') or '')})
     for n, h in enumerate(oc['addons'][:3], 1): data[f'sf_cart_upsell_{n}'] = pid(h)
     if oc.get('frontrow'): data['sf_frontrow_product_id'] = str(oc['frontrow'])
+    for k, rp in zip(REFILL_SLOTS, oc.get('refill_products', [])):
+        if not pid(rp['handle']): sys.exit(f"sf-offer.json: no NEXT product mapped for {rp['handle']} (set SF_CATALOG)")
+        data.update({f'sf_refill_product_{k}': pid(rp['handle']), f'sf_refill_price_text_{k}': rp['price_text'],
+                     f'sf_refill_compare_text_{k}': rp['compare_text'], f'sf_refill_every_{k}': str(rp['every'])})
     if oc.get('refill', {}).get('default'):
         data.update({'sf_refill_default_product': pid(oc['product']), 'sf_subscription_interval': oc['refill']['interval'],
                      'sf_subscription_interval_count': str(oc['refill']['every']),
