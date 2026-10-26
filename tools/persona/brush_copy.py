@@ -295,7 +295,7 @@ def refill_faq(bundles, refill, email='hello@skinofab.com'):
     every = ', '.join(f"{money(b['refill'])} every {b['every']} days for {n(b)}" for b in bundles)
     once = ', '.join(f"{money(b['price'])} for {n(b)}" for b in bundles)
     return [('How do Automatic Refills work?',
-             f'Your pack ships again on a set schedule, about when it runs out, at the refill price: {every}. We email you '
+             f'Your pack ships again on a set schedule, at the refill price: {every}. We email you '
              f'before every refill. '
              f'To skip, delay or cancel, just email {email}: no minimum, no fees.'),
             ('Can I buy just once?',

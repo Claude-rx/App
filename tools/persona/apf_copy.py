@@ -699,10 +699,10 @@ OFFER_PICKER_CSS = r"""
 .sfo-save{font-size:12px;font-weight:500;letter-spacing:.04em;background:#151515;color:#fff;border-radius:999px;padding:3px 10px;white-space:nowrap}
 .sfo-main small{display:block;font-size:14px;color:#6a6a6a;margin-top:3px}
 .sfo-price{text-align:right;line-height:1.15;white-space:nowrap}
-.sfo-refill-note{margin:10px 2px 0;font-size:13px;line-height:1.45;color:#555}
+.sfo-refill-note{margin:10px 2px 0;font-size:14px;line-height:1.45;color:#555}
 .sfo-price b{display:block;font-size:21px;font-weight:600}
 .sfo-price s,.sfo-gifts s{font-size:14px;color:#7a7a7a}
-.sfo-price .sfo-per{display:block;font-size:12.5px;color:#555;margin-top:2px}
+.sfo-price .sfo-per{display:block;font-size:14px;color:#555;margin-top:2px}
 .sfo-tab{position:absolute;top:-13px;right:16px;background:#151515;color:#fff;font-style:normal;font-size:13px;font-weight:600;padding:4px 12px;border-radius:6px;line-height:1.3}
 .sfo-gifts{list-style:none!important;margin:14px 0 0!important;padding:12px 0 0!important;border-top:1px solid #e6e6e6;display:grid;gap:8px}
 .sfo-gifts li{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600}
@@ -985,8 +985,8 @@ REVIEW_WALL_CSS = r"""
 .sfr-dist li[aria-pressed="true"]{font-weight:700}
 .sfr-dist span{height:9px;border-radius:2px;background:#e5e5dd;overflow:hidden}
 .sfr-dist span em{display:block;height:100%;background:var(--sf-tp,#151515)}
-.sfr-dist small{color:#6a6a6a;text-align:right}
-.sfr-note{margin:16px 0 0;font-size:12.5px;line-height:1.45;color:#6a6a6a}
+.sfr-dist small{color:#6a6a6a;text-align:right;font-size:14px}
+.sfr-note{margin:16px 0 0;font-size:14px;line-height:1.45;color:#6a6a6a}
 .sfr-write{display:inline-flex;margin-top:20px;padding:13px 26px;border-radius:999px;border:1.5px solid #191919;color:#191919 !important;text-decoration:none !important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 .sfr-write:hover{background:#191919;color:#fff !important}
 .sfr-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 18px}
@@ -1092,6 +1092,11 @@ REVIEW_WALL_JS = r"""
     if (reset) { shown = 0; box.innerHTML = ''; }
     var next = l.slice(shown, shown + PAGE);
     box.insertAdjacentHTML('beforeend', next.length ? next.map(card).join('') : (shown ? '' : '<p class="sfr-empty">No reviews match this filter yet.</p>'));
+    // "Read more" only where the text is cut: 360 characters fit in five lines on a wide card, and the link opened
+    // nothing (stick review 5)
+    Array.prototype.forEach.call(box.querySelectorAll('.sfr-body.is-clamped'), function (b) {
+      if (b.scrollHeight <= b.clientHeight + 1) { b.classList.remove('is-clamped'); var m = b.nextElementSibling; if (m && m.classList.contains('sfr-more-text')) m.remove(); }
+    });
     shown += next.length;
     root.querySelector('.sfr-more').hidden = shown >= l.length;
   }
@@ -1110,7 +1115,8 @@ REVIEW_WALL_JS = r"""
     root.querySelector('.sfr-chips').innerHTML = chips;
     var note = root.querySelector('.sfr-note');
     if (note && totals.imported) {
-      note.textContent = 'Includes ' + totals.imported.toLocaleString('en-US') + ' verified reviews ' + (totals.note || 'of the same formula from our earlier store') +
+      // whose reviews they are: data-note on another product's page ("of our Adaptive Peptide Foundation ...")
+      note.textContent = 'Includes ' + totals.imported.toLocaleString('en-US') + ' verified reviews ' + (root.getAttribute('data-note') || totals.note || 'of the same formula from our earlier store') +
         (all.length < n ? '. Showing the ' + all.length.toLocaleString('en-US') + ' most helpful.' : '.');
       note.hidden = false;
     }
@@ -1149,6 +1155,11 @@ REVIEW_WALL_JS = r"""
     if (e.target.closest('.sfr-more button')) { paint(false); return; }
     var m = e.target.closest('.sfr-more-text');
     if (m) { m.previousElementSibling.classList.remove('is-clamped'); m.remove(); }
+  });
+  // the photo viewer closes with Escape too (stick review 5), as with its button and its backdrop
+  document.addEventListener('keydown', function (e) {
+    var b = root.querySelector('.sfr-box');
+    if (e.key === 'Escape' && b && !b.hidden) b.hidden = true;
   });
   root.addEventListener('keydown', function (e) {
     var f = e.target.closest && e.target.closest('li[data-sfr-filter]');

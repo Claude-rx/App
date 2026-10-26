@@ -428,6 +428,17 @@ OFF_TOPIC = re.compile(r"(?i)\bbrush|\bs\.?\s?p\.?\s?f\b|\bsf ?\d|sun ?screen|su
                        r"https?:|www\.|youtu|lip ?pl?u?mper|lip pumper|bubble mask|lip stain|lip gloss|" + OFF_TOPIC_BRANDS)
 on_topic = lambda r: not OFF_TOPIC.search((r.get('title') or '') + ' ' + r['body'])
 
+CUT_AT = 495     # the earlier store's export cut each review at 500 characters and added "..." (often mid-word)
+
+def whole(body):
+    """A review the export cut off ("...like many of them ar...", stick review 5), ended where its last full sentence
+    ends; with no full sentence long enough, at its last whole word and an ellipsis. Other reviews as they are."""
+    if len(body) < CUT_AT or not re.search(r'(\.\.\.|…)\s*$', body): return body
+    text = re.sub(r'\s*(\.\.\.|…)\s*$', '', body)
+    ends = [m.end() for m in re.finditer(r'(?<!\.)[.!?](?!\.)["”’)]*(?=\s)', text)]
+    if ends and ends[-1] >= 150: return text[:ends[-1]].rstrip()
+    return re.sub(r'\s+\S*$', '', text).rstrip(' ,;:-–') + '…'
+
 def review_data(reviews=REVIEWS):
     """The imported reviews in <reviews>/reviews.json (tools/reviews/import_reviews.py), or None: the list the wall
     ships (every photo review, every review under 4 stars, then the rest in the importer's order, up to SHIP), the
@@ -435,7 +446,7 @@ def review_data(reviews=REVIEWS):
     data = reviews / 'reviews.json'
     if not data.exists(): return None
     d = json.loads(data.read_text())
-    rs = [r for r in d['reviews'] if on_topic(r)]
+    rs = [dict(r, body=whole(r['body'])) for r in d['reviews'] if on_topic(r)]
     keep = set(i for i, r in enumerate(rs) if r.get('photos') or r['rating'] <= 3)
     for i in range(len(rs)):
         if len(keep) >= SHIP: break
@@ -1393,13 +1404,13 @@ LAYOUT_FIXES = (
     # the results cards: three equal columns whatever the width of their numbers (they pushed the page sideways at 768)
     '.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}'
     '@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}'
-    # product pages on tablets: the gallery above the buy box (side by side the buy box was 261 px wide), not sticky
-    '@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}'
-    # (relative, not static: FrontrowMD's sticker sits in it; static, it was placed against the page, under the
-    # header, at 768: review 6)
-    # (top 0: the design's sticky gallery keeps top 85 px, which as relative moved it 85 px down onto the title and
-    # rating, stick review 2)
-    '.product-single__gallery{position:relative!important;top:0!important;height:auto!important}}'
+    # (and on a small laptop: "30 days" at 80 px was 287 px wide in a 229 px card at 1024, stick review 5)
+    '@media(min-width:1024px) and (max-width:1339px){.skinofab-results__percentage{font-size:60px}}'
+    # the smallest reading text at 14 px for a reader over 45 (stick review 5: the comparison table at 12 px on a
+    # phone, the ingredient cards and the results lines at 13)
+    '.skinofab-compare-table th,.skinofab-compare-table td{font-size:14px!important}.si__body{font-size:14px}'
+    '.skinofab-results__subtitle{font-size:14px}'
+    # product pages on tablets, the gallery above the buy box: TABLET_STACK, in the gallery's reserve style
     # a circled word: room on both sides so the drawn ellipse never crosses the word before it (CIRCLE_ROOM_JS sets
     # the left room from the word's width once it is laid out: the ellipse is 136% of it)
     '.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}'
@@ -1503,6 +1514,12 @@ def layout_fixes():
     for page in DST.rglob('*.html'):
         t = page.read_text(encoding='utf-8', errors='surrogateescape')
         if 'data-sf-layout-fixes' in t or '</body>' not in t: continue
+        # the accordions' titles: one id on six of them (stick review 5); a class, with the design's two rules for it
+        if '<span id="accordionbefore">' in t:
+            t = t.replace('<span id="accordionbefore">', '<span class="sf-acctitle">')
+            t = t.replace('</body>', '<style>button[aria-expanded=true] .sf-acctitle:before{content:"";position:absolute;'
+                          'height:67%;right:-5%;left:-5%;top:33%;background-color:var(--text-highlight-color,#E7B5C1);opacity:.5;'
+                          'z-index:-1;transition:.25s all}.sf-acctitle{position:relative;transition:.25s all}</style></body>', 1)
         # the product gallery before its slider script starts: the square first photo and one row of thumbnails, as
         # after it (all its photos stacked made the page 4,300 px taller, then jump: CLS 0.49 on phones, stick review
         # 2). Clipped, not hidden, so the script still measures every slide; just before the gallery, so it holds from
@@ -1515,12 +1532,46 @@ def layout_fixes():
                        # (full width it was 833 px tall and the screen held no buy box, stick review 3)
                        '@media (min-width:768px) and (max-width:1023px){[data-product-single-media-group]{max-width:560px;'
                        'margin-left:auto!important;margin-right:auto!important}}'
-                       '</style>' + m.group(1), t, count=1)
+                       + TABLET_STACK + '</style>' + m.group(1), t, count=1)
         t = t.replace('</body>', f'<style data-sf-layout-fixes>{LAYOUT_FIXES}</style>'
                       + (CIRCLE_ROOM_JS if 'text-highlight-wrapper--circle' in t else '') + '</body>', 1)
         t = BEFORE_AFTER_IMG.sub(lambda m: f'<div class="skinofab-iwt__image sf-has-note">{m.group(1)}{BEFORE_AFTER_NOTE}', t)
         page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
+
+# product pages on tablets: the gallery above the buy box (side by side the buy box was 261 px wide), not sticky. In
+# the gallery's reserve style, before the gallery: at the end of the body it came after the first paint, and the buy
+# box, laid out beside the gallery, dropped 670 px below it (CLS 0.55 at 768, stick review 5)
+# (relative, not static: FrontrowMD's sticker sits in it; static, it was placed against the page, under the header,
+# at 768: review 6) (top 0: the design's sticky gallery keeps top 85 px, which as relative moved it 85 px down onto
+# the title and rating, stick review 2)
+TABLET_STACK = ('@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}'
+                '.product-single__gallery{position:relative!important;top:0!important;height:auto!important}}')
+
+GUARANTEE_SVG = ('<svg aria-hidden="true" class="sfb-guarantee__icon" viewBox="0 0 100 100" width="50" height="50">'
+                 '<circle cx="50" cy="50" fill="#151515" r="48"></circle><circle cx="50" cy="50" fill="none" r="40" '
+                 'stroke="#fff" stroke-dasharray="2.5 3.5" stroke-width="2"></circle><text fill="#fff" '
+                 'font-family="Jost,Arial,sans-serif" font-size="34" font-weight="700" text-anchor="middle" x="50" y="54">30'
+                 '</text><text fill="#fff" font-family="Jost,Arial,sans-serif" font-size="12" font-weight="600" '
+                 'letter-spacing="1.5" text-anchor="middle" x="50" y="73">DAYS</text></svg>')
+ASSURE_CSS = ('.sfb-assure{margin:14px 0 4px}'
+              '.sfb-shiprow{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;margin:0 0 16px;font-size:15px;'
+              'line-height:1.4;font-weight:600;text-align:center}'
+              '.sfb-shiprow__free{color:#15803d}.sfb-shiprow__free:before{content:"";display:inline-block;width:8px;height:8px;'
+              'border-radius:50%;background:#15803d;margin-right:8px;vertical-align:middle}'
+              '.sfb-guarantee{display:grid;grid-template-columns:50px 1fr;gap:6px 16px;align-items:center;padding:18px 20px;'
+              'border:2px solid #000;border-radius:12px;background:#f7f7f7;color:#000}'
+              '.sfb-guarantee b{font-size:18px;font-weight:600;line-height:1.3}'
+              '.sfb-guarantee p{grid-column:1/-1;margin:4px 0 0;font-size:16px;line-height:1.5}')
+
+def assure_html(text=None):
+    """Under a twin page's button, as under the foundation's: free shipping, how fast it ships, and the 30-day
+    guarantee in its box. text: the guarantee's line for this product (P.GUARANTEE)."""
+    text = text or 'Use it for 30 days. If you don’t love it, we’ll refund you, even opened.'
+    return (f'<div class="product__block sfb-assure"><style>{ASSURE_CSS}</style>'
+            '<p class="sfb-shiprow"><span class="sfb-shiprow__free">Free shipping on every order</span>'
+            '<span>\U0001F4E6 Ships in 1 business day, tracked</span></p>'
+            f'<div class="sfb-guarantee">{GUARANTEE_SVG}<b>30-day money-back guarantee</b><p>{html.escape(text, quote=False)}</p></div></div>')
 
 def local_location():
     """The product pages' "Free shipping to <country>" line asked Shopify's /browsing_context_suggestions.json, which
@@ -2066,9 +2117,10 @@ def cart_offer():
     brush = json.loads((WORK / 'brush-offers.json').read_text())['variants']
     b1, b2 = brush_copy.BUNDLES[0], brush_copy.BUNDLES[1]
     b_text = (f"Just {money(round(float(b2['price']) - float(b1['price']), 2))} more for a second brush and a second free case.")
-    def step_text(P, what):
-        # the price step from the 1-pack to the 2-pack: one number when it is the same bought once and with refills
-        a, b = P.BUNDLES[0], P.BUNDLES[1]
+    def step_text(P, what, i=0):
+        # the price step from pack i to pack i + 1 (the 1-pack to the 2-pack): one number when it is the same bought
+        # once and with refills
+        a, b = P.BUNDLES[i], P.BUNDLES[i + 1]
         once = round(float(b['price']) - float(a['price']), 2)
         if not getattr(P, 'REFILL', None): return f"Just {money(once)} more for {what}."
         refill = round(float(b['refill']) - float(a['refill']), 2)
@@ -2086,6 +2138,10 @@ def cart_offer():
     stick = json.loads((WORK / stick_copy.OFFERS_FILE).read_text())['variants']
     e1, e2 = stick_copy.BUNDLES[0], stick_copy.BUNDLES[1]
     e_text = step_text(stick_copy, 'a second stick: one at home, one in your bag')
+    # and from the 2-stick pack, the default, to the 3-stick pack (buy 2, get 1 free): most bags hold the 2-pack, and
+    # the drawer offered nothing from it (stick review 5)
+    e3 = stick_copy.BUNDLES[2]
+    e3_text = step_text(stick_copy, 'a third stick', 1)
 
     return {'product': cart['product'], 'addons': cart['addons'],
             'upgrades': [{'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
@@ -2097,7 +2153,9 @@ def cart_offer():
                          {'from': serum[d1['key']], 'to': serum[d2['key']], 'title': serum_copy.CART_UPGRADE['title'],
                           'text': d_text, 'button': serum_copy.CART_UPGRADE['button'], 'every': every_of(serum_copy)},
                          {'from': stick[e1['key']], 'to': stick[e2['key']], 'title': stick_copy.CART_UPGRADE['title'],
-                          'text': e_text, 'button': stick_copy.CART_UPGRADE['button'], 'every': every_of(stick_copy)}],
+                          'text': e_text, 'button': stick_copy.CART_UPGRADE['button'], 'every': every_of(stick_copy)},
+                         {'from': stick[e2['key']], 'to': stick[e3['key']], 'title': stick_copy.CART_UPGRADE_3['title'],
+                          'text': e3_text, 'button': stick_copy.CART_UPGRADE_3['button'], 'every': e3['every']}],
             'review': {'text': cart['review_text'], 'name': cart['review_name']}, 'guarantee_text': cart['guarantee_text'],
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
@@ -2339,7 +2397,8 @@ def twin_context(P, found, stats, amazon):
         wall += own.replace(head, f'<h2 id="sfr-title">{html.escape(borrow["title"])}</h2>'
                                   f'<p class="sfr-of" style="margin:6px 0 14px;color:#4a4a4a;font-size:15px;line-height:1.5">'
                                   f'{html.escape(borrow["note"])}</p>', 1).replace(
-            sec, f'{sec} data-buyer="{html.escape(borrow["buyer"])}"', 1)     # each card: whose buyer she was
+            sec, f'{sec} data-buyer="{html.escape(borrow["buyer"])}"'
+                 + (f' data-note="{html.escape(borrow["wall_note"])}"' if borrow.get('wall_note') else ''), 1)   # each card: whose buyer she was
     else: wall += review_wall(reviews)
     return {'img': img, 'clip': clip, 'avatar': avatar(), 'strip_own': review_strip(reviews), 'strip_brand': brand,
             'wall': wall, 'no_reviews': None if (stats or borrow) else f'<style>{brush_copy.SECTIONS_CSS}</style>{P.no_reviews_html(amazon=amazon)}'}
@@ -2379,7 +2438,8 @@ def product_page(base, P, final, found=None):
         im['src'], im['srcset'] = big, f'{mid_src} 753w, {big} 1080w'
         # P.GALLERY_ALT: what a slide shows, for a screen reader (else the product's name)
         im['alt'], im['data-image-id'] = getattr(P, 'GALLERY_ALT', {}).get(P.GALLERY[k - 1], P.TITLE), mid
-        if k > 1: im['fetchpriority'] = 'low'
+        # the others when they come near (the six 1080 px photos, 674 KB, all loaded with the page, stick review 5)
+        if k > 1: im['fetchpriority'], im['loading'] = 'low', 'lazy'
         slider.append(sl)
         th = copy.copy(t_thumb)
         th['data-id'], th['data-thumbnail-id'] = mid, f'{P.KEY}-{mid}'
@@ -2499,7 +2559,12 @@ def product_page(base, P, final, found=None):
     plan = refill_plan(P)
     cta.insert_after(frag(f'<div class="product__block sfp-trust"><style>{apf_copy.TRUST_CSS}</style>'
                           f'{apf_copy.trust_html(terms=bool(plan), refills=bool(plan), plan=plan)}</div>'))
-    if frontrow_html: prod.select_one('.sfp-trust').insert_after(frag(frontrow_html))
+    # then, as under the foundation's button, free shipping and the boxed 30-day guarantee (stick review 5: under the
+    # twin's button only the refill terms showed, no reassurance); its own markup, as the design's blocks carry the
+    # foundation's variant ids and scripts
+    trust = prod.select_one('.sfp-trust')
+    trust.insert_after(frag(assure_html(getattr(P, 'GUARANTEE', None))))
+    if frontrow_html: prod.select_one('.sfb-assure').insert_after(frag(frontrow_html))
     # the tabs, in the design's accordion markup
     accs = prod.select('.product__block.product__accordions')
     tpl, anchor = copy.copy(accs[0]), accs[-1]

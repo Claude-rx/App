@@ -73,7 +73,8 @@ def moments(sec, cards, img):
     for k, sl in enumerate(slides):
         if k >= len(cards): sl.decompose(); continue
         name, title, text, alt = cards[k]
-        src, w, h = img(name, (640, 480), (0.5, 0.35))
+        # 960 x 720: a card is 266 px wide on a phone, 798 device pixels at 3x (640 px was short, stick review 5)
+        src, w, h = img(name, (960, 720), (0.5, 0.35))
         im = sl.select_one('.skinofab-testimonials__image img')
         im['src'], im['alt'], im['width'], im['height'] = src, alt, str(w), str(h)
         sl.select_one('.skinofab-testimonials__name').string = title
@@ -81,7 +82,9 @@ def moments(sec, cards, img):
             for el in sl.select(sel): el.decompose()
         p = sl.select_one('.skinofab-testimonials__text p')
         p.string = text
-    return str(s)
+    # on a tablet, 2.2 cards, not 2.5: the half card at the screen's edge cut a face in two (stick review 5); the
+    # card that peeks in now shows its first fifth (each photo's own margin, before the face)
+    return str(s).replace('767: { slidesPerView: 2.5,', '767: { slidesPerView: 2.2,')
 
 
 # line icons for the twin pages, drawn to say what their line says (the design's icons were the foundation's own: a

@@ -231,8 +231,9 @@ PAGE = {
         # the section")
         (r'RE:<p>Prices on this Application are displayed:</p>\s*<ul>\s*<li>either exclusive or inclusive of any applicable fees, '
          r'taxes and costs, depending on the section the User is browsing\.</li>\s*</ul>',
-         '<p>The price shown at checkout is the full price: it includes any applicable fees, taxes and costs, and there are '
-         'no import duties or charges to pay at delivery.</p>'),
+         # (no promise about import duties: nothing shows the checkout collects them, stick review 5)
+         '<p>The price shown at checkout includes any applicable fees and taxes the Owner collects. Import duties or taxes '
+         'charged by the destination country, if any, are not included and are payable by the User at delivery.</p>'),
         # payment methods the checkout does not offer (it takes cards)
         (r'RE:(?s)<h3 id="payment-of-price-in-installments">Payment of price in installments</h3>\s*<p>.*?</p>\s*', ''),
         (r'RE:(?s)<h3 id="authorization-for-future-paypal-payment">Authorization for future PayPal payment</h3>\s*<p>.*?</p>\s*<p>.*?</p>\s*', ''),

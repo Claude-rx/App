@@ -102,7 +102,7 @@ async function drawerState(s) {
     const r = document.querySelector(sel).shadowRoot, text = r.querySelector('.spark-drawer-panel').innerText.replace(/\s+/g, ' ');
     return { open: getComputedStyle(r.querySelector('.spark-drawer-panel')).visibility !== 'hidden', text: text.slice(0, 900),
              upgrade: !!r.querySelector('[data-sf-upgrade]'), addons: [...r.querySelectorAll('.sf-upsell-name')].map(a => a.textContent),
-             review: !!r.querySelector('.sf-review'), guarantee: !!r.querySelector('.sf-trust-row'), pay: r.querySelectorAll('.sf-pay img').length,
+             review: !!r.querySelector('.sf-review'), guarantee: !!r.querySelector('.spark-drawer-footer .sf-guarantee, .sf-guarantee'), pay: r.querySelectorAll('.sf-pay img').length,
              planTalk: /refill reminder|cancel any time|due today|switch base/i.test(text) };
   }, drawer);
 }
@@ -463,7 +463,7 @@ async function twinPage(name, route, cfg) {
   await scrollThrough(s.page);
   const pg = await s.page.evaluate(([keysSrc, claimsSrc]) => {
     const keys = new Function('return (' + keysSrc + ')')()();
-    const tabs = [...document.querySelectorAll('.product__accordions #accordionbefore')].map(e => e.textContent.trim());
+    const tabs = [...document.querySelectorAll('.product__accordions .sf-acctitle')].map(e => e.textContent.trim());
     const head = document.querySelector('.product__price-and-badge');
     let native = { reviews: [] };
     try { native = JSON.parse(document.querySelector('[data-sf-native-reviews]').textContent); } catch (e) {}

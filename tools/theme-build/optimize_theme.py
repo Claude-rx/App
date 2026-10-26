@@ -23,6 +23,8 @@ Every step keeps what a visitor sees the same and only changes what the browser 
    data-sf-bg, at most 1080 px wide through the CDN, and the base layout sets it when its element nears the screen.
 7. The home page's photo first: its lazy images (fetched with the page on a slow network anyway) wait for the page
    to load unless they come near the screen, so the hero photo has the bandwidth to itself.
+8. Comments out. Inline scripts and styles and the store's own scripts lose their comments (the build's notes stay
+   in tools/): scripts parsed by strip_comments.mjs, so strings and regexes are untouched.
 
 Writes theme-optimize-report.json next to the theme dir. Fails (exit 1) when an output does not compile with
 the platform's Sass compiler or a step's safety check trips.
@@ -286,13 +288,17 @@ def prune_faces(text, stats):
 
 st = {}
 asset_styles = THEME / 'partials/sf_asset_styles.html'
-t = read(asset_styles)
+raw = read(asset_styles)
+# its url()s are template tags ({{ '...'|asset_url }}): set aside while the faces are matched, or a face ended at the
+# first "}" of its first url and only its start was dropped, leaving '}") format("woff2"),url(...)' in every page's
+# head (stick review 5)
+t, keep = protect(raw)
 t = prune_faces(t, st)
 # --sfu-* url() variables nothing reads any more
 for var in set(re.findall(r'(--sfu-[\w-]+):', t)):
-    if not re.search(r'var\(\s*' + re.escape(var) + r'\s*[,)]', ALL_CSS.replace(t, '')):
+    if not re.search(r'var\(\s*' + re.escape(var) + r'\s*[,)]', ALL_CSS.replace(raw, '')):
         t = re.sub(re.escape(var) + r':url\("[^"]*"\);', '', t); st['url_vars_dropped'] = st.get('url_vars_dropped', 0) + 1
-t = re.sub(r'\n{2,}', '\n', t)
+t = restore(re.sub(r'\n{2,}', '\n', t), keep)
 write(asset_styles, t)
 REPORT['fonts']['sf_asset_styles'] = st
 
@@ -597,6 +603,67 @@ if late_stats['images'] and '/* sf late images */' not in b:
     else: write(base, b.replace('\n</body>', '\n' + LATE_SCRIPT + '</body>', 1))
 REPORT['late_images'] = late_stats
 
+# ---------------------------------------------------------------- 8. comments out
+# The build's notes on why a line is there ("stick review 5: ...") stay in tools/; what a visitor downloads carries
+# none (stick review 5 read them in the page source). Inline scripts without template tags and the store's own
+# scripts go through strip_comments.mjs (parsed, so strings and regexes are safe; a script that does not parse is
+# left alone); inline styles lose their /* */ comments, outside strings and template tags.
+def css_without_comments(css):
+    out, i = [], 0
+    while i < len(css):
+        c = css[i]
+        if c in '"\'':
+            j = skip_string(css, i); out.append(css[i:j]); i = j
+        elif css.startswith('/*', i) and not css.startswith('/*!', i):
+            j = css.find('*/', i + 2)
+            if j < 0: out.append(css[i:]); break
+            out.append(' '); i = j + 2
+        else:
+            out.append(c); i += 1
+    return ''.join(out)
+
+STYLE_BLOCK = re.compile(r'(<style\b[^>]*>)(.*?)(</style>)', re.S)
+OWN_JS = sorted(set(THEME.glob('assets/js/skinofab-*.js')) | set(THEME.glob('assets/sf/js/skinofab-*.js')))
+c_stats = {'inline_scripts': 0, 'scripts_left': 0, 'own_scripts': 0, 'inline_styles': 0, 'kb_saved': 0.0}
+sjobs = [(p, m.group(2)) for p in DESIGN_HTML for m in INLINE_JS.finditer(read(p))
+         if '//' in m.group(2) or '/*' in m.group(2)]
+sjobs = [(p, b) for p, b in sjobs if not DTL_RE.search(b)]
+own = [(f, read(f)) for f in OWN_JS]
+try:
+    res = subprocess.run(['node', str(HERE / 'strip_comments.mjs')], input=json.dumps([b for _, b in sjobs] + [s for _, s in own]),
+                         capture_output=True, text=True, check=True)
+    stripped = json.loads(res.stdout)
+except Exception as e:
+    stripped = None
+    REPORT['errors'].append(f'comments: strip_comments.mjs unavailable ({e}); comments left in')
+if stripped is not None:
+    saved = 0
+    per = {}
+    for (p, body), code in zip(sjobs, stripped[:len(sjobs)]):
+        if code is None: c_stats['scripts_left'] += 1; continue
+        per.setdefault(p, []).append((body, code))
+    for p, pairs in per.items():
+        t_ = read(p)
+        for body, code in pairs:
+            new_t = t_.replace('>' + body + '</script>', '>' + code + '</script>', 1)
+            if new_t != t_: saved += len(body) - len(code); c_stats['inline_scripts'] += 1; t_ = new_t
+        write(p, t_)
+    for (f, src), code in zip(own, stripped[len(sjobs):]):
+        if code is None: REPORT['errors'].append(f'comments: {f.relative_to(THEME)} does not parse, left as it is'); continue
+        if code != src: write(f, code); saved += len(src) - len(code); c_stats['own_scripts'] += 1
+    for p in DESIGN_HTML:
+        t_ = read(p)
+        def strip_style(m):
+            if '/*' not in m.group(2): return m.group(0)
+            body, keep = protect(m.group(2))
+            new = restore(css_without_comments(body), keep)
+            c_stats['inline_styles'] += 1
+            return m.group(1) + new + m.group(3)
+        new_t = STYLE_BLOCK.sub(strip_style, t_)
+        if new_t != t_: saved += len(t_) - len(new_t); write(p, new_t)
+    c_stats['kb_saved'] = kb(saved)
+REPORT['comments'] = c_stats
+
 # ---------------------------------------------------------------- gates + report
 try:
     import sass
@@ -612,6 +679,6 @@ for p in DESIGN_HTML:
 tot_b = sum(v['before_kb'] for k, v in REPORT['css'].items() if k != 'inline')
 tot_a = sum(v['after_kb'] for k, v in REPORT['css'].items() if k != 'inline')
 print(f"css files {tot_b:.0f} KB -> {tot_a:.0f} KB; inline styles {INLINE['before_kb']:.0f} KB -> {INLINE['after_kb']:.0f} KB in {INLINE['blocks']} blocks; "
-      f"bundles {len(bundles)}; fonts {REPORT['fonts']['sf_asset_styles']}; swiper {REPORT['swiper'] or 'unchanged'}; images {img_stats}; backgrounds {bg_stats}; late images {late_stats}")
+      f"bundles {len(bundles)}; fonts {REPORT['fonts']['sf_asset_styles']}; swiper {REPORT['swiper'] or 'unchanged'}; images {img_stats}; backgrounds {bg_stats}; late images {late_stats}; comments {c_stats}")
 for e in REPORT['errors']: print('  !', e)
 sys.exit(1 if any(e.startswith('sass:') or 'comment' in e for e in REPORT['errors']) else 0)

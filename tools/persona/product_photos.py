@@ -245,11 +245,12 @@ def panel(product, name, title, rows, out):
         size -= 2
     d.text((70, 150), title[0], font=serif(size, 'Bold'), fill=INK, anchor='ls')
     d.text((70, 150 + round(size * 100 / 84)), title[1], font=serif(size, 'Bold', italic=True), fill=INK, anchor='ls')
+    # the rows at 40 px: the photo is 350 px wide on a phone, where 32 px read as 10 px (stick review 5)
     for k, (kind, a, b) in enumerate(rows):
-        y = 380 + k * 130
-        icon(d, kind, 104, y + 4)
-        d.text((160, y - 4), a, font=sans(32, 'Medium'), fill=INK, anchor='ls')
-        d.text((160, y + 36), b, font=sans(32, 'Medium'), fill=INK, anchor='ls')
+        y = 384 + k * 148
+        icon(d, kind, 100, y + 6)
+        d.text((150, y - 2), a, font=sans(40, 'Medium'), fill=INK, anchor='ls')
+        d.text((150, y + 46), b, font=sans(40, 'Medium'), fill=INK, anchor='ls')
     save(im, product, out)
 
 
@@ -268,17 +269,40 @@ def results_grid(product, pairs, title):
     save(im, product, 'results-grid')
 
 
-def whats_inside(product, name, rows, size=700, note_left=False):
+def whats_inside(product, name, rows, size=700, note_left=False, shadow=False):
+    """shadow: a soft contact shadow under a product standing on the white (the stick's floated, stick review 5)."""
+    import cv2
     im = Image.new('RGB', (W, W), PAPER)
     im.paste(src(product, name, size), (W - size, W - size))
+    # the product itself: the largest dark shape (not a dropper or a swatch beside it), for the lines and the shadow
+    dark = (np.asarray(im.convert('L')) < 90).astype(np.uint8)
+    n, lab, stats, _ = cv2.connectedComponentsWithStats(dark)
+    main = 1 + int(np.argmax(stats[1:, cv2.CC_STAT_AREA]))
+    ys, xs = np.where(lab == main)
+    sx0, sx1, sy0, sy1 = int(xs.min()), int(xs.max()), int(ys.min()), int(ys.max())
+    def edge(y):                     # the product's left edge at height y (its nearest row that has it)
+        rows_ = np.unique(ys)
+        r = int(rows_[np.argmin(np.abs(rows_ - y))])
+        return int(xs[ys == r].min()), r
+    if shadow:
+        sh = Image.new('L', (W, W), 0)
+        ImageDraw.Draw(sh).ellipse((sx0 - (sx1 - sx0) * .45, sy1 - 7, sx1 + (sx1 - sx0) * .45, sy1 + 15), fill=150)
+        sh = np.asarray(sh.filter(ImageFilter.GaussianBlur(9))).astype(np.float32)[..., None] / 255
+        im = Image.fromarray(np.clip(np.asarray(im).astype(np.float32) * (1 - .42 * sh), 0, 255).astype(np.uint8))
     d = ImageDraw.Draw(im)
     d.text((64, 150), 'What’s', font=serif(80, 'Bold'), fill=INK, anchor='ls')
     d.text((64, 240), 'inside', font=serif(80, 'Bold'), fill=INK, anchor='ls')
     for k, (a, b) in enumerate(rows):
         y = 380 + k * 126
         d.text((64, y), a, font=sans(31, 'Medium'), fill=INK, anchor='ls')
+        # each line runs on to the product itself, a dot where it meets it (they stopped 200 px short and pointed at
+        # nothing, stick review 5)
         end = 64 + d.textlength(a, font=sans(31, 'Medium')) + 16
-        if end < 400: d.line([(end, y - 10), (460, y - 10)], fill=INK, width=2)
+        tx, ty = edge(sy0 + (sy1 - sy0) * (.16 + .2 * k))
+        tx -= 8
+        if end < tx - 40:
+            d.line([(end, y - 10), (tx - 70, y - 10), (tx, ty)], fill=INK, width=2, joint='curve')
+            d.ellipse((tx - 5, ty - 5, tx + 5, ty + 5), fill=INK)
         d.text((64, y + 34), b, font=sans(19, 'Regular'), fill=SOFT, anchor='ls')
     # note_left: on the white side (a photo that runs to the bottom-right corner hid it)
     if note_left: note(d, (64, W - 28), anchor='ls')
@@ -328,6 +352,20 @@ def vs_others(product, ours, others, others_label, why, rows, others_thresh=240,
         check(d, col1, y - 14, 22, True)
         check(d, col2, y - 14, 22, False, (200, 200, 200))
     save(im, product, 'vs-others')
+
+
+def paint_over(path, box, level):
+    """Paint over what is lighter than `level` (0-255) inside box (x0, y0, x1, y1) of the photo at path, from what is
+    round it (OpenCV inpainting), in place: an AI artefact on a dark ground."""
+    import cv2
+    im = cv2.imread(str(path))
+    x0, y0, x1, y1 = box
+    mask = np.zeros(im.shape[:2], np.uint8)
+    region = cv2.cvtColor(im[y0:y1, x0:x1], cv2.COLOR_BGR2GRAY)
+    mask[y0:y1, x0:x1] = (region > level).astype(np.uint8) * 255
+    mask = cv2.dilate(mask, np.ones((9, 9), np.uint8))
+    mask[:y0], mask[y1:], mask[:, :x0], mask[:, x1:] = 0, 0, 0, 0
+    cv2.imwrite(str(path), cv2.inpaint(im, mask, 6, cv2.INPAINT_TELEA), [cv2.IMWRITE_JPEG_QUALITY, 95])
 
 
 def plain(product, name, out=None, small_print=None):
@@ -397,6 +435,9 @@ def stick():
     for name, ops in relabel_bottles.STICK.items():
         relabel_bottles.relabel(Image.open(P / 'source' / f'{name}.jpg'), ops).save(P / 'labelled' / f'{name}.jpg', quality=95)
         print('relabelled', name)
+    # the handbag's top right corner: the AI ran its zipper into a loose loop of chain links (stick review 5); the
+    # links painted over from the dark lining round them, the zipper below and the hand above left as they are
+    paint_over(P / 'labelled' / 'bag.jpg', (1140, 410, 1254, 496), 16)
     # the before/after illustration: one woman, the same photo twice (the after is an image edit of the before: her
     # hair, pose, light and lines unchanged, only the foundation added), the middle half of each side by side
     b, a = photo(P, 'before'), photo(P, 'after')
@@ -437,7 +478,7 @@ def stick():
                                                           ('stick', 'Swipe, buff,', 'done in a minute')], 'one-stick')
     # on the stick itself (the swatch photo is "How does it work?" further down: the same photo twice, stick review 3)
     whats_inside(P, 'single', [('Hyaluronic acid', 'Keeps dry skin comfortable'), ('Niacinamide', 'For a more even-looking tone'),
-                               ('Squalane + vitamin E', 'Soft and supple, never tight')], note_left=True)
+                               ('Squalane + vitamin E', 'Soft and supple, never tight')], note_left=True, shadow=True)
     science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',
                            'and the white cream shifts toward your own skin tone:',
                            'one shade that meets your skin where it is.'))

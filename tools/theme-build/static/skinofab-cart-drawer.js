@@ -279,11 +279,9 @@
     }
 
     function trustHtml() {
+        /* the guarantee is in the footer, always in view (in this card, the footer cut it in half on a phone, stick
+           review 5) */
         var html = '';
-        if (cfg.guaranteeTitle) {
-            html += '<div class="sf-trust-row">' + ICON.seal + '<p><strong>' + escapeHtml(cfg.guaranteeTitle) + '</strong>' +
-                (cfg.guaranteeText ? '<span>' + escapeHtml(cfg.guaranteeText) + '</span>' : '') + '</p></div>';
-        }
         /* the review is about one product: it shows while that product (any of its packs) is in the bag */
         var about = parseInt(cfg.reviewPk, 10);
         var reviewed = !about || currentLines.some(function(l) {
@@ -363,6 +361,7 @@
             '<div class="spark-drawer-total-row grand"><span>' + escapeHtml(label(labels, 'totalLabel', 'Total')) + '</span><span>' + money(total, currency) + '</span></div>' +
             '</div>' +
             '<a href="' + escapeHtml(labels.checkoutUrl) + '" class="spark-drawer-checkout">' + ICON.lock + '<span>' + escapeHtml(cfg.checkoutText || labels.checkoutText) + '</span></a>';
+        if (cfg.guaranteeTitle) html += '<p class="sf-secure sf-guarantee">' + ICON.seal + '<span>' + escapeHtml(cfg.guaranteeTitle) + '</span></p>';
         if ((cfg.payIcons || []).length) {
             html += '<ul class="sf-pay" aria-label="' + escapeHtml(cfg.payLabel || 'Accepted payment methods') + '">' +
                 cfg.payIcons.map(function(p) { return '<li><img src="' + escapeHtml(p.src) + '" alt="' + escapeHtml(p.alt) + '" width="38" height="24" /></li>'; }).join('') + '</ul>';
@@ -500,6 +499,8 @@
         '.sf-pay { list-style: none; margin: 12px 0 0; padding: 0; display: flex; justify-content: center; gap: 6px; }',
         '.sf-pay img { display: block; width: 38px; height: 24px; }',
         '.sf-secure { margin: 8px 0 0; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; color: #6a6a6a; }',
+        '.sf-guarantee { margin-top: 10px; font-size: 14px; font-weight: 600; color: #151515; }',
+        '.sf-guarantee svg { width: 18px; height: 18px; flex: none; }',
         '.spark-drawer-continue { margin-top: 6px; color: #151515; text-decoration: underline; text-underline-offset: 2px; }',
         /* empty bag */
         '.spark-drawer-empty { padding: 36px 20px; gap: 6px; }',
