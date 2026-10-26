@@ -2603,7 +2603,10 @@ def product_page(base, P, final, found=None):
     prod.insert_after(frag(''.join(out)))
     if frontrow_html:
         strip = soup.select_one('#shopify-section-sf-review-strip .sfrs-wrap') or soup.select_one('.sfrs .sfrs-wrap')
-        if strip: strip.append(frag(f'<div class="sfrs-frontrow" style="max-width:560px;margin:18px auto 0">{frontrow_html}</div>'))
+        # (across the strip's grid, never wider than it: in a 1fr column its badge's fixed width widened the page to
+        # 461 px on a phone)
+        if strip: strip.append(frag(f'<div class="sfrs-frontrow" style="grid-column:1/-1;min-width:0;max-width:min(560px,100%);'
+                                    f'overflow:hidden;margin:6px auto 0;justify-self:center;width:100%">{frontrow_html}</div>'))
         else: prod.select_one('.sfb-assure').insert_after(frag(frontrow_html))
     # the design's product JSON (the theme's product script reads prices and variants from it)
     gallery = [s_.find('img')['src'] for s_ in slider.select('[data-product-single-media-wrapper]')]
