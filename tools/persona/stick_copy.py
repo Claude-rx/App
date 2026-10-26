@@ -148,7 +148,7 @@ BORROW_REVIEWS = {'of': 'our Adaptive Peptide Foundation, the same adaptive form
                   'title': 'Reviews of our Adaptive Peptide Foundation',
                   'note': 'The same adaptive formula, in a bottle. The stick is new at SKINOFAB: its own reviews join these '
                           'as buyers write them.',
-                  'badge': 'of the foundation’s formula'}
+                  'badge': 'of the foundation'}          # one line under the stars on a phone (stick review 4)
 # the reviews' stars, bars and checks in the review-site look the owner asked for (26 Oct 2026): green boxed stars,
 # with no review site's name or logo (the reviews are the store's own imports, and the page says so)
 REVIEW_STARS = '#00b67a'

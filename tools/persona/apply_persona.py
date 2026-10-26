@@ -1365,9 +1365,7 @@ LAYOUT_FIXES = (
     '.si__dots{gap:0!important}.si__dot{box-sizing:content-box!important;padding:18px 8px!important;background-clip:content-box!important}'
     '.si__dot:not([aria-current="true"]){background-color:#b3b3b3!important}'
     '.sfb-rating{padding-top:10px;padding-bottom:6px;margin-top:-10px;margin-bottom:4px}'
-    # (its tap area no longer runs under the title: stick review 4); on a phone the stars on one line, the words
-    # under them, not wrapped beside them
-    '@media (max-width:599px){.sfb-rating .sf-rating{flex-wrap:wrap;row-gap:4px}.sfb-rating .sf-rating__text{flex-basis:100%}}'
+    # (its tap area no longer runs under the title: stick review 4)
     # the photo cards one height (a longer line made one card taller, stick review 4); under 1024 px the row runs to
     # the screen's edge, its arrows gone (below), so the next card shows where it continues
     '.skinofab-testimonials .swiper-slide{height:auto}.skinofab-testimonials__card{height:100%}'
@@ -2261,7 +2259,7 @@ def card_clip(src, name, kind, width=540):
 def brush_rating(imported=None, of=None):
     """Stars and count from the product's approved NEXT reviews and its imported ones (count and sum of their ratings),
     shown only once there are some. of: whose reviews they are when they are another product's (the stick shows the
-    foundation's: "4.8/5 · 9,855 reviews of the foundation's formula")."""
+    foundation's: "4.8/5 · 9,855 reviews of the foundation")."""
     n0, s0 = (imported or {}).get('count', 0), sum(int(k) * v for k, v in ((imported or {}).get('distribution') or {}).items())
     # with imported reviews the badge is drawn from them as the page loads (its script then adds NEXT's own): hidden
     # until the script ran, it pushed the title down when it appeared (review 7)
@@ -2411,12 +2409,16 @@ def product_page(base, P, final, found=None):
     # P.REVIEW_STARS: the page's stars as colored boxes, in the buy box's rating as in the review strip and wall
     # (their --sf-tp, apf_copy)
     if getattr(P, 'REVIEW_STARS', None):
-        app.append(frag(f'<style>:root{{--sf-tp:{P.REVIEW_STARS}}}'
+        app.insert(0, frag(f'<style>:root{{--sf-tp:{P.REVIEW_STARS}}}'
                         '.sfb-rating .sf-rating__stars{gap:3px}'
                         '.sfb-rating .sf-star{width:22px;height:22px;color:#fff;'
                         'background:linear-gradient(90deg,var(--sf-tp) var(--f),#dcdce6 var(--f))}'
                         '.sfb-rating .sf-star svg{width:72%;height:72%;left:14%;top:14%}'
-                        '.sfb-rating .sf-star svg+svg{display:none}</style>'))
+                        '.sfb-rating .sf-star svg+svg{display:none}'
+                        # on a phone the stars on one line, the words under them, not wrapped beside them (stick
+                        # review 4); here, beside the rating, so it holds from the first paint (in the page's last
+                        # style block it moved the title down once loaded)
+                        '@media (max-width:599px){.sfb-rating .sf-rating{flex-wrap:wrap;row-gap:4px}.sfb-rating .sf-rating__text{flex-basis:100%}}</style>'))
     # the foundation's FrontrowMD listing (P.FRONTROW_NOTE: the owner's same-product word): a box under the
     # add-to-cart button (added there, below), the line naming whose listing it is first, then the sticker
     # (on the stick's own photo it read as the stick's listing and hid its white tip, stick review 2; under the title
