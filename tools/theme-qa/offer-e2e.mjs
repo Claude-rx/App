@@ -586,7 +586,7 @@ await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf
                                  clips: 0, was: '$69.90', price: '$47.95', shelf: '$27.95',
                                  claims: '#1 Firming|137,135|10,000\\+|clinically|stimulate collagen|at the source|dermatologist|Madeca|Time Reverse' });
 await twinPage('stick', STICK, { title: 'Adaptive Foundation Stick', handle: 'adaptive-foundation-stick', nav: 'Adaptive Foundation Stick',
-                                 gallery: 6, faq: 18, clips: 0, was: '$78', price: '$47', shelf: '$31', borrowed: true, frontrow: true,
+                                 gallery: 6, faq: 19, clips: 0, was: '$78', price: '$47', shelf: '$31', borrowed: true, frontrow: true,
                                  announce: 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee',
                                  claims: '97%|93%|50,000|pieces remain|11:59|16 skin tones|anti-aging|reduces redness|clinically|dermatologist|Changing Foundation' });
 
