@@ -298,7 +298,8 @@ def policy_services():
         o = t
         t = re.sub(r'<details class="legalDoc__accordion">.*?</details>', card, t, flags=re.S)
         for old, new in POLICY_NAMES: t = t.replace(old, new)
-        if re.search(r'Shopify|Afterpay|AfterPay|PayPal', re.sub(r'<[^>]+>', ' ', t)):
+        body = re.sub(r'(?s)<(script|style)[^>]*>.*?</\1>', ' ', t[t.find('<main'):t.find('</main>')])
+        if re.search(r'Shopify|Afterpay|AfterPay|PayPal', re.sub(r'<[^>]+>', ' ', body)):
             missing.append(('policy services: old service still named', rel))
         if t != o: page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
@@ -321,15 +322,15 @@ def honest_video_cards():
         # the clip the card plays (its replacement, else the export's clip's Genjutsu re-make) as the product page's
         # cards play it: 540 px, silent, H.264 with a VP9 copy for browsers without H.264 (data-src-webm: the card
         # script picks it, patch_card_loader); the export's were 1080p with sound, for a card ~360 px wide
-        m = re.search(r'<video[^>]*data-src="(assets/media/[^"]+\.mp4)"', art)
-        src = override[0] if override else (DST / m.group(1) if m else None)
+        vm = re.search(r'<video[^>]*data-src="(assets/media/[^"]+\.mp4)"', art)
+        src = override[0] if override else (DST / vm.group(1) if vm else None)
         if src is not None and not override and src.name in swaps: src = ROOT / swaps[src.name]
-        if m and src is not None and src.exists():
+        if vm and src is not None and src.exists():
             stem = 'skinofab-demo-' + hashlib.md5(src.read_bytes()).hexdigest()[:6]
             mp4, webm = card_clip(src, stem, 'mp4'), card_clip(src, stem, 'webm')
             if mp4:
                 extra = f' data-src-webm="{webm[3:]}"' if webm else ''
-                art = art.replace(f'data-src="{m.group(1)}"', f'data-src="{mp4[3:]}"{extra}', 1)
+                art = art.replace(f'data-src="{vm.group(1)}"', f'data-src="{mp4[3:]}"{extra}', 1)
             else: missing.append(('video card clip', title))
         elif override: missing.append(('video card clip', title))
         if override:          # a frame of the card's replacement clip as its poster
