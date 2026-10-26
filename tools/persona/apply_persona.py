@@ -2352,13 +2352,18 @@ def product_page(base, P, final, found=None):
                          '<div class="sfb-frontrow__badge"></div></div>')
     price = prod.select_one('.product__price-and-badge [data-price-wrapper]')
     was = price.select_one('.product__price--compare')
-    # sold with Automatic Refills (P.REFILL, on by default): the single pack at its refill price against its one-time
-    # price, as the foundation's title shows its refill price; else the single pack's price
-    now_p, was_p = refill_price(P)
-    if float(was_p) > float(now_p): was.string = P.money(was_p)
-    else: was.decompose()                                  # no saving on one: no "was" price
+    # the chosen pack's price as the picker shows it (the default pack, at its refill price with Automatic Refills
+    # on, P.REFILL), against its compare-at price; as written (data-sf-fixed-price): bound to the product's own price
+    # the title opened at one stick's price and the picker's script then swapped it, a jump in the first screen, and
+    # a pack with no saving on one lost its crossed-out price (the brush's 2-pack, stick review 3's e2e)
+    pick = next((b for b in P.BUNDLES if b.get('default')), P.BUNDLES[0])
+    refill_on = bool(getattr(P, 'REFILL', None) and P.REFILL.get('default'))
+    now_p, was_p = pick['refill' if refill_on else 'price'], pick['compare']
+    price['data-sf-fixed-price'] = ''
+    was.string = P.money(was_p) + ' USD'                   # as the store writes a price ("$47 USD")
+    if float(was_p) <= float(now_p): was['hidden'] = ''     # no saving: the picker's script shows it for a pack with one
     reg = price.select_one('.product__price--regular')
-    reg.string = P.money(now_p)
+    reg.string = P.money(now_p) + ' USD'
     off = price.select_one('.product__price--off')
     if off: off.decompose()
     reg.insert_after(frag(f'<span class="sfb-ship">{P.esc(P.SHIPPING_BADGE)}</span>'))
