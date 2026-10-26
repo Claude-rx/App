@@ -107,12 +107,18 @@
         if (isGift) {
             html += '<span class="spark-drawer-item-free">' + escapeHtml(label(labels, 'freeText', 'Free')) + '</span>';
         } else {
+            
+
+            var bigger = packUp(line);
+            var plus = bigger
+                ? '<button type="button" class="spark-drawer-qty-btn" data-sf-upgrade="' + escapeHtml(line.pk) + '" data-sf-upgrade-to="' + escapeHtml(bigger.to) +
+                  '" aria-label="' + escapeHtml(bigger.title) + '">+</button>'
+                : '<button type="button" class="spark-drawer-qty-btn" data-action="increase" aria-label="' + escapeHtml(label(labels, 'increaseQuantityLabel', 'Increase quantity')) + '"' +
+                  (line.quantity >= maxQty ? ' disabled' : '') + '>+</button>';
             html += '<div class="spark-drawer-item-qty" role="group" aria-label="' + escapeHtml(label(labels, 'quantityLabel', 'Quantity')) + '">' +
                 '<button type="button" class="spark-drawer-qty-btn" data-action="decrease" aria-label="' + escapeHtml(label(labels, 'decreaseQuantityLabel', 'Decrease quantity')) + '"' +
                 (line.quantity <= 1 ? ' disabled' : '') + '>&minus;</button>' +
-                '<span class="spark-drawer-qty-val" aria-live="polite">' + line.quantity + '</span>' +
-                '<button type="button" class="spark-drawer-qty-btn" data-action="increase" aria-label="' + escapeHtml(label(labels, 'increaseQuantityLabel', 'Increase quantity')) + '"' +
-                (line.quantity >= maxQty ? ' disabled' : '') + '>+</button>' +
+                '<span class="spark-drawer-qty-val" aria-live="polite">' + line.quantity + '</span>' + plus +
                 '</div>';
         }
         html += '<div class="spark-drawer-item-price">' +
@@ -208,6 +214,13 @@
         return null;
     }
 
+     
+    function packUp(line) {
+        if (parseInt(line.quantity, 10) !== 1 || line.isUpsell) return null;
+        var pk = String((line.product || {}).pk);
+        return ups.filter(function(u) { return String(u.from) === pk; })[0] || null;
+    }
+
     function upgradeHtml() {
         var hit = upgradeFor();
         if (!hit) return '';
@@ -231,8 +244,10 @@
         var line = cart && (cart.lines || []).filter(function(l) { return String(l.pk) === btn.getAttribute('data-sf-upgrade'); })[0];
         var up = ups.filter(function(u) { return String(u.to) === btn.getAttribute('data-sf-upgrade-to'); })[0];
         if (!client || !line || !up) return;
+         
+        var small = btn.classList.contains('spark-drawer-qty-btn');
         btn.setAttribute('aria-busy', 'true');
-        btn.textContent = cfg.upsellAdding || 'Adding...';
+        if (!small) btn.textContent = cfg.upsellAdding || 'Adding...';
         var show = function(next) {
             if (next) document.dispatchEvent(new CustomEvent('spark:cart:updated', { detail: { cart: next, action: 'update' }, bubbles: true }));
         };
@@ -247,7 +262,7 @@
             }, function() { show(added.cart); });
         }).catch(function() {
             btn.removeAttribute('aria-busy');
-            btn.textContent = up.button || 'Upgrade';
+            if (!small) btn.textContent = up.button || 'Upgrade';
             var err = document.createElement('span');
             err.className = 'sf-muted';
             err.setAttribute('role', 'alert');

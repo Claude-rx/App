@@ -143,9 +143,9 @@
    "dropped": 4893
   },
   "inline": {
-   "blocks": 963,
-   "before_kb": 5481.8,
-   "after_kb": 4721.5,
+   "blocks": 967,
+   "before_kb": 5485.2,
+   "after_kb": 4725.0,
    "skipped": 0
   }
  },
@@ -197,6 +197,6 @@
   "scripts_left": 0,
   "own_scripts": 2,
   "inline_styles": 9,
-  "kb_saved": 86.6
+  "kb_saved": 88.2
  }
 }
