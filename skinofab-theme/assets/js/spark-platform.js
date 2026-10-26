@@ -33,6 +33,10 @@
     async function refreshCSRF() {
         try {
             var response = await fetch('/csrf/', { credentials: 'same-origin' });
+            if (!response.ok) {
+                await new Promise(function(r) { setTimeout(r, 700); });
+                response = await fetch('/csrf/', { credentials: 'same-origin' });
+            }
             var data = await response.json();
             var inputs = document.querySelectorAll('input[name="csrfmiddlewaretoken"][type="hidden"]');
             inputs.forEach(function(input) {

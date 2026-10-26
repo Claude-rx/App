@@ -116,7 +116,7 @@
         '  properties { key value }',
         '  product {',
         '    pk title url metadata',
-        '    primaryImage { thumbnail: url(transform: { maxWidth: 150, maxHeight: 150, format: webp, crop: center }) }',
+        '    primaryImage { thumbnail: url(transform: { maxWidth: 300, maxHeight: 300, format: webp, crop: center }) }',
         '    subscriptionInfo { interval intervalCount }',
         '    parent { pk title url metadata }',
         '    purchaseInfo { priceRetail { value format currency } availableForSale availability }',
@@ -440,6 +440,18 @@
             if (isCartNotFoundResult(result)) {
                 clearCartId();
                 return result;
+            }
+            if (result && result.success === false) {
+                var msgs = [];
+                (function walk(e) {
+                    if (!e) return;
+                    if (typeof e === 'string') msgs.push(e);
+                    else if (Array.isArray(e)) e.forEach(walk);
+                    else if (e.code === 'voucher_not_found') msgs.push('That code isn’t valid. Check the spelling and try again.');
+                    else if (e.message) msgs.push(e.message);
+                    else Object.keys(e).forEach(function(k) { walk(e[k]); });
+                })(result.errors);
+                return { success: false, errors: msgs.length ? msgs : ['That code isn’t valid.'], cart: null };
             }
             if (result && result.cart) {
                 self._dispatchCartUpdated(result.cart, 'voucher_add');

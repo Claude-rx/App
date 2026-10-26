@@ -30,7 +30,7 @@
                     {{ form.id }}
                     {# Product image #}
                     {% with image=product.primary_image %}
-                        {% image_thumbnail image.original "80x80" crop="center" upscale=False as thumb %}
+                        {% image_thumbnail image.original "240x240" crop="center" upscale=False as thumb %}
                         <a href="{{ product.get_absolute_url }}" class="shrink-0">
                             <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-20 h-20 object-cover" />
                         </a>
