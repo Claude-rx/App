@@ -2250,6 +2250,15 @@ def product_page(base, P, final, found=None):
     app = prod.select_one('.product__block.standard__app')
     borrow = getattr(P, 'BORROW_REVIEWS', None) if not stats and found else None
     app.clear(); app.append(frag(brush_rating(found['summary'], of=borrow['badge']) if borrow else brush_rating(stats)))
+    # P.REVIEW_STARS: the page's stars as colored boxes, in the buy box's rating as in the review strip and wall
+    # (their --sf-tp, apf_copy)
+    if getattr(P, 'REVIEW_STARS', None):
+        app.append(frag(f'<style>:root{{--sf-tp:{P.REVIEW_STARS}}}'
+                        '.sfb-rating .sf-rating__stars{gap:3px}'
+                        '.sfb-rating .sf-star{width:22px;height:22px;color:#fff;'
+                        'background:linear-gradient(90deg,var(--sf-tp) var(--f),#dcdce6 var(--f))}'
+                        '.sfb-rating .sf-star svg{width:72%;height:72%;left:14%;top:14%}'
+                        '.sfb-rating .sf-star svg+svg{display:none}</style>'))
     # the foundation's FrontrowMD listing (P.FRONTROW_NOTE: the owner's same-product word), its sticker on the
     # gallery as on the foundation's page, and a line under the title naming whose listing it is
     if getattr(P, 'FRONTROW_NOTE', None) and getattr(ccf_copy, 'FRONTROW_PRODUCT_ID', None):

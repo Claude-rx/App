@@ -960,7 +960,7 @@ REVIEW_WALL_CSS = r"""
 .sfr-avg p{margin:0;font-size:15px;color:#3b3b3b}
 .sfr-avg p b{color:#191919}
 .sfr-tp{display:inline-flex;gap:3px;vertical-align:middle}
-.sfr-tp i{display:inline-grid;place-items:center;width:var(--s,20px);height:var(--s,20px);background:linear-gradient(90deg,#151515 var(--f),#dcdce6 var(--f))}
+.sfr-tp i{display:inline-grid;place-items:center;width:var(--s,20px);height:var(--s,20px);background:linear-gradient(90deg,var(--sf-tp,#151515) var(--f),#dcdce6 var(--f))}
 .sfr-tp i svg{width:72%;height:72%;color:#fff}
 .sfr-tp--lg{--s:34px;gap:4px}
 .sfr-dist{list-style:none !important;margin:20px 0 0 !important;padding:0 !important;display:grid;gap:8px}
@@ -968,7 +968,7 @@ REVIEW_WALL_CSS = r"""
 .sfr-dist li:before{content:none !important}
 .sfr-dist li[aria-pressed="true"]{font-weight:700}
 .sfr-dist span{height:9px;border-radius:2px;background:#e5e5dd;overflow:hidden}
-.sfr-dist span em{display:block;height:100%;background:#151515}
+.sfr-dist span em{display:block;height:100%;background:var(--sf-tp,#151515)}
 .sfr-dist small{color:#6a6a6a;text-align:right}
 .sfr-note{margin:16px 0 0;font-size:12.5px;line-height:1.45;color:#6a6a6a}
 .sfr-write{display:inline-flex;margin-top:20px;padding:13px 26px;border-radius:999px;border:1.5px solid #191919;color:#191919 !important;text-decoration:none !important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
@@ -982,7 +982,7 @@ REVIEW_WALL_CSS = r"""
 .sfr-card{background:#fff;border:1px solid #e5e5dd;border-radius:12px;padding:20px 22px}
 .sfr-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
 .sfr-ver{display:inline-flex;align-items:center;gap:5px;color:#191919;font-size:13px;font-weight:500}
-.sfr-ver svg{color:#151515}
+.sfr-ver svg{color:var(--sf-tp,#151515)}
 .sfr-card h3{font-size:16px;font-weight:700;margin:0 0 6px;line-height:1.35}
 .sfr-body{font-size:15px;line-height:1.55;color:#2b2b2b;margin:0;white-space:pre-line}
 .sfr-body.is-clamped{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
@@ -1177,7 +1177,7 @@ REVIEW_STRIP_CSS = r"""
 .sfrs-card small{margin-top:auto;font-size:13px;color:#6a6a6a}
 .sfrs-card small b{color:#191919}
 .sfrs .sfr-tp{display:inline-flex;gap:3px}
-.sfrs .sfr-tp i{display:inline-grid;place-items:center;width:var(--s,18px);height:var(--s,18px);background:linear-gradient(90deg,#151515 var(--f),#dcdce6 var(--f))}
+.sfrs .sfr-tp i{display:inline-grid;place-items:center;width:var(--s,18px);height:var(--s,18px);background:linear-gradient(90deg,var(--sf-tp,#151515) var(--f),#dcdce6 var(--f))}
 .sfrs .sfr-tp i svg{width:72%;height:72%;color:#fff}
 .sfrs .sfr-tp--lg{--s:30px;gap:4px}
 @media (max-width:989px){.sfrs-wrap{grid-template-columns:1fr;gap:18px}.sfrs-card{flex-basis:78%}}

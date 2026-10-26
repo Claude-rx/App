@@ -133,6 +133,9 @@ BORROW_REVIEWS = {'of': 'our Adaptive Peptide Foundation, the same adaptive form
                   'note': 'The same adaptive formula, in a bottle. The stick is new at SKINOFAB: its own reviews join these '
                           'as buyers write them.',
                   'badge': 'of the foundation’s formula'}
+# the reviews' stars, bars and checks in the review-site look the owner asked for (26 Oct 2026): green boxed stars,
+# with no review site's name or logo (the reviews are the store's own imports, and the page says so)
+REVIEW_STARS = '#00b67a'
 FRONTROW_NOTE = 'Clinicians’ Choice listing of our Adaptive Peptide Foundation, the same adaptive formula.'
 NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews of the stick yet', 'lead_amazon': 'No SKINOFAB reviews yet',
               'text': 'The Adaptive Foundation Stick is new at SKINOFAB, and we only show reviews from real buyers. Try it for 30 days: '
