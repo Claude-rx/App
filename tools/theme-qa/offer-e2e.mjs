@@ -89,7 +89,9 @@ async function choose(s, key, refill = null) {
     const terms = document.querySelector('[data-sf-refill-terms]');
     const cb = root.querySelector('input[name=sf_purchase]'), pct = root.querySelector('[data-sfo-pct]');
     return { id: form.querySelector('input[name=id]').value, refill: cb.checked, boxShown: !!cb.offsetParent,
-             now: head.querySelector('.product__price--regular').textContent.trim(), was: head.querySelector('.product__price--compare').textContent.trim(),
+             now: head.querySelector('.product__price--regular').textContent.trim(),
+             // the crossed-out price as shown: empty when hidden (the theme's own price script hid it, build 39)
+             was: (w => w && w.getClientRects().length ? w.textContent.trim() : '')(head.querySelector('.product__price--compare')),
              cards: [...root.querySelectorAll('.sfo-card')].map(c => c.querySelector('[data-sfo-now]').textContent + ' ' + c.querySelector('[data-sfo-save]').textContent),
              pct: pct ? pct.textContent : null, termsShown: !!terms && !terms.hidden, terms: terms ? terms.textContent : '' };
   }, picker);
@@ -146,7 +148,8 @@ for (const [key, pack] of Object.entries(packs)) {
     if (ui.id !== String(pack.pk)) problems.push(`form id ${ui.id} != ${pack.pk}`);
     if (ui.refill !== refill) problems.push(`refills ${ui.refill} != ${refill}`);
     if (!ui.now.startsWith(money(want.price))) problems.push(`title price ${ui.now} != ${money(want.price)}`);
-    if (!ui.was.startsWith(money(pack.compare))) problems.push(`title compare ${ui.was} != ${money(pack.compare)}`);
+    const wantWas = pack.compare > want.price ? money(pack.compare) : '';
+    if (wantWas ? !ui.was.startsWith(wantWas) : ui.was) problems.push(`title compare shown "${ui.was}" != "${wantWas}"`);
     if (ui.termsShown !== refill) problems.push(`refill terms shown=${ui.termsShown}`);
     if (refill && !ui.terms.includes(`You pay ${money(pack.refill)} today, then ${money(pack.refill)} every 28 days`)) problems.push('terms amount: ' + ui.terms.slice(0, 80));
     const bb = await s.page.locator('.product__price-and-badge').boundingBox();
@@ -482,7 +485,7 @@ async function twinPage(name, route, cfg) {
              clips: document.querySelectorAll('#sf-video-reviews video source[src*=".mp4"]').length,
              cards: document.querySelectorAll('#sf-video-reviews .sfx-review').length,
              empty: !!empty && !empty.hidden, now: head.querySelector('.product__price--regular').textContent.trim(),
-             was: (head.querySelector('.product__price--compare') || {}).textContent || '',
+             was: (w => w && w.getClientRects().length ? w.textContent.trim() : '')(head.querySelector('.product__price--compare')),
              competitor: /solena|fem\+|femplus|meimei|facelove/i.test(document.documentElement.outerHTML), reviews: native.reviews.length,
              announce: ((document.querySelector('.announcement .text-highlight__break') || {}).textContent || '').trim(),
              stars: !document.querySelector('[data-sfb-rating]').hidden, hScroll: document.documentElement.scrollWidth > innerWidth + 1,

@@ -377,7 +377,8 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     var a = head && head.querySelector('.product__price--regular'), was = head && head.querySelector('.product__price--compare');
     var unit = a && / USD\\s*$/.test(a.textContent) ? ' USD' : '';
     if (a) a.textContent = money(now) + unit;
-    if (was) {{ was.hidden = !(compare > now); if (compare > now) was.textContent = money(compare) + unit; }}
+    // the theme's own price script hides it by class when the NEXT variant has no compare-at price
+    if (was) {{ was.hidden = !(compare > now); was.classList.remove('hidden'); if (compare > now) was.textContent = money(compare) + unit; }}
   }}
   function sync() {{
     var key = (root.querySelector('input[name=sf_pack]:checked') || {{}}).value || '{default}';

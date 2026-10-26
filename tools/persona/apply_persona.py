@@ -2443,10 +2443,14 @@ def product_page(base, P, final, found=None):
     refill_on = bool(getattr(P, 'REFILL', None) and P.REFILL.get('default'))
     now_p, was_p = pick['refill' if refill_on else 'price'], pick['compare']
     price['data-sf-fixed-price'] = ''
+    # off the theme's own price script (it rewrites [data-product-price] and hides [data-compare-price] by class
+    # when the NEXT variant has no compare-at price: the crossed-out $78 was hidden live, build 39); the wrapper
+    # keeps [data-price-wrapper] for the theme's sold-out state
     was.string = P.money(was_p) + ' USD'                   # as the store writes a price ("$47 USD")
     if float(was_p) <= float(now_p): was['hidden'] = ''     # no saving: the picker's script shows it for a pack with one
     reg = price.select_one('.product__price--regular')
     reg.string = P.money(now_p) + ' USD'
+    for el, attr in ((was, 'data-compare-price'), (reg, 'data-product-price')): del el[attr]
     off = price.select_one('.product__price--off')
     if off: off.decompose()
     reg.insert_after(frag(f'<span class="sfb-ship">{P.esc(P.SHIPPING_BADGE)}</span>'))
