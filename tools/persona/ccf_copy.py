@@ -51,10 +51,10 @@ GLOBAL = [
     ('>Korean inspired performance formulas<', '>Formulated in Korea, with advanced K-beauty science<'),
     ('>3. Built in Korea, by the people who invented the science<', '>3. Formulated in Korea, with advanced K-beauty science<'),
     ('a breakthrough foundation from Korean pharmacies,', 'a breakthrough foundation formulated in Korea,'),
-    # the announcement bar: 67% is the deepest saving on the site (the Lymphatic Brush 3-pack, $49.90 vs $149.70;
-    # the foundation's 2 bottles on refills save 60%), not every product's, and the Mystery Gift comes with the
-    # 2-bottle pack; the brush bundles carry their own free gifts
-    ("🍂 Fall Sale: 60% OFF + FREE Mystery Gift", "🍂 Fall Sale: Up to 67% OFF + FREE Gifts"),
+    # the announcement bar: 60% is the deepest saving on the site (the foundation's 2 bottles on refills, $47 vs
+    # $118; every other pack saves at most a third: a new product has no "was" price of its own), not every
+    # product's, and the gifts come with the 2-bottle pack and the brush 3-pack
+    ("🍂 Fall Sale: 60% OFF + FREE Mystery Gift", "🍂 Fall Sale: Up to 60% OFF + FREE Gifts"),
     # one dermatologist speaks on the homepage, not "leading dermatologists worldwide"; the results card is backed by
     # the verified reviews under it, not by a study
     ("Trusted by leading dermatologists worldwide", "Recommended by a dermatologist"),
@@ -98,6 +98,23 @@ GLOBAL = [
     ("Natural look for 16+ hours", "Hydrates like a serum"),
     ("Lasts 16+ hours", "Hydrating serum base"),
     (">Lasts 16 hours<", ">No creasing<"),
+    # a heading's "K-beauty" kept on one line: capitalised, it broke after the hyphen ("Advanced K-" / "Beauty
+    # Science", review 5)
+    (r'RE:(<h[1-3][^>]*>[^<]*?)\bK-([Bb]eauty)', r'\g<1><span style="white-space:nowrap">K-\g<2></span>'),
+    # the ingredients pop-up lists the key ingredients (the full list is on the box): its link said "View full list"
+    # (review 5)
+    (r'RE:(<a class="accordion-popup-trigger" data-popup-trigger="[^"]*" href="#">)\s*View full list\s*(</a>)', r'\g<1>See all key ingredients\g<2>'),
+    (r'RE:(<h3 class="popup-modal__title">)Ingredients(</h3>\s*<div class="popup-modal__body rte">\s*<p>Key ingredients:)', r'\g<1>Key ingredients\g<2>'),
+    # the policy pages' contents and summary cards opened as dialogs on the old platform (its script is gone): here
+    # they are always shown in the page, and their "Table of contents", "Back to overview" and close buttons did
+    # nothing (review 5)
+    (r'RE:<div class="table-of-content-btn-wrapper d-mobile">\s*<button aria-controls="table-of-content-wrapper" class="open-dialog table-of-content-toggle">Table of contents</button>\s*</div>\s*', ''),
+    (r'RE:<p><a class="close-dialog">Back to overview</a></p>\s*', ''),
+    (r'RE:<a class="close-dialog"></a>\s*', ''),
+    (r'RE:<button class="close-dialog">(?:Back to overview|<span class="sr-only">Close</span>)</button>\s*', ''),
+    # Shopify's installments widget, carrying the old shop's data (its variant, a $49 price), dead on NEXT (review 5)
+    (r'RE:<shopify-payment-terms[^>]*>[\s\S]*?</shopify-payment-terms>', ''),
+    (r'RE:<div class="card-buttons-group d-mobile">(?:\s*<button aria-controls="[^"]*" class="card-button open-dialog">[^<]*</button>)+\s*</div>\s*', ''),
 ]
 
 PAGE = {
@@ -327,7 +344,7 @@ def pdp_faq_orders():
          f"{usd(two['refill'])} for 2 bottles. We email you before every refill. To skip or cancel, just email "
          "hello@skinofab.com: no minimum, no fees."),
         ('Can I buy just once?',
-         f"Yes. In your bag, tap Change under the bottle and pick One Time before checkout: {usd(one['price'])} for 1 bottle or "
+         f"Yes. In your bag, tap Change under the bottle, then on the cart page set it to One-time purchase before checkout: {usd(one['price'])} for 1 bottle or "
          f"{usd(two['price'])} for 2 bottles, with no refills."),
         ('Does it have SPF?',
          'No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation layers on top without pilling.'),
@@ -363,7 +380,6 @@ GALLERY = [
     '21_7a5d845a',                                       # 58, silver hair, bottle at temple (persona)
     '22_ed20463f',                                       # white dots turning into skin (persona)
     'ColorChangingFoundation-Productimagesphotos_412bfd2c',  # Adapts to your skin (persona infographic)
-    'ColorChangingFoundation-Productimagesphotos_5',     # daylight before / after
     '6_d0973846',                                        # What's inside
     'ColorChangingFoundation-Productimagesphotos_2_1791540a',  # results panel
     '8_87ca3242',                                        # skinofab vs. others

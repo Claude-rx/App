@@ -528,16 +528,20 @@ await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf
                                  clips: 0, was: '', price: '$34.95',
                                  claims: '#1 Firming|137,135|10,000\\+|clinically|stimulate collagen|at the source|dermatologist|Madeca|Time Reverse' });
 
-// the sticky bar on both product pages: hidden at the top, shown once the add-to-cart button has scrolled away, and
-// its button brings the pack picker back into view
+// the sticky bar on every product page: shown exactly while the add-to-cart button is out of view (at the top on a
+// phone the button is below the fold: the bar shows; on a computer it is in view: hidden), shown once it has
+// scrolled away, and its button brings the pack picker back into view
 for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BALM], ['serum', SERUM]]) for (const [w, h] of [[390, 844], [1440, 900]]) {
   const s = await session(w, h, route);
   const on = () => s.page.evaluate(() => { const b = document.getElementById('sf-sticky'); return b ? b.classList.contains('is-on') : null; });
   const problems = [];
+  await s.page.waitForTimeout(400);
   const atTop = await on();
+  const atcOut = await s.page.evaluate(() => { const b = document.querySelector('form[data-product-form] [data-add-to-cart]') || document.querySelector('#apf-buy');
+    const r = b.getBoundingClientRect(); return r.top >= innerHeight || r.bottom <= 0; });
   await s.page.evaluate(() => window.scrollTo(0, 3000)); await s.page.waitForTimeout(900);
   const scrolled = await on();
-  if (atTop !== false) problems.push(`at the top: ${atTop}`);
+  if (atTop !== atcOut) problems.push(`at the top: bar ${atTop}, add-to-cart out of view ${atcOut}`);
   if (scrolled !== true) problems.push(`after scrolling: ${scrolled}`);
   if (scrolled) {
     await s.page.click('#sf-sticky a'); await s.page.waitForTimeout(1500);

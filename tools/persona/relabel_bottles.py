@@ -90,12 +90,21 @@ SITE = {
                                                            ('flat', (598.5, 629), (598.5, 715), 16)]),
     'skinofab-korean-formulas-foundation-application-mobile': ((940, 1662), [('flat', (718.6, 885.2), (778.1, 991.1), 20)]),
     'skinofab-korean-formulas-foundation-application': ((2000, 858), [('flat', (815, 364), (893.8, 505.7), 25)]),
-    '2_221c6006-6944-4b6f-a085-220e11ef092d': ((1080, 1080), [('auto', (0.08, 0.33, 0.40, 0.86), -20, {})]),
-    'ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b': ((1350, 1350), [('box', (822, 520, 900, 730), (870, 540))]),
+    '2_221c6006-6944-4b6f-a085-220e11ef092d': ((1080, 1080), [('auto', (0.08, 0.33, 0.40, 0.86), -20, {}),
+        ('boldrot', (316, 831), -18, (56, 20), 'PDRN', 11)]),       # its 6 px PDRN read PORN at the gallery's size (review 5)
+    # the gallery photos' PDRN lines, 7-9 px tall in 1350, read PORN at the gallery's size on a computer (about 650 px
+    # wide at 1440): set again bold along each label's slant (review 5)
+    'ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b': ((1350, 1350), [('box', (822, 520, 900, 730), (870, 540)),
+        ('boldrot', (826.5, 783), 9, (44, 18), 'PDRN', 9.5)]),
     'ColorChangingFoundation-Productimagesphotos_1_87f31fb4-5811-': ((1080, 1080), [('box', (720, 330, 950, 425), (745, 405))]),
-    '21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7': ((1350, 1350), [('auto', (0.05, 0.12, 0.34, 0.67), 15, {})]),
-    '22_ed20463f-1b63-4206-8734-81f1bfc33ec4': ((1350, 1350), [('auto', (0.07, 0.34, 0.32, 0.96), -6, {})]),
-    '24_e2816f7f-0236-4d48-8794-a7b92c9b627d': ((1350, 1350), [('auto', (0.225, 0.385, 0.385, 0.83), -5, {})]),
+    '21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7': ((1350, 1350), [('auto', (0.05, 0.12, 0.34, 0.67), 15, {}),
+        ('boldrot', (192.5, 765), 11, (52, 20), 'PDRN', 11.5)]),
+    '22_ed20463f-1b63-4206-8734-81f1bfc33ec4': ((1350, 1350), [('auto', (0.07, 0.34, 0.32, 0.96), -6, {}),
+        ('boldrot', (282.5, 1169), -7, (52, 20), 'PDRN', 11.5)]),
+    '24_e2816f7f-0236-4d48-8794-a7b92c9b627d': ((1350, 1350), [('auto', (0.225, 0.385, 0.385, 0.83), -5, {}),
+        ('boldrot', (426, 988), -4, (44, 18), 'PDRN', 10)]),
+    # the comparison card's bottle: its PDRN line 5 px tall in 1080 read PORN even at full size (review 5)
+    '8_87ca3242-b11c-40e2-beab-fb1aa34022a6': ((1080, 1080), [('boldrot', (622.5, 458), 0, (36, 16), 'PDRN', 7.5)]),
     '2_babe5169': ((1500, 1500), [('flat', (584.3, 203.6), (830.9, 105.3), 42)]),
     # the "Soft on fine lines" clip's poster (the swapped bottle, tilted in her hand): its small PDRN line, a few px
     # tall, was drawn as PORN; set again bold along the label's slant (review 4)

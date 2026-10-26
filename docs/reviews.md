@@ -38,6 +38,13 @@ the buyers line appear with the first review); its imports go to `<work_dir>/rev
    old bottle; customer photos are never edited. Run step 2 again.
 4. Rebuild and push (`tools/build_store.sh <work_dir>`, then push the changed theme files).
 
+What the page shows of them: up to 1,000 reviews (every photo review, every review under 4 stars, then the rest), and
+the totals of all of them. A review about something this page does not sell or say stays out of that list, whatever
+its rating, and still counts in the totals (`apply_persona.OFF_TOPIC`): the free brush that came with the earlier
+store's orders ("the brush is easy to use"), an SPF the formula does not have ("SF 15"), and other brands by name.
+Of 9,855 imported reviews that is 213 (161 five-star, 52 four-star); none is edited. The testimonial cards
+(`apf_copy.TESTIMONIALS`) must pass the same rule, or the build stops.
+
 ## The Lymphatic Brush
 
 Two real sources can fill its page; both appear in the same green Trustpilot-style boxes as the foundation's.

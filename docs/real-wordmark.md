@@ -63,6 +63,14 @@ python3 -I tools/persona/relabel_bottles.py sheet <work_dir>/rel4/skinofab-site 
 tools/build_store.sh <work_dir>                        # page photos, then the theme
 ```
 
+**A small PDRN line set bold** (`label_fix.bold_line_rot`, the `'boldrot'` op in `relabel_bottles.SITE`): where a
+photo shows the bottle so small that its own PDRN line, a few pixels tall, reads PORN, the line is erased and set
+again in a heavy weight, along the label's slant. The foundation gallery's photos `21_`, `22_`, `24_`, `412bfd2c` and
+the comparison card `8_87ca3242` (review 5) carry one, as do the packshot, `2_221c6006` and the "Soft on fine lines"
+poster. Homepage photos get the same from `home_images.py` (`held()` sets `--pdrn bold`; the one-shade photo, the
+formulas photo and the phenomenon cards `--pdrn xl` or a bold line), and so does the empty cart's bottle
+(`tools/theme-build/static/skinofab-cart-bottle.png`, at 3x its 76 px width).
+
 A new photo of a foundation bottle with the old print: add its file-name prefix, reference size and bottle to
 `relabel_bottles.SITE` (`'box'` with a box around the print and a point at its first letter is the simplest), run
 `sheet`, check the crop, rebuild.

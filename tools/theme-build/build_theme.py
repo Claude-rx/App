@@ -290,8 +290,54 @@ loader = must_replace(loader, """    window.SparkCartLoader = {""", """    /* th
 loader_f.write_text(loader)
 # A first add made two round trips (createCart, then addCartLines). The storefront API's createCart takes the lines:
 # one request creates the cart with the item. A saved cart still takes addCartLines, a consumed one still recreates.
+# The platform's /csrf/ (which sets the cookie the cart's requests carry) answered 502 now and then (2 loads in 85,
+# review 5): one retry after a moment, so a first add to the cart still has its token
+plat_f = OUT / 'assets' / 'js' / 'spark-platform.js'
+plat_f.write_text(must_replace(plat_f.read_text(), "            var response = await fetch('/csrf/', { credentials: 'same-origin' });",
+                               "            var response = await fetch('/csrf/', { credentials: 'same-origin' });\n"
+                               "            if (!response.ok) {\n"
+                               "                await new Promise(function(r) { setTimeout(r, 700); });\n"
+                               "                response = await fetch('/csrf/', { credentials: 'same-origin' });\n"
+                               "            }", 'platform: csrf retry'))
 cart_f = OUT / 'assets' / 'js' / 'spark-cart.js'
 cart_js = cart_f.read_text()
+# The side cart's line photos: a 150 px cut, shown 88 px wide, was soft at 2x and 3x and its bottle's label smeared
+# into "PDRH" (review 5): cut at 300 px
+cart_js = must_replace(cart_js, "primaryImage { thumbnail: url(transform: { maxWidth: 150, maxHeight: 150, format: webp, crop: center }) }",
+                       "primaryImage { thumbnail: url(transform: { maxWidth: 300, maxHeight: 300, format: webp, crop: center }) }",
+                       'cart client: line photo size')
+# A refused code came back as {success: false, errors: {nonFieldErrors: [[{message, code}]]}}: not a list, so the
+# drawer took it for a success, redrew itself and the code's field closed with no word said (review 5); and the cart
+# event went out as if it had changed. The errors are now a list of messages, in the store's words for an unknown code.
+cart_js = must_replace(cart_js, """            var result = data.addVoucher;
+            if (isCartNotFoundResult(result)) {
+                clearCartId();
+                return result;
+            }
+            if (result && result.cart) {
+                self._dispatchCartUpdated(result.cart, 'voucher_add');
+            }
+            return result;""", """            var result = data.addVoucher;
+            if (isCartNotFoundResult(result)) {
+                clearCartId();
+                return result;
+            }
+            if (result && result.success === false) {
+                var msgs = [];
+                (function walk(e) {
+                    if (!e) return;
+                    if (typeof e === 'string') msgs.push(e);
+                    else if (Array.isArray(e)) e.forEach(walk);
+                    else if (e.code === 'voucher_not_found') msgs.push('That code isn\u2019t valid. Check the spelling and try again.');
+                    else if (e.message) msgs.push(e.message);
+                    else Object.keys(e).forEach(function(k) { walk(e[k]); });
+                })(result.errors);
+                return { success: false, errors: msgs.length ? msgs : ['That code isn\u2019t valid.'], cart: null };
+            }
+            if (result && result.cart) {
+                self._dispatchCartUpdated(result.cart, 'voucher_add');
+            }
+            return result;""", 'cart client: refused voucher')
 cart_js = must_replace(cart_js, """            var input = {
                 cartId: cartId,
                 lines: [lineInput]
@@ -670,10 +716,24 @@ def simple(page, template):
 
 # 7a homepage. Settings > SEO drives the home meta tags; until the store has a meta description, the design's
 # description, the hero image and the store's WebSite/Organization data stand in (the platform tag would print empty ones).
+def og_image(hero_rel):
+    """The link-preview picture (1200 x 630 JPEG, the size Facebook, iMessage and Slack draw) from the hero: her, the
+    bottle and the wall to their left, from the photo's right side. The hero itself is a 4096 px WebP, which several
+    previewers do not read (the homepage's og:image was empty, review 5)."""
+    from PIL import Image
+    im = Image.open(OUT / 'assets' / hero_rel).convert('RGB')
+    w = round(im.height * 1200 / 630)
+    im = im.crop((im.width - w, 0, im.width, im.height)).resize((1200, 630), Image.LANCZOS)
+    tmp = OUT / 'assets' / 'sf' / 'img' / 'skinofab-og.jpg'
+    im.save(tmp, quality=86, optimize=True, progressive=True)
+    final = tmp.with_name(f'skinofab-og-{hashlib.md5(tmp.read_bytes()).hexdigest()[:6]}.jpg'); tmp.rename(final)
+    return 'sf/img/' + final.name
+
 def home_seo(parts):
-    hero = re.search(r"\{\{ '(sf/img/[^']*hero[^']*-1800w[^']*)'\|asset_url \}\}", (OUT / 'templates/index.html').read_text())
+    hero = re.search(r"\{\{ '(sf/img/skinofab-hero-desktop-[^']*)'\|asset_url \}\}", (OUT / 'templates/index.html').read_text())
+    if not hero: sys.exit('home: the hero photo for og:image not found')
     d = parts['description'].replace('"', '&quot;')
-    img = "{{ '%s'|asset_url }}" % hero.group(1) if hero else ''
+    img = "{{ '%s'|asset_url }}" % og_image(hero.group(1))
     return ('{% block seo %}{% if store.get_meta_description %}{{ block.super }}{% else %}'
             '<meta name="title" content="{{ store.name }}">\n<meta name="description" content="' + d + '">\n'
             '<meta property="og:title" content="{{ store.name }}">\n<meta property="og:description" content="' + d + '">\n'
@@ -879,12 +939,12 @@ def catalogue(template, title_var):
             h.string = slots.put(title_var)
         # "24 products": the export's own count, not the listing's; NEXT's page shows its products, no count
         for c in main.select('.collection__products-count'): c.decompose()
-        # the banner's photo shows our four products, each in a woman's hand: a category with fewer of them (Skin:
-        # the balm, the serum and the brush) shows its name without the photo
+        # the banner's photo shows our four products, each in a woman's hand: a category with fewer of them shows
+        # its name without the photo. Hidden, not left out: the section's script animates that element and threw a
+        # TypeError (handleImageAnimation) when it was missing (review 5)
         if template.endswith('category.html'):
             for box in main.select('.banner-image__image-container')[:1]:
-                box.insert_before(NavigableString(slots.put('{% if products|length >= 4 %}')))
-                box.insert_after(NavigableString(slots.put('{% endif %}')))
+                box['data-sf-few'] = slots.put('{% if products|length < 4 %}true{% else %}false{% endif %}')
         return slots.render(str(transform(main, f, slots)))
     write(template, page_template(f, parts, content, title_dtl='{% firstof category.get_meta_title category.name "Shop all" %} | {{ block.super }}'))
 catalogue('templates/catalogue/category.html', '{{ category.name }}')
@@ -1022,7 +1082,8 @@ BTN_CSS = (
     '-webkit-tap-highlight-color:transparent;touch-action:manipulation}'
     + BTN_ALL + '::before{display:none!important}'
     '@media (hover:hover) and (pointer:fine){'
-    ':is(' + ', '.join(BTN_DARK) + '):hover{background-color:#000!important;border-color:#000!important;transform:translateY(-1px);'
+    # (white text on the black: the outline "Shop now" of "Beauty is a celebration" kept its black text, review 5)
+    ':is(' + ', '.join(BTN_DARK) + '):hover{background-color:#000!important;border-color:#000!important;color:#fff!important;transform:translateY(-1px);'
     'box-shadow:0 12px 24px -12px rgba(0,0,0,.6)}'
     '.sfb-btn--light:hover{background-color:#f4f2ee!important;transform:translateY(-1px);box-shadow:0 12px 24px -14px rgba(0,0,0,.4)}}'
     + BTN_ALL + ':active{transform:translateY(0) scale(.97)!important;box-shadow:0 2px 8px -4px rgba(0,0,0,.5)!important;transition-duration:.06s!important}'
@@ -1116,8 +1177,13 @@ SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1
                '#main-content nav ol li::before,#main-content nav ol li::marker{content:none}'
                # form fields on these pages (review form, cart, support) were white on white: a visible border
                '#main-content form input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]),'
-               '#main-content form select,#main-content form textarea{border:1px solid #cfcfcf !important;border-radius:10px !important;background:#fff !important}'
+               '#main-content form textarea{border:1px solid #cfcfcf !important;border-radius:10px !important;background:#fff !important}'
+               # selects drew no arrow (the cart's quantity and refill choice did not look like they open, review 5)
+               '#main-content form select{border:1px solid #cfcfcf !important;border-radius:10px !important;-webkit-appearance:none;appearance:none;padding-right:34px !important;'
+               'background:#fff url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%278%27 viewBox=%270 0 12 8%27%3E%3Cpath d=%27M1 1.5l5 5 5-5%27 fill=%27none%27 stroke=%27%23151515%27 stroke-width=%271.6%27/%3E%3C/svg%3E") no-repeat right 12px center/12px 8px !important}'
                '#main-content form select{min-width:140px}'
+               # Spark's light grey small print (Remove, Shipping, the breadcrumb) was 2.6:1 on white: slate-600, 7.6:1
+               '#main-content .text-slate-400{color:#475569}#main-content a.text-slate-400:hover{color:#151515}'
                # the cart's lines on a phone: quantity, refill choice and Remove wrap onto a second line, and the
                # selects drop the 140 px minimum above (same id, so they need the higher specificity), so the line
                # total and Remove stay on screen (they were pushed 100 px past its right edge)
@@ -1130,7 +1196,10 @@ SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1
                # the page's width and margins as the header's and footer's (it started 104 px in on a desktop)
                '#main-content .container{width:calc(100% - 64px);max-width:1440px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}'
                '@media (max-width:749px){ #main-content .container{width:calc(100% - 32px)}}'   # "{ #": "{#" opens a DTL comment
-               '#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}</style>')
+               '#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}'
+               # the design's buttons are black with white text: Spark's secondary hover (slate-50) left the label white on
+               # white (the cart's ADD COUPON, review 5)
+               '#main-content .btn-secondary:hover,#main-content .btn-secondary:focus-visible{background:#333 !important;border-color:#333 !important;color:#fff !important}</style>')
 
 for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'templates/500.html',
           *[str(p.relative_to(OUT)) for p in (OUT / 'templates').rglob('*.html') if p.parts[-2] in ('reviews', 'support')]]:
@@ -1217,6 +1286,10 @@ REFILL_LABELS = ('<script data-sf-refill-labels>(function () {'
     'function set(el, prop, v) { if (el[prop] !== v) el[prop] = v; }'
     'function label() {'
     ' Array.prototype.forEach.call(document.querySelectorAll(\'select[name$="subscription_range"]\'), function (s) {'
+    # a product with no refill plan had a select with its one option: the words instead
+    '  if (s.options.length < 2) { if (!s.getAttribute("data-sf-single")) { s.setAttribute("data-sf-single", "1"); s.style.display = "none";'
+    '   var w = document.createElement("span"); w.className = "text-xs text-slate-600"; w.textContent = "One-time purchase";'
+    '   s.parentNode.insertBefore(w, s.nextSibling); } return; }'
     '  Array.prototype.forEach.call(s.options, function (o) {'
     '   var t = o.textContent.trim(), m = t.match(/^(\\d+)\\s+(day|week|month|year)s?$/i);'
     '   if (/^one time$/i.test(t)) set(o, "textContent", "One-time purchase");'
@@ -1242,6 +1315,26 @@ if p_cart.exists():
     t = p_cart.read_text()
     if 'data-sf-refill-labels' not in t:
         p_cart.write_text(must_replace(t, '                </form>', '                </form>' + REFILL_LABELS, 'templates/cart.html refill labels'))
+
+# Cart page: the layout already shows the page's messages above its content; the cart's own copy showed each one twice
+# (an unknown coupon: the same error at the top and above the lines, review 5). The AJAX partial keeps its own.
+if p_cart.exists():
+    t = p_cart.read_text()
+    if t.count('{% include "partials/alert_messages.html" %}') == 1:
+        p_cart.write_text(re.sub(r'[ \t]*\{% include "partials/alert_messages\.html" %\}\n?', '', t, count=1))
+    elif '{% include "partials/alert_messages.html" %}' in t: sys.exit('templates/cart.html: alert messages included more than once')
+
+# Product thumbnails on Spark's pages were cut at their display size (the cart's 100 px, the AJAX cart's 80 px, the
+# reviews' 180 px tall): a phone or tablet scaled them up 2-3x and the bottle's label smeared (review 5). Cut at 3x
+# (2x for the reviews' 112 px box); the pages still show them at the same size (their width/height or classes).
+for rel, old, new in (('templates/cart.html', '"100x100" crop="center"', '"300x300" crop="center"'),
+                      ('partials/cart_content.html', '"80x80" crop="center"', '"240x240" crop="center"'),
+                      ('templates/reviews/index.html', 'image.original "x180"', 'image.original "x360"'),
+                      ('templates/reviews/review.html', 'image.original "x180"', 'image.original "x360"')):
+    p = OUT / rel
+    if not p.exists(): continue
+    t = p.read_text()
+    if new not in t: p.write_text(must_replace(t, old, new, rel + ' thumbnail size'))
 
 # Cart page: free shipping said plainly when the store ships for free (Theme settings > SKINOFAB > Cart Drawer)
 FREE_SHIP = "{% if settings.sf_cart_free_shipping %}<span class=\"text-xs font-semibold\" style=\"color:#1f7a3f\">{% t 'store.catalogue.free' %}</span>{% else %}"

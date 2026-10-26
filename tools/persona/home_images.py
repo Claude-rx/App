@@ -4,15 +4,17 @@ photo of the build's image set, a woman of about 55 holding the real bottle: app
 
 usage: python3 -I tools/persona/home_images.py
 
-- oneshade-mobile.webp, oneshade-desktop.jpg: the "One shade" model (source/oneshade-ai.jpg: the original photo, its
+- oneshade-mobile.webp, oneshade-desktop.webp: the "One shade" model (source/oneshade-ai.jpg: the original photo, its
   model made a woman of about 57 by gpt-image-2, her bottle's small print garbled), the real bottle laid on it. The
   phone file (also tablets and small laptops, under 1200 px) is its backdrop keyed out, the gaps between her fingers
   and between her arm and neck too (the card's grey gradient behind her, as behind the original cut-out); the desktop
-  file is a landscape crop of it; both from source/oneshade-ai-2x.jpg (Real-ESRGAN 2x, docs/persona-image-shots.md)
+  file is the same keyed photo, hair to chest, on a wider transparent canvas (1.31:1), so a computer shows her whole
+  head on the card (a landscape crop of the photo cut it); both from source/oneshade-ai-2x.jpg (Real-ESRGAN 2x)
 - formulas.jpg: the "Korean formulas" photo (source/formulas-ai-2x.jpg: the original model with her neck and shoulder
   completed, so no cut edge shows at any width; Real-ESRGAN 2x), the real bottle laid on it, a little wider than the
   image model's bottle so it covers it whole
-- phenomenon-4.jpg, phenomenon-7.jpg: two of "The SKINOFAB phenomenon" cards (source/phenomenon-*-ai.jpg), the real
+- phenomenon-1.jpg: "The SKINOFAB phenomenon" card 1 at 2x (source/phenomenon-1-sr.jpg); phenomenon-4.jpg,
+  phenomenon-7.jpg: two of its cards (source/phenomenon-*-ai.jpg), the real
   bottle laid on them
 - balm-wide.jpg: the balm banner's photo from 1200 px (pdrn-balm/source/apply-eye-wide-ai.png)
 - celebration.jpg: "Beauty is a celebration", the export's two models as women in their fifties (gpt-image-2)
@@ -21,7 +23,8 @@ usage: python3 -I tools/persona/home_images.py
   (a portrayal, said so on the page) with the real bottle
 - collage-wide.jpg, collage-square.jpg: the listing pages' banners, the four tiles side by side and two by two
 - bundle-*.jpg (1:1): Bundle & Save, each bundle's units on white with soft contact shadows (the foundation from
-  its front render, the brush with its case); card-foundation.jpg, the shelf's foundation card, one bottle the same way
+  its front render, the brush with its case); card-foundation.jpg, the shelf's foundation card, one bottle the same way;
+  tools/theme-build/static/skinofab-cart-bottle.png, the empty cart drawer's bottle
 """
 import subprocess, sys
 from pathlib import Path
@@ -129,7 +132,8 @@ def main():
     # source/oneshade-ai-2x.jpg, Real-ESRGAN 2x of oneshade-ai.jpg, so a 2x screen's 880 px box gets real detail); ours is
     # a little wider than the image model's, so it covers it whole
     held(SRC / 'oneshade-ai-2x.jpg', TMP / 'oneshade.jpg', '--line', '366,1874,502,824', '--w', '304', '--width', '1.11', '--anchor', 'centre',
-         '--fingers', 'left')                                       # her fingertip at its edge stays in front
+         '--fingers', 'left', '--pdrn', 'xl')                       # her fingertip at its edge stays in front; the PDRN
+                                                                    # line bold read PORN at 1024 (review 5): extra large
     one = Image.open(TMP / 'oneshade.jpg').convert('RGB')                               # 2048 x 3072
     a = np.asarray(one).astype(np.float32)
     white = (a.min(2) > 238) & (a.max(2) - a.min(2) < 10)
@@ -145,8 +149,12 @@ def main():
     # phones: her head and shoulders from the hair down, keyed (the card's grey gradient shows behind her)
     # (1290 px wide: a tablet shows it across the card, ~700 px, at 2x)
     save(rgba.crop((0, 380, 2048, 3072)).resize((1290, 1695), Image.LANCZOS), 'oneshade-mobile.webp', quality=84, method=6)
-    # wide screens: bottle and face, chin included (1.31:1), 2048 px for the 880 px box at 2x
-    save(one.crop((0, 720, 2048, 2280)), 'oneshade-desktop.jpg')
+    # wide screens: the keyed photo from above her hair to her chest, on a transparent canvas 1.31 times as wide as it
+    # is tall (her at its left, the card's grey to her right), 2048 px wide for the 880 px box at 2x: a landscape crop
+    # of the photo cut the top of her head (review 5)
+    body = rgba.crop((0, 90, 2048, 2290))
+    wide = Image.new('RGBA', (round(body.height * 1.31), body.height), (0, 0, 0, 0)); wide.paste(body, (0, 0))
+    save(wide.resize((2048, round(2048 / 1.31)), Image.LANCZOS), 'oneshade-desktop.webp', quality=84, method=6)
     # ---- Korean formulas: the bottle at her forehead, measured by hand at 2x
     # (its old bottle is slimmer than ours, 178 px to our 226 at the same length: ours covers it whole, the fingers that
     # crossed the old one stay in front); first a white wedge the image model left on her nose is filled from the skin
@@ -155,11 +163,20 @@ def main():
     box[700:760, 1138:1186] = src[700:760, 1138:1186].mean(2) > 225
     box = cv2.dilate(box, np.ones((5, 5), np.uint8))
     Image.fromarray(cv2.inpaint(src, box * 255, 5, cv2.INPAINT_TELEA)).save(TMP / 'formulas-src.jpg', quality=95)
-    held(TMP / 'formulas-src.jpg', OUT / 'formulas.jpg', '--line', '1607,1105,1235,475', '--w', '178', '--width', '1.27', '--anchor', 'centre')
+    held(TMP / 'formulas-src.jpg', OUT / 'formulas.jpg', '--line', '1607,1105,1235,475', '--w', '178', '--width', '1.27', '--anchor', 'centre',
+         '--pdrn', 'xl')                                     # a laptop shows the bottle ~80 px wide (review 5)
     # ---- the foundation page's "Formulated in Korea": a model in a lab coat (gpt-image-2, source/doctor-ai.png), the
     # real bottle laid in her hand, its own tones kept (the image model's bottle was lit flatter)
     held(BRAND / 'adaptive-peptide-foundation' / 'source' / 'doctor-ai.png', BRAND / 'adaptive-peptide-foundation' / 'doctor.jpg',
          '--line', '269,925,269,566', '--w', '97', '--width', '1.15', '--anchor', 'centre', '--fingers', 'left', '--tone', 'render')
+    # ---- "The SKINOFAB phenomenon" card 1: the persona selfie's card crop was 442 x 680 px for a 260 x 400 card (a 3x
+    # phone stretched it 1.76x, review 5). source/phenomenon-1-sr.jpg is it at 2x: Real-ESRGAN x4 (tools/persona/
+    # upscale.py, RealESRGAN_x4plus) resized to 2x and blended 60/40 with a plain resize, so the skin keeps its
+    # texture, and the bottle (the left column) the plain resize alone (the upscaler garbled its small print); its
+    # PDRN line set again bold, as on the other cards
+    r = np.asarray(Image.open(SRC / 'phenomenon-1-sr.jpg').convert('RGB')).astype(np.float32)
+    label_fix.bold_line_rot(r, (86, 931), 0, (44, 16), 'PDRN', 11, weight=760, track=0.2)
+    save(Image.fromarray(np.clip(r + 0.5, 0, 255).astype(np.uint8)), 'phenomenon-1.jpg')
     # ---- "The SKINOFAB phenomenon" cards 4 and 7: persona photos whose bottles printed the old "COLOR CHANGING
     # FOUNDATION / 15 SPF" (4) or a PDRN that read PORN at the card's size; the real bottle laid on them, its PDRN line
     # set large enough for a bottle the card shows ~45 px wide on a 1440 px screen, --pdrn xl (review 4; card 7: the
@@ -180,12 +197,20 @@ def main():
     save(crop45(SRC / 'tile-foundation.jpg', (0, 0, 1397, 1747)), 'tile-foundation.jpg')
     save(crop45(BRAND / 'egf-nad-serum' / 'hold-cheek.jpg', (108, 0, 972, 1080)), 'tile-serum.jpg')
     save(crop45(BRAND / 'pdrn-balm' / 'hold-cheek.jpg', (150, 0, 1014, 1080)), 'tile-balm.jpg')
-    save(crop45(SRC / 'brush-ai.jpg', (102, 0, 921, 1024)), 'tile-brush.jpg')
+    # her whole head and the brush in her hand (1254 px source: the old box, measured on a 1024 px one, cut her hair
+    # and ear at the tile's right edge, review 5)
+    save(crop45(SRC / 'brush-ai.jpg', (150, 0, 1153, 1254)), 'tile-brush.jpg')
     # ---- Bundle & Save
     save(trio(foundation_unit(), height=0.7, spread=0.2, count=2), 'bundle-foundation.jpg')
     # the shelf's foundation card: the bottle alone, as the bundle's (the export's card photo cast a long grey shadow
     # off to one side)
     save(trio(foundation_unit(), height=0.7, count=1), 'card-foundation.jpg')
+    # the empty cart drawer's bottle (76 x 213 on screen): the same cut-out at 3x, its PDRN line at label_fix.XL (the
+    # old hand-made file printed the render's own line, which read PORN; review 5)
+    unit = foundation_unit(); unit.thumbnail((228, 640), Image.LANCZOS)
+    bottle = Image.new('RGBA', (228, 640), (0, 0, 0, 0)); bottle.alpha_composite(unit, ((228 - unit.width) // 2, 640 - unit.height))
+    path = ROOT / 'tools' / 'theme-build' / 'static' / 'skinofab-cart-bottle.png'
+    bottle.save(path, optimize=True); print(f'{path.relative_to(ROOT)}  {bottle.size[0]}x{bottle.size[1]}  {path.stat().st_size // 1024} KB')
     save(Image.open(BRAND / 'egf-nad-serum' / 'trio.jpg').convert('RGB').resize((1000, 1000), Image.LANCZOS), 'bundle-serum.jpg')
     save(trio(cutout(BRAND / 'pdrn-balm' / 'card.jpg', keep='tallest'), height=0.62), 'bundle-balm.jpg')
     save(trio(cutout(BRAND / 'lymphatic-brush' / 'card.jpg', keep='all'), height=0.5, spread=0.3, side=0.9), 'bundle-brush.jpg')

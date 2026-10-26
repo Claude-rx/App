@@ -65,7 +65,7 @@ payment method today and then every {every} days at the refill price of your pac
 <p>To skip a refill or cancel, email <a href="mailto:{company.EMAIL}">{company.EMAIL}</a> before your next refill date.
 There is no minimum number of refills and no cancellation fee.</p>
 <h3>Buying once instead</h3>
-<p>You can buy without refills: in your bag, tap Change under the bottle and pick One Time before checkout ({usd(one['price'])} for 1 bottle,
+<p>You can buy without refills: in your bag, tap Change under the bottle, then on the cart page set it to One-time purchase before checkout ({usd(one['price'])} for 1 bottle,
 {usd(two['price'])} for 2 bottles).</p>
 <h3>Refunds</h3>
 <p>Refunds follow our refund policy and the 30-day money-back guarantee shown on the product page.</p>

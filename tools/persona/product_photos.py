@@ -255,8 +255,14 @@ def vs_others(product, ours, others, others_label, why, rows, others_thresh=240,
     save(im, product, 'vs-others')
 
 
-def plain(product, name, out=None):
-    save(src(product, name), product, out or name)
+def plain(product, name, out=None, small_print=None):
+    """The photo as it is, on white; small_print: (box, text, cap) set again bold first (label_fix.bold_line), for a
+    photo shown only a few hundred px wide."""
+    if not small_print: return save(src(product, name), product, out or name)
+    box, text, cap = small_print
+    a = label_fix.bold_line(np.asarray(photo(product, name)).astype(np.float32), box, text, cap)
+    im = Image.fromarray(np.clip(a + 0.5, 0, 255).astype(np.uint8))
+    save(ImageOps.fit(im, (W, W), Image.LANCZOS), product, out or name)
 
 
 # ------------------------------------------------------------------------------------------------ products
@@ -286,7 +292,9 @@ def balm():
     for n in ('apply-eye', 'hold-chin', 'friends', 'apply-lips', 'bag'):
         plain(P, n)
     before_after(P, 'ba-smile', 'ba-smile')
-    plain(P, 'pack', 'card')
+    # the card (the shelf, the essentials row and the bundle card show the stick ~60 px wide on a laptop): its
+    # "PDRN · VOLUFILINE" as one bold PDRN, which reads at that size (review 5)
+    plain(P, 'pack', 'card', small_print=((372, 789, 540, 821), 'PDRN', 18))
 
 
 # where the serum's blank bottle is in each photo (roi, px); blur: out-of-focus bottles. The bottle is the brand's

@@ -271,17 +271,29 @@ NEXT_PLATFORM = _service('NEXT Commerce', 'Next Commerce Pte. Ltd.', 'Singapore'
 CARD_SERVICES = (
     _service('Spreedly', 'Spreedly, Inc.', 'United States',
              'Spreedly is a payment service provided by Spreedly, Inc.: the checkout’s card fields send the card details '
-             'to it, and the Owner never receives them.', ['payment info', 'Usage Data'], 'https://www.spreedly.com/privacy-policy')
+             'to it, and the Owner never receives them.', ['payment info', 'Usage Data'], 'https://legal.spreedly.com/#privacy-policy')
     + '\n' + _service('Stripe', 'Stripe, Inc.', 'United States',
                       'Stripe is a payment service provided by Stripe, Inc. that processes card and wallet payments '
                       '(such as Apple Pay and Google Pay) at checkout. This service may place Trackers on the User’s device.',
                       ['payment info', 'Trackers', 'Usage Data'], 'https://stripe.com/privacy'))
+# two services every page loads that the old policies did not name (review 5): the platform's performance monitoring,
+# and the product pages' FrontrowMD widget, which sets the cookies ahoy_visitor and ahoy_visit
+PAGE_SERVICES = (
+    _service('New Relic', 'New Relic, Inc.', 'United States',
+             'New Relic is a performance monitoring service provided by New Relic, Inc. that the platform uses to measure '
+             'how fast and how reliably the pages load and to record errors. This service may place Trackers on the '
+             'User’s device.', ['device information', 'Trackers', 'Usage Data'], 'https://newrelic.com/termsandconditions/privacy')
+    + '\n' + _service('FrontrowMD', 'FrontrowMD, Inc.', 'United States',
+                      'FrontrowMD is a product information widget provided by FrontrowMD, Inc., shown on the product '
+                      'pages. It places Trackers on the User’s device (ahoy_visitor, ahoy_visit) to count visits.',
+                      ['Trackers', 'Usage Data'], 'https://www.frontrowmd.com/privacy-policy'))
 POLICY_NAMES = [('Afterpay US, Inc.', 'Stripe, Inc.'), ('PayPal Inc.', 'Spreedly, Inc.'), ('Shopify Inc.', 'Next Commerce Pte. Ltd.')]
 
 def policy_services():
     """The privacy and cookie policies were generated for the old Shopify store: they named Shopify as the host, and
     Afterpay and PayPal, which this checkout does not offer. The services the store runs on now: NEXT Commerce (the
-    platform and its checkout), Spreedly (the card fields) and Stripe (cards and wallets, with Apple Pay). Afterpay,
+    platform and its checkout, with New Relic, its monitoring), FrontrowMD (the product pages' widget), Spreedly (the
+    card fields) and Stripe (cards and wallets, with Apple Pay). Afterpay,
     PayPal and Shopify Analytics go; Shopify's card becomes NEXT's; Spreedly and Stripe follow Apple Pay; the lists of
     third parties name them in the old ones' places. Returns the pages changed."""
     n = 0
@@ -292,14 +304,16 @@ def policy_services():
         def card(m):
             name = re.search(r'<h4>(.*?)</h4>', m.group(0)).group(1).strip()
             if name in POLICY_DROP: return ''
-            if name == 'Shopify': return NEXT_PLATFORM
+            if name == 'Shopify': return NEXT_PLATFORM + '\n' + PAGE_SERVICES
             if name == 'Apple Pay': return m.group(0) + '\n' + CARD_SERVICES
             return m.group(0)
         o = t
         t = re.sub(r'<details class="legalDoc__accordion">.*?</details>', card, t, flags=re.S)
         for old, new in POLICY_NAMES: t = t.replace(old, new)
+        # Taboola's cookies as its Shopify app sets them (taboola:shopify:page_view...): not this store's
+        t = re.sub(r'<li>taboola:shopify:[^<]*</li>\s*', '', t)
         body = re.sub(r'(?s)<(script|style)[^>]*>.*?</\1>', ' ', t[t.find('<main'):t.find('</main>')])
-        if re.search(r'Shopify|Afterpay|AfterPay|PayPal', re.sub(r'<[^>]+>', ' ', body)):
+        if re.search(r'(?i)shopify|afterpay|paypal', re.sub(r'<[^>]+>', ' ', body)):
             missing.append(('policy services: old service still named', rel))
         if t != o: page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
@@ -386,6 +400,17 @@ REVIEWS = Path(sys.argv[3]).resolve().parent / 'reviews'   # tools/reviews/impor
 
 SHIP = 1000   # reviews in the wall's data file; the totals cover every imported review
 
+# Reviews about what this page does not sell or say, whatever their rating, stay out of the list the page shows (the
+# totals still count every one): the earlier store's free brush ("the brush is easy to use"), an SPF the formula
+# does not have ("I love that it has SF 15"), and other brands by name (review 5).
+OFF_TOPIC_BRANDS = (r"bare ?minerals|clinique|i'?l ?makiage|victoria jackson|est[eé]e?m? ?lauder|lanc[oô]me|maybelline|"
+                    r"l'?or[eé]al|loreal|revlon|cover ?girl|fenty|it cosmetics|\bnars\b|dior|chanel|armani|charlotte tilbury|"
+                    r"\btarte\b|clarins|bobbi brown|neutrogena|\bolay\b|\bno ?7\b|max factor|rimmel|e\.l\.f|smashbox|too faced|"
+                    r"urban decay|laura mercier|la mer\b|shiseido|sk-?ii|physicians formula|dermablend|jane iredale|mary kay|"
+                    r"avon\b|almay|wet n wild|nyx\b|milani|kylie|huda|giorgio|dolce|ysl|yves saint|sephora|ulta\b|boots\b|superdrug")
+OFF_TOPIC = re.compile(r"(?i)\bbrush|\bs\.?\s?p\.?\s?f\b|\bsf ?\d|sun ?screen|sun ?block|sun ?protection|smooch|" + OFF_TOPIC_BRANDS)
+on_topic = lambda r: not OFF_TOPIC.search((r.get('title') or '') + ' ' + r['body'])
+
 def review_data(reviews=REVIEWS):
     """The imported reviews in <reviews>/reviews.json (tools/reviews/import_reviews.py), or None: the list the wall
     ships (every photo review, every review under 4 stars, then the rest in the importer's order, up to SHIP), the
@@ -393,7 +418,7 @@ def review_data(reviews=REVIEWS):
     data = reviews / 'reviews.json'
     if not data.exists(): return None
     d = json.loads(data.read_text())
-    rs = d['reviews']
+    rs = [r for r in d['reviews'] if on_topic(r)]
     keep = set(i for i, r in enumerate(rs) if r.get('photos') or r['rating'] <= 3)
     for i in range(len(rs)):
         if len(keep) >= SHIP: break
@@ -802,7 +827,7 @@ def strip_gone(soup, page=''):
 # does not sell (under-eye patches, lip gloss, pink tubes). Each card is now a woman over 45 with one of our four
 # products, linked to it: (source, crop centre across the photo, product handle, alt). The cards are 260 x 400.
 PHENOMENON = [
-    ('persona:2_9c7e1c85-81c7-4ffb-8ccb-a246f8658467_800x800-d920b1.jpg', .42, 'color-changing-foundation',
+    ('home:phenomenon-1.jpg', .5, 'color-changing-foundation',             # home_images.py: the persona selfie at 2x
      'A woman in her fifties taking a selfie with the Adaptive Peptide Foundation'),
     ('serum:mirror.jpg', .5, serum_copy.HANDLE, 'A woman applying the EGF + NAD+ Firming Serum at her bathroom mirror'),
     ('balm:bag.jpg', .5, balm_copy.HANDLE, 'The PDRN Plumping Balm going into a handbag'),
@@ -832,7 +857,7 @@ def home_phenomenon():
         cw = round(min(im.height * 13 / 20, im.width))
         x0 = round((im.width - cw) * cx)
         im = im.crop((x0, 0, x0 + cw, im.height))
-        if im.height > 1000: im = im.resize((650, 1000), Image.LANCZOS)
+        if im.height > 1200: im = im.resize((780, 1200), Image.LANCZOS)          # 3x the 260 x 400 card
         tmp = WORK / f'phenomenon-{i}.jpg'; im.save(tmp, quality=86, optimize=True, progressive=True)
         url = hashed_copy(tmp, 'img', f'skinofab-phenomenon-{i}')[3:]
         cards.append(f'<div class="fh-social-card"><a href="products/{handle}.html"><img alt="{html.escape(alt)}" '
@@ -927,11 +952,14 @@ def home_features():
     a, b = section('__serum')
     if a is not None:
         sec = t[a:b]
-        img = hashed_copy(serum_copy_img('drop'), 'img', 'skinofab-home-serum-1080w', (1080, 1080))[3:]
+        # her at the serum's bottle, held up by her cheek: the whole face, hair to chin, and the bottle's wordmark in the
+        # wide box (1.62:1 on a computer, from the top of the square); the dropper photo cut the bottle off at its
+        # shoulder and her face at the frame's edge (review 5)
+        img = hashed_copy(serum_copy_img('temple'), 'img', 'skinofab-home-serum-1024w', (1024, 1024))[3:]
         sec = re.sub(r'<div class="fh-story-media" data-fh-editorial-video=""( style="[^"]*")?>.*?</div>\s*</div>',
-                     lambda m: f'<div class="fh-story-media"{m.group(1) or ""}><img alt="A woman in her sixties applying the EGF + NAD+ Firming Serum" '
-                     f'class="fh-social-poster" height="1080" loading="lazy" sizes="(max-width: 749px) calc(100vw - 32px), 760px" '
-                     f'src="{img}" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%" width="1080"/></div>', sec, count=1, flags=re.S)
+                     lambda m: f'<div class="fh-story-media"{m.group(1) or ""}><img alt="A woman in her sixties holding the EGF + NAD+ Firming Serum by her cheek" '
+                     f'class="fh-social-poster" height="1024" loading="lazy" sizes="(max-width: 749px) calc(100vw - 32px), 760px" '
+                     f'src="{img}" style="width:100%;height:100%;object-fit:cover;object-position:50% 0" width="1024"/></div>', sec, count=1, flags=re.S)
         sec = re.sub(r'<div class="fh-story-copy">.*?</a></div>',
                      '<div class="fh-story-copy"><div class="fh-eyebrow"><span>EGF + NAD+ Firming Serum</span></div>'
                      '<h2>Firmer-looking skin, face and neck</h2><div class="fh-story-body">'
@@ -1129,14 +1157,15 @@ def home_original():
     if a is not None:
         sec = t[a:b]
         mob = hashed_copy(HOME / 'oneshade-mobile.webp', 'img', 'skinofab-home-oneshade-mobile-1290w')[3:]
-        desk = hashed_copy(HOME / 'oneshade-desktop.jpg', 'img', 'skinofab-home-oneshade-desktop-2048w')[3:]
-        # under 1200 px the keyed portrait, whole: the wide photo, cropped to a tablet's or a small laptop's box, cut the
-        # top of her head (under a fade, 768 px) or her far eye (under the fade into the copy, 1024 px; review 3)
+        desk = hashed_copy(HOME / 'oneshade-desktop.webp', 'img', 'skinofab-home-oneshade-desktop-2048w')[3:]
+        # under 1024 px (the photo under the copy) the keyed portrait, whole; from 1024 px (beside the copy) the keyed
+        # wide file, whole: a crop of the photo cut the top of her head, and the fades laid over its cut edges covered
+        # her cheek and hair (1440) or her neck and shoulder (1024; reviews 3 and 5)
         sec, k1 = re.subn(r'<source height="1182" media="\(max-width: 749px\)" sizes="85vw" srcset="[^"]*" width="660"/?>',
-                          f'<source height="1695" media="(max-width: 1199px)" sizes="(max-width: 1023px) 100vw, 45vw" srcset="{mob} 1290w" '
+                          f'<source height="1695" media="(max-width: 1023px)" sizes="100vw" srcset="{mob} 1290w" '
                           f'type="image/webp" width="1290">', sec, count=1)
         sec, k2 = re.subn(r'<img alt="[^"]*" class="fh-original" height="1825"[^>]*>',
-                          f'<img alt="A woman in her fifties holding the Adaptive Peptide Foundation to her temple" class="fh-original" height="1560" '
+                          f'<img alt="A woman in her fifties holding the Adaptive Peptide Foundation to her temple" class="fh-original" height="1563" '
                           f'loading="lazy" sizes="880px" src="{desk}" srcset="{desk} 2048w" width="2048"/>', sec, count=1)
         X = '[id$="__foundation"] .fh-editorial--foundation'
         sec, k3 = style(sec, (
@@ -1146,8 +1175,10 @@ def home_original():
             f'{X} .fh-story-copy{{height:auto;padding:40px 0;min-height:max(var(--fh-story-height),calc((100cqw - min(var(--fh-story-width),42cqw) - 64px) / 1.31))}}'
             f'{X} .fh-story-media{{right:calc(min(var(--fh-story-width),42%) + 64px);width:auto}}'
             f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}'
-            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;width:100%;height:100%;transform:none;object-fit:cover;object-position:0 35%;'
-            f'-webkit-mask-image:linear-gradient(to right,#000 94%,transparent);mask-image:linear-gradient(to right,#000 94%,transparent)}}}}'
+            # (the desktop file: her keyed, hair to chest, on a transparent canvas of the box's shape, whole
+            # in the box, her forearm and chest at its left and lower edges, the card's grey round her: no crop, no fade)
+            f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;width:100%;height:100%;transform:none;object-fit:contain;object-position:0 100%;'
+            f'-webkit-mask-image:none;mask-image:none}}}}'
             # under 1024 px: the copy, then the photo under it across the card
             f'@media(max-width:1023px){{{X}{{height:auto;min-height:0;display:flex;flex-direction:column}}'
             f'{X} .fh-story-copy{{order:1;height:auto;min-height:0;width:100%;margin:0;padding:32px 32px 8px}}'
@@ -1157,19 +1188,10 @@ def home_original():
             f'-webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%);mask-image:linear-gradient(to bottom,transparent,#000 12%)}}}}'
             f'@media(max-width:749px){{{X} .fh-story-copy{{padding:32px 16px 8px}}{X} .fh-story-media{{aspect-ratio:860/1130}}'
             f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'
-            # small laptops (1024-1199, beside the copy): the keyed portrait whole, in the card's lower left corner, where the photo's own
-            # edges (her forearm on the left, her shoulders below) meet the card's (centred, the cut forearm stood
-            # in the middle of the card). The image is sized to the portrait (its width/height attributes are the
-            # desktop photo's), so its right edge, where the photo cuts her shoulder, fades into the card below her
-            # head: two mask layers, added, the top 55% never faded
             # tablets (750-1023, the photo under the copy): the portrait across the card's width as on phones, its
             # left, right and lower edges the card's (in a 4:3 box beside empty card it left the right half bare)
             f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-story-media{{aspect-ratio:860/1130}}'
-            f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'
-            f'@media(min-width:1024px) and (max-width:1199px){{{X} .fh-story-media .fh-original{{object-fit:contain;object-position:0 100%;'
-            f'inset:auto;left:0;bottom:0;top:auto;right:auto;width:auto;max-width:100%;height:100%;aspect-ratio:860/1130;'
-            f'-webkit-mask-image:linear-gradient(to left,transparent,#000 12%),linear-gradient(to bottom,#000 55%,transparent 72%);'
-            f'mask-image:linear-gradient(to left,transparent,#000 12%),linear-gradient(to bottom,#000 55%,transparent 72%)}}}}'))
+            f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'))
         t = t[:a] + sec + t[b:]; done['one shade'] = k1 + k2 + k3
     # ---- Korean formulas: one complete photo (her neck and shoulder whole, so no cut edge), the real bottle in hand
     a, b = section('__formulas')
@@ -1184,13 +1206,17 @@ def home_original():
                           f'srcset="{srcset}" width="3344"/>', sec, count=1)   # from 1024 px it covers a box ~0.9 screens wide
         X = '[id$="__formulas"]'
         sec, k3 = style(sec, (
-            f'@media(min-width:1024px){{{X} .fh-formula-photo{{left:0;top:0;bottom:0;width:58%;height:auto;'
-            f'-webkit-mask-image:linear-gradient(to right,#000 72%,transparent 97%);mask-image:linear-gradient(to right,#000 72%,transparent 97%)}}'
+            # from 1200 px the photo beside the copy, its inner edge faded into the card past her hand; under 1200 px
+            # the copy, then the photo across the card (at 1024 the box beside the copy showed only her and her hand,
+            # and the fade lay over the hand, review 5)
+            f'@media(min-width:1200px){{{X} .fh-formula-photo{{left:0;top:0;bottom:0;width:58%;height:auto;'
+            f'-webkit-mask-image:linear-gradient(to right,#000 82%,transparent 99%);mask-image:linear-gradient(to right,#000 82%,transparent 99%)}}'
             f'{X} .fh-formula-photo .fh-original{{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0 40%}}}}'
-            f'@media(max-width:1023px){{{X} .fh-formula{{flex-direction:column;justify-content:flex-start;min-height:0;padding:32px 24px 0;gap:24px;margin:0}}'
+            f'@media(max-width:1199px){{{X} .fh-formula{{flex-direction:column;justify-content:flex-start;min-height:0;padding:32px 24px 0;gap:24px;margin:0}}'
             f'{X} .fh-formula-copy{{width:100%}}'
+            # (no fade at its top: it laid a white haze over her hair, review 5)
             f'{X} .fh-formula-photo{{position:relative;left:auto;top:auto;bottom:auto;width:auto;height:auto;margin:0 -24px;aspect-ratio:16/9;overflow:hidden;'
-            f'-webkit-mask-image:linear-gradient(to bottom,transparent,#000 14%);mask-image:linear-gradient(to bottom,transparent,#000 14%)}}'
+            f'-webkit-mask-image:none;mask-image:none}}'
             f'{X} .fh-formula-photo .fh-original{{position:absolute;inset:0;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:20% 40%}}}}'
             f'@media(max-width:749px){{{X} .fh-formula{{padding:32px 16px 0}}{X} .fh-formula-photo{{margin:0 -16px;aspect-ratio:6/5}}}}'))
         t = t[:a] + sec + t[b:]; done['formulas'] = k1 + k2 + k3
@@ -1243,20 +1269,23 @@ def home_original():
     a, b = section('__arrivals_desktop')
     if a is not None:
         X = '[id$="__arrivals_desktop"] .fh-editorial--arrivals'
-        # the wide photo anchored at her (its right), a little below the box's top so her hair has air above it
-        img = (f'{X} .fh-story-media .fh-original{{position:absolute;inset:auto;left:0;top:auto;bottom:0;width:100%;height:96%;transform:none;'
-               f'object-fit:cover;object-position:100% 0;mix-blend-mode:multiply;-webkit-mask-image:none;mask-image:none}}')
+        # the wide photo anchored at her (its right), the box's full height; the card takes the photo's own backdrop
+        # tone (#ececec, its left edge), so the photo has no edge: at 96% high and multiplied into the card's grey it
+        # showed as a lighter, pasted-in rectangle with a seam along its top (review 5)
+        img = (f'{X} .fh-story-media .fh-original{{position:absolute;inset:0;left:0;top:0;bottom:0;width:100%;height:100%;transform:none;'
+               f'object-fit:cover;object-position:100% 0;mix-blend-mode:normal;-webkit-mask-image:none;mask-image:none}}')
         sec, k = style(t[a:b], (
+            f'@media(max-width:1199px){{{X}{{background:#ececec}}}}'
             f'@media(max-width:1023px){{{X}{{height:auto;min-height:0;display:flex;flex-direction:column}}'
             f'{X} .fh-story-copy{{position:relative;order:1;height:auto;width:100%;margin:0;padding:40px 32px 24px}}'
-            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;top:auto;left:auto;right:auto;bottom:auto;width:100%;aspect-ratio:4/3;background:#e9e9e9}}'
+            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;top:auto;left:auto;right:auto;bottom:auto;width:100%;aspect-ratio:4/3;background:#ececec}}'
             f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}{img}'
             f'{X} .fh-story-media:after{{display:none}}}}'
             f'@media(max-width:749px){{{X} .fh-story-copy{{padding:32px 16px 16px}}{X} .fh-story-media{{aspect-ratio:1/1}}}}'
             f'@media(min-width:1024px) and (max-width:1199px){{{X}{{height:auto;min-height:var(--fh-story-height);display:grid;'
             f'grid-template-columns:1fr 1fr;align-items:stretch}}'
             f'{X} .fh-story-copy{{position:relative;order:1;height:auto;width:auto;margin:0;padding:48px 40px;justify-content:center}}'
-            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;top:auto;left:auto;right:auto;bottom:auto;width:auto;min-height:440px;background:#e9e9e9}}'
+            f'{X} .fh-story-media{{position:relative;order:2;inset:auto;top:auto;left:auto;right:auto;bottom:auto;width:auto;min-height:440px;background:#ececec}}'
             f'{X} .fh-story-media picture{{position:absolute;inset:0;width:100%;height:100%}}{img}'
             f'{X} .fh-story-media:after{{display:none}}}}'))
         t = t[:a] + sec + t[b:]; done['arrivals tablets'] = k
@@ -1279,9 +1308,28 @@ LAYOUT_FIXES = (
     # a circled word: room on both sides so the drawn ellipse never crosses the word before it (CIRCLE_ROOM_JS sets
     # the left room from the word's width once it is laid out: the ellipse is 136% of it)
     '.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}'
+    # the homepage's footer legal line and policy links at the design's 10 px (12 px on every other page): 12 px
+    '.template-index .sf__policies,.template-index .sf__legal-bottom{font-size:12px;line-height:18px}'
+    # the video cards' play button sat in the middle of the poster, on the woman's nose and mouth: the lower left corner
+    '.fh-social-play{top:auto;right:auto;left:14px;bottom:14px;margin:0;width:52px;height:52px}'
+    # the homepage's video cards were 574 px at every width, so the last one in view was always cut mid-sentence
+    # ("Glides Over Textur", review 5): whole cards, one in view on tablets, two from 1024 px, all three from 1400
+    '@media(min-width:750px){.fh-review-track>.fh-review{width:auto;min-width:0;grid-template-columns:186.36px minmax(0,1fr)}}'
+    '@media(min-width:750px) and (max-width:1023px){.fh-review-track>.fh-review{flex:0 0 100%}}'
+    '@media(min-width:1024px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 12px) / 2)}}'
+    '@media(min-width:1400px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 24px) / 3)}}'
     # policy tables: the export's fixed column widths and row heights (inline) squeezed "Express Shipping" onto 3 lines
     '.rte__table-wrapper table{height:auto!important}.rte__table-wrapper td{width:auto!important;height:auto!important}'
+    # the before/after photos' "illustration" line under the photo (BEFORE_AFTER_NOTE), the photo keeping its corners
+    '.skinofab-iwt__image.sf-has-note{border-radius:0;overflow:visible}.skinofab-iwt__image.sf-has-note img{border-radius:16px}'
+    '.sf-illustration-note{margin:8px 0 0;font-size:12px;line-height:1.4;color:#595959;text-align:center}'
 )
+
+# The before/after photos in the product pages' image + text blocks (the foundation's, the serum's, the balm's and
+# the brush's) are AI illustrations; the line saying so was printed on the photo at 17 px of 1200, about 5 px on a
+# computer (review 5), and the foundation's had none: a line of text under each photo, 12 px at every width.
+BEFORE_AFTER_IMG = re.compile(r'<div class="skinofab-iwt__image">(\s*<img[^>]*?src="[^"]*(?:/HIDDEN_1_|-ba-)[^"]*"[^>]*>)')
+BEFORE_AFTER_NOTE = '<p class="sf-illustration-note">Illustration made with AI, not a customer photo. Results vary.</p>'
 
 # The drawn ellipse round a circled word is 136% of the word's width, centred on it: it reaches 18% of that width
 # past each side, past a fixed margin when the word is long ("3 minutes" crossed the "n" of "in", review 4). The left
@@ -1302,6 +1350,7 @@ def layout_fixes():
         if 'data-sf-layout-fixes' in t or '</body>' not in t: continue
         t = t.replace('</body>', f'<style data-sf-layout-fixes>{LAYOUT_FIXES}</style>'
                       + (CIRCLE_ROOM_JS if 'text-highlight-wrapper--circle' in t else '') + '</body>', 1)
+        t = BEFORE_AFTER_IMG.sub(lambda m: f'<div class="skinofab-iwt__image sf-has-note">{m.group(1)}{BEFORE_AFTER_NOTE}', t)
         page.write_text(t, encoding='utf-8', errors='surrogateescape'); n += 1
     return n
 
@@ -1398,10 +1447,12 @@ def working_forms():
         if m:
             e = t.find('</form>', m.start())
             if e > 0: t = t[:m.start()] + t[e + len('</form>'):]
-        t = t.replace('href="#" id="customer_login_link"', 'href="/accounts/" id="customer_login_link"')   # NEXT's account page
+        # NEXT's account page, in a new tab: it is the platform's own page (no header, no link back to the store: the
+        # Back button was the only way out, review 5), so the store stays open behind it
+        t = t.replace('href="#" id="customer_login_link"', 'href="/accounts/" id="customer_login_link" target="_blank" rel="noopener"')
         # "Log in" and "Create account" both opened the same page (NEXT signs in and signs up with one email code): one
         # link, named for both
-        t = re.sub(r'(<a class="mobile-navlink mobile-navlink--small" href="/accounts/" id="customer_login_link">)Log in(</a></li>)\s*'
+        t = re.sub(r'(<a class="mobile-navlink mobile-navlink--small" href="/accounts/" id="customer_login_link" target="_blank" rel="noopener">)Log in(</a></li>)\s*'
                    r'<li class="mobile-menu__item"><a class="mobile-navlink mobile-navlink--small" href="[^"]*" id="customer_register_link">Create account</a></li>',
                    r'\1Log in or create an account\2', t)
         if 'data-sf-mailto=' in t and MAILTO_JS not in t:
@@ -1418,6 +1469,7 @@ LISTING_BANNER_CSS = ('<style>.banner-image__inner.sf-listing-banner{display:fle
                       '.sf-listing-banner .banner-image__heading{color:#151515}'
                       '.sf-listing-banner .banner-image__image-container{position:relative;min-height:0;padding-top:0;aspect-ratio:3456/1080}'
                       '.sf-listing-banner .banner-image__image-inner{transform:none;animation:none}'
+                      '.sf-listing-banner .banner-image__image-container[data-sf-few="true"]{display:none}'
                       '@media (max-width:767px){.sf-listing-banner .banner-image__image-container{aspect-ratio:2000/2500}'
                       '.sf-listing-banner .banner-image__text-container{padding:28px 0 16px}}</style>')
 
@@ -1676,6 +1728,8 @@ def real_testimonials(t, reviews=REVIEWS):
     by_id = {r['id']: r for r in json.loads(data.read_text())['reviews']}
     picks = [(by_id[i], f) for i, f in apf_copy.TESTIMONIALS
              if i in by_id and by_id[i].get('photos') and by_id[i]['rating'] == 5 and by_id[i].get('verified')]
+    off = [r['id'] for r, _ in picks if not on_topic(r)]
+    if off: missing.append(('testimonials about what the page does not sell or say', off))
     m = re.search(r'<section class="skinofab-testimonials"', t)
     if not m or not picks: return t, 0
     end = t.find('</section>', m.start())
@@ -2395,7 +2449,13 @@ def faster_home(home):
                # right 62% of the banner, cropped from its right, its left edge faded into the grey
                f'@media(min-width:1024px) and (max-width:1199px){{{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:auto;right:0;top:0;'
                f'width:62%;height:100%;object-fit:cover;object-position:97% 20%;-webkit-mask-image:linear-gradient(to right,transparent,#000 18%);'
-               f'mask-image:linear-gradient(to right,transparent,#000 18%)}}}}')
+               f'mask-image:linear-gradient(to right,transparent,#000 18%)}}}}'
+               # computers: the export drew the photo 150% wide and 180% tall, shifted up by half the banner, which cut
+               # her head at mid-forehead (review 5); the photo whole instead, the banner's height, at its right, its
+               # left part (the empty wall, under the copy) faded into the grey
+               f'@media(min-width:1200px){{{X} .fh-hero-slide--foundation .fh-hero-image .fh-original{{left:auto;right:0;top:0;'
+               f'width:auto;max-width:none;height:100%;aspect-ratio:{dsz[0]}/{dsz[1]};object-fit:cover;object-position:100% 0;'
+               f'-webkit-mask-image:linear-gradient(to right,transparent,#000 15%);mask-image:linear-gradient(to right,transparent,#000 15%)}}}}')
         hs = re.search(r'<section [^>]*id="shopify-section-template--[0-9]+__hero"', home)
         if hs:
             e = home.find('</style>', hs.start())
@@ -2431,8 +2491,9 @@ STICKY_CSS = """
 
 def sticky_bar(t, img, title, price_line, button, rating=None):
     """The product page's sticky bar, rebuilt: the export's #sticky_atcs was never shown (the app script that showed
-    it did not come with the export) and its prices were bound to the wrong product. This one slides up once the buy
-    box's add-to-cart button has scrolled out of view, and its button goes back to the pack picker (#apf-buy).
+    it did not come with the export) and its prices were bound to the wrong product. This one shows whenever the buy
+    box's add-to-cart button is out of view, above or below (on a phone or a tablet the page opens with it below the
+    fold: there was no buy button on the first screen, review 5), and its button goes to the pack picker (#apf-buy).
     price_line is plain text ("From $37 · Free shipping"), so the theme build leaves it as written."""
     m = re.search(r'<div id="sticky_atcs"', t)
     if not m: return t, False
@@ -2446,7 +2507,7 @@ def sticky_bar(t, img, title, price_line, button, rating=None):
            'function start() {'
            'var btn = document.querySelector("form[data-product-form] [data-add-to-cart]") || document.querySelector("#apf-buy");'
            'if (!btn || !("IntersectionObserver" in window)) return;'
-           'new IntersectionObserver(function (es) { var e = es[0], on = !e.isIntersecting && e.boundingClientRect.top < 0;'
+           'new IntersectionObserver(function (es) { var e = es[0], on = !e.isIntersecting;'
            'bar.classList.toggle("is-on", on); bar.setAttribute("aria-hidden", on ? "false" : "true");'
            'bar.querySelector("a").tabIndex = on ? 0 : -1;'
            # while it shows, the page ends that much lower: the footer's last line and the payment icons stay above it
@@ -2456,13 +2517,14 @@ def sticky_bar(t, img, title, price_line, button, rating=None):
     return t[:m.start()] + bar + t[balanced_end(t, m.start(), 'div'):], True
 
 def sticky_thumb(src, name):
-    """A 104 px square thumbnail on white (a transparent packshot would turn black as a JPEG)."""
+    """A 156 px square thumbnail on white (a transparent packshot would turn black as a JPEG): the bar shows it 52 px
+    wide, so a 3x phone gets its own pixels (104 px was stretched 1.5x, review 5)."""
     from PIL import Image
     im = Image.open(src).convert('RGBA')
     s = max(im.size); sq = Image.new('RGBA', (s, s), (255, 255, 255, 255))
     sq.alpha_composite(im, ((s - im.width) // 2, (s - im.height) // 2))
     out = DST / 'assets' / 'img' / f'{name}.jpg'
-    sq.convert('RGB').resize((104, 104), Image.LANCZOS).save(out, quality=86, optimize=True)
+    sq.convert('RGB').resize((156, 156), Image.LANCZOS).save(out, quality=86, optimize=True)
     final = out.with_name(f"{name}-{hashlib.md5(out.read_bytes()).hexdigest()[:6]}.jpg"); out.rename(final)
     return f'../assets/img/{final.name}'
 
@@ -2501,10 +2563,16 @@ def honest_pdp(t, summary):
     for cls in ('product-single__media-slide', 'product-single__thumbnail'):
         for m in reversed(list(re.finditer(r'<div class="%s[^"]*"[^>]*>' % cls, t))):
             end = balanced_end(t, m.start(), 'div')
-            if any(k in t[m.start():end] for k in ('ColorChangingFoundation-Productimagesphotos_2_1791540a',
-                                                   'ColorChangingFoundation-Productimagesphotos_1_87f31fb4')):
+            if any(k in t[m.start():end] for k in GONE_SLIDES):
                 t = t[:m.start()] + t[end:]; n['gone slides'] = n.get('gone slides', 0) + 1
     return t, n
+
+# the foundation gallery's slides that go: the panel numbers above; "Even better together" (a pink blending brush the
+# store does not sell); "Loved by 9,800+" and the striped-top before / after, faces whose hair and light change
+# between the shots, shown as customers' results with no label (review 5)
+GONE_SLIDES = ('ColorChangingFoundation-Productimagesphotos_2_1791540a', 'ColorChangingFoundation-Productimagesphotos_1_87f31fb4',
+               'ColorChangingFoundation-Productimagesphotos_4_35e0c406', 'ColorChangingFoundation-Productimagesphotos_5-',
+               'ColorChangingFoundation-Productimagesphotos_5_')
 
 def balanced_end(t, start, tag):
     depth = 0
@@ -2542,7 +2610,7 @@ def main():
         hit = next((u for u in imgs if Path(u.split('?')[0]).name.startswith(prefix) and u not in ordered), None)
         if hit: ordered.append(hit)
         else: missing.append(('gallery', prefix))
-    gone = ('ColorChangingFoundation-Productimagesphotos_2_1791540a', 'ColorChangingFoundation-Productimagesphotos_1_87f31fb4')
+    gone = GONE_SLIDES
     data['images'] = [u for u in ordered + [u for u in imgs if u not in ordered] if not any(g in u for g in gone)]
     snap.write_text(json.dumps(data))
     pdp = DST / 'products' / 'color-changing-foundation.html'

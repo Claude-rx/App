@@ -18,7 +18,7 @@ KEY, MEDIA_BASE = 'brush', 9300000000000          # section ids, gallery media i
 HANDLE = 'the-lymphatic-brush'
 TITLE = 'The Lymphatic Brush'
 SHOPIFY_ID, SHOPIFY_VARIANT = 15517563191626, 61233683038538       # Solena's ids (the design markup carries them)
-PRICE, COMPARE = '24.95', '49.90'
+PRICE, COMPARE = '24.95', '24.95'                                # one brush; no "was" price (a new product)
 EMAIL = 'hello@skinofab.com'
 DESCRIPTION = ('<p>A 3-minute depuffing massage for your morning face. Hundreds of ultra-soft tips sweep from under '
                'your eyes, along your cheeks and jaw and down your neck with a light touch, on dry skin, no oil. '
@@ -71,14 +71,16 @@ SHIPPING_BADGE = '\U0001F381 FREE SHIPPING'
 LEAD = ('A 3-minute morning massage for puffy-looking eyes, cheeks and jaw. Ultra-soft bristles that bend instead of '
         'pressing, on dry skin, no oils.')
 # the offer: Solena's three bundles (each a NEXT variant); the free cases and the body brush ship with the order
-GIFTS = {'case': ('Premium Case', 'Premium Cases', '9.95'), 'body': ('Body Dry Brush', 'Body Dry Brushes', '24.95')}
+# the case comes with every brush (no price of its own: "included", not a free gift worth $9.95); the body brush is the
+# 3-pack's gift, the price it sells for
+GIFTS = {'case': ('Protective case', 'Protective cases', None), 'body': ('Body Dry Brush', 'Body Dry Brushes', '24.95')}
 BUNDLES = [
     {'key': '1', 'name': 'Buy 1 Brush', 'note': '', 'variant': '1 brush + free case', 'sku': 'SKF-LYB-1',
-     'price': '24.95', 'compare': '49.90', 'gifts': [('case', 1)]},
+     'price': '24.95', 'compare': '24.95', 'gifts': [('case', 1)]},
     {'key': '2', 'name': 'Buy 2 Brushes', 'note': '2-Pack', 'variant': '2 brushes + 2 free cases', 'sku': 'SKF-LYB-2',
-     'price': '39.95', 'compare': '99.80', 'badge': 'Most popular', 'default': True, 'gifts': [('case', 2)]},
+     'price': '39.95', 'compare': '49.90', 'badge': 'Most popular', 'default': True, 'gifts': [('case', 2)]},
     {'key': '3', 'name': 'Buy 2 Brushes + 1 FREE', 'note': '3-Pack', 'variant': '3 brushes + 3 free cases + free body brush',
-     'sku': 'SKF-LYB-3', 'price': '49.90', 'compare': '149.70', 'badge': 'Best offer', 'gifts': [('case', 3), ('body', 1)]},
+     'sku': 'SKF-LYB-3', 'price': '49.90', 'compare': '74.85', 'badge': 'Best offer', 'gifts': [('case', 3), ('body', 1)]},
 ]
 GIFT_FILES = {'case': 'case', 'body': 'body-brush'}     # brand/lymphatic-brush/gift-<file>.jpg
 
@@ -291,7 +293,8 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
         saves = float(b['compare']) > float(b['price'])
         gifts_li = ''.join(
             f'<li><img src="{gift_imgs[k]}" alt="" width="40" height="40" loading="lazy" decoding="async">'
-            f'<span>+ {n} FREE {esc(gifts[k][0 if n == 1 else 1])}</span><s>{money(float(gifts[k][2]) * n)}</s><b>FREE</b></li>'
+            + (f'<span>+ {n} FREE {esc(gifts[k][0 if n == 1 else 1])}</span><s>{money(float(gifts[k][2]) * n)}</s><b>FREE</b></li>'
+               if gifts[k][2] else f'<span>+ {n} {esc(gifts[k][0 if n == 1 else 1])}</span><b>Included</b></li>')
             for k, n in b['gifts'])
         cards.append(
             '<label class="sfo-card sfo-card--gifts">'
@@ -457,7 +460,7 @@ def no_reviews_html(buy='#apf-buy', amazon=None, n=None):
 # around the site ---------------------------------------------------------------------------------------------------
 # the homepage product shelf (the Bestsellers list and its tabs): a card like the other products', next to the gua sha
 # and the face roller, in the default list and the Bestsellers, New and Face tabs (the shelf's tab keys)
-SHELF = {'badge': 'New', 'saving': 'Save 50%', 'tags': ['No oils', '3 minutes', 'Less puffy'],
+SHELF = {'badge': 'New', 'saving': 'Buy 2, get 1 free', 'tags': ['No oils', '3 minutes', 'Less puffy'],
          'after': {'list': 'color-changing-foundation', 'bestsellers_0': 'color-changing-foundation',
                    'bestsellers_1': None, 'bestsellers_2': 'under-eye-reset'}}
 # the NEXT collections it is in, as the other face tools (gua sha, face roller): Accessories, Face, Skin, Bestsellers

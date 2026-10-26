@@ -92,6 +92,11 @@ FAQ = [
     ('How do I return a product', None,
      f'<p>Email {MAIL} with your order number and what you’d like: a refund, store credit or an exchange. We reply with '
      'what to do next.</p>'),
+    # the export's answer: "products of equal value", the customer pays any difference: the refund policy's terms instead
+    ('Do you offer exchanges', None,
+     f'<p>Yes, for an unopened product, within 30 days of delivery: email {MAIL} with your order number and the SKINOFAB '
+     'product you would like instead. If it costs more or less, we charge or refund the difference. As with any '
+     'unopened return, you pay the return shipping, unless we sent the wrong item or it arrived damaged.</p>'),
     ('When will I receive my refund', None,
      '<p>Once your refund is approved we send it to your original payment method straight away. Your bank or card '
      'provider usually shows it within 5 to 10 business days.</p>'),

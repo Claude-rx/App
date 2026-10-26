@@ -334,7 +334,9 @@
                 '" aria-label="' + escapeHtml(label(labels, 'removeVoucherLabel', 'Remove voucher')) + '">' + ICON.close + '</button></div>';
         });
         return '<div class="spark-drawer-voucher">' + applied +
-            '<details class="sf-voucher"' + (applied ? ' open' : '') + '><summary>' + escapeHtml(cfg.couponToggle || 'Have a discount code?') + '</summary>' +
+            /* opened at the foot of the list, the field sat under the totals: it scrolls into view, focused */
+            '<details class="sf-voucher"' + (applied ? ' open' : '') + ' ontoggle="if(this.open){var f=this.querySelector(\'input\');' +
+            'if(f){f.scrollIntoView({block:\'center\',behavior:\'smooth\'});f.focus({preventScroll:true});}}"><summary>' + escapeHtml(cfg.couponToggle || 'Have a discount code?') + '</summary>' +
             '<div class="spark-drawer-voucher-form">' +
             '<input type="text" class="spark-drawer-voucher-input" autocomplete="off" aria-label="' + escapeHtml(labels.couponPlaceholder) + '" placeholder="' + escapeHtml(labels.couponPlaceholder) + '" />' +
             '<button type="button" class="spark-drawer-voucher-btn" data-action="apply-voucher">' + escapeHtml(labels.couponBtn) + '</button>' +
