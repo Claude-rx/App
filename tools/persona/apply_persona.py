@@ -1061,9 +1061,11 @@ def home_original():
             f'-webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%);mask-image:linear-gradient(to bottom,transparent,#000 12%)}}}}'
             f'@media(max-width:749px){{{X} .fh-story-copy{{padding:32px 16px 8px}}{X} .fh-story-media{{aspect-ratio:860/1130}}'
             f'{X} .fh-story-media .fh-original{{object-fit:contain;-webkit-mask-image:none;mask-image:none}}}}'
-            # tablets and small laptops: the keyed portrait whole, standing on the card's lower edge (no fade, no crop)
+            # tablets and small laptops: the keyed portrait whole, in the card's lower left corner, where the photo's own
+            # edges (her forearm on the left, her shoulders below) meet the card's (centred, the cut forearm stood
+            # in the middle of the card)
             f'@media(min-width:750px) and (max-width:1023px){{{X} .fh-story-media{{aspect-ratio:4/3}}}}'
-            f'@media(min-width:750px) and (max-width:1199px){{{X} .fh-story-media .fh-original{{object-fit:contain;object-position:50% 100%;'
+            f'@media(min-width:750px) and (max-width:1199px){{{X} .fh-story-media .fh-original{{object-fit:contain;object-position:0 100%;'
             f'-webkit-mask-image:none;mask-image:none}}}}'))
         t = t[:a] + sec + t[b:]; done['one shade'] = k1 + k2 + k3
     # ---- Korean formulas: one complete photo (her neck and shoulder whole, so no cut edge), the real bottle in hand
