@@ -1371,7 +1371,8 @@ if p_cart.exists():
     t = p_cart.read_text()
     if 'sf-cart-grid' not in t:
         t = must_replace(t, '<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">',
-                         '<style>@media (min-width:64rem){#main-content .sf-cart-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem}'
+                         # ("{ #": "{#" opens a template comment)
+                         '<style>@media (min-width:64rem){ #main-content .sf-cart-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem}'
                          '#main-content .sf-cart-lines{grid-column:span 2/span 2}}</style>'
                          '<div class="grid grid-cols-1 gap-8 sf-cart-grid">', 'templates/cart.html grid')
         p_cart.write_text(must_replace(t, '<div class="md:col-span-2">', '<div class="sf-cart-lines">', 'templates/cart.html lines column'))
