@@ -66,7 +66,7 @@ KOREAN = False         # no "Formulated in Korea" line until the supplier confir
 
 # the buy box --------------------------------------------------------------------------------------------------------
 EYEBROW = None
-SHIPPING_BADGE = '\U0001F381 FREE SHIPPING'
+SHIPPING_BADGE = '\U0001F69A FREE SHIPPING'   # a truck: no gift comes with this product (a gift box suggested one, stick review 9)
 # the header's line on this page (the store's "Up to 60% OFF + FREE Gifts" names gifts and savings the stick has
 # not got, stick review 3): what every stick order does get
 ANNOUNCEMENT = 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee'
@@ -251,7 +251,7 @@ TWIN = {
         'img_problem': 'problem', 'img_solution': 'card',
         'photo_alt': 'A woman in her fifties frowning at her foundation in a hand mirror',
         'problem': ('The problem', 'Your foundation used to work.', 'Your skin changed.'),
-        'lede': 'You found your shade years ago. Now the same bottle looks orange in daylight, gray by the window, and by lunch '
+        'lede': 'You found your shade years ago. Now the same bottle looks fine under the bathroom light, orange in daylight, and by lunch '
                 'it has found every line around your eyes.',
         'pains': ['A shade that looked right in the shop and wrong at home',
                   'Foundation that settles into fine lines and looks heavier by the hour',
@@ -307,7 +307,7 @@ TWIN = {
         {'img': 'wear-day', 'alt': 'The same woman at 10 AM and at 10 PM wearing the stick (AI illustration)',
          'lead': 'From 10 AM', 'mark': 'to 10 PM',
          'paras': ['A thin, creamy layer moves with your skin instead of drying on top of it, so it is made to look the same at '
-                   'dinner as it did at breakfast: no orange by the window, no settling into lines by lunch. Out late? Buff the brush '
+                   'dinner as it did at breakfast: no orange in daylight, no settling into lines by lunch. Out late? Buff the brush '
                    'end over your nose and chin and you are done. Results vary from person to person.'],
          'usps': [('Made to wear all day', 'clock'), ('Touch up with the brush', 'brush')]},
         {'img': 'swatch', 'alt': 'A stripe of the stick’s white cream and the same stripe blended into the skin (AI illustration)',

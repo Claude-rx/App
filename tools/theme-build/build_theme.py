@@ -1606,7 +1606,8 @@ schema = {'SKINOFAB': {
         {'name': 'sf_cart_coupon_toggle', 'type': 'text', 'label': 'Discount code link', 'default': 'Have a discount code?'},
         {'name': 'sf_cart_remove_text', 'type': 'text', 'label': 'Remove link', 'default': 'Remove'},
         {'name': 'sf_cart_empty_title', 'type': 'text', 'label': 'Empty cart title', 'default': 'Your bag is empty'},
-        {'name': 'sf_cart_empty_text', 'type': 'text', 'label': 'Empty cart text', 'default': 'Your shade is about a minute away.'},
+        {'name': 'sf_cart_empty_text', 'type': 'text', 'label': 'Empty cart text',
+         'default': 'Free shipping and a 30-day money-back guarantee on every order.'},
         {'name': 'sf_cart_empty_product', 'type': 'product', 'label': 'Empty cart button goes to'},
         {'name': 'sf_cart_empty_cta', 'type': 'text', 'label': 'Empty cart button', 'default': '',
          'help_text': 'Leave empty for "Shop <product above>".'},
@@ -1620,6 +1621,10 @@ for group in schema['SKINOFAB'].values():
     for field in group:
         data.setdefault(field['name'], field.get('default') if field['type'] != 'product' else None)
 data.setdefault('cart_header_title', 'Your bag')
+# the empty bag's old line was the foundation's ("Your shade is about a minute away."): every product's page shows it
+# (stick review 9)
+if data.get('sf_cart_empty_text') == 'Your shade is about a minute away.':
+    data['sf_cart_empty_text'] = 'Free shipping and a 30-day money-back guarantee on every order.'
 # a product or collection link the theme no longer has (the store dropped it): its old value goes too
 _names = {f['name'] for group in schema['SKINOFAB'].values() for f in group}
 for k in [k for k in data if k.startswith(('sf_p_', 'sf_c_')) and k not in _names]: del data[k]

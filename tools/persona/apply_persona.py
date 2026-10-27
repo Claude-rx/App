@@ -458,9 +458,13 @@ def review_data(reviews=REVIEWS):
                       r"|(?<![\w'’.])[b-hj-zB-HJ-Z](?![\w'’.])")
     # (and about how it looks on the day: "has evened out those places" read as a lasting result, first under the
     # stick's buy box; nor "clear", the page saying it goes on white; stick review 8)
-    later = re.compile(r"(?i)even(ed|s)? out|over time|after (a|one|two|three|\d+) (week|month)|fad(e|ed|es|ing)\b|\bclear\b")
+    later = re.compile(r"(?i)even(ed|s)? out|over time|after (a|one|two|three|\d+) (week|month)|fad(e|ed|es|ing)\b|\bclear\b"
+                       # nor a wrinkle result ("appears to help eradicate all the wrinkles I have at 80", stick review 9)
+                       r"|eradicat|eras(e|es|ed|ing)\b|(get rid of|gone|disappear\w*|vanish\w*|remov\w*|reduc\w*|fill\w* in|smooth\w* out)\W+(\w+\W+){0,4}(wrinkle|line|spot)")
+    # and from women her age: "in my upper 30s" was the seventh card (stick review 9)
+    young = re.compile(r"(?i)\b(in my|upper|late|early|mid)[- ]?(20|30)'?s\b|\b(i'?m|i am|at)\s+(2\d|3\d|4[0-4])\b|\b(2\d|3\d|4[0-4])\s*(years? old|yrs|yo\b|y/o)")
     picks = [r for r in rs if r['rating'] == 5 and r.get('verified') and 70 <= len(r['body']) <= 210 and '\n' not in r['body']
-             and not typo.search(r['body']) and not later.search(r['body'])]
+             and not typo.search(r['body']) and not later.search(r['body']) and not young.search(r['body'])]
     # those where she says her age (45 and over) first: "I'm 65 and...", the buyer reading them (stick review 6)
     age = re.compile(r"(?i)\b(?:I['’]?m|I am|at|age)\s+(4[5-9]|[5-8]\d)\b|\b(4[5-9]|[5-8]\d)\s*(?:years? old|yrs? old|y/?o)\b"
                      r"|\bin my (?:fifties|sixties|seventies|50s|60s|70s)\b")
@@ -1434,6 +1438,12 @@ LAYOUT_FIXES = (
     # (on a phone the design's track kept its own 728 px height, 85 to 110 px taller than the cards: an empty band
     # above the slider's controls, review 6; the posters' width and height hold their room)
     '@media(max-width:749px){.fh-review-track{min-height:0}}'
+    # the footer and its newsletter at the page's own edges (60 px from 1024, 20 below): at 32 px they stood out of
+    # line with the header and every section (stick review 9)
+    '@media(min-width:1024px){footer.sf .sf__wrap{width:calc(100% - 120px)!important;margin-left:auto!important;margin-right:auto!important}}'
+    '@media(max-width:1023px){footer.sf .sf__wrap{width:calc(100% - 40px)!important;margin-left:auto!important;margin-right:auto!important}}'
+    # a phone's FAQ answer: the whole card's width, not 53 px short of it for the + (30 characters a line, stick review 9)
+    '@media(max-width:599px){.accordion__item__text-wrapper{padding-right:0!important}}'
     '@media(min-width:750px){.fh-review-track>.fh-review{width:auto;min-width:0;grid-template-columns:186.36px minmax(0,1fr)}}'
     '@media(min-width:750px) and (max-width:1023px){.fh-review-track>.fh-review{flex:0 0 100%}}'
     '@media(min-width:1024px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 12px) / 2)}}'
@@ -1471,7 +1481,8 @@ BEFORE_AFTER_NOTE = '<p class="sf-illustration-note">Illustration made with AI, 
 # room is set from the word's own width, after the web font is in.
 CIRCLE_ROOM_JS = ('<script data-sf-circle-room>(function () {'
                   'function room() { Array.prototype.forEach.call(document.querySelectorAll(".text-highlight-wrapper--circle .text-highlight"),'
-                  ' function (e) { e.style.marginLeft = Math.round(e.offsetWidth * 0.18 + 6) + "px"; }); }'
+                  # both sides: on a line of its own the circled words sat 13 px right of centre (stick review 9)
+                  ' function (e) { e.style.marginLeft = e.style.marginRight = Math.round(e.offsetWidth * 0.18 + 6) + "px"; }); }'
                   'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", room); else room();'
                   'if (document.fonts && document.fonts.ready) document.fonts.ready.then(room);'
                   '})();</script>')
@@ -2351,7 +2362,7 @@ def brush_rating(imported=None, of=None):
     # with imported reviews the badge is drawn from them as the page loads (its script then adds NEXT's own): hidden
     # until the script ran, it pushed the title down when it appeared (review 7)
     avg0 = s0 / n0 if n0 else 0
-    fill = lambda i: max(0, min(1, round((avg0 - i) * 2) / 2)) * 100 if n0 else 100
+    fill = lambda i: round(max(0, min(1, avg0 - i)) * 100) if n0 else 100     # 4.8: the fifth star 80 % (stick review 9)
     stars = ''.join(f'<span class="sf-star" style="--f:{fill(i):g}%">{STAR}{STAR}</span>' for i in range(5))
     text0 = f'{avg0:.1f}/5 · {n0:,} review{"" if n0 == 1 else "s"}' + (f' {of}' if of else '') if n0 else ''
     return (f'<a class="sfb-rating" href="#sf-review-wall" data-sfb-rating{"" if n0 else " hidden"} style="text-decoration:none">'

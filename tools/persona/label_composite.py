@@ -363,11 +363,12 @@ def measure_print(img, box, first):
     return tuple(p0), tuple(p1), float(c1 - c0)
 
 
-def swap_flat(img, p0, p1, height, blur=0.5):
+def swap_flat(img, p0, p1, height, blur=0.5, ink=None):
     """The old wordmark printed from p0 (the outer end of its first letter) to p1 (the outer end of its last), its
     letters height px tall, is erased and the brand's wordmark set in its place, flat (a small or turned print, where
     the cylinder's curve does not show): the same middle, length and angle, in the old print's own ink colour, with
-    fingers in front of it kept in front. p0, p1 in the photo's px."""
+    fingers in front of it kept in front. p0, p1 in the photo's px. ink: the print's colour instead of the old
+    print's (a dim, lit print read grey and low, stick review 9)."""
     import cv2
     a = np.asarray(img.convert('RGB')).astype(np.float32)
     H, W = a.shape[:2]
@@ -383,7 +384,8 @@ def swap_flat(img, p0, p1, height, blur=0.5):
     strip = (np.abs(along) <= L / 2 + height * 0.65) & (np.abs(across) <= height * 0.72)   # a little past both ends
     base = float(np.percentile(lum[strip], 35))
     text = strip & (lum > base + 40) & (sat < 45) & (a[..., 0] - a[..., 2] < 20)   # not a fingertip's warm highlight
-    ink = (np.median(a[text & (lum >= np.percentile(lum[text], 60))], axis=0) if text.sum() > 10
+    ink = (np.array(ink, np.float32) if ink is not None
+           else np.median(a[text & (lum >= np.percentile(lum[text], 60))], axis=0) if text.sum() > 10
            else np.array([235, 235, 235], np.float32))
     m = ndimage.binary_dilation(text, iterations=max(1, int(round(height / 14)))) & ndimage.binary_dilation(strip, iterations=2)
     bgr = np.clip(a[..., ::-1], 0, 255).astype(np.uint8)

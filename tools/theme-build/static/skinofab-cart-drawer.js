@@ -331,6 +331,12 @@
         return frag;
     }
 
+    /* the add-ons fetched ahead, once the page is idle (pages with no add-ons fetch nothing): opened before they came,
+       the drawer showed an empty space where they go (stick review 9) */
+    window.addEventListener('load', function() {
+        (window.requestIdleCallback || function(f) { setTimeout(f, 1500); })(function() { if (!upsellData) loadUpsells(); });
+    });
+
     /* fill the add-on slot of the rendered drawer once the data has arrived */
     function paintUpsells() {
         var drawer = document.querySelector('spark-cart-drawer');
@@ -396,11 +402,17 @@
     function emptyHtml(labels) {
         labels = labels || {};
         currentLines = [];
+        /* on another product's own page, back to that product, not to the store's set one (stick review 9: an empty
+           bag on the stick's page showed the foundation's bottle and "Shop Adaptive Peptide Foundation") */
+        var title = document.querySelector('form[data-product-form]') && document.querySelector('.product__title');
+        var path = location.pathname.replace(/\/$/, ''), shop = String(cfg.shopUrl || '').replace(/^https?:\/\/[^\/]+/, '').replace(/\/$/, '');
+        var here = title && title.textContent.trim() && path !== shop ? title.textContent.trim() : '';
         return '<div class="spark-drawer-empty">' +
-            (cfg.emptyImage ? '<img class="sf-empty-img" src="' + escapeHtml(cfg.emptyImage) + '" alt="" width="114" height="320" />' : '') +
+            (cfg.emptyImage && !here ? '<img class="sf-empty-img" src="' + escapeHtml(cfg.emptyImage) + '" alt="" width="114" height="320" />' : '') +
             '<div class="spark-drawer-empty-title">' + escapeHtml(cfg.emptyTitle || labels.emptyTitle) + '</div>' +
             '<div class="spark-drawer-empty-sub">' + escapeHtml(cfg.emptyText || labels.emptySub) + '</div>' +
-            '<a href="' + escapeHtml(cfg.shopUrl || labels.continueUrl) + '" class="spark-drawer-empty-cta">' + escapeHtml(cfg.shopText || labels.continueCta) + '</a>' +
+            (here ? '<a href="' + escapeHtml(location.pathname) + '" class="spark-drawer-empty-cta" data-action="close">' + escapeHtml('Back to ' + here) + '</a>'
+                  : '<a href="' + escapeHtml(cfg.shopUrl || labels.continueUrl) + '" class="spark-drawer-empty-cta">' + escapeHtml(cfg.shopText || labels.continueCta) + '</a>') +
             '</div>';
     }
 

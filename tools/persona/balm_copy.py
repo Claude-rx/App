@@ -50,7 +50,7 @@ KOREAN = True          # the foundation's "Formulated in Korea" line stays in th
 
 # the buy box --------------------------------------------------------------------------------------------------------
 EYEBROW = None
-SHIPPING_BADGE = '\U0001F381 FREE SHIPPING'
+SHIPPING_BADGE = '\U0001F69A FREE SHIPPING'   # a truck: no gift comes with this product (a gift box suggested one, stick review 9)
 LEAD = ('The 10-second pick-me-up for the spots that make you look tired: hollow-looking under-eyes, smile lines and the lines '
         'around your lips. Swipe it on, press it in, and skin looks smoother, fuller and rested.')
 BUNDLES = [

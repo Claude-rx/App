@@ -1034,7 +1034,7 @@ REVIEW_WALL_JS = r"""
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function stars(v, big) {
     var h = '<span class="sfr-tp' + (big ? ' sfr-tp--lg' : '') + '" role="img" aria-label="Rated ' + v + ' out of 5">';
-    for (var i = 0; i < 5; i++) { var f = Math.max(0, Math.min(1, Math.round((v - i) * 2) / 2)); h += '<i style="--f:' + (f * 100) + '%">' + STAR + '</i>'; }
+    for (var i = 0; i < 5; i++) { var f = Math.max(0, Math.min(1, v - i)); h += '<i style="--f:' + Math.round(f * 100) + '%">' + STAR + '</i>'; }
     return h + '</span>';
   }
   function word(v) { return v >= 4.5 ? 'Excellent' : v >= 4 ? 'Great' : v >= 3 ? 'Average' : v >= 2 ? 'Poor' : 'Bad'; }
@@ -1054,7 +1054,7 @@ REVIEW_WALL_JS = r"""
       SHIPPING = /took (about |around |over )?\w+( to \w+)? (weeks?|days) to (arrive|come|get here)|arriv\w* (late|after \w+ weeks)|shipping (took|was slow)|weeks to (arrive|come)/i,
       // further down too (still shown, under the ratings): a review that calls it clear (the page says it goes on
       // white), one signed with a social handle, and a beauty professional's (read as an endorsement); stick review 8
-      OFFSIDE = /\bclear (foundation|formula|product)\b|it'?s clear\b|@\w{3,}|\b[a-z]{4,}\d{3,}\b|\b(qualified|licensed|professional) (beauty|make-?up|skin)|beauty therapist|esthetician|aesthetician|make-?up artist|\bmua\b/i;
+      OFFSIDE = /\bclear (foundation|formula|product)\b|it'?s clear\b|@\w{3,}|\b[a-z]{4,}\d{3,}\b|\b(qualified|licensed|professional) (beauty|make-?up|skin)|beauty therapist|esthetician|aesthetician|make-?up artist|\bmua\b|eradicat|(get rid of|disappear\w*|vanish\w*|remov\w*)\W+(\w+\W+){0,4}wrinkle/i;
   function helpful(r) {
     var t = (r.title || '') + ' ' + (r.body || '');
     return ((r.photos || []).length ? 2 : 0) + Math.min((r.body || '').length, 400) / 400 + (r.rating || 0) / 5
@@ -1266,7 +1266,9 @@ _TP_STAR = ('<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path
 
 
 def tp_stars(v, big=False):
-    out = ''.join(f'<i style="--f:{int(max(0, min(1, round((v - i) * 2) / 2)) * 100)}%">{_TP_STAR}</i>' for i in range(5))
+    # each star filled to the rating's own share: 4.8 fills the fifth to 80 % (rounded to halves, five full stars
+    # showed for 4.8, stick review 9)
+    out = ''.join(f'<i style="--f:{round(max(0, min(1, v - i)) * 100)}%">{_TP_STAR}</i>' for i in range(5))
     return f'<span class="sfr-tp{" sfr-tp--lg" if big else ""}" role="img" aria-label="Rated {v:g} out of 5">{out}</span>'
 
 

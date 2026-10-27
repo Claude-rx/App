@@ -85,10 +85,14 @@ STICK = {
     'tips': [('box', (360, 830, 445, 1215), (402, 860)), ('box', (790, 860, 875, 1230), (832, 890))],
     'hold-cheek': [('box', (240, 670, 360, 890), (283, 700))],
     'apply-cheek': [('box', (220, 630, 370, 780), (240, 760))],
-    'blend': [('flat', (828, 694), (913, 797), 21)],              # dim, lit print: measured by hand (mirrored, below)
+    # dim, lit print: measured by hand (mirrored, below); printed near white, not in its own grey (read low on a
+    # 172 px card, stick review 9)
+    'blend': [('flat', (828, 694), (913, 797), 21, (226, 226, 222))],
     'swatch': [('box', (930, 580, 1080, 890), (965, 865))],
     'temple': [('flat', (303, 540), (279, 691), 22)],
-    'friends': [('box', (570, 805, 655, 1000), (612, 832))],
+    # (27 Oct 2026: the left woman edited in again, stick review 9; the edit re-drew the print letter-spaced, so it is
+    # measured: S at the brush end, top)
+    'friends': [('flat', (612, 831), (612, 959), 17)],
     'bag': [('box', (680, 500, 830, 725), (780, 528))],
     # (aged up with GPT Image 2, store audit 8 / stick review 4: its re-drawn print is letter-spaced, measured by hand)
     'hold-chin': [('flat', (372, 973), (386, 826), 21)],
@@ -177,9 +181,9 @@ def relabel(im, ops, ref=None):
             p0, p1, h = L.measure_print(out, [v * k for v in box], (first[0] * k, first[1] * k))
             out = L.swap_flat(out, p0, p1, h)
             continue
-        if op[0] == 'flat':
-            _, p0, p1, h = op
-            out = L.swap_flat(out, (p0[0] * k, p0[1] * k), (p1[0] * k, p1[1] * k), h * k)
+        if op[0] == 'flat':                                    # (an optional 5th: the print's colour)
+            _, p0, p1, h, *ink = op
+            out = L.swap_flat(out, (p0[0] * k, p0[1] * k), (p1[0] * k, p1[1] * k), h * k, ink=ink[0] if ink else None)
             continue
         _, roi, angle, kw = op
         r = None if roi is None else tuple(int(v) for v in (roi[0] * W, roi[1] * H, roi[2] * W, roi[3] * H))

@@ -51,7 +51,7 @@ KOREAN = True          # the foundation's "Formulated in Korea" line stays in th
 
 # the buy box --------------------------------------------------------------------------------------------------------
 EYEBROW = None
-SHIPPING_BADGE = '\U0001F381 FREE SHIPPING'
+SHIPPING_BADGE = '\U0001F69A FREE SHIPPING'   # a truck: no gift comes with this product (a gift box suggested one, stick review 9)
 LEAD = ('One light step for skin that looks less firm, drier and duller: EGF, NAD+ and collagen in a serum that sinks in '
         'within a minute. Two drops for your face, two for your neck.')
 BUNDLES = [

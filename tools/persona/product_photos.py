@@ -35,7 +35,7 @@ FOUNDATION = BRAND / 'adaptive-peptide-foundation'
 FONTS = HERE / 'assets' / 'fonts'
 W = 1080
 INK, SOFT, LINE, PAPER = (21, 21, 21), (96, 96, 96), (214, 214, 214), (255, 255, 255)
-ILLUSTRATIVE = 'Image only for illustrative purposes'
+ILLUSTRATIVE = 'For illustration only'      # ("Image only for illustrative purposes" read clumsily, stick review 9)
 
 
 def serif(size, weight='Bold', italic=False):
@@ -489,8 +489,9 @@ def stick():
     # skin result shown before the supplier confirms it was a claim the page could not back (stick review 6)
     tones = [('tone-fair-b', 'tone-fair-a'), ('tone-light-b', 'tone-light-a'), ('tone-med-b', 'tone-med-a')]
     title = ('One stick, fair to medium skin', 'It goes on white and blends into your own tone')
-    tones_panel(P, tones, title, 'tones', tones=SKIN_TONES[:7])
-    tones_panel(P, tones, title, 'tones-tall', tall=True, tones=SKIN_TONES[:7])
+    # the bar from fair to medium, no darker than the women shown (it ran on into a tan, stick review 9)
+    tones_panel(P, tones, title, 'tones', tones=SKIN_TONES[:5])
+    tones_panel(P, tones, title, 'tones-tall', tall=True, tones=SKIN_TONES[:5])
     panel(P, 'panel-wide', ('One Stick,', 'Your Shade'), [('sparkle', 'Goes on white,', 'blends to your tone'),
                                                           ('drop', 'Creamy, made for', 'dry, mature skin'),
                                                           ('stick', 'Twist, dot, buff:', 'no sponge needed')], 'one-stick')

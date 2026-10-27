@@ -62,7 +62,7 @@ def loved(sec, c):
                         'main .text-highlight-wrapper--circle .text-highlight__icon svg{width:100%;height:100%;transform:translate(-50%,-50%)}'
                         # a phone: the circled words on a line of their own, their oval's top ran into the line above
                         # (stick review 8); the lines get the oval's room
-                        '@media(max-width:749px){main .text-highlight-wrapper--circle{line-height:1.6}}</style>'))
+                        '@media(max-width:749px){main .text-highlight-wrapper--circle{line-height:1.8}}</style>'))
     return str(s)
 
 
@@ -74,8 +74,10 @@ def moments(sec, cards, img):
     if root and root.get('id') == 'sf-reviews': del root['id']          # the foundation's rating link target
     # the photos at their own 4:3 at every width (a fixed 220 px height made them nearly square at 1024 and cut a
     # face out of the two friends, stick review 6)
+    # (and the arrow with nowhere to go hidden: faded on the last card, it sat on a woman's ear, stick review 9)
     if root: root.insert(0, frag('<style>.skinofab-testimonials .skinofab-testimonials__image:has(img[src*="-960x720-"])'
-                                 '{height:auto!important;aspect-ratio:4/3}</style>'))
+                                 '{height:auto!important;aspect-ratio:4/3}'
+                                 '.skinofab-testimonials .swiper-button-disabled{opacity:0!important;pointer-events:none}</style>'))
     slides = s.select('.swiper-slide')
     for k, sl in enumerate(slides):
         if k >= len(cards): sl.decompose(); continue
