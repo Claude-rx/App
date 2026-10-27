@@ -440,25 +440,46 @@ SERUM_LABELS = {
 }
 
 
+def foundation_only(before, after, s=10, k=0.92):
+    """What a foundation can change and nothing more: the after photo's tone and colour (the redness, spots and
+    dullness evened) with the before photo's own detail (its lines, its bags' creases, its pores and texture), so the
+    after shows no smoothing a foundation can't do (stick review 12: the AI's after flattened the under-eye bags and
+    the forehead and frown lines, read as "reverses aging", and drew a crackle texture on the cheek). In Lab: the
+    after's lightness below s px and its colour, plus k of the before's lightness above s px (k < 1: the soft-focus
+    powders soften texture a little). The after, an edit of the before, is aligned to it first (ECC)."""
+    import cv2
+    b = np.asarray(before.convert('RGB')).astype(np.float32)
+    a = np.asarray(after.convert('RGB').resize(before.size, Image.LANCZOS)).astype(np.float32)
+    gb, ga = (cv2.cvtColor(x.astype(np.uint8), cv2.COLOR_RGB2GRAY).astype(np.float32) for x in (b, a))
+    warp = np.eye(2, 3, dtype=np.float32)
+    _, warp = cv2.findTransformECC(gb, ga, warp, cv2.MOTION_AFFINE, (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 200, 1e-6), None, 5)
+    a = cv2.warpAffine(a, warp, before.size, flags=cv2.INTER_LINEAR + cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT)
+    lb, la = (cv2.cvtColor(x.astype(np.uint8), cv2.COLOR_RGB2LAB).astype(np.float32) for x in (b, a))
+    out = la.copy()
+    out[..., 0] = cv2.GaussianBlur(la[..., 0], (0, 0), s) + k * (lb[..., 0] - cv2.GaussianBlur(lb[..., 0], (0, 0), s))
+    for c in (1, 2): out[..., c] = cv2.GaussianBlur(la[..., c], (0, 0), 2)
+    return Image.fromarray(cv2.cvtColor(np.clip(out + 0.5, 0, 255).astype(np.uint8), cv2.COLOR_LAB2RGB))
+
+
 def ingredient_card(product, name, size=(1200, 900), box=(0.72, 0.74)):
-    """source/<name>.jpg (a texture on white) as <name>.jpg: on a white 4:3 canvas, the texture scaled to fit the
-    same box (box: its share of the canvas's width and height) and centred, so every card's subject is one size and
-    none is cut by the card's 4:3 window. The texture's extent is its 2nd to 98th percentile of non-white pixels
-    (a stray droplet does not count); the pasted photo's edges fade into the white."""
+    """source/<name>.jpg (a texture on a white backdrop) as <name>.jpg: on a 4:3 canvas of its own backdrop colour,
+    the texture scaled to fit the same box (box: its share of the canvas's width and height) and centred, so every
+    card's subject is one size and none is cut by the card's 4:3 window. The texture is what differs from the
+    backdrop (the median of the photo's border) by more than 14 levels, specks opened away, its extent the 1st to 99th
+    percentile of that (a stray droplet does not count; a white cream on white is still found by its shading)."""
+    from scipy import ndimage
     im = Image.open(product / 'source' / f'{name}.jpg').convert('RGB')
     a = np.asarray(im).astype(np.int16)
-    ys, xs = np.nonzero(a.min(2) < 228)
-    # its near-white backdrop lifted to the card's white (a grey box showed round the PDRN and peptide photos): each
-    # pixel eased toward white by how light its lightest-dark channel is, 226 untouched to 250 white
-    lo = a.min(2).astype(np.float32)
-    t = np.clip((lo - 226) / 24, 0, 1); t = (t * t * (3 - 2 * t))[..., None]
-    im = Image.fromarray(np.clip(a * (1 - t) + 255 * t + 0.5, 0, 255).astype(np.uint8))
-    x0, x1 = np.percentile(xs, (2, 98)); y0, y1 = np.percentile(ys, (2, 98))
+    border = np.concatenate([a[:8].reshape(-1, 3), a[-8:].reshape(-1, 3), a[:, :8].reshape(-1, 3), a[:, -8:].reshape(-1, 3)])
+    bg = np.median(border, 0)
+    m = ndimage.binary_opening(np.abs(a - bg).max(2) > 14, iterations=3)
+    ys, xs = np.nonzero(m)
+    x0, x1 = np.percentile(xs, (1, 99)); y0, y1 = np.percentile(ys, (1, 99))
     W, H = size
     k = min(box[0] * W / (x1 - x0), box[1] * H / (y1 - y0))
     sm = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
     cx, cy = (x0 + x1) / 2 * k, (y0 + y1) / 2 * k
-    canvas = Image.new('RGB', size, (255, 255, 255))
+    canvas = Image.new('RGB', size, tuple(int(v) for v in bg))
     f = max(8, round(min(sm.size) * 0.08))                     # the fade, in from each edge of the pasted photo
     mask = Image.new('L', sm.size, 0)
     ImageDraw.Draw(mask).rectangle((f, f, sm.width - f - 1, sm.height - f - 1), fill=255)
@@ -482,7 +503,8 @@ def stick():
     paint_over(P / 'labelled' / 'bag.jpg', (1140, 410, 1254, 496), 16)
     # the before/after illustration: one woman, the same photo twice (the after is an image edit of the before: her
     # hair, pose, light and lines unchanged, only the foundation added), the middle half of each side by side
-    b, a = photo(P, 'before'), photo(P, 'after')
+    b = photo(P, 'before')
+    a = white_bg.light(foundation_only(Image.open(path_of(P, 'before')), Image.open(path_of(P, 'after'))))
     w, h = b.size
     ba = Image.new('RGB', (w, h), PAPER)
     ba.paste(b.crop((w // 4, 0, w // 4 + w // 2, h)), (0, 0)); ba.paste(a.crop((w // 4, 0, w // 4 + w // 2, h)), (w // 2, 0))
@@ -519,14 +541,16 @@ def stick():
     # the bar from fair to medium, no darker than the women shown (it ran on into a tan, stick review 9)
     tones_panel(P, tones, title, 'tones', tones=SKIN_TONES[:5])
     tones_panel(P, tones, title, 'tones-tall', tall=True, tones=SKIN_TONES[:5])
+    # the range under "Your Shade" (stick review 12: the spec allows "no shade matching" within the range only)
     panel(P, 'panel-wide', ('One Stick,', 'Your Shade'), [('sparkle', 'Goes on white,', 'blends to your tone'),
-                                                          ('drop', 'PDRN + peptides', 'for mature skin'),
-                                                          ('stick', 'Twist, dot, buff:', 'no sponge needed')], 'one-stick')
+                                                          ('drop', 'For fair to', 'medium skin tones'),
+                                                          ('stick', 'PDRN + peptides,', 'brush built in')], 'one-stick')
     # on the stick itself (the swatch photo is "How does it work?" further down: the same photo twice, stick review 3)
     # what each one is, the five the page names (stick review 8: "for a more even-looking tone" and "soft and supple"
     # were results, and centella was missing)
     # the formula's key actives (SKF-ADFS-001, stick_copy.INGREDIENTS), what each one is
-    whats_inside(P, 'single', [('PDRN + peptides', 'Matrixyl 3000, Volufiline'), ('Hyaluronic acid', 'Moisture spheres'),
+    # (Volufiline is a root extract, not a peptide: not on the peptides' line, stick review 12)
+    whats_inside(P, 'single', [('PDRN + peptides', 'Sodium DNA, Matrixyl 3000™'), ('Hyaluronic acid', 'Moisture spheres'),
                                ('Ceramides + squalane', 'For dry, mature skin'), ('Soft-focus spheres', 'Blur the look of lines')],
                  note_left=True, shadow=True, cap=34, note_size=32)
     science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',

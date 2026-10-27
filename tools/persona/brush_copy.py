@@ -369,9 +369,14 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     # and their savings did not say they were refill prices)
     # what the crossed-out prices are (every pack's compare-at price is its count bought one at a time), and where
     # one-time is chosen: the cart page, from the drawer's "Change" link (stick review 3: "in your bag" was not it)
-    off = min(round(100 * (1 - float(b['refill']) / float(b['price']))) for b in bundles) if on else 0
+    # the saving, as it is for every pack: one percentage when they share it, else one dollar amount when they
+    # share that, else "up to" the largest (stick review 12: "18% off" was the 2-pack's; the single stick saves 21%)
+    pcts = {round(100 * (1 - float(b['refill']) / float(b['price']))) for b in bundles} if on else {0}
+    dollars = {round(float(b['price']) - float(b['refill']), 2) for b in bundles} if on else {0}
+    off = (f'{pcts.pop()}% off' if len(pcts) == 1 else f'{money(dollars.pop())} off each pack' if len(dollars) == 1
+           else f'up to {max(pcts)}% off')
     one_each = on and refill.get('unit') and all(abs(float(b['compare']) - units(b) * base) < 0.01 for b in bundles)
-    note = (f'<p class="sfo-refill-note">Prices with Automatic Refills, {off}% off.'
+    note = (f'<p class="sfo-refill-note">Prices with Automatic Refills, {off}.'
             + (f' Crossed out: {money(base)} a {esc(refill["unit"])}, bought one at a time.' if one_each else '')
             + ' One-time packs: '
             + ' · '.join(f"{esc(pack_label(b['name']))} {money(b['price'])}" for b in bundles)

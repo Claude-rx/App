@@ -185,14 +185,37 @@ Left, by choice or for the owner:
 - **Before/after** (gallery slide 4, `before-after`): a new pair, `source/before.jpg` (bare skin: redness on the
   cheeks and nose, sun spots, a dull, uneven tone, dark circles) and `source/after.jpg` (an edit of the same photo:
   the foundation added, the lines kept), gpt-image-2 via 4SToken, labelled "AI illustration, not a customer photo".
+- **Before/after** honesty (stick review 12): the AI's after flattened her under-eye bags and forehead lines and drew
+  a crackle texture on the cheek. `product_photos.foundation_only` now builds the after from the after's tone and
+  colour and the before's own detail (lines, the bags' creases, pores): a foundation evens the colour, it does not
+  smooth the face.
 - **Science loop** (the "Adaptive color science" block, `TWIN['science']['video']`): a 17-second silent loop,
   `tools/persona/stick_science_video.py` → `brand/foundation-stick/science/science.{mp4,webm}`, its poster and
-  `science.gif` (432 px, for emails and ads). Four steps and an end card, captioned in a band under the picture,
-  "Illustration" in its corner: 1 it goes on white (the capsules), 2 buff, and the capsules break (a Kling 3.0 clip,
-  image to video, Kie.ai), 3 soft-focus spheres scatter the light, 4 skincare in every swipe, then the stick. Steps 3
-  and 4 are slow push-ins between two renders each: Higgsfield had 0.03 credits and the Kie.ai and 4SToken video
-  balances ran out after the first clip. Top one up, render `blur-kling.mp4` and `ha-kling.mp4` from `blur-a.jpg` and
-  `ha-a.jpg`, and rerun the script: each scene takes its clip when it is there.
+  `science.gif` (432 px, for emails and ads). Four steps and an end card, captioned in a band under the picture
+  (48/34 px, about 20/14 px on a phone), "Illustration" in its corner: 1 it goes on white (the capsules), 2 buff: the
+  stick's own kabuki end (`kabuki.jpg`, a macro of its brush end) buffs the stroke in small circles and the skin tone
+  shows wherever it has passed, 3 soft-focus spheres scatter the light, 4 skincare in every swipe, then the stick.
+  The first Kling 3.0 clip (Kie.ai) buffed with a separate long-handled flat brush, against "no separate brush"
+  (stick review 12), so it is not used (kept out of the repo). Steps 3 and 4 are slow push-ins between two renders
+  each. With credits (Higgsfield had 0.03; Kie.ai's and 4SToken's video balances ran out), render Kling clips from
+  `capsules-a.jpg` with the kabuki end, `blur-a.jpg` and `ha-a.jpg`, save them as `<name>-kling.mp4` and rerun the
+  script: each scene takes its clip when it is there.
+- **Wear copy** (stick review 12): "From 10 AM to 10 PM" stays (the owner's element, with its AI illustration), but
+  its text no longer promises "the same at dinner as at breakfast" or "no settling into lines by lunch": the
+  pigments are made not to turn orange, and an afternoon touch-up with the brush end is part of the day. The 6-hour
+  panel (spec section 5) would let it say more.
+- **Water and PEGs:** the spec calls the stick anhydrous and PEG-free, but Matrixyl 3000 as supplied (line 25)
+  carries water and polysorbate 20 (a PEG derivative), which the carton's full list will show; the page no longer
+  says "water-free" or "made without PEGs". Ask the factory whether a water- and PEG-free grade exists.
+- **For the owner to decide** (stick review 12):
+  - the stick's page shows the liquid foundation's 9,855 reviews and FrontrowMD listing, labelled as the
+    foundation's; the US FTC rule on consumer reviews (16 CFR 465) bars using reviews of a substantially different
+    product, and a stick and a liquid can be read as different products: `BORROW_REVIEWS = None` and
+    `FRONTROW_NOTE = None` in `stick_copy.py` turn them off;
+  - the 2-stick card says SAVE $47 against $94 (two sticks at the one-time single price), as the foundation's card
+    does; the one-time 2-pack is $57, so a stricter reading is "save $10 with refills";
+  - whether the free Lymphatic Brush ships with every refill of the 2-pack or the first order only;
+  - whether 28 days is right for one 9 g stick.
 - **Ingredient cards:** PDRN, peptides, hyaluronic acid spheres, ceramides, squalane, niacinamide, centella and
   vitamin E (`ing-pdrn`, `ing-peptides`, `ing-ceramides` new, gpt-image-2 on white).
 - **Homepage:** the Lymphatic Brush is the last card of the product list and of each tab (`brush_copy.SHELF`

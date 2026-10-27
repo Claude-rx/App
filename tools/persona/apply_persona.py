@@ -1072,16 +1072,17 @@ HOME_BUNDLES = [
      'Buy 2, get 1 free: about six months, morning and night.', None, None),
     (balm_copy.HANDLE, 'Plumping Balm Trio', 'bundle-balm', 'Three PDRN Plumping Balm sticks',
      'Buy 2, get 1 free: one for home, one for your bag, one to share.', None, None),
-    (brush_copy.HANDLE, 'Lymphatic Brush Trio', 'bundle-brush', 'Three Lymphatic Brushes',
-     'Buy 2, get 1 free, each with its travel case.', None, None),
     (stick_copy.HANDLE, 'Foundation Stick Duo', 'bundle-stick', 'Two Adaptive Foundation Sticks and a free Lymphatic Brush',
      'Two sticks and a free Lymphatic Brush: one stick for home, one for your bag.', None, None),
+    (brush_copy.HANDLE, 'Lymphatic Brush Trio', 'bundle-brush', 'Three Lymphatic Brushes',
+     'Buy 2, get 1 free, each with its travel case.', None, None),
 ]
 HOME_TILES = [('color-changing-foundation', 'Foundation', 'tile-foundation', 'A woman in her fifties holding the Adaptive Peptide Foundation'),
               (serum_copy.HANDLE, 'Serum', 'tile-serum', 'A woman in her sixties holding the EGF + NAD+ Firming Serum'),
               (balm_copy.HANDLE, 'Balm', 'tile-balm', 'A woman in her fifties holding the PDRN Plumping Balm to her cheek'),
-              (brush_copy.HANDLE, 'Brush', 'tile-brush', 'A woman in her sixties sweeping the Lymphatic Brush along her cheekbone'),
-              (stick_copy.HANDLE, 'Stick', 'tile-stick', 'A woman in her late fifties holding the Adaptive Foundation Stick by her cheek')]
+              (stick_copy.HANDLE, 'Stick', 'tile-stick', 'A woman in her late fifties holding the Adaptive Foundation Stick by her cheek'),
+              # the brush last in every homepage row (the owner, 27 Oct 2026)
+              (brush_copy.HANDLE, 'Brush', 'tile-brush', 'A woman in her sixties sweeping the Lymphatic Brush along her cheekbone')]
 HOME_ESSENTIALS = [('color-changing-foundation', apf_copy.PRODUCT, BRAND / 'adaptive-peptide-foundation' / 'next' / '01-front.jpg'),
                    (stick_copy.HANDLE, stick_copy.TITLE, stick_copy.IMG / 'card.jpg'),
                    (serum_copy.HANDLE, serum_copy.TITLE, serum_copy.IMG / 'card.jpg'),

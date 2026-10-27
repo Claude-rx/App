@@ -55,7 +55,7 @@ IMG_PREFIX, GIFT_PREFIX = 'skinofab-foundation-stick', 'skinofab-stick-gift'
 OFFERS_FILE, REVIEWS_DIR, AMAZON_FILE = 'stick-offers.json', 'reviews-stick', None
 DESCRIPTION = ('<p>A dual-ended foundation stick for skin after 45. The cream goes on white and shifts toward your skin tone '
                'as you blend; the kabuki brush on the other end buffs it into an even, natural finish. A skincare-infused '
-               'cream with PDRN, peptides (Matrixyl 3000, Argireline) and Volufiline, ceramides, hyaluronic acid spheres, '
+               'cream with PDRN, peptides (Matrixyl 3000™, acetyl hexapeptide-8) and Volufiline™, ceramides, hyaluronic acid spheres, '
                'niacinamide and squalane, made for dry, mature skin. Fragrance-free.</p>')
 META_TITLE = 'Adaptive Foundation Stick | One shade that adapts, brush built in | SKINOFAB'
 META_DESCRIPTION = ('A foundation stick that goes on white and blends into fair to medium skin, kabuki brush built in, with PDRN '
@@ -134,10 +134,10 @@ CART_UPGRADE = {'title': 'Upgrade to 2 sticks + a free brush', 'button': 'Upgrad
 INGREDIENTS = [
     ('PDRN (sodium DNA)', 'The K-beauty skincare ingredient, from salmon DNA',
      'Sodium DNA from salmon, the PDRN Korean skincare made famous, here in a foundation.'),
-    ('Peptides', 'Matrixyl 3000 (palmitoyl tripeptide-1 and tetrapeptide-7) and acetyl hexapeptide-8, peptides used in '
+    ('Peptides', 'Matrixyl 3000™ (palmitoyl tripeptide-1 and palmitoyl tetrapeptide-7) and acetyl hexapeptide-8, peptides used in '
                  'firming and expression-line creams',
      'The peptides of firming and expression-line creams, in the cream you wear all day.'),
-    ('Volufiline', 'Anemarrhena root extract, used in creams for skin that has lost fullness',
+    ('Volufiline™', 'Anemarrhena root extract, used in creams for skin that has lost fullness',
      'A plant extract used in creams for skin that has lost fullness.'),
     ('Hyaluronic acid spheres', 'They take up moisture, so the cream feels fresh and comfortable',
      'Dehydrated spheres that take up moisture, so dry skin stays comfortable under the foundation.'),
@@ -146,8 +146,8 @@ INGREDIENTS = [
     ('Squalane', 'A light, silky, skin-identical oil',
      'Softens and seals in moisture, so the cream glides over texture and dry patches instead of catching on them.'),
     ('Niacinamide', 'Vitamin B3, a skincare classic', 'Vitamin B3, one of the most used ingredients in skincare creams.'),
-    ('Bakuchiol and adenosine', 'A plant alternative to retinol and adenosine, both used in creams for skin after 45 '
-                                '(there is no retinol in the stick)',
+    ('Bakuchiol and adenosine', 'Bakuchiol, a plant alternative to retinol, and adenosine, both used in creams for skin '
+                                'after 45 (there is no retinol in the stick)',
      'A plant alternative to retinol, and adenosine.'),
     ('Hydrolyzed collagen', 'A moisture-holding protein', 'A moisture-holding protein.'),
     ('Vitamin E, centella and bisabolol', 'An antioxidant and two soothing botanicals (centella is also called cica)',
@@ -156,8 +156,9 @@ INGREDIENTS = [
      'Round powders that scatter light, so lines and pores look softer.'),
 ]
 # what it is made without (section 1): every one a thing she checks for; silicones are optional in the spec, so not
-# among them
-FREE_FROM = ['fragrance', 'essential oils', 'retinol', 'denatured alcohol', 'parabens', 'PEGs', 'mineral oil', 'talc', 'EDTA']
+# among them, nor PEGs, nor "water-free": Matrixyl 3000 as supplied (line 25) carries water and polysorbate 20, a PEG
+# derivative, which the label's full list will show (stick review 12)
+FREE_FROM = ['fragrance', 'essential oils', 'retinol', 'denatured alcohol', 'parabens', 'mineral oil', 'talc', 'EDTA']
 # the label's warnings (section 8)
 WARNINGS = ('For external use only. Avoid direct contact with the eyes. Contains salmon-derived DNA: not for anyone with '
             'a fish allergy. Stop use if irritation occurs. Not a sunscreen: wear it over your SPF.')
@@ -180,7 +181,7 @@ def tabs():
          '<p>Most foundations make you choose a shade under store lights, then need a sponge or brush, then settle into lines by '
          'lunch. This one goes on white and shifts toward your own skin tone as you blend, with the brush built into the other end.</p>'
          + _list(['No shade to choose: it adapts to fair to medium skin as you blend', 'A dense kabuki brush on the other end',
-                  'Skincare-infused: PDRN, peptides and Volufiline in a cream for dry, mature skin',
+                  'Skincare-infused: PDRN, peptides and Volufiline™ in a cream for dry, mature skin',
                   'Fragrance-free, and small enough for your bag, the brush included'])),
         ('Does it work on my skin?',
          '<p>It’s made for skin after 45: drier, with redness, sun spots and fine lines. The cream, with ceramides, squalane '
@@ -199,7 +200,7 @@ def tabs():
          f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll '
          'refund it in <strong>full</strong>, even opened, no questions asked.</p>'),
         ('Ingredients',
-         '<p>A creamy, water-free foundation with skincare in it. Its key ingredients:</p>'
+         '<p>A creamy foundation stick with skincare in it. Its key ingredients:</p>'
          + ''.join(f'<p><strong>{esc(n)}.</strong> {esc(t)}.</p>' for n, t, _ in INGREDIENTS)
          + f'<p><strong>Made without</strong> {esc(", ".join(FREE_FROM[:-1]))} or {esc(FREE_FROM[-1])}.</p>'
          + '<p>The full ingredient list is printed on the packaging.</p>'
@@ -241,19 +242,19 @@ FAQ = {'items': [
     ('Will it look cakey or heavy?',
      'Not in thin layers. It’s a cream, not a powder, so it’s made not to crack on dry skin. Build only where you need it.'),
     ('Is it good for dry skin?',
-     'That’s who it’s made for: a water-free cream, not a powder, with ceramides, squalane and hyaluronic acid spheres '
+     'That’s who it’s made for: a creamy stick, not a powder, with ceramides, squalane and hyaluronic acid spheres '
      'among its key ingredients, buffed on in a thin layer that keeps dry, mature skin comfortable.'),
     # the formula's skincare (SKF-ADFS-001): what is in it, nothing it does over time
     ('Is there skincare in it?',
-     'Yes: PDRN (sodium DNA), the peptides Matrixyl 3000 and acetyl hexapeptide-8, Volufiline, ceramides, hyaluronic acid '
+     'Yes: PDRN (sodium DNA), the peptides Matrixyl 3000™ and acetyl hexapeptide-8, Volufiline™, ceramides, hyaluronic acid '
      'spheres, niacinamide, bakuchiol, adenosine, collagen and squalane, in the cream you wear all day. It is a foundation '
      'first: it evens out the look of your skin while you wear it.'),
     ('Can it cover spots and redness?',
      'It evens out the look of redness and sun spots in a thin layer; for a darker spot, tap a second layer on just that spot '
      'and buff the edges. It’s a natural finish, not a mask.'),
     ('How long does it last on my skin?',
-     'It’s made to wear from morning to evening as a thin, flexible layer, made not to settle into lines. On a long day, '
-     'buff the brush end over your nose and chin to refresh it; there’s no need to add more.'),
+     'It’s made to wear as a thin, flexible layer that moves with your skin. How long it lasts depends on your skin and your '
+     'day: in the afternoon, buff the brush end over your nose and chin to refresh it; there’s no need to add more.'),
     ('Stick or bottle: which one is for me?',
      'Both go on white and shift toward your tone as you blend. The Adaptive Peptide Foundation is the liquid you blend '
      'with your fingertips; the stick is the solid cream with the brush built in, made for quick mornings and touch-ups '
@@ -362,7 +363,7 @@ TWIN = {
                          ('Buff, and the capsules break', 'Small circles with the brush end open them, and the color shifts toward '
                                                           'your own tone, from fair to medium.'),
                          ('Soft-focus spheres', 'Round silica and boron nitride powders scatter the light, so lines and pores look softer.'),
-                         ('Skincare in every swipe', 'PDRN, peptides, Volufiline, ceramides and hyaluronic acid spheres in a '
+                         ('Skincare in every swipe', 'PDRN, peptides, Volufiline™, ceramides and hyaluronic acid spheres in a '
                                                      'cream made for dry skin after 45.')],
                 'note': 'The video is an illustration. The full ingredient list is printed on the packaging.',
                 'video': 'science', 'video_alt': 'Illustration: the white cream’s capsules break as the brush buffs it in and the '
@@ -371,10 +372,12 @@ TWIN = {
     'iwt': [
         {'img': 'wear-day', 'alt': 'The same woman at 10 AM and at 10 PM wearing the stick (AI illustration)',
          'lead': 'From 10 AM', 'mark': 'to 10 PM',
-         'paras': ['A thin, creamy layer is made to move with your skin instead of drying on top of it, so it is made to look the same at '
-                   'dinner as it did at breakfast: no orange in daylight, no settling into lines by lunch. Out late? Buff the brush '
-                   'end over your nose and chin and you are done. Results vary from person to person.'],
-         'usps': [('Made to wear all day', 'clock'), ('Touch up with the brush', 'brush')]},
+         # (stick review 12: "the same at dinner as at breakfast, no settling into lines by lunch" promised what only
+         # the spec's 6-hour panel can show; the touch-up is part of the day)
+         'paras': ['A thin, creamy layer is made to move with your skin instead of drying on top of it, and its pigments are made '
+                   'not to turn orange or grey in daylight. By the afternoon, buff the brush end over your nose and chin and it looks '
+                   'fresh again, with no more product. How long it lasts depends on your skin and your day.'],
+         'usps': [('Made not to turn orange', 'clock'), ('Touch up with the brush', 'brush')]},
         {'img': 'swatch', 'alt': 'A stripe of the stick’s white cream and the same stripe blended into the skin (AI illustration)',
          'lead': 'How does it work?', 'mark': None,
          'paras': ['Twist up a little and dot it on your cheeks and forehead. It looks white: that’s the capsules, still closed.',
@@ -385,7 +388,7 @@ TWIN = {
     ],
     'results': {'title': 'What to expect',
                 'cards': [('3 steps', 'Twist, dot, buff', 'No sponge, no separate brush'),
-                          ('0', 'Shades to choose', 'One stick adapts as you blend'),
+                          ('0', 'Shades to choose', 'One stick adapts to fair to medium skin'),
                           ('30 days', 'To try it risk-free', 'Love it, or your money back')]},
     # each row as it is against a typical liquid: it builds coverage too (stick review 7: every row crossed out
     # against "your old foundation", the creamy row and the pump row included, beside the brand's own pump bottle)
@@ -394,12 +397,12 @@ TWIN = {
                          ('Buildable, natural coverage', True)]},
     # (each photo made for the card's 4:3 window, every texture the same size: product_photos.ingredient_card)
     'inside': {'title': 'What’s inside the stick', 'size': (960, 720),
-               'intro': 'Skincare in a creamy, water-free foundation made for dry, mature skin. Fragrance-free. The full list is '
+               'intro': 'Skincare in a creamy foundation stick made for dry, mature skin. Fragrance-free. The full list is '
                         'printed on the packaging.',
                # what each one is, and what it does in the cream (stick review 8: "for a more even-looking
                # complexion" and "soft, supple skin" promised results before the full ingredient list)
                'cards': [('ing-pdrn', 'PDRN', 'Sodium DNA from salmon, the K-beauty skincare ingredient'),
-                         ('ing-peptides', 'Peptides', 'Matrixyl 3000 and acetyl hexapeptide-8, as in firming creams'),
+                         ('ing-peptides', 'Peptides', 'Matrixyl 3000™ and acetyl hexapeptide-8, as in firming creams'),
                          ('ing-ha', 'Hyaluronic acid spheres', 'They take up moisture, so the cream feels comfortable'),
                          ('ing-ceramides', 'Ceramides', 'Lipids of the skin’s own barrier, for dry skin'),
                          ('ing-squalane', 'Squalane', 'A light oil that helps the cream glide over dry patches'),
@@ -412,7 +415,7 @@ TWIN = {
         {'img': 'blend', 'title': 'Buff it in', 'text': 'Small circles with the brush end until it shifts to your tone.', 'alt': 'Buffing the foundation in with the brush end'},
         {'img': 'apply-cheek', 'title': 'Need more? Add a layer', 'text': 'A little more on spots and redness, then buff the edges.', 'alt': 'Swiping the white foundation along a cheekbone'}]},
     'why': {'title': 'The SKINOFAB difference', 'img': 'hold-cheek', 'button': 'Choose your pack',
-            'features': [('Your shade, without guessing', 'It goes on white and adapts to your tone as you blend', 'tones'),
+            'features': [('Your shade, without guessing', 'It goes on white and adapts to fair to medium skin tones as you blend', 'tones'),
                          ('The brush is built in', 'A dense kabuki brush on the other end of the stick', 'brush'),
                          ('30-day money-back guarantee', 'Love it, or email us for a full refund', 'shield')]},
 }
