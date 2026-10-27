@@ -32,8 +32,18 @@ Accept and decline both go to the next offer; offer 4 goes to the thank-you page
 4. **Reviews.** The listicle, product page and checkout show the store's existing reviews of the **Adaptive Peptide
    Foundation** (the liquid foundation), each labelled as such, because the stick has no reviews of its own yet. Swap
    them for stick reviews as they come in; never relabel foundation reviews as stick reviews (FTC).
-5. **Tracking.** `gtm_id` and `fb_pixel_id` in `campaigns/skinofab/_data/campaigns.json` are empty (no tags). Set
-   them, and the matching providers in `src/stick-funnel/assets/config.js`, before sending paid traffic.
+5. **Tracking (before paid traffic).** `gtm_id` and `fb_pixel_id` in `campaigns/skinofab/_data/campaigns.json` are
+   empty, so no tags load and Meta gets no page views or purchases. Set them, and enable the matching providers in
+   `src/stick-funnel/assets/config.js` (`analytics.providers.gtm` / `.facebook` with the pixel id; `storeName` is
+   already `skinofab`, for Meta's purchase deduplication).
+6. **The 2-stick refill ships a brush every time.** Package 2 is "2 sticks + free Lymphatic Brush" and every refill is
+   that same package, so each 56-day refill includes a brush, and the FAQ says so ("Each refill is the same pack as
+   your first order"). If refills should be sticks only, the 2-pack needs its own sticks-only refill package; tell me
+   and the FAQ, the cards and the checks change with it.
+7. **Offer cadence (your call).** Offer 1 adds a stick that refills every 28 days on its own, so a 2-pack buyer who
+   accepts gets 4 sticks every 56 days; offer 2's brush refills every 90 days. Each page states its own renewal by
+   its button. If you'd rather have offer 1 ride the order's own cycle, or show offer 2 only to 1-stick buyers (2-stick
+   buyers already get a brush), that is a campaign change plus a page rule.
 
 ## Commerce (Campaigns App campaign 2211)
 
@@ -71,11 +81,18 @@ The listicle follows https://facelove-cosmetics.com/pages/10-reasons-why-foundat
 
 - **Product and images**: the black SKINOFAB stick with its real wordmark, women 45+ on white, made with gpt-image-2
   (prompts in `tools/persona/image_prompts.json`, "stick-funnel").
-- **Before/after**: every before/after image carries "AI illustration, not a customer photo".
+- **Before/after**: every before/after image carries "AI illustration, not a customer photo", and shows only what a
+  foundation does: the dry-skin "after" is its own "before" with the skin tone evened out (`funnel_images.even_tone`),
+  every line kept. Generated "afters" that smoothed lines or lifted the jaw were dropped (funnel review 1).
+- **Reason 5** (Facelove: SPF): "Made not to turn orange by the afternoon", with a verified review of the liquid.
+- **Reason 9** (Facelove: "dermatologist recommended"): the liquid foundation's real ratings, 9,855 reviews averaging
+  4.8, drawn on the page with the count per star, labelled as the liquid's (no expert, no borrowed endorsement).
 - **Claims** follow the stick's spec rules (SKF-ADFS-001 section 8, see `docs/foundation-stick.md`): fair to medium
   skin, not "every skin tone"; "made not to settle", not "won't settle"; no SPF, no percentages, no "reverses aging",
   no doctor or expert endorsements, no scarcity counts. `check_funnel.py` fails the build on any of them.
-- **Reviews**: the store's real foundation reviews, labelled (Facelove shows stick reviews).
+- **Reviews**: the store's real foundation reviews, labelled "Verified buyer of our liquid foundation" on every card
+  (Facelove shows stick reviews).
+- **Headline**: Facelove's "10 Reasons Why..." form, kept as the brief asked; its "Look 35" and "Age-Reversing" are not.
 - **Prices and terms**: SKINOFAB's subscription offer, with the refill terms stated on every page that sells.
 
 ## How it is built
