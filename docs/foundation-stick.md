@@ -148,3 +148,23 @@ several ages and skin tones. `product_photos.py stick` prints the real wordmark 
 (`relabel_bottles.STICK`) and lays out the gallery's panels (One Stick, Your Shade; What's inside; The Science;
 skinofab vs. others). The before/after photo is one AI portrait edited into its "after", so it is the same woman, the
 same light and the same pose; it is an illustration and says so on the image and under it.
+
+## Status after stick review 11 (27 Oct 2026)
+
+Eleven independent reviews of the live page, each fixed in `tools/` and rebuilt (builds 37 to 50). The eleventh found
+no blocking defect: the buy flow, prices, refill terms, drawer, cart and every slider, accordion and filter work at
+390, 768, 1024 and 1440; the offer e2e passes 51 of 51; CLS stays under 0.03 on every product page.
+
+Left, by choice or for the owner:
+
+- **Proof.** No reviews of the stick itself yet (the page borrows the foundation's, labelled); no real photos or demo
+  clip (every photo is AI, labelled where it shows a result). The most valuable next step: a 10–15 s real clip and
+  the first buyers' reviews.
+- **Offer.** One-time is chosen on the cart page (refills are the default); crossed-out prices are count × $39; no
+  gift on the 2- and 3-packs (Facelove: 2 for $49 one-time with gifts). Each is the owner's call.
+- **Facts from the supplier.** Size, net weight, how long a stick lasts, the full ingredient list (INCI), fragrance.
+- **Platform.** Refill reminder emails (the page promises them), PayPal / Apple Pay, HTML caching (about 0.6–0.9 s
+  of every load is the server building the page), the occasional 502 from `/api/graphql/`.
+- **Small, left as is.** The how-to cards' wordmark is small on a 1440 screen; the "Twist up a little" ring and the
+  vitamin E capsules are AI details a real photo will replace; the drawer's "Continue Shopping" is the platform's
+  label; the link-preview image is the platform's crop of the first product photo.
