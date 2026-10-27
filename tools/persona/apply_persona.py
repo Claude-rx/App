@@ -456,8 +456,11 @@ def review_data(reviews=REVIEWS):
     # (either apostrophe; a stray one-letter word such as "with s friend", stick review 4)
     typo = re.compile(r"\s[,.!?]|\bi\b|\s{2}|I['’]m don['’]t|liked to be|recommened|dissapoint|adopted to|It['’]s us\b"
                       r"|(?<![\w'’.])[b-hj-zB-HJ-Z](?![\w'’.])")
+    # (and about how it looks on the day: "has evened out those places" read as a lasting result, first under the
+    # stick's buy box; nor "clear", the page saying it goes on white; stick review 8)
+    later = re.compile(r"(?i)even(ed|s)? out|over time|after (a|one|two|three|\d+) (week|month)|fad(e|ed|es|ing)\b|\bclear\b")
     picks = [r for r in rs if r['rating'] == 5 and r.get('verified') and 70 <= len(r['body']) <= 210 and '\n' not in r['body']
-             and not typo.search(r['body'])]
+             and not typo.search(r['body']) and not later.search(r['body'])]
     # those where she says her age (45 and over) first: "I'm 65 and...", the buyer reading them (stick review 6)
     age = re.compile(r"(?i)\b(?:I['’]?m|I am|at|age)\s+(4[5-9]|[5-8]\d)\b|\b(4[5-9]|[5-8]\d)\s*(?:years? old|yrs? old|y/?o)\b"
                      r"|\bin my (?:fifties|sixties|seventies|50s|60s|70s)\b")
@@ -2193,7 +2196,11 @@ def cart_offer():
             # and its two prices, one-time and refill, for the cart page's choice (stick review 7: "One-time
             # purchase" there named no price)
             'pack_prices': {b['sku']: [float(b['price']), float(b['refill'])] for P in SECOND_PRODUCTS
-                            if (getattr(P, 'REFILL', None) or {}).get('default') for b in P.BUNDLES}}
+                            if (getattr(P, 'REFILL', None) or {}).get('default') for b in P.BUNDLES},
+            # the products sold with refills (their page's slug): in the bag, a line of one bought once says so
+            # (stick review 8: after switching to one-time the drawer showed "2 sticks · $59" and nothing more)
+            'refill_handles': (['adaptive-peptide-foundation'] if ccf_copy.REFILL.get('default') else [])
+                              + [P.HANDLE for P in SECOND_PRODUCTS if (getattr(P, 'REFILL', None) or {}).get('default')]}
 
 STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
         '<path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
@@ -2355,7 +2362,10 @@ def brush_rating(imported=None, of=None):
             '.sf-rating__stars{display:inline-flex;gap:2px}'
             '.sf-star{position:relative;display:inline-block;width:20px;height:20px;color:#d8d8d8}'
             '.sf-star svg{position:absolute;left:0;top:0}'
-            '.sf-star svg+svg{color:var(--sf-star);clip-path:inset(0 calc(100% - var(--f)) 0 0)}</style>'
+            '.sf-star svg+svg{color:var(--sf-star);clip-path:inset(0 calc(100% - var(--f)) 0 0)}'
+            # a phone: the count under the stars, on its own line, sat on the title (their lines overlapped by 8 px,
+            # stick review 8); here, in the buy box, so it holds from the first paint
+            '@media(max-width:599px){.sfb-rating .sf-rating__text{line-height:1.3}.sfb-rating{margin-bottom:10px!important}}</style>'
             '<script>(function () {'
             'var badge = document.currentScript.previousElementSibling.previousElementSibling;'
             'function show() {'
@@ -2421,6 +2431,10 @@ def twin_context(P, found, stats, amazon):
                                   f'{html.escape(borrow["note"])}</p>', 1).replace(
             sec, f'{sec} data-buyer="{html.escape(borrow["buyer"])}"'
                  + (f' data-note="{html.escape(borrow["wall_note"])}"' if borrow.get('wall_note') else ''), 1)   # each card: whose buyer she was
+        # the button under another product's reviews posts to this product's form: it says so (stick review 8)
+        if borrow.get('write'):
+            if wall.count('>Write a review</a>') != 1: missing.append((P.KEY, 'review wall write button'))
+            wall = wall.replace('>Write a review</a>', f'>{html.escape(borrow["write"])}</a>', 1)
     else: wall += review_wall(reviews)
     return {'img': img, 'clip': clip, 'avatar': avatar(), 'strip_own': review_strip(reviews), 'strip_brand': brand,
             'wall': wall, 'no_reviews': None if (stats or borrow) else f'<style>{brush_copy.SECTIONS_CSS}</style>{P.no_reviews_html(amazon=amazon)}'}
@@ -2470,6 +2484,17 @@ def product_page(base, P, final, found=None):
         ti['src'], ti['srcset'], ti['alt'] = small, f'{big} 1080w', P.TITLE
         ti['loading'] = 'eager' if k <= 5 else 'lazy'
         thumbs.append(th)
+    # every thumbnail in the row at every width: at 90 px the sixth was hidden and the fifth cut on a phone and on a
+    # small laptop, with nothing to say there were more (stick review 8). Each is the row's width over their number,
+    # less its 5 px padding each side; the row's height before its slider starts is the same, so nothing moves
+    n = len(P.GALLERY)
+    thumbs.insert_before(frag(
+        '<style>[data-product-single-media-group]{--sf-th:90px}'
+        f'@media(max-width:767px){{[data-product-single-media-group]{{--sf-th:min(90px,calc((100vw - 40px) / {n} - 10px))}}}}'
+        f'@media(min-width:768px) and (max-width:1023px){{[data-product-single-media-group]{{--sf-th:min(90px,calc(560px / {n} - 10px))}}}}'
+        f'@media(min-width:1024px) and (max-width:1279px){{[data-product-single-media-group]{{--sf-th:min(90px,calc((50vw - 90px) / {n} - 10px))}}}}'
+        '[data-product-single-media-group] .product-single__thumbnail-link{width:var(--sf-th);height:var(--sf-th)}'
+        '[data-product-single-media-thumbs]:not(.flickity-enabled){height:calc(var(--sf-th) + 10px)}</style>'))
     # the buy box, top to bottom
     blocks = prod.select('.product__block')
     def text_of(b): return ' '.join(b.get_text(' ', strip=True).split())
@@ -2996,11 +3021,18 @@ def sticky_bar(t, img, title, price_line, button, rating=None, live=None):
            'if (!btn || !("IntersectionObserver" in window)) return;'
            # (on a laptop only once the button has gone up off the screen: shown while it was still below, the bar
            # covered the pack cards' prices in the first screen, stick review 6)
-           'new IntersectionObserver(function (es) { var e = es[0], on = !e.isIntersecting && (innerWidth < 1024 || e.boundingClientRect.top < 0);'
+           'var out = false, above = false, seen = [];'
+           'function paint() { var on = out && !seen.length && (innerWidth < 1024 || above);'
            'bar.classList.toggle("is-on", on); bar.setAttribute("aria-hidden", on ? "false" : "true");'
            'bar.querySelector("a").tabIndex = on ? 0 : -1;'
            # while it shows, the page ends that much lower: the footer's last line and the payment icons stay above it
-           'document.body.style.paddingBottom = on ? bar.offsetHeight + "px" : ""; }).observe(btn); }'
+           'document.body.style.paddingBottom = on ? bar.offsetHeight + "px" : ""; }'
+           'new IntersectionObserver(function (es) { var e = es[0]; out = !e.isIntersecting; above = e.boundingClientRect.top < 0; paint(); }).observe(btn);'
+           # and away while a section's own "Choose your pack" button is on the screen: two of the same black button,
+           # one over the other, on a phone (stick review 8)
+           'var io = new IntersectionObserver(function (es) { es.forEach(function (e) { var k = seen.indexOf(e.target);'
+           ' if (e.isIntersecting && k < 0) seen.push(e.target); else if (!e.isIntersecting && k >= 0) seen.splice(k, 1); }); paint(); });'
+           'Array.prototype.forEach.call(document.querySelectorAll("a[href*=\'#apf-buy\']"), function (a) { if (!bar.contains(a)) io.observe(a); }); }'
            'if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();'
            '})();</script></div>')
     return t[:m.start()] + bar + t[balanced_end(t, m.start(), 'div'):], True

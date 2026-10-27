@@ -59,7 +59,7 @@ GALLERY = ['one-stick', 'tones', 'duo-ends', 'before-after', 'whats-inside', 'ho
 GALLERY_ALT = {'one-stick': 'A woman in her fifties holding the Adaptive Foundation Stick: goes on white, blends to your tone',
                'duo-ends': 'The Adaptive Foundation Stick open at both ends: the white cream and the kabuki brush',
                'before-after': 'Before and after the stick on dry, mature skin (AI illustration)',
-               'whats-inside': 'What is inside: hyaluronic acid, niacinamide, squalane and vitamin E',
+               'whats-inside': 'What is inside: hyaluronic acid, niacinamide, squalane, vitamin E and centella',
                'tones': 'Three women with fair to medium skin, before and after the stick (AI illustration)',
                'hold-chin': 'A woman in her fifties holding the Adaptive Foundation Stick by her chin'}
 KOREAN = False         # no "Formulated in Korea" line until the supplier confirms where it is formulated
@@ -106,15 +106,15 @@ CART_UPGRADE_3 = {'title': 'Make it 3 sticks: buy 2, get 1 free', 'button': 'Upg
 # stick; match to the supplier's INCI before launch). What each one is and how the cream feels, nothing over time
 # (stick review 7: "helps the complexion look more even over time" promised a result no test backs)
 INGREDIENTS = [
-    ('Hyaluronic acid', 'Holds water in the skin',
+    ('Hyaluronic acid', 'A moisture-holding ingredient',
      'Draws in moisture, so dry skin stays comfortable under the foundation and the finish looks fresh instead of tight.'),
-    ('Niacinamide', 'Vitamin B3, for a more even look',
-     'Vitamin B3, a skincare classic in creams for skin that looks uneven or dull.'),
-    ('Squalane', 'A light oil skin already knows',
+    ('Niacinamide', 'Vitamin B3, a skincare classic',
+     'Vitamin B3, one of the most used ingredients in skincare creams.'),
+    ('Squalane', 'A light, silky oil',
      'Softens and seals in moisture, so the cream glides over texture and dry patches instead of catching on them.'),
-    ('Vitamin E', 'Antioxidant care',
-     'An antioxidant oil that leaves skin feeling soft and supple.'),
-    ('Centella asiatica', 'A calming plant extract',
+    ('Vitamin E', 'An antioxidant oil',
+     'An antioxidant oil, used in creams to keep their oils fresh.'),
+    ('Centella asiatica', 'A plant extract known as cica',
      'Also called cica or gotu kola: a soothing botanical for sensitive-feeling skin.'),
 ]
 # fair to medium: the range the stick's maker states for it (stick review 6: the page showed a deep-skin result it
@@ -152,8 +152,8 @@ def tabs():
          'refund it in <strong>full</strong>, even opened, no questions asked.</p>'),
         ('Ingredients',
          '<p>The key ingredients, as the stick’s maker lists them:</p>'
-         + ''.join(f'<p><strong>{esc(n)}:</strong> {esc(t)}.</p>' for n, t, _ in INGREDIENTS)
-         + '<p>The full ingredient list is printed on the box.</p>'
+         + ''.join(f'<p><strong>{esc(n)}.</strong> {esc(t)}.</p>' for n, t, _ in INGREDIENTS)
+         + '<p>The full ingredient list is printed on the packaging.</p>'
          + (f'<p><strong>Net weight:</strong> {NET}.</p>' if NET else '')),
         _b.SHIPPING_TAB,
     ]
@@ -171,7 +171,8 @@ BORROW_REVIEWS = {'of': 'our Adaptive Peptide Foundation, which adapts to your t
                   'note': 'Our liquid foundation: it goes on white and adapts to your tone the same way, in a serum base of '
                           'its own. The stick is new at SKINOFAB: its own reviews join these as buyers write them.',
                   'badge': 'of the foundation',          # one line under the stars on a phone (stick review 4)
-                  'wall_note': 'of our Adaptive Peptide Foundation from our earlier store'}   # the wall's count line
+                  'wall_note': 'of our Adaptive Peptide Foundation from our earlier store',   # the wall's count line
+                  'write': 'Write a review of the stick'}
 # the reviews' stars, bars and checks in the review-site look the owner asked for (26 Oct 2026): green boxed stars,
 # with no review site's name or logo (the reviews are the store's own imports, and the page says so)
 REVIEW_STARS = '#00b67a'
@@ -195,7 +196,7 @@ FAQ = {'items': [
      'It evens out the look of redness and sun spots in a thin layer; for a darker spot, tap a second layer on just that spot '
      'and buff the edges. It’s a natural finish, not a mask.'),
     ('How long does it last on my skin?',
-     'It’s made to wear from morning to evening as a thin, flexible layer that doesn’t settle into lines. On a long day, '
+     'It’s made to wear from morning to evening as a thin, flexible layer, made not to settle into lines. On a long day, '
      'buff the brush end over your nose and chin to refresh it; there’s no need to add more.'),
     ('Stick or bottle: which one is for me?',
      'Both go on white and shift toward your tone as you blend. The Adaptive Peptide Foundation is the liquid you blend '
@@ -206,9 +207,10 @@ FAQ = {'items': [
     ('How do I clean the brush?',
      'Once a week, wash the bristles with lukewarm water and a little gentle soap, rinse, squeeze out the water and let it dry '
      'bristles down, cap off. Keep water away from the foundation end.'),
+    # (no gentleness claim before the full ingredient list: stick review 8, "rests on centella alone")
     ('Is it gentle on sensitive skin?',
-     'Its key ingredients include centella, a calming plant extract. Still, if your skin reacts easily, try it on a '
-     'small area first, and don’t use it on broken or irritated skin.'),
+     'No makeup suits every sensitive skin, so if yours reacts easily, try it on a small area of your jaw first and wait '
+     'a day. Don’t use it on broken or irritated skin. The full ingredient list is printed on the packaging.'),
     ('Can I wear it over skincare and under powder?',
      'Yes. Apply it after your moisturizer and sunscreen. If you like powder, a light dusting on top is fine.'),
     # her last two questions before buying a cream foundation (stick review 3); no transfer-proof claim: nothing
@@ -230,8 +232,7 @@ FAQ = {'items': [
      f'Email {EMAIL} within 30 days and we’ll refund it in full, even opened. No questions asked.'),
     # her question before the guarantee counts (stick review 7): the refund policy asks for nothing back
     ('Do I have to send it back for a refund?',
-     f'No. Email {EMAIL} with your order number within 30 days of delivery and we refund you in full, even opened. '
-     'Only an exchange needs the unopened stick sent back.'),
+     f'No. Email {EMAIL} with your order number within 30 days of delivery and we refund you in full, even opened.'),
 ]}
 FAQ['items'][-2:-2] = _b.refill_faq(BUNDLES, REFILL)     # how refills work, how to buy once; then the refund two
 # section by section, in the foundation page's order (twin.py names each slot); images are brand/foundation-stick/
@@ -298,9 +299,9 @@ TWIN = {
                         'the color shifts toward your own tone, so there is no shade to pick.',
                 'rows': [('It goes on white', 'The pigments sit closed in their capsules, so there is no shade on the stick to get wrong.'),
                          ('The capsules break as you buff', 'Small circles with the brush end open them, and the color comes out into the cream.'),
-                         ('It shifts toward your tone', 'Blended in a thin layer, it settles toward your own skin tone, from fair to medium.'),
+                         ('It shifts toward your tone', 'Blended in a thin layer, it moves toward your own skin tone, from fair to medium.'),
                          ('Check it in daylight', 'Look at your jaw by a window. Not your match? A full refund within 30 days, even opened.')],
-                'note': 'The picture is an illustration. The full ingredient list is printed on the box.',
+                'note': 'The picture is an illustration. The full ingredient list is printed on the packaging.',
                 'button': 'Choose your pack'},
     'iwt': [
         {'img': 'wear-day', 'alt': 'The same woman at 10 AM and at 10 PM wearing the stick (AI illustration)',
@@ -326,13 +327,15 @@ TWIN = {
     'compare': {'title': 'Why SKINOFAB?', 'others': 'Typical liquid foundation',
                 'rows': ['No shade to choose', 'Kabuki brush built in', 'Touch-ups from your bag, no sponge',
                          ('Buildable, natural coverage', True)]},
-    'inside': {'title': 'What’s inside, and why your skin will love it',
-               'intro': 'The key ingredients in the stick’s creamy base, made for dry, mature skin. The full list is printed on the box.',
-               'cards': [('ing-ha', 'Hyaluronic acid', 'Holds water in the skin, for a fresh, comfortable finish'),
-                         ('ing-niacinamide', 'Niacinamide', 'Vitamin B3, for a more even-looking complexion'),
-                         ('ing-squalane', 'Squalane', 'Softens, so the cream glides over dry patches'),
-                         ('ing-vite', 'Vitamin E', 'Antioxidant care for soft, supple skin'),
-                         ('ing-centella', 'Centella asiatica', 'A calming plant extract, for skin that feels sensitive')]},
+    'inside': {'title': 'What’s inside the stick',
+               'intro': 'The key ingredients in the stick’s creamy base, made for dry, mature skin. The full list is printed on the packaging.',
+               # what each one is, and what it does in the cream (stick review 8: "for a more even-looking
+               # complexion" and "soft, supple skin" promised results before the full ingredient list)
+               'cards': [('ing-ha', 'Hyaluronic acid', 'Holds water, so the cream feels comfortable on dry skin'),
+                         ('ing-niacinamide', 'Niacinamide', 'Vitamin B3, one of the most used ingredients in skincare'),
+                         ('ing-squalane', 'Squalane', 'A light oil that helps the cream glide over dry patches'),
+                         ('ing-vite', 'Vitamin E', 'An antioxidant oil that keeps the cream’s oils fresh'),
+                         ('ing-centella', 'Centella asiatica', 'A plant extract known as cica, used in calming creams')]},
     # the foundation's customer clips: how to use it, in the same cards (not reviews)
     'cards': {'eyebrow': 'How to use it', 'title': 'Twist, dot, buff', 'items': [
         {'img': 'twist', 'title': 'Twist up a little', 'text': 'A few millimeters is all you need.', 'alt': 'Hands twisting up the white foundation end of the stick'},

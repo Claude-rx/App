@@ -76,6 +76,12 @@
         return (cfg.refillText || 'Refills every') + ' ' + (count === 1 ? unit : count + ' ' + unit + 's');
     }
 
+    /* a product sold with refills (its page's slug in cfg.refillHandles): a line of it bought once says so, with the
+       same "Change" link (stick review 8: after switching to one-time, "2 sticks · $59" and nothing more) */
+    function refillProduct(href) {
+        return (cfg.refillHandles || []).some(function(h) { return new RegExp('/' + h + '(_\\d+)?/').test(href || ''); });
+    }
+
     /* "Adaptive Peptide Foundation - 1 bottle": product name and pack on separate lines */
     function splitTitle(product) {
         var title = product.title || '';
@@ -121,7 +127,8 @@
             '<a href="' + escapeHtml(href) + '" class="spark-drawer-item-title">' + escapeHtml(names.name) + '</a>' +
             (names.variant ? '<div class="sf-item-variant">' + escapeHtml(names.variant) + '</div>' : '') +
             (props ? '<div class="sf-item-variant">' + escapeHtml(props) + '</div>' : '') +
-            (line.interval ? '<div class="sf-item-variant sf-item-every">' + escapeHtml(cadence(line)) +
+            (line.interval || refillProduct(href) ? '<div class="sf-item-variant sf-item-every">' +
+                escapeHtml(line.interval ? cadence(line) : (cfg.onceText || 'One-time purchase')) +
                 (cfg.cartUrl ? '<a class="sf-item-change" href="' + escapeHtml(cfg.cartUrl) + '">' + escapeHtml(cfg.changeText || 'Change') + '</a>' : '') +
                 '</div>' : '') +
             '<div class="spark-drawer-item-bottom">';

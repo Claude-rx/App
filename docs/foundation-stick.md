@@ -18,9 +18,11 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   key ingredients Facelove's page names for the same stick; the Ingredients tab says so ("The key ingredients, as the
   stick's maker lists them") and "The full ingredient list is printed on the box". Facelove publishes no full
   ingredient list: check the supplier's INCI list and correct `INGREDIENTS` and `TWIN['inside']` in `stick_copy.py`
-  if it differs. Since stick review 7 the page says what each one is and how the cream feels, nothing over time (no
-  "helps the complexion look more even over time"), and the "Adaptive color science" block explains the color
-  capsules (what the stick shares with the foundation), not a third ingredient list.
+  if it differs. Since stick reviews 7 and 8 the page says what each one is and what it does in the cream, no result
+  on the skin (no "more even-looking complexion", no "soft, supple skin", no gentleness claim resting on centella),
+  and the "Adaptive color science" block explains the color capsules (what the stick shares with the foundation), not
+  a third ingredient list. "The full ingredient list is printed on the packaging": US cosmetic packaging must carry
+  it; make sure the supplier's does.
 - **Shade range.** Facelove's page says both "16 skin tones" and, in its own gallery, "For fair to medium skin tones".
   Since stick review 6 the page says fair to medium: `SHADE_FAQ` ("made for fair to medium skin tones"; deeper skin
   emails first; a full refund within 30 days, even opened), the tones panel (fair, light-medium and medium women before
@@ -72,7 +74,13 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   in-house one) would back them.
 - **Real photos.** The photos are AI-generated; the wordmark is printed on every stick by `relabel_bottles.py` from
   the real wordmark (`docs/real-wordmark.md`). Once the real stick exists, photograph it on white and swap `pack` and
-  `single` first.
+  `single` first. Two photos are mirrored before their print is set (`relabel_bottles.STICK_MIRROR`: `blend`,
+  `buff-jaw`): held brush first towards the right, the print read upside down; mirrored, it reads the right way up
+  and still runs from the brush end, as on every other photo.
+- **Refill emails.** The trust row and the FAQ say "We email you before every refill" (the foundation's owner
+  element): make sure the platform's subscription emails are on, since the store has no mailing service yet.
+- **Brand replies to low reviews.** The wall's 1- and 2-star reviews (the earlier store's, under "Lowest rated")
+  include "couldn't find how to cancel"; a short reply in your words under each would answer the next buyer.
 
 ## What Facelove's page does, and what we kept
 
@@ -130,7 +138,7 @@ brush, sensitive skin, layering, refunds). It doesn't promise she will look 30.
 | Product page | The Adaptive Peptide Foundation page's structure, section by section (`tools/persona/twin.py`), with `stick_copy.py`'s copy and `brand/foundation-stick/` photos |
 | Homepage | A card in the product shelf after the foundation (default list, Bestsellers, New and Face tabs), "New" and "Buy 2, get 1 free" badges; a card in Essentials |
 | Menus | "Adaptive Foundation Stick" after the foundation in the menu and in the footer's Shop column (the footer uses the menu's names, in its order) |
-| Cart drawer | Its own upgrade cards: 1 → 2 sticks ($16 more with refills, $20 bought once; Theme settings → Cart Drawer → Fifth upgrade) and, with the 2-stick pack in the bag, 2 → 3 sticks, buy 2, get 1 free ($15 more with refills, $19 bought once; Sixth upgrade); not an add-on to the foundation (one foundation is enough). The 30-day guarantee sits in the drawer's footer, under the checkout button |
+| Cart drawer | A line bought once says "One-time purchase · Change" (a refill line says how often it ships). Its own upgrade cards: 1 → 2 sticks ($16 more with refills, $20 bought once; Theme settings → Cart Drawer → Fifth upgrade) and, with the 2-stick pack in the bag, 2 → 3 sticks, buy 2, get 1 free ($15 more with refills, $19 bought once; Sixth upgrade); not an add-on to the foundation (one foundation is enough). The 30-day guarantee sits in the drawer's footer, under the checkout button |
 
 ## Images
 

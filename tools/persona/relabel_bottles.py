@@ -85,7 +85,7 @@ STICK = {
     'tips': [('box', (360, 830, 445, 1215), (402, 860)), ('box', (790, 860, 875, 1230), (832, 890))],
     'hold-cheek': [('box', (240, 670, 360, 890), (283, 700))],
     'apply-cheek': [('box', (220, 630, 370, 780), (240, 760))],
-    'blend': [('flat', (426, 694), (341, 797), 21)],              # dim, lit print: measured by hand
+    'blend': [('flat', (828, 694), (913, 797), 21)],              # dim, lit print: measured by hand (mirrored, below)
     'swatch': [('box', (930, 580, 1080, 890), (965, 865))],
     'temple': [('flat', (303, 540), (279, 691), 22)],
     'friends': [('box', (570, 805, 655, 1000), (612, 832))],
@@ -96,9 +96,15 @@ STICK = {
     'twist': [('box', (598, 480, 662, 772), (629, 752))],
     'dots': [('box', (395, 840, 440, 995), (417, 980))],
     'daylight': [('flat', (275, 810), (301, 946), 14)],
-    'buff-jaw': [('flat', (510, 910), (405, 982), 16)],
+    'buff-jaw': [('flat', (744, 910), (849, 982), 16)],             # (mirrored, below)
     'duo-ends': [('flat', (545, 660), (755, 447), 34)],   # the band wide enough to clear the AI print's ends (stick review 4)
 }
+
+# photos mirrored left to right before their print is set: held brush first towards the right, the stick read upside
+# down from its brush end (stick reviews 7 and 8: "SKINOFAB" upside down on "Buff it in" and "The brush is built in");
+# mirrored, the brush points left and the same print reads the right way up. Their STICK entries are in the mirrored
+# photo's px (x = 1254 - x)
+STICK_MIRROR = {'blend', 'buff-jaw'}
 
 # file-name prefix -> (the reference copy's size, the bottles in it); the longest prefix whose aspect matches wins
 SITE = {

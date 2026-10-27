@@ -24,6 +24,8 @@ GLOBAL = [
     # the footer: the brand's name as its logo writes it, and a line that says what the brand makes and for whom,
     # not a generic one (stick review 3)
     ('A little more Skinofab in your inbox.', 'A little more SKINOFAB in your inbox.'),
+    # its line said "inbox" a second time, with the page's one serial comma (stick review 8)
+    ('New arrivals, beauty tips, and little treats for your inbox.', 'New arrivals, beauty tips and little treats.'),
     ('>About Skinofab<', '>About SKINOFAB<'),
     (r'RE:<p><em><strong>Skinofab</strong> is a solutions-oriented beauty brand, creating a world where everybody feels confident\.</em></p>',
      '<p><em><strong>SKINOFAB</strong> makes makeup and skincare for skin after 45: simple to use, comfortable on dry skin, '

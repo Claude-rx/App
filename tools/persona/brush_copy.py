@@ -300,7 +300,8 @@ def refill_faq(bundles, refill, email='hello@skinofab.com'):
     return [('How do Automatic Refills work?',
              f'Your pack ships again on a set schedule, at the refill price: {every}. We email you '
              f'before every refill. '
-             f'To skip, delay or cancel, just email {email}: no minimum, no fees.'),
+             f'To skip, delay or cancel, just email {email}: no minimum, no fees, and a person replies within one '
+             'business day. Every refill is covered by the same 30-day money-back guarantee.'),
             ('Can I buy just once?',
              f'Yes. In your bag, tap Change under the {unit}, then on the cart page set it to One-time purchase before '
              f'checkout: {once}, with no refills.')]

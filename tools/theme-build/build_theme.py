@@ -1147,6 +1147,10 @@ base = base.replace("<script type=\"text/javascript\" src=\"{{ 'js/theme.js'|ass
 # Side cart: SKINOFAB renderer in place of Spark's, configured from Theme settings > SKINOFAB > Cart Drawer
 base = must_replace(base, "cartRenderer: \"{{ 'js/spark-cart-drawer-renderer.js'|asset_url|escapejs }}\"",
                     "cartRenderer: \"{{ 'js/skinofab-cart-drawer.js'|asset_url|escapejs }}\"", 'cart renderer')
+# the products sold with Automatic Refills (sf-offer.json, by page slug): the drawer says "One-time purchase" on a
+# line of one bought once (stick review 8)
+_ro_path = EXPORT / 'sf-offer.json'
+REFILL_HANDLES = (json.loads(_ro_path.read_text()).get('refill_handles') or []) if _ro_path.exists() else []
 SF_CART = ('''        <script>
         window.SFCart = {
             shippingFree: {% if settings.sf_cart_free_shipping %}true{% else %}false{% endif %},
@@ -1177,6 +1181,7 @@ SF_CART = ('''        <script>
             payIcons: [PAY_ICONS_JS],
             checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
             cartUrl: "/cart/", changeText: "{{ settings.sf_cart_change_text|default:'Change'|escapejs }}",
+            refillHandles: REFILL_HANDLES_JS, onceText: "One-time purchase",
             secureText: "{{ settings.sf_cart_secure_text|default:''|escapejs }}",
             couponToggle: "{{ settings.sf_cart_coupon_toggle|default:'Have a discount code?'|escapejs }}",
             removeText: "{{ settings.sf_cart_remove_text|default:'Remove'|escapejs }}",
@@ -1187,7 +1192,7 @@ SF_CART = ('''        <script>
             shopText: "{% if settings.sf_cart_empty_cta %}{{ settings.sf_cart_empty_cta|escapejs }}{% elif settings.sf_cart_empty_product %}Shop {{ settings.sf_cart_empty_product.get_title|escapejs }}{% endif %}"
         };
         </script>
-''').replace('CART_BOTTLE', CART_BOTTLE).replace('PAY_ICONS_JS', ''.join(
+''').replace('CART_BOTTLE', CART_BOTTLE).replace('REFILL_HANDLES_JS', json.dumps(REFILL_HANDLES)).replace('PAY_ICONS_JS', ''.join(
     "{%% if '%s' in settings.sf_pay_icons %%}{ src: \"{{ 'img/pay/%s.svg'|asset_url|escapejs }}\", alt: \"%s\" }, {%% endif %%}" % (k, k, alt)
     for k, alt in PAY_ICONS))
 base = must_replace(base, "        <script type=\"text/javascript\" src=\"{{ 'js/spark-cart-loader.js'|asset_url }}\"></script>",

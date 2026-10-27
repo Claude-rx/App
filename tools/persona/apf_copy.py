@@ -896,7 +896,7 @@ def dermatologist_html(d):
   <div class="sfx-photo"><img src="{ph[0]}" alt="{d.get('photo_alt', d['name'])}" width="{ph[1]}" height="{ph[2]}" loading="lazy" decoding="async"></div>
   <div>
     <span class="sfx-eyebrow">{d.get('eyebrow', 'Dermatologist recommended')}</span>
-    <h2>&ldquo;{d['headline_lead']} <span class="sfx-mark">{d['headline_mark']}</span>&rdquo;</h2>
+    <h2>&ldquo;{d['headline_lead']} <span style="white-space:nowrap"><span class="sfx-mark">{d['headline_mark']}</span>&rdquo;</span></h2>
     <blockquote class="sfx-quote">{paras}</blockquote>
     <div class="sfx-sign"><img src="{d['avatar']}" alt="" width="52" height="52" loading="lazy" decoding="async"><div><b>{d['name']}</b><span>{d['role']}</span></div></div>
   </div>
@@ -1051,11 +1051,15 @@ REVIEW_WALL_JS = r"""
       CONDITION = /acne|rosacea|eczema|psoriasis|dermatitis|\bcur(e|ed|es)\b|\bheal(s|ed|ing)?\b|prescription|medication|\bscar(s|ring)?\b/i,
       // the earlier store's deliveries (weeks to arrive): about its shipping, not the product, and not this store's
       // times (stick review 4); still shown, under Most recent and the ratings
-      SHIPPING = /took (about |around |over )?\w+( to \w+)? (weeks?|days) to (arrive|come|get here)|arriv\w* (late|after \w+ weeks)|shipping (took|was slow)|weeks to (arrive|come)/i;
+      SHIPPING = /took (about |around |over )?\w+( to \w+)? (weeks?|days) to (arrive|come|get here)|arriv\w* (late|after \w+ weeks)|shipping (took|was slow)|weeks to (arrive|come)/i,
+      // further down too (still shown, under the ratings): a review that calls it clear (the page says it goes on
+      // white), one signed with a social handle, and a beauty professional's (read as an endorsement); stick review 8
+      OFFSIDE = /\bclear (foundation|formula|product)\b|it'?s clear\b|@\w{3,}|\b[a-z]{4,}\d{3,}\b|\b(qualified|licensed|professional) (beauty|make-?up|skin)|beauty therapist|esthetician|aesthetician|make-?up artist|\bmua\b/i;
   function helpful(r) {
     var t = (r.title || '') + ' ' + (r.body || '');
     return ((r.photos || []).length ? 2 : 0) + Math.min((r.body || '').length, 400) / 400 + (r.rating || 0) / 5
       + (AGE.test(t) ? 1 : 0) + (WORRY.test(t) ? 0.6 : 0) - (CONDITION.test(t) ? 4 : 0) - (SHIPPING.test(t) ? 1.5 : 0)
+      - (OFFSIDE.test(t) ? 3 : 0)
       // the reviews the strip near the top already shows: last (stick review 7: the same review twice)
       - (r.top ? 10 : 0);
   }

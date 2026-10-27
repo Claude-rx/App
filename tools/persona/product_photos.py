@@ -274,8 +274,10 @@ def results_grid(product, pairs, title):
     save(im, product, 'results-grid')
 
 
-def whats_inside(product, name, rows, size=700, note_left=False, shadow=False):
-    """shadow: a soft contact shadow under a product standing on the white (the stick's floated, stick review 5)."""
+def whats_inside(product, name, rows, size=700, note_left=False, shadow=False, cap=28, note_size=26):
+    """shadow: a soft contact shadow under a product standing on the white (the stick's floated, stick review 5).
+    cap, note_size: the captions' and the small print's px (the stick's 34 and 32: at 28 and 26 a phone showed them at
+    8 and 7 px, stick review 8)."""
     import cv2
     im = Image.new('RGB', (W, W), PAPER)
     im.paste(src(product, name, size), (W - size, W - size))
@@ -309,10 +311,10 @@ def whats_inside(product, name, rows, size=700, note_left=False, shadow=False):
         if end < tx - 40:
             d.line([(end, y - 10), (tx - 70, y - 10), (tx, ty)], fill=INK, width=2, joint='curve')
             d.ellipse((tx - 5, ty - 5, tx + 5, ty + 5), fill=INK)
-        d.text((64, y + 42), b, font=sans(28, 'Regular'), fill=SOFT, anchor='ls')
+        d.text((64, y + 14 + cap), b, font=sans(cap, 'Regular'), fill=SOFT, anchor='ls')
     # note_left: on the white side (a photo that runs to the bottom-right corner hid it)
-    if note_left: note(d, (64, W - 28), anchor='ls', size=26)
-    else: note(d, (W - 60, W - 28), anchor='rs', size=26)
+    if note_left: note(d, (64, W - 28), anchor='ls', size=note_size)
+    else: note(d, (W - 60, W - 28), anchor='rs', size=note_size)
     save(im, product, 'whats-inside')
 
 
@@ -444,7 +446,9 @@ def stick():
     P = STICK
     (P / 'labelled').mkdir(exist_ok=True)
     for name, ops in relabel_bottles.STICK.items():
-        relabel_bottles.relabel(Image.open(P / 'source' / f'{name}.jpg'), ops).save(P / 'labelled' / f'{name}.jpg', quality=95)
+        im = Image.open(P / 'source' / f'{name}.jpg')
+        if name in relabel_bottles.STICK_MIRROR: im = ImageOps.mirror(im)      # so its print reads the right way up
+        relabel_bottles.relabel(im, ops).save(P / 'labelled' / f'{name}.jpg', quality=95)
         print('relabelled', name)
     # the handbag's top right corner: the AI ran its zipper into a loose loop of chain links (stick review 5); the
     # links painted over from the dark lining round them, the zipper below and the hand above left as they are
@@ -491,8 +495,11 @@ def stick():
                                                           ('drop', 'Creamy, made for', 'dry, mature skin'),
                                                           ('stick', 'Twist, dot, buff:', 'no sponge needed')], 'one-stick')
     # on the stick itself (the swatch photo is "How does it work?" further down: the same photo twice, stick review 3)
-    whats_inside(P, 'single', [('Hyaluronic acid', 'Keeps dry skin comfortable'), ('Niacinamide', 'For a more even-looking tone'),
-                               ('Squalane + vitamin E', 'Soft and supple, not tight')], note_left=True, shadow=True)
+    # what each one is, the five the page names (stick review 8: "for a more even-looking tone" and "soft and supple"
+    # were results, and centella was missing)
+    whats_inside(P, 'single', [('Hyaluronic acid', 'Holds water in the cream'), ('Niacinamide', 'Vitamin B3'),
+                               ('Squalane + vitamin E', 'Light, silky oils'), ('Centella asiatica', 'A plant extract, cica')],
+                 note_left=True, shadow=True, cap=34, note_size=32)
     science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',
                            'and the white cream shifts toward your own skin tone:',
                            'one shade that meets your skin where it is.'))

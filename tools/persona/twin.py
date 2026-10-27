@@ -59,7 +59,10 @@ def loved(sec, c):
         # (an ellipse clears a word's corners at ~1.35x its box; the heading's lines get the room for it)
         brk.append(frag('<style>main .text-highlight-wrapper--circle{line-height:1.32}'
                         'main .text-highlight-wrapper--circle .text-highlight__icon{width:136%;height:136%}'
-                        'main .text-highlight-wrapper--circle .text-highlight__icon svg{width:100%;height:100%;transform:translate(-50%,-50%)}</style>'))
+                        'main .text-highlight-wrapper--circle .text-highlight__icon svg{width:100%;height:100%;transform:translate(-50%,-50%)}'
+                        # a phone: the circled words on a line of their own, their oval's top ran into the line above
+                        # (stick review 8); the lines get the oval's room
+                        '@media(max-width:749px){main .text-highlight-wrapper--circle{line-height:1.6}}</style>'))
     return str(s)
 
 

@@ -602,7 +602,12 @@ for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BAL
   const atTop = await on();
   const atcOut = await s.page.evaluate(() => { const b = document.querySelector('form[data-product-form] [data-add-to-cart]') || document.querySelector('#apf-buy');
     const r = b.getBoundingClientRect(); return r.top >= innerHeight || r.bottom <= 0; });
+  // (somewhere no section's own "Choose your pack" button shows: the bar steps aside for one, stick review 8)
   await s.page.evaluate(() => window.scrollTo(0, 3000)); await s.page.waitForTimeout(900);
+  for (let k = 0; k < 12 && await s.page.evaluate(() => [...document.querySelectorAll("a[href*='#apf-buy']")]
+         .some(a => !a.closest('#sf-sticky') && a.getBoundingClientRect().bottom > 0 && a.getBoundingClientRect().top < innerHeight)); k++) {
+    await s.page.evaluate(() => window.scrollBy(0, 500)); await s.page.waitForTimeout(700);
+  }
   const scrolled = await on();
   if (atTop !== (atcOut && w < 1024)) problems.push(`at the top: bar ${atTop}, add-to-cart out of view ${atcOut} at ${w}`);
   // on the first screen the bar covers neither the title nor the price (stick review 3)
@@ -618,6 +623,10 @@ for (const [name, route] of [['foundation', PDP], ['brush', BRUSH], ['balm', BAL
     const r = await s.page.evaluate(() => { const e = document.getElementById('apf-buy').getBoundingClientRect(); return [e.top, e.bottom, innerHeight]; });
     if (r[0] > r[2] || r[1] < 0) problems.push('picker not in view after the sticky button: ' + r.map(Math.round).join(','));
   }
+  // and it steps aside while a section's own buy button is on the screen
+  const cta = await s.page.evaluate(() => { const a = [...document.querySelectorAll("a[href*='#apf-buy']")].find(a => !a.closest('#sf-sticky') && a.offsetParent);
+    if (!a) return null; a.scrollIntoView({ block: 'center' }); return true; });
+  if (cta) { await s.page.waitForTimeout(900); if (await on()) problems.push('the bar shows over a section buy button'); }
   out.push({ case: `sticky bar ${name} ${w}`, errors: s.errors, ok: problems.length === 0, problems });
   await s.ctx.close();
 }
