@@ -101,7 +101,7 @@ GUARANTEE = ('Not your match? Wear it in your own daylight for 30 days; if it is
 STICKY_BUTTON = 'Choose your pack'
 STICKY_IMG = 'duo-ends'      # the bar's 52 px thumbnail: both ends open, brush and cream (the capped packshot read as a pen)
 CART_UPGRADE = {'title': 'Upgrade to 2 sticks', 'button': 'Upgrade'}
-CART_UPGRADE_3 = {'title': 'Make it 3 sticks: buy 2, get 1 free', 'button': 'Upgrade'}   # from the 2-stick pack
+CART_UPGRADE_3 = {'title': 'Add a third stick', 'button': 'Upgrade'}   # ("buy 2, get 1 free" beside "$15 more" read as a contradiction, stick review 11)   # from the 2-stick pack
 
 # what is in it: the key ingredients the stick's maker lists (Facelove's page, the owner's other brand, for the same
 # stick; match to the supplier's INCI before launch). What each one is and how the cream feels, nothing over time
@@ -188,7 +188,7 @@ NO_REVIEWS = {'title': 'Customer reviews', 'lead': 'No reviews of the stick yet'
 FAQ = {'items': [
     ('Will it match my skin tone?', SHADE_FAQ),
     ('Will it settle into my fine lines?',
-     'Use it in thin layers and buff it in with the brush: a thin, creamy layer moves with your skin instead of collecting in '
+     'Use it in thin layers and buff it in with the brush: a thin, creamy layer is made to move with your skin instead of collecting in '
      'lines. Starting with moisturized skin helps too.'),
     ('Will it look cakey or heavy?',
      'Not in thin layers. It’s a cream, not a powder, so it’s made not to crack on dry skin. Build only where you need it.'),
@@ -278,7 +278,7 @@ TWIN = {
                          'you blend, and the brush on the other end.',
         'fixes': [('The wrong shade', 'It goes on white and shifts toward your skin tone as you blend.'),
                   ('Cakey on dry skin', 'A cream made for dry skin, buffed on in a thin layer.'),
-                  ('Settling into lines', 'Buffed in thin with the brush, it moves with your skin.'),
+                  ('Settling into lines', 'Buffed in thin with the brush, it’s made to move with your skin.'),
                   ('Redness and spots', 'A thin layer evens their look; a second one covers more.'),
                   ('Three tools', 'Foundation and kabuki brush in one stick that fits in your bag.')],
         'button': 'Get yours', 'note': 'Try it for 30 days: love it, or your money back.',
@@ -309,7 +309,7 @@ TWIN = {
     'iwt': [
         {'img': 'wear-day', 'alt': 'The same woman at 10 AM and at 10 PM wearing the stick (AI illustration)',
          'lead': 'From 10 AM', 'mark': 'to 10 PM',
-         'paras': ['A thin, creamy layer moves with your skin instead of drying on top of it, so it is made to look the same at '
+         'paras': ['A thin, creamy layer is made to move with your skin instead of drying on top of it, so it is made to look the same at '
                    'dinner as it did at breakfast: no orange in daylight, no settling into lines by lunch. Out late? Buff the brush '
                    'end over your nose and chin and you are done. Results vary from person to person.'],
          'usps': [('Made to wear all day', 'clock'), ('Touch up with the brush', 'brush')]},

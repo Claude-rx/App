@@ -439,7 +439,7 @@ def whole(body):
     if ends and ends[-1] >= 150: return text[:ends[-1]].rstrip()
     return re.sub(r'\s+\S*$', '', text).rstrip(' ,;:-–') + '…'
 
-REVIEW_DOWN = [('Katie W.', 'This will be my forever')]
+REVIEW_DOWN = [('Katie W.', 'This will be my forever'), ('Danielle F.', 'I have a neutral underto'), ('Danielle F.', 'Great product')]   # (stick reviews 10, 11)
 
 def review_data(reviews=REVIEWS):
     """The imported reviews in <reviews>/reviews.json (tools/reviews/import_reviews.py), or None: the list the wall
