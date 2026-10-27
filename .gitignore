@@ -16,3 +16,10 @@ __pycache__/
 *.pyc
 # source PDF of the product sheet (21 MB); its views are extracted under brand/adaptive-peptide-foundation/
 brand/adaptive-peptide-foundation/product-sheet.pdf
+
+# Next Commerce campaign runs (manifests hold campaign keys)
+next-campaigns-create-runs/
+.env
+# the funnel's Page Kit project: installed packages and build output (tools/build_store.sh rebuilds _site/)
+campaigns/skinofab/node_modules/
+campaigns/skinofab/_site/

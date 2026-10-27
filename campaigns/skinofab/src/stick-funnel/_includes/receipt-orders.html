@@ -1,0 +1,68 @@
+{% comment %}
+  next_component: receipt-orders
+  next_version: 1.0.1
+  next_sdk_min: 0.4.18 (order.* condition paths incl. order.hasItems source-verified in ConditionalDisplayEnhancer at v0.4.18 and unchanged through v0.4.36)
+  next_purpose: Receipt page order line items. Hosts the SDK template + list for rendering ordered items after payment. SDK populates [data-next-order-items] from OrderItemsEnhancer.
+  next_params: (none today; parameterization deferred to v1 if cart-item template variants emerge across receipts)
+  next_sdk_owns:
+    - data-next-order-items
+    - data-item-template-id (must match the inner <template id>)
+    - data-next-show="order.hasItems"
+    - data-next-quantity (decrease/increase) inside template (currently hidden but kept for symmetry with cart-item markup)
+    - Single-brace tokens inside <template> are SDK syntax, not Liquid: {item.id}, {item.image}, {item.quantity}, {item.name}, {item.packageId}, {item.lineTotal}
+  next_theming:
+    classes_designer_owns: [.cart-items, .cart-items__list, .cart-items__scroll-hint, .cart-item, .cart-item__wrapper, .cart-item__image-container, .cart-item__quantity-badge, .cart-item__quantity, .cart-item__image, .cart-item__details, .cart-item__content, .cart-item__description, .cart-item__header, .cart-item__title, .cart-item__pricing, .checkout__line-item__final-price]
+    css_vars_designer_owns: []
+  next_dont_touch:
+    - Do not change single-brace tokens to Liquid {{ }} — SDK templating, not Liquid
+    - data-item-template-id on the list MUST match the <template id> exactly ("order-item-template")
+    - Do not remove the data-next-show="order.hasItems" wrapper — it suppresses the empty-state box until the order loads with items
+    - Never gate receipt visibility on cart.* state: SDK >=0.4.17 clears cart/coupon session state before the post-checkout redirect, so cart.isEmpty is always true on the receipt and a cart-gated wrapper hides the populated order-items list
+  next_gotchas:
+    - This partial is rendered twice per receipt page (desktop summary + mobile summary). Keep both invocations identical
+  next_variants:
+    - default (this)
+  next_related:
+    - receipt-skeleton (loading skeleton this replaces once SDK hydrates)
+    - cart-summary01..04 (checkout-time order summary; different SDK contract via data-next-cart-summary)
+{% endcomment %}
+<div data-next-catalog-component="receipt-orders" class="cart-items">
+  <div data-next-component="scroll-hint" class="cart-items__scroll-hint cart-items__scroll-hint--active">
+    <div>Scroll for more items</div>
+    <div class="icon__view-more"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6z"></path>
+      </svg></div>
+  </div>
+  <div data-next-show="order.hasItems"><template id="order-item-template" class="item-template os-show">
+      <div data-order-line-id="{item.id}" class="cart-item">
+        <div class="cart-item__wrapper">
+          <div class="cart-item__image-container">
+            <div class="cart-item__quantity-badge">
+              <div class="cart-item__quantity">{item.quantity}</div>
+            </div><img src="{item.image}" class="cart-item__image">
+          </div>
+          <div class="cart-item__details">
+            <div class="cart-item__content">
+              <div class="cart-item__description">
+                <div class="cart-item__header">
+                  <div pb-cart="line_item-title" class="cart-item__title">{item.name}</div>
+                </div>
+                <div class="quantity-controls hide">
+                  <div id="quantity_-item.packageId" data-flavor="original" class="cart-quantity-controls__container">
+                    <div data-package-id="{item.packageId}" data-next-quantity="decrease" role="button" class="quantity-controls__button quantity-controls__button--decrease">-</div>
+                    <div pb-cart="line_item-quantity" class="quantity-controls__display">{item.quantity}</div>
+                    <div data-package-id="{item.packageId}" data-next-quantity="increase" role="button" class="quantity-controls__button quantity-controls__button--increase">+</div>
+                  </div>
+                </div>
+              </div>
+              <div class="cart-item__pricing">
+                <div class="checkout__line-item__final-price">{item.lineTotal}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <div data-item-template-id="order-item-template" data-next-order-items="" class="cart-items__list"></div>
+  </div>
+</div>

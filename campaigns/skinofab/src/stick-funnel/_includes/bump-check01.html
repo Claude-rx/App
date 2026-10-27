@@ -1,0 +1,192 @@
+{%- comment -%} GENERATED from _shared/checkout/_includes/bump-check01.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: order-bump-card
+  next_version: 2.0.0
+  next_sdk_min: 0.4.25
+  next_purpose: Pre-purchase add-on offer rendered as a checkbox-style card. Customer opts in with one click; SDK adds the package to cart at checkout.
+  next_params:
+    packages:             object, optional. Dict with main_package, prepurchase_1, prepurchase_2 keys. Defaults for package_id and the package-sync fallback when not passed explicitly.
+    order_bump.check01:   optional frontmatter object for package_id, sync_quantity, product_sync, title, image_src, image_alt, features, pricing_mode, the legacy show_* bools, and is_upsell.
+    package_id:           number, default packages.prepurchase_1 or 7. data-next-package-id (the bump's package).
+    bump_title:           string, default "Order Bump Title". Bump headline.
+    bump_image:           string asset path, default "images/1x1_1.svg". Product imagery. (image_src is the legacy alias; order_bump.check01.image_src works too.)
+    bump_image_alt:       string, default the resolved title.
+    package_sync:         number|false. data-next-package-sync — mirrors the main bundle qty, matched by packageId. Default packages.main_package or 1; set false to disable sync. (sync_quantity is the legacy alias; order_bump.check01.sync_quantity works too.)
+    product_sync:         number|false. data-next-product-sync (SDK 0.4.25+) — sums qty across every variant of a product, matched by product_id. REQUIRED instead of package_sync when the main product is MV/configurable (see comment below). Wins over package_sync when both are set; false disables sync entirely. Also settable via order_bump.check01.product_sync.
+    features:             array of bullet strings, default placeholder list. Bullet list shown under price.
+    pricing_mode:         enum [full_price, discounted, compare_at, unit_total, unit_only], default "full_price"
+                          (template-brand-contract shared-commerce pricing_surfaces.bump). Include arg wins over
+                          order_bump.check01.pricing_mode, and over the legacy show_* bools below. Controls
+                          which price rows render:
+                          full_price/unit_only = unitPrice/ea only (one visible price);
+                          discounted/compare_at = struck originalUnitPrice + unitPrice/ea — IDENTICAL on this
+                          surface: the struck original shows only while the SDK reports a discount
+                          (data-next-toggle-display="hasDiscount");
+                          unit_total = unitPrice/ea + line total (scales with synced qty).
+                          Pick the mode here — campaign CSS must never display:none price rows.
+    show_compare_price:   bool, LEGACY. Explicitly include the struck originalUnitPrice in Option A; it shows only while the SDK reports a discount (hasDiscount).
+    show_per_unit_price:  bool, LEGACY. Render Option A row (unitPrice/ea, plus originalUnitPrice/ea only when show_compare_price=true).
+    show_line_total_price:bool, LEGACY. Render Option B row (originalPrice + price). The legacy bools are honored
+                          only when pricing_mode is not set anywhere and at least one of the three show_* bools
+                          is set explicitly (include arg or frontmatter).
+    is_upsell:            bool, default true (deliberate). data-next-is-upsell flag; false keeps the bump a plain line on the initial order.
+  next_sdk_owns:
+    - data-next-package-toggle
+    - data-next-toggle-card
+    - data-next-is-upsell
+    - data-next-package-id
+    - data-next-package-sync (mirrors main bundle quantity, packageId match)
+    - data-next-product-sync (mirrors main product quantity across variants, product_id match)
+    - data-next-toggle-display
+    - data-next-toggle-image
+    - data-next-await
+  next_theming:
+    classes_designer_owns: [.toggle-card, .toggle-card__*, .checkbox-style-1, .pb--bestseller, .bump-card, .bump__title, .bump__price, .bump__price-row, .bump__image, .list-container]
+    css_vars_designer_owns: []
+  next_dont_touch:
+    - data-next-package-sync mirrors main-bundle quantity; this is a product decision, not just mechanical wiring.
+    - Default to sync OFF (package_sync=false) unless the campaign explicitly wants quantity-synced bumps
+    - originalUnitPrice/ea is per-unit (stable); originalPrice is line total (scales with synced qty)
+  next_gotchas:
+    - Receipt must render bumps as separate line items
+    - Ethically, syncing bump qty with main bundle when the bump reads as "one-time add-on" is misleading; prefer fixed qty (set package_sync=false)
+    - features array items render as plain HTML; sanitize merchant-provided text upstream
+  next_variants:
+    - check01 (this; checkbox card)
+    - check02 (expanded checkbox layout)
+    - check03 (product-card bump)
+    - switch01 (toggle-switch UI; same SDK contract)
+  next_related:
+    - bundle-selector (the "main" cart that this bump augments)
+    - cart-summary (will list the bump as an additional line)
+{% endcomment %}
+{% assign bump = order_bump.check01 -%}
+{% comment %} Resolve into a private local — never assign the public arg name: campaign_include shares scope, so a public assign here would leak into sibling bumps on the page and defeat their own frontmatter fallbacks. {% endcomment -%}
+{% if is_upsell != nil %}{% assign b_is_upsell = is_upsell %}{% elsif bump.is_upsell != nil %}{% assign b_is_upsell = bump.is_upsell %}{% else %}{% assign b_is_upsell = true %}{% endif -%}
+{% assign pkg_id = package_id | default: bump.package_id | default: packages.prepurchase_1 | default: 7 -%}
+{% assign b_title = bump_title | default: bump.title | default: 'Order Bump Title' -%}
+{% assign b_image_src = bump_image | default: image_src | default: bump.image_src | default: 'images/1x1_1.svg' -%}
+{% assign b_image_alt = bump_image_alt | default: bump.image_alt | default: b_title -%}
+{% assign feature_list = features | default: bump.features -%}
+{% comment %} QTY SYNC — two models, product_sync wins when both are set.
+     data-next-package-sync matches cart lines by packageId: correct for a single-package main product.
+     data-next-product-sync (SDK 0.4.25+) matches by product_id, which every variant of a product shares —
+     REQUIRED for an MV/configurable main: each variant is its own package, and on variant swap the SDK
+     rebuilds the line under the new variant's packageId, so packageId matching under-counts. Find the id
+     under packages[].product_id in the campaign API response (same value for every variant).
+     Set order_bump.check01.product_sync (and .package_id) in the page frontmatter — no need to edit this
+     partial. An explicit false (either model) disables sync entirely. {% endcomment -%}
+{% assign b_sync_mode = 'package' -%}
+{% if product_sync != nil %}{% assign b_sync = product_sync %}{% assign b_sync_mode = 'product' -%}
+{% elsif bump.product_sync != nil %}{% assign b_sync = bump.product_sync %}{% assign b_sync_mode = 'product' -%}
+{% elsif package_sync != nil %}{% assign b_sync = package_sync -%}
+{% elsif sync_quantity != nil %}{% assign b_sync = sync_quantity -%}
+{% elsif bump.sync_quantity != nil %}{% assign b_sync = bump.sync_quantity -%}
+{% else %}{% assign b_sync = packages.main_package | default: 1 %}{% endif -%}
+{% comment %} PRICING — pricing_mode (include arg, then bump.pricing_mode) wins; the legacy show_* bools are
+     honored ONLY when no pricing_mode is set anywhere and at least one of the three show_* bools is set
+     explicitly (include arg or frontmatter) — if both styles are passed, the legacy bools are ignored. {% endcomment -%}
+{% assign b_pricing_mode = pricing_mode | default: bump.pricing_mode -%}
+{% assign b_legacy_rows = false -%}
+{% if b_pricing_mode == nil -%}
+  {% if show_per_unit_price != nil or show_line_total_price != nil or show_compare_price != nil or bump.show_per_unit_price != nil or bump.show_line_total_price != nil or bump.show_compare_price != nil -%}
+    {% assign b_legacy_rows = true -%}
+  {% else -%}
+    {% assign b_pricing_mode = 'full_price' -%}
+  {% endif -%}
+{% endif -%}
+{% if show_per_unit_price != nil %}{% assign b_unit = show_per_unit_price %}{% elsif bump.show_per_unit_price != nil %}{% assign b_unit = bump.show_per_unit_price %}{% else %}{% assign b_unit = true %}{% endif -%}
+{% if show_compare_price != nil %}{% assign b_compare = show_compare_price %}{% elsif bump.show_compare_price != nil %}{% assign b_compare = bump.show_compare_price %}{% else %}{% assign b_compare = false %}{% endif -%}
+{% if show_line_total_price != nil %}{% assign b_line_total = show_line_total_price %}{% elsif bump.show_line_total_price != nil %}{% assign b_line_total = bump.show_line_total_price %}{% else %}{% assign b_line_total = false %}{% endif -%}
+<div data-next-catalog-component="order-bump-card" data-component="prepurchase-upsell" data-variant="check01" data-next-await="">
+  <div data-next-package-toggle>
+    <div class="bump-card" data-next-toggle-card{% if b_is_upsell %} data-next-is-upsell="true"{% endif %}{% if b_sync and b_sync_mode == 'product' %} data-next-product-sync="{{ b_sync }}"{% elsif b_sync %} data-next-package-sync="{{ b_sync }}"{% endif %} data-next-package-id="{{ pkg_id }}">
+      {% comment %} Bump header — visual only, whole card is the toggle target {% endcomment %}
+      <div class="bump__header-left">
+        <div class="bump__header-content">
+          <div class="bump__checkbox">
+            <div os-component="check" class="checkbox__icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--fe" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 10l-2 2l6 6L20 8l-2-2l-8 8z"></path></svg></div>
+          </div>
+          <div class="bump__title">{{ b_title }}</div>
+        </div>
+      </div>
+      {% comment %} Bump body: price, list, image {% endcomment %}
+      <div class="bump__body">
+        <div class="bump__content">
+          <div class="bump__content-wrap">
+            <div class="bump__price">
+              {% if b_legacy_rows %}
+              {% if b_unit %}
+              {% comment %} Legacy Option A: per-unit pricing — stable across tier changes (SDK 0.4.14+) {% endcomment %}
+              <div class="bump__price-row">
+                {% if b_compare %}<div class="bump__price-unit" data-next-toggle-display="hasDiscount"><span data-next-toggle-display="originalUnitPrice" class="bump__price-reg">--</span></div>{% endif %}
+                <div class="bump__price-unit"><span data-next-toggle-display="unitPrice" class="bump__price-sale">--</span><span class="text-xl">/ea</span></div>
+              </div>
+              {% endif %}
+              {% if b_line_total %}
+              {% comment %} Legacy Option B: line total pricing — scales with synced qty {% endcomment %}
+              <div class="bump__price-row">
+                <div data-next-toggle-display="hasDiscount"><div data-next-toggle-display="originalPrice" class="bump__price-reg">--</div></div>
+                <div data-next-toggle-display="price" class="bump__price-total">--</div>
+              </div>
+              {% endif %}
+              {% else %}
+              {% comment %} pricing_mode-driven price rows — never hide rows with campaign CSS; pick the mode instead {% endcomment %}
+              {% case b_pricing_mode %}
+              {% when 'discounted', 'compare_at' %}
+              {% comment %} One shared branch: both modes render the struck originalUnitPrice, shown only while the
+                   SDK reports a discount (hasDiscount). {% endcomment %}
+              <div class="bump__price-row">
+                <div class="bump__price-unit" data-next-toggle-display="hasDiscount"><span data-next-toggle-display="originalUnitPrice" class="bump__price-reg">--</span></div>
+                <div class="bump__price-unit"><span data-next-toggle-display="unitPrice" class="bump__price-sale">--</span><span class="text-xl">/ea</span></div>
+              </div>
+              {% when 'unit_total' %}
+              <div class="bump__price-row">
+                <div class="bump__price-unit"><span data-next-toggle-display="unitPrice" class="bump__price-sale">--</span><span class="text-xl">/ea</span></div>
+                <div data-next-toggle-display="price" class="bump__price-total">--</div>
+              </div>
+              {% else %}
+              {% comment %} full_price / unit_only (default full_price): one visible price row {% endcomment %}
+              <div class="bump__price-row">
+                <div class="bump__price-unit"><span data-next-toggle-display="unitPrice" class="bump__price-sale">--</span><span class="text-xl">/ea</span></div>
+              </div>
+              {% endcase %}
+              {% endif %}
+            </div>
+
+            <div class="list-container cc-2xs">
+              <ul role="list" class="list w-list-unstyled">
+                {% if feature_list -%}
+                {% for feat in feature_list -%}
+                <li class="list__item">
+                  <div class="list_icon"><svg width="100%" height="100%" viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" fill="CurrentColor"><path d="M12.265 0.182296C12.0219 -0.0607654 11.6279 -0.0607654 11.3848 0.182296L3.92853 7.63866L1.06245 4.77258C0.819416 4.52952 0.425382 4.52955 0.182296 4.77258C-0.0607654 5.01562 -0.0607654 5.40966 0.182296 5.65272L3.48845 8.95882C3.73142 9.20186 4.12574 9.20169 4.36861 8.95882L12.265 1.06245C12.508 0.819416 12.508 0.425358 12.265 0.182296Z" fill="inherit"></path></svg></div>
+                  <div>{{ feat }}</div>
+                </li>
+                {% endfor -%}
+                {% else -%}
+                <li class="list__item">
+                  <div class="list_icon"><svg width="100%" height="100%" viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" fill="CurrentColor"><path d="M12.265 0.182296C12.0219 -0.0607654 11.6279 -0.0607654 11.3848 0.182296L3.92853 7.63866L1.06245 4.77258C0.819416 4.52952 0.425382 4.52955 0.182296 4.77258C-0.0607654 5.01562 -0.0607654 5.40966 0.182296 5.65272L3.48845 8.95882C3.73142 9.20186 4.12574 9.20169 4.36861 8.95882L12.265 1.06245C12.508 0.819416 12.508 0.425358 12.265 0.182296Z" fill="inherit"></path></svg></div>
+                  <div>Order bump feature 1</div>
+                </li>
+                <li class="list__item">
+                  <div class="list_icon"><svg width="100%" height="100%" viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" fill="CurrentColor"><path d="M12.265 0.182296C12.0219 -0.0607654 11.6279 -0.0607654 11.3848 0.182296L3.92853 7.63866L1.06245 4.77258C0.819416 4.52952 0.425382 4.52955 0.182296 4.77258C-0.0607654 5.01562 -0.0607654 5.40966 0.182296 5.65272L3.48845 8.95882C3.73142 9.20186 4.12574 9.20169 4.36861 8.95882L12.265 1.06245C12.508 0.819416 12.508 0.425358 12.265 0.182296Z" fill="inherit"></path></svg></div>
+                  <div>Order bump feature 2</div>
+                </li>
+                <li class="list__item">
+                  <div class="list_icon"><svg width="100%" height="100%" viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" fill="CurrentColor"><path d="M12.265 0.182296C12.0219 -0.0607654 11.6279 -0.0607654 11.3848 0.182296L3.92853 7.63866L1.06245 4.77258C0.819416 4.52952 0.425382 4.52955 0.182296 4.77258C-0.0607654 5.01562 -0.0607654 5.40966 0.182296 5.65272L3.48845 8.95882C3.73142 9.20186 4.12574 9.20169 4.36861 8.95882L12.265 1.06245C12.508 0.819416 12.508 0.425358 12.265 0.182296Z" fill="inherit"></path></svg></div>
+                  <div>Order bump feature 3</div>
+                </li>
+                <li class="list__item">
+                  <div class="list_icon"><svg width="100%" height="100%" viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" fill="CurrentColor"><path d="M12.265 0.182296C12.0219 -0.0607654 11.6279 -0.0607654 11.3848 0.182296L3.92853 7.63866L1.06245 4.77258C0.819416 4.52952 0.425382 4.52955 0.182296 4.77258C-0.0607654 5.01562 -0.0607654 5.40966 0.182296 5.65272L3.48845 8.95882C3.73142 9.20186 4.12574 9.20169 4.36861 8.95882L12.265 1.06245C12.508 0.819416 12.508 0.425358 12.265 0.182296Z" fill="inherit"></path></svg></div>
+                  <div>Order bump feature 4</div>
+                </li>
+                {%- endif %}
+              </ul>
+            </div>
+          </div>
+          <img data-next-toggle-image loading="lazy" alt="{{ b_image_alt }}" src="{{ b_image_src | campaign_asset }}" class="bump__image">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

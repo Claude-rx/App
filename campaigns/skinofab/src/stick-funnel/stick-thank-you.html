@@ -1,0 +1,227 @@
+---
+title: "Thank you | SKINOFAB"
+page_type: receipt
+meta_tags:
+  next-funnel: "SKINOFAB Foundation Stick"
+  next-page-type: "receipt"
+# Apollo's receipt (order.* bindings only: the SDK clears the cart before this page), with the brand's logo and what
+# happens next: the first use, the refills (every package in the funnel recurs) and how to skip or cancel them.
+styles:
+  - css/checkout-brand.css
+---
+<div class="page-wrapper">
+
+      <div class="main-wrapper">
+        {% campaign_include 'receipt-skeleton.html' %}
+        <div class="checkout-content">
+          <div class="checkout__content">
+            <div class="checkout__layout">
+              <div class="checkout__column checkout__column--left">
+                <div class="checkout__form-container cc-checkout">
+                  <div class="checkout__header-brand cc-shop"><img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" loading="eager" alt="{{ campaign.store_name }}" class="brand-logo"></div>
+                  <div class="order-summary-mobile">
+                    <div data-initial-state="closed" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary-mobile__accordion">
+                      <div data-next-accordion-trigger="order-summary" class="order-summary__trigger">
+                        <div class="order-summary__inner">
+                          <div class="order-summary__mobile-left">
+                            <div class="summary-toggle">
+                              <div data-next-accordion-text="order-summary" class="summary-toggle__text show_text">Show Order Summary</div><img os-summary-icon="" loading="lazy" alt="" src="{{ 'images/arrow-down.svg' | campaign_asset }}" class="summary-toggle__icon">
+                            </div>
+                          </div>
+                          <div data-next-show="order.hasItems" class="order-summary__mobile-right">
+                            <div data-next-show="order.hasDiscounts" class="summary_price price--crossed cc-sm"><span data-next-display="order.subtotal"></span></div>
+                            <div data-next-display="order.total" class="summary_price price--total"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div data-next-accordion-panel="order-summary" class="accordion__panel payment-method__form--expanded">
+                        <div class="order-summary">
+                          <h4 class="order-summary__title">Order Summary</h4>
+                          <div class="order-summary__content">
+                            {% campaign_include 'receipt-orders.html' %}
+                            <div data-next-content="">
+                              <div class="order-totals">
+                                <div class="order-totals__line">
+                                  <div class="order-totals__label">Subtotal</div>
+                                  <div data-next-display="order.subtotal" class="order-totals__value"></div>
+                                </div>
+                                <div class="order-totals__section">
+                                  <div class="order-totals__line">
+                                    <div class="order-totals__label-group">
+                                      <div class="order-totals__label">Shipping<br></div>
+                                    </div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.shipping" class="order-totals__value"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div data-next-show="order.hasTax" class="order-totals__section">
+                                  <div class="order-totals__line">
+                                    <div class="order-totals__label-group">
+                                      <div class="order-totals__label">Tax<br></div>
+                                    </div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.tax" class="order-totals__value"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="order-totals__section cc-total">
+                                  <div class="order-totals__line order-totals__line--total">
+                                    <div class="order-totals__label order-totals__label--total">Total</div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.currency" class="summary-total__coin"></div>
+                                      <div data-next-display="order.total" class="order-totals__value order-totals__value--total"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="receipt_head">
+                    <div class="receipt-check"><svg width="100%" height="100%" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M49 25C49 38.2548 38.2548 49 25 49C11.7452 49 1 38.2548 1 25C1 11.7452 11.7452 1 25 1C38.2548 1 49 11.7452 49 25Z" stroke="currentColor" stroke-width="2"></path>
+                        <path d="M15 24.5113L22.3067 31.818L35.1247 19" stroke="currentColor" stroke-width="2"></path>
+                      </svg></div>
+                    <div class="receipt-heading">
+                      <div class="receipt-subtitle">Confirmation #<span data-next-display="order.number">DQFDHG5E0</span><br></div>
+                      <h2 class="receipt_order">Thank you, <span data-next-display="order.customer.name">Taylor!</span></h2>
+                    </div>
+                  </div>
+                  <div class="receipt_section">
+                    <div class="receipt_section-head">
+                      <div class="display-xs">Your order is confirmed</div>
+                      <div class="receipt_section-head--desc">You’ll get a confirmation email with your order number soon. Your order ships in 1 business day, with tracking.</div>
+                    </div>
+                  </div>
+                  {% campaign_include 'sf-next-steps.html' %}
+                  <div class="receipt_section">
+                    <div class="receipt_section-head">
+                      <div class="display-xs">Order details</div>
+                    </div>
+                    <div class="order_receipt-grid">
+                      <div class="order_receipt-col">
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Contact information</div>
+                          <div data-next-display="order.customer.email" class="sec_value">jordan.chen@domain.com</div>
+                        </div>
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Shipping address</div>
+                          <div class="order_receipt--group">
+                            <div data-next-display="order.customer.name" class="sec_value">Jordan Chen</div>
+                            <div data-next-display="order.shippingAddress.line1" class="sec_value">151 O'Connor St</div>
+                            <div data-next-display="order.shippingAddress.line2" class="sec_value">Apt 1011</div>
+                            <div class="sec_value"><span data-next-display="order.shippingAddress.city">Ottawa</span>, <span data-next-display="order.shippingAddress.state">ON</span>, <span data-next-display="order.shippingAddress.postcode">K2P 2L8</span></div>
+                            <div data-next-display="order.shippingAddress.country" class="sec_value">Canada</div>
+                          </div>
+                        </div>
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Shipping method</div>
+                          <div class="order_receipt--group">
+                            <div data-next-display="order.shippingMethod" class="sec_value">FedEx Ground</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="order_receipt-col">
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Payment method</div>
+                          <div data-next-display="order.paymentMethod" class="sec_value">Credit Card</div>
+                        </div>
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Billing address</div>
+                          <div class="order_receipt--group">
+                            <div data-next-display="order.billingAddress.name" class="sec_value">Jordan Chen</div>
+                            <div data-next-display="order.billingAddress.line1" class="sec_value">151 O'Connor St</div>
+                            <div data-next-display="order.billingAddress.line2" class="sec_value">Apt 1011</div>
+                            <div class="sec_value"><span data-next-display="order.billingAddress.city">Ottawa</span>, <span data-next-display="order.billingAddress.state">ON</span>, <span data-next-display="order.billingAddress.postcode">K2P 2L8</span></div>
+                            <div data-next-display="order.billingAddress.country" class="sec_value">Canada</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="receipt_info">
+                    <div class="receipt-flex">
+                      <div>Need help?</div>
+                      <a href="{{ campaign.store_contact }}" target="_blank" class="link">
+                        <div>Contact Us</div>
+                      </a>
+                    </div>
+                    <a href="{{ campaign.store_url }}" target="_blank" class="button cc-auto">
+                      <div>Visit the SKINOFAB store</div>
+                    </a>
+                  </div>
+                  <div class="checkout-footer-links">
+                    <a href="{{ campaign.store_returns }}" target="_blank" class="link">
+                      <div>Return policy</div>
+                    </a>
+                    <a href="{{ campaign.store_privacy }}" target="_blank" class="link">
+                      <div>Privacy policy</div>
+                    </a>
+                    <a href="{{ campaign.store_terms }}" target="_blank" class="link">
+                      <div>Terms of service</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="checkout__column checkout__column--right">
+                <div class="checkout__summary">
+                  <div class="summary-desktop">
+                    <div class="summary-wrap">
+                      <div class="summary-holder">
+                        <div class="order-summary">
+                          <h4 class="order-summary__title checkout">Order Summary</h4>
+                          <div class="order-summary__content">
+                            {% campaign_include 'receipt-orders.html' %}
+                            <div data-next-content="">
+                              <div class="order-totals">
+                                <div class="order-totals__line">
+                                  <div class="order-totals__label">Subtotal</div>
+                                  <div data-next-display="order.subtotal" class="order-totals__value"></div>
+                                </div>
+                                <div class="order-totals__section">
+                                  <div class="order-totals__line">
+                                    <div class="order-totals__label-group">
+                                      <div class="order-totals__label">Shipping<br></div>
+                                    </div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.shipping" class="order-totals__value"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div data-next-show="order.hasTax" class="order-totals__section">
+                                  <div class="order-totals__line">
+                                    <div class="order-totals__label-group">
+                                      <div class="order-totals__label">Tax<br></div>
+                                    </div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.tax" class="order-totals__value"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="order-totals__section cc-total">
+                                  <div class="order-totals__line order-totals__line--total">
+                                    <div class="order-totals__label order-totals__label--total">Total</div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.currency" class="summary-total__coin"></div>
+                                      <div data-next-display="order.total" class="order-totals__value order-totals__value--total"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

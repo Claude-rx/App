@@ -1,0 +1,89 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/offer-selector.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-offer-selector
+  next_version: 1
+  next_sdk_owns: hidden bundle selector + bundle cards (state machine), MV slot template
+  next_sdk_surface: upsell offer (hidden state — rendered by upsell/offer.html, first thing inside the offer)
+  next_params: reads offer / tiers / selector_id / upsell_type from upsell/offer-context.html.
+  next_dont_touch: data-next-bundle-*, data-next-quantity-*, data-next-upsell-context
+
+  Hidden state-machine selector per offer type. It MUST be the first [data-next-bundle-selector] inside
+  [data-next-upsell="offer"]: UpsellEnhancer resolves the bundle items + vouchers to add from it.
+    tier-pills → one hidden card per tier; upsell/offer-controls.html buttons click them (initBundleQtyToggle)
+    stepper    → one hidden card carrying data-next-quantity / min / max (SDK 0.4.18+ native bundleQuantity)
+    mv         → one hidden configurable card per tier + the slot <template> the SDK clones per unit
+    tier-cards → nothing here (the visible tier grid in upsell/offer-controls.html IS the selector)
+    single     → nothing here (package id on the offer wrapper; voucher selector sits outside the offer)
+  Prices surface via remote data-next-display="bundle.<selector_id>.*" in upsell/offer-prices.html.
+{% endcomment %}
+{%- if upsell_type == 'tier-pills' -%}
+<div data-next-bundle-selector data-next-upsell-context data-next-selector-id="{{ selector_id }}" class="os-option" style="display:none">
+  {% for i in (1..tier_count) %}{% campaign_include 'upsell/offer-tier.html' i=i %}
+  <div role="button"
+       data-next-bundle-card
+       data-next-bundle-id="{{ t_id }}"
+       data-next-bundle-items='{{ t_items_json }}'
+       data-next-bundle-vouchers='{{ t_vouchers_json }}'
+       {% if t_selected %}data-next-selected="true"{% endif %}
+       class="os-card{% if t_selected %} next-selected{% endif %}"></div>
+  {% endfor %}
+</div>
+{%- elsif upsell_type == 'stepper' -%}
+{%- assign st_bundle_id = offer.bundle_id | default: 'upsell-bundle-1x' -%}
+{%- assign st_items_json = offer.items_json | default: default_items_json -%}
+{%- assign st_vouchers_json = default_vouchers_json -%}
+<div data-next-bundle-selector data-next-upsell-context data-next-selector-id="{{ selector_id }}" class="os-option" style="display:none">
+  <div role="button"
+       data-next-bundle-card
+       data-next-bundle-id="{{ st_bundle_id }}"
+       data-next-bundle-items='{{ st_items_json }}'
+       data-next-bundle-vouchers='{{ st_vouchers_json }}'
+       data-next-quantity="{{ offer.default_quantity | default: 1 }}"
+       data-next-min-quantity="{{ offer.min_quantity | default: 1 }}"
+       data-next-max-quantity="{{ offer.max_quantity | default: 5 }}"
+       data-next-selected="true"
+       class="os-card next-selected"></div>
+</div>
+{%- elsif upsell_type == 'mv' -%}
+<div data-next-bundle-selector
+     data-next-upsell-context
+     data-next-selector-id="{{ selector_id }}"
+     data-next-bundle-slot-template-id="upsell-slot-template"
+     style="display:none">
+  {% for i in (1..tier_count) %}{% campaign_include 'upsell/offer-tier.html' i=i %}
+  <div role="button"
+       data-next-bundle-card
+       data-next-bundle-id="{{ t_id }}"
+       data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":{{ t_quantity }},"configurable":true}]'
+       data-next-bundle-vouchers='{{ t_vouchers_json }}'
+       {% if t_selected %}data-next-selected="true"{% endif %}
+       class="os-card{% if t_selected %} next-selected{% endif %}"></div>
+  {% endfor %}
+</div>
+{% comment %}
+  Slot template — one slot per configurable unit in the selected tier. The SDK injects
+  .next-slot-variant-field elements into [data-next-variant-selectors]; setupBundleSlotVariantDropdowns()
+  (upsells-mv.js) swaps the native selects for os-dropdown UI. SDK 0.4.27: the optional data-next-property
+  input is cloned per unit so each accepted upsell line can carry its own text (slot_personalization).
+{% endcomment %}
+<template id="upsell-slot-template">
+  <div class="os-card__upsell-grid cc-two-col">
+    <div class="os-card__variant-number os-option grid-cell">
+      <div data-next-bind="slot-number">#{slot.unitNumber}</div>
+    </div>
+    <div>
+      <div data-next-variant-selectors></div>
+      {%- if slot_personalization and slot_personalization.enabled -%}
+      {%- assign usp_key = slot_personalization.property_key | default: 'custom_text' -%}
+      {%- assign usp_label = slot_personalization.label | default: 'Custom text' -%}
+      {%- assign usp_placeholder = slot_personalization.placeholder | default: '' -%}
+      {%- assign usp_maxlength = slot_personalization.maxlength | default: 24 -%}
+      <div class="os-slot__personalization">
+        <label class="os-card__variant-label">{{ usp_label }}{% if slot_personalization.optional %} <span class="text-muted text-weight-normal">(optional)</span>{% endif %}</label>
+        <input data-next-property="{{ usp_key }}" type="text" maxlength="{{ usp_maxlength }}"{% if usp_placeholder != "" %} placeholder="{{ usp_placeholder }}"{% endif %} class="input-flds">
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</template>
+{%- endif -%}

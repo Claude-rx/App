@@ -1,0 +1,59 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/hero.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-hero
+  next_version: 1
+  next_sdk_owns: nothing (copy may carry data-next-display spans — the page author writes them in frontmatter)
+  next_sdk_surface: upsell page (title band under the header bar)
+  next_params:
+    upsell_hero: object.
+      variant band (default) | card | plain
+        band  → brand-colour band: title · offer · suboffer (the classic "Wait! Your order isn't complete").
+        card  → short brand band with the title, then a white card overlapping it: heading · text · countdown
+                (the fluff pattern). Pair with upsell_layout.boxed: false so the offer does not overlap too.
+        plain → no band: a centered heading-box (h1 title · text) on the surface colour, directly above a
+                box-style offer (upsell_layout.style: box — the upsell-single look).
+      title / offer / suboffer: HTML strings (band). title / heading / text: HTML strings (card). title / text (plain).
+      All strings accept the upsell/copy.html tokens: {package_name} {price} {compare_price} {discount}
+      {price_1x} {discount_1x} {discount_max} {first_name} — never hardcode package ids in copy.
+      narrow: true → container cc-medium.
+    countdown_timer: rendered inside the card variant when set (countdown-timer.html contract).
+  Renders nothing without upsell_hero.
+    {% campaign_include 'upsell/hero.html' upsell_hero=upsell_hero countdown_timer=countdown_timer %}
+{%- endcomment -%}
+{%- if upsell_hero -%}
+{%- campaign_include 'upsell/offer-context.html' -%}
+{%- assign hero_variant = upsell_hero.variant | default: 'band' -%}
+{%- if hero_variant == 'plain' -%}
+<section class="section cc-sm cc-bottom-0 color-surface upsell-hero--plain">
+  <div class="container cc-medium">
+    <div class="heading-box text-center max-width-large align-center">
+      {%- if upsell_hero.title %}<h1 class="display-lg">{% campaign_include 'upsell/copy.html' text=upsell_hero.title %}</h1>{% endif %}
+      {%- if upsell_hero.text %}<p class="text-xl">{% campaign_include 'upsell/copy.html' text=upsell_hero.text %}</p>{% endif %}
+    </div>
+  </div>
+</section>
+{%- else -%}
+<section class="section upsell-header{% if hero_variant == 'card' %} upsell-header--card{% endif %}">
+  <div class="container{% if upsell_hero.narrow %} cc-medium{% endif %}">
+    <div class="upsell-header__inner">
+      {%- if upsell_hero.title %}<div class="upsell-header__title">{% campaign_include 'upsell/copy.html' text=upsell_hero.title %}</div>{% endif %}
+      {%- if hero_variant == 'band' %}
+      {%- if upsell_hero.offer %}<div class="upsell-header__offer">{% campaign_include 'upsell/copy.html' text=upsell_hero.offer %}</div>{% endif %}
+      {%- if upsell_hero.suboffer %}<div class="upsell-header__suboffer">{% campaign_include 'upsell/copy.html' text=upsell_hero.suboffer %}</div>{% endif %}
+      {%- endif %}
+    </div>
+  </div>
+</section>
+{%- if hero_variant == 'card' %}
+<section class="section upsell-header-card">
+  <div class="container cc-medium">
+    <div class="upsell-header-card__inner">
+      {%- if upsell_hero.heading %}<p class="upsell-header-card__heading">{% campaign_include 'upsell/copy.html' text=upsell_hero.heading %}</p>{% endif %}
+      {%- if upsell_hero.text %}<p class="upsell-header-card__text">{% campaign_include 'upsell/copy.html' text=upsell_hero.text %}</p>{% endif %}
+      {%- if countdown_timer %}{% campaign_include 'countdown-timer.html' countdown_timer=countdown_timer %}{% endif %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+{%- endif -%}
+{%- endif -%}

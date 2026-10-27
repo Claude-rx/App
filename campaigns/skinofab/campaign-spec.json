@@ -1,0 +1,714 @@
+{
+  "schema_version": "5.0",
+  "spec_identity": {
+    "source": "hand-authored",
+    "local_spec_id": "1b7c62ea-589f-49eb-83f9-31869ed0c283",
+    "public_route_slug": "stick-funnel",
+    "template_family": "apollo",
+    "authority": "tools/funnel/funnel.py + the live campaign read"
+  },
+  "campaign": {
+    "ref_id": 2211,
+    "name": "SKINOFAB Foundation Stick Funnel",
+    "currency": "USD",
+    "language": "en",
+    "payment_env_key": "5WMJ53MV2D8MH9X9S955PQ0T95",
+    "available_payment_methods": [
+      {
+        "code": "bankcard",
+        "label": "Bankcard"
+      },
+      {
+        "code": "klarna",
+        "label": "Klarna"
+      },
+      {
+        "code": "link",
+        "label": "Link"
+      },
+      {
+        "code": "paypal",
+        "label": "PayPal"
+      }
+    ],
+    "available_express_payment_methods": [
+      {
+        "code": "apple_pay",
+        "label": "Apple Pay"
+      },
+      {
+        "code": "paypal",
+        "label": "PayPal"
+      }
+    ],
+    "available_currencies": [
+      {
+        "code": "USD",
+        "label": "$ USD"
+      }
+    ],
+    "available_shipping_countries": [],
+    "preferred_template_family": "apollo",
+    "store_url": "https://skinofab.29next.store",
+    "store_name": "SKINOFAB",
+    "store_contact": "https://skinofab.29next.store/contact/",
+    "store_terms": "https://skinofab.29next.store/terms-of-service/",
+    "store_shipping": "https://skinofab.29next.store/shipping-policy/",
+    "store_privacy": "https://skinofab.29next.store/privacy-policy/",
+    "store_returns": "https://skinofab.29next.store/refund-policy/",
+    "store_phone": null,
+    "store_phone_tel": null
+  },
+  "global_config": {
+    "sdk_version": "0.4.43"
+  },
+  "funnels": [
+    {
+      "id": "stick",
+      "name": "Foundation Stick: listicle to thank you",
+      "weight": 100,
+      "pages": [
+        {
+          "id": "listicle",
+          "type": "presell",
+          "order": 1,
+          "label": "Listicle: 10 reasons women past 45 switch to the stick",
+          "is_entry": true,
+          "page_url": "10-reasons-foundation-stick/",
+          "sdk_hints": {
+            "sdk_page_type": "product",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Foundation Stick",
+              "next-page-type": "product"
+            },
+            "template_family": "apollo"
+          },
+          "next_page": "offer",
+          "resolved_routing": {
+            "next_page": "offer",
+            "next_page_route": "/stick-funnel/foundation-stick-offer/"
+          },
+          "packages": [
+            {
+              "ref_id": 1,
+              "name": "Adaptive Foundation Stick - 1 stick",
+              "qty": 1,
+              "price": "37.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/0214d9090e4a43759f00115570627df8.webp",
+              "product_name": "Adaptive Foundation Stick",
+              "product_sku": "SKF-AFS-1",
+              "product_variant_name": "Adaptive Foundation Stick - 1 stick",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "37.00",
+              "interval": "day",
+              "interval_count": 28,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            },
+            {
+              "ref_id": 2,
+              "name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+              "qty": 1,
+              "price": "47.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/f7f1e8cb943b46fcbe3ae258ed23ec56.webp",
+              "product_name": "Adaptive Foundation Stick",
+              "product_sku": "SKF-AFS-2",
+              "product_variant_name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "47.00",
+              "interval": "day",
+              "interval_count": 56,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            }
+          ]
+        },
+        {
+          "id": "offer",
+          "type": "landing",
+          "order": 2,
+          "label": "Product page: choose 1 stick or 2 sticks + a free Lymphatic Brush",
+          "is_entry": false,
+          "page_url": "foundation-stick-offer/",
+          "sdk_hints": {
+            "sdk_page_type": "product",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Foundation Stick",
+              "next-page-type": "product"
+            },
+            "template_family": "apollo"
+          },
+          "next_page": "checkout",
+          "resolved_routing": {
+            "next_page": "checkout",
+            "next_page_route": "/stick-funnel/stick-checkout/"
+          },
+          "packages": [
+            {
+              "ref_id": 1,
+              "name": "Adaptive Foundation Stick - 1 stick",
+              "qty": 1,
+              "price": "37.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/0214d9090e4a43759f00115570627df8.webp",
+              "product_name": "Adaptive Foundation Stick",
+              "product_sku": "SKF-AFS-1",
+              "product_variant_name": "Adaptive Foundation Stick - 1 stick",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "37.00",
+              "interval": "day",
+              "interval_count": 28,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            },
+            {
+              "ref_id": 2,
+              "name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+              "qty": 1,
+              "price": "47.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/f7f1e8cb943b46fcbe3ae258ed23ec56.webp",
+              "product_name": "Adaptive Foundation Stick",
+              "product_sku": "SKF-AFS-2",
+              "product_variant_name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "47.00",
+              "interval": "day",
+              "interval_count": 56,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            }
+          ]
+        },
+        {
+          "id": "checkout",
+          "type": "checkout",
+          "order": 3,
+          "label": "Checkout",
+          "is_entry": false,
+          "page_url": "stick-checkout/",
+          "sdk_hints": {
+            "sdk_page_type": "checkout",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Foundation Stick",
+              "next-page-type": "checkout",
+              "next-success-url": "/stick-funnel/stick-special-1/"
+            },
+            "template_family": "apollo"
+          },
+          "success_url": "special-1",
+          "resolved_routing": {
+            "success": "special-1",
+            "success_route": "/stick-funnel/stick-special-1/"
+          },
+          "packages": [
+            {
+              "ref_id": 1,
+              "name": "Adaptive Foundation Stick - 1 stick",
+              "qty": 1,
+              "price": "37.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/0214d9090e4a43759f00115570627df8.webp",
+              "product_name": "Adaptive Foundation Stick",
+              "product_sku": "SKF-AFS-1",
+              "product_variant_name": "Adaptive Foundation Stick - 1 stick",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "37.00",
+              "interval": "day",
+              "interval_count": 28,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            },
+            {
+              "ref_id": 2,
+              "name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+              "qty": 1,
+              "price": "47.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/f7f1e8cb943b46fcbe3ae258ed23ec56.webp",
+              "product_name": "Adaptive Foundation Stick",
+              "product_sku": "SKF-AFS-2",
+              "product_variant_name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "47.00",
+              "interval": "day",
+              "interval_count": 56,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "exit_intent": {
+            "enabled": true,
+            "offer_ref_id": 5,
+            "offer_code": "STICK10",
+            "notes": "Once per visit, on leaving the checkout: 10% off the stick packs."
+          },
+          "offers": [
+            {
+              "ref_id": 5
+            }
+          ]
+        },
+        {
+          "id": "special-1",
+          "type": "upsell",
+          "order": 4,
+          "label": "Special offer 1: one more stick, 50% off",
+          "is_entry": false,
+          "page_url": "stick-special-1/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Foundation Stick",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/stick-funnel/stick-special-2/",
+              "next-upsell-decline-url": "/stick-funnel/stick-special-2/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "special-2",
+          "on_decline": "special-2",
+          "resolved_routing": {
+            "accept": "special-2",
+            "accept_route": "/stick-funnel/stick-special-2/",
+            "decline": "special-2",
+            "decline_route": "/stick-funnel/stick-special-2/"
+          },
+          "packages": [
+            {
+              "ref_id": 1,
+              "name": "Adaptive Foundation Stick - 1 stick",
+              "qty": 1,
+              "price": "37.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/0214d9090e4a43759f00115570627df8.webp",
+              "product_name": "Adaptive Foundation Stick",
+              "product_sku": "SKF-AFS-1",
+              "product_variant_name": "Adaptive Foundation Stick - 1 stick",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "37.00",
+              "interval": "day",
+              "interval_count": 28,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "offers": [
+            {
+              "ref_id": 1
+            }
+          ]
+        },
+        {
+          "id": "special-2",
+          "type": "upsell",
+          "order": 5,
+          "label": "Special offer 2: the Lymphatic Brush, 20% off",
+          "is_entry": false,
+          "page_url": "stick-special-2/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Foundation Stick",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/stick-funnel/stick-special-3/",
+              "next-upsell-decline-url": "/stick-funnel/stick-special-3/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "special-3",
+          "on_decline": "special-3",
+          "resolved_routing": {
+            "accept": "special-3",
+            "accept_route": "/stick-funnel/stick-special-3/",
+            "decline": "special-3",
+            "decline_route": "/stick-funnel/stick-special-3/"
+          },
+          "packages": [
+            {
+              "ref_id": 3,
+              "name": "The Lymphatic Brush - 1 brush + free case",
+              "qty": 1,
+              "price": "24.95",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/100efa681b1d4878b9897dd1caf759a0.webp",
+              "product_name": "The Lymphatic Brush",
+              "product_sku": "SKF-LYB-1",
+              "product_variant_name": "The Lymphatic Brush - 1 brush + free case",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "24.95",
+              "interval": "day",
+              "interval_count": 90,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "offers": [
+            {
+              "ref_id": 2
+            }
+          ]
+        },
+        {
+          "id": "special-3",
+          "type": "upsell",
+          "order": 6,
+          "label": "Special offer 3: the PDRN Plumping Balm, 20% off",
+          "is_entry": false,
+          "page_url": "stick-special-3/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Foundation Stick",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/stick-funnel/stick-special-4/",
+              "next-upsell-decline-url": "/stick-funnel/stick-special-4/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "special-4",
+          "on_decline": "special-4",
+          "resolved_routing": {
+            "accept": "special-4",
+            "accept_route": "/stick-funnel/stick-special-4/",
+            "decline": "special-4",
+            "decline_route": "/stick-funnel/stick-special-4/"
+          },
+          "packages": [
+            {
+              "ref_id": 4,
+              "name": "PDRN Plumping Balm - 1 stick",
+              "qty": 1,
+              "price": "19.95",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/d52733c6e5bc4f2c865f1b3a8159a0a3.webp",
+              "product_name": "PDRN Plumping Balm",
+              "product_sku": "SKF-PDB-1",
+              "product_variant_name": "PDRN Plumping Balm - 1 stick",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "19.95",
+              "interval": "day",
+              "interval_count": 28,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "offers": [
+            {
+              "ref_id": 3
+            }
+          ]
+        },
+        {
+          "id": "special-4",
+          "type": "upsell",
+          "order": 7,
+          "label": "Special offer 4: the EGF + NAD+ Firming Serum, 20% off",
+          "is_entry": false,
+          "page_url": "stick-special-4/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Foundation Stick",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/stick-funnel/stick-thank-you/",
+              "next-upsell-decline-url": "/stick-funnel/stick-thank-you/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "thank-you",
+          "on_decline": "thank-you",
+          "resolved_routing": {
+            "accept": "thank-you",
+            "accept_route": "/stick-funnel/stick-thank-you/",
+            "decline": "thank-you",
+            "decline_route": "/stick-funnel/stick-thank-you/"
+          },
+          "packages": [
+            {
+              "ref_id": 5,
+              "name": "EGF + NAD+ Firming Serum - 1 bottle",
+              "qty": 1,
+              "price": "27.95",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/5d2cbbd4c7004fe7ac2b43c597de8fd5.webp",
+              "product_name": "EGF + NAD+ Firming Serum",
+              "product_sku": "SKF-ENS-1",
+              "product_variant_name": "EGF + NAD+ Firming Serum - 1 bottle",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": true,
+              "price_recurring": "27.95",
+              "interval": "day",
+              "interval_count": 56,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "offers": [
+            {
+              "ref_id": 4
+            }
+          ]
+        },
+        {
+          "id": "thank-you",
+          "type": "thankyou",
+          "order": 8,
+          "label": "Thank you",
+          "is_entry": false,
+          "page_url": "stick-thank-you/",
+          "sdk_hints": {
+            "sdk_page_type": "receipt",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Foundation Stick",
+              "next-page-type": "receipt"
+            },
+            "template_family": "apollo"
+          }
+        }
+      ]
+    }
+  ],
+  "offers": [
+    {
+      "ref_id": 1,
+      "name": "Adaptive Foundation Stick - 50%",
+      "type": "voucher",
+      "code": "STICK50",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "50.00",
+        "description": "50% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 1,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/0214d9090e4a43759f00115570627df8.webp",
+          "package_name": "Adaptive Foundation Stick - 1 stick",
+          "product_name": "Adaptive Foundation Stick",
+          "product_variant_name": "Adaptive Foundation Stick - 1 stick",
+          "unit_price": "18.00",
+          "unit_price_before_discount": "37.00",
+          "package_price": "18.00",
+          "package_price_before_discount": "37.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 2,
+      "name": "The Lymphatic Brush - 20%",
+      "type": "voucher",
+      "code": "BRUSH20",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "20.00",
+        "description": "20% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 3,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/100efa681b1d4878b9897dd1caf759a0.webp",
+          "package_name": "The Lymphatic Brush - 1 brush + free case",
+          "product_name": "The Lymphatic Brush",
+          "product_variant_name": "The Lymphatic Brush - 1 brush + free case",
+          "unit_price": "19.00",
+          "unit_price_before_discount": "24.95",
+          "package_price": "19.00",
+          "package_price_before_discount": "24.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 3,
+      "name": "PDRN Plumping Balm - 20%",
+      "type": "voucher",
+      "code": "BALM20",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "20.00",
+        "description": "20% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 4,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/d52733c6e5bc4f2c865f1b3a8159a0a3.webp",
+          "package_name": "PDRN Plumping Balm - 1 stick",
+          "product_name": "PDRN Plumping Balm",
+          "product_variant_name": "PDRN Plumping Balm - 1 stick",
+          "unit_price": "15.00",
+          "unit_price_before_discount": "19.95",
+          "package_price": "15.00",
+          "package_price_before_discount": "19.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 4,
+      "name": "EGF + NAD+ Firming Serum - 20%",
+      "type": "voucher",
+      "code": "SERUM20",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "20.00",
+        "description": "20% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 5,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/5d2cbbd4c7004fe7ac2b43c597de8fd5.webp",
+          "package_name": "EGF + NAD+ Firming Serum - 1 bottle",
+          "product_name": "EGF + NAD+ Firming Serum",
+          "product_variant_name": "EGF + NAD+ Firming Serum - 1 bottle",
+          "unit_price": "22.00",
+          "unit_price_before_discount": "27.95",
+          "package_price": "22.00",
+          "package_price_before_discount": "27.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 5,
+      "name": "Adaptive Foundation Stick - Exit - 10%",
+      "type": "voucher",
+      "code": "STICK10",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "10.00",
+        "description": "10% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 1,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/0214d9090e4a43759f00115570627df8.webp",
+          "package_name": "Adaptive Foundation Stick - 1 stick",
+          "product_name": "Adaptive Foundation Stick",
+          "product_variant_name": "Adaptive Foundation Stick - 1 stick",
+          "unit_price": "33.00",
+          "unit_price_before_discount": "37.00",
+          "package_price": "33.00",
+          "package_price_before_discount": "37.00",
+          "package_unit_qty": 1
+        },
+        {
+          "package_id": 2,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/f7f1e8cb943b46fcbe3ae258ed23ec56.webp",
+          "package_name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+          "product_name": "Adaptive Foundation Stick",
+          "product_variant_name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+          "unit_price": "42.00",
+          "unit_price_before_discount": "47.00",
+          "package_price": "42.00",
+          "package_price_before_discount": "47.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    }
+  ],
+  "shipping_methods": [
+    {
+      "ref_id": 1,
+      "code": "default",
+      "price": "0.00"
+    }
+  ]
+}

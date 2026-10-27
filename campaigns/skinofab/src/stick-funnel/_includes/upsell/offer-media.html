@@ -1,0 +1,32 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/offer-media.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-offer-media
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell offer (media column — the area the swiper normally sits: carousel · image · grid · video)
+  next_params: reads media / offer from upsell/offer-context.html.
+    upsell_layout.media: carousel (default; swiper-gallery.html with swiper_slides / swiper_thumbs — Swiper CDN
+      must be in the page styles/scripts) | image (offer.image; offer.image_display e.g. package.image lets the SDK
+      swap in the live package image — the MV upsell uses this) | grid (media_images[] { src, alt }, 2×2) |
+      video (media_video — same contract as upsell_video, rendered by upsell/video.html in this column) |
+      none (single column — handled by upsell/offer.html).
+    media_video is independent of upsell_video: upsell_video is the content-column video under the heading
+      (the VSL pattern); media_video replaces the swiper area. A page may use either or both.
+    swiper_aspect / swiper_thumb_aspect / swiper_fit / swiper_thumbs_per_view pass straight through to swiper-gallery.html.
+    upsell_layout.media_width (box style only): narrow | medium (default, 25rem) | wide (32rem) — the image column width on desktop.
+{% endcomment %}
+{%- if media == 'video' -%}
+{%- campaign_include 'upsell/video.html' upsell_video=media_video -%}
+{%- elsif media == 'image' -%}
+<img loading="eager" src="{{ offer.image | default: 'images/1x1_1.svg' | campaign_asset }}" alt="{{ offer.image_alt | default: '' }}" class="width-full upsell-offer__image"{% if offer.image_display %} data-next-display="{{ offer.image_display }}"{% endif %}>
+{%- elsif media == 'grid' -%}
+<div class="upsell-media-grid">
+  {%- for img in media_images %}
+  <div class="upsell-media-grid__cell"><img loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" src="{{ img.src | campaign_asset }}" alt="{{ img.alt | default: '' }}" class="cover"></div>
+  {%- endfor %}
+</div>
+{%- else -%}
+<div>
+  {% campaign_include 'swiper-gallery.html' main_slides=swiper_slides thumbs=swiper_thumbs variant='sw1' swiper_aspect=swiper_aspect swiper_thumb_aspect=swiper_thumb_aspect swiper_fit=swiper_fit swiper_thumbs_per_view=swiper_thumbs_per_view %}
+</div>
+{%- endif -%}

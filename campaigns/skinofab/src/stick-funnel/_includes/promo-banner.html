@@ -1,0 +1,75 @@
+{%- comment -%} GENERATED from _shared/checkout/_includes/promo-banner.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  promo-banner.html — promo announcement bar, rendered at build time (no web component).
+  Replaces the legacy <promo-banner> element + promo-banner.js, which built the bar in
+  shadow DOM after first paint and pushed the whole page down (issue #233, CLS ~0.09–0.16).
+
+    {% campaign_include 'promo-banner.html' promo_banner=promo_banner %}
+
+  No banner: leave `promo_banner` out of the page frontmatter (or drop the include). The
+  partial then outputs nothing — no wrapper, no reserved space.
+
+  promo_banner:
+    variant: slim                # slim (default) — one-line bar · classic — code bar + optional top bar / countdown
+    # slim
+    emoji: "✨"
+    highlight: "Up to 60% off"
+    lead: "your"
+    strong: "Product Name"
+    trail: "- Today only · Free USA shipping"
+    # classic
+    text: "GET UP TO 69% OFF NOW!"   # bold lead
+    code_label: "USE PROMO CODE:"
+    code: "XXCODE"                   # "" = no code pill
+    suffix: "- LIMITED TIME OFFER"
+    countdown_end: "2026-11-29T23:59:59"   # optional: days/hrs/mins/secs to this time (visitor's local time)
+    topbar:                          # optional second row above the code bar
+      show: true                     # false = rendered but hidden (?topbar=on reveals it)
+      emoji: "🔥"
+      title: "BLACK FRIDAY SALE!"
+      offer1: "GET 1x FOR 63% OFF"
+      offer2: "3x FOR 69% OFF"
+      background: "#000000"
+      highlight_color: "#ACF4A1"
+
+  Switching sales: edit `promo_banner` and redeploy. There is no date schedule — what is in
+  the frontmatter is what renders.
+
+  URL overrides, applied by the inline script below BEFORE first paint (a deferred script
+  would collapse or grow the bar after paint, the same shift in reverse):
+    ?banner=n          hide the whole banner
+    ?topbar=on | off   show / hide the classic top bar
+{%- endcomment -%}
+{%- if promo_banner and promo_banner != "" -%}
+{%- assign pb_variant = promo_banner.variant | default: "slim" -%}
+{%- assign pb_topbar = promo_banner.topbar -%}
+<script>(function(p,c){p=new URLSearchParams(location.search);c=document.documentElement.classList;if(p.get('banner')==='n')c.add('cc-promo-banner-off');if(p.get('topbar')==='on')c.add('cc-promo-topbar-on');if(p.get('topbar')==='off')c.add('cc-promo-topbar-off');})();</script>
+<div class="section_header" data-promo-banner>
+{%- if pb_variant == "classic" %}
+  <div class="promo-banner promo-banner--classic{% if pb_topbar and pb_topbar.show == false %} promo-banner--topbar-off{% endif %}"{% if pb_topbar.background or pb_topbar.highlight_color %} style="{% if pb_topbar.background %}--promo-banner-topbar-bg: {{ pb_topbar.background }};{% endif %}{% if pb_topbar.highlight_color %}--promo-banner-highlight: {{ pb_topbar.highlight_color }};{% endif %}"{% endif %}>
+    {%- if pb_topbar %}
+    <div class="promo-banner__topbar">
+      <p class="promo-banner__topbar-text">{% if pb_topbar.title %}{% if pb_topbar.emoji %}{{ pb_topbar.emoji }} {% endif %}{{ pb_topbar.title }}{% if pb_topbar.emoji %} {{ pb_topbar.emoji }}{% endif %}{% if pb_topbar.offer1 %}<br class="promo-banner__break"> {% endif %}{% endif %}{% if pb_topbar.offer1 %}<span class="promo-banner__highlight">{{ pb_topbar.offer1 }}</span>{% if pb_topbar.offer2 %} or <span class="promo-banner__highlight">{{ pb_topbar.offer2 }}</span>{% endif %}{% endif %}</p>
+    </div>
+    {%- endif %}
+    <div class="promo-banner__bar">
+      <p class="promo-banner__text">{% if promo_banner.text %}<span class="promo-banner__strong">{{ promo_banner.text }}</span> {% endif %}{% if promo_banner.code and promo_banner.code != "" %}{% if promo_banner.code_label %}<span class="promo-banner__label">{{ promo_banner.code_label }}</span>{% endif %}<span class="promo-banner__code">{{ promo_banner.code }}</span>{% endif %}{% if promo_banner.suffix %} <span class="promo-banner__suffix">{{ promo_banner.suffix }}</span>{% endif %}</p>
+      {%- if promo_banner.countdown_end and promo_banner.countdown_end != "" %}
+      <div class="promo-banner__timer" data-promo-countdown="{{ promo_banner.countdown_end }}">
+        <div class="promo-banner__timer-item"><div class="promo-banner__timer-box" data-unit="d">00</div><div class="promo-banner__timer-label">DAYS</div></div>
+        <div class="promo-banner__timer-item"><div class="promo-banner__timer-box" data-unit="h">00</div><div class="promo-banner__timer-label">HRS</div></div>
+        <div class="promo-banner__timer-item"><div class="promo-banner__timer-box" data-unit="m">00</div><div class="promo-banner__timer-label">MINS</div></div>
+        <div class="promo-banner__timer-item"><div class="promo-banner__timer-box" data-unit="s">00</div><div class="promo-banner__timer-label">SECS</div></div>
+      </div>
+      {%- comment -%} Runs as soon as the timer is parsed, so the first paint already shows the right digits; the boxes are fixed-size, so ticking never moves the bar. {%- endcomment -%}
+      <script>(function(){var t=document.currentScript.parentNode.querySelector('[data-promo-countdown]'),e=new Date(t.getAttribute('data-promo-countdown')).getTime(),b={},i;if(isNaN(e))return;t.querySelectorAll('[data-unit]').forEach(function(n){b[n.getAttribute('data-unit')]=n;});function p(n){return String(n).padStart(2,'0');}function u(){var d=Math.max(0,e-Date.now());b.d.textContent=p(Math.floor(d/864e5));b.h.textContent=p(Math.floor(d%864e5/36e5));b.m.textContent=p(Math.floor(d%36e5/6e4));b.s.textContent=p(Math.floor(d%6e4/1e3));if(!d)clearInterval(i);}u();i=setInterval(u,1000);})();</script>
+      {%- endif %}
+    </div>
+  </div>
+{%- else %}
+  <div class="promo-banner promo-banner--apollo">
+    <p class="promo-banner__text">{% if promo_banner.emoji %}<span class="promo-banner__emoji">{{ promo_banner.emoji }}</span> {% endif %}<span class="promo-banner__highlight">{{ promo_banner.highlight }}</span> {{ promo_banner.lead }} <span class="promo-banner__strong">{{ promo_banner.strong }}</span> {{ promo_banner.trail }}</p>
+  </div>
+{%- endif %}
+</div>
+{%- endif -%}

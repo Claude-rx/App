@@ -1,0 +1,906 @@
+{
+  "schema_version": "campaign-runtime-build-context/v0",
+  "generated_at": "2026-10-27T10:22:39.032Z",
+  "source_adapter": "html_funnel",
+  "intake": {
+    "spec_source": "local",
+    "spec_path": "./campaign-spec.json",
+    "map_id": null,
+    "proxy_base": null,
+    "saved_map_revision": null,
+    "source_root": "./design-source",
+    "target_repo": ".",
+    "template_family": "apollo",
+    "brief_path": null,
+    "design_manifest_path": null,
+    "allow_uncertified_template": null,
+    "wrapper_policy": "preserve_document_wrappers",
+    "packet_path": "./campaign-runtime.build.json"
+  },
+  "status": "prepared",
+  "packet_path": "./campaign-runtime.build.json",
+  "report_path": ".campaign-runtime/assembly-report.json",
+  "design_source_package": {
+    "path": "input/design-source-package.json",
+    "schema_version": "campaign-design-source-package/v0",
+    "sha256": "sha256:e78abf824ae3ba9393ba28039136054bc6d085856f027fded3fa36fa1a87c64d",
+    "material_fingerprint": "sha256:052d430b03a95eb65b4eb3eb9a6eba30b97697b3e7ec2bc1e43008ac245862ca"
+  },
+  "spec": {
+    "path": "./campaign-spec.json",
+    "hash": "895628602b512639d70d857a59b0c2b2039b436c0827ea778a23eb23fc24c465",
+    "material_hash": "sha256:4a7f3cd6e41c4819da0bf7222ba0e2e56a283ad5a5763a65fb90a9851d21fc1a",
+    "active_pages": [
+      {
+        "id": "listicle",
+        "type": "presell",
+        "label": "Listicle: 10 reasons women past 45 switch to the stick",
+        "page_url": "10-reasons-foundation-stick/"
+      },
+      {
+        "id": "offer",
+        "type": "landing",
+        "label": "Product page: choose 1 stick or 2 sticks + a free Lymphatic Brush",
+        "page_url": "foundation-stick-offer/"
+      },
+      {
+        "id": "checkout",
+        "type": "checkout",
+        "label": "Checkout",
+        "page_url": "stick-checkout/"
+      },
+      {
+        "id": "special-1",
+        "type": "upsell",
+        "label": "Special offer 1: one more stick, 50% off",
+        "page_url": "stick-special-1/"
+      },
+      {
+        "id": "special-2",
+        "type": "upsell",
+        "label": "Special offer 2: the Lymphatic Brush, 20% off",
+        "page_url": "stick-special-2/"
+      },
+      {
+        "id": "special-3",
+        "type": "upsell",
+        "label": "Special offer 3: the PDRN Plumping Balm, 20% off",
+        "page_url": "stick-special-3/"
+      },
+      {
+        "id": "special-4",
+        "type": "upsell",
+        "label": "Special offer 4: the EGF + NAD+ Firming Serum, 20% off",
+        "page_url": "stick-special-4/"
+      },
+      {
+        "id": "thank-you",
+        "type": "thankyou",
+        "label": "Thank you",
+        "page_url": "stick-thank-you/"
+      }
+    ]
+  },
+  "source": {
+    "root": "./design-source",
+    "html_files": [
+      {
+        "path": "facelove-listicle.html",
+        "name": "facelove-listicle.html",
+        "basename": "facelove-listicle",
+        "bytes": 601188,
+        "sha256": "2300c09ed1f5cf7ac38e16dc17f38db205aedeb955aa8af2ca976334714629ce"
+      },
+      {
+        "path": "stick-pdp.html",
+        "name": "stick-pdp.html",
+        "basename": "stick-pdp",
+        "bytes": 463099,
+        "sha256": "93c59448221912d2377f29149bba16b0b176630369bbf3249d0310129df2ed4b"
+      }
+    ],
+    "manifest": {
+      "path": "./design-source/.campaigns-os/source-html-manifest.json",
+      "schema_version": "source-html-manifest/v0",
+      "generator": "tools/funnel/design_source.py@1",
+      "generated_at": "2026-10-27T10:22:30Z",
+      "campaign_slug": "stick-funnel",
+      "page_count": 8,
+      "file_count": 0,
+      "producer_provenance": null
+    },
+    "manifest_warnings": [],
+    "ambiguous_candidates": [],
+    "manifest_draft": null,
+    "asset_crawl": {
+      "schema_version": "source-asset-crawl/v0",
+      "scanned_files": [
+        {
+          "path": "facelove-listicle.html",
+          "kind": "html",
+          "bytes": 601188,
+          "sha256": "2300c09ed1f5cf7ac38e16dc17f38db205aedeb955aa8af2ca976334714629ce"
+        },
+        {
+          "path": "stick-pdp.html",
+          "kind": "html",
+          "bytes": 463099,
+          "sha256": "93c59448221912d2377f29149bba16b0b176630369bbf3249d0310129df2ed4b"
+        }
+      ],
+      "references": [
+        {
+          "raw": "/checkouts/internal/preloads.js?locale=en-US&default_configuration_id=8831828310",
+          "normalized": "checkouts/internal/preloads.js",
+          "asset_kind": "script",
+          "root_relative": true,
+          "source_path": "checkouts/internal/preloads.js",
+          "source_exists": false,
+          "outside_source_root": false,
+          "source_root_fallback": false,
+          "pagekit_asset_path": "checkouts/internal/preloads.js",
+          "rewrite_required": true,
+          "rewrite_hint": "Rewrite source asset ref \"/checkouts/internal/preloads.js\" to the Page Kit campaign asset root, e.g. campaign_asset \"checkouts/internal/preloads.js\".",
+          "referenced_by": [
+            {
+              "path": "facelove-listicle.html",
+              "kind": "html",
+              "attribute": "src",
+              "page_ids": [
+                "listicle"
+              ]
+            }
+          ]
+        },
+        {
+          "raw": "/products/dream-skin-primer",
+          "normalized": "products/dream-skin-primer",
+          "asset_kind": "asset",
+          "root_relative": true,
+          "source_path": "products/dream-skin-primer",
+          "source_exists": false,
+          "outside_source_root": false,
+          "source_root_fallback": false,
+          "pagekit_asset_path": "products/dream-skin-primer",
+          "rewrite_required": true,
+          "rewrite_hint": "Rewrite source asset ref \"/products/dream-skin-primer\" to the Page Kit campaign asset root, e.g. campaign_asset \"products/dream-skin-primer\".",
+          "referenced_by": [
+            {
+              "path": "facelove-listicle.html",
+              "kind": "html",
+              "attribute": "href",
+              "page_ids": [
+                "listicle"
+              ]
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "scanned_file_count": 2,
+        "reference_count": 2,
+        "missing_count": 2,
+        "outside_source_root_count": 0,
+        "source_root_fallback_count": 0,
+        "rewrite_required_count": 2,
+        "root_assets_path_count": 0
+      },
+      "warnings": [
+        {
+          "code": "source_asset.missing_file",
+          "message": "2 local source asset reference(s) did not resolve to files under the source root.",
+          "sample": [
+            "/checkouts/internal/preloads.js?locale=en-US&default_configuration_id=8831828310",
+            "/products/dream-skin-primer"
+          ]
+        }
+      ]
+    }
+  },
+  "build_brief": {
+    "schema_version": "campaigns-os-build-brief/v1",
+    "mode": "guided_draft",
+    "status": "complete",
+    "input_path": "./campaign-build-brief.json",
+    "normalized_path": ".campaign-runtime/input/campaign-build-brief.normalized.json",
+    "question_count": 0,
+    "gate_count": 1,
+    "questions": [],
+    "gates": [
+      {
+        "code": "build_brief.partial_scope_qa_policy",
+        "severity": "warning",
+        "field": "qa_policy.require_checkout_flow",
+        "message": "Brief requires checkout flow QA while some mapped pages are skipped; partial builds need explicit launch-readiness language."
+      }
+    ],
+    "material": {
+      "presentation": "sha256:a450e62bd514b2e1ed8ef9ea96031c054b0701f2a7cddb195833ebfe51c10099",
+      "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+    },
+    "input_sha256": "sha256:318155283cee24f9642923a72d6d598010bba4ae8baa5fe1b2b09d03cd3d417c"
+  },
+  "page_map": [
+    {
+      "page_id": "listicle",
+      "source_path": "facelove-listicle.html",
+      "skip_reason": null,
+      "output_path": "./src/stick-funnel/10-reasons-foundation-stick.html",
+      "page_kit": {
+        "target_path": "10-reasons-foundation-stick.html",
+        "output_path": "src/stick-funnel/10-reasons-foundation-stick.html",
+        "public_route": "/stick-funnel/10-reasons-foundation-stick/",
+        "spec_route": "10-reasons-foundation-stick/",
+        "page_type": "product",
+        "permalink_required": false,
+        "frontmatter": {
+          "page_type": "product",
+          "next_url": "/stick-funnel/foundation-stick-offer/"
+        }
+      }
+    },
+    {
+      "page_id": "offer",
+      "source_path": "stick-pdp.html",
+      "skip_reason": null,
+      "output_path": "./src/stick-funnel/foundation-stick-offer.html",
+      "page_kit": {
+        "target_path": "foundation-stick-offer.html",
+        "output_path": "src/stick-funnel/foundation-stick-offer.html",
+        "public_route": "/stick-funnel/foundation-stick-offer/",
+        "spec_route": "foundation-stick-offer/",
+        "page_type": "product",
+        "permalink_required": false,
+        "frontmatter": {
+          "page_type": "product",
+          "next_url": "/stick-funnel/stick-checkout/"
+        }
+      }
+    },
+    {
+      "page_id": "checkout",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo checkout page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "special-1",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "special-2",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "special-3",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "special-4",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "thank-you",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo receipt page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    }
+  ],
+  "scaffold": {
+    "mode": "existing",
+    "required": false,
+    "target_repo": ".",
+    "output_dir": "./src/stick-funnel",
+    "handoff_skill": "next-campaigns-build",
+    "handoff_artifact": ".campaign-runtime/setup-handoff.json",
+    "reason": "Target campaign output directory already exists."
+  },
+  "template": {
+    "family": "apollo",
+    "locked": true,
+    "lock": {
+      "locked": true,
+      "locked_by": "operator_flag",
+      "confidence": "high",
+      "evidence": [
+        "prepare-build --template-family"
+      ]
+    },
+    "candidates": [
+      {
+        "family": "apollo",
+        "source": "CampaignSpec preferred_template_family",
+        "confidence": "hint"
+      }
+    ]
+  },
+  "adapter_decisions": {
+    "raw_html_conversion_status": "pending",
+    "source_asset_strategy": "pagekit_campaign_asset_root",
+    "route_rewrite_policy": "campaignspec_routes_via_campaign_link",
+    "config_script_strategy": "campaign_asset",
+    "commerce_shell_adoption": "not_required",
+    "wrapper_policy": "preserve_document_wrappers",
+    "frontmatter_policy": "pagekit_yaml_frontmatter",
+    "script_style_reference_policy": "frontmatter_or_campaign_asset",
+    "cta_rewrite_policy": "campaignspec_routes_via_campaign_link",
+    "layout_choice": "campaign_layout",
+    "template_files_copied": {
+      "status": "pending",
+      "required_groups": [
+        "pages",
+        "_includes",
+        "_layouts",
+        "assets/css",
+        "assets/js",
+        "frontmatter_vocabulary"
+      ],
+      "groups": [],
+      "paths": []
+    }
+  },
+  "commerce_zone_findings": [],
+  "prompts_required": [],
+  "decisions": [
+    {
+      "id": "dec_page_map_listicle",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "mapped CampaignSpec page \"listicle\" to source file \"facelove-listicle.html\" via source-html manifest (matched by page_id)",
+      "confidence": "high",
+      "evidence": [
+        "source-html manifest entry matched page \"listicle\" by page_id; path=\"facelove-listicle.html\" from ./design-source/.campaigns-os/source-html-manifest.json"
+      ]
+    },
+    {
+      "id": "dec_page_map_offer",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "mapped CampaignSpec page \"offer\" to source file \"stick-pdp.html\" via source-html manifest (matched by page_id)",
+      "confidence": "high",
+      "evidence": [
+        "source-html manifest entry matched page \"offer\" by page_id; path=\"stick-pdp.html\" from ./design-source/.campaigns-os/source-html-manifest.json"
+      ]
+    },
+    {
+      "id": "dec_page_scope_checkout",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"checkout\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"checkout\" at ./design-source/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_special-1",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"special-1\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"special-1\" at ./design-source/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_special-2",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"special-2\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"special-2\" at ./design-source/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_special-3",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"special-3\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"special-3\" at ./design-source/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_special-4",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"special-4\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"special-4\" at ./design-source/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_thank-you",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"thank-you\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"thank-you\" at ./design-source/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_kit_target_listicle",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "projected CampaignSpec page \"listicle\" to Page Kit target \"10-reasons-foundation-stick.html\" with CPK page_type \"product\"",
+      "confidence": "high",
+      "evidence": [
+        "source path \"facelove-listicle.html\" remains producer provenance",
+        "target path \"src/stick-funnel/10-reasons-foundation-stick.html\" derives from CampaignSpec route \"10-reasons-foundation-stick/\" and public slug \"stick-funnel\""
+      ]
+    },
+    {
+      "id": "dec_page_kit_target_offer",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "projected CampaignSpec page \"offer\" to Page Kit target \"foundation-stick-offer.html\" with CPK page_type \"product\"",
+      "confidence": "high",
+      "evidence": [
+        "source path \"stick-pdp.html\" remains producer provenance",
+        "target path \"src/stick-funnel/foundation-stick-offer.html\" derives from CampaignSpec route \"foundation-stick-offer/\" and public slug \"stick-funnel\""
+      ]
+    }
+  ],
+  "theme": {
+    "status": "ready_with_warnings",
+    "policy": "inspect_only",
+    "source_kind": "html_funnel",
+    "producer": {
+      "name": "figma-sections-export",
+      "version": "v0"
+    },
+    "source_files": [
+      {
+        "path": "design-source/facelove-listicle.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "8f87af571aadeb7043890a6f86122ad0614ede8059f2f34fb139192aa94f6078",
+        "token_count": 254,
+        "inline_block_index": 3,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/facelove-listicle.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "3f8832d57513f057ab157cc26faf3c4ec6914111c55b9833ce62e96c31c0802a",
+        "token_count": 1,
+        "inline_block_index": 7,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/facelove-listicle.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "452fff5827c8581e815e67425277eddf902bba80b98cf1759253123b679da36b",
+        "token_count": 1,
+        "inline_block_index": 7,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/facelove-listicle.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "6f8d797794ca95487f5661ad35e1e8603898778b62e9af61b9f992d2cbe97e66",
+        "token_count": 3,
+        "inline_block_index": 11,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "d3b27cbfe8efe2392b71d3455ac2efcef1e68a0bbd15b3b5982f2de7cdd14ffb",
+        "token_count": 12,
+        "inline_block_index": 1,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "d46bf192c34c6b4b1303bcea133860f27aec7a3a1a3b5ac275ae6f84ab84993a",
+        "token_count": 11,
+        "inline_block_index": 2,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "352d188b8cd0edc80a57f64b306c987c6dec27a1fb3054c83a5f7aa8e47bc868",
+        "token_count": 1,
+        "inline_block_index": 6,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "eade45b54950875ccab061abb928b860e3ffd5d3d5b6cd96dbc527ac1c856b7d",
+        "token_count": 1,
+        "inline_block_index": 6,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "91da08642672a3948c112adf9cdc7ec2549b66794446bd59a29cdc2a710ba36b",
+        "token_count": 236,
+        "inline_block_index": 7,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "68a2e960f84a0a0d938f92302113282c8ca8c9a4ec6ed8d98365b051f7c192aa",
+        "token_count": 1,
+        "inline_block_index": 12,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "fc9f705fef557232c75fe3ae5fcbddb07f96b1a5808c06bcda90597cd5c838ea",
+        "token_count": 1,
+        "inline_block_index": 13,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "954ae07f1da447e9ab99129144d15cb90fc332f17df8a097c8dcec758e55c35e",
+        "token_count": 1,
+        "inline_block_index": 13,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "d6a032745a4fcf4e4b666370b6294415cc54118aff6baf101751697d64c11135",
+        "token_count": 2,
+        "inline_block_index": 14,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "980656ebc9eb26d2548f80b2f2a361506ae46c9b513553fc50415b84f596fd3a",
+        "token_count": 2,
+        "inline_block_index": 14,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "20b79eb7d3a39d3aabc76e67f5f43051a8cab1ca27b51ca9833cf31ef81a8dfd",
+        "token_count": 3,
+        "inline_block_index": 17,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source/stick-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "c606553550bf195e18589e7520b85d35463f62c1ae11603aa785c73f8a01fcd7",
+        "token_count": 1,
+        "inline_block_index": 17,
+        "referenced_by": []
+      }
+    ],
+    "selected_source": {
+      "path": "design-source/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "8f87af571aadeb7043890a6f86122ad0614ede8059f2f34fb139192aa94f6078",
+      "token_count": 254,
+      "inline_block_index": 3,
+      "referenced_by": []
+    },
+    "producer_defaults": {
+      "matched": false,
+      "producer": "figma-sections-export",
+      "version": "v0",
+      "matched_tokens": [],
+      "unresolved_tokens": [],
+      "present_core_tokens": [
+        "--brand-primary",
+        "--brand-accent",
+        "--text-primary",
+        "--text-secondary",
+        "--border-default"
+      ]
+    },
+    "confidence": "medium",
+    "generated": {
+      "css_path": ".campaign-runtime/theme/brand-theme.css",
+      "report_path": ".campaign-runtime/theme/theme-report.json",
+      "safety": {
+        "ok": true,
+        "errors": [],
+        "warnings": []
+      },
+      "stale": {
+        "stale": false,
+        "reasons": []
+      },
+      "can_generate": true,
+      "can_auto_generate": false,
+      "overwrite_requires_force": false
+    },
+    "mappings": [
+      {
+        "source": "--brand-primary",
+        "target": "--brand--color--primary",
+        "value": "#ffffff",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--brand-accent",
+        "target": "--brand--color--accent",
+        "value": "#b69fd1",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--text-primary",
+        "target": "--brand--color--text-primary",
+        "value": "#ffffff",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--text-primary",
+        "target": "--brand--color--foreground",
+        "value": "#ffffff",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--text-secondary",
+        "target": "--brand--color--text-secondary",
+        "value": "#000000",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--border-default",
+        "target": "--brand--color--border",
+        "value": "#000000",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--border-default",
+        "target": "--component--color--outline",
+        "value": "#000000",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--rating-star",
+        "target": "--brand--color--rating-star",
+        "value": "#b69fd1",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--brand-primary",
+        "target": "--brand--color--primary-dark",
+        "value": "#d1d1d1",
+        "confidence": "medium",
+        "derivation": {
+          "method": "mix-black",
+          "amount": 0.18
+        }
+      },
+      {
+        "source": "--brand-primary",
+        "target": "--brand--color--primary-light",
+        "value": "#ffffff",
+        "confidence": "medium",
+        "derivation": {
+          "method": "mix-white",
+          "amount": 0.2
+        }
+      },
+      {
+        "source": "--brand-primary",
+        "target": "--brand--color--primary-lighter",
+        "value": "#ffffff",
+        "confidence": "medium",
+        "derivation": {
+          "method": "mix-white",
+          "amount": 0.86
+        }
+      },
+      {
+        "source": "--brand-accent",
+        "target": "--brand--color--cta-primary",
+        "value": "#b69fd1",
+        "confidence": "medium",
+        "derivation": {
+          "method": "cta-fallback-from-brand-accent"
+        }
+      },
+      {
+        "source": "--brand--color--cta-primary",
+        "target": "--brand--color--cta-foreground",
+        "value": "#0a0a0a",
+        "confidence": "high",
+        "derivation": {
+          "method": "foreground-from-luminance",
+          "background": "--brand--color--cta-primary",
+          "background_value": "#b69fd1",
+          "on": "dark",
+          "contrast": 8.36
+        }
+      },
+      {
+        "source": "--brand--color--cta-primary",
+        "target": "--brand--color--text-inverse",
+        "value": "#0a0a0a",
+        "confidence": "high",
+        "derivation": {
+          "method": "foreground-from-luminance",
+          "background": "--brand--color--cta-primary",
+          "background_value": "#b69fd1",
+          "on": "dark",
+          "contrast": 8.36
+        }
+      },
+      {
+        "source": "--brand--color--primary",
+        "target": "--brand--color--primary-foreground",
+        "value": "#0a0a0a",
+        "confidence": "high",
+        "derivation": {
+          "method": "foreground-from-luminance",
+          "background": "--brand--color--primary",
+          "background_value": "#ffffff",
+          "on": "dark",
+          "contrast": 19.8
+        }
+      },
+      {
+        "source": "--brand--color--accent",
+        "target": "--brand--color--accent-foreground",
+        "value": "#0a0a0a",
+        "confidence": "high",
+        "derivation": {
+          "method": "foreground-from-luminance",
+          "background": "--brand--color--accent",
+          "background_value": "#b69fd1",
+          "on": "dark",
+          "contrast": 8.36
+        }
+      }
+    ],
+    "unmapped_defaults": [],
+    "warnings": [
+      {
+        "code": "theme.source_tokens.conflict",
+        "message": "Source token --brand-primary has conflicting values across source files.",
+        "detail": {
+          "token": "--brand-primary",
+          "entries": [
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+              "role": "page",
+              "value": "#ffffff"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+              "role": "page",
+              "value": "#000000"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+              "role": "page",
+              "value": "#000000"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+              "role": "page",
+              "value": "#ffffff"
+            }
+          ]
+        }
+      },
+      {
+        "code": "theme.source_tokens.conflict",
+        "message": "Source token --text-secondary has conflicting values across source files.",
+        "detail": {
+          "token": "--text-secondary",
+          "entries": [
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+              "role": "page",
+              "value": "#000000"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+              "role": "page",
+              "value": "#ffffff"
+            }
+          ]
+        }
+      },
+      {
+        "code": "theme.source_tokens.conflict",
+        "message": "Source token --brand-accent has conflicting values across source files.",
+        "detail": {
+          "token": "--brand-accent",
+          "entries": [
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+              "role": "page",
+              "value": "#b69fd1"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+              "role": "page",
+              "value": "#f0f0f0"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+              "role": "page",
+              "value": "#000000"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+              "role": "page",
+              "value": "#000000"
+            }
+          ]
+        }
+      },
+      {
+        "code": "theme.cta.fallback",
+        "message": "No explicit CTA token or button background was found; using --brand-accent as --brand--color--cta-primary. This may be a rating or decorative accent; confirm the CTA colour against the design."
+      }
+    ],
+    "wrote": {
+      "report": true,
+      "css": false
+    }
+  }
+}

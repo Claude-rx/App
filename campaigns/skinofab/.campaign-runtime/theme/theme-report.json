@@ -1,0 +1,495 @@
+{
+  "schema_version": "campaign-runtime-brand-theme/v0",
+  "generated_at": "2026-10-27T10:23:41.432Z",
+  "status": "ready_with_warnings",
+  "policy": "auto",
+  "source_kind": "html_funnel",
+  "confidence": "medium",
+  "source_files": [
+    {
+      "path": "design-source/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "8f87af571aadeb7043890a6f86122ad0614ede8059f2f34fb139192aa94f6078",
+      "token_count": 254,
+      "inline_block_index": 3,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "3f8832d57513f057ab157cc26faf3c4ec6914111c55b9833ce62e96c31c0802a",
+      "token_count": 1,
+      "inline_block_index": 7,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "452fff5827c8581e815e67425277eddf902bba80b98cf1759253123b679da36b",
+      "token_count": 1,
+      "inline_block_index": 7,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "6f8d797794ca95487f5661ad35e1e8603898778b62e9af61b9f992d2cbe97e66",
+      "token_count": 3,
+      "inline_block_index": 11,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "d3b27cbfe8efe2392b71d3455ac2efcef1e68a0bbd15b3b5982f2de7cdd14ffb",
+      "token_count": 12,
+      "inline_block_index": 1,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "d46bf192c34c6b4b1303bcea133860f27aec7a3a1a3b5ac275ae6f84ab84993a",
+      "token_count": 11,
+      "inline_block_index": 2,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "352d188b8cd0edc80a57f64b306c987c6dec27a1fb3054c83a5f7aa8e47bc868",
+      "token_count": 1,
+      "inline_block_index": 6,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "eade45b54950875ccab061abb928b860e3ffd5d3d5b6cd96dbc527ac1c856b7d",
+      "token_count": 1,
+      "inline_block_index": 6,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "91da08642672a3948c112adf9cdc7ec2549b66794446bd59a29cdc2a710ba36b",
+      "token_count": 236,
+      "inline_block_index": 7,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "68a2e960f84a0a0d938f92302113282c8ca8c9a4ec6ed8d98365b051f7c192aa",
+      "token_count": 1,
+      "inline_block_index": 12,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "fc9f705fef557232c75fe3ae5fcbddb07f96b1a5808c06bcda90597cd5c838ea",
+      "token_count": 1,
+      "inline_block_index": 13,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "954ae07f1da447e9ab99129144d15cb90fc332f17df8a097c8dcec758e55c35e",
+      "token_count": 1,
+      "inline_block_index": 13,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "d6a032745a4fcf4e4b666370b6294415cc54118aff6baf101751697d64c11135",
+      "token_count": 2,
+      "inline_block_index": 14,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "980656ebc9eb26d2548f80b2f2a361506ae46c9b513553fc50415b84f596fd3a",
+      "token_count": 2,
+      "inline_block_index": 14,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "20b79eb7d3a39d3aabc76e67f5f43051a8cab1ca27b51ca9833cf31ef81a8dfd",
+      "token_count": 3,
+      "inline_block_index": 17,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source/stick-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "c606553550bf195e18589e7520b85d35463f62c1ae11603aa785c73f8a01fcd7",
+      "token_count": 1,
+      "inline_block_index": 17,
+      "referenced_by": []
+    }
+  ],
+  "selected_source": {
+    "path": "design-source/facelove-listicle.html",
+    "role": "page",
+    "source": "html_inline_root",
+    "hash": "8f87af571aadeb7043890a6f86122ad0614ede8059f2f34fb139192aa94f6078",
+    "token_count": 254,
+    "inline_block_index": 3,
+    "referenced_by": []
+  },
+  "producer_defaults": {
+    "matched": false,
+    "producer": "figma-sections-export",
+    "version": "v0",
+    "matched_tokens": [],
+    "unresolved_tokens": [],
+    "present_core_tokens": [
+      "--brand-primary",
+      "--brand-accent",
+      "--text-primary",
+      "--text-secondary",
+      "--border-default"
+    ]
+  },
+  "conflicts": [
+    {
+      "token": "--brand-primary",
+      "entries": [
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+          "role": "page",
+          "value": "#ffffff"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+          "role": "page",
+          "value": "#000000"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+          "role": "page",
+          "value": "#000000"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+          "role": "page",
+          "value": "#ffffff"
+        }
+      ]
+    },
+    {
+      "token": "--text-secondary",
+      "entries": [
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+          "role": "page",
+          "value": "#000000"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+          "role": "page",
+          "value": "#ffffff"
+        }
+      ]
+    },
+    {
+      "token": "--brand-accent",
+      "entries": [
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+          "role": "page",
+          "value": "#b69fd1"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+          "role": "page",
+          "value": "#f0f0f0"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+          "role": "page",
+          "value": "#000000"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+          "role": "page",
+          "value": "#000000"
+        }
+      ]
+    }
+  ],
+  "mappings": [
+    {
+      "source": "--brand-primary",
+      "target": "--brand--color--primary",
+      "value": "#ffffff",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--brand-accent",
+      "target": "--brand--color--accent",
+      "value": "#b69fd1",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--text-primary",
+      "target": "--brand--color--text-primary",
+      "value": "#ffffff",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--text-primary",
+      "target": "--brand--color--foreground",
+      "value": "#ffffff",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--text-secondary",
+      "target": "--brand--color--text-secondary",
+      "value": "#000000",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--border-default",
+      "target": "--brand--color--border",
+      "value": "#000000",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--border-default",
+      "target": "--component--color--outline",
+      "value": "#000000",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--rating-star",
+      "target": "--brand--color--rating-star",
+      "value": "#b69fd1",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--brand-primary",
+      "target": "--brand--color--primary-dark",
+      "value": "#d1d1d1",
+      "confidence": "medium",
+      "derivation": {
+        "method": "mix-black",
+        "amount": 0.18
+      }
+    },
+    {
+      "source": "--brand-primary",
+      "target": "--brand--color--primary-light",
+      "value": "#ffffff",
+      "confidence": "medium",
+      "derivation": {
+        "method": "mix-white",
+        "amount": 0.2
+      }
+    },
+    {
+      "source": "--brand-primary",
+      "target": "--brand--color--primary-lighter",
+      "value": "#ffffff",
+      "confidence": "medium",
+      "derivation": {
+        "method": "mix-white",
+        "amount": 0.86
+      }
+    },
+    {
+      "source": "--brand-accent",
+      "target": "--brand--color--cta-primary",
+      "value": "#b69fd1",
+      "confidence": "medium",
+      "derivation": {
+        "method": "cta-fallback-from-brand-accent"
+      }
+    },
+    {
+      "source": "--brand--color--cta-primary",
+      "target": "--brand--color--cta-foreground",
+      "value": "#0a0a0a",
+      "confidence": "high",
+      "derivation": {
+        "method": "foreground-from-luminance",
+        "background": "--brand--color--cta-primary",
+        "background_value": "#b69fd1",
+        "on": "dark",
+        "contrast": 8.36
+      }
+    },
+    {
+      "source": "--brand--color--cta-primary",
+      "target": "--brand--color--text-inverse",
+      "value": "#0a0a0a",
+      "confidence": "high",
+      "derivation": {
+        "method": "foreground-from-luminance",
+        "background": "--brand--color--cta-primary",
+        "background_value": "#b69fd1",
+        "on": "dark",
+        "contrast": 8.36
+      }
+    },
+    {
+      "source": "--brand--color--primary",
+      "target": "--brand--color--primary-foreground",
+      "value": "#0a0a0a",
+      "confidence": "high",
+      "derivation": {
+        "method": "foreground-from-luminance",
+        "background": "--brand--color--primary",
+        "background_value": "#ffffff",
+        "on": "dark",
+        "contrast": 19.8
+      }
+    },
+    {
+      "source": "--brand--color--accent",
+      "target": "--brand--color--accent-foreground",
+      "value": "#0a0a0a",
+      "confidence": "high",
+      "derivation": {
+        "method": "foreground-from-luminance",
+        "background": "--brand--color--accent",
+        "background_value": "#b69fd1",
+        "on": "dark",
+        "contrast": 8.36
+      }
+    }
+  ],
+  "generated": {
+    "css_path": ".campaign-runtime/theme/brand-theme.css",
+    "report_path": ".campaign-runtime/theme/theme-report.json",
+    "safety": {
+      "ok": true,
+      "errors": [],
+      "warnings": []
+    },
+    "stale": {
+      "stale": false,
+      "reasons": []
+    },
+    "can_generate": true,
+    "can_auto_generate": false,
+    "overwrite_requires_force": false
+  },
+  "existing_brand_layers": [],
+  "warnings": [
+    {
+      "code": "theme.source_tokens.conflict",
+      "message": "Source token --brand-primary has conflicting values across source files.",
+      "detail": {
+        "token": "--brand-primary",
+        "entries": [
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+            "role": "page",
+            "value": "#ffffff"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+            "role": "page",
+            "value": "#000000"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+            "role": "page",
+            "value": "#000000"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+            "role": "page",
+            "value": "#ffffff"
+          }
+        ]
+      }
+    },
+    {
+      "code": "theme.source_tokens.conflict",
+      "message": "Source token --text-secondary has conflicting values across source files.",
+      "detail": {
+        "token": "--text-secondary",
+        "entries": [
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+            "role": "page",
+            "value": "#000000"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+            "role": "page",
+            "value": "#ffffff"
+          }
+        ]
+      }
+    },
+    {
+      "code": "theme.source_tokens.conflict",
+      "message": "Source token --brand-accent has conflicting values across source files.",
+      "detail": {
+        "token": "--brand-accent",
+        "entries": [
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/facelove-listicle.html",
+            "role": "page",
+            "value": "#b69fd1"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+            "role": "page",
+            "value": "#f0f0f0"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+            "role": "page",
+            "value": "#000000"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source/stick-pdp.html",
+            "role": "page",
+            "value": "#000000"
+          }
+        ]
+      }
+    },
+    {
+      "code": "theme.cta.fallback",
+      "message": "No explicit CTA token or button background was found; using --brand-accent as --brand--color--cta-primary. This may be a rating or decorative accent; confirm the CTA colour against the design."
+    }
+  ],
+  "errors": [],
+  "next_action": "Run campaigns-os theme generate, then apply brand-theme.css after next-core.css on commerce pages."
+}

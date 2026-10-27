@@ -1,0 +1,29 @@
+{%- comment -%}
+  bundle-card-product.html — product-style bundle card.
+  One of the interchangeable bundle card styles dispatched by bundle-card.html.
+  Layout mirrors bump-check03: radio + image + title, one price line + savings;
+  badges grouped at the top-right edge (tier pill + red % OFF at the end).
+  Reads the shared card arg contract (see bundle-card.html). SDK attrs preserved.
+{%- endcomment -%}
+<div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="bundle-card">
+  <div class="bundle-card__badges">
+    {% if badge_text and badge_text != "" %}<div class="bundle-card__badge bundle-card__badge--{{ badge_tone | default: 'popular' }}">{{ badge_text }}</div>{% endif %}
+    <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
+    <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>+{discount.percentage}</span></template></div>
+  </div>
+  <div class="bundle-card__main" data-next-package-id="{{ package_id }}">
+    <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
+    <img data-next-display="package.image" loading="lazy" alt="" class="bundle-card__image">
+    <div class="bundle-card__copy">
+      <div class="bundle-card__title">{{ title_prefix }}<span data-next-display="package.name">Package</span></div>
+      {% if subtitle and subtitle != "" %}<div class="bundle-card__subtitle">{{ subtitle }}</div>{% endif %}
+    </div>
+    <div class="bundle-card__price">
+      <div class="bundle-card__price-row">
+        <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg">--</span>
+        <span data-next-bundle-display="price" class="bundle-card__price-total">--</span>
+      </div>
+      <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount">--</span></div>
+    </div>
+  </div>
+</div>

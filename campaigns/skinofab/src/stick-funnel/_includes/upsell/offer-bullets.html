@@ -1,0 +1,28 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/offer-bullets.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-offer-bullets
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell offer (feature bullets under the heading)
+  next_params:
+    offer_bullets: array of strings or { text }. When absent the four demo bullets render so existing pages
+      keep their shape — set offer_bullets in frontmatter to replace them, or upsell_layout.show_bullets: false
+      to drop the block (and its divider) entirely.
+{% endcomment %}
+{%- unless layout.show_bullets == false -%}
+{%- assign _bullets = offer_bullets -%}
+{%- if _bullets == nil or _bullets.size == 0 -%}
+  {%- assign _bullets = "The standard chunk of Lorem Ipsum|Contrary to popular belief, Lorem Ipsum|Lorem Ipsum has been the industry's|Lorem Ipsum is simply dummy text" | split: '|' -%}
+{%- endif -%}
+<div class="upsell-offer__bullets">
+  <div class="bullet_inner-one">
+    {%- for b in _bullets %}
+    <div class="hero_bullet-features-box-inner">
+      <div class="bullet-features-icon-box"><div class="bullet_features-icon-svg"><svg width="100%" height="100%" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 0.930023C4.48 0.930023 0 5.41002 0 10.93C0 16.45 4.48 20.93 10 20.93C15.52 20.93 20 16.45 20 10.93C20 5.41002 15.52 0.930023 10 0.930023ZM9.99994 18.9302C5.58994 18.9302 1.99994 15.3402 1.99994 10.9302C1.99994 6.52025 5.58994 2.93025 9.99994 2.93025C14.4099 2.93025 17.9999 6.52025 17.9999 10.9302C17.9999 15.3402 14.4099 18.9302 9.99994 18.9302ZM8.00003 13.1002L14.59 6.51021L16 7.93021L8.00003 15.9302L4.00003 11.9302L5.41003 10.5202L8.00003 13.1002Z" fill="currentColor"></path></svg></div></div>
+      <div class="bullet-features-text-box"><div class="text-size-regular text-weight-bold">{% if b.text %}{% campaign_include 'upsell/copy.html' text=b.text %}{% else %}{% campaign_include 'upsell/copy.html' text=b %}{% endif %}</div></div>
+    </div>
+    {%- endfor %}
+  </div>
+</div>
+<div class="divider_line margin-32"></div>
+{%- endunless -%}

@@ -1,0 +1,21 @@
+{%- comment -%}
+  bundle-card-tiles.html — tile bundle style.
+  One of the interchangeable bundle card styles dispatched by bundle-card.html.
+  Desktop: vertical tiles in a row (image · title · struck+current price), tier
+  badge centered on the top edge. Mobile: tiles stack and go horizontal (image
+  left, title+price row), badge top-right. No radio — selection shows via the
+  card border + tint (apollo style). Reads the shared card arg contract.
+{%- endcomment -%}
+<div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="bundle-tile">
+  {% if badge_text and badge_text != "" %}<div class="bundle-card__badge bundle-card__badge--{{ badge_tone | default: 'popular' }}">{{ badge_text }}</div>{% endif %}
+  <div class="bundle-tile__body" data-next-package-id="{{ package_id }}">
+    <img data-next-display="package.image" loading="lazy" alt="" class="bundle-tile__image">
+    <div class="bundle-tile__info">
+      <div class="bundle-tile__title">{{ title_prefix }}<span data-next-display="package.name">Package</span></div>
+      <div class="bundle-tile__price">
+        <span data-next-bundle-display="hasDiscount" class="bundle-tile__price-reg"><span data-next-bundle-display="originalPrice">--</span></span>
+        <span data-next-bundle-display="price" class="bundle-tile__price-cur">--</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+{%- comment -%}
+  Social share meta (Open Graph + Twitter Card). Included by base.html, base-presell.html
+  and base-landing.html so the three layouts never drift.
+  Title comes from the page `title`. Description/image: frontmatter `og_description` /
+  `og_image` win, then fall back to `campaign.description` / `campaign.og_image`.
+  Leave campaign.og_image "" (the default) to omit image tags until a real asset exists.
+{%- endcomment -%}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ title }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ title }}">
+{% assign og_desc = og_description | default: campaign.description %}
+{% if og_desc and og_desc != "" %}
+<meta property="og:description" content="{{ og_desc }}">
+<meta name="twitter:description" content="{{ og_desc }}">
+{% endif %}
+{% assign og_img = og_image | default: campaign.og_image %}
+{% if og_img and og_img != "" %}
+<meta property="og:image" content="{{ og_img }}">
+<meta name="twitter:image" content="{{ og_img }}">
+{% endif %}
+{% if campaign.store_name and campaign.store_name != "" %}
+<meta property="og:site_name" content="{{ campaign.store_name }}">
+{% endif %}

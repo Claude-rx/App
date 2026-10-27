@@ -1,0 +1,218 @@
+---
+title: "Secure checkout | SKINOFAB Adaptive Foundation Stick"
+page_type: checkout
+next_url: stick-special-1.html
+meta_tags:
+  next-funnel: "SKINOFAB Foundation Stick"
+  next-page-type: "checkout"
+  next-success-url: "/stick-funnel/stick-special-1/"
+# Apollo's single-step checkout (the flagship family) with the funnel's two packs, campaign packages 1 and 2
+# (tools/funnel/funnel.py). Every pack ships with Automatic Refills (both packages recur), said in the cards' summary
+# ({item.frequency}, cart-summary02) and above the button. The exit pop applies STICK10 (offer 5, 10% off the stick
+# packs). No coupon box: the post-purchase vouchers (STICK50 above all) must not be usable here.
+cart_summary_variant: "02"
+# the radios for the campaign's own methods only (card, PayPal, Klarna, Link; Apple Pay and PayPal as express buttons)
+payment_methods:
+  show_paypal: false      # PayPal and Apple Pay are the express buttons above (one surface each)
+  show_apple_pay: false
+  show_google_pay: false
+  show_affirm: false
+  show_twint: false
+  show_bancontact: false
+  show_ideal: false
+  show_sepa_debit: false
+  show_shop_pay: false
+selector_order_bump_variant: "none"
+order_bump_variant: "none"
+bundle_card_style: "product"
+checkout_reveal: false
+address_form:
+  label_style: inset
+  gated: true
+promo_banner:
+  emoji: "🎁"
+  highlight: "FREE Lymphatic Brush"
+  lead: "with"
+  strong: "2 sticks"
+  trail: "· Free shipping · 30-day money-back guarantee"
+product_heading:
+  title: "Adaptive Foundation Stick"
+  features:
+    - text: "Goes on white, adapts to fair to medium skin"
+    - text: "Kabuki brush built into the other end"
+    - text: "PDRN + peptides, made for skin after 45"
+    - text: "30-day money-back guarantee, even opened"
+reviews:
+  - title: "“It’s the perfect color match”"
+    body: "I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!"
+    author: "Lora Z."
+    verified: "Verified buyer of our liquid foundation"
+  - title: "“This by far is THE best”"
+    body: "I've ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn't love my wrinkles."
+    author: "Hope H."
+    verified: "Verified buyer of our liquid foundation"
+  - title: "“Matches perfectly”"
+    body: "I am 60 years old and don't wear much makeup. This product I love it is light weight and matches perfectly. This is mid afternoon even."
+    author: "Diane O."
+    verified: "Verified buyer of our liquid foundation"
+  - title: "“Feels like my skin”"
+    body: "Easy to apply, covers my blemishes lasts all day feels like my skin as in not heavy works well with my aged wrinkles. I’m 59."
+    author: "Jo-anne B."
+    verified: "Verified buyer of our liquid foundation"
+reviews_note: "Reviews of our Adaptive Peptide Foundation, the liquid that goes on white and adapts the same way. The stick is new at SKINOFAB."
+guarantee:
+  badge: "images/sf/guarantee.jpg"
+  title: "30-Day Money-Back Guarantee"
+  text: "Not your match? Wear it in your own daylight for 30 days; if it isn’t right for you, email hello@skinofab.com and we’ll refund you in full, even opened. You don’t have to send it back."
+styles:
+  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
+  - css/exit-intent-popup.css
+  - css/checkout-brand.css
+scripts:
+  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
+  - js/checkout.js
+  - js/sf-checkout.js
+  - js/payment-logos.js
+swiper_slides:
+  - src: "images/sf/g-one-stick.jpg"
+    alt: "A woman in her fifties holding the Adaptive Foundation Stick"
+  - src: "images/sf/g-duo-ends.jpg"
+    alt: "The stick open at both ends: the white cream and the kabuki brush"
+  - src: "images/sf/g-tones.jpg"
+    alt: "Three women with fair to medium skin, before and after the stick (AI illustration)"
+  - src: "images/sf/g-before-after.jpg"
+    alt: "Before and after the stick on dry, mature skin (AI illustration)"
+  - src: "images/sf/g-whats-inside.jpg"
+    alt: "What is inside: PDRN and peptides, hyaluronic acid, ceramides and squalane, soft-focus spheres"
+  - src: "images/sf/offer.jpg"
+    alt: "Two sticks and the free Lymphatic Brush"
+swiper_thumbs:
+  - src: "images/sf/g-one-stick.jpg"
+    alt: ""
+  - src: "images/sf/g-duo-ends.jpg"
+    alt: ""
+  - src: "images/sf/g-tones.jpg"
+    alt: ""
+  - src: "images/sf/g-before-after.jpg"
+    alt: ""
+  - src: "images/sf/g-whats-inside.jpg"
+    alt: ""
+  - src: "images/sf/offer.jpg"
+    alt: ""
+packages:
+  main_package: 2
+shipping_methods:
+  standard: 1
+bundles:
+  - id: "stick-2"
+    package_id: 2
+    quantity: 1
+    shipping_method: "standard"
+    selected: true
+    subtitle_text: "Then $47.00 every 56 days. Free shipping, and the brush is free"
+    badge_text: "Best value"
+    badge_pill_class: "os-card__label--pill-secondary"
+  - id: "stick-1"
+    package_id: 1
+    quantity: 1
+    shipping_method: "standard"
+    subtitle_text: "Then $37.00 every 28 days. Free shipping"
+refill_terms: "<strong>Automatic Refills.</strong> You pay today’s price now, then the same price again every 56 days for 2 sticks + brush, or every 28 days for 1 stick, until you cancel. We email you before every refill. To skip, delay or cancel, just email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a>: a person replies within one business day. No minimum, no fees, and every refill has the same 30-day money-back guarantee."
+exit_intent:
+  coupon_code: "STICK10"
+  popup_image: "images/sf/offer.jpg"
+  headline: "Wait!"
+  subheadline: "Before you go, take 10% off."
+  offer_title: "Your stick pack, 10% off today"
+  offer_label: "Save a further <strong>10% off</strong>"
+  offer_detail: "Takes 10% off the stick pack in today’s order. Refills stay at the pack’s price."
+  cta_label: "Apply my 10% off"
+---
+<div class="page-wrapper">
+  <div class="main-wrapper">
+    {% campaign_include 'promo-banner.html' promo_banner=promo_banner %}
+    {% campaign_include 'checkout-header.html' %}
+    <div class="section-checkout cc-gray">
+      <div class="container">
+        <div class="checkout-page-layout">
+          <div class="show-tablet">
+            {% campaign_include 'product-heading.html' product_heading=product_heading %}
+          </div>
+          <div class="checkout-wrapper">
+            <div class="checkout-layout__left">
+              <div class="checkout-layout__content">
+                <div class="checkout-layout__content-inner">
+                  <div class="checkout-media__wrapper">
+                    {% campaign_include 'swiper-gallery.html' main_slides=swiper_slides thumbs=swiper_thumbs variant='sw1' %}
+                  </div>
+                  <div class="hide-tablet-down">
+                    {% campaign_include 'reviews-slider.html' reviews=reviews %}
+                    <p class="sf-reviews-note">{{ reviews_note }}</p>
+                  </div>
+                  <div class="hide-tablet-down">
+                    {% campaign_include 'guarantee.html' guarantee=guarantee %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="checkout-layout__right">
+              <div class="checkout-layout__form">
+                <div class="checkout__form-container">
+                  <div class="hide-tablet">
+                    {% campaign_include 'product-heading.html' product_heading=product_heading %}
+                  </div>
+                  <div class="checkout-form">
+                    <form data-next-checkout="form" id="combo_form" method="post">
+                      <div class="form-content">
+                        <div class="form-sections">
+                          <div class="form-section grid-row-gap2 form-section--first">
+                            <h2 class="form-section__title">Step 1: Choose your pack</h2>
+                            {% campaign_include 'bundle-selector.html' selector_id='main' card_style=bundle_card_style packages=packages shipping_methods=shipping_methods bundles=bundles %}
+                          </div>
+                          <div data-next-component="shipping-form" class="form-sections">
+                            {% campaign_include 'customer-info-form.html' %}
+                            {% campaign_include 'shipping-address-form.html' %}
+                          </div>
+                          <div class="form-section form-section--last">
+                            <div class="form-section__header">
+                              <h2 class="form-section__title">Step 4: Payment</h2>
+                              <div class="form-section__subtitle">All transactions are secure and encrypted.</div>
+                            </div>
+                            {% campaign_include 'express-checkout.html' show_title=false %}
+                            {% campaign_include 'payment-methods.html' %}
+                          </div>
+                          <div class="form-section form-section--last">
+                            <div class="cart-box cart-box--card">
+                              {% campaign_include 'cart-summary02.html' %}
+                            </div>
+                          </div>
+                          <div class="sf-refill-terms" id="refill-terms">{{ refill_terms }}</div>
+                          {% capture disclaimer %}By placing your order you agree to Automatic Refills as described above, our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
+                          {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='30-DAY MONEY-BACK GUARANTEE · FREE SHIPPING' disclaimer=disclaimer %}
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="checkout-trust-bar">
+                    {% campaign_include 'payment-logos.html' show_secure=true %}
+                  </div>
+                  <div class="hide-tablet-up">
+                    {% campaign_include 'guarantee.html' guarantee=guarantee %}
+                  </div>
+                  <div class="hide-tablet-up">
+                    {% campaign_include 'reviews-slider.html' reviews=reviews %}
+                    <p class="sf-reviews-note">{{ reviews_note }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% campaign_include 'footer.html' %}
+</div>
+{% assign exit_image = exit_intent.popup_image | campaign_asset %}
+{% campaign_include 'exit-intent-popup.html' coupon_code=exit_intent.coupon_code popup_image=exit_image headline=exit_intent.headline subheadline=exit_intent.subheadline offer_title=exit_intent.offer_title offer_label=exit_intent.offer_label offer_detail=exit_intent.offer_detail cta_label=exit_intent.cta_label %}
+<script>if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => initSwiperGalleries()); } else { initSwiperGalleries(); }</script>
