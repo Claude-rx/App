@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVQLDCY0UVFR6PQDRP9BLL99ES",
+  "run_id": "MVQMM9YEOU4PK5ILN2K9DSJV38",
   "campaign_slug": "local-spec-1b7c62ea-589f-49eb-83f9-31869ed0c283",
   "local_spec_id": "1b7c62ea-589f-49eb-83f9-31869ed0c283",
   "public_route_slug": "stick-funnel",
   "campaign_ref_id": 2211,
   "spec_version": "5.0",
-  "spec_hash": "sha256:4a7f3cd6e41c4819da0bf7222ba0e2e56a283ad5a5763a65fb90a9851d21fc1a",
-  "started_at": "2026-10-27T11:17:58.344Z",
-  "completed_at": "2026-10-27T11:18:37.481Z",
-  "generated_at": "2026-10-27T11:18:37.507Z",
+  "spec_hash": "sha256:e083bd61d6ec505f5c85825b538fa75bf3e12c5cd175ecd10f2256272f346aa6",
+  "started_at": "2026-10-27T11:52:53.990Z",
+  "completed_at": "2026-10-27T11:53:31.579Z",
+  "generated_at": "2026-10-27T11:53:31.604Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -914,8 +914,8 @@
       "page": "checkout",
       "status": "manual_review",
       "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "id": "qc.tracking.url:run:url",
@@ -947,8 +947,8 @@
       "page": "checkout",
       "status": "manual_review",
       "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     }
   ],
   "cause_summary": {
@@ -956,14 +956,14 @@
     "surface": "qa",
     "total": 1,
     "counts": {
-      "caused_by_change": 1,
-      "pre_existing": 0,
+      "caused_by_change": 0,
+      "pre_existing": 1,
       "test_environment": 0,
       "upstream_drift": 0,
       "unknown": 0
     },
     "prior_run_id": "run_1793096559787_6f6967cd",
-    "prior_qa_attempt_run_id": "MVQJNS9RLG5QFB5OL858R501OF",
+    "prior_qa_attempt_run_id": "MVQLDCY0UVFR6PQDRP9BLL99ES",
     "comparison": "prior_run"
   }
 }

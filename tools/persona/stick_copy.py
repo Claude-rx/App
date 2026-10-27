@@ -186,7 +186,7 @@ def tabs():
         ('Does it work on my skin?',
          '<p>It’s made for skin after 45: drier, with redness, sun spots and fine lines. The cream, with ceramides, squalane '
          'and hyaluronic acid spheres, keeps dry skin comfortable, soft-focus spheres blur the look of lines and pores, and '
-         'the brush buffs it into a thin, even layer that doesn’t sit on top of texture.</p>'
+         'the brush buffs it into a thin, even layer made not to sit on top of texture.</p>'
          f'<p>{esc(SHADE_FAQ)}</p>'
          '<p>If your skin reacts easily, try it on a small area first. It contains salmon-derived DNA (PDRN): not for '
          'anyone with a fish allergy.</p>'),

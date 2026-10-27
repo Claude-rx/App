@@ -59,3 +59,18 @@
 /* sf-failsafe.js: the message when the SDK can't load the campaign (the page would otherwise stay blank) */
 .sf-failsafe { margin: 0; padding: 14px 16px; background: #fff4e5; border-bottom: 2px solid #e8a33d; color: #151515; font-size: 15px; line-height: 1.5; text-align: center; }
 .sf-failsafe a { color: inherit; text-decoration: underline; }
+/* sf-skip-europe.js: while the serum offer declines itself for a European address, show nothing of it */
+.sf-skipping .page-wrapper { visibility: hidden; }
+.sf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }  /* in the page (the SDK fills it), not shown */
+/* funnel review 2: the exit pop's button in the brand's black pill; the gallery smaller on phones and tablets, so
+   "Step 1: Choose your pack" is on the first screen */
+.exit-intent-popup__cta { background: #151515 !important; color: #fff !important; border-radius: 999px; }
+@media (max-width: 991px) {
+  .checkout-media__wrapper { max-width: 360px; margin: 0 auto; }
+}
+@media (max-width: 479px) {
+  .checkout-media__wrapper { max-width: 230px; }
+  .checkout-media__wrapper [swiper="slider-thumbs"], .checkout-media__wrapper [swiper="prev-button"], .checkout-media__wrapper [swiper="next-button"] { display: none; }
+}
+.exit-intent-popup__cta { border: 0 !important; }
+.exit-intent-popup__cta::after { filter: invert(1); }

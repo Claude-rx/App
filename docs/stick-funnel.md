@@ -19,11 +19,17 @@ Accept and decline both go to the next offer; offer 4 goes to the thank-you page
 
 ## Before launch (owner)
 
-1. **Allow the store's domain on the campaign (one dashboard step, required).** Campaigns App -> campaign
-   **2211 "SKINOFAB Foundation Stick Funnel"** -> Settings -> Allowed Domains -> add `skinofab.29next.store`
-   (Production). Until then the browser blocks the SDK's calls (CORS) on the live pages: prices, checkout and offers
-   stay empty. `localhost` is already a Development domain, which is how the funnel was tested. The Admin API has no
-   endpoint for this setting. Then run the live check (below, "Checks").
+1. **Serve the funnel on a domain the campaign allows (required).** The Campaigns App allows
+   **`try.skinofab.com`** (Production, added by the owner 27 Oct 2026); the API answers it, and refuses
+   `skinofab.29next.store` and `skinofab.com`, so on those the browser blocks the SDK (CORS) and the checkout and
+   offers can't load (they say so on the page after 10 s, `sf-failsafe.js`). `try.skinofab.com` still needs:
+   - DNS at GoDaddy (skinofab.com): a CNAME record, name `try`, value `dns.29next.store` (what `skinofab.com`
+     already points to);
+   - NEXT store -> Settings -> Domains -> add `try.skinofab.com` (not as the primary domain).
+   Then the funnel is https://try.skinofab.com/10-reasons-foundation-stick/ and so on (the pages' links are
+   root-relative, so nothing is rebuilt). Alternative with no DNS change: add `skinofab.com` (already the store's) as
+   a Production domain in the Campaigns App. The Admin API has no endpoint for either setting. Then run the live
+   check (below, "Checks") on that host.
 2. **Cancel the 5 QA test orders**: 101436, 101437, 101439, 101440, 101445 (test card, no charge; the checkout with
    offers accepted and declined). They are real orders in the store and each started a subscription.
 3. **Upsell 4's discount.** The brief named the serum without a discount; it is offered at 20% off (SERUM20) like
@@ -44,6 +50,11 @@ Accept and decline both go to the next offer; offer 4 goes to the thank-you page
    accepts gets 4 sticks every 56 days; offer 2's brush refills every 90 days. Each page states its own renewal by
    its button. If you'd rather have offer 1 ride the order's own cycle, or show offer 2 only to 1-stick buyers (2-stick
    buyers already get a brush), that is a campaign change plus a page rule.
+
+8. **Klarna and Link with refills.** Every package renews, and Klarna and Link are offered at checkout. Confirm with
+   NEXT that an order paid with Klarna (or Link) can be charged again for its refills; if not, take them off the
+   campaign's payment methods. The one-click offers are safe either way: an order the platform marks as unable to take
+   them (`supports_post_purchase_upsells`) skips straight to the thank-you page (`sf-offer-gate.js`).
 
 ## Commerce (Campaigns App campaign 2211)
 
@@ -72,7 +83,12 @@ them live and the pages are checked against them on every build.
   the SDK's real `{discount}`, never a fixed "50%".
 - Shipping: one method (ref 1), free. Payment: card, Klarna, Link, PayPal; express PayPal and Apple Pay.
 - The post-purchase codes never appear on the checkout, and the checkout has no coupon box, so they can't be typed
-  in early.
+  in early. The offers' names are the shopper's ("10% off your stick pack today", "50% off your extra stick (first
+  charge)"...): the order summary and receipt show them.
+- Offer 4 (the serum) is not shown for delivery in the EU, the EEA, Switzerland or the UK: its EGF (sh-Oligopeptide-1)
+  is not allowed in cosmetics there (`docs/egf-nad-serum.md`); such an order goes on to the thank-you page.
+- Crossed-out prices compare with buying single sticks in this funnel (16 CFR 233): the 2-stick pack is $47 against two
+  1-stick packs at $37 ("SAVE $27"); the 1-stick pack has none.
 
 ## Versus the Facelove listicle
 
@@ -90,8 +106,9 @@ The listicle follows https://facelove-cosmetics.com/pages/10-reasons-why-foundat
 - **Claims** follow the stick's spec rules (SKF-ADFS-001 section 8, see `docs/foundation-stick.md`): fair to medium
   skin, not "every skin tone"; "made not to settle", not "won't settle"; no SPF, no percentages, no "reverses aging",
   no doctor or expert endorsements, no scarcity counts. `check_funnel.py` fails the build on any of them.
-- **Reviews**: the store's real foundation reviews, labelled "Verified buyer of our liquid foundation" on every card
-  (Facelove shows stick reviews).
+- **Reviews**: the liquid foundation's published reviews from the earlier store, each card labelled "Verified buyer of our
+  liquid foundation, from our earlier store", and only ones about the colour match (no wear-time or wrinkle claims a
+  stick review couldn't back). Facelove shows stick reviews.
 - **Headline**: Facelove's "10 Reasons Why..." form, kept as the brief asked; its "Look 35" and "Age-Reversing" are not.
 - **Prices and terms**: SKINOFAB's subscription offer, with the refill terms stated on every page that sells.
 

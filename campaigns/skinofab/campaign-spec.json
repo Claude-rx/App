@@ -503,7 +503,7 @@
   "offers": [
     {
       "ref_id": 1,
-      "name": "Adaptive Foundation Stick - 50%",
+      "name": "50% off your extra stick (first charge)",
       "type": "voucher",
       "code": "STICK50",
       "condition": {
@@ -541,7 +541,7 @@
     },
     {
       "ref_id": 2,
-      "name": "The Lymphatic Brush - 20%",
+      "name": "20% off the Lymphatic Brush (first charge)",
       "type": "voucher",
       "code": "BRUSH20",
       "condition": {
@@ -579,7 +579,7 @@
     },
     {
       "ref_id": 3,
-      "name": "PDRN Plumping Balm - 20%",
+      "name": "20% off the PDRN Plumping Balm (first charge)",
       "type": "voucher",
       "code": "BALM20",
       "condition": {
@@ -617,7 +617,7 @@
     },
     {
       "ref_id": 4,
-      "name": "EGF + NAD+ Firming Serum - 20%",
+      "name": "20% off the EGF + NAD+ Firming Serum (first charge)",
       "type": "voucher",
       "code": "SERUM20",
       "condition": {
@@ -655,7 +655,7 @@
     },
     {
       "ref_id": 5,
-      "name": "Adaptive Foundation Stick - Exit - 10%",
+      "name": "10% off your stick pack today",
       "type": "voucher",
       "code": "STICK10",
       "condition": {

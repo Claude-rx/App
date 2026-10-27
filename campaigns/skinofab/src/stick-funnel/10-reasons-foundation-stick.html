@@ -19,7 +19,7 @@ meta_tags:
 offer_bar: "FREE Lymphatic Brush with 2 sticks · Free shipping"
 offer_bar_short: "FREE brush with 2 sticks"
 headline: "10 Reasons Why Women Over 45 Look Fresher With This ‘Shade-Adapting’ Foundation Stick"
-subhead: "It goes on white and meets your own skin tone as you blend, with the brush built into the other end: no shade to guess, no sponge, no cakey lines."
+subhead: "It goes on white and meets your own skin tone as you blend, with the brush built into the other end: no shade to guess, no sponge, made not to look cakey."
 intro:
   - "There are thousands of foundations promising younger-looking skin. Almost none of them were made for skin after 45: drier, a little redder, with a tone that shifts from the bathroom light to daylight."
   - "The SKINOFAB Adaptive Foundation Stick was. It won’t make you look 30, and no honest brand will tell you it does. What it does is even out the look of your skin in about a minute, so the rest of you shows. Here are the 10 reasons women past 45 are trying it."
@@ -64,7 +64,7 @@ reasons:
       - "It’s the complaint we hear most about color-changing foundations: right at 8 AM, orange by lunch."
       - "The stick’s pigments are made not to turn orange or grey in daylight, and its creamy layer is made to move with your skin instead of drying on top of it. In the afternoon, buff the brush end over your nose and chin and it looks fresh again, with no more product."
     quote: "It’s the only color changing foundation that is a perfect match and doesn’t oxidized and look orange at the end of the day."
-    quote_by: "Cassandra K., verified buyer of our liquid foundation"
+    quote_by: "Cassandra K., verified buyer of our liquid foundation, from our earlier store"
     after: "Good to know: it has no SPF, so keep wearing your daily sunscreen underneath."
   - title: "It’s Skincare in a Stick: PDRN, Peptides and Volufiline™"
     image: "images/sf/plate.jpg"
@@ -94,7 +94,7 @@ reasons:
     ratings: true
     paras:
       - "The stick is new at SKINOFAB, so it has no reviews of its own yet."
-      - "What it does have is a sister: our Adaptive Peptide Foundation, the liquid that goes on white and adapts to your tone the same way. 9,855 women have reviewed it, 4.8 out of 5 on average."
+      - "What it does have is a sister: our Adaptive Peptide Foundation, the liquid that goes on white and adapts to your tone the same way. At our earlier store, 9,855 women reviewed it, 4.8 out of 5 on average."
       - "The stick carries the same adapting color in a solid cream made for dry skin, with the kabuki brush built into the other end."
   - title: "A 30-Day Money-Back Guarantee"
     image: "images/sf/guarantee.jpg"
@@ -112,23 +112,29 @@ cta:
 reviews:
   stars: "4.8/5 · 9,855 reviews of our liquid foundation"
   title: "What Women Are Saying"
-  lead: "Reviews of our Adaptive Peptide Foundation, the liquid that goes on white and adapts the same way, with the customers’ own photos. The stick is new at SKINOFAB: its own reviews join these as buyers write them."
+  lead: "Reviews of our Adaptive Peptide Foundation, the liquid that goes on white and adapts the same way, written by buyers at our earlier store, with their own photos. The stick is new at SKINOFAB: its own reviews join these as buyers write them."
   items:
     - name: "Lora Z., 65"
       photo: "images/sf/review-lora.jpg"
       text: "I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!"
-    - name: "Hope H., 74"
-      photo: "images/sf/review-hope.jpg"
-      text: "I've ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn't love my wrinkles."
-    - name: "Diane O., 60"
-      photo: "images/sf/review-diane.jpg"
-      text: "I am 60 years old and don't wear much makeup. This product I love it is light weight and matches perfectly. This is mid afternoon even."
+    - name: "Susan B., 70"
+      photo: "images/sf/review-susan.jpg"
+      text: "Lovely smooth finish and colour is great on my 70 year old skin"
+    - name: "Mary D."
+      photo: "images/sf/review-mary.jpg"
+      text: "First time trying & I absolutely love it. It blends into my skin perfectly leaving no trace of white just a blooming tone to my mature skin. Im so happy I bought it"
 ratings:
   average: "4.8"
   count: "9,855"
   total: 9855
   rows: [["5", 7719], ["4", 2132], ["3", 0], ["2", 1], ["1", 3]]
-  note: "Every review of our Adaptive Peptide Foundation, the liquid, as of October 2026."
+  note: "The published reviews of our Adaptive Peptide Foundation, the liquid, from our earlier store (imported October 2026)."
+# Facelove's "Our Mission" block before the footer, in the brand's own words (stick_copy.TWIN['note'])
+mission:
+  title: "Made for the mornings you want to look like yourself, just fresher"
+  paras:
+    - "We make SKINOFAB for skin after 45. The women we talk to don’t want more makeup: they want the foundation they already wear to stop turning orange, stop settling into lines and stop needing three tools."
+    - "That’s why we put a foundation that adapts to your tone and a kabuki brush into one stick: twist it up, dot it on, buff it in. It won’t make you look 30, and we won’t pretend it will."
 closing: "If you made it to the end, you deserve to love your skin at any age!"
 ---
 {% assign offer_link = next_url | campaign_link %}
@@ -177,16 +183,26 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
       {% if r.bullets %}<ul class="sf-ticks">{% for b in r.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
       {% if r.quote %}<blockquote class="sf-quote"><p>“{{ r.quote }}”</p><cite>{{ r.quote_by }}</cite></blockquote>{% endif %}
       {% if r.after %}<p>{{ r.after }}</p>{% endif %}
-      {% if r.video %}
-      <figure class="sf-video">
-        <video data-sf-lazy muted loop playsinline preload="none" poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="864" height="1080" aria-label="Illustration: the white cream’s capsules break as the brush buffs it in and the color meets her skin tone">
-          <source src="{{ 'images/sf/science.webm' | campaign_asset }}" type="video/webm">
-          <source src="{{ 'images/sf/science.mp4' | campaign_asset }}" type="video/mp4">
-        </video>
-        <figcaption>How it works: the capsules break as you buff and the color meets your tone (illustration).</figcaption>
-      </figure>
-      {% endif %}
     </div>
+    {% if r.video %}
+    {% comment %} its own row under the reason, the width of both columns (funnel review 2: in the text column it left
+       an empty space under the photo) {% endcomment %}
+    <figure class="sf-video-row">
+      <video data-sf-lazy muted loop playsinline preload="none" poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="864" height="1080" aria-label="Illustration: the white cream’s capsules break as the brush buffs it in and the color meets her skin tone">
+        <source src="{{ 'images/sf/science.webm' | campaign_asset }}" type="video/webm">
+        <source src="{{ 'images/sf/science.mp4' | campaign_asset }}" type="video/mp4">
+      </video>
+      <figcaption>
+        <strong>How it works</strong>
+        <ol class="sf-steps">
+          <li><strong>It goes on white</strong>The color waits in tiny capsules in the cream.</li>
+          <li><strong>Buff, and the capsules break</strong>Small circles with the brush end open them, and the color shifts toward your own tone.</li>
+          <li><strong>Soft-focus spheres</strong>Round silica and boron nitride powders scatter the light.</li>
+        </ol>
+        <span class="sf-video-row__note">The video is an illustration.</span>
+      </figcaption>
+    </figure>
+    {% endif %}
   </section>
   {% endfor %}
 
@@ -212,10 +228,17 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
         <h3>{{ t.name }}</h3>
         <p class="sf-review__stars" aria-label="5 out of 5 stars">★★★★★</p>
         <p class="sf-review__text">“{{ t.text }}”</p>
-        <p class="sf-review__who">Verified buyer of our liquid foundation</p>
+        <p class="sf-review__who">Verified buyer of our liquid foundation, from our earlier store</p>
       </article>
       {% endfor %}
     </div>
+  </section>
+
+  <section class="sf-mission">
+    <p class="sf-eyebrow">Our mission</p>
+    <h2>{{ mission.title }}</h2>
+    {% for p in mission.paras %}<p>{{ p }}</p>{% endfor %}
+    <p class="sf-mission__sign"><strong>The SKINOFAB team</strong> · Made for skin after 45</p>
   </section>
 
   <section class="sf-closing">

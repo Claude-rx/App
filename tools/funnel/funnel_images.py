@@ -34,8 +34,9 @@ OUT = ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'ima
 INK, PAPER, SOFT, CREAM = (21, 21, 21), (255, 255, 255), (96, 96, 96), (246, 242, 236)
 # the three testimonials' own photos (review id -> crop box as fractions of the photo: left, top, right, bottom)
 # (review id, where her face is across and down the photo: the square crop keeps her whole head)
-TESTIMONIAL_PHOTOS = {'lora': ('zjPC7IPmY-0', (0.5, 0.2)), 'hope': ('DCqk83pSC-0', (0.62, 0.2)),
-                      'diane': ('Eu0eKzf2sd-0', (0.5, 0.2))}
+# (funnel review 2: reviews that speak to the colour match only; no wear-time or wrinkle claims)
+TESTIMONIAL_PHOTOS = {'lora': ('zjPC7IPmY-0', (0.5, 0.2)), 'susan': ('yguFL8u9n-0', (0.5, 0.36)),
+                      'mary': ('ZTOdiyg6x-0', (0.5, 0.4))}
 
 
 def save(im, name, size=None, q=82):
@@ -197,19 +198,6 @@ def offer_card():
     save(im, 'offer')
 
 
-def labelled_ba(path, out, size=1080):
-    """A product's own before/after photo with the funnel's labels: Before / After and the AI line on a white band
-    at its foot, over the store photo's small "illustrative purposes" caption (funnel review 1: the brush's
-    before/after carried only that caption)."""
-    im = ImageOps.fit(Image.open(path).convert('RGB'), (size, size), Image.LANCZOS)
-    d = ImageDraw.Draw(im)
-    d.rectangle((0, size - 150, size, size), fill=PAPER)
-    d.text((34, size - 88), 'Before', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
-    d.text((size // 2 + 34, size - 88), 'After', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
-    P.note(d, (34, size - 30), P.AI_NOTE, anchor='ls', size=38)
-    save(im, out)
-
-
 def pack_images():
     """The checkout's pack cards (funnel review 1: both showed the campaign's one product photo): one stick, and two
     sticks with the free brush, on white, no words (they show at 64 px)."""
@@ -253,7 +241,7 @@ def copies():
         # the special offers
         'up1-hold': STICK / 'hold-cheek.jpg',
         'up2-brush': BRUSH / 'card.jpg', 'up2-how': BRUSH / 'how-to-use.jpg',
-        'up3-balm': BALM / 'card.jpg', 'up3-hold': BALM / 'hold-cheek.jpg', 'up3-ba': BALM / 'before-after.jpg', 'up3-inside': BALM / 'whats-inside.jpg',
+        'up3-balm': BALM / 'card.jpg', 'up3-hold': BALM / 'hold-cheek.jpg', 'up3-inside': BALM / 'whats-inside.jpg',
         'up4-serum': SERUM / 'card.jpg', 'up4-hold': SERUM / 'hold-cheek.jpg', 'up4-inside': SERUM / 'whats-inside.jpg',
     }
     for name, path in plain.items():
@@ -282,5 +270,6 @@ if __name__ == '__main__':
     pack_images()
     testimonials(sys.argv[1] if len(sys.argv) > 1 else None)
     copies()
-    labelled_ba(BRUSH / 'ba-puffy.jpg', 'up2-ba')      # (the serum's before/after stays on its own page: a filter can't
-                                                        # honestly show firming, so offer 4 shows the bottle, her and the formula)
+    # (no before/after on the special offers, funnel review 2: a brush's or a balm's "after" overstated the result, and
+    # a filter can't honestly show depuffing, plumping or firming; each offer shows the product, a woman with it and
+    # its formula or how-to)

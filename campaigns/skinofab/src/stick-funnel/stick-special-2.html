@@ -17,8 +17,10 @@ scripts:
   - js/upsells.js
   - js/payment-logos.js
   - js/sf-failsafe.js
+  - js/sf-offer-gate.js
 announcement_text: "Offer 2 of 4 · Your order is placed"
 announcement_variant: dark
+thank_you_url: "/stick-funnel/stick-thank-you/"
 upsell_hero:
   variant: band
   title: "Add a 3-minute morning ritual"
@@ -69,11 +71,9 @@ ships_info:
 swiper_slides:
   - { src: "images/sf/up2-brush.jpg", alt: "The Lymphatic Brush and its SKINOFAB travel case" }
   - { src: "images/sf/up2-how.jpg", alt: "How to use the Lymphatic Brush: neck, jaw and cheeks, under the eyes" }
-  - { src: "images/sf/up2-ba.jpg", alt: "A puffy morning face, and the same face after a gentle massage (AI illustration)" }
 swiper_thumbs:
   - { src: "images/sf/up2-brush.jpg", alt: "" }
   - { src: "images/sf/up2-how.jpg", alt: "" }
-  - { src: "images/sf/up2-ba.jpg", alt: "" }
 upsell_guarantees:
   - variant: row
     icon: shield
@@ -95,6 +95,8 @@ closing_cta:
 ---
 {% comment %} Apollo's single-offer upsell: announcement, header, hero band, the offer (the one SDK offer), body, closing card
      (its accept / skip proxy the offer's own). {% endcomment %}
+{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">

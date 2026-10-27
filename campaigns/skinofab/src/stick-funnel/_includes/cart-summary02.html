@@ -1,3 +1,4 @@
+{%- comment -%} SKINOFAB: the summary opens on load (funnel review 2: the total and the exit discount were out of sight). {%- endcomment -%}
 {% comment %}
   next_component: order-summary
   next_version: 1.0.0
@@ -38,7 +39,7 @@
     - bundle-selector (drives cart contents this summary renders)
     - submit-block (acts on the totals shown here)
 {% endcomment %}
-<div data-next-catalog-component="order-summary" data-initial-state="closed" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary__accordion">
+<div data-next-catalog-component="order-summary" data-initial-state="open" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary__accordion">
   <div data-next-accordion-trigger="order-summary" class="order-summary__accordion-trigger">
     <div class="order-summary__accordion-inner">
       <div class="order-summary__accordion-head">

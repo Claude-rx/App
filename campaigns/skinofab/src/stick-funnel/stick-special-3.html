@@ -17,13 +17,15 @@ scripts:
   - js/upsells.js
   - js/payment-logos.js
   - js/sf-failsafe.js
+  - js/sf-offer-gate.js
 announcement_text: "Offer 3 of 4 · Your order is placed"
 announcement_variant: dark
+thank_you_url: "/stick-funnel/stick-thank-you/"
 upsell_hero:
   variant: band
-  title: "For the lines foundation can’t fill"
+  title: "For the look of tired under-eyes"
   offer: "Add the PDRN Plumping Balm for {price} ({discount} off)"
-  suboffer: "The 10-second pick-me-up for hollow-looking under-eyes, smile lines and the lines around your lips."
+  suboffer: "A melting balm you press on where your face looks tired: under the eyes, along smile lines, around the lips."
 upsell_layout:
   style: card
   boxed: true
@@ -58,7 +60,7 @@ upsell_offer:
   fallback_discount: "25%"
 offer_bullets:
   - "PDRN, Volufiline™, collagen and hyaluronic acid in a melting balm"
-  - "Swipe it on, press it in: skin looks smoother, fuller and rested in seconds"
+  - "Swipe it on, press it in: a soft, smooth, rested look over or under your foundation"
   - "A black stick like your foundation, made for your bag"
   - "10 g, about a month of daily use"
 ships_info:
@@ -68,12 +70,10 @@ ships_info:
 swiper_slides:
   - { src: "images/sf/up3-balm.jpg", alt: "The PDRN Plumping Balm stick" }
   - { src: "images/sf/up3-hold.jpg", alt: "A woman in her fifties holding the PDRN Plumping Balm" }
-  - { src: "images/sf/up3-ba.jpg", alt: "Under-eyes before and after the balm (AI illustration)" }
   - { src: "images/sf/up3-inside.jpg", alt: "What is inside the balm: PDRN, Volufiline and collagen with hyaluronic acid" }
 swiper_thumbs:
   - { src: "images/sf/up3-balm.jpg", alt: "" }
   - { src: "images/sf/up3-hold.jpg", alt: "" }
-  - { src: "images/sf/up3-ba.jpg", alt: "" }
   - { src: "images/sf/up3-inside.jpg", alt: "" }
 upsell_guarantees:
   - variant: row
@@ -82,7 +82,7 @@ upsell_guarantees:
     text: "Love it, or email us within 30 days of delivery for a full refund, even opened."
 upsell_body:
   - type: features
-    title: "Made for the spots foundation can’t fix"
+    title: "Three places to press it on"
     text: "Press it on where your face looks tired, over or under your foundation."
     items:
       - { title: "Under the eyes", text: "Where skin looks hollow and shadowed by the afternoon." }
@@ -96,6 +96,8 @@ closing_cta:
 ---
 {% comment %} Apollo's single-offer upsell: announcement, header, hero band, the offer (the one SDK offer), body, closing card
      (its accept / skip proxy the offer's own). {% endcomment %}
+{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">

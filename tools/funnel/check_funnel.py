@@ -45,6 +45,13 @@ FORBIDDEN = [
     (r"order isn[’']t complete", '"your order isn\'t complete" after the order is placed'),
     (r"\bdon[’']t close this page\b", 'pressure: "don\'t close this page"'),
     (r'\bfrom 10 ?AM\b.{0,20}\b10 ?PM\b', '12-hour wear'),
+    # funnel review 2: the reviews are the liquid's published ones from the earlier store, not "every review"; no
+    # "further" discount where there was none; the balm is no filler
+    (r'\bevery review\b', '"every review" (the imported reviews are the published ones)'),
+    (r'\bsave a further\b', '"a further" discount with no first one'),
+    (r'\bfuller\b.{0,30}\bin seconds\b', 'instant plumping'),
+    (r"\blines foundation can[’']t fill\b", 'filling lines'),
+    (r'\bno cakey lines\b', 'unhedged "no cakey lines"'),
 ]
 SPF_OK = re.compile(r'(?:no|not a|has no|without|doesn[’\']t have|does it have)\s+(?:an?\s+)?SPF|SPF\?|your (?:daily )?(?:SPF|sunscreen)|over your SPF', re.I)
 problems = []
@@ -165,6 +172,10 @@ for p in F.PAGES:
         ctx = t[max(0, m.start() - 24):m.end() + 2]
         if not SPF_OK.search(ctx): fail(p['id'], f'SPF named outside a "no SPF" line: "{ctx}"')
     if 'AI illustration' not in t and p['id'] in ('listicle', 'offer'): fail(p['id'], 'before/after shown without the AI-illustration label')
+    # every review card says whose review it is and where it was written (the liquid's, at the earlier store)
+    h = html(p['id'])
+    for who in re.findall(r'class="(?:sf-review__who|checkout-review__verified)">([^<]*)<', h):
+        if 'liquid foundation' not in who or 'earlier store' not in who: fail(p['id'], f'review card labelled "{who}"')
 
 if problems:
     print(f'check_funnel: {len(problems)} problem(s)'); print('\n'.join('  ' + x for x in problems)); sys.exit(1)
