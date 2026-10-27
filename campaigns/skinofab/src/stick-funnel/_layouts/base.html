@@ -6,6 +6,10 @@
     {% comment %} Social share meta {% endcomment %}
     {% campaign_include 'meta-social.html' %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  {% comment %} SKINOFAB: the campaign allows one domain (campaign.funnel_host, the Campaigns App's Allowed Domain): the
+     SDK's calls fail from any other host the store answers on (skinofab.29next.store, skinofab.com), so a visit there
+     goes to the same page on the funnel's host. Production builds only (local proof runs on localhost). {% endcomment %}
+  {% if environment != 'development' and campaign.funnel_host and campaign.funnel_host != "" %}<script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })({{ campaign.funnel_host | json }});</script>{% endif %}
 
     {% comment %} Resource hints: SDK CDN + campaign API + next-page prefetch (accept + decline paths on upsells;
          on a checkout step or select page, the next step rather than next_url, which is where a completed order goes).

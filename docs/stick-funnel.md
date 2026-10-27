@@ -1,37 +1,38 @@
 # The Adaptive Foundation Stick funnel
 
-A full subscription funnel for the Adaptive Foundation Stick, served by the store itself:
+A full subscription funnel for the Adaptive Foundation Stick, served by the store itself on **try.skinofab.com**:
 
     listicle  ->  product page  ->  checkout  ->  special offers 1-4 (post-purchase, one click)  ->  thank you
 
 | Page | Live URL | What it does |
 |---|---|---|
-| Listicle (entry) | https://skinofab.29next.store/10-reasons-foundation-stick/ | "10 Reasons Why Women Over 45 Look Fresher With This 'Shade-Adapting' Foundation Stick": Facelove's listicle structure, SKINOFAB product and images |
-| Product page | https://skinofab.29next.store/foundation-stick-offer/ | gallery, 2 pack cards ($37 / 1 stick, $47 / 2 sticks + free Lymphatic Brush), refill terms, guarantee, science video, FAQ |
-| Checkout | https://skinofab.29next.store/stick-checkout/ | Apollo checkout, 2 pack cards (2-pack preselected), express PayPal / Apple Pay, Klarna, Link, exit pop STICK10 |
-| Special offer 1 | https://skinofab.29next.store/stick-special-1/ | one more stick, 50% off the first charge |
-| Special offer 2 | https://skinofab.29next.store/stick-special-2/ | the Lymphatic Brush + case, 20% off |
-| Special offer 3 | https://skinofab.29next.store/stick-special-3/ | the PDRN Plumping Balm, 20% off |
-| Special offer 4 | https://skinofab.29next.store/stick-special-4/ | the EGF + NAD+ Firming Serum, 20% off |
-| Thank you | https://skinofab.29next.store/stick-thank-you/ | receipt (the order and every accepted offer) and next steps |
+| Listicle (entry) | https://try.skinofab.com/10-reasons-foundation-stick/ | "10 Reasons Why Women Over 45 Look Fresher With This 'Shade-Adapting' Foundation Stick": Facelove's listicle structure, SKINOFAB product and images |
+| Product page | https://try.skinofab.com/foundation-stick-offer/ | gallery, 2 pack cards ($37 / 1 stick, $47 / 2 sticks + free Lymphatic Brush), refill terms, guarantee, science video, FAQ |
+| Checkout | https://try.skinofab.com/stick-checkout/ | Apollo checkout, 2 pack cards (2-pack preselected), express PayPal / Apple Pay, Klarna, Link, exit pop STICK10 |
+| Special offer 1 | https://try.skinofab.com/stick-special-1/ | one more stick, 50% off the first charge |
+| Special offer 2 | https://try.skinofab.com/stick-special-2/ | the Lymphatic Brush + case, 20% off |
+| Special offer 3 | https://try.skinofab.com/stick-special-3/ | the PDRN Plumping Balm, 20% off |
+| Special offer 4 | https://try.skinofab.com/stick-special-4/ | the EGF + NAD+ Firming Serum, 20% off |
+| Thank you | https://try.skinofab.com/stick-thank-you/ | receipt (the order and every accepted offer) and next steps |
 
 Accept and decline both go to the next offer; offer 4 goes to the thank-you page. Every page is `noindex`.
 
+**Proven live (27 Oct 2026):** test order **101449** on https://try.skinofab.com: checkout 2 sticks + brush $47, offer 1
+accepted ($18), offer 2 declined ($19 shown), offer 3 accepted ($15), offer 4 declined ($22 shown), thank-you page with
+each line's renewal; order total $80.00, confirmed by the campaign API (`tools/funnel/live_order.mjs`).
+
 ## Before launch (owner)
 
-1. **Serve the funnel on a domain the campaign allows (required).** The Campaigns App allows
-   **`try.skinofab.com`** (Production, added by the owner 27 Oct 2026); the API answers it, and refuses
-   `skinofab.29next.store` and `skinofab.com`, so on those the browser blocks the SDK (CORS) and the checkout and
-   offers can't load (they say so on the page after 10 s, `sf-failsafe.js`). `try.skinofab.com` still needs:
-   - DNS at GoDaddy (skinofab.com): a CNAME record, name `try`, value `dns.29next.store` (what `skinofab.com`
-     already points to);
-   - NEXT store -> Settings -> Domains -> add `try.skinofab.com` (not as the primary domain).
-   Then the funnel is https://try.skinofab.com/10-reasons-foundation-stick/ and so on (the pages' links are
-   root-relative, so nothing is rebuilt). Alternative with no DNS change: add `skinofab.com` (already the store's) as
-   a Production domain in the Campaigns App. The Admin API has no endpoint for either setting. Then run the live
-   check (below, "Checks") on that host.
-2. **Cancel the 5 QA test orders**: 101436, 101437, 101439, 101440, 101445 (test card, no charge; the checkout with
-   offers accepted and declined). They are real orders in the store and each started a subscription.
+1. **The domain (done, 27 Oct 2026).** The funnel's host is **`try.skinofab.com`** (`funnel.FUNNEL_HOST`): a
+   Production domain in the Campaigns App (the only one the campaign's API answers), a CNAME `try` ->
+   `dns.29next.store` at GoDaddy, and a domain of the NEXT store (SSL by the store). The store answers on its other
+   domains too (skinofab.29next.store, skinofab.com), where the SDK is refused (CORS): every funnel page sends a visit
+   there to the same page on try.skinofab.com, path and query kept (production builds only), and the checkout,
+   offers and thank-you page say so if the SDK still can't load (`sf-failsafe.js`). Policy links point to
+   try.skinofab.com. To move the funnel to another domain: allow it in the Campaigns App, link it to the store, set
+   `FUNNEL_HOST` and `funnel_host` / `store_*` in `_data/campaigns.json`, run `campaign_spec.py`, rebuild.
+2. **Cancel the 6 QA test orders**: 101436, 101437, 101439, 101440, 101445 (local QA) and 101449 (the live run) (test
+   card, no charge, flagged as tests). They are real orders in the store and each started a subscription.
 3. **Upsell 4's discount.** The brief named the serum without a discount; it is offered at 20% off (SERUM20) like
    offers 2 and 3 ($22 instead of $27.95). For full price, offer 4 would come off `special-4` in `funnel.py` and
    the page would show the package price (a small change in `upsell_pages.py` and `check_funnel.py`).
@@ -138,6 +139,7 @@ hand.
 | `store_pages.py` | creates or updates the 8 store pages that render those templates (Admin API, `$NEXT_API_TOKEN`) |
 | `check_funnel.py` | offline checks (below); the store build fails on any problem |
 | `funnel_check.mjs` | Playwright run of every page at 390 and 1440: screenshots, console errors, overflow, live prices |
+| `live_order.mjs` | one real test order on the live host: checkout with NEXT's test card, each offer accepted or declined, the receipt's lines and renewals |
 | `design_source.py` | the design-source manifest Campaigns OS reads |
 
 ### Rebuild and deploy
@@ -167,13 +169,19 @@ compiles theme CSS with libsass, which rejects `min()`/`max()` with mixed units,
   offer page adds its own package with its own voucher (upsell-scoped, never the live cart), states its renewal and
   falls back to its landed price; the product page's packs match the campaign; theme templates generated, with every
   asset on disk; and the claims rules above.
-- `node tools/funnel/funnel_check.mjs <base-url> <out-dir> [--served]`: `http://127.0.0.1:<port>/stick-funnel/`
-  for the local build, `https://skinofab.29next.store --served` for the live pages (after step 1 above).
+- `node tools/funnel/funnel_check.mjs <base-url> <out-dir> [--served]`: `http://127.0.0.1:<port>` for the local
+  build, `https://try.skinofab.com --served` for the live pages.
+- `node tools/funnel/live_order.mjs https://try.skinofab.com <out-dir> [--path accept,decline,accept,decline]`: one
+  real test order through the live funnel (it lands in the store as a test order: cancel it). Campaigns OS's `qa run`
+  can't do this on the store's host yet: it always adds the Page Kit slug to the URL, though the store serves the pages
+  at the site root (logged as workflow finding wf_1793106901837_7d97c164).
 
 ### Campaigns OS
 
 The funnel went through the Campaigns OS 1.60.0 lifecycle (brief, build, theme, Page Kit parity, polish capture,
-deploy, QA resolve, QA run with 5 test orders): verdict **ready_with_exceptions**, commercial parity pass. Run it from
+deploy, QA resolve, QA run with 5 test orders on the local build; after each review round again, without orders):
+verdict **ready_with_exceptions** (143 pass; the exception is offer coverage in a run without orders), commercial
+parity pass. Run it from
 `campaigns/skinofab` with:
 
     export LANG=C.UTF-8 CAMPAIGNS_OS_TELEMETRY=off NODE_USE_ENV_PROXY=1

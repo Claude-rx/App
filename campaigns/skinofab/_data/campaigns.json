@@ -5,15 +5,16 @@
     "entry_url": "10-reasons-foundation-stick",
     "sdk_version": "0.4.43",
     "store_name": "SKINOFAB",
-    "store_url": "https://skinofab.29next.store",
-    "store_terms": "https://skinofab.29next.store/terms-of-service/",
-    "store_privacy": "https://skinofab.29next.store/privacy-policy/",
-    "store_contact": "https://skinofab.29next.store/contact/",
-    "store_returns": "https://skinofab.29next.store/refund-policy/",
-    "store_shipping": "https://skinofab.29next.store/shipping-policy/",
+    "store_url": "https://try.skinofab.com",
+    "store_terms": "https://try.skinofab.com/terms-of-service/",
+    "store_privacy": "https://try.skinofab.com/privacy-policy/",
+    "store_contact": "https://try.skinofab.com/contact/",
+    "store_returns": "https://try.skinofab.com/refund-policy/",
+    "store_shipping": "https://try.skinofab.com/shipping-policy/",
     "store_email": "hello@skinofab.com",
     "gtm_id": "",
     "fb_pixel_id": "",
-    "og_image": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+    "og_image": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg",
+    "funnel_host": "https://try.skinofab.com"
   }
 }

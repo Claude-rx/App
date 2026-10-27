@@ -22,10 +22,10 @@ CONFIG_JS = PROJECT / 'src' / F.SLUG / 'assets' / 'config.js'
 OUT = PROJECT / 'campaign-spec.json'
 PROXY = 'https://campaign-map.nextcommerce.com/api/campaign'
 STORE_FIELDS = {
-    'store_url': F.STORE, 'store_name': 'SKINOFAB',
-    'store_contact': f'{F.STORE}/contact/', 'store_terms': f'{F.STORE}/terms-of-service/',
-    'store_shipping': f'{F.STORE}/shipping-policy/', 'store_privacy': f'{F.STORE}/privacy-policy/',
-    'store_returns': f'{F.STORE}/refund-policy/', 'store_phone': None, 'store_phone_tel': None,
+    'store_url': F.FUNNEL_HOST, 'store_name': 'SKINOFAB',
+    'store_contact': f'{F.FUNNEL_HOST}/contact/', 'store_terms': f'{F.FUNNEL_HOST}/terms-of-service/',
+    'store_shipping': f'{F.FUNNEL_HOST}/shipping-policy/', 'store_privacy': f'{F.FUNNEL_HOST}/privacy-policy/',
+    'store_returns': f'{F.FUNNEL_HOST}/refund-policy/', 'store_phone': None, 'store_phone_tel': None,
 }
 PACKAGE_KEYS = ['ref_id', 'name', 'qty', 'price', 'price_retail', 'image', 'product_name', 'product_sku',
                 'product_variant_name', 'product_purchase_availability', 'product_inventory_availability',

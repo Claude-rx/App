@@ -8,7 +8,7 @@
     "live_url_path": "/stick-funnel/",
     "campaigns_app_url": null,
     "api_key_source": "env:CAMPAIGNS_API_KEY",
-    "allowed_domains_confirmed": false
+    "allowed_domains_confirmed": true
   },
   "spec": {
     "map_id": null,
@@ -155,7 +155,7 @@
   "deploy": {
     "target": "local-serve",
     "preview_url": "http://127.0.0.1:8090/stick-funnel/",
-    "production_url": null,
+    "production_url": "https://try.skinofab.com/",
     "live_url_path": "/stick-funnel/"
   },
   "qa": {

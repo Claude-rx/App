@@ -2,7 +2,7 @@
 // the checkout's two pack cards and their prices, and full-page screenshots.
 //
 // usage: node tools/funnel/funnel_check.mjs <base-url> <out-dir> [--served]
-//   <base-url>  http://127.0.0.1:8090 (Page Kit's _site, routes /stick-funnel/<page>/) or https://skinofab.29next.store
+//   <base-url>  http://127.0.0.1:8090 (Page Kit's _site, routes /stick-funnel/<page>/) or https://try.skinofab.com (live)
 //   --served    the store's routes (/<page>/) instead of Page Kit's
 // Exits 1 when a page has a console error, a failed same-site request or a checkout without its two priced packs.
 import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';

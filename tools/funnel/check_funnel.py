@@ -12,6 +12,7 @@ built pages (campaigns/skinofab/_site/stick-funnel/) and the theme templates dep
               recurring price and interval; the fallback price is the voucher's price rounded down to dollars
   product     each pack card's price and interval are its package's; every checkout link names a checkout card
   thank you   each package's renewal line (by its SKU) is its recurring price and interval
+  host        each page sends other hosts to funnel.FUNNEL_HOST; its policy links are on it
   theme       a template per page, marked GENERATED, no Page Kit route left, every asset it names on disk
   claims      none of the claims the brand may not make (stick_copy.py, the SKF-ADFS-001 section 8 rules)
 """
@@ -150,6 +151,19 @@ else:
         want = f'Then {money(p["price_recurring"])} every {p["interval_count"]} days'
         got = ren.get(p['product_sku'], '')
         if not got.startswith(want): fail('thank-you', f'package {ref} ({p["product_sku"]}) renews "{got}", not "{want}"')
+
+# host: each deployed page sends a visit on another host to the funnel's (the only one the campaign allows), and its
+# policy links stay on it. The redirect is read from the theme template: the layout leaves it out of a development
+# build, which is what _site holds after a local Campaigns OS run.
+REDIRECT = re.compile(r'location\.replace\(u\.origin \+ location\.pathname \+ location\.search \+ location\.hash\);'
+                      r' \} catch \(e\) \{\} \}\)\("([^"]+)"\);</script>')
+for p in F.PAGES:
+    h = html(p['id'])
+    t = THEME / 'templates' / 'pages' / f'page.{p["file"]}.html'
+    hosts = REDIRECT.findall(t.read_text(encoding='utf-8')) if t.is_file() else []
+    if hosts != [F.FUNNEL_HOST]: fail(p['id'], f'deployed page redirects to {hosts or "nothing"}, not {F.FUNNEL_HOST}')
+    for link in re.findall(r'href="(https://[^/"]+)/(?:terms-of-service|privacy-policy|refund-policy|shipping-policy|contact)/"', h):
+        if link != F.FUNNEL_HOST: fail(p['id'], f'policy link on {link}, not {F.FUNNEL_HOST}')
 
 # theme -------------------------------------------------------------------------------------------------------------
 for p in F.PAGES:

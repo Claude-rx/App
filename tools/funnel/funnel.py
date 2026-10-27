@@ -11,14 +11,16 @@ its discount off the first charge only; the renewals are at the package's recurr
 Package refs (data-next-package-id) and offer refs are the campaign's own, read live by campaign_spec.py; this file
 only says which page sells which. The pages are Campaign Page Kit pages in campaigns/skinofab/src/stick-funnel/
 (file = the page's name there), served by the store itself at /<file>/ (deploy_theme.py turns the built pages
-into theme templates, store_pages.py creates the store pages that render them).
+into theme templates, store_pages.py creates the store pages that render them), on FUNNEL_HOST: the store domain the
+campaign allows. The SDK's calls are refused from any other host, so the pages send a visit on another host there.
 """
 
 SLUG = 'stick-funnel'                    # the Page Kit campaign slug (campaigns/skinofab/src/<SLUG>/)
 CAMPAIGN_REF = 2211                      # the Campaigns App campaign id
 LOCAL_SPEC_ID = '1b7c62ea-589f-49eb-83f9-31869ed0c283'   # the CampaignSpec's stable identity (never a Map ID)
 FUNNEL_NAME = 'SKINOFAB Foundation Stick'                # next-funnel on every page (campaigns.json "name")
-STORE = 'https://skinofab.29next.store'
+STORE = 'https://skinofab.29next.store'  # the store's own host: its Admin API (store_pages.py)
+FUNNEL_HOST = 'https://try.skinofab.com'  # where the funnel is served: a store domain the Campaigns App allows (CORS)
 STORE_ROUTE = '/'                        # the store serves each page at /<file>/ (as its /faq/ and /contact/)
 TEMPLATE_PREFIX = 'sfc-'                 # theme template page.<file>.html; assets sfc-<name>-<hash>.<ext>
 

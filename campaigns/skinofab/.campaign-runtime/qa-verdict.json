@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVQMM9YEOU4PK5ILN2K9DSJV38",
+  "run_id": "MVQPUENZL4NF0H40Q0ONGN89V9",
   "campaign_slug": "local-spec-1b7c62ea-589f-49eb-83f9-31869ed0c283",
   "local_spec_id": "1b7c62ea-589f-49eb-83f9-31869ed0c283",
   "public_route_slug": "stick-funnel",
   "campaign_ref_id": 2211,
   "spec_version": "5.0",
-  "spec_hash": "sha256:e083bd61d6ec505f5c85825b538fa75bf3e12c5cd175ecd10f2256272f346aa6",
-  "started_at": "2026-10-27T11:52:53.990Z",
-  "completed_at": "2026-10-27T11:53:31.579Z",
-  "generated_at": "2026-10-27T11:53:31.604Z",
+  "spec_hash": "sha256:b705f5ea59706bd92682ab504e60d95b94309c8ff6ba95c99f37ee3896e40584",
+  "started_at": "2026-10-27T13:23:12.191Z",
+  "completed_at": "2026-10-27T13:23:50.965Z",
+  "generated_at": "2026-10-27T13:23:50.988Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -963,7 +963,7 @@
       "unknown": 0
     },
     "prior_run_id": "run_1793096559787_6f6967cd",
-    "prior_qa_attempt_run_id": "MVQLDCY0UVFR6PQDRP9BLL99ES",
+    "prior_qa_attempt_run_id": "MVQMM9YEOU4PK5ILN2K9DSJV38",
     "comparison": "prior_run"
   }
 }

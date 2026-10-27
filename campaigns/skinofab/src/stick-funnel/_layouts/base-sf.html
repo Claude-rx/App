@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% comment %} SKINOFAB: the campaign allows one domain (campaign.funnel_host, the Campaigns App's Allowed Domain): the
+     SDK's calls fail from any other host the store answers on (skinofab.29next.store, skinofab.com), so a visit there
+     goes to the same page on the funnel's host. Production builds only (local proof runs on localhost). {% endcomment %}
+  {% if environment != 'development' and campaign.funnel_host and campaign.funnel_host != "" %}<script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })({{ campaign.funnel_host | json }});</script>{% endif %}
   <title>{{ title }}</title>
   {% if description %}<meta name="description" content="{{ description }}">{% endif %}
   {% comment %} Funnel pages are for ad traffic: kept out of search, as the store's other landing pages. {% endcomment %}

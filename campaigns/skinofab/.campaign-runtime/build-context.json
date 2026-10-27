@@ -28,8 +28,8 @@
   },
   "spec": {
     "path": "./campaign-spec.json",
-    "hash": "62c72c0ed19310db77e2b271c37dab8b91ca0097d357ae08b802545b8dd330ea",
-    "material_hash": "sha256:e083bd61d6ec505f5c85825b538fa75bf3e12c5cd175ecd10f2256272f346aa6",
+    "hash": "c8e427b515e24d928de2504b24ef3a6630cc3eb421c228f3aa271a806965159c",
+    "material_hash": "sha256:b705f5ea59706bd92682ab504e60d95b94309c8ff6ba95c99f37ee3896e40584",
     "active_pages": [
       {
         "id": "listicle",

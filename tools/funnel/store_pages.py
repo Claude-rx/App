@@ -1,5 +1,6 @@
 """Create (or update) the store pages that serve the funnel: one per funnel page, slug = template = its file name, so
-skinofab.29next.store/<file>/ renders templates/pages/page.<file>.html (deploy_theme.py).
+<store>/<file>/ (on every store domain; the funnel's is funnel.FUNNEL_HOST) renders templates/pages/page.<file>.html
+(deploy_theme.py).
 
 usage: NEXT_API_TOKEN=... python3 -I tools/funnel/store_pages.py [--dry-run]
 
@@ -63,8 +64,8 @@ if __name__ == '__main__':
         body = {'title': title, 'slug': slug, 'template': slug, 'meta_title': title + ' | SKINOFAB', 'meta_description': desc}
         cur = have.get(slug)
         if cur and all(str(cur.get(k)) == str(v) for k, v in body.items()):
-            print('ok     ', F.STORE + F.route(pg['id'], served=True)); continue
+            print('ok     ', F.FUNNEL_HOST + F.route(pg['id'], served=True)); continue
         if dry: print('would', 'update' if cur else 'create', slug); continue
         if cur: call('PATCH', f"pages/{cur['id']}/", {k: v for k, v in body.items() if k != 'slug'})
         else: call('POST', 'pages/', {**body, 'content': '<p>Rendered by the theme template.</p>'})
-        print('updated' if cur else 'created', F.STORE + F.route(pg['id'], served=True))
+        print('updated' if cur else 'created', F.FUNNEL_HOST + F.route(pg['id'], served=True))
