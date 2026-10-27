@@ -392,7 +392,8 @@ TWIN = {
     'compare': {'title': 'Why SKINOFAB?', 'others': 'Typical liquid foundation',
                 'rows': ['No shade to choose', 'Kabuki brush built in', 'Touch-ups from your bag, no sponge',
                          ('Buildable, natural coverage', True)]},
-    'inside': {'title': 'What’s inside the stick',
+    # (each photo made for the card's 4:3 window, every texture the same size: product_photos.ingredient_card)
+    'inside': {'title': 'What’s inside the stick', 'size': (960, 720),
                'intro': 'Skincare in a creamy, water-free foundation made for dry, mature skin. Fragrance-free. The full list is '
                         'printed on the packaging.',
                # what each one is, and what it does in the cream (stick review 8: "for a more even-looking

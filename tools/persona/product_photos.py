@@ -440,6 +440,33 @@ SERUM_LABELS = {
 }
 
 
+def ingredient_card(product, name, size=(1200, 900), box=(0.72, 0.74)):
+    """source/<name>.jpg (a texture on white) as <name>.jpg: on a white 4:3 canvas, the texture scaled to fit the
+    same box (box: its share of the canvas's width and height) and centred, so every card's subject is one size and
+    none is cut by the card's 4:3 window. The texture's extent is its 2nd to 98th percentile of non-white pixels
+    (a stray droplet does not count); the pasted photo's edges fade into the white."""
+    im = Image.open(product / 'source' / f'{name}.jpg').convert('RGB')
+    a = np.asarray(im).astype(np.int16)
+    ys, xs = np.nonzero(a.min(2) < 228)
+    # its near-white backdrop lifted to the card's white (a grey box showed round the PDRN and peptide photos): each
+    # pixel eased toward white by how light its lightest-dark channel is, 226 untouched to 250 white
+    lo = a.min(2).astype(np.float32)
+    t = np.clip((lo - 226) / 24, 0, 1); t = (t * t * (3 - 2 * t))[..., None]
+    im = Image.fromarray(np.clip(a * (1 - t) + 255 * t + 0.5, 0, 255).astype(np.uint8))
+    x0, x1 = np.percentile(xs, (2, 98)); y0, y1 = np.percentile(ys, (2, 98))
+    W, H = size
+    k = min(box[0] * W / (x1 - x0), box[1] * H / (y1 - y0))
+    sm = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+    cx, cy = (x0 + x1) / 2 * k, (y0 + y1) / 2 * k
+    canvas = Image.new('RGB', size, (255, 255, 255))
+    f = max(8, round(min(sm.size) * 0.08))                     # the fade, in from each edge of the pasted photo
+    mask = Image.new('L', sm.size, 0)
+    ImageDraw.Draw(mask).rectangle((f, f, sm.width - f - 1, sm.height - f - 1), fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(f / 2))
+    canvas.paste(sm, (round(W / 2 - cx), round(H / 2 - cy)), mask)
+    canvas.save(product / f'{name}.jpg', quality=92)
+
+
 def stick():
     """The Adaptive Foundation Stick: brand/foundation-stick/source -> labelled/ (the real wordmark on every tube,
     relabel_bottles.STICK, and the two composites below) -> brand/foundation-stick/*.jpg."""
@@ -520,6 +547,10 @@ def stick():
     note(d, (46, W - 40), AI_NOTE + '.', anchor='ls', size=40)
     save(sw, P, 'swatch')
     plain(P, 'single', 'card')
+    # the ingredient cards: each texture whole and the same size in the card's 4:3 window (the owner, 27 Oct 2026: the
+    # tall PDRN helix filled and overflowed its card while the wide textures sat smaller)
+    for n in ('ing-pdrn', 'ing-peptides', 'ing-ha', 'ing-ceramides', 'ing-squalane', 'ing-niacinamide', 'ing-centella'):
+        ingredient_card(P, n)
     # the 2-stick pack's gift rows (stick_copy.GIFTS), at the foundation's icon size: the Lymphatic Brush from its
     # shelf card, cropped square round the brush and its case (the card's product spans x 290-789, y 195-892), and
     # the foundation's free-shipping box

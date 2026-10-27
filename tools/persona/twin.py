@@ -196,7 +196,8 @@ def inside(sec, c, img):
     for a in cards: a.decompose()
     for name, title, text in c['cards']:
         a = copy.copy(tpl)
-        src, w, h = img(name, (800, 1067), (0.5, 0.5))
+        # c['size']: the photo's shape when the product's are made for the card's 4:3 window (the stick's)
+        src, w, h = img(name, c.get('size', (800, 1067)), (0.5, 0.5))
         im = a.select_one('img')
         im['src'], im['alt'], im['width'], im['height'] = src, title, str(w), str(h)
         for attr in ('srcset', 'sizes'):

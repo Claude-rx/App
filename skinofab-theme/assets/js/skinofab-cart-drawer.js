@@ -189,6 +189,8 @@
             var p = l.product || {};
             inBag[p.pk] = true;
             if (p.parent) inBag[p.parent.pk] = true;
+             
+            ((cfg.giftIncludes || {})[p.pk] || []).forEach(function(pk) { inBag[pk] = true; });
         });
         var offers = upsellData.filter(function(u) { return !u.ids.some(function(id) { return inBag[id]; }); }).slice(0, 2);
         if (!offers.length) return '';
