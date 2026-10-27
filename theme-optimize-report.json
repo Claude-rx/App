@@ -144,8 +144,8 @@
   },
   "inline": {
    "blocks": 963,
-   "before_kb": 5506.5,
-   "after_kb": 4746.0,
+   "before_kb": 5507.1,
+   "after_kb": 4746.6,
    "skipped": 0
   }
  },
@@ -197,6 +197,6 @@
   "scripts_left": 0,
   "own_scripts": 2,
   "inline_styles": 9,
-  "kb_saved": 91.5
+  "kb_saved": 92.0
  }
 }
