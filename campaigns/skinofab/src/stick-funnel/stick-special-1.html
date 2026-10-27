@@ -18,6 +18,7 @@ scripts:
   - js/payment-logos.js
   - js/sf-failsafe.js
   - js/sf-offer-gate.js
+  - js/sf-funnel.js
 announcement_text: "Offer 1 of 4 · Your order is placed"
 announcement_variant: dark
 thank_you_url: "/stick-funnel/stick-thank-you/"
@@ -88,6 +89,8 @@ upsell_body:
       - { title: "For touch-ups on the go", text: "Buff the brush end over your nose and chin and it looks fresh again." }
       - { title: "One at home, one with you", text: "The stick on your vanity stays there; the spare lives in your bag." }
       - { title: "Refills you control", text: "It refills on its own every 28 days. Skip or cancel it by email whenever you like." }
+how: {"eyebrow": "How it works", "title": "One shade that meets your skin", "text": "The color pigments are wrapped in tiny capsules in a white cream. As you blend, the capsules break and the color shifts toward your own tone, so there is no shade to pick.", "steps": [{"title": "Twist up a little", "text": "A few millimeters is all you need."}, {"title": "Dot it on", "text": "A few dots on your cheeks and forehead. It looks white at first."}, {"title": "Buff it in", "text": "Small circles with the brush end until it shifts to your tone."}, {"title": "Touch up from your bag", "text": "Buff the brush end over your nose and chin in the afternoon and it looks fresh again."}], "note": "The video is an illustration. The full ingredient list is printed on the packaging.", "video": {"mp4": "images/sf/science.mp4", "webm": "images/sf/science.webm", "poster": "images/sf/science-poster.jpg", "width": 864, "height": 1080, "label": "Illustration: the white cream’s capsules break as the brush buffs it in and the color meets her skin tone; soft-focus spheres; the skincare in the cream"}}
+reserved: {"title": "Your second stick, at a price that’s only here", "store_price": "$37.00", "store_note": "1 stick, with Automatic Refills", "items": [{"title": "Only for customers who just ordered", "text": "You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered."}, {"title": "It rides in the same box", "text": "Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery."}, {"title": "One tap, nothing to type", "text": "It’s added to the order you just placed and charged to the same payment method."}]}
 closing_cta:
   variant: card
   title: "Add one more stick for {price}?"
@@ -97,7 +100,7 @@ closing_cta:
 {% comment %} Apollo's single-offer upsell: announcement, header, hero band, the offer (the one SDK offer), body, closing card
      (its accept / skip proxy the offer's own). {% endcomment %}
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -105,6 +108,8 @@ closing_cta:
     {% campaign_include 'upsell/header-bar.html' logo='images/sf/skinofab-wordmark.svg' %}
     {% campaign_include 'upsell/hero.html' upsell_hero=upsell_hero %}
     {% campaign_include 'upsell/offer.html' %}
+    {% campaign_include 'sf-upsell-how.html' how=how %}
+    {% campaign_include 'sf-upsell-reserved.html' reserved=reserved %}
     {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
     {% campaign_include 'upsell/closing-cta.html' %}
     {% campaign_include 'footer.html' %}

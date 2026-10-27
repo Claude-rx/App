@@ -74,7 +74,7 @@
     
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-cc59d9.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-1bdd77.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfc/sfc-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -88,7 +88,7 @@
 
     
 
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/stick-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-ship-country data-next-display="order.shippingAddress.country"></span></div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/stick-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span><span data-sf-ship-country data-next-display="order.shippingAddress.country"></span></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -306,31 +306,80 @@
     </div>
   </section>
 </div>
+    <section class="section cc-sm sf-how" aria-labelledby="sf-how-title">
+  <div class="container">
+    <div class="sf-how__grid">
+      <figure class="sf-how__media">
+        <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfc/sfc-up4-how-poster-9fef5a.jpg'|asset_url }}{% verbatim %}" width="720" height="900" aria-label="A woman putting two drops of the EGF + NAD+ Firming Serum on her face, pressing them in and sweeping more down her neck, then her foundation stick">
+          <source src="{% endverbatim %}{{ 'sfc/sfc-up4-how-16afc6.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
+          <source src="{% endverbatim %}{{ 'sfc/sfc-up4-how-c64226.webm'|asset_url }}{% verbatim %}" type="video/webm">
+        </video>
+      </figure>
+      <div class="sf-how__body">
+        <span class="sf-how__eyebrow">How to use it</span>
+        <h2 class="display-md" id="sf-how-title">Two drops, then your stick</h2>
+        <p class="sf-how__lede">Morning and night, on clean skin. It sinks in within a minute.</p>
+        <ol class="sf-how__steps">
+          <li><b>1</b><div><strong>Cleanse your face and neck</strong><span></span></div></li>
+          <li><b>2</b><div><strong>Two drops for your face</strong><span>Pressed in with your fingertips.</span></div></li>
+          <li><b>3</b><div><strong>Two more drops</strong><span>Swept down your neck.</span></div></li>
+          <li><b>4</b><div><strong>Then the rest of your routine</strong><span>Your moisturiser, then your stick.</span></div></li>
+        </ol><p class="sf-how__note">Less is more: two drops cover the whole face.</p>
+      </div>
+    </div>
+  </div>
+</section>
+    <section class="section cc-sm sf-reserved" aria-labelledby="sf-reserved-title">
+  <div class="container cc-medium">
+    <div class="sf-reserved__card">
+      <span class="sf-reserved__eyebrow">Reserved for you<span data-sf-name></span></span>
+      <h2 class="display-md" id="sf-reserved-title">The serum, at a price that’s only here</h2>
+      <div class="sf-reserved__compare">
+        <div class="sf-reserved__price">
+          <span class="sf-reserved__label">In our store</span>
+          <s class="sf-reserved__amount">$27.95</s>
+          <small>with Automatic Refills, $34.95 one at a time</small>
+        </div>
+        <div class="sf-reserved__price is-here">
+          <span class="sf-reserved__label">Here, today</span>
+          <strong class="sf-reserved__amount"><span data-next-display="bundle.special-4.price" data-next-format="currency">$22.00</span></strong>
+          <small><span data-next-display="bundle.special-4.discountPercentage" data-next-format="percentage">21%</span> off your first one</small>
+        </div>
+      </div>
+      <ul class="sf-reserved__list">
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Only for customers who just ordered</strong><span>You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered.</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>It rides in the same box</strong><span>Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery.</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>One tap, nothing to type</strong><span>It’s added to the order you just placed and charged to the same payment method.</span></div></li>
+      </ul><a data-upsell-proxy="add" href="#" class="button cc-xl" pb-animate="pulse-upsell">
+  <div data-button="content" class="button_content"><div>Yes, add the serum for <span data-next-display="bundle.special-4.price" data-next-format="currency">$22.00</span></div></div>
+</a><p class="upsell-cta__note"><span data-next-display="bundle.special-4.price" data-next-format="currency">$22.00</span> today (<span data-next-display="bundle.special-4.discountPercentage" data-next-format="percentage">21%</span> off this first charge). After that, $27.95 every 56 days for this one until you cancel. We email you before every refill; to skip or cancel, just email hello@skinofab.com. Backed by our 30-day money-back guarantee.</p></div>
+  </div>
+</section>
     <section class="section cc-sm">
   <div class="container">
     <div class="heading-box text-center max-width-large align-center">
-      <h2 class="display-md">One light step, face and neck</h2><p class="text-lg">For skin that looks less firm, drier and duller after 45.</p>
+      <h2 class="display-md">What’s in the serum</h2><p class="text-lg">Water-based and light: it sinks in within a minute and sits well under moisturiser and makeup.</p>
     </div>
     <div class="grid-2col-standard margin-32">
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">1</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Two drops for your face</h3>
-          <p class="text-base">Press them in after cleansing, morning and night.</p>
+          <h3 class="checkout-features__item-title">EGF</h3>
+          <p class="text-base">A bioengineered peptide modelled on a growth factor found in skin. In a serum it helps skin look smoother, firmer and more even.</p>
         </div>
       </div>
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">2</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Two for your neck</h3>
-          <p class="text-base">Sweep upward from the collarbone.</p>
+          <h3 class="checkout-features__item-title">NAD+</h3>
+          <p class="text-base">Nicotinamide adenine dinucleotide, the ingredient behind the longevity skincare trend. It’s there for skin that looks tired and dull, to help it look fresher and more radiant.</p>
         </div>
       </div>
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">3</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Then your stick</h3>
-          <p class="text-base">It sinks in within a minute, so your foundation goes straight on.</p>
+          <h3 class="checkout-features__item-title">Collagen</h3>
+          <p class="text-base">Collagen holds water on the skin’s surface, so skin feels firmer and smoother and looks plumper.</p>
         </div>
       </div>
     </div>
@@ -395,7 +444,9 @@
     
     <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-failsafe-378969.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-offer-gate-8d4ca3.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-offer-gate-aec643.js'|asset_url }}{% verbatim %}"></script>
+    
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-funnel-715d6b.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

@@ -18,6 +18,7 @@ scripts:
   - js/payment-logos.js
   - js/sf-failsafe.js
   - js/sf-offer-gate.js
+  - js/sf-funnel.js
 announcement_text: "Offer 2 of 4 · Your order is placed"
 announcement_variant: dark
 thank_you_url: "/stick-funnel/stick-thank-you/"
@@ -81,12 +82,14 @@ upsell_guarantees:
     text: "Love it, or email us within 30 days of delivery for a full refund, even opened."
 upsell_body:
   - type: features
-    title: "Three minutes, every morning"
-    text: "A light touch with soft bristles, before your foundation goes on."
+    title: "Why it’s worth three minutes"
+    text: "A light touch, no oils, nothing to wash off."
     items:
-      - { title: "Neck first", text: "Sweep down toward the collarbone, ten times." }
-      - { title: "Jaw and cheeks", text: "Sweep out toward the ear, ten times each side." }
-      - { title: "Under the eyes", text: "Sweep out to the temples with the lightest touch." }
+      - { title: "Soft tips, light touch", text: "Hundreds of ultra-soft tips bend instead of pressing: no red marks." }
+      - { title: "On dry skin", text: "No oils, so your foundation goes straight on after." }
+      - { title: "A fresh brush every 90 days", text: "Like a toothbrush: skip or cancel the refill by email." }
+how: {"eyebrow": "How to use it", "title": "Three minutes, every morning", "text": "On clean, dry skin, before your foundation. No oils and no pressing: the soft tips do the work.", "steps": [{"title": "Neck", "text": "Sweep down from under the ear to the collarbone."}, {"title": "Jaw and cheeks", "text": "Sweep from your chin along the jaw toward the ear."}, {"title": "Under the eyes", "text": "Sweep out from the nose to the temples, very lightly."}, {"title": "Neck again", "text": "Finish with a few sweeps down the neck."}], "note": "Repeat each sweep about 10 times, then do the other side.", "video": {"mp4": "images/sf/up2-how.mp4", "webm": "images/sf/up2-how.webm", "poster": "images/sf/up2-how-poster.jpg", "width": 720, "height": 900, "label": "The Lymphatic Brush’s soft tips, its four sweeps (neck, jaw and cheeks, under the eyes, neck again) and its travel case"}}
+reserved: {"title": "The brush, at a price that’s only here", "store_price": "$24.95", "store_note": "1 brush with its case", "items": [{"title": "Only for customers who just ordered", "text": "You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered."}, {"title": "It rides in the same box", "text": "Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery."}, {"title": "One tap, nothing to type", "text": "It’s added to the order you just placed and charged to the same payment method."}]}
 closing_cta:
   variant: card
   title: "Add the Lymphatic Brush for {price}?"
@@ -96,7 +99,7 @@ closing_cta:
 {% comment %} Apollo's single-offer upsell: announcement, header, hero band, the offer (the one SDK offer), body, closing card
      (its accept / skip proxy the offer's own). {% endcomment %}
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -104,6 +107,8 @@ closing_cta:
     {% campaign_include 'upsell/header-bar.html' logo='images/sf/skinofab-wordmark.svg' %}
     {% campaign_include 'upsell/hero.html' upsell_hero=upsell_hero %}
     {% campaign_include 'upsell/offer.html' %}
+    {% campaign_include 'sf-upsell-how.html' how=how %}
+    {% campaign_include 'sf-upsell-reserved.html' reserved=reserved %}
     {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
     {% campaign_include 'upsell/closing-cta.html' %}
     {% campaign_include 'footer.html' %}

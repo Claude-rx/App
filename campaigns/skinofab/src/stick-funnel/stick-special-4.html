@@ -18,6 +18,7 @@ scripts:
   - js/payment-logos.js
   - js/sf-failsafe.js
   - js/sf-offer-gate.js
+  - js/sf-funnel.js
 announcement_text: "Offer 4 of 4 · Your order is placed"
 announcement_variant: dark
 thank_you_url: "/stick-funnel/stick-thank-you/"
@@ -83,12 +84,14 @@ upsell_guarantees:
     text: "Love it, or email us within 30 days of delivery for a full refund, even opened."
 upsell_body:
   - type: features
-    title: "One light step, face and neck"
-    text: "For skin that looks less firm, drier and duller after 45."
+    title: "What’s in the serum"
+    text: "Water-based and light: it sinks in within a minute and sits well under moisturiser and makeup."
     items:
-      - { title: "Two drops for your face", text: "Press them in after cleansing, morning and night." }
-      - { title: "Two for your neck", text: "Sweep upward from the collarbone." }
-      - { title: "Then your stick", text: "It sinks in within a minute, so your foundation goes straight on." }
+      - { title: "EGF", text: "A bioengineered peptide modelled on a growth factor found in skin. In a serum it helps skin look smoother, firmer and more even." }
+      - { title: "NAD+", text: "Nicotinamide adenine dinucleotide, the ingredient behind the longevity skincare trend. It’s there for skin that looks tired and dull, to help it look fresher and more radiant." }
+      - { title: "Collagen", text: "Collagen holds water on the skin’s surface, so skin feels firmer and smoother and looks plumper." }
+how: {"eyebrow": "How to use it", "title": "Two drops, then your stick", "text": "Morning and night, on clean skin. It sinks in within a minute.", "steps": [{"title": "Cleanse your face and neck", "text": ""}, {"title": "Two drops for your face", "text": "Pressed in with your fingertips."}, {"title": "Two more drops", "text": "Swept down your neck."}, {"title": "Then the rest of your routine", "text": "Your moisturiser, then your stick."}], "note": "Less is more: two drops cover the whole face.", "video": {"mp4": "images/sf/up4-how.mp4", "webm": "images/sf/up4-how.webm", "poster": "images/sf/up4-how-poster.jpg", "width": 720, "height": 900, "label": "A woman putting two drops of the EGF + NAD+ Firming Serum on her face, pressing them in and sweeping more down her neck, then her foundation stick"}}
+reserved: {"title": "The serum, at a price that’s only here", "store_price": "$27.95", "store_note": "with Automatic Refills, $34.95 one at a time", "items": [{"title": "Only for customers who just ordered", "text": "You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered."}, {"title": "It rides in the same box", "text": "Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery."}, {"title": "One tap, nothing to type", "text": "It’s added to the order you just placed and charged to the same payment method."}]}
 closing_cta:
   variant: card
   title: "Add the EGF + NAD+ Firming Serum for {price}?"
@@ -98,7 +101,7 @@ closing_cta:
 {% comment %} Apollo's single-offer upsell: announcement, header, hero band, the offer (the one SDK offer), body, closing card
      (its accept / skip proxy the offer's own). {% endcomment %}
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -106,6 +109,8 @@ closing_cta:
     {% campaign_include 'upsell/header-bar.html' logo='images/sf/skinofab-wordmark.svg' %}
     {% campaign_include 'upsell/hero.html' upsell_hero=upsell_hero %}
     {% campaign_include 'upsell/offer.html' %}
+    {% campaign_include 'sf-upsell-how.html' how=how %}
+    {% campaign_include 'sf-upsell-reserved.html' reserved=reserved %}
     {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
     {% campaign_include 'upsell/closing-cta.html' %}
     {% campaign_include 'footer.html' %}

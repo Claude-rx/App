@@ -91,6 +91,34 @@ them live and the pages are checked against them on every build.
 - Crossed-out prices compare with buying single sticks in this funnel (16 CFR 233): the 2-stick pack is $47 against two
   1-stick packs at $37 ("SAVE $27"); the 1-stick pack has none.
 
+### The special offer pages
+
+Each offer page, top to bottom (`tools/funnel/upsell_pages.py`):
+
+1. **Hero band**: "Your order is placed", the offer and its price.
+2. **The offer**: photos, bullets, today's price against the regular price, the button and the renewal terms.
+3. **How it works / how to use it** (`_includes/sf-upsell-how.html`): a muted loop beside the product page's own
+   numbered steps. Offer 1 plays the stick's explainer (`stick_science_video.py`); offers 2-4 play
+   `brand/stick-funnel/videos/up<n>-how.*` (`upsell_videos.py`): the product pages' photos of it in use, one step a
+   scene, a slow push-in and the step's line (the brush has no photo on a face, so its loop is the brush, its how-to
+   card walked step by step, and its case). Nothing is generated motion, so no label is redrawn; every frame says
+   "Illustration".
+4. **Reserved for you** (`_includes/sf-upsell-reserved.html`): her first name when the order has one, the store's price
+   for one beside today's, and three plain reasons: no single one costs this in the store and no code unlocks it (the
+   store's multi-packs can cost less each, so the claim is about one), it rides in the box she just ordered, and it
+   goes on the payment she just made. Then the button again, with the terms.
+5. **Why / what's in it**: the brush's three reasons; the balm's and serum's first three ingredients, word for word from
+   their product pages (`balm_copy.INGREDIENTS`, `serum_copy.INGREDIENTS`).
+6. **Closing card**: the price, the button and "No thanks".
+
+Store prices quoted (one at a time): stick $37.00 with refills; brush $24.95 with its case; balm $19.95 with refills
+($24.95 one-time); serum $27.95 with refills ($34.95 one-time). The funnel never names SPF (the serum page's "SPF in the
+morning" is left out; `check_funnel.py` fails on it).
+
+Realistic motion clips (a woman using each product) can replace the loops once a video supplier has credit: 4SToken
+and Kie.ai were out of balance on 27 Oct 2026, and Higgsfield needs the owner's go-ahead per spend. Use the start
+frames in `upsell_videos.py`'s scene list, keep labels readable, and run `video_brand_gate.py`'s pink check on them.
+
 ## Versus the Facelove listicle
 
 The listicle follows https://facelove-cosmetics.com/pages/10-reasons-why-foundating-stick-2026-new reason for reason
@@ -135,6 +163,7 @@ hand.
 | `copy_includes.py` | the product page's tabs and FAQ includes from `tools/persona/stick_copy.py` |
 | `upsell_pages.py` | the four special-offer pages (frontmatter from the spec: package, voucher, prices, terms) |
 | `funnel_images.py` | the listicle and product images (collages, labelled before/afters, review photos, video) |
+| `upsell_videos.py` | the special offers' how-it-works loops (`brand/stick-funnel/videos/`, committed; rerun only to change a scene) |
 | `deploy_theme.py` | turns the built pages into theme templates `templates/pages/page.<file>.html` and assets `assets/sfc/` |
 | `store_pages.py` | creates or updates the 8 store pages that render those templates (Admin API, `$NEXT_API_TOKEN`) |
 | `check_funnel.py` | offline checks (below); the store build fails on any problem |
@@ -160,6 +189,9 @@ Hosting notes: the store serves a page at `/<slug>/` (not `/pages/<slug>/`) and 
 theme CDN flattens asset folders, so `deploy_theme.py` gives each asset a unique `sfc-<name>-<hash>` name; NEXT
 compiles theme CSS with libsass, which rejects `min()`/`max()` with mixed units, so they are written `MIN()`/`MAX()`
 (CSS functions are case-insensitive). Templates are wrapped in `{% verbatim %}` so the SDK's `{tokens}` survive.
+The store caches each page's HTML for 30 minutes by path (`cache-control: max-age=1800`; a query string doesn't
+bypass it), so a pushed page can show its old version on the live host for up to half an hour;
+`https://skinofab.29next.store/<page>/?preview_theme=34` shows the new one at once.
 
 ### Checks
 

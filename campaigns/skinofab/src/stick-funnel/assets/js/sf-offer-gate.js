@@ -4,6 +4,7 @@
 //   - on special offer 4 (its gate has data-sf-ship-country), an order shipping to Europe goes where a decline goes: the
 //     serum's EGF, sh-Oligopeptide-1, is not allowed in cosmetics sold in the EU, and the UK, Switzerland and the EEA
 //     follow the same list (docs/egf-nad-serum.md).
+// It also puts her first name after "Reserved for you" ([data-sf-name], sf-upsell-reserved.html) once the order has one.
 (function () {
   const EUROPE = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU',
     'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'CH', 'GB', 'UK'];
@@ -37,4 +38,10 @@
   };
   new MutationObserver(check).observe(gate, { childList: true, characterData: true, subtree: true });
   check();
+  const first = gate.querySelector('[data-sf-first-name]');
+  const name = () => {
+    const n = (first && first.textContent || '').trim();
+    if (n) document.querySelectorAll('[data-sf-name]').forEach((e) => { e.textContent = ', ' + n; });
+  };
+  if (first) { new MutationObserver(name).observe(first, { childList: true, characterData: true, subtree: true }); name(); }
 })();

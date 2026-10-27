@@ -74,7 +74,7 @@
     
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-cc59d9.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-1bdd77.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfc/sfc-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -88,7 +88,7 @@
 
     
 
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/stick-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span></div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/stick-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -298,31 +298,80 @@
     </div>
   </section>
 </div>
+    <section class="section cc-sm sf-how" aria-labelledby="sf-how-title">
+  <div class="container">
+    <div class="sf-how__grid">
+      <figure class="sf-how__media">
+        <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfc/sfc-up2-how-poster-76527d.jpg'|asset_url }}{% verbatim %}" width="720" height="900" aria-label="The Lymphatic Brush’s soft tips, its four sweeps (neck, jaw and cheeks, under the eyes, neck again) and its travel case">
+          <source src="{% endverbatim %}{{ 'sfc/sfc-up2-how-64aedd.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
+          <source src="{% endverbatim %}{{ 'sfc/sfc-up2-how-f8d151.webm'|asset_url }}{% verbatim %}" type="video/webm">
+        </video>
+      </figure>
+      <div class="sf-how__body">
+        <span class="sf-how__eyebrow">How to use it</span>
+        <h2 class="display-md" id="sf-how-title">Three minutes, every morning</h2>
+        <p class="sf-how__lede">On clean, dry skin, before your foundation. No oils and no pressing: the soft tips do the work.</p>
+        <ol class="sf-how__steps">
+          <li><b>1</b><div><strong>Neck</strong><span>Sweep down from under the ear to the collarbone.</span></div></li>
+          <li><b>2</b><div><strong>Jaw and cheeks</strong><span>Sweep from your chin along the jaw toward the ear.</span></div></li>
+          <li><b>3</b><div><strong>Under the eyes</strong><span>Sweep out from the nose to the temples, very lightly.</span></div></li>
+          <li><b>4</b><div><strong>Neck again</strong><span>Finish with a few sweeps down the neck.</span></div></li>
+        </ol><p class="sf-how__note">Repeat each sweep about 10 times, then do the other side.</p>
+      </div>
+    </div>
+  </div>
+</section>
+    <section class="section cc-sm sf-reserved" aria-labelledby="sf-reserved-title">
+  <div class="container cc-medium">
+    <div class="sf-reserved__card">
+      <span class="sf-reserved__eyebrow">Reserved for you<span data-sf-name></span></span>
+      <h2 class="display-md" id="sf-reserved-title">The brush, at a price that’s only here</h2>
+      <div class="sf-reserved__compare">
+        <div class="sf-reserved__price">
+          <span class="sf-reserved__label">In our store</span>
+          <s class="sf-reserved__amount">$24.95</s>
+          <small>1 brush with its case</small>
+        </div>
+        <div class="sf-reserved__price is-here">
+          <span class="sf-reserved__label">Here, today</span>
+          <strong class="sf-reserved__amount"><span data-next-display="bundle.special-2.price" data-next-format="currency">$19.00</span></strong>
+          <small><span data-next-display="bundle.special-2.discountPercentage" data-next-format="percentage">24%</span> off your first one</small>
+        </div>
+      </div>
+      <ul class="sf-reserved__list">
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Only for customers who just ordered</strong><span>You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered.</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>It rides in the same box</strong><span>Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery.</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>One tap, nothing to type</strong><span>It’s added to the order you just placed and charged to the same payment method.</span></div></li>
+      </ul><a data-upsell-proxy="add" href="#" class="button cc-xl" pb-animate="pulse-upsell">
+  <div data-button="content" class="button_content"><div>Yes, add the brush for <span data-next-display="bundle.special-2.price" data-next-format="currency">$19.00</span></div></div>
+</a><p class="upsell-cta__note"><span data-next-display="bundle.special-2.price" data-next-format="currency">$19.00</span> today (<span data-next-display="bundle.special-2.discountPercentage" data-next-format="percentage">24%</span> off this first charge). After that, $24.95 every 90 days for this one until you cancel. We email you before every refill; to skip or cancel, just email hello@skinofab.com. Backed by our 30-day money-back guarantee.</p></div>
+  </div>
+</section>
     <section class="section cc-sm">
   <div class="container">
     <div class="heading-box text-center max-width-large align-center">
-      <h2 class="display-md">Three minutes, every morning</h2><p class="text-lg">A light touch with soft bristles, before your foundation goes on.</p>
+      <h2 class="display-md">Why it’s worth three minutes</h2><p class="text-lg">A light touch, no oils, nothing to wash off.</p>
     </div>
     <div class="grid-2col-standard margin-32">
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">1</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Neck first</h3>
-          <p class="text-base">Sweep down toward the collarbone, ten times.</p>
+          <h3 class="checkout-features__item-title">Soft tips, light touch</h3>
+          <p class="text-base">Hundreds of ultra-soft tips bend instead of pressing: no red marks.</p>
         </div>
       </div>
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">2</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Jaw and cheeks</h3>
-          <p class="text-base">Sweep out toward the ear, ten times each side.</p>
+          <h3 class="checkout-features__item-title">On dry skin</h3>
+          <p class="text-base">No oils, so your foundation goes straight on after.</p>
         </div>
       </div>
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">3</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Under the eyes</h3>
-          <p class="text-base">Sweep out to the temples with the lightest touch.</p>
+          <h3 class="checkout-features__item-title">A fresh brush every 90 days</h3>
+          <p class="text-base">Like a toothbrush: skip or cancel the refill by email.</p>
         </div>
       </div>
     </div>
@@ -387,7 +436,9 @@
     
     <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-failsafe-378969.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-offer-gate-8d4ca3.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-offer-gate-aec643.js'|asset_url }}{% verbatim %}"></script>
+    
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-funnel-715d6b.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

@@ -74,7 +74,7 @@
     
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-cc59d9.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-1bdd77.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfc/sfc-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -88,7 +88,7 @@
 
     
 
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/stick-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span></div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/stick-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -306,6 +306,55 @@
     </div>
   </section>
 </div>
+    <section class="section cc-sm sf-how" aria-labelledby="sf-how-title">
+  <div class="container">
+    <div class="sf-how__grid">
+      <figure class="sf-how__media">
+        <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfc/sfc-science-poster-392fc2.jpg'|asset_url }}{% verbatim %}" width="864" height="1080" aria-label="Illustration: the white cream’s capsules break as the brush buffs it in and the color meets her skin tone; soft-focus spheres; the skincare in the cream">
+          <source src="{% endverbatim %}{{ 'sfc/sfc-science-52007f.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
+          <source src="{% endverbatim %}{{ 'sfc/sfc-science-b8fb9b.webm'|asset_url }}{% verbatim %}" type="video/webm">
+        </video>
+      </figure>
+      <div class="sf-how__body">
+        <span class="sf-how__eyebrow">How it works</span>
+        <h2 class="display-md" id="sf-how-title">One shade that meets your skin</h2>
+        <p class="sf-how__lede">The color pigments are wrapped in tiny capsules in a white cream. As you blend, the capsules break and the color shifts toward your own tone, so there is no shade to pick.</p>
+        <ol class="sf-how__steps">
+          <li><b>1</b><div><strong>Twist up a little</strong><span>A few millimeters is all you need.</span></div></li>
+          <li><b>2</b><div><strong>Dot it on</strong><span>A few dots on your cheeks and forehead. It looks white at first.</span></div></li>
+          <li><b>3</b><div><strong>Buff it in</strong><span>Small circles with the brush end until it shifts to your tone.</span></div></li>
+          <li><b>4</b><div><strong>Touch up from your bag</strong><span>Buff the brush end over your nose and chin in the afternoon and it looks fresh again.</span></div></li>
+        </ol><p class="sf-how__note">The video is an illustration. The full ingredient list is printed on the packaging.</p>
+      </div>
+    </div>
+  </div>
+</section>
+    <section class="section cc-sm sf-reserved" aria-labelledby="sf-reserved-title">
+  <div class="container cc-medium">
+    <div class="sf-reserved__card">
+      <span class="sf-reserved__eyebrow">Reserved for you<span data-sf-name></span></span>
+      <h2 class="display-md" id="sf-reserved-title">Your second stick, at a price that’s only here</h2>
+      <div class="sf-reserved__compare">
+        <div class="sf-reserved__price">
+          <span class="sf-reserved__label">In our store</span>
+          <s class="sf-reserved__amount">$37.00</s>
+          <small>1 stick, with Automatic Refills</small>
+        </div>
+        <div class="sf-reserved__price is-here">
+          <span class="sf-reserved__label">Here, today</span>
+          <strong class="sf-reserved__amount"><span data-next-display="bundle.special-1.price" data-next-format="currency">$18.00</span></strong>
+          <small><span data-next-display="bundle.special-1.discountPercentage" data-next-format="percentage">51%</span> off your first one</small>
+        </div>
+      </div>
+      <ul class="sf-reserved__list">
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Only for customers who just ordered</strong><span>You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered.</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>It rides in the same box</strong><span>Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery.</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>One tap, nothing to type</strong><span>It’s added to the order you just placed and charged to the same payment method.</span></div></li>
+      </ul><a data-upsell-proxy="add" href="#" class="button cc-xl" pb-animate="pulse-upsell">
+  <div data-button="content" class="button_content"><div>Yes, add one more stick for <span data-next-display="bundle.special-1.price" data-next-format="currency">$18.00</span></div></div>
+</a><p class="upsell-cta__note"><span data-next-display="bundle.special-1.price" data-next-format="currency">$18.00</span> today (<span data-next-display="bundle.special-1.discountPercentage" data-next-format="percentage">51%</span> off this first charge). After that, $37.00 every 28 days for this one until you cancel. We email you before every refill; to skip or cancel, just email hello@skinofab.com. Backed by our 30-day money-back guarantee.</p></div>
+  </div>
+</section>
     <section class="section cc-sm">
   <div class="container">
     <div class="heading-box text-center max-width-large align-center">
@@ -395,7 +444,9 @@
     
     <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-failsafe-378969.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-offer-gate-8d4ca3.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-offer-gate-aec643.js'|asset_url }}{% verbatim %}"></script>
+    
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-funnel-715d6b.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

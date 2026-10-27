@@ -18,6 +18,7 @@ scripts:
   - js/payment-logos.js
   - js/sf-failsafe.js
   - js/sf-offer-gate.js
+  - js/sf-funnel.js
 announcement_text: "Offer 3 of 4 · Your order is placed"
 announcement_variant: dark
 thank_you_url: "/stick-funnel/stick-thank-you/"
@@ -82,12 +83,14 @@ upsell_guarantees:
     text: "Love it, or email us within 30 days of delivery for a full refund, even opened."
 upsell_body:
   - type: features
-    title: "Three places to press it on"
-    text: "Press it on where your face looks tired, over or under your foundation."
+    title: "What’s in the balm"
+    text: "In a balm that melts on contact, in a black stick like your foundation."
     items:
-      - { title: "Under the eyes", text: "Where skin looks hollow and shadowed by the afternoon." }
-      - { title: "Smile lines", text: "Swipe along the fold, then press it in with a fingertip." }
-      - { title: "Around the lips", text: "The fine lines lipstick catches in." }
+      - { title: "PDRN", text: "Polydeoxyribonucleotide, the ingredient behind Korea’s “skin booster” trend. In a balm it helps tired, dry skin look healthier, smoother and more even." }
+      - { title: "Volufiline™", text: "A plant-derived active (Anemarrhena root) made for volume. It helps hollow-looking under-eyes, smile lines and lips look fuller and more cushioned." }
+      - { title: "Collagen", text: "Hydrolyzed collagen films the surface so fine lines and crepey texture look less noticeable." }
+how: {"eyebrow": "How to use it", "title": "Swipe it on, press it in", "text": "Over or under your foundation, wherever your face looks tired. About 10 seconds.", "steps": [{"title": "Twist up a little balm", "text": ""}, {"title": "Swipe a thin layer on the spot", "text": "Under the eyes, along smile lines, around the lips."}, {"title": "Press it in", "text": "With the stick or a fingertip, no rubbing."}, {"title": "Morning and night", "text": "At night you can go a little thicker."}], "note": "Less is more: a thin layer looks smooth; too much looks shiny.", "video": {"mp4": "images/sf/up3-how.mp4", "webm": "images/sf/up3-how.webm", "poster": "images/sf/up3-how-poster.jpg", "width": 720, "height": 900, "label": "A woman pressing the PDRN Plumping Balm on under her eyes, along a smile line and around her lips"}}
+reserved: {"title": "The balm, at a price that’s only here", "store_price": "$19.95", "store_note": "with Automatic Refills, $24.95 one at a time", "items": [{"title": "Only for customers who just ordered", "text": "You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered."}, {"title": "It rides in the same box", "text": "Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery."}, {"title": "One tap, nothing to type", "text": "It’s added to the order you just placed and charged to the same payment method."}]}
 closing_cta:
   variant: card
   title: "Add the PDRN Plumping Balm for {price}?"
@@ -97,7 +100,7 @@ closing_cta:
 {% comment %} Apollo's single-offer upsell: announcement, header, hero band, the offer (the one SDK offer), body, closing card
      (its accept / skip proxy the offer's own). {% endcomment %}
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -105,6 +108,8 @@ closing_cta:
     {% campaign_include 'upsell/header-bar.html' logo='images/sf/skinofab-wordmark.svg' %}
     {% campaign_include 'upsell/hero.html' upsell_hero=upsell_hero %}
     {% campaign_include 'upsell/offer.html' %}
+    {% campaign_include 'sf-upsell-how.html' how=how %}
+    {% campaign_include 'sf-upsell-reserved.html' reserved=reserved %}
     {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
     {% campaign_include 'upsell/closing-cta.html' %}
     {% campaign_include 'footer.html' %}

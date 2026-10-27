@@ -9,6 +9,10 @@ The package, voucher and routes come from funnel.py and the CampaignSpec (campai
 from each product's store copy (tools/persona/*_copy.py). Every package recurs, so each offer says, by the button,
 what is charged today and what after: the voucher takes its discount off this first charge only.
 No countdown (nothing expires when it ends) and no rating row (the starter's "4.8/5 - 19,569+ Reviews" is demo copy).
+Under the offer, "how it works" (_includes/sf-upsell-how.html): its loop (upsell_videos.py; offer 1 plays the stick's
+explainer) beside the product page's own steps; then "reserved for you" (_includes/sf-upsell-reserved.html): the
+store's price for it beside today's, why the price is only here (not sold at it anywhere else, it rides in the box she
+just ordered, it goes on the payment she just made) and the button again; then what is in it.
 The percentages are the SDK's ({discount}): the campaign rounds offer prices down to whole dollars, so 50% off $37 is
 $18 (51%) and 20% off $24.95 is $19 (24%); the page shows what she pays, never a rounder number.
 """
@@ -17,12 +21,38 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent / 'persona'))
 import funnel as F
+import stick_copy as SC, balm_copy as BC, serum_copy as SEC
 
 ROOT = HERE.parents[1]
 SRC = ROOT / 'campaigns' / 'skinofab' / 'src' / F.SLUG
 SPEC = ROOT / 'campaigns' / 'skinofab' / 'campaign-spec.json'
 EMAIL = 'hello@skinofab.com'
+
+
+def video(name, label, size=(720, 900)):
+    """A loop in the funnel's images (funnel_images.py copies them there): its two sources, poster, size and label."""
+    return {'mp4': f'images/sf/{name}.mp4', 'webm': f'images/sf/{name}.webm', 'poster': f'images/sf/{name}-poster.jpg',
+            'width': size[0], 'height': size[1], 'label': label}
+
+
+def reserved(title, store_price, store_note):
+    """Why today's price is hers: the store's own price for one, and the three reasons it's only here (all true of every
+    offer: no single one costs this in the store and the vouchers have no box to go in outside this page, the order has
+    not shipped, and an offer goes on the payment she made; an order that can't take one never sees it, sf-offer-gate.js)."""
+    return {'title': title, 'store_price': store_price, 'store_note': store_note, 'items': [
+        # (one at a time: the store's multi-packs can cost less each, e.g. 3 brushes for $49.90)
+        {'title': 'Only for customers who just ordered', 'text': 'You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered.'},
+        {'title': 'It rides in the same box', 'text': 'Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery.'},
+        {'title': 'One tap, nothing to type', 'text': 'It’s added to the order you just placed and charged to the same payment method.'}]}
+
+
+def steps(*rows):
+    return [{'title': t, 'text': x} for t, x in rows]
+
+
+_SCI = SC.TWIN['science']
 
 OFFERS = {
     'special-1': {
@@ -46,6 +76,11 @@ OFFERS = {
                      ('One at home, one with you', 'The stick on your vanity stays there; the spare lives in your bag.'),
                      ('Refills you control', 'It refills on its own every 28 days. Skip or cancel it by email whenever you like.')],
         'closing': 'Add one more stick for {price}?',
+        'how': {'eyebrow': 'How it works', 'title': 'One shade that meets your skin', 'text': _SCI['lede'],
+                'steps': steps(*[(c['title'], c['text']) for c in SC.TWIN['cards']['items'][:3]],
+                               ('Touch up from your bag', 'Buff the brush end over your nose and chin in the afternoon and it looks fresh again.')),
+                'note': _SCI['note'], 'video': video('science', _SCI['video_alt'], (864, 1080))},
+        'reserved': reserved('Your second stick, at a price that’s only here', '$37.00', '1 stick, with Automatic Refills'),
     },
     'special-2': {
         'hero_title': 'Add a 3-minute morning ritual',
@@ -62,12 +97,21 @@ OFFERS = {
                    ('up2-how', 'How to use the Lymphatic Brush: neck, jaw and cheeks, under the eyes')],
         'accept': 'Yes, add the brush for',
         'decline': 'No thanks, I don’t want the brush',
-        'features_title': 'Three minutes, every morning',
-        'features_text': 'A light touch with soft bristles, before your foundation goes on.',
-        'features': [('Neck first', 'Sweep down toward the collarbone, ten times.'),
-                     ('Jaw and cheeks', 'Sweep out toward the ear, ten times each side.'),
-                     ('Under the eyes', 'Sweep out to the temples with the lightest touch.')],
+        'features_title': 'Why it’s worth three minutes',
+        'features_text': 'A light touch, no oils, nothing to wash off.',
+        'features': [('Soft tips, light touch', 'Hundreds of ultra-soft tips bend instead of pressing: no red marks.'),
+                     ('On dry skin', 'No oils, so your foundation goes straight on after.'),
+                     ('A fresh brush every 90 days', 'Like a toothbrush: skip or cancel the refill by email.')],
         'closing': 'Add the Lymphatic Brush for {price}?',
+        'how': {'eyebrow': 'How to use it', 'title': 'Three minutes, every morning',
+                'text': 'On clean, dry skin, before your foundation. No oils and no pressing: the soft tips do the work.',
+                'steps': steps(('Neck', 'Sweep down from under the ear to the collarbone.'),
+                               ('Jaw and cheeks', 'Sweep from your chin along the jaw toward the ear.'),
+                               ('Under the eyes', 'Sweep out from the nose to the temples, very lightly.'),
+                               ('Neck again', 'Finish with a few sweeps down the neck.')),
+                'note': 'Repeat each sweep about 10 times, then do the other side.',
+                'video': video('up2-how', 'The Lymphatic Brush’s soft tips, its four sweeps (neck, jaw and cheeks, under the eyes, neck again) and its travel case')},
+        'reserved': reserved('The brush, at a price that’s only here', '$24.95', '1 brush with its case'),
     },
     'special-3': {
         'hero_title': 'For the look of tired under-eyes',
@@ -84,11 +128,18 @@ OFFERS = {
                    ('up3-inside', 'What is inside the balm: PDRN, Volufiline and collagen with hyaluronic acid')],
         'accept': 'Yes, add the balm for',
         'decline': 'No thanks, I don’t want the balm',
-        'features_title': 'Three places to press it on',
-        'features_text': 'Press it on where your face looks tired, over or under your foundation.',
-        'features': [('Under the eyes', 'Where skin looks hollow and shadowed by the afternoon.'),
-                     ('Smile lines', 'Swipe along the fold, then press it in with a fingertip.'),
-                     ('Around the lips', 'The fine lines lipstick catches in.')],
+        'features_title': 'What’s in the balm',
+        'features_text': 'In a balm that melts on contact, in a black stick like your foundation.',
+        'features': [(n, text) for n, _, text in BC.INGREDIENTS[:3]],
+        'how': {'eyebrow': 'How to use it', 'title': 'Swipe it on, press it in',
+                'text': 'Over or under your foundation, wherever your face looks tired. About 10 seconds.',
+                'steps': steps(('Twist up a little balm', ''),
+                               ('Swipe a thin layer on the spot', 'Under the eyes, along smile lines, around the lips.'),
+                               ('Press it in', 'With the stick or a fingertip, no rubbing.'),
+                               ('Morning and night', 'At night you can go a little thicker.')),
+                'note': 'Less is more: a thin layer looks smooth; too much looks shiny.',
+                'video': video('up3-how', 'A woman pressing the PDRN Plumping Balm on under her eyes, along a smile line and around her lips')},
+        'reserved': reserved('The balm, at a price that’s only here', '$19.95', 'with Automatic Refills, $24.95 one at a time'),
         'note': 'Contains salmon-derived PDRN: not for anyone with a fish allergy.',
         'closing': 'Add the PDRN Plumping Balm for {price}?',
     },
@@ -107,11 +158,19 @@ OFFERS = {
                    ('up4-inside', 'What is inside the serum: EGF, NAD+ and collagen')],
         'accept': 'Yes, add the serum for',
         'decline': 'No thanks, I don’t want the serum',
-        'features_title': 'One light step, face and neck',
-        'features_text': 'For skin that looks less firm, drier and duller after 45.',
-        'features': [('Two drops for your face', 'Press them in after cleansing, morning and night.'),
-                     ('Two for your neck', 'Sweep upward from the collarbone.'),
-                     ('Then your stick', 'It sinks in within a minute, so your foundation goes straight on.')],
+        'features_title': 'What’s in the serum',
+        # (the serum page's texture line without its SPF: the funnel names SPF only to say the stick has none, check_funnel)
+        'features_text': 'Water-based and light: it sinks in within a minute and sits well under moisturiser and makeup.',
+        'features': [(n, text) for n, _, text in SEC.INGREDIENTS[:3]],
+        'how': {'eyebrow': 'How to use it', 'title': 'Two drops, then your stick',
+                'text': 'Morning and night, on clean skin. It sinks in within a minute.',
+                'steps': steps(('Cleanse your face and neck', ''),
+                               ('Two drops for your face', 'Pressed in with your fingertips.'),
+                               ('Two more drops', 'Swept down your neck.'),
+                               ('Then the rest of your routine', 'Your moisturiser, then your stick.')),
+                'note': 'Less is more: two drops cover the whole face.',
+                'video': video('up4-how', 'A woman putting two drops of the EGF + NAD+ Firming Serum on her face, pressing them in and sweeping more down her neck, then her foundation stick')},
+        'reserved': reserved('The serum, at a price that’s only here', '$27.95', 'with Automatic Refills, $34.95 one at a time'),
         'closing': 'Add the EGF + NAD+ Firming Serum for {price}?',
         'skip_europe': True,
     },
@@ -147,7 +206,7 @@ def page(pid, spec):
         'meta_tags:', *[f'  {k}: {q(v)}' for k, v in F.meta_tags(pg).items()],
         '# GENERATED by tools/funnel/upsell_pages.py: edit it there, then run it.',
         'styles:', '  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', '  - css/checkout-brand.css',
-        'scripts:', '  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', '  - js/upsells.js', '  - js/payment-logos.js', '  - js/sf-failsafe.js', '  - js/sf-offer-gate.js',
+        'scripts:', '  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', '  - js/upsells.js', '  - js/payment-logos.js', '  - js/sf-failsafe.js', '  - js/sf-offer-gate.js', '  - js/sf-funnel.js',
         f'announcement_text: {q(f"Offer {n} of 4 · Your order is placed")}',
         'announcement_variant: dark',
         f'thank_you_url: {q(F.route("thank-you"))}',
@@ -170,6 +229,7 @@ def page(pid, spec):
         '    text: "Love it, or email us within 30 days of delivery for a full refund, even opened."',
         'upsell_body:', '  - type: features', f'    title: {q(o["features_title"])}', f'    text: {q(o["features_text"])}', '    items:',
         *[f'      - {{ title: {q(t)}, text: {q(x)} }}' for t, x in o['features']],
+        f'how: {q(o["how"])}', f'reserved: {q(o["reserved"])}',
         'closing_cta:', '  variant: card', f'  title: {q(o["closing"])}',
         f'  note: {q((o.get("note", "") + " " if o.get("note") else "") + "Backed by our 30-day money-back guarantee.")}',
         f'  image: {q("images/sf/" + o["images"][0][0] + ".jpg")}',
@@ -177,7 +237,7 @@ def page(pid, spec):
     body = """{% comment %} Apollo's single-offer upsell: announcement, header, hero band, the offer (the one SDK offer), body, closing card
      (its accept / skip proxy the offer's own). {% endcomment %}
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -185,6 +245,8 @@ def page(pid, spec):
     {% campaign_include 'upsell/header-bar.html' logo='images/sf/skinofab-wordmark.svg' %}
     {% campaign_include 'upsell/hero.html' upsell_hero=upsell_hero %}
     {% campaign_include 'upsell/offer.html' %}
+    {% campaign_include 'sf-upsell-how.html' how=how %}
+    {% campaign_include 'sf-upsell-reserved.html' reserved=reserved %}
     {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
     {% campaign_include 'upsell/closing-cta.html' %}
     {% campaign_include 'footer.html' %}

@@ -74,7 +74,7 @@
     
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-cc59d9.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-1bdd77.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfc/sfc-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -88,7 +88,7 @@
 
     
 
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/stick-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span></div>
+<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/stick-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -306,31 +306,80 @@
     </div>
   </section>
 </div>
+    <section class="section cc-sm sf-how" aria-labelledby="sf-how-title">
+  <div class="container">
+    <div class="sf-how__grid">
+      <figure class="sf-how__media">
+        <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfc/sfc-up3-how-poster-78d059.jpg'|asset_url }}{% verbatim %}" width="720" height="900" aria-label="A woman pressing the PDRN Plumping Balm on under her eyes, along a smile line and around her lips">
+          <source src="{% endverbatim %}{{ 'sfc/sfc-up3-how-2ce03d.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
+          <source src="{% endverbatim %}{{ 'sfc/sfc-up3-how-f39a4d.webm'|asset_url }}{% verbatim %}" type="video/webm">
+        </video>
+      </figure>
+      <div class="sf-how__body">
+        <span class="sf-how__eyebrow">How to use it</span>
+        <h2 class="display-md" id="sf-how-title">Swipe it on, press it in</h2>
+        <p class="sf-how__lede">Over or under your foundation, wherever your face looks tired. About 10 seconds.</p>
+        <ol class="sf-how__steps">
+          <li><b>1</b><div><strong>Twist up a little balm</strong><span></span></div></li>
+          <li><b>2</b><div><strong>Swipe a thin layer on the spot</strong><span>Under the eyes, along smile lines, around the lips.</span></div></li>
+          <li><b>3</b><div><strong>Press it in</strong><span>With the stick or a fingertip, no rubbing.</span></div></li>
+          <li><b>4</b><div><strong>Morning and night</strong><span>At night you can go a little thicker.</span></div></li>
+        </ol><p class="sf-how__note">Less is more: a thin layer looks smooth; too much looks shiny.</p>
+      </div>
+    </div>
+  </div>
+</section>
+    <section class="section cc-sm sf-reserved" aria-labelledby="sf-reserved-title">
+  <div class="container cc-medium">
+    <div class="sf-reserved__card">
+      <span class="sf-reserved__eyebrow">Reserved for you<span data-sf-name></span></span>
+      <h2 class="display-md" id="sf-reserved-title">The balm, at a price that’s only here</h2>
+      <div class="sf-reserved__compare">
+        <div class="sf-reserved__price">
+          <span class="sf-reserved__label">In our store</span>
+          <s class="sf-reserved__amount">$19.95</s>
+          <small>with Automatic Refills, $24.95 one at a time</small>
+        </div>
+        <div class="sf-reserved__price is-here">
+          <span class="sf-reserved__label">Here, today</span>
+          <strong class="sf-reserved__amount"><span data-next-display="bundle.special-3.price" data-next-format="currency">$15.00</span></strong>
+          <small><span data-next-display="bundle.special-3.discountPercentage" data-next-format="percentage">25%</span> off your first one</small>
+        </div>
+      </div>
+      <ul class="sf-reserved__list">
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Only for customers who just ordered</strong><span>You won’t find one at this price in our store, and no code unlocks it. It’s here because you just ordered.</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>It rides in the same box</strong><span>Your order hasn’t shipped yet, so it goes in with it: no extra shipping, no second delivery.</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>One tap, nothing to type</strong><span>It’s added to the order you just placed and charged to the same payment method.</span></div></li>
+      </ul><a data-upsell-proxy="add" href="#" class="button cc-xl" pb-animate="pulse-upsell">
+  <div data-button="content" class="button_content"><div>Yes, add the balm for <span data-next-display="bundle.special-3.price" data-next-format="currency">$15.00</span></div></div>
+</a><p class="upsell-cta__note"><span data-next-display="bundle.special-3.price" data-next-format="currency">$15.00</span> today (<span data-next-display="bundle.special-3.discountPercentage" data-next-format="percentage">25%</span> off this first charge). After that, $19.95 every 28 days for this one until you cancel. We email you before every refill; to skip or cancel, just email hello@skinofab.com. Backed by our 30-day money-back guarantee.</p></div>
+  </div>
+</section>
     <section class="section cc-sm">
   <div class="container">
     <div class="heading-box text-center max-width-large align-center">
-      <h2 class="display-md">Three places to press it on</h2><p class="text-lg">Press it on where your face looks tired, over or under your foundation.</p>
+      <h2 class="display-md">What’s in the balm</h2><p class="text-lg">In a balm that melts on contact, in a black stick like your foundation.</p>
     </div>
     <div class="grid-2col-standard margin-32">
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">1</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Under the eyes</h3>
-          <p class="text-base">Where skin looks hollow and shadowed by the afternoon.</p>
+          <h3 class="checkout-features__item-title">PDRN</h3>
+          <p class="text-base">Polydeoxyribonucleotide, the ingredient behind Korea’s “skin booster” trend. In a balm it helps tired, dry skin look healthier, smoother and more even.</p>
         </div>
       </div>
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">2</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Smile lines</h3>
-          <p class="text-base">Swipe along the fold, then press it in with a fingertip.</p>
+          <h3 class="checkout-features__item-title">Volufiline™</h3>
+          <p class="text-base">A plant-derived active (Anemarrhena root) made for volume. It helps hollow-looking under-eyes, smile lines and lips look fuller and more cushioned.</p>
         </div>
       </div>
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">3</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">Around the lips</h3>
-          <p class="text-base">The fine lines lipstick catches in.</p>
+          <h3 class="checkout-features__item-title">Collagen</h3>
+          <p class="text-base">Hydrolyzed collagen films the surface so fine lines and crepey texture look less noticeable.</p>
         </div>
       </div>
     </div>
@@ -395,7 +444,9 @@
     
     <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-failsafe-378969.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-offer-gate-8d4ca3.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-offer-gate-aec643.js'|asset_url }}{% verbatim %}"></script>
+    
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-funnel-715d6b.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

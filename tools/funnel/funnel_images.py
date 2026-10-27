@@ -251,6 +251,10 @@ def copies():
     # the explainer loop (stick_science_video.py): video for the pages, the poster above
     for ext in ('mp4', 'webm'):
         shutil.copyfile(STICK / 'science' / f'science.{ext}', OUT / f'science.{ext}')
+    # the special offers' how-it-works loops (upsell_videos.py) and their posters
+    for n in (2, 3, 4):
+        for f in (f'up{n}-how.mp4', f'up{n}-how.webm', f'up{n}-how-poster.jpg'):
+            shutil.copyfile(BRAND / 'stick-funnel' / 'videos' / f, OUT / f)
     # the brand's wordmark (header) and the store's favicons (the starter's are replaced)
     shutil.copyfile(BRAND / 'logo' / 'skinofab-wordmark.svg', OUT / 'skinofab-wordmark.svg')
     static = ROOT / 'tools' / 'theme-build' / 'static'
