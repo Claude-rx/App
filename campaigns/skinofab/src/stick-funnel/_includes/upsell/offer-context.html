@@ -1,4 +1,4 @@
-{%- comment -%} SKINOFAB: the demo fallback prices ($9.99, $24.95, $0.00...) are the page's own (upsell_offer.fallback_price / fallback_compare, tools/funnel/upsell_pages.py). Otherwise GENERATED from _shared/upsell/_includes/upsell/offer-context.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%} SKINOFAB: the demo fallback prices ($9.99, $24.95, $0.00...) and the 0% discount are the page's own (upsell_offer.fallback_price / fallback_compare / fallback_discount, tools/funnel/upsell_pages.py). Otherwise GENERATED from _shared/upsell/_includes/upsell/offer-context.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
 {% comment %}
   next_component: upsell-offer-context
   next_version: 1
@@ -101,7 +101,7 @@
 {%- capture tok_package_name -%}<span data-next-display="{{ package_name_path }}">Product</span>{%- endcapture -%}
 {%- capture tok_price -%}<span data-next-display="{{ tok_price_path }}" data-next-format="currency">{{ offer.fallback_price }}</span>{%- endcapture -%}
 {%- capture tok_compare_price -%}<span data-next-display="{{ tok_compare_path }}" data-next-format="currency">{{ offer.fallback_compare }}</span>{%- endcapture -%}
-{%- capture tok_discount -%}<span data-next-display="{{ tok_pct_path }}" data-next-format="percentage">0%</span>{%- endcapture -%}
+{%- capture tok_discount -%}<span data-next-display="{{ tok_pct_path }}" data-next-format="percentage">{{ offer.fallback_discount | default: '0%' }}</span>{%- endcapture -%}
 {%- if upsell_type == 'tier-cards' or upsell_type == 'tier-pills' or upsell_type == 'mv' -%}
   {%- capture tok_price_1x -%}<span data-next-display="bundle.{{ display_selector_id }}.price" data-next-format="currency">{{ offer.fallback_price }}</span>{%- endcapture -%}
   {%- capture tok_discount_1x -%}<span data-next-display="bundle.{{ display_selector_id }}.discountPercentage" data-next-format="percentage">0%</span>{%- endcapture -%}

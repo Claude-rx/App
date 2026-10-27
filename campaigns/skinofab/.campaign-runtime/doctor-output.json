@@ -3089,5 +3089,9 @@
     },
     "prior_run_id": "run_1793096559787_6f6967cd",
     "comparison": "prior_run"
-  }
+  },
+  "stale": true,
+  "stale_marked_by": "polish capture",
+  "stale_marked_at": "2026-10-27T11:16:49.013Z",
+  "stale_reason": "Package-owned polish page-load evidence changed after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
 }

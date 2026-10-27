@@ -34,7 +34,7 @@
     
 
     
-    <script src="{% endverbatim %}{{ 'sfc/sfc-config-34f13e.js'|asset_url }}{% verbatim %}"></script>
+    <script src="{% endverbatim %}{{ 'sfc/sfc-config-18e8d6.js'|asset_url }}{% verbatim %}"></script>
 
     
     
@@ -66,7 +66,7 @@
 
     <link href="{% endverbatim %}{{ 'sfc/sfc-next-core-e875b0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-5c0390.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-ee79fb.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfc/sfc-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -78,7 +78,8 @@
 
 
 
-    <div class="page-wrapper">
+    <div hidden data-sf-renewals='{"SKF-AFS-1":"Then $37.00 every 28 days, until you cancel","SKF-AFS-2":"Then $47.00 every 56 days, until you cancel","SKF-LYB-1":"Then $24.95 every 90 days, until you cancel","SKF-PDB-1":"Then $19.95 every 28 days, until you cancel","SKF-ENS-1":"Then $27.95 every 56 days, until you cancel"}'></div>
+<div class="page-wrapper">
 
       <div class="main-wrapper">
         
@@ -291,6 +292,7 @@
                 <div class="cart-item__header">
                   <div pb-cart="line_item-title" class="cart-item__title">{item.name}</div>
                 </div>
+                <div class="sf-line-renew" data-sf-sku="{item.sku}"></div>
                 <div class="quantity-controls hide">
                   <div id="quantity_-item.packageId" data-flavor="original" class="cart-quantity-controls__container">
                     <div data-package-id="{item.packageId}" data-next-quantity="decrease" role="button" class="quantity-controls__button quantity-controls__button--decrease">-</div>
@@ -374,7 +376,7 @@
   <div class="receipt_section-head"><div class="display-xs">What happens next</div></div>
   <ol class="sf-next__list">
     <li><strong>Your first morning with the stick.</strong> Twist up a little, dot it on your cheeks and forehead (it looks white at first), then flip it and buff in small circles with the brush end until it meets your tone.</li>
-    <li><strong>Your Automatic Refills.</strong> Each item in this order ships again on its own schedule, at the price shown in your confirmation email. We email you before every refill. To skip, delay or cancel, just email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>: a person replies within one business day. No minimum, no fees.</li>
+    <li><strong>Your Automatic Refills.</strong> Each item in this order ships again on its own schedule, at the price and interval shown under it in your order summary. We email you before every refill. To skip, delay or cancel, just email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>: a person replies within one business day. No minimum, no fees.</li>
     <li><strong>30 days to love it.</strong> If it isn’t right for you, email us within 30 days of delivery for a full refund, even opened. You don’t have to send it back.</li>
   </ol>
 </div>
@@ -402,7 +404,7 @@
                         <div class="order_receipt-sec">
                           <div class="sec_title">Shipping method</div>
                           <div class="order_receipt--group">
-                            <div data-next-display="order.shippingMethod" class="sec_value">FedEx Ground</div>
+                            <div class="sec_value">Free shipping, tracked</div>
                           </div>
                         </div>
                       </div>
@@ -478,6 +480,7 @@
                 <div class="cart-item__header">
                   <div pb-cart="line_item-title" class="cart-item__title">{item.name}</div>
                 </div>
+                <div class="sf-line-renew" data-sf-sku="{item.sku}"></div>
                 <div class="quantity-controls hide">
                   <div id="quantity_-item.packageId" data-flavor="original" class="cart-quantity-controls__container">
                     <div data-package-id="{item.packageId}" data-next-quantity="decrease" role="button" class="quantity-controls__button quantity-controls__button--decrease">-</div>
@@ -548,6 +551,8 @@
       </div>
     </div>
 
+    
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-sf-receipt-8b4439.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

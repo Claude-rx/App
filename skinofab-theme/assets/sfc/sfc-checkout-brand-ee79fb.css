@@ -16,7 +16,7 @@
   --brand--color--cta-primary: #151515;
   --brand--color--accent: #151515;
   --brand--color--complementary-1: #faf8f5;
-  --brand--color--rating-star: #00b67a;
+  --brand--color--rating-star: #e8a33d;          /* gold, as the listicle's (green boxes read as a review site's) */
   --brand--color--pill-primary: #151515;
   --brand--color--pill-primary-surface: #f1ede7;
   --brand--color--pill-secondary: #151515;
@@ -34,3 +34,25 @@
 /* a pack's crossed-out price only when the SDK reports a discount (the exit coupon): without one, originalPrice is
    the same as the price, and the same number struck through beside itself reads as a fake saving */
 .bundle-card:has(.bundle-card__savings[style*="display: none"]) .bundle-card__price-reg { display: none; }
+/* the starter's review stars are green boxes (a review site's look): gold stars, no box */
+.checkout-review__stars rect { fill: transparent; }
+.checkout-review__stars path { fill: #e8a33d; }
+.checkout-review__meta { flex-direction: column; align-items: flex-start; row-gap: 2px; }
+.checkout-review__meta .review-auth:nth-child(2) { display: none; }      /* the "|" between name and label */
+.review-auth { white-space: nowrap; }
+.reviews-slider .swiper-slide { height: auto; }
+.reviews-slider .checkout-review--slide { width: auto; height: 100%; }
+/* what she pays today and what renews, by the express buttons and the order button */
+.sf-pay-terms { margin: 0 0 12px; padding: 10px 12px; border-radius: 8px; background: #f1ede7; font-size: 14px; line-height: 1.45; color: #151515; }
+.submit-section__disclaimer { font-size: 13px !important; line-height: 1.5; }
+/* the special offers: the shipping row's icon at its size (the SVG fills its box), the % under its label on phones,
+   and the closing card's price larger than its label */
+.upsell-ships-info__icon { width: 36px; height: 36px; flex: none; }
+.upsell-ships-info__text { flex: 1; min-width: 0; }
+@media (max-width: 479px) {
+  .upsell-offer__price-heading { flex-direction: column; gap: 2px; }
+}
+.upsell-closing .prices-text-wrapper.cc-start > div:last-child { font-size: 17px; font-weight: 600; }
+.upsell-closing .prices-text-wrapper.cc-start > div:last-child [data-next-display] { font-size: 30px; font-weight: 700; margin-left: 4px; }
+.sf-line-renew { margin-top: 2px; font-size: 12px; line-height: 1.4; color: #6b6b6b; }
+.sf-line-renew:empty { display: none; }

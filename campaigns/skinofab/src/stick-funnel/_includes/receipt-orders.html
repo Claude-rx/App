@@ -1,4 +1,5 @@
 {% comment %}
+  SKINOFAB: each line's renewal under its name (.sf-line-renew, filled by js/sf-receipt.js from the thank-you page's renewals, by SKU: order lines carry no package id).
   next_component: receipt-orders
   next_version: 1.0.1
   next_sdk_min: 0.4.18 (order.* condition paths incl. order.hasItems source-verified in ConditionalDisplayEnhancer at v0.4.18 and unchanged through v0.4.36)
@@ -47,6 +48,7 @@
                 <div class="cart-item__header">
                   <div pb-cart="line_item-title" class="cart-item__title">{item.name}</div>
                 </div>
+                <div class="sf-line-renew" data-sf-sku="{item.sku}"></div>
                 <div class="quantity-controls hide">
                   <div id="quantity_-item.packageId" data-flavor="original" class="cart-quantity-controls__container">
                     <div data-package-id="{item.packageId}" data-next-quantity="decrease" role="button" class="quantity-controls__button quantity-controls__button--decrease">-</div>

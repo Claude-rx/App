@@ -8,8 +8,10 @@ usage: python3 -I tools/funnel/funnel_images.py [<work_dir>]
 
 The listicle mirrors the image kinds of the owner's other brand's listicle (Facelove, "10 reasons why foundating
 stick 2026 new"), one by one: a three-women collage up top, a before/after for the shade match, a woman holding the
-stick, a before/after for dry skin, a macro of the brush buffing, a before/after for spots, an ingredient plate, the
-women the stick is made for, the how-to, the guarantee seal and the offer card. What Facelove's could not back is
+stick, a before/after for dry skin, a macro of the brush buffing, a woman in daylight (Facelove's SPF reason, here
+"made not to turn orange"), an ingredient plate, the women the stick is made for, the liquid's ratings (drawn on the
+page), the guarantee seal and the offer card. The dry-skin "after" is its own "before" with the tone evened out
+(even_tone): the generated one smoothed lines. What Facelove's could not back is
 not drawn: no "WEEK 1 / WEEK 8" (nothing measured it), no doctors holding the stick (no expert endorses it), no
 "America's #1" or "98%" or award seal. Every before/after says on the image that it is an AI illustration. The
 testimonial photos are the customers' own (their reviews of the Adaptive Peptide Foundation, imported from the
@@ -17,6 +19,7 @@ store's earlier review app; photos approved by eye in reviews/photos-approved.tx
 """
 import shutil, sys
 from pathlib import Path
+import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -46,10 +49,45 @@ def save(im, name, size=None, q=82):
 def src(name): return Image.open(SRC / f'{name}.png').convert('RGB')
 
 
-def before_after(name, out, size=1080):
+def _blur(a, r):
+    """A Gaussian blur of a float image (H x W or H x W x 3, 0..1)."""
+    if a.ndim == 3: return np.stack([_blur(a[..., c], r) for c in range(3)], -1)
+    im = Image.fromarray(np.clip(a * 255, 0, 255).astype(np.uint8), 'L').filter(ImageFilter.GaussianBlur(r))
+    return np.asarray(im).astype(np.float32) / 255
+
+
+def even_tone(before):
+    """What a thin layer of foundation does to a photo, and nothing else: the skin's colour evened out (redness and
+    blotches pulled toward her own mean skin tone) and a soft satin glow, with every line, pore and the face's shape
+    left exactly as they are (funnel review 1: a generated "after" smoothed forehead lines and lifted the jaw).
+    Frequency separation: the fine detail (lines, pores, texture) is kept whole; only the broad colour under it is
+    evened, on skin only (a YCbCr skin mask)."""
+    a = np.asarray(before).astype(np.float32) / 255
+    ycc = np.asarray(before.convert('YCbCr')).astype(np.float32)
+    skin = ((ycc[..., 2] > 133) & (ycc[..., 2] < 178) & (ycc[..., 1] > 80) & (ycc[..., 1] < 130) & (ycc[..., 0] > 60))
+    skin = _blur(skin.astype(np.float32), 4)
+    m = skin[..., None]
+    low = _blur(a, 9)
+    detail = a - low                                            # the lines and texture: kept as they are
+    skin_low = _blur(low * m, 28) / np.maximum(_blur(skin, 28)[..., None], 1e-3)
+    mean = (low * m).sum((0, 1)) / m.sum()
+    even = (low * 0.45 + skin_low * 0.55) * 0.78 + mean * 0.22
+    lum = even.mean(-1, keepdims=True)
+    even = lum + (even - lum) * 1.06                            # back the colour the averaging took out
+    even = even * np.array([1.0, 0.998, 0.985]) * 1.03 + 0.05 * _blur(lum[..., 0], 24)[..., None] ** 2
+    return Image.fromarray((np.clip(a * (1 - m) + np.clip(even + detail, 0, 1) * m, 0, 1) * 255).astype(np.uint8))
+
+
+def before_after(name, out, size=1080, honest_after=False):
     """A split-screen photo with Before / After and the AI line in ink on a white band at its foot (the gallery's
-    style, P.before_after dark: white words were lost on the white t-shirts), a white line between the halves."""
-    im = ImageOps.fit(src(name), (size, size), Image.LANCZOS)
+    style, P.before_after dark: white words were lost on the white t-shirts), a white line between the halves.
+    honest_after: the After half is the Before half with even_tone() (the generated After is not used)."""
+    im = src(name)
+    if honest_after:
+        w, h = im.size
+        before = im.crop((0, 0, w // 2, h))
+        im = Image.new('RGB', (w // 2 * 2, h)); im.paste(before, (0, 0)); im.paste(even_tone(before), (w // 2, 0))
+    im = ImageOps.fit(im, (size, size), Image.LANCZOS)
     d = ImageDraw.Draw(im)
     d.rectangle((size // 2 - 3, 0, size // 2 + 3, size), fill=PAPER)
     d.rectangle((0, size - 150, size, size), fill=PAPER)
@@ -113,22 +151,6 @@ def made_without():
     save(im, 'made-without')
 
 
-def how_to():
-    """Twist, dot, buff: the stick page's three how-to photos side by side with their step."""
-    s = 720
-    steps = [('twist', '1  Twist up'), ('dots', '2  Dot it on'), ('blend', '3  Buff it in')]
-    im = Image.new('RGB', (s * 3 + 16, s), PAPER)
-    for i, (n, word) in enumerate(steps):
-        p = ImageOps.fit(Image.open(STICK / 'labelled' / f'{n}.jpg').convert('RGB'), (s, s), Image.LANCZOS)
-        d = ImageDraw.Draw(p)
-        f = P.sans(46, 'SemiBold')
-        tw = d.textlength(word, font=f)
-        d.rounded_rectangle((28, s - 104, 28 + tw + 48, s - 32), radius=36, fill=INK)
-        d.text((52, s - 68), word, font=f, fill=PAPER, anchor='lm')
-        im.paste(p, (i * (s + 8), 0))
-    save(im, 'how-to', size=1620)
-
-
 def seal():
     """The 30-day guarantee seal (Facelove's "FREE TRIAL" seal, in the brand's black)."""
     import math
@@ -175,6 +197,33 @@ def offer_card():
     save(im, 'offer')
 
 
+def labelled_ba(path, out, size=1080):
+    """A product's own before/after photo with the funnel's labels: Before / After and the AI line on a white band
+    at its foot, over the store photo's small "illustrative purposes" caption (funnel review 1: the brush's
+    before/after carried only that caption)."""
+    im = ImageOps.fit(Image.open(path).convert('RGB'), (size, size), Image.LANCZOS)
+    d = ImageDraw.Draw(im)
+    d.rectangle((0, size - 150, size, size), fill=PAPER)
+    d.text((34, size - 88), 'Before', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
+    d.text((size // 2 + 34, size - 88), 'After', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
+    P.note(d, (34, size - 30), P.AI_NOTE, anchor='ls', size=38)
+    save(im, out)
+
+
+def pack_images():
+    """The checkout's pack cards (funnel review 1: both showed the campaign's one product photo): one stick, and two
+    sticks with the free brush, on white, no words (they show at 64 px)."""
+    size = 600
+    one = Image.new('RGB', (size, size), PAPER)
+    one.paste(ImageOps.fit(P.white_bg.light(Image.open(STICK / 'labelled' / 'single.jpg').convert('RGB')), (size, size), Image.LANCZOS))
+    save(one, 'pack-1')
+    two = Image.new('RGB', (size, size), PAPER)
+    sticks = ImageOps.fit(P.white_bg.light(Image.open(STICK / 'hero.jpg').convert('RGB')), (470, 470), Image.LANCZOS)
+    brush = ImageOps.fit(P.white_bg.light(Image.open(BRUSH / 'card.jpg').convert('RGB')), (300, 300), Image.LANCZOS)
+    two.paste(sticks, (-40, 70)); two.paste(brush, (300, 230))
+    save(two, 'pack-2')
+
+
 def testimonials(work):
     """Each testimonial's own photo, square on her face (kept in brand/stick-funnel/review-<key>.jpg)."""
     for key, (rid, centering) in TESTIMONIAL_PHOTOS.items():
@@ -195,15 +244,17 @@ def copies():
         # product page gallery (the stick page's, in its order) and its sections
         'g-one-stick': STICK / 'one-stick.jpg', 'g-tones': STICK / 'tones.jpg', 'g-duo-ends': STICK / 'duo-ends.jpg',
         'g-before-after': STICK / 'before-after.jpg', 'g-whats-inside': STICK / 'whats-inside.jpg', 'g-hold-chin': STICK / 'hold-chin.jpg',
-        'wear-day': STICK / 'wear-day.jpg', 'vs-others': STICK / 'vs-others.jpg', 'science-poster': STICK / 'science' / 'science-poster.jpg',
+        'science-poster': STICK / 'science' / 'science-poster.jpg',
         'gift-brush': STICK / 'gift-brush.jpg', 'gift-shipping': STICK / 'gift-shipping.jpg', 'stick-card': STICK / 'card.jpg',
-        'temple': STICK / 'temple.jpg', 'friends': STICK / 'friends.jpg', 'swatch': STICK / 'swatch.jpg',
+        'temple': STICK / 'temple.jpg', 'swatch': STICK / 'swatch.jpg',
+        'daylight': STICK / 'daylight.jpg', 'bag': STICK / 'bag.jpg', 'problem': STICK / 'source' / 'problem.jpg',
+        **{f'step-{n}': STICK / f'{n}.jpg' for n in ('twist', 'dots', 'blend', 'apply-cheek')},
         **{f'ing-{n}': STICK / f'ing-{n}.jpg' for n in ('pdrn', 'peptides', 'ha', 'ceramides', 'squalane', 'niacinamide', 'centella')},
         # the special offers
-        'up1-hold': STICK / 'hold-cheek.jpg', 'up1-pack': STICK / 'hero.jpg',
-        'up2-brush': BRUSH / 'hero.jpg', 'up2-card': BRUSH / 'card.jpg', 'up2-how': BRUSH / 'how-to-use.jpg', 'up2-ba': BRUSH / 'ba-puffy.jpg',
+        'up1-hold': STICK / 'hold-cheek.jpg',
+        'up2-brush': BRUSH / 'card.jpg', 'up2-how': BRUSH / 'how-to-use.jpg',
         'up3-balm': BALM / 'card.jpg', 'up3-hold': BALM / 'hold-cheek.jpg', 'up3-ba': BALM / 'before-after.jpg', 'up3-inside': BALM / 'whats-inside.jpg',
-        'up4-serum': SERUM / 'card.jpg', 'up4-hold': SERUM / 'hold-cheek.jpg', 'up4-ba': SERUM / 'before-after.jpg', 'up4-inside': SERUM / 'whats-inside.jpg',
+        'up4-serum': SERUM / 'card.jpg', 'up4-hold': SERUM / 'hold-cheek.jpg', 'up4-inside': SERUM / 'whats-inside.jpg',
     }
     for name, path in plain.items():
         save(Image.open(path), name, size=1080)
@@ -220,14 +271,16 @@ def copies():
 
 
 if __name__ == '__main__':
+    for old in OUT.glob('*.jpg'): old.unlink()
     hero()
     before_after('ba-redness', 'ba-redness')
-    before_after('ba-dry', 'ba-dry')
-    before_after('ba-spots', 'ba-spots')
+    before_after('ba-dry', 'ba-dry', honest_after=True)
     labelled_plate()
     made_without()
-    how_to()
     seal()
     offer_card()
+    pack_images()
     testimonials(sys.argv[1] if len(sys.argv) > 1 else None)
     copies()
+    labelled_ba(BRUSH / 'ba-puffy.jpg', 'up2-ba')      # (the serum's before/after stays on its own page: a filter can't
+                                                        # honestly show firming, so offer 4 shows the bottle, her and the formula)

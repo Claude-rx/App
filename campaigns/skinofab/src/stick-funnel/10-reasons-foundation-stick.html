@@ -12,8 +12,9 @@ meta_tags:
   next-page-type: "product"
 # The owner's other brand's listicle (Facelove, /pages/10-reasons-why-foundating-stick-2026-new), section by section
 # and image kind by image kind, for SKINOFAB's stick. Its reasons that nothing backs are rewritten to what is true
-# (docs/stick-funnel.md has the list): no SPF (5), no study percentages (1, 6, 7), no "dermatologist recommended"
-# (9), no "all skin tones" (8), no "look 35" or "age-reversing" (the title), no reset-on-load countdown, and the
+# (docs/stick-funnel.md has the list): no SPF (5: made not to turn orange, with a real review), no study percentages
+# (1, 6, 7), no "dermatologist recommended" (9: the real ratings of the stick's liquid sister, labelled as such), no
+# "all skin tones" (8), no "look 35" or "age-reversing" (the title), no reset-on-load countdown, and the
 # byline is the brand's own. Every claim here is one the stick's page already makes (tools/persona/stick_copy.py).
 offer_bar: "FREE Lymphatic Brush with 2 sticks · Free shipping"
 offer_bar_short: "FREE brush with 2 sticks"
@@ -55,13 +56,16 @@ reasons:
       - "Young skin naturally diffuses light, which is why it looks so soft in photos."
       - "This foundation contains round silica spheres and boron nitride, soft-focus powders that scatter the light, so fine lines and pores look softer."
       - "Think of it as a soft filter that still looks like your skin, not like makeup."
-  - title: "It Evens Out Redness and Sun Spots, Without a Mask"
-    image: "images/sf/ba-spots.jpg"
-    alt: "A woman in her sixties before and after the stick: sun spots and redness softened (AI illustration)"
+      - "And the brush is built in: twist up a little, dot it on your cheeks and forehead (it looks white at first), then flip the stick and buff in small circles until it meets your tone. About a minute, no sponge to wash."
+  - title: "Made Not to Turn Orange by the Afternoon"
+    image: "images/sf/daylight.jpg"
+    alt: "A woman in her fifties touching her jawline, the black stick in her other hand"
     paras:
-      - "Years of sun leave their mark: uneven tone, dark spots, redness around the nose and cheeks."
-      - "One thin layer gives light to medium coverage that evens out their look. For a darker spot, tap a second layer on just that spot and buff the edges. It’s buildable, so you choose how much coverage you want and still look like you."
-      - "Good to know: it has no SPF, so keep wearing your daily sunscreen underneath."
+      - "It’s the complaint we hear most about color-changing foundations: right at 8 AM, orange by lunch."
+      - "The stick’s pigments are made not to turn orange or grey in daylight, and its creamy layer is made to move with your skin instead of drying on top of it. In the afternoon, buff the brush end over your nose and chin and it looks fresh again, with no more product."
+    quote: "It’s the only color changing foundation that is a perfect match and doesn’t oxidized and look orange at the end of the day."
+    quote_by: "Cassandra K., verified buyer of our liquid foundation"
+    after: "Good to know: it has no SPF, so keep wearing your daily sunscreen underneath."
   - title: "It’s Skincare in a Stick: PDRN, Peptides and Volufiline™"
     image: "images/sf/plate.jpg"
     alt: "The stick on a plate with the textures of its ingredients: vitamin E, ceramides, hyaluronic acid, centella, squalane and silica"
@@ -86,13 +90,12 @@ reasons:
     paras:
       - "Whether you’re in your 40s, 50s, 60s or beyond, the stick adapts to your tone as you blend, and its cream is made for the dry, mature skin most foundations ignore."
       - "It’s made for fair to medium skin tones. If your skin is deeper than medium, email us at <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a> before you order and we’ll tell you honestly how it will suit you."
-  - title: "The Brush Is Built In: Twist, Dot, Buff"
-    image: "images/sf/how-to.jpg"
-    alt: "Three steps: twist up the stick, dot it on the face, buff it in with the brush end"
-    wide: true
+  - title: "9,855 Women Rated Its Liquid Sister 4.8 Out of 5"
+    ratings: true
     paras:
-      - "No sponge to wash, no brush to lose. One end of the stick is the foundation, the other a dense kabuki brush."
-      - "Twist up a little, dot it on your cheeks and forehead (it looks white at first), then flip the stick and buff in small circles until it meets your tone. About a minute, and it fits in your handbag for touch-ups."
+      - "The stick is new at SKINOFAB, so it has no reviews of its own yet."
+      - "What it does have is a sister: our Adaptive Peptide Foundation, the liquid that goes on white and adapts to your tone the same way. 9,855 women have reviewed it, 4.8 out of 5 on average."
+      - "The stick carries the same adapting color in a solid cream made for dry skin, with the kabuki brush built into the other end."
   - title: "A 30-Day Money-Back Guarantee"
     image: "images/sf/guarantee.jpg"
     alt: "SKINOFAB’s 30-day money-back guarantee seal"
@@ -102,14 +105,14 @@ reasons:
 cta:
   title: "Click Below and Claim Your Special Offer Today!"
   text: "2 sticks + a FREE Lymphatic Brush, with free shipping."
+  price: "$47 ($23.50 a stick), then $47 every 56 days until you cancel. Or 1 stick for $37, then $37 every 28 days. Skip or cancel any time by email."
   button: "CLAIM YOUR SPECIAL OFFER NOW →"
   note: "FAST & FREE SHIPPING · 30-DAY MONEY-BACK GUARANTEE"
   image_alt: "The Adaptive Foundation Stick: two sticks and a free Lymphatic Brush"
 reviews:
   stars: "4.8/5 · 9,855 reviews of our liquid foundation"
   title: "What Women Are Saying"
-  lead: "Real reviews from real women"
-  note: "These are reviews of our Adaptive Peptide Foundation, the liquid that goes on white and adapts to your tone the same way, with the customers’ own photos. The stick is new at SKINOFAB: its own reviews will join these as buyers write them."
+  lead: "Reviews of our Adaptive Peptide Foundation, the liquid that goes on white and adapts the same way, with the customers’ own photos. The stick is new at SKINOFAB: its own reviews join these as buyers write them."
   items:
     - name: "Lora Z., 65"
       photo: "images/sf/review-lora.jpg"
@@ -120,6 +123,12 @@ reviews:
     - name: "Diane O., 60"
       photo: "images/sf/review-diane.jpg"
       text: "I am 60 years old and don't wear much makeup. This product I love it is light weight and matches perfectly. This is mid afternoon even."
+ratings:
+  average: "4.8"
+  count: "9,855"
+  total: 9855
+  rows: [["5", 7719], ["4", 2132], ["3", 0], ["2", 1], ["1", 3]]
+  note: "Every review of our Adaptive Peptide Foundation, the liquid, as of October 2026."
 closing: "If you made it to the end, you deserve to love your skin at any age!"
 ---
 {% assign offer_link = next_url | campaign_link %}
@@ -146,14 +155,27 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
 
   {% for r in reasons %}
   <section class="sf-reason{% if r.wide %} sf-reason--wide{% endif %}" id="reason-{{ forloop.index }}">
+    {% if r.ratings %}
+    <figure class="sf-reason__media sf-ratings" aria-label="{{ ratings.average }} out of 5 from {{ ratings.count }} reviews of our liquid foundation">
+      <p class="sf-ratings__avg">{{ ratings.average }}<small>/5</small></p>
+      <p class="sf-stars__row" aria-hidden="true">★★★★★</p>
+      <p class="sf-ratings__count">{{ ratings.count }} reviews of our liquid foundation</p>
+      <ul class="sf-ratings__rows">{% for row in ratings.rows %}{% assign pct = row[1] | times: 100.0 | divided_by: ratings.total %}
+        <li><span>{{ row[0] }} ★</span><i><b style="width:{{ pct | round: 1 }}%{% if row[1] == 0 %};min-width:0{% endif %}"></b></i><span>{{ row[1] }}</span></li>{% endfor %}
+      </ul>
+      <figcaption>{{ ratings.note }}</figcaption>
+    </figure>
+    {% else %}
     <figure class="sf-reason__media">
       <img src="{{ r.image | campaign_asset }}" alt="{{ r.alt }}" loading="{% if forloop.index > 1 %}lazy{% else %}eager{% endif %}" decoding="async" width="1080" height="{% if r.wide %}536{% else %}1080{% endif %}">
     </figure>
+    {% endif %}
     <div class="sf-reason__copy">
       <h2>{{ forloop.index }}. {{ r.title }}</h2>
       {% for p in r.paras %}<p>{{ p }}</p>
       {% endfor %}
       {% if r.bullets %}<ul class="sf-ticks">{% for b in r.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
+      {% if r.quote %}<blockquote class="sf-quote"><p>“{{ r.quote }}”</p><cite>{{ r.quote_by }}</cite></blockquote>{% endif %}
       {% if r.after %}<p>{{ r.after }}</p>{% endif %}
       {% if r.video %}
       <figure class="sf-video">
@@ -173,6 +195,7 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
     <div class="sf-cta__copy">
       <h2>{{ cta.title }}</h2>
       <p>{{ cta.text }}</p>
+      <p class="sf-cta__price">{{ cta.price }}</p>
       <a class="sf-btn sf-btn--xl" href="{{ offer_link }}">{{ cta.button }}</a>
       <p class="sf-cta__note">{{ cta.note }}</p>
     </div>
@@ -189,11 +212,10 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
         <h3>{{ t.name }}</h3>
         <p class="sf-review__stars" aria-label="5 out of 5 stars">★★★★★</p>
         <p class="sf-review__text">“{{ t.text }}”</p>
-        <p class="sf-review__who">Verified buyer of the foundation</p>
+        <p class="sf-review__who">Verified buyer of our liquid foundation</p>
       </article>
       {% endfor %}
     </div>
-    <p class="sf-reviews__note">{{ reviews.note }}</p>
   </section>
 
   <section class="sf-closing">

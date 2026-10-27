@@ -16,13 +16,13 @@ scripts:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - js/upsells.js
   - js/payment-logos.js
-announcement_text: "Offer 1 of 4 · Your order is placed. Don’t close this page: this price is only here."
+announcement_text: "Offer 1 of 4 · Your order is placed"
 announcement_variant: dark
 upsell_hero:
   variant: band
   title: "Your order is placed!"
   offer: "Add one more stick for {price} ({discount} off)"
-  suboffer: "A second Adaptive Foundation Stick for your bag, your bathroom or a friend. This price is only on this page."
+  suboffer: "A second Adaptive Foundation Stick for your bag, so the one at home stays at home. This price is only on this page."
 upsell_layout:
   style: card
   boxed: true
@@ -40,7 +40,7 @@ upsell_offer:
   voucher: "STICK50"
   selector_id: "special-1"
   show_rating: false
-  pretitle: "One-time offer · {discount} off"
+  pretitle: "Only on this page · {discount} off your first charge"
   title: "One more Adaptive Foundation Stick"
   retail_label: "Regular price"
   price_label: "Today, on this page"
@@ -54,10 +54,11 @@ upsell_offer:
   image: "images/sf/up1-hold.jpg"
   fallback_price: "$18.00"
   fallback_compare: "$37.00"
+  fallback_discount: "51%"
 offer_bullets:
   - "Keep one at home and one in your bag for touch-ups"
-  - "Give one to a friend or sister: one shade adapts to fair to medium skin"
   - "The same stick: goes on white, meets your tone as you blend, brush built in"
+  - "Its own refills, every 28 days: skip, delay or cancel them by email, any time"
   - "Ships with your order, no extra shipping"
 ships_info:
   icon: "images/icon-shipping.svg"
@@ -66,24 +67,24 @@ ships_info:
 swiper_slides:
   - { src: "images/sf/up1-hold.jpg", alt: "A woman in her fifties holding the Adaptive Foundation Stick by her cheek" }
   - { src: "images/sf/g-duo-ends.jpg", alt: "The stick open at both ends: the white cream and the kabuki brush" }
-  - { src: "images/sf/friends.jpg", alt: "Two women in their fifties and sixties with the stick" }
+  - { src: "images/sf/bag.jpg", alt: "The black SKINOFAB stick going into a handbag" }
 swiper_thumbs:
   - { src: "images/sf/up1-hold.jpg", alt: "" }
   - { src: "images/sf/g-duo-ends.jpg", alt: "" }
-  - { src: "images/sf/friends.jpg", alt: "" }
+  - { src: "images/sf/bag.jpg", alt: "" }
 upsell_guarantees:
   - variant: row
     icon: shield
     title: "30-day money-back guarantee"
-    text: "Love it, or email us for a full refund, even opened."
+    text: "Love it, or email us within 30 days of delivery for a full refund, even opened."
 upsell_body:
   - type: features
     title: "Why women add a second stick"
     text: "The one you keep at home stays at home. The one in your bag saves the afternoon."
     items:
       - { title: "For touch-ups on the go", text: "Buff the brush end over your nose and chin and it looks fresh again." }
-      - { title: "One for a friend", text: "No shade to choose, so it’s an easy gift for fair to medium skin." }
-      - { title: "Never run out", text: "This price is only on this page, while your first stick is still on its way." }
+      - { title: "One at home, one with you", text: "The stick on your vanity stays there; the spare lives in your bag." }
+      - { title: "Refills you control", text: "It refills on its own every 28 days. Skip or cancel it by email whenever you like." }
 closing_cta:
   variant: card
   title: "Add one more stick for {price}?"

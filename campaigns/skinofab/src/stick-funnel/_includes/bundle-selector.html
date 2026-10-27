@@ -1,4 +1,6 @@
 {% comment %}
+  SKINOFAB: a card's b.image (a campaign asset) is passed on as card_image (bundle-card-product.html shows it in place of
+  the package's photo: the funnel's two packs share one product photo).
   next_component: bundle-selector
   next_version: 2.1.0
   next_sdk_min: 0.4.18
@@ -65,7 +67,7 @@
     {% assign badge_tone = 'popular' -%}
     {% if b.badge_pill_class contains 'secondary' %}{% assign badge_tone = 'deal' %}{% endif -%}
     {% capture card_subtitle %}{% if b.subtitle_text %}{{ b.subtitle_text }}{% endif %}{% if b.shipping_label %}{% if b.subtitle_text %} {% endif %}{{ b.shipping_label }}{% endif %}{% endcapture -%}
-    {% campaign_include 'bundle-card.html' card_style=card_style bundle_id=b.id items=card_items package_id=card_package_id shipping_id=card_shipping_id bundle_vouchers=card_vouchers selected=b.selected title_prefix=b.title_prefix subtitle=card_subtitle subtitle_text=b.subtitle_text shipping_label=b.shipping_label badge_text=b.badge_text badge_tone=badge_tone badge_pill_class=b.badge_pill_class total_tone_class=b.total_tone_class %}
+    {% campaign_include 'bundle-card.html' card_style=card_style bundle_id=b.id items=card_items package_id=card_package_id shipping_id=card_shipping_id bundle_vouchers=card_vouchers selected=b.selected title_prefix=b.title_prefix subtitle=card_subtitle subtitle_text=b.subtitle_text shipping_label=b.shipping_label badge_text=b.badge_text badge_tone=badge_tone badge_pill_class=b.badge_pill_class total_tone_class=b.total_tone_class card_image=b.image %}
     {% endfor -%}
     {% else -%}
     {%- comment -%} Default: canonical 3-tier (1x/2x/3x) of packages.main_package (fallback 1). {%- endcomment -%}

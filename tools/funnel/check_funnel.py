@@ -11,6 +11,7 @@ built pages (campaigns/skinofab/_site/stick-funnel/) and the theme templates dep
   offers      each offer's package and voucher are the campaign's; the renewal sentence states the package's
               recurring price and interval; the fallback price is the voucher's price rounded down to dollars
   product     each pack card's price and interval are its package's; every checkout link names a checkout card
+  thank you   each package's renewal line (by its SKU) is its recurring price and interval
   theme       a template per page, marked GENERATED, no Page Kit route left, every asset it names on disk
   claims      none of the claims the brand may not make (stick_copy.py, the SKF-ADFS-001 section 8 rules)
 """
@@ -39,6 +40,11 @@ FORBIDDEN = [
     (r'\b\d{1,3}\s?%\s+of\s+(?:women|users|customers|testers)', 'study percentage'),
     (r"\b(?:won['’]t|will not|never)\s+settle", 'unhedged "won\'t settle"'),
     (r'\bonly\s+\d+\s+(?:left|pieces|in stock)', 'scarcity count'),
+    # every package recurs: an offer is only on its page, never "one-time" (funnel review 1); the order is placed
+    (r'\bone-time offer\b', '"one-time offer" on a recurring item'),
+    (r"order isn[’']t complete", '"your order isn\'t complete" after the order is placed'),
+    (r"\bdon[’']t close this page\b", 'pressure: "don\'t close this page"'),
+    (r'\bfrom 10 ?AM\b.{0,20}\b10 ?PM\b', '12-hour wear'),
 ]
 SPF_OK = re.compile(r'(?:no|not a|has no|without|doesn[’\']t have|does it have)\s+(?:an?\s+)?SPF|SPF\?|your (?:daily )?(?:SPF|sunscreen)|over your SPF', re.I)
 problems = []
@@ -114,6 +120,29 @@ for m in re.finditer(r'class="sf-pack[^"]*" data-pack="([^"]+)" data-price="([^"
         fail('offer', f'pack {pack}: {price} every {every} days, campaign {money(p["price_recurring"])} every {p["interval_count"]}')
 for b in re.findall(r'forceBundleId=([a-z0-9-]+)', pp):
     if b not in card_ids: fail('offer', f'checkout link to a card that does not exist: {b}')
+
+# checkout pay line: what renews, per card (by the express buttons and the order button)
+m = re.search(r"data-sf-pay-terms='([^']+)'", co)
+if not m: fail('checkout', 'no pay line by the express buttons')
+else:
+    terms = json.loads(unescape(m.group(1)))
+    for bid, items, attrs, body in cards:
+        ref = json.loads(items)[0]['packageId']
+        want = f'{money(pkgs[ref]["price_recurring"])} every {pkgs[ref]["interval_count"]} days'
+        if not terms.get(bid, '').startswith(want): fail('checkout', f'pay line for {bid}: "{terms.get(bid)}", not "{want}"')
+    if co.count('data-sf-pay-terms=') < 2: fail('checkout', 'the pay line is not both above the express buttons and by the order button')
+
+# thank you: each package's renewal under its line
+ty = html('thank-you')
+m = re.search(r"data-sf-renewals='([^']+)'", ty)
+all_pkgs = {p['ref_id']: p for pg in PAGES.values() for p in pg.get('packages', [])}
+if not m: fail('thank-you', 'no renewals map')
+else:
+    ren = json.loads(unescape(m.group(1)))
+    for ref, p in all_pkgs.items():
+        want = f'Then {money(p["price_recurring"])} every {p["interval_count"]} days'
+        got = ren.get(p['product_sku'], '')
+        if not got.startswith(want): fail('thank-you', f'package {ref} ({p["product_sku"]}) renews "{got}", not "{want}"')
 
 # theme -------------------------------------------------------------------------------------------------------------
 for p in F.PAGES:

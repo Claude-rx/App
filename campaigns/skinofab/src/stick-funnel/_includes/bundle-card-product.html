@@ -4,6 +4,7 @@
   Layout mirrors bump-check03: radio + image + title, one price line + savings;
   badges grouped at the top-right edge (tier pill + red % OFF at the end).
   Reads the shared card arg contract (see bundle-card.html). SDK attrs preserved.
+  SKINOFAB: card_image (bundle-selector.html, a bundle's image) replaces the package photo when set.
 {%- endcomment -%}
 <div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="bundle-card">
   <div class="bundle-card__badges">
@@ -13,7 +14,7 @@
   </div>
   <div class="bundle-card__main" data-next-package-id="{{ package_id }}">
     <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
-    <img data-next-display="package.image" loading="lazy" alt="" class="bundle-card__image">
+    {% if card_image and card_image != "" %}<img src="{{ card_image | campaign_asset }}" loading="lazy" alt="" class="bundle-card__image">{% else %}<img data-next-display="package.image" loading="lazy" alt="" class="bundle-card__image">{% endif %}
     <div class="bundle-card__copy">
       <div class="bundle-card__title">{{ title_prefix }}<span data-next-display="package.name">Package</span></div>
       {% if subtitle and subtitle != "" %}<div class="bundle-card__subtitle">{{ subtitle }}</div>{% endif %}

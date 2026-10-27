@@ -5,10 +5,22 @@ meta_tags:
   next-funnel: "SKINOFAB Foundation Stick"
   next-page-type: "receipt"
 # Apollo's receipt (order.* bindings only: the SDK clears the cart before this page), with the brand's logo and what
-# happens next: the first use, the refills (every package in the funnel recurs) and how to skip or cancel them.
+# happens next: the first use, the refills (every package in the funnel recurs) and how to skip or cancel them. The
+# shipping method is named, not read: the campaign's one method is free, and its store name is "Default".
+# each package's renewal by its SKU (order lines carry the SKU, not the package id): the campaign's recurring price
+# and interval (tools/funnel/check_funnel.py checks them), shown under its line in the order summary by js/sf-receipt.js
+renewals:
+  SKF-AFS-1: "Then $37.00 every 28 days, until you cancel"
+  SKF-AFS-2: "Then $47.00 every 56 days, until you cancel"
+  SKF-LYB-1: "Then $24.95 every 90 days, until you cancel"
+  SKF-PDB-1: "Then $19.95 every 28 days, until you cancel"
+  SKF-ENS-1: "Then $27.95 every 56 days, until you cancel"
 styles:
   - css/checkout-brand.css
+scripts:
+  - js/sf-receipt.js
 ---
+<div hidden data-sf-renewals='{{ renewals | json }}'></div>
 <div class="page-wrapper">
 
       <div class="main-wrapper">
@@ -121,7 +133,7 @@ styles:
                         <div class="order_receipt-sec">
                           <div class="sec_title">Shipping method</div>
                           <div class="order_receipt--group">
-                            <div data-next-display="order.shippingMethod" class="sec_value">FedEx Ground</div>
+                            <div class="sec_value">Free shipping, tracked</div>
                           </div>
                         </div>
                       </div>

@@ -93,7 +93,7 @@ window.nextConfig = {
   // defaultProfile: "regular",
   
   // Analytics providers configuration
-  storeName: 'store-name', // Required for purchase deduplication with NEXT Storefront Meta App
+  storeName: 'skinofab', // Required for purchase deduplication with NEXT Storefront Meta App
   analytics: {
     enabled: true,
     mode: 'auto', // 'auto' | 'manual' | 'disabled'

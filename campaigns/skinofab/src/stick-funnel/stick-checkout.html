@@ -63,7 +63,7 @@ reviews_note: "Reviews of our Adaptive Peptide Foundation, the liquid that goes 
 guarantee:
   badge: "images/sf/guarantee.jpg"
   title: "30-Day Money-Back Guarantee"
-  text: "Not your match? Wear it in your own daylight for 30 days; if it isn’t right for you, email hello@skinofab.com and we’ll refund you in full, even opened. You don’t have to send it back."
+  text: "Not your match? Wear it in your own daylight. Email hello@skinofab.com within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
 styles:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
   - css/exit-intent-popup.css
@@ -109,6 +109,7 @@ bundles:
     quantity: 1
     shipping_method: "standard"
     selected: true
+    image: "images/sf/pack-2.jpg"
     subtitle_text: "Then $47.00 every 56 days. Free shipping, and the brush is free"
     badge_text: "Best value"
     badge_pill_class: "os-card__label--pill-secondary"
@@ -116,7 +117,13 @@ bundles:
     package_id: 1
     quantity: 1
     shipping_method: "standard"
+    image: "images/sf/pack-1.jpg"
     subtitle_text: "Then $37.00 every 28 days. Free shipping"
+# what she pays today (the SDK's cart total, after any exit coupon) and what renews, by the express buttons (they place
+# the order too) and by the button; sf-checkout.js keeps the renewal in step with the chosen card
+pay_terms:
+  stick-2: "$47.00 every 56 days for 2 sticks with a Lymphatic Brush"
+  stick-1: "$37.00 every 28 days for 1 stick"
 refill_terms: "<strong>Automatic Refills.</strong> You pay today’s price now, then the same price again every 56 days for 2 sticks + brush, or every 28 days for 1 stick, until you cancel. We email you before every refill. To skip, delay or cancel, just email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a>: a person replies within one business day. No minimum, no fees, and every refill has the same 30-day money-back guarantee."
 exit_intent:
   coupon_code: "STICK10"
@@ -178,6 +185,8 @@ exit_intent:
                               <h2 class="form-section__title">Step 4: Payment</h2>
                               <div class="form-section__subtitle">All transactions are secure and encrypted.</div>
                             </div>
+                            {% capture pay_line %}<p class="sf-pay-terms" data-sf-pay-terms='{{ pay_terms | json }}'><strong><span data-next-display="cart.total">$47.00</span> today</strong>, then <span data-sf-renew>{{ pay_terms['stick-2'] }}</span>, until you cancel. Skip or cancel any time by email.</p>{% endcapture %}
+                            {{ pay_line }}
                             {% campaign_include 'express-checkout.html' show_title=false %}
                             {% campaign_include 'payment-methods.html' %}
                           </div>
@@ -187,6 +196,7 @@ exit_intent:
                             </div>
                           </div>
                           <div class="sf-refill-terms" id="refill-terms">{{ refill_terms }}</div>
+                          {{ pay_line }}
                           {% capture disclaimer %}By placing your order you agree to Automatic Refills as described above, our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
                           {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='30-DAY MONEY-BACK GUARANTEE · FREE SHIPPING' disclaimer=disclaimer %}
                         </div>

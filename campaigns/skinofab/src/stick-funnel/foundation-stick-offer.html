@@ -12,7 +12,9 @@ meta_tags:
 # The store's stick page (tools/persona/stick_copy.py) in the funnel: its gallery, buy box, refill row, guarantee,
 # tabs and FAQ (the last two generated from stick_copy.py by tools/funnel/copy_includes.py). The two packs are the
 # campaign's packages 1 and 2 (tools/funnel/funnel.py): tools/funnel/check_funnel.py checks their prices here against
-# the live campaign's; the crossed-out ones are the store's one-time prices. Each pack links to the checkout with ?forceBundleId= so the checkout opens on it;
+# the live campaign's; the crossed-out ones are the store's one-time price of a stick ($47) times the sticks.
+# Below the buy box, the stick page's own sections (tools/funnel/copy_includes.py from stick_copy.TWIN): the problem,
+# its root and the solution, how to use it, what to expect and the brand's note. Each pack links to the checkout with ?forceBundleId= so the checkout opens on it;
 # this page writes nothing to the cart.
 gallery:
   - src: "images/sf/g-one-stick.jpg"
@@ -54,8 +56,8 @@ packs:
     selected: true
     label: "2 sticks with Automatic Refills, $23.50 a stick"
     gifts: true
-refill_note: "Prices with Automatic Refills, $10 off each pack. Crossed out: $47 a stick, our one-time price in the store."
-guarantee: "Not your match? Wear it in your own daylight for 30 days; if it isn’t right for you, we’ll refund you in full, even opened."
+refill_note: "Prices with Automatic Refills. Crossed out: the same sticks bought one at a time, at our one-time price of $47 a stick."
+guarantee: "Not your match? Wear it in your own daylight. Email hello@skinofab.com within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
 science:
   eyebrow: "Adaptive color science"
   lead: "One shade"
@@ -68,9 +70,9 @@ science:
     - ["Skincare in every swipe", "PDRN, peptides, Volufiline™, ceramides and hyaluronic acid spheres in a cream made for dry skin after 45."]
   note: "The video is an illustration. The full ingredient list is printed on the packaging."
 wear:
-  lead: "From 10 AM"
-  mark: "to 10 PM"
-  text: "A thin, creamy layer is made to move with your skin instead of drying on top of it, and its pigments are made not to turn orange or grey in daylight. By the afternoon, buff the brush end over your nose and chin and it looks fresh again, with no more product. How long it lasts depends on your skin and your day."
+  lead: "The afternoon touch-up,"
+  mark: "from your bag"
+  text: "A thin, creamy layer is made to move with your skin instead of drying on top of it, and its pigments are made not to turn orange or grey in daylight. In the afternoon, flip the stick and buff the brush end over your nose and chin: it looks fresh again, with no more product and no sponge. How long it lasts depends on your skin and your day."
 inside:
   - ["ing-pdrn", "PDRN", "Sodium DNA from salmon, the K-beauty skincare ingredient"]
   - ["ing-peptides", "Peptides", "Matrixyl 3000™ and acetyl hexapeptide-8, as in firming creams"]
@@ -80,13 +82,24 @@ inside:
   - ["ing-niacinamide", "Niacinamide", "Vitamin B3, one of the most used ingredients in skincare"]
   - ["ing-centella", "Centella and vitamin E", "A soothing botanical and an antioxidant oil"]
   - ["swatch", "Goes on white", "A stripe of the white cream, then blended into the skin (AI illustration)"]
+# the store's imported reviews of the liquid foundation (tools/reviews): these three with the customers' own photos,
+# and the count of every review by stars
 reviews:
-  - name: "Diane O."
-    text: "I am 60 years old and don't wear much makeup. This product I love it is light weight and matches perfectly. This is mid afternoon even."
-  - name: "Lora Z."
+  - name: "Lora Z., 65"
+    photo: "images/sf/review-lora.jpg"
     text: "I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!"
-  - name: "Hope H."
+  - name: "Hope H., 74"
+    photo: "images/sf/review-hope.jpg"
     text: "I've ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn't love my wrinkles."
+  - name: "Diane O., 60"
+    photo: "images/sf/review-diane.jpg"
+    text: "I am 60 years old and don't wear much makeup. This product I love it is light weight and matches perfectly. This is mid afternoon even."
+ratings:
+  total: 9855
+  rows: [["5", 7719], ["4", 2132], ["3", 0], ["2", 1], ["1", 3]]
+compare:
+  others: "Typical liquid foundation"
+  rows: [["No shade to choose", false], ["Kabuki brush built in", false], ["Touch-ups from your bag, no sponge", false], ["Buildable, natural coverage", true]]
 ---
 {% assign checkout_link = next_url | campaign_link %}
 <header class="sf-bar">
@@ -110,7 +123,7 @@ reviews:
     </div>
 
     <div class="sf-buy__info">
-      <div class="sf-rating"><span class="sf-rating__stars" aria-label="4.8 out of 5 stars"><i></i><i></i><i></i><i></i><i></i></span>
+      <div class="sf-rating"><span class="sf-rating__stars" aria-label="4.8 out of 5 stars">★★★★★</span>
         <span>4.8/5 · <a href="#reviews">9,855 reviews of our liquid foundation</a></span></div>
       <h1 class="sf-title">Adaptive Foundation Stick</h1>
       <div class="sf-price"><span data-sf-price>$47</span> <s data-sf-compare>$94</s>
@@ -155,6 +168,8 @@ reviews:
     </div>
   </section>
 
+  {% campaign_include 'sf-stick-story.html' %}
+
   <section class="sf-sec">
     <div class="sf-two">
       <figure style="margin:0"><video data-sf-lazy muted loop playsinline preload="none" poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="864" height="1080" style="border-radius:12px;width:100%;aspect-ratio:864/1080" aria-label="Illustration: the white cream’s capsules break as the brush buffs it in and the color meets her skin tone; soft-focus spheres; the skincare in the cream">
@@ -170,9 +185,11 @@ reviews:
     </div>
   </section>
 
+  {% campaign_include 'sf-stick-howto.html' %}
+
   <section class="sf-sec sf-sec--cream">
     <div class="sf-sec__in sf-two">
-      <img src="{{ 'images/sf/wear-day.jpg' | campaign_asset }}" alt="The same woman at 10 AM and at 10 PM wearing the stick (AI illustration)" width="1080" height="1080" loading="lazy" decoding="async" style="border-radius:12px">
+      <img src="{{ 'images/sf/bag.jpg' | campaign_asset }}" alt="The black SKINOFAB stick going into a handbag" width="1080" height="1080" loading="lazy" decoding="async" style="border-radius:12px">
       <div>
         <h2 class="sf-h2">{{ wear.lead }} <span class="sf-mark">{{ wear.mark }}</span></h2>
         <p>{{ wear.text }}</p>
@@ -180,16 +197,23 @@ reviews:
     </div>
   </section>
 
+  {% campaign_include 'sf-stick-expect.html' %}
+
   <section class="sf-sec">
     <div class="sf-two">
       <div>
         <h2 class="sf-h2">Why SKINOFAB?</h2>
-        <p>Against a typical liquid foundation: no shade to choose, the kabuki brush built in, touch-ups from your bag with no sponge, and buildable, natural coverage.</p>
+        <p>Against a typical liquid foundation: no shade to choose, the kabuki brush built in, touch-ups from your bag with no sponge. Both build to the coverage you want.</p>
         <a class="sf-btn" href="#buy">CHOOSE YOUR PACK</a>
       </div>
-      <img src="{{ 'images/sf/vs-others.jpg' | campaign_asset }}" alt="SKINOFAB versus a typical liquid foundation: adapts to your skin tone, kabuki brush built in, touch-ups from your bag, buildable natural finish" width="1080" height="1080" loading="lazy" decoding="async" style="border-radius:12px">
+      <table class="sf-vs">
+        <thead><tr><th scope="col"><span class="sr-only">What it does</span></th><th scope="col"><img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="96" height="19"></th><th scope="col">{{ compare.others }}</th></tr></thead>
+        <tbody>{% for r in compare.rows %}<tr><th scope="row">{{ r[0] }}</th><td><span class="sf-vs__yes" aria-label="Yes">✓</span></td><td>{% if r[1] %}<span class="sf-vs__yes" aria-label="Yes">✓</span>{% else %}<span class="sf-vs__no" aria-label="No">✕</span>{% endif %}</td></tr>{% endfor %}</tbody>
+      </table>
     </div>
   </section>
+
+  {% campaign_include 'sf-stick-note.html' %}
 
   <section class="sf-sec sf-sec--cream">
     <div class="sf-sec__in">
@@ -201,11 +225,14 @@ reviews:
 
   <section class="sf-sec" id="reviews">
     <div class="sf-reviews" style="padding:0">
-      <p class="sf-stars"><span class="sf-rating__stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span> 4.8 out of 5 · 9,855 reviews</p>
+      <p class="sf-stars"><span class="sf-stars__row" aria-hidden="true">★★★★★</span> 4.8 out of 5 · 9,855 reviews</p>
       <h2>Reviews of our Adaptive Peptide Foundation</h2>
       <p class="sf-reviews__lead">Our liquid foundation: it goes on white and adapts to your tone the same way, in a serum base of its own. The stick is new at SKINOFAB: its own reviews join these as buyers write them.</p>
+      <ul class="sf-ratings__rows sf-ratings__rows--inline" aria-label="Every review of our liquid foundation, by stars">{% for row in ratings.rows %}{% assign pct = row[1] | times: 100.0 | divided_by: ratings.total %}
+        <li><span>{{ row[0] }} ★</span><i><b style="width:{{ pct | round: 1 }}%{% if row[1] == 0 %};min-width:0{% endif %}"></b></i><span>{{ row[1] }}</span></li>{% endfor %}
+      </ul>
       <div class="sf-reviews__grid">
-        {% for t in reviews %}<article class="sf-review"><p class="sf-review__stars" aria-label="5 out of 5 stars">★★★★★</p><p class="sf-review__text">“{{ t.text }}”</p><h3>{{ t.name }}</h3><p class="sf-review__who">Verified buyer of the foundation</p></article>
+        {% for t in reviews %}<article class="sf-review"><img src="{{ t.photo | campaign_asset }}" alt="{{ t.name }}, her own photo" loading="lazy" decoding="async" width="375" height="375"><h3>{{ t.name }}</h3><p class="sf-review__stars" aria-label="5 out of 5 stars">★★★★★</p><p class="sf-review__text">“{{ t.text }}”</p><p class="sf-review__who">Verified buyer of our liquid foundation</p></article>
         {% endfor %}
       </div>
     </div>

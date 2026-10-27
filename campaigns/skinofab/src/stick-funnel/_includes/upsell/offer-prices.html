@@ -1,4 +1,4 @@
-{%- comment -%} SKINOFAB: the demo fallback prices ($9.99, $24.95, $0.00...) are the page's own (upsell_offer.fallback_price / fallback_compare, tools/funnel/upsell_pages.py). Otherwise GENERATED from _shared/upsell/_includes/upsell/offer-prices.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%} SKINOFAB: the demo fallback prices ($9.99, $24.95, $0.00...) and the empty discount are the page's own (upsell_offer.fallback_price / fallback_compare / fallback_discount, tools/funnel/upsell_pages.py). Otherwise GENERATED from _shared/upsell/_includes/upsell/offer-prices.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
 {% comment %}
   next_component: upsell-offer-prices
   next_version: 1
@@ -68,7 +68,7 @@
     <div class="upsell-offer__price-heading">
       <div class="text-sm tw-600">{% if pricing_mode == 'unit_total' %}{{ offer.total_label | default: 'Total' }}{% else %}{{ offer.price_label | default: 'Offer Price' }}{% endif %}</div>
       {%- if pricing_mode == 'discounted' %}
-      <div class="text-sm font-bold color-primary"{% if price_is_scoped %} data-next-show="package.hasSavings"{% endif %}>(<span data-next-display="{{ pct_path }}" data-next-format="percentage"></span> OFF)</div>
+      <div class="text-sm font-bold color-primary"{% if price_is_scoped %} data-next-show="package.hasSavings"{% endif %}>(<span data-next-display="{{ pct_path }}" data-next-format="percentage">{{ offer.fallback_discount }}</span> OFF)</div>
       {%- endif %}
     </div>
     <div class="upsell-offer__price" data-next-display="{{ price_path }}" data-next-format="currency">{{ offer.fallback_price }}</div>
