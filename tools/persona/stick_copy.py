@@ -99,6 +99,7 @@ GIFT_FILES = {}
 GUARANTEE = ('Not your match? Wear it in your own daylight for 30 days; if it isn’t right for you, we’ll refund you in '
              'full, even opened.')
 STICKY_BUTTON = 'Choose your pack'
+STICKY_IMG = 'duo-ends'      # the bar's 52 px thumbnail: both ends open, brush and cream (the capped packshot read as a pen)
 CART_UPGRADE = {'title': 'Upgrade to 2 sticks', 'button': 'Upgrade'}
 CART_UPGRADE_3 = {'title': 'Make it 3 sticks: buy 2, get 1 free', 'button': 'Upgrade'}   # from the 2-stick pack
 
@@ -121,7 +122,8 @@ INGREDIENTS = [
 # could not back); deeper skin asks first
 SHADE_FAQ = ('It’s made for fair to medium skin tones, without picking a shade: the cream goes on white and its pigments '
              'shift toward your tone as you blend. Try it along your jaw in daylight. Not your match? Email us within 30 '
-             f'days for a full refund, even opened. If your skin is deeper than medium, email {EMAIL} before you order and '
+             f'days for a full refund, even opened. If it looks a touch light, buff in a second thin layer; at the deeper end '
+             f'of medium it can stay a little light. If your skin is deeper than medium, email {EMAIL} before you order and '
              'we’ll tell you honestly how it suits you.')
 
 
@@ -132,7 +134,7 @@ def tabs():
     """The tabs under the buy box, the foundation's six."""
     return [
         ('What makes it different?',
-         '<p>Most foundations make you choose a shade under shop lights, then need a sponge or brush, then settle into lines by '
+         '<p>Most foundations make you choose a shade under store lights, then need a sponge or brush, then settle into lines by '
          'lunch. This one goes on white and shifts toward your own skin tone as you blend, with the brush built into the other end.</p>'
          + _list(['No shade to choose: it adapts as you blend', 'A dense kabuki brush on the other end',
                   'Creamy, made for dry, mature skin', 'Small enough for your bag, the brush included'])),
@@ -170,7 +172,8 @@ BORROW_REVIEWS = {'of': 'our Adaptive Peptide Foundation, which adapts to your t
                   'title': 'Reviews of our Adaptive Peptide Foundation',
                   'note': 'Our liquid foundation: it goes on white and adapts to your tone the same way, in a serum base of '
                           'its own. The stick is new at SKINOFAB: its own reviews join these as buyers write them.',
-                  'badge': 'of the foundation',          # one line under the stars on a phone (stick review 4)
+                  # (whose: "of the foundation" above this foundation stick's own title read as the stick's, stick review 10)
+                  'badge': 'of our liquid foundation',
                   'wall_note': 'of our Adaptive Peptide Foundation from our earlier store',   # the wall's count line
                   'write': 'Write a review of the stick'}
 # the reviews' stars, bars and checks in the review-site look the owner asked for (26 Oct 2026): green boxed stars,
@@ -253,7 +256,7 @@ TWIN = {
         'problem': ('The problem', 'Your foundation used to work.', 'Your skin changed.'),
         'lede': 'You found your shade years ago. Now the same bottle looks fine under the bathroom light, orange in daylight, and by lunch '
                 'it has found every line around your eyes.',
-        'pains': ['A shade that looked right in the shop and wrong at home',
+        'pains': ['A shade that looked right in the store and wrong at home',
                   'Foundation that settles into fine lines and looks heavier by the hour',
                   'Dry patches that catch it and make it look cakey',
                   'Redness and sun spots that show through, or a mask that hides your skin',

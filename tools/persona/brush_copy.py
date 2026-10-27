@@ -287,7 +287,7 @@ BUYBOX_CSS = r"""
 
 
 REFILL_TERMS = ('You pay {amount} today, then {amount} every {every} days until you cancel. We email you before every '
-                'refill. To skip or cancel, just email hello@skinofab.com. No minimum, no fees.')
+                'refill. To skip or cancel, just email hello@skinofab.com: a person replies within one business day. No minimum, no fees.')
 
 
 def refill_faq(bundles, refill, email='hello@skinofab.com'):
@@ -343,7 +343,8 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
             '<label class="sfo-card sfo-card--gifts">'
             + (f'<em class="sfo-tab">{esc(b["badge"])}</em>' if b.get('badge') else '')
             + f'<span class="sfo-row"><input type="radio" name="sf_pack" value="{b["key"]}"{" checked" if b["key"] == default else ""}>'
-            f'<span class="sfo-main"><span class="sfo-name">{esc(b["name"])}'
+            # (its offer in brackets kept on one line: "3 sticks (buy 2, get 1 / free)" broke mid-phrase, stick review 10)
+            f'<span class="sfo-main"><span class="sfo-name">{re.sub(r"[(][^)]*[)]", lambda m: chr(60) + "span style=white-space:nowrap" + chr(62) + m.group(0) + chr(60) + "/span" + chr(62), esc(b["name"]))}'
             + (f'<span class="sfo-save">SAVE {money(round(float(b["compare"]) - now_of(b), 2))}</span>' if saves else '') + '</span>'
             f'<small>{esc(b["note"])}</small></span>'
             f'<span class="sfo-price"><b>{money(now_of(b))}</b>' + (f'<s>{money(b["compare"])}</s>' if saves else '')

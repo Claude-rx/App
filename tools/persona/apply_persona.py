@@ -439,6 +439,8 @@ def whole(body):
     if ends and ends[-1] >= 150: return text[:ends[-1]].rstrip()
     return re.sub(r'\s+\S*$', '', text).rstrip(' ,;:-–') + '…'
 
+REVIEW_DOWN = [('Katie W.', 'This will be my forever')]
+
 def review_data(reviews=REVIEWS):
     """The imported reviews in <reviews>/reviews.json (tools/reviews/import_reviews.py), or None: the list the wall
     ships (every photo review, every review under 4 stars, then the rest in the importer's order, up to SHIP), the
@@ -473,6 +475,9 @@ def review_data(reviews=REVIEWS):
     # (stick review 7: Diane O.'s "I am 60 years old..." in the strip and again in the wall's first eight)
     top = {(r['name'], r['body']) for r in picks}
     ship = [dict(r, top=1) if (r['name'], r['body']) in top else r for r in ship]
+    # further down "Most helpful" (still in the wall): reviewers clearly under 45 by their photo, where their words
+    # don't say (REVIEW_DOWN: name, start of the review; stick review 10)
+    ship = [dict(r, down=1) if any(r['name'] == n and r['body'].startswith(b) for n, b in REVIEW_DOWN) else r for r in ship]
     summary = {'count': d['count'], 'average': d['average'], 'distribution': d['distribution']}
     if d.get('note'): summary['note'] = d['note']        # where the imported reviews come from (import_reviews.py --note)
     return {'ship': ship, 'summary': summary,
@@ -494,7 +499,7 @@ def review_wall(reviews=REVIEWS):
             im.save(DST / 'assets' / 'img' / name, quality=84, optimize=True, progressive=True)
             photos[p] = '../assets/img/' + name
     # a data script (theme JS assets run through the template engine: ASCII only, no template openers)
-    slim = [{k: r[k] for k in ('name', 'rating', 'title', 'body', 'date', 'verified', 'photos', 'top') if r.get(k)} for r in d['ship']]
+    slim = [{k: r[k] for k in ('name', 'rating', 'title', 'body', 'date', 'verified', 'photos', 'top', 'down') if r.get(k)} for r in d['ship']]
     payload = json.dumps({'summary': d['summary'], 'reviews': slim}, ensure_ascii=True, separators=(',', ':'))
     payload = payload.replace('{%', '{\\u0025').replace('{{', '{\\u007b').replace('{#', '{\\u0023')
     body = 'window.SFReviewsData=' + payload + ';\n'
@@ -2257,6 +2262,10 @@ FRONTROW_CSS = (
     '@media only screen and (max-width:480px){#frontrow-sticker{transform:scale(.7) !important;transform-origin:0 0 !important}}'
     # narrow phones: a little smaller, so it clears the flag badge in the first photo
     '@media only screen and (max-width:400px){#frontrow-sticker{transform:scale(.66) !important}}'
+    # in a review strip's box (another product's page: no photo to clear) as large as the phone's box allows: at .66
+    # its words were 7 px (stick review 10)
+    '@media only screen and (max-width:480px){.sfrs-wrap #frontrow-sticker{transform:scale(.75) !important}}'
+    '@media only screen and (max-width:374px){.sfrs-wrap #frontrow-sticker{transform:scale(.7) !important}}'
     # FrontrowMD's own script appends its modals to <body> and shows them on click (their documents draw the backdrop)
     '.iframe-modal-frontrow{display:none;position:fixed;z-index:99999999;inset:0;width:100%;height:100%;overflow:hidden}'
     '.iframe.frontrow{display:none;position:fixed;left:0;top:0;z-index:99999997;right:0;bottom:0;width:100%;height:100%;overflow:hidden}')
@@ -2387,7 +2396,7 @@ def brush_rating(imported=None, of=None):
             'if (!n) return;'
             'var avg = sum / n;'
             'Array.prototype.forEach.call(badge.querySelectorAll(".sf-star"), function (s, i) {'
-            's.style.setProperty("--f", Math.max(0, Math.min(1, Math.round((avg - i) * 2) / 2)) * 100 + "%"); });'
+            's.style.setProperty("--f", Math.round(Math.max(0, Math.min(1, avg - i)) * 100) + "%"); });'   # 4.8: 80 % (stick review 10)
             'badge.querySelector(".sf-rating__stars").setAttribute("aria-label", "Rated " + avg.toFixed(1) + " out of 5");'
             'badge.querySelector(".sf-rating__text").textContent = avg.toFixed(1) + "/5 \\u00b7 " + n.toLocaleString("en-US") + " review" + (n === 1 ? "" : "s")'
             + (f' + {json.dumps(" " + of)}' if of else '') + ';'
@@ -2691,7 +2700,10 @@ def product_page(base, P, final, found=None):
     text = text.replace('id="color-adapting-foundation-for-flawless-skin-skinofab"', f'id="{P.HANDLE}-skinofab"', 1)
     first = next((b for b in P.BUNDLES if b.get('default')), P.BUNDLES[0])
     on = bool(getattr(P, 'REFILL', None) and P.REFILL.get('default'))
-    text, _ = sticky_bar(text, sticky_thumb(P.IMG / 'card.jpg', f'{P.IMG_PREFIX}-sticky', getattr(P, 'STICKY_ERASE', ())), P.TITLE,
+    # P.STICKY_IMG: its own picture for the 52 px thumbnail (the stick's thin capped packshot read as a pen there, stick
+    # review 10), else the card
+    thumb = P.IMG / f"{getattr(P, 'STICKY_IMG', None) or 'card'}.jpg"
+    text, _ = sticky_bar(text, sticky_thumb(thumb, f'{P.IMG_PREFIX}-sticky', getattr(P, 'STICKY_ERASE', ())), P.TITLE,
                          f'From {P.money(refill_price(P)[0])} · Free shipping', P.STICKY_BUTTON,
                          live=(brush_copy.pack_label(first['name']), P.money(first['refill'] if on else first['price']),
                                ' with refills' if on else ''))
@@ -3017,7 +3029,7 @@ def sticky_bar(t, img, title, price_line, button, rating=None, live=None):
         pack, now, tail = (html.escape(x) for x in live)
         line = (f'<span data-sf-sticky-pack>{pack}</span> · <span data-sf-sticky-now>{now}</span>{tail} · '
                 + html.escape(price_line.split(' · ')[-1]))
-        short = f'<span data-sf-sticky-now>{now}</span>'
+        short = f'<span data-sf-sticky-now>{now}</span>{tail}'      # "· $47 with refills" (stick review 10: a bare $47)
     else:
         line, short = html.escape(price_line), html.escape(price_line.split(' · ')[0])
     bar = (f'<style>{STICKY_CSS}</style><div class="sf-sticky" id="sf-sticky" aria-hidden="true">'

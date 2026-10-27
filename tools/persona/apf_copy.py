@@ -52,7 +52,8 @@ ICONS = {
 }
 # Refill terms, shown next to the button whenever refills are ticked ({amount} = the chosen pack's refill price)
 TERMS = ("You pay {amount} today, then {amount} every %d days until you cancel. We email you before every refill. "
-         "To skip or cancel, just email hello@skinofab.com. No minimum, no fees." % REFILL['every'])
+         "To skip or cancel, just email hello@skinofab.com: a person replies within one business day. No minimum, "
+         "no fees." % REFILL['every'])
 TRUST_CSS = r"""
 .apf-trust{text-align:center;margin:16px 0 0;color:#151515}
 .apf-trust__head{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 14px !important;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#151515 !important}
@@ -1054,14 +1055,15 @@ REVIEW_WALL_JS = r"""
       SHIPPING = /took (about |around |over )?\w+( to \w+)? (weeks?|days) to (arrive|come|get here)|arriv\w* (late|after \w+ weeks)|shipping (took|was slow)|weeks to (arrive|come)/i,
       // further down too (still shown, under the ratings): a review that calls it clear (the page says it goes on
       // white), one signed with a social handle, and a beauty professional's (read as an endorsement); stick review 8
-      OFFSIDE = /\bclear (foundation|formula|product)\b|it'?s clear\b|@\w{3,}|\b[a-z]{4,}\d{3,}\b|\b(qualified|licensed|professional) (beauty|make-?up|skin)|beauty therapist|esthetician|aesthetician|make-?up artist|\bmua\b|eradicat|(get rid of|disappear\w*|vanish\w*|remov\w*)\W+(\w+\W+){0,4}wrinkle/i;
+      OFFSIDE = /\bclear (foundation|formula|product)\b|it'?s clear\b|@\w{3,}|\b[a-z]{4,}\d{3,}\b|\b(qualified|licensed|professional) (beauty|make-?up|skin)|beauty therapist|esthetician|aesthetician|make-?up artist|\bmua\b|eradicat|(get rid of|disappear\w*|vanish\w*|remov\w*)\W+(\w+\W+){0,4}wrinkle|\b(in my|upper|late|early|mid)[- ]?(20|30)'?s\b|\bmascara\b|free (mystery )?gift|mystery gift/i;
   function helpful(r) {
     var t = (r.title || '') + ' ' + (r.body || '');
     return ((r.photos || []).length ? 2 : 0) + Math.min((r.body || '').length, 400) / 400 + (r.rating || 0) / 5
       + (AGE.test(t) ? 1 : 0) + (WORRY.test(t) ? 0.6 : 0) - (CONDITION.test(t) ? 4 : 0) - (SHIPPING.test(t) ? 1.5 : 0)
       - (OFFSIDE.test(t) ? 3 : 0)
-      // the reviews the strip near the top already shows: last (stick review 7: the same review twice)
-      - (r.top ? 10 : 0);
+      // the reviews the strip near the top already shows: last (stick review 7: the same review twice); and those
+      // marked down (r.down: a reviewer clearly under 45 by her photo, stick review 10)
+      - (r.top ? 10 : 0) - (r.down ? 6 : 0);
   }
   function photoSrc(p) { return /^https?:|^\//.test(p) ? p : (photoBase[p] || ''); }
   function list() {
