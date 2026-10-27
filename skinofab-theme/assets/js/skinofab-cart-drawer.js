@@ -309,6 +309,12 @@
         return frag;
     }
 
+    
+
+    window.addEventListener('load', function() {
+        (window.requestIdleCallback || function(f) { setTimeout(f, 1500); })(function() { if (!upsellData) loadUpsells(); });
+    });
+
      
     function paintUpsells() {
         var drawer = document.querySelector('spark-cart-drawer');
@@ -374,11 +380,17 @@
     function emptyHtml(labels) {
         labels = labels || {};
         currentLines = [];
+        
+
+        var title = document.querySelector('form[data-product-form]') && document.querySelector('.product__title');
+        var path = location.pathname.replace(/\/$/, ''), shop = String(cfg.shopUrl || '').replace(/^https?:\/\/[^\/]+/, '').replace(/\/$/, '');
+        var here = title && title.textContent.trim() && path !== shop ? title.textContent.trim() : '';
         return '<div class="spark-drawer-empty">' +
-            (cfg.emptyImage ? '<img class="sf-empty-img" src="' + escapeHtml(cfg.emptyImage) + '" alt="" width="114" height="320" />' : '') +
+            (cfg.emptyImage && !here ? '<img class="sf-empty-img" src="' + escapeHtml(cfg.emptyImage) + '" alt="" width="114" height="320" />' : '') +
             '<div class="spark-drawer-empty-title">' + escapeHtml(cfg.emptyTitle || labels.emptyTitle) + '</div>' +
             '<div class="spark-drawer-empty-sub">' + escapeHtml(cfg.emptyText || labels.emptySub) + '</div>' +
-            '<a href="' + escapeHtml(cfg.shopUrl || labels.continueUrl) + '" class="spark-drawer-empty-cta">' + escapeHtml(cfg.shopText || labels.continueCta) + '</a>' +
+            (here ? '<a href="' + escapeHtml(location.pathname) + '" class="spark-drawer-empty-cta" data-action="close">' + escapeHtml('Back to ' + here) + '</a>'
+                  : '<a href="' + escapeHtml(cfg.shopUrl || labels.continueUrl) + '" class="spark-drawer-empty-cta">' + escapeHtml(cfg.shopText || labels.continueCta) + '</a>') +
             '</div>';
     }
 

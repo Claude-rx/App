@@ -535,7 +535,7 @@
         "name": "sf_cart_empty_text",
         "type": "text",
         "label": "Empty cart text",
-        "default": "Your shade is about a minute away."
+        "default": "Free shipping and a 30-day money-back guarantee on every order."
       },
       {
         "name": "sf_cart_empty_product",
