@@ -1,8 +1,8 @@
 {%- comment -%}
-  SKINOFAB: why the special offer's price is hers, after the how-it-works: the store's own price beside today's (the
-  SDK's, with its voucher), the three plain reasons it's here (it isn't sold at this price anywhere else, it rides in the
-  box she just ordered, it goes on the payment she just made) and the offer's button again.
-    reserved: { title, store_price, store_note, items[] { title, text } }
+  SKINOFAB: why the special offer's price is hers, after the how-it-works: the store's own price for one beside today's
+  (the SDK's, with its voucher, and what renews), three plain reasons (what one costs in the store and, where its packs
+  cost less each, that too; it goes on the order and payment she just made; the guarantee) and the offer's button again.
+    reserved: { title, store_price, store_note, renews, items[] { title, text } }   (text may use upsell/copy.html's tokens)
   "Reserved for you" takes her first name when the order has one (js/sf-offer-gate.js fills [data-sf-name]). The button
   is a proxy of the offer's own (upsells.js initUpsellProxyActions): one SDK offer per page, as the closing card.
   Written by tools/funnel/upsell_pages.py's frontmatter.
@@ -23,12 +23,13 @@
         <div class="sf-reserved__price is-here">
           <span class="sf-reserved__label">Here, today</span>
           <strong class="sf-reserved__amount">{% campaign_include 'upsell/copy.html' text='{price}' %}</strong>
-          <small>{% campaign_include 'upsell/copy.html' text='{discount} off your first one' %}</small>
+          <small>{% campaign_include 'upsell/copy.html' text='{discount} off the first charge' %}</small>
+          <small class="sf-reserved__renews">{{ reserved.renews }}</small>
         </div>
       </div>
       <ul class="sf-reserved__list">
         {%- for i in reserved.items %}
-        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>{{ i.title }}</strong><span>{{ i.text }}</span></div></li>
+        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>{{ i.title }}</strong><span>{% campaign_include 'upsell/copy.html' text=i.text %}</span></div></li>
         {%- endfor %}
       </ul>
       {%- campaign_include 'upsell/cta.html' proxy=true compact=true cta_style='box' -%}

@@ -259,7 +259,15 @@ def main():
         frame = Image.new('RGBA', (W, H), (255, 255, 255, 255))
         frame.paste(im, (0, 0))
         layer = Image.new('RGBA', (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(layer)
-        band(d, cap[2], cap[3], cap[4], alpha)
+        if i >= len(pics) - f:
+            # the loop's seam: the end card's line gives way to step 1's as the picture dissolves into the first frame
+            # (it used to jump back on a still picture, funnel review 3)
+            p = ease((i - (len(pics) - f) + 1) / (f + 1))
+            first = caps[0][0]
+            band(d, cap[2], cap[3], cap[4], alpha * (1 - p))
+            band(d, first[2], first[3], first[4], p)
+        else:
+            band(d, cap[2], cap[3], cap[4], alpha)
         d.rounded_rectangle((W - 236, 20, W - 20, 72), 26, fill=(255, 255, 255, 225))
         d.text((W - 128, 46), 'Illustration', font=font(28, 'Medium'), fill=(50, 50, 50, 255), anchor='mm')
         Image.alpha_composite(frame, layer).convert('RGB').save(tmp / f'f{i:04d}.jpg', quality=93)

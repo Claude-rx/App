@@ -100,13 +100,16 @@ Each offer page, top to bottom (`tools/funnel/upsell_pages.py`):
 3. **How it works / how to use it** (`_includes/sf-upsell-how.html`): a muted loop beside the product page's own
    numbered steps. Offer 1 plays the stick's explainer (`stick_science_video.py`); offers 2-4 play
    `brand/stick-funnel/videos/up<n>-how.*` (`upsell_videos.py`): the product pages' photos of it in use, one step a
-   scene, a slow push-in and the step's line (the brush has no photo on a face, so its loop is the brush, its how-to
-   card walked step by step, and its case). Nothing is generated motion, so no label is redrawn; every frame says
-   "Illustration".
+   scene, a slow push-in, a dip through white between scenes and the step's line, numbered as the page's steps (the
+   brush has no photo on a face, so its loop is the brush, its how-to card walked step by step, and its case). Nothing
+   is generated motion, so no label is redrawn; every frame and the line under the steps say it is an illustration.
+   With "reduce motion" set on her device, the loops don't autoplay and show their controls.
 4. **Reserved for you** (`_includes/sf-upsell-reserved.html`): her first name when the order has one, the store's price
-   for one beside today's, and three plain reasons: no single one costs this in the store and no code unlocks it (the
-   store's multi-packs can cost less each, so the claim is about one), it rides in the box she just ordered, and it
-   goes on the payment she just made. Then the button again, with the terms.
+   for one beside today's (with what it renews at), and three plain reasons: it costs less than one in the store (and,
+   for the brush, balm and serum, that the store's 2- and 3-packs cost less each: a store-wide "only here" would not
+   be true of a 3-pack, funnel review 3), it goes on the order and payment she just made, and the 30-day guarantee. Then
+   the button again (not pulsing: one pulsing button per screen), with the terms; the stick's and balm's terms end
+   with the salmon-derived PDRN warning, so it sits by every button.
 5. **Why / what's in it**: the brush's three reasons; the balm's and serum's first three ingredients, word for word from
    their product pages (`balm_copy.INGREDIENTS`, `serum_copy.INGREDIENTS`).
 6. **Closing card**: the price, the button and "No thanks".

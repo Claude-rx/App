@@ -1,6 +1,7 @@
 """The special offers' "how it works" loops: the product pages' own photos of each product in use, one step a scene,
 each under a slow push-in, the step's line in the same white pill as the foundation's loop (tools/persona/howto_video.py),
-cross-faded, and back to the first scene so it loops without a jump.
+dipped through white from one to the next (a cross-fade between two women showed both faces at once, funnel review
+3), and back to the first scene so it loops without a jump. Each caption is the page's step of the same number.
 
 usage: python3 -I tools/funnel/upsell_videos.py
 Writes brand/stick-funnel/videos/up<n>-how.mp4 (H.264, 720 x 900, 24 fps, silent, faststart), up<n>-how.webm (the same
@@ -37,11 +38,12 @@ VIDEOS = {
     3: [('pdrn-balm', 'apply-eye', 2.8, '1', 'Under the eyes', 'cover'),
         ('pdrn-balm', 'apply-smile', 2.8, '2', 'Along smile lines', 'cover'),
         ('pdrn-balm', 'apply-lips', 2.8, '3', 'Around the lips', 'cover'),
-        ('pdrn-balm', 'hold-cheek', 2.8, '', 'Press it in, no rubbing', 'cover')],
-    4: [('egf-nad-serum', 'drop', 2.8, '1', 'Two drops for your face', 'cover'),
+        ('pdrn-balm', 'hold-cheek', 2.8, '4', 'Press it in, no rubbing', 'cover')],
+    # (the drop photo whole: a 4:5 crop cut off the hand holding the dropper, and the caption sat on it)
+    4: [('egf-nad-serum', 'drop', 2.8, '1', 'Two drops for your face', 'contain'),
         ('egf-nad-serum', 'apply-cheeks', 2.8, '2', 'Press them in', 'cover'),
         ('egf-nad-serum', 'apply-neck', 2.8, '3', 'Two more, down your neck', 'cover'),
-        ('foundation-stick', 'hold-cheek', 2.8, '4', 'Then your stick', 'cover')],
+        ('foundation-stick', 'hold-cheek', 2.8, '4', 'Moisturiser, then your stick', 'cover')],
 }
 
 
@@ -96,6 +98,21 @@ def ease(x):
     return x * x * (3 - 2 * x)
 
 
+def push(fit):
+    """How far a scene pushes in over its length: less for a photo shown whole, so the caption stays in its white band."""
+    return 0.03 if fit in ('contain', 'tour') else 0.07
+
+
+def tag(layer):
+    """"Illustration", bottom right, large enough to read on a phone (the loop shows about half size there)."""
+    d = ImageDraw.Draw(layer)
+    f = font(26, 600)
+    w = int(d.textlength('Illustration', font=f)) + 36
+    x1, y1 = SIZE[0] - 20, SIZE[1] - 20
+    d.rounded_rectangle((x1 - w, y1 - 46, x1, y1), 23, fill=(255, 255, 255, 235), outline=(0, 0, 0, 40))
+    d.text((x1 - w / 2, y1 - 23), 'Illustration', font=f, fill=(40, 40, 40, 255), anchor='mm')
+
+
 def chip(layer, num, text, alpha, x=28, y=30):
     """A white pill, top left on the overlay: the step's number in a black disc (when it has one) and its line."""
     d = ImageDraw.Draw(layer)
@@ -126,17 +143,22 @@ def render(n, scenes, tmp):
         s = max(j for j, s0 in enumerate(starts) if s0 <= t)
         im, secs, num, text, fit, name = ims[s]
         local = t - starts[s]
-        cur = frame_of(im, fit, 1 + 0.07 * (local + FADE) / (secs + FADE), name, local, secs)
-        # the last half second fades into the next scene (the last one into the first: the loop has no seam)
+        cur = frame_of(im, fit, 1 + push(fit) * (local + FADE) / (secs + FADE), name, local, secs)
+        # the last half second dips through white into the next scene (the last one into the first: the loop has no
+        # seam); the next scene is already pushing in as it comes up, so it picks up where its own first frame starts
         if local > secs - FADE:
             nxt = ims[(s + 1) % len(ims)]
-            p = ease((local - (secs - FADE)) / FADE)
-            cur = Image.blend(cur, frame_of(nxt[0], nxt[4], 1 + 0.07 * (local - secs + FADE) / (nxt[1] + FADE), nxt[5]), p)
-        layer = Image.new('RGBA', SIZE, (0, 0, 0, 0)); d = ImageDraw.Draw(layer)
+            p = (local - (secs - FADE)) / FADE
+            white = Image.new('RGB', SIZE, (255, 255, 255))
+            if p < 0.5:
+                cur = Image.blend(cur, white, ease(p * 2))
+            else:
+                up = frame_of(nxt[0], nxt[4], 1 + push(nxt[4]) * (local - secs + FADE) / (nxt[1] + FADE), nxt[5])
+                cur = Image.blend(white, up, ease(p * 2 - 1))
+        layer = Image.new('RGBA', SIZE, (0, 0, 0, 0))
         a = min(ease((local - 0.15) / 0.35), 1 - ease((local - (secs - FADE - 0.1)) / 0.35))
-        if a > 0 and text: chip(layer, num, text, a)
-        d.rounded_rectangle((SIZE[0] - 148, SIZE[1] - 52, SIZE[0] - 20, SIZE[1] - 20), 16, fill=(255, 255, 255, 200))
-        d.text((SIZE[0] - 84, SIZE[1] - 36), 'Illustration', font=font(17, 500), fill=(60, 60, 60, 255), anchor='mm')
+        if a > 0 and text: chip(layer, num, text, a, y=22 if fit in ('contain', 'tour') else 30)
+        tag(layer)
         Image.alpha_composite(cur.convert('RGBA'), layer).convert('RGB').save(tmp / f'f{i:04d}.jpg', quality=93)
         i += 1
 

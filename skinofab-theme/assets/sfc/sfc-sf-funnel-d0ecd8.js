@@ -1,12 +1,16 @@
 /* SKINOFAB funnel: the listicle's and product page's own behaviour (the SDK owns cart, checkout and offers).
-   - videos marked data-sf-lazy play only while on screen (they load nothing until then)
+   - videos marked data-sf-lazy play only while on screen (they load nothing until then), and not at all when the
+     device asks for reduced motion (then they show their controls)
    - the product page: gallery thumbnails, the pack choice (the checkout links open the checkout on that pack, and the
      price, refill row and terms follow it), and the sticky bar on phones once the buy button scrolls away */
 (function () {
   'use strict';
 
   var videos = document.querySelectorAll('video[data-sf-lazy]');
-  if (videos.length && 'IntersectionObserver' in window) {
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // asked for less motion: no autoplay, the player's own controls instead (its poster shows until she taps play)
+  if (still) Array.prototype.forEach.call(videos, function (v) { v.controls = true; });
+  if (videos.length && !still && 'IntersectionObserver' in window) {
     var vo = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         var v = e.target;
