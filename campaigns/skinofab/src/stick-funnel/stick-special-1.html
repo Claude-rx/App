@@ -16,6 +16,7 @@ scripts:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - js/upsells.js
   - js/payment-logos.js
+  - js/sf-failsafe.js
 announcement_text: "Offer 1 of 4 · Your order is placed"
 announcement_variant: dark
 upsell_hero:
@@ -93,6 +94,7 @@ closing_cta:
 ---
 {% comment %} Apollo's single-offer upsell: announcement, header, hero band, the offer (the one SDK offer), body, closing card
      (its accept / skip proxy the offer's own). {% endcomment %}
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
     {% campaign_include 'upsell/announcement.html' announcement_text=announcement_text %}

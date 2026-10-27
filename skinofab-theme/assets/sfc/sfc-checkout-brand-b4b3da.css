@@ -56,3 +56,6 @@
 .upsell-closing .prices-text-wrapper.cc-start > div:last-child [data-next-display] { font-size: 30px; font-weight: 700; margin-left: 4px; }
 .sf-line-renew { margin-top: 2px; font-size: 12px; line-height: 1.4; color: #6b6b6b; }
 .sf-line-renew:empty { display: none; }
+/* sf-failsafe.js: the message when the SDK can't load the campaign (the page would otherwise stay blank) */
+.sf-failsafe { margin: 0; padding: 14px 16px; background: #fff4e5; border-bottom: 2px solid #e8a33d; color: #151515; font-size: 15px; line-height: 1.5; text-align: center; }
+.sf-failsafe a { color: inherit; text-decoration: underline; }

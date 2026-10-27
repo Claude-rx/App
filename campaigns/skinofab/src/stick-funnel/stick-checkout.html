@@ -72,6 +72,7 @@ scripts:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - js/checkout.js
   - js/sf-checkout.js
+  - js/sf-failsafe.js
   - js/payment-logos.js
 swiper_slides:
   - src: "images/sf/g-one-stick.jpg"
@@ -135,6 +136,7 @@ exit_intent:
   offer_detail: "Takes 10% off the stick pack in today’s order. Refills stay at the pack’s price."
   cta_label: "Apply my 10% off"
 ---
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
     {% campaign_include 'promo-banner.html' promo_banner=promo_banner %}

@@ -19,8 +19,10 @@ styles:
   - css/checkout-brand.css
 scripts:
   - js/sf-receipt.js
+  - js/sf-failsafe.js
 ---
 <div hidden data-sf-renewals='{{ renewals | json }}'></div>
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
 
       <div class="main-wrapper">
