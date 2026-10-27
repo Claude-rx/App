@@ -312,7 +312,7 @@ def pack_label(name):
     return re.split(r':| \(', name)[0]
 
 
-def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choose your bundle', refill=None):
+def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choose your bundle', refill=None, per_unit=True):
     """The bundle picker: three cards (Solena's bundles, or another product's `bundles` and `gifts`), the default one
     chosen. It sets the form's variant and the button's price. A bundle shows a saving only when its compare-at price
     is above its price.
@@ -321,7 +321,12 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     as the foundation is. A hidden, ticked refill box (the form adds the pack as a refill, every 'every' days of the
     chosen pack), the cards and the title at the refill price against the one-time price, and the refill row and
     terms under the button ([data-sf-renew], [data-sf-refill-terms]) kept in step with the chosen pack. Without it the
-    lines are one-time purchases (no refill choice)."""
+    lines are one-time purchases (no refill choice).
+
+    gifts: {key: (name, plural, price[, 'free'])}, a bundle's 'gifts' [(key, count)]: a row each, as the foundation's
+    ("+ FREE SKINOFAB Blender  $9  FREE"): the count only when it is more than one, a priced gift struck through, an
+    unpriced one 'free' (free shipping) or included (the brush's cases). per_unit: a pack's price per unit under its
+    price (the foundation's cards have none)."""
     bundles, gifts = bundles or BUNDLES, GIFTS if gifts is None else gifts
     on = bool(refill)
     units = lambda b: int(b.get('units') or (b['key'] if b['key'].isdigit() else 1))
@@ -334,10 +339,13 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
     cards = []
     for b in bundles:
         saves = float(b['compare']) > now_of(b)
+        count = lambda n: f'{n} ' if n > 1 else ''
         gifts_li = ''.join(
             f'<li><img src="{gift_imgs[k]}" alt="" width="40" height="40" loading="lazy" decoding="async">'
-            + (f'<span>+ {n} FREE {esc(gifts[k][0 if n == 1 else 1])}</span><s>{money(float(gifts[k][2]) * n)}</s><b>FREE</b></li>'
-               if gifts[k][2] else f'<span>+ {n} {esc(gifts[k][0 if n == 1 else 1])}</span><b>Included</b></li>')
+            + (f'<span>+ {count(n)}FREE {esc(gifts[k][0 if n == 1 else 1])}</span><s>{money(float(gifts[k][2]) * n)}</s><b>FREE</b></li>'
+               if gifts[k][2] else
+               f'<span>+ FREE {esc(gifts[k][0])}</span><b>FREE</b></li>' if gifts[k][3:] == ('free',) else
+               f'<span>+ {n} {esc(gifts[k][0 if n == 1 else 1])}</span><b>Included</b></li>')
             for k, n in b['gifts'])
         cards.append(
             '<label class="sfo-card sfo-card--gifts">'
@@ -350,7 +358,7 @@ def picker_html(variants, gift_imgs, css, bundles=None, gifts=None, legend='Choo
             f'<span class="sfo-price"><b>{money(now_of(b))}</b>' + (f'<s>{money(b["compare"])}</s>' if saves else '')
             # a pack of several: its price per stick or bottle (stick review 3: two reference prices, no unit price)
             + (f'<small class="sfo-per">{money(round(now_of(b) / units(b), 2))} / {esc(refill["unit"])}</small>'
-               if on and refill.get('unit') and units(b) > 1 else '') + '</span></span>'
+               if per_unit and on and refill.get('unit') and units(b) > 1 else '') + '</span></span>'
             + (f'<ul class="sfo-gifts">{gifts_li}</ul>' if gifts_li else '') + '</label>')
     first = next(b for b in bundles if b['key'] == default)
     # inline !important: the design's stylesheets give inputs display:block, which beats the hidden attribute
@@ -552,9 +560,9 @@ def no_reviews_html(buy='#apf-buy', amazon=None, n=None):
 # around the site ---------------------------------------------------------------------------------------------------
 # the homepage product shelf (the Bestsellers list and its tabs): a card like the other products', next to the gua sha
 # and the face roller, in the default list and the Bestsellers, New and Face tabs (the shelf's tab keys)
+# the last card of the homepage list and of each tab (the owner, 27 Oct 2026: the brush at the end of the list)
 SHELF = {'badge': 'New', 'saving': 'Buy 2, get 1 free', 'tags': ['No oils', '3 minutes', 'Less puffy'],
-         'after': {'list': 'color-changing-foundation', 'bestsellers_0': 'color-changing-foundation',
-                   'bestsellers_1': None, 'bestsellers_2': 'under-eye-reset'}}
+         'after': {'list': '$end', 'bestsellers_0': '$end', 'bestsellers_1': '$end', 'bestsellers_2': '$end'}}
 # the NEXT collections it is in, as the other face tools (gua sha, face roller): Accessories, Face, Skin, Bestsellers
 CATEGORIES = ['essentials', 'face', 'skin', 'the-hits']
 # menus on every page: a top-level link before Bestsellers (desktop and mobile) and one in the footer's Shop column;

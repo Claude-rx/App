@@ -211,6 +211,8 @@
             var p = l.product || {};
             inBag[p.pk] = true;
             if (p.parent) inBag[p.parent.pk] = true;
+            /* a pack that comes with another product (the 2-stick pack's free Lymphatic Brush): no add-on of it */
+            ((cfg.giftIncludes || {})[p.pk] || []).forEach(function(pk) { inBag[pk] = true; });
         });
         var offers = upsellData.filter(function(u) { return !u.ids.some(function(id) { return inBag[id]; }); }).slice(0, 2);
         if (!offers.length) return '';

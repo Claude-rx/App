@@ -493,13 +493,14 @@ def stick():
     tones_panel(P, tones, title, 'tones', tones=SKIN_TONES[:5])
     tones_panel(P, tones, title, 'tones-tall', tall=True, tones=SKIN_TONES[:5])
     panel(P, 'panel-wide', ('One Stick,', 'Your Shade'), [('sparkle', 'Goes on white,', 'blends to your tone'),
-                                                          ('drop', 'Creamy, made for', 'dry, mature skin'),
+                                                          ('drop', 'PDRN + peptides', 'for mature skin'),
                                                           ('stick', 'Twist, dot, buff:', 'no sponge needed')], 'one-stick')
     # on the stick itself (the swatch photo is "How does it work?" further down: the same photo twice, stick review 3)
     # what each one is, the five the page names (stick review 8: "for a more even-looking tone" and "soft and supple"
     # were results, and centella was missing)
-    whats_inside(P, 'single', [('Hyaluronic acid', 'Holds water in the cream'), ('Niacinamide', 'Vitamin B3'),
-                               ('Squalane + vitamin E', 'Light, silky oils'), ('Centella asiatica', 'A plant extract, cica')],
+    # the formula's key actives (SKF-ADFS-001, stick_copy.INGREDIENTS), what each one is
+    whats_inside(P, 'single', [('PDRN + peptides', 'Matrixyl 3000, Volufiline'), ('Hyaluronic acid', 'Moisture spheres'),
+                               ('Ceramides + squalane', 'For dry, mature skin'), ('Soft-focus spheres', 'Blur the look of lines')],
                  note_left=True, shadow=True, cap=34, note_size=32)
     science(P, 'science', ('Color pigments wrapped in tiny capsules break as you blend,',
                            'and the white cream shifts toward your own skin tone:',
@@ -519,6 +520,12 @@ def stick():
     note(d, (46, W - 40), AI_NOTE + '.', anchor='ls', size=40)
     save(sw, P, 'swatch')
     plain(P, 'single', 'card')
+    # the 2-stick pack's gift rows (stick_copy.GIFTS), at the foundation's icon size: the Lymphatic Brush from its
+    # shelf card, cropped square round the brush and its case (the card's product spans x 290-789, y 195-892), and
+    # the foundation's free-shipping box
+    br = Image.open(BRUSH / 'card.jpg').convert('RGB').crop((190, 194, 890, 894))
+    br.resize((160, 160), Image.LANCZOS).save(P / 'gift-brush.jpg', quality=90)
+    Image.open(HERE / 'assets' / 'offer-gift-shipping.jpg').convert('RGB').save(P / 'gift-shipping.jpg', quality=92)
 
 
 def serum():

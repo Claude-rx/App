@@ -50,6 +50,7 @@ def all_products():
 
 
 REFILL = getattr(P, 'REFILL', None)   # sold with Automatic Refills: each variant's subscription price is its refill price
+RETIRED = set(getattr(P, 'RETIRED_SKUS', []))   # packs taken off sale (the stick's 3-pack): deleted, or emptied if NEXT keeps them
 
 
 def variant_body(b):
@@ -70,8 +71,21 @@ fields = {'title': TITLE, 'slug': HANDLE, 'categories': [cats[c] for c in CATEGO
 # refills: every pack ships again when it runs out, so each pack's interval count is allowed (P.BUNDLES 'every')
 if REFILL: fields.update({'interval': REFILL['interval'], 'interval_counts': sorted({int(b['every']) for b in BUNDLES})})
 found = all_products().get(HANDLE)
+kept = []                                     # retired variants NEXT would not delete (orders point at them)
 if found:
     pk = found['id']
+    for v in call('GET', f'products/{pk}/')['variants']:
+        if v.get('sku') not in RETIRED: continue
+        try:
+            call('DELETE', f"products/variants/{v['id']}/"); print('deleted retired variant', v['id'], v['sku'])
+        except RuntimeError as e:
+            # kept, out of stock and not for sale on backorder, its attribute value kept with it
+            print('kept retired variant', v['id'], v['sku'], str(e)[:120])
+            call('PATCH', f"products/variants/{v['id']}/", {'track_stock': True, 'allow_backorders': False,
+                                                              'stockrecords': [{'location_id': 1, 'num_in_stock': 0, 'low_stock_threshold': 0}]})
+            kept.append(v)
+    if kept:
+        fields['variant_attributes'][0]['values'] += [a['value'] for v in kept for a in v.get('variant_attribute_values', []) if a.get('name') == ATTR]
     call('PATCH', f'products/{pk}/', fields)
     print('updated product', pk)
 else:
@@ -87,7 +101,7 @@ for b in BUNDLES:
     else: call('POST', f'products/{pk}/variants/', body)
 prod = call('GET', f'products/{pk}/')
 by_sku = {v.get('sku'): v for v in prod['variants']}
-extra = [v['id'] for v in prod['variants'] if v.get('sku') not in {b['sku'] for b in BUNDLES}]
+extra = [v['id'] for v in prod['variants'] if v.get('sku') not in {b['sku'] for b in BUNDLES} | RETIRED]
 if extra: raise SystemExit(f'unexpected extra variants on product {pk}: {extra}')
 offers = {'pk': pk, 'variants': {b['key']: by_sku[b['sku']]['id'] for b in BUNDLES}}
 (WORK / P.OFFERS_FILE).write_text(json.dumps(offers, indent=1))

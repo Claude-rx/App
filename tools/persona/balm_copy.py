@@ -265,8 +265,9 @@ BUYBOX_CSS = _b.BUYBOX_CSS
 # (not in the NEXT Bestsellers collection: a new product has no sales to rank it by; the homepage shelf is
 # "Shop the range", review 7)
 SHELF = {'badge': 'New', 'saving': 'Buy 2, get 1 free', 'tags': ['PDRN', 'Under-eyes', 'Press-on'],
-         'after': {'list': 'the-lymphatic-brush', 'bestsellers_0': 'the-lymphatic-brush',
-                   'bestsellers_1': None, 'bestsellers_2': 'the-lymphatic-brush'}}
+         # where the brush was before it moved to the end (brush_copy.SHELF)
+         'after': {'list': 'color-changing-foundation', 'bestsellers_0': 'color-changing-foundation',
+                   'bestsellers_1': None, 'bestsellers_2': 'under-eye-reset'}}
 # the NEXT collections (as the foundation and the other face skincare): Face, Skin, Bestsellers
 CATEGORIES = ['face', 'skin']
 # menus on every page: a top-level link before the brush (desktop and mobile) and one in the footer's Shop column

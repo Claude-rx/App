@@ -22,7 +22,7 @@
 //        expert block signed by the brand, before/after photos marked as illustrations; no competitor name or dropped
 //        claim, no broken image after scrolling the whole page, the title price (no "was" on one stick), no stars
 //        without reviews; its card in the homepage shelf (default list, Bestsellers, New and Face tabs) at its
-//        single price ($24.95; the serum $34.95; the stick $39), and the menu links lead to it.
+//        single price ($24.95; the serum $34.95; the stick $37 with refills), and the menu links lead to it.
 import { chromium } from '/opt/node-tools/node_modules/playwright/index.mjs';
 import fs from 'fs'; import path from 'path';
 
@@ -121,7 +121,7 @@ async function checkout(s, name, product = 'Adaptive Peptide Foundation') {
   const thumbs = await s.page.evaluate(() => [...document.images].filter(i => !/\.svg/.test(i.currentSrc || i.src)).map(i => i.naturalWidth));
   await s.page.screenshot({ path: path.join(SHOTS, `checkout-${name}.png`), fullPage: true });
   return { status: resp && resp.status(), hasLine: text.toLowerCase().includes(product.toLowerCase()),
-           pack: (text.match(/(1 bottle|2 bottles \+ free gifts|1 brush \+ free case|2 brushes \+ 2 free cases|3 brushes \+ 3 free cases \+ free body brush|1 stick|2 sticks|3 sticks \(buy 2, get 1 free\))/i) || [])[0] || null,
+           pack: (text.match(/(1 bottle|2 bottles \+ free gifts|1 brush \+ free case|2 brushes \+ 2 free cases|3 brushes \+ 3 free cases \+ free body brush|1 stick|2 sticks \+ free Lymphatic Brush|2 sticks)/i) || [])[0] || null,
            refillWords: (text.match(/[^.$]{0,40}(every\s+\d+\s+days?|subscri|recurring|renew)[^.$]{0,40}/gi) || []).slice(0, 3),
            thumbs, prices: (text.match(/\$\d+\.\d\d/g) || []).slice(0, 6) };
 }
@@ -383,9 +383,10 @@ async function chooseBundle(s, key) {
   }, picker);
 }
 // each bundle: its variant and price, one-time, the drawer (its 1 -> 2 upgrade only for one, never itself as an
-// add-on), checkout for the 2-pack; then the drawer upgrade 1 -> 2. to3: the 2-pack is offered 2 -> 3 as well (the
-// stick, stick review 5), and the upgraded bag then takes it
-async function bundleCases(name, route, title, label, refills = false, to3 = false) {
+// add-on), checkout for the 2-pack; then the drawer upgrade 1 -> 2. to3: the 2-pack is offered 2 -> 3 as well, and
+// the upgraded bag then takes it. gift: the 2-pack comes with this product (the stick's free Lymphatic Brush), so the
+// drawer offers no add-on of it while the 2-pack is in the bag
+async function bundleCases(name, route, title, label, refills = false, to3 = false, gift = null) {
   const packs = await packsOf(route);
   const want = pack => (refills ? { price: pack.refill, refill: true, every: pack.every } : { price: pack.price, refill: false });
   for (const [key, pack] of Object.entries(packs)) {
@@ -404,6 +405,8 @@ async function bundleCases(name, route, title, label, refills = false, to3 = fal
     // a line of one pack that has a bigger pack above it: its "+" moves it up a pack instead of adding a second line
     if (d.plus !== d.upgrade) problems.push(`"+" upgrades=${d.plus}, banner=${d.upgrade}`);
     if (d.addons.includes(title)) problems.push(`${title} offered as an add-on while in the bag`);
+    if (gift && key === '2' && d.addons.some(a => a.includes(gift))) problems.push(`${gift} offered with the pack that includes it`);
+    if (gift && key === '1' && !d.addons.some(a => a.includes(gift))) problems.push(`${gift} not offered with the single pack`);
     if (d.addons.length < 1) problems.push('no add-ons');
     if (d.planTalk) problems.push('drawer has plan talk');
     let co = null;
@@ -463,7 +466,7 @@ await bundleCases('brush', BRUSH, 'The Lymphatic Brush', 'Lymphatic Brush');
 // its refill price, every its own days; the brush is one-time only
 await bundleCases('balm', BALM, 'PDRN Plumping Balm', 'PDRN Plumping Balm', true);
 await bundleCases('serum', SERUM, 'EGF + NAD+ Firming Serum', 'EGF + NAD+ Firming Serum', true);
-await bundleCases('stick', STICK, 'Adaptive Foundation Stick', 'Adaptive Foundation Stick', true, true);
+await bundleCases('stick', STICK, 'Adaptive Foundation Stick', 'Adaptive Foundation Stick', true, false, 'Lymphatic Brush');
 
 // ---------------------------------------------------------------- the brush's, the balm's, the serum's and the stick's pages
 // All are built on the foundation page's structure (tools/persona/twin.py): the same sections in the same order (the
@@ -586,8 +589,8 @@ await twinPage('serum', SERUM, { title: 'EGF + NAD+ Firming Serum', handle: 'egf
                                  clips: 0, was: '$69.90', price: '$47.95', shelf: '$27.95',
                                  claims: '#1 Firming|137,135|10,000\\+|clinically|stimulate collagen|at the source|dermatologist|Madeca|Time Reverse' });
 await twinPage('stick', STICK, { title: 'Adaptive Foundation Stick', handle: 'adaptive-foundation-stick', nav: 'Adaptive Foundation Stick',
-                                 gallery: 6, faq: 19, clips: 0, was: '$78', price: '$47', shelf: '$31', borrowed: true, frontrow: true,
-                                 announce: 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee',
+                                 gallery: 6, faq: 21, clips: 0, was: '$94', price: '$47', shelf: '$37', borrowed: true, frontrow: true,
+                                 announce: 'Free Lymphatic Brush with 2 sticks · Free shipping · 30-day money-back guarantee',
                                  claims: '97%|93%|50,000|pieces remain|11:59|16 skin tones|anti-aging|reduces redness|clinically|dermatologist|Changing Foundation' });
 
 // the sticky bar on every product page: shown while the add-to-cart button is out of view on a phone or a tablet

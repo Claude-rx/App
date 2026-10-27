@@ -69,11 +69,11 @@ FAQ = [
      f'deep, email us first at {MAIL} and we’ll tell you honestly how it is likely to look on you. Either way you have '
      f'30 days: if you don’t love how it looks, we’ll refund you.</p>'),
     ('Is Skinofab cruelty-free and vegan', 'Are SKINOFAB products vegan?',
-     '<p>No. The PDRN in the Adaptive Peptide Foundation and the PDRN Plumping Balm comes from salmon DNA, and the balm '
-     'and the EGF + NAD+ Firming Serum contain collagen. The Adaptive Foundation Stick’s full ingredient list is printed '
-     # (not "we'll send it to you": its maker's full list isn't in yet, stick review 9)
-     f'on its packaging; if you avoid animal-derived ingredients, email {MAIL} before you order and we’ll send you the '
-     'full list as soon as its maker confirms it.</p>'),
+     # (the stick's formula, SKF-ADFS-001: salmon DNA and hydrolyzed collagen, 27 Oct 2026)
+     '<p>No. The PDRN in the Adaptive Peptide Foundation, the Adaptive Foundation Stick and the PDRN Plumping Balm comes '
+     'from salmon DNA, so they are not for anyone with a fish allergy, and the stick, the balm and the EGF + NAD+ '
+     f'Firming Serum contain collagen. If you avoid animal-derived ingredients, email {MAIL} and we’ll tell you what is '
+     'in each one.</p>'),
     ('What are the key ingredients', 'What are the key ingredients in the Adaptive Peptide Foundation?',
      '<ul><li><strong>Peptides (Matrixyl 3000), PDRN and Pro-Xylane</strong>: K-beauty actives for the skin underneath.</li>'
      '<li><strong>Hyaluronic acid, ceramide NP, squalane and panthenol</strong>: a hydrating serum base for dry, mature '

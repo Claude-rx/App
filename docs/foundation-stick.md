@@ -14,15 +14,27 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
 - **Name.** The page calls it the **Adaptive Foundation Stick**, so it reads as part of the SKINOFAB line next to the
   Adaptive Peptide Foundation (Facelove's name is "Changing Foundation Stick"). To change it: `TITLE` and `NAV_LABEL`
   in `tools/persona/stick_copy.py`, then rerun `setup_brush_offers.py skinofab <work> stick_copy` and the build.
-- **Formula.** The page names hyaluronic acid, niacinamide, squalane, vitamin E and centella asiatica, the five
-  key ingredients Facelove's page names for the same stick; the Ingredients tab says so ("The key ingredients, as the
-  stick's maker lists them") and "The full ingredient list is printed on the box". Facelove publishes no full
-  ingredient list: check the supplier's INCI list and correct `INGREDIENTS` and `TWIN['inside']` in `stick_copy.py`
-  if it differs. Since stick reviews 7 and 8 the page says what each one is and what it does in the cream, no result
-  on the skin (no "more even-looking complexion", no "soft, supple skin", no gentleness claim resting on centella),
-  and the "Adaptive color science" block explains the color capsules (what the stick shares with the foundation), not
-  a third ingredient list. "The full ingredient list is printed on the packaging": US cosmetic packaging must carry
-  it; make sure the supplier's does.
+- **Formula.** Since 27 Oct 2026 the page follows the manufacturing spec **SKF-ADFS-001** (v1.0, the owner's PDF):
+  an anhydrous cream stick, 9 g / 0.32 oz, Shade 1 "Light-Medium" (fair to medium skin), pigments in microcapsules
+  that break as the brush buffs. `stick_copy.INGREDIENTS` names its key actives as the INCI does: PDRN (sodium DNA,
+  salmon), Matrixyl 3000 and acetyl hexapeptide-8, Volufiline (anemarrhena root extract), hyaluronic acid spheres,
+  ceramide NP and cholesterol, squalane, niacinamide, bakuchiol and adenosine, hydrolyzed collagen, vitamin E,
+  centella and bisabolol, and the soft-focus silica and boron nitride. `FREE_FROM` lists what it is made without
+  (fragrance, essential oils, retinol, denatured alcohol, parabens, PEGs, mineral oil, talc, EDTA; not silicones,
+  which the spec leaves optional) and `WARNINGS` the label's warnings (fish allergy, eyes, not a sunscreen). The spec
+  is **confidential**: the page gives no percentage, no supplier and no step of the process. Check two things with
+  the factory: if it uses the "COA-equivalent" of Volufiline or Argireline, drop those trade names (`INGREDIENTS`,
+  `TWIN['science']`, `TWIN['inside']`, the `whats-inside` panel in `product_photos.py`); and the label's full INCI
+  (section 9) must match `INGREDIENTS`.
+- **Claims the spec allows (section 8)** are the only ones the page makes: "adapts to fair-to-medium skin tones as
+  you blend", "skincare-infused foundation with PDRN, peptides & Volufiline", "fragrance-free", "made for skin after
+  45". "Won't settle into fine lines" needs the 6-hour 45+ panel: until its report is in, the page says "made not to
+  settle". No percentage ("80% said...") before the 4-week consumer study (30+ women 45+), then worded as the spec
+  says, with its footnote. Never: "every skin tone" (unless Shade 2 is sold), "reverses aging", Botox, filler,
+  "produces collagen", SPF.
+- **Not vegan, fish allergy.** The stick contains salmon-derived DNA and hydrolyzed collagen: the store's vegan FAQ
+  (`support_copy.py`), the stick's FAQ ("Is it vegan? I have a fish allergy.") and the Ingredients tab's warnings say
+  so.
 - **Shade range.** Facelove's page says both "16 skin tones" and, in its own gallery, "For fair to medium skin tones".
   Since stick review 6 the page says fair to medium: `SHADE_FAQ` ("made for fair to medium skin tones"; deeper skin
   emails first; a full refund within 30 days, even opened), the tones panel (fair, light-medium and medium women before
@@ -30,31 +42,30 @@ Preview: https://skinofab.29next.store/catalogue/adaptive-foundation-stick_235/?
   re-made with light-medium models (a deep-skin result was a claim the page could not back). The earlier photos (a deep
   before/after pair, and women with deep skin in `temple` and `friends`) are in git history: if the supplier confirms
   a wider range, bring them back with `SHADE_FAQ` and the panel's title.
-- **Net weight** (`NET`): shown in the Ingredients tab once set.
+- **Net weight** (`NET`): 9 g / 0.32 oz (the spec's declared fill), in the Ingredients tab with the shade.
 - **Where it is made** (`KOREAN`): off. The foundation, balm and serum say "Formulated in Korea"; the stick doesn't
   until the supplier confirms it.
-- **Refills.** Automatic Refills are on by default, as on the foundation: $31 every 28 days for 1 stick, $47 every
-  56 days for 2, $62 every 84 days for 3 (20% under the one-time price; one-time stays a choice on the cart page). How
-  long a stick lasts decides the 28 days: change `BUNDLES[*]['refill'|'every']` and `REFILL['every']` in
-  `stick_copy.py`, then rerun `setup_brush_offers.py skinofab <work> stick_copy` and the build.
+- **Offer (27 Oct 2026, the owner).** The foundation's offer, in its design: **1 stick $37** and **2 sticks $47**
+  with Automatic Refills (always on, every 28 and 56 days), one-time $47 and $57 on the cart page, crossed out $47 and
+  $94 (the one-time single price times the sticks). The 2-stick pack is "Best value" with the foundation's gift rows:
+  **+ FREE Lymphatic Brush** ($24.95, struck through) and **+ FREE Shipping**; its order line reads "2 sticks + free
+  Lymphatic Brush" (SKU `SKF-AFS-2`), so **every 2-stick order ships one Lymphatic Brush**: tell the warehouse. As
+  set, the brush ships with each refill of the 2-pack too (the order line is the same); if it should be the first
+  order only, say so and the gift row, the refill FAQ and the SKU get a "first order" rule. The 3-stick pack is gone:
+  its NEXT variant (238, `SKF-AFS-3`) was deleted by `setup_brush_offers.py` (`RETIRED_SKUS`). The drawer offers no
+  brush add-on while the 2-stick pack is in the bag (`GIFT_INCLUDES`, `window.SFCart.giftIncludes`), and its upgrade
+  reads "Upgrade to 2 sticks + a free brush". To change prices: `BUNDLES` in `stick_copy.py`, then
+  `setup_brush_offers.py skinofab <work> stick_copy` and the build.
 - **"16 skin tones".** The owner's reference shows "One stick for 16 skin tones". The page gives no number and says
   fair to medium (above) until the supplier confirms the range: then put it in the `tones_panel` titles in
   `product_photos.py stick` and in `SHADE_FAQ`.
 - **Reviews' 3-star share.** The wall shows 0% 3-star reviews: that is the earlier store's own export (7,719 five,
   2,132 four, 0 three, 1 two, 3 one), not a filter.
 - **Same formula.** The reviews near the top and in the wall are the Adaptive Peptide Foundation's, labelled "Verified
-  buyer of the foundation", because the owner states the stick is the same adaptive formula. If the supplier's stick
-  formula differs, set `BORROW_REVIEWS = None` and `FRONTROW_NOTE = None` in `stick_copy.py` and the page shows its
-  own (empty) reviews again.
-- **Same formula, different ingredient lists.** The page lists hyaluronic acid, niacinamide, squalane, vitamin E and
-  centella (Facelove's list); the foundation's page lists PDRN, Matrixyl 3000, Pro-Xylane, adenosine and ceramide NP.
-  An independent review (26 Oct) flagged that "the same adaptive formula" and two different lists contradict each
-  other. Since stick review 5 the page claims only what both share, the colour technology: the reviews are "of our
-  Adaptive Peptide Foundation, which adapts to your tone the same way", the FrontrowMD line names "the liquid that
-  adapts to your tone the same way this stick does", and the FAQ "Stick or bottle" names each one's base (the
-  foundation's serum with peptides and PDRN, the stick's cream with hyaluronic acid, niacinamide and squalane). If the
-  supplier's INCI shows the stick is the foundation's formula, the copy can say so again; if it shows a different
-  colour technology, set `BORROW_REVIEWS = None` and `FRONTROW_NOTE = None`.
+  buyer of the foundation", because the owner states the stick is the same adaptive product. The page claims only
+  what the two share for sure, the colour technology ("of our Adaptive Peptide Foundation, which adapts to your tone
+  the same way"); with SKF-ADFS-001 the stick also has PDRN, Matrixyl 3000 and ceramide NP, as the foundation does.
+  If the stick's own reviews should replace them, set `BORROW_REVIEWS = None` and `FRONTROW_NOTE = None`.
 - **Size.** The close-up product photos have nothing to give scale, and the in-hand photos show a stick about a
   palm long; the page states no size. Once the supplier gives the length and net weight, add them to the
   Ingredients tab (`NET`) and an FAQ ("How big is it? How long does a stick last?").
@@ -168,3 +179,22 @@ Left, by choice or for the owner:
 - **Small, left as is.** The how-to cards' wordmark is small on a 1440 screen; the "Twist up a little" ring and the
   vitamin E capsules are AI details a real photo will replace; the drawer's "Continue Shopping" is the platform's
   label; the link-preview image is the platform's crop of the first product photo.
+
+## The offer, the formula, the before/after and the science loop (27 Oct 2026)
+
+- **Before/after** (gallery slide 4, `before-after`): a new pair, `source/before.jpg` (bare skin: redness on the
+  cheeks and nose, sun spots, a dull, uneven tone, dark circles) and `source/after.jpg` (an edit of the same photo:
+  the foundation added, the lines kept), gpt-image-2 via 4SToken, labelled "AI illustration, not a customer photo".
+- **Science loop** (the "Adaptive color science" block, `TWIN['science']['video']`): a 17-second silent loop,
+  `tools/persona/stick_science_video.py` → `brand/foundation-stick/science/science.{mp4,webm}`, its poster and
+  `science.gif` (432 px, for emails and ads). Four steps and an end card, captioned in a band under the picture,
+  "Illustration" in its corner: 1 it goes on white (the capsules), 2 buff, and the capsules break (a Kling 3.0 clip,
+  image to video, Kie.ai), 3 soft-focus spheres scatter the light, 4 skincare in every swipe, then the stick. Steps 3
+  and 4 are slow push-ins between two renders each: Higgsfield had 0.03 credits and the Kie.ai and 4SToken video
+  balances ran out after the first clip. Top one up, render `blur-kling.mp4` and `ha-kling.mp4` from `blur-a.jpg` and
+  `ha-a.jpg`, and rerun the script: each scene takes its clip when it is there.
+- **Ingredient cards:** PDRN, peptides, hyaluronic acid spheres, ceramides, squalane, niacinamide, centella and
+  vitamin E (`ing-pdrn`, `ing-peptides`, `ing-ceramides` new, gpt-image-2 on white).
+- **Homepage:** the Lymphatic Brush is the last card of the product list and of each tab (`brush_copy.SHELF`
+  `'$end'`); the Bundle & Save card is the "Foundation Stick Duo", two sticks and the brush (`home_images.group`).
+

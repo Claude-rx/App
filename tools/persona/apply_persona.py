@@ -1074,8 +1074,8 @@ HOME_BUNDLES = [
      'Buy 2, get 1 free: one for home, one for your bag, one to share.', None, None),
     (brush_copy.HANDLE, 'Lymphatic Brush Trio', 'bundle-brush', 'Three Lymphatic Brushes',
      'Buy 2, get 1 free, each with its travel case.', None, None),
-    (stick_copy.HANDLE, 'Foundation Stick Trio', 'bundle-stick', 'Three Adaptive Foundation Sticks',
-     'Buy 2, get 1 free: home, bag, and one to share.', None, None),
+    (stick_copy.HANDLE, 'Foundation Stick Duo', 'bundle-stick', 'Two Adaptive Foundation Sticks and a free Lymphatic Brush',
+     'Two sticks and a free Lymphatic Brush: one stick for home, one for your bag.', None, None),
 ]
 HOME_TILES = [('color-changing-foundation', 'Foundation', 'tile-foundation', 'A woman in her fifties holding the Adaptive Peptide Foundation'),
               (serum_copy.HANDLE, 'Serum', 'tile-serum', 'A woman in her sixties holding the EGF + NAD+ Firming Serum'),
@@ -2174,11 +2174,7 @@ def cart_offer():
     d_text = step_text(serum_copy, 'a second bottle, about two more months')
     stick = json.loads((WORK / stick_copy.OFFERS_FILE).read_text())['variants']
     e1, e2 = stick_copy.BUNDLES[0], stick_copy.BUNDLES[1]
-    e_text = step_text(stick_copy, 'a second stick, one for home and one for your bag')
-    # and from the 2-stick pack, the default, to the 3-stick pack (buy 2, get 1 free): most bags hold the 2-pack, and
-    # the drawer offered nothing from it (stick review 5)
-    e3 = stick_copy.BUNDLES[2]
-    e3_text = step_text(stick_copy, 'a third stick', 1)
+    e_text = step_text(stick_copy, 'a second stick and a free Lymphatic Brush')
 
     return {'product': cart['product'], 'addons': cart['addons'],
             'upgrades': [{'from': variants[one['key']], 'to': variants[two['key']], 'title': cart['upgrade_title'],
@@ -2190,9 +2186,7 @@ def cart_offer():
                          {'from': serum[d1['key']], 'to': serum[d2['key']], 'title': serum_copy.CART_UPGRADE['title'],
                           'text': d_text, 'button': serum_copy.CART_UPGRADE['button'], 'every': every_of(serum_copy)},
                          {'from': stick[e1['key']], 'to': stick[e2['key']], 'title': stick_copy.CART_UPGRADE['title'],
-                          'text': e_text, 'button': stick_copy.CART_UPGRADE['button'], 'every': every_of(stick_copy)},
-                         {'from': stick[e2['key']], 'to': stick[e3['key']], 'title': stick_copy.CART_UPGRADE_3['title'],
-                          'text': e3_text, 'button': stick_copy.CART_UPGRADE_3['button'], 'every': e3['every']}],
+                          'text': e_text, 'button': stick_copy.CART_UPGRADE['button'], 'every': every_of(stick_copy)}],
             'review': {'text': cart['review_text'], 'name': cart['review_name']}, 'guarantee_text': cart['guarantee_text'],
             # refills on by default: every add of the foundation that names no purchase type is the refill plan
             'refill': {'default': bool(ccf_copy.REFILL.get('default')), 'interval': ccf_copy.REFILL['interval'],
@@ -2216,7 +2210,24 @@ def cart_offer():
             # the products sold with refills (their page's slug): in the bag, a line of one bought once says so
             # (stick review 8: after switching to one-time the drawer showed "2 sticks · $59" and nothing more)
             'refill_handles': (['adaptive-peptide-foundation'] if ccf_copy.REFILL.get('default') else [])
-                              + [P.HANDLE for P in SECOND_PRODUCTS if (getattr(P, 'REFILL', None) or {}).get('default')]}
+                              + [P.HANDLE for P in SECOND_PRODUCTS if (getattr(P, 'REFILL', None) or {}).get('default')],
+            # a pack that comes with another product (the 2-stick pack's free Lymphatic Brush): by the pack's variant pk,
+            # the product pks the drawer then offers no add-on of
+            'gift_includes': gift_includes()}
+
+def gift_includes():
+    """{variant pk: [product pk]} for every pack whose gift is one of the store's products (P.GIFT_INCLUDES: pack key
+    -> the gift's handle, its pk from catalog-rb.json)."""
+    cat = json.loads((WORK / 'catalog-rb.json').read_text())['mapping']['products']
+    out = {}
+    for P in SECOND_PRODUCTS:
+        inc = getattr(P, 'GIFT_INCLUDES', None)
+        if not inc: continue
+        variants = json.loads((WORK / P.OFFERS_FILE).read_text())['variants']
+        for key, handle in inc.items():
+            if handle not in cat: missing.append((P.KEY, f'gift product {handle}')); continue
+            out[str(variants[key])] = [int(cat[handle]['id'])]
+    return out
 
 STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
         '<path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
@@ -2431,6 +2442,15 @@ def twin_context(P, found, stats, amazon):
     def clip(k):
         return (hashed_copy(media / f'{k}.mp4', 'media', f'skinofab-{k}'),
                 hashed_copy(media / f'{k}.jpg', 'img', f'skinofab-{k}-poster'))
+    def loop(name, label):
+        # a silent loop in the science block (P.IMG/science/<name>.mp4, .webm and -poster.jpg, 864 x 1080), or the
+        # block's photo when it is not there
+        d = P.IMG / 'science'
+        if not (d / f'{name}.mp4').exists():
+            missing.append((P.KEY, f'science loop {name}.mp4')); return None
+        return ((hashed_copy(d / f'{name}.mp4', 'media', f'{P.IMG_PREFIX}-{name}'),
+                 hashed_copy(d / f'{name}-poster.jpg', 'img', f'{P.IMG_PREFIX}-{name}-poster'), 864, 1080, label)
+                + ((hashed_copy(d / f'{name}.webm', 'media', f'{P.IMG_PREFIX}-{name}'),) if (d / f'{name}.webm').exists() else ()))
     reviews = WORK / P.REVIEWS_DIR
     # until the product has its own reviews, its page shows none (the foundation's, even labelled, read as this
     # product's), unless the owner says it is the same product (P.BORROW_REVIEWS: the stick): then the foundation's,
@@ -2456,7 +2476,7 @@ def twin_context(P, found, stats, amazon):
             if wall.count('>Write a review</a>') != 1: missing.append((P.KEY, 'review wall write button'))
             wall = wall.replace('>Write a review</a>', f'>{html.escape(borrow["write"])}</a>', 1)
     else: wall += review_wall(reviews)
-    return {'img': img, 'clip': clip, 'avatar': avatar(), 'strip_own': review_strip(reviews), 'strip_brand': brand,
+    return {'img': img, 'clip': clip, 'loop': loop, 'avatar': avatar(), 'strip_own': review_strip(reviews), 'strip_brand': brand,
             'wall': wall, 'no_reviews': None if (stats or borrow) else f'<style>{brush_copy.SECTIONS_CSS}</style>{P.no_reviews_html(amazon=amazon)}'}
 
 
@@ -2775,10 +2795,12 @@ def product_shelf(home, P):
              f'sizes="(min-width: 750px) 25vw, 66vw" src="{small}" srcset="{small} 720w" width="720"/></a>'
              f'<div class="fh-product-info"><h3><a href="{href}">{title}</a></h3>\n{price}</div></article>')
     def place(block, card, after):
-        """block with card inserted after the article linking to products/<after>.html (first when None)."""
+        """block with card inserted after the article linking to products/<after>.html (first when None, last when
+        '$end')."""
         arts = [(a.start(), block.find('</article>', a.start()) + len('</article>')) for a in re.finditer(r'<article class="fh-product">', block)]
         if not arts: return None
         if after is None: pos = arts[0][0]
+        elif after == '$end': pos = arts[-1][1]
         else:
             hit = [e for s_, e in arts if f'products/{after}.html"' in block[s_:e]]
             if not hit: return None

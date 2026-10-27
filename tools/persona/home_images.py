@@ -97,6 +97,29 @@ def foundation_unit():
     return Image.fromarray(rgba, 'RGBA')
 
 
+def group(items, size=1000):
+    """Products on white on one floor line, items [(unit, dx, height)] drawn in order (the last in front), each with
+    a soft contact shadow: a pack and its gift (the stick duo and its free brush)."""
+    canvas = Image.new('RGB', (size, size), (255, 255, 255))
+    floor = int(size * 0.84)
+    shadow = Image.new('L', (size, size), 0)
+    placed = []
+    for unit, dx, height in items:
+        h = int(size * height); w = int(unit.width * h / unit.height)
+        u = unit.resize((w, h), Image.LANCZOS)
+        x = int(size / 2 + dx * size - w / 2)
+        placed.append((u, x, floor - h))
+        sw, sh = int(w * 1.05), max(6, int(w * 0.16))
+        e = Image.new('L', (sw, sh), 0)
+        ImageDraw.Draw(e).ellipse((0, 0, sw - 1, sh - 1), fill=150)
+        shadow.paste(e, (x + (w - sw) // 2, floor - sh // 2), e)
+    shadow = shadow.filter(ImageFilter.GaussianBlur(size * 0.012))
+    canvas = Image.composite(Image.new('RGB', canvas.size, (175, 172, 170)), canvas, shadow.point(lambda v: v * 0.55))
+    for u, x, y in placed:
+        canvas.paste(u, (x, y), u)
+    return canvas
+
+
 def trio(unit, height=0.66, size=1000, spread=0.27, side=0.9, count=3):
     """Three (or two, or one) of a product on white, side by side on one floor line, the middle one in front, soft
     contact shadows."""
@@ -226,7 +249,10 @@ def main():
     save(Image.open(BRAND / 'egf-nad-serum' / 'trio.jpg').convert('RGB').resize((1000, 1000), Image.LANCZOS), 'bundle-serum.jpg')
     save(trio(cutout(BRAND / 'pdrn-balm' / 'card.jpg', keep='tallest'), height=0.62), 'bundle-balm.jpg')
     save(trio(cutout(BRAND / 'lymphatic-brush' / 'card.jpg', keep='all'), height=0.5, spread=0.3, side=0.9), 'bundle-brush.jpg')
-    save(trio(cutout(BRAND / 'foundation-stick' / 'card.jpg', keep='tallest'), height=0.62), 'bundle-stick.jpg')
+    # the stick's best-value pack (27 Oct 2026): two sticks and the free Lymphatic Brush in its case beside them
+    stick = cutout(BRAND / 'foundation-stick' / 'card.jpg', keep='tallest')
+    save(group([(stick, -0.24, 0.62), (stick, -0.04, 0.62), (cutout(BRAND / 'lymphatic-brush' / 'card.jpg', keep='all'), 0.24, 0.4)]),
+         'bundle-stick.jpg')
     # ---- banners of the listing pages (the export's showed four young models with products the store no longer
     # sells): our four women 45+ with their products, side by side (wide) and two by two (phones)
     tiles = [Image.open(OUT / f'tile-{k}.jpg').convert('RGB') for k in ('foundation', 'serum', 'balm', 'brush')]

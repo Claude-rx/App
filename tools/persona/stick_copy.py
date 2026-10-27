@@ -16,12 +16,26 @@ review app behind them, several from women under 45). The stick is new at SKINOF
 foundation's, labelled as theirs, and the review wall says "no reviews yet" until real buyers write some. Bundle
 savings are real (the single-stick price times the sticks).
 
-Before launch (owner): the ingredients (INGREDIENTS), the shade range it adapts to (SHADE_FAQ and the tones panel:
-fair to medium, as the stick's maker states, until the supplier confirms more), the net weight (NET) and where it is
-formulated (KOREAN) must match the supplier's sheet.
+The offer (the owner, 27 Oct 2026): the foundation's, in its design: 1 stick at $37 and 2 sticks at $47 with
+Automatic Refills (always on), each with its one-time price on the cart page ($47 and $57, the foundation's refill +
+$10), and the 2-stick pack with a free Lymphatic Brush and free shipping in the foundation's gift rows. The 3-stick
+pack is retired (RETIRED_SKUS).
+
+The formula (SKF-ADFS-001, the manufacturing spec of 27 Oct 2026, docs/foundation-stick.md): an anhydrous cream
+stick, 9 g, Shade 1 "Light-Medium" (fair to medium skin); pigments in microcapsules that break as the brush buffs;
+the Facelove stick's five named actives (hyaluronic acid, niacinamide, vitamin E, squalane, centella) plus PDRN,
+Matrixyl 3000, Argireline, Volufiline, ceramide NP, bakuchiol, adenosine and collagen; soft-focus silica and boron
+nitride. Its section 8 sets what the page may say: "adapts to fair-to-medium skin tones as you blend", "skincare-
+infused foundation with PDRN, peptides & Volufiline", "fragrance-free", "made for skin after 45"; "won't settle into
+fine lines" only after the 6-hour panel (until then "made not to"); no "every skin tone", no "reverses aging", no
+"produces collagen", no SPF, no percentages before the consumer study. It contains salmon DNA: not vegan, and not
+for anyone with a fish allergy (the warnings, in the Ingredients tab and the FAQ).
+
+Before launch (owner): the label's full INCI from the factory (section 9), the 6-hour wear panel before "won't
+settle" loses its "made not to", and where it is made (KOREAN) once the factory is chosen.
 
 Read by apply_persona.py (it builds products/adaptive-foundation-stick.html from the foundation page's markup,
-product_page()) and by setup_brush_offers.py (the NEXT product, its three bundles and their prices).
+product_page()) and by setup_brush_offers.py (the NEXT product, its two packs and their prices).
 """
 from pathlib import Path
 import brush_copy as _b
@@ -32,18 +46,20 @@ HANDLE = 'adaptive-foundation-stick'
 TITLE = 'Adaptive Foundation Stick'
 NAV_LABEL = 'Foundation Stick'
 SHOPIFY_ID, SHOPIFY_VARIANT = 15517563191900, 61233683038800    # ids for the design markup's product JSON (not Shopify's)
-PRICE, COMPARE = '39.00', '39.00'                                # one stick; no "was" price
+PRICE, COMPARE = '47.00', '47.00'                                # one stick bought once; no "was" price
 EMAIL = 'hello@skinofab.com'
-NET = None                       # the net weight, from the supplier's sheet (shown in the Ingredients tab once set)
+NET = '9 g / 0.32 oz'            # the declared fill (SKF-ADFS-001: 9.5 g poured, 9 g declared)
+SHADE = 'Light-Medium'           # Shade 1, the only shade sold: fair to medium skin
 IMG = Path(__file__).resolve().parents[2] / 'brand' / 'foundation-stick'   # product_photos.py stick writes the images here
 IMG_PREFIX, GIFT_PREFIX = 'skinofab-foundation-stick', 'skinofab-stick-gift'
 OFFERS_FILE, REVIEWS_DIR, AMAZON_FILE = 'stick-offers.json', 'reviews-stick', None
 DESCRIPTION = ('<p>A dual-ended foundation stick for skin after 45. The cream goes on white and shifts toward your skin tone '
-               'as you blend; the kabuki brush on the other end buffs it into an even, natural finish. Hyaluronic acid, '
-               'niacinamide, squalane, vitamin E and centella in a creamy base made for dry, mature skin.</p>')
+               'as you blend; the kabuki brush on the other end buffs it into an even, natural finish. A skincare-infused '
+               'cream with PDRN, peptides (Matrixyl 3000, Argireline) and Volufiline, ceramides, hyaluronic acid spheres, '
+               'niacinamide and squalane, made for dry, mature skin. Fragrance-free.</p>')
 META_TITLE = 'Adaptive Foundation Stick | One shade that adapts, brush built in | SKINOFAB'
-META_DESCRIPTION = ('A foundation stick that goes on white and blends into your skin tone, kabuki brush built in. Made '
-                    'for dry, mature skin. 30-day money-back guarantee.')
+META_DESCRIPTION = ('A foundation stick that goes on white and blends into fair to medium skin, kabuki brush built in, with PDRN '
+                    'and peptides for skin 45+. 30-day guarantee.')
 
 # the gallery (product_photos.py stick writes brand/foundation-stick/<name>.jpg): the foundation gallery's order and
 # kinds of image, first one eager; the card is the shelf, cart and sticky-bar image
@@ -59,65 +75,92 @@ GALLERY = ['one-stick', 'tones', 'duo-ends', 'before-after', 'whats-inside', 'ho
 GALLERY_ALT = {'one-stick': 'A woman in her fifties holding the Adaptive Foundation Stick: goes on white, blends to your tone',
                'duo-ends': 'The Adaptive Foundation Stick open at both ends: the white cream and the kabuki brush',
                'before-after': 'Before and after the stick on dry, mature skin (AI illustration)',
-               'whats-inside': 'What is inside: hyaluronic acid, niacinamide, squalane, vitamin E and centella',
+               'whats-inside': 'What is inside: PDRN and peptides, hyaluronic acid, ceramides and squalane, soft-focus spheres',
                'tones': 'Three women with fair to medium skin, before and after the stick (AI illustration)',
                'hold-chin': 'A woman in her fifties holding the Adaptive Foundation Stick by her chin'}
 KOREAN = False         # no "Formulated in Korea" line until the supplier confirms where it is formulated
 
 # the buy box --------------------------------------------------------------------------------------------------------
 EYEBROW = None
-SHIPPING_BADGE = '\U0001F69A FREE SHIPPING'   # a truck: no gift comes with this product (a gift box suggested one, stick review 9)
+SHIPPING_BADGE = '\U0001F69A FREE SHIPPING'   # a truck: every order ships free (the gift is the 2-stick pack's, in its card)
 # the header's line on this page (the store's "Up to 60% OFF + FREE Gifts" names gifts and savings the stick has
 # not got, stick review 3): what every stick order does get
-ANNOUNCEMENT = 'Buy 2, get 1 free · Free shipping · 30-day money-back guarantee'
+ANNOUNCEMENT = 'Free Lymphatic Brush with 2 sticks · Free shipping · 30-day money-back guarantee'
 # three lines under the lead, what she checks first (stick review 4: the first phone screen named no benefit); the
 # lead says what she gets, the lines how (stick review 5: the lead and the lines said the same three things); the
 # shade range first, where she decides (stick review 7: "fair to medium" first showed two thirds down the page, and
 # "no pump" knocked the brand's own pump bottle, whose reviews this page shows)
 BULLETS = ['For fair to medium skin tones', 'Kabuki brush built into the other end',
-           'Creamy, made not to cake on dry skin']
+           'PDRN + peptides, made not to cake on dry skin']   # the formula's skincare (SKF-ADFS-001)
 LEAD = 'Stop guessing your shade: it goes on white and adapts to your tone as you blend, for an even, natural finish.'
 # the cards name each pack as the drawer, the cart and the checkout do (the order line's name), as the foundation's
 # "1 bottle" and "2 bottles" (stick review 7: "2 Sticks" and "3 Sticks: buy 2, get 1 free" here, "2 sticks" and
 # "3 sticks (buy 2, get 1 free)" in the bag)
+# the foundation's two packs (ccf_copy.PACKS, the owner's brief of 27 Oct 2026): $37 and $47 with refills, the
+# foundation's notes, the 2-pack "Best value" with its gift rows; the 2-pack's order line names the brush, so the
+# order shows what to pack (as the foundation's "2 bottles + free gifts")
 BUNDLES = [
-    {'key': '1', 'name': '1 stick', 'note': 'Foundation + brush in one', 'variant': '1 stick', 'sku': 'SKF-AFS-1',
-     'price': '39.00', 'refill': '31.00', 'every': 28, 'compare': '39.00', 'gifts': []},
-    {'key': '2', 'name': '2 sticks', 'note': 'One at home, one in your bag', 'variant': '2 sticks', 'sku': 'SKF-AFS-2',
-     'price': '59.00', 'refill': '47.00', 'every': 56, 'compare': '78.00', 'badge': 'Recommended', 'default': True, 'gifts': []},
-    {'key': '3', 'name': '3 sticks (buy 2, get 1 free)', 'note': 'Home, bag and one to share', 'variant': '3 sticks (buy 2, get 1 free)',
-     'sku': 'SKF-AFS-3', 'price': '78.00', 'refill': '62.00', 'every': 84, 'compare': '117.00', 'badge': 'Best value', 'gifts': []},
+    {'key': '1', 'name': '1 stick', 'note': 'Free shipping, 30-day guarantee', 'variant': '1 stick', 'sku': 'SKF-AFS-1',
+     'price': '47.00', 'refill': '37.00', 'every': 28, 'compare': '47.00', 'gifts': []},
+    {'key': '2', 'name': '2 sticks', 'note': 'The lowest price per stick', 'variant': '2 sticks + free Lymphatic Brush',
+     'sku': 'SKF-AFS-2', 'price': '57.00', 'refill': '47.00', 'every': 56, 'compare': '94.00', 'badge': 'Best value',
+     'default': True, 'gifts': [('brush', 1), ('shipping', 1)]},
 ]
+RETIRED_SKUS = ['SKF-AFS-3']      # the 3-stick pack (buy 2, get 1 free), off sale since 27 Oct 2026
 # Automatic Refills (the owner's brief of 26 Oct 2026: every product but the brush is sold with refills, as the
-# foundation is): on by default, so the cards and the title show the refill price (20% under the one-time price);
+# foundation is): on by default, so the cards and the title show the refill price ($10 under the one-time price, as
+# the foundation's);
 # one-time stays a choice on the cart page. A pack ships again when it runs out: 'every' days per pack, 28 for one
 # stick (the owner to confirm how long a stick lasts). setup_brush_offers.py writes the refill prices to NEXT.
 REFILL = {'interval': 'day', 'every': 28, 'name': 'Automatic Refills', 'default': True, 'unit': 'stick'}
-GIFTS = {}
-GIFT_FILES = {}
+# the gift rows, as the foundation's: the brush at its own price, struck through, and free shipping
+GIFTS = {'brush': ('Lymphatic Brush', 'Lymphatic Brushes', _b.BUNDLES[0]['price']),     # the brush's own price, $24.95
+         'shipping': ('Shipping', 'Shipping', None, 'free')}
+GIFT_FILES = {'brush': 'brush', 'shipping': 'shipping'}     # brand/foundation-stick/gift-<file>.jpg (product_photos.py)
+# the drawer: a bag with the 2-stick pack has a brush in it already, so it offers no brush add-on
+GIFT_INCLUDES = {'2': 'the-lymphatic-brush'}
 # the boxed guarantee under the button (as the foundation's)
 GUARANTEE = ('Not your match? Wear it in your own daylight for 30 days; if it isn’t right for you, we’ll refund you in '
              'full, even opened.')
 STICKY_BUTTON = 'Choose your pack'
 STICKY_IMG = 'duo-ends'      # the bar's 52 px thumbnail: both ends open, brush and cream (the capped packshot read as a pen)
-CART_UPGRADE = {'title': 'Upgrade to 2 sticks', 'button': 'Upgrade'}
-CART_UPGRADE_3 = {'title': 'Add a third stick', 'button': 'Upgrade'}   # ("buy 2, get 1 free" beside "$15 more" read as a contradiction, stick review 11)   # from the 2-stick pack
+CART_UPGRADE = {'title': 'Upgrade to 2 sticks + a free brush', 'button': 'Upgrade'}
 
-# what is in it: the key ingredients the stick's maker lists (Facelove's page, the owner's other brand, for the same
-# stick; match to the supplier's INCI before launch). What each one is and how the cream feels, nothing over time
-# (stick review 7: "helps the complexion look more even over time" promised a result no test backs)
+# what is in it: the key actives of the formula (SKF-ADFS-001, section 2), named as its INCI does, what each one is
+# and how the cream feels, nothing over time (stick review 7: "helps the complexion look more even over time"
+# promised a result no test backs). The spec is confidential: no percentages, no supplier and no process on the page.
+# Volufiline and Matrixyl 3000 are the spec's own named grades (section 8 allows "PDRN, peptides & Volufiline"); the
+# acetyl hexapeptide-8 may be Argireline or its equivalent, so it goes by its INCI.
 INGREDIENTS = [
-    ('Hyaluronic acid', 'A moisture-holding ingredient',
-     'Draws in moisture, so dry skin stays comfortable under the foundation and the finish looks fresh instead of tight.'),
-    ('Niacinamide', 'Vitamin B3, a skincare classic',
-     'Vitamin B3, one of the most used ingredients in skincare creams.'),
-    ('Squalane', 'A light, silky oil',
+    ('PDRN (sodium DNA)', 'The K-beauty skincare ingredient, from salmon DNA',
+     'Sodium DNA from salmon, the PDRN Korean skincare made famous, here in a foundation.'),
+    ('Peptides', 'Matrixyl 3000 (palmitoyl tripeptide-1 and tetrapeptide-7) and acetyl hexapeptide-8, peptides used in '
+                 'firming and expression-line creams',
+     'The peptides of firming and expression-line creams, in the cream you wear all day.'),
+    ('Volufiline', 'Anemarrhena root extract, used in creams for skin that has lost fullness',
+     'A plant extract used in creams for skin that has lost fullness.'),
+    ('Hyaluronic acid spheres', 'They take up moisture, so the cream feels fresh and comfortable',
+     'Dehydrated spheres that take up moisture, so dry skin stays comfortable under the foundation.'),
+    ('Ceramide NP and cholesterol', 'Lipids of the skin’s own barrier, for dry skin',
+     'Lipids of the skin’s own barrier, in a cream made for dry skin.'),
+    ('Squalane', 'A light, silky, skin-identical oil',
      'Softens and seals in moisture, so the cream glides over texture and dry patches instead of catching on them.'),
-    ('Vitamin E', 'An antioxidant oil',
-     'An antioxidant oil, used in creams to keep their oils fresh.'),
-    ('Centella asiatica', 'A plant extract known as cica',
-     'Also called cica or gotu kola: a soothing botanical for sensitive-feeling skin.'),
+    ('Niacinamide', 'Vitamin B3, a skincare classic', 'Vitamin B3, one of the most used ingredients in skincare creams.'),
+    ('Bakuchiol and adenosine', 'A plant alternative to retinol and adenosine, both used in creams for skin after 45 '
+                                '(there is no retinol in the stick)',
+     'A plant alternative to retinol, and adenosine.'),
+    ('Hydrolyzed collagen', 'A moisture-holding protein', 'A moisture-holding protein.'),
+    ('Vitamin E, centella and bisabolol', 'An antioxidant and two soothing botanicals (centella is also called cica)',
+     'An antioxidant oil and two soothing botanicals.'),
+    ('Silica spheres and boron nitride', 'Soft-focus powders that scatter light, for a smooth, skin-like finish',
+     'Round powders that scatter light, so lines and pores look softer.'),
 ]
+# what it is made without (section 1): every one a thing she checks for; silicones are optional in the spec, so not
+# among them
+FREE_FROM = ['fragrance', 'essential oils', 'retinol', 'denatured alcohol', 'parabens', 'PEGs', 'mineral oil', 'talc', 'EDTA']
+# the label's warnings (section 8)
+WARNINGS = ('For external use only. Avoid direct contact with the eyes. Contains salmon-derived DNA: not for anyone with '
+            'a fish allergy. Stop use if irritation occurs. Not a sunscreen: wear it over your SPF.')
 # fair to medium: the range the stick's maker states for it (stick review 6: the page showed a deep-skin result it
 # could not back); deeper skin asks first
 SHADE_FAQ = ('It’s made for fair to medium skin tones, without picking a shade: the cream goes on white and its pigments '
@@ -136,13 +179,16 @@ def tabs():
         ('What makes it different?',
          '<p>Most foundations make you choose a shade under store lights, then need a sponge or brush, then settle into lines by '
          'lunch. This one goes on white and shifts toward your own skin tone as you blend, with the brush built into the other end.</p>'
-         + _list(['No shade to choose: it adapts as you blend', 'A dense kabuki brush on the other end',
-                  'Creamy, made for dry, mature skin', 'Small enough for your bag, the brush included'])),
+         + _list(['No shade to choose: it adapts to fair to medium skin as you blend', 'A dense kabuki brush on the other end',
+                  'Skincare-infused: PDRN, peptides and Volufiline in a cream for dry, mature skin',
+                  'Fragrance-free, and small enough for your bag, the brush included'])),
         ('Does it work on my skin?',
-         '<p>It’s made for skin after 45: drier, with redness, sun spots and fine lines. The cream base keeps dry skin '
-         'comfortable, and the brush buffs it into a thin, even layer that doesn’t sit on top of texture.</p>'
+         '<p>It’s made for skin after 45: drier, with redness, sun spots and fine lines. The cream, with ceramides, squalane '
+         'and hyaluronic acid spheres, keeps dry skin comfortable, soft-focus spheres blur the look of lines and pores, and '
+         'the brush buffs it into a thin, even layer that doesn’t sit on top of texture.</p>'
          f'<p>{esc(SHADE_FAQ)}</p>'
-         '<p>If your skin reacts easily, try it on a small area first.</p>'),
+         '<p>If your skin reacts easily, try it on a small area first. It contains salmon-derived DNA (PDRN): not for '
+         'anyone with a fish allergy.</p>'),
         # three steps, as everywhere on the page (stick review 7: two, three and four steps in different places)
         ('How do I use it?',
          _list(['Twist up a little foundation', 'Dot a little on your cheeks and forehead: it looks white at first',
@@ -153,10 +199,12 @@ def tabs():
          f'<p>Try it for <strong>30 days</strong>. If you don’t love it, email us at <a href="mailto:{EMAIL}">{EMAIL}</a> and we’ll '
          'refund it in <strong>full</strong>, even opened, no questions asked.</p>'),
         ('Ingredients',
-         '<p>The key ingredients, as the stick’s maker lists them:</p>'
+         '<p>A creamy, water-free foundation with skincare in it. Its key ingredients:</p>'
          + ''.join(f'<p><strong>{esc(n)}.</strong> {esc(t)}.</p>' for n, t, _ in INGREDIENTS)
+         + f'<p><strong>Made without</strong> {esc(", ".join(FREE_FROM[:-1]))} or {esc(FREE_FROM[-1])}.</p>'
          + '<p>The full ingredient list is printed on the packaging.</p>'
-         + (f'<p><strong>Net weight:</strong> {NET}.</p>' if NET else '')),
+         + f'<p><strong>Shade:</strong> {SHADE}, for fair to medium skin tones. <strong>Net weight:</strong> {NET}.</p>'
+         + f'<p><strong>Warnings:</strong> {esc(WARNINGS)}</p>'),
         _b.SHIPPING_TAB,
     ]
 
@@ -193,8 +241,13 @@ FAQ = {'items': [
     ('Will it look cakey or heavy?',
      'Not in thin layers. It’s a cream, not a powder, so it’s made not to crack on dry skin. Build only where you need it.'),
     ('Is it good for dry skin?',
-     'That’s who it’s made for: a cream, not a powder, with hyaluronic acid and squalane among its key ingredients, '
-     'buffed on in a thin layer that keeps dry, mature skin comfortable.'),
+     'That’s who it’s made for: a water-free cream, not a powder, with ceramides, squalane and hyaluronic acid spheres '
+     'among its key ingredients, buffed on in a thin layer that keeps dry, mature skin comfortable.'),
+    # the formula's skincare (SKF-ADFS-001): what is in it, nothing it does over time
+    ('Is there skincare in it?',
+     'Yes: PDRN (sodium DNA), the peptides Matrixyl 3000 and acetyl hexapeptide-8, Volufiline, ceramides, hyaluronic acid '
+     'spheres, niacinamide, bakuchiol, adenosine, collagen and squalane, in the cream you wear all day. It is a foundation '
+     'first: it evens out the look of your skin while you wear it.'),
     ('Can it cover spots and redness?',
      'It evens out the look of redness and sun spots in a thin layer; for a darker spot, tap a second layer on just that spot '
      'and buff the edges. It’s a natural finish, not a mask.'),
@@ -212,8 +265,12 @@ FAQ = {'items': [
      'bristles down, cap off. Keep water away from the foundation end.'),
     # (no gentleness claim before the full ingredient list: stick review 8, "rests on centella alone")
     ('Is it gentle on sensitive skin?',
-     'No makeup suits every sensitive skin, so if yours reacts easily, try it on a small area of your jaw first and wait '
-     'a day. Don’t use it on broken or irritated skin. The full ingredient list is printed on the packaging.'),
+     'It is fragrance-free, with no essential oils, retinol or denatured alcohol. Still, no makeup suits every sensitive '
+     'skin, so if yours reacts easily, try it on a small area of your jaw first and wait a day. Don’t use it on broken or '
+     'irritated skin. The full ingredient list is printed on the packaging.'),
+    ('Is it vegan? I have a fish allergy.',
+     'It is not vegan: its PDRN comes from salmon DNA and it contains hydrolyzed collagen. If you have a fish allergy, '
+     'please don’t use it.'),
     ('Can I wear it over skincare and under powder?',
      'Yes. Apply it after your moisturizer and sunscreen. If you like powder, a light dusting on top is fine.'),
     # her last two questions before buying a cream foundation (stick review 3); no transfer-proof claim: nothing
@@ -248,7 +305,7 @@ TWIN = {
         ('daylight', 'It meets your tone', 'Blended in, it shifts toward your own tone. Check it in daylight.', 'A woman in her sixties touching her jawline, the stick in her other hand'),
         ('bag', 'Touch-ups anywhere', 'Small enough for any bag, and the brush comes with it.', 'The stick going into a handbag'),
         ('buff-jaw', 'The brush is built in', 'Buff it in with the other end of the stick.', 'A woman in her sixties buffing foundation along her jaw with the brush end'),
-        ('friends', 'Home, bag and one to share', 'The 3-stick pack: one at home, one in your bag, one for a friend.', 'Two women in their fifties and sixties with the stick'),
+        ('friends', 'One for a friend', 'The 2-stick pack: one for you, one for a friend, and a Lymphatic Brush free.', 'Two women in their fifties and sixties with the stick'),
     ],
     'problem': {
         'img_problem': 'problem', 'img_solution': 'card',
@@ -300,11 +357,16 @@ TWIN = {
                 'eyebrow': 'Adaptive color science', 'lead': 'One shade', 'mark': 'that meets your skin',
                 'lede': 'The color pigments are wrapped in tiny capsules in a white cream. As you blend, the capsules break and '
                         'the color shifts toward your own tone, so there is no shade to pick.',
-                'rows': [('It goes on white', 'The pigments sit closed in their capsules, so there is no shade on the stick to get wrong.'),
-                         ('The capsules break as you buff', 'Small circles with the brush end open them, and the color comes out into the cream.'),
-                         ('It shifts toward your tone', 'Blended in a thin layer, it moves toward your own skin tone, from fair to medium.'),
-                         ('Check it in daylight', 'Look at your jaw by a window. Not your match? A full refund within 30 days, even opened.')],
-                'note': 'The picture is an illustration. The full ingredient list is printed on the packaging.',
+                # the loop's four steps, in its words (stick_science_video.py)
+                'rows': [('It goes on white', 'The pigments wait in tiny capsules, so there is no shade on the stick to get wrong.'),
+                         ('Buff, and the capsules break', 'Small circles with the brush end open them, and the color shifts toward '
+                                                          'your own tone, from fair to medium.'),
+                         ('Soft-focus spheres', 'Round silica and boron nitride powders scatter the light, so lines and pores look softer.'),
+                         ('Skincare in every swipe', 'PDRN, peptides, Volufiline, ceramides and hyaluronic acid spheres in a '
+                                                     'cream made for dry skin after 45.')],
+                'note': 'The video is an illustration. The full ingredient list is printed on the packaging.',
+                'video': 'science', 'video_alt': 'Illustration: the white cream’s capsules break as the brush buffs it in and the '
+                                                 'color meets her skin tone; soft-focus spheres; the skincare in the cream',
                 'button': 'Choose your pack'},
     'iwt': [
         {'img': 'wear-day', 'alt': 'The same woman at 10 AM and at 10 PM wearing the stick (AI illustration)',
@@ -331,14 +393,17 @@ TWIN = {
                 'rows': ['No shade to choose', 'Kabuki brush built in', 'Touch-ups from your bag, no sponge',
                          ('Buildable, natural coverage', True)]},
     'inside': {'title': 'What’s inside the stick',
-               'intro': 'The key ingredients in the stick’s creamy base, made for dry, mature skin. The full list is printed on the packaging.',
+               'intro': 'Skincare in a creamy, water-free foundation made for dry, mature skin. Fragrance-free. The full list is '
+                        'printed on the packaging.',
                # what each one is, and what it does in the cream (stick review 8: "for a more even-looking
                # complexion" and "soft, supple skin" promised results before the full ingredient list)
-               'cards': [('ing-ha', 'Hyaluronic acid', 'Holds water, so the cream feels comfortable on dry skin'),
-                         ('ing-niacinamide', 'Niacinamide', 'Vitamin B3, one of the most used ingredients in skincare'),
+               'cards': [('ing-pdrn', 'PDRN', 'Sodium DNA from salmon, the K-beauty skincare ingredient'),
+                         ('ing-peptides', 'Peptides', 'Matrixyl 3000 and acetyl hexapeptide-8, as in firming creams'),
+                         ('ing-ha', 'Hyaluronic acid spheres', 'They take up moisture, so the cream feels comfortable'),
+                         ('ing-ceramides', 'Ceramides', 'Lipids of the skin’s own barrier, for dry skin'),
                          ('ing-squalane', 'Squalane', 'A light oil that helps the cream glide over dry patches'),
-                         ('ing-vite', 'Vitamin E', 'An antioxidant oil that keeps the cream’s oils fresh'),
-                         ('ing-centella', 'Centella asiatica', 'A plant extract known as cica, used in calming creams')]},
+                         ('ing-niacinamide', 'Niacinamide', 'Vitamin B3, one of the most used ingredients in skincare'),
+                         ('ing-centella', 'Centella and vitamin E', 'A soothing botanical and an antioxidant oil')]},
     # the foundation's customer clips: how to use it, in the same cards (not reviews)
     'cards': {'eyebrow': 'How to use it', 'title': 'Twist, dot, buff', 'items': [
         {'img': 'twist', 'title': 'Twist up a little', 'text': 'A few millimeters is all you need.', 'alt': 'Hands twisting up the white foundation end of the stick'},
@@ -353,7 +418,9 @@ TWIN = {
 
 
 def picker_html(variants, gift_imgs, css):
-    return _b.picker_html(variants, gift_imgs, css, bundles=BUNDLES, gifts=GIFTS, legend='Choose your pack', refill=REFILL)
+    # the foundation's cards: no price per stick under the pack's price
+    return _b.picker_html(variants, gift_imgs, css, bundles=BUNDLES, gifts=GIFTS, legend='Choose your pack', refill=REFILL,
+                          per_unit=False)
 
 
 def no_reviews_html(buy='#apf-buy', amazon=None): return _b.no_reviews_html(buy, amazon, NO_REVIEWS)
@@ -367,7 +434,7 @@ BUYBOX_CSS = _b.BUYBOX_CSS
 # the newest, and that tab has no foundation card)
 # (not in the NEXT Bestsellers collection: a new product has no sales to rank it by; the homepage shelf is
 # "Shop the range", review 7)
-SHELF = {'badge': 'New', 'saving': 'Buy 2, get 1 free', 'tags': ['Adapts to you', 'Brush built in', 'Cream stick'],
+SHELF = {'badge': 'New', 'saving': 'Free brush with 2', 'tags': ['Adapts to you', 'Brush built in', 'Cream stick'],
          'after': {'list': 'color-changing-foundation', 'bestsellers_0': 'color-changing-foundation',
                    'bestsellers_1': None, 'bestsellers_2': 'color-changing-foundation'}}
 # the NEXT collections (as the foundation): Face, Skin, Bestsellers

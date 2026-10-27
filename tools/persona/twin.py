@@ -273,7 +273,9 @@ def sections(found_main, P, ctx):
             n['avatar'] = ctx['avatar']
             out.append(wrap('sf-note', apf_copy.dermatologist_html(n)))
             k = t['science']
-            out.append(wrap('sf-kbeauty', apf_copy.kbeauty_html(img(k['img'], (930, 1162), (0.5, 0.45)), k=k)))
+            # its picture: the "how it works" loop when the product has one (k['video'], stick_science_video.py)
+            video = ctx['loop'](k['video'], k['video_alt']) if k.get('video') else None
+            out.append(wrap('sf-kbeauty', apf_copy.kbeauty_html(img(k['img'], (930, 1162), (0.5, 0.45)), k=k, video=video)))
         elif '__section_image_with_text_' in sid:
             out.append(image_with_text(raw, t['iwt'][seen_iwt], img)); seen_iwt += 1
         elif '__kopstorm_results_' in sid:
