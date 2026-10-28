@@ -90,8 +90,8 @@ reasons:
     ingredients: true
     alt: "The skincare inside the foundation, one ingredient at a time"
     paras:
-      - "Why wear a foundation that does nothing for your skin? This one carries the skincare ingredients of the creams you would buy separately, in every layer you wear. A serum sinks in; a cream sits on top."
-    after: "It’s a foundation first: it evens out the look of your skin while you wear it, in a serum that treats dry skin kindly. It treats nothing else. Formulated in Korea."
+      - "Why wear a foundation that does nothing for your skin? This one carries the skincare ingredients of the creams you would buy separately, in every layer you wear. A serum melts into the surface; a cream sits on top."
+    after: "It’s a foundation first: it evens out the look of your skin while you wear it, in a serum that keeps dry skin comfortable. It treats nothing. Formulated in Korea."
   - title: "It’s Made Without What Sensitive Skin Hates"
     image: "images/sf/bottle.jpg"
     alt: "The Adaptive Peptide Foundation bottle on white"
@@ -99,7 +99,7 @@ reasons:
       - "It’s fragrance-free, with no propylene glycol, drying alcohol or parabens: the usual reasons thinner skin stings."
       - "No makeup suits every sensitive skin, so if yours reacts easily, try it on a small area of your jaw first and wait a day."
       - "One honest note: it contains salmon-derived DNA (PDRN), so it isn’t vegan and isn’t for anyone with a fish allergy."
-    quote: "No break outs, no drying, no burning sensation. Really Happy"
+    quote: "…No break outs, no drying, no burning sensation. Really Happy"
     quote_by: "Michele W., who has rosacea, verified buyer, from our earlier store"
   - title: "One Bottle, at 45, 55 or 70"
     image: "images/sf/reason-ages.jpg"
@@ -113,7 +113,7 @@ reasons:
     ratings: true
     paras:
       - "Not reviews of a sister product, not a survey: the published reviews of this foundation from our earlier store, imported in October 2026, word for word. 7,719 gave it five stars, 2,132 four."
-      - "Read what women of 54 to 81 wrote about their lines, their dry skin and their shade on the next page: nine with their own photos, and two of those nine are four stars, because that is honest."
+      - "Read what women of 54 to 81 wrote about their lines, their dry skin and their shade on the next page. Nine of the reviews come with the buyer’s own photo, and two of those nine are four stars, because that is honest."
   - title: "A 30-Day Money-Back Guarantee"
     image: "images/sf/guarantee.jpg"
     alt: "SKINOFAB’s 30-day money-back guarantee seal"
@@ -160,9 +160,9 @@ reviews:
     - name: "Gillian S., 65"
       photo: "images/sf/review-gillian.jpg"
       text: "I’m 65 and my skin has been the bane of my life! I found this foundation calming and most important to me, blurs imperfections and cover redness, and it looks like skin, not something put on top! That’s why I ordered more"
-    - name: "Darla H., 74"
-      photo: "images/sf/review-darla.jpg"
-      text: "I love the product. I am 74 and have a few wrinkles and I like how the foundation does not get caked in the wrinkles. The negative is I have to apply twice to get the desired color. I would definitely recommend this foundation."
+    - name: "Susan B., 70"
+      photo: "images/sf/review-susan.jpg"
+      text: "Lovely smooth finish and colour is great on my 70 year old skin"
 ratings:
   average: "4.8"
   count: "9,855"
@@ -220,11 +220,11 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
     </figure>
     {% elsif r.ingredients %}
     <figure class="sf-reason__media sf-reason__clip">
-      <video data-sf-lazy autoplay muted loop playsinline preload="metadata" poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="Illustration: a cream sits on top of a skin cross-section while a drop of the serum sinks into the other">
+      <video data-sf-lazy autoplay muted loop playsinline preload="metadata" poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="Illustration: a cream sits on top of a skin cross-section while a drop of the serum melts into the surface of the other">
         <source src="{{ 'images/sf/science.webm' | campaign_asset }}" type="video/webm">
         <source src="{{ 'images/sf/science.mp4' | campaign_asset }}" type="video/mp4">
       </video>
-      <figcaption><strong>✕ A cream sits on top. ✓ A serum sinks in.</strong> Illustration of the two textures, not a measurement.</figcaption>
+      <figcaption><strong>✕ A cream sits on top. ✓ A serum melts into the surface.</strong> Illustration of the two textures at the surface, not a measurement.</figcaption>
     </figure>
     {% else %}
     <figure class="sf-reason__media">

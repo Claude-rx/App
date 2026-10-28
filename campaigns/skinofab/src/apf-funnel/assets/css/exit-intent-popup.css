@@ -6,7 +6,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  width: 800px;
+  width: min(800px, calc(100vw - 32px));   /* 800 px clipped the right column at 768 (live review 3) */
   height: auto;
 }
 

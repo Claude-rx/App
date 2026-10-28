@@ -85,10 +85,10 @@ BRUSH_PDP = {
             'steps': steps(('Neck', 'Sweep down from under the ear to the collarbone.'), ('Jaw and cheeks', 'Sweep from your chin along the jaw toward the ear.'),
                            ('Under the eyes', 'Sweep out from the nose to the temples, very lightly.'), ('Neck again', 'Finish with a few sweeps down the neck.')),
             'note': 'Repeat each sweep about 10 times, then do the other side. Keep it clean: a quick sweep on a cloth with a brush cleaner or 70% alcohol before each use, and a gentle wash of the tips once a month.'},
-    'compare': {'title': 'Why this brush, not a stone or a roller?', 'lede': 'Gua sha needs oil and pressure; a roller covers one narrow line at a time. The brush gives the light, wide sweeps facial massage for puffiness uses.',
+    'compare': {'title': 'Why this brush, not a stone or a roller?', 'lede': 'Gua sha needs oil and pressure; a roller covers one narrow line at a time. The brush gives the light, wide sweeps that a facial massage for puffiness uses.',
                 'others': 'Gua sha stones and rollers',
-                'rows': ['Hundreds of soft contact points', 'Works with just a light touch', 'Flexible bristles adapt to your face', 'Four sweeps, no tutorial', 'A protective case included']},
-    'box': {'title': 'What’s in the box', 'lede': 'The Lymphatic Brush is made for one thing: a light, quick massage for the look of morning puffiness.',
+                'rows': ['Hundreds of soft contact points', 'Works with just a light touch', 'Flexible bristles adapt to your face', 'Four sweeps, no tutorial']},
+    'box': {'title': 'What you get, and where it works', 'lede': 'The Lymphatic Brush is made for one thing: a light, quick massage for the look of morning puffiness.',
             'cards': [{'image': 'images/sf/brush-compare-ours.jpg', 'alt': 'The brush’s raised, soft tufts', 'title': 'Ultra-soft bristles', 'text': 'Vegan fibers that bend instead of pressing.'},
                       {'image': 'images/sf/brush-head.jpg', 'alt': 'The brush’s curved head and raised tufts', 'title': 'A curved head', 'text': 'Follows the cheek, the jaw and the neck in one sweep.'},
                       {'image': 'images/sf/brush-how-1.jpg', 'alt': 'Where morning puffiness shows: under the eyes and along the jaw', 'title': 'Eyes, cheeks and jaw', 'text': 'Where morning puffiness shows first.'},
@@ -96,6 +96,7 @@ BRUSH_PDP = {
     'faq': {'title': 'Questions', 'items': [
         {'q': 'When will I see a difference?', 'a': 'You may see a fresher, less puffy look right after your first 3 minutes. It’s temporary, so it works best every morning. Results vary from person to person.'},
         {'q': 'Does it work on mature skin?', 'a': 'Yes. The bristles bend instead of pulling, so they don’t drag thinner skin or fine lines. Keep the touch light, especially under the eyes.'},
+        {'q': 'Why is it called the Lymphatic Brush?', 'a': 'It’s named for the light lymphatic-massage strokes it’s designed for: the sweeps an aesthetician uses on a puffy morning face. It’s a cosmetic massage brush; we make no medical claim, and we don’t claim it drains anything.'},
         {'q': 'Do I need oil or serum?', 'a': 'No. Use it on clean, dry skin. You can apply your skincare and your foundation right after.'},
         {'q': 'Is it safe for sensitive skin?', 'a': 'The bristles are soft and the pressure stays light, so it’s gentle on most skin types. Avoid using it on irritated or broken skin, sunburn or active breakouts. If swelling doesn’t go away during the day, or you have a medical condition, check with your doctor first.'},
         {'q': 'What if it doesn’t work for me?', 'a': f'Email {EMAIL} within 30 days of delivery and we’ll refund it in full, even opened. No questions asked.'}]},
@@ -176,7 +177,7 @@ def single_page(pid, spec, o):
         *([f'brush: {q(BRUSH_PDP)}'] if brush else []),
         'closing_cta:', '  variant: card', f'  title: {q(o["closing"])}',
         f'  note: {q((o.get("note", "") + " " if o.get("note") else "") + GUARANTEE + " The clock above is the offer’s: at 0:00 this page moves on.")}',
-        f'  image: {q("images/sf/" + o["images"][0][0] + ".jpg")}',
+        f'  image: {q("images/sf/" + o.get("closing_image", o["images"][0][0]) + ".jpg")}',   # the bottle on the foundation offers (the portrait's crown was cut in the card, live review 3)
     ]
     body = GATE + """<div class="page-wrapper">
   <div class="main-wrapper""" + (' sf-brush-page' if brush else '') + """">
@@ -209,15 +210,15 @@ def supply_page(spec):
          'name': '6 more bottles', 'deal': '$16.50 a bottle', 'gift': 'FREE Lymphatic Brush + case ($24.95)',
          'per_day': '$0.55 a day', 'per_bottle': '$16.50 a bottle · 6 bottles', 'price': '$99.00', 'compare': '$234', 'selected': False, 'button': 'BUY NOW · $99'},
     ]
-    supply = {'title': 'Choose your pack', 'lede': 'Half price a bottle or less, charged once, shipped in the same box as the order you just placed.',
+    supply = {'title': 'Choose your pack', 'lede': '$19.50 a bottle in the 2-pack, $16.50 in the 6-pack, charged once, shipped in the same box as the order you just placed.',
               'tiers': cards, 'guarantee': '30-day money-back guarantee on every bottle, even opened. You don’t send anything back.',
               'charged': 'Charged once to the payment you just used. Nothing renews.', 'decline': 'No thanks, I don’t want to stock up'}
     features = [('A bottle lasts about a month', 'One pump a day. Two more bottles cover the next two months; six cover the year’s photos, calls and lunches.'),
                 ('One at home, one in your bag', 'The one on your vanity stays there. The one in your bag saves the afternoon.'),
-                ('This price is only here', 'In our store one bottle is $47, bought once. On this page a bottle works out at $19.50 or $16.50, in the same box as your order.')]
+                ('These packs exist only here', 'In our store one bottle is $47, bought once. These two packs are made for this page: a bottle works out at $19.50 in the 2-pack or $16.50 in the 6-pack, in the same box as your order.')]
     fm = head(pid, 'Stock up on the Adaptive Peptide Foundation', 'Offer 1 of 3 · Your order is placed', extra_scripts=['js/sf-supply.js']) + [
-        *hero('A one-time offer', 'Just for you, right now: more bottles at half price or less',
-              'Add bottles to the order you just placed: one tap, same box, same payment. These prices exist on this page only.', TIMER),
+        *hero('A one-time offer', 'Just for you, right now: more bottles from $16.50 each',
+              'Add bottles to the order you just placed: one tap, same box, same payment. These two packs exist on this page only.', TIMER),
         f'supply: {q(supply)}',
         # the closing card prices the selected card (bundle.supply.*) and proxies its add / skip
         'upsell_offer:', '  type: tier-cards', f'  package_id: {two}', '  selector_id: "supply"', '  display_selector_id: "supply"', '  display_bundle_id: "supply-b1g1"',
@@ -256,7 +257,7 @@ OFFERS = {
         'pretitle': 'Only on this page',
         'title': 'One more Adaptive Peptide Foundation',
         'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Keep one at home and one in your bag', 'A bottle lasts about a month', 'Bought once: nothing renews', 'Ships with your order, in the same box'],
-        'images': FOUNDATION_IMAGES,
+        'images': FOUNDATION_IMAGES, 'closing_image': 'bottle',
         'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, I don’t want another bottle',
         'features_title': 'Why women keep a second bottle',
         'features_text': 'The one you keep at home stays at home. The one in your bag saves the afternoon.',
@@ -273,11 +274,11 @@ OFFERS = {
         'pretitle': 'Last chance',
         'title': 'One more Adaptive Peptide Foundation',
         'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Charged once, nothing renews', 'A bottle lasts about a month', 'Ships with your order, in the same box'],
-        'images': FOUNDATION_IMAGES,
+        'images': FOUNDATION_IMAGES, 'closing_image': 'bottle',
         'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, not even at this price',
         'features_title': 'Why we make this offer',
         'features_text': 'A second bottle in the same box costs us little to ship, and it keeps you from running out of the shade that finally works.',
-        'features': [('{discount} off, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of $39.'),
+        'features': [('{discount} off, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of the $39 one-bottle price on the page you came from ($47 in our store).'),
                      ('Charged once', 'To the payment you just used. Nothing renews, nothing else is charged.'),
                      ('The same guarantee', '30 days from delivery, a full refund even opened, on this bottle too.')],
         'closing': 'Add one more bottle for {price} today?',

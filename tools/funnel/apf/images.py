@@ -179,9 +179,9 @@ def one_shade():
         x = x0 + k * (cw + g)
         im.paste(swatch, (x, y0), m)
         d.text((x + cw // 2, y0 + ph + 52), word, font=P.sans(34, 'SemiBold'), fill=INK, anchor='ms')
-    d.text((W // 2, y0 + ph + 150), 'The same white drop, your tone as you blend', font=P.sans(30, 'Medium'), fill=INK, anchor='ms')
-    d.text((W // 2, y0 + ph + 198), 'Made for fair to deep skin. Very fair or very deep? Email us first, or let the 30-day guarantee decide.', font=P.sans(22, 'Regular'), fill=SOFT, anchor='ms')
-    P.note(d, (W // 2, H - 50), 'Illustration of how the colour blends, not a photo. Results vary.', size=30)
+    d.text((W // 2, y0 + ph + 160), 'The same white drop, your tone as you blend', font=P.sans(36, 'Medium'), fill=INK, anchor='ms')
+    # the fair-to-deep sentence is the panel's own bullets (in the page's HTML, readable at any width: at 390 the 22 px line was 9 px, live review 3)
+    P.note(d, (W // 2, H - 50), 'Illustration of how the colour blends, not a photo. Results vary.', size=34)
     save(im, 'one-shade', size=1080)
 
 
@@ -209,8 +209,6 @@ def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
     src = src.resize((w, round(src.height * w / src.width)), Image.LANCZOS)
     a = np.asarray(src).astype(np.float32)
     H, W = a.shape[:2]
-    save(src, 'science-poster', size=w)
-    if not encode: return
     blue = (a[..., 2] - a[..., 0] > 14) & (a[..., 2] > 110)
     blue[:, : W // 2] = False
     blue[: int(H * 0.36)] = False
@@ -221,17 +219,28 @@ def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
     hsv[..., 1] = np.where(pink, hsv[..., 1] * 0.55, hsv[..., 1])
     dry = np.asarray(Image.fromarray(hsv.astype(np.uint8), 'HSV').convert('RGB')).astype(np.float32)
     dry = a * (1 - bm) + dry * bm
+    # the serum stays in the surface layer: below the epidermis (the cobbled band ends at 54% of the still) the block keeps its
+    # own pink, in the poster and at the end of the loop (the blue through the dermis read as a penetration claim, live review 3)
+    y_cut = int(H * 0.54)
+    # below the cut the right block borrows the left block's dermis (the same render, one block-width to the left), so no
+    # pale channel marks where the blue was; the seam is feathered
+    dx = W * 457 // 1080
+    deep = FI._blur(blue.astype(np.float32), 6.0)[..., None]; deep[: y_cut] = 0
+    clone = a.copy(); clone[:, dx:] = a[:, : W - dx]
+    held = a * (1 - deep) + clone * deep
+    save(Image.fromarray(np.clip(held, 0, 255).astype(np.uint8)), 'science-poster', size=w)
+    if not encode: return
     # the falling drop in the still: cut out (its box, as fractions of the still), its place filled white
     bx0, by0, bx1, by1 = int(W * 0.60), int(H * 0.25), int(W * 0.66), int(H * 0.355)
     box = a[by0:by1, bx0:bx1]
     dmask = FI._blur(((255 - box.min(-1)) > 20).astype(np.float32), 1.0)[..., None]
     drop = box.copy()
-    for base in (a, dry): base[by0:by1, bx0:bx1] = base[by0:by1, bx0:bx1] * (1 - dmask) + 255 * dmask
+    for base in (a, dry, held): base[by0:by1, bx0:bx1] = base[by0:by1, bx0:bx1] * (1 - dmask) + 255 * dmask
     y_nozzle, y_land = int(H * 0.19), int(H * 0.40) - (by1 - by0)
     frames = _frames_dir('science')
     n = int(fps * seconds)
     ys, xs = np.mgrid[0:H, 0:W]
-    y_top, y_bot = int(H * 0.40), int(H * 0.92)
+    y_top, y_bot = int(H * 0.40), y_cut + int(H * 0.04)
     for i in range(n):
         t = i / fps
         if t < 1.3:                                                       # the drop falls (ease in)
@@ -243,7 +252,7 @@ def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
             p = min(1.0, (t - 1.3) / 3.0)
             edge = y_top + (y_bot - y_top) * p
             r = np.clip((edge - ys) / (H * 0.06), 0, 1)[..., None]       # revealed above the sinking edge
-            frame = dry * (1 - r * bm) + a * (r * bm)
+            frame = dry * (1 - r * bm) + held * (r * bm)
             if t > seconds - 0.4:                                          # a short crossfade back to the first frame
                 q = (t - (seconds - 0.4)) / 0.4
                 frame = frame * (1 - q) + dry * q
@@ -279,7 +288,7 @@ def allday_clip(encode=True, fps=25, seconds=6.0):
             while d.textlength(title, font=f) > W // 2 - 60 and fs > 28: fs -= 2; f = P.sans(fs, 'SemiBold')
             d.text((cx, 580), title, font=f, fill=INK, anchor='ms')
             d.text((cx, 622), sub, font=small, fill=SOFT, anchor='ms')
-        P.note(d, (W // 2, H - 28), 'Illustration of the pigments, not a photo. Results vary.', size=tiny.size)
+        # the disclosure is the page's caption under the clip (the baked line repeated it, live review 3)
         im.save(frames / f'f{i + 1:04d}.png')
     save(Image.open(frames / f'f{n:04d}.png'), 'allday-poster', size=W)
     if encode: _encode(frames, 'allday', fps)
@@ -320,11 +329,27 @@ def portrait(src, out, size=1080, crop=None, centering=(0.5, 0.3)):
     save(ImageOps.fit(im, (size, size), Image.LANCZOS, centering=centering), out, size=size)
 
 
+def soften_patch(im, box):
+    """Flatten a generated photo's pigment inside an ellipse (box as fractions of the image): the mottling blends 60% into a
+    blurred copy and its darkest marks lift halfway toward their surround, with a feathered edge. Sun spots and redness
+    stay, the solid blotch that read as a bruise at page size does not (the mirror photo, live review 3)."""
+    w, h = im.size
+    a = np.asarray(im).astype(np.float32)
+    blur = np.asarray(im.filter(ImageFilter.GaussianBlur(14))).astype(np.float32)
+    m = Image.new('L', (w, h), 0)
+    ImageDraw.Draw(m).ellipse((int(w * box[0]), int(h * box[1]), int(w * box[2]), int(h * box[3])), fill=255)
+    m = np.asarray(m.filter(ImageFilter.GaussianBlur(28))).astype(np.float32)[..., None] / 255
+    soft = a * 0.4 + blur * 0.6
+    dark = np.clip((blur.mean(-1, keepdims=True) - a.mean(-1, keepdims=True)) / 40, 0, 1)
+    soft = soft + (blur - soft) * dark * 0.5
+    return Image.fromarray(np.clip(a * (1 - m) + soft * m, 0, 255).astype(np.uint8))
+
+
 def hero_collage():
     """Three women past 45 with the bottle, side by side (the listicle's top image), 2:3 each."""
     w, h = 560, 840
     panels = [ImageOps.fit(Image.open(PDP / f'{n}.jpg').convert('RGB'), (w, h), Image.LANCZOS, centering=c)
-              for n, c in (('hold-cheek', (0.5, 0.4)), ('dots-eyes-closed', (0.35, 0.45)), ('hold-grey-hair', (0.5, 0.4)))]
+              for n, c in (('hold-cheek', (0.5, 0.4)), ('dots-eyes-closed', (1.0, 0.45)), ('hold-grey-hair', (0.5, 0.4)))]   # the middle panel on her face, not the seam through her eye (live review 3)
     im = Image.new('RGB', (w * 3 + 8, h), PAPER)
     for i, p in enumerate(panels): im.paste(p, (i * (w + 4), 0))
     save(im, 'hero', size=1688)
@@ -446,7 +471,9 @@ def copies(video=True):
     P.note(d, (540, 1350 - 26), P.AI_NOTE, fill=INK, size=34)
     save(wow, 'wow', size=1350)
     for n in ('problem-mirror', 'problem-orange'):
-        save(ImageOps.fit(Image.open(GEN / f'{n}.png').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), n, size=1350)
+        im = Image.open(GEN / f'{n}.png').convert('RGB')
+        if n == 'problem-mirror': im = soften_patch(im, (0.19, 0.27, 0.47, 0.49))   # her cheek's pigment read as a bruise at page size (live review 3)
+        save(ImageOps.fit(im, (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), n, size=1350)
     save(ImageOps.fit(Image.open(APF / 'doctor.jpg').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), 'doctor', size=1350)
     stick = ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'images' / 'sf'
     for n in ('pdrn', 'peptides', 'ha', 'ceramides', 'squalane', 'niacinamide'): shutil.copyfile(stick / f'ing-{n}.jpg', OUT / f'ing-{n}.jpg')

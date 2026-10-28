@@ -55,7 +55,7 @@
     {% if show_phone -%}
     <div data-next-component="shipping-field-row" class="form-grid__row">
       <div class="form-group">
-        <div class="form-input"><label for="phone" class="label-checkout">Phone</label><input autocomplete="tel-full"{% if phone_required == true or phone_required == 'true' %} required data-next-required="true"{% endif %} name="phone" data-name="Phone" type="tel" id="phone" placeholder="201-555-0123" data-next-checkout-field="phone" class="input-flds"></div>
+        <div class="form-input"><label for="phone" class="label-checkout">Phone</label><input autocomplete="tel-full"{% if phone_required == true or phone_required == 'true' %} required data-next-required="true"{% endif %} name="phone" data-name="Phone" type="tel" id="phone" placeholder="Phone (optional)" data-next-checkout-field="phone" class="input-flds"></div>
       </div>
     </div>
     {%- endif %}

@@ -92,14 +92,14 @@ upsell_body:
     title: "Why we make this offer"
     text: "A second bottle in the same box costs us little to ship, and it keeps you from running out of the shade that finally works."
     items:
-      - { title: "51% off, same bottle", text: "The same 30 mL airless pump, the same serum, $19.00 instead of $39." }
+      - { title: "51% off, same bottle", text: "The same 30 mL airless pump, the same serum, $19.00 instead of the $39 one-bottle price on the page you came from ($47 in our store)." }
       - { title: "Charged once", text: "To the payment you just used. Nothing renews, nothing else is charged." }
       - { title: "The same guarantee", text: "30 days from delivery, a full refund even opened, on this bottle too." }
 closing_cta:
   variant: card
   title: "Add one more bottle for {price} today?"
   note: "Contains salmon-derived PDRN: not for anyone with a fish allergy. Backed by our 30-day money-back guarantee. The clock above is the offer’s: at 0:00 this page moves on."
-  image: "images/sf/g-hold.jpg"
+  image: "images/sf/bottle.jpg"
 ---
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them) {% endcomment %}
 <div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>

@@ -356,6 +356,48 @@ ending `net::ERR_ABORTED`. That is the SDK cancelling its own superseded calcula
 applied right after init (reviewer 2 saw the same aborted fetch on the previous build, where the QA run happened not
 to catch it); no page request fails, and the final total is right on every path. Not waived, recorded.
 
+**Independent live review 3 (28 Oct 2026, night, the nine pages with the preview cookie):** verdict "fix first, then
+ship", no blockers, 7 major, 31 minor; technically clean again (zero console or page errors and no failed request at
+four widths, every price in the campaign's set, the exit pop's $67/$51/$35, the countdowns' wording true of their
+script, the `?pack=apf-3#offer` landing). Fixed the same night, in the tools and the source: the five offer pages'
+footer had no styles at all (they load `sf-offers.css`, not `sf-funnel.css`: the footer rules now live there too);
+the exit pop's 800 px dialog overflowed a 768 px viewport (`min(800px, 100vw - 32px)`); the skin diagram's SVG
+captions were clipped at both ends and 8 px tall at 390 (the titles and captions are HTML text beside the drawing);
+offer 1 said "these prices exist on this page only / half price or less" while offer 2b sells a bottle for $19 (offer
+1 now promises its two packs, "from $16.50 each", and 2b names the $39 it strikes as the page-you-came-from price,
+$47 in the store); the serum cross-section glowed blue down through the dermis, a penetration claim the words avoid
+(the serum stays in the surface layer in the poster and the loop, the dermis below borrowed from the cream block; the
+pages say "melts into the surface", "keeps dry skin comfortable", "be kind to the skin underneath"; no "treats");
+the checkout's first phone screen was a three-line promo bar, the logo and three stacked badges with Step 1 below
+the fold (the bar on one line, the header badges hidden below 768 px: Step 1 now starts 270 px down); the checkout
+at 1024 measured as one 760 px column centred on the local build and live, so the review's 480 px column was
+re-checked and not reproduced. Minors: the review wall flows in two CSS columns (no card stretched to its tallest
+neighbour); the footer's copyright beside the links; email, terms and policy links are 44 px without a taller line
+box; the receipt's "Order details" toggle and the checkout's payment notes and reviewer names are no longer
+headings (one H1, then H2s); "after you place your order"; the redundant "See the other 7 reviews" link removed;
+an early pack tap repaints every live total; "Phone (optional)" before the SDK relabels it; the phone's promo bar;
+three "why" cards in one row from 900 px; four-column steps and proof only from 1024 px; the sales page's top bar
+scrolls away on a phone once the sticky checkout bar is on; the listicle's bar fits "Gifts with 2+ bottles" on one
+line at 390; "3 bottles + brush + 2 gifts" in the sticky bar; the next-page promise says nine reviews carry a
+photo without implying those nine span 54 to 81; Michele W.'s excerpt starts with an ellipsis; the brush page's
+grammar, a FAQ on why it is called the Lymphatic Brush (a massage brush, no drainage claim), the case row dropped
+from the comparison (the box section says it comes with one), "What you get, and where it works" over the tiles,
+its mirror caption at 14 px in ink; the 2 PM loop's disclosure once (the page's caption; the baked line removed);
+the hero triptych's middle panel on her face, not the seam through her eye; the closing card of offers 2 and 2b
+shows the bottle (the portrait's crown was cut); the mirror photo's cheek pigment softened (it read as a bruise at
+page size; `soften_patch` in `images.py`); the shade panel's long sentence out of the image (its bullets say it)
+and Darla H.'s car selfie replaced by Susan B., 70 on the sales page and the listicle. Left as they are, documented:
+the brush loop and the "where it works" tile are sketches of a younger face (the stick funnel's render and a
+generated diagram; no image credit to redraw them), the crowns cut in two store portraits and the duo photo (in the
+sources), the listicle's reason-4 crop (the source), the 33,712 px sales page at 390 (its length is the page), the
+"Lymphatic Brush" product name (the merchant's; the FAQ says what it is and is not), and the wordmark missing from
+one 2 s capture at 1440 (not reproduced: present at 2 s in three loads).
+
+**Campaigns OS after live review 3's fixes (28 Oct 2026, night):** build recorded, polish READY (18 captures, no
+hidden eager media), polish completed with the evidence file, deploy recorded on the served route root, browser QA
+`MVSMVUMJU56ELT8AS8F5BRT6IH` ready_with_exceptions (the same two exceptions as before: the checkout's upsell-action coverage is a
+manual review, offer 1's bundle price claim reads the live package).
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the

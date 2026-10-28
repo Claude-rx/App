@@ -196,8 +196,10 @@
 .sf-skin { margin: 0; padding: 14px; border-radius: 12px; background: #fff; color: #151515; }
 .sf-skin svg { width: 100%; height: auto; display: block; }
 .sf-skin figcaption { font-size: 12px; color: #6b6b6b; margin-top: 6px; }
-.sf-skin__t { font: 600 18px var(--sans); fill: #151515; }
-.sf-skin__cap { font: 500 12px var(--sans); fill: #6b6b6b; }
+/* the titles and captions are HTML text beside the drawing (SVG text scaled to 8 px at 390 and clipped at both ends, live review 3) */
+.sf-skin__heads, .sf-skin__caps { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12.5%; padding: 0 3.1%; text-align: center; }
+.sf-skin__heads span { font: 600 18px/1.2 var(--sans); color: #151515; margin-bottom: 8px; }
+.sf-skin__caps span { font: 500 13px/1.35 var(--sans); color: #4a4a4a; margin-top: 8px; }
 .sf-skin__fiber { fill: none; stroke: #f7e1dc; stroke-width: 7; stroke-linecap: round; }
 .sf-skin__fiber--thin { stroke-width: 4; opacity: .75; }
 .sf-skin__water { fill: #bfe0f5; }
@@ -299,8 +301,6 @@ body.sf-has-sticky .sf-footer { padding-bottom: 110px; }
   .sf-root__grid { grid-template-columns: 1.15fr 1fr; align-items: center; }
   .sf-mechanism .sf-causes { grid-template-columns: 1fr; }
   .sf-korea { grid-template-columns: 420px 1fr; gap: 40px; }
-  .sf-steps--grid { grid-template-columns: repeat(4, 1fr); }
-  .sf-proof--four { grid-template-columns: repeat(4, 1fr); }
   .sf-badges { grid-template-columns: repeat(8, 1fr); }
   .sf-badges li { flex-direction: column; text-align: center; border-radius: 12px; padding: 12px 6px; font-size: 12.5px; }
 }
@@ -341,7 +341,22 @@ body.sf-has-sticky .sf-footer { padding-bottom: 110px; }
 .sf-ease { align-items: start; }
 .sf-rating a, .sf-rating__count a { display: inline-block; padding: 12px 0; }
 .sf-korea__fig figcaption { font-size: 14.5px; color: var(--ink); }
-.sf-skin__t { font: 600 22px var(--sans); }
-.sf-skin__cap { font: 500 17px var(--sans); fill: #4a4a4a; }
+.sf-skin__heads span { font-size: 22px; }
+@media (min-width: 768px) { .sf-skin__caps span { font-size: 15px; } }   /* 13 px in the 119 px columns at 390 */
 .sf-skin figcaption { font-size: 14px; }
 body.sf-has-sticky .sf-footer { padding-bottom: 150px; }
+
+/* four columns of steps and proof cards only where each column fits a sentence (at 768 they were 150 px wide, live review 3) */
+@media (min-width: 1024px) {
+  .sf-steps--grid, .sf-proof--four { grid-template-columns: repeat(4, 1fr); }
+}
+/* a phone: the top bar scrolls away once the sticky checkout bar is on (the two covered 129 px of 844, live review 3); the
+   listicle's bar fits "Gifts with 2+ bottles" on one line beside CLAIM OFFER */
+@media (max-width: 767px) {
+  body.sf-has-sticky .sf-bar { position: static; }
+}
+@media (max-width: 420px) {
+  .sf-bar__logo { width: 84px; }
+  .sf-bar__short { white-space: nowrap; font-size: 12.5px; }
+  .sf-bar__btn { padding: 8px 11px; font-size: 11.5px; }
+}

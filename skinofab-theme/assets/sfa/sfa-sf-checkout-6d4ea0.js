@@ -98,8 +98,7 @@ window.addEventListener('next:initialized', function () {
     const price = prices[(card.getAttribute('data-next-bundle-id') || '').split(':').pop()];
     if (!price || couponOn()) return;
     if (fb) fb.textContent = price;
-    const live = document.querySelector('[data-next-show="cart.hasItems"] [data-next-display="cart.total"]');
-    if (live) live.textContent = price;
+    document.querySelectorAll('[data-next-display="cart.total"]').forEach((el) => { el.textContent = price; });
   };
   sel.addEventListener('click', (e) => {
     const card = e.target.closest('[data-next-bundle-card]');

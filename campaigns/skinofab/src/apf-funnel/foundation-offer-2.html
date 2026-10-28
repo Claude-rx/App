@@ -100,7 +100,7 @@ closing_cta:
   variant: card
   title: "Add one more bottle for {price} today?"
   note: "Contains salmon-derived PDRN: not for anyone with a fish allergy. Backed by our 30-day money-back guarantee. The clock above is the offer’s: at 0:00 this page moves on."
-  image: "images/sf/g-hold.jpg"
+  image: "images/sf/bottle.jpg"
 ---
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them) {% endcomment %}
 <div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>

@@ -5,8 +5,8 @@
     part='inline'    the guarantee in one line, right above the order button
     part='badges'    four badges right under the order button: the guarantee, free shipping, one-time, secure
     part='featured'  three reviews after the order button, on a phone and tablet (there the proof column comes
-                     after the form; on a computer it is beside it); the wall then shows the other seven
-                     (checkout-brand.css hides its first three below 992 px)
+                     right after, so no link to it: the wall then shows the other seven, checkout-brand.css hides
+                     its first three below 1200 px)
     part='proof'     the ratings by stars, the review wall (buyers' own photos), the guarantee card and the questions a
                      buyer asks before paying; after the form in the page (keyboard and screen-reader order), shown on
                      the left on a computer (checkout-brand.css)
@@ -31,8 +31,6 @@
   {%- for r in reviews limit: 3 %}
   {% campaign_include 'sf-checkout-review.html' r=r %}
   {%- endfor %}
-  {%- assign more = reviews.size | minus: 3 %}
-  <a class="sf-co-featured__more" href="#sf-co-reviews">See the other {{ more }} reviews and the ratings</a>
 </div>
 {%- elsif part == 'inline' -%}
 <div class="sf-co-guarantee-line" data-sf-guarantee-inline>

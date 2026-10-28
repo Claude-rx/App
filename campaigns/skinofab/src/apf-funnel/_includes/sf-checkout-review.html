@@ -2,7 +2,7 @@
 <article class="sf-co-review">
   <header>
     <img src="{{ r.photo | campaign_asset }}" alt="{{ r.author }}, her own photo" width="64" height="64" loading="lazy" decoding="async">
-    <div><h3>{{ r.author }}</h3><p class="sf-co-tp sf-co-tp--sm" role="img" aria-label="{{ r.rating | default: 5 }} out of 5 stars">{% campaign_include 'sf-stars.html' n=r.rating %}</p></div>
+    <div><p class="sf-co-review__name">{{ r.author }}</p><p class="sf-co-tp sf-co-tp--sm" role="img" aria-label="{{ r.rating | default: 5 }} out of 5 stars">{% campaign_include 'sf-stars.html' n=r.rating %}</p></div>
   </header>
   <p class="sf-co-review__body">“{{ r.body }}”</p>
   <p class="sf-review__who">{{ r.verified }}</p>

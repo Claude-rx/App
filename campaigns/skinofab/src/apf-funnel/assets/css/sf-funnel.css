@@ -284,3 +284,6 @@ body.sf { margin: 0; background: var(--paper); color: var(--text); font: 400 17p
   .sf-cta__copy { order: 0; }
 }
 .sf-reason:has(.sf-video-row) .sf-reason__media { position: static; }   /* (a sticky photo would slide over the video row) */
+
+/* 44 px targets for the email links in running text, without a taller line box (live review 3) */
+a[href^="mailto:"] { display: inline-block; padding: 10px 0; margin: -10px 0; }
