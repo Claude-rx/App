@@ -16,5 +16,23 @@
     "fb_pixel_id": "",
     "og_image": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg",
     "funnel_host": "https://try.skinofab.com"
+  },
+  "apf-funnel": {
+    "name": "SKINOFAB Adaptive Peptide Foundation",
+    "description": "The Adaptive Peptide Foundation: goes on white and adapts to your skin tone as you blend, in a hydrating serum base with PDRN and peptides. Made for skin after 45.",
+    "entry_url": "10-reasons-adaptive-foundation",
+    "sdk_version": "0.4.43",
+    "store_name": "SKINOFAB",
+    "store_url": "https://try.skinofab.com",
+    "store_terms": "https://try.skinofab.com/terms-of-service/",
+    "store_privacy": "https://try.skinofab.com/privacy-policy/",
+    "store_contact": "https://try.skinofab.com/contact/",
+    "store_returns": "https://try.skinofab.com/refund-policy/",
+    "store_shipping": "https://try.skinofab.com/shipping-policy/",
+    "store_email": "hello@skinofab.com",
+    "gtm_id": "",
+    "fb_pixel_id": "",
+    "og_image": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg",
+    "funnel_host": "https://try.skinofab.com"
   }
 }

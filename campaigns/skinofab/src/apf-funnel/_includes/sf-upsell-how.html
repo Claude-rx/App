@@ -1,0 +1,31 @@
+{%- comment -%}
+  SKINOFAB: a special offer's "how it works", under the offer: its loop beside the product page's own steps.
+    how: { eyebrow, title, text, steps[] { title, text }, note, video { mp4, webm, poster, width, height, label } }
+  The loop (tools/funnel/apf/images.py: the foundation's how-to, the brush's four sweeps) loads nothing until it is on
+  screen and plays muted while it is (js/sf-apf.js, data-sf-lazy). Written by tools/funnel/apf/offer_pages.py's frontmatter.
+{%- endcomment -%}
+{%- if how -%}
+<section class="section cc-sm sf-how" aria-labelledby="sf-how-title">
+  <div class="container">
+    <div class="sf-how__grid">
+      <figure class="sf-how__media">
+        <video data-sf-lazy muted loop playsinline preload="none" poster="{{ how.video.poster | campaign_asset }}" width="{{ how.video.width }}" height="{{ how.video.height }}" aria-label="{{ how.video.label }}">
+          <source src="{{ how.video.mp4 | campaign_asset }}" type="video/mp4">
+          <source src="{{ how.video.webm | campaign_asset }}" type="video/webm">
+        </video>
+      </figure>
+      <div class="sf-how__body">
+        <span class="sf-how__eyebrow">{{ how.eyebrow }}</span>
+        <h2 class="display-md" id="sf-how-title">{{ how.title }}</h2>
+        <p class="sf-how__lede">{{ how.text }}</p>
+        <ol class="sf-how__steps">
+          {%- for s in how.steps %}
+          <li><b>{{ forloop.index }}</b><div><strong>{{ s.title }}</strong>{% if s.text %}<span>{{ s.text }}</span>{% endif %}</div></li>
+          {%- endfor %}
+        </ol>
+        {%- if how.note %}<p class="sf-how__note">{{ how.note }}</p>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}

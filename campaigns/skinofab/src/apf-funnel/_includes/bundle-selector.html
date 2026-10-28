@@ -1,0 +1,86 @@
+{% comment %}
+  SKINOFAB: a card's b.image (a campaign asset) is passed on as card_image (bundle-card-product.html shows it in place of
+  the package's photo: the funnel's two packs share one product photo).
+  next_component: bundle-selector
+  next_version: 2.1.0
+  next_sdk_min: 0.4.18
+  next_purpose: Tiered package selector. Customer picks a quantity tier (e.g. 1x/2x/3x) that maps to a bundle of package IDs at checkout. SDK swaps cart on selection change.
+  next_purpose_note: |
+    v2 — the SELECTOR owns the SDK wrapper + per-tier data/logic; the CARD VISUAL
+    is an interchangeable partial chosen via card_style. Each tier renders through
+    bundle-card.html (a style dispatcher) so the same selector can present
+    different looks. One card design is used for both the loop and the default
+    tiers (DRY). Card styles: 'product' (default, rows) | 'classic' (Olympus
+    os-card) | 'tiles' (tile grid). Add a style by adding bundle-card-<style>.html
+    + a dispatch branch in bundle-card.html.
+  next_params:
+    selector_id:        string, default "main".
+    await:              bool, default true.
+    include_shipping:   bool, default true.
+    selection_mode:     enum [swap, select], default "swap".
+    card_style:         enum [product, classic, tiles], default "product". Picks the card visual.
+    packages:           object, optional. main_package / prepurchase_* package IDs.
+    shipping_methods:   object, optional. Campaigns App shipping method ref_ids. Recommended: ONE method
+                        (the campaign's single storefront method, priced at the highest tier rate) on every card.
+    bundles:            array of card defs (see card arg contract in bundle-card.html). Defaults to canonical 3-tier.
+                        bundles[].vouchers — optional coupon code(s), string or list, rendered as
+                        data-next-bundle-vouchers: applied while that card is selected, removed when it is not.
+                        Use for tier shipping price: a shipping_percentage Code Offer (100% = free shipping).
+  next_sdk_owns:
+    - data-next-bundle-selector / -selector-id / -selection-mode / -include-shipping / -await
+    - data-next-bundle-card / -bundle-id / -bundle-items / -bundle-display / -shipping-id / -bundle-vouchers / -selected
+    - data-next-package-id / -display / -discounts
+  next_dont_touch:
+    - data-next-* attributes are SDK-owned; renaming breaks runtime
+    - bundle ids must be stable strings; do not auto-generate per render
+    - data-next-shipping-id values must be valid Campaigns API ref_ids
+    - bundles[].vouchers codes must exist as Code Offers on the campaign; do not also offer the same code in a coupon box
+    - data-next-bundle-items packageId values must exist in the Campaigns API
+  next_gotchas:
+    - Tier shipping price = one method + a card coupon, not a second method per price. A campaign lists each
+      storefront shipping method once; coupons only take a percentage OFF, so price the method at the highest rate.
+    - data-next-include-shipping="true" required when tiers use tier-specific shipping or totals will be wrong.
+    - data-next-selected="true" on the initial card; SDK toggles .next-selected at runtime.
+    - hasDiscount resolves to a class string ('hide' when no discount) — render on the SAVE badge, struck price and savings line.
+    - subtitle_text / shipping_label are FREE TEXT — visual review is the gate.
+  next_related:
+    - bundle-card.html (style dispatcher) · bundle-card-product.html · bundle-card-classic.html · bundle-card-tiles.html
+{% endcomment %}
+{% assign sel_id = selector_id | default: 'main' -%}
+{% assign sel_mode = selection_mode | default: 'swap' -%}
+{% assign card_style = card_style | default: 'product' -%}
+{% if include_shipping == nil %}{% assign include_shipping = true %}{% endif -%}
+{% if await == nil %}{% assign await = true %}{% endif -%}
+{% if card_style == 'classic' %}{% assign cards_class = 'os-cards__vertical os--gap-xl' %}{% elsif card_style == 'tiles' %}{% assign cards_class = 'bundle-tiles' %}{% else %}{% assign cards_class = 'bundle-cards' %}{% endif -%}
+<div data-next-catalog-component="bundle-selector" data-component="bundle-selector" data-next-bundle-selector data-next-selector-id="{{ sel_id }}" data-next-selection-mode="{{ sel_mode }}"{% if include_shipping %} data-next-include-shipping="true"{% endif %} class="os-option"{% if await %} data-next-await=""{% endif %}>
+  <div class="{{ cards_class }}">
+    {% if bundles -%}
+    {% for b in bundles -%}
+    {% assign card_package_id = b.package_id | default: packages.main_package | default: 1 -%}
+    {% assign card_quantity = b.quantity | default: 1 -%}
+    {% assign card_shipping_id = b.shipping_id -%}
+    {% if card_shipping_id == nil and b.shipping_method %}{% assign card_shipping_id = shipping_methods[b.shipping_method] %}{% endif -%}
+    {% assign card_vouchers = b.vouchers | join: ',' -%}
+    {% if b.items_json -%}{% assign card_items = b.items_json -%}
+    {% elsif b.items -%}{% assign card_items = b.items -%}
+    {% else -%}{% capture card_items %}[{"packageId":{{ card_package_id }},"quantity":{{ card_quantity }}}]{% endcapture -%}{% endif -%}
+    {% assign badge_tone = 'popular' -%}
+    {% if b.badge_pill_class contains 'secondary' %}{% assign badge_tone = 'deal' %}{% endif -%}
+    {% capture card_subtitle %}{% if b.subtitle_text %}{{ b.subtitle_text }}{% endif %}{% if b.shipping_label %}{% if b.subtitle_text %} {% endif %}{{ b.shipping_label }}{% endif %}{% endcapture -%}
+    {% campaign_include 'bundle-card.html' card_style=card_style bundle_id=b.id items=card_items package_id=card_package_id shipping_id=card_shipping_id bundle_vouchers=card_vouchers selected=b.selected title_prefix=b.title_prefix subtitle=card_subtitle subtitle_text=b.subtitle_text shipping_label=b.shipping_label badge_text=b.badge_text badge_tone=badge_tone badge_pill_class=b.badge_pill_class total_tone_class=b.total_tone_class card_image=b.image %}
+    {% endfor -%}
+    {% else -%}
+    {%- comment -%} Default: canonical 3-tier (1x/2x/3x) of packages.main_package (fallback 1). {%- endcomment -%}
+    {%- assign _pkg = packages.main_package | default: 1 -%}
+    {% capture items_1x %}[{"packageId":{{ _pkg }},"quantity":1}]{% endcapture -%}
+    {% capture items_2x %}[{"packageId":{{ _pkg }},"quantity":2}]{% endcapture -%}
+    {% capture items_3x %}[{"packageId":{{ _pkg }},"quantity":3}]{% endcapture -%}
+    {% capture sub_3x %}{% if shipping_methods.free %}+ Free Shipping{% endif %}{% endcapture -%}
+    {%- comment -%} 3x uses shipping_methods.free when a page still maps one (legacy two-method setup), else the one standard method. {%- endcomment -%}
+    {% assign _ship_3x = shipping_methods.free | default: shipping_methods.standard -%}
+    {% campaign_include 'bundle-card.html' card_style=card_style bundle_id='bundle-1x' items=items_1x package_id=_pkg shipping_id=shipping_methods.standard selected=true title_prefix='1x ' badge_text='Most Popular' badge_tone='popular' badge_pill_class='os-card__label--pill-primary' %}
+    {% campaign_include 'bundle-card.html' card_style=card_style bundle_id='bundle-2x' items=items_2x package_id=_pkg shipping_id=shipping_methods.standard title_prefix='2x ' badge_text='Best Deal' badge_tone='deal' badge_pill_class='os-card__label--pill-secondary' %}
+    {% campaign_include 'bundle-card.html' card_style=card_style bundle_id='bundle-3x' items=items_3x package_id=_pkg shipping_id=_ship_3x title_prefix='3x ' subtitle=sub_3x shipping_label=sub_3x %}
+    {%- endif %}
+  </div>
+</div>

@@ -1,0 +1,1069 @@
+{
+  "schema_version": "5.0",
+  "spec_identity": {
+    "source": "hand-authored",
+    "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
+    "public_route_slug": "apf-funnel",
+    "template_family": "apollo",
+    "authority": "tools/funnel/funnels/apf.py + the live campaign read"
+  },
+  "campaign": {
+    "ref_id": 2211,
+    "name": "SKINOFAB Foundation Stick Funnel",
+    "currency": "USD",
+    "language": "en",
+    "payment_env_key": "5WMJ53MV2D8MH9X9S955PQ0T95",
+    "available_payment_methods": [
+      {
+        "code": "affirm",
+        "label": "Affirm"
+      },
+      {
+        "code": "afterpay",
+        "label": "Afterpay"
+      },
+      {
+        "code": "apple_pay",
+        "label": "Apple Pay"
+      },
+      {
+        "code": "bankcard",
+        "label": "Bankcard"
+      },
+      {
+        "code": "klarna",
+        "label": "Klarna"
+      },
+      {
+        "code": "link",
+        "label": "Link"
+      },
+      {
+        "code": "paypal",
+        "label": "PayPal"
+      }
+    ],
+    "available_express_payment_methods": [
+      {
+        "code": "apple_pay",
+        "label": "Apple Pay"
+      },
+      {
+        "code": "paypal",
+        "label": "PayPal"
+      }
+    ],
+    "available_currencies": [
+      {
+        "code": "USD",
+        "label": "$ USD"
+      }
+    ],
+    "available_shipping_countries": [],
+    "preferred_template_family": "apollo",
+    "store_url": "https://try.skinofab.com",
+    "store_name": "SKINOFAB",
+    "store_contact": "https://try.skinofab.com/contact/",
+    "store_terms": "https://try.skinofab.com/terms-of-service/",
+    "store_shipping": "https://try.skinofab.com/shipping-policy/",
+    "store_privacy": "https://try.skinofab.com/privacy-policy/",
+    "store_returns": "https://try.skinofab.com/refund-policy/",
+    "store_phone": null,
+    "store_phone_tel": null
+  },
+  "global_config": {
+    "sdk_version": "0.4.43"
+  },
+  "funnels": [
+    {
+      "id": "apf",
+      "name": "Adaptive Peptide Foundation: listicle to thank you",
+      "weight": 100,
+      "pages": [
+        {
+          "id": "listicle",
+          "type": "presell",
+          "order": 1,
+          "label": "Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation",
+          "is_entry": true,
+          "page_url": "10-reasons-adaptive-foundation/",
+          "sdk_hints": {
+            "sdk_page_type": "product",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "product"
+            },
+            "template_family": "apollo"
+          },
+          "next_page": "offer",
+          "resolved_routing": {
+            "next_page": "offer",
+            "next_page_route": "/apf-funnel/adaptive-foundation-offer/"
+          },
+          "packages": [
+            {
+              "ref_id": 6,
+              "name": "Adaptive Peptide Foundation - 1 bottle",
+              "qty": 1,
+              "price": "39.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-1",
+              "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            },
+            {
+              "ref_id": 7,
+              "name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+              "qty": 1,
+              "price": "57.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/5ff3fbef36494261a3f8d9e789222845.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-2-GIFTS",
+              "product_variant_name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            },
+            {
+              "ref_id": 8,
+              "name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+              "qty": 1,
+              "price": "75.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/dedb4fe484f44f03ae6af6ca7976581d.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-3-GIFTS",
+              "product_variant_name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            }
+          ]
+        },
+        {
+          "id": "offer",
+          "type": "landing",
+          "order": 2,
+          "label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts",
+          "is_entry": false,
+          "page_url": "adaptive-foundation-offer/",
+          "sdk_hints": {
+            "sdk_page_type": "product",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "product"
+            },
+            "template_family": "apollo"
+          },
+          "next_page": "checkout",
+          "resolved_routing": {
+            "next_page": "checkout",
+            "next_page_route": "/apf-funnel/foundation-checkout/"
+          },
+          "packages": [
+            {
+              "ref_id": 6,
+              "name": "Adaptive Peptide Foundation - 1 bottle",
+              "qty": 1,
+              "price": "39.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-1",
+              "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            },
+            {
+              "ref_id": 7,
+              "name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+              "qty": 1,
+              "price": "57.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/5ff3fbef36494261a3f8d9e789222845.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-2-GIFTS",
+              "product_variant_name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            },
+            {
+              "ref_id": 8,
+              "name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+              "qty": 1,
+              "price": "75.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/dedb4fe484f44f03ae6af6ca7976581d.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-3-GIFTS",
+              "product_variant_name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            }
+          ]
+        },
+        {
+          "id": "checkout",
+          "type": "checkout",
+          "order": 3,
+          "label": "Checkout",
+          "is_entry": false,
+          "page_url": "foundation-checkout/",
+          "sdk_hints": {
+            "sdk_page_type": "checkout",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "checkout",
+              "next-success-url": "/apf-funnel/foundation-offer-1/"
+            },
+            "template_family": "apollo"
+          },
+          "success_url": "offer-1",
+          "resolved_routing": {
+            "success": "offer-1",
+            "success_route": "/apf-funnel/foundation-offer-1/"
+          },
+          "packages": [
+            {
+              "ref_id": 6,
+              "name": "Adaptive Peptide Foundation - 1 bottle",
+              "qty": 1,
+              "price": "39.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-1",
+              "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            },
+            {
+              "ref_id": 7,
+              "name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+              "qty": 1,
+              "price": "57.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/5ff3fbef36494261a3f8d9e789222845.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-2-GIFTS",
+              "product_variant_name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": true
+            },
+            {
+              "ref_id": 8,
+              "name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+              "qty": 1,
+              "price": "75.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/dedb4fe484f44f03ae6af6ca7976581d.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-3-GIFTS",
+              "product_variant_name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": false,
+              "is_order_bump": false,
+              "default_selected": false
+            }
+          ],
+          "exit_intent": {
+            "enabled": true,
+            "offer_ref_id": 6,
+            "offer_code": "APF10",
+            "notes": "Once per visit, on leaving the checkout: 10% off the foundation packs."
+          },
+          "offers": [
+            {
+              "ref_id": 6
+            }
+          ]
+        },
+        {
+          "id": "offer-1",
+          "type": "upsell",
+          "order": 4,
+          "label": "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
+          "is_entry": false,
+          "page_url": "foundation-offer-1/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/apf-funnel/lymphatic-brush-offer/",
+              "next-upsell-decline-url": "/apf-funnel/foundation-offer-2/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "brush-offer",
+          "on_decline": "offer-2",
+          "resolved_routing": {
+            "accept": "brush-offer",
+            "accept_route": "/apf-funnel/lymphatic-brush-offer/",
+            "decline": "offer-2",
+            "decline_route": "/apf-funnel/foundation-offer-2/"
+          },
+          "packages": [
+            {
+              "ref_id": 9,
+              "name": "Adaptive Peptide Foundation - 2 bottles",
+              "qty": 1,
+              "price": "39.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/08167c9e99404664be93c4d6a2a3571b.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-2",
+              "product_variant_name": "Adaptive Peptide Foundation - 2 bottles",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            },
+            {
+              "ref_id": 10,
+              "name": "Adaptive Peptide Foundation - 6 bottles + free Lymphatic Brush",
+              "qty": 1,
+              "price": "99.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/36e2c073d2354fc8abdb4db23efe3143.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-6-BRUSH",
+              "product_variant_name": "Adaptive Peptide Foundation - 6 bottles + free Lymphatic Brush",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": false
+            }
+          ],
+          "offers": []
+        },
+        {
+          "id": "offer-2",
+          "type": "upsell",
+          "order": 5,
+          "label": "Offer 2: one more bottle, 40% off",
+          "is_entry": false,
+          "page_url": "foundation-offer-2/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/apf-funnel/lymphatic-brush-offer/",
+              "next-upsell-decline-url": "/apf-funnel/foundation-offer-2b/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "brush-offer",
+          "on_decline": "offer-2b",
+          "resolved_routing": {
+            "accept": "brush-offer",
+            "accept_route": "/apf-funnel/lymphatic-brush-offer/",
+            "decline": "offer-2b",
+            "decline_route": "/apf-funnel/foundation-offer-2b/"
+          },
+          "packages": [
+            {
+              "ref_id": 6,
+              "name": "Adaptive Peptide Foundation - 1 bottle",
+              "qty": 1,
+              "price": "39.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-1",
+              "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "offers": [
+            {
+              "ref_id": 7
+            }
+          ]
+        },
+        {
+          "id": "offer-2b",
+          "type": "downsell",
+          "order": 6,
+          "label": "Offer 2 downsell: one more bottle, 50% off",
+          "is_entry": false,
+          "page_url": "foundation-offer-2b/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/apf-funnel/lymphatic-brush-offer/",
+              "next-upsell-decline-url": "/apf-funnel/lymphatic-brush-offer/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "brush-offer",
+          "on_decline": "brush-offer",
+          "resolved_routing": {
+            "accept": "brush-offer",
+            "accept_route": "/apf-funnel/lymphatic-brush-offer/",
+            "decline": "brush-offer",
+            "decline_route": "/apf-funnel/lymphatic-brush-offer/"
+          },
+          "packages": [
+            {
+              "ref_id": 6,
+              "name": "Adaptive Peptide Foundation - 1 bottle",
+              "qty": 1,
+              "price": "39.00",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+              "product_name": "Adaptive Peptide Foundation",
+              "product_sku": "SKF-APF-1",
+              "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "offers": [
+            {
+              "ref_id": 8
+            }
+          ]
+        },
+        {
+          "id": "brush-offer",
+          "type": "upsell",
+          "order": 7,
+          "label": "Offer 3: the Lymphatic Brush, 40% off",
+          "is_entry": false,
+          "page_url": "lymphatic-brush-offer/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/apf-funnel/foundation-thank-you/",
+              "next-upsell-decline-url": "/apf-funnel/lymphatic-brush-offer-b/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "thank-you",
+          "on_decline": "brush-offer-b",
+          "resolved_routing": {
+            "accept": "thank-you",
+            "accept_route": "/apf-funnel/foundation-thank-you/",
+            "decline": "brush-offer-b",
+            "decline_route": "/apf-funnel/lymphatic-brush-offer-b/"
+          },
+          "packages": [
+            {
+              "ref_id": 11,
+              "name": "The Lymphatic Brush - 1 brush + free travel case",
+              "qty": 1,
+              "price": "24.95",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/2b29808833b4443fbaf3c14d1d70fda9.webp",
+              "product_name": "The Lymphatic Brush",
+              "product_sku": "SKF-LYB-1T",
+              "product_variant_name": "The Lymphatic Brush - 1 brush + free travel case",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "offers": [
+            {
+              "ref_id": 9
+            }
+          ]
+        },
+        {
+          "id": "brush-offer-b",
+          "type": "downsell",
+          "order": 8,
+          "label": "Offer 3 downsell: the Lymphatic Brush, 60% off",
+          "is_entry": false,
+          "page_url": "lymphatic-brush-offer-b/",
+          "sdk_hints": {
+            "sdk_page_type": "upsell",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "upsell",
+              "next-upsell-accept-url": "/apf-funnel/foundation-thank-you/",
+              "next-upsell-decline-url": "/apf-funnel/foundation-thank-you/"
+            },
+            "template_family": "apollo"
+          },
+          "on_accept": "thank-you",
+          "on_decline": "thank-you",
+          "resolved_routing": {
+            "accept": "thank-you",
+            "accept_route": "/apf-funnel/foundation-thank-you/",
+            "decline": "thank-you",
+            "decline_route": "/apf-funnel/foundation-thank-you/"
+          },
+          "packages": [
+            {
+              "ref_id": 11,
+              "name": "The Lymphatic Brush - 1 brush + free travel case",
+              "qty": 1,
+              "price": "24.95",
+              "price_retail": null,
+              "image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/2b29808833b4443fbaf3c14d1d70fda9.webp",
+              "product_name": "The Lymphatic Brush",
+              "product_sku": "SKF-LYB-1T",
+              "product_variant_name": "The Lymphatic Brush - 1 brush + free travel case",
+              "product_purchase_availability": "available",
+              "product_inventory_availability": "untracked",
+              "is_recurring": false,
+              "price_recurring": null,
+              "interval": "",
+              "interval_count": null,
+              "is_upsell": true,
+              "is_order_bump": false,
+              "default_selected": true
+            }
+          ],
+          "offers": [
+            {
+              "ref_id": 10
+            }
+          ]
+        },
+        {
+          "id": "thank-you",
+          "type": "thankyou",
+          "order": 9,
+          "label": "Thank you",
+          "is_entry": false,
+          "page_url": "foundation-thank-you/",
+          "sdk_hints": {
+            "sdk_page_type": "receipt",
+            "meta_tags": {
+              "next-funnel": "SKINOFAB Adaptive Peptide Foundation",
+              "next-page-type": "receipt"
+            },
+            "template_family": "apollo"
+          }
+        }
+      ]
+    }
+  ],
+  "offers": [
+    {
+      "ref_id": 1,
+      "name": "50% off your extra stick (first charge)",
+      "type": "voucher",
+      "code": "STICK50",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "50.00",
+        "description": "50% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 1,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/0214d9090e4a43759f00115570627df8.webp",
+          "package_name": "Adaptive Foundation Stick - 1 stick",
+          "product_name": "Adaptive Foundation Stick",
+          "product_variant_name": "Adaptive Foundation Stick - 1 stick",
+          "unit_price": "18.00",
+          "unit_price_before_discount": "37.00",
+          "package_price": "18.00",
+          "package_price_before_discount": "37.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 2,
+      "name": "20% off the Lymphatic Brush (first charge)",
+      "type": "voucher",
+      "code": "BRUSH20",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "20.00",
+        "description": "20% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 3,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/100efa681b1d4878b9897dd1caf759a0.webp",
+          "package_name": "The Lymphatic Brush - 1 brush + free case",
+          "product_name": "The Lymphatic Brush",
+          "product_variant_name": "The Lymphatic Brush - 1 brush + free case",
+          "unit_price": "19.00",
+          "unit_price_before_discount": "24.95",
+          "package_price": "19.00",
+          "package_price_before_discount": "24.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 3,
+      "name": "20% off the PDRN Plumping Balm (first charge)",
+      "type": "voucher",
+      "code": "BALM20",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "20.00",
+        "description": "20% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 4,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/d52733c6e5bc4f2c865f1b3a8159a0a3.webp",
+          "package_name": "PDRN Plumping Balm - 1 stick",
+          "product_name": "PDRN Plumping Balm",
+          "product_variant_name": "PDRN Plumping Balm - 1 stick",
+          "unit_price": "15.00",
+          "unit_price_before_discount": "19.95",
+          "package_price": "15.00",
+          "package_price_before_discount": "19.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 4,
+      "name": "20% off the EGF + NAD+ Firming Serum (first charge)",
+      "type": "voucher",
+      "code": "SERUM20",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "20.00",
+        "description": "20% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 5,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/5d2cbbd4c7004fe7ac2b43c597de8fd5.webp",
+          "package_name": "EGF + NAD+ Firming Serum - 1 bottle",
+          "product_name": "EGF + NAD+ Firming Serum",
+          "product_variant_name": "EGF + NAD+ Firming Serum - 1 bottle",
+          "unit_price": "22.00",
+          "unit_price_before_discount": "27.95",
+          "package_price": "22.00",
+          "package_price_before_discount": "27.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 5,
+      "name": "10% off your stick pack today",
+      "type": "voucher",
+      "code": "STICK10",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "10.00",
+        "description": "10% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 1,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/0214d9090e4a43759f00115570627df8.webp",
+          "package_name": "Adaptive Foundation Stick - 1 stick",
+          "product_name": "Adaptive Foundation Stick",
+          "product_variant_name": "Adaptive Foundation Stick - 1 stick",
+          "unit_price": "33.00",
+          "unit_price_before_discount": "37.00",
+          "package_price": "33.00",
+          "package_price_before_discount": "37.00",
+          "package_unit_qty": 1
+        },
+        {
+          "package_id": 2,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/f7f1e8cb943b46fcbe3ae258ed23ec56.webp",
+          "package_name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+          "product_name": "Adaptive Foundation Stick",
+          "product_variant_name": "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+          "unit_price": "42.00",
+          "unit_price_before_discount": "47.00",
+          "package_price": "42.00",
+          "package_price_before_discount": "47.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 6,
+      "name": "10% off your foundation today",
+      "type": "voucher",
+      "code": "APF10",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "10.00",
+        "description": "10% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 6,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+          "package_name": "Adaptive Peptide Foundation - 1 bottle",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+          "unit_price": "35.00",
+          "unit_price_before_discount": "39.00",
+          "package_price": "35.00",
+          "package_price_before_discount": "39.00",
+          "package_unit_qty": 1
+        },
+        {
+          "package_id": 7,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/5ff3fbef36494261a3f8d9e789222845.webp",
+          "package_name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+          "unit_price": "51.00",
+          "unit_price_before_discount": "57.00",
+          "package_price": "51.00",
+          "package_price_before_discount": "57.00",
+          "package_unit_qty": 1
+        },
+        {
+          "package_id": 8,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/dedb4fe484f44f03ae6af6ca7976581d.webp",
+          "package_name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+          "unit_price": "67.00",
+          "unit_price_before_discount": "75.00",
+          "package_price": "67.00",
+          "package_price_before_discount": "75.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 7,
+      "name": "40% off one more bottle",
+      "type": "voucher",
+      "code": "APF40",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "40.00",
+        "description": "40% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 6,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+          "package_name": "Adaptive Peptide Foundation - 1 bottle",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+          "unit_price": "23.00",
+          "unit_price_before_discount": "39.00",
+          "package_price": "23.00",
+          "package_price_before_discount": "39.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 8,
+      "name": "50% off one more bottle",
+      "type": "voucher",
+      "code": "APF50",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "50.00",
+        "description": "50% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 6,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+          "package_name": "Adaptive Peptide Foundation - 1 bottle",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+          "unit_price": "19.00",
+          "unit_price_before_discount": "39.00",
+          "package_price": "19.00",
+          "package_price_before_discount": "39.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 9,
+      "name": "40% off the Lymphatic Brush",
+      "type": "voucher",
+      "code": "BRUSH40",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "40.00",
+        "description": "40% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 11,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/2b29808833b4443fbaf3c14d1d70fda9.webp",
+          "package_name": "The Lymphatic Brush - 1 brush + free travel case",
+          "product_name": "The Lymphatic Brush",
+          "product_variant_name": "The Lymphatic Brush - 1 brush + free travel case",
+          "unit_price": "14.00",
+          "unit_price_before_discount": "24.95",
+          "package_price": "14.00",
+          "package_price_before_discount": "24.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 10,
+      "name": "60% off the Lymphatic Brush",
+      "type": "voucher",
+      "code": "BRUSH60",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "60.00",
+        "description": "60% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 11,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/2b29808833b4443fbaf3c14d1d70fda9.webp",
+          "package_name": "The Lymphatic Brush - 1 brush + free travel case",
+          "product_name": "The Lymphatic Brush",
+          "product_variant_name": "The Lymphatic Brush - 1 brush + free travel case",
+          "unit_price": "9.00",
+          "unit_price_before_discount": "24.95",
+          "package_price": "9.00",
+          "package_price_before_discount": "24.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    }
+  ],
+  "shipping_methods": [
+    {
+      "ref_id": 1,
+      "code": "default",
+      "price": "0.00"
+    }
+  ]
+}

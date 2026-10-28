@@ -1,14 +1,20 @@
 // One real test order through the live funnel: the checkout with NEXT's test card (no charge, no transaction; the
-// order is flagged as a test and lands in the store, to be cancelled), then each special offer accepted or declined,
-// then the thank-you page's lines, renewals and total.
+// order is flagged as a test and lands in the store, to be cancelled), then each special offer accepted or declined as
+// the funnel routes them, then the thank-you page's lines, their terms and the total.
 //
-// usage: node tools/funnel/live_order.mjs <host> <out-dir> [--path accept,decline,accept,decline] [--pack stick-2]
+// usage: [FUNNEL=stick|apf] node tools/funnel/live_order.mjs <host> <out-dir> [--path accept,decline,...] [--pack <card>]
+//        [--tier <bundle id>] [--resume <ref_id> [--start <page file>]]
+//   FUNNEL   which funnel's pages (tools/funnel/funnels/<name>.py): stick (default) or apf
 //   <host>   https://try.skinofab.com (the funnel's host: the domain the campaign allows)
-//   --path   what to do on special offers 1-4, in order (default accept,decline,accept,decline)
-//   --pack   the checkout card to buy (default stick-2)
-//   --resume <ref_id> [--start N]  skip the checkout: walk the offers of an order already placed, from offer N
-// Writes a screenshot per step and order.json (order number, lines, renewals, total) to <out-dir>; exits 1 when a step
-// does not arrive where the funnel routes it.
+//   --path   what to do on the offer pages, in the order they come. Accept and decline route differently (apf: offer 1
+//            accepted skips offer 2; a decline goes to the downsell), so the walk reads where to arrive from each page's
+//            own accept / decline meta tags, and stops on the thank-you page; pages after the list are declined.
+//            Default: decline everything, the shortest path.
+//   --pack   the checkout card to buy (default: the funnel's featured card)
+//   --tier   on a supply-card offer (apf's offer 1), the card whose Buy now is pressed on accept (default: the selected one)
+//   --resume <ref_id> [--start <page file>]  skip the checkout: walk the offers of an order already placed, from that page
+// Writes a screenshot per step and order.json (order number, lines, terms, total) to <out-dir>; exits 1 when a step
+// does not arrive where the page routes it.
 //
 // Campaigns OS's own `qa run` places these orders on a local build; it cannot yet on the store's host, where the funnel
 // is served at the site root (/<page>/) rather than under its Page Kit slug.
@@ -17,16 +23,22 @@ import fs from 'node:fs';
 
 const [host, out] = process.argv.slice(2);
 const opt = (name, dflt) => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : dflt; };
-const path = opt('--path', 'accept,decline,accept,decline').split(',');
-const pack = opt('--pack', 'stick-2');
-const resume = opt('--resume', null);                  // an order's ref_id: start on a special offer with it
-const start = Number(opt('--start', '1'));             // with --resume: the special offer to start on (1-4)
+const FUNNELS = {
+  stick: { checkout: 'stick-checkout', pack: 'stick-2', first: 'stick-special-1', thankYou: 'stick-thank-you' },
+  apf: { checkout: 'foundation-checkout', pack: 'apf-2', first: 'foundation-offer-1', thankYou: 'foundation-thank-you' },
+};
+const FN = FUNNELS[process.env.FUNNEL || 'stick'];
+const path = opt('--path', 'decline').split(',');
+const pack = opt('--pack', FN.pack);
+const tier = opt('--tier', null);
+const resume = opt('--resume', null);                  // an order's ref_id: start on an offer page with it
+const start = opt('--start', FN.first);                // with --resume: the page to start on
 const CARD = '6011111111111117', CVV = '123';          // NEXT's test card (as Campaigns OS's QA uses)
 const ADDRESS = { fname: 'Quinn', lname: 'Tester', email: 'qa-live@skinofab.test', address1: '1600 Amphitheatre Pkwy',
   city: 'Mountain View', province: 'CA', postal: '94043' };
 fs.mkdirSync(out, { recursive: true });
 
-const browser = await chromium.launch({ proxy: process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined });
+const browser = await chromium.launch({ proxy: process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined, args: ['--disable-dev-shm-usage'] });
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'en-US', ignoreHTTPSErrors: true });
 const page = await ctx.newPage();
 const errors = [];
@@ -47,12 +59,13 @@ const fill = async (name, value) => {
 };
 const select = async (name, value) => { const f = field(name); await f.waitFor({ timeout: 20000 }); await f.selectOption(value); };
 const arrive = async (file) => page.waitForURL(new RegExp(`/${file}/`), { timeout: 90000 });
+const fileOf = (u) => new URL(u, host).pathname.split('/').filter(Boolean).pop();
 
-let result = { host, pack, path };
+let result = { funnel: process.env.FUNNEL || 'stick', host, pack, path };
 try {
   if (!resume) {
   await step('checkout', async () => {
-    await page.goto(`${host}/stick-checkout/?forceBundleId=${pack}`, { waitUntil: 'load', timeout: 60000 });
+    await page.goto(`${host}/${FN.checkout}/?forceBundleId=${pack}`, { waitUntil: 'load', timeout: 60000 });
     await page.waitForFunction(() => [...document.querySelectorAll('[data-next-bundle-card] .bundle-card__price-total')]
       .some((e) => /\$\d/.test(e.textContent)), null, { timeout: 30000 });
   });
@@ -79,7 +92,7 @@ try {
   });
   await step('place-order', async () => {
     await page.locator('#combo_form button[type="submit"]').first().click();
-    try { await arrive('stick-special-1'); }
+    try { await arrive(FN.first); }
     catch (e) {
       // what stopped it: the form's visible messages, by field
       result.name_fields = await page.evaluate(() => [...document.querySelectorAll('[data-next-checkout-field="fname"], [data-next-checkout-field="lname"], input[name="first_name"], input[name="fname"]')]
@@ -92,22 +105,40 @@ try {
     }
   });
   } else {
-    await step('resume', async () => { await page.goto(`${host}/stick-special-${start}/?ref_id=${resume}`, { waitUntil: 'load', timeout: 60000 }); });
+    await step('resume', async () => { await page.goto(`${host}/${start}/?ref_id=${resume}`, { waitUntil: 'load', timeout: 60000 }); });
   }
   result.ref_id = new URL(page.url()).searchParams.get('ref_id');
-  const files = ['stick-special-1', 'stick-special-2', 'stick-special-3', 'stick-special-4', 'stick-thank-you'];
   result.offers = [];
-  for (let i = resume ? start - 1 : 0; i < 4; i++) {
-    const action = path[i] === 'accept' ? 'add' : 'skip';
-    await step(`offer-${i + 1}-${path[i]}`, async () => {
-      // the SDK has the order (sf-offer-gate's field is filled) before its offer actions answer a click
+  // the offer pages, as the funnel routes them, until the thank-you page
+  for (let i = 0, guard = 0; guard < 10; guard++) {
+    const file = fileOf(page.url());
+    if (file === FN.thankYou) break;
+    const action = path[i] || 'decline';
+    await step(`${file}-${action}`, async () => {
+      // the SDK has the order (sf-offer-gate's field is filled) before its offer actions answer a click; a page with a
+      // skip rule (the brush offers) has read the order's lines by then, and may be sending the order on
       await page.waitForFunction(() => (document.querySelector('[data-sf-upsell-ok]')?.textContent || '').trim(), null, { timeout: 45000 });
+      await page.waitForFunction(() => !document.querySelector('[data-sf-skip-skus]') || document.querySelector('[data-sf-sku]'), null, { timeout: 30000 }).catch(() => {});
       await page.waitForTimeout(1500);
-      const price = (await page.locator('[data-next-upsell="offer"] .upsell-offer__price:not(.diagonal-strike)').first().textContent().catch(() => ''))?.trim();
-      result.offers.push({ offer: i + 1, action: path[i], shown_price: price });
-      // (the accept button pulses, so it is never "stable" to Playwright: the element's own click)
-      await page.locator(`[data-next-upsell="offer"] [data-next-upsell-action="${action}"]:visible`).first().evaluate((el) => el.click());
-      await arrive(files[i + 1]);
+      const now = fileOf(page.url());
+      if (now !== file) { result.offers.push({ page: file, gate: `sent on to ${now} without an offer` }); return; }
+      i++;
+      const meta = async (n) => page.locator(`meta[name="${n}"]`).first().getAttribute('content');
+      const next = fileOf(await meta(action === 'accept' ? 'next-upsell-accept-url' : 'next-upsell-decline-url'));
+      const supply = await page.locator('[data-sf-supply-buy]').count();
+      if (action === 'accept' && supply) {
+        // a supply-card offer: the card's own Buy now (it selects the card, then fires the offer's add)
+        const card = tier ? page.locator(`[data-next-bundle-card][data-next-bundle-id="${tier}"]`).first() : page.locator('[data-next-bundle-card].next-selected').first();
+        const price = (await card.locator('[data-next-bundle-display="price"]').first().textContent().catch(() => ''))?.trim();
+        result.offers.push({ page: file, action, tier: await card.getAttribute('data-next-bundle-id'), shown_price: price, next });
+        await card.locator('[data-sf-supply-buy]').first().evaluate((el) => el.click());
+      } else {
+        const price = (await page.locator('[data-next-upsell="offer"] .upsell-offer__price:not(.diagonal-strike), [data-next-upsell="offer"] [data-next-bundle-card].next-selected [data-next-bundle-display="price"]').first().textContent().catch(() => ''))?.trim();
+        result.offers.push({ page: file, action, shown_price: price, next });
+        // (the accept button pulses, so it is never "stable" to Playwright: the element's own click)
+        await page.locator(`[data-next-upsell="offer"] [data-next-upsell-action="${action === 'accept' ? 'add' : 'skip'}"]`).first().evaluate((el) => el.click());
+      }
+      await arrive(next);
     });
   }
   await step('thank-you', async () => {
@@ -116,9 +147,8 @@ try {
     Object.assign(result, await page.evaluate(() => ({
       order_number: document.querySelector('[data-next-display="order.number"]')?.textContent.trim(),
       lines: [...document.querySelectorAll('.summary-desktop [data-order-line-id]')]       // (the desktop summary; the phone one repeats it)
-       
         .slice(0, 8).map((l) => ({ name: l.querySelector('.cart-item__title')?.textContent.trim(),
-          renew: l.querySelector('.sf-line-renew')?.textContent.trim(), total: l.querySelector('.checkout__line-item__final-price')?.textContent.trim() })),
+          terms: l.querySelector('.sf-line-renew')?.textContent.trim(), total: l.querySelector('.checkout__line-item__final-price')?.textContent.trim() })),
       order_total: document.querySelector('.order-totals__value--total')?.textContent.trim(),
     })));
   });

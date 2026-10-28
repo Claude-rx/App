@@ -1,0 +1,42 @@
+{%- comment -%} SKINOFAB: the step title is an h2, as the other steps' (it was the page's only h1). {%- endcomment -%}
+{% comment %}
+  next_component: shipping-address-form
+  next_version: 2.0.0
+  next_sdk_min: 0.4.40
+  next_purpose: Shipping address fields, SDK-built. The empty data-next-address block renders the fields the selected country collects, in that country's order (layouts from i18n-rules.nextcommerce.com, re-rendered on country change with entered values preserved).
+  next_params:
+    section_title:    string, default "Step 3: Shipping Information". Heading shown above the fields.
+    is_first:         bool, default false. Adds form-section--first modifier.
+    gated:            bool, default from page frontmatter `address_form.gated` (false when neither is set). true = cc-gated: only the Address field shows until the shopper types an address, then Apartment / City / State / Postal / Phone appear. false = cc-ungated: every field visible from the start. There is no third state — the SDK's own half-gating (Apartment shown, City/State/Postal hidden) is never used.
+    label_style:      string, default "inset" (label floats in at the top of the field when filled). "floating" = cc-floating, label lifts onto the field's top border on a white chip when filled (the .label-checkout--floating look). "static" = cc-static, non-floating — label always visible above the field, placeholder hidden. Also toggleable per page without an include arg via frontmatter `address_form.label_style` (the include arg wins when both are set).
+  next_sdk_owns:
+    - data-next-address="shipping" (the block; SDK renders .next-address-row / .form-group.next-address-field / .next-address-control + .next-address-label into it)
+    - data-next-address-state (loading | ready — set by the SDK, styleable)
+    - data-next-component="location" (SDK adds it to rows after address1 so city/state/postal stay gated until country is selected)
+  next_theming:
+    classes_designer_owns: [.form-section, .form-section__title]
+    css_vars_designer_owns: []
+    notes: The SDK-built controls are styled by the "SDK address blocks" section of next-core.css (.next-address-control/-label mirror .input-flds/.label-checkout; floating labels are pure CSS via :placeholder-shown, no has-value JS).
+  next_dont_touch:
+    - Do NOT prefill field markup inside the block — hand-written address inputs are deprecated (SDK >= 0.4.40); the SDK owns everything inside it
+    - The block skips any field already declared elsewhere in the form (e.g. fname/lname/email/phone in customer-info-form), so it renders country -> address -> city/state/postal here
+    - data-next-component="shipping-form" wrapper SHOULD live in the page around both customer-info-form + this partial; do not add a duplicate wrapper here
+  next_gotchas:
+    - Field set and order are country-driven — do NOT hardcode US assumptions; JP puts postcode before city, DE puts postcode before city, etc.
+    - Optional attrs: data-next-address-lang (label language), data-next-address-api (override the i18n rules host)
+  next_variants:
+    - default (this partial)
+  next_related:
+    - customer-info-form (paired inside SDK shipping-form wrapper; its declared fields are what the block skips)
+    - billing-address-form (same block mechanism with data-next-address="billing")
+{% endcomment %}
+{% assign sec_title = section_title | default: 'Step 3: Shipping Information' -%}
+{% if is_first == nil %}{% assign is_first = false %}{% endif -%}
+{% assign saf_label_style = label_style | default: address_form.label_style -%}
+{% if gated == nil %}{% assign gate_raw = address_form.gated %}{% else %}{% assign gate_raw = gated %}{% endif -%}
+{% comment %} Liquid treats any non-empty string as truthy, so a quoted `gated: "false"` must not switch gating on {% endcomment -%}
+{% if gate_raw == true or gate_raw == 'true' %}{% assign gate_on = true %}{% else %}{% assign gate_on = false %}{% endif -%}
+<div data-next-catalog-component="shipping-address-form" class="form-section{% if is_first %} form-section--first{% endif %}">
+  <h2 class="form-section__title">{{ sec_title }}</h2>
+  <div data-next-address="shipping" class="{% if gate_on %}cc-gated{% else %}cc-ungated{% endif %}{% if saf_label_style == 'floating' %} cc-floating{% elsif saf_label_style == 'static' %} cc-static{% endif %}"></div>
+</div>

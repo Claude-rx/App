@@ -24,13 +24,18 @@ python3 -I tools/rebrand/fresh_alpha_names.py "$W/rb/groups.json" "$W/rel2/skino
 python3 -I tools/persona/apf_pages.py "$W/rel4/skinofab-site" tools/persona/apf-images.json --classic | tail -2
 SF_CATALOG="$W/catalog-rb.json" python3 -I tools/theme-build/build_theme.py "$W/rel4/skinofab-site" "$W/spark" skinofab-theme skinofab-handoff
 python3 -I tools/theme-build/optimize_theme.py skinofab-theme
-# the Adaptive Foundation Stick funnel (Campaign Page Kit project campaigns/skinofab, docs/stick-funnel.md): its generated
-# copy and images, the Page Kit build, the theme templates the store serves at /<page>/, then the funnel checks
+# the two funnels (Campaign Page Kit project campaigns/skinofab): the Adaptive Foundation Stick's (docs/stick-funnel.md)
+# and the Adaptive Peptide Foundation's (docs/apf-funnel.md): their generated copy, pages and images, one Page Kit build,
+# the theme templates the store serves at /<page>/ (each funnel its own slug and asset folder), then each funnel's checks
 python3 -I tools/funnel/copy_includes.py && python3 -I tools/funnel/upsell_pages.py > /dev/null
 python3 -I tools/funnel/funnel_images.py "$W" > /dev/null
+python3 -I tools/funnel/apf/images.py "$W" > /dev/null
+python3 -I tools/funnel/apf/offer_pages.py > /dev/null && python3 -I tools/funnel/apf/copy_deck.py > /dev/null
 (cd campaigns/skinofab && { [ -d node_modules ] || npm ci --no-audit --no-fund > /dev/null; } && npx --no-install campaign-build > /dev/null 2>&1)
 python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/stick-funnel skinofab-theme
 python3 -I tools/funnel/check_funnel.py skinofab-theme      # prices, renewal terms, refs, routes, claims
+FUNNEL=apf python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/apf-funnel skinofab-theme
+python3 -I tools/funnel/apf/check_apf.py skinofab-theme     # prices, one-time terms, refs, routes, claims
 
 cd skinofab-theme
 python3 scripts/check-dtl.py --require

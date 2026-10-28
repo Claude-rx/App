@@ -192,11 +192,15 @@ template family, using the Campaign Cart SDK 0.4.43:
       design-source/                  what the listicle and product page were designed from, with screenshots
 
 `tools/funnel/` holds everything that writes or checks them; nothing under `_site/` or `skinofab-theme/` is edited by
-hand.
+hand. The same tools serve the second funnel, the Adaptive Peptide Foundation's (`docs/apf-funnel.md`,
+`src/apf-funnel/`): `funnel.py` loads `funnels/<name>.py` for the funnel named by `FUNNEL` (`stick`, the default, or
+`apf`), so `FUNNEL=apf python3 -I tools/funnel/deploy_theme.py …` deploys that funnel into its own asset folder
+(`assets/sfa/`) and template set, and `FUNNEL=apf node tools/funnel/funnel_check.mjs …` checks its pages. The APF's own
+generators and checks are under `tools/funnel/apf/`.
 
 | Tool | Does |
 |---|---|
-| `funnel.py` | the one source of the pages, their order, routes, packages, offers and SDK meta tags |
+| `funnel.py` | loads the funnel named by `FUNNEL` from `funnels/`: the one source of the pages, their order, routes, packages, offers and SDK meta tags |
 | `campaign_spec.py` | writes `campaign-spec.json` from `funnel.py` and one live read of campaign 2211 |
 | `copy_includes.py` | the product page's tabs and FAQ includes from `tools/persona/stick_copy.py` |
 | `upsell_pages.py` | the four special-offer pages (frontmatter from the spec: package, voucher, prices, terms) |
@@ -247,6 +251,14 @@ bypass it), so a pushed page can show its old version on the live host for up to
   at the site root (logged as workflow finding wf_1793106901837_7d97c164).
 
 ### Campaigns OS
+
+The Page Kit project holds one Build Packet at a time. Since the Adaptive Peptide Foundation funnel's run (28 Oct
+2026), `campaign-runtime.build.json` and `.campaign-runtime/` are that funnel's (`docs/apf-funnel.md`); this funnel's
+run is archived under `campaigns/skinofab/runs/stick-funnel/` (its packet, brief and readback bundle: assembly
+report, build context, doctor output, QA verdict, polish captures). To run this funnel's lifecycle again, `start` it
+from its own inputs: `npx --no-install campaigns-os start --spec ./campaign-spec.json --source ./design-source --target
+. --template-family apollo --wrapper-policy preserve_document_wrappers --order-path-depth common --deploy-target
+local-serve --brief ./campaign-build-brief.json --force`.
 
 The funnel went through the Campaigns OS 1.60.0 lifecycle (brief, build, theme, Page Kit parity, polish capture,
 deploy, QA resolve, QA run with 5 test orders on the local build; after each review round again, without orders):

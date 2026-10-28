@@ -43,12 +43,12 @@
         "asset_crawl_schema_version": "source-asset-crawl/v0",
         "generator": "tools/funnel/design_source.py@1",
         "generator_version": null,
-        "manifest_path": "../../design-source/.campaigns-os/source-html-manifest.json",
+        "manifest_path": "../../design-source-apf/.campaigns-os/source-html-manifest.json",
         "manifest_schema_version": "source-html-manifest/v0",
-        "manifest_sha256": "sha256:d8c1fa66a2561fa49bc67bb7999b9b8f73f5ea30a1b7ba17d8198f2c213e4e5b",
+        "manifest_sha256": "sha256:66e650456c127b6c5a206ce9c903973aef131577431c049d06e50bf0152ca561",
         "producer": null,
         "producer_material_fingerprint": null,
-        "source_root": "../../design-source",
+        "source_root": "../../design-source-apf",
         "source_type": "html_funnel"
       },
       "reference_refs": [],
@@ -85,13 +85,13 @@
         {
           "availability": "available",
           "browser": "playwright-chromium/1194",
-          "captured_at": "2026-10-27T09:41:00Z",
+          "captured_at": "2026-10-28T08:45:00Z",
           "device_profile": "desktop-1440x900",
-          "height": 15613,
+          "height": 12785,
           "id": "source-offer-desktop",
           "kind": "source_screenshot",
           "path": ".campaigns-os/screenshots/offer-desktop.jpg",
-          "sha256": "sha256:63e2bcf90b42a403458d6d0acdd48f6793a2e912108da436d87e04fce53f3345",
+          "sha256": "sha256:227151ae395bcc5f32b24cfe1dff72742f8ebd77f36994eccceb554d4f089760",
           "source_ref_id": "source-offer-html",
           "viewport": "desktop",
           "width": 1440
@@ -99,13 +99,13 @@
         {
           "availability": "available",
           "browser": "playwright-chromium/1194",
-          "captured_at": "2026-10-27T09:41:00Z",
+          "captured_at": "2026-10-28T08:45:00Z",
           "device_profile": "mobile-390x844",
-          "height": 20974,
+          "height": 16716,
           "id": "source-offer-mobile",
           "kind": "source_screenshot",
           "path": ".campaigns-os/screenshots/offer-mobile.jpg",
-          "sha256": "sha256:b6680572b1e151677e36b131abb0dd857af0c0bdd4c8456bc815a57c1bddada3",
+          "sha256": "sha256:a63b02f8ac881c1ef5333a04c9b7f3f31ded07ce9d1f8f7f1c3aa767eead74ba",
           "source_ref_id": "source-offer-html",
           "viewport": "mobile",
           "width": 390
@@ -127,9 +127,9 @@
         {
           "id": "source-html-manifest",
           "kind": "manifest",
-          "path": "../../design-source/.campaigns-os/source-html-manifest.json",
+          "path": "../../design-source-apf/.campaigns-os/source-html-manifest.json",
           "role": "producer_manifest",
-          "sha256": "sha256:d8c1fa66a2561fa49bc67bb7999b9b8f73f5ea30a1b7ba17d8198f2c213e4e5b"
+          "sha256": "sha256:66e650456c127b6c5a206ce9c903973aef131577431c049d06e50bf0152ca561"
         },
         {
           "id": "source-listicle-html",
@@ -141,9 +141,9 @@
         {
           "id": "source-offer-html",
           "kind": "html_file",
-          "path": "stick-pdp.html",
+          "path": "apf-pdp.html",
           "role": "page",
-          "sha256": "sha256:93c59448221912d2377f29149bba16b0b176630369bbf3249d0310129df2ed4b"
+          "sha256": "sha256:b75e4c7913104a9e8a4bf3e47b72ecd5f98f28510f6c5bc0b05de44fcb708481"
         }
       ],
       "trust": "structured"
@@ -170,7 +170,7 @@
         {
           "confidence": "high",
           "coverage_role": "template_baseline",
-          "id": "template-special-1-coverage",
+          "id": "template-offer-1-coverage",
           "reference_refs": [
             "apollo-checkout-desktop",
             "apollo-checkout-mobile"
@@ -179,13 +179,13 @@
           "source_refs": [
             "template-reference-apollo-contract"
           ],
-          "surface_id": "special-1",
+          "surface_id": "offer-1",
           "template_reference_id": "template-reference-apollo"
         },
         {
           "confidence": "high",
           "coverage_role": "template_baseline",
-          "id": "template-special-2-coverage",
+          "id": "template-offer-2-coverage",
           "reference_refs": [
             "apollo-checkout-desktop",
             "apollo-checkout-mobile"
@@ -194,13 +194,13 @@
           "source_refs": [
             "template-reference-apollo-contract"
           ],
-          "surface_id": "special-2",
+          "surface_id": "offer-2",
           "template_reference_id": "template-reference-apollo"
         },
         {
           "confidence": "high",
           "coverage_role": "template_baseline",
-          "id": "template-special-3-coverage",
+          "id": "template-offer-2b-coverage",
           "reference_refs": [
             "apollo-checkout-desktop",
             "apollo-checkout-mobile"
@@ -209,13 +209,13 @@
           "source_refs": [
             "template-reference-apollo-contract"
           ],
-          "surface_id": "special-3",
+          "surface_id": "offer-2b",
           "template_reference_id": "template-reference-apollo"
         },
         {
           "confidence": "high",
           "coverage_role": "template_baseline",
-          "id": "template-special-4-coverage",
+          "id": "template-brush-offer-coverage",
           "reference_refs": [
             "apollo-checkout-desktop",
             "apollo-checkout-mobile"
@@ -224,7 +224,22 @@
           "source_refs": [
             "template-reference-apollo-contract"
           ],
-          "surface_id": "special-4",
+          "surface_id": "brush-offer",
+          "template_reference_id": "template-reference-apollo"
+        },
+        {
+          "confidence": "high",
+          "coverage_role": "template_baseline",
+          "id": "template-brush-offer-b-coverage",
+          "reference_refs": [
+            "apollo-checkout-desktop",
+            "apollo-checkout-mobile"
+          ],
+          "screenshot_refs": [],
+          "source_refs": [
+            "template-reference-apollo-contract"
+          ],
+          "surface_id": "brush-offer-b",
           "template_reference_id": "template-reference-apollo"
         },
         {
@@ -339,8 +354,8 @@
     }
   ],
   "divergences": [],
-  "generated_at": "2026-10-27T10:22:39.021Z",
-  "material_fingerprint": "sha256:052d430b03a95eb65b4eb3eb9a6eba30b97697b3e7ec2bc1e43008ac245862ca",
+  "generated_at": "2026-10-28T08:58:55.655Z",
+  "material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
   "notes": [],
   "package_id": "null:design-source",
   "proposed_exceptions": [],
@@ -348,13 +363,14 @@
     "blockers": [],
     "gaps": [],
     "handled": [
+      "brush-offer-b: template_baseline (high) via template-baseline",
+      "brush-offer: template_baseline (high) via template-baseline",
       "checkout: template_baseline (high) via template-baseline",
       "listicle: primary_design (high) via html-funnel",
+      "offer-1: template_baseline (high) via template-baseline",
+      "offer-2: template_baseline (high) via template-baseline",
+      "offer-2b: template_baseline (high) via template-baseline",
       "offer: primary_design (high) via html-funnel",
-      "special-1: template_baseline (high) via template-baseline",
-      "special-2: template_baseline (high) via template-baseline",
-      "special-3: template_baseline (high) via template-baseline",
-      "special-4: template_baseline (high) via template-baseline",
       "thank-you: template_baseline (high) via template-baseline"
     ],
     "included_sources": [
@@ -364,14 +380,14 @@
     "next_actions": [
       "Proceed to Build with this Design Source Package material fingerprint."
     ],
-    "summary": "Design Source Package is ready; 2 contribution(s), 8 coverage mapping(s), 0 gap(s), 0 TODO(s), and 0 waiver(s).",
+    "summary": "Design Source Package is ready; 2 contribution(s), 9 coverage mapping(s), 0 gap(s), 0 TODO(s), and 0 waiver(s).",
     "todos": [],
     "waivers": []
   },
   "readiness": {
     "blocking_reasons": [],
     "gap_count": 0,
-    "generated_at": "2026-10-27T10:22:39.021Z",
+    "generated_at": "2026-10-28T08:58:55.655Z",
     "status": "ready",
     "todo_count": 0,
     "waiver_count": 0
@@ -383,43 +399,43 @@
   "surface_identity": [
     {
       "aliases": [
-        "stick-funnel"
+        "apf-funnel"
       ],
       "id": "campaign",
       "kind": "campaign",
       "label": "Campaign",
       "mappings": {
-        "campaign_slug": "stick-funnel"
+        "campaign_slug": "apf-funnel"
       }
     },
     {
       "aliases": [
         "listicle",
-        "Listicle: 10 reasons women past 45 switch to the stick",
+        "Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation",
         "presell",
         "facelove-listicle.html",
-        "/stick-funnel/10-reasons-foundation-stick/",
+        "/apf-funnel/10-reasons-adaptive-foundation/",
         "product",
-        "10-reasons-foundation-stick.html",
-        "src/stick-funnel/10-reasons-foundation-stick.html"
+        "10-reasons-adaptive-foundation.html",
+        "src/apf-funnel/10-reasons-adaptive-foundation.html"
       ],
       "id": "listicle",
       "kind": "page",
-      "label": "Listicle: 10 reasons women past 45 switch to the stick",
+      "label": "Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation",
       "mappings": {
         "campaign_spec_page_id": "listicle",
         "map_builder_custom_name": null,
-        "map_builder_label": "Listicle: 10 reasons women past 45 switch to the stick",
+        "map_builder_label": "Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation",
         "page_kit": {
-          "output_path": "src/stick-funnel/10-reasons-foundation-stick.html",
+          "output_path": "src/apf-funnel/10-reasons-adaptive-foundation.html",
           "page_type": "product",
           "permalink_required": false,
-          "public_route": "/stick-funnel/10-reasons-foundation-stick/",
-          "spec_route": "10-reasons-foundation-stick/",
-          "target_path": "10-reasons-foundation-stick.html"
+          "public_route": "/apf-funnel/10-reasons-adaptive-foundation/",
+          "spec_route": "10-reasons-adaptive-foundation/",
+          "target_path": "10-reasons-adaptive-foundation.html"
         },
         "producer_page_type": null,
-        "public_route": "/stick-funnel/10-reasons-foundation-stick/",
+        "public_route": "/apf-funnel/10-reasons-adaptive-foundation/",
         "source_page_id": "listicle",
         "source_path": "facelove-listicle.html"
       }
@@ -427,40 +443,40 @@
     {
       "aliases": [
         "offer",
-        "Product page: choose 1 stick or 2 sticks + a free Lymphatic Brush",
+        "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts",
         "landing",
-        "stick-pdp.html",
-        "/stick-funnel/foundation-stick-offer/",
+        "apf-pdp.html",
+        "/apf-funnel/adaptive-foundation-offer/",
         "product",
-        "foundation-stick-offer.html",
-        "src/stick-funnel/foundation-stick-offer.html"
+        "adaptive-foundation-offer.html",
+        "src/apf-funnel/adaptive-foundation-offer.html"
       ],
       "id": "offer",
       "kind": "page",
-      "label": "Product page: choose 1 stick or 2 sticks + a free Lymphatic Brush",
+      "label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts",
       "mappings": {
         "campaign_spec_page_id": "offer",
         "map_builder_custom_name": null,
-        "map_builder_label": "Product page: choose 1 stick or 2 sticks + a free Lymphatic Brush",
+        "map_builder_label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts",
         "page_kit": {
-          "output_path": "src/stick-funnel/foundation-stick-offer.html",
+          "output_path": "src/apf-funnel/adaptive-foundation-offer.html",
           "page_type": "product",
           "permalink_required": false,
-          "public_route": "/stick-funnel/foundation-stick-offer/",
-          "spec_route": "foundation-stick-offer/",
-          "target_path": "foundation-stick-offer.html"
+          "public_route": "/apf-funnel/adaptive-foundation-offer/",
+          "spec_route": "adaptive-foundation-offer/",
+          "target_path": "adaptive-foundation-offer.html"
         },
         "producer_page_type": null,
-        "public_route": "/stick-funnel/foundation-stick-offer/",
+        "public_route": "/apf-funnel/adaptive-foundation-offer/",
         "source_page_id": "offer",
-        "source_path": "stick-pdp.html"
+        "source_path": "apf-pdp.html"
       }
     },
     {
       "aliases": [
         "checkout",
         "Checkout",
-        "stick-checkout/"
+        "foundation-checkout/"
       ],
       "id": "checkout",
       "kind": "page",
@@ -471,92 +487,113 @@
         "map_builder_label": "Checkout",
         "page_kit": null,
         "producer_page_type": null,
-        "public_route": "stick-checkout/",
+        "public_route": "foundation-checkout/",
         "source_page_id": "checkout",
         "source_path": null
       }
     },
     {
       "aliases": [
-        "special-1",
-        "Special offer 1: one more stick, 50% off",
+        "offer-1",
+        "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
         "upsell",
-        "stick-special-1/"
+        "foundation-offer-1/"
       ],
-      "id": "special-1",
+      "id": "offer-1",
       "kind": "page",
-      "label": "Special offer 1: one more stick, 50% off",
+      "label": "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
       "mappings": {
-        "campaign_spec_page_id": "special-1",
+        "campaign_spec_page_id": "offer-1",
         "map_builder_custom_name": null,
-        "map_builder_label": "Special offer 1: one more stick, 50% off",
+        "map_builder_label": "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
         "page_kit": null,
         "producer_page_type": null,
-        "public_route": "stick-special-1/",
-        "source_page_id": "special-1",
+        "public_route": "foundation-offer-1/",
+        "source_page_id": "offer-1",
         "source_path": null
       }
     },
     {
       "aliases": [
-        "special-2",
-        "Special offer 2: the Lymphatic Brush, 20% off",
+        "offer-2",
+        "Offer 2: one more bottle, 40% off",
         "upsell",
-        "stick-special-2/"
+        "foundation-offer-2/"
       ],
-      "id": "special-2",
+      "id": "offer-2",
       "kind": "page",
-      "label": "Special offer 2: the Lymphatic Brush, 20% off",
+      "label": "Offer 2: one more bottle, 40% off",
       "mappings": {
-        "campaign_spec_page_id": "special-2",
+        "campaign_spec_page_id": "offer-2",
         "map_builder_custom_name": null,
-        "map_builder_label": "Special offer 2: the Lymphatic Brush, 20% off",
+        "map_builder_label": "Offer 2: one more bottle, 40% off",
         "page_kit": null,
         "producer_page_type": null,
-        "public_route": "stick-special-2/",
-        "source_page_id": "special-2",
+        "public_route": "foundation-offer-2/",
+        "source_page_id": "offer-2",
         "source_path": null
       }
     },
     {
       "aliases": [
-        "special-3",
-        "Special offer 3: the PDRN Plumping Balm, 20% off",
-        "upsell",
-        "stick-special-3/"
+        "offer-2b",
+        "Offer 2 downsell: one more bottle, 50% off",
+        "downsell",
+        "foundation-offer-2b/"
       ],
-      "id": "special-3",
+      "id": "offer-2b",
       "kind": "page",
-      "label": "Special offer 3: the PDRN Plumping Balm, 20% off",
+      "label": "Offer 2 downsell: one more bottle, 50% off",
       "mappings": {
-        "campaign_spec_page_id": "special-3",
+        "campaign_spec_page_id": "offer-2b",
         "map_builder_custom_name": null,
-        "map_builder_label": "Special offer 3: the PDRN Plumping Balm, 20% off",
+        "map_builder_label": "Offer 2 downsell: one more bottle, 50% off",
         "page_kit": null,
         "producer_page_type": null,
-        "public_route": "stick-special-3/",
-        "source_page_id": "special-3",
+        "public_route": "foundation-offer-2b/",
+        "source_page_id": "offer-2b",
         "source_path": null
       }
     },
     {
       "aliases": [
-        "special-4",
-        "Special offer 4: the EGF + NAD+ Firming Serum, 20% off",
+        "brush-offer",
+        "Offer 3: the Lymphatic Brush, 40% off",
         "upsell",
-        "stick-special-4/"
+        "lymphatic-brush-offer/"
       ],
-      "id": "special-4",
+      "id": "brush-offer",
       "kind": "page",
-      "label": "Special offer 4: the EGF + NAD+ Firming Serum, 20% off",
+      "label": "Offer 3: the Lymphatic Brush, 40% off",
       "mappings": {
-        "campaign_spec_page_id": "special-4",
+        "campaign_spec_page_id": "brush-offer",
         "map_builder_custom_name": null,
-        "map_builder_label": "Special offer 4: the EGF + NAD+ Firming Serum, 20% off",
+        "map_builder_label": "Offer 3: the Lymphatic Brush, 40% off",
         "page_kit": null,
         "producer_page_type": null,
-        "public_route": "stick-special-4/",
-        "source_page_id": "special-4",
+        "public_route": "lymphatic-brush-offer/",
+        "source_page_id": "brush-offer",
+        "source_path": null
+      }
+    },
+    {
+      "aliases": [
+        "brush-offer-b",
+        "Offer 3 downsell: the Lymphatic Brush, 60% off",
+        "downsell",
+        "lymphatic-brush-offer-b/"
+      ],
+      "id": "brush-offer-b",
+      "kind": "page",
+      "label": "Offer 3 downsell: the Lymphatic Brush, 60% off",
+      "mappings": {
+        "campaign_spec_page_id": "brush-offer-b",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Offer 3 downsell: the Lymphatic Brush, 60% off",
+        "page_kit": null,
+        "producer_page_type": null,
+        "public_route": "lymphatic-brush-offer-b/",
+        "source_page_id": "brush-offer-b",
         "source_path": null
       }
     },
@@ -565,7 +602,7 @@
         "thank-you",
         "Thank you",
         "thankyou",
-        "stick-thank-you/"
+        "foundation-thank-you/"
       ],
       "id": "thank-you",
       "kind": "page",
@@ -576,7 +613,7 @@
         "map_builder_label": "Thank you",
         "page_kit": null,
         "producer_page_type": null,
-        "public_route": "stick-thank-you/",
+        "public_route": "foundation-thank-you/",
         "source_page_id": "thank-you",
         "source_path": null
       }

@@ -1,0 +1,171 @@
+/* sf-apf.css: the Adaptive Peptide Foundation funnel's listicle and sales page, on top of sf-funnel.css (the stick
+   funnel's look: Jost, ink on white, black buttons). The sales page is the 20-section long page; each section's block
+   is here, the shared ones (sf-sec, sf-two, sf-h2, sf-steps, sf-cards, sf-vs, sf-reviews, sf-packs...) in sf-funnel.css. */
+
+/* 1-2: the hero: the loop beside the headline */
+.sf-hero2 { display: grid; gap: 18px; padding: 10px 0 8px; align-items: center; }
+.sf-hero2__media { margin: 0; position: relative; max-width: 420px; justify-self: center; width: 100%; }
+.sf-hero2__media video, .sf-hero2__media img { width: 100%; aspect-ratio: 864 / 1080; object-fit: cover; border-radius: 16px; background: var(--cream); }
+.sf-hero2__tag { position: absolute; left: 12px; bottom: 12px; padding: 6px 12px; border-radius: 999px; background: rgba(21,21,21,.86); color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .04em; }
+.sf-hero2__eyebrow { display: inline-block; margin-bottom: 10px; padding: 5px 12px; border-radius: 999px; background: var(--cream); color: var(--ink); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.sf-hero2 h1 { font-size: 30px; line-height: 1.15; letter-spacing: -.01em; margin-bottom: 12px !important; }
+.sf-hero2 h1 em { font-style: normal; background: var(--ink); color: #fff; padding: 0 8px; border-radius: 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.sf-hero2__sub { font-size: 17px; line-height: 1.5; color: var(--text); margin-bottom: 14px !important; }
+.sf-trustline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 0 0 16px; padding: 0; list-style: none; font-size: 13.5px; color: var(--ink); }
+.sf-trustline li { display: flex; align-items: center; gap: 6px; }
+.sf-trustline .sf-stars__row { font-size: 15px; letter-spacing: 1px; }
+.sf-hero2 .sf-btn { width: 100%; max-width: 440px; }
+.sf-hero2__note { margin-top: 10px !important; font-size: 13px; color: var(--soft); }
+
+/* 3: the summary, 4: the benefits with the guarantee */
+.sf-summary { max-width: 760px; margin: 0 auto; font-size: 18px; line-height: 1.6; color: var(--ink); text-align: center; }
+.sf-benefits { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.sf-benefits li { position: relative; padding: 12px 14px 12px 46px; border: 1px solid var(--line); border-radius: 12px; background: #fff; font-size: 15px; line-height: 1.45; }
+.sf-benefits li::before { content: ''; position: absolute; left: 14px; top: 13px; width: 22px; height: 22px; border-radius: 50%; background: var(--ink)
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/13px no-repeat; }
+.sf-benefits strong { color: var(--ink); }
+.sf-guarantee--wide { margin-top: 16px; }
+
+/* 5 and 16: the pack picker (the stick funnel's cards, three of them) */
+.sf-offerbox { padding: 18px; border: 3px solid var(--ink); border-radius: var(--radius); background: #fff; }
+.sf-offerbox h2 { font-size: 24px; line-height: 1.2; margin-bottom: 4px; }
+.sf-offerbox__lead { font-size: 15px; color: var(--soft); margin-bottom: 14px !important; }
+.sf-pack__gift { display: flex; align-items: center; gap: 10px; }
+.sf-offerbox .sf-btn { width: 100%; max-width: none; }
+.sf-offerbox__trust { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; font-size: 13px; color: var(--soft); }
+.sf-offerbox__trust li::before { content: '✓'; margin-right: 5px; color: var(--ok); font-weight: 700; }
+.sf-once { margin: 12px 0 0 !important; font-size: 13px; line-height: 1.5; color: var(--soft); text-align: center; }
+.sf-savings { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 999px; background: #fdecec; color: #b3261e; font-size: 12px; font-weight: 600; }
+
+/* 6: the problem: scenes she knows */
+.sf-scenes { list-style: none; padding: 0; margin: 14px 0 18px; display: grid; gap: 10px; }
+.sf-scenes li { padding: 12px 14px; border-left: 4px solid #b3261e; background: #fff; border-radius: 0 10px 10px 0; font-size: 15.5px; line-height: 1.5; box-shadow: 0 1px 0 var(--line); }
+.sf-scenes time { font-weight: 600; color: var(--ink); margin-right: 6px; }
+.sf-problem__close { font-size: 18px; font-weight: 600; color: var(--ink); }
+
+/* 7: the problem mechanism, named */
+.sf-mechanism { margin: 0; padding: 22px 20px; border-radius: var(--radius); background: var(--ink); color: #fff; }
+.sf-mechanism p { color: #e6e6e6; }
+.sf-mechanism strong { color: #fff; }
+.sf-mechanism .sf-eyebrow { color: #c9c9c9; }
+.sf-mechanism h2 { color: #fff; }
+.sf-causes { display: grid; gap: 10px; margin: 16px 0; }
+.sf-mechanism .sf-cause { padding: 14px 16px; border-radius: 12px; background: #fff; color: #151515; }
+.sf-mechanism .sf-cause p, .sf-mechanism .sf-cause strong { color: #151515; }
+.sf-mechanism .sf-cause strong { display: block; margin-bottom: 4px; }
+
+/* 8: the solution: the loop beside four parts */
+.sf-parts { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; counter-reset: part; }
+.sf-parts li { counter-increment: part; position: relative; padding: 14px 14px 14px 56px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.sf-parts li::before { content: counter(part); position: absolute; left: 14px; top: 14px; width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-size: 14px; font-weight: 600; }
+.sf-parts strong { display: block; font-size: 16px; margin-bottom: 2px; }
+.sf-parts p { margin: 0 !important; font-size: 14.5px; }
+.sf-inside-img { border-radius: 12px; }
+
+/* 10: complaint -> what we did */
+.sf-fixgrid { display: grid; gap: 10px; }
+.sf-fix { display: grid; grid-template-columns: 1fr; gap: 6px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.sf-fix q { font-style: italic; color: #7a2e2e; quotes: '“' '”'; font-size: 15px; }
+.sf-fix q::before { content: open-quote; }
+.sf-fix q::after { content: close-quote; }
+.sf-fix small { font-size: 12px; color: var(--soft); }
+.sf-fix div { font-size: 15px; color: var(--ink); }
+.sf-fix div::before { content: '→ '; font-weight: 700; }
+
+/* 11: before and after */
+.sf-ba-grid { display: grid; gap: 12px; }
+.sf-ba-grid figure { margin: 0; }
+.sf-ba-grid img { border-radius: 12px; }
+.sf-ba-grid figcaption { margin-top: 6px; font-size: 13px; color: var(--soft); }
+.sf-lifegrid { display: grid; gap: 12px; margin-top: 18px; }
+.sf-life { padding: 16px; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
+.sf-life--after { background: var(--cream); border-color: var(--cream); }
+.sf-life h3 { font-size: 16px; margin-bottom: 8px; }
+.sf-life ul { margin: 0; padding-left: 20px; font-size: 15px; }
+.sf-life li { margin-bottom: 4px; }
+
+/* 12: the proof: the ratings and the facts */
+.sf-proof { display: grid; gap: 14px; }
+.sf-proof__card { padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.sf-proof__card strong { display: block; font-size: 16px; margin-bottom: 4px; }
+.sf-proof__card p { margin: 0 !important; font-size: 14.5px; }
+.sf-proof__quote { margin: 0; padding: 14px 16px; border-radius: 12px; background: var(--cream); font-size: 15px; }
+.sf-proof__quote cite { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--soft); }
+
+/* 13: the promise */
+.sf-promise { padding: 28px 20px; border-radius: var(--radius); background: var(--ink); color: #fff; }
+.sf-promise h2, .sf-promise strong { color: #fff; }
+.sf-promise p { color: #e6e6e6; font-size: 17px; line-height: 1.6; }
+.sf-promise .sf-eyebrow { color: #c9c9c9; }
+.sf-promise .sf-btn { background: #fff; color: var(--ink) !important; margin-top: 8px; }
+.sf-promise img { border-radius: 12px; }
+
+/* 14: how to use it, and the demo clips */
+.sf-demos { display: grid; gap: 14px; margin-top: 18px; }
+.sf-demo { margin: 0; }
+.sf-demo video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 12px; background: #000; }
+.sf-demo--wide video { aspect-ratio: 606 / 1080; }
+.sf-demo figcaption { margin-top: 6px; font-size: 13px; color: var(--soft); line-height: 1.4; }
+.sf-timeline { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+.sf-timeline li { display: grid; grid-template-columns: 84px 1fr; gap: 12px; align-items: start; padding: 12px 14px; border-radius: 12px; background: #fff; border: 1px solid var(--line); font-size: 14.5px; }
+.sf-timeline b { font-size: 14px; color: var(--ink); }
+
+/* 15: the guarantee, large */
+.sf-promisebox { display: grid; gap: 18px; align-items: center; padding: 24px 20px; border: 3px solid var(--ink); border-radius: var(--radius); background: #fff; }
+.sf-promisebox img { width: 160px; height: 160px; border-radius: 50%; justify-self: center; }
+.sf-promisebox h2 { font-size: 26px; margin-bottom: 8px; }
+.sf-promisebox ol { margin: 10px 0 0; padding-left: 20px; font-size: 15px; }
+.sf-promisebox li { margin-bottom: 4px; }
+
+/* 16: the value stack */
+.sf-stack { list-style: none; padding: 0; margin: 0 0 12px; }
+.sf-stack li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--line); font-size: 15px; }
+.sf-stack li span:last-child { white-space: nowrap; color: var(--soft); }
+.sf-stack li.sf-stack__total { border-bottom: 0; font-weight: 600; color: var(--ink); }
+.sf-stack li.sf-stack__total span:last-child { color: var(--ink); }
+.sf-stack li.sf-stack__today span:last-child { color: var(--ink); font-size: 22px; font-weight: 700; }
+.sf-why-now { margin: 14px 0 0 !important; padding: 12px 14px; border-radius: 10px; background: var(--cream); font-size: 14.5px; line-height: 1.5; }
+
+/* 17: scarcity, said plainly */
+.sf-limited { padding: 16px; border: 1px dashed var(--ink); border-radius: 12px; font-size: 15px; line-height: 1.5; }
+
+/* 18: the reviews: the wall of buyers' photos and the quotes */
+.sf-photowall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 16px 0; }
+.sf-photowall img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; }
+.sf-morequotes { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 8px; text-align: left; }
+.sf-morequotes li { padding: 10px 14px; border-radius: 10px; background: #fff; border: 1px solid var(--line); font-size: 14.5px; }
+.sf-morequotes cite { font-style: normal; color: var(--soft); font-size: 13px; }
+.sf-review--four .sf-review__stars .off { color: #d9d3ca; }
+
+/* 20: customer service */
+.sf-service { display: grid; gap: 12px; }
+.sf-service a.sf-card { text-decoration: none; }
+.sf-service .sf-card div { padding: 14px; }
+
+/* the listicle's reasons: a video reason, a photo wall reason */
+.sf-reason__video video { width: 100%; max-width: 360px; aspect-ratio: 606 / 1080; border-radius: 12px; background: #000; display: block; margin: 0 auto; }
+
+@media (min-width: 600px) {
+  .sf-ba-grid { grid-template-columns: 1fr 1fr; }
+  .sf-lifegrid { grid-template-columns: 1fr 1fr; }
+  .sf-fixgrid { grid-template-columns: 1fr 1fr; }
+  .sf-demos { grid-template-columns: repeat(2, 1fr); }
+  .sf-proof { grid-template-columns: 1fr 1fr; }
+  .sf-service { grid-template-columns: 1fr 1fr; }
+  .sf-photowall { grid-template-columns: repeat(6, 1fr); }
+}
+@media (min-width: 768px) {
+  .sf-hero2 { grid-template-columns: 1fr 1.1fr; gap: 36px; padding: 24px 0 10px; }
+  .sf-hero2__media { max-width: none; }
+  .sf-hero2 h1 { font-size: 40px; }
+  .sf-benefits { grid-template-columns: 1fr 1fr; }
+  .sf-fix { grid-template-columns: 1fr 1fr; align-items: center; }
+  .sf-demos { grid-template-columns: repeat(4, 1fr); }
+  .sf-promisebox { grid-template-columns: 160px 1fr; }
+  .sf-proof { grid-template-columns: repeat(3, 1fr); }
+  .sf-promise { padding: 40px 36px; }
+}
+@media (min-width: 1024px) {
+  .sf-hero2 h1 { font-size: 46px; }
+  .sf-photowall { grid-template-columns: repeat(8, 1fr); }
+}

@@ -1,31 +1,34 @@
 {
   "schema_version": "campaigns-os-build-brief/v1",
   "campaign_intent": {
-    "audience": "Women 45+ with dry, mature skin and fair to medium skin tones (persona: Linda, 56) who have tried many foundations and fear the wrong shade, a cakey look and lines",
-    "conversion_goal": "Warm cold traffic with the listicle, convert on the product page and checkout, raise AOV with four post-purchase offers; every package is a subscription",
-    "tone": "clear, practical, benefit-led",
+    "audience": "Women 45+ with dry, mature skin who have tried many foundations and fear the wrong shade, a cakey look and lines (persona: Linda, 56, docs/apf-funnel/persona.md)",
+    "conversion_goal": "Warm cold traffic with the listicle, convert on the long sales page and a trust-first checkout, raise AOV with quantity breaks and gifts on the page and three post-purchase offers with downsells; every package is a one-time purchase",
+    "tone": "clear, warm, benefit-led, in the buyer's own words",
     "compliance": {
       "approved_claims": [
-        "goes on white and adapts to fair to medium skin tones as you blend",
-        "made not to settle into fine lines (hedged until the 6-hour wear panel)",
-        "skincare-infused foundation with PDRN, peptides and Volufiline",
-        "fragrance-free",
-        "made for skin after 45",
-        "30-day money-back guarantee, even opened"
+        "goes on white and adapts to your skin tone as you blend",
+        "designed not to settle into fine lines",
+        "a hydrating serum base: two forms of hyaluronic acid, ceramide NP, squalane and panthenol",
+        "skincare actives named on the label: PDRN, Matrixyl 3000 peptides, Pro-Xylane, niacinamide, adenosine",
+        "fragrance-free; made without propylene glycol, drying alcohol or parabens",
+        "formulated in Korea; made for skin after 45",
+        "4.8 out of 5 from 9,855 reviews of this foundation, imported from our earlier store in October 2026",
+        "30-day money-back guarantee, even opened, nothing to send back"
       ],
       "forbidden_claims": [
         "SPF or sun protection",
-        "reverses aging / age-reversing / look 35",
+        "reverses aging / age-reversing / look N years younger",
         "produces collagen",
-        "every or all skin tones",
-        "any percentage or study result before the consumer study",
-        "dermatologist or expert recommended",
-        "fake countdowns or scarcity",
-        "reviews presented as the stick's own (the reviews are the liquid foundation's and say so)"
+        "every or all skin tones, matches 99%",
+        "any percentage or study result",
+        "dermatologist, doctor or expert recommended",
+        "fake countdowns or scarcity counts",
+        "any renewal wording: nothing in this funnel recurs"
       ],
       "copy_rules": [
-        "before/after images are labelled AI illustrations",
-        "subscription terms are stated next to every buy button: price today, renewal price and interval, how to cancel",
+        "before/after images are labelled AI illustrations, not customer photos",
+        "every buy button says the price is charged once and nothing renews",
+        "the reviews are the foundation's published reviews from our earlier store, word for word, and say so",
         "the manufacturing spec stays confidential: no percentages, suppliers or process"
       ]
     }
@@ -37,25 +40,29 @@
     },
     "offer": {
       "source": "provided_design_export",
-      "reference": "stick-pdp.html"
+      "reference": "apf-pdp.html"
     },
     "checkout": {
       "source": "template",
       "reference": "template stock: Apollo checkout page, no bespoke design"
     },
-    "special-1": {
+    "offer-1": {
       "source": "template",
       "reference": "template stock: Apollo upsell page, no bespoke design"
     },
-    "special-2": {
+    "offer-2": {
       "source": "template",
       "reference": "template stock: Apollo upsell page, no bespoke design"
     },
-    "special-3": {
+    "offer-2b": {
       "source": "template",
       "reference": "template stock: Apollo upsell page, no bespoke design"
     },
-    "special-4": {
+    "brush-offer": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "brush-offer-b": {
       "source": "template",
       "reference": "template stock: Apollo upsell page, no bespoke design"
     },
@@ -74,27 +81,30 @@
   },
   "media": {
     "sold_variants": [
-      "Adaptive Foundation Stick - 1 stick (Light-Medium)",
-      "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
-      "The Lymphatic Brush - 1 brush + free case",
-      "PDRN Plumping Balm - 1 stick",
-      "EGF + NAD+ Firming Serum - 1 bottle"
+      "Adaptive Peptide Foundation - 1 bottle",
+      "Adaptive Peptide Foundation - 2 bottles + free gifts",
+      "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+      "Adaptive Peptide Foundation - 2 bottles",
+      "Adaptive Peptide Foundation - 6 bottles + free Lymphatic Brush",
+      "The Lymphatic Brush - 1 brush + free travel case"
     ],
     "allow_other_variant_colors": false,
     "prefer": [
-      "clean product renders",
-      "lifestyle images without embedded text"
+      "the store's own approved photos of women over 45 with the real bottle",
+      "clean product renders on white",
+      "the buyers' own review photos"
     ],
     "avoid": [
       "wrong product variant",
-      "blurry stock-like crops"
+      "blurry stock-like crops",
+      "AI faces presented as customers"
     ]
   },
   "offer_presentation": {
     "bundle_cards": {
-      "primary_price": "pack_price_with_refill_interval",
+      "primary_price": "pack_price_once",
       "show_total": "multi_pack_only",
-      "show_compare_price": false,
+      "show_compare_price": true,
       "savings_badge": "rounded_percentage",
       "hide_duplicate_discount_copy": true
     },
@@ -164,25 +174,25 @@
   },
   "brief_mode": "guided",
   "_meta": {
-    "generated_at": "2026-10-27T10:23:40.850Z",
+    "generated_at": "2026-10-28T09:14:15.783Z",
     "mode": "guided_draft",
     "mode_source": "field",
-    "input_path": "../../campaign-build-brief.json",
+    "input_path": "../../campaign-build-brief.apf.json",
     "input_format": "json",
-    "input_source": "target_repo",
+    "input_source": "operator_flag",
     "normalized_by": "campaigns-os prepare-build",
     "field_sources": {
       "campaign_intent.audience": {
         "kind": "stated",
-        "value_fingerprint": "sha256:3e6c2cab805fa0431363590ce6de5baf476155a96d1ec5a5fdca401314042fca"
+        "value_fingerprint": "sha256:c7ca64dddcccd7006e45a7366fe9c1fb2d792223045852285c46dbfa5c0b56e4"
       },
       "campaign_intent.conversion_goal": {
         "kind": "stated",
-        "value_fingerprint": "sha256:54449b96218e2acb56b233805f86616ae317b456b542fcec80bd10da45a67239"
+        "value_fingerprint": "sha256:14efc1f09c52756bf2e6e71f9b5e09c83e0cc059e8775808a4e7d761b57ff120"
       },
       "campaign_intent.tone": {
-        "kind": "default",
-        "value_fingerprint": "sha256:c06327153b1b772dabda6323a797629314905c99c809e5106f9b9aa7a3fc7794"
+        "kind": "stated",
+        "value_fingerprint": "sha256:0ee0ba24231caef1062859bf521b8c7232e9a5d094a55c1709c1f9f86de32c01"
       },
       "brand.commerce_palette_source": {
         "kind": "stated",
@@ -212,20 +222,24 @@
         "kind": "default",
         "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
       },
-      "design_authority.special-1.source": {
-        "kind": "default",
+      "design_authority.offer-1.source": {
+        "kind": "stated",
         "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
       },
-      "design_authority.special-2.source": {
-        "kind": "default",
+      "design_authority.offer-2.source": {
+        "kind": "stated",
         "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
       },
-      "design_authority.special-3.source": {
-        "kind": "default",
+      "design_authority.offer-2b.source": {
+        "kind": "stated",
         "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
       },
-      "design_authority.special-4.source": {
-        "kind": "default",
+      "design_authority.brush-offer.source": {
+        "kind": "stated",
+        "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
+      },
+      "design_authority.brush-offer-b.source": {
+        "kind": "stated",
         "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
       },
       "design_authority.thank-you.source": {

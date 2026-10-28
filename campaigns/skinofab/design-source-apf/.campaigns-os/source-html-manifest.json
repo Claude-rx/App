@@ -1,0 +1,103 @@
+{
+  "schema_version": "source-html-manifest/v0",
+  "generated_at": "2026-10-28T08:58:10Z",
+  "generator": "tools/funnel/design_source.py@1",
+  "campaign_slug": "apf-funnel",
+  "wrapper_policy": "preserve_document_wrappers",
+  "pages": [
+    {
+      "page_id": "listicle",
+      "path": "facelove-listicle.html",
+      "source_hash": "2300c09ed1f5cf7ac38e16dc17f38db205aedeb955aa8af2ca976334714629ce",
+      "screenshots": [
+        {
+          "id": "source-listicle-desktop",
+          "kind": "source_screenshot",
+          "viewport": "desktop",
+          "availability": "available",
+          "path": ".campaigns-os/screenshots/listicle-desktop.jpg",
+          "sha256": "3304239699a07e94dcb61602d64a2f7ea83a00c5d8cfe72d8ea17774d48a7b57",
+          "width": 1440,
+          "height": 8747,
+          "device_profile": "desktop-1440x900",
+          "browser": "playwright-chromium/1194",
+          "captured_at": "2026-10-27T09:41:00Z"
+        },
+        {
+          "id": "source-listicle-mobile",
+          "kind": "source_screenshot",
+          "viewport": "mobile",
+          "availability": "available",
+          "path": ".campaigns-os/screenshots/listicle-mobile.jpg",
+          "sha256": "9bd84d3db5da98df1193b8e6bfee02149b6f9133b34d0fd69394190e6cd81152",
+          "width": 390,
+          "height": 12409,
+          "device_profile": "mobile-390x844",
+          "browser": "playwright-chromium/1194",
+          "captured_at": "2026-10-27T09:41:00Z"
+        }
+      ]
+    },
+    {
+      "page_id": "offer",
+      "path": "apf-pdp.html",
+      "source_hash": "b75e4c7913104a9e8a4bf3e47b72ecd5f98f28510f6c5bc0b05de44fcb708481",
+      "screenshots": [
+        {
+          "id": "source-offer-desktop",
+          "kind": "source_screenshot",
+          "viewport": "desktop",
+          "availability": "available",
+          "path": ".campaigns-os/screenshots/offer-desktop.jpg",
+          "sha256": "227151ae395bcc5f32b24cfe1dff72742f8ebd77f36994eccceb554d4f089760",
+          "width": 1440,
+          "height": 12785,
+          "device_profile": "desktop-1440x900",
+          "browser": "playwright-chromium/1194",
+          "captured_at": "2026-10-28T08:45:00Z"
+        },
+        {
+          "id": "source-offer-mobile",
+          "kind": "source_screenshot",
+          "viewport": "mobile",
+          "availability": "available",
+          "path": ".campaigns-os/screenshots/offer-mobile.jpg",
+          "sha256": "a63b02f8ac881c1ef5333a04c9b7f3f31ded07ce9d1f8f7f1c3aa767eead74ba",
+          "width": 390,
+          "height": 16716,
+          "device_profile": "mobile-390x844",
+          "browser": "playwright-chromium/1194",
+          "captured_at": "2026-10-28T08:45:00Z"
+        }
+      ]
+    },
+    {
+      "page_id": "checkout",
+      "skip_reason": "template stock: Apollo checkout page, no bespoke design"
+    },
+    {
+      "page_id": "offer-1",
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+    },
+    {
+      "page_id": "offer-2",
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+    },
+    {
+      "page_id": "offer-2b",
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+    },
+    {
+      "page_id": "brush-offer",
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+    },
+    {
+      "page_id": "brush-offer-b",
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+    },
+    {
+      "page_id": "thank-you",
+      "skip_reason": "template stock: Apollo receipt page, no bespoke design"
+    }
+  ]
+}

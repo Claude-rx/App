@@ -1,6 +1,6 @@
-"""Write the funnel's CampaignSpec (campaigns/skinofab/campaign-spec.json) from funnel.py and the live campaign.
+"""Write the funnel's CampaignSpec (campaigns/skinofab/<funnel SPEC_FILE>) from funnel.py and the live campaign.
 
-usage: python3 -I tools/funnel/campaign_spec.py [--read <campaign-read.json>]
+usage: [FUNNEL=apf] python3 -I tools/funnel/campaign_spec.py [--read <campaign-read.json>]
 
 The commerce values are never typed: they come from one read of the campaign through NEXT's public proxy
 (https://campaign-map.nextcommerce.com/api/campaign, header X-Campaign-Key), the read Campaigns OS doctor and QA
@@ -18,8 +18,10 @@ import funnel as F
 
 ROOT = Path(__file__).resolve().parents[2]
 PROJECT = ROOT / 'campaigns' / 'skinofab'
-CONFIG_JS = PROJECT / 'src' / F.SLUG / 'assets' / 'config.js'
-OUT = PROJECT / 'campaign-spec.json'
+# the campaign's public key, from this funnel's config.js (or any funnel's on the same campaign, before its pages exist)
+CONFIG_JS = next((PROJECT / 'src' / s / 'assets' / 'config.js' for s in (F.SLUG, 'stick-funnel', 'apf-funnel')
+                  if (PROJECT / 'src' / s / 'assets' / 'config.js').is_file()), PROJECT / 'src' / F.SLUG / 'assets' / 'config.js')
+OUT = PROJECT / F.SPEC_FILE
 PROXY = 'https://campaign-map.nextcommerce.com/api/campaign'
 STORE_FIELDS = {
     'store_url': F.FUNNEL_HOST, 'store_name': 'SKINOFAB',
@@ -78,11 +80,12 @@ def spec(c):
         if pg['type'] == 'checkout':
             page['packages'] = [package(r, default_selected=r == pg['default_package']) for r in pg['packages']]
             page['exit_intent'] = {'enabled': True, 'offer_ref_id': pg['exit_offer'], 'offer_code': offers[pg['exit_offer']]['code'],
-                                   'notes': 'Once per visit, on leaving the checkout: 10% off the stick packs.'}
+                                   'notes': F.EXIT_NOTE}
             page['offers'] = [{'ref_id': pg['exit_offer']}]
-        if pg['type'] == 'upsell':
-            page['packages'] = [package(pg['package'], is_upsell=True, default_selected=True)]
-            page['offers'] = [{'ref_id': pg['offer']}]
+        if pg['type'] in ('upsell', 'downsell'):
+            refs, offer_refs = F.page_packages(pg)
+            page['packages'] = [package(r, is_upsell=True, default_selected=i == 0) for i, r in enumerate(refs)]
+            page['offers'] = [{'ref_id': o} for o in offer_refs]
         if pg['type'] in ('presell', 'landing'):
             # the product page links each pack to the checkout (?forceBundleId=); neither page writes the cart
             page['packages'] = [package(r) for r in BY_CHECKOUT['packages']]
@@ -91,7 +94,7 @@ def spec(c):
     return {
         'schema_version': '5.0',
         'spec_identity': {'source': 'hand-authored', 'local_spec_id': F.LOCAL_SPEC_ID, 'public_route_slug': F.SLUG,
-                          'template_family': 'apollo', 'authority': 'tools/funnel/funnel.py + the live campaign read'},
+                          'template_family': 'apollo', 'authority': f'tools/funnel/funnels/{F.FUNNEL}.py + the live campaign read'},
         'campaign': {'ref_id': c['id'], 'name': c['name'], 'currency': c['currency'], 'language': c['language'],
                      'payment_env_key': c.get('payment_env_key'),
                      'available_payment_methods': c.get('available_payment_methods', []),
@@ -100,7 +103,7 @@ def spec(c):
                      'available_shipping_countries': c.get('available_shipping_countries', []),
                      'preferred_template_family': 'apollo', **STORE_FIELDS},
         'global_config': {'sdk_version': SDK_VERSION},
-        'funnels': [{'id': 'stick', 'name': 'Foundation Stick: listicle to thank you', 'weight': 100, 'pages': pages}],
+        'funnels': [{'id': F.FUNNEL_ID, 'name': F.FUNNEL_LABEL, 'weight': 100, 'pages': pages}],
         'offers': [offers[k] for k in sorted(offers)],
         'shipping_methods': [{k: s.get(k) for k in ('ref_id', 'code', 'price')} for s in c['shipping_methods']],
     }

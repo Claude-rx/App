@@ -1,0 +1,82 @@
+{%- comment -%}
+  SKINOFAB: the checkout's trust, in place of a product description (the shopper has chosen the foundation already):
+    part='top'       the rating, said to be this foundation's, from our earlier store, in the same line, and four plain promises, above Step 1
+    part='featured'  three reviews above the payment step, on a phone and tablet (there the proof column comes after
+                     the order button; on a computer it is beside the form); the wall then shows the other seven
+                     (checkout-brand.css hides its first three below 992 px)
+    part='inline'    the guarantee in one line, right above the order button
+    part='proof'     the ratings by stars, the review wall (buyers' own photos), the guarantee card and the questions a
+                     buyer asks before paying; after the form in the page (keyboard and screen-reader order), shown on
+                     the left on a computer (checkout-brand.css)
+  From the page's frontmatter: trust { rating { average, count, total, rows[] [stars, count, shown], of },
+  points[] { icon, title, text }, faq[] { q, a } }, reviews[] { body, author, photo, rating, verified }, reviews_note
+  and guarantee { badge, title, text, line, ticks[] }. Every figure and review is this foundation's, from the
+  earlier store, and says so (check_funnel); the reviews have no titles (the buyers wrote none).
+{%- endcomment -%}
+{%- if part == 'top' -%}
+<div class="sf-co-top">
+  <p class="sf-co-rating"><span class="sf-co-stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
+  <ul class="sf-co-points">
+    {%- for p in trust.points %}
+    <li>{% campaign_include 'sf-checkout-icon.html' icon=p.icon %}<div><strong>{{ p.title }}</strong><span>{{ p.text }}</span></div></li>
+    {%- endfor %}
+  </ul>
+</div>
+{%- elsif part == 'featured' -%}
+<div class="sf-co-featured hide-tablet-up" id="sf-co-featured">
+  <p class="sf-co-featured__title">From buyers of this foundation</p>
+  {%- for r in reviews limit: 3 %}
+  {% campaign_include 'sf-checkout-review.html' r=r %}
+  {%- endfor %}
+  {%- assign more = reviews.size | minus: 3 %}
+  <a class="sf-co-featured__more" href="#sf-co-reviews">See the other {{ more }} reviews and the ratings</a>
+</div>
+{%- elsif part == 'inline' -%}
+<div class="sf-co-guarantee-line" data-sf-guarantee-inline>
+  <img src="{{ guarantee.badge | campaign_asset }}" alt="" width="64" height="64" loading="lazy" decoding="async">
+  <p><strong>{{ guarantee.title }}.</strong> {{ guarantee.line }}</p>
+</div>
+{%- elsif part == 'proof' -%}
+<section class="sf-co-proof" aria-label="Reviews and guarantee">
+  <div class="sf-co-card sf-co-ratings" id="sf-co-reviews">
+    <h2>{{ trust.rating.count }} reviews of this foundation</h2>
+    <div class="sf-co-ratings__score">
+      <strong>{{ trust.rating.average }}</strong>
+      <span class="sf-co-stars" role="img" aria-label="{{ trust.rating.average }} out of 5">★★★★★</span>
+      <span>out of 5</span>
+    </div>
+    <ul class="sf-co-ratings__rows" aria-label="Reviews of this foundation, by stars">
+      {%- for row in trust.rating.rows %}{% assign pct = row[1] | times: 100.0 | divided_by: trust.rating.total %}
+      <li><span>{{ row[0] }} ★</span><i>{% if row[1] > 0 %}<b style="width:{{ pct | round: 2 }}%"></b>{% endif %}</i><span>{{ row[2] | default: row[1] }}</span></li>
+      {%- endfor %}
+    </ul>
+    <p class="sf-co-ratings__of">{{ reviews_note }}</p>
+  </div>
+
+  <h2 class="sf-co-reviews__title">What buyers of this foundation say</h2>
+  <div class="sf-co-reviews">
+    {%- for r in reviews %}
+    {% campaign_include 'sf-checkout-review.html' r=r %}
+    {%- endfor %}
+  </div>
+
+  <div class="sf-co-card sf-co-guarantee">
+    <img src="{{ guarantee.badge | campaign_asset }}" alt="30-day money-back guarantee seal" width="112" height="112" loading="lazy" decoding="async">
+    <div>
+      <h2>{{ guarantee.title }}</h2>
+      <p>{{ guarantee.text }}</p>
+      <ul>{% for t in guarantee.ticks %}<li>{{ t }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+
+  <div class="sf-co-card sf-co-faq">
+    <h2>Before you order</h2>
+    {%- for f in trust.faq %}
+    <details{% if forloop.first %} open{% endif %}><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>
+    {%- endfor %}
+    <p class="sf-co-faq__contact">Still unsure? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>: a person replies within one business day.</p>
+  </div>
+  {%- comment -%} on a phone the proof ends the page, after the button: back to the payment step she left {%- endcomment -%}
+  <a class="sf-co-back hide-tablet-up" href="#sf-co-pay">Back to my order</a>
+</section>
+{%- endif -%}

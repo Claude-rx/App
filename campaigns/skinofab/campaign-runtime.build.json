@@ -1,61 +1,61 @@
 {
   "schema_version": "campaign-runtime-build-packet/v0",
-  "generated_at": "2026-10-27T10:22:39.031Z",
+  "generated_at": "2026-10-28T09:14:15.889Z",
   "campaigns_os_version": "1.60.0",
   "campaign": {
-    "public_route_slug": "stick-funnel",
-    "campaign_directory": "stick-funnel",
-    "live_url_path": "/stick-funnel/",
+    "public_route_slug": "apf-funnel",
+    "campaign_directory": "apf-funnel",
+    "live_url_path": "/apf-funnel/",
     "campaigns_app_url": null,
     "api_key_source": "env:CAMPAIGNS_API_KEY",
-    "allowed_domains_confirmed": true
+    "allowed_domains_confirmed": false
   },
   "spec": {
     "map_id": null,
-    "local_spec_id": "1b7c62ea-589f-49eb-83f9-31869ed0c283",
+    "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
     "spec_url": null,
-    "local_path": "./campaign-spec.json"
+    "local_path": "./campaign-spec.apf.json"
   },
   "design_source_package": {
     "path": ".campaign-runtime/input/design-source-package.json",
     "schema_version": "campaign-design-source-package/v0",
-    "sha256": "sha256:e78abf824ae3ba9393ba28039136054bc6d085856f027fded3fa36fa1a87c64d",
-    "material_fingerprint": "sha256:052d430b03a95eb65b4eb3eb9a6eba30b97697b3e7ec2bc1e43008ac245862ca"
+    "sha256": "sha256:958c8ec4e8d510014b26745c12fb6458e34fd53f2798f98752fd1aaa1b42adfa",
+    "material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b"
   },
   "source_html": {
-    "root": "./design-source",
+    "root": "./design-source-apf",
     "pages": [
       {
         "page_id": "listicle",
         "path": "facelove-listicle.html",
         "source_hash": "2300c09ed1f5cf7ac38e16dc17f38db205aedeb955aa8af2ca976334714629ce",
         "page_kit": {
-          "target_path": "10-reasons-foundation-stick.html",
-          "output_path": "src/stick-funnel/10-reasons-foundation-stick.html",
-          "public_route": "/stick-funnel/10-reasons-foundation-stick/",
-          "spec_route": "10-reasons-foundation-stick/",
+          "target_path": "10-reasons-adaptive-foundation.html",
+          "output_path": "src/apf-funnel/10-reasons-adaptive-foundation.html",
+          "public_route": "/apf-funnel/10-reasons-adaptive-foundation/",
+          "spec_route": "10-reasons-adaptive-foundation/",
           "page_type": "product",
           "permalink_required": false,
           "frontmatter": {
             "page_type": "product",
-            "next_url": "/stick-funnel/foundation-stick-offer/"
+            "next_url": "/apf-funnel/adaptive-foundation-offer/"
           }
         }
       },
       {
         "page_id": "offer",
-        "path": "stick-pdp.html",
-        "source_hash": "93c59448221912d2377f29149bba16b0b176630369bbf3249d0310129df2ed4b",
+        "path": "apf-pdp.html",
+        "source_hash": "b75e4c7913104a9e8a4bf3e47b72ecd5f98f28510f6c5bc0b05de44fcb708481",
         "page_kit": {
-          "target_path": "foundation-stick-offer.html",
-          "output_path": "src/stick-funnel/foundation-stick-offer.html",
-          "public_route": "/stick-funnel/foundation-stick-offer/",
-          "spec_route": "foundation-stick-offer/",
+          "target_path": "adaptive-foundation-offer.html",
+          "output_path": "src/apf-funnel/adaptive-foundation-offer.html",
+          "public_route": "/apf-funnel/adaptive-foundation-offer/",
+          "spec_route": "adaptive-foundation-offer/",
           "page_type": "product",
           "permalink_required": false,
           "frontmatter": {
             "page_type": "product",
-            "next_url": "/stick-funnel/stick-checkout/"
+            "next_url": "/apf-funnel/foundation-checkout/"
           }
         }
       },
@@ -64,19 +64,23 @@
         "skip_reason": "template stock: Apollo checkout page, no bespoke design"
       },
       {
-        "page_id": "special-1",
+        "page_id": "offer-1",
         "skip_reason": "template stock: Apollo upsell page, no bespoke design"
       },
       {
-        "page_id": "special-2",
+        "page_id": "offer-2",
         "skip_reason": "template stock: Apollo upsell page, no bespoke design"
       },
       {
-        "page_id": "special-3",
+        "page_id": "offer-2b",
         "skip_reason": "template stock: Apollo upsell page, no bespoke design"
       },
       {
-        "page_id": "special-4",
+        "page_id": "brush-offer",
+        "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+      },
+      {
+        "page_id": "brush-offer-b",
         "skip_reason": "template stock: Apollo upsell page, no bespoke design"
       },
       {
@@ -114,20 +118,20 @@
     "schema_version": "campaigns-os-build-brief/v1",
     "mode": "guided_draft",
     "status": "complete",
-    "input_path": "./campaign-build-brief.json",
+    "input_path": "./campaign-build-brief.apf.json",
     "normalized_path": ".campaign-runtime/input/campaign-build-brief.normalized.json",
     "question_count": 0,
     "gate_count": 1,
     "material": {
-      "presentation": "sha256:a450e62bd514b2e1ed8ef9ea96031c054b0701f2a7cddb195833ebfe51c10099",
+      "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
       "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
     },
-    "input_sha256": "sha256:318155283cee24f9642923a72d6d598010bba4ae8baa5fe1b2b09d03cd3d417c"
+    "input_sha256": "sha256:10e7ebb547568b6081e1cec469e66a3e17e5e1eeab0d4c81cf75f039607a8460"
   },
   "assembly": {
     "implementation": "next-campaigns-build",
     "target_repo": ".",
-    "output_dir": "src/stick-funnel",
+    "output_dir": "src/apf-funnel",
     "template_family": "apollo",
     "template_decision_notes": "Template family locked by prepare-build --template-family apollo.",
     "template_lock": {
@@ -154,9 +158,9 @@
   },
   "deploy": {
     "target": "local-serve",
-    "preview_url": "http://127.0.0.1:8090/stick-funnel/",
+    "preview_url": "http://127.0.0.1:8090/apf-funnel/",
     "production_url": "https://try.skinofab.com/",
-    "live_url_path": "/stick-funnel/"
+    "live_url_path": "/apf-funnel/"
   },
   "qa": {
     "proof_policy": {

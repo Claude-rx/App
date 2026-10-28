@@ -2,7 +2,7 @@
 <store>/<file>/ (on every store domain; the funnel's is funnel.FUNNEL_HOST) renders templates/pages/page.<file>.html
 (deploy_theme.py).
 
-usage: NEXT_API_TOKEN=... python3 -I tools/funnel/store_pages.py [--dry-run]
+usage: [FUNNEL=apf] NEXT_API_TOKEN=... python3 -I tools/funnel/store_pages.py [--dry-run]
 
 Idempotent: pages are matched by slug; an existing one only gets its template, title and meta fields set. The Admin
 API token comes from the environment and is never printed or written anywhere.
@@ -14,17 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import funnel as F
 
 API = F.STORE + '/api/admin/'
-TITLES = {
-    'listicle': ('10 Reasons Women Over 45 Look Fresher With This Shade-Adapting Foundation Stick',
-                 'The foundation stick that goes on white and meets your own skin tone as you blend, with the brush built in.'),
-    'offer': ('Adaptive Foundation Stick: choose your pack', 'One shade that adapts to fair to medium skin, brush built in. 30-day guarantee.'),
-    'checkout': ('Secure checkout', 'Checkout for the Adaptive Foundation Stick.'),
-    'special-1': ('Special offer 1', 'A one-time offer for your order.'),
-    'special-2': ('Special offer 2', 'A one-time offer for your order.'),
-    'special-3': ('Special offer 3', 'A one-time offer for your order.'),
-    'special-4': ('Special offer 4', 'A one-time offer for your order.'),
-    'thank-you': ('Thank you', 'Your order is confirmed.'),
-}
+TITLES = F.TITLES
 
 
 def call(method, path, body=None):

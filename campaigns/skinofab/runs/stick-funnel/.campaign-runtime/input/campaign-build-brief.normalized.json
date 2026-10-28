@@ -1,0 +1,252 @@
+{
+  "schema_version": "campaigns-os-build-brief/v1",
+  "campaign_intent": {
+    "audience": "Women 45+ with dry, mature skin and fair to medium skin tones (persona: Linda, 56) who have tried many foundations and fear the wrong shade, a cakey look and lines",
+    "conversion_goal": "Warm cold traffic with the listicle, convert on the product page and checkout, raise AOV with four post-purchase offers; every package is a subscription",
+    "tone": "clear, practical, benefit-led",
+    "compliance": {
+      "approved_claims": [
+        "goes on white and adapts to fair to medium skin tones as you blend",
+        "made not to settle into fine lines (hedged until the 6-hour wear panel)",
+        "skincare-infused foundation with PDRN, peptides and Volufiline",
+        "fragrance-free",
+        "made for skin after 45",
+        "30-day money-back guarantee, even opened"
+      ],
+      "forbidden_claims": [
+        "SPF or sun protection",
+        "reverses aging / age-reversing / look 35",
+        "produces collagen",
+        "every or all skin tones",
+        "any percentage or study result before the consumer study",
+        "dermatologist or expert recommended",
+        "fake countdowns or scarcity",
+        "reviews presented as the stick's own (the reviews are the liquid foundation's and say so)"
+      ],
+      "copy_rules": [
+        "before/after images are labelled AI illustrations",
+        "subscription terms are stated next to every buy button: price today, renewal price and interval, how to cancel",
+        "the manufacturing spec stays confidential: no percentages, suppliers or process"
+      ]
+    }
+  },
+  "design_authority": {
+    "listicle": {
+      "source": "provided_design_export",
+      "reference": "facelove-listicle.html"
+    },
+    "offer": {
+      "source": "provided_design_export",
+      "reference": "stick-pdp.html"
+    },
+    "checkout": {
+      "source": "template",
+      "reference": "template stock: Apollo checkout page, no bespoke design"
+    },
+    "special-1": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "special-2": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "special-3": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "special-4": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "thank-you": {
+      "source": "template",
+      "reference": "template stock: Apollo receipt page, no bespoke design"
+    }
+  },
+  "brand": {
+    "commerce_palette_source": "provided_design_export",
+    "primary_accent": "#151515",
+    "cta_style": "SKINOFAB: black (#151515) pill buttons with white uppercase Jost text; Jost body, Playfair Display for product names",
+    "avoid": [
+      "template-default brand colors"
+    ]
+  },
+  "media": {
+    "sold_variants": [
+      "Adaptive Foundation Stick - 1 stick (Light-Medium)",
+      "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+      "The Lymphatic Brush - 1 brush + free case",
+      "PDRN Plumping Balm - 1 stick",
+      "EGF + NAD+ Firming Serum - 1 bottle"
+    ],
+    "allow_other_variant_colors": false,
+    "prefer": [
+      "clean product renders",
+      "lifestyle images without embedded text"
+    ],
+    "avoid": [
+      "wrong product variant",
+      "blurry stock-like crops"
+    ]
+  },
+  "offer_presentation": {
+    "bundle_cards": {
+      "primary_price": "pack_price_with_refill_interval",
+      "show_total": "multi_pack_only",
+      "show_compare_price": false,
+      "savings_badge": "rounded_percentage",
+      "hide_duplicate_discount_copy": true
+    },
+    "post_purchase": {
+      "show_voucher_code": "when_customer_needs_to_see_it",
+      "show_retail_price": true,
+      "show_shipping": "if_charged"
+    }
+  },
+  "promo_urgency": {
+    "header_claim_source": "campaign_offers",
+    "timer_label": "none",
+    "show_promo_code_in_timer": false,
+    "exit_pop": {
+      "enabled": true,
+      "code_source": "campaign_spec"
+    },
+    "forbid_placeholders": true
+  },
+  "commerce_surfaces": {
+    "payment_methods_allowed": [
+      "apple_pay",
+      "card",
+      "klarna",
+      "paypal"
+    ],
+    "hidden_payment_methods": [
+      "afterpay",
+      "amazon_pay",
+      "cash_app",
+      "google_pay",
+      "sezzle",
+      "shop_pay",
+      "venmo"
+    ],
+    "order_bump": {
+      "enabled": false,
+      "display_style": null
+    },
+    "guarantees": {
+      "use_campaign_or_merchant_policy_copy": true
+    }
+  },
+  "canonical_display": {
+    "product_name_source": "campaign_spec",
+    "allow_runtime_name_override": false,
+    "manual_overrides": {}
+  },
+  "template_residue_policy": {
+    "block_placeholders": true,
+    "block_template_favicon": true,
+    "block_demo_payment_methods": true,
+    "block_lorem_ipsum": true,
+    "block_unapproved_tracking_claims": true
+  },
+  "qa_policy": {
+    "enforcement": {
+      "status": "documented_expectation",
+      "enforced_by": "qa.proof_policy and report.proof_policy",
+      "note": "Build Brief qa_policy records business QA expectations; doctor and QA enforce the Build Packet qa.proof_policy and Assembly Report report.proof_policy contract."
+    },
+    "require_desktop_mobile_screenshots": true,
+    "require_checkout_flow": true,
+    "require_post_purchase_flow": true,
+    "fail_on_visible_placeholders": true,
+    "compare_live_runtime_data_to_spec": true
+  },
+  "brief_mode": "guided",
+  "_meta": {
+    "generated_at": "2026-10-27T10:23:40.850Z",
+    "mode": "guided_draft",
+    "mode_source": "field",
+    "input_path": "../../campaign-build-brief.json",
+    "input_format": "json",
+    "input_source": "target_repo",
+    "normalized_by": "campaigns-os prepare-build",
+    "field_sources": {
+      "campaign_intent.audience": {
+        "kind": "stated",
+        "value_fingerprint": "sha256:3e6c2cab805fa0431363590ce6de5baf476155a96d1ec5a5fdca401314042fca"
+      },
+      "campaign_intent.conversion_goal": {
+        "kind": "stated",
+        "value_fingerprint": "sha256:54449b96218e2acb56b233805f86616ae317b456b542fcec80bd10da45a67239"
+      },
+      "campaign_intent.tone": {
+        "kind": "default",
+        "value_fingerprint": "sha256:c06327153b1b772dabda6323a797629314905c99c809e5106f9b9aa7a3fc7794"
+      },
+      "brand.commerce_palette_source": {
+        "kind": "stated",
+        "value_fingerprint": "sha256:9619134e869b288e543ddd05e92b397287a189553b817aa82df537dc2ad20d2a"
+      },
+      "brand.primary_accent": {
+        "kind": "stated",
+        "value_fingerprint": "sha256:7b1ddda2cdc59554b6485275a8d80d37473a8392b4c16d7c697dafa49852f617"
+      },
+      "brand.cta_style": {
+        "kind": "stated",
+        "value_fingerprint": "sha256:248e769addb081eee0bc2c21fa90dc9b2dd6b134ac85cfa57ce64299f1b13377"
+      },
+      "brand.avoid": {
+        "kind": "default",
+        "value_fingerprint": "sha256:ab716391a7e3154de83ba4b6f07d43ab8f3ba2c8aa55afbd3f05a2efa7129b69"
+      },
+      "design_authority.listicle.source": {
+        "kind": "default",
+        "value_fingerprint": "sha256:9619134e869b288e543ddd05e92b397287a189553b817aa82df537dc2ad20d2a"
+      },
+      "design_authority.offer.source": {
+        "kind": "default",
+        "value_fingerprint": "sha256:9619134e869b288e543ddd05e92b397287a189553b817aa82df537dc2ad20d2a"
+      },
+      "design_authority.checkout.source": {
+        "kind": "default",
+        "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
+      },
+      "design_authority.special-1.source": {
+        "kind": "default",
+        "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
+      },
+      "design_authority.special-2.source": {
+        "kind": "default",
+        "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
+      },
+      "design_authority.special-3.source": {
+        "kind": "default",
+        "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
+      },
+      "design_authority.special-4.source": {
+        "kind": "default",
+        "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
+      },
+      "design_authority.thank-you.source": {
+        "kind": "default",
+        "value_fingerprint": "sha256:dae1a374ddaefa22ba8c71598ad98c02147631f5867f0ed3386ea06e5d8d8d4b"
+      },
+      "template_residue_policy.block_placeholders": {
+        "kind": "default",
+        "value_fingerprint": "sha256:b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      }
+    }
+  },
+  "confidence": {},
+  "status": "complete",
+  "questions": [],
+  "gates": [
+    {
+      "code": "build_brief.partial_scope_qa_policy",
+      "severity": "warning",
+      "field": "qa_policy.require_checkout_flow",
+      "message": "Brief requires checkout flow QA while some mapped pages are skipped; partial builds need explicit launch-readiness language."
+    }
+  ]
+}

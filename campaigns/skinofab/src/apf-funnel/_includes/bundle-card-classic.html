@@ -1,0 +1,60 @@
+{%- comment -%}
+  bundle-card-classic.html — the original Olympus os-card bundle style.
+  One of the interchangeable bundle card styles dispatched by bundle-card.html.
+  Reads the shared card arg contract (see bundle-card.html). SDK attrs preserved.
+{%- endcomment -%}
+<div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="os-card">
+  <div class="os-card__header-slot"></div>
+  <div class="os-card__wrapper">
+    <div class="os-card__content os--align-middle" data-next-package-id="{{ package_id }}">
+      <div{% if selected %} data-selected="true"{% endif %} class="radio-style-1">
+        <div class="radio-inner"></div>
+      </div>
+      <div class="os-card__image-slot hide-tablet"><img data-next-display="package.image" alt="" class="image"></div>
+      <div class="os-card__main-slot">
+        <div class="os-card__title-section">
+          <div class="os-card__title-wrapper">
+            <div class="os-card__title">{{ title_prefix }}<span data-next-display="package.name">Package Title</span></div>
+            <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="os-card__title-badge pb--bestseller">
+              <template><span>SAVE {discount.percentage}</span></template>
+            </div>
+            <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="os-card__title-badge pb--bestseller" style="display:none">
+              <template><span>+{discount.percentage}</span></template>
+            </div>
+          </div>
+          <div class="os-card__subtitle-wrapper">
+            {%- if subtitle_text and subtitle_text != "" %}
+            <div class="os-card__subtitle-text">{{ subtitle_text }}</div>
+            {%- else %}
+            <div data-next-bundle-display="hasDiscount" class="os-card__subtitle-text">Save <span data-next-bundle-display="discountAmount">-</span></div>
+            {%- endif %}
+            {%- if shipping_label and shipping_label != "" %}<div class="os-card__subtitle-text">{{ shipping_label }}</div>{%- endif %}
+          </div>
+        </div>
+      </div>
+      <div class="os-card__secondary-slot">
+        <div class="os-card__pricing">
+          <div class="os-card__price-container">
+            <div data-next-bundle-display="hasDiscount" class="os-card__price os--compare os-style"><span data-next-bundle-display="originalUnitPrice">-</span></div>
+            <div class="os-card__price os--current"><span data-next-bundle-display="unitPrice">-</span>/ea</div>
+          </div>
+          <div class="os-card__total-container">
+            <div class="os-card__total-label">Total:</div>
+            <div data-next-bundle-display="hasDiscount" class="os-card__total-compare"><span data-next-bundle-display="originalPrice">-</span></div>
+            <div class="os-card__total-current{% if total_tone_class and total_tone_class != "" %} {{ total_tone_class }}{% endif %}"><span data-next-bundle-display="price">-</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="os-card__bottom-slot hide"></div>
+  </div>
+  <div class="os-card__footer-slot"></div>
+  {% if badge_text and badge_text != "" -%}
+  <div class="os-card__label-slot">
+    <div class="os-card__label-2 os-card__label--middle-right{% if badge_pill_class and badge_pill_class != "" %} {{ badge_pill_class }}{% endif %}">
+      <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path></svg></div>
+      <div class="os-card__label-text-2">{{ badge_text }}</div>
+    </div>
+  </div>
+  {%- endif %}
+</div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    {% comment %} Social share meta {% endcomment %}
+    {% campaign_include 'meta-social.html' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  {% comment %} SKINOFAB: the campaign allows one domain (campaign.funnel_host, the Campaigns App's Allowed Domain): the
+     SDK's calls fail from any other host the store answers on (skinofab.29next.store, skinofab.com), so a visit there
+     goes to the same page on the funnel's host. Production builds only (local proof runs on localhost). {% endcomment %}
+  {% if environment != 'development' and campaign.funnel_host and campaign.funnel_host != "" %}<script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })({{ campaign.funnel_host | json }});</script>{% endif %}
+
+    {% comment %} Resource hints: SDK CDN + campaign API + next-page prefetch (accept + decline paths on upsells;
+         on a checkout step or select page, the next step rather than next_url, which is where a completed order goes).
+         rel=prefetch issues a real low-priority GET, so prefetched pages appear in CDN/server access
+         logs even when the visitor never navigates; client-side analytics (GTM, pixels, SDK) never run
+         on a prefetched document, and the cached bytes are the same static template HTML every visitor
+         receives (form/personal data is entered client-side and is never in the prefetched bytes). {% endcomment %}
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://campaigns.apps.29next.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdn-countries.muddy-wind-c7ca.workers.dev">
+    <link rel="dns-prefetch" href="//i18n-rules.nextcommerce.com">
+    {% if next_step %}<link rel="prefetch" href="{{ next_step | campaign_link }}" as="document">{% elsif next_url %}<link rel="prefetch" href="{{ next_url | campaign_link }}" as="document">{% endif %}
+    {% if decline_url and decline_url != next_url %}<link rel="prefetch" href="{{ decline_url | campaign_link }}" as="document">{% endif %}
+
+    {% comment %} Campaign Configuration {% endcomment %}
+    <script src="{{ 'config.js' | campaign_asset }}"></script>
+
+    {% comment %} NEXT Metatags {% endcomment %}
+    {% if meta_tags and meta_tags != empty %}
+    {% for tag in meta_tags %}
+    {% if tag[1] %}<meta name="{{ tag[0] }}" content="{{ tag[1] }}">{% endif %}
+    {% endfor %}
+    {% else %}
+    <meta name="next-funnel" content="{{ campaign.name }}">
+    {% if next_url %}<meta name="next-success-url" content="{{ next_url | campaign_link }}">{% endif %}
+    {% if next_url %}<meta name="next-upsell-accept-url" content="{{ next_url | campaign_link }}">{% endif %}
+    {% if decline_url %}<meta name="next-upsell-decline-url" content="{{ decline_url | campaign_link }}">{% endif %}
+    <meta name="next-page-type" content="{{ page_type }}">
+    {% endif %}
+    {% comment %} BS-013 / Known #8 diagnostic only: <meta name="next-clear-cart" content="true"> clears session cart every load (masks merge bugs; breaks persistence — do not ship). {% endcomment %}
+
+    {% comment %} Campaign Cart SDK {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v{{ campaign.sdk_version }}/dist/loader.js" type="module"></script>
+
+    {% campaign_include 'analytics-head.html' %}
+
+    <link href="{{ 'css/next-core.css' | campaign_asset }}" rel="stylesheet" type="text/css">
+    {% for style in styles %}
+    <link href="{{ style | campaign_asset }}" rel="stylesheet" type="text/css">
+    {% endfor %}
+
+    <link href="{{ 'images/favicon.png' | campaign_asset }}" rel="shortcut icon" type="image/x-icon">
+    <link href="{{ 'images/webclip.png' | campaign_asset }}" rel="apple-touch-icon">
+  </head>
+  <body>
+    {% campaign_include 'analytics-body.html' %}
+    {{ content }}
+    {% for script in scripts %}
+    <script defer src="{{ script | campaign_asset }}"></script>
+    {% endfor %}
+  </body>
+</html>

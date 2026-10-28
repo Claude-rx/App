@@ -5,7 +5,7 @@
     "local_spec_id": "1b7c62ea-589f-49eb-83f9-31869ed0c283",
     "public_route_slug": "stick-funnel",
     "template_family": "apollo",
-    "authority": "tools/funnel/funnel.py + the live campaign read"
+    "authority": "tools/funnel/funnels/stick.py + the live campaign read"
   },
   "campaign": {
     "ref_id": 2211,
@@ -14,6 +14,18 @@
     "language": "en",
     "payment_env_key": "5WMJ53MV2D8MH9X9S955PQ0T95",
     "available_payment_methods": [
+      {
+        "code": "affirm",
+        "label": "Affirm"
+      },
+      {
+        "code": "afterpay",
+        "label": "Afterpay"
+      },
+      {
+        "code": "apple_pay",
+        "label": "Apple Pay"
+      },
       {
         "code": "bankcard",
         "label": "Bankcard"
@@ -691,6 +703,220 @@
           "unit_price_before_discount": "47.00",
           "package_price": "42.00",
           "package_price_before_discount": "47.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 6,
+      "name": "10% off your foundation today",
+      "type": "voucher",
+      "code": "APF10",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "10.00",
+        "description": "10% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 6,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+          "package_name": "Adaptive Peptide Foundation - 1 bottle",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+          "unit_price": "35.00",
+          "unit_price_before_discount": "39.00",
+          "package_price": "35.00",
+          "package_price_before_discount": "39.00",
+          "package_unit_qty": 1
+        },
+        {
+          "package_id": 7,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/5ff3fbef36494261a3f8d9e789222845.webp",
+          "package_name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 2 bottles + free gifts",
+          "unit_price": "51.00",
+          "unit_price_before_discount": "57.00",
+          "package_price": "51.00",
+          "package_price_before_discount": "57.00",
+          "package_unit_qty": 1
+        },
+        {
+          "package_id": 8,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/dedb4fe484f44f03ae6af6ca7976581d.webp",
+          "package_name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+          "unit_price": "67.00",
+          "unit_price_before_discount": "75.00",
+          "package_price": "67.00",
+          "package_price_before_discount": "75.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 7,
+      "name": "40% off one more bottle",
+      "type": "voucher",
+      "code": "APF40",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "40.00",
+        "description": "40% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 6,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+          "package_name": "Adaptive Peptide Foundation - 1 bottle",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+          "unit_price": "23.00",
+          "unit_price_before_discount": "39.00",
+          "package_price": "23.00",
+          "package_price_before_discount": "39.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 8,
+      "name": "50% off one more bottle",
+      "type": "voucher",
+      "code": "APF50",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "50.00",
+        "description": "50% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 6,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/453406e8914a4be3b89f33f441d1be3b.webp",
+          "package_name": "Adaptive Peptide Foundation - 1 bottle",
+          "product_name": "Adaptive Peptide Foundation",
+          "product_variant_name": "Adaptive Peptide Foundation - 1 bottle",
+          "unit_price": "19.00",
+          "unit_price_before_discount": "39.00",
+          "package_price": "19.00",
+          "package_price_before_discount": "39.00",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 9,
+      "name": "40% off the Lymphatic Brush",
+      "type": "voucher",
+      "code": "BRUSH40",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "40.00",
+        "description": "40% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 11,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/2b29808833b4443fbaf3c14d1d70fda9.webp",
+          "package_name": "The Lymphatic Brush - 1 brush + free travel case",
+          "product_name": "The Lymphatic Brush",
+          "product_variant_name": "The Lymphatic Brush - 1 brush + free travel case",
+          "unit_price": "14.00",
+          "unit_price_before_discount": "24.95",
+          "package_price": "14.00",
+          "package_price_before_discount": "24.95",
+          "package_unit_qty": 1
+        }
+      ],
+      "shipping_methods": [
+        {
+          "ref_id": 1,
+          "code": "default",
+          "price": "0.00",
+          "price_before_discount": "0.00"
+        }
+      ]
+    },
+    {
+      "ref_id": 10,
+      "name": "60% off the Lymphatic Brush",
+      "type": "voucher",
+      "code": "BRUSH60",
+      "condition": {
+        "type": "any",
+        "value": null,
+        "description": "No minimum purchase requirement"
+      },
+      "benefit": {
+        "type": "package_percentage",
+        "value": "60.00",
+        "description": "60% off selected packages"
+      },
+      "packages": [
+        {
+          "package_id": 11,
+          "package_image": "https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/2b29808833b4443fbaf3c14d1d70fda9.webp",
+          "package_name": "The Lymphatic Brush - 1 brush + free travel case",
+          "product_name": "The Lymphatic Brush",
+          "product_variant_name": "The Lymphatic Brush - 1 brush + free travel case",
+          "unit_price": "9.00",
+          "unit_price_before_discount": "24.95",
+          "package_price": "9.00",
+          "package_price_before_discount": "24.95",
           "package_unit_qty": 1
         }
       ],

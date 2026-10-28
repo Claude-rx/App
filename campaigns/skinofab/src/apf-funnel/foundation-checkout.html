@@ -1,0 +1,246 @@
+---
+title: "Secure checkout | SKINOFAB Adaptive Peptide Foundation"
+page_type: checkout
+next_url: foundation-offer-1.html
+meta_tags:
+  next-funnel: "SKINOFAB Adaptive Peptide Foundation"
+  next-page-type: "checkout"
+  next-success-url: "/apf-funnel/foundation-offer-1/"
+# Apollo's single-step checkout (the flagship family) with the funnel's three packs, campaign packages 6, 7 and 8
+# (tools/funnel/funnels/apf.py), the 2-bottle pack preselected. The page sells on trust, not on the product (she chose it
+# on the sales page): the rating and four promises above Step 1, the guarantee by the order button, and the reviews,
+# ratings, guarantee card and questions in the left column (under the form on a phone): _includes/sf-checkout-trust.html.
+# Every pack is a one-time purchase (nothing renews), said by the express buttons and the order button. The exit pop
+# applies APF10 (offer 6, 10% off the foundation packs). No coupon box: the post-purchase vouchers must not be usable here.
+cart_summary_variant: "02"
+payment_flags:
+  show_affirm: false
+payment_methods:
+  show_paypal: false      # PayPal and Apple Pay are the express buttons above (one surface each)
+  show_apple_pay: false
+  show_google_pay: false
+  show_affirm: false
+  show_twint: false
+  show_bancontact: false
+  show_ideal: false
+  show_sepa_debit: false
+  show_shop_pay: false
+selector_order_bump_variant: "none"
+order_bump_variant: "none"
+bundle_card_style: "product"
+checkout_reveal: false
+address_form:
+  label_style: inset
+  gated: true
+promo_banner:
+  emoji: "🎁"
+  highlight: "FREE Lymphatic Brush"
+  lead: "with"
+  strong: "3 bottles"
+  trail: "· Free shipping · 30-day money-back guarantee"
+trust:
+  rating:
+    average: "4.8"
+    count: "9,855"
+    total: 9855
+    rows: [["5", 7719, "7,719"], ["4", 2132, "2,132"], ["3", 0, "0"], ["2", 1, "1"], ["1", 3, "3"]]
+    of: "of this foundation, at our earlier store"
+  points:
+    - { icon: shield, title: "30-day money-back guarantee", text: "Not your match? A full refund, even opened. You don’t send it back." }
+    - { icon: truck, title: "Free tracked shipping", text: "Your order ships in 1 business day." }
+    - { icon: mail, title: "One-time purchase", text: "Nothing renews. Questions? A person replies within one business day." }
+    - { icon: lock, title: "Secure checkout", text: "Your card number goes straight to our payment processor, encrypted." }
+  faq:
+    - q: "What if it isn’t my shade?"
+      a: "It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
+    - q: "Is this a subscription?"
+      a: "No. Every pack is a one-time purchase: you pay today’s total once and nothing renews. If you ever want refills, you can set them up in our store yourself."
+    - q: "When does it ship?"
+      a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days in the US, 6–9 to Europe, 8–12 elsewhere."
+    - q: "Are these reviews of this foundation?"
+      a: "Yes. They are the published reviews of the Adaptive Peptide Foundation from our earlier store, imported in October 2026 word for word, with the buyers’ own photos."
+    - q: "Is my payment secure?"
+      a: "Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal, Apple Pay, Klarna or Link."
+# the foundation's published reviews (the earlier store's review app), word for word and without titles (the buyers wrote
+# none): women past 45 about the match, their lines and their dry skin (persona.md), two of them 4 stars as 2,132 of the
+# ratings are; each with her own photo (tools/funnel/apf/images.py REVIEW_PHOTOS)
+reviews:
+  - body: "This color adjusting foundation is hands down the best ever. Ive tried all different foundations and they're either too light or dark. Never a match. I will keep buying this stuff."
+    author: "Virginia Z."
+    photo: "images/sf/review-virginia.jpg"
+    rating: 5
+    verified: "Verified buyer, from our earlier store"
+  - body: "I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!"
+    author: "Lora Z., 65"
+    photo: "images/sf/review-lora.jpg"
+    rating: 5
+    verified: "Verified buyer, from our earlier store"
+  - body: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. It doesn’t settle to lines at all."
+    author: "Tina C."
+    photo: "images/sf/review-tina.jpg"
+    rating: 5
+    verified: "Verified buyer, from our earlier store"
+  - body: "I’ve ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn’t love my wrinkles."
+    author: "Hope H., 74"
+    photo: "images/sf/review-hope.jpg"
+    rating: 5
+    verified: "Verified buyer, from our earlier store"
+  - body: "Lovely smooth finish and colour is great on my 70 year old skin"
+    author: "Susan B., 70"
+    photo: "images/sf/review-susan.jpg"
+    rating: 5
+    verified: "Verified buyer, from our earlier store"
+  - body: "Easy to blend , natural everyday foundation. Aging skin so hard to find something that doesn’t sink into the wrinkles…very happy"
+    author: "Rachel H."
+    photo: "images/sf/review-rachel.jpg"
+    rating: 4
+    verified: "Verified buyer, from our earlier store"
+  - body: "First time trying & I absolutely love it. It blends into my skin perfectly leaving no trace of white just a blooming tone to my mature skin. Im so happy I bought it"
+    author: "Mary D."
+    photo: "images/sf/review-mary.jpg"
+    rating: 5
+    verified: "Verified buyer, from our earlier store"
+  - body: "I am 60 years old and don't wear much makeup. This product I love it is light weight and matches perfectly. This is mid afternoon even."
+    author: "Diane O., 60"
+    photo: "images/sf/review-diane.jpg"
+    rating: 5
+    verified: "Verified buyer, from our earlier store"
+  - body: "Applied very nicely. Color seems a little lighter but adjusted after a few minutes."
+    author: "Sherron S."
+    photo: "images/sf/review-sherron.jpg"
+    rating: 4
+    verified: "Verified buyer, from our earlier store"
+  - body: "Easy application and covers well. Looks good on my 81 year old face!"
+    author: "Vicki M., 81"
+    photo: "images/sf/review-vicki.jpg"
+    rating: 5
+    verified: "Verified buyer, from our earlier store"
+reviews_note: "Ratings and reviews of the Adaptive Peptide Foundation from our earlier store, imported in October 2026, none edited."
+guarantee:
+  badge: "images/sf/guarantee.jpg"
+  title: "30-Day Money-Back Guarantee"
+  text: "Not your match? Wear it in your own daylight. Email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
+  line: "Not your match? Email us within 30 days of delivery for a full refund, even opened."
+  ticks: ["30 days from delivery to decide", "A full refund, even opened", "No need to send it back", "Every pack, every gift included"]
+styles:
+  - css/exit-intent-popup.css
+  - css/checkout-brand.css
+scripts:
+  - js/checkout.js
+  - js/sf-checkout.js
+  - js/sf-failsafe.js
+  - js/payment-logos.js
+packages:
+  main_package: 7
+shipping_methods:
+  standard: 1
+bundles:
+  - id: "apf-2"
+    package_id: 7
+    quantity: 1
+    shipping_method: "standard"
+    selected: true
+    image: "images/sf/pack-2.jpg"
+    subtitle_text: "One-time. Free shipping, a free Blender brush and a free mystery gift"
+    badge_text: "Most popular"
+    badge_pill_class: "os-card__label--pill-secondary"
+  - id: "apf-3"
+    package_id: 8
+    quantity: 1
+    shipping_method: "standard"
+    image: "images/sf/pack-3.jpg"
+    subtitle_text: "One-time. Free shipping, a free Lymphatic Brush, a free Blender brush and a free mystery gift"
+    badge_text: "Best value"
+    badge_pill_class: "os-card__label--pill-primary"
+  - id: "apf-1"
+    package_id: 6
+    quantity: 1
+    shipping_method: "standard"
+    image: "images/sf/pack-1.jpg"
+    subtitle_text: "One-time. Free shipping"
+# what she pays today (the SDK's cart total, after any exit coupon) and what the pack is, by the express buttons (they place
+# the order too) and by the button; sf-checkout.js keeps the pack's line in step with the chosen card
+pay_terms:
+  apf-2: "2 bottles with a free Blender brush and a free mystery gift"
+  apf-3: "3 bottles with a free Lymphatic Brush, a free Blender brush and a free mystery gift"
+  apf-1: "1 bottle"
+once_terms: "A one-time purchase: nothing renews and nothing else is charged. Questions? Email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a>: a person replies within one business day. Every pack has the same 30-day money-back guarantee."
+exit_intent:
+  coupon_code: "APF10"
+  popup_image: "images/sf/offer.jpg"
+  headline: "Wait!"
+  subheadline: "Before you go, take 10% off."
+  offer_title: "Your foundation pack, 10% off today"
+  offer_label: "Take <strong>10% off</strong> your pack"
+  offer_detail: "10% off the foundation pack in today’s order, rounded down to the dollar ($67 for 3 bottles, $51 for 2, $35 for 1). The gifts and free shipping stay."
+  cta_label: "Apply my 10% off"
+---
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
+<div class="page-wrapper">
+  <div class="main-wrapper">
+    {% campaign_include 'promo-banner.html' promo_banner=promo_banner %}
+    {% campaign_include 'checkout-header.html' %}
+    <div class="section-checkout cc-gray">
+      <div class="container">
+        <div class="checkout-page-layout">
+          <div class="checkout-wrapper sf-co">
+            <div class="checkout-layout__right">
+              <div class="checkout-layout__form">
+                <div class="checkout__form-container">
+                  <h1 class="sf-sr">Secure checkout: Adaptive Peptide Foundation</h1>
+                  {% campaign_include 'sf-checkout-trust.html' part='top' %}
+                  <div class="checkout-form">
+                    <form data-next-checkout="form" id="combo_form" method="post">
+                      <div class="form-content">
+                        <div class="form-sections">
+                          <div class="form-section grid-row-gap2 form-section--first">
+                            <h2 class="form-section__title">Step 1: Choose your pack</h2>
+                            {% campaign_include 'bundle-selector.html' selector_id='main' card_style=bundle_card_style packages=packages shipping_methods=shipping_methods bundles=bundles %}
+                          </div>
+                          <div data-next-component="shipping-form" class="form-sections">
+                            {% campaign_include 'customer-info-form.html' section_title='Step 2: Your details' %}
+                            {% campaign_include 'shipping-address-form.html' section_title='Step 3: Shipping address' %}
+                          </div>
+                          {% campaign_include 'sf-checkout-trust.html' part='featured' %}
+                          <div class="form-section form-section--last">
+                            <div class="form-section__header">
+                              <h2 class="form-section__title" id="sf-co-pay">Step 4: Payment</h2>
+                              <div class="form-section__subtitle">All transactions are secure and encrypted.</div>
+                            </div>
+                            {% capture pay_text %}<strong><span data-next-display="cart.total">$57.00</span> today</strong>, once, for <span data-sf-renew>{{ pay_terms['apf-2'] }}</span>.{% endcapture %}
+                            <p class="sf-pay-terms" data-sf-pay-terms='{{ pay_terms | json }}'>{{ pay_text }} Nothing renews.</p>
+                            {% campaign_include 'express-checkout.html' show_title=false %}
+                            {% campaign_include 'payment-methods.html' %}
+                          </div>
+                          <div class="form-section form-section--last">
+                            <div class="cart-box cart-box--card">
+                              {% campaign_include 'cart-summary02.html' %}
+                            </div>
+                          </div>
+                          <div class="sf-refill-terms" id="once-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{{ pay_terms | json }}'><strong>One-time purchase.</strong> {{ pay_text }}</p><p>{{ once_terms }}</p></div>
+                          {% campaign_include 'sf-checkout-trust.html' part='inline' %}
+                          {% capture disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
+                          {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · ONE-TIME PURCHASE · 30-DAY GUARANTEE' disclaimer=disclaimer %}
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="checkout-trust-bar">
+                    {% campaign_include 'payment-logos.html' show_secure=true %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% comment %} the proof column: after the form in the page (it is read after it), on the left on a computer (checkout-brand.css) {% endcomment %}
+            <div class="checkout-layout__left sf-co-left">
+              {% campaign_include 'sf-checkout-trust.html' part='proof' %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% campaign_include 'footer.html' %}
+</div>
+{% assign exit_image = exit_intent.popup_image | campaign_asset %}
+{% campaign_include 'exit-intent-popup.html' coupon_code=exit_intent.coupon_code popup_image=exit_image headline=exit_intent.headline subheadline=exit_intent.subheadline offer_title=exit_intent.offer_title offer_label=exit_intent.offer_label offer_detail=exit_intent.offer_detail cta_label=exit_intent.cta_label %}

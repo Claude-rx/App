@@ -1,0 +1,110 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/offer-controls.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-offer-controls
+  next_version: 1
+  next_sdk_owns: visible bundle cards (tier-cards), native bundle quantity stepper, MV slot stage, default-property input
+  next_sdk_surface: upsell offer (the visible quantity / tier / variant control — the only piece that differs per type)
+  next_params: reads offer / tiers / selector_id / package_id / upsell_type from upsell/offer-context.html.
+    offer.quantity_label: heading above the control (default per type).
+    slot_personalization / order_personalization (mv only): see CLAUDE.md "Line-item properties".
+  next_dont_touch: data-next-bundle-*, data-next-quantity-*, data-next-bundle-qty-for, data-next-bundle-slots-for,
+    data-next-default-property, data-bundle-qty-*
+
+    tier-cards → VISIBLE bundle cards in a grid; click selects (this IS the first in-offer selector).
+                 Per-card data-next-bundle-display shows each tier's own price before selection.
+    tier-pills → 1…N buttons; initBundleQtyToggle() (upsells.js) clicks the matching hidden card
+                 (data-bundle-qty-btn value = suffix of data-next-bundle-id, e.g. "2" → upsell-bundle-2x).
+    stepper    → SDK-native −/+ (data-next-bundle-qty-for matches the hidden card's selector id).
+    mv         → qty buttons + optional order-wide property field + #bundle-slots-stage (SDK renders one
+                 slot per unit; setupBundleSlotVariantDropdowns() in upsells-mv.js styles the selects).
+    single     → no control (one package, fixed quantity).
+{% endcomment %}
+{%- if upsell_type == 'tier-cards' -%}
+<p class="next-bundle-tier-heading">{{ offer.quantity_label | default: 'Choose quantity' }}</p>
+<div class="next-bundle-qty">
+  <div data-next-bundle-selector
+       data-next-upsell-context
+       data-next-selector-id="{{ selector_id }}"
+       class="os-option next-bundle-tier-grid">
+    {% for i in (1..tier_count) %}{% campaign_include 'upsell/offer-tier.html' i=i %}
+    <div role="button"
+         data-next-bundle-card
+         data-next-bundle-id="{{ t_id }}"
+         data-next-bundle-items='{{ t_items_json }}'
+         data-next-bundle-vouchers='{{ t_vouchers_json }}'
+         {% if t_selected %}data-next-selected="true"{% endif %}
+         class="os-card{% if t_selected %} next-selected{% endif %}">
+      <div class="next-bundle-tier-card__inner" data-next-package-id="{{ package_id }}">
+        <p class="next-bundle-tier-card__label">{{ t_label }}</p>
+        <p class="next-bundle-tier-card__hint">{{ t_hint }}</p>
+        <div class="next-bundle-tier-card__price"><span data-next-bundle-display="price">—</span></div>
+        <div class="next-bundle-tier-card__compare"><span data-next-bundle-display="originalPrice"></span></div>
+        <div data-next-bundle-display="hasDiscount" class="next-bundle-tier-card__badge"><span data-next-bundle-display="discountPercentage" data-next-format="percentage"></span> off</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{%- elsif upsell_type == 'tier-pills' or upsell_type == 'mv' -%}
+<div class="next-bundle-qty">
+  <div class="next-bundle-qty__label">
+    <div>{{ offer.quantity_label | default: 'Select Quantity' }}</div>
+    <div class="right-bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M16.01 11H4v2h12.01v3L20 12l-3.99-4z"></path></svg></div>
+  </div>
+  <div class="next-bundle-qty__row" data-bundle-qty-for="{{ selector_id }}">
+    {% for i in (1..tier_count) %}{% campaign_include 'upsell/offer-tier.html' i=i %}
+    {%- if upsell_type == 'mv' -%}{%- assign qv = t_quantity -%}{%- else -%}{%- assign qv = t_button_value -%}{%- endif -%}
+    <div data-bundle-qty-btn="{{ qv }}" class="next-bundle-qty__btn{% if t_selected %} next-selected{% endif %}"><div>{{ qv }}</div></div>
+    {% endfor %}
+  </div>
+</div>
+{%- if upsell_type == 'mv' -%}
+{%- if order_personalization and order_personalization.enabled -%}
+{%- assign up_key = order_personalization.property_key | default: 'custom_text' -%}
+{%- assign up_label = order_personalization.label | default: 'Custom Text (applied to all items)' -%}
+{%- assign up_placeholder = order_personalization.placeholder | default: '' -%}
+{%- assign up_maxlength = order_personalization.maxlength | default: 120 -%}
+<div class="grid-full margin-12">
+  <div class="os-slot__personalization">
+    <label class="os-card__variant-label">{{ up_label }}{% if order_personalization.optional %} <span class="text-muted text-weight-normal">(optional)</span>{% endif %}</label>
+    <input data-next-default-property="{{ up_key }}" name="{{ up_key }}" type="text" maxlength="{{ up_maxlength }}"{% if up_placeholder != "" %} placeholder="{{ up_placeholder }}"{% endif %} class="input-flds">
+  </div>
+</div>
+{%- endif -%}
+<div class="upsell_variants-wrapper">
+  <div class="os-card__variants-container">
+    <div class="os-card__upsell-grid cc-two-col">
+      <div class="os-card__variant-number">
+        <div class="os-card__variant-label-item"><div class="hide">#</div></div>
+      </div>
+      <div class="os-card__variant-label-items">
+        {%- assign mv_labels = offer.variant_labels | default: 'Select Size,Select Color' | split: ',' -%}
+        {%- for lbl in mv_labels -%}
+        <div class="os-card__variant-label-item{% if forloop.first %} grid-cell{% endif %}"><div>{{ lbl | strip }}</div></div>
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="os-card__variant-label">
+      <div class="os-card__variant-label-number"></div>
+    </div>
+    <div data-next-bundle-slots-for="{{ selector_id }}" class="os-card__variant-options" id="bundle-slots-stage"></div>
+  </div>
+</div>
+{%- endif -%}
+{%- elsif upsell_type == 'stepper' -%}
+<div class="next-bundle-qty">
+  <div class="next-bundle-qty__label">
+    <div>{{ offer.quantity_label | default: 'Select Quantity' }}</div>
+    <div class="right-bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M16.01 11H4v2h12.01v3L20 12l-3.99-4z"></path></svg></div>
+  </div>
+  <div class="next-bundle-qty__row" data-next-bundle-qty-for="{{ selector_id }}">
+    <button type="button" class="next-bundle-qty__btn" data-next-quantity-decrease aria-label="Decrease quantity">−</button>
+    <span class="text-lg tw-600 next-bundle-qty__value" data-next-quantity-display>{{ offer.default_quantity | default: 1 }}</span>
+    <button type="button" class="next-bundle-qty__btn" data-next-quantity-increase aria-label="Increase quantity">+</button>
+  </div>
+</div>
+{%- elsif upsell_type == 'single' -%}
+{%- if offer.urgency_text -%}
+<p class="text-lg font-bold color-destructive">{{ offer.urgency_text }}</p>
+{%- endif -%}
+{%- endif -%}

@@ -1,0 +1,114 @@
+{%- comment -%} SKINOFAB: the demo fallback prices ($9.99, $24.95, $0.00...) and the 0% discount are the page's own (upsell_offer.fallback_price / fallback_compare / fallback_discount, tools/funnel/upsell_pages.py). Otherwise GENERATED from _shared/upsell/_includes/upsell/offer-context.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-offer-context
+  next_version: 1
+  next_sdk_owns: nothing (assign-only helper — renders no markup)
+  next_sdk_surface: upsell offer (shared variable resolution)
+  next_params:
+    offer_type: include arg. tier-cards | tier-pills | stepper | single | mv. Falls back to upsell_offer.type, then "stepper".
+    upsell_offer: object. package_id, selector_id, display_selector_id, display_bundle_id, voucher (single only),
+      bundle_id / items_json / vouchers_json / default_quantity / min_quantity / max_quantity (stepper only),
+      pricing_mode, copy overrides (see upsell/offer.html).
+    upsell_bundle_tiers / upsell_mv_tiers: arrays (tier-cards, tier-pills, mv) — optional; generated from
+      package_id (offer.tier_count, offer.vouchers_json) when absent.
+  Per-type inputs (everything else derives from package_id):
+    single     → package_id (+ voucher)
+    stepper    → package_id (+ items_json, vouchers_json, default/min/max_quantity)
+    tier-cards → package_id + upsell_bundle_tiers[] { id, items_json, vouchers_json, label, hint, selected }  (or generated)
+    tier-pills → package_id + upsell_bundle_tiers[] { id, items_json, vouchers_json, button_value, selected } (or generated)
+    mv         → package_id + upsell_mv_tiers[] { id, quantity, vouchers_json, selected } (or generated) + upsells-mv.js
+  next_dont_touch: the *_path assigns — they are the only SDK display paths the offer partials read.
+
+  Resolves every shared variable the upsell offer partials need, in ONE place. campaign_include shares
+  scope (assign writes to the page scope), so upsell/offer.html and upsell/closing-cta.html both include
+  this and every child partial sees the same offer / package_id / selector_id / *_path values.
+
+  Price paths:
+    single, no voucher → package.price / package.price_retail / package.savingsPercentage
+                          (scoped: needs a data-next-package-id ancestor — the offer wrapper provides it)
+    single + voucher   → bundle.<selector_id>.* (hidden linked selector, see upsell/offer.html)
+    every bundle type  → bundle.<selector_id>.* (remote display; keep data-next-format on the nodes)
+{% endcomment %}
+{%- assign offer = upsell_offer -%}
+{%- assign upsell_type = offer_type | default: offer.type | default: 'stepper' -%}
+{%- assign package_id = offer.package_id | default: 3 -%}
+{%- if upsell_type == 'single' -%}
+  {%- assign selector_id = offer.selector_id | default: 'upsell-single' -%}
+{%- else -%}
+  {%- assign selector_id = offer.selector_id | default: 'upsell-bundle' -%}
+{%- endif -%}
+{%- assign display_selector_id = offer.display_selector_id | default: 'upsell-bundle-1x' -%}
+{%- assign display_bundle_id = offer.display_bundle_id | default: 'upsell-bundle-1x-card' -%}
+{%- if upsell_type == 'mv' -%}
+  {%- assign tiers = upsell_mv_tiers -%}
+{%- else -%}
+  {%- assign tiers = upsell_bundle_tiers -%}
+{%- endif -%}
+{%- comment -%} Tier resolution. Explicit upsell_bundle_tiers / upsell_mv_tiers win. Without them a tier type still
+     renders: tier_count (offer.tier_count, default 3) tiers are generated from package_id — ids
+     <selector_id>-<n>x, items [{packageId, quantity: n}], vouchers offer.vouchers_json on every tier, labels
+     "Buy n" — so flipping upsell_offer.type on a page always yields a working selector. {%- endcomment -%}
+{%- assign tiers_generated = false -%}
+{%- if tiers == nil or tiers.size == 0 -%}
+  {%- assign tiers_generated = true -%}
+{%- endif -%}
+{%- assign tier_count = offer.tier_count | default: 3 -%}
+{%- unless tiers_generated -%}{%- assign tier_count = tiers.size -%}{%- endunless -%}
+{%- assign default_items_json = '[{"packageId":' | append: package_id | append: ',"quantity":1}]' -%}
+{%- assign default_vouchers_json = offer.vouchers_json | default: '["UP50"]' -%}
+{%- if tiers_generated -%}
+  {%- assign display_items_json = default_items_json -%}
+  {%- assign display_vouchers_json = default_vouchers_json -%}
+  {%- assign display_quantity = 1 -%}
+{%- else -%}
+  {%- assign display_tier = tiers | first -%}
+  {%- assign display_items_json = display_tier.items_json -%}
+  {%- assign display_vouchers_json = display_tier.vouchers_json -%}
+  {%- assign display_quantity = display_tier.quantity | default: 1 -%}
+{%- endif -%}
+{%- assign package_name_path = 'package.' | append: package_id | append: '.name' -%}
+{%- assign price_is_scoped = false -%}
+{%- if upsell_type == 'single' and offer.voucher == nil -%}
+  {%- assign price_is_scoped = true -%}
+  {%- assign price_path = 'package.price' -%}
+  {%- assign compare_path = 'package.price_retail' -%}
+  {%- assign pct_path = 'package.savingsPercentage' -%}
+  {%- assign unit_price_path = 'package.price' -%}
+{%- else -%}
+  {%- assign price_path = 'bundle.' | append: selector_id | append: '.price' -%}
+  {%- assign compare_path = 'bundle.' | append: selector_id | append: '.originalPrice' -%}
+  {%- assign pct_path = 'bundle.' | append: selector_id | append: '.discountPercentage' -%}
+  {%- assign unit_price_path = 'bundle.' | append: selector_id | append: '.unitPrice' -%}
+{%- endif -%}
+{%- assign layout = upsell_layout -%}
+{%- assign media = layout.media | default: 'carousel' -%}
+{%- assign media_position = layout.media_position | default: 'right' -%}
+{%- assign media_align = layout.media_align | default: 'center' -%}
+{%- assign boxed = true -%}
+{%- if layout.boxed == false -%}{%- assign boxed = false -%}{%- endif -%}
+{%- comment -%} Copy tokens for upsell/copy.html — every span is built from the resolved ids above. Copy renders
+     outside the offer wrapper (the hero, the closing card), where no data-next-package-id ancestor scopes the
+     bare package.* paths, so the single/no-voucher tokens name the package explicitly (package.<id>.*). {%- endcomment -%}
+{%- if price_is_scoped -%}
+  {%- assign tok_price_path = 'package.' | append: package_id | append: '.price' -%}
+  {%- assign tok_compare_path = 'package.' | append: package_id | append: '.price_retail' -%}
+  {%- assign tok_pct_path = 'package.' | append: package_id | append: '.savingsPercentage' -%}
+{%- else -%}
+  {%- assign tok_price_path = price_path -%}
+  {%- assign tok_compare_path = compare_path -%}
+  {%- assign tok_pct_path = pct_path -%}
+{%- endif -%}
+{%- capture tok_package_name -%}<span data-next-display="{{ package_name_path }}">Product</span>{%- endcapture -%}
+{%- capture tok_price -%}<span data-next-display="{{ tok_price_path }}" data-next-format="currency">{{ offer.fallback_price }}</span>{%- endcapture -%}
+{%- capture tok_compare_price -%}<span data-next-display="{{ tok_compare_path }}" data-next-format="currency">{{ offer.fallback_compare }}</span>{%- endcapture -%}
+{%- capture tok_discount -%}<span data-next-display="{{ tok_pct_path }}" data-next-format="percentage">{{ offer.fallback_discount | default: '0%' }}</span>{%- endcapture -%}
+{%- if upsell_type == 'tier-cards' or upsell_type == 'tier-pills' or upsell_type == 'mv' -%}
+  {%- capture tok_price_1x -%}<span data-next-display="bundle.{{ display_selector_id }}.price" data-next-format="currency">{{ offer.fallback_price }}</span>{%- endcapture -%}
+  {%- capture tok_discount_1x -%}<span data-next-display="bundle.{{ display_selector_id }}.discountPercentage" data-next-format="percentage">0%</span>{%- endcapture -%}
+  {%- capture tok_discount_max -%}<span data-next-display="bundle.{{ selector_id }}-{{ tier_count }}x.discountPercentage" data-next-format="percentage">0%</span>{%- endcapture -%}
+{%- else -%}
+  {%- assign tok_price_1x = tok_price -%}
+  {%- assign tok_discount_1x = tok_discount -%}
+  {%- assign tok_discount_max = tok_discount -%}
+{%- endif -%}
+{%- capture tok_first_name -%}<span data-next-display="order.customer.firstName"></span>{%- endcapture -%}

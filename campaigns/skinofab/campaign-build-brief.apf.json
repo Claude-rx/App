@@ -1,0 +1,176 @@
+{
+  "schema_version": "campaigns-os-build-brief/v1",
+  "campaign_intent": {
+    "audience": "Women 45+ with dry, mature skin who have tried many foundations and fear the wrong shade, a cakey look and lines (persona: Linda, 56, docs/apf-funnel/persona.md)",
+    "conversion_goal": "Warm cold traffic with the listicle, convert on the long sales page and a trust-first checkout, raise AOV with quantity breaks and gifts on the page and three post-purchase offers with downsells; every package is a one-time purchase",
+    "tone": "clear, warm, benefit-led, in the buyer's own words",
+    "compliance": {
+      "approved_claims": [
+        "goes on white and adapts to your skin tone as you blend",
+        "designed not to settle into fine lines",
+        "a hydrating serum base: two forms of hyaluronic acid, ceramide NP, squalane and panthenol",
+        "skincare actives named on the label: PDRN, Matrixyl 3000 peptides, Pro-Xylane, niacinamide, adenosine",
+        "fragrance-free; made without propylene glycol, drying alcohol or parabens",
+        "formulated in Korea; made for skin after 45",
+        "4.8 out of 5 from 9,855 reviews of this foundation, imported from our earlier store in October 2026",
+        "30-day money-back guarantee, even opened, nothing to send back"
+      ],
+      "forbidden_claims": [
+        "SPF or sun protection",
+        "reverses aging / age-reversing / look N years younger",
+        "produces collagen",
+        "every or all skin tones, matches 99%",
+        "any percentage or study result",
+        "dermatologist, doctor or expert recommended",
+        "fake countdowns or scarcity counts",
+        "any renewal wording: nothing in this funnel recurs"
+      ],
+      "copy_rules": [
+        "before/after images are labelled AI illustrations, not customer photos",
+        "every buy button says the price is charged once and nothing renews",
+        "the reviews are the foundation's published reviews from our earlier store, word for word, and say so",
+        "the manufacturing spec stays confidential: no percentages, suppliers or process"
+      ]
+    }
+  },
+  "design_authority": {
+    "listicle": {
+      "source": "provided_design_export",
+      "reference": "facelove-listicle.html"
+    },
+    "offer": {
+      "source": "provided_design_export",
+      "reference": "apf-pdp.html"
+    },
+    "checkout": {
+      "source": "template",
+      "reference": "template stock: Apollo checkout page, no bespoke design"
+    },
+    "offer-1": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "offer-2": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "offer-2b": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "brush-offer": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "brush-offer-b": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "thank-you": {
+      "source": "template",
+      "reference": "template stock: Apollo receipt page, no bespoke design"
+    }
+  },
+  "brand": {
+    "commerce_palette_source": "provided_design_export",
+    "primary_accent": "#151515",
+    "cta_style": "SKINOFAB: black (#151515) pill buttons with white uppercase Jost text; Jost body, Playfair Display for product names",
+    "avoid": [
+      "template-default brand colors"
+    ]
+  },
+  "media": {
+    "sold_variants": [
+      "Adaptive Peptide Foundation - 1 bottle",
+      "Adaptive Peptide Foundation - 2 bottles + free gifts",
+      "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush",
+      "Adaptive Peptide Foundation - 2 bottles",
+      "Adaptive Peptide Foundation - 6 bottles + free Lymphatic Brush",
+      "The Lymphatic Brush - 1 brush + free travel case"
+    ],
+    "allow_other_variant_colors": false,
+    "prefer": [
+      "the store's own approved photos of women over 45 with the real bottle",
+      "clean product renders on white",
+      "the buyers' own review photos"
+    ],
+    "avoid": [
+      "wrong product variant",
+      "blurry stock-like crops",
+      "AI faces presented as customers"
+    ]
+  },
+  "offer_presentation": {
+    "bundle_cards": {
+      "primary_price": "pack_price_once",
+      "show_total": "multi_pack_only",
+      "show_compare_price": true,
+      "savings_badge": "rounded_percentage",
+      "hide_duplicate_discount_copy": true
+    },
+    "post_purchase": {
+      "show_voucher_code": "when_customer_needs_to_see_it",
+      "show_retail_price": true,
+      "show_shipping": "if_charged"
+    }
+  },
+  "promo_urgency": {
+    "header_claim_source": "campaign_offers",
+    "timer_label": "none",
+    "show_promo_code_in_timer": false,
+    "exit_pop": {
+      "enabled": true,
+      "code_source": "campaign_spec"
+    },
+    "forbid_placeholders": true
+  },
+  "commerce_surfaces": {
+    "payment_methods_allowed": [
+      "card",
+      "paypal",
+      "apple_pay",
+      "klarna"
+    ],
+    "hidden_payment_methods": [
+      "google_pay",
+      "afterpay",
+      "sezzle",
+      "shop_pay",
+      "amazon_pay",
+      "venmo",
+      "cash_app"
+    ],
+    "order_bump": {
+      "enabled": false,
+      "display_style": null
+    },
+    "guarantees": {
+      "use_campaign_or_merchant_policy_copy": true
+    }
+  },
+  "canonical_display": {
+    "product_name_source": "campaign_spec",
+    "allow_runtime_name_override": false,
+    "manual_overrides": {}
+  },
+  "template_residue_policy": {
+    "block_placeholders": true,
+    "block_template_favicon": true,
+    "block_demo_payment_methods": true,
+    "block_lorem_ipsum": true,
+    "block_unapproved_tracking_claims": true
+  },
+  "qa_policy": {
+    "enforcement": {
+      "status": "documented_expectation",
+      "enforced_by": "qa.proof_policy and report.proof_policy",
+      "note": "Build Brief qa_policy records business QA expectations; doctor and QA enforce the Build Packet qa.proof_policy and Assembly Report report.proof_policy contract."
+    },
+    "require_desktop_mobile_screenshots": true,
+    "require_checkout_flow": true,
+    "require_post_purchase_flow": true,
+    "fail_on_visible_placeholders": true,
+    "compare_live_runtime_data_to_spec": true
+  },
+  "brief_mode": "guided"
+}

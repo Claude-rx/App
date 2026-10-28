@@ -1,0 +1,3093 @@
+{
+  "schema_version": "campaigns-os-doctor-output/v0",
+  "generated_at": "2026-10-27T13:23:52.674Z",
+  "generated_by": "qa run",
+  "ok": true,
+  "status": "ready_with_warnings",
+  "errors": [],
+  "warnings": [
+    {
+      "code": "source_html.raw_html_wrappers",
+      "message": "Effective raw_html_conversion_status is \"not_required\", but mapped source HTML still contains document wrapper tags: facelove-listicle.html (doctype, html, head, body); stick-pdp.html (doctype, html, head, body). Strip <!doctype>, <html>, <head>, and <body> before treating the page as page-kit-ready source.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.wrapper_policy",
+      "message": "Assembly is recorded complete with report.adapter_decisions.wrapper_policy=\"preserve_document_wrappers\". Select wrapper_policy at intake with prepare-build --wrapper-policy or the source-html manifest's wrapper_policy option; page-kit source should normally strip document wrappers unless preserving them is explicitly not_required.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.template_files_copied",
+      "message": "Assembly is recorded complete, but report.adapter_decisions.template_files_copied.status is \"pending\". Copy or verify the selected template family as one atomic slice, not individual commerce pages.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "build_brief.payment_methods_spec_drift",
+      "message": "Campaign Build Brief allows payment method(s) not found in CampaignSpec data: card. Confirm runtime/catalog support before rendering them.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    }
+  ],
+  "ready": [
+    "Build Packet schema campaign-runtime-build-packet/v0",
+    "Template family \"apollo\" is certified (commerce catalog + brand contract)",
+    "Template family \"apollo\" certification is current: last verified against SDK 0.4.42 (2026-10-16), the current SDK recorded by the vendored contracts.",
+    "Deploy target is local-serve and the deploy URL http://127.0.0.1:8090/stick-funnel/ is a loopback origin: it is served locally for QA. Campaigns App states its Development-domain rule for the hostname localhost on any port; if SDK initialization is refused on this host, open the same server as http://localhost:<port>/ and record that URL instead.",
+    "Local proof mode: the built _site/ is recorded as a development render (stages.assembly.evidence.build_environment); vendor loaders are environment-gated out, SDK dl_* events still fire.",
+    "Local proof production parity: PASS — 8 page(s) identical to the current development render; production differs only in environment-gated output (136 line(s)); Campaign Cart pin 0.4.43.",
+    "Target campaign output directory exists",
+    "Target page-kit dependency 0.3.0",
+    "Local CampaignSpec parsed",
+    "CampaignSpec spec_identity includes local_spec_id and public_route_slug",
+    "Packet public_route_slug \"stick-funnel\" matches CampaignSpec identity and is not the Map ID",
+    "CampaignSpec public page routes are Page Kit-compatible",
+    "CampaignSpec required Store Profile fields are present for page-kit campaigns.json",
+    "CampaignSpec store_url points at a non-placeholder storefront",
+    "Built checkout carries no google_pay payment-method markup (_site/stick-funnel/stick-checkout/index.html); left to browser QA: shared chrome asset upsell-payment-logos.svg",
+    "Target campaigns.json SDK version matches CampaignSpec (0.4.43).",
+    "Target campaigns.json Store Profile matches the CampaignSpec across all nine governed fields.",
+    "CampaignSpec shipping countries: all countries",
+    "CampaignSpec routing meta deferred to built-output verification (_site/stick-funnel/).",
+    "Source-html manifest source-html-manifest/v0 validated",
+    "Template-stock page(s) materialised by the build stage: checkout (apollo), special-1 (apollo), special-2 (apollo), special-3 (apollo), special-4 (apollo), thank-you (apollo)",
+    "Source mappings cover active CampaignSpec pages",
+    "All mapped CampaignSpec pages are build candidates",
+    "Mapped source pages pass the page-kit preparation check (document wrappers stripped, no leftover frontmatter, no source-file internal links)",
+    "CampaignSpec package purchase availability has no unavailable package refs in active build data",
+    "Built output root found at _site/stick-funnel/",
+    "Build output fingerprint matches stages.assembly.build_fingerprint (122 file(s) under _site/stick-funnel/)",
+    "Built HTML structure and commerce refs checked in _site/stick-funnel/ for 8 page(s)",
+    "Every bundle selector on 4 built post-purchase page(s) is scoped away from the live cart (4 selector(s) scanned)",
+    "All 8 built page(s) agree on campaign identity (next-funnel \"SKINOFAB Foundation Stick\", API key consistent)",
+    "SDK markup: 3 data-next-* name(s) not in the Campaign Cart 0.4.42 attribute index (advisory; the SDK does not read them): data-next-catalog-component, data-next-content, data-next-skeleton",
+    "SDK markup checks passed on 8 built page(s)",
+    "All 9 campaign-owned script(s) loaded by built pages parse",
+    "Built SDK meta tags checked in _site/stick-funnel/ for 8 page(s)",
+    "Page Kit build summary verified for \"stick-funnel\": 8 page(s) built, no build errors, shape warnings or asset warnings",
+    "Built routes match CampaignSpec page routes (8/8 verified)",
+    "Built output carries no needs-input markers, unverified urgency chrome, or template demo residue",
+    "Campaigns API key available via env:CAMPAIGNS_API_KEY",
+    "Commerce catalog sharedFrontmatterVocabulary loaded",
+    "Template agentContract loaded for apollo",
+    "Template brand/residue/pricing contract loaded for apollo",
+    "Template family inventory matrix loaded for apollo",
+    "Built target output has no obvious demo-only or unsupported starter contract residue",
+    "Built target output has no generic starter placeholder or promo-code residue",
+    "Built target output has no promo discount claims above CampaignSpec max (50%)",
+    "Built target output has no literal template placeholder text",
+    "Built target output references no template demo placeholder assets",
+    "apollo upsell offers have code-backed discounts or no code-less discount offer binding requirement",
+    "apollo exit-pop/promo-code behavior is governed by CampaignSpec offer-surface fields",
+    "source_html.adapter_contract adapter decision fields loaded",
+    "qa.proof_policy loaded: browser=true, typed_card_depth=common, order_path_depth=common",
+    "Campaign Build Brief is complete: merchandising/design presentation truth is available.",
+    "Build context schema campaign-runtime-build-context/v0",
+    "context.adapter_decisions adapter decision fields loaded",
+    "Brand theme context ready_with_warnings (medium confidence)",
+    "Assembly report schema campaign-runtime-assembly-report/v0",
+    "Assembly report theme applied",
+    "report.adapter_decisions adapter decision fields loaded",
+    "report.proof_policy loaded: browser=true, typed_card_depth=common, order_path_depth=common",
+    "Theme gate passed: Brand theme is applied after next-core.css on commerce pages.",
+    "Campaign CSS has no display:none rules on apollo pricing surfaces",
+    "Polish gate passed: structured evidence is current for this build.",
+    "Hidden eager-media checkpoint passed: package-owned page-load evidence is complete and current."
+  ],
+  "derived": {
+    "packet_path": "./campaign-runtime.build.json",
+    "assembly_report_path": ".campaign-runtime/assembly-report.json",
+    "map_id": null,
+    "local_spec_id": "1b7c62ea-589f-49eb-83f9-31869ed0c283",
+    "public_route_slug": "stick-funnel",
+    "template_family": "apollo",
+    "source_root": "./design-source",
+    "target_repo": ".",
+    "target_output_dir": "./src/stick-funnel",
+    "spec_path": "./campaign-spec.json",
+    "doctor_checks": [
+      "campaign-spec.rule-registry",
+      "spec.identity_export",
+      "campaign.route_slug_identity",
+      "campaign.route_root",
+      "spec.public_routes",
+      "spec.store_profile",
+      "page_kit.sdk_version",
+      "page_kit.store_profile",
+      "spec.shipping_countries",
+      "spec.routing_meta_tags",
+      "spec.routing_host_prefix",
+      "source_html.coverage",
+      "source_html.preparation",
+      "spec.package_availability",
+      "built_output.target_root",
+      "built_output.fingerprint",
+      "built_output.pages",
+      "built_output.live_campaign_refs",
+      "built_output.upsell_selector_scope",
+      "built_output.campaign_identity",
+      "built_output.sdk_markup",
+      "built_output.script_syntax",
+      "built_output.cart_placeholders",
+      "built_output.smoke_qc",
+      "built_output.sdk_meta_tags",
+      "built_output.build_summary",
+      "built_output.route_drift",
+      "built_output.content_residue",
+      "built_output.proof_attestation",
+      "campaign.api_key",
+      "assembly.commerce_catalog",
+      "market_copy",
+      "source_html.adapter_contract",
+      "qa.proof_policy",
+      "build_brief.artifact",
+      "context.shape",
+      "assembly_report.shape"
+    ],
+    "checkpoint_gates": [
+      {
+        "id": "page_kit.sdk_version",
+        "scope": "page_kit.sdk_version",
+        "status": "pass",
+        "code": "page_kit.sdk_version.pass",
+        "reason": "Target SDK version exactly matches the CampaignSpec (0.4.43).",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "stick-funnel",
+          "target_path": "_data/campaigns.json"
+        },
+        "state": {
+          "expected": "0.4.43",
+          "observed": "0.4.43"
+        },
+        "state_fingerprint": null,
+        "expected_sdk_version": "0.4.43",
+        "observed_sdk_version": "0.4.43",
+        "expected_source": "global_config.sdk_version",
+        "waiver": null,
+        "waiver_assessment": {
+          "active": null,
+          "inert_counts": {
+            "stale": 0,
+            "foreign": 0,
+            "malformed": 0,
+            "expired": 0
+          }
+        },
+        "required_actions": []
+      },
+      {
+        "id": "page_kit.store_profile",
+        "scope": "page_kit.store_profile",
+        "status": "pass",
+        "code": "page_kit.store_profile.pass",
+        "reason": "Target Store Profile exactly matches the CampaignSpec for all nine governed fields.",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "stick-funnel",
+          "target_path": "_data/campaigns.json"
+        },
+        "state": {
+          "discrepancies": []
+        },
+        "state_fingerprint": "sha256:02b174db800be67124edf7834ae23489f6a2b4b2c2e44558ba167b0592a1a249",
+        "matrix": [
+          {
+            "field": "store_name",
+            "kind": "match",
+            "spec": "SKINOFAB",
+            "target": "SKINOFAB",
+            "severity": "clean"
+          },
+          {
+            "field": "store_url",
+            "kind": "match",
+            "spec": "https://try.skinofab.com",
+            "target": "https://try.skinofab.com",
+            "severity": "clean"
+          },
+          {
+            "field": "store_terms",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/terms-of-service/",
+            "target": "https://try.skinofab.com/terms-of-service/",
+            "severity": "clean"
+          },
+          {
+            "field": "store_privacy",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/privacy-policy/",
+            "target": "https://try.skinofab.com/privacy-policy/",
+            "severity": "clean"
+          },
+          {
+            "field": "store_contact",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/contact/",
+            "target": "https://try.skinofab.com/contact/",
+            "severity": "clean"
+          },
+          {
+            "field": "store_returns",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/refund-policy/",
+            "target": "https://try.skinofab.com/refund-policy/",
+            "severity": "clean"
+          },
+          {
+            "field": "store_shipping",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/shipping-policy/",
+            "target": "https://try.skinofab.com/shipping-policy/",
+            "severity": "clean"
+          },
+          {
+            "field": "store_phone",
+            "kind": "both_empty",
+            "spec": "",
+            "target": "",
+            "severity": "clean"
+          },
+          {
+            "field": "store_phone_tel",
+            "kind": "both_empty",
+            "spec": "",
+            "target": "",
+            "severity": "clean"
+          }
+        ],
+        "blocker_fields": [],
+        "warning_fields": [],
+        "waiver": null,
+        "waiver_assessment": {
+          "active": null,
+          "inert_counts": {
+            "stale": 0,
+            "foreign": 0,
+            "malformed": 0,
+            "expired": 0
+          }
+        },
+        "required_actions": []
+      },
+      {
+        "id": "built_output.upsell_selector_scope",
+        "scope": "built_output.upsell_selector_scope",
+        "status": "pass",
+        "code": "built_output.upsell_selector_scope.pass",
+        "reason": "Every bundle selector on 4 built post-purchase page(s) is scoped away from the live cart.",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "stick-funnel",
+          "site_root": "./_site/stick-funnel"
+        },
+        "state": {
+          "findings": []
+        },
+        "state_fingerprint": null,
+        "findings": [],
+        "warned": [],
+        "pages_scanned": 4,
+        "selectors_scanned": 4,
+        "waiver": null,
+        "waiver_assessment": {
+          "active": null,
+          "inert_counts": {
+            "stale": 0,
+            "foreign": 0,
+            "malformed": 0,
+            "expired": 0
+          }
+        },
+        "required_actions": []
+      },
+      {
+        "id": "built_output.campaign_identity",
+        "scope": "built_output.campaign_identity",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "stick-funnel",
+          "site_root": "./_site/stick-funnel"
+        },
+        "waiver": null,
+        "status": "pass",
+        "code": "built_output.campaign_identity.pass",
+        "reason": "All 8 built page(s) agree on campaign identity (API key present, next-funnel \"SKINOFAB Foundation Stick\").",
+        "findings": [],
+        "pages_scanned": 8,
+        "pages_skipped": [],
+        "identity": {
+          "api_key": "xeLMiMHnfC8DwH5gQjGDIAhNawAmCqyuwZX0HrxP",
+          "api_key_source": "/stick-funnel/config.js nextConfig.apiKey",
+          "funnel": "SKINOFAB Foundation Stick"
+        },
+        "required_actions": []
+      },
+      {
+        "id": "built_output.sdk_markup",
+        "scope": "built_output.sdk_markup",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "stick-funnel",
+          "site_root": "./_site/stick-funnel"
+        },
+        "waiver": null,
+        "sdk_attribute_index_version": "0.4.42",
+        "campaign_sdk_version": "0.4.43",
+        "status": "pass",
+        "code": "built_output.sdk_markup.pass",
+        "reason": "SDK markup checks passed on 8 built page(s).",
+        "findings": [],
+        "warned": [],
+        "unknown_attributes": [
+          {
+            "name": "data-next-catalog-component",
+            "pages": [
+              "./_site/stick-funnel/stick-checkout/index.html",
+              "./_site/stick-funnel/stick-special-1/index.html",
+              "./_site/stick-funnel/stick-special-2/index.html",
+              "./_site/stick-funnel/stick-special-3/index.html",
+              "./_site/stick-funnel/stick-special-4/index.html",
+              "./_site/stick-funnel/stick-thank-you/index.html"
+            ]
+          },
+          {
+            "name": "data-next-content",
+            "pages": [
+              "./_site/stick-funnel/stick-thank-you/index.html"
+            ]
+          },
+          {
+            "name": "data-next-skeleton",
+            "pages": [
+              "./_site/stick-funnel/stick-thank-you/index.html"
+            ]
+          }
+        ],
+        "pages_scanned": 8,
+        "required_actions": []
+      },
+      {
+        "id": "built_output.script_syntax",
+        "scope": "built_output.script_syntax",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "stick-funnel",
+          "site_root": "./_site/stick-funnel"
+        },
+        "waiver": null,
+        "status": "pass",
+        "code": "built_output.script_syntax.pass",
+        "reason": "All 9 campaign-owned script(s) loaded by 8 built page(s) parse.",
+        "findings": [],
+        "scripts_scanned": 9,
+        "scripts_unresolved": [],
+        "scripts_outside_site": [],
+        "warned": [],
+        "pages_scanned": 8,
+        "required_actions": []
+      }
+    ],
+    "qc_results": [
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/stick-funnel/10-reasons-foundation-stick/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:dacc916df325fc635952de95143f7bd96c967bc2244b36188fd954fe0df7c14d",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 21524,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.385Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/stick-funnel/foundation-stick-offer/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:cea8947a44b92f287aa2983f97a9be78f40e3584b683bb06cfae50ba33e10595",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 39611,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.385Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/stick-funnel/stick-checkout/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:e185b4d34e77d39bd085ce6d7ef7082b35b84dfd959a413aac95c9f6107e0c03",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 77890,
+          "candidates": 27
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.385Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/stick-funnel/stick-special-1/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:a853cccaf4c56154b5250ad1fa1222fae5e6bfe7c5d019650ef88ba4526f51e4",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 30043,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.385Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/stick-funnel/stick-special-2/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:dde9252a47879e872c16b8d6788ac36c30e7fc004ce9200cac42dd65fdb8b804",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 30189,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.385Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/stick-funnel/stick-special-3/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:5429ba5ce15c98eb56c5c60f06f08e30dd4cae72142fddbb499c57aee625147e",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 29908,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.385Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/stick-funnel/stick-special-4/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:a7472197dc0b9e4c9e82b564797bdc83d2ea8368b85e736e52c5891757644e70",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 29903,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.385Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/stick-funnel/stick-thank-you/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:1ac46c1adc748214e86712e634cc981c63af1b913a2bb21c49e100205032de50",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 31797,
+          "candidates": 8
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.385Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/10-reasons-foundation-stick/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:3f79fcdb2fdb02570f2b2f55a4267d52e20d9f4589d2ffd3833068cb41816623",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/10-reasons-foundation-stick/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:3ae65e346a0e4bf28f322beaf61e1f628943f44fdcf0ebf4a69c801aaee4f2c3",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/10-reasons-foundation-stick/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:7c10d43ba1edc5f0b883d3bab5a630abd4b5dc53f5991bb205db6bc069a55f94",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/10-reasons-foundation-stick/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:8e72dd87005daf33ec33adad8c47e0ea7aca4e1525d487b7af9c2bb1298cabfb",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/10-reasons-foundation-stick/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:c5adc467a6f9ce1983d863987d083075077ebc0141b997954dc497c64e91ce67",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/10-reasons-foundation-stick/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:b7b53f90510f6939611bc3e2325ad0a2875c848909070b0581d6c65b08e68e98",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/10-reasons-foundation-stick/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:347977e9f70e81c45ba50360d3cdacd9e05120d417dd1e400b462cb7ec6dd516",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/10-reasons-foundation-stick/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:be533057091e2acb0ebab058748aef94617bcdaaa717fbd489d3dc61bdf6b934",
+        "observation": {
+          "page": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:anchor:reviews",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "anchor:reviews"
+        },
+        "state_fingerprint": "sha256:7d6db4f129c5245591489538f4c673cba729bbf2601f57f11a624bb72bb19ea0",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "target": "reviews",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:anchor:buy",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "anchor:buy"
+        },
+        "state_fingerprint": "sha256:4b4b9ff019a426f3b3f41f4f32e9ead174836aabb88285e88daf19bfda0562ba",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "target": "buy",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:f013d36085b66429c2319904ebc1251c30993d9dcba7b3518e7deaf371e2819a",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:6eb26b272b83f5bd9a29c8129ac466a047548341ba8eafbebe412b8af188b70b",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:189a5fe7603020ef281dd6f4ee3f83a7a94fe013829539661f1d7c9546803033",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:f6eab1d50d6f27904fa10aae503f7e7568668fb64c500892569e658f4fbf0a04",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:1fc02ada6ac80f1c544caaf0314297dde9e5e3aa7f57c2196b375be50f5d1993",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:414b2ad1b7ec5268e7baa344abca4e149b986c4955180cbf530168c2882126fe",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:d9a5946bbac6419c5961947e5e628f6eaa8b95bb04a192ac8d61bde1bf84374c",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/foundation-stick-offer/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:9f7e1d3a6261300d3ba1490d3b16d7c7b67e5b31a7b7bb80a1be08cdb91afdbc",
+        "observation": {
+          "page": "_site/stick-funnel/foundation-stick-offer/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-checkout/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:09e87da78b805b1955569de0fe50b643e33e207228fb9d439f880ed0fdc3860a",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-checkout/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:0e6126e2e8ce7ad3d0f96eb6b78a5fd82e496f67deeea71a5dd5b9addb2d96fc",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-checkout/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:a11578ca9a4ba6dd6ff80544226b579f883526eaca7e88c12168582e191629ca",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-checkout/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:a4c248f1788fe1dba3b5a681e886b32e7f1c0c9353dc9530affddbfd8f0bbfb3",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-checkout/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:2124be0307c569875e083eb4611751c027c1ca5fb260ef889595a4cc776985bd",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-checkout/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:36ac666754a69b79eb5d0a77ec2d809d0c68c96b0fbbb77a9ade984eb4a2ba62",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-checkout/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:b9ecab0e394028a697357cf54c154007e35ee0575bd491fc009cd0e53afd28ca",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-checkout/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:0d3666a0a23b1e00b063b9f0523e1441c6d20eb6c6f9fe458db049e0fcad07bd",
+        "observation": {
+          "page": "_site/stick-funnel/stick-checkout/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:ac0aac371541827ba8f2a81e6ae6a0be051415f05dfcb87b76ad0609b499e5c1",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:d29ffcdc36ff7d0dff0a6f94ad2390a132a9bf838740437a7dacf682fc163c55",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:330d112c3200ef91ed339aea880ba2c6d25501c6048b3b1a7fcfa94642985c8b",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:f703bf2be0b17418dcba48a5e863f7f8e88ecdd77737d14bd8f09f61999fca8a",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:5762fb2aa943668fbf5813b1478fa45d689531e25d427323bbe5277bd46d8d17",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:8ae09821ad64e7c517308e1ab0fc7845ed50fe102a5ae944bc12d1eaea2aeb58",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:8c17ce3c2d502b433eb07a350cfd7f4ccb42d5fd787b2ae456aeeca458eae5d3",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:84da110dfdd458bd142fa3c3ec8779443ad3f7ed89845608205f75e8b2565ee5",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-1/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:6e4af2d6cadcf067f16b9294fde40b315c1709bed10b84129bd8d1c3baf83323",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-1/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:a249c2cfc73718f3ddde35859d4bc96cc522615b3978e3495f7987364a1e102b",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:bb0175ff3ad577277dc68fc201d430815b30dd490c3466b1e268a40e9e14df97",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:e68dc741b40c21e4b4e2dfc595188285035980b2bf5dc1213e4099c057323f02",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:693fae5d29bb0a2260739cf241fbc0c995b3ceba6d592135608ed7d359fa7574",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:925fd68ede46d74c6e8c6af88f1e13a4b002eae3e1fced63a2bd95a8744e58d3",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:85b827d8431dea6b89bb219d1ab8006f59d271ab25d54c681e230250611ccd1e",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:3cb33b6e733a8568734cacbb578699595a7d4bbaaa2dc31602fca2aac368c1b4",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:3a2acc26158da28ceff68f9c9f1bb1daf08414f37a790372ac0e1ff14af6ea33",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-2/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:c4309707794c71ca09e0648d607520899332d5ff0ea633102d89d9c4a303c68b",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-2/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:2a69cff9cc22cd8b568e17f6839cfe89fd0192f193658607b7f4d152fd735aa4",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:4bad09a6e94adc9e36ce7251c51fcc2084debad5d39d6bc91933beb12011b74c",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:137af85d11366b2796f53087675d32a6ce0b27ef65c65721f971c57a80056e9c",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:9310c3ee8bd7f70d461e799019e2dee4301d2f0ee9bdf5de1bef9f89cd191877",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:e138d1fc4513fd94d8b391608bbfff6e96d1f81f90c56c14b997f3d58da65b9e",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:43c2b17153c5b77ca0cacae378e2a2085cb000a0ac3c4f13226c8b0a1e615aec",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:97a17f62d2d86ef756ff630eaebd6eb3695224eb1d10d62f225bbbbf73327e0c",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:c031b99b8b4f21f061156593d5f65f0295822790c3b444024632b6ec47fa5411",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-3/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:9818759b0147fb00cbc2e255d8c81c0aecf507c2c537545df3d12a944361c8bc",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-3/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:780052e5856c928bd5922c19af32474754743dd3e618ba453cae4ea1e86fbee5",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:9a8267265a08aad2f89f714ff7be55b0a7a5467e13391a6321f9e33005154caf",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:6e53bd3c1a2955cd136518e0288ac321f3bc86a19dbc3533b5c90beda9f9eaa7",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:18baafe695b86b3343ddc2b6b83337c22756a14d253e8166c452c9ea10b2d49d",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:49dec9ce7d9531d999683e4a208377f44b571f456430b22c665bd2ada741aa90",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:eded7c281e0dda3f6d66fd6faf6306bead19f8552cf80d20e6948500f96fdcc3",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:5dd33476377cccb6ccb65abdf9565e1630fd64c1213c660106e1aea17e137f24",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:aa3612219a1cd6e3e0987cc03d8fd81902148d3b9a225a74a5ab66d51d8a4f45",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-special-4/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:4e3eb34ac7e4d1a7f1a5171eb35bbdfd7864fbc7beacd57e1dcf6fe164797d22",
+        "observation": {
+          "page": "_site/stick-funnel/stick-special-4/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-thank-you/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:facadb1cd68bce558bae4c363abd593e77df4fcb215a7352be92e92e5a32cac4",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-thank-you/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:aad9d738be17704297c9878424ade6c0a1d0c0003135b114148b8187e284f482",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-thank-you/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:d3f5cf968e66dd5d65f04f89b22d523965b040331b1bba8d2711e56f16254a5b",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-thank-you/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:1e6d4fc4d1afbdb779467b50b9e8eb49d09ed054f53d6ca3396b81e105b05e74",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-thank-you/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:4ebc964dad306a51c927d93e25b4d212db059eafb4f3520819b70c4415de7f25",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-thank-you/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:791449289fcdc32f05b1f0502501d8190dc972e7e868f415a039c7d24aaa4bf4",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-thank-you/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:644df2330d415595b707b000aabab5df67c27ef1d60a2ef2e8fdbeeb4e567c4d",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/stick-funnel/stick-thank-you/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:dbb343511b255328e52e0d4748a8e0c391911c29551f023e793a1d83fc9fbddd",
+        "observation": {
+          "page": "_site/stick-funnel/stick-thank-you/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-27T13:23:52.468Z",
+        "producer": "campaigns-os doctor"
+      }
+    ],
+    "polish_checkpoint_gate": {
+      "id": "polish.hidden_eager_media",
+      "scope": "polish.hidden_eager_media",
+      "status": "pass",
+      "checkpoint_status": "ready",
+      "severity": "info",
+      "code": "polish.hidden_eager_media.pass",
+      "reason": "Page-load evidence has no hidden eager media above 1,048,576 bytes.",
+      "waivable": false,
+      "subject": {
+        "build_fingerprint": "sha256:fbf750a767dc8d2556e6ceb43685e8460cb25cca0e10bcea72f32a7cc6c08719",
+        "campaign_slug": "stick-funnel",
+        "route_scope": "selected",
+        "routes": [
+          "/stick-funnel/10-reasons-foundation-stick/",
+          "/stick-funnel/foundation-stick-offer/"
+        ],
+        "viewports": [
+          "desktop",
+          "mobile"
+        ]
+      },
+      "state": {
+        "findings": []
+      },
+      "state_fingerprint": "sha256:f1fc7a79d4c763240ccf21c129771dbb68d38efb50860df9d2681a7963043fa3",
+      "findings": [],
+      "waiver": null,
+      "waiver_assessment": {
+        "active": null,
+        "inert_counts": {
+          "stale": 0,
+          "foreign": 0,
+          "malformed": 0,
+          "expired": 0
+        }
+      },
+      "required_actions": []
+    },
+    "prepare_build_gate": null,
+    "brand_contract": {
+      "state": "inspected",
+      "family": "apollo"
+    },
+    "page_kit_campaign_config": {
+      "status": "ok",
+      "public_route_slug": "stick-funnel",
+      "target_path": "_data/campaigns.json"
+    },
+    "scaffold_required": false,
+    "scaffold_reason": null,
+    "scope": {
+      "mode": "full",
+      "built_pages": [
+        {
+          "page_id": "listicle",
+          "type": "presell",
+          "role": "visual",
+          "route": "10-reasons-foundation-stick/",
+          "source_path": "facelove-listicle.html"
+        },
+        {
+          "page_id": "offer",
+          "type": "landing",
+          "role": "visual",
+          "route": "foundation-stick-offer/",
+          "source_path": "stick-pdp.html"
+        },
+        {
+          "page_id": "checkout",
+          "type": "checkout",
+          "role": "runtime",
+          "route": "stick-checkout/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "special-1",
+          "type": "upsell",
+          "role": "runtime",
+          "route": "stick-special-1/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "special-2",
+          "type": "upsell",
+          "role": "runtime",
+          "route": "stick-special-2/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "special-3",
+          "type": "upsell",
+          "role": "runtime",
+          "route": "stick-special-3/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "special-4",
+          "type": "upsell",
+          "role": "runtime",
+          "route": "stick-special-4/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "thank-you",
+          "type": "thankyou",
+          "role": "runtime",
+          "route": "stick-thank-you/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        }
+      ],
+      "out_of_scope_pages": [],
+      "out_of_scope_reasons": [],
+      "previewable_routes": [
+        {
+          "page_id": "listicle",
+          "type": "presell",
+          "route": "10-reasons-foundation-stick/"
+        },
+        {
+          "page_id": "offer",
+          "type": "landing",
+          "route": "foundation-stick-offer/"
+        },
+        {
+          "page_id": "checkout",
+          "type": "checkout",
+          "route": "stick-checkout/"
+        },
+        {
+          "page_id": "special-1",
+          "type": "upsell",
+          "route": "stick-special-1/"
+        },
+        {
+          "page_id": "special-2",
+          "type": "upsell",
+          "route": "stick-special-2/"
+        },
+        {
+          "page_id": "special-3",
+          "type": "upsell",
+          "route": "stick-special-3/"
+        },
+        {
+          "page_id": "special-4",
+          "type": "upsell",
+          "route": "stick-special-4/"
+        },
+        {
+          "page_id": "thank-you",
+          "type": "thankyou",
+          "route": "stick-thank-you/"
+        }
+      ],
+      "blocked_runtime_pages": []
+    },
+    "source_preparation": {
+      "checked_page_count": 2,
+      "finding_codes": []
+    },
+    "build_output_fingerprint": {
+      "root": "_site/stick-funnel/",
+      "algorithm": "sha256-manifest/v1",
+      "value": "sha256:fbf750a767dc8d2556e6ceb43685e8460cb25cca0e10bcea72f32a7cc6c08719",
+      "file_count": 122,
+      "excluded": [],
+      "recorded": "sha256:fbf750a767dc8d2556e6ceb43685e8460cb25cca0e10bcea72f32a7cc6c08719",
+      "status": "pass"
+    },
+    "live_campaign_refs": {
+      "status": "not_run",
+      "reason_code": "not_read",
+      "reason": "This invocation does not read the live campaign.",
+      "checked_pages": 8,
+      "page_findings": [],
+      "drift": null
+    },
+    "input_currency": {
+      "brief": {
+        "bound": {
+          "presentation": "sha256:a450e62bd514b2e1ed8ef9ea96031c054b0701f2a7cddb195833ebfe51c10099",
+          "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+        },
+        "current": {
+          "presentation": "sha256:a450e62bd514b2e1ed8ef9ea96031c054b0701f2a7cddb195833ebfe51c10099",
+          "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+        },
+        "status": "current"
+      },
+      "spec": {
+        "bound": "sha256:b705f5ea59706bd92682ab504e60d95b94309c8ff6ba95c99f37ee3896e40584",
+        "current": "sha256:b705f5ea59706bd92682ab504e60d95b94309c8ff6ba95c99f37ee3896e40584",
+        "snapshot_material": "current"
+      },
+      "stages": {
+        "assembly": "current",
+        "polish": "current",
+        "qa": "current"
+      },
+      "reasons": {
+        "assembly": null,
+        "polish": null,
+        "qa": null
+      }
+    },
+    "theme_gate": {
+      "status": "pass",
+      "code": "theme_gate.applied",
+      "reason": "Brand theme is applied after next-core.css on commerce pages.",
+      "commerce_pages": [
+        "checkout",
+        "special-1",
+        "special-2",
+        "special-3",
+        "special-4",
+        "thank-you"
+      ],
+      "commerce_pages_out_of_scope": [],
+      "waiver": null,
+      "required_actions": []
+    },
+    "polish_gate": {
+      "status": "pass",
+      "code": "polish.evidence_current",
+      "reason": "Polish evidence is current, structured, and produced by next-campaigns-polish.",
+      "build_fingerprint": "sha256:fbf750a767dc8d2556e6ceb43685e8460cb25cca0e10bcea72f32a7cc6c08719",
+      "source_build_fingerprint": "sha256:fbf750a767dc8d2556e6ceb43685e8460cb25cca0e10bcea72f32a7cc6c08719",
+      "source_package_material_fingerprint": "sha256:052d430b03a95eb65b4eb3eb9a6eba30b97697b3e7ec2bc1e43008ac245862ca",
+      "current_source_package_material_fingerprint": "sha256:052d430b03a95eb65b4eb3eb9a6eba30b97697b3e7ec2bc1e43008ac245862ca",
+      "assembly_source_package_material_fingerprint": "sha256:052d430b03a95eb65b4eb3eb9a6eba30b97697b3e7ec2bc1e43008ac245862ca",
+      "performed_by": "next-campaigns-polish",
+      "waiver": null,
+      "warnings": [],
+      "owned_checkpoint_id": "polish.hidden_eager_media",
+      "owned_checkpoint_status": "pass",
+      "owned_checkpoint_only": false
+    }
+  },
+  "next": {
+    "stage": "qa",
+    "status": "ready_with_warnings",
+    "stage_blocked": false,
+    "owner": "qa",
+    "default_skill": "next-campaigns-qa",
+    "command": "npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json --context ./.campaign-runtime/build-context.json --report ./.campaign-runtime/assembly-report.json",
+    "reason": "QA recorded zero executed order paths, so a declared \"common\" order-path depth is not proved. A `--test-order off` run is a diagnostic, not purchase proof; re-run QA at the declared depth or change the declared depth deliberately.",
+    "actions": [
+      "Run npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json --context ./.campaign-runtime/build-context.json --report ./.campaign-runtime/assembly-report.json."
+    ],
+    "blocked_stages": []
+  },
+  "cause_summary": {
+    "schema_version": "campaigns-os-finding-cause/v0",
+    "surface": "doctor",
+    "total": 4,
+    "counts": {
+      "caused_by_change": 0,
+      "pre_existing": 4,
+      "test_environment": 0,
+      "upstream_drift": 0,
+      "unknown": 0
+    },
+    "prior_run_id": "run_1793096559787_6f6967cd",
+    "comparison": "prior_run"
+  }
+}
