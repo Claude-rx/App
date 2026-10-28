@@ -15,7 +15,7 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
               the difference, every checkout link names a checkout card, the before/afters carry the AI label
   offer 1     the supply cards: each card's package is the page's, its price the package's, its crossed-out, per-bottle
               and per-day prices arithmetic from the one-bottle price; the cards sit in an upsell-context selector inside
-              the one offer, with an add and a skip action; charged once
+              the one offer, each card's Buy now the offer's add action (no hidden one), with a skip action; charged once
   offers 2-3  each offer's package and voucher are the campaign's; the fallback price is the voucher's price rounded
               down to dollars, the crossed-out price the package's; charged once; the brush offers skip an order that
               already has a brush (the SKUs of the campaign's packages that include one), the foundation offers never
@@ -191,7 +191,8 @@ opk = {p['ref_id']: p for p in pg1['packages']}
 one = float(next(p['price'] for p in ALL_PKGS.values() if p['product_sku'] == ONE_SKU))
 if 'data-next-upsell="offer" data-next-await=""' not in h1: fail('offer-1', 'no offer wrapper')
 if 'data-next-bundle-selector data-next-upsell-context data-next-selector-id="supply"' not in h1: fail('offer-1', 'the supply selector is not an upsell-context selector')
-if h1.count('data-next-upsell-action="add"') != 1 or 'data-next-upsell-action="skip"' not in h1: fail('offer-1', 'not one add and a skip action')
+if h1.count('data-next-upsell-action="add"') != len(opk) or 'data-next-upsell-action="skip"' not in h1: fail('offer-1', 'not one add action per card and a skip action')
+if 'class="sf-sr" tabindex="-1" aria-hidden="true">Add to my order' in h1: fail('offer-1', 'a hidden add action (a harness or a screen reader must reach the real one)')
 cards1 = re.findall(r"<div data-next-bundle-card data-next-bundle-id=\"([^\"]+)\" data-next-bundle-items='([^']+)'([^>]*)>(.*?<p class=\"sf-supply__charged\">[^<]*</p>)", h1, re.S)
 if len(cards1) != len(opk): fail('offer-1', f'{len(cards1)} supply cards for {len(opk)} packages')
 if sum('data-next-selected="true"' in c[2] for c in cards1) != 1: fail('offer-1', 'not exactly one selected supply card')
@@ -213,6 +214,7 @@ for bid, items, attrs, body in cards1:
     if 'Charged once' not in t: fail('offer-1', f'card {bid}: not said to be charged once')
     gifts_said(f'offer-1 card {bid}', p['product_sku'], t)
     if 'data-sf-supply-card' not in attrs: fail('offer-1', f'card {bid}: not a supply card (js/sf-supply.js)')
+    if 'data-next-upsell-action="add" data-sf-supply-buy' not in h1[h1.find(bid):h1.find(bid) + 3000]: fail('offer-1', f'card {bid}: its Buy now is not the offer\'s add action')
 if 'data-sf-skip-skus' in h1: fail('offer-1', 'a brush skip rule on a foundation offer')
 
 # offers 2 and 3, with their downsells -------------------------------------------------------------------------------

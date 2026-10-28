@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVQPUENZL4NF0H40Q0ONGN89V9",
-  "campaign_slug": "local-spec-1b7c62ea-589f-49eb-83f9-31869ed0c283",
-  "local_spec_id": "1b7c62ea-589f-49eb-83f9-31869ed0c283",
-  "public_route_slug": "stick-funnel",
+  "run_id": "MVRWKIACPRQD983L4KSP6P6R3I",
+  "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
+  "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
+  "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2211,
   "spec_version": "5.0",
-  "spec_hash": "sha256:b705f5ea59706bd92682ab504e60d95b94309c8ff6ba95c99f37ee3896e40584",
-  "started_at": "2026-10-27T13:23:12.191Z",
-  "completed_at": "2026-10-27T13:23:50.965Z",
-  "generated_at": "2026-10-27T13:23:50.988Z",
+  "spec_hash": "sha256:6a18da19dbacf616e8fc346f9521ee6b5f4e32176ec3223ef38eeedae715168a",
+  "started_at": "2026-10-28T09:19:13.812Z",
+  "completed_at": "2026-10-28T09:24:24.135Z",
+  "generated_at": "2026-10-28T09:24:24.215Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
-  "disposition": "ready_with_exceptions",
+  "disposition": "blocked",
   "entry_urls": [],
   "page_urls": [],
   "tested_urls": [],
@@ -149,219 +149,273 @@
       "status": "pass"
     },
     {
-      "id": "page-binding:special-1",
+      "id": "page-binding:offer-1",
       "family": "api-metadata",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "http:special-1",
+      "id": "http:offer-1",
       "family": "funnel-flow",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "meta:special-1:next-funnel",
+      "id": "meta:offer-1:next-funnel",
       "family": "meta-tags",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "meta:special-1:next-page-type",
+      "id": "meta:offer-1:next-page-type",
       "family": "meta-tags",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "meta:special-1:next-upsell-accept-url",
+      "id": "meta:offer-1:next-upsell-accept-url",
       "family": "meta-tags",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "meta:special-1:next-upsell-decline-url",
+      "id": "meta:offer-1:next-upsell-decline-url",
       "family": "meta-tags",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "route-link:special-1:next",
+      "id": "route-link:offer-1:next",
       "family": "funnel-flow",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "route-link:special-1:accept",
+      "id": "route-link:offer-1:accept",
       "family": "funnel-flow",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "route-link:special-1:decline",
+      "id": "route-link:offer-1:decline",
       "family": "funnel-flow",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "page-binding:special-2",
+      "id": "page-binding:offer-2",
       "family": "api-metadata",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "http:special-2",
+      "id": "http:offer-2",
       "family": "funnel-flow",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "meta:special-2:next-funnel",
+      "id": "meta:offer-2:next-funnel",
       "family": "meta-tags",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "meta:special-2:next-page-type",
+      "id": "meta:offer-2:next-page-type",
       "family": "meta-tags",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "meta:special-2:next-upsell-accept-url",
+      "id": "meta:offer-2:next-upsell-accept-url",
       "family": "meta-tags",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "meta:special-2:next-upsell-decline-url",
+      "id": "meta:offer-2:next-upsell-decline-url",
       "family": "meta-tags",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "route-link:special-2:next",
+      "id": "route-link:offer-2:next",
       "family": "funnel-flow",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "route-link:special-2:accept",
+      "id": "route-link:offer-2:accept",
       "family": "funnel-flow",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "route-link:special-2:decline",
+      "id": "route-link:offer-2:decline",
       "family": "funnel-flow",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "page-binding:special-3",
+      "id": "page-binding:offer-2b",
       "family": "api-metadata",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "http:special-3",
+      "id": "http:offer-2b",
       "family": "funnel-flow",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "meta:special-3:next-funnel",
+      "id": "meta:offer-2b:next-funnel",
       "family": "meta-tags",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "meta:special-3:next-page-type",
+      "id": "meta:offer-2b:next-page-type",
       "family": "meta-tags",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "meta:special-3:next-upsell-accept-url",
+      "id": "meta:offer-2b:next-upsell-accept-url",
       "family": "meta-tags",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "meta:special-3:next-upsell-decline-url",
+      "id": "meta:offer-2b:next-upsell-decline-url",
       "family": "meta-tags",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "route-link:special-3:next",
+      "id": "route-link:offer-2b:next",
       "family": "funnel-flow",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "route-link:special-3:accept",
+      "id": "route-link:offer-2b:accept",
       "family": "funnel-flow",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "route-link:special-3:decline",
+      "id": "route-link:offer-2b:decline",
       "family": "funnel-flow",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "page-binding:special-4",
+      "id": "page-binding:brush-offer",
       "family": "api-metadata",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "http:special-4",
+      "id": "http:brush-offer",
       "family": "funnel-flow",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "meta:special-4:next-funnel",
+      "id": "meta:brush-offer:next-funnel",
       "family": "meta-tags",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "meta:special-4:next-page-type",
+      "id": "meta:brush-offer:next-page-type",
       "family": "meta-tags",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "meta:special-4:next-upsell-accept-url",
+      "id": "meta:brush-offer:next-upsell-accept-url",
       "family": "meta-tags",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "meta:special-4:next-upsell-decline-url",
+      "id": "meta:brush-offer:next-upsell-decline-url",
       "family": "meta-tags",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "route-link:special-4:next",
+      "id": "route-link:brush-offer:next",
       "family": "funnel-flow",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "route-link:special-4:accept",
+      "id": "route-link:brush-offer:accept",
       "family": "funnel-flow",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "route-link:special-4:decline",
+      "id": "route-link:brush-offer:decline",
       "family": "funnel-flow",
-      "page": "special-4",
+      "page": "brush-offer",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:brush-offer-b",
+      "family": "api-metadata",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "http:brush-offer-b",
+      "family": "funnel-flow",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "meta:brush-offer-b:next-funnel",
+      "family": "meta-tags",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "meta:brush-offer-b:next-page-type",
+      "family": "meta-tags",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "meta:brush-offer-b:next-upsell-accept-url",
+      "family": "meta-tags",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "meta:brush-offer-b:next-upsell-decline-url",
+      "family": "meta-tags",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:brush-offer-b:next",
+      "family": "funnel-flow",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:brush-offer-b:accept",
+      "family": "funnel-flow",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:brush-offer-b:decline",
+      "family": "funnel-flow",
+      "page": "brush-offer-b",
       "status": "pass"
     },
     {
@@ -545,267 +599,321 @@
       "status": "pass"
     },
     {
-      "id": "browser-load:special-1",
+      "id": "browser-request-failures:checkout",
       "family": "browser-runtime",
-      "page": "special-1",
-      "status": "pass"
+      "page": "checkout",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
     },
     {
-      "id": "browser-primary-cta:special-1",
+      "id": "browser-load:offer-1",
       "family": "browser-runtime",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "browser-upsell-control:special-1:accept",
+      "id": "browser-primary-cta:offer-1",
       "family": "browser-runtime",
-      "page": "special-1",
-      "status": "pass"
+      "page": "offer-1",
+      "status": "fail",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
     },
     {
-      "id": "browser-upsell-control:special-1:decline",
+      "id": "browser-upsell-control:offer-1:accept",
       "family": "browser-runtime",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-1:style:announcement_bar",
+      "id": "browser-upsell-control:offer-1:decline",
+      "family": "browser-runtime",
+      "page": "offer-1",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:offer-1:style:announcement_bar",
       "family": "template_residue",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-1:style:upsell_accept_cta",
+      "id": "template-residue:offer-1:style:upsell_accept_cta",
       "family": "template_residue",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-1:logo",
+      "id": "template-residue:offer-1:logo",
       "family": "template_residue",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-1:placeholder-text",
+      "id": "template-residue:offer-1:placeholder-text",
       "family": "template_residue",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-1:demo-asset",
+      "id": "template-residue:offer-1:demo-asset",
       "family": "template_residue",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "pricing.upsell_price_visible:special-1",
+      "id": "pricing.upsell_price_visible:offer-1",
       "family": "pricing",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "browser-sdk-debugger:special-1",
+      "id": "browser-sdk-debugger:offer-1",
       "family": "browser-runtime",
-      "page": "special-1",
+      "page": "offer-1",
       "status": "pass"
     },
     {
-      "id": "browser-load:special-2",
+      "id": "browser-load:offer-2",
       "family": "browser-runtime",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "browser-primary-cta:special-2",
+      "id": "browser-primary-cta:offer-2",
       "family": "browser-runtime",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "browser-upsell-control:special-2:accept",
+      "id": "browser-upsell-control:offer-2:accept",
       "family": "browser-runtime",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "browser-upsell-control:special-2:decline",
+      "id": "browser-upsell-control:offer-2:decline",
       "family": "browser-runtime",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-2:style:announcement_bar",
+      "id": "template-residue:offer-2:style:announcement_bar",
       "family": "template_residue",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-2:style:upsell_accept_cta",
+      "id": "template-residue:offer-2:style:upsell_accept_cta",
       "family": "template_residue",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-2:logo",
+      "id": "template-residue:offer-2:logo",
       "family": "template_residue",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-2:placeholder-text",
+      "id": "template-residue:offer-2:placeholder-text",
       "family": "template_residue",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-2:demo-asset",
+      "id": "template-residue:offer-2:demo-asset",
       "family": "template_residue",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "pricing.upsell_price_visible:special-2",
+      "id": "pricing.upsell_price_visible:offer-2",
       "family": "pricing",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "browser-sdk-debugger:special-2",
+      "id": "browser-sdk-debugger:offer-2",
       "family": "browser-runtime",
-      "page": "special-2",
+      "page": "offer-2",
       "status": "pass"
     },
     {
-      "id": "browser-load:special-3",
+      "id": "browser-load:offer-2b",
       "family": "browser-runtime",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "browser-primary-cta:special-3",
+      "id": "browser-primary-cta:offer-2b",
       "family": "browser-runtime",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "browser-upsell-control:special-3:accept",
-      "family": "browser-runtime",
-      "page": "special-3",
-      "status": "pass"
-    },
-    {
-      "id": "browser-upsell-control:special-3:decline",
-      "family": "browser-runtime",
-      "page": "special-3",
-      "status": "pass"
-    },
-    {
-      "id": "template-residue:special-3:style:announcement_bar",
+      "id": "template-residue:offer-2b:style:announcement_bar",
       "family": "template_residue",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-3:style:upsell_accept_cta",
+      "id": "template-residue:offer-2b:style:upsell_accept_cta",
       "family": "template_residue",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-3:logo",
+      "id": "template-residue:offer-2b:logo",
       "family": "template_residue",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-3:placeholder-text",
+      "id": "template-residue:offer-2b:placeholder-text",
       "family": "template_residue",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-3:demo-asset",
+      "id": "template-residue:offer-2b:demo-asset",
       "family": "template_residue",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "pricing.upsell_price_visible:special-3",
+      "id": "pricing.upsell_price_visible:offer-2b",
       "family": "pricing",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "browser-sdk-debugger:special-3",
+      "id": "browser-sdk-debugger:offer-2b",
       "family": "browser-runtime",
-      "page": "special-3",
+      "page": "offer-2b",
       "status": "pass"
     },
     {
-      "id": "browser-load:special-4",
+      "id": "browser-load:brush-offer",
       "family": "browser-runtime",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "browser-primary-cta:special-4",
+      "id": "browser-primary-cta:brush-offer",
       "family": "browser-runtime",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "browser-upsell-control:special-4:accept",
+      "id": "browser-upsell-control:brush-offer:accept",
       "family": "browser-runtime",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "browser-upsell-control:special-4:decline",
+      "id": "browser-upsell-control:brush-offer:decline",
       "family": "browser-runtime",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-4:style:announcement_bar",
+      "id": "template-residue:brush-offer:style:announcement_bar",
       "family": "template_residue",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-4:style:upsell_accept_cta",
+      "id": "template-residue:brush-offer:style:upsell_accept_cta",
       "family": "template_residue",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-4:logo",
+      "id": "template-residue:brush-offer:logo",
       "family": "template_residue",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-4:placeholder-text",
+      "id": "template-residue:brush-offer:placeholder-text",
       "family": "template_residue",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "template-residue:special-4:demo-asset",
+      "id": "template-residue:brush-offer:demo-asset",
       "family": "template_residue",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "pricing.upsell_price_visible:special-4",
+      "id": "pricing.upsell_price_visible:brush-offer",
       "family": "pricing",
-      "page": "special-4",
+      "page": "brush-offer",
       "status": "pass"
     },
     {
-      "id": "browser-sdk-debugger:special-4",
+      "id": "browser-sdk-debugger:brush-offer",
       "family": "browser-runtime",
-      "page": "special-4",
+      "page": "brush-offer",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:brush-offer-b",
+      "family": "browser-runtime",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "browser-primary-cta:brush-offer-b",
+      "family": "browser-runtime",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:brush-offer-b:style:announcement_bar",
+      "family": "template_residue",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:brush-offer-b:style:upsell_accept_cta",
+      "family": "template_residue",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:brush-offer-b:logo",
+      "family": "template_residue",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:brush-offer-b:placeholder-text",
+      "family": "template_residue",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:brush-offer-b:demo-asset",
+      "family": "template_residue",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "pricing.upsell_price_visible:brush-offer-b",
+      "family": "pricing",
+      "page": "brush-offer-b",
+      "status": "pass"
+    },
+    {
+      "id": "browser-sdk-debugger:brush-offer-b",
+      "family": "browser-runtime",
+      "page": "brush-offer-b",
       "status": "pass"
     },
     {
@@ -909,61 +1017,412 @@
       "severity": "info"
     },
     {
+      "id": "browser-test-order:checkout",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-display-parity:checkout",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-total-parity:checkout",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "analytics-correctness:data-layer-purchase:checkout",
+      "family": "analytics-correctness",
+      "page": "checkout:order:checkout",
+      "status": "pass"
+    },
+    {
+      "id": "qc.tracking.url:checkout:url",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.tracking.order:checkout:order",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "browser-test-order:accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "fail",
+      "severity": "blocker",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-order-display-parity:accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-total-parity:accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "analytics-correctness:data-layer-purchase:accept",
+      "family": "analytics-correctness",
+      "page": "checkout:order:accept",
+      "status": "pass"
+    },
+    {
+      "id": "qc.tracking.url:accept:url",
+      "family": "browser-test-order",
+      "page": "accept",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.order:accept:order",
+      "family": "browser-test-order",
+      "page": "accept",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-test-order:decline",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-display-parity:decline",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-total-parity:decline",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "analytics-correctness:data-layer-purchase:decline",
+      "family": "analytics-correctness",
+      "page": "checkout:order:decline",
+      "status": "pass"
+    },
+    {
+      "id": "qc.tracking.url:decline:url",
+      "family": "browser-test-order",
+      "page": "decline",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.tracking.order:decline:order",
+      "family": "browser-test-order",
+      "page": "decline",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "browser-test-order:accept-accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "fail",
+      "severity": "blocker",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-order-display-parity:accept-accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-total-parity:accept-accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "analytics-correctness:data-layer-purchase:accept-accept",
+      "family": "analytics-correctness",
+      "page": "checkout:order:accept-accept",
+      "status": "pass"
+    },
+    {
+      "id": "qc.tracking.url:accept-accept:url",
+      "family": "browser-test-order",
+      "page": "accept-accept",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.order:accept-accept:order",
+      "family": "browser-test-order",
+      "page": "accept-accept",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-test-order:accept-decline-decline",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "fail",
+      "severity": "blocker",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-order-display-parity:accept-decline-decline",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-total-parity:accept-decline-decline",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "analytics-correctness:data-layer-purchase:accept-decline-decline",
+      "family": "analytics-correctness",
+      "page": "checkout:order:accept-decline-decline",
+      "status": "pass"
+    },
+    {
+      "id": "qc.tracking.url:accept-decline-decline:url",
+      "family": "browser-test-order",
+      "page": "accept-decline-decline",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.order:accept-decline-decline:order",
+      "family": "browser-test-order",
+      "page": "accept-decline-decline",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-test-order:decline-decline-decline-accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-display-parity:decline-decline-decline-accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-order-total-parity:decline-decline-decline-accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-receipt-rendering:decline-decline-decline-accept",
+      "family": "browser-receipt-rendering",
+      "page": "checkout:receipt:decline-decline-decline-accept",
+      "status": "pass"
+    },
+    {
+      "id": "analytics-correctness:data-layer-purchase:decline-decline-decline-accept",
+      "family": "analytics-correctness",
+      "page": "checkout:order:decline-decline-decline-accept",
+      "status": "pass"
+    },
+    {
+      "id": "qc.tracking.url:decline-decline-decline-accept:url",
+      "family": "browser-test-order",
+      "page": "decline-decline-decline-accept",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.tracking.order:decline-decline-decline-accept:order",
+      "family": "browser-test-order",
+      "page": "decline-decline-decline-accept",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
       "id": "browser-test-order:upsell-action-coverage",
       "family": "browser-test-order",
       "page": "checkout",
-      "status": "manual_review",
+      "status": "warn",
       "severity": "warn",
-      "cause": "pre_existing",
-      "cause_reason": "same_status_in_prior_run"
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
     },
     {
-      "id": "qc.tracking.url:run:url",
-      "family": "browser-test-order",
-      "page": "run",
-      "status": "skipped",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:run:order",
-      "family": "browser-test-order",
-      "page": "run",
-      "status": "skipped",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.tag:run:tag",
-      "family": "browser-test-order",
-      "page": "run",
-      "status": "skipped",
-      "severity": "info"
+      "id": "price-claim-mismatch:offer-1:bundle.supply.price",
+      "family": "pricing",
+      "page": "offer-1",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
     }
   ],
   "test_orders": [],
   "exceptions": [
     {
+      "id": "browser-request-failures:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-primary-cta:offer-1",
+      "family": "browser-runtime",
+      "page": "offer-1",
+      "status": "fail",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-test-order:accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "fail",
+      "severity": "blocker",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.url:accept:url",
+      "family": "browser-test-order",
+      "page": "accept",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.order:accept:order",
+      "family": "browser-test-order",
+      "page": "accept",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-test-order:accept-accept",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "fail",
+      "severity": "blocker",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.url:accept-accept:url",
+      "family": "browser-test-order",
+      "page": "accept-accept",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.order:accept-accept:order",
+      "family": "browser-test-order",
+      "page": "accept-accept",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "browser-test-order:accept-decline-decline",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "fail",
+      "severity": "blocker",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.url:accept-decline-decline:url",
+      "family": "browser-test-order",
+      "page": "accept-decline-decline",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "qc.tracking.order:accept-decline-decline:order",
+      "family": "browser-test-order",
+      "page": "accept-decline-decline",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
       "id": "browser-test-order:upsell-action-coverage",
       "family": "browser-test-order",
       "page": "checkout",
-      "status": "manual_review",
+      "status": "warn",
       "severity": "warn",
-      "cause": "pre_existing",
-      "cause_reason": "same_status_in_prior_run"
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
+    },
+    {
+      "id": "price-claim-mismatch:offer-1:bundle.supply.price",
+      "family": "pricing",
+      "page": "offer-1",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "unknown",
+      "cause_reason": "no_prior_run"
     }
   ],
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "qa",
-    "total": 1,
+    "total": 13,
     "counts": {
       "caused_by_change": 0,
-      "pre_existing": 1,
+      "pre_existing": 0,
       "test_environment": 0,
       "upstream_drift": 0,
-      "unknown": 0
+      "unknown": 13
     },
-    "prior_run_id": "run_1793096559787_6f6967cd",
-    "prior_qa_attempt_run_id": "MVQMM9YEOU4PK5ILN2K9DSJV38",
-    "comparison": "prior_run"
+    "prior_run_id": null,
+    "prior_qa_attempt_run_id": null,
+    "comparison": "no_prior_run"
   }
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "campaign-runtime-build-packet/v0",
-  "generated_at": "2026-10-28T09:14:15.889Z",
+  "generated_at": "2026-10-28T09:29:59.108Z",
   "campaigns_os_version": "1.60.0",
   "campaign": {
     "public_route_slug": "apf-funnel",

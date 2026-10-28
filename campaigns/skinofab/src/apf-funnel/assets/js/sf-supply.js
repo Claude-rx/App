@@ -1,22 +1,25 @@
-// Offer 1's supply cards (_includes/sf-supply-cards.html): a card's Buy now selects that card (the SDK's own click on
-// the bundle card) and then fires the offer's add action, so the order gets the card she pressed, never the one that
-// happened to be selected. Enter or Space on a focused card selects it (the SDK binds click only).
+// Offer 1's supply cards (_includes/sf-supply-cards.html): every card's Buy now is the SDK's own add action, which adds
+// the SELECTED card. A real click (hers, or a test harness's) on a card that is not selected is stopped before the SDK
+// sees it, the card is selected (the SDK's own click on the bundle card) and the same button is clicked again for her,
+// now for the right card; a proxied click (the closing card's button forwards one, upsells.js) is left alone, so it
+// adds the selection, as its copy says. Enter or Space on a focused card selects it (the SDK binds click only).
 (function () {
   'use strict';
   var cards = document.querySelectorAll('[data-sf-supply-card]');
   if (!cards.length) return;
-  var add = document.querySelector('[data-next-upsell="offer"] [data-next-upsell-action="add"]');
   var mark = function () {
     cards.forEach(function (c) { c.setAttribute('aria-pressed', c.classList.contains('next-selected') ? 'true' : 'false'); });
   };
+  document.addEventListener('click', function (e) {
+    var buy = e.target && e.target.closest ? e.target.closest('[data-sf-supply-buy]') : null;
+    if (!buy || !e.isTrusted) return;
+    var card = buy.closest('[data-sf-supply-card]');
+    if (!card || card.classList.contains('next-selected')) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    card.click();
+    setTimeout(function () { buy.click(); }, 80);
+  }, true);
   cards.forEach(function (card) {
-    var buy = card.querySelector('[data-sf-supply-buy]');
-    if (buy) buy.addEventListener('click', function (e) {
-      e.preventDefault(); e.stopPropagation();
-      if (!card.classList.contains('next-selected')) card.click();
-      // the selection is the SDK's own state change; the add reads it on the next tick
-      setTimeout(function () { if (add) add.click(); }, 60);
-    });
     card.addEventListener('keydown', function (e) {
       if (e.target !== card) return;
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }

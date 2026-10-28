@@ -10,7 +10,8 @@ price is charged once to the payment she just used and nothing renews.
 
 - offer 1 (foundation-offer-1): the supply cards (_includes/sf-supply-cards.html): two bottles for the price of one
   ("Add 1, get 1 FREE") and six for the price of three with the Lymphatic Brush ("Buy 3, get 3 FREE"); each card is
-  its own package at its own price, no voucher. Accept goes to the brush offer, decline to offer 2.
+  its own package at its own price, no voucher, and each card's Buy now is the offer's own add action (js/sf-supply.js
+  selects the card first). Accept goes to the brush offer, decline to offer 2.
 - offer 2 / its downsell: one more bottle with APF40 (40% off, $23) or APF50 (50% off, $19): Apollo's single-offer
   upsell with the voucher on a hidden selector (as the stick funnel's), the store's how-it-works loop beside the four
   parts of the formula, "reserved for you" (the store's $47 for one bottle beside today's), the closing card.
@@ -241,7 +242,7 @@ def supply_page(spec):
         '  suboffer: "Two bottles for the price of one, or six for the price of three with a free Lymphatic Brush. Only on this page, only with the order you just placed."',
         f'supply: {q(supply)}',
         # the closing card prices the selected card (bundle.supply.*) and proxies its add / skip
-        'upsell_offer:', '  type: tier-cards', '  package_id: 9', '  selector_id: "supply"', '  display_selector_id: "supply-display"', '  display_bundle_id: "supply-display-card"',
+        'upsell_offer:', '  type: tier-cards', '  package_id: 10', '  selector_id: "supply"', '  display_selector_id: "supply"', '  display_bundle_id: "supply-b3g3"',
         '  accept_text: "Yes, add it for"', '  accept_show_price: true', '  decline_text: "No thanks, I don’t want to stock up"',
         '  fallback_price: "$99.00"', '  fallback_compare: "$234.00"',
         f'  cta_note: {q("Charged once to the payment you just used. Nothing renews, and it ships in the same box. " + GUARANTEE + " " + ALLERGY)}',

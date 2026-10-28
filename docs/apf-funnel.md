@@ -117,10 +117,13 @@ fewer than 8 review cards or one without a photo, or a rating other than the fou
    in the Obvi "month supply" style, each with its badge ("Best value, SAVE 58%", "Most popular, SAVE 50%"), the pack
    image, the deal ("Buy 3, get 3 FREE" + the free brush; "Add 1, get 1 FREE"), the per-day and per-bottle price, the
    stars, the crossed-out and the live price, BUY NOW, and "Charged once". The cards are the SDK's bundle selector
-   inside the one offer, scoped with `data-next-upsell-context` (it never touches a live cart); a card's BUY NOW
-   selects it and fires the offer's add, so the order gets the card she pressed. Under the cards: the guarantee row, the
-   decline link, the foundation's how-it-works loop beside its four parts, why women stock up, and the closing card
-   priced from the selected card.
+   inside the one offer, scoped with `data-next-upsell-context` (it never touches a live cart). Every BUY NOW is the
+   offer's own add action (the SDK adds the selected card); a real click on a card that is not selected is stopped,
+   the card is selected and the button clicked again for her (`js/sf-supply.js`), so the order gets the card she
+   pressed, while the closing card's proxied click adds the selection. Proven with the upsell request intercepted:
+   card 2 sends package 9, card 1 package 10, the closing card the selected one. Under the cards: the guarantee row,
+   the decline link, the foundation's how-it-works loop beside its four parts, why women stock up, and the closing
+   card priced from the selected card.
 2. **Offer 2 and its downsell**: Apollo's single offer with the voucher on a hidden upsell-scoped selector (as the stick
    funnel's), four photos, the bullets, today's price against $39, the button and the terms ("$23.00 today (41% off),
    charged once… Nothing renews"), then the how-it-works loop, "reserved for you" (the store's $47 for one beside

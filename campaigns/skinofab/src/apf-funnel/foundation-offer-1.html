@@ -32,10 +32,10 @@ upsell_hero:
 supply: {"title": "Stock up at the lowest price we will ever offer", "lede": "Add bottles to the order you just placed: one tap, same box, same payment. These prices exist on this page only.", "tiers": [{"id": "supply-b3g3", "items_json": "[{\"packageId\": 10, \"quantity\": 1}]", "image": "images/sf/pack-6.jpg", "alt": "Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush", "badge": "Best value", "save": "58%", "name": "6-month supply", "deal": "Buy 3, get 3 FREE", "gift": "FREE Lymphatic Brush + case ($24.95)", "per_day": "$0.55 a day", "per_bottle": "$16.50 a bottle · 6 bottles", "price": "$99.00", "compare": "$234", "selected": true, "button": "BUY NOW · $99"}, {"id": "supply-b1g1", "items_json": "[{\"packageId\": 9, \"quantity\": 1}]", "image": "images/sf/pack-2.jpg", "alt": "Two bottles of Adaptive Peptide Foundation", "badge": "Most popular", "save": "50%", "name": "2-month supply", "deal": "Add 1, get 1 FREE", "gift": "", "per_day": "$0.65 a day", "per_bottle": "$19.50 a bottle · 2 bottles", "price": "$39.00", "compare": "$78", "selected": false, "button": "BUY NOW · $39"}], "guarantee": "30-day money-back guarantee on every bottle, even opened. You don’t send anything back.", "charged": "Charged once to the payment you just used. Nothing renews.", "decline": "No thanks, I don’t want to stock up"}
 upsell_offer:
   type: tier-cards
-  package_id: 9
+  package_id: 10
   selector_id: "supply"
-  display_selector_id: "supply-display"
-  display_bundle_id: "supply-display-card"
+  display_selector_id: "supply"
+  display_bundle_id: "supply-b3g3"
   accept_text: "Yes, add it for"
   accept_show_price: true
   decline_text: "No thanks, I don’t want to stock up"
