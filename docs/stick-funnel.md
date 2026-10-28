@@ -96,17 +96,27 @@ them live and the pages are checked against them on every build.
 The checkout sells on trust, not on the product (the shopper chose it on the product page): no feature list and no
 product gallery (`stick-checkout.html`, `_includes/sf-checkout-trust.html`).
 
-- **Above Step 1:** the liquid foundation's rating (4.8 out of 5, 9,855 reviews, said to be the stick's sister's at
-  the earlier store) and four promises: the 30-day money-back guarantee, free tracked shipping (ships in 1 business
-  day), skip or cancel by email (a person replies within one business day), and the encrypted card fields.
+- **Above Step 1:** the rating in one sentence that says whose it is ("4.8 out of 5 from 9,855 reviews of our liquid
+  foundation, the stick's sister, at our earlier store") and four promises: the 30-day money-back guarantee, free
+  tracked shipping (ships in 1 business day), skip or cancel by email (a person replies within one business day), and
+  the encrypted card fields. On a phone, where the banner and header already say them, the promises show as a 2 x 2
+  of icon and title.
+- **Before the payment step, on a phone and tablet:** three reviews and a link to all of them (there the proof column
+  comes after the order button).
 - **Right above the order button:** the guarantee in one line, with its seal.
-- **The proof column** (left on a computer, under the form on a phone, one copy in the page): the guarantee card, the
-  ratings by stars, ten review cards with each buyer's own photo, and "Before you order" (shade, refills, delivery,
-  whose reviews these are, payment security).
-- The ten reviews are the liquid's published ones, word for word, from women past 45 about the colour match, each
-  photo cropped on her face by `funnel_images.py` (`TESTIMONIAL_PHOTOS`, kept in `brand/stick-funnel/review-*.jpg`).
-  `check_funnel.py` fails the build without the guarantee line above the button, with fewer than 8 review cards or a
-  card without its photo, or with a rating other than the liquid's.
+- **The proof column:** the ratings by stars (7,719 / 2,132 / 0 / 1 / 3), the review wall, the guarantee card and
+  "Before you order" (shade, refills, shipping, whose reviews these are, payment security), then on a phone a "Back to
+  my order" button. It is after the form in the page, so keyboard and screen readers reach the form first, and shown
+  on the left on a computer by CSS.
+- **The ten reviews** are the liquid's published ones, word for word and without titles (the buyers wrote none):
+  women past 45 about the colour match, one of them 4 stars (as 2,132 of the ratings are). Each photo is cropped on her
+  face by `funnel_images.py` (`TESTIMONIAL_PHOTOS`; a three-value entry pads a narrow photo with a blur of itself so
+  no head is cut), kept in `brand/stick-funnel/review-*.jpg`.
+- The payment logos show only what she can choose (`payment_flags: show_affirm: false`); the "didn't load" message
+  (`js/sf-failsafe.js`) shows after 10 s without the SDK and goes away the moment it arrives.
+- `check_funnel.py` fails the build without the guarantee line above the button, without reviews before the payment
+  step, with fewer than 8 review cards or one without a photo, with a title on a review, or with a rating other than
+  the liquid's.
 
 ### The special offer pages
 

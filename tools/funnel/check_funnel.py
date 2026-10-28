@@ -109,6 +109,11 @@ cards_r = re.findall(r'<article class="sf-co-review">(.*?)</article>', co, re.S)
 if len(cards_r) < 8: fail('checkout', f'{len(cards_r)} review cards, not at least 8')
 if any('<img ' not in c for c in cards_r): fail('checkout', 'a review card without its buyer\'s photo')
 if '4.8 out of 5' not in co or '9,855 reviews' not in co: fail('checkout', 'the rating is not the liquid\'s 4.8 from 9,855 reviews')
+# the buyers wrote no titles: none is put on their reviews (checkout review: an invented title read as theirs); and on a
+# phone, where the proof column follows the button, three reviews come before the payment step
+if 'sf-co-review__title' in co: fail('checkout', 'a title on a review (the buyers wrote none)')
+f, pay = co.find('id="sf-co-featured"'), co.find('Step 4: Payment')
+if f < 0 or f > pay: fail('checkout', 'no reviews before the payment step on a phone')
 
 # special offers ----------------------------------------------------------------------------------------------------
 for pid in ('special-1', 'special-2', 'special-3', 'special-4'):

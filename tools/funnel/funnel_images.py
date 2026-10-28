@@ -35,13 +35,16 @@ INK, PAPER, SOFT, CREAM = (21, 21, 21), (255, 255, 255), (96, 96, 96), (246, 242
 # the three testimonials' own photos (review id -> crop box as fractions of the photo: left, top, right, bottom)
 # (review id, where her face is across and down the photo: the square crop keeps her whole head)
 # (funnel review 2: reviews that speak to the colour match only; no wear-time or wrinkle claims)
-TESTIMONIAL_PHOTOS = {'lora': ('zjPC7IPmY-0', (0.5, 0.2)), 'susan': ('yguFL8u9n-0', (0.5, 0.36)),
+# (review id, (x, y) where her face sits: the largest square on it) or (review id, (x, y, side)): a square of side x the
+# photo's height centred on (x, y), any part beyond the photo filled with a blur of it, so no head is cut (checkout
+# review: a narrow photo cut Susan's hair and chin, and the top of Virginia's head)
+TESTIMONIAL_PHOTOS = {'lora': ('zjPC7IPmY-0', (0.5, 0.2)), 'susan': ('yguFL8u9n-0', (0.5, 0.38, 0.66)),
                       'mary': ('ZTOdiyg6x-0', (0.5, 0.4)),
                       # the checkout's review wall (women past 45, about the colour match, approved photos)
-                      'grace': ('0z7LbNoAb-0', (0.5, 0.6)), 'sue': ('ofljph3B2O-0', (0.5, 0.45)),
-                      'virginia': ('5FRfi6xsO-0', (0.5, 0.3)), 'deborah': ('XzARV6k1B-0', (0.5, 0.38)),
+                      'grace': ('0z7LbNoAb-0', (0.5, 0.48, 0.5)), 'virginia': ('5FRfi6xsO-0', (0.55, 0.36, 0.78)),
                       'kathryn': ('BJ6W4ha63-0', (0.5, 0.35)), 'donna': ('do7iDXXm-0', (0.5, 0.4)),
-                      'jeannie': ('a8SFatRai-0', (0.5, 0.45))}
+                      'priscilla': ('xIUxnqCZd-0', (0.47, 0.56, 0.62)), 'tracy': ('bGoecpWaG-0', (0.5, 0.42, 0.62)),
+                      'sherron': ('3WiAfEawf-0', (0.5, 0.45, 0.72))}
 
 
 def save(im, name, size=None, q=82):
@@ -217,6 +220,16 @@ def pack_images():
     save(two, 'pack-2')
 
 
+def face_square(im, cx, cy, side):
+    """A square of side x the photo's height around (cx, cy), any part outside the photo filled with a blur of it."""
+    w, h = im.size
+    n = int(side * h)
+    x0, y0 = int(cx * w - n / 2), int(cy * h - n / 2)
+    back = im.resize((n, n), Image.LANCZOS).filter(ImageFilter.GaussianBlur(n / 18))
+    back.paste(im, (-x0, -y0))
+    return back
+
+
 def testimonials(work):
     """Each testimonial's own photo, square on her face (kept in brand/stick-funnel/review-<key>.jpg)."""
     for key, (rid, centering) in TESTIMONIAL_PHOTOS.items():
@@ -224,8 +237,11 @@ def testimonials(work):
         photo = Path(work) / 'reviews' / 'photos' / f'{rid}.jpg' if work else None
         if photo and photo.exists():
             im = Image.open(photo).convert('RGB')
-            side = min(im.size)
-            crop = ImageOps.fit(im, (side, side), Image.LANCZOS, centering=centering)
+            if len(centering) == 3:
+                crop = face_square(im, *centering)
+            else:
+                side = min(im.size)
+                crop = ImageOps.fit(im, (side, side), Image.LANCZOS, centering=centering)
             crop.thumbnail((600, 600), Image.LANCZOS)
             crop.save(kept, quality=88)
         save(Image.open(kept), f'review-{key}', size=600)

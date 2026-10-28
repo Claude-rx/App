@@ -24,7 +24,6 @@
 .sf-refill-terms { margin: 4px 0 14px; padding: 12px 14px; border: 1px solid var(--brand--color--border); border-radius: 10px;
   background: var(--brand--color--primary-lighter); font-size: 13px; line-height: 1.5; color: #3b3b3b; }
 .sf-refill-terms a, .submit-section__disclaimer a { color: inherit; text-decoration: underline; }
-.sf-reviews-note { margin: 8px 0 0; font-size: 12px; line-height: 1.45; color: #6b6b6b; }
 .checkout-header__logo { width: 140px; height: auto; }
 .brand-logo { width: 130px; height: auto; }
 .guarantee-badge { border-radius: 50%; }
@@ -34,14 +33,6 @@
 /* a pack's crossed-out price only when the SDK reports a discount (the exit coupon): without one, originalPrice is
    the same as the price, and the same number struck through beside itself reads as a fake saving */
 .bundle-card:has(.bundle-card__savings[style*="display: none"]) .bundle-card__price-reg { display: none; }
-/* the starter's review stars are green boxes (a review site's look): gold stars, no box */
-.checkout-review__stars rect { fill: transparent; }
-.checkout-review__stars path { fill: #e8a33d; }
-.checkout-review__meta { flex-direction: column; align-items: flex-start; row-gap: 2px; }
-.checkout-review__meta .review-auth:nth-child(2) { display: none; }      /* the "|" between name and label */
-.review-auth { white-space: nowrap; }
-.reviews-slider .swiper-slide { height: auto; }
-.reviews-slider .checkout-review--slide { width: auto; height: 100%; }
 /* what she pays today and what renews, by the express buttons and the order button */
 .sf-pay-terms { margin: 0 0 12px; padding: 10px 12px; border-radius: 8px; background: #f1ede7; font-size: 14px; line-height: 1.45; color: #151515; }
 .submit-section__disclaimer { font-size: 13px !important; line-height: 1.5; }
@@ -62,16 +53,8 @@
 /* sf-skip-europe.js: while the serum offer declines itself for a European address, show nothing of it */
 .sf-skipping .page-wrapper { visibility: hidden; }
 .sf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }  /* in the page (the SDK fills it), not shown */
-/* funnel review 2: the exit pop's button in the brand's black pill; the gallery smaller on phones and tablets, so
-   "Step 1: Choose your pack" is on the first screen */
+/* funnel review 2: the exit pop's button in the brand's black pill */
 .exit-intent-popup__cta { background: #151515 !important; color: #fff !important; border-radius: 999px; }
-@media (max-width: 991px) {
-  .checkout-media__wrapper { max-width: 360px; margin: 0 auto; }
-}
-@media (max-width: 479px) {
-  .checkout-media__wrapper { max-width: 230px; }
-  .checkout-media__wrapper [swiper="slider-thumbs"], .checkout-media__wrapper [swiper="prev-button"], .checkout-media__wrapper [swiper="next-button"] { display: none; }
-}
 .exit-intent-popup__cta { border: 0 !important; }
 .exit-intent-popup__cta::after { filter: invert(1); }
 /* the special offers' "how it works" (sf-upsell-how.html: the loop beside the steps) and "reserved for you"
@@ -116,54 +99,68 @@ s.sf-reserved__amount { font-weight: 600; color: #6b6b6b; text-decoration-thickn
   [pb-animate="pulse-upsell"] { animation: none !important; }
 }
 /* the checkout's trust (sf-checkout-trust.html), in place of a product description: the rating and four promises above
-   Step 1, the guarantee by the order button, and the proof column (guarantee card, ratings, reviews, questions): left
-   on a computer, under the form on a phone */
+   Step 1, three reviews before the payment step on a phone, the guarantee by the order button, and the proof column
+   (ratings, reviews, guarantee card, questions): after the form in the page, on the left on a computer */
+@media (min-width: 992px) {
+  .sf-co .sf-co-left { order: -1; width: 46%; }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .sf-co .sf-co-left { width: 40%; }
+  .sf-co .sf-co-reviews { grid-template-columns: 1fr; }
+}
 .sf-co-left { gap: 20px; }
 .sf-co-proof { display: grid; gap: 16px; align-content: start; }
-@media (max-width: 991px) {
-  .sf-co .checkout-layout__right { order: 1; }
-  .sf-co .sf-co-left { order: 2; }
-}
-.sf-co-stars { color: var(--brand--color--rating-star); letter-spacing: 2px; }
+.sf-co-stars { margin: 0; color: var(--brand--color--rating-star); letter-spacing: 2px; }
+.sf-co-stars__off { color: #d9d3ca; }
 .sf-co-top { margin: 0 0 22px; }
-.sf-co-rating { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 6px; color: #151515; text-decoration: none; font-size: 16px; }
-.sf-co-rating strong { font-weight: 600; }
-.sf-co-rating > span:last-child { text-decoration: underline; text-underline-offset: 3px; }
+.sf-co-rating { margin: 0 0 14px; font-size: 16px; line-height: 1.45; color: #151515; }
 .sf-co-rating .sf-co-stars { font-size: 18px; }
-.sf-co-rating__of { margin: 2px 0 14px; font-size: 13px; line-height: 1.4; color: #5a5a5a; }
+.sf-co-rating a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.sf-co-rating strong { font-weight: 600; }
 .sf-co-points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .sf-co-points li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; margin: 0; padding: 12px; border: 1px solid var(--brand--color--border); border-radius: 12px; background: var(--brand--color--primary-lighter); }
-.sf-co-points strong { display: block; font-size: 14.5px; line-height: 1.3; }
-.sf-co-points span { display: block; margin-top: 2px; font-size: 13.5px; line-height: 1.4; color: #3b3b3b; }
-@media (max-width: 479px) {
-  .sf-co-points { grid-template-columns: 1fr; gap: 8px; }
-  .sf-co-points li { padding: 10px 12px; }
+.sf-co-points strong { display: block; font-size: 15px; line-height: 1.3; }
+.sf-co-points span { display: block; margin-top: 2px; font-size: 14.5px; line-height: 1.4; color: #3b3b3b; }
+/* on a phone the banner and the header already say these: the four as a 2 x 2 of icon and title (their detail is in the
+   guarantee line, the guarantee card and the questions) */
+@media (max-width: 599px) {
+  .sf-co-points { gap: 8px; }
+  .sf-co-points li { grid-template-columns: 22px 1fr; gap: 8px; align-items: center; padding: 10px; }
+  .sf-co-points .sf-co-icon { width: 22px; height: 22px; }
+  .sf-co-points strong { font-size: 14px; }
+  .sf-co-points span { display: none; }
 }
-.sf-co-guarantee-line { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: center; margin: 4px 0 14px; padding: 12px 14px; border: 1.5px solid #151515; border-radius: 12px; background: #fff; }
+.sf-co-featured { display: grid; gap: 10px; margin: 4px 0 20px; }
+.sf-co-featured__title { margin: 0; font-size: 17px; font-weight: 600; }
+.sf-co-featured__more { font-size: 15px; color: #151515; text-decoration: underline; text-underline-offset: 3px; }
+.sf-co-guarantee-line { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: center; margin: 4px 0 14px; padding: 12px 14px; border: 1.5px solid #151515; border-radius: 12px; background: #fff; scroll-margin-top: 90px; }
 .sf-co-guarantee-line img { width: 64px; height: 64px; border-radius: 50%; }
-.sf-co-guarantee-line p { margin: 0; font-size: 14.5px; line-height: 1.45; color: #151515; }
+.sf-co-guarantee-line p { margin: 0; font-size: 15px; line-height: 1.45; color: #151515; }
 .sf-co-card { padding: 22px; border-radius: 16px; background: var(--brand--color--surface); }
-.sf-co-card h2 { margin: 0 0 8px; font-size: 22px; line-height: 1.25; font-weight: 600; }
+.sf-co-card h2, .sf-co-reviews__title { margin: 0 0 8px; font-size: 22px; line-height: 1.25; font-weight: 600; }
+.sf-co-reviews__title { margin: 8px 0 0; }
 .sf-co-guarantee { display: grid; grid-template-columns: 112px 1fr; gap: 20px; align-items: center; }
 .sf-co-guarantee img { width: 112px; height: 112px; border-radius: 50%; }
 .sf-co-guarantee p { margin: 0; font-size: 15px; line-height: 1.5; color: #3b3b3b; }
+.sf-co-guarantee p a, .sf-co-faq details p a { color: inherit; text-decoration: underline; }
 .sf-co-guarantee ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
-.sf-co-guarantee li { position: relative; margin: 0; padding-left: 22px; font-size: 14px; line-height: 1.4; font-weight: 500; }
+.sf-co-guarantee li { position: relative; margin: 0; padding-left: 22px; font-size: 14.5px; line-height: 1.4; font-weight: 500; }
 .sf-co-guarantee li::before { content: "✓"; position: absolute; left: 0; top: 0; font-weight: 700; }
 @media (max-width: 479px) {
   .sf-co-guarantee { grid-template-columns: 1fr; justify-items: center; text-align: center; }
   .sf-co-guarantee ul { grid-template-columns: 1fr; text-align: left; justify-self: stretch; }
 }
-.sf-co-ratings { display: grid; grid-template-columns: auto 1fr; gap: 8px 22px; align-items: center; }
+.sf-co-ratings { display: grid; grid-template-columns: auto 1fr; gap: 8px 22px; align-items: center; scroll-margin-top: 20px; }
+.sf-co-ratings h2 { grid-column: 1 / -1; }
 .sf-co-ratings__score { display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .sf-co-ratings__score strong { font-size: 44px; line-height: 1; font-weight: 600; }
-.sf-co-ratings__score span:last-child { font-size: 13.5px; color: #3b3b3b; }
+.sf-co-ratings__score span:last-child { font-size: 14px; color: #3b3b3b; }
 .sf-co-ratings__rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
-.sf-co-ratings__rows li { display: grid; grid-template-columns: 34px 1fr 46px; gap: 10px; align-items: center; margin: 0; font-size: 13.5px; }
+.sf-co-ratings__rows li { display: grid; grid-template-columns: 34px 1fr 52px; gap: 10px; align-items: center; margin: 0; font-size: 14px; }
 .sf-co-ratings__rows i { display: block; height: 8px; border-radius: 4px; background: #e2ddd5; overflow: hidden; }
-.sf-co-ratings__rows b { display: block; height: 100%; min-width: 2px; background: var(--brand--color--rating-star); }
-.sf-co-ratings__rows li span:last-child { text-align: right; color: #5a5a5a; }
-.sf-co-ratings__of { grid-column: 1 / -1; margin: 6px 0 0; font-size: 13px; line-height: 1.45; color: #5a5a5a; }
+.sf-co-ratings__rows b { display: block; height: 100%; background: var(--brand--color--rating-star); }
+.sf-co-ratings__rows li span:last-child { text-align: right; color: #4a4a4a; }
+.sf-co-ratings__of { grid-column: 1 / -1; margin: 6px 0 0; font-size: 14px; line-height: 1.45; color: #4a4a4a; }
 .sf-co-reviews { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 599px) { .sf-co-reviews { grid-template-columns: 1fr; } }
 .sf-co-review { padding: 18px; border: 1px solid var(--brand--color--border); border-radius: 14px; background: #fff; }
@@ -171,9 +168,8 @@ s.sf-reserved__amount { font-weight: 600; color: #6b6b6b; text-decoration-thickn
 .sf-co-review header img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex: none; }
 .sf-co-review h3 { margin: 0; font-size: 16px; line-height: 1.3; font-weight: 600; }
 .sf-co-review .sf-co-stars { margin: 2px 0 0; font-size: 15px; }
-.sf-co-review__title { margin: 0 0 4px; font-size: 16px; line-height: 1.35; font-weight: 600; }
-.sf-co-review__body { margin: 0; font-size: 15px; line-height: 1.55; color: #2c2c2c; }
-.sf-co-review .sf-review__who { margin: 10px 0 0; font-size: 13px; line-height: 1.4; color: #5a5a5a; }
+.sf-co-review__body { margin: 0; font-size: 15.5px; line-height: 1.55; color: #2c2c2c; }
+.sf-co-review .sf-review__who { margin: 10px 0 0; font-size: 14px; line-height: 1.4; color: #4a4a4a; }
 .sf-co-faq details { border-top: 1px solid #ddd7ce; }
 .sf-co-faq details:last-of-type { border-bottom: 1px solid #ddd7ce; }
 .sf-co-faq summary { cursor: pointer; list-style: none; position: relative; padding: 14px 28px 14px 0; font-size: 16px; font-weight: 600; line-height: 1.35; }
@@ -181,5 +177,14 @@ s.sf-reserved__amount { font-weight: 600; color: #6b6b6b; text-decoration-thickn
 .sf-co-faq summary::after { content: "+"; position: absolute; right: 2px; top: 10px; font-size: 22px; font-weight: 400; }
 .sf-co-faq details[open] summary::after { content: "–"; }
 .sf-co-faq details p { margin: 0 0 14px; font-size: 15px; line-height: 1.55; color: #3b3b3b; }
-.sf-co-faq__contact { margin: 14px 0 0; font-size: 14.5px; line-height: 1.5; }
+.sf-co-faq__contact { margin: 14px 0 0; font-size: 15px; line-height: 1.5; }
 .sf-co-faq__contact a { color: inherit; text-decoration: underline; }
+.sf-co-back { display: block; padding: 16px; border-radius: 10px; background: #151515; color: #fff !important; text-align: center; text-decoration: none; font-size: 16px; font-weight: 600; }
+/* readable for her: the header's promises and the button's line were 10-12 px capitals */
+.checkout-header__badge { font-size: 12px; }
+.submit-button__subtext { font-size: 13px; }
+/* the brand's typeface on phones and tablets too: next-core.css sets the system font on body below 992 px */
+body {
+  --_text---font-family--primary: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --_text---font-family--heading: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
