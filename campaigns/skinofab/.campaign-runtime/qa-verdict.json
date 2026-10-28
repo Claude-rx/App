@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVSFVLYQMNVPQMD1SPK4K8PURI",
+  "run_id": "MVSJF307HQN95L5BHOF7GPB5EJ",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2221,
   "spec_version": "5.0",
   "spec_hash": "sha256:c9cf7d1073841ea2d9fc2af6248abc536214168a8da36fd7ec3790be7cb74331",
-  "started_at": "2026-10-28T18:19:44.498Z",
-  "completed_at": "2026-10-28T18:20:29.557Z",
-  "generated_at": "2026-10-28T18:20:29.584Z",
+  "started_at": "2026-10-28T19:58:51.895Z",
+  "completed_at": "2026-10-28T19:59:38.688Z",
+  "generated_at": "2026-10-28T19:59:38.731Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -599,6 +599,15 @@
       "status": "pass"
     },
     {
+      "id": "browser-request-failures:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
       "id": "browser-load:offer-1",
       "family": "browser-runtime",
       "page": "offer-1",
@@ -1047,6 +1056,15 @@
   "test_orders": [],
   "exceptions": [
     {
+      "id": "browser-request-failures:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
       "id": "browser-test-order:upsell-action-coverage",
       "family": "browser-test-order",
       "page": "checkout",
@@ -1068,9 +1086,9 @@
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "qa",
-    "total": 2,
+    "total": 3,
     "counts": {
-      "caused_by_change": 1,
+      "caused_by_change": 2,
       "pre_existing": 1,
       "test_environment": 0,
       "upstream_drift": 0,
