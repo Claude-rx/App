@@ -213,7 +213,29 @@ checks take their numbers from the spec. The theme serves this funnel's assets f
 
 ### Campaigns OS
 
-<<CAMPAIGNS OS: lifecycle run and verdict>>
+The funnel went through the Campaigns OS 1.60.0 lifecycle on 28 Oct 2026 (brief, build, theme, Page Kit parity,
+polish capture, deploy, QA resolve, QA run with typed-card test orders on the local build), twice. Run 1 (verdict
+`MVRWKIACPRQD983L4KSP6P6R3I`, 6 orders) was **blocked**: 186 pass, 4 fail, all of them offer 1's accept action (the
+supply cards' Buy now buttons were not the SDK's add action, so the harness could not accept the offer). After the fix
+(each card's Buy now is `data-next-upsell-action="add"`; `js/sf-supply.js` selects the card in the capture phase
+before the SDK handles the click), run 2 (verdict `MVRXCDNA3MJV4LVHEK4IOTPM5S`, 4 orders under `--max-test-orders 4`:
+checkout, accept, decline, accept-accept) gave **ready_with_exceptions**: 184 pass, 4 skipped (optional Apollo
+checkout selectors this checkout does not use), 2 warnings, both pre-existing, reported here and not waived:
+
+- `browser-test-order:upsell-action-coverage`: no order of run 2 clicked the decline on offer 2, its downsell, the
+  brush offer or its downsell (the 4-order cap went to the checkout, offer 1 accepted and declined, and accept-accept,
+  which takes the brush offer). Run 1's six orders declined every page; its decline-decline-decline-accept order
+  ended on the thank-you page at $71 (the 2-bottle pack plus the brush at $14).
+- `price-claim-mismatch:offer-1:bundle.supply.price` (claimed $39.00, calculated $138.00): the harness prices a page
+  as one cart holding every package on it, and offer 1 carries two alternative cards (package 9 at $39, package 10
+  at $99), so its "representative total" is their sum. The page's $39 is the selected card's price, which the SDK
+  renders live and the orders confirm (accept: $57 + $39 = $96; accept-accept: $96 + $14 = $110).
+
+Commercial parity reports that one finding; the theme gate and the route probe pass. The Run Record is
+`.campaign-runtime/run-records/run_1793180219231_d5a6e5d9.json` (telemetry off: nothing left the machine). Run the
+lifecycle from `campaigns/skinofab` with the commands `docs/stick-funnel.md` gives, with `--base-url
+http://127.0.0.1:<port>` serving `_site` (QA resolves the funnel under `/apf-funnel/`), and `--spec
+./campaign-spec.apf.json --source ./design-source-apf --brief ./campaign-build-brief.apf.json` on `start`.
 
 The project holds one Build Packet at a time (`campaign-runtime.build.json` and `.campaign-runtime/` are written per
 `start`): the stick funnel's run is kept under `campaigns/skinofab/runs/stick-funnel/`; to run its lifecycle again,

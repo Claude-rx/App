@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVRWKIACPRQD983L4KSP6P6R3I",
+  "run_id": "MVRXCDNA3MJV4LVHEK4IOTPM5S",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2211,
   "spec_version": "5.0",
   "spec_hash": "sha256:6a18da19dbacf616e8fc346f9521ee6b5f4e32176ec3223ef38eeedae715168a",
-  "started_at": "2026-10-28T09:19:13.812Z",
-  "completed_at": "2026-10-28T09:24:24.135Z",
-  "generated_at": "2026-10-28T09:24:24.215Z",
+  "started_at": "2026-10-28T09:40:54.166Z",
+  "completed_at": "2026-10-28T09:42:46.889Z",
+  "generated_at": "2026-10-28T09:42:46.934Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
-  "disposition": "blocked",
+  "disposition": "ready_with_exceptions",
   "entry_urls": [],
   "page_urls": [],
   "tested_urls": [],
@@ -599,15 +599,6 @@
       "status": "pass"
     },
     {
-      "id": "browser-request-failures:checkout",
-      "family": "browser-runtime",
-      "page": "checkout",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
       "id": "browser-load:offer-1",
       "family": "browser-runtime",
       "page": "offer-1",
@@ -617,10 +608,7 @@
       "id": "browser-primary-cta:offer-1",
       "family": "browser-runtime",
       "page": "offer-1",
-      "status": "fail",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "status": "pass"
     },
     {
       "id": "browser-upsell-control:offer-1:accept",
@@ -1058,10 +1046,7 @@
       "id": "browser-test-order:accept",
       "family": "browser-test-order",
       "page": "checkout",
-      "status": "fail",
-      "severity": "blocker",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "status": "pass"
     },
     {
       "id": "browser-order-display-parity:accept",
@@ -1085,19 +1070,15 @@
       "id": "qc.tracking.url:accept:url",
       "family": "browser-test-order",
       "page": "accept",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "status": "pass",
+      "severity": "info"
     },
     {
       "id": "qc.tracking.order:accept:order",
       "family": "browser-test-order",
       "page": "accept",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "status": "pass",
+      "severity": "info"
     },
     {
       "id": "browser-test-order:decline",
@@ -1141,10 +1122,7 @@
       "id": "browser-test-order:accept-accept",
       "family": "browser-test-order",
       "page": "checkout",
-      "status": "fail",
-      "severity": "blocker",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "status": "pass"
     },
     {
       "id": "browser-order-display-parity:accept-accept",
@@ -1159,6 +1137,12 @@
       "status": "pass"
     },
     {
+      "id": "browser-receipt-rendering:accept-accept",
+      "family": "browser-receipt-rendering",
+      "page": "checkout:receipt:accept-accept",
+      "status": "pass"
+    },
+    {
       "id": "analytics-correctness:data-layer-purchase:accept-accept",
       "family": "analytics-correctness",
       "page": "checkout:order:accept-accept",
@@ -1168,106 +1152,13 @@
       "id": "qc.tracking.url:accept-accept:url",
       "family": "browser-test-order",
       "page": "accept-accept",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "status": "pass",
+      "severity": "info"
     },
     {
       "id": "qc.tracking.order:accept-accept:order",
       "family": "browser-test-order",
       "page": "accept-accept",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "browser-test-order:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "fail",
-      "severity": "blocker",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "browser-order-display-parity:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:accept-decline-decline",
-      "family": "analytics-correctness",
-      "page": "checkout:order:accept-decline-decline",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:accept-decline-decline:url",
-      "family": "browser-test-order",
-      "page": "accept-decline-decline",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "qc.tracking.order:accept-decline-decline:order",
-      "family": "browser-test-order",
-      "page": "accept-decline-decline",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "browser-test-order:decline-decline-decline-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:decline-decline-decline-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:decline-decline-decline-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-receipt-rendering:decline-decline-decline-accept",
-      "family": "browser-receipt-rendering",
-      "page": "checkout:receipt:decline-decline-decline-accept",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:decline-decline-decline-accept",
-      "family": "analytics-correctness",
-      "page": "checkout:order:decline-decline-decline-accept",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:decline-decline-decline-accept:url",
-      "family": "browser-test-order",
-      "page": "decline-decline-decline-accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:decline-decline-decline-accept:order",
-      "family": "browser-test-order",
-      "page": "decline-decline-decline-accept",
       "status": "pass",
       "severity": "info"
     },
@@ -1277,8 +1168,8 @@
       "page": "checkout",
       "status": "warn",
       "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "id": "price-claim-mismatch:offer-1:bundle.supply.price",
@@ -1286,119 +1177,20 @@
       "page": "offer-1",
       "status": "warn",
       "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     }
   ],
   "test_orders": [],
   "exceptions": [
     {
-      "id": "browser-request-failures:checkout",
-      "family": "browser-runtime",
-      "page": "checkout",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "browser-primary-cta:offer-1",
-      "family": "browser-runtime",
-      "page": "offer-1",
-      "status": "fail",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "browser-test-order:accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "fail",
-      "severity": "blocker",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "qc.tracking.url:accept:url",
-      "family": "browser-test-order",
-      "page": "accept",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "qc.tracking.order:accept:order",
-      "family": "browser-test-order",
-      "page": "accept",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "browser-test-order:accept-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "fail",
-      "severity": "blocker",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "qc.tracking.url:accept-accept:url",
-      "family": "browser-test-order",
-      "page": "accept-accept",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "qc.tracking.order:accept-accept:order",
-      "family": "browser-test-order",
-      "page": "accept-accept",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "browser-test-order:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "fail",
-      "severity": "blocker",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "qc.tracking.url:accept-decline-decline:url",
-      "family": "browser-test-order",
-      "page": "accept-decline-decline",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
-      "id": "qc.tracking.order:accept-decline-decline:order",
-      "family": "browser-test-order",
-      "page": "accept-decline-decline",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
-    },
-    {
       "id": "browser-test-order:upsell-action-coverage",
       "family": "browser-test-order",
       "page": "checkout",
       "status": "warn",
       "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "id": "price-claim-mismatch:offer-1:bundle.supply.price",
@@ -1406,23 +1198,23 @@
       "page": "offer-1",
       "status": "warn",
       "severity": "warn",
-      "cause": "unknown",
-      "cause_reason": "no_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     }
   ],
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "qa",
-    "total": 13,
+    "total": 2,
     "counts": {
       "caused_by_change": 0,
-      "pre_existing": 0,
+      "pre_existing": 2,
       "test_environment": 0,
       "upstream_drift": 0,
-      "unknown": 13
+      "unknown": 0
     },
-    "prior_run_id": null,
-    "prior_qa_attempt_run_id": null,
-    "comparison": "no_prior_run"
+    "prior_run_id": "run_1793177937752_b50037b3",
+    "prior_qa_attempt_run_id": "MVRWKIACPRQD983L4KSP6P6R3I",
+    "comparison": "prior_run"
   }
 }
