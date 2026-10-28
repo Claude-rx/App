@@ -90,9 +90,9 @@ BRUSH_PDP = {
                 'rows': ['Hundreds of soft contact points', 'Works with just a light touch', 'Flexible bristles adapt to your face', 'Four sweeps, no tutorial', 'A protective case included']},
     'box': {'title': 'What’s in the box', 'lede': 'The Lymphatic Brush is made for one thing: a light, quick massage for the look of morning puffiness.',
             'cards': [{'image': 'images/sf/brush-compare-ours.jpg', 'alt': 'The brush’s raised, soft tufts', 'title': 'Ultra-soft bristles', 'text': 'Vegan fibers that bend instead of pressing.'},
-                      {'image': 'images/sf/brush-features.jpg', 'alt': 'The brush’s curved head and raised tufts', 'title': 'A curved head', 'text': 'Follows the cheek, the jaw and the neck in one sweep.'},
+                      {'image': 'images/sf/brush-head.jpg', 'alt': 'The brush’s curved head and raised tufts', 'title': 'A curved head', 'text': 'Follows the cheek, the jaw and the neck in one sweep.'},
                       {'image': 'images/sf/brush-how-1.jpg', 'alt': 'Where morning puffiness shows: under the eyes and along the jaw', 'title': 'Eyes, cheeks and jaw', 'text': 'Where morning puffiness shows first.'},
-                      {'image': 'images/sf/brush-case.jpg', 'alt': 'The brush’s protective travel case', 'title': 'A protective case', 'text': 'Keeps the bristles clean between uses, and travels.'}]},
+                      {'image': 'images/sf/brush-card.jpg', 'alt': 'The brush above its protective travel case', 'title': 'A protective case', 'text': 'Keeps the bristles clean between uses, and travels.'}]},
     'faq': {'title': 'Questions', 'items': [
         {'q': 'When will I see a difference?', 'a': 'You may see a fresher, less puffy look right after your first 3 minutes. It’s temporary, so it works best every morning. Results vary from person to person.'},
         {'q': 'Does it work on mature skin?', 'a': 'Yes. The bristles bend instead of pulling, so they don’t drag thinner skin or fine lines. Keep the touch light, especially under the eyes.'},
@@ -109,7 +109,7 @@ BRUSH_VIDEO = {'src': 'images/sf/brush-how.mp4', 'webm': 'images/sf/brush-how.we
                'id': 'sf-brush-loop'}
 FOUNDATION_IMAGES = [('g-hold', 'A woman in her sixties, silver-haired, holding the Adaptive Peptide Foundation by her cheek'),
                      ('bottle', 'The Adaptive Peptide Foundation bottle'),
-                     ('g-dots', 'A woman in her fifties with the foundation dotted on white, eyes closed')]
+                     ('g-brush', 'A woman in her fifties buffing the foundation into her cheek with a brush')]
 
 
 def head(pid, title, n_text, extra_scripts=(), extra_styles=()):
@@ -185,7 +185,7 @@ def single_page(pid, spec, o):
     {% campaign_include 'sf-upsell-hero.html' uh=uh %}
     {% campaign_include 'upsell/offer.html' %}
 """ + ("    {% campaign_include 'sf-brush-pdp.html' brush=brush %}\n" if brush else "    {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}\n") + """    {% campaign_include 'upsell/closing-cta.html' %}
-    {% campaign_include 'footer.html' %}
+    {% campaign_include 'sf-footer.html' %}
   </div>
 </div>
 """
@@ -241,7 +241,7 @@ def supply_page(spec):
     {% campaign_include 'sf-supply-cards.html' supply=supply %}
     {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
     {% campaign_include 'upsell/closing-cta.html' %}
-    {% campaign_include 'footer.html' %}
+    {% campaign_include 'sf-footer.html' %}
   </div>
 </div>
 """

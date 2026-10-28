@@ -12,7 +12,7 @@ opt-in only, never pre-checked). A campaign takes one package per store variant:
 - the store's own "1 bottle" (15) and "2 bottles + free gifts" (103) carry the funnel's first two packs at the
   funnel's prices (a package's price is the campaign's, not the store's);
 - the 3-bottle pack, the offer-1 packs (2 bottles; 6 bottles + free brush) are new variants of product 14, named for
-  what the warehouse packs, with the single bottle's $59 list price times the bottles as their compare-at;
+  what the warehouse packs, with the store's $47 for one bottle times the bottles as their compare-at;
 - the brush's variant 170 is already package 3 (the stick funnel's, recurring every 90 days), so the one-time brush
   offer gets its own variant on product 169, "1 brush + free travel case", the same contents.
 Vouchers are percentages off one package, rounded down to the dollar (the campaign's convention), named as the order
@@ -33,7 +33,7 @@ DRY = '--dry-run' in sys.argv
 HDR = {'Authorization': 'Bearer ' + os.environ.get('NEXT_API_TOKEN', ''), 'X-29next-API-Version': '2024-04-01',
        'Content-Type': 'application/json', 'Accept': 'application/json', 'User-Agent': 'skinofab-funnel/1'}
 FOUNDATION, BRUSH = 14, 169
-LIST_PRICE = 59.00                       # the store's list price of one bottle (its crossed-out $59)
+LIST_PRICE = 47.00                       # what the store charges for one bottle, bought once
 
 # the store variants the funnel's packs need (variant attribute "Pack" on the foundation, "Bundle" on the brush)
 VARIANTS = {

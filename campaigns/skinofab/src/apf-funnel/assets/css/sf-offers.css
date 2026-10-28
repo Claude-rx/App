@@ -132,3 +132,8 @@
 .swiper-button-next, .swiper-button-prev { width: 44px; height: 44px; }
 .sf-uh__wait { margin: 10px 0 0; font-size: 14px; color: #6b6b6b; }
 .sf-uh__wait[hidden] { display: none; }
+
+/* live review 2: the offer box no longer rides up over the hero (next-core pulls .upsell-box up 96 px, which hid the
+   line that says what the clock does); 44 px carousel arrows */
+.sf-uh ~ * .upsell-box, .section.upsell-box { margin-top: 0; }
+.swiper__button-static { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; }

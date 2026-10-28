@@ -81,11 +81,11 @@ Every package is bought once (no subscription; the store offers refills only whe
 campaign's; `campaign_spec.py` reads them live (`FUNNEL=apf`) into `campaign-spec.apf.json` and the pages are checked
 against them on every build. The refs are campaign 2221's (`funnels/apf.py` PACKAGE and VOUCHER).
 
-| Package ref | SKU | Sells | Price | Compare (list $59 a bottle) |
+| Package ref | SKU | Sells | Price | Compare (the store's $47 a bottle) |
 |---:|---|---|---:|---:|
-| 1 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $39.00 | $59 |
-| 2 | SKF-APF-2-GIFTS | 2 bottles + free Blender brush + free mystery gift | $57.00 | $118 |
-| 3 | SKF-APF-3-GIFTS | 3 bottles + both gifts + free Lymphatic Brush | $75.00 | $177 |
+| 1 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $39.00 | $47 |
+| 2 | SKF-APF-2-GIFTS | 2 bottles + free Blender brush + free mystery gift | $57.00 | $94 |
+| 3 | SKF-APF-3-GIFTS | 3 bottles + both gifts + free Lymphatic Brush | $75.00 | $141 |
 | 4 | SKF-APF-2 | 2 bottles (offer 1: "Add 1, get 1 FREE") | $39.00 | $78 (2 × $39) |
 | 5 | SKF-APF-6-BRUSH | 6 bottles + free Lymphatic Brush (offer 1: $16.50 a bottle) | $99.00 | $234 (6 × $39) |
 | 6 | SKF-LYB-1T | The Lymphatic Brush + free travel case | $24.95 | — |
@@ -121,7 +121,7 @@ formula answers, the before/after (a generated split portrait: the same woman of
 redness bare on the left and the foundation on, even and luminous, on the right, labelled "AI illustration, not a
 customer photo"), proof (the imported reviews' numbers, the actives on the label, what we don't
 claim), the promise, four steps with four demo clips of women 45+ (the first with sound), the 30-Day Daylight Promise,
-the value stack ($225.95 of value for $75, and why the price is only here), what is limited (the launch brush), the
+the value stack ($189.95 of value for $75, and why the price is only here), what is limited (the launch brush), the
 review wall with the buyers' own photos and nine reviews (two of them four stars), eleven questions, how to reach us,
 and the packs again. A sticky bar on phones follows the chosen pack.
 
@@ -322,6 +322,31 @@ height (`mobileScrollTrigger` in `campaign-cart@0.4.43`), not on a fast scroll u
 at 52% in an iPhone profile; the reviewer's scrolls stopped short of that. Still open: the six before/after pairs
 that need image credit (above), and the hidden payment-logo markup for methods the campaign does not offer (the
 family's partial; invisible).
+
+**Independent live review 2 (28 Oct 2026, night, the nine pages with the preview cookie, 1,090 captures):** verdict
+"fix first, then ship", no blockers, 5 major, 17 minor; technically clean (every page 200 at four widths, no console
+error, no overflow, every price in the campaign's set, the exit pop and coupon, the countdowns, the receipt and the
+`?pack=apf-3` landing all verified). Fixed the same night: the family's offer box rode 96 px up over the hero and hid
+the line that says what the clock does on four pages (`.upsell-box{margin-top:0}`); a pack tapped in the first ~3 s,
+before the SDK had bound the cards, was lost (the tap is shown at once and replayed on the card at `next:initialized`,
+and a tap after that shows the card's price at once instead of 0.7 s later); the crossed-out $59 a bottle was above
+the $47 the pages say the store charges (the store's $47 is now the only reference: $47 / $94 / $141 crossed out,
+SAVE $8 / $37 / $66, $189.95 of value; `LIST_PRICE` in `funnels/apf.py`, held by `check_apf.py`); the hero's fifth
+star painted transparent (a grey base star with the lit 80% clipped over it); the shade panel is a tone diagram (a
+white drop blending into a fair, a medium and a deep swatch under the bar) instead of filtered faces. Minors: the
+offer pages carry the funnel's own footer with the illustration disclosure (the offer-2 woman was unlabelled) and
+offer 2's third slide is the brush photo (two silver-haired women read as a duplicate); `#offer` lands clear of the
+bar (`scroll-margin-top`); "Loading the address form…" under Step 3 while the SDK builds it; the old-routine card
+no longer stretches to its neighbour; the bottle's detached shadow cleaned (`bottle()`); the brush cards use the
+clean product shots (the infographic and the case photo's baked text were illegible at card size); 44 px carousel
+arrows and review links; the short bar text up to 900 px and shorter still; the listicle's promise about the next
+page's reviews matches the nine cards; "expression-line creams" without "firming", "is made not to crack", "made
+to layer without pilling", "9,855 reviews say"; the doctor caption at 14.5 px in ink; the skin diagram's labels at
+17 px; the receipt's section titles are h2s; sharper demo posters (the sharpest of the first two seconds); the
+science and all-day loops re-encoded as yuv420p VP9 (an RGB VP9 painted blank in some captures). Left as they are,
+documented: the brush loop's baked "Illustration" pill on its hand-held frames (they are illustrations; the loop is
+the stick funnel's render), the "3 ★ 0" row (the imported data), the sticky bar at 390 (measured 43 px clear of the
+footer's last line; its room is now 150 px), and the cropped hairlines in two square store portraits.
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page

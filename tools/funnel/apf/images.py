@@ -64,9 +64,9 @@ PDP_PHOTOS = {'g-hold': 'hold-cheek', 'g-dots': 'dots-eyes-closed', 'g-grey': 'h
               'gift-blender': 'gift-blender', 'gift-mystery': 'gift-mystery', 'gift-shipping': 'gift-shipping'}
 # the demo clips (brand/videos/gj-<key>*.mp4): women 45+ with the real bottle; poster from the live page or a frame
 CLIPS = {'demo-navy': ('gj-43e0f648-cut', 'poster-navy', 'A woman in her fifties, blonde, in a navy top, dots the foundation on white and blends it in while she talks (60 s, with sound)'),
-         'demo-black': ('gj-41b77ec4-clean', 'poster-black', 'A woman in her fifties in black pumps the bottle and buffs the foundation in with a brush'),
+         'demo-black': ('gj-41b77ec4-clean', 'sharp', 'A woman in her fifties in black pumps the bottle and buffs the foundation in with a brush'),
          'demo-silver': ('gj-88d49199', None, 'A silver-haired woman in her sixties blends the foundation in with her fingers'),
-         'demo-robe': ('gj-b705ce67', 'poster-robe', 'A blonde woman in a grey robe dots the foundation on her cheeks and forehead and buffs it in')}
+         'demo-robe': ('gj-b705ce67', 'sharp', 'A blonde woman in a grey robe dots the foundation on her cheeks and forehead and buffs it in')}
 CLIP_WIDTH = 540
 
 
@@ -81,6 +81,11 @@ def save(im, name, size=None, q=84):
 def bottle(size):
     """The bottle on white: the live page's own render (the product sheet's, its grey backdrop already lifted)."""
     im = Image.open(PDP / 'solution-bottle.jpg').convert('RGB')
+    # the faint grey smear to the lower right of the base goes (a detached shadow, live reviews 1 and 2); the darker
+    # contact shadow under the base stays
+    a = np.asarray(im).copy(); y0 = int(a.shape[0] * 0.84)
+    band = a[y0:]; band[band.min(axis=2) > 196] = 255; a[y0:] = band
+    im = Image.fromarray(a)
     return ImageOps.pad(im, (size, size), Image.LANCZOS, color=PAPER)
 
 
@@ -141,45 +146,43 @@ def ground(im, strength=1.0):
     return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
 
 
-# the shade objection's three women, fair to medium (the persona photos; no deep-skinned persona photo exists, so
-# the panel's words say "fair to medium" and the page's words carry the honest fair-to-deep line)
-ONE_SHADE = [('age-238', (0.1, 0.0, 0.9, 0.8)), ('age-107', (0.05, 0.05, 0.95, 0.95)), ('age-264', (0.08, 0.0, 0.92, 0.84))]
 
 
 def one_shade():
     """The shade objection answered in one picture (the owner's ask, 28 Oct 2026, after a competitor's "16 skin
-    tones" panel): three women before and after (the after the before with foundation_look) under a fair-to-deep
-    tone bar; no count of tones (the claims rules), the AI line in full."""
-    W, H = 1080, 1350
+    tones" panel): a white drop of the foundation blending into a fair, a medium and a deep skin tone under a
+    fair-to-deep tone bar. No faces (the persona photos' filtered "afters" showed no difference, live review 2; the
+    real pairs wait for image credit), no count of tones (the claims rules), the illustration line in full."""
+    W, H = 1080, 1000
     im = Image.new('RGB', (W, H), PAPER)
     d = ImageDraw.Draw(im)
     d.text((W // 2, 150), 'One shade, no number to guess', font=P.serif(58, 'Bold'), fill=INK, anchor='ms')
     d.text((W // 2, 202), 'It goes on white and blends into your own tone', font=P.sans(32, 'Regular'), fill=SOFT, anchor='ms')
     x0b, x1b, bh, cy = 60, W - 60, 34, 262
-    stops = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in P.SKIN_TONES[:9]]   # fair to deep, as the words say (not very deep: live review 1)
-    xs = np.linspace(0, len(stops) - 1, x1b - x0b)
-    lo = np.floor(xs).astype(int).clip(0, len(stops) - 2); f = (xs - lo)[:, None]
-    row = (np.array(stops)[lo] * (1 - f) + np.array(stops)[lo + 1] * f).astype(np.uint8)
+    tones = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in P.SKIN_TONES[:9]]   # fair to deep, as the words say
+    xs = np.linspace(0, len(tones) - 1, x1b - x0b)
+    lo = np.floor(xs).astype(int).clip(0, len(tones) - 2); f = (xs - lo)[:, None]
+    row = (np.array(tones)[lo] * (1 - f) + np.array(tones)[lo + 1] * f).astype(np.uint8)
     bar = Image.fromarray(np.repeat(row[None], bh, 0), 'RGB')
     mask = Image.new('L', bar.size, 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, bar.width - 1, bh - 1), bh // 2, fill=255)
     im.paste(bar, (x0b, cy - bh // 2), mask)
-    cw, g, ph = 316, 26, 398
-    x0, y0 = (W - 3 * cw - 2 * g) // 2, cy + 60
-    for k, (src, crop) in enumerate(ONE_SHADE):
-        photo = Image.open(PERSONA / f'{src}.jpg').convert('RGB')
-        w, h = photo.size
-        photo = photo.crop((int(crop[0] * w), int(crop[1] * h), int(crop[2] * w), int(crop[3] * h)))
-        before = ImageOps.fit(photo, (cw, ph), Image.LANCZOS, centering=(0.5, 0.3))
-        after = FI.foundation_look(before)
+    cw, g, ph = 316, 26, 316
+    x0, y0 = (W - 3 * cw - 2 * g) // 2, cy + 90
+    yy, xx = np.mgrid[0:ph, 0:cw].astype(np.float32)
+    for k, (tone, word) in enumerate(((tones[1], 'Fair'), (tones[4], 'Medium'), (tones[8], 'Deep'))):
+        # the tone as a swatch; a white drop at the top left fading into it, as the foundation does as it is blended
+        dist = np.sqrt((xx - cw * 0.34) ** 2 + (yy - ph * 0.34) ** 2)
+        t = np.clip((dist - 52) / 120, 0, 1)[..., None]
+        px = (np.array([255, 255, 255], dtype=np.float32) * (1 - t) + np.array(tone, dtype=np.float32) * t).astype(np.uint8)
+        swatch = Image.fromarray(px, 'RGB')
+        m = Image.new('L', (cw, ph), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, cw - 1, ph - 1), 28, fill=255)
         x = x0 + k * (cw + g)
-        for j, (pic, word) in enumerate(((before, 'Before'), (after, 'After'))):
-            y = y0 + j * (ph + 54)
-            im.paste(pic, (x, y))
-            d.text((x + 4, y + ph + 36), word, font=P.sans(32, 'SemiBold'), fill=INK, anchor='ls')
-    line, size = P.AI_NOTE + '. Results vary.', 44
-    while size > 34 and d.textlength(line, font=P.sans(size, 'Regular')) > W - 60: size -= 1
-    P.note(d, (W // 2, y0 + 2 * ph + 54 + 84), line, size=size)
-    save(im, 'one-shade', size=1350)
+        im.paste(swatch, (x, y0), m)
+        d.text((x + cw // 2, y0 + ph + 52), word, font=P.sans(34, 'SemiBold'), fill=INK, anchor='ms')
+    d.text((W // 2, y0 + ph + 150), 'The same white drop, your tone as you blend', font=P.sans(30, 'Medium'), fill=INK, anchor='ms')
+    d.text((W // 2, y0 + ph + 198), 'Made for fair to deep skin. Very fair or very deep? Email us first, or let the 30-day guarantee decide.', font=P.sans(22, 'Regular'), fill=SOFT, anchor='ms')
+    P.note(d, (W // 2, H - 50), 'Illustration of how the colour blends, not a photo. Results vary.', size=30)
+    save(im, 'one-shade', size=1080)
 
 
 GEN = APF / 'gen'                    # the v2 sources (GPT Image 2 through 4SToken, 28 Oct 2026; gen/README.md has the prompts)
@@ -189,7 +192,7 @@ def _encode(frames, key, fps=25):
     """frames (a folder of f0001.png…) as <key>.mp4 (H.264) and <key>.webm (VP9), silent, and the last frame as
     the poster."""
     for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
-                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '32', '-b:v', '0', '-row-mt', '1'])):
+                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '32', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):   # yuv420p: an RGB VP9 painted blank in some captures (live review 2)
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(fps), '-i', str(frames / 'f%04d.png'), '-an', *args, str(OUT / f'{key}.{ext}')], check=True)
 
 
@@ -382,11 +385,19 @@ def clip(key, src, poster, label, encode=True):
         out = OUT / f'{key}.{ext}'
         if out.exists() or not encode: continue
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src_path), '-vf', f'scale={CLIP_WIDTH}:-2', *args, str(out)], check=True)
-    if poster: save(Image.open(PDP / f'{poster}.jpg'), f'{key}-poster', size=720)
+    if poster and poster != 'sharp': save(Image.open(PDP / f'{poster}.jpg'), f'{key}-poster', size=720)
     else:
-        frame = OUT / f'{key}-frame.png'
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', '1.0', '-i', str(src_path), '-frames:v', '1', str(frame)], check=True)
-        save(Image.open(frame), f'{key}-poster', size=720); frame.unlink()
+        # the sharpest frame of the first two seconds (a mid-motion blur as the poster, live review 2), or the frame at 1 s
+        tmp = _frames_dir(f'{key}-poster')
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-t', '2.2', '-i', str(src_path), '-vf', 'fps=5', str(tmp / 'f%04d.png')], check=True)
+        frames = sorted(tmp.glob('f*.png'))
+        def sharp(f):
+            g = np.asarray(Image.open(f).convert('L'), dtype=np.float32)
+            lap = g[1:-1, 1:-1] * 4 - g[:-2, 1:-1] - g[2:, 1:-1] - g[1:-1, :-2] - g[1:-1, 2:]
+            return float(lap.var())
+        best = max(frames, key=sharp) if poster == 'sharp' and frames else (frames[min(5, len(frames) - 1)] if frames else None)
+        save(Image.open(best), f'{key}-poster', size=720)
+        shutil.rmtree(tmp, ignore_errors=True)
     print(key, 'clip', label[:40])
 
 
@@ -395,8 +406,14 @@ def copies(video=True):
     save(Image.open(APF / 'composites' / 'two-bottles.jpg'), 'two-bottles', size=1080)
     # the brush: its page's images, in-hand and problem photos, the before/after it already shows (its own illustration
     # label is on the image) and the stick funnel's loop of it
-    for n in ('hero', 'case', 'how-to-use', 'vs-tools', 'card', 'how-1', 'how-2', 'how-3', 'compare-ours'):
+    for n in ('hero', 'how-to-use', 'vs-tools', 'card', 'how-1', 'how-2', 'how-3', 'compare-ours'):
         save(Image.open(BRUSH / f'{n}.jpg'), f'brush-{n}', size=1080)
+    # the case photo without its baked headline (illegible at card size, live review 2), and the brush's head alone
+    # cut from the clean product shot
+    case = Image.open(BRUSH / 'case.jpg').convert('RGB'); cw, ch = case.size
+    save(ImageOps.pad(case.crop((0, int(ch * 0.27), cw, ch)), (1080, 1080), Image.LANCZOS, color=PAPER), 'brush-case', size=1080)
+    card_im = Image.open(BRUSH / 'card.jpg').convert('RGB'); kw, kh = card_im.size
+    save(ImageOps.pad(card_im.crop((int(kw * 0.24), int(kh * 0.12), int(kw * 0.76), int(kh * 0.465))), (1080, 1080), Image.LANCZOS, color=PAPER), 'brush-head', size=1080)
     # the features infographic's own headline hedged ("BUILT TO TARGET MORNING PUFFINESS" made the claim the page's words
     # avoid, live review 1): the top band redrawn with the page's wording; the brush's before/after is no longer used
     feat = Image.open(BRUSH / 'features.jpg').convert('RGB')

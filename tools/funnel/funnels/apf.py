@@ -10,8 +10,8 @@ plan (next-campaigns-create-runs/skinofab-apf/, gitignored: its manifest holds t
 price proven by the skill's verify against the Cart API. Package refs (data-next-package-id) and offer refs are the
 campaign's own, read live by campaign_spec.py; this file says which page sells which and at what price (check_apf.py
 holds every page to it; commerce.py --verify prices each through the Cart API). The campaign's Allowed Domains
-(try.skinofab.com) are a dashboard setting the API cannot write. Prices: the store sells one bottle at $47 once or $37 with refills against a $59 list price; the funnel's packs
-are below both, and every crossed-out price is the $59 list price times the bottles.
+(try.skinofab.com) are a dashboard setting the API cannot write. Prices: the store sells one bottle at $47 once or $37 with refills; the funnel's packs
+are below both, and every crossed-out price is the store's $47 times the bottles.
 
 The pages are Campaign Page Kit pages in campaigns/skinofab/src/apf-funnel/ (file = the page's name there), served by
 the store at /<file>/ (deploy_theme.py, store_pages.py) on FUNNEL_HOST, the store domain the campaign allows.
@@ -30,7 +30,7 @@ SPEC_FILE = 'campaign-spec.apf.json'
 FUNNEL_ID, FUNNEL_LABEL = 'apf', 'Adaptive Peptide Foundation: listicle to thank you'
 EXIT_NOTE = 'Once per visit, on leaving the checkout: 10% off the foundation packs.'
 EMAIL = 'hello@skinofab.com'
-LIST_PRICE = 59.00                 # the store's list price of one bottle (its crossed-out $59)
+LIST_PRICE = 47.00                 # what the store charges for one bottle, bought once (live review 2: a $59 list price above the $47 the pages themselves quote was an unsubstantiated reference; the store's own $47 is the honest one)
 
 # the campaign's packages (the plan's keys, tools/funnel/apf/commerce.py): key -> ref
 PACKAGE = {'apf-1': 1, 'apf-2-gifts': 2, 'apf-3-gifts': 3, 'apf-2': 4, 'apf-6-brush': 5, 'brush-1': 6}
@@ -38,13 +38,13 @@ PACKAGE = {'apf-1': 1, 'apf-2-gifts': 2, 'apf-3-gifts': 3, 'apf-2': 4, 'apf-6-br
 VOUCHER = {'APF10': 1, 'APF40': 2, 'APF50': 3, 'BRUSH40': 4, 'BRUSH60': 5}
 
 # the sales page's and checkout's packs (one-time, free shipping): the checkout card id, the package, what she pays,
-# the crossed-out price (the $59 list price times the bottles) and the gifts in the box
+# the crossed-out price (the store's $47 times the bottles) and the gifts in the box
 PACKS = [
-    {'key': 'apf-1', 'bundle': 'apf-1', 'package': 1, 'bottles': 1, 'price': 39.00, 'compare': 59.00, 'gifts': [],
+    {'key': 'apf-1', 'bundle': 'apf-1', 'package': 1, 'bottles': 1, 'price': 39.00, 'compare': 47.00, 'gifts': [],
      'name': '1 bottle', 'supply': 'About a month'},
-    {'key': 'apf-2-gifts', 'bundle': 'apf-2', 'package': 2, 'bottles': 2, 'price': 57.00, 'compare': 118.00,
+    {'key': 'apf-2-gifts', 'bundle': 'apf-2', 'package': 2, 'bottles': 2, 'price': 57.00, 'compare': 94.00,
      'gifts': ['blender', 'mystery'], 'name': '2 bottles', 'supply': 'About two months', 'selected': True, 'tab': 'Most popular'},
-    {'key': 'apf-3-gifts', 'bundle': 'apf-3', 'package': 3, 'bottles': 3, 'price': 75.00, 'compare': 177.00,
+    {'key': 'apf-3-gifts', 'bundle': 'apf-3', 'package': 3, 'bottles': 3, 'price': 75.00, 'compare': 141.00,
      'gifts': ['blender', 'mystery', 'brush'], 'name': '3 bottles', 'supply': 'About three months', 'tab': 'Best value'},
 ]
 GIFTS = {'blender': ('SKINOFAB Blender brush', 9.00), 'mystery': ('Mystery gift', 15.00), 'brush': ('The Lymphatic Brush', 24.95)}

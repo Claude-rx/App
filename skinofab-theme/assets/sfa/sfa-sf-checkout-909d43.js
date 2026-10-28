@@ -80,3 +80,38 @@ window.addEventListener('next:initialized', function () {
   if (lines) new MutationObserver(() => { if (lines.textContent.trim()) ready(); }).observe(lines, { childList: true, subtree: true, characterData: true });
   setTimeout(ready, 8000);
 })();
+
+// a pack tapped before the SDK has bound the cards (the first ~3 s) was lost (live review 2): the tap is shown at
+// once (the card marked, the pay line's amount), kept, and replayed on the card once the SDK is ready. After the
+// SDK is ready, a tap still shows the card's price at once instead of the ~0.7 s the recalculation takes, unless a
+// coupon is on (then the total is the SDK's alone).
+(function initEarlyPick() {
+  const sel = document.querySelector('[data-next-bundle-selector]');
+  const fb = document.querySelector('[data-sf-pay-fallback]');
+  if (!sel) return;
+  let prices = {};
+  try { prices = JSON.parse((fb && fb.getAttribute('data-sf-prices')) || '{}'); } catch (_) {}
+  let ready = false, pending = null;
+  const couponOn = () => !!document.querySelector('[data-next-discounts="voucher"].next-discounts-has-items');
+  const show = (card) => {
+    sel.querySelectorAll('[data-next-bundle-card]').forEach((c) => { const on = c === card; c.classList.toggle('next-selected', on); c.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    const price = prices[(card.getAttribute('data-next-bundle-id') || '').split(':').pop()];
+    if (!price || couponOn()) return;
+    if (fb) fb.textContent = price;
+    const live = document.querySelector('[data-next-show="cart.hasItems"] [data-next-display="cart.total"]');
+    if (live) live.textContent = price;
+  };
+  sel.addEventListener('click', (e) => {
+    const card = e.target.closest('[data-next-bundle-card]');
+    if (!card) return;
+    if (!ready) pending = card;
+    show(card);
+  }, true);
+  const onReady = () => {
+    if (ready) return;
+    ready = true;
+    if (pending) { const c = pending; pending = null; setTimeout(() => { c.click(); }, 80); }
+  };
+  document.addEventListener('next:initialized', onReady);
+  window.addEventListener('next:initialized', onReady);
+})();

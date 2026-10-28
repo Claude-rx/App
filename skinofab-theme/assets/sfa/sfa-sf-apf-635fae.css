@@ -332,4 +332,16 @@ body.sf-has-sticky .sf-footer { padding-bottom: 110px; }
 .sf-bar__btn { min-height: 44px; }
 .sf-footer__links a { padding: 12px 6px; }
 .sf-tp__stars i.part, .sf-co-tp i.part { background: linear-gradient(90deg, #00b67a 0 var(--p, 80%), #cfd0d6 var(--p, 80%)); }
-.sf-star--part { background: linear-gradient(90deg, currentColor 0 80%, #d9d3ca 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* live review 2 */
+.sf-star--part { position: relative; display: inline-block; }
+.sf-star--part__base { color: #d9d3ca; }
+.sf-star--part__fill { position: absolute; left: 0; top: 0; width: 80%; overflow: hidden; white-space: nowrap; color: inherit; }
+#offer, .sf-sec[id] { scroll-margin-top: 84px; }
+.sf-ease { align-items: start; }
+.sf-rating a, .sf-rating__count a { display: inline-block; padding: 12px 0; }
+.sf-korea__fig figcaption { font-size: 14.5px; color: var(--ink); }
+.sf-skin__t { font: 600 22px var(--sans); }
+.sf-skin__cap { font: 500 17px var(--sans); fill: #4a4a4a; }
+.sf-skin figcaption { font-size: 14px; }
+body.sf-has-sticky .sf-footer { padding-bottom: 150px; }

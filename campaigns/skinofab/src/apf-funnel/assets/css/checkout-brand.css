@@ -192,3 +192,8 @@ body {
 [data-sf-summary-box]:not(.sf-co-ready) [data-next-cart-summary] { visibility: hidden; }
 [data-sf-summary-box]:not(.sf-co-ready) { position: relative; min-height: 120px; }
 [data-sf-summary-box]:not(.sf-co-ready)::after { content: 'Loading your pack and total…'; position: absolute; left: 20px; top: 56px; font-size: 14px; color: #6b6b6b; }
+
+/* live review 2: a line in Step 3 while the SDK builds the address form (an empty heading for 3-6 s); the featured
+   reviews' link a 44 px target */
+[data-next-address="shipping"]:not(:has(*))::before { content: 'Loading the address form…'; display: block; padding: 12px 0; font-size: 14px; color: #6b6b6b; }
+.sf-co-featured__more { display: inline-block; padding: 11px 0; }
