@@ -1,6 +1,6 @@
 {
   "schema_version": "campaign-runtime-build-context/v0",
-  "generated_at": "2026-10-28T09:36:57.007Z",
+  "generated_at": "2026-10-28T15:44:53.774Z",
   "source_adapter": "html_funnel",
   "intake": {
     "spec_source": "local",
@@ -28,8 +28,8 @@
   },
   "spec": {
     "path": "./campaign-spec.apf.json",
-    "hash": "1e67a0c181b8558fb2552987b465a6360ba0740bead53962bd4a1a96e70d4c84",
-    "material_hash": "sha256:6a18da19dbacf616e8fc346f9521ee6b5f4e32176ec3223ef38eeedae715168a",
+    "hash": "c3682ac057e2cef202f711624aba4f6645b713277d04a099441c7d63657da464",
+    "material_hash": "sha256:c9cf7d1073841ea2d9fc2af6248abc536214168a8da36fd7ec3790be7cb74331",
     "active_pages": [
       {
         "id": "listicle",
@@ -320,7 +320,7 @@
     "output_dir": "./src/apf-funnel",
     "handoff_skill": "next-campaigns-build",
     "handoff_artifact": ".campaign-runtime/setup-handoff.json",
-    "reason": "Setup recorded by campaigns-os record setup at 2026-10-28T09:36:59.813Z; the campaign output directory exists."
+    "reason": "Setup recorded by campaigns-os record setup at 2026-10-28T15:44:57.204Z; the campaign output directory exists."
   },
   "template": {
     "family": "apollo",

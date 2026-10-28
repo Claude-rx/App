@@ -266,8 +266,23 @@ checks take their numbers from the spec. The theme serves this funnel's assets f
 
 ### Campaigns OS
 
-The funnel went through the Campaigns OS 1.60.0 lifecycle on 28 Oct 2026 (brief, build, theme, Page Kit parity,
-polish capture, deploy, QA resolve, QA run with typed-card test orders on the local build), twice. Run 1 (verdict
+**Run 3, on campaign 2221 and the v2 pages (28 Oct 2026):** the lifecycle started again from the new CampaignSpec
+(`start --force`, setup, doctor, build and theme recorded, Page Kit parity, polish capture READY with no hidden eager
+media, deploy on the served build, QA resolve with every gate passing), then `qa run --browser --test-order common
+--max-test-orders 6`: verdict `MVSAFX9DEITLQA20U1HQNCARHJ`, **ready_with_exceptions**, 198 pass, 4 skipped, 1
+manual_review, 1 warn, **6 test orders on campaign 2221** (101554, 101555, 101557, 101558, 101561, 101563, all
+`qa-test@campaigns-os.test`), every terminal path under the cap, so every offer page's accept and decline were
+clicked and every receipt rendered. The two exceptions, reported and not waived: `qc.tracking.order` on the
+accept-decline-decline path reads "tracking.order unexercised (extractor_failed)": the harness's own attribution
+extractor did not run on that one order, while every UTM and affiliate field it did read on the request and on the
+read-back was equal on that path and on the other five; and `price-claim-mismatch:offer-1` is the pre-existing
+sum-of-both-cards reading explained under run 2. Before that run, `tools/funnel/live_order.mjs` placed order **101552** on campaign
+2221 through the local build (checkout, offer 1's 2-bottle card accepted, both brush offers declined, the receipt
+with both lines and the gifts named): the first proof of the new campaign end to end.
+
+The earlier runs, on campaign 2211 and the v1 pages: the funnel went through the Campaigns OS 1.60.0 lifecycle on
+28 Oct 2026 (brief, build, theme, Page Kit parity, polish capture, deploy, QA resolve, QA run with typed-card test
+orders on the local build), twice. Run 1 (verdict
 `MVRWKIACPRQD983L4KSP6P6R3I`, 6 orders) was **blocked**: 186 pass, 4 fail, all of them offer 1's accept action (the
 supply cards' Buy now buttons were not the SDK's add action, so the harness could not accept the offer). After the fix
 (each card's Buy now is `data-next-upsell-action="add"`; `js/sf-supply.js` selects the card in the capture phase
