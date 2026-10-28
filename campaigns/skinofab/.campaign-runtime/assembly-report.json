@@ -2,7 +2,7 @@
   "schema_version": "campaign-runtime-assembly-report/v0",
   "run_id": "asm_1793202293970",
   "generated_at": "2026-10-28T15:44:53.970Z",
-  "status": "completed",
+  "status": "prepared",
   "identity": {
     "map_id": null,
     "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
@@ -153,116 +153,6 @@
       "blockers": [],
       "warnings": [],
       "history": [
-        {
-          "archived_at": "2026-10-28T09:14:16.024Z",
-          "archived_by": "prepare-build --force",
-          "reason_code": "force_reset",
-          "status": "completed",
-          "completed_at": "2026-10-28T09:12:15.696Z",
-          "recorded_by": "campaigns-os record build",
-          "build_fingerprint": "sha256:00d562648f9841375e5fc2b413fd9b26490416f393c814edacd5e55b7f52b17e",
-          "source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
-          "source_brief_material": {
-            "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
-            "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
-          },
-          "source_spec_material_hash": "sha256:6a18da19dbacf616e8fc346f9521ee6b5f4e32176ec3223ef38eeedae715168a",
-          "outputs": [],
-          "evidence": {
-            "build_environment": "development",
-            "local_proof": {
-              "production_parity": {
-                "checked_at": "2026-10-28T09:12:23.038Z",
-                "environment": {
-                  "proven": "development",
-                  "compared": "production"
-                },
-                "status": "pass",
-                "campaign_slug": "apf-funnel",
-                "page_count": 9,
-                "sdk_version": "0.4.43",
-                "pages": [
-                  {
-                    "route": "/apf-funnel/10-reasons-adaptive-foundation/",
-                    "path": "10-reasons-adaptive-foundation/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  },
-                  {
-                    "route": "/apf-funnel/adaptive-foundation-offer/",
-                    "path": "adaptive-foundation-offer/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  },
-                  {
-                    "route": "/apf-funnel/foundation-checkout/",
-                    "path": "foundation-checkout/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  },
-                  {
-                    "route": "/apf-funnel/foundation-offer-1/",
-                    "path": "foundation-offer-1/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  },
-                  {
-                    "route": "/apf-funnel/foundation-offer-2/",
-                    "path": "foundation-offer-2/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  },
-                  {
-                    "route": "/apf-funnel/foundation-offer-2b/",
-                    "path": "foundation-offer-2b/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  },
-                  {
-                    "route": "/apf-funnel/foundation-thank-you/",
-                    "path": "foundation-thank-you/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  },
-                  {
-                    "route": "/apf-funnel/lymphatic-brush-offer-b/",
-                    "path": "lymphatic-brush-offer-b/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  },
-                  {
-                    "route": "/apf-funnel/lymphatic-brush-offer/",
-                    "path": "lymphatic-brush-offer/index.html",
-                    "sdk_version": "0.4.43",
-                    "gated_inserted_lines": 16,
-                    "gated_removed_lines": 1,
-                    "gated_hosts": []
-                  }
-                ],
-                "first_difference": null,
-                "summary": "9 page(s) identical to the current development render; production differs only in environment-gated output (153 line(s)); Campaign Cart pin 0.4.43.",
-                "build_fingerprint": "sha256:00d562648f9841375e5fc2b413fd9b26490416f393c814edacd5e55b7f52b17e",
-                "proven_root": "_site/"
-              }
-            }
-          }
-        },
         {
           "archived_at": "2026-10-28T09:29:59.297Z",
           "archived_by": "prepare-build --force",
@@ -702,6 +592,116 @@
               }
             }
           }
+        },
+        {
+          "archived_at": "2026-10-28T18:08:01.887Z",
+          "archived_by": "record build",
+          "reason_code": "rerecorded",
+          "status": "completed",
+          "completed_at": "2026-10-28T17:14:23.463Z",
+          "recorded_by": "campaigns-os record build",
+          "build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
+          "source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
+          "source_brief_material": {
+            "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
+            "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+          },
+          "source_spec_material_hash": "sha256:c9cf7d1073841ea2d9fc2af6248abc536214168a8da36fd7ec3790be7cb74331",
+          "outputs": [],
+          "evidence": {
+            "build_environment": "development",
+            "local_proof": {
+              "production_parity": {
+                "checked_at": "2026-10-28T15:45:15.210Z",
+                "environment": {
+                  "proven": "development",
+                  "compared": "production"
+                },
+                "status": "pass",
+                "campaign_slug": "apf-funnel",
+                "page_count": 9,
+                "sdk_version": "0.4.43",
+                "pages": [
+                  {
+                    "route": "/apf-funnel/10-reasons-adaptive-foundation/",
+                    "path": "10-reasons-adaptive-foundation/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  },
+                  {
+                    "route": "/apf-funnel/adaptive-foundation-offer/",
+                    "path": "adaptive-foundation-offer/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  },
+                  {
+                    "route": "/apf-funnel/foundation-checkout/",
+                    "path": "foundation-checkout/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  },
+                  {
+                    "route": "/apf-funnel/foundation-offer-1/",
+                    "path": "foundation-offer-1/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  },
+                  {
+                    "route": "/apf-funnel/foundation-offer-2/",
+                    "path": "foundation-offer-2/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  },
+                  {
+                    "route": "/apf-funnel/foundation-offer-2b/",
+                    "path": "foundation-offer-2b/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  },
+                  {
+                    "route": "/apf-funnel/foundation-thank-you/",
+                    "path": "foundation-thank-you/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  },
+                  {
+                    "route": "/apf-funnel/lymphatic-brush-offer-b/",
+                    "path": "lymphatic-brush-offer-b/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  },
+                  {
+                    "route": "/apf-funnel/lymphatic-brush-offer/",
+                    "path": "lymphatic-brush-offer/index.html",
+                    "sdk_version": "0.4.43",
+                    "gated_inserted_lines": 16,
+                    "gated_removed_lines": 1,
+                    "gated_hosts": []
+                  }
+                ],
+                "first_difference": null,
+                "summary": "9 page(s) identical to the current development render; production differs only in environment-gated output (153 line(s)); Campaign Cart pin 0.4.43.",
+                "build_fingerprint": "sha256:ed4e6e7283ba6c6ee9466e6af7021bc3138627c9f4343c5b7a86f4e9d7d09006",
+                "proven_root": "_site/"
+              }
+            }
+          }
         }
       ],
       "evidence": {
@@ -798,17 +798,17 @@
           }
         }
       },
-      "build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
-      "completed_at": "2026-10-28T17:14:23.463Z",
+      "build_fingerprint": "sha256:a510b7b6458c19bceadf5e08abc4d26b6b976958ccb87bd5cf14b9763fc68e0f",
+      "completed_at": "2026-10-28T18:08:01.887Z",
       "recorded_by": "campaigns-os record build",
       "build_manifest": [
         {
           "path": "10-reasons-adaptive-foundation/index.html",
-          "sha256": "c63aa665e0c18b7cc86a373c65fcc8d3d15faabf74d14c01789c0f62d8b00e5e"
+          "sha256": "6591925a6219053253b51f05389797bd0fbfce1b409f19b25eafb8d9ea10d2ea"
         },
         {
           "path": "adaptive-foundation-offer/index.html",
-          "sha256": "26e65c970dd7d42d6ce8f0cdba8122c85661e9b32584cf359cdfcd4ae21ea755"
+          "sha256": "9f0787702d379252c65f5b9d0530653684e9d180ff9789a49b37acb04bd41131"
         },
         {
           "path": "config.js",
@@ -816,7 +816,7 @@
         },
         {
           "path": "css/checkout-brand.css",
-          "sha256": "f230b43f1a3a6b3fb5d1735704224f71cd453345ff2dcf52cb89d4f6c5bcdcf7"
+          "sha256": "f9b1a2a515e7fd8f716bb83373d1293cbbfeb48e6e9947fd3c9321b697d15171"
         },
         {
           "path": "css/exit-intent-popup.css",
@@ -828,7 +828,7 @@
         },
         {
           "path": "css/sf-apf.css",
-          "sha256": "8c1957c9b8df7322ff7009822fd2380155991ccd171bf3b8031d118c6a44bbc8"
+          "sha256": "f345566284ab824ea56baa00650f59db1c5c5f53d2e4bd427ccf6cdf37767afa"
         },
         {
           "path": "css/sf-funnel.css",
@@ -836,23 +836,23 @@
         },
         {
           "path": "css/sf-offers.css",
-          "sha256": "2641b5fc1639c2a616e9447865cbacf256916b5855e6b70e0b0d83ec8c6ddd2d"
+          "sha256": "1bbc255520f01d360f40ea346d5f9e8d5b54ab78d70204375aa7ca54f92a3589"
         },
         {
           "path": "foundation-checkout/index.html",
-          "sha256": "6b88d1971ee48d8a7cb7ea55ab7033832f56c1f76a25e8cacb7a1148eef3e13a"
+          "sha256": "788bb06a6a38f283ca914dbe5d7113c97278b95dda62830cb0233d6122030daa"
         },
         {
           "path": "foundation-offer-1/index.html",
-          "sha256": "9f12629d67f569dea05e0628885e4d9c57128060df44ec623294b2e9869d8b6c"
+          "sha256": "b335e2c1b272b767e8d953e839fa9d8bc3bf802e9e81f15eba09418640dcfb47"
         },
         {
           "path": "foundation-offer-2/index.html",
-          "sha256": "204e17be18dd7cc31262cd908f952f55b475537898b970f5d41513bac112c710"
+          "sha256": "368b367754b9c548886d78a29e0117656df203a9df0793e507e43741747ae549"
         },
         {
           "path": "foundation-offer-2b/index.html",
-          "sha256": "6c4a97961a123873f8581601a798d8d538aadf122be8c45da4c4f1a68c4b0d14"
+          "sha256": "296a23422ac4670f233fba11d218242b6892ddc4284f9f6824816a62cfdf07ae"
         },
         {
           "path": "foundation-thank-you/index.html",
@@ -1019,10 +1019,6 @@
           "sha256": "96628843ce073cb1c03661ab35bb94a8192262df9c1022188bab3f8ed0342841"
         },
         {
-          "path": "images/sf/brush-ba-puffy.jpg",
-          "sha256": "b6d062c1eae3916869e9fa71e2a3d39ef1366311cbc6dbbe29ef1ee5f28283ce"
-        },
-        {
           "path": "images/sf/brush-card.jpg",
           "sha256": "585f5d2f0ee19ea6b1447b1a4d89fcc6ae34fe865e494f40df712b2af899221b"
         },
@@ -1036,7 +1032,7 @@
         },
         {
           "path": "images/sf/brush-features.jpg",
-          "sha256": "610b91369deeac6e0d545f714efcd36f0a294ed67ab9159472d66c84b04e9148"
+          "sha256": "dd869d4d3f756cc79c222e8e5264b501509763fbe890f69ccdeef32d812ddcf8"
         },
         {
           "path": "images/sf/brush-hero.jpg",
@@ -1232,7 +1228,7 @@
         },
         {
           "path": "images/sf/one-shade.jpg",
-          "sha256": "7e4394c2304cf09a122a3423f51af80644365aed36d6402a19c85f56fdcf567e"
+          "sha256": "32fbe9902f8230d96ca9d0604b2d4727450db25b7bd08221c779cf8b46f330e6"
         },
         {
           "path": "images/sf/pack-1.jpg",
@@ -1444,7 +1440,7 @@
         },
         {
           "path": "images/sf/wow.jpg",
-          "sha256": "9728bbb58461d42afd854a7d664c856ac0b0ba84246fae44ba86b9f6304ebde2"
+          "sha256": "8e96098e2b38b5764ed73097ac340b3974162b82c9f876dd5072c845e7c3691a"
         },
         {
           "path": "images/shop-pay-logo.svg",
@@ -1500,11 +1496,11 @@
         },
         {
           "path": "js/sf-apf.js",
-          "sha256": "fa29e8d4a62d58758137984ef25c9772978d9c083bfdd790655b608661b01562"
+          "sha256": "065fcc77bb061e21882d47b6fc67bcc09037572db48fe8fc7ce9c30f41f45eaf"
         },
         {
           "path": "js/sf-checkout.js",
-          "sha256": "755edb61646b55913219fc7c5a0102ed2cafed731954d6f4bcf31c6366bc4e0e"
+          "sha256": "df18a63b2b734db59f1106ec1529844d05899387fdc3b4eefd6d872b190c5a25"
         },
         {
           "path": "js/sf-failsafe.js",
@@ -1512,7 +1508,7 @@
         },
         {
           "path": "js/sf-offer-gate.js",
-          "sha256": "38e3b002e258a0817a9616f87eefbdf5dc10a7c12c17e4b977aa111c67a114e6"
+          "sha256": "8b37363c640539c3fe617cd7074873a52c7bc3bed9b208fb73691cb0d8a95d5e"
         },
         {
           "path": "js/sf-offer-timer.js",
@@ -1548,11 +1544,11 @@
         },
         {
           "path": "lymphatic-brush-offer-b/index.html",
-          "sha256": "e595cdf61e1e7a458f7d0f034b03cc1b872bfea39acb0912e9c1184ab9205a01"
+          "sha256": "44c58cc3aa2ee50ac6a62827c70d7f19388338302399c04115642cb9735b613d"
         },
         {
           "path": "lymphatic-brush-offer/index.html",
-          "sha256": "e64652eb40330a78ec4dd43b753ec2b09db7ba3bec02a5cb9b4cdb8a25fd56c7"
+          "sha256": "e99a451fc74b84b5978177acba7e94bc1abfe6cf0183b0145cf1087674064941"
         }
       ],
       "source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
@@ -1564,7 +1560,7 @@
     },
     "polish": {
       "stage": "polish",
-      "status": "completed",
+      "status": "required",
       "inputs": [],
       "outputs": [],
       "commands": [],
@@ -477110,16 +477106,6 @@
       "required_for": [
         "qa"
       ],
-      "performed_by": "next-campaigns-polish",
-      "source_build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
-      "source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
-      "source_brief_material": {
-        "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
-        "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
-      },
-      "source_spec_material_hash": "sha256:c9cf7d1073841ea2d9fc2af6248abc536214168a8da36fd7ec3790be7cb74331",
-      "completed_at": "2026-10-28T17:20:42.596Z",
-      "recorded_by": "campaigns-os record polish",
       "evidence": {
         "visual_review": {
           "screenshots": [
@@ -581828,34 +581814,12 @@
     },
     "deploy": {
       "stage": "deploy",
-      "status": "completed",
+      "status": "required",
       "inputs": [],
       "commands": [],
       "blockers": [],
       "warnings": [],
       "history": [
-        {
-          "archived_at": "2026-10-27T10:34:46.249Z",
-          "archived_by": "record build",
-          "reason_code": "build_output_changed",
-          "status": "completed",
-          "completed_at": "2026-10-27T10:29:36.692Z",
-          "recorded_by": "campaigns-os record deploy",
-          "source_build_fingerprint": "sha256:6883063e44d5b21188ea621a1255ecf109a5c3ea3726fb7a538b245edb31aa3a",
-          "outputs": [
-            "http://127.0.0.1:8090/stick-funnel/"
-          ],
-          "evidence": [
-            "http://127.0.0.1:8090/stick-funnel/10-reasons-foundation-stick/ answered HTTP 200",
-            "http://127.0.0.1:8090/stick-funnel/foundation-stick-offer/ answered HTTP 200",
-            "http://127.0.0.1:8090/stick-funnel/stick-checkout/ answered HTTP 200",
-            "http://127.0.0.1:8090/stick-funnel/stick-special-1/ answered HTTP 200",
-            "http://127.0.0.1:8090/stick-funnel/stick-special-2/ answered HTTP 200",
-            "http://127.0.0.1:8090/stick-funnel/stick-special-3/ answered HTTP 200",
-            "http://127.0.0.1:8090/stick-funnel/stick-special-4/ answered HTTP 200",
-            "http://127.0.0.1:8090/stick-funnel/stick-thank-you/ answered HTTP 200"
-          ]
-        },
         {
           "archived_at": "2026-10-27T11:15:46.263Z",
           "archived_by": "record build",
@@ -581944,29 +581908,35 @@
             "http://127.0.0.1:8090/apf-funnel/lymphatic-brush-offer-b/ answered HTTP 200",
             "http://127.0.0.1:8090/apf-funnel/lymphatic-brush-offer/ answered HTTP 200"
           ]
+        },
+        {
+          "archived_at": "2026-10-28T18:08:01.887Z",
+          "archived_by": "record build",
+          "reason_code": "build_output_changed",
+          "status": "completed",
+          "completed_at": "2026-10-28T17:20:48.568Z",
+          "recorded_by": "campaigns-os record deploy",
+          "source_build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
+          "outputs": [
+            "http://127.0.0.1:8090/apf-funnel/"
+          ],
+          "evidence": [
+            "http://127.0.0.1:8090/apf-funnel/10-reasons-adaptive-foundation/ answered HTTP 200",
+            "http://127.0.0.1:8090/apf-funnel/adaptive-foundation-offer/ answered HTTP 200",
+            "http://127.0.0.1:8090/apf-funnel/foundation-checkout/ answered HTTP 200",
+            "http://127.0.0.1:8090/apf-funnel/foundation-offer-1/ answered HTTP 200",
+            "http://127.0.0.1:8090/apf-funnel/foundation-offer-2/ answered HTTP 200",
+            "http://127.0.0.1:8090/apf-funnel/foundation-offer-2b/ answered HTTP 200",
+            "http://127.0.0.1:8090/apf-funnel/foundation-thank-you/ answered HTTP 200",
+            "http://127.0.0.1:8090/apf-funnel/lymphatic-brush-offer-b/ answered HTTP 200",
+            "http://127.0.0.1:8090/apf-funnel/lymphatic-brush-offer/ answered HTTP 200"
+          ]
         }
       ],
       "required_by": "build",
       "required_for": [
         "qa"
-      ],
-      "source_build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
-      "outputs": [
-        "http://127.0.0.1:8090/apf-funnel/"
-      ],
-      "evidence": [
-        "http://127.0.0.1:8090/apf-funnel/10-reasons-adaptive-foundation/ answered HTTP 200",
-        "http://127.0.0.1:8090/apf-funnel/adaptive-foundation-offer/ answered HTTP 200",
-        "http://127.0.0.1:8090/apf-funnel/foundation-checkout/ answered HTTP 200",
-        "http://127.0.0.1:8090/apf-funnel/foundation-offer-1/ answered HTTP 200",
-        "http://127.0.0.1:8090/apf-funnel/foundation-offer-2/ answered HTTP 200",
-        "http://127.0.0.1:8090/apf-funnel/foundation-offer-2b/ answered HTTP 200",
-        "http://127.0.0.1:8090/apf-funnel/foundation-thank-you/ answered HTTP 200",
-        "http://127.0.0.1:8090/apf-funnel/lymphatic-brush-offer-b/ answered HTTP 200",
-        "http://127.0.0.1:8090/apf-funnel/lymphatic-brush-offer/ answered HTTP 200"
-      ],
-      "completed_at": "2026-10-28T17:20:48.568Z",
-      "recorded_by": "campaigns-os record deploy"
+      ]
     },
     "qa": {
       "stage": "qa",
@@ -591590,8 +591560,8 @@
     }
   ],
   "next": {
-    "stage": "done",
-    "owner": "next-campaigns-os",
-    "action": "Every stage is terminal; run next to confirm the closeout actions."
+    "stage": "polish",
+    "owner": "next-campaigns-polish",
+    "action": "Run polish with this packet."
   }
 }

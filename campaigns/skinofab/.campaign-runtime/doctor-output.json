@@ -3566,5 +3566,9 @@
     },
     "prior_run_id": "run_1793201833092_0994c5d5",
     "comparison": "prior_run"
-  }
+  },
+  "stale": true,
+  "stale_marked_by": "record build",
+  "stale_marked_at": "2026-10-28T18:08:04.873Z",
+  "stale_reason": "stages.assembly was recorded after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
 }

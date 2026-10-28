@@ -61,7 +61,7 @@ trust:
     - q: "Is this a subscription?"
       a: "No. Every pack is a one-time purchase: you pay today’s total once and nothing renews. If you ever want refills, you can set them up in our store yourself."
     - q: "When does it ship?"
-      a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days in the US, 6–9 to Europe, 8–12 elsewhere."
+      a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days in the US, 6–9 to Europe, the UK, Canada, Australia and New Zealand, 8–12 elsewhere."
     - q: "Are these reviews of this foundation?"
       a: "Yes. They are the published reviews of the Adaptive Peptide Foundation from our earlier store, imported in October 2026 word for word, with the buyers’ own photos."
     - q: "Is my payment secure?"
@@ -220,13 +220,13 @@ exit_intent:
                               <h2 class="form-section__title" id="sf-co-pay">Step 4: Payment</h2>
                               <div class="form-section__subtitle">All transactions are secure and encrypted.</div>
                             </div>
-                            {% capture pay_text %}<strong><span data-next-display="cart.total">$57.00</span> today</strong>, once, for <span data-sf-renew>{{ pay_terms['apf-2'] }}</span>.{% endcapture %}
+                            {% capture pay_text %}<strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$57.00</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ {% for b in bundles %}{% unless forloop.first %},{% endunless %}"{{ b.id }}":"{{ b.price }}"{% endfor %} }'>$57.00</span> today</strong>, once, for <span data-sf-renew>{{ pay_terms['apf-2'] }}</span>.{% endcapture %}
                             <p class="sf-pay-terms" data-sf-pay-terms='{{ pay_terms | json }}'>{{ pay_text }} Nothing renews.</p>
                             {% campaign_include 'express-checkout.html' show_title=false %}
                             {% campaign_include 'payment-methods.html' %}
                           </div>
                           <div class="form-section form-section--last">
-                            <div class="cart-box cart-box--card">
+                            <div class="cart-box cart-box--card" data-sf-summary-box>
                               {% campaign_include 'cart-summary02.html' %}
                             </div>
                           </div>

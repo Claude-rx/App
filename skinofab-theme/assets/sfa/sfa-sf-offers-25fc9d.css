@@ -120,3 +120,15 @@
 /* a decline link and the footer's policy links as 44 px targets (funnel review) */
 .cc-decline-wrapper .upsell-link, .sf-supply__decline { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px; }
 .footer_legal-link { display: inline-block; padding: 10px 6px; }
+
+/* live review 1: offer 1's two cards built the same (both pictures in a white box of the same shape, the buttons on one
+   line, the charge the biggest number), 44 px carousel arrows, the "Confirming your order…" line */
+.sf-supply__grid { align-items: stretch; }
+.sf-supply__card img { max-width: 100%; aspect-ratio: 1; object-fit: contain; background: #fff; border: 1px solid #efebe5; }
+.sf-supply__perday { font-size: 17px; font-weight: 600; color: #3b3b3b; }
+.sf-supply__price strong { font-size: 34px; }
+.sf-supply__buy { margin-top: auto; }
+.sf-supply__card .sf-supply__charged { margin-top: 6px; }
+.swiper-button-next, .swiper-button-prev { width: 44px; height: 44px; }
+.sf-uh__wait { margin: 10px 0 0; font-size: 14px; color: #6b6b6b; }
+.sf-uh__wait[hidden] { display: none; }

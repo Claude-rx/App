@@ -49,7 +49,7 @@ ONCE = 'charged once to the payment you just used. Nothing renews, and it ships 
 GUARANTEE = 'Backed by our 30-day money-back guarantee.'
 # the honest countdown: 10 minutes on an offer, 5 on a last chance; at 0:00 the page declines the offer itself
 TIMER, TIMER_LAST = 600, 300
-EXPIRES = 'When the clock reaches 0:00 this page moves on and this price is gone: you won’t find it in our store or in an email.'
+EXPIRES = 'When the clock reaches 0:00 this page moves on and this offer is gone: it isn’t in our store or in an email.'
 
 
 def q(s):
@@ -66,8 +66,8 @@ def steps(*rows):
 
 # the brush's short product page under its offer (its store copy, tools/persona/brush_copy.py, in the page's own words)
 BRUSH_PDP = {
-    'problem': {'image': 'images/sf/brush-ba-puffy.jpg', 'alt': 'Illustration: the same woman in her fifties, puffy-looking under the eyes and along the jaw on the left, a fresher-looking morning face on the right',
-                'caption': 'Illustration of the look it is for, not a customer photo. Results vary.',
+    'problem': {'image': 'images/sf/brush-problem.jpg', 'alt': 'A woman in her fifties at her bathroom mirror first thing in the morning, puffy under the eyes, a hand on her jaw (AI illustration, not a customer photo)',
+                'caption': 'AI illustration, not a customer photo.',
                 'eyebrow': 'The problem', 'title': 'You wake up looking more tired than you are',
                 'lede': 'You slept. And still the mirror shows a puffy face: swollen-looking under the eyes, softer along the jaw. It fades by lunch, but by then you’ve already seen it.',
                 'pains': ['Puffy, swollen-looking under-eyes first thing in the morning', 'A jawline and cheekbones that look softer than they used to',
@@ -75,7 +75,7 @@ BRUSH_PDP = {
                 'close': 'The result: a face that looks tired before your day has even started.'},
     'solution': {'image': 'images/sf/brush-in-hand.jpg', 'alt': 'The Lymphatic Brush in a hand: hundreds of ultra-soft tips on a curved head',
                  'eyebrow': 'The solution', 'title': 'Three minutes, on dry skin, before your foundation',
-                 'lede': 'The Lymphatic Brush gives your face the light, slow massage an aesthetician would, in 3 minutes, on dry skin.',
+                 'lede': 'The Lymphatic Brush is a facial massage brush: it gives your face the light, slow massage an aesthetician would, in 3 minutes, on dry skin.',
                  'fixes': [{'title': 'No oils or serums to glide.', 'text': 'Works on dry skin: nothing to wash off, and your foundation goes straight on after.'},
                            {'title': 'No pressing.', 'text': 'Hundreds of soft tips bend instead of pressing: no red marks, no drag on thinner skin.'},
                            {'title': 'No tutorial.', 'text': 'Four sweeps: neck, jaw, under the eyes, neck again.'},
@@ -172,7 +172,7 @@ def single_page(pid, spec, o):
         'upsell_guarantees:', '  - variant: row', '    icon: shield', '    title: "30-day money-back guarantee"',
         '    text: "Love it, or email us within 30 days of delivery for a full refund, even opened."',
         *(['upsell_body:', '  - type: features', f'    title: {q(o["features_title"])}', f'    text: {q(o["features_text"])}', '    items:',
-           *[f'      - {{ title: {q(t)}, text: {q(x.replace("{price}", fallback).replace("{discount}", discount))} }}' for t, x in o['features']]] if o.get('features') else []),
+           *[f'      - {{ title: {q(t.replace("{price}", fallback).replace("{discount}", discount))}, text: {q(x.replace("{price}", fallback).replace("{discount}", discount))} }}' for t, x in o['features']]] if o.get('features') else []),
         *([f'brush: {q(BRUSH_PDP)}'] if brush else []),
         'closing_cta:', '  variant: card', f'  title: {q(o["closing"])}',
         f'  note: {q((o.get("note", "") + " " if o.get("note") else "") + GUARANTEE + " The clock above is the offer’s: at 0:00 this page moves on.")}',
@@ -261,7 +261,7 @@ OFFERS = {
         'features_title': 'Why women keep a second bottle',
         'features_text': 'The one you keep at home stays at home. The one in your bag saves the afternoon.',
         'features': [('For touch-ups on the go', 'One pump in your bag: a thin layer over the nose and chin and it looks fresh again.'),
-                     ('Less than any bottle in our store', 'One is $47 there, bought once, and $39 on the page you came from. Here, {price}, charged once.'),
+                     ('Less than any bottle in our store', 'One is $47 there, bought once, and $39 at full price on the page you came from. Here, {price}, charged once.'),
                      ('30 days to love it', 'Or email us within 30 days of delivery for a full refund, even opened.')],
         'closing': 'Add one more bottle for {price} today?',
         'allergy': ALLERGY, 'note': ALLERGY,

@@ -15,6 +15,12 @@
     'finland', 'france', 'germany', 'greece', 'hungary', 'ireland', 'italy', 'latvia', 'lithuania', 'luxembourg', 'malta',
     'netherlands', 'poland', 'portugal', 'romania', 'slovakia', 'slovenia', 'spain', 'sweden', 'iceland', 'liechtenstein',
     'norway', 'switzerland', 'united kingdom'];
+  // the "Confirming your order…" line under the clock goes once the SDK has drawn the page (the offer sat behind a
+  // blank band for ~2 s, live review 1)
+  const noteOff = () => document.querySelectorAll('[data-sf-await-note]').forEach((e) => { e.hidden = true; });
+  document.addEventListener('next:initialized', noteOff);
+  window.addEventListener('next:initialized', noteOff);
+  setTimeout(noteOff, 8000);
   const gate = document.querySelector('[data-sf-offer-gate]');
   if (!gate) return;
   const ok = gate.querySelector('[data-sf-upsell-ok]');
@@ -27,6 +33,7 @@
     if (done) return;
     const can = (ok.textContent || '').trim().toLowerCase();
     if (!can) return;                                     // the order is not loaded yet
+    noteOff();
     // (the SDK writes the flag as "Yes" / "No")
     if ((can === 'no' || can === 'false') && thankYou) { done = true; hide(); location.replace(thankYou + location.search); return; }
     if (skipSkus.length) {

@@ -53,3 +53,30 @@ window.addEventListener('next:initialized', function () {
   new MutationObserver(name).observe(box, { childList: true, subtree: true });
   name();
 })();
+
+// the pay line before the SDK answers: its fallback amount is the pack the URL asks for (?forceBundleId=apf-3 showed
+// $57.00 for ~4 s; live review 1), read from the bundles' prices on the element
+(function initPayFallback() {
+  const e = document.querySelector('[data-sf-pay-fallback]');
+  if (!e) return;
+  let prices = {};
+  try { prices = JSON.parse(e.getAttribute('data-sf-prices') || '{}'); } catch (_) { return; }
+  const id = (new URLSearchParams(location.search).get('forceBundleId') || '').split(':').pop();
+  if (id && prices[id]) {
+    e.textContent = prices[id];
+    const live = e.previousElementSibling && e.previousElementSibling.querySelector('[data-next-display="cart.total"]');
+    if (live && !live.textContent.startsWith('$0')) live.textContent = prices[id];
+  }
+})();
+
+// the order summary shows its lines once the SDK has the campaign (an empty frame for ~4 s before, live review 1)
+(function initSummaryReady() {
+  const box = document.querySelector('[data-sf-summary-box]');
+  if (!box) return;
+  const ready = () => box.classList.add('sf-co-ready');
+  document.addEventListener('next:initialized', ready);
+  window.addEventListener('next:initialized', ready);
+  const lines = box.querySelector('[data-summary-lines]');
+  if (lines) new MutationObserver(() => { if (lines.textContent.trim()) ready(); }).observe(lines, { childList: true, subtree: true, characterData: true });
+  setTimeout(ready, 8000);
+})();

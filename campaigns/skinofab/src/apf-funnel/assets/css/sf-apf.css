@@ -327,3 +327,9 @@ body.sf-has-sticky .sf-footer { padding-bottom: 110px; }
 .sf-cta--v2 .sf-cta__note { margin-top: 8px !important; text-align: left; }
 @media (min-width: 600px) { .sf-ingcards { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 768px) { .sf-cta--v2 { grid-template-columns: 1fr 1.1fr; align-items: start; } }
+
+/* live review 1: 44 px targets for the bar's button and the footer's links; 4.8 drawn as 4.8 */
+.sf-bar__btn { min-height: 44px; }
+.sf-footer__links a { padding: 12px 6px; }
+.sf-tp__stars i.part, .sf-co-tp i.part { background: linear-gradient(90deg, #00b67a 0 var(--p, 80%), #cfd0d6 var(--p, 80%)); }
+.sf-star--part { background: linear-gradient(90deg, currentColor 0 80%, #d9d3ca 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }

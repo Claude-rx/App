@@ -17,7 +17,7 @@
 {%- endcomment -%}
 {%- if part == 'top' -%}
 <div class="sf-co-top">
-  <p class="sf-co-rating"><span class="sf-co-tp" role="img" aria-label="Rated {{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=5 %}</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
+  <p class="sf-co-rating"><span class="sf-co-tp" role="img" aria-label="Rated {{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
 </div>
 {%- elsif part == 'badges' -%}
 <ul class="sf-co-badges" aria-label="What every order gets">
@@ -45,7 +45,7 @@
     <h2>{{ trust.rating.count }} reviews of this foundation</h2>
     <div class="sf-co-ratings__score">
       <strong>{{ trust.rating.average }}</strong>
-      <span class="sf-co-tp" role="img" aria-label="{{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=5 %}</span>
+      <span class="sf-co-tp" role="img" aria-label="{{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span>
       <span>out of 5</span>
     </div>
     <ul class="sf-co-ratings__rows" aria-label="Reviews of this foundation, by stars">

@@ -5,7 +5,10 @@
   badges grouped at the top-right edge (tier pill + red % OFF at the end).
   Reads the shared card arg contract (see bundle-card.html). SDK attrs preserved.
   SKINOFAB: card_image (bundle-selector.html, a bundle's image) replaces the package photo when set; card_name and
-  card_price (a bundle's name and price) show until the SDK writes the campaign's (the cards were blank for ~6 s);
+  card_price (a bundle's name and price) show until the SDK writes the campaign's (the cards were blank for ~6 s); the
+  struck price, the savings line and the offer badge wait for the SDK (checkout-brand.css hides the badge until the SDK
+  marks it next-discounts-has-items and the savings line while its amount is empty: a dash and an empty red pill showed
+  for ~5 s, live review 1);
   the coupon badge says "EXTRA 10% OFF" (a bare "+10%" read as a surcharge).
 {%- endcomment -%}
 <div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="bundle-card{% if selected %} next-selected{% endif %}">
@@ -23,10 +26,10 @@
     </div>
     <div class="bundle-card__price">
       <div class="bundle-card__price-row">
-        <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg">--</span>
+        <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
         <span data-next-bundle-display="price" class="bundle-card__price-total">{{ card_price | default: '--' }}</span>
       </div>
-      <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount">--</span></div>
+      <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>
     </div>
   </div>
 </div>

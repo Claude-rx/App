@@ -156,7 +156,7 @@ def one_shade():
     d.text((W // 2, 150), 'One shade, no number to guess', font=P.serif(58, 'Bold'), fill=INK, anchor='ms')
     d.text((W // 2, 202), 'It goes on white and blends into your own tone', font=P.sans(32, 'Regular'), fill=SOFT, anchor='ms')
     x0b, x1b, bh, cy = 60, W - 60, 34, 262
-    stops = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in P.SKIN_TONES]
+    stops = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in P.SKIN_TONES[:9]]   # fair to deep, as the words say (not very deep: live review 1)
     xs = np.linspace(0, len(stops) - 1, x1b - x0b)
     lo = np.floor(xs).astype(int).clip(0, len(stops) - 2); f = (xs - lo)[:, None]
     row = (np.array(stops)[lo] * (1 - f) + np.array(stops)[lo + 1] * f).astype(np.uint8)
@@ -395,8 +395,17 @@ def copies(video=True):
     save(Image.open(APF / 'composites' / 'two-bottles.jpg'), 'two-bottles', size=1080)
     # the brush: its page's images, in-hand and problem photos, the before/after it already shows (its own illustration
     # label is on the image) and the stick funnel's loop of it
-    for n in ('hero', 'case', 'how-to-use', 'features', 'vs-tools', 'ba-puffy', 'card', 'how-1', 'how-2', 'how-3', 'compare-ours'):
+    for n in ('hero', 'case', 'how-to-use', 'vs-tools', 'card', 'how-1', 'how-2', 'how-3', 'compare-ours'):
         save(Image.open(BRUSH / f'{n}.jpg'), f'brush-{n}', size=1080)
+    # the features infographic's own headline hedged ("BUILT TO TARGET MORNING PUFFINESS" made the claim the page's words
+    # avoid, live review 1): the top band redrawn with the page's wording; the brush's before/after is no longer used
+    feat = Image.open(BRUSH / 'features.jpg').convert('RGB')
+    fw, fh = feat.size
+    fd = ImageDraw.Draw(feat); fd.rectangle((0, 0, fw, int(fh * 0.25)), fill=PAPER)
+    fd.text((fw // 2, int(fh * 0.085)), 'FOR THE LOOK OF', font=P.sans(int(fh * 0.028), 'Medium'), fill=SOFT, anchor='ms')
+    fd.text((fw // 2, int(fh * 0.155)), 'MORNING PUFFINESS', font=P.sans(int(fh * 0.058), 'Bold'), fill=INK, anchor='ms')
+    fd.text((fw // 2, int(fh * 0.215)), 'with a light touch', font=P.serif(int(fh * 0.042), 'Bold', italic=True), fill=(140, 72, 84), anchor='ms')
+    save(feat, 'brush-features', size=1080)
     save(Image.open(BRUSH / 'source' / 'in-hand.jpg'), 'brush-in-hand', size=1080)
     save(Image.open(BRUSH / 'source' / 'problem.jpg'), 'brush-problem', size=1080)
     for f in ('up2-how.mp4', 'up2-how.webm', 'up2-how-poster.jpg'): shutil.copyfile(BRAND / 'stick-funnel' / 'videos' / f, OUT / f.replace('up2-how', 'brush-how'))
@@ -416,7 +425,8 @@ def copies(video=True):
     # "wow" portrait, two problem photos), the store's Korean formulator portrait, the stick funnel's ingredient
     # textures (the same ingredients, the same photos)
     wow = ImageOps.fit(Image.open(GEN / 'wow-split.png').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35))
-    P.note(ImageDraw.Draw(wow), (540, 1350 - 26), P.AI_NOTE, size=34)
+    d = ImageDraw.Draw(wow); d.rectangle((0, 1350 - 72, 1080, 1350), fill=PAPER)   # the AI line on a white band (grey on skin was unreadable, live review 1)
+    P.note(d, (540, 1350 - 26), P.AI_NOTE, fill=INK, size=34)
     save(wow, 'wow', size=1350)
     for n in ('problem-mirror', 'problem-orange'):
         save(ImageOps.fit(Image.open(GEN / f'{n}.png').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), n, size=1350)
