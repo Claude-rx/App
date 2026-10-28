@@ -1,4 +1,4 @@
-{%- comment -%} SKINOFAB: the summary opens on load (funnel review 2: the total and the exit discount were out of sight). {%- endcomment -%}
+{%- comment -%} SKINOFAB: no percentage badge on the saving (the exit coupon is 10% rounded down to the dollar, which the badge rounded up to 11%: the amount says it); the summary opens on load (funnel review 2: the total and the exit discount were out of sight). {%- endcomment -%}
 {% comment %}
   next_component: order-summary
   next_version: 1.0.0
@@ -156,11 +156,6 @@
                 <div class="order-totals__line">
                   <div class="order-totals__label-group">
                     <div class="order-totals__label">Today You Saved</div>
-                    <div class="badge badge--small">
-                      <div class="label__wrapper cc-sm">
-                        <div class="badge__text">{totalDiscountPercentage} OFF</div>
-                      </div>
-                    </div>
                   </div>
                   <div class="order-totals__value-group">
                     <div class="order-totals__label">Discount:</div>

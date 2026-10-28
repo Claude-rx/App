@@ -1,3 +1,4 @@
+{%- comment -%} SKINOFAB: the step title is an h2, as the other steps' (it was the page's only h1). {%- endcomment -%}
 {% comment %}
   next_component: shipping-address-form
   next_version: 2.0.0
@@ -36,6 +37,6 @@
 {% comment %} Liquid treats any non-empty string as truthy, so a quoted `gated: "false"` must not switch gating on {% endcomment -%}
 {% if gate_raw == true or gate_raw == 'true' %}{% assign gate_on = true %}{% else %}{% assign gate_on = false %}{% endif -%}
 <div data-next-catalog-component="shipping-address-form" class="form-section{% if is_first %} form-section--first{% endif %}">
-  <h1 class="form-section__title">{{ sec_title }}</h1>
+  <h2 class="form-section__title">{{ sec_title }}</h2>
   <div data-next-address="shipping" class="{% if gate_on %}cc-gated{% else %}cc-ungated{% endif %}{% if saf_label_style == 'floating' %} cc-floating{% elsif saf_label_style == 'static' %} cc-static{% endif %}"></div>
 </div>

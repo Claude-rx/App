@@ -101,13 +101,20 @@ product gallery (`stick-checkout.html`, `_includes/sf-checkout-trust.html`).
   tracked shipping (ships in 1 business day), skip or cancel by email (a person replies within one business day), and
   the encrypted card fields. On a phone, where the banner and header already say them, the promises show as a 2 x 2
   of icon and title.
-- **Before the payment step, on a phone and tablet:** three reviews and a link to all of them (there the proof column
-  comes after the order button).
+- **Before the payment step, on a phone and tablet:** three reviews and a link to the other seven (there the proof
+  column comes after the order button; the wall then shows the seven, not the three again).
 - **Right above the order button:** the guarantee in one line, with its seal.
 - **The proof column:** the ratings by stars (7,719 / 2,132 / 0 / 1 / 3), the review wall, the guarantee card and
   "Before you order" (shade, refills, shipping, whose reviews these are, payment security), then on a phone a "Back to
-  my order" button. It is after the form in the page, so keyboard and screen readers reach the form first, and shown
-  on the left on a computer by CSS.
+  my order" button that lands on the payment step she left. It is after the form in the page, so keyboard and screen
+  readers reach the form first, and shown on the left on a computer by CSS; between 992 and 1199 px (one review a
+  row) the guarantee card and the questions come before the wall, so they sit beside the payment step.
+- **By the button:** one box with the live pay line ("Automatic Refills. $47.00 today, then $47.00 every 56 days…")
+  and how to skip or cancel, then the guarantee line, the agreement and the button. The summary's saving shows the
+  amount, not a percentage (10% rounded down to the dollar read as "11% OFF").
+- **Keyboard and screen readers:** the pack cards take focus, Enter or Space picks one and `aria-pressed` says which
+  (`js/sf-checkout.js`); the express buttons are named; the billing form the SDK folds away is out of the tab order
+  (`.billing-form-collapsed { visibility: hidden }`); the step titles are h2s under one hidden h1.
 - **The ten reviews** are the liquid's published ones, word for word and without titles (the buyers wrote none):
   women past 45 about the colour match, one of them 4 stars (as 2,132 of the ratings are). Each photo is cropped on her
   face by `funnel_images.py` (`TESTIMONIAL_PHOTOS`; a three-value entry pads a narrow photo with a blur of itself so
@@ -116,7 +123,8 @@ product gallery (`stick-checkout.html`, `_includes/sf-checkout-trust.html`).
   (`js/sf-failsafe.js`) shows after 10 s without the SDK and goes away the moment it arrives.
 - `check_funnel.py` fails the build without the guarantee line above the button, without reviews before the payment
   step, with fewer than 8 review cards or one without a photo, with a title on a review, or with a rating other than
-  the liquid's.
+  the liquid's. The claims rules are also checked in `aria-label`, `alt` and `title` attributes (a list's label said
+  "every review").
 
 ### The special offer pages
 

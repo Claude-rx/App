@@ -191,11 +191,15 @@ for p in F.PAGES:
 
 # claims ------------------------------------------------------------------------------------------------------------
 for p in F.PAGES:
-    t = text(html(p['id']))
-    for rx, what in FORBIDDEN:
+    h = html(p['id'])
+    # the page's words, and what a screen reader is told (aria-label, alt and title attributes; checkout review 2:
+    # "every review" sat in a list's label)
+    for t in (text(h), ' '.join(re.findall(r'(?:aria-label|alt|title)="([^"]*)"', h))):
+      for rx, what in FORBIDDEN:
         for m in re.finditer(rx, t, re.I):
             if what.startswith('unhedged') and re.search(r'(?:made|designed)\s+not\s+to\s+$', t[max(0, m.start() - 20):m.start()], re.I): continue
             fail(p['id'], f'{what}: "{t[max(0, m.start() - 40):m.end() + 20]}"')
+    t = text(h)
     for m in re.finditer(r'\bSPF\b', t):
         ctx = t[max(0, m.start() - 24):m.end() + 2]
         if not SPF_OK.search(ctx): fail(p['id'], f'SPF named outside a "no SPF" line: "{ctx}"')

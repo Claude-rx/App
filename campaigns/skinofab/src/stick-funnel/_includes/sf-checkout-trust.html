@@ -2,7 +2,8 @@
   SKINOFAB: the checkout's trust, in place of a product description (the shopper has chosen the stick already):
     part='top'       the rating, said to be the liquid's in the same line, and four plain promises, above Step 1
     part='featured'  three reviews above the payment step, on a phone and tablet (there the proof column comes after
-                     the order button; on a computer it is beside the form)
+                     the order button; on a computer it is beside the form); the wall then shows the other seven
+                     (checkout-brand.css hides its first three below 992 px)
     part='inline'    the guarantee in one line, right above the order button
     part='proof'     the ratings by stars, the review wall (buyers' own photos), the guarantee card and the questions a
                      buyer asks before paying; after the form in the page (keyboard and screen-reader order), shown on
@@ -14,7 +15,7 @@
 {%- endcomment -%}
 {%- if part == 'top' -%}
 <div class="sf-co-top">
-  <p class="sf-co-rating"><span class="sf-co-stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <a class="hide-tablet-down" href="#sf-co-reviews">{{ trust.rating.count }} reviews</a><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
+  <p class="sf-co-rating"><span class="sf-co-stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
   <ul class="sf-co-points">
     {%- for p in trust.points %}
     <li>{% campaign_include 'sf-checkout-icon.html' icon=p.icon %}<div><strong>{{ p.title }}</strong><span>{{ p.text }}</span></div></li>
@@ -27,10 +28,11 @@
   {%- for r in reviews limit: 3 %}
   {% campaign_include 'sf-checkout-review.html' r=r %}
   {%- endfor %}
-  <a class="sf-co-featured__more" href="#sf-co-reviews">See all {{ reviews.size }} reviews and the ratings</a>
+  {%- assign more = reviews.size | minus: 3 %}
+  <a class="sf-co-featured__more" href="#sf-co-reviews">See the other {{ more }} reviews and the ratings</a>
 </div>
 {%- elsif part == 'inline' -%}
-<div class="sf-co-guarantee-line" id="sf-co-pay" data-sf-guarantee-inline>
+<div class="sf-co-guarantee-line" data-sf-guarantee-inline>
   <img src="{{ guarantee.badge | campaign_asset }}" alt="" width="64" height="64" loading="lazy" decoding="async">
   <p><strong>{{ guarantee.title }}.</strong> {{ guarantee.line }}</p>
 </div>
@@ -43,7 +45,7 @@
       <span class="sf-co-stars" role="img" aria-label="{{ trust.rating.average }} out of 5">★★★★★</span>
       <span>out of 5</span>
     </div>
-    <ul class="sf-co-ratings__rows" aria-label="Every review of our liquid foundation, by stars">
+    <ul class="sf-co-ratings__rows" aria-label="Reviews of our liquid foundation, by stars">
       {%- for row in trust.rating.rows %}{% assign pct = row[1] | times: 100.0 | divided_by: trust.rating.total %}
       <li><span>{{ row[0] }} ★</span><i>{% if row[1] > 0 %}<b style="width:{{ pct | round: 2 }}%"></b>{% endif %}</i><span>{{ row[2] | default: row[1] }}</span></li>
       {%- endfor %}
@@ -74,7 +76,7 @@
     {%- endfor %}
     <p class="sf-co-faq__contact">Still unsure? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>: a person replies within one business day.</p>
   </div>
-  {%- comment -%} on a phone the proof ends the page, after the button: take her back to it {%- endcomment -%}
+  {%- comment -%} on a phone the proof ends the page, after the button: back to the payment step she left {%- endcomment -%}
   <a class="sf-co-back hide-tablet-up" href="#sf-co-pay">Back to my order</a>
 </section>
 {%- endif -%}

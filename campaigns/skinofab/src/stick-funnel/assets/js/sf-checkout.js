@@ -23,3 +23,31 @@ window.addEventListener('next:initialized', function () {
   cards.forEach((c) => watch.observe(c, { attributes: true, attributeFilter: ['class'] }));
   sync();
 })();
+
+// The pack cards from the keyboard: the SDK's cards are div[role=button] it binds a click to, so Tab reaches them,
+// Enter or Space picks one, and aria-pressed says which is chosen (checkout review 2).
+(function initCardKeys() {
+  const cards = document.querySelectorAll('[data-next-bundle-card]');
+  if (!cards.length) return;
+  const mark = () => cards.forEach((c) => c.setAttribute('aria-pressed', c.classList.contains('next-selected') ? 'true' : 'false'));
+  cards.forEach((c) => {
+    if (!c.hasAttribute('tabindex')) c.setAttribute('tabindex', '0');
+    c.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); } });
+    new MutationObserver(mark).observe(c, { attributes: true, attributeFilter: ['class'] });
+  });
+  mark();
+})();
+
+// The express buttons the SDK builds carry no name a screen reader can say (Apple Pay's is an unlabelled icon).
+(function initExpressNames() {
+  const box = document.querySelector('[data-next-express-checkout="container"]');
+  if (!box) return;
+  const names = { 'cc-paypal': 'PayPal', 'cc-apple-pay': 'Apple Pay', 'cc-google-pay': 'Google Pay', 'cc-link': 'Link', 'cc-shop-pay': 'Shop Pay' };
+  const name = () => box.querySelectorAll('button, [role="button"]').forEach((b) => {
+    if (b.getAttribute('aria-label')) return;
+    const key = Object.keys(names).find((k) => b.classList.contains(k));
+    if (key) b.setAttribute('aria-label', 'Pay with ' + names[key]);
+  });
+  new MutationObserver(name).observe(box, { childList: true, subtree: true });
+  name();
+})();

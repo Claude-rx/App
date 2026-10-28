@@ -22,7 +22,10 @@
   --brand--color--pill-secondary: #151515;
 }
 .sf-refill-terms { margin: 4px 0 14px; padding: 12px 14px; border: 1px solid var(--brand--color--border); border-radius: 10px;
-  background: var(--brand--color--primary-lighter); font-size: 13px; line-height: 1.5; color: #3b3b3b; }
+  background: var(--brand--color--primary-lighter); font-size: 14px; line-height: 1.5; color: #3b3b3b; }
+.sf-refill-terms p { margin: 0 0 8px; }
+.sf-refill-terms p:last-child { margin: 0; }
+.sf-pay-terms--plain { padding: 0; background: none; font-size: inherit; color: inherit; }
 .sf-refill-terms a, .submit-section__disclaimer a { color: inherit; text-decoration: underline; }
 .checkout-header__logo { width: 140px; height: auto; }
 .brand-logo { width: 130px; height: auto; }
@@ -35,7 +38,7 @@
 .bundle-card:has(.bundle-card__savings[style*="display: none"]) .bundle-card__price-reg { display: none; }
 /* what she pays today and what renews, by the express buttons and the order button */
 .sf-pay-terms { margin: 0 0 12px; padding: 10px 12px; border-radius: 8px; background: #f1ede7; font-size: 14px; line-height: 1.45; color: #151515; }
-.submit-section__disclaimer { font-size: 13px !important; line-height: 1.5; }
+.submit-section__disclaimer { font-size: 14px !important; line-height: 1.5; }
 /* the special offers: the shipping row's icon at its size (the SVG fills its box), the % under its label on phones,
    and the closing card's price larger than its label */
 .upsell-ships-info__icon { width: 36px; height: 36px; flex: none; }
@@ -104,9 +107,18 @@ s.sf-reserved__amount { font-weight: 600; color: #6b6b6b; text-decoration-thickn
 @media (min-width: 992px) {
   .sf-co .sf-co-left { order: -1; width: 46%; }
 }
+/* a narrow proof column: one review a row, the guarantee card stacked, and the guarantee and the questions before the
+   wall of reviews, so they sit beside the payment step rather than past the end of the form */
 @media (min-width: 992px) and (max-width: 1199px) {
   .sf-co .sf-co-left { width: 40%; }
   .sf-co .sf-co-reviews { grid-template-columns: 1fr; }
+  .sf-co-guarantee { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .sf-co-guarantee ul { grid-template-columns: 1fr; text-align: left; justify-self: stretch; }
+  .sf-co-proof .sf-co-ratings { order: 0; }
+  .sf-co-proof .sf-co-guarantee { order: 1; }
+  .sf-co-proof .sf-co-faq { order: 2; }
+  .sf-co-proof .sf-co-reviews__title { order: 3; }
+  .sf-co-proof .sf-co-reviews { order: 4; }
 }
 .sf-co-left { gap: 20px; }
 .sf-co-proof { display: grid; gap: 16px; align-content: start; }
@@ -180,9 +192,24 @@ s.sf-reserved__amount { font-weight: 600; color: #6b6b6b; text-decoration-thickn
 .sf-co-faq__contact { margin: 14px 0 0; font-size: 15px; line-height: 1.5; }
 .sf-co-faq__contact a { color: inherit; text-decoration: underline; }
 .sf-co-back { display: block; padding: 16px; border-radius: 10px; background: #151515; color: #fff !important; text-align: center; text-decoration: none; font-size: 16px; font-weight: 600; }
-/* readable for her: the header's promises and the button's line were 10-12 px capitals */
-.checkout-header__badge { font-size: 12px; }
+/* readable for her: the header's promises were 10 px capitals (next-core's apollo rule outranks a bare class), the
+   button's line 12 px, the order totals and the billing checkbox 12 px */
+.checkout-header--apollo .checkout-header__badge { font-size: 12px; }
 .submit-button__subtext { font-size: 13px; }
+.cart-box .order-totals__label, .cart-box .order-totals__value { font-size: 14px; }
+.checkout__checkbox .checkbox__label { font-size: 14px; }
+/* the billing form the SDK folds away ("use shipping address") is out of the tab order too */
+.billing-form-collapsed { visibility: hidden; }
+/* where the page's own links land: a little air above */
+#sf-co-featured, #sf-co-pay, #sf-co-reviews { scroll-margin-top: 16px; }
+/* on a phone and tablet the three reviews before the payment step are not repeated at the top of the wall */
+@media (max-width: 991px) {
+  .sf-co-reviews .sf-co-review:nth-child(-n+3) { display: none; }
+}
+/* a tablet: the columns no wider than a comfortable line of text */
+@media (min-width: 600px) and (max-width: 991px) {
+  .sf-co .checkout-layout__right, .sf-co .sf-co-left { width: 100%; max-width: 620px; margin-left: auto; margin-right: auto; }
+}
 /* the brand's typeface on phones and tablets too: next-core.css sets the system font on body below 992 px */
 body {
   --_text---font-family--primary: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
