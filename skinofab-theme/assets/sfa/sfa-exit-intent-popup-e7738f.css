@@ -104,9 +104,9 @@
 
 /* ─── Responsive ─────────────────────────────────────────────────────────── */
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {   /* two columns clipped the terms at 768 (live review 4) */
   .exit-intent-popup__dialog {
-    width: 100%;
+    width: MIN(800px, calc(100vw - 32px));
   }
 
   .exit-intent-popup__image {

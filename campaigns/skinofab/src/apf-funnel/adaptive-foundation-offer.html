@@ -281,7 +281,7 @@ reviews_section:
   title: "Women over 45, in their own words"
   lede: "The published reviews of this foundation from our earlier store, word for word, with the buyers’ own photos. Two of the nine are four stars, as 2,132 of the reviews are."
   note: "Ratings and reviews of the Adaptive Peptide Foundation, imported from our earlier store in October 2026. None is edited; names are shown as first name and initial."
-  wall: ["lora", "hope", "tina", "gillian", "darla", "diane", "mary", "vicki", "judith", "susan", "katie", "michelle", "rachel", "melissa", "barbara", "sharyl"]
+  wall: ["lora", "hope", "tina", "gillian", "darla", "diane", "mary", "vicki", "judith", "susan", "dotty", "patricia", "rachel", "melissa", "barbara", "sharyl"]
   more:
     - { text: "At 56, I also am happy it doesn’t cake or settle in fine lines.", by: "Maria R." }
     - { text: "Easy application and covers well. Looks good on my 81 year old face!", by: "Vicki M." }
@@ -507,11 +507,7 @@ closing:
         <img src="{{ korea.image | campaign_asset }}" alt="{{ korea.image_alt }}" width="1080" height="1350" loading="lazy" decoding="async">
       </figure>
       <div class="sf-korea__copy">
-        <div class="sf-laurel" role="img" aria-label="{{ korea.badge[0] }} {{ korea.badge[1] }}">
-          <svg viewBox="0 0 60 80" aria-hidden="true"><path d="M30 4c-8 10-10 24-4 36M30 4c8 10 10 24 4 36M22 20c-8 2-12 10-10 18M38 20c8 2 12 10 10 18M18 40c-6 4-8 12-4 20M42 40c6 4 8 12 4 20M24 58c-4 6-2 12 2 18M36 58c4 6 2 12-2 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-          <b>{{ korea.badge[0] }}<br>{{ korea.badge[1] }}</b>
-          <svg viewBox="0 0 60 80" aria-hidden="true" style="transform:scaleX(-1)"><path d="M30 4c-8 10-10 24-4 36M30 4c8 10 10 24 4 36M22 20c-8 2-12 10-10 18M38 20c8 2 12 10 10 18M18 40c-6 4-8 12-4 20M42 40c6 4 8 12 4 20M24 58c-4 6-2 12 2 18M36 58c4 6 2 12-2 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-        </div>
+        <p class="sf-korea__pill">{{ korea.badge[0] }} {{ korea.badge[1] }}</p>
         <p class="sf-eyebrow">{{ korea.eyebrow }}</p>
         <h2 class="sf-h2 sf-h2--big">{{ korea.title }}</h2>
         <ul class="sf-ticks sf-ticks--big">{% for b in korea.bullets %}<li>{{ b }}</li>{% endfor %}</ul>

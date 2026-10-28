@@ -90,11 +90,16 @@
   // of view both times, so nothing intersects and the bar stayed on, funnel review 2).
   var sticky = document.querySelector('[data-sf-sticky]');
   var buyBtn = document.querySelector('[data-sf-sticky-anchor]');
+  var offerSec = document.getElementById('offer');
   if (sticky && buyBtn) {
     var ticking = false;
     var place = function () {
       ticking = false;
       var on = buyBtn.getBoundingClientRect().bottom < 0;
+      if (on && offerSec) {                                        // not over the pack chooser and its own button (live review 4)
+        var o = offerSec.getBoundingClientRect();
+        if (o.top < window.innerHeight && o.bottom > 0) on = false;
+      }
       sticky.classList.toggle('is-on', on);
       document.body.classList.toggle('sf-has-sticky', on);     // room for the footer's last line under the bar
     };

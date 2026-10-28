@@ -431,7 +431,10 @@ def copies(video=True):
     # the brush: its page's images, in-hand and problem photos, the before/after it already shows (its own illustration
     # label is on the image) and the stick funnel's loop of it
     for n in ('hero', 'how-to-use', 'vs-tools', 'card', 'how-1', 'how-2', 'how-3', 'compare-ours'):
-        save(Image.open(BRUSH / f'{n}.jpg'), f'brush-{n}', size=1080)
+        im = Image.open(BRUSH / f'{n}.jpg').convert('RGB')
+        if n == 'how-to-use':   # its first printed line ("Repeat on the other side.") sat above the title (live review 4): cut off, the square padded
+            w, h = im.size; im = ImageOps.pad(im.crop((0, int(h * 0.091), w, h)), (w, w), Image.LANCZOS, color=PAPER)
+        save(im, f'brush-{n}', size=1080)
     # the case photo without its baked headline (illegible at card size, live review 2), and the brush's head alone
     # cut from the clean product shot
     case = Image.open(BRUSH / 'case.jpg').convert('RGB'); cw, ch = case.size

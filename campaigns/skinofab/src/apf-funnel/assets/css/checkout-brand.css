@@ -174,7 +174,7 @@
 /* 44 px targets: the footer's legal links and every email link (20-24 px tall, live review 1) */
 .footer_legal-link, .footer_link-wrapper a { display: inline-block; padding: 11px 6px; }
 .footer_copy-info { align-items: center; }   /* the copyright beside the taller links, not above them (live review 3) */
-a[href^="mailto:"], .submit-section__disclaimer a, .checkout-footer-links a.link { display: inline-block; padding: 10px 0; margin: -10px 0; }   /* 44 px targets without a taller line box */
+a[href^="mailto:"]:not(.sf-btn):not(.btn), .submit-section__disclaimer a, a.link { display: inline-block; padding: 10px 0; margin: -10px 0; }   /* a.link: the receipt's policy and Contact Us links too */   /* 44 px targets without a taller line box */
 /* a tablet: the columns no wider than a comfortable line of text */
 @media (min-width: 600px) and (max-width: 991px) {
   .sf-co .checkout-layout__right, .sf-co .sf-co-left { width: 100%; max-width: 620px; margin-left: auto; margin-right: auto; }
@@ -207,3 +207,7 @@ body {
   .checkout-header--apollo .checkout-header__inner { justify-content: center; padding: 10px 0; }
   .promo-banner--apollo .promo-banner__text { font-size: 12.5px; line-height: 1.35; }
 }
+
+/* before the SDK answers, the billing block is empty: its heading stays hidden with it (an empty "Billing Address" showed under the
+   ticked box for the first seconds, live review 4) */
+.billing-address__form:has([data-next-address="billing"]:empty) { display: none; }

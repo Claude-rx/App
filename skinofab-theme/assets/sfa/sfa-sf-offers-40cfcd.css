@@ -151,3 +151,6 @@
 @media (min-width: 900px) {
   .grid-2col-standard:has(> .checkout-features__item:nth-child(3):last-child) { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* the numbered feature cards: text left, beside the number (centred text sat off-axis at 390, live review 4) */
+.checkout-features__item--card .heading-box { text-align: left; }

@@ -1,11 +1,29 @@
 // The funnel checkout's own behaviour, on top of checkout.js (the SDK owns the form, the bundle cards and the totals):
 // the pay line's renewal (below) and the exit pop (the _includes/exit-intent-popup.html template) that applies the page's exit code (APF10 here, the
 // campaign's 10%-off exit offer on the foundation packs; STICK10 on the stick funnel), at most once per visit: on a
-// computer when the pointer leaves through the top, on a phone on a scroll back up toward the address bar (the SDK's
-// own mobile trigger; without it phone buyers, most of the traffic, never saw the offer).
+// computer when the pointer leaves through the top, on a phone on a fast scroll back up toward the address bar once she
+// has been past the pay step (the SDK's own mobile trigger is armed at that gesture; alone it fires at half the page).
 window.addEventListener('next:initialized', function () {
   if (!window.next || typeof window.next.exitIntent !== 'function') return;
-  window.next.exitIntent({ template: 'exit-intent', showCloseButton: true, maxTriggers: 1, disableOnMobile: false, mobileScrollTrigger: true });
+  var base = { template: 'exit-intent', showCloseButton: true, maxTriggers: 1 };
+  var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  if (!coarse) { window.next.exitIntent(base); return; }
+  // a phone: the SDK's own scroll trigger fires once the page is half scrolled, which is the order button, while she is
+  // still filling in the form (live review 4). Here it is armed only by a fast scroll back up (toward the address bar or
+  // the back button) once she has been past the pay step, and fires straight away on that gesture.
+  var last = window.scrollY, lastT = 0, up = 0, armed = false;
+  var onScroll = function () {
+    var y = window.scrollY, t = Date.now(), d = last - y;                 // d > 0: scrolling up
+    up = d > 0 ? (t - lastT <= 300 ? up + d : d) : 0;                   // one flick's upward distance (events ≤ 300 ms apart)
+    last = y; lastT = t;
+    var depth = y / Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    if (!armed && up >= 220 && depth >= 0.45) {
+      armed = true; window.removeEventListener('scroll', onScroll);
+      Promise.resolve(window.next.exitIntent(Object.assign({ disableOnMobile: false, mobileScrollTrigger: true }, base)))
+        .then(function () { window.dispatchEvent(new Event('scroll')); });   // the SDK fires on it when the page is still half scrolled
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
 });
 
 // The pay line by the express buttons and the order button: today's total is the SDK's; what the pack is (or, on the stick

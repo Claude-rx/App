@@ -398,6 +398,36 @@ hidden eager media), polish completed with the evidence file, deploy recorded on
 `MVSMVUMJU56ELT8AS8F5BRT6IH` ready_with_exceptions (the same two exceptions as before: the checkout's upsell-action coverage is a
 manual review, offer 1's bundle price claim reads the live package).
 
+**Independent live review 4 (28 Oct 2026, night, the nine pages with the preview cookie, 493 captures):** verdict "fix
+first (three quick layout fixes), then ship", no blockers, 3 major, 19 minor; the prices, the checkout's first
+seconds, the exit pop's coupon, the `?pack=apf-3` landing, the countdown wording, the receipt's gifts, autoplay,
+headings and the claims rules all verified again. Fixed the same night: the exit pop's two columns clipped its terms
+at 768 (it stacks below 992 px now); the hero's fifth star wrapped to a second line at 390 (the star row never
+wraps); the "EMAIL HELLO@SKINOFAB.COM" button had lost its pill padding to the 44 px email-link rule of review 3
+(the rule skips buttons). Minors: the brush how-to image's "Repeat on the other side." line sat above its title
+(cut off in `copies()`); the sticky bar steps aside while the pack chooser is on screen and the footer's room under
+it is static (one scroll to the end fell 110 px short while the room was added); on a phone the exit offer is no
+longer the SDK's 50%-depth trigger in the middle of the form: it is armed by a fast scroll back up (a flick of 220 px
+or more) once she has been past the pay step, and fires on that gesture (`sf-checkout.js`); the coupon row says
+"10% off your foundation today" once; the empty "Billing Address" heading waits for the SDK; the listicle's wide
+loops and the serum render are 680 px at most and the guarantee seal 360 px; the solution loop is centred beside
+its cards and the old-routine card fills its row with its time line at the foot; the listicle's offer box centres
+its pack image on the value table; "Formulated in Korea" is a pill in the page's type instead of the laurel
+sprigs; the two review-wall photos that read younger are Dotty and Patricia now; the listicle's promise says the
+reviews sit beside their own photos (no count against the wall); "Two months’ supply" instead of "Most popular" on
+offer 1's page-only pack, and its closing card says the 2-pack is what it adds unless changed; no payment-logo
+strip on the one-tap offers; the brush loop is level with its text; "Contact Us" on the receipt is 44 px; the H1's
+highlighted phrase never breaks; the offer pages' feature cards read left beside their number. Left, documented:
+the AI bottles carry a "PDRN" line the packaging renders do not (no credit to regenerate either), and the receipt's
+gift line for 1- and 3-bottle orders and the brush offer's skip for buyers who already get the brush remain
+exercised only by the gate's code and the earlier proof orders. Lifecycle on the fix build: build recorded, polish READY
+and completed, deploy recorded on the served route root, browser QA `MVSOULLREEJ3RA25BUU105L0A2` and, after the stacked
+pop was widened to `min(800px, 100vw - 32px)`, `MVSP1U2XN433DFPFFH0G4EJ959`, both ready_with_exceptions (the two known
+exceptions; the first run also warned once about the SDK aborting a superseded `carts/calculate`, the timing artefact
+noted after review 2). Verified live with the preview cookie at 390/768/1024/1440: the pop 736 px at 768 and 358 px at
+390 with nothing clipped, the star row on one line, the email pill padded, the footer's last line 83 px clear of the
+bar after one scroll, the coupon row named once, zero console errors.
+
 **No disclaimer or illustration line (28 Oct 2026, night, the owner's instruction: "remove all disclaimer and
 illustration text from the images and the text"):** every such line is gone from the nine pages and the images, in
 the tools and the source: the before/after pairs and the hero's split portrait carry no "AI illustration, not a

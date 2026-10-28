@@ -156,8 +156,8 @@ def single_page(pid, spec, o):
     fm = head(pid, o['title'], o['announcement']) + [
         *([f'skip_skus: {q(o["skip_skus"])}'] if o.get('skip_skus') else []),
         *hero(o['eyebrow'], o['hero_title'], o['hero_text'], o['seconds']),
-        'upsell_layout:', '  style: card', '  boxed: true', f'  media: {"video" if brush else "carousel"}', '  media_position: right', '  media_align: center',
-        '  show_bullets: true', '  show_ships_info: true', '  show_payment_logos: true', '  decline_position: below',
+        'upsell_layout:', '  style: card', '  boxed: true', f'  media: {"video" if brush else "carousel"}', '  media_position: right', f'  media_align: {"top" if brush else "center"}',   # the brush loop level with its text (a blank band sat above it at 1440, live review 4)
+        '  show_bullets: true', '  show_ships_info: true', '  show_payment_logos: false', '  decline_position: below',   # no logo strip: the charge goes to the payment she just used
         *(['media_video:', *[f'  {k}: {q(v) if isinstance(v, str) else str(v).lower()}' for k, v in BRUSH_VIDEO.items()]] if brush else []),
         'upsell_offer:', '  type: single', '  pricing_mode: discounted', f'  package_id: {tier["ref"]}',
         f'  voucher: {q(tier["voucher"])}', f'  selector_id: {q(pid)}', '  show_rating: false',
@@ -202,7 +202,7 @@ def supply_page(spec):
     two, six = F.PACKAGE['apf-2'], F.PACKAGE['apf-6-brush']
     cards = [
         {'id': 'supply-b1g1', 'items_json': json.dumps([{'packageId': two, 'quantity': 1}]), 'image': 'images/sf/pack-2.jpg',
-         'alt': 'Two bottles of Adaptive Peptide Foundation', 'badge': 'Most popular', 'save': '50%',
+         'alt': 'Two bottles of Adaptive Peptide Foundation', 'badge': 'Two months’ supply', 'save': '50%',
          'name': '2 more bottles', 'deal': 'Add 1, get 1 FREE', 'gift': '',
          'per_day': '$0.65 a day', 'per_bottle': '$19.50 a bottle · 2 bottles', 'price': '$39.00', 'compare': '$78', 'selected': True, 'button': 'BUY NOW · $39'},
         {'id': 'supply-b3g3', 'items_json': json.dumps([{'packageId': six, 'quantity': 1}]), 'image': 'images/sf/pack-6.jpg',
@@ -232,7 +232,7 @@ def supply_page(spec):
         'upsell_body:', '  - type: features', '    title: "Why women stock up"', '    text: "Because the shade that finally works is the one you don’t want to run out of."', '    items:',
         *[f'      - {{ title: {q(t)}, text: {q(x)} }}' for t, x in features],
         'closing_cta:', '  variant: card', '  title: "Add the pack you chose above?"',
-        f'  note: {q("The card you picked above is what this adds. " + GUARANTEE + " The clock above is the offer’s: at 0:00 this page moves on.")}', '  image: "images/sf/pack-2.jpg"',
+        f'  note: {q("The pack selected above is what this adds: the 2-pack unless you change it. " + GUARANTEE + " The clock above is the offer’s: at 0:00 this page moves on.")}', '  image: "images/sf/pack-2.jpg"',
     ]
     body = GATE + """<div class="page-wrapper">
   <div class="main-wrapper">

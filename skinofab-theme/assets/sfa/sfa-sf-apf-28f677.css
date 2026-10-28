@@ -13,7 +13,7 @@
 .sf-hero2__sub { font-size: 17px; line-height: 1.5; color: var(--text); margin-bottom: 14px !important; }
 .sf-trustline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 0 0 16px; padding: 0; list-style: none; font-size: 13.5px; color: var(--ink); }
 .sf-trustline li { display: flex; align-items: center; gap: 6px; }
-.sf-trustline .sf-stars__row { font-size: 15px; letter-spacing: 1px; }
+.sf-trustline .sf-stars__row { font-size: 15px; letter-spacing: 1px; white-space: nowrap; flex: none; }   /* the fifth star wrapped to a second line at 390 (live review 4) */
 .sf-hero2 .sf-btn { width: 100%; max-width: 440px; }
 .sf-hero2__note { margin-top: 10px !important; font-size: 13px; color: var(--soft); }
 
@@ -221,6 +221,7 @@
 .sf-science__r::before { content: '✓ '; color: var(--ok); }
 .sf-science figcaption small { grid-column: 1 / -1; font-size: 12px; font-weight: 400; color: var(--soft); line-height: 1.4; }
 .sf-two--top { align-items: start; }
+@media (min-width: 1024px) { .sf-two--top { align-items: center; } }   /* the loop beside the four cards, not above an empty band (live review 4) */
 /* how easy it is */
 .sf-ease { display: grid; gap: 14px; }
 .sf-ease__col { padding: 20px; border-radius: var(--radius); border: 1px solid var(--line); background: #fff; }
@@ -256,9 +257,8 @@
 .sf-korea__fig { margin: 0; max-width: 460px; justify-self: center; width: 100%; }
 .sf-korea__fig img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 16px; }
 .sf-korea__fig figcaption { margin-top: 8px; font-size: 12px; color: var(--soft); line-height: 1.4; }
-.sf-laurel { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; color: var(--ink); }
-.sf-laurel svg { width: 34px; height: 46px; }
-.sf-laurel b { font: 700 15px/1.15 var(--serif); text-align: center; letter-spacing: .02em; }
+.sf-korea__pill { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px !important; padding: 7px 14px; border: 1.5px solid var(--ink); border-radius: 999px; font: 600 12.5px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.sf-korea__pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); }
 .sf-ticks--big li { font-size: 17px; margin-bottom: 10px; }
 .sf-ticks--big a { text-decoration: underline; }
 .sf-shade__img { width: 100%; max-width: 520px; justify-self: center; }
@@ -283,7 +283,7 @@
 /* tap targets, the sticky bar's room, the footer's last line (reviewer) */
 .sf-bar__btn { min-height: 40px; display: inline-flex; align-items: center; }
 .sf-footer__links a { display: inline-block; padding: 10px 4px; }
-body.sf-has-sticky .sf-footer { padding-bottom: 110px; }
+body:has([data-sf-sticky]) .sf-footer { padding-bottom: 110px; }   /* static room under the bar: added only when the bar turned on, one scroll to the end fell 110 px short (live review 4) */
 @media (min-width: 600px) {
   .sf-problem__grid { grid-template-columns: 1fr 1fr; }
   .sf-problem__copy { grid-column: 1 / -1; }
@@ -326,7 +326,7 @@ body.sf-has-sticky .sf-footer { padding-bottom: 110px; }
 .sf-cta__alt { margin: 12px 0 0 !important; font-size: 14px; color: var(--ink); }
 .sf-cta--v2 .sf-cta__note { margin-top: 8px !important; text-align: left; }
 @media (min-width: 600px) { .sf-ingcards { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 768px) { .sf-cta--v2 { grid-template-columns: 1fr 1.1fr; align-items: start; } }
+@media (min-width: 768px) { .sf-cta--v2 { grid-template-columns: 1fr 1.1fr; align-items: center; } }   /* the pack image level with the value table (live review 4) */
 
 /* live review 1: 44 px targets for the bar's button and the footer's links; 4.8 drawn as 4.8 */
 .sf-bar__btn { min-height: 44px; }
@@ -338,13 +338,15 @@ body.sf-has-sticky .sf-footer { padding-bottom: 110px; }
 .sf-star--part__base { color: #d9d3ca; }
 .sf-star--part__fill { position: absolute; left: 0; top: 0; width: 80%; overflow: hidden; white-space: nowrap; color: inherit; }
 #offer, .sf-sec[id] { scroll-margin-top: 84px; }
-.sf-ease { align-items: start; }
+.sf-ease { align-items: stretch; }
+.sf-ease__col { display: flex; flex-direction: column; }
+.sf-ease__col--old > p { margin-top: auto !important; padding-top: 10px; }   /* the old-routine card fills its row, its time line at the foot (an empty band sat under it, live review 4) */
 .sf-rating a, .sf-rating__count a { display: inline-block; padding: 12px 0; }
 .sf-korea__fig figcaption { font-size: 14.5px; color: var(--ink); }
 .sf-skin__heads span { font-size: 22px; }
 @media (min-width: 768px) { .sf-skin__caps span { font-size: 15px; } }   /* 13 px in the 119 px columns at 390 */
 .sf-skin figcaption { font-size: 14px; }
-body.sf-has-sticky .sf-footer { padding-bottom: 150px; }
+body:has([data-sf-sticky]) .sf-footer { padding-bottom: 150px; }
 
 /* four columns of steps and proof cards only where each column fits a sentence (at 768 they were 150 px wide, live review 3) */
 @media (min-width: 1024px) {
@@ -359,4 +361,13 @@ body.sf-has-sticky .sf-footer { padding-bottom: 150px; }
   .sf-bar__logo { width: 84px; }
   .sf-bar__short { white-space: nowrap; font-size: 12.5px; }
   .sf-bar__btn { padding: 8px 11px; font-size: 11.5px; }
+}
+
+/* the H1's highlighted phrase stays on one line (it broke into two boxes at 390, live review 4) */
+.sf-hero2 h1 em { white-space: nowrap; }
+/* the listicle: the wide reasons' loops and renders at a photo's width, not the column's (1,026 px of flat circles at 1440,
+   live review 4); the guarantee seal at a seal's size beside its text */
+@media (min-width: 768px) {
+  .sf-reason--wide .sf-reason__media, .sf-reason--wide .sf-science { max-width: 680px; margin-left: auto; margin-right: auto; }
+  .sf-reason:has(img[src*="guarantee"]) .sf-reason__media { max-width: 360px; margin-left: auto; margin-right: auto; }
 }
