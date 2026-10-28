@@ -8,7 +8,7 @@ A full subscription funnel for the Adaptive Foundation Stick, served by the stor
 |---|---|---|
 | Listicle (entry) | https://try.skinofab.com/10-reasons-foundation-stick/ | "10 Reasons Why Women Over 45 Look Fresher With This 'Shade-Adapting' Foundation Stick": Facelove's listicle structure, SKINOFAB product and images |
 | Product page | https://try.skinofab.com/foundation-stick-offer/ | gallery, 2 pack cards ($37 / 1 stick, $47 / 2 sticks + free Lymphatic Brush), refill terms, guarantee, science video, FAQ |
-| Checkout | https://try.skinofab.com/stick-checkout/ | Apollo checkout, 2 pack cards (2-pack preselected), express PayPal / Apple Pay, Klarna, Link, exit pop STICK10 |
+| Checkout | https://try.skinofab.com/stick-checkout/ | Apollo checkout on trust (rating, promises, guarantee by the button, 10 reviews with photos, FAQ), 2 pack cards (2-pack preselected), express PayPal / Apple Pay, Klarna, Link, exit pop STICK10 |
 | Special offer 1 | https://try.skinofab.com/stick-special-1/ | one more stick, 50% off the first charge |
 | Special offer 2 | https://try.skinofab.com/stick-special-2/ | the Lymphatic Brush + case, 20% off |
 | Special offer 3 | https://try.skinofab.com/stick-special-3/ | the PDRN Plumping Balm, 20% off |
@@ -90,6 +90,23 @@ them live and the pages are checked against them on every build.
   is not allowed in cosmetics there (`docs/egf-nad-serum.md`); such an order goes on to the thank-you page.
 - Crossed-out prices compare with buying single sticks in this funnel (16 CFR 233): the 2-stick pack is $47 against two
   1-stick packs at $37 ("SAVE $27"); the 1-stick pack has none.
+
+### The checkout
+
+The checkout sells on trust, not on the product (the shopper chose it on the product page): no feature list and no
+product gallery (`stick-checkout.html`, `_includes/sf-checkout-trust.html`).
+
+- **Above Step 1:** the liquid foundation's rating (4.8 out of 5, 9,855 reviews, said to be the stick's sister's at
+  the earlier store) and four promises: the 30-day money-back guarantee, free tracked shipping (ships in 1 business
+  day), skip or cancel by email (a person replies within one business day), and the encrypted card fields.
+- **Right above the order button:** the guarantee in one line, with its seal.
+- **The proof column** (left on a computer, under the form on a phone, one copy in the page): the guarantee card, the
+  ratings by stars, ten review cards with each buyer's own photo, and "Before you order" (shade, refills, delivery,
+  whose reviews these are, payment security).
+- The ten reviews are the liquid's published ones, word for word, from women past 45 about the colour match, each
+  photo cropped on her face by `funnel_images.py` (`TESTIMONIAL_PHOTOS`, kept in `brand/stick-funnel/review-*.jpg`).
+  `check_funnel.py` fails the build without the guarantee line above the button, with fewer than 8 review cards or a
+  card without its photo, or with a rating other than the liquid's.
 
 ### The special offer pages
 

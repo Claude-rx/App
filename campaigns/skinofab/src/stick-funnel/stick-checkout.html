@@ -7,7 +7,10 @@ meta_tags:
   next-page-type: "checkout"
   next-success-url: "/stick-funnel/stick-special-1/"
 # Apollo's single-step checkout (the flagship family) with the funnel's two packs, campaign packages 1 and 2
-# (tools/funnel/funnel.py). Every pack ships with Automatic Refills (both packages recur), said in the cards' summary
+# (tools/funnel/funnel.py). The page sells on trust, not on the product (she chose it on the product page): the
+# rating and four promises above Step 1, the guarantee by the order button, and the reviews, ratings, guarantee card
+# and questions in the left column (under the form on a phone): _includes/sf-checkout-trust.html.
+# Every pack ships with Automatic Refills (both packages recur), said in the cards' summary
 # ({item.frequency}, cart-summary02) and above the button. The exit pop applies STICK10 (offer 5, 10% off the stick
 # packs). No coupon box: the post-purchase vouchers (STICK50 above all) must not be usable here.
 cart_summary_variant: "02"
@@ -35,71 +38,97 @@ promo_banner:
   lead: "with"
   strong: "2 sticks"
   trail: "· Free shipping · 30-day money-back guarantee"
-product_heading:
-  title: "Adaptive Foundation Stick"
-  features:
-    - text: "Goes on white, adapts to fair to medium skin"
-    - text: "Kabuki brush built into the other end"
-    - text: "PDRN + peptides, made for skin after 45"
-    - text: "30-day money-back guarantee, even opened"
+trust:
+  rating:
+    average: "4.8"
+    count: "9,855"
+    total: 9855
+    rows: [["5", 7719], ["4", 2132], ["3", 0], ["2", 1], ["1", 3]]
+    of: "Our liquid foundation, the stick’s sister, at our earlier store"
+  points:
+    - { icon: shield, title: "30-day money-back guarantee", text: "Not your match? A full refund, even opened. You don’t send it back." }
+    - { icon: truck, title: "Free tracked shipping", text: "Your order ships in 1 business day." }
+    - { icon: mail, title: "Skip or cancel any time", text: "Just email us: a person replies within one business day." }
+    - { icon: lock, title: "Secure checkout", text: "Your card number goes straight to our payment processor, encrypted." }
+  faq:
+    - q: "What if it isn’t my shade?"
+      a: "It goes on white and adapts to fair to medium skin as you blend. If it still isn’t your match, email hello@skinofab.com within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
+    - q: "Can I cancel the refills?"
+      a: "Yes, any time. You pay today’s total now, then $47.00 every 56 days for 2 sticks with a Lymphatic Brush, or $37.00 every 28 days for 1 stick. We email you before every refill; to skip, delay or cancel, just email hello@skinofab.com. No minimum, no fees."
+    - q: "When will it arrive?"
+      a: "Your order ships in 1 business day, with tracking, and shipping is free."
+    - q: "Are these reviews of the stick?"
+      a: "They are of our Adaptive Peptide Foundation, the liquid that goes on white and adapts to your tone the same way, from our earlier store. The stick is new at SKINOFAB: its own reviews will join them as buyers write them."
+    - q: "Is my payment secure?"
+      a: "Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal, Apple Pay, Klarna or Link."
+# the liquid foundation's published reviews (the earlier store's review app, word for word), women past 45 about the
+# colour match only (funnel review 2), each with her own photo (tools/funnel/funnel_images.py TESTIMONIAL_PHOTOS)
 reviews:
-  - title: "“It’s the perfect color match”"
+  - title: "Hands down the best ever"
+    body: "This color adjusting foundation is hands down the best ever. Ive tried all different foundations and they're either too light or dark. Never a match. I will keep buying this stuff."
+    author: "Virginia Z."
+    photo: "images/sf/review-virginia.jpg"
+    verified: "Verified buyer of our liquid foundation, from our earlier store"
+  - title: "The perfect color match"
     body: "I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!"
     author: "Lora Z."
+    photo: "images/sf/review-lora.jpg"
     verified: "Verified buyer of our liquid foundation, from our earlier store"
-  - title: "“Colour is great on my 70 year old skin”"
+  - title: "Turns to my exact color"
+    body: "The white foundation turns to my exact color and the brush is easy to use. Even skin appearance with a slight glow. I like it. You don’t have to use more that a pea size amount. Will buy again."
+    author: "Sue B."
+    photo: "images/sf/review-sue.jpg"
+    verified: "Verified buyer of our liquid foundation, from our earlier store"
+  - title: "Great on my 70 year old skin"
     body: "Lovely smooth finish and colour is great on my 70 year old skin"
     author: "Susan B."
+    photo: "images/sf/review-susan.jpg"
     verified: "Verified buyer of our liquid foundation, from our earlier store"
-  - title: "“No trace of white”"
+  - title: "I honestly was skeptical"
+    body: "I honestly was skeptical. Because I’ve tried this kind of foundation before. But I was flawed at how good it looks. The more I blended it the better it looks. I’m 59 and it glides on smoothly. Would definitely recommend"
+    author: "Deborah Z."
+    photo: "images/sf/review-deborah.jpg"
+    verified: "Verified buyer of our liquid foundation, from our earlier store"
+  - title: "No trace of white"
     body: "First time trying & I absolutely love it. It blends into my skin perfectly leaving no trace of white just a blooming tone to my mature skin. Im so happy I bought it"
     author: "Mary D."
+    photo: "images/sf/review-mary.jpg"
     verified: "Verified buyer of our liquid foundation, from our earlier store"
-  - title: "“The perfect colour”"
+  - title: "An exact match"
+    body: "I love how the color is an exact match and it isn't heavy."
+    author: "Kathryn S."
+    photo: "images/sf/review-kathryn.jpg"
+    verified: "Verified buyer of our liquid foundation, from our earlier store"
+  - title: "Matches my skin tone"
+    body: "I love this for my foundation! Color appears and matches my skin tone. Remarkable!!"
+    author: "Donna D."
+    photo: "images/sf/review-donna.jpg"
+    verified: "Verified buyer of our liquid foundation, from our earlier store"
+  - title: "The perfect colour"
     body: "The best foundation ever. It is the perfect colour and looks natural not like makeup."
     author: "Grace D."
+    photo: "images/sf/review-grace.jpg"
     verified: "Verified buyer of our liquid foundation, from our earlier store"
-reviews_note: "Published reviews of our Adaptive Peptide Foundation, the liquid that goes on white and adapts the same way, from our earlier store. The stick is new at SKINOFAB."
+  - title: "Matched just as stated"
+    body: "Blends well and matched to my face just as stated."
+    author: "Jeannie F."
+    photo: "images/sf/review-jeannie.jpg"
+    verified: "Verified buyer of our liquid foundation, from our earlier store"
+reviews_note: "Ratings and reviews of our Adaptive Peptide Foundation, the liquid that goes on white and adapts the same way, from our earlier store. The stick is new at SKINOFAB."
 guarantee:
   badge: "images/sf/guarantee.jpg"
   title: "30-Day Money-Back Guarantee"
   text: "Not your match? Wear it in your own daylight. Email hello@skinofab.com within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
+  line: "Not your match? Email us within 30 days of delivery for a full refund, even opened."
+  ticks: ["30 days from delivery to decide", "A full refund, even opened", "No need to send it back", "Every refill has the same guarantee"]
 styles:
-  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
   - css/exit-intent-popup.css
   - css/checkout-brand.css
 scripts:
-  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - js/checkout.js
   - js/sf-checkout.js
   - js/sf-failsafe.js
   - js/payment-logos.js
-swiper_slides:
-  - src: "images/sf/g-one-stick.jpg"
-    alt: "A woman in her fifties holding the Adaptive Foundation Stick"
-  - src: "images/sf/g-duo-ends.jpg"
-    alt: "The stick open at both ends: the white cream and the kabuki brush"
-  - src: "images/sf/g-tones.jpg"
-    alt: "Three women with fair to medium skin, before and after the stick (AI illustration)"
-  - src: "images/sf/g-before-after.jpg"
-    alt: "Before and after the stick on dry, mature skin (AI illustration)"
-  - src: "images/sf/g-whats-inside.jpg"
-    alt: "What is inside: PDRN and peptides, hyaluronic acid, ceramides and squalane, soft-focus spheres"
-  - src: "images/sf/offer.jpg"
-    alt: "Two sticks and the free Lymphatic Brush"
-swiper_thumbs:
-  - src: "images/sf/g-one-stick.jpg"
-    alt: ""
-  - src: "images/sf/g-duo-ends.jpg"
-    alt: ""
-  - src: "images/sf/g-tones.jpg"
-    alt: ""
-  - src: "images/sf/g-before-after.jpg"
-    alt: ""
-  - src: "images/sf/g-whats-inside.jpg"
-    alt: ""
-  - src: "images/sf/offer.jpg"
-    alt: ""
 packages:
   main_package: 2
 shipping_methods:
@@ -144,32 +173,15 @@ exit_intent:
     <div class="section-checkout cc-gray">
       <div class="container">
         <div class="checkout-page-layout">
-          <div class="show-tablet">
-            {% campaign_include 'product-heading.html' product_heading=product_heading %}
-          </div>
-          <div class="checkout-wrapper">
-            <div class="checkout-layout__left">
-              <div class="checkout-layout__content">
-                <div class="checkout-layout__content-inner">
-                  <div class="checkout-media__wrapper">
-                    {% campaign_include 'swiper-gallery.html' main_slides=swiper_slides thumbs=swiper_thumbs variant='sw1' %}
-                  </div>
-                  <div class="hide-tablet-down">
-                    {% campaign_include 'reviews-slider.html' reviews=reviews %}
-                    <p class="sf-reviews-note">{{ reviews_note }}</p>
-                  </div>
-                  <div class="hide-tablet-down">
-                    {% campaign_include 'guarantee.html' guarantee=guarantee %}
-                  </div>
-                </div>
-              </div>
+          <div class="checkout-wrapper sf-co">
+            {% comment %} the proof column: left on a computer, under the form on a phone (checkout-brand.css: order) {% endcomment %}
+            <div class="checkout-layout__left sf-co-left">
+              {% campaign_include 'sf-checkout-trust.html' part='proof' %}
             </div>
             <div class="checkout-layout__right">
               <div class="checkout-layout__form">
                 <div class="checkout__form-container">
-                  <div class="hide-tablet">
-                    {% campaign_include 'product-heading.html' product_heading=product_heading %}
-                  </div>
+                  {% campaign_include 'sf-checkout-trust.html' part='top' %}
                   <div class="checkout-form">
                     <form data-next-checkout="form" id="combo_form" method="post">
                       <div class="form-content">
@@ -199,6 +211,7 @@ exit_intent:
                           </div>
                           <div class="sf-refill-terms" id="refill-terms">{{ refill_terms }}</div>
                           {{ pay_line }}
+                          {% campaign_include 'sf-checkout-trust.html' part='inline' %}
                           {% capture disclaimer %}By placing your order you agree to Automatic Refills as described above, our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
                           {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='30-DAY MONEY-BACK GUARANTEE · FREE SHIPPING' disclaimer=disclaimer %}
                         </div>
@@ -207,13 +220,6 @@ exit_intent:
                   </div>
                   <div class="checkout-trust-bar">
                     {% campaign_include 'payment-logos.html' show_secure=true %}
-                  </div>
-                  <div class="hide-tablet-up">
-                    {% campaign_include 'guarantee.html' guarantee=guarantee %}
-                  </div>
-                  <div class="hide-tablet-up">
-                    {% campaign_include 'reviews-slider.html' reviews=reviews %}
-                    <p class="sf-reviews-note">{{ reviews_note }}</p>
                   </div>
                 </div>
               </div>
@@ -227,4 +233,3 @@ exit_intent:
 </div>
 {% assign exit_image = exit_intent.popup_image | campaign_asset %}
 {% campaign_include 'exit-intent-popup.html' coupon_code=exit_intent.coupon_code popup_image=exit_image headline=exit_intent.headline subheadline=exit_intent.subheadline offer_title=exit_intent.offer_title offer_label=exit_intent.offer_label offer_detail=exit_intent.offer_detail cta_label=exit_intent.cta_label %}
-<script>if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => initSwiperGalleries()); } else { initSwiperGalleries(); }</script>

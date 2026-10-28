@@ -7,7 +7,8 @@ Reads the CampaignSpec (campaigns/skinofab/campaign-spec.json, the live campaign
 built pages (campaigns/skinofab/_site/stick-funnel/) and the theme templates deploy_theme.py wrote. Checks:
   routes      every page is built, carries the SDK meta tags funnel.py gives it, and links only to funnel routes
   checkout    one card per checkout package, one selected, each card's "Then $X every N days" = the package's
-              recurring price and interval; no coupon box; no post-purchase voucher code anywhere on the page
+              recurring price and interval; no coupon box; no post-purchase voucher code anywhere on the page; the
+              guarantee right above the order button, 8+ review cards each with the buyer's photo, the liquid's rating
   offers      each offer's package and voucher are the campaign's; the renewal sentence states the package's
               recurring price and interval; the fallback price is the voucher's price rounded down to dollars
   product     each pack card's price and interval are its package's; every checkout link names a checkout card
@@ -100,6 +101,14 @@ for o in OFFERS.values():
     if o['code'] != OFFERS[PAGES['checkout']['exit_intent']['offer_ref_id']]['code'] and o['code'] in co:
         fail('checkout', f'post-purchase voucher {o["code"]} appears on the checkout')
 if f'data-coupon-code="{PAGES["checkout"]["exit_intent"]["offer_code"]}"' not in co: fail('checkout', 'exit pop does not apply the exit offer')
+# the checkout sells on trust: the guarantee right above the order button, the review wall with each buyer's own photo,
+# and the liquid's ratings as the listicle and product page give them
+g, btn = co.find('data-sf-guarantee-inline'), co.find('COMPLETE MY ORDER')
+if g < 0 or btn < 0 or g > btn: fail('checkout', 'no guarantee line right above the order button')
+cards_r = re.findall(r'<article class="sf-co-review">(.*?)</article>', co, re.S)
+if len(cards_r) < 8: fail('checkout', f'{len(cards_r)} review cards, not at least 8')
+if any('<img ' not in c for c in cards_r): fail('checkout', 'a review card without its buyer\'s photo')
+if '4.8 out of 5' not in co or '9,855 reviews' not in co: fail('checkout', 'the rating is not the liquid\'s 4.8 from 9,855 reviews')
 
 # special offers ----------------------------------------------------------------------------------------------------
 for pid in ('special-1', 'special-2', 'special-3', 'special-4'):

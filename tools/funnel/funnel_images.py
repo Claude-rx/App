@@ -36,7 +36,12 @@ INK, PAPER, SOFT, CREAM = (21, 21, 21), (255, 255, 255), (96, 96, 96), (246, 242
 # (review id, where her face is across and down the photo: the square crop keeps her whole head)
 # (funnel review 2: reviews that speak to the colour match only; no wear-time or wrinkle claims)
 TESTIMONIAL_PHOTOS = {'lora': ('zjPC7IPmY-0', (0.5, 0.2)), 'susan': ('yguFL8u9n-0', (0.5, 0.36)),
-                      'mary': ('ZTOdiyg6x-0', (0.5, 0.4))}
+                      'mary': ('ZTOdiyg6x-0', (0.5, 0.4)),
+                      # the checkout's review wall (women past 45, about the colour match, approved photos)
+                      'grace': ('0z7LbNoAb-0', (0.5, 0.6)), 'sue': ('ofljph3B2O-0', (0.5, 0.45)),
+                      'virginia': ('5FRfi6xsO-0', (0.5, 0.3)), 'deborah': ('XzARV6k1B-0', (0.5, 0.38)),
+                      'kathryn': ('BJ6W4ha63-0', (0.5, 0.35)), 'donna': ('do7iDXXm-0', (0.5, 0.4)),
+                      'jeannie': ('a8SFatRai-0', (0.5, 0.45))}
 
 
 def save(im, name, size=None, q=82):

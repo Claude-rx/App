@@ -1,0 +1,9 @@
+{%- comment -%} SKINOFAB: the checkout's trust icons (sf-checkout-trust.html), line drawings in the brand's ink. icon: shield | truck | mail | lock {%- endcomment -%}
+<svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+{%- case icon -%}
+{%- when 'shield' -%}<path d="M12 3l7 3v5.5c0 4.3-2.9 8-7 9.5-4.1-1.5-7-5.2-7-9.5V6l7-3z"/><path d="M8.8 12.2l2.2 2.2 4.3-4.5"/>
+{%- when 'truck' -%}<path d="M2.5 6.5h11v9h-11z"/><path d="M13.5 9.5h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>
+{%- when 'mail' -%}<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>
+{%- when 'lock' -%}<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/>
+{%- endcase -%}
+</svg>

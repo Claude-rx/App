@@ -1,0 +1,73 @@
+{%- comment -%}
+  SKINOFAB: the checkout's trust, in place of a product description (the shopper has chosen the stick already):
+    part='top'     the rating and four plain promises, above Step 1
+    part='inline'  the guarantee in one line, right above the order button
+    part='proof'   the ratings by stars, the review wall (buyers' own photos), the guarantee card and the questions a
+                   buyer asks before paying; the left column on a computer, under the form on a phone
+  From the page's frontmatter: trust { rating { average, count, total, rows, of }, points[] { icon, title, text },
+  faq[] { q, a } }, reviews[] { title, body, author, photo, verified }, reviews_note and guarantee { badge, title, text,
+  ticks[] }. Every figure and review is the liquid foundation's, from the earlier store, and says so (check_funnel).
+{%- endcomment -%}
+{%- if part == 'top' -%}
+<div class="sf-co-top">
+  <a class="sf-co-rating" href="#sf-co-reviews"><span class="sf-co-stars" aria-hidden="true">★★★★★</span><strong>{{ trust.rating.average }} out of 5</strong><span>· {{ trust.rating.count }} reviews</span></a>
+  <p class="sf-co-rating__of">{{ trust.rating.of }}</p>
+  <ul class="sf-co-points">
+    {%- for p in trust.points %}
+    <li>{% campaign_include 'sf-checkout-icon.html' icon=p.icon %}<div><strong>{{ p.title }}</strong><span>{{ p.text }}</span></div></li>
+    {%- endfor %}
+  </ul>
+</div>
+{%- elsif part == 'inline' -%}
+<div class="sf-co-guarantee-line" data-sf-guarantee-inline>
+  <img src="{{ guarantee.badge | campaign_asset }}" alt="" width="64" height="64" loading="lazy" decoding="async">
+  <p><strong>{{ guarantee.title }}.</strong> {{ guarantee.line }}</p>
+</div>
+{%- elsif part == 'proof' -%}
+<section class="sf-co-proof" aria-label="Reviews and guarantee">
+  <div class="sf-co-card sf-co-guarantee">
+    <img src="{{ guarantee.badge | campaign_asset }}" alt="30-day money-back guarantee seal" width="112" height="112" loading="lazy" decoding="async">
+    <div>
+      <h2>{{ guarantee.title }}</h2>
+      <p>{{ guarantee.text }}</p>
+      <ul>{% for t in guarantee.ticks %}<li>{{ t }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+
+  <div class="sf-co-card sf-co-ratings" id="sf-co-reviews">
+    <div class="sf-co-ratings__score">
+      <strong>{{ trust.rating.average }}</strong>
+      <span class="sf-co-stars" aria-hidden="true">★★★★★</span>
+      <span>{{ trust.rating.count }} reviews</span>
+    </div>
+    <ul class="sf-co-ratings__rows" aria-label="Every review of our liquid foundation, by stars">
+      {%- for row in trust.rating.rows %}{% assign pct = row[1] | times: 100.0 | divided_by: trust.rating.total %}
+      <li><span>{{ row[0] }} ★</span><i><b style="width:{{ pct | round: 1 }}%"></b></i><span>{{ row[1] }}</span></li>
+      {%- endfor %}
+    </ul>
+    <p class="sf-co-ratings__of">{{ reviews_note }}</p>
+  </div>
+
+  <div class="sf-co-reviews">
+    {%- for r in reviews %}
+    <article class="sf-co-review">
+      <header>
+        <img src="{{ r.photo | campaign_asset }}" alt="{{ r.author }}, her own photo" width="64" height="64" loading="lazy" decoding="async">
+        <div><h3>{{ r.author }}</h3><p class="sf-co-stars" aria-label="5 out of 5 stars">★★★★★</p></div>
+      </header>
+      <p class="sf-co-review__title">{{ r.title }}</p>
+      <p class="sf-co-review__body">“{{ r.body }}”</p>
+      <p class="sf-review__who">{{ r.verified }}</p>
+    </article>
+    {%- endfor %}
+  </div>
+
+  <div class="sf-co-card sf-co-faq">
+    <h2>Before you order</h2>
+    {%- for f in trust.faq %}
+    <details{% if forloop.first %} open{% endif %}><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>
+    {%- endfor %}
+    <p class="sf-co-faq__contact">Still unsure? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>: a person replies within one business day.</p>
+  </div>
+</section>
+{%- endif -%}
