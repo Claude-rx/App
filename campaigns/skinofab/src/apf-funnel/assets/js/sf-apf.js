@@ -12,6 +12,11 @@
   var videos = document.querySelectorAll('video[data-sf-lazy]');
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (still) Array.prototype.forEach.call(videos, function (v) { v.controls = true; });
+  // a clip the page autoplays itself (the brush offer's loop, upsell/video.html): for anyone who asks their device
+  // for less motion it waits for a tap instead, with its controls
+  if (still) Array.prototype.forEach.call(document.querySelectorAll('video[autoplay]:not([data-sf-lazy])'), function (v) {
+    v.removeAttribute('autoplay'); v.controls = true; try { v.pause(); } catch (e) {}
+  });
   if (videos.length && !still && 'IntersectionObserver' in window) {
     var vo = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -82,7 +87,9 @@
   if (sticky && buyBtn && 'IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
       var e = entries[0];
-      sticky.classList.toggle('is-on', !e.isIntersecting && e.boundingClientRect.top < 0);
+      var on = !e.isIntersecting && e.boundingClientRect.top < 0;
+      sticky.classList.toggle('is-on', on);
+      document.body.classList.toggle('sf-has-sticky', on);     // room for the footer's last line under the bar
     }).observe(buyBtn);
   }
 })();

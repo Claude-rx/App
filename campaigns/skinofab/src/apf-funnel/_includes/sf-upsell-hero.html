@@ -1,0 +1,20 @@
+{%- comment -%}
+  SKINOFAB: a special offer's hero: the page's H1, what the offer is in one line, "reserved for you, <her first name>"
+  and the countdown (js/sf-offer-timer.js: the deadline is set once per order and page and survives a reload; at 0:00
+  the page declines the offer itself and moves on, which the line under the clock says, so the clock is true).
+    uh: { eyebrow, title, text, seconds, expires }   (title and text may use upsell/copy.html's tokens)
+  Her first name comes from the order (js/sf-offer-gate.js fills [data-sf-name]). Written by tools/funnel/apf/offer_pages.py.
+{%- endcomment -%}
+{%- campaign_include 'upsell/offer-context.html' -%}
+<section class="sf-uh" aria-labelledby="sf-uh-title">
+  <div class="container cc-medium">
+    <p class="sf-uh__eyebrow">{{ uh.eyebrow }}</p>
+    <h1 class="sf-uh__title" id="sf-uh-title">{% campaign_include 'upsell/copy.html' text=uh.title %}</h1>
+    <p class="sf-uh__text">{% campaign_include 'upsell/copy.html' text=uh.text %}</p>
+    <div class="sf-uh__timer" data-sf-timer="{{ uh.seconds }}" data-sf-timer-expires="skip">
+      <span class="sf-uh__for">Reserved for you<span data-sf-name></span> for</span>
+      <span class="sf-uh__clock" role="timer" aria-live="off" data-sf-timer-display>{{ uh.seconds | divided_by: 60 | prepend: '00' | slice: -2, 2 }}:00</span>
+    </div>
+    <p class="sf-uh__expires">{{ uh.expires }}</p>
+  </div>
+</section>

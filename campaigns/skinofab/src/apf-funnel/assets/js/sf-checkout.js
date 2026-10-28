@@ -1,9 +1,11 @@
 // The funnel checkout's own behaviour, on top of checkout.js (the SDK owns the form, the bundle cards and the totals):
 // the pay line's renewal (below) and the exit pop (the _includes/exit-intent-popup.html template) that applies the page's exit code (APF10 here, the
-// campaign's 10%-off exit offer on the foundation packs; STICK10 on the stick funnel), at most once per visit.
+// campaign's 10%-off exit offer on the foundation packs; STICK10 on the stick funnel), at most once per visit: on a
+// computer when the pointer leaves through the top, on a phone on a scroll back up toward the address bar (the SDK's
+// own mobile trigger; without it phone buyers, most of the traffic, never saw the offer).
 window.addEventListener('next:initialized', function () {
   if (!window.next || typeof window.next.exitIntent !== 'function') return;
-  window.next.exitIntent({ template: 'exit-intent', showCloseButton: true, maxTriggers: 1 });
+  window.next.exitIntent({ template: 'exit-intent', showCloseButton: true, maxTriggers: 1, disableOnMobile: false, mobileScrollTrigger: true });
 });
 
 // The pay line by the express buttons and the order button: today's total is the SDK's; what the pack is (or, on the stick

@@ -87,6 +87,36 @@ def even_tone(before):
     return Image.fromarray((np.clip(a * (1 - m) + np.clip(even + detail, 0, 1) * m, 0, 1) * 255).astype(np.uint8))
 
 
+def foundation_look(before, strength=1.0):
+    """What a satin, medium-coverage foundation does to a photo, so the after plainly looks made up (the owner's ask
+    on 28 Oct 2026: even_tone's after was too close to the before): the skin's colour evened toward her own mean tone
+    (redness, sun spots and dull patches pulled in), lines and pores softened as soft-focus powders do (their contrast
+    lowered, never erased: the face's shape, its creases and its bags stay where they are), a light satin glow. Hair,
+    eyes, lips, clothes and the background are untouched (a YCbCr skin mask that leaves the lips out)."""
+    a = np.asarray(before.convert('RGB')).astype(np.float32) / 255
+    ycc = np.asarray(before.convert('YCbCr')).astype(np.float32)
+    Y, Cb, Cr = ycc[..., 0], ycc[..., 1], ycc[..., 2]
+    skin = (Cr > 128) & (Cr < 186) & (Cb > 70) & (Cb < 136) & (Y > 40)      # wide enough for golden light
+    lips = (Cr > 172) & (Cb < 110) & (Y < 190)
+    s = max(1.0, before.width / 540)
+    m = _blur((skin & ~lips).astype(np.float32), 4 * s)[..., None]
+    low = _blur(a, 7 * s)                                       # the broad colour: blotches, redness, shading
+    mid = _blur(a, 1.6 * s)
+    hi, md = a - mid, mid - low                                 # pores and fine texture; lines, creases, spots
+    skin_low = _blur(low * m, 32 * s) / np.maximum(_blur(m[..., 0], 32 * s)[..., None], 1e-3)
+    mean = (low * m).sum((0, 1)) / max(float(m.sum()), 1.0)
+    even = skin_low * 0.7 + mean * 0.3                          # a smooth local tone, pulled toward her mean
+    even = even * 0.55 + low * 0.45                             # the face's own shading kept under it
+    lum = even.mean(-1, keepdims=True)
+    chroma = even - lum
+    chroma[..., 0] *= 0.9                                       # the redness down, the warmth kept
+    even = lum * 1.025 + 0.008 + chroma * 1.06                 # a touch brighter and warmer: a healthy, made-up look
+    glow = 0.03 * _blur(lum[..., 0], 26 * s)[..., None] ** 2
+    after_skin = even + glow + md * (1 - 0.45 * strength) + hi * (1 - 0.2 * strength)
+    out = a * (1 - m) + np.clip(after_skin, 0, 1) * m
+    return Image.fromarray((np.clip(out, 0, 1) * 255).astype(np.uint8))
+
+
 def before_after(name, out, size=1080, honest_after=False):
     """A split-screen photo with Before / After and the AI line in ink on a white band at its foot (the gallery's
     style, P.before_after dark: white words were lost on the white t-shirts), a white line between the halves.

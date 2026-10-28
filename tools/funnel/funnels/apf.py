@@ -3,12 +3,14 @@
     listicle  ->  sales page  ->  checkout  ->  offer 1 (stock up)  ->  offer 2 (one more bottle) / its downsell
               ->  offer 3 (the Lymphatic Brush) / its downsell  ->  thank you
 
-The commerce lives in campaign 2211 (the stick funnel's; the Campaigns App allows try.skinofab.com on it and that list
-is not settable through the Admin API), created by tools/funnel/apf/commerce.py: six one-time packages (no refills: the
-persona report asks for opt-in refills only, and the funnel sells packs) and five vouchers. Package refs
-(data-next-package-id) and offer refs are the campaign's own, read live by campaign_spec.py; this file says which page
-sells which and at what price (check_apf.py holds every page to it; commerce.py --verify prices each through the Cart
-API). Prices: the store sells one bottle at $47 once or $37 with refills against a $59 list price; the funnel's packs
+The commerce lives in its own campaign, 2221 "SKINOFAB Adaptive Peptide Foundation Funnel" (one campaign per product
+funnel; the stick funnel keeps 2211), created on 28 Oct 2026 with the next-campaigns-create skill from a hand-authored
+plan (next-campaigns-create-runs/skinofab-apf/, gitignored: its manifest holds the campaign key): six one-time packages
+(no refills: the persona report asks for opt-in refills only, and the funnel sells packs) and five vouchers, every
+price proven by the skill's verify against the Cart API. Package refs (data-next-package-id) and offer refs are the
+campaign's own, read live by campaign_spec.py; this file says which page sells which and at what price (check_apf.py
+holds every page to it; commerce.py --verify prices each through the Cart API). The campaign's Allowed Domains
+(try.skinofab.com) are a dashboard setting the API cannot write. Prices: the store sells one bottle at $47 once or $37 with refills against a $59 list price; the funnel's packs
 are below both, and every crossed-out price is the $59 list price times the bottles.
 
 The pages are Campaign Page Kit pages in campaigns/skinofab/src/apf-funnel/ (file = the page's name there), served by
@@ -16,7 +18,7 @@ the store at /<file>/ (deploy_theme.py, store_pages.py) on FUNNEL_HOST, the stor
 """
 
 SLUG = 'apf-funnel'
-CAMPAIGN_REF = 2211
+CAMPAIGN_REF = 2221
 LOCAL_SPEC_ID = '7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47'     # the CampaignSpec's stable identity (never a Map ID)
 FUNNEL_NAME = 'SKINOFAB Adaptive Peptide Foundation'       # next-funnel on every page (campaigns.json "name")
 STORE = 'https://skinofab.29next.store'
@@ -30,19 +32,19 @@ EXIT_NOTE = 'Once per visit, on leaving the checkout: 10% off the foundation pac
 EMAIL = 'hello@skinofab.com'
 LIST_PRICE = 59.00                 # the store's list price of one bottle (its crossed-out $59)
 
-# the campaign's packages (tools/funnel/apf/commerce.py): key -> ref
-PACKAGE = {'apf-1': 6, 'apf-2-gifts': 7, 'apf-3-gifts': 8, 'apf-2': 9, 'apf-6-brush': 10, 'brush-1': 11}
+# the campaign's packages (the plan's keys, tools/funnel/apf/commerce.py): key -> ref
+PACKAGE = {'apf-1': 1, 'apf-2-gifts': 2, 'apf-3-gifts': 3, 'apf-2': 4, 'apf-6-brush': 5, 'brush-1': 6}
 # the vouchers: code -> offer ref
-VOUCHER = {'APF10': 6, 'APF40': 7, 'APF50': 8, 'BRUSH40': 9, 'BRUSH60': 10}
+VOUCHER = {'APF10': 1, 'APF40': 2, 'APF50': 3, 'BRUSH40': 4, 'BRUSH60': 5}
 
 # the sales page's and checkout's packs (one-time, free shipping): the checkout card id, the package, what she pays,
 # the crossed-out price (the $59 list price times the bottles) and the gifts in the box
 PACKS = [
-    {'key': 'apf-1', 'bundle': 'apf-1', 'package': 6, 'bottles': 1, 'price': 39.00, 'compare': 59.00, 'gifts': [],
+    {'key': 'apf-1', 'bundle': 'apf-1', 'package': 1, 'bottles': 1, 'price': 39.00, 'compare': 59.00, 'gifts': [],
      'name': '1 bottle', 'supply': 'About a month'},
-    {'key': 'apf-2-gifts', 'bundle': 'apf-2', 'package': 7, 'bottles': 2, 'price': 57.00, 'compare': 118.00,
+    {'key': 'apf-2-gifts', 'bundle': 'apf-2', 'package': 2, 'bottles': 2, 'price': 57.00, 'compare': 118.00,
      'gifts': ['blender', 'mystery'], 'name': '2 bottles', 'supply': 'About two months', 'selected': True, 'tab': 'Most popular'},
-    {'key': 'apf-3-gifts', 'bundle': 'apf-3', 'package': 8, 'bottles': 3, 'price': 75.00, 'compare': 177.00,
+    {'key': 'apf-3-gifts', 'bundle': 'apf-3', 'package': 3, 'bottles': 3, 'price': 75.00, 'compare': 177.00,
      'gifts': ['blender', 'mystery', 'brush'], 'name': '3 bottles', 'supply': 'About three months', 'tab': 'Best value'},
 ]
 GIFTS = {'blender': ('SKINOFAB Blender brush', 9.00), 'mystery': ('Mystery gift', 15.00), 'brush': ('The Lymphatic Brush', 24.95)}
@@ -51,12 +53,12 @@ GIFTS = {'blender': ('SKINOFAB Blender brush', 9.00), 'mystery': ('Mystery gift'
 # campaign rounds a voucher's price down to the dollar) and the crossed-out price
 OFFER_PAGES = {
     'offer-1': {'id': 'offer-1', 'tiers': [
-        {'key': 'b1g1', 'package': 'apf-2', 'ref': 9, 'bottles': 2, 'price': 39.00, 'compare': 78.00, 'badge': 'Most popular'},
-        {'key': 'b3g3', 'package': 'apf-6-brush', 'ref': 10, 'bottles': 6, 'price': 99.00, 'compare': 234.00, 'badge': 'Best value', 'gift': 'brush'}]},
-    'offer-2': {'id': 'offer-2', 'tiers': [{'key': 'one', 'package': 'apf-1', 'ref': 6, 'bottles': 1, 'voucher': 'APF40', 'price': 23.00, 'compare': 39.00}]},
-    'offer-2b': {'id': 'offer-2b', 'tiers': [{'key': 'one', 'package': 'apf-1', 'ref': 6, 'bottles': 1, 'voucher': 'APF50', 'price': 19.00, 'compare': 39.00}]},
-    'brush-offer': {'id': 'brush-offer', 'tiers': [{'key': 'brush', 'package': 'brush-1', 'ref': 11, 'voucher': 'BRUSH40', 'price': 14.00, 'compare': 24.95}]},
-    'brush-offer-b': {'id': 'brush-offer-b', 'tiers': [{'key': 'brush', 'package': 'brush-1', 'ref': 11, 'voucher': 'BRUSH60', 'price': 9.00, 'compare': 24.95}]},
+        {'key': 'b1g1', 'package': 'apf-2', 'ref': 4, 'bottles': 2, 'price': 39.00, 'compare': 78.00, 'badge': 'Most popular'},
+        {'key': 'b3g3', 'package': 'apf-6-brush', 'ref': 5, 'bottles': 6, 'price': 99.00, 'compare': 234.00, 'badge': 'Best value', 'gift': 'brush'}]},
+    'offer-2': {'id': 'offer-2', 'tiers': [{'key': 'one', 'package': 'apf-1', 'ref': 1, 'bottles': 1, 'voucher': 'APF40', 'price': 23.00, 'compare': 39.00}]},
+    'offer-2b': {'id': 'offer-2b', 'tiers': [{'key': 'one', 'package': 'apf-1', 'ref': 1, 'bottles': 1, 'voucher': 'APF50', 'price': 19.00, 'compare': 39.00}]},
+    'brush-offer': {'id': 'brush-offer', 'tiers': [{'key': 'brush', 'package': 'brush-1', 'ref': 6, 'voucher': 'BRUSH40', 'price': 14.00, 'compare': 24.95}]},
+    'brush-offer-b': {'id': 'brush-offer-b', 'tiers': [{'key': 'brush', 'package': 'brush-1', 'ref': 6, 'voucher': 'BRUSH60', 'price': 9.00, 'compare': 24.95}]},
 }
 
 # the pages in funnel order. type: the CampaignSpec page type; sdk: the SDK page type (Page Kit page_type).
@@ -65,17 +67,17 @@ PAGES = [
      'next': 'offer', 'label': 'Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation'},
     {'id': 'offer', 'file': 'adaptive-foundation-offer', 'type': 'landing', 'sdk': 'product', 'next': 'checkout',
      'label': 'Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts'},
-    {'id': 'checkout', 'file': 'foundation-checkout', 'type': 'checkout', 'sdk': 'checkout', 'packages': [6, 7, 8],
-     'default_package': 7, 'success': 'offer-1', 'exit_offer': 6, 'label': 'Checkout'},
-    {'id': 'offer-1', 'file': 'foundation-offer-1', 'type': 'upsell', 'sdk': 'upsell', 'packages': [9, 10], 'offers': [],
+    {'id': 'checkout', 'file': 'foundation-checkout', 'type': 'checkout', 'sdk': 'checkout', 'packages': [1, 2, 3],
+     'default_package': 2, 'success': 'offer-1', 'exit_offer': 1, 'label': 'Checkout'},
+    {'id': 'offer-1', 'file': 'foundation-offer-1', 'type': 'upsell', 'sdk': 'upsell', 'packages': [4, 5], 'offers': [],
      'accept': 'brush-offer', 'decline': 'offer-2', 'label': 'Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)'},
-    {'id': 'offer-2', 'file': 'foundation-offer-2', 'type': 'upsell', 'sdk': 'upsell', 'packages': [6], 'offers': [7],
+    {'id': 'offer-2', 'file': 'foundation-offer-2', 'type': 'upsell', 'sdk': 'upsell', 'packages': [1], 'offers': [2],
      'accept': 'brush-offer', 'decline': 'offer-2b', 'label': 'Offer 2: one more bottle, 40% off'},
-    {'id': 'offer-2b', 'file': 'foundation-offer-2b', 'type': 'downsell', 'sdk': 'upsell', 'packages': [6], 'offers': [8],
+    {'id': 'offer-2b', 'file': 'foundation-offer-2b', 'type': 'downsell', 'sdk': 'upsell', 'packages': [1], 'offers': [3],
      'accept': 'brush-offer', 'decline': 'brush-offer', 'label': 'Offer 2 downsell: one more bottle, 50% off'},
-    {'id': 'brush-offer', 'file': 'lymphatic-brush-offer', 'type': 'upsell', 'sdk': 'upsell', 'packages': [11], 'offers': [9],
+    {'id': 'brush-offer', 'file': 'lymphatic-brush-offer', 'type': 'upsell', 'sdk': 'upsell', 'packages': [6], 'offers': [4],
      'accept': 'thank-you', 'decline': 'brush-offer-b', 'label': 'Offer 3: the Lymphatic Brush, 40% off'},
-    {'id': 'brush-offer-b', 'file': 'lymphatic-brush-offer-b', 'type': 'downsell', 'sdk': 'upsell', 'packages': [11], 'offers': [10],
+    {'id': 'brush-offer-b', 'file': 'lymphatic-brush-offer-b', 'type': 'downsell', 'sdk': 'upsell', 'packages': [6], 'offers': [5],
      'accept': 'thank-you', 'decline': 'thank-you', 'label': 'Offer 3 downsell: the Lymphatic Brush, 60% off'},
     {'id': 'thank-you', 'file': 'foundation-thank-you', 'type': 'thankyou', 'sdk': 'receipt', 'label': 'Thank you'},
 ]

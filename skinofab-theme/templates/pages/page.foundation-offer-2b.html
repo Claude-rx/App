@@ -36,7 +36,7 @@
     
 
     
-    <script src="{% endverbatim %}{{ 'sfa/sfa-config-18e8d6.js'|asset_url }}{% verbatim %}"></script>
+    <script src="{% endverbatim %}{{ 'sfa/sfa-config-0001d9.js'|asset_url }}{% verbatim %}"></script>
 
     
     
@@ -74,9 +74,9 @@
     
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-06326f.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-0a3463.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-8c9286.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-f1e5ce.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -89,7 +89,7 @@
 
 
     
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/foundation-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
+<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="/foundation-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -139,12 +139,19 @@
   </div>
 </section>
 
-    <section class="section upsell-header">
-  <div class="container">
-    <div class="upsell-header__inner"><div class="upsell-header__title">Our lowest price for one bottle: 50% off</div><div class="upsell-header__offer">Add one more bottle for <span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span> (<span data-next-display="bundle.offer-2b.discountPercentage" data-next-format="percentage">51%</span> off)</div><div class="upsell-header__suboffer">We would rather you had a spare than ran out. Half price, charged once, in the same box. This is the lowest price we sell one bottle for anywhere.</div>
+    <section class="sf-uh" aria-labelledby="sf-uh-title">
+  <div class="container cc-medium">
+    <p class="sf-uh__eyebrow">Offer 2 of 3 · One more chance</p>
+    <h1 class="sf-uh__title" id="sf-uh-title">Last chance: one more bottle at half price</h1>
+    <p class="sf-uh__text"><span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span> is the lowest price we sell one bottle for, anywhere. Charged once, in the same box as your order.</p>
+    <div class="sf-uh__timer" data-sf-timer="300" data-sf-timer-expires="skip">
+      <span class="sf-uh__for">Reserved for you<span data-sf-name></span> for</span>
+      <span class="sf-uh__clock" role="timer" aria-live="off" data-sf-timer-display>05:00</span>
     </div>
+    <p class="sf-uh__expires">When the clock reaches 0:00 this page moves on and the offer is gone: it is not in our store and we won’t email it.</p>
   </div>
 </section>
+
     <div data-next-catalog-component="upsell-offer" data-upsell-offer-type="single">
   <section class="section upsell-box">
     <div class="container">
@@ -152,16 +159,16 @@
         <div role="button"
              data-next-bundle-card
              data-next-bundle-id="offer-2b-card"
-             data-next-bundle-items='[{"packageId":6,"quantity":1}]'
+             data-next-bundle-items='[{"packageId":1,"quantity":1}]'
              data-next-bundle-vouchers='["APF50"]'
              data-next-selected="true"
              class="os-card next-selected"></div>
       </div>
 
-      <div class="upsell-wrapper" data-next-upsell="offer" data-next-await="" data-next-package-id="6" data-next-bundle-selector-id="offer-2b"><div class="upsell-container">
+      <div class="upsell-wrapper" data-next-upsell="offer" data-next-await="" data-next-package-id="1" data-next-bundle-selector-id="offer-2b"><div class="upsell-container">
           <div class="grid-full flex-col flex-horizontal-lg-up">
             <div class="upsell-content__column">
-              <div class="upsell-offer__card"><div class="upsell-offer__heading"><p class="upsell-offer__pretitle">Our lowest price · <span data-next-display="bundle.offer-2b.discountPercentage" data-next-format="percentage">51%</span> off</p>
+              <div class="upsell-offer__card"><div class="upsell-offer__heading"><p class="upsell-offer__pretitle">Our lowest price</p>
   <h2 class="display-lg">One more Adaptive Peptide Foundation</h2>
 </div>
 <div class="divider_line _25"></div><div class="upsell-offer__bullets">
@@ -200,13 +207,13 @@
 </div><a data-next-upsell-action="add" href="#" class="button cc-xl" pb-animate="pulse-upsell">
   <div data-button="content" class="button_content"><div>Yes, add one more bottle for <span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span></div></div>
 </a>
-<p class="upsell-cta__note"><span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span> today (<span data-next-display="bundle.offer-2b.discountPercentage" data-next-format="percentage">51%</span> off), charged once to the payment you just used. Nothing renews, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy.</p><div class="upsell-ships-info"><img class="upsell-ships-info__icon" src="{% endverbatim %}{{ 'sfa/sfa-icon-shipping-d364b9.svg'|asset_url }}{% verbatim %}" alt="">
+<p class="upsell-cta__note"><span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span> today, charged once to the payment you just used. Nothing renews, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy.</p><div class="upsell-ships-info"><img class="upsell-ships-info__icon" src="{% endverbatim %}{{ 'sfa/sfa-icon-shipping-d364b9.svg'|asset_url }}{% verbatim %}" alt="">
   <p class="upsell-ships-info__text">Ships with your order, in the same box, with tracking.</p>
 </div>
 <div class="payment-img-wrapper hide-tablet-up">
   <div class="trust-badge invert"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-icons8-lock-24-1icons8-lock-24-7e2024.png'|asset_url }}{% verbatim %}" alt="" class="trust-badge__icon">
     <div class="badge-text-black">100% Encrypted &amp; Secure Checkout</div>
-  </div><div class="payment-logos" data-payment-logos aria-label="Accepted payment methods"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-visa-89d56c.svg'|asset_url }}{% verbatim %}" alt="Visa" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="visa" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-master-465bcf.svg'|asset_url }}{% verbatim %}" alt="Mastercard" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="mastercard" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-amex-d638f4.svg'|asset_url }}{% verbatim %}" alt="American Express" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="american_express" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-discover-c1e4c3.svg'|asset_url }}{% verbatim %}" alt="Discover" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="discover" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-diners-club-6d75f2.svg'|asset_url }}{% verbatim %}" alt="Diners Club" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="diners_club" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-jcb-768f2b.svg'|asset_url }}{% verbatim %}" alt="JCB" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="jcb" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-maestro-7caa38.svg'|asset_url }}{% verbatim %}" alt="Maestro" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="maestro" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-dankort-15b780.svg'|asset_url }}{% verbatim %}" alt="Dankort" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="dankort" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-paypal-logo-812a71.svg'|asset_url }}{% verbatim %}" alt="PayPal" class="payment-logos__item" data-payment-logo="paypal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-apple-pay-logo-d7b774.svg'|asset_url }}{% verbatim %}" alt="Apple Pay" class="payment-logos__item" data-payment-logo="apple_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-google-pay-logo-4a1dc6.svg'|asset_url }}{% verbatim %}" alt="Google Pay" class="payment-logos__item" data-payment-logo="google_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-klarna-logo-625918.svg'|asset_url }}{% verbatim %}" alt="Klarna" class="payment-logos__item" data-payment-logo="klarna" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-affirm-logo-264821.svg'|asset_url }}{% verbatim %}" alt="Affirm" class="payment-logos__item" data-payment-logo="affirm" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-link-logo-b8bc37.svg'|asset_url }}{% verbatim %}" alt="Link" class="payment-logos__item" data-payment-logo="link" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-shop-pay-logo-df9c3b.svg'|asset_url }}{% verbatim %}" alt="Shop Pay" class="payment-logos__item" data-payment-logo="shop_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-twint-logo-271738.svg'|asset_url }}{% verbatim %}" alt="TWINT" class="payment-logos__item" data-payment-logo="twint" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-bancontact-logo-9a7e81.svg'|asset_url }}{% verbatim %}" alt="Bancontact" class="payment-logos__item" data-payment-logo="bancontact" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-ideal-logo-8b639e.svg'|asset_url }}{% verbatim %}" alt="iDEAL" class="payment-logos__item" data-payment-logo="ideal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-sepa-logo-b17ddc.svg'|asset_url }}{% verbatim %}" alt="SEPA Direct Debit" class="payment-logos__item" data-payment-logo="sepa_debit" hidden>
+  </div><div class="payment-logos" data-payment-logos aria-label="Accepted payment methods"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-visa-89d56c.svg'|asset_url }}{% verbatim %}" alt="Visa" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="visa" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-master-465bcf.svg'|asset_url }}{% verbatim %}" alt="Mastercard" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="mastercard" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-amex-d638f4.svg'|asset_url }}{% verbatim %}" alt="American Express" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="american_express" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-discover-c1e4c3.svg'|asset_url }}{% verbatim %}" alt="Discover" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="discover" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-diners-club-6d75f2.svg'|asset_url }}{% verbatim %}" alt="Diners Club" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="diners_club" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-jcb-768f2b.svg'|asset_url }}{% verbatim %}" alt="JCB" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="jcb" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-maestro-7caa38.svg'|asset_url }}{% verbatim %}" alt="Maestro" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="maestro" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-dankort-15b780.svg'|asset_url }}{% verbatim %}" alt="Dankort" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="dankort" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-paypal-logo-812a71.svg'|asset_url }}{% verbatim %}" alt="PayPal" class="payment-logos__item" data-payment-logo="paypal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-apple-pay-logo-d7b774.svg'|asset_url }}{% verbatim %}" alt="Apple Pay" class="payment-logos__item" data-payment-logo="apple_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-google-pay-logo-4a1dc6.svg'|asset_url }}{% verbatim %}" alt="Google Pay" class="payment-logos__item" data-payment-logo="google_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-klarna-logo-625918.svg'|asset_url }}{% verbatim %}" alt="Klarna" class="payment-logos__item" data-payment-logo="klarna" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-affirm-logo-264821.svg'|asset_url }}{% verbatim %}" alt="Affirm" class="payment-logos__item" data-payment-logo="affirm" data-payment-force="hide" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-link-logo-b8bc37.svg'|asset_url }}{% verbatim %}" alt="Link" class="payment-logos__item" data-payment-logo="link" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-shop-pay-logo-df9c3b.svg'|asset_url }}{% verbatim %}" alt="Shop Pay" class="payment-logos__item" data-payment-logo="shop_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-twint-logo-271738.svg'|asset_url }}{% verbatim %}" alt="TWINT" class="payment-logos__item" data-payment-logo="twint" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-bancontact-logo-9a7e81.svg'|asset_url }}{% verbatim %}" alt="Bancontact" class="payment-logos__item" data-payment-logo="bancontact" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-ideal-logo-8b639e.svg'|asset_url }}{% verbatim %}" alt="iDEAL" class="payment-logos__item" data-payment-logo="ideal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-sepa-logo-b17ddc.svg'|asset_url }}{% verbatim %}" alt="SEPA Direct Debit" class="payment-logos__item" data-payment-logo="sepa_debit" hidden>
   </div></div>
 <div class="upsell-guarantees">
   <div class="upsell-guarantee upsell-guarantee--row">
@@ -241,19 +248,13 @@
           
           <div class="swiper-slide">
             <div class="swiper-slide_inner">
-              <div class="swiper-slide_image-wrap is-square"><img loading="eager" src="{% endverbatim %}{{ 'sfa/sfa-bottle-556f27.jpg'|asset_url }}{% verbatim %}" alt="The Adaptive Peptide Foundation bottle" class="cover"></div>
+              <div class="swiper-slide_image-wrap is-square"><img loading="eager" src="{% endverbatim %}{{ 'sfa/sfa-bottle-afe082.jpg'|asset_url }}{% verbatim %}" alt="The Adaptive Peptide Foundation bottle" class="cover"></div>
             </div>
           </div>
           
           <div class="swiper-slide">
             <div class="swiper-slide_inner">
               <div class="swiper-slide_image-wrap is-square"><img loading="eager" src="{% endverbatim %}{{ 'sfa/sfa-g-dots-77f417.jpg'|asset_url }}{% verbatim %}" alt="A woman in her fifties with the foundation dotted on white, eyes closed" class="cover"></div>
-            </div>
-          </div>
-          
-          <div class="swiper-slide">
-            <div class="swiper-slide_inner">
-              <div class="swiper-slide_image-wrap is-square"><img loading="eager" src="{% endverbatim %}{{ 'sfa/sfa-g-inside-64c3d7.jpg'|asset_url }}{% verbatim %}" alt="What is inside: peptides and PDRN, hyaluronic acid and ceramide, fragrance-free (illustration)" class="cover"></div>
             </div>
           </div>
           
@@ -275,19 +276,13 @@
               
               <div class="swiper-slide is-thumb">
                 <div class="swiper-slide_inner">
-                  <div class="swiper-slide_image-wrap"><img loading="eager" src="{% endverbatim %}{{ 'sfa/sfa-bottle-556f27.jpg'|asset_url }}{% verbatim %}" alt="" class="cover"></div>
+                  <div class="swiper-slide_image-wrap"><img loading="eager" src="{% endverbatim %}{{ 'sfa/sfa-bottle-afe082.jpg'|asset_url }}{% verbatim %}" alt="" class="cover"></div>
                 </div>
               </div>
               
               <div class="swiper-slide is-thumb">
                 <div class="swiper-slide_inner">
                   <div class="swiper-slide_image-wrap"><img loading="eager" src="{% endverbatim %}{{ 'sfa/sfa-g-dots-77f417.jpg'|asset_url }}{% verbatim %}" alt="" class="cover"></div>
-                </div>
-              </div>
-              
-              <div class="swiper-slide is-thumb">
-                <div class="swiper-slide_inner">
-                  <div class="swiper-slide_image-wrap"><img loading="eager" src="{% endverbatim %}{{ 'sfa/sfa-g-inside-64c3d7.jpg'|asset_url }}{% verbatim %}" alt="" class="cover"></div>
                 </div>
               </div>
               
@@ -305,7 +300,7 @@
 </div><div class="payment-img-wrapper hide-tablet-down">
   <div class="trust-badge invert"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-icons8-lock-24-1icons8-lock-24-7e2024.png'|asset_url }}{% verbatim %}" alt="" class="trust-badge__icon">
     <div class="badge-text-black">100% Encrypted &amp; Secure Checkout</div>
-  </div><div class="payment-logos" data-payment-logos aria-label="Accepted payment methods"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-visa-89d56c.svg'|asset_url }}{% verbatim %}" alt="Visa" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="visa" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-master-465bcf.svg'|asset_url }}{% verbatim %}" alt="Mastercard" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="mastercard" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-amex-d638f4.svg'|asset_url }}{% verbatim %}" alt="American Express" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="american_express" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-discover-c1e4c3.svg'|asset_url }}{% verbatim %}" alt="Discover" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="discover" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-diners-club-6d75f2.svg'|asset_url }}{% verbatim %}" alt="Diners Club" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="diners_club" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-jcb-768f2b.svg'|asset_url }}{% verbatim %}" alt="JCB" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="jcb" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-maestro-7caa38.svg'|asset_url }}{% verbatim %}" alt="Maestro" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="maestro" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-dankort-15b780.svg'|asset_url }}{% verbatim %}" alt="Dankort" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="dankort" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-paypal-logo-812a71.svg'|asset_url }}{% verbatim %}" alt="PayPal" class="payment-logos__item" data-payment-logo="paypal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-apple-pay-logo-d7b774.svg'|asset_url }}{% verbatim %}" alt="Apple Pay" class="payment-logos__item" data-payment-logo="apple_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-google-pay-logo-4a1dc6.svg'|asset_url }}{% verbatim %}" alt="Google Pay" class="payment-logos__item" data-payment-logo="google_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-klarna-logo-625918.svg'|asset_url }}{% verbatim %}" alt="Klarna" class="payment-logos__item" data-payment-logo="klarna" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-affirm-logo-264821.svg'|asset_url }}{% verbatim %}" alt="Affirm" class="payment-logos__item" data-payment-logo="affirm" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-link-logo-b8bc37.svg'|asset_url }}{% verbatim %}" alt="Link" class="payment-logos__item" data-payment-logo="link" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-shop-pay-logo-df9c3b.svg'|asset_url }}{% verbatim %}" alt="Shop Pay" class="payment-logos__item" data-payment-logo="shop_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-twint-logo-271738.svg'|asset_url }}{% verbatim %}" alt="TWINT" class="payment-logos__item" data-payment-logo="twint" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-bancontact-logo-9a7e81.svg'|asset_url }}{% verbatim %}" alt="Bancontact" class="payment-logos__item" data-payment-logo="bancontact" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-ideal-logo-8b639e.svg'|asset_url }}{% verbatim %}" alt="iDEAL" class="payment-logos__item" data-payment-logo="ideal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-sepa-logo-b17ddc.svg'|asset_url }}{% verbatim %}" alt="SEPA Direct Debit" class="payment-logos__item" data-payment-logo="sepa_debit" hidden>
+  </div><div class="payment-logos" data-payment-logos aria-label="Accepted payment methods"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-visa-89d56c.svg'|asset_url }}{% verbatim %}" alt="Visa" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="visa" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-master-465bcf.svg'|asset_url }}{% verbatim %}" alt="Mastercard" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="mastercard" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-amex-d638f4.svg'|asset_url }}{% verbatim %}" alt="American Express" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="american_express" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-discover-c1e4c3.svg'|asset_url }}{% verbatim %}" alt="Discover" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="discover" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-diners-club-6d75f2.svg'|asset_url }}{% verbatim %}" alt="Diners Club" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="diners_club" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-jcb-768f2b.svg'|asset_url }}{% verbatim %}" alt="JCB" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="jcb" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-maestro-7caa38.svg'|asset_url }}{% verbatim %}" alt="Maestro" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="maestro" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-dankort-15b780.svg'|asset_url }}{% verbatim %}" alt="Dankort" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="dankort" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-paypal-logo-812a71.svg'|asset_url }}{% verbatim %}" alt="PayPal" class="payment-logos__item" data-payment-logo="paypal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-apple-pay-logo-d7b774.svg'|asset_url }}{% verbatim %}" alt="Apple Pay" class="payment-logos__item" data-payment-logo="apple_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-google-pay-logo-4a1dc6.svg'|asset_url }}{% verbatim %}" alt="Google Pay" class="payment-logos__item" data-payment-logo="google_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-klarna-logo-625918.svg'|asset_url }}{% verbatim %}" alt="Klarna" class="payment-logos__item" data-payment-logo="klarna" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-affirm-logo-264821.svg'|asset_url }}{% verbatim %}" alt="Affirm" class="payment-logos__item" data-payment-logo="affirm" data-payment-force="hide" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-link-logo-b8bc37.svg'|asset_url }}{% verbatim %}" alt="Link" class="payment-logos__item" data-payment-logo="link" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-shop-pay-logo-df9c3b.svg'|asset_url }}{% verbatim %}" alt="Shop Pay" class="payment-logos__item" data-payment-logo="shop_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-twint-logo-271738.svg'|asset_url }}{% verbatim %}" alt="TWINT" class="payment-logos__item" data-payment-logo="twint" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-bancontact-logo-9a7e81.svg'|asset_url }}{% verbatim %}" alt="Bancontact" class="payment-logos__item" data-payment-logo="bancontact" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-ideal-logo-8b639e.svg'|asset_url }}{% verbatim %}" alt="iDEAL" class="payment-logos__item" data-payment-logo="ideal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-sepa-logo-b17ddc.svg'|asset_url }}{% verbatim %}" alt="SEPA Direct Debit" class="payment-logos__item" data-payment-logo="sepa_debit" hidden>
   </div></div>
 </div></div>
         </div>
@@ -319,56 +314,6 @@
     </div>
   </section>
 </div>
-    <section class="section cc-sm sf-how" aria-labelledby="sf-how-title">
-  <div class="container">
-    <div class="sf-how__grid">
-      <figure class="sf-how__media">
-        <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfa/sfa-howto-poster-2a3be8.jpg'|asset_url }}{% verbatim %}" width="864" height="1080" aria-label="Illustration: the foundation goes on as white dots, blends into her skin tone, and the serum’s ingredients">
-          <source src="{% endverbatim %}{{ 'sfa/sfa-howto-009016.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
-          <source src="{% endverbatim %}{{ 'sfa/sfa-howto-7f7278.webm'|asset_url }}{% verbatim %}" type="video/webm">
-        </video>
-      </figure>
-      <div class="sf-how__body">
-        <span class="sf-how__eyebrow">How it works</span>
-        <h2 class="display-md" id="sf-how-title">One adaptive shade, in a skincare serum</h2>
-        <p class="sf-how__lede">Not a shade you pick, but a foundation that finds yours, in a serum made for skin after 45.</p>
-        <ol class="sf-how__steps">
-          <li><b>1</b><div><strong>It goes on white</strong><span>The colour waits in tiny capsules in the serum; there is nothing on the bottle to get wrong.</span></div></li>
-          <li><b>2</b><div><strong>Blend, and the capsules open</strong><span>The colour shifts toward your own tone as you work it in, in about a minute.</span></div></li>
-          <li><b>3</b><div><strong>A hydrating serum base</strong><span>Two forms of hyaluronic acid, ceramide NP, squalane and panthenol keep dry skin comfortable.</span></div></li>
-          <li><b>4</b><div><strong>Soft-focus spheres</strong><span>Round silica and boron nitride powders scatter the light, so lines and pores look softer.</span></div></li>
-        </ol><p class="sf-how__note">PDRN, Matrixyl 3000 peptides, Pro-Xylane and niacinamide in every layer. The video is an illustration; the full ingredient list is on the box.</p>
-      </div>
-    </div>
-  </div>
-</section>
-    <section class="section cc-sm sf-reserved" aria-labelledby="sf-reserved-title">
-  <div class="container cc-medium">
-    <div class="sf-reserved__card">
-      <span class="sf-reserved__eyebrow">Reserved for you<span data-sf-name></span></span>
-      <h2 class="display-md" id="sf-reserved-title">Half price, only on this page</h2>
-      <div class="sf-reserved__compare">
-        <div class="sf-reserved__price">
-          <span class="sf-reserved__label">In our store</span>
-          <s class="sf-reserved__amount">$47.00</s>
-          <small>1 bottle, bought once</small>
-        </div>
-        <div class="sf-reserved__price is-here">
-          <span class="sf-reserved__label">Here, today</span>
-          <strong class="sf-reserved__amount"><span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span></strong>
-          <small><span data-next-display="bundle.offer-2b.discountPercentage" data-next-format="percentage">51%</span> off, charged once</small>
-          <small class="sf-reserved__renews">charged once, nothing renews</small>
-        </div>
-      </div>
-      <ul class="sf-reserved__list">
-        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Our lowest price anywhere</strong><span>One is $47.00 in our store and $39 on the sales page; it is <span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span> here and nowhere else.</span></div></li>
-        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>One tap, nothing to type</strong><span>It’s added to the order you just placed, in the same box, and charged to the same payment method.</span></div></li>
-        <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#151515"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>30 days to love it</strong><span>Or email us within 30 days of delivery for a full refund, even opened.</span></div></li>
-      </ul><a data-upsell-proxy="add" href="#" class="button cc-xl" pb-animate="pulse-upsell">
-  <div data-button="content" class="button_content"><div>Yes, add one more bottle for <span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span></div></div>
-</a><p class="upsell-cta__note"><span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span> today (<span data-next-display="bundle.offer-2b.discountPercentage" data-next-format="percentage">51%</span> off), charged once to the payment you just used. Nothing renews, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy.</p></div>
-  </div>
-</section>
     <section class="section cc-sm">
   <div class="container">
     <div class="heading-box text-center max-width-large align-center">
@@ -401,7 +346,7 @@
 </section>
     <div data-next-catalog-component="upsell-closing-cta"><section class="section cc-sm upsell-closing color-surface">
   <div class="container cc-medium">
-    <p class="text-lg text-center max-width-medium align-center margin-12">Contains salmon-derived PDRN: not for anyone with a fish allergy. Backed by our 30-day money-back guarantee.</p>
+    <p class="text-lg text-center max-width-medium align-center margin-12">Contains salmon-derived PDRN: not for anyone with a fish allergy. Backed by our 30-day money-back guarantee. The clock above is the offer’s: at 0:00 this page moves on.</p>
     <div class="upsell-container upsell-container--box margin-32">
       <div class="upsell-offer__card">
         <div class="grid-full flex-col flex-horizontal-lg-up gap-xl">
@@ -416,7 +361,7 @@
   <div class="text-3xl tw-700">Today, on this page <span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span></div>
 </div><a data-upsell-proxy="add" href="#" class="button cc-xl" pb-animate="pulse-upsell">
   <div data-button="content" class="button_content"><div>Yes, add one more bottle for <span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span></div></div>
-</a><p class="upsell-cta__note"><span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span> today (<span data-next-display="bundle.offer-2b.discountPercentage" data-next-format="percentage">51%</span> off), charged once to the payment you just used. Nothing renews, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy.</p>
+</a><p class="upsell-cta__note"><span data-next-display="bundle.offer-2b.price" data-next-format="currency">$19.00</span> today, charged once to the payment you just used. Nothing renews, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy.</p>
 <div class="cc-decline-wrapper">
   <a data-upsell-proxy="skip" href="#" class="upsell-link cc-decline cc-upsell4">
     <div class="text-sm tw-600 cc-upsell4">No thanks, not even at half price</div>
@@ -460,7 +405,9 @@
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-offer-gate-d7b4ad.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-7a4c68.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-offer-timer-271526.js'|asset_url }}{% verbatim %}"></script>
+    
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-5a907c.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

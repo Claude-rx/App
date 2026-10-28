@@ -4,9 +4,11 @@ store. The Admin token comes from $NEXT_API_TOKEN and is never printed.
 
 usage: NEXT_API_TOKEN=... python3 -I tools/funnel/apf/commerce.py [--dry-run] [--verify]
 
-The campaign is the stick funnel's (2211): the Campaigns App allows try.skinofab.com on it, and that allow-list is not
-settable through the Admin API, so a second campaign would wait on the dashboard. The foundation's packages are
-one-time (the persona report: refills opt-in only, never pre-checked). A campaign takes one package per store variant:
+The campaign is the funnel's own, 2221 "SKINOFAB Adaptive Peptide Foundation Funnel" (created 28 Oct 2026 by the
+next-campaigns-create skill from next-campaigns-create-runs/skinofab-apf/campaign-plan.json, which also verified every
+price; this script finds those packages and offers in place and creates nothing twice). Its Allowed Domains
+(try.skinofab.com) are a dashboard setting. The foundation's packages are one-time (the persona report: refills
+opt-in only, never pre-checked). A campaign takes one package per store variant:
 - the store's own "1 bottle" (15) and "2 bottles + free gifts" (103) carry the funnel's first two packs at the
   funnel's prices (a package's price is the campaign's, not the store's);
 - the 3-bottle pack, the offer-1 packs (2 bottles; 6 bottles + free brush) are new variants of product 14, named for
@@ -24,7 +26,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'tools' / 'funnel'))
 STORE = 'https://skinofab.29next.store'
-CAMPAIGN = 2211
+CAMPAIGN = 2221
 API = STORE + '/api/admin/'
 CART = 'https://campaigns.apps.29next.com/api/v1/carts/calculate/'
 DRY = '--dry-run' in sys.argv

@@ -6,12 +6,15 @@ meta_tags:
   next-funnel: "SKINOFAB Adaptive Peptide Foundation"
   next-page-type: "checkout"
   next-success-url: "/apf-funnel/foundation-offer-1/"
-# Apollo's single-step checkout (the flagship family) with the funnel's three packs, campaign packages 6, 7 and 8
-# (tools/funnel/funnels/apf.py), the 2-bottle pack preselected. The page sells on trust, not on the product (she chose it
-# on the sales page): the rating and four promises above Step 1, the guarantee by the order button, and the reviews,
-# ratings, guarantee card and questions in the left column (under the form on a phone): _includes/sf-checkout-trust.html.
-# Every pack is a one-time purchase (nothing renews), said by the express buttons and the order button. The exit pop
-# applies APF10 (offer 6, 10% off the foundation packs). No coupon box: the post-purchase vouchers must not be usable here.
+# Apollo's single-step checkout (the flagship family) with the funnel's three packs, campaign packages 1, 2 and 3
+# (tools/funnel/funnels/apf.py: campaign 2221, packages 1, 2 and 3), the 2-bottle pack preselected. The form comes first (v2: she chose the foundation on the
+# sales page, so the page asks for her pack, her details, her address and her payment straight away); the trust sits
+# where she decides: one rating line above the pack cards, the guarantee line and the one-time terms by the order
+# button, four badges under it, three buyers' reviews (green stars, their own photos) right after it on a phone, and the
+# proof column (ratings by stars, ten reviews, the guarantee card, the questions) beside the form on a computer:
+# _includes/sf-checkout-trust.html. Every pack is a one-time purchase (nothing renews), said by the express buttons and
+# the order button. The exit pop applies APF10 (offer 6, 10% off the foundation packs), on a phone too (a scroll up
+# toward the address bar). No coupon box: the post-purchase vouchers must not be usable here.
 cart_summary_variant: "02"
 payment_flags:
   show_affirm: false
@@ -50,6 +53,7 @@ trust:
     - { icon: truck, title: "Free tracked shipping", text: "Your order ships in 1 business day." }
     - { icon: mail, title: "One-time purchase", text: "Nothing renews. Questions? A person replies within one business day." }
     - { icon: lock, title: "Secure checkout", text: "Your card number goes straight to our payment processor, encrypted." }
+  allergy: "Contains salmon-derived PDRN: not for anyone with a fish allergy."
   faq:
     - q: "What if it isn’t my shade?"
       a: "It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
@@ -61,6 +65,8 @@ trust:
       a: "Yes. They are the published reviews of the Adaptive Peptide Foundation from our earlier store, imported in October 2026 word for word, with the buyers’ own photos."
     - q: "Is my payment secure?"
       a: "Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal, Apple Pay, Klarna or Link."
+    - q: "Anything I should know before I order?"
+      a: "The formula contains salmon-derived PDRN, so it is not for anyone with a fish allergy. If your skin is very reactive, try it on your jawline first. The full ingredient list is printed on the box."
 # the foundation's published reviews (the earlier store's review app), word for word and without titles (the buyers wrote
 # none): women past 45 about the match, their lines and their dry skin (persona.md), two of them 4 stars as 2,132 of the
 # ratings are; each with her own photo (tools/funnel/apf/images.py REVIEW_PHOTOS)
@@ -131,32 +137,38 @@ scripts:
   - js/sf-failsafe.js
   - js/payment-logos.js
 packages:
-  main_package: 7
+  main_package: 2
 shipping_methods:
   standard: 1
 bundles:
   - id: "apf-2"
-    package_id: 7
+    package_id: 2
     quantity: 1
     shipping_method: "standard"
     selected: true
     image: "images/sf/pack-2.jpg"
+    name: "2 bottles + free gifts"
+    price: "$57.00"
     subtitle_text: "One-time. Free shipping, a free Blender brush and a free mystery gift"
     badge_text: "Most popular"
     badge_pill_class: "os-card__label--pill-secondary"
   - id: "apf-3"
-    package_id: 8
+    package_id: 3
     quantity: 1
     shipping_method: "standard"
     image: "images/sf/pack-3.jpg"
+    name: "3 bottles + free gifts + free Lymphatic Brush"
+    price: "$75.00"
     subtitle_text: "One-time. Free shipping, a free Lymphatic Brush, a free Blender brush and a free mystery gift"
     badge_text: "Best value"
     badge_pill_class: "os-card__label--pill-primary"
   - id: "apf-1"
-    package_id: 6
+    package_id: 1
     quantity: 1
     shipping_method: "standard"
     image: "images/sf/pack-1.jpg"
+    name: "1 bottle"
+    price: "$39.00"
     subtitle_text: "One-time. Free shipping"
 # what she pays today (the SDK's cart total, after any exit coupon) and what the pack is, by the express buttons (they place
 # the order too) and by the button; sf-checkout.js keeps the pack's line in step with the chosen card
@@ -164,16 +176,17 @@ pay_terms:
   apf-2: "2 bottles with a free Blender brush and a free mystery gift"
   apf-3: "3 bottles with a free Lymphatic Brush, a free Blender brush and a free mystery gift"
   apf-1: "1 bottle"
-once_terms: "A one-time purchase: nothing renews and nothing else is charged. Questions? Email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a>: a person replies within one business day. Every pack has the same 30-day money-back guarantee."
+once_terms: "A one-time purchase: nothing renews and nothing else is charged. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a>: a person replies within one business day."
+# the exit pop: the bottle (the pack she picked may not be the 3-pack), one offer said once, the saving applied at the button
 exit_intent:
   coupon_code: "APF10"
-  popup_image: "images/sf/offer.jpg"
+  popup_image: "images/sf/bottle.jpg"
   headline: "Wait!"
-  subheadline: "Before you go, take 10% off."
-  offer_title: "Your foundation pack, 10% off today"
-  offer_label: "Take <strong>10% off</strong> your pack"
-  offer_detail: "10% off the foundation pack in today’s order, rounded down to the dollar ($67 for 3 bottles, $51 for 2, $35 for 1). The gifts and free shipping stay."
-  cta_label: "Apply my 10% off"
+  subheadline: "One more reason to order today."
+  offer_title: "An extra <strong>10% off</strong> your pack"
+  offer_label: "Applied at the button, before you pay"
+  offer_detail: "It comes off the foundation pack in today’s order, rounded down to the dollar: $67 for 3 bottles, $51 for 2, $35 for 1. The gifts and free shipping stay."
+  cta_label: "Apply it to my order"
 ---
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
@@ -201,7 +214,6 @@ exit_intent:
                             {% campaign_include 'customer-info-form.html' section_title='Step 2: Your details' %}
                             {% campaign_include 'shipping-address-form.html' section_title='Step 3: Shipping address' %}
                           </div>
-                          {% campaign_include 'sf-checkout-trust.html' part='featured' %}
                           <div class="form-section form-section--last">
                             <div class="form-section__header">
                               <h2 class="form-section__title" id="sf-co-pay">Step 4: Payment</h2>
@@ -221,6 +233,7 @@ exit_intent:
                           {% campaign_include 'sf-checkout-trust.html' part='inline' %}
                           {% capture disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
                           {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · ONE-TIME PURCHASE · 30-DAY GUARANTEE' disclaimer=disclaimer %}
+                          {% campaign_include 'sf-checkout-trust.html' part='badges' %}
                         </div>
                       </div>
                     </form>
@@ -228,6 +241,7 @@ exit_intent:
                   <div class="checkout-trust-bar">
                     {% campaign_include 'payment-logos.html' show_secure=true %}
                   </div>
+                  {% campaign_include 'sf-checkout-trust.html' part='featured' %}
                 </div>
               </div>
             </div>

@@ -5,7 +5,8 @@
 // usage: [FUNNEL=stick|apf] node tools/funnel/live_order.mjs <host> <out-dir> [--path accept,decline,...] [--pack <card>]
 //        [--tier <bundle id>] [--resume <ref_id> [--start <page file>]]
 //   FUNNEL   which funnel's pages (tools/funnel/funnels/<name>.py): stick (default) or apf
-//   <host>   https://try.skinofab.com (the funnel's host: the domain the campaign allows)
+//   <host>   https://try.skinofab.com (the funnel's host: the domain the campaign allows), or a local build under its
+//            Page Kit slug, http://127.0.0.1:8090/apf-funnel (localhost is always allowed by the campaign)
 //   --path   what to do on the offer pages, in the order they come. Accept and decline route differently (apf: offer 1
 //            accepted skips offer 2; a decline goes to the downsell), so the walk reads where to arrive from each page's
 //            own accept / decline meta tags, and stops on the thank-you page; pages after the list are declined.
@@ -38,7 +39,8 @@ const ADDRESS = { fname: 'Quinn', lname: 'Tester', email: 'qa-live@skinofab.test
   city: 'Mountain View', province: 'CA', postal: '94043' };
 fs.mkdirSync(out, { recursive: true });
 
-const browser = await chromium.launch({ proxy: process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined, args: ['--disable-dev-shm-usage'] });
+// the agent proxy only for a remote host: it answers 405 to a local address (a run on Page Kit's _site, http://127.0.0.1:<port>/<slug>)
+const browser = await chromium.launch({ proxy: process.env.HTTPS_PROXY && !/127\.0\.0\.1|localhost/.test(host) ? { server: process.env.HTTPS_PROXY } : undefined, args: ['--disable-dev-shm-usage'] });
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'en-US', ignoreHTTPSErrors: true });
 const page = await ctx.newPage();
 const errors = [];

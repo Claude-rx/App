@@ -1,14 +1,15 @@
 {%- comment -%}
-  SKINOFAB: the brush offer's product page under the offer: the problem (morning puffiness), its root, the solution, how to
-  use it, what to expect, how it compares with other tools, what is in the box and the questions, in the brush's own
-  store copy (tools/persona/brush_copy.py: a light, dry massage for the look of morning puffiness; it does not drain,
-  sculpt or lift, and says so). Reads the page's frontmatter (brush), written by tools/funnel/apf/offer_pages.py.
+  SKINOFAB: the brush offer's short product page under the offer (the loop above the fold shows the brush at work): the
+  problem (morning puffiness, with an illustration of the look it is for), the solution, how to use it (said once: the
+  four sweeps), how it compares with stones and rollers, what is in the box and the questions, in the brush's own store
+  copy (tools/persona/brush_copy.py: a light, dry massage for the look of morning puffiness; it does not drain, sculpt
+  or lift, and says so). Reads the page's frontmatter (brush), written by tools/funnel/apf/offer_pages.py.
 {%- endcomment -%}
 {%- if brush -%}
 <div class="sf-bp">
   <section class="sf-bp__sec" aria-labelledby="sf-bp-problem">
     <div class="sf-bp__two">
-      <img src="{{ brush.problem.image | campaign_asset }}" alt="{{ brush.problem.alt }}" width="1024" height="1024" loading="lazy" decoding="async">
+      <figure class="sf-bp__fig"><img src="{{ brush.problem.image | campaign_asset }}" alt="{{ brush.problem.alt }}" width="1080" height="1080" loading="lazy" decoding="async"><figcaption>{{ brush.problem.caption }}</figcaption></figure>
       <div>
         <span class="sf-bp__eyebrow">{{ brush.problem.eyebrow }}</span>
         <h2 class="display-md" id="sf-bp-problem">{{ brush.problem.title }}</h2>
@@ -16,15 +17,6 @@
         <ul class="sf-bp__pains">{% for p in brush.problem.pains %}<li>{{ p }}</li>{% endfor %}</ul>
         <p class="text-lg"><strong>{{ brush.problem.close }}</strong></p>
       </div>
-    </div>
-  </section>
-
-  <section class="sf-bp__sec" aria-labelledby="sf-bp-root">
-    <div class="sf-bp__root">
-      <span class="sf-bp__eyebrow">{{ brush.root.eyebrow }}</span>
-      <h2 class="display-md" id="sf-bp-root">{{ brush.root.title }}</h2>
-      <div class="sf-bp__causes">{% for c in brush.root.causes %}<div class="sf-bp__cause"><strong>{{ c.title }}</strong><p>{{ c.text }}</p></div>{% endfor %}</div>
-      <p class="text-lg" style="margin-top:14px"><strong>{{ brush.root.end }}</strong></p>
     </div>
   </section>
 
@@ -51,11 +43,6 @@
         <p class="text-base" style="margin-top:10px">{{ brush.use.note }}</p>
       </div>
     </div>
-  </section>
-
-  <section class="sf-bp__sec" aria-labelledby="sf-bp-expect">
-    <h2 class="display-md text-center" id="sf-bp-expect">{{ brush.expect.title }}</h2>
-    <div class="sf-bp__cards" style="margin-top:14px">{% for c in brush.expect.cards %}<div class="sf-bp__card"><b>{{ c[0] }}</b><strong>{{ c[1] }}</strong><span>{{ c[2] }}</span></div>{% endfor %}</div>
   </section>
 
   <section class="sf-bp__sec" aria-labelledby="sf-bp-compare">

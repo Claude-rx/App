@@ -1,0 +1,2 @@
+{%- comment -%} SKINOFAB: five boxed stars in a review site's green (no site named), n of them lit (4 or 5). Inside a .sf-co-tp / .sf-tp__stars span. {%- endcomment -%}
+{%- assign lit = n | default: 5 -%}{% for i in (1..5) %}<i{% if i > lit %} class="off"{% endif %}></i>{% endfor %}

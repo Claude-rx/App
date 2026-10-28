@@ -1,0 +1,19 @@
+{%- comment -%}
+  SKINOFAB: a small line icon by name (v2 feature marks and ingredient cards). Inline SVG in currentColor, 24 x 24.
+    name: leaf | ban | drop-off | flag | dna | chain | drop | once | tree | spark | wave | shield
+{%- endcomment -%}
+{%- case name -%}
+{%- when 'leaf' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c0-9 6-15 16-15 0 10-6 16-15 16M4 20l8-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- when 'ban' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+{%- when 'drop-off' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5 19L19 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+{%- when 'flag' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 9.5c3-3 7-3 9 0s6 3 8 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M5.5 14.5c3-3 7-3 9 0s6 3 8 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".55"/></svg>
+{%- when 'dna' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3c0 6 10 6 10 12M17 3c0 6-10 6-10 12M7 15c0 2 1 4 2 6M17 15c0 2-1 4-2 6M9 7h6M8 11h8M9 15h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+{%- when 'chain' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.6 12h1.8M14.6 12h1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+{%- when 'drop' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 14a3 3 0 0 0 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+{%- when 'once' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 9.5l2.2-1.5V16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- when 'tree' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 7h-3l4 5h-5v6h-2v-6H6l4-5H7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+{%- when 'spark' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+{%- when 'wave' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12c3-4 6-4 9 0s6 4 9 0M3 17c3-4 6-4 9 0s6 4 9 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+{%- when 'shield' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- else -%}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- endcase -%}

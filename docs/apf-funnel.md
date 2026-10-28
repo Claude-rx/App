@@ -1,21 +1,22 @@
 # The Adaptive Peptide Foundation funnel
 
 A one-time-purchase funnel for the Adaptive Peptide Foundation (the liquid foundation), served by the store itself on
-**try.skinofab.com** beside the stick funnel (`docs/stick-funnel.md`), both in Campaigns App campaign 2211:
+**try.skinofab.com** beside the stick funnel (`docs/stick-funnel.md`), in its own Campaigns App campaign, **2221
+"SKINOFAB Adaptive Peptide Foundation Funnel"** (one campaign per product funnel; the stick keeps 2211):
 
     listicle  ->  sales page  ->  checkout  ->  offer 1 (supply)  ->  offer 2 / its downsell  ->  offer 3 (brush) / its downsell  ->  thank you
 
 | Page | Live URL | What it does |
 |---|---|---|
 | Listicle (entry) | https://try.skinofab.com/10-reasons-adaptive-foundation/ | "10 Reasons Why Women Over 45 Look Fresher With This 'Shade-Adapting' Foundation": the Facelove listicle's structure, this foundation's reasons, photos and reviews |
-| Sales page | https://try.skinofab.com/adaptive-foundation-offer/ | the 20-section long sales page (`docs/apf-funnel/copy-deck.md`): 3 packs ($39 / $57 + 2 gifts / $75 + 3 gifts incl. the Lymphatic Brush), problem, mechanism, solution, comparison, labelled before/afters, proof, demo clips, guarantee, value stack, reviews with photos, FAQ |
-| Checkout | https://try.skinofab.com/foundation-checkout/ | Apollo checkout on trust (rating, promises, guarantee by the button, 10 reviews with photos, FAQ), 3 pack cards (2-pack preselected), express PayPal / Apple Pay, Klarna, Link, exit pop APF10 |
-| Offer 1 | https://try.skinofab.com/foundation-offer-1/ | supply cards: 2 bottles for the price of one ($39, "Add 1, get 1 FREE") or 6 for the price of three with a free Lymphatic Brush ($99, "Buy 3, get 3 FREE") |
-| Offer 2 | https://try.skinofab.com/foundation-offer-2/ | one more bottle, 40% off ($23) |
-| Offer 2, downsell | https://try.skinofab.com/foundation-offer-2b/ | one more bottle, 50% off ($19), the lowest price for one bottle anywhere |
-| Offer 3 | https://try.skinofab.com/lymphatic-brush-offer/ | the Lymphatic Brush + case, 40% off ($14), with the brush's product page under the offer |
-| Offer 3, downsell | https://try.skinofab.com/lymphatic-brush-offer-b/ | the brush, 60% off ($9), last chance |
-| Thank you | https://try.skinofab.com/foundation-thank-you/ | receipt (the order and every accepted offer, each line "One-time purchase. Nothing renews."), next steps, the rest of the range |
+| Sales page | https://try.skinofab.com/adaptive-foundation-offer/ | v2 (28 Oct 2026): hero promise ("Even, fresh skin in about a minute. No shade to guess.") with bullets and the wow image; the problem with emotional images; the root cause with an animated skin diagram; the root solution with the science loop; one pump instead of four products; the comparison table; feature badges; the ingredients; "Formulated in Korea" with the doctor image captioned as an illustration; the one-shade objection graphic; before/afters; proof; demo clips; green-star reviews; FAQ; the offer with the value stack, honest urgency and the pack chooser (`docs/apf-funnel/copy-deck.md`) |
+| Checkout | https://try.skinofab.com/foundation-checkout/ | v2: the form first (packs with their names and prices from the first paint, details, address, payment), the guarantee line and one-time terms by the order button, four badges under it, three green-star reviews after it on a phone, the proof column beside it on a computer; express PayPal / Apple Pay, Klarna, Link; exit pop APF10 (on a phone too) |
+| Offer 1 | https://try.skinofab.com/foundation-offer-1/ | "just for you, right now" with the honest 10-minute clock: supply cards, 2 bottles for $39 ("Add 1, get 1 FREE") or 6 for $99 ($16.50 a bottle) with a free Lymphatic Brush |
+| Offer 2 | https://try.skinofab.com/foundation-offer-2/ | one more bottle, 40% off ($23), 10-minute clock |
+| Offer 2, downsell | https://try.skinofab.com/foundation-offer-2b/ | one more bottle, 50% off ($19), the lowest price for one bottle anywhere, 5-minute clock |
+| Offer 3 | https://try.skinofab.com/lymphatic-brush-offer/ | the Lymphatic Brush + case, 40% off ($14): the brush's loop plays above the fold, the short product page under it, 10-minute clock |
+| Offer 3, downsell | https://try.skinofab.com/lymphatic-brush-offer-b/ | the brush, 60% off ($9), last chance, 5-minute clock |
+| Thank you | https://try.skinofab.com/foundation-thank-you/ | receipt (the order and every accepted offer, each line "One-time purchase. Nothing renews.", the gifts in her box named from the order), next steps, the rest of the range at one-time prices |
 
 Routes (`tools/funnel/funnels/apf.py`): offer 1 accepted goes to the brush offer (she just bought more bottles; offer 2
 would sell her one more), declined to offer 2; offer 2 accepted goes to the brush offer, declined to its downsell, which
@@ -24,7 +25,18 @@ ends on the thank-you page either way. An order that already includes a brush (t
 sent past both brush offers to the thank-you page by `js/sf-offer-gate.js` (it reads the order's SKUs from a hidden
 order-items list). Every page is `noindex`. Nothing in this funnel recurs.
 
-**Proven live (28 Oct 2026, `tools/funnel/live_order.mjs` on try.skinofab.com, NEXT's test card):** order **101534**,
+**The campaign (28 Oct 2026).** Created with the `next-campaigns-create` skill from a hand-authored plan
+(`next-campaigns-create-runs/skinofab-apf/campaign-plan.json`, gitignored with its run manifest, which holds the
+campaign key): six one-time packages on the existing store variants, one free shipping method, five whole-dollar
+vouchers, payment methods card, Klarna, Link, PayPal and Apple Pay (no Affirm or Afterpay: the pages never offered
+them). The skill's `verify` read every object back and priced every pack and voucher through the Cart API: 13 cart
+cases, all PASS ($39 / $57 / $75; $35 / $51 / $67 with APF10; $39 and $99 for offer 1; $23, $19, $14, $9 on the
+offers). **Owner's step the API cannot do:** add `try.skinofab.com` under Allowed Domains (Production) in the
+Campaigns App for campaign 2221; until then the live pages on that host are refused by the SDK (CORS). Localhost is
+always allowed, so the local build and Campaigns OS QA run regardless. Campaign 2211 still carries the foundation's
+old packages (refs 6–11) and vouchers (offers 6–10); nothing uses them now and they can be deleted in the dashboard.
+
+**Proven live on campaign 2211 (28 Oct 2026, before the move, `tools/funnel/live_order.mjs` on try.skinofab.com, NEXT's test card):** order **101534**,
 the 2-bottle pack ($57) at the checkout, offer 1's 2-bottle card accepted with a real click on its Buy now ($39 added,
 $96), the brush offer and its downsell declined, the thank-you page with both lines and their one-time terms. Order
 **101536**, the same checkout, offer 1's 6-bottle card accepted ($99 added, $156): the brush offer's gate read the
@@ -34,9 +46,14 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
 
 ## Before launch (owner)
 
+0. **Allow the domain on campaign 2221.** Campaigns App > campaign "SKINOFAB Adaptive Peptide Foundation Funnel" >
+   Settings > Allowed Domains: add `try.skinofab.com` as a Production domain (the API cannot set it). Until then every
+   live page of this funnel is refused by the SDK on that host; the pages built for localhost work, and the old
+   campaign 2211 still answers its own key, which these pages no longer carry.
 1. **Cancel the QA test orders** (test card, no charge, flagged as tests; real orders in the store):
    101520 to 101525 and 101527, 101528, 101530, 101531 (Campaigns OS QA, `qa-test@campaigns-os.test`), 101534 and
-   101536 (the live proofs, `qa-live@skinofab.test`). The stick funnel's are listed in `docs/stick-funnel.md`.
+   101536 (the live proofs, `qa-live@skinofab.test`), all on campaign 2211; the campaign 2221 test orders are listed
+   in the Campaigns OS section below. The stick funnel's are listed in `docs/stick-funnel.md`.
 2. **The gifts.** The 2- and 3-bottle packs promise a SKINOFAB Blender brush and a mystery gift; the 3-bottle pack and
    offer 1's 6-bottle pack a Lymphatic Brush with its travel case. Fulfilment must pack them: the campaign's packages
    name them in their titles (the store sees "2 bottles + free gifts"), nothing else tells the warehouse.
@@ -55,28 +72,28 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
 7. **The mystery gift** is "a mystery gift from our range", valued at $15 on the value stack. Decide what ships (a
    deluxe sample of the balm or the serum fits) and keep its value honest.
 
-## Commerce (Campaigns App campaign 2211)
+## Commerce (Campaigns App campaign 2221)
 
 Every package is bought once (no subscription; the store offers refills only when she asks). The values below are the
 campaign's; `campaign_spec.py` reads them live (`FUNNEL=apf`) into `campaign-spec.apf.json` and the pages are checked
-against them on every build.
+against them on every build. The refs are campaign 2221's (`funnels/apf.py` PACKAGE and VOUCHER).
 
 | Package ref | SKU | Sells | Price | Compare (list $59 a bottle) |
 |---:|---|---|---:|---:|
-| 6 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $39.00 | $59 |
-| 7 | SKF-APF-2-GIFTS | 2 bottles + free Blender brush + free mystery gift | $57.00 | $118 |
-| 8 | SKF-APF-3-GIFTS | 3 bottles + both gifts + free Lymphatic Brush | $75.00 | $177 |
-| 9 | SKF-APF-2 | 2 bottles (offer 1: "Add 1, get 1 FREE") | $39.00 | $78 (2 × $39) |
-| 10 | SKF-APF-6-BRUSH | 6 bottles + free Lymphatic Brush (offer 1: "Buy 3, get 3 FREE") | $99.00 | $234 (6 × $39) |
-| 11 | SKF-LYB-1T | The Lymphatic Brush + free travel case | $24.95 | — |
+| 1 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $39.00 | $59 |
+| 2 | SKF-APF-2-GIFTS | 2 bottles + free Blender brush + free mystery gift | $57.00 | $118 |
+| 3 | SKF-APF-3-GIFTS | 3 bottles + both gifts + free Lymphatic Brush | $75.00 | $177 |
+| 4 | SKF-APF-2 | 2 bottles (offer 1: "Add 1, get 1 FREE") | $39.00 | $78 (2 × $39) |
+| 5 | SKF-APF-6-BRUSH | 6 bottles + free Lymphatic Brush (offer 1: $16.50 a bottle) | $99.00 | $234 (6 × $39) |
+| 6 | SKF-LYB-1T | The Lymphatic Brush + free travel case | $24.95 | — |
 
 | Offer ref | Code | Package | Off | Lands at (rounded down to the dollar) |
 |---:|---|---:|---:|---|
-| 6 | APF10 | 6, 7, 8 | 10% | the checkout's exit pop: $35 / $51 / $67 |
-| 7 | APF40 | 6 | 40% | $23.00 (shown as 41% off) |
-| 8 | APF50 | 6 | 50% | $19.00 (51% off) |
-| 9 | BRUSH40 | 11 | 40% | $14.00 (44% off) |
-| 10 | BRUSH60 | 11 | 60% | $9.00 (64% off) |
+| 1 | APF10 | 1, 2, 3 | 10% | the checkout's exit pop: $35 / $51 / $67 |
+| 2 | APF40 | 1 | 40% | $23.00 (shown as 41% off) |
+| 3 | APF50 | 1 | 50% | $19.00 (51% off) |
+| 4 | BRUSH40 | 6 | 40% | $14.00 (44% off) |
+| 5 | BRUSH60 | 6 | 60% | $9.00 (64% off) |
 
 - Offer 1 has no voucher: each supply card is its own package at its own price, so what the SDK adds is exactly the
   card she pressed. The 2-bottle card compares with two bottles at the funnel's $39, the 6-bottle card with six.
@@ -106,46 +123,74 @@ and the packs again. A sticky bar on phones follows the chosen pack.
 
 ### The checkout
 
-The checkout sells on trust, not on the product (`foundation-checkout.html`, `_includes/sf-checkout-trust.html`), as the
-stick funnel's does: the rating in one sentence that says whose it is ("of this foundation, at our earlier store"), four
-promises, three reviews before the payment step on a phone, the guarantee in one line right above the order button, the
-proof column (ratings by stars, ten reviews with photos, the guarantee card, "Before you order"), and by the button one
-box with the live pay line ("$57.00 today, once, for 2 bottles with a free Blender brush and a free mystery gift. Nothing
-renews.") and the one-time terms. Three pack cards (2-pack preselected, "Most popular"; 3-pack "Best value"), each
-"One-time. Free shipping" with its gifts. The exit pop offers APF10. `check_apf.py` fails the build on a card that does
-not say it is bought once or does not name its gifts, a coupon box, a post-purchase code, a missing guarantee line,
-fewer than 8 review cards or one without a photo, or a rating other than the foundation's.
+v2 (the owner's brief: "simplify, give directly the shipping info and the payment, with some badges and
+Trustpilot-style reviews"): the form comes first (`foundation-checkout.html`, `_includes/sf-checkout-trust.html`). One
+rating line above the pack cards (green boxed stars, no review site named; "4.8 out of 5 from 9,855 reviews of this
+foundation, at our earlier store"), then Step 1 the three pack cards (2-pack preselected, "Most popular"; 3-pack "Best
+value"; each "One-time. Free shipping" with its gifts, and each with its name and price in the markup so the cards are
+never blank while the SDK loads), Step 2 her details, Step 3 her address, Step 4 payment with the live pay line
+("$57.00 today, once, for 2 bottles with a free Blender brush and a free mystery gift. Nothing renews."), the express
+buttons and the card form; the order summary; the one-time terms (with the fish-allergy note); the guarantee in one line
+right above the order button; four badges right under it (guarantee, free shipping, one-time, secure); then, on a
+phone, three buyers' reviews with their own photos and a link to the rest. On a computer the proof column (ratings by
+stars, ten reviews, the guarantee card, "Before you order") sits beside the form. No review ever sits between the
+address and the payment step. The exit pop offers APF10 with the bottle, says the offer once, and also fires on a phone
+(a scroll back up toward the address bar); the coupon badge on a card reads "EXTRA 10% OFF". `check_apf.py` fails the
+build on a card that does not say it is bought once, does not name its gifts or has no name and price in the markup, a
+coupon box, a post-purchase code, a missing guarantee line, reviews between the address and the payment, the featured
+reviews not after the button, fewer than 8 review cards or one without a photo, or a rating other than the
+foundation's.
 
 ### The offer pages
 
-`tools/funnel/apf/offer_pages.py` writes the five pages from `funnels/apf.py` and the CampaignSpec.
+`tools/funnel/apf/offer_pages.py` writes the five pages from `funnels/apf.py` and the CampaignSpec. v2 (the owner's
+brief: "an exclusive offer just for her, now, with a timer and more urgency; simpler; only the brush needs a short
+product page with an autoplaying clip above the fold"):
 
-1. **Offer 1, the supply cards** (`_includes/sf-supply-cards.html`, `js/sf-supply.js`, `css/sf-offers.css`): two cards
-   in the Obvi "month supply" style, the 2-bottle card first and preselected ("Most popular, SAVE 50%": the smaller
-   step, and the one a first-offer accept adds), the 6-pack beside it ("Best value, SAVE 58%"), each with its badge, the
-   pack image, the deal ("Add 1, get 1 FREE"; "Buy 3, get 3 FREE" + the free brush), the per-day and per-bottle price, the
-   stars, the crossed-out and the live price, BUY NOW, and "Charged once". The cards are the SDK's bundle selector
-   inside the one offer, scoped with `data-next-upsell-context` (it never touches a live cart). Every BUY NOW is the
-   offer's own add action (the SDK adds the selected card); a real click on a card that is not selected is stopped,
-   the card is selected and the button clicked again for her (`js/sf-supply.js`), so the order gets the card she
-   pressed, while the closing card's proxied click adds the selection. Proven with the upsell request intercepted:
-   card 2 sends package 9, card 1 package 10, the closing card the selected one. Under the cards: the guarantee row,
-   the decline link, the foundation's how-it-works loop beside its four parts, why women stock up, and the closing
-   card priced from the selected card.
+**The hero and the clock** (`_includes/sf-upsell-hero.html`, `js/sf-offer-timer.js`, `css/sf-offers.css`): every offer
+page opens with its H1 ("Just for you, right now: more bottles at half price or less"; "One more bottle, 41% off, just
+for you"; "Add the Lymphatic Brush, 44% off, just for you"; the downsells "Last chance: …"), one line on the offer,
+"Reserved for you, <her first name>" and a countdown: 10 minutes on an offer, 5 on a last chance. The clock is honest:
+its deadline is set the first time she sees the page for that order and kept in sessionStorage, so a reload or Back
+does not restart it, and at 0:00 the page declines the offer itself (the SDK's own skip action, which goes where a
+decline goes with her order reference; if the SDK is not there, the page goes to the decline URL itself) and the hero
+says so under the clock: "When the clock reaches 0:00 this page moves on and the offer is gone: it is not in our store
+and we won't email it." If she is mid-accept when it runs out, the page waits for the SDK rather than pull the offer
+away. `check_apf.py` allows a countdown only with that consequence wired (`data-sf-timer-expires="skip"`, the script,
+the sentence), only on offer pages, and still refuses the kit's timers. The percentage in a hero is the SDK's own
+({discount}: 41%, not the voucher's 40%), so a page never shows two numbers for one discount.
+
+1. **Offer 1, the supply cards** (`_includes/sf-supply-cards.html`, `js/sf-supply.js`): two cards in the Obvi "month
+   supply" style, the 2-bottle card first and preselected ("Most popular, SAVE 50%", "Add 1, get 1 FREE": $39 for two,
+   one bottle being $39), the 6-pack beside it ("Best value, SAVE 58%", "$16.50 a bottle" + the free brush), each with
+   its badge, the pack image, the per-day and per-bottle price, the green stars ("4.8 · 9,855 reviews, earlier store"),
+   the crossed-out and the live price, BUY NOW, and "Charged once". The cards are the SDK's bundle selector inside the
+   one offer, scoped with `data-next-upsell-context` (it never touches a live cart); the card is the SDK's own click
+   target and carries no button role (its BUY NOW is the one button). Every BUY NOW is the offer's own add action (the
+   SDK adds the selected card); a real click on a card that is not selected is stopped, the card is selected and the
+   button clicked again for her (`js/sf-supply.js`), so the order gets the card she pressed, while the closing card's
+   proxied click adds the selection, and the closing card's picture follows the selected card. Under the cards: the
+   guarantee row, the decline link, why women stock up (three reasons), the closing card priced from the selected
+   card. No "lowest price we will ever offer" (the downsells go lower), no "six for the price of three" (no shown
+   price backs it).
 2. **Offer 2 and its downsell**: Apollo's single offer with the voucher on a hidden upsell-scoped selector (as the stick
-   funnel's), four photos, the bullets, today's price against $39, the button and the terms ("$23.00 today (41% off),
-   charged once… Nothing renews"), then the how-it-works loop, "reserved for you" (the store's $47 for one beside
-   today's, charged once), three reasons to keep a second bottle, the closing card. The downsell says it is the lowest
-   price for one bottle anywhere.
-3. **Offer 3, the brush, and its downsell**: the same offer layout with the brush's gallery and bullets, then the brush's
-   four sweeps beside its loop, then the brush's own product page (`_includes/sf-brush-pdp.html`, from
-   `tools/persona/brush_copy.py`'s claims: the look of morning puffiness, a light dry massage, no draining or lifting):
-   the problem, its root, the solution, how to use it, what to expect, versus stones and rollers, what's in the box, the
-   questions; then "reserved for you" ($24.95 in the store) and the closing card. The downsell is the last chance at
-   60% off. Both skip an order that already has a brush.
+   funnel's), three photos, the bullets, today's price against $39, the button and the terms ("$23.00 today, charged
+   once… Nothing renews"), three reasons ("Less than any bottle in our store": $47 there, bought once; $39 on the page
+   she came from; $23 here), the closing card. The downsell says it is the lowest price for one bottle anywhere (it
+   is). No how-it-works loop and no "reserved for you" block any more: she knows the product, and the hero carries her
+   name and the clock.
+3. **Offer 3, the brush, and its downsell**: the offer with the brush's loop (its four sweeps and the case, 720 × 900)
+   playing muted in the media column above the fold, the bullets, the price and the button; then the brush's short
+   product page (`_includes/sf-brush-pdp.html`, from `tools/persona/brush_copy.py`'s claims: the look of morning
+   puffiness, a light dry massage, no draining or lifting): the problem with an illustration of the look it is for
+   (captioned as an illustration, not a customer photo), the solution, how to use it (the four sweeps, said once),
+   versus stones and rollers, what's in the box (the "fluid channels" diagram is gone), the questions; the closing
+   card. The downsell is the last chance at 60% off. Both skip an order that already has a brush.
 
-Every offer page carries the gate (`js/sf-offer-gate.js`): an order the platform marks as unable to take a one-click
-offer goes straight to the thank-you page; her first name follows "Reserved for you".
+Every offer page carries the gate (`js/sf-offer-gate.js`, hidden from screen readers): an order the platform marks as
+unable to take a one-click offer goes straight to the thank-you page; her first name follows "Reserved for you". The
+payment logos row never shows Affirm or Afterpay (the campaign offers neither); the decline links and the footer's
+policy links are 44 px targets.
 
 ## Versus the Facelove listicle and the stick's
 
@@ -179,7 +224,7 @@ Campaign Cart SDK 0.4.43, its own `config.js` with the campaign's public key), w
 | Tool | Does |
 |---|---|
 | `funnels/apf.py` | the funnel's pages, routes, packages, vouchers, packs and offer tiers (loaded by `funnel.py` with `FUNNEL=apf`) |
-| `apf/commerce.py` | the campaign setup, idempotent: the store variants, packages 6–11, offers 6–10; `--verify` checks the Cart API against `funnels/apf.py` |
+| `apf/commerce.py` | the campaign's commerce, idempotent (the `next-campaigns-create` plan created it; this finds it in place): the store variants, packages 1–6, offers 1–5; `--verify` checks the Cart API against `funnels/apf.py` |
 | `apf/images.py` | the images and clips: the store's photos, pack cards, labelled before/afters, review crops, demo clips, the thank-you page's range cards |
 | `apf/offer_pages.py` | the five offer pages (supply cards, offer 2 and its downsell, the brush offer and its downsell) |
 | `apf/copy_deck.py` | `docs/apf-funnel/copy-deck.md` from the sales page's frontmatter, validated |
@@ -209,9 +254,10 @@ checks take their numbers from the spec. The theme serves this funnel's assets f
   the button, the reviews; the sales page's packs (price, crossed-out list price × bottles, saving) against the
   campaign; offer 1's cards (package, price, crossed-out, per-bottle and per-day arithmetic, charged once, an add and a
   skip action in one upsell-scoped offer); offers 2 and 3 (package, voucher, landed fallback price, charged once, the
-  brush skip rule on the brush offers only); the thank-you page's terms per SKU; the host redirect and policy links;
-  the theme templates and assets; the claims rules, nothing recurring, no timer, AI labels, the reviews' origin, SPF
-  only ever as absent.
+  brush skip rule on the brush offers only); the thank-you page's terms per SKU and its gift line; the host redirect
+  and policy links; the theme templates and assets; the claims rules (now also the unhedged "nothing sitting in your
+  lines" and the "lowest ever / lowest anywhere" superlatives the downsells contradict), nothing recurring, no
+  countdown but the offers' honest one, AI labels, the reviews' origin, SPF only ever as absent.
 - `FUNNEL=apf node tools/funnel/funnel_check.mjs <base-url> <out-dir> [--served]`: every page at 390 and 1440,
   screenshots (long pages in parts), console errors, overflow, live prices; `ORDER_REF=<ref_id>` opens the offer and
   thank-you pages with a real order.

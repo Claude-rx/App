@@ -19,20 +19,25 @@ scripts:
   - js/payment-logos.js
   - js/sf-failsafe.js
   - js/sf-offer-gate.js
+  - js/sf-offer-timer.js
   - js/sf-apf.js
   - js/sf-supply.js
 announcement_text: "Offer 1 of 3 · Your order is placed"
 announcement_variant: dark
+payment_flags:
+  show_affirm: false
+  show_afterpay: false
 thank_you_url: "/apf-funnel/foundation-thank-you/"
-upsell_hero:
-  variant: band
-  title: "Your order is placed!"
-  offer: "Add bottles for less than half the store price"
-  suboffer: "Two bottles for the price of one, or six for the price of three with a free Lymphatic Brush. Only on this page, only with the order you just placed."
-supply: {"title": "Stock up at the lowest price we will ever offer", "lede": "Add bottles to the order you just placed: one tap, same box, same payment. These prices exist on this page only.", "tiers": [{"id": "supply-b1g1", "items_json": "[{\"packageId\": 9, \"quantity\": 1}]", "image": "images/sf/pack-2.jpg", "alt": "Two bottles of Adaptive Peptide Foundation", "badge": "Most popular", "save": "50%", "name": "2-month supply", "deal": "Add 1, get 1 FREE", "gift": "", "per_day": "$0.65 a day", "per_bottle": "$19.50 a bottle · 2 bottles", "price": "$39.00", "compare": "$78", "selected": true, "button": "BUY NOW · $39"}, {"id": "supply-b3g3", "items_json": "[{\"packageId\": 10, \"quantity\": 1}]", "image": "images/sf/pack-6.jpg", "alt": "Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush", "badge": "Best value", "save": "58%", "name": "6-month supply", "deal": "Buy 3, get 3 FREE", "gift": "FREE Lymphatic Brush + case ($24.95)", "per_day": "$0.55 a day", "per_bottle": "$16.50 a bottle · 6 bottles", "price": "$99.00", "compare": "$234", "selected": false, "button": "BUY NOW · $99"}], "guarantee": "30-day money-back guarantee on every bottle, even opened. You don’t send anything back.", "charged": "Charged once to the payment you just used. Nothing renews.", "decline": "No thanks, I don’t want to stock up"}
+uh:
+  eyebrow: "A one-time offer"
+  title: "Just for you, right now: more bottles at half price or less"
+  text: "Add bottles to the order you just placed: one tap, same box, same payment. These prices exist on this page only."
+  seconds: 600
+  expires: "When the clock reaches 0:00 this page moves on and the offer is gone: it is not in our store and we won’t email it."
+supply: {"title": "Choose your pack", "lede": "Half price a bottle or less, charged once, shipped in the same box as the order you just placed.", "tiers": [{"id": "supply-b1g1", "items_json": "[{\"packageId\": 4, \"quantity\": 1}]", "image": "images/sf/pack-2.jpg", "alt": "Two bottles of Adaptive Peptide Foundation", "badge": "Most popular", "save": "50%", "name": "2 more bottles", "deal": "Add 1, get 1 FREE", "gift": "", "per_day": "$0.65 a day", "per_bottle": "$19.50 a bottle · 2 bottles", "price": "$39.00", "compare": "$78", "selected": true, "button": "BUY NOW · $39"}, {"id": "supply-b3g3", "items_json": "[{\"packageId\": 5, \"quantity\": 1}]", "image": "images/sf/pack-6.jpg", "alt": "Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush", "badge": "Best value", "save": "58%", "name": "6 more bottles", "deal": "$16.50 a bottle", "gift": "FREE Lymphatic Brush + case ($24.95)", "per_day": "$0.55 a day", "per_bottle": "$16.50 a bottle · 6 bottles", "price": "$99.00", "compare": "$234", "selected": false, "button": "BUY NOW · $99"}], "guarantee": "30-day money-back guarantee on every bottle, even opened. You don’t send anything back.", "charged": "Charged once to the payment you just used. Nothing renews.", "decline": "No thanks, I don’t want to stock up"}
 upsell_offer:
   type: tier-cards
-  package_id: 9
+  package_id: 4
   selector_id: "supply"
   display_selector_id: "supply"
   display_bundle_id: "supply-b1g1"
@@ -43,38 +48,36 @@ upsell_offer:
   fallback_compare: "$78.00"
   cta_note: "Charged once to the payment you just used. Nothing renews, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy."
 upsell_bundle_tiers:
-  - { id: "supply-b1g1", items_json: "[{\"packageId\": 9, \"quantity\": 1}]", vouchers_json: "[]", label: "2 bottles", hint: "Add 1, get 1 free", selected: true }
-  - { id: "supply-b3g3", items_json: "[{\"packageId\": 10, \"quantity\": 1}]", vouchers_json: "[]", label: "6 bottles", hint: "Buy 3, get 3 free" }
+  - { id: "supply-b1g1", items_json: "[{\"packageId\": 4, \"quantity\": 1}]", vouchers_json: "[]", label: "2 bottles", hint: "Add 1, get 1 free", selected: true }
+  - { id: "supply-b3g3", items_json: "[{\"packageId\": 5, \"quantity\": 1}]", vouchers_json: "[]", label: "6 bottles", hint: "$16.50 a bottle" }
 upsell_layout:
   style: card
   boxed: true
   media: image
   show_payment_logos: false
-how: {"eyebrow": "How it works", "title": "One adaptive shade, in a skincare serum", "text": "Not a shade you pick, but a foundation that finds yours, in a serum made for skin after 45.", "steps": [{"title": "It goes on white", "text": "The colour waits in tiny capsules in the serum; there is nothing on the bottle to get wrong."}, {"title": "Blend, and the capsules open", "text": "The colour shifts toward your own tone as you work it in, in about a minute."}, {"title": "A hydrating serum base", "text": "Two forms of hyaluronic acid, ceramide NP, squalane and panthenol keep dry skin comfortable."}, {"title": "Soft-focus spheres", "text": "Round silica and boron nitride powders scatter the light, so lines and pores look softer."}], "note": "PDRN, Matrixyl 3000 peptides, Pro-Xylane and niacinamide in every layer. The video is an illustration; the full ingredient list is on the box.", "video": {"mp4": "images/sf/howto.mp4", "webm": "images/sf/howto.webm", "poster": "images/sf/howto-poster.jpg", "width": 864, "height": 1080, "label": "Illustration: the foundation goes on as white dots, blends into her skin tone, and the serum’s ingredients"}}
 upsell_body:
   - type: features
     title: "Why women stock up"
     text: "Because the shade that finally works is the one you don’t want to run out of."
     items:
-      - { title: "A bottle lasts about a month", text: "One pump a day. Two bottles see you to spring; six see you through the year’s photos, calls and lunches." }
+      - { title: "A bottle lasts about a month", text: "One pump a day. Two more bottles cover the next two months; six cover the year’s photos, calls and lunches." }
       - { title: "One at home, one in your bag", text: "The one on your vanity stays there. The one in your bag saves the afternoon." }
-      - { title: "The price stays this low only here", text: "In our store one bottle is $47. The 6-pack works out at $16.50 a bottle, the 2-pack at $19.50, and both come in the same box as your order." }
+      - { title: "This price is only here", text: "In our store one bottle is $47, bought once. On this page a bottle works out at $19.50 or $16.50, in the same box as your order." }
 closing_cta:
   variant: card
   title: "Add the pack you chose above?"
-  note: "The card you picked above is what this adds. Backed by our 30-day money-back guarantee."
+  note: "The card you picked above is what this adds. Backed by our 30-day money-back guarantee. The clock above is the offer’s: at 0:00 this page moves on."
   image: "images/sf/pack-2.jpg"
 ---
-{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
+{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them) {% endcomment %}
+<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
     {% campaign_include 'upsell/announcement.html' announcement_text=announcement_text %}
     {% campaign_include 'upsell/header-bar.html' logo='images/sf/skinofab-wordmark.svg' %}
-    {% campaign_include 'upsell/hero.html' upsell_hero=upsell_hero %}
+    {% campaign_include 'sf-upsell-hero.html' uh=uh %}
     {% campaign_include 'sf-supply-cards.html' supply=supply %}
-    {% campaign_include 'sf-upsell-how.html' how=how %}
     {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
     {% campaign_include 'upsell/closing-cta.html' %}
     {% campaign_include 'footer.html' %}

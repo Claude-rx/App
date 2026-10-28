@@ -36,7 +36,7 @@
     
 
     
-    <script src="{% endverbatim %}{{ 'sfa/sfa-config-18e8d6.js'|asset_url }}{% verbatim %}"></script>
+    <script src="{% endverbatim %}{{ 'sfa/sfa-config-0001d9.js'|asset_url }}{% verbatim %}"></script>
 
     
     
@@ -68,9 +68,9 @@
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-next-core-e875b0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-8c9286.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-f1e5ce.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-06326f.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-0a3463.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -82,7 +82,7 @@
 
 
 
-    <div hidden data-sf-renewals='{"SKF-APF-1":"One-time purchase. Nothing renews.","SKF-APF-2-GIFTS":"One-time purchase, with your free Blender brush and mystery gift in the box. Nothing renews.","SKF-APF-3-GIFTS":"One-time purchase, with your free Lymphatic Brush, Blender brush and mystery gift in the box. Nothing renews.","SKF-APF-2":"One-time purchase. Nothing renews.","SKF-APF-6-BRUSH":"One-time purchase, with your free Lymphatic Brush in the box. Nothing renews.","SKF-LYB-1T":"One-time purchase, with its travel case. Nothing renews."}'></div>
+    <div hidden data-sf-renewals='{"SKF-APF-1":"One-time purchase. Nothing renews.","SKF-APF-2-GIFTS":"One-time purchase, with your free Blender brush and mystery gift in the box. Nothing renews.","SKF-APF-3-GIFTS":"One-time purchase, with your free Lymphatic Brush, Blender brush and mystery gift in the box. Nothing renews.","SKF-APF-2":"One-time purchase. Nothing renews.","SKF-APF-6-BRUSH":"One-time purchase, with your free Lymphatic Brush in the box. Nothing renews.","SKF-LYB-1T":"One-time purchase, with its travel case. Nothing renews."}' data-sf-gift-map='{"SKF-APF-2-GIFTS":["the SKINOFAB Blender brush","the mystery gift"],"SKF-APF-3-GIFTS":["the SKINOFAB Blender brush","the mystery gift","the Lymphatic Brush with its travel case"],"SKF-APF-6-BRUSH":["the Lymphatic Brush with its travel case"],"SKF-LYB-1T":["the brush’s travel case"]}'></div>
 <p class="sf-failsafe" role="status" hidden data-sf-no-order>We couldn’t find an order to show here. If you just ordered, your confirmation email has your order details. Questions? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
@@ -95,7 +95,7 @@
       <div class="checkout__layout">
         <div class="checkout__column checkout__column--left">
           <div class="checkout__form-container cc-checkout">
-            <div class="checkout__header-brand cc-shop"><img src="{% endverbatim %}{{ 'sfa/sfa-next-dark-c6abd6.svg'|asset_url }}{% verbatim %}" loading="eager" alt="SKINOFAB" class="brand-logo"></div>
+            <div class="checkout__header-brand cc-shop"><img src="{% endverbatim %}{{ 'sfa/sfa-skinofab-wordmark-d7216f.svg'|asset_url }}{% verbatim %}" loading="eager" alt="SKINOFAB" class="brand-logo"></div>
             <div class="order-summary-mobile">
               <div class="order-summary-mobile__accordion">
                 <div class="order-summary__trigger">
@@ -274,7 +274,7 @@
                       </div>
                       <div data-next-accordion-panel="order-summary" class="accordion__panel payment-method__form--expanded">
                         <div class="order-summary">
-                          <h4 class="order-summary__title">Order Summary</h4>
+                          <p class="order-summary__title">Order Summary</p>
                           <div class="order-summary__content">
                             
 <div data-next-catalog-component="receipt-orders" class="cart-items">
@@ -331,7 +331,7 @@
                                       <div class="order-totals__label">Shipping<br></div>
                                     </div>
                                     <div class="order-totals__value-group">
-                                      <div data-next-display="order.shipping" class="order-totals__value"></div>
+                                      <div class="order-totals__value" data-sf-shipping><span data-next-display="order.shipping"></span></div>
                                     </div>
                                   </div>
                                 </div>
@@ -383,7 +383,7 @@
   <ol class="sf-next__list">
     <li><strong>Your first morning.</strong> Moisturiser and sunscreen first. One pump, five dots on your forehead, cheeks, nose and chin (they look white), then blend outward with your fingertips for about a minute until the white has turned into your tone. Tap a little more over a spot or redness. Skip powder on dry areas.</li>
     <li><strong>The daylight test.</strong> Look in the car mirror at noon on day one. That’s the one that counts, and it’s the one the guarantee is for.</li>
-    <li><strong>Your gifts are in the box.</strong> The Blender brush, the mystery gift and, with 3 or 6 bottles, the Lymphatic Brush with its travel case ship in the same parcel, free.</li>
+    <li data-sf-gift-line><strong>Everything ships in one parcel.</strong> <span data-sf-gifts>Any free gift your pack includes is listed under it in your order summary and ships in the same box, free.</span></li>
     <li><strong>Nothing renews.</strong> Every item in this order is a one-time purchase. If you ever want refills, you can set them up in our store yourself; we never do it for you.</li>
     <li><strong>30 days to love it.</strong> If it isn’t right for you, email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a> within 30 days of delivery for a full refund, even opened. You don’t have to send it back.</li>
   </ol>
@@ -394,9 +394,9 @@
   <div class="receipt_section-head"><div class="display-xs">Women who love the foundation also use</div>
     <div class="receipt_section-head--desc">Three more SKINOFAB products made for skin after 45, in our store. Each has the same 30-day money-back guarantee.</div></div>
   <div class="sf-more__grid">
-    <a class="sf-more__card" href="https://skinofab.com/catalogue/the-lymphatic-brush_169/"><img src="{% endverbatim %}{{ 'sfa/sfa-brush-card-9a17d3.jpg'|asset_url }}{% verbatim %}" alt="" width="200" height="200" loading="lazy"><strong>The Lymphatic Brush</strong><span>A 3-minute morning massage for the look of puffy eyes, cheeks and jaw. From $24.95.</span></a>
-    <a class="sf-more__card" href="https://skinofab.com/catalogue/pdrn-plumping-balm_202/"><img src="{% endverbatim %}{{ 'sfa/sfa-more-balm-a5c0a7.jpg'|asset_url }}{% verbatim %}" alt="" width="200" height="200" loading="lazy"><strong>PDRN Plumping Balm</strong><span>A melting balm you press on where your face looks tired: under the eyes, along smile lines. From $19.95.</span></a>
-    <a class="sf-more__card" href="https://skinofab.com/catalogue/egf-nad-firming-serum_206/"><img src="{% endverbatim %}{{ 'sfa/sfa-more-serum-d89228.jpg'|asset_url }}{% verbatim %}" alt="" width="200" height="200" loading="lazy"><strong>EGF + NAD+ Firming Serum</strong><span>Two drops for your face, two for your neck, the light step before your foundation. From $27.95.</span></a>
+    <a class="sf-more__card" href="https://skinofab.com/catalogue/the-lymphatic-brush_169/"><img src="{% endverbatim %}{{ 'sfa/sfa-brush-card-9a17d3.jpg'|asset_url }}{% verbatim %}" alt="" width="200" height="200" loading="lazy"><strong>The Lymphatic Brush</strong><span>A 3-minute morning massage for the look of puffy eyes, cheeks and jaw. $24.95, bought once.</span></a>
+    <a class="sf-more__card" href="https://skinofab.com/catalogue/pdrn-plumping-balm_202/"><img src="{% endverbatim %}{{ 'sfa/sfa-more-balm-a5c0a7.jpg'|asset_url }}{% verbatim %}" alt="" width="200" height="200" loading="lazy"><strong>PDRN Plumping Balm</strong><span>A melting balm you press on where your face looks tired: under the eyes, along smile lines. $24.95, bought once.</span></a>
+    <a class="sf-more__card" href="https://skinofab.com/catalogue/egf-nad-firming-serum_206/"><img src="{% endverbatim %}{{ 'sfa/sfa-more-serum-d89228.jpg'|asset_url }}{% verbatim %}" alt="" width="200" height="200" loading="lazy"><strong>EGF + NAD+ Firming Serum</strong><span>Two drops for your face, two for your neck, the light step before your foundation. $34.95, bought once.</span></a>
   </div>
 </div>
 
@@ -452,7 +452,7 @@
                         <div>Contact Us</div>
                       </a>
                     </div>
-                    <a href="https://try.skinofab.com" target="_blank" class="button cc-auto">
+                    <a href="https://skinofab.com/" target="_blank" rel="noopener" class="button cc-auto">
                       <div>Visit the SKINOFAB store</div>
                     </a>
                   </div>
@@ -475,7 +475,7 @@
                     <div class="summary-wrap">
                       <div class="summary-holder">
                         <div class="order-summary">
-                          <h4 class="order-summary__title checkout">Order Summary</h4>
+                          <p class="order-summary__title checkout">Order Summary</p>
                           <div class="order-summary__content">
                             
 <div data-next-catalog-component="receipt-orders" class="cart-items">
@@ -532,7 +532,7 @@
                                       <div class="order-totals__label">Shipping<br></div>
                                     </div>
                                     <div class="order-totals__value-group">
-                                      <div data-next-display="order.shipping" class="order-totals__value"></div>
+                                      <div class="order-totals__value" data-sf-shipping><span data-next-display="order.shipping"></span></div>
                                     </div>
                                   </div>
                                 </div>
@@ -571,7 +571,7 @@
     </div>
 
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-receipt-e4d61a.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-receipt-ac36d0.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-failsafe-396ae4.js'|asset_url }}{% verbatim %}"></script>
     

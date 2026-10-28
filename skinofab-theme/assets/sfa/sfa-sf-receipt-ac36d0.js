@@ -1,0 +1,56 @@
+// The thank-you page: under each order line, its terms (the page's renewals, by SKU: here every line is bought once),
+// and in "what happens next" the gifts in her box (the page's gifts, by SKU, joined for the lines the order has).
+// The SDK renders the lines after the order loads, so both are filled as the lines appear. The shipping total the
+// SDK writes as $0.00 reads "Free" (the campaign's one method is free, and the checkout said so).
+(function () {
+  const holder = document.querySelector('[data-sf-renewals]');
+  if (!holder) return;
+  let renewals, giftMap = {};
+  try { renewals = JSON.parse(holder.getAttribute('data-sf-renewals')); } catch (e) { return; }
+  try { giftMap = JSON.parse(holder.getAttribute('data-sf-gift-map') || '{}'); } catch (e) { giftMap = {}; }
+  const giftLine = document.querySelector('[data-sf-gift-line]');
+  const join = (xs) => xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1];
+  const fill = () => {
+    const skus = [];
+    document.querySelectorAll('.sf-line-renew[data-sf-sku]').forEach((el) => {
+      const sku = el.getAttribute('data-sf-sku'); skus.push(sku);
+      const text = renewals[sku];
+      if (text && el.textContent !== text) el.textContent = text;
+    });
+    if (giftLine && skus.length) {
+      const gifts = []; skus.forEach((k) => (giftMap[k] || []).forEach((g) => { if (!gifts.includes(g)) gifts.push(g); }));
+      const strong = giftLine.querySelector('strong'), span = giftLine.querySelector('[data-sf-gifts]');
+      const title = gifts.length ? 'Your gifts are in the box.' : 'Everything ships in one parcel.';
+      const body = gifts.length ? join(gifts).replace(/^./, (c) => c.toUpperCase()) + (gifts.length > 1 ? ' ship' : ' ships') + ' in the same parcel as your foundation, free.' : 'Your order ships in 1 business day, with tracking.';
+      if (strong && strong.textContent !== title) strong.textContent = title;
+      if (span && span.textContent !== body) span.textContent = body;
+    }
+    document.querySelectorAll('[data-sf-shipping]').forEach((el) => {
+      const v = el.querySelector('[data-next-display]');
+      if (v && /^\s*\$0(?:\.00)?\s*$/.test(v.textContent)) v.textContent = 'Free';
+    });
+  };
+  new MutationObserver(fill).observe(document.body, { childList: true, subtree: true, characterData: true });
+  fill();
+})();
+
+// Opened without an order (no or a wrong ref_id in the address), the receipt would show "Thank you," and empty rows:
+// after 8 s with no order line, say so at the top; if the order comes in later (a slow connection), take it down again
+// (funnel review 2).
+(function () {
+  const note = document.querySelector('[data-sf-no-order]');
+  if (!note) return;
+  const head = () => document.querySelectorAll('.receipt_head, .order-summary-mobile');
+  const hasOrder = () => !!document.querySelector('[data-order-line-id]');   // (the loading skeleton is .cart-item too)
+  setTimeout(() => {
+    if (hasOrder()) return;
+    note.hidden = false;
+    const wrap = document.querySelector('.main-wrapper') || document.body;
+    wrap.insertBefore(note, wrap.firstChild);
+    head().forEach((el) => { el.hidden = true; });
+    new MutationObserver((_, obs) => {
+      if (!hasOrder()) return;
+      note.hidden = true; head().forEach((el) => { el.hidden = false; }); obs.disconnect();
+    }).observe(document.body, { childList: true, subtree: true });
+  }, 8000);
+})();

@@ -2,11 +2,11 @@
 <footer class="sf-footer">
   <img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="120" height="24" loading="lazy">
   <nav class="sf-footer__links" aria-label="Store policies">
-    <a href="{{ campaign.store_privacy }}">Privacy policy</a>
-    <a href="{{ campaign.store_terms }}">Terms of service</a>
-    <a href="{{ campaign.store_returns }}">Refund policy</a>
-    <a href="{{ campaign.store_shipping }}">Shipping policy</a>
-    <a href="{{ campaign.store_contact }}">Contact</a>
+    <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy policy</a>
+    <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of service</a>
+    <a href="{{ campaign.store_returns }}" target="_blank" rel="noopener">Refund policy</a>
+    <a href="{{ campaign.store_shipping }}" target="_blank" rel="noopener">Shipping policy</a>
+    <a href="{{ campaign.store_contact }}" target="_blank" rel="noopener">Contact</a>
   </nav>
   <p>Questions? <a href="mailto:{{ campaign.store_email }}">{{ campaign.store_email }}</a> · a person replies within one business day.</p>
   {% if disclosure != false %}<p class="sf-footer__small">This page is an advertisement by SKINOFAB. Before/after images are AI illustrations, not customer photos. Reviews and their photos are from verified buyers of the Adaptive Peptide Foundation at our earlier store, imported in October 2026, word for word. Individual results vary.</p>{% endif %}

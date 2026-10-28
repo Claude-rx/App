@@ -7,10 +7,11 @@ usage: python3 -I tools/funnel/apf/check_apf.py [<theme dir>]      (default: ski
 Reads the CampaignSpec (campaigns/skinofab/campaign-spec.apf.json, the live campaign as campaign_spec.py read it with
 FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the theme templates deploy_theme.py wrote. Checks:
   routes      every page is built, carries the SDK meta tags funnels/apf.py gives it, and links only to funnel routes
-  checkout    one card per checkout package, one selected, each card says it is bought once and names its gifts; the pay
-              line by the buttons names every card; no coupon box; no post-purchase voucher code anywhere on the page;
-              the exit pop applies the exit offer; the guarantee right above the order button, 8+ review cards each with
-              the buyer's photo, the reviews' rating and where they are from
+  checkout    one card per checkout package, one selected, each card says it is bought once and names its gifts, and
+              shows its name and price before the SDK answers; the pay line by the buttons names every card; no coupon
+              box; no post-purchase voucher code anywhere on the page; the exit pop applies the exit offer; the
+              guarantee right above the order button, the three featured reviews after it (never between the address
+              and the payment), 8+ review cards each with the buyer's photo, the reviews' rating and where they are from
   sales page  each pack's price is its package's, its crossed-out price the list price times its bottles, its saving
               the difference, every checkout link names a checkout card, the before/afters carry the AI label
   offer 1     the supply cards: each card's package is the page's, its price the package's, its crossed-out, per-bottle
@@ -22,8 +23,9 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
   thank you   each package's line (by its SKU) says it was bought once; a package with the brush says so
   host        each page sends other hosts to the funnel's; its policy links are on it
   theme       a template per page, marked GENERATED for this funnel, no Page Kit route left, every asset it names on disk
-  claims      none of the claims the brand may not make; nothing recurs; no timer; the AI before/afters are labelled;
-              the reviews say where they are from; SPF is only ever mentioned as absent
+  claims      none of the claims the brand may not make; nothing recurs; no countdown but the offers' own honest one
+              (js/sf-offer-timer.js: it declines the offer at 0:00 and says so); the AI before/afters are labelled; the
+              reviews say where they are from; SPF is only ever mentioned as absent
 """
 import json, os, re, sys
 from html import unescape
@@ -72,6 +74,10 @@ FORBIDDEN = [
     (r'\bsave a further\b', '"a further" discount with no first one'),
     (r'\bfuller\b.{0,30}\bin seconds\b', 'instant plumping'),
     (r'\bno cakey lines\b', 'unhedged "no cakey lines"'),
+    (r'\bnothing sitting in your lines\b', 'unhedged "nothing sitting in your lines"'),
+    (r'\blowest price we will ever\b', 'a "lowest ever" price (the downsells go lower)'),
+    (r'\blowest single-bottle price anywhere\b', 'a "lowest anywhere" price on offer 2 (its downsell goes lower)'),
+    (r'\bsix for the price of three\b', '"six for the price of three" (no shown price backs it)'),
 ]
 # SPF may only be mentioned as what the foundation does not have, or as her own sunscreen under it
 SPF_OK = re.compile(r"(?:no|not an?|has no|without|doesn[’']t have|does it have|left)\s+SPF|SPF\s+out\b|SPF\?|"
@@ -151,8 +157,13 @@ if len(cards_r) < 8: fail('checkout', f'{len(cards_r)} review cards, not at leas
 if any('<img ' not in c for c in cards_r): fail('checkout', 'a review card without its buyer\'s photo')
 if '4.8 out of 5' not in co or '9,855 reviews' not in co: fail('checkout', 'the rating is not the foundation\'s 4.8 from 9,855 reviews')
 if 'sf-co-review__title' in co: fail('checkout', 'a title on a review (the buyers wrote none)')
-f, pay = co.find('id="sf-co-featured"'), co.find('Step 4: Payment')
-if f < 0 or f > pay: fail('checkout', 'no reviews before the payment step on a phone')
+f = co.find('id="sf-co-featured"')
+if f < 0 or f < btn: fail('checkout', 'the featured reviews are not after the order button (v2: the form comes first)')
+s3, s4 = co.find('Step 3: Shipping address'), co.find('Step 4: Payment')
+if 'sf-co-review' in co[s3:s4]: fail('checkout', 'a review between the address and the payment step')
+for bid, items, attrs, body in cards:
+    if '>Package<' in body or 'bundle-card__price-total">--<' in body: fail('checkout', f'card {bid} has no name or price before the SDK answers')
+if 'data-sf-gift-line' not in html('thank-you'): fail('thank-you', 'no gift line for js/sf-receipt.js to fill')
 # the pay line by the express buttons and the order button: every card, bought once, with its gifts
 m = re.search(r"data-sf-pay-terms='([^']+)'", co)
 if not m: fail('checkout', 'no pay line by the express buttons')
@@ -290,7 +301,11 @@ for p in F.PAGES:
                 fail(p['id'], f'{what}: "…{t[max(0, m.start() - 40):m.end() + 40]}…"')
         for m in re.finditer(r'\bSPF\b', t):
             if not SPF_OK.search(t[max(0, m.start() - 30):m.end() + 12]): fail(p['id'], f'SPF mentioned as present: "…{t[max(0, m.start() - 40):m.end() + 40]}…"')
-    if 'data-next-timer' in h or 'data-next-element="timer"' in h: fail(p['id'], 'a countdown timer')
+    if 'data-next-timer' in h or 'data-next-element="timer"' in h: fail(p['id'], 'a countdown timer the page does not keep (the kit\'s)')
+    if 'data-sf-timer' in h:
+        if 'data-sf-timer-expires="skip"' not in h or 'js/sf-offer-timer' not in h or 'this page moves on' not in text(h):
+            fail(p['id'], 'a countdown without its consequence (the offer must decline itself at 0:00 and say so)')
+        if p['sdk'] != 'upsell': fail(p['id'], 'a countdown on a page that is not an offer')
     if 'images/sf/ba-' in h and 'AI illustration' not in h: fail(p['id'], 'before/after images without the AI illustration label')
     if 'images/sf/review-' in h and 'earlier store' not in text(h): fail(p['id'], 'buyers\' reviews without where they are from')
 

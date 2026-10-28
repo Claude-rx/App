@@ -36,7 +36,7 @@
     <link rel="prefetch" href="/foundation-offer-2/" as="document">
 
     
-    <script src="{% endverbatim %}{{ 'sfa/sfa-config-18e8d6.js'|asset_url }}{% verbatim %}"></script>
+    <script src="{% endverbatim %}{{ 'sfa/sfa-config-0001d9.js'|asset_url }}{% verbatim %}"></script>
 
     
     
@@ -74,9 +74,9 @@
     
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-06326f.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-0a3463.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-8c9286.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-f1e5ce.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -89,7 +89,7 @@
 
 
     
-<div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/foundation-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
+<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="/foundation-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
@@ -139,36 +139,45 @@
   </div>
 </section>
 
-    <section class="section upsell-header">
-  <div class="container">
-    <div class="upsell-header__inner"><div class="upsell-header__title">Your order is placed!</div><div class="upsell-header__offer">Add bottles for less than half the store price</div><div class="upsell-header__suboffer">Two bottles for the price of one, or six for the price of three with a free Lymphatic Brush. Only on this page, only with the order you just placed.</div>
+    <section class="sf-uh" aria-labelledby="sf-uh-title">
+  <div class="container cc-medium">
+    <p class="sf-uh__eyebrow">Offer 1 of 3 · Your order is placed</p>
+    <h1 class="sf-uh__title" id="sf-uh-title">Just for you, right now: more bottles at half price or less</h1>
+    <p class="sf-uh__text">Add bottles to the order you just placed: one tap, same box, same payment. These prices exist on this page only.</p>
+    <div class="sf-uh__timer" data-sf-timer="600" data-sf-timer-expires="skip">
+      <span class="sf-uh__for">Reserved for you<span data-sf-name></span> for</span>
+      <span class="sf-uh__clock" role="timer" aria-live="off" data-sf-timer-display>10:00</span>
     </div>
+    <p class="sf-uh__expires">When the clock reaches 0:00 this page moves on and the offer is gone: it is not in our store and we won’t email it.</p>
   </div>
 </section>
+
     <section class="section cc-sm sf-supply-sec" aria-labelledby="sf-supply-title">
   <div class="container cc-medium">
     <div class="heading-box text-center max-width-large align-center">
-      <h2 class="display-md" id="sf-supply-title">Stock up at the lowest price we will ever offer</h2>
-      <p class="text-lg">Add bottles to the order you just placed: one tap, same box, same payment. These prices exist on this page only.</p>
+      <h2 class="display-md" id="sf-supply-title">Choose your pack</h2>
+      <p class="text-lg">Half price a bottle or less, charged once, shipped in the same box as the order you just placed.</p>
     </div>
     <div class="upsell-wrapper sf-supply" data-next-upsell="offer" data-next-await="">
       <div data-next-bundle-selector data-next-upsell-context data-next-selector-id="supply" class="sf-supply__grid" role="group" aria-label="Choose how many bottles to add">
-        <div data-next-bundle-card data-next-bundle-id="supply-b1g1" data-next-bundle-items='[{"packageId": 9, "quantity": 1}]' data-next-selected="true" role="button" tabindex="0" class="sf-supply__card os-card next-selected" data-sf-supply-card><span class="sf-supply__badge">Most popular<b>SAVE 50%</b></span>
-          <img src="{% endverbatim %}{{ 'sfa/sfa-pack-2-e4e829.jpg'|asset_url }}{% verbatim %}" alt="Two bottles of Adaptive Peptide Foundation" width="700" height="700" decoding="async">
-          <h3>2-month supply</h3>
+        <div data-next-bundle-card data-next-bundle-id="supply-b1g1" data-next-bundle-items='[{"packageId": 4, "quantity": 1}]' data-next-selected="true" class="sf-supply__card os-card next-selected" data-sf-supply-card data-sf-image="{% endverbatim %}{{ 'sfa/sfa-pack-2-d42517.jpg'|asset_url }}{% verbatim %}"><span class="sf-supply__badge">Most popular<b>SAVE 50%</b></span>
+          <img src="{% endverbatim %}{{ 'sfa/sfa-pack-2-d42517.jpg'|asset_url }}{% verbatim %}" alt="Two bottles of Adaptive Peptide Foundation" width="700" height="700" decoding="async">
+          <h3>2 more bottles</h3>
           <p class="sf-supply__deal">Add 1, get 1 FREE</p>
           <p class="sf-supply__perday">$0.65 a day<small>$19.50 a bottle · 2 bottles</small></p>
-          <p class="sf-supply__stars"><span aria-hidden="true">★★★★★</span> 4.8 (9,855 reviews)</p>
+          <p class="sf-supply__stars"><span class="sf-co-tp sf-co-tp--sm" role="img" aria-label="4.8 out of 5"><i></i><i></i><i></i><i></i><i></i>
+</span> 4.8 · 9,855 reviews, earlier store</p>
           <p class="sf-supply__price"><s>$78</s> <strong><span data-next-bundle-display="price">$39.00</span></strong></p>
           <button type="button" class="button cc-xl sf-supply__buy" data-next-upsell-action="add" data-sf-supply-buy>BUY NOW · $39</button>
           <p class="sf-supply__charged">Charged once to the payment you just used. Nothing renews.</p>
         </div>
-        <div data-next-bundle-card data-next-bundle-id="supply-b3g3" data-next-bundle-items='[{"packageId": 10, "quantity": 1}]' role="button" tabindex="0" class="sf-supply__card os-card" data-sf-supply-card><span class="sf-supply__badge">Best value<b>SAVE 58%</b></span>
-          <img src="{% endverbatim %}{{ 'sfa/sfa-pack-6-13c805.jpg'|asset_url }}{% verbatim %}" alt="Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush" width="700" height="700" decoding="async">
-          <h3>6-month supply</h3>
-          <p class="sf-supply__deal">Buy 3, get 3 FREE</p><p class="sf-supply__gift">+ FREE Lymphatic Brush + case ($24.95)</p>
+        <div data-next-bundle-card data-next-bundle-id="supply-b3g3" data-next-bundle-items='[{"packageId": 5, "quantity": 1}]' class="sf-supply__card os-card" data-sf-supply-card data-sf-image="{% endverbatim %}{{ 'sfa/sfa-pack-6-a9dadb.jpg'|asset_url }}{% verbatim %}"><span class="sf-supply__badge">Best value<b>SAVE 58%</b></span>
+          <img src="{% endverbatim %}{{ 'sfa/sfa-pack-6-a9dadb.jpg'|asset_url }}{% verbatim %}" alt="Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush" width="700" height="700" decoding="async">
+          <h3>6 more bottles</h3>
+          <p class="sf-supply__deal">$16.50 a bottle</p><p class="sf-supply__gift">+ FREE Lymphatic Brush + case ($24.95)</p>
           <p class="sf-supply__perday">$0.55 a day<small>$16.50 a bottle · 6 bottles</small></p>
-          <p class="sf-supply__stars"><span aria-hidden="true">★★★★★</span> 4.8 (9,855 reviews)</p>
+          <p class="sf-supply__stars"><span class="sf-co-tp sf-co-tp--sm" role="img" aria-label="4.8 out of 5"><i></i><i></i><i></i><i></i><i></i>
+</span> 4.8 · 9,855 reviews, earlier store</p>
           <p class="sf-supply__price"><s>$234</s> <strong><span data-next-bundle-display="price">$99.00</span></strong></p>
           <button type="button" class="button cc-xl sf-supply__buy" data-next-upsell-action="add" data-sf-supply-buy>BUY NOW · $99</button>
           <p class="sf-supply__charged">Charged once to the payment you just used. Nothing renews.</p>
@@ -179,29 +188,6 @@
   </div>
 </section>
 
-    <section class="section cc-sm sf-how" aria-labelledby="sf-how-title">
-  <div class="container">
-    <div class="sf-how__grid">
-      <figure class="sf-how__media">
-        <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfa/sfa-howto-poster-2a3be8.jpg'|asset_url }}{% verbatim %}" width="864" height="1080" aria-label="Illustration: the foundation goes on as white dots, blends into her skin tone, and the serum’s ingredients">
-          <source src="{% endverbatim %}{{ 'sfa/sfa-howto-009016.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
-          <source src="{% endverbatim %}{{ 'sfa/sfa-howto-7f7278.webm'|asset_url }}{% verbatim %}" type="video/webm">
-        </video>
-      </figure>
-      <div class="sf-how__body">
-        <span class="sf-how__eyebrow">How it works</span>
-        <h2 class="display-md" id="sf-how-title">One adaptive shade, in a skincare serum</h2>
-        <p class="sf-how__lede">Not a shade you pick, but a foundation that finds yours, in a serum made for skin after 45.</p>
-        <ol class="sf-how__steps">
-          <li><b>1</b><div><strong>It goes on white</strong><span>The colour waits in tiny capsules in the serum; there is nothing on the bottle to get wrong.</span></div></li>
-          <li><b>2</b><div><strong>Blend, and the capsules open</strong><span>The colour shifts toward your own tone as you work it in, in about a minute.</span></div></li>
-          <li><b>3</b><div><strong>A hydrating serum base</strong><span>Two forms of hyaluronic acid, ceramide NP, squalane and panthenol keep dry skin comfortable.</span></div></li>
-          <li><b>4</b><div><strong>Soft-focus spheres</strong><span>Round silica and boron nitride powders scatter the light, so lines and pores look softer.</span></div></li>
-        </ol><p class="sf-how__note">PDRN, Matrixyl 3000 peptides, Pro-Xylane and niacinamide in every layer. The video is an illustration; the full ingredient list is on the box.</p>
-      </div>
-    </div>
-  </div>
-</section>
     <section class="section cc-sm">
   <div class="container">
     <div class="heading-box text-center max-width-large align-center">
@@ -212,7 +198,7 @@
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">1</div>
         <div class="heading-box">
           <h3 class="checkout-features__item-title">A bottle lasts about a month</h3>
-          <p class="text-base">One pump a day. Two bottles see you to spring; six see you through the year’s photos, calls and lunches.</p>
+          <p class="text-base">One pump a day. Two more bottles cover the next two months; six cover the year’s photos, calls and lunches.</p>
         </div>
       </div>
       <div class="checkout-features__item checkout-features__item--card">
@@ -225,8 +211,8 @@
       <div class="checkout-features__item checkout-features__item--card">
         <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">3</div>
         <div class="heading-box">
-          <h3 class="checkout-features__item-title">The price stays this low only here</h3>
-          <p class="text-base">In our store one bottle is $47. The 6-pack works out at $16.50 a bottle, the 2-pack at $19.50, and both come in the same box as your order.</p>
+          <h3 class="checkout-features__item-title">This price is only here</h3>
+          <p class="text-base">In our store one bottle is $47, bought once. On this page a bottle works out at $19.50 or $16.50, in the same box as your order.</p>
         </div>
       </div>
     </div>
@@ -234,12 +220,12 @@
 </section>
     <div data-next-catalog-component="upsell-closing-cta"><section class="section cc-sm upsell-closing color-surface">
   <div class="container cc-medium">
-    <p class="text-lg text-center max-width-medium align-center margin-12">The card you picked above is what this adds. Backed by our 30-day money-back guarantee.</p>
+    <p class="text-lg text-center max-width-medium align-center margin-12">The card you picked above is what this adds. Backed by our 30-day money-back guarantee. The clock above is the offer’s: at 0:00 this page moves on.</p>
     <div class="upsell-container upsell-container--box margin-32">
       <div class="upsell-offer__card">
         <div class="grid-full flex-col flex-horizontal-lg-up gap-xl">
           <div class="upsell-offer__image-column cc-narrow align-self-center">
-            <img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-pack-2-e4e829.jpg'|asset_url }}{% verbatim %}" alt="" class="width-full">
+            <img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-pack-2-d42517.jpg'|asset_url }}{% verbatim %}" alt="" class="width-full">
           </div>
           <div class="upsell-content__column cc-fluid flex-col gap-lg">
             <h2 class="display-md">Add the pack you chose above?</h2><div class="prices-text-wrapper cc-start" data-pricing-mode="full_price">
@@ -290,9 +276,11 @@
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-offer-gate-d7b4ad.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-7a4c68.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-offer-timer-271526.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-supply-420313.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-5a907c.js'|asset_url }}{% verbatim %}"></script>
+    
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-supply-055f17.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

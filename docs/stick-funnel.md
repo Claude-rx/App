@@ -59,6 +59,10 @@ each line's renewal; order total $80.00, confirmed by the campaign API (`tools/f
 
 ## Commerce (Campaigns App campaign 2211)
 
+Campaign 2211 is this funnel's alone since 28 Oct 2026: the Adaptive Peptide Foundation funnel moved to its own
+campaign, 2221 (`docs/apf-funnel.md`). The foundation's packages 6–11 and vouchers (offers 6–10) that
+`tools/funnel/apf/commerce.py` had created in 2211 are no longer used by any page and can be deleted in the dashboard.
+
 Every package is a subscription ("all subscription"). The values below are the campaign's; `campaign_spec.py` reads
 them live and the pages are checked against them on every build.
 

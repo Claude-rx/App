@@ -89,3 +89,34 @@
 .sf-more__card strong { font-size: 15px; }
 .sf-more__card span { font-size: 13.5px; line-height: 1.4; color: #3b3b3b; }
 /* (one column at every width: the receipt column is narrow on a computer too) */
+
+/* v2: the offer's hero (sf-upsell-hero.html): the page's H1, one line, "reserved for you" and the honest clock
+   (js/sf-offer-timer.js) in a black band with no empty space under its last line (funnel review: the kit's band
+   left 100 px of black) */
+.sf-uh { padding: 26px 0 22px; background: #151515; color: #fff; text-align: center; }
+.sf-uh__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.72); }
+.sf-uh__title { margin: 0; font-size: 34px; line-height: 1.15; font-weight: 700; text-wrap: balance; }
+.sf-uh__text { max-width: 640px; margin: 10px auto 0; font-size: 17px; line-height: 1.5; color: rgba(255,255,255,.9); text-wrap: balance; }
+.sf-uh__timer { display: inline-flex; align-items: center; gap: 12px; margin: 16px auto 0; padding: 8px 10px 8px 16px; border-radius: 999px; background: rgba(255,255,255,.12); }
+.sf-uh__for { font-size: 15px; font-weight: 600; }
+.sf-uh__clock { display: inline-block; min-width: 86px; padding: 6px 12px; border-radius: 999px; background: #fff; color: #151515; font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; text-align: center; }
+.sf-uh__timer.is-ending .sf-uh__clock { background: #e8a33d; }
+.sf-uh__expires { max-width: 560px; margin: 10px auto 0; font-size: 13.5px; line-height: 1.45; color: rgba(255,255,255,.72); text-wrap: balance; }
+@media (max-width: 599px) {
+  .sf-uh { padding: 22px 0 18px; }
+  .sf-uh__title { font-size: 26px; }
+  .sf-uh__text { font-size: 15.5px; }
+  .sf-uh__timer { gap: 8px; padding: 6px 8px 6px 12px; }
+  .sf-uh__for { font-size: 13.5px; }
+  .sf-uh__clock { min-width: 74px; font-size: 20px; }
+}
+/* the brush's loop in the offer's media column: a portrait clip (720 x 900), not the kit's 16:9 frame */
+.sf-brush-page .upsell-video__frame { aspect-ratio: 4 / 5; background: #f6f2ec; }
+.sf-brush-page .upsell-video__player { object-fit: cover; }
+.sf-brush-page .upsell-offer__image-column { width: 100%; max-width: 420px; }
+/* the problem's illustration on the brush page, with its caption */
+.sf-bp__fig { margin: 0; }
+.sf-bp__fig figcaption { margin-top: 6px; font-size: 13px; line-height: 1.4; color: #6b6b6b; text-align: center; }
+/* a decline link and the footer's policy links as 44 px targets (funnel review) */
+.cc-decline-wrapper .upsell-link, .sf-supply__decline { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px; }
+.footer_legal-link { display: inline-block; padding: 10px 6px; }

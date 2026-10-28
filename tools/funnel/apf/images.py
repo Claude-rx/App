@@ -23,6 +23,7 @@ approved):
 """
 import json, shutil, subprocess, sys
 from pathlib import Path
+import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -90,22 +91,195 @@ def pack_cards():
     brush = ImageOps.fit(Image.open(BRUSH / 'card.jpg').convert('RGB'), (420, 420), Image.LANCZOS)
 
     def card(n, with_brush=False, name=''):
+        """v2 (28 Oct 2026): with the brush, the bottles stand clear of it (no bottle half hidden behind the brush's
+        box: the owner's "the offer image is not good"): a shorter row shifted left, the brush and its case at the
+        bottom right on their own."""
         size = 900
         im = Image.new('RGB', (size, size), PAPER)
-        h = 640 if n <= 3 else 400
+        if with_brush: h = 560 if n <= 3 else 360
+        else: h = 640 if n <= 3 else 400
         b = cut.resize((int(cut.width * h / cut.height), h), Image.LANCZOS)
         gap = 18
         cols = n if n <= 3 else 3
         rows = 1 if n <= 3 else 2
         total_w = cols * b.width + (cols - 1) * gap
-        x0 = (size - total_w) // 2 - (120 if with_brush and n <= 3 else 0)
-        y0 = (size - rows * h - (rows - 1) * gap) // 2
+        x0 = (size - total_w) // 2 - (130 if with_brush else 0)
+        y0 = ((size - rows * h - (rows - 1) * gap) // 2) - (60 if with_brush else 0)
         for i in range(n):
             im.paste(b, (x0 + (i % cols) * (b.width + gap), y0 + (i // cols) * (h + gap)))
-        if with_brush: im.paste(brush, (size - brush.width - 30, size - brush.height - 60))
-        save(im, name, size=700)
+        if with_brush:
+            br = brush.resize((300, 300) if n > 3 else (340, 340), Image.LANCZOS)
+            # pasted by its own mask (what is not its white backdrop), so it never blanks out a bottle behind it
+            m = Image.fromarray(((255 - np.asarray(br.convert('L'))) > 10).astype(np.uint8) * 255, 'L').filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(1.2))
+            im.paste(br, (size - br.width - 24, size - br.height - 40), m)
+        save(ground(im), name, size=700)
     card(1, name='pack-1'); card(2, name='pack-2'); card(3, True, 'pack-3'); card(6, True, 'pack-6')
-    save(bottle(1080), 'bottle', size=1080)
+    save(ground(bottle(1080)), 'bottle', size=1080)
+
+
+def ground(im, strength=1.0):
+    """A natural shadow under a product on white (the owner, 28 Oct 2026: the packshots' shadows looked pasted on):
+    a tight contact shadow along the base of whatever is not white and a wider, fainter pool under it, feathered
+    sideways, in a warm grey; nothing is drawn over the product itself."""
+    a = np.asarray(im.convert('RGB')).astype(np.float32)
+    H, W = a.shape[:2]
+    s = W / 900
+    mask = (255 - a.min(-1)) > 16
+    cols = mask.any(0)
+    if not cols.any(): return im
+    yb = np.where(cols, H - 1 - np.argmax(mask[::-1], 0), -10 ** 6).astype(np.float32)
+    d = np.arange(H, dtype=np.float32)[:, None] - yb[None, :]            # rows below each column's base
+    below = (d > -3 * s)
+    contact = np.exp(-(d / (4.5 * s)) ** 2) * below * 0.42
+    pool = np.exp(-(d / (16 * s)) ** 2) * below * 0.2
+    shade = (contact + pool) * cols[None, :]
+    shade = FI._blur(shade, 5 * s) * (1 - FI._blur(mask.astype(np.float32), 1.2 * s))
+    shade = np.clip(shade * strength, 0, 0.6)[..., None]
+    out = a * (1 - shade) + np.array([38, 34, 32], np.float32) * shade
+    return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
+
+
+# the shade objection's three women, fair to medium (the persona photos; no deep-skinned persona photo exists, so
+# the panel's words say "fair to medium" and the page's words carry the honest fair-to-deep line)
+ONE_SHADE = [('age-238', (0.1, 0.0, 0.9, 0.8)), ('age-107', (0.05, 0.05, 0.95, 0.95)), ('age-264', (0.08, 0.0, 0.92, 0.84))]
+
+
+def one_shade():
+    """The shade objection answered in one picture (the owner's ask, 28 Oct 2026, after a competitor's "16 skin
+    tones" panel): three women before and after (the after the before with foundation_look) under a fair-to-deep
+    tone bar; no count of tones (the claims rules), the AI line in full."""
+    W, H = 1080, 1350
+    im = Image.new('RGB', (W, H), PAPER)
+    d = ImageDraw.Draw(im)
+    d.text((W // 2, 150), 'One shade, no number to guess', font=P.serif(58, 'Bold'), fill=INK, anchor='ms')
+    d.text((W // 2, 202), 'It goes on white and blends into your own tone', font=P.sans(32, 'Regular'), fill=SOFT, anchor='ms')
+    x0b, x1b, bh, cy = 60, W - 60, 34, 262
+    stops = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in P.SKIN_TONES]
+    xs = np.linspace(0, len(stops) - 1, x1b - x0b)
+    lo = np.floor(xs).astype(int).clip(0, len(stops) - 2); f = (xs - lo)[:, None]
+    row = (np.array(stops)[lo] * (1 - f) + np.array(stops)[lo + 1] * f).astype(np.uint8)
+    bar = Image.fromarray(np.repeat(row[None], bh, 0), 'RGB')
+    mask = Image.new('L', bar.size, 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, bar.width - 1, bh - 1), bh // 2, fill=255)
+    im.paste(bar, (x0b, cy - bh // 2), mask)
+    cw, g, ph = 316, 26, 398
+    x0, y0 = (W - 3 * cw - 2 * g) // 2, cy + 60
+    for k, (src, crop) in enumerate(ONE_SHADE):
+        photo = Image.open(PERSONA / f'{src}.jpg').convert('RGB')
+        w, h = photo.size
+        photo = photo.crop((int(crop[0] * w), int(crop[1] * h), int(crop[2] * w), int(crop[3] * h)))
+        before = ImageOps.fit(photo, (cw, ph), Image.LANCZOS, centering=(0.5, 0.3))
+        after = FI.foundation_look(before)
+        x = x0 + k * (cw + g)
+        for j, (pic, word) in enumerate(((before, 'Before'), (after, 'After'))):
+            y = y0 + j * (ph + 54)
+            im.paste(pic, (x, y))
+            d.text((x + 4, y + ph + 36), word, font=P.sans(32, 'SemiBold'), fill=INK, anchor='ls')
+    line, size = P.AI_NOTE + '. Results vary.', 44
+    while size > 34 and d.textlength(line, font=P.sans(size, 'Regular')) > W - 60: size -= 1
+    P.note(d, (W // 2, y0 + 2 * ph + 54 + 84), line, size=size)
+    save(im, 'one-shade', size=1350)
+
+
+GEN = APF / 'gen'                    # the v2 sources (GPT Image 2 through 4SToken, 28 Oct 2026; gen/README.md has the prompts)
+
+
+def _encode(frames, key, fps=25):
+    """frames (a folder of f0001.png…) as <key>.mp4 (H.264) and <key>.webm (VP9), silent, and the last frame as
+    the poster."""
+    for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '32', '-b:v', '0', '-row-mt', '1'])):
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(fps), '-i', str(frames / 'f%04d.png'), '-an', *args, str(OUT / f'{key}.{ext}')], check=True)
+
+
+def _frames_dir(key):
+    import tempfile
+    return Path(tempfile.mkdtemp(prefix=f'{key}-'))
+
+
+def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
+    """The serum-absorption loop drawn from the generated cross-section still: the drop leaves the pump, lands, and
+    the serum's blue sinks down through the right block while the cream on the left stays on top; then it loops.
+    No words (the page's words carry what it shows). science-poster.jpg is the still with the serum in."""
+    src = Image.open(GEN / 'science-cross-section.png').convert('RGB')
+    src = src.resize((w, round(src.height * w / src.width)), Image.LANCZOS)
+    a = np.asarray(src).astype(np.float32)
+    H, W = a.shape[:2]
+    save(src, 'science-poster', size=w)
+    if not encode: return
+    blue = (a[..., 2] - a[..., 0] > 14) & (a[..., 2] > 110)
+    blue[:, : W // 2] = False
+    blue[: int(H * 0.36)] = False
+    bm = FI._blur(blue.astype(np.float32), 2.0)[..., None]
+    hsv = np.asarray(src.convert('HSV')).astype(np.float32)
+    pink = bm[..., 0] > 0.2
+    hsv[..., 0] = np.where(pink, 8.0, hsv[..., 0])
+    hsv[..., 1] = np.where(pink, hsv[..., 1] * 0.55, hsv[..., 1])
+    dry = np.asarray(Image.fromarray(hsv.astype(np.uint8), 'HSV').convert('RGB')).astype(np.float32)
+    dry = a * (1 - bm) + dry * bm
+    # the falling drop in the still: cut out (its box, as fractions of the still), its place filled white
+    bx0, by0, bx1, by1 = int(W * 0.60), int(H * 0.25), int(W * 0.66), int(H * 0.355)
+    box = a[by0:by1, bx0:bx1]
+    dmask = FI._blur(((255 - box.min(-1)) > 20).astype(np.float32), 1.0)[..., None]
+    drop = box.copy()
+    for base in (a, dry): base[by0:by1, bx0:bx1] = base[by0:by1, bx0:bx1] * (1 - dmask) + 255 * dmask
+    y_nozzle, y_land = int(H * 0.19), int(H * 0.40) - (by1 - by0)
+    frames = _frames_dir('science')
+    n = int(fps * seconds)
+    ys, xs = np.mgrid[0:H, 0:W]
+    y_top, y_bot = int(H * 0.40), int(H * 0.92)
+    for i in range(n):
+        t = i / fps
+        if t < 1.3:                                                       # the drop falls (ease in)
+            k = min(1.0, max(0.0, (t - 0.2) / 1.1)) ** 1.6
+            frame = dry.copy()
+            y = int(y_nozzle + (y_land - y_nozzle) * k)
+            frame[y:y + (by1 - by0), bx0:bx1] = frame[y:y + (by1 - by0), bx0:bx1] * (1 - dmask) + drop * dmask
+        else:                                                              # the serum sinks in, then holds
+            p = min(1.0, (t - 1.3) / 3.0)
+            edge = y_top + (y_bot - y_top) * p
+            r = np.clip((edge - ys) / (H * 0.06), 0, 1)[..., None]       # revealed above the sinking edge
+            frame = dry * (1 - r * bm) + a * (r * bm)
+            if t > seconds - 0.4:                                          # a short crossfade back to the first frame
+                q = (t - (seconds - 0.4)) / 0.4
+                frame = frame * (1 - q) + dry * q
+        Image.fromarray(np.clip(frame, 0, 255).astype(np.uint8)).save(frames / f'f{i + 1:04d}.png')
+    _encode(frames, 'science', fps)
+    shutil.rmtree(frames)
+    print('science clip', n, 'frames')
+
+
+def allday_clip(encode=True, fps=25, seconds=6.0):
+    """Reason 5's loop (the owner, 28 Oct 2026: its video did not play, it was a still): two swatches through a day,
+    8 AM to 6 PM. The left (this foundation) keeps its tone; the right (a foundation that oxidises) drifts orange.
+    An illustration, and it says so."""
+    W, H = 1080, 720
+    ours, theirs0, theirs1 = (214, 166, 131), (214, 166, 131), (221, 136, 70)
+    frames = _frames_dir('allday')
+    n = int(fps * seconds)
+    big, small, tiny = P.sans(44, 'SemiBold'), P.sans(26, 'Regular'), P.sans(22, 'Regular')
+    for i in range(n):
+        p = min(1.0, max(0.0, (i / fps - 0.5) / (seconds - 1.5)))
+        im = Image.new('RGB', (W, H), PAPER)
+        d = ImageDraw.Draw(im)
+        hour = 8 + p * 10
+        hh = int(hour); label = f'{hh if hh <= 12 else hh - 12} {"AM" if hh < 12 else "PM"}'
+        d.text((W // 2, 92), label, font=P.serif(64, 'Bold'), fill=INK, anchor='ms')
+        d.rounded_rectangle((120, 150, W - 120, 164), 7, fill=(232, 228, 222))
+        d.rounded_rectangle((120, 150, 120 + int((W - 240) * p), 164), 7, fill=INK)
+        for k, (col, title, sub) in enumerate(((ours, 'This foundation', 'the same tone all day'),
+                                               (tuple(int(theirs0[c] + (theirs1[c] - theirs0[c]) * p) for c in range(3)), 'One that oxidises', 'orange by the afternoon'))):
+            cx = W // 4 + k * (W // 2)
+            d.ellipse((cx - 150, 220, cx + 150, 520), fill=col)
+            f, fs = big, 44
+            while d.textlength(title, font=f) > W // 2 - 60 and fs > 28: fs -= 2; f = P.sans(fs, 'SemiBold')
+            d.text((cx, 580), title, font=f, fill=INK, anchor='ms')
+            d.text((cx, 622), sub, font=small, fill=SOFT, anchor='ms')
+        P.note(d, (W // 2, H - 28), 'Illustration of the pigments, not a photo. Results vary.', size=tiny.size)
+        im.save(frames / f'f{i + 1:04d}.png')
+    save(Image.open(frames / f'f{n:04d}.png'), 'allday-poster', size=W)
+    if encode: _encode(frames, 'allday', fps)
+    shutil.rmtree(frames)
+    print('allday clip', n, 'frames')
 
 
 def before_after(name, src, out, size=1080, crop=None):
@@ -117,7 +291,7 @@ def before_after(name, src, out, size=1080, crop=None):
         w, h = im.size
         im = im.crop((int(crop[0] * w), int(crop[1] * h), int(crop[2] * w), int(crop[3] * h)))
     half = ImageOps.fit(im, (size // 2, size - 150), Image.LANCZOS, centering=(0.5, 0.22))
-    after = FI.even_tone(half)
+    after = FI.foundation_look(half)        # v2: the after plainly made up (even tone, lines softened, a satin glow)
     out_im = Image.new('RGB', (size, size), PAPER)
     out_im.paste(half, (0, 0)); out_im.paste(after, (size // 2, 0))
     d = ImageDraw.Draw(out_im)
@@ -139,21 +313,29 @@ def hero_collage():
 
 
 def offer_card():
-    """The listicle's offer box image: three bottles and the brush with the gifts named."""
+    """The listicle's offer image, v2 (28 Oct 2026, the owner: the lettered composite was not good): a flat lay with
+    no words, the three bottles standing on the left, the three gifts (the Lymphatic Brush with its case, the Blender
+    brush, the mystery gift) stacked on the right, grounded shadows. The words are the page's (sf-cta)."""
     size = 1080
     im = Image.new('RGB', (size, size), PAPER)
-    three = Image.open(OUT / 'pack-3.jpg').convert('RGB').resize((760, 760), Image.LANCZOS)
-    im.paste(three, (160, 250))
-    d = ImageDraw.Draw(im)
-    d.text((60, 110), 'Adaptive Peptide', font=P.serif(84, 'Bold'), fill=INK, anchor='ls')
-    d.text((60, 200), 'Foundation', font=P.serif(84, 'Bold', italic=True), fill=INK, anchor='ls')
-    d.text((62, 256), 'One adaptive shade · made for skin after 45', font=P.sans(32, 'Medium'), fill=SOFT, anchor='ls')
-    f = P.sans(30, 'SemiBold'); word = '3 bottles + FREE Lymphatic Brush + 2 free gifts'
-    tw = d.textlength(word, font=f); cx = size / 2
-    d.rounded_rectangle((cx - tw / 2 - 30, 930, cx + tw / 2 + 30, 1000), radius=35, fill=INK)
-    d.text((cx, 965), word, font=f, fill=PAPER, anchor='mm')
-    d.text((size / 2, size - 28), 'Free shipping · 30-day money-back guarantee', font=P.sans(28, 'Medium'), fill=INK, anchor='ms')
-    save(im, 'offer')
+    one = bottle(1254)
+    bbox = ImageOps.invert(one.convert('L')).point(lambda v: 255 if v > 40 else 0).getbbox()
+    cut = one.crop(bbox)
+    h = 700
+    b = cut.resize((int(cut.width * h / cut.height), h), Image.LANCZOS)
+    gap = 22
+    x0, y0 = 70, (size - h) // 2 - 20
+    for i in range(3): im.paste(b, (x0 + i * (b.width + gap), y0))
+    tiles = [(BRUSH / 'card.jpg', 0.0), (PDP / 'gift-blender.jpg', 0.0), (PDP / 'gift-mystery.jpg', 0.0)]
+    t, tg = 292, 18
+    tx = size - t - 60
+    ty0 = (size - 3 * t - 2 * tg) // 2
+    for k, (path, _) in enumerate(tiles):
+        tile = ImageOps.fit(Image.open(path).convert('RGB'), (t, t), Image.LANCZOS)
+        mask = Image.new('L', (t, t), 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, t - 1, t - 1), 26, fill=255)
+        im.paste(tile, (tx, ty0 + k * (t + tg)), mask)
+        ImageDraw.Draw(im).rounded_rectangle((tx, ty0 + k * (t + tg), tx + t - 1, ty0 + k * (t + tg) + t - 1), 26, outline=(226, 222, 216), width=2)
+    save(ground(im), 'offer')
 
 
 def reviews(work):
@@ -216,6 +398,17 @@ def copies(video=True):
     shutil.copyfile(static / 'skinofab-favicon-32.png', OUT.parent / 'favicon.png')
     shutil.copyfile(static / 'skinofab-favicon-180.png', OUT.parent / 'webclip.png')
     for key, (src, poster, label) in CLIPS.items(): clip(key, src, poster, label, encode=video)
+    # v2 (28 Oct 2026): the generated sources in gen/ (the science cross-section with the real bottle, the split-face
+    # "wow" portrait, two problem photos), the store's Korean formulator portrait, the stick funnel's ingredient
+    # textures (the same ingredients, the same photos)
+    wow = ImageOps.fit(Image.open(GEN / 'wow-split.png').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35))
+    P.note(ImageDraw.Draw(wow), (540, 1350 - 26), P.AI_NOTE, size=34)
+    save(wow, 'wow', size=1350)
+    for n in ('problem-mirror', 'problem-orange'):
+        save(ImageOps.fit(Image.open(GEN / f'{n}.png').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), n, size=1350)
+    save(ImageOps.fit(Image.open(APF / 'doctor.jpg').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), 'doctor', size=1350)
+    stick = ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'images' / 'sf'
+    for n in ('pdrn', 'peptides', 'ha', 'ceramides', 'squalane', 'niacinamide'): shutil.copyfile(stick / f'ing-{n}.jpg', OUT / f'ing-{n}.jpg')
 
 
 if __name__ == '__main__':
@@ -229,6 +422,14 @@ if __name__ == '__main__':
     before_after('redness', PERSONA / 'age-264.jpg', 'ba-tone', crop=(0.08, 0.0, 0.92, 0.84))
     before_after('spots', PERSONA / 'age-238.jpg', 'ba-spots', crop=(0.1, 0.0, 0.9, 0.8))
     before_after('dry', PERSONA / 'age-107.jpg', 'ba-dry', crop=(0.05, 0.05, 0.95, 0.95))
+    # v2: the listicle's own four (the sales page keeps the four above: no photo on both pages), and the shade panel
+    before_after('lines', PERSONA / 'age-109.jpg', 'ba-lines')
+    before_after('glow', PERSONA / 'age-200.jpg', 'ba-glow', crop=(0.15, 0.0, 0.85, 0.8))
+    before_after('olive', PERSONA / 'age-255.jpg', 'ba-olive', crop=(0.2, 0.0, 0.8, 0.75))
+    before_after('sun', PERSONA / 'age-223.jpg', 'ba-sun', crop=(0.25, 0.0, 0.75, 0.5))
+    one_shade()
+    science_clip(encode='--no-video' not in sys.argv)
+    allday_clip(encode='--no-video' not in sys.argv)
     reviews(work)
     copies(video='--no-video' not in sys.argv)
     # (every before/after says on the image that it is an AI illustration; the buyers' photos are their own, uncut on
