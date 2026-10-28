@@ -31,8 +31,8 @@ each line's renewal; order total $80.00, confirmed by the campaign API (`tools/f
    offers and thank-you page say so if the SDK still can't load (`sf-failsafe.js`). Policy links point to
    try.skinofab.com. To move the funnel to another domain: allow it in the Campaigns App, link it to the store, set
    `FUNNEL_HOST` and `funnel_host` / `store_*` in `_data/campaigns.json`, run `campaign_spec.py`, rebuild.
-2. **Cancel the 6 QA test orders**: 101436, 101437, 101439, 101440, 101445 (local QA) and 101449 (the live run) (test
-   card, no charge, flagged as tests). They are real orders in the store and each started a subscription.
+2. **Cancel the 7 QA test orders**: 101436, 101437, 101439, 101440, 101445 (local QA), 101449 and 101519 (the live
+   runs) (test card, no charge, flagged as tests). They are real orders in the store and each started a subscription.
 3. **Upsell 4's discount.** The brief named the serum without a discount; it is offered at 20% off (SERUM20) like
    offers 2 and 3 ($22 instead of $27.95). For full price, offer 4 would come off `special-4` in `funnel.py` and
    the page would show the package price (a small change in `upsell_pages.py` and `check_funnel.py`).

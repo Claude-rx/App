@@ -58,6 +58,15 @@ const fill = async (name, value) => {
   await f.click(); await f.fill(''); await f.pressSequentially(value, { delay: 20 }); await f.press('Tab');
 };
 const select = async (name, value) => { const f = field(name); await f.waitFor({ timeout: 20000 }); await f.selectOption(value); };
+// a filled text field the SDK still flags (its state missed the typing): type it again, as a shopper would
+const retypeErrored = async () => {
+  await page.waitForTimeout(600);
+  for (const [name, value] of Object.entries(ADDRESS)) {
+    if (name === 'province') continue;
+    const f = field(name);
+    if (await f.count() && /has-error|next-error-field/.test(await f.getAttribute('class') || '')) await fill(name, value);
+  }
+};
 const arrive = async (file) => page.waitForURL(new RegExp(`/${file}/`), { timeout: 90000 });
 const fileOf = (u) => new URL(u, host).pathname.split('/').filter(Boolean).pop();
 
@@ -68,6 +77,10 @@ try {
     await page.goto(`${host}/${FN.checkout}/?forceBundleId=${pack}`, { waitUntil: 'load', timeout: 60000 });
     await page.waitForFunction(() => [...document.querySelectorAll('[data-next-bundle-card] .bundle-card__price-total')]
       .some((e) => /\$\d/.test(e.textContent)), null, { timeout: 30000 });
+    // the SDK binds the form after it has priced the cards: the country select gets its options last. A field typed
+    // before that keeps its value but not the SDK's state ("Enter a first name" on a filled field)
+    await page.waitForFunction(() => document.querySelectorAll('[data-next-checkout-field="country"] option').length > 1, null, { timeout: 30000 });
+    await page.waitForTimeout(1500);
   });
   await step('details', async () => {
     await fill('fname', ADDRESS.fname); await fill('lname', ADDRESS.lname); await fill('email', ADDRESS.email);
@@ -76,6 +89,7 @@ try {
     await page.keyboard.press('Escape');                 // close the address suggestions
     await page.waitForTimeout(800);
     await fill('city', ADDRESS.city); await select('province', ADDRESS.province); await fill('postal', ADDRESS.postal);
+    await retypeErrored();
   });
   await step('card', async () => {
     await page.locator('[data-next-payment-method="credit"], #combo_mode_credit').first().click({ force: true }).catch(() => {});
@@ -117,9 +131,13 @@ try {
     await step(`${file}-${action}`, async () => {
       // the SDK has the order (sf-offer-gate's field is filled) before its offer actions answer a click; a page with a
       // skip rule (the brush offers) has read the order's lines by then, and may be sending the order on
-      await page.waitForFunction(() => (document.querySelector('[data-sf-upsell-ok]')?.textContent || '').trim(), null, { timeout: 45000 });
-      await page.waitForFunction(() => !document.querySelector('[data-sf-skip-skus]') || document.querySelector('[data-sf-sku]'), null, { timeout: 30000 }).catch(() => {});
-      await page.waitForTimeout(1500);
+      // a page with a skip rule may send the order on (the brush offers, for an order with a brush) while this waits
+      const left = page.waitForURL((u) => !u.pathname.includes(`/${file}/`), { timeout: 45000 }).then(() => 'left').catch(() => 'stayed');
+      await Promise.race([left, (async () => {
+        await page.waitForFunction(() => (document.querySelector('[data-sf-upsell-ok]')?.textContent || '').trim(), null, { timeout: 45000 });
+        await page.waitForFunction(() => !document.querySelector('[data-sf-skip-skus]') || document.querySelector('[data-sf-sku]'), null, { timeout: 30000 }).catch(() => {});
+        await page.waitForTimeout(1500);
+      })()]).catch(() => {});
       const now = fileOf(page.url());
       if (now !== file) { result.offers.push({ page: file, gate: `sent on to ${now} without an offer` }); return; }
       i++;
@@ -131,7 +149,11 @@ try {
         const card = tier ? page.locator(`[data-next-bundle-card][data-next-bundle-id="${tier}"]`).first() : page.locator('[data-next-bundle-card].next-selected').first();
         const price = (await card.locator('[data-next-bundle-display="price"]').first().textContent().catch(() => ''))?.trim();
         result.offers.push({ page: file, action, tier: await card.getAttribute('data-next-bundle-id'), shown_price: price, next });
-        await card.locator('[data-sf-supply-buy]').first().evaluate((el) => el.click());
+        // a real (trusted) click, as hers: sf-supply.js only steps in for those (it selects the card, then clicks the
+        // button again for the SDK); a synthetic click would add the card selected before
+        const buy = card.locator('[data-sf-supply-buy]').first();
+        await buy.scrollIntoViewIfNeeded();
+        await buy.click({ force: true, timeout: 15000 });
       } else {
         const price = (await page.locator('[data-next-upsell="offer"] .upsell-offer__price:not(.diagonal-strike), [data-next-upsell="offer"] [data-next-bundle-card].next-selected [data-next-bundle-display="price"]').first().textContent().catch(() => ''))?.trim();
         result.offers.push({ page: file, action, shown_price: price, next });

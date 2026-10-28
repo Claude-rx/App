@@ -24,12 +24,19 @@ ends on the thank-you page either way. An order that already includes a brush (t
 sent past both brush offers to the thank-you page by `js/sf-offer-gate.js` (it reads the order's SKUs from a hidden
 order-items list). Every page is `noindex`. Nothing in this funnel recurs.
 
-**Proven live:** <<LIVE PROOF: order number, path, totals>>
+**Proven live (28 Oct 2026, `tools/funnel/live_order.mjs` on try.skinofab.com, NEXT's test card):** order **101534**,
+the 2-bottle pack ($57) at the checkout, offer 1's 2-bottle card accepted with a real click on its Buy now ($39 added,
+$96), the brush offer and its downsell declined, the thank-you page with both lines and their one-time terms. Order
+**101536**, the same checkout, offer 1's 6-bottle card accepted ($99 added, $156): the brush offer's gate read the
+order's `SKF-APF-6-BRUSH` line and sent it past both brush offers to the thank-you page. Campaigns OS's QA placed the
+other paths on the local build (below): declines on offer 1, offer 2, its downsell and both brush pages, the brush
+offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
 
 ## Before launch (owner)
 
 1. **Cancel the QA test orders** (test card, no charge, flagged as tests; real orders in the store):
-   <<TEST ORDERS>>. The stick funnel's are listed in `docs/stick-funnel.md`.
+   101520 to 101525 and 101527, 101528, 101530, 101531 (Campaigns OS QA, `qa-test@campaigns-os.test`), 101534 and
+   101536 (the live proofs, `qa-live@skinofab.test`). The stick funnel's are listed in `docs/stick-funnel.md`.
 2. **The gifts.** The 2- and 3-bottle packs promise a SKINOFAB Blender brush and a mystery gift; the 3-bottle pack and
    offer 1's 6-bottle pack a Lymphatic Brush with its travel case. Fulfilment must pack them: the campaign's packages
    name them in their titles (the store sees "2 bottles + free gifts"), nothing else tells the warehouse.
