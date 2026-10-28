@@ -81,7 +81,8 @@
 /* between 992 and 1199 px the family's two columns leave no room for a third: the proof column goes under the form at
    full width, its reviews two a row (at 1024 the three columns were cramped, one word a line, live review 1) */
 @media (min-width: 992px) and (max-width: 1199px) {
-  .sf-co .checkout-layout__right, .sf-co .sf-co-left { width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .sf-co.checkout-wrapper { flex-direction: column; align-items: center; }
+  .sf-co .checkout-layout__right, .sf-co .sf-co-left { flex: 0 0 auto; width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
   .sf-co .sf-co-left { order: 1; }
 }
 .sf-co-left { gap: 20px; }

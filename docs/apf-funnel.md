@@ -296,6 +296,33 @@ sum-of-both-cards reading explained under run 2. Before that run, `tools/funnel/
 2221 through the local build (checkout, offer 1's 2-bottle card accepted, both brush offers declined, the receipt
 with both lines and the gifts named): the first proof of the new campaign end to end.
 
+**Independent live review 1 (28 Oct 2026, evening, the nine pages on try.skinofab.com at 390/768/1024/1440, 322
+captures):** verdict "fix first", 2 blockers, 8 major, 14 minor. Fixed the same evening: offer 2b's feature card
+printed a raw `{discount}` token (titles now go through the same substitution as texts, and `check_apf.py` fails on
+any raw token); the checkout showed an empty red pill, "Instant savings:" with nothing after it and an empty summary
+frame for ~4 s and flashed "$0.00 today" on the pay line (the pill waits for the SDK's `next-discounts-has-items`,
+the savings line hides while its amount is empty, the summary waits behind "Loading your pack and total…" until the
+SDK fills it, the pay line's fallback is the pack the URL asks for and the live total is shown only while the cart
+has items); at 1024 the proof column sat beside a 296 px form (stacked below the form between 992 and 1199 px; beside
+it from 1200); the listicle's "CLAIM YOUR LAUNCH OFFER" landed on a page preselecting the 2-bottle pack (it now
+lands on the pack chooser with the 3-bottle pack selected, `?pack=apf-3#offer`, read by `sf-apf.js`); "the price you
+see is the price you pay" and "this price is gone" contradicted the exit pop and the cheaper last chance (now
+"nothing is added at checkout", "no pack costs more than it says here", "this offer is gone"); the sales hero's AI
+line was grey on skin (on a white band); the shade bar ran to very deep (ends at deep, as the words say); the brush
+infographic said "built to target morning puffiness" (its top band redrawn: "for the look of morning puffiness"), its
+before/after showed no difference (the morning-mirror photo instead) and the brush is named a facial massage brush;
+4.8 is drawn as 4.8 (`sf-stars.html` lights part of the fifth star); 44 px targets; one line of bar text at 390; the
+same shipping times in both FAQs; no "printed on the bottle"; "9,855 reviews", not "women"; the comparison table's
+unsourced complaints dropped; the footer names the women pictured as illustrations; one savings row in the summary;
+offer 1's cards built alike with the charge the biggest number; "Reserved for you, Jane · 09:47 left"; "Confirming
+your order…" under the clock until the SDK has the order. The campaign's pack packages now carry the pack renders as
+their images (`PUT /packages/{id}/image/`, packages 2, 3, 4, 5), so the summary and receipt show two, three or six
+bottles. Not a defect after reading the SDK: the mobile exit pop fires when the page has been scrolled past half its
+height (`mobileScrollTrigger` in `campaign-cart@0.4.43`), not on a fast scroll up, and it does on the live checkout
+at 52% in an iPhone profile; the reviewer's scrolls stopped short of that. Still open: the six before/after pairs
+that need image credit (above), and the hidden payment-logo markup for methods the campaign does not offer (the
+family's partial; invisible).
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the
