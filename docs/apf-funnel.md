@@ -348,6 +348,14 @@ documented: the brush loop's baked "Illustration" pill on its hand-held frames (
 the stick funnel's render), the "3 ★ 0" row (the imported data), the sticky bar at 390 (measured 43 px clear of the
 footer's last line; its room is now 150 px), and the cropped hairlines in two square store portraits.
 
+**Campaigns OS after live review 2's fixes (28 Oct 2026, night):** build recorded, polish READY (18 captures, no
+console error, no overflow), deploy recorded, QA resolve passing, browser QA verdict `MVSJF307HQN95L5BHOF7GPB5EJ`
+ready_with_exceptions: 159 pass, the two known exceptions (no typed orders on an image-and-copy run; offer 1's
+sum-of-both-cards price read) and one new warn, `browser-request-failures:checkout`: one `carts/calculate` request
+ending `net::ERR_ABORTED`. That is the SDK cancelling its own superseded calculation when the card the URL names is
+applied right after init (reviewer 2 saw the same aborted fetch on the previous build, where the QA run happened not
+to catch it); no page request fails, and the final total is right on every path. Not waived, recorded.
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the
