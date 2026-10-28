@@ -19,7 +19,7 @@ TITLES = F.TITLES
 
 def call(method, path, body=None):
     data = json.dumps(body).encode() if body is not None else None
-    for attempt in range(4):
+    for attempt in range(6):
         req = urllib.request.Request(API + path, data=data, method=method, headers={
             'Authorization': 'Bearer ' + os.environ['NEXT_API_TOKEN'], 'X-29next-API-Version': '2024-04-01',
             'Content-Type': 'application/json', 'Accept': 'application/json', 'User-Agent': 'skinofab-funnel/1'})
@@ -28,10 +28,12 @@ def call(method, path, body=None):
                 raw = r.read()
                 return json.loads(raw) if raw else {}
         except urllib.error.HTTPError as e:
-            if e.code >= 500 and attempt < 3: time.sleep(2 ** attempt); continue
+            if e.code == 429 and attempt < 5:       # the Admin API throttles bursts ("available in N seconds")
+                time.sleep(max(2, int(e.headers.get('Retry-After') or 0)) + attempt); continue
+            if e.code >= 500 and attempt < 5: time.sleep(2 ** attempt); continue
             raise SystemExit(f'{method} {path}: {e.code} {e.read()[:300]!r}')
         except urllib.error.URLError:
-            if attempt < 3: time.sleep(2 ** attempt); continue
+            if attempt < 5: time.sleep(2 ** attempt); continue
             raise
 
 
