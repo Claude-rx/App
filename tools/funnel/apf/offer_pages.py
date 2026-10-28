@@ -224,12 +224,13 @@ def supply_page(spec):
         {'id': 'supply-b3g3', 'items_json': json.dumps([{'packageId': 10, 'quantity': 1}]), 'image': 'images/sf/pack-6.jpg',
          'alt': 'Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush', 'badge': 'Best value', 'save': '58%',
          'name': '6-month supply', 'deal': 'Buy 3, get 3 FREE', 'gift': 'FREE Lymphatic Brush + case ($24.95)',
-         'per_day': '$0.55 a day', 'per_bottle': '$16.50 a bottle · 6 bottles', 'price': '$99.00', 'compare': '$234', 'selected': True, 'button': 'BUY NOW · $99'},
+         'per_day': '$0.55 a day', 'per_bottle': '$16.50 a bottle · 6 bottles', 'price': '$99.00', 'compare': '$234', 'selected': False, 'button': 'BUY NOW · $99'},
         {'id': 'supply-b1g1', 'items_json': json.dumps([{'packageId': 9, 'quantity': 1}]), 'image': 'images/sf/pack-2.jpg',
          'alt': 'Two bottles of Adaptive Peptide Foundation', 'badge': 'Most popular', 'save': '50%',
          'name': '2-month supply', 'deal': 'Add 1, get 1 FREE', 'gift': '',
-         'per_day': '$0.65 a day', 'per_bottle': '$19.50 a bottle · 2 bottles', 'price': '$39.00', 'compare': '$78', 'selected': False, 'button': 'BUY NOW · $39'},
+         'per_day': '$0.65 a day', 'per_bottle': '$19.50 a bottle · 2 bottles', 'price': '$39.00', 'compare': '$78', 'selected': True, 'button': 'BUY NOW · $39'},
     ]
+    cards.reverse()   # the 2-bottle card first and selected (the smaller step, the one most take); the 6-pack beside it
     supply = {'title': 'Stock up at the lowest price we will ever offer', 'lede': 'Add bottles to the order you just placed: one tap, same box, same payment. These prices exist on this page only.',
               'tiers': cards, 'guarantee': '30-day money-back guarantee on every bottle, even opened. You don’t send anything back.',
               'charged': 'Charged once to the payment you just used. Nothing renews.', 'decline': 'No thanks, I don’t want to stock up'}
@@ -242,19 +243,19 @@ def supply_page(spec):
         '  suboffer: "Two bottles for the price of one, or six for the price of three with a free Lymphatic Brush. Only on this page, only with the order you just placed."',
         f'supply: {q(supply)}',
         # the closing card prices the selected card (bundle.supply.*) and proxies its add / skip
-        'upsell_offer:', '  type: tier-cards', '  package_id: 10', '  selector_id: "supply"', '  display_selector_id: "supply"', '  display_bundle_id: "supply-b3g3"',
+        'upsell_offer:', '  type: tier-cards', '  package_id: 9', '  selector_id: "supply"', '  display_selector_id: "supply"', '  display_bundle_id: "supply-b1g1"',
         '  accept_text: "Yes, add it for"', '  accept_show_price: true', '  decline_text: "No thanks, I don’t want to stock up"',
-        '  fallback_price: "$99.00"', '  fallback_compare: "$234.00"',
+        '  fallback_price: "$39.00"', '  fallback_compare: "$78.00"',
         f'  cta_note: {q("Charged once to the payment you just used. Nothing renews, and it ships in the same box. " + GUARANTEE + " " + ALLERGY)}',
         'upsell_bundle_tiers:',
-        f'  - {{ id: "supply-b3g3", items_json: {q(cards[0]["items_json"])}, vouchers_json: "[]", label: "6 bottles", hint: "Buy 3, get 3 free", selected: true }}',
-        f'  - {{ id: "supply-b1g1", items_json: {q(cards[1]["items_json"])}, vouchers_json: "[]", label: "2 bottles", hint: "Add 1, get 1 free" }}',
+        f'  - {{ id: "supply-b1g1", items_json: {q(cards[0]["items_json"])}, vouchers_json: "[]", label: "2 bottles", hint: "Add 1, get 1 free", selected: true }}',
+        f'  - {{ id: "supply-b3g3", items_json: {q(cards[1]["items_json"])}, vouchers_json: "[]", label: "6 bottles", hint: "Buy 3, get 3 free" }}',
         'upsell_layout:', '  style: card', '  boxed: true', '  media: image', '  show_payment_logos: false',
         f'how: {q(HOW_APF)}',
         'upsell_body:', '  - type: features', '    title: "Why women stock up"', '    text: "Because the shade that finally works is the one you don’t want to run out of."', '    items:',
         *[f'      - {{ title: {q(t)}, text: {q(x)} }}' for t, x in features],
         'closing_cta:', '  variant: card', '  title: "Add the pack you chose above?"',
-        f'  note: {q("The card you picked above is what this adds. " + GUARANTEE)}', '  image: "images/sf/pack-6.jpg"',
+        f'  note: {q("The card you picked above is what this adds. " + GUARANTEE)}', '  image: "images/sf/pack-2.jpg"',
     ]
     body = GATE + """<div class="page-wrapper">
   <div class="main-wrapper">

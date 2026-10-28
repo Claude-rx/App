@@ -62,7 +62,7 @@
 .sf-bp__no { color: #b3261e; font-weight: 700; }
 .sf-bp__box { display: grid; gap: 12px; }
 .sf-bp__box figure { margin: 0; border: 1px solid #e6e2dc; border-radius: 12px; overflow: hidden; background: #fff; }
-.sf-bp__box img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #fff; }
+.sf-bp__box img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; background: #fff; }
 .sf-bp__box figcaption { padding: 10px 12px 12px; font-size: 13.5px; line-height: 1.4; }
 .sf-bp__box strong { display: block; font-size: 15px; }
 .sf-bp__faq details { border-top: 1px solid #ddd7ce; }
@@ -88,4 +88,4 @@
 .sf-more__card img { width: 72px; height: 72px; border-radius: 10px; object-fit: cover; grid-row: span 2; }
 .sf-more__card strong { font-size: 15px; }
 .sf-more__card span { font-size: 13.5px; line-height: 1.4; color: #3b3b3b; }
-@media (min-width: 768px) { .sf-more__grid { grid-template-columns: repeat(3, 1fr); } }
+/* (one column at every width: the receipt column is narrow on a computer too) */

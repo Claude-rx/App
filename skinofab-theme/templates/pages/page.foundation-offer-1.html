@@ -25,7 +25,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  
+  <script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })("https://try.skinofab.com");</script>
 
     
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -58,13 +58,25 @@
     
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     <link href="{% endverbatim %}{{ 'sfa/sfa-next-core-e875b0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-55c80c.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-06326f.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-10657e.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-8c9286.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -72,6 +84,9 @@
   </head>
   <body>
     
+
+
+
 
     
 <div class="sf-sr" data-sf-offer-gate data-sf-thank-you="/foundation-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
@@ -145,7 +160,7 @@
           <p class="sf-supply__perday">$0.55 a day<small>$16.50 a bottle · 6 bottles</small></p>
           <p class="sf-supply__stars"><span aria-hidden="true">★★★★★</span> 4.8 (9,855 reviews)</p>
           <p class="sf-supply__price"><s>$234</s> <strong><span data-next-bundle-display="price">$99.00</span></strong></p>
-          <button type="button" class="button cc-xl sf-supply__buy" data-sf-supply-buy>BUY NOW · $99</button>
+          <button type="button" class="button cc-xl sf-supply__buy" data-next-upsell-action="add" data-sf-supply-buy>BUY NOW · $99</button>
           <p class="sf-supply__charged">Charged once to the payment you just used. Nothing renews.</p>
         </div>
         <div data-next-bundle-card data-next-bundle-id="supply-b1g1" data-next-bundle-items='[{"packageId": 9, "quantity": 1}]' role="button" tabindex="0" class="sf-supply__card os-card" data-sf-supply-card><span class="sf-supply__badge">Most popular<b>SAVE 50%</b></span>
@@ -155,11 +170,10 @@
           <p class="sf-supply__perday">$0.65 a day<small>$19.50 a bottle · 2 bottles</small></p>
           <p class="sf-supply__stars"><span aria-hidden="true">★★★★★</span> 4.8 (9,855 reviews)</p>
           <p class="sf-supply__price"><s>$78</s> <strong><span data-next-bundle-display="price">$39.00</span></strong></p>
-          <button type="button" class="button cc-xl sf-supply__buy" data-sf-supply-buy>BUY NOW · $39</button>
+          <button type="button" class="button cc-xl sf-supply__buy" data-next-upsell-action="add" data-sf-supply-buy>BUY NOW · $39</button>
           <p class="sf-supply__charged">Charged once to the payment you just used. Nothing renews.</p>
         </div>
-      </div><a data-next-upsell-action="add" href="#" class="sf-sr" tabindex="-1" aria-hidden="true">Add to my order</a>
-      <div class="sf-supply__guarantee"><img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-50cdfb.jpg'|asset_url }}{% verbatim %}" alt="" width="56" height="56" loading="lazy"><p>30-day money-back guarantee on every bottle, even opened. You don’t send anything back.</p></div>
+      </div><div class="sf-supply__guarantee"><img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-50cdfb.jpg'|asset_url }}{% verbatim %}" alt="" width="56" height="56" loading="lazy"><p>30-day money-back guarantee on every bottle, even opened. You don’t send anything back.</p></div>
       <div class="upsell-decline text-center"><a data-next-upsell-action="skip" href="#" class="sf-supply__decline">No thanks, I don’t want to stock up</a></div>
     </div>
   </div>
@@ -278,7 +292,7 @@
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-7a4c68.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-supply-ad9ab1.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-supply-420313.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

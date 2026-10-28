@@ -114,8 +114,9 @@ fewer than 8 review cards or one without a photo, or a rating other than the fou
 `tools/funnel/apf/offer_pages.py` writes the five pages from `funnels/apf.py` and the CampaignSpec.
 
 1. **Offer 1, the supply cards** (`_includes/sf-supply-cards.html`, `js/sf-supply.js`, `css/sf-offers.css`): two cards
-   in the Obvi "month supply" style, each with its badge ("Best value, SAVE 58%", "Most popular, SAVE 50%"), the pack
-   image, the deal ("Buy 3, get 3 FREE" + the free brush; "Add 1, get 1 FREE"), the per-day and per-bottle price, the
+   in the Obvi "month supply" style, the 2-bottle card first and preselected ("Most popular, SAVE 50%": the smaller
+   step, and the one a first-offer accept adds), the 6-pack beside it ("Best value, SAVE 58%"), each with its badge, the
+   pack image, the deal ("Add 1, get 1 FREE"; "Buy 3, get 3 FREE" + the free brush), the per-day and per-bottle price, the
    stars, the crossed-out and the live price, BUY NOW, and "Charged once". The cards are the SDK's bundle selector
    inside the one offer, scoped with `data-next-upsell-context` (it never touches a live cart). Every BUY NOW is the
    offer's own add action (the SDK adds the selected card); a real click on a card that is not selected is stopped,

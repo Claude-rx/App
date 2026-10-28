@@ -90,7 +90,8 @@ s.sf-reserved__amount { font-weight: 600; color: #6b6b6b; text-decoration-thickn
 .sf-reserved__list { list-style: none; margin: 22px 0; padding: 0; display: grid; gap: 14px; text-align: left; }
 .sf-reserved__list li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; margin: 0; }
 .sf-reserved__list strong { display: block; font-size: 16px; line-height: 1.35; }
-.sf-reserved__list span { display: block; font-size: 15px; line-height: 1.5; color: #3b3b3b; }
+.sf-reserved__list li > div > span { display: block; font-size: 15px; line-height: 1.5; color: #3b3b3b; }
+.sf-reserved__list li > div > span span { display: inline; }
 @media (max-width: 479px) {
   .sf-reserved__card { padding: 26px 18px; }
   .sf-reserved__amount { font-size: 26px; }

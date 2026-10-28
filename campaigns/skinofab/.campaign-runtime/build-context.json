@@ -1,6 +1,6 @@
 {
   "schema_version": "campaign-runtime-build-context/v0",
-  "generated_at": "2026-10-28T09:29:59.109Z",
+  "generated_at": "2026-10-28T09:36:57.007Z",
   "source_adapter": "html_funnel",
   "intake": {
     "spec_source": "local",
@@ -320,7 +320,7 @@
     "output_dir": "./src/apf-funnel",
     "handoff_skill": "next-campaigns-build",
     "handoff_artifact": ".campaign-runtime/setup-handoff.json",
-    "reason": "Setup recorded by campaigns-os record setup at 2026-10-28T09:30:02.167Z; the campaign output directory exists."
+    "reason": "Setup recorded by campaigns-os record setup at 2026-10-28T09:36:59.813Z; the campaign output directory exists."
   },
   "template": {
     "family": "apollo",
