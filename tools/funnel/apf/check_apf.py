@@ -13,7 +13,7 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
               guarantee right above the order button, the three featured reviews after it (never between the address
               and the payment), 8+ review cards each with the buyer's photo, the reviews' rating and where they are from
   sales page  each pack's price is its package's, its crossed-out price the list price times its bottles, its saving
-              the difference, every checkout link names a checkout card, the before/afters carry the AI label
+              the difference, every checkout link names a checkout card, no disclaimer or illustration line anywhere
   offer 1     the supply cards: each card's package is the page's, its price the package's, its crossed-out, per-bottle
               and per-day prices arithmetic from the one-bottle price; the cards sit in an upsell-context selector inside
               the one offer, each card's Buy now the offer's add action (no hidden one), with a skip action; charged once
@@ -24,7 +24,7 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
   host        each page sends other hosts to the funnel's; its policy links are on it
   theme       a template per page, marked GENERATED for this funnel, no Page Kit route left, every asset it names on disk
   claims      none of the claims the brand may not make; nothing recurs; no countdown but the offers' own honest one
-              (js/sf-offer-timer.js: it declines the offer at 0:00 and says so); the AI before/afters are labelled; the
+              (js/sf-offer-timer.js: it declines the offer at 0:00 and says so); no disclaimer or illustration line (the owner's instruction); the
               reviews say where they are from; SPF is only ever mentioned as absent
 """
 import json, os, re, sys
@@ -65,6 +65,13 @@ FORBIDDEN = [
     (r"order isn[’']t complete", '"your order isn\'t complete" after the order is placed'),
     (r"\bdon[’']t close this page\b", 'pressure: "don\'t close this page"'),
     (r'\btrustpilot\b', 'Trustpilot'),
+    # the owner's instruction (28 Oct 2026): no disclaimer or illustration line on any page or image
+    (r'\billustrations?\b', 'an illustration line'),
+    (r'\bresults\s+(?:may\s+)?vary\b', 'a results-vary disclaimer'),
+    (r'\badvertisement\b', 'an advertisement disclosure'),
+    (r'\bnot\s+(?:a\s+)?(?:customer\s+)?photos?\b', 'a not-a-photo line'),
+    (r'\bnot\s+an?\s+(?:endorsement|measurement)\b', 'a not-an-endorsement/measurement line'),
+    (r'\bnot\s+to\s+scale\b', 'a not-to-scale line'),
     # nothing in this funnel recurs: no renewal wording anywhere (the stick funnel's terms must not be copied in)
     (r'\bevery\s+\d+\s+days\b', 'a renewal interval'),
     (r'\bThen\s+\$\d', 'a "Then $X" renewal line'),
@@ -314,7 +321,6 @@ for p in F.PAGES:
         if 'data-sf-timer-expires="skip"' not in h or 'js/sf-offer-timer' not in h or 'this page moves on' not in text(h):
             fail(p['id'], 'a countdown without its consequence (the offer must decline itself at 0:00 and say so)')
         if p['sdk'] != 'upsell': fail(p['id'], 'a countdown on a page that is not an offer')
-    if 'images/sf/ba-' in h and 'AI illustration' not in h: fail(p['id'], 'before/after images without the AI illustration label')
     if 'images/sf/review-' in h and 'earlier store' not in text(h): fail(p['id'], 'buyers\' reviews without where they are from')
 
 if problems:

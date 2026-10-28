@@ -398,6 +398,22 @@ hidden eager media), polish completed with the evidence file, deploy recorded on
 `MVSMVUMJU56ELT8AS8F5BRT6IH` ready_with_exceptions (the same two exceptions as before: the checkout's upsell-action coverage is a
 manual review, offer 1's bundle price claim reads the live package).
 
+**No disclaimer or illustration line (28 Oct 2026, night, the owner's instruction: "remove all disclaimer and
+illustration text from the images and the text"):** every such line is gone from the nine pages and the images, in
+the tools and the source: the before/after pairs and the hero's split portrait carry no "AI illustration, not a
+customer photo" band, the shade panel no "Illustration … Results vary" note, the brush loop and its poster no
+"Illustration" pill (painted out of every frame in `copies()`); the pages carry no footer disclosure ("This page is
+an advertisement … AI illustrations … Individual results vary"), no "Illustration of the skin's layers, not to
+scale", "not a measurement", "The video is an illustration", "not an endorsement", "not paid endorsers" or
+"Results vary" line, and no "(AI illustration)" in an alt or aria-label; the doctor figure and the brush's mirror
+photo have no caption. `check_apf.py` now fails any page that carries one of those lines instead of requiring the
+AI label. Kept, because they are not disclaimers: the fish-allergy warning (a safety line), the guarantee terms,
+the countdown's own sentence, and the reviews' provenance ("from our earlier store"). The owner was told once that
+unlabelled AI before/afters and no results-vary line carry an ad-compliance risk in the US and UK.
+Lifecycle on that build: build recorded, polish READY and completed, deploy recorded on the served route root, browser QA
+`MVSNOLCU080Q3069M343O69O9O` ready_with_exceptions (the same two exceptions); verified live with the preview cookie: no such
+line in any page's text, alt or aria-label, the new image hashes served, zero console errors.
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the

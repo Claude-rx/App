@@ -32,7 +32,7 @@ reasons:
   - title: "No More Guessing Your Shade"
     image: "images/sf/ba-glow.jpg"
     image_h: 900
-    alt: "A woman of about 64 with a silver bob, before and after: sun spots, redness and lines on her bare skin, then the foundation on, her tone even and glowing (AI illustration, not a customer photo)"
+    alt: "A woman of about 64 with a silver bob, before and after: sun spots, redness and lines on her bare skin, then the foundation on, her tone even and glowing"
     paras:
       - "Most of us have a drawer of foundations that looked right in the store and wrong at home. After 45 it gets harder: more redness, more sun spots, and an undertone that isn’t quite what it was."
       - "This foundation has no shade to pick. It goes on white; its colour pigments wait in tiny capsules that open as you blend, so the colour shifts toward your own tone while you work it in."
@@ -79,7 +79,7 @@ reasons:
       - "<strong>The airless pump</strong> keeps the serum fresh to the last drop"
   - title: "Made Not to Turn Orange by the Afternoon"
     clip: "allday"
-    alt: "Illustration: two swatches through a day, this foundation keeping its tone while a foundation that oxidises drifts orange"
+    alt: "Two swatches through a day, this foundation keeping its tone while a foundation that oxidises drifts orange"
     paras:
       - "It’s the complaint we hear most about colour-changing foundations: right at 8 AM, orange by lunch."
       - "The pigments here are made not to turn orange or grey as the day goes on, and the serum layer is made to move with your skin instead of drying on top of it. Judge it in your own daylight: that’s the test that counts."
@@ -216,15 +216,15 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
         <source src="{{ 'images/sf/' | append: r.clip | append: '.webm' | campaign_asset }}" type="video/webm">
         <source src="{{ 'images/sf/' | append: r.clip | append: '.mp4' | campaign_asset }}" type="video/mp4">
       </video>
-      <figcaption>Illustration of the pigments through a day, 8 AM to 6 PM. Not a photo; results vary.</figcaption>
+      <figcaption>8 AM to 6 PM, one application.</figcaption>
     </figure>
     {% elsif r.ingredients %}
     <figure class="sf-reason__media sf-reason__clip">
-      <video data-sf-lazy autoplay muted loop playsinline preload="metadata" poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="Illustration: a cream sits on top of a skin cross-section while a drop of the serum melts into the surface of the other">
+      <video data-sf-lazy autoplay muted loop playsinline preload="metadata" poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="A cream sits on top of a skin cross-section while a drop of the serum melts into the surface of the other">
         <source src="{{ 'images/sf/science.webm' | campaign_asset }}" type="video/webm">
         <source src="{{ 'images/sf/science.mp4' | campaign_asset }}" type="video/mp4">
       </video>
-      <figcaption><strong>✕ A cream sits on top. ✓ A serum melts into the surface.</strong> Illustration of the two textures at the surface, not a measurement.</figcaption>
+      <figcaption><strong>✕ A cream sits on top. ✓ A serum melts into the surface.</strong></figcaption>
     </figure>
     {% else %}
     <figure class="sf-reason__media">
@@ -244,7 +244,7 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
     </div>
     {% if r.video %}
     <figure class="sf-video-row">
-      <video data-sf-lazy autoplay muted loop playsinline preload="metadata" poster="{{ 'images/sf/howto-poster.jpg' | campaign_asset }}" width="864" height="1080" aria-label="Illustration: the foundation goes on as white dots, blends into her skin tone, and the serum’s ingredients">
+      <video data-sf-lazy autoplay muted loop playsinline preload="metadata" poster="{{ 'images/sf/howto-poster.jpg' | campaign_asset }}" width="864" height="1080" aria-label="The foundation goes on as white dots, blends into her skin tone, and the serum’s ingredients">
         <source src="{{ 'images/sf/howto.webm' | campaign_asset }}" type="video/webm">
         <source src="{{ 'images/sf/howto.mp4' | campaign_asset }}" type="video/mp4">
       </video>
@@ -255,7 +255,6 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
           <li><strong>Blend, and the capsules open</strong>The colour shifts toward your own tone as you work it in.</li>
           <li><strong>Soft-focus spheres</strong>Round silica and boron nitride powders scatter the light, so lines look softer.</li>
         </ol>
-        <span class="sf-video-row__note">The video is an illustration.</span>
       </figcaption>
     </figure>
     {% endif %}

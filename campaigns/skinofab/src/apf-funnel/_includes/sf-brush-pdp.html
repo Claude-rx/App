@@ -9,7 +9,7 @@
 <div class="sf-bp">
   <section class="sf-bp__sec" aria-labelledby="sf-bp-problem">
     <div class="sf-bp__two">
-      <figure class="sf-bp__fig"><img src="{{ brush.problem.image | campaign_asset }}" alt="{{ brush.problem.alt }}" width="1080" height="1080" loading="lazy" decoding="async"><figcaption>{{ brush.problem.caption }}</figcaption></figure>
+      <figure class="sf-bp__fig"><img src="{{ brush.problem.image | campaign_asset }}" alt="{{ brush.problem.alt }}" width="1080" height="1080" loading="lazy" decoding="async">{% if brush.problem.caption %}<figcaption>{{ brush.problem.caption }}</figcaption>{% endif %}</figure>
       <div>
         <span class="sf-bp__eyebrow">{{ brush.problem.eyebrow }}</span>
         <h2 class="display-md" id="sf-bp-problem">{{ brush.problem.title }}</h2>

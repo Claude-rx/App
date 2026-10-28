@@ -1,6 +1,6 @@
 {
   "schema_version": "campaigns-os-doctor-output/v0",
-  "generated_at": "2026-10-28T21:36:41.724Z",
+  "generated_at": "2026-10-28T21:59:03.594Z",
   "generated_by": "qa run",
   "ok": true,
   "status": "ready_with_warnings",
@@ -8,7 +8,7 @@
   "warnings": [
     {
       "code": "local_proof.production_parity",
-      "message": "Production parity was recorded for build sha256:ed4e6e7283ba6c6ee9466e6af7021bc3138627c9f4343c5b7a86f4e9d7d09006, but stages.assembly.build_fingerprint is now sha256:2fc15b76c89b4fe08273d4ae7bf5fed2515959f51d63ef5bd6c3bbf27d5dd629. Re-run npx --no-install campaigns-os page-kit parity --packet <packet> on the current build.",
+      "message": "Production parity was recorded for build sha256:ed4e6e7283ba6c6ee9466e6af7021bc3138627c9f4343c5b7a86f4e9d7d09006, but stages.assembly.build_fingerprint is now sha256:ed85e82beefded4e998eb3b3870aaa322a22ddb18b2d57f46f9907bed2f6e9ad. Re-run npx --no-install campaigns-os page-kit parity --packet <packet> on the current build.",
       "cause": "caused_by_change",
       "cause_reason": "new_since_prior_run"
     },
@@ -424,7 +424,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 27165,
+          "bytes": 26482,
           "candidates": 0
         },
         "members": [],
@@ -436,7 +436,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -460,7 +460,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 64246,
+          "bytes": 63032,
           "candidates": 0
         },
         "members": [],
@@ -472,7 +472,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -508,7 +508,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -532,7 +532,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 15933,
+          "bytes": 15532,
           "candidates": 0
         },
         "members": [],
@@ -544,7 +544,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -568,7 +568,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 32399,
+          "bytes": 31998,
           "candidates": 0
         },
         "members": [],
@@ -580,7 +580,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -604,7 +604,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 31400,
+          "bytes": 30999,
           "candidates": 0
         },
         "members": [],
@@ -616,7 +616,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -652,7 +652,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -676,7 +676,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 35929,
+          "bytes": 35414,
           "candidates": 0
         },
         "members": [],
@@ -688,7 +688,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -712,7 +712,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 36027,
+          "bytes": 35512,
           "candidates": 0
         },
         "members": [],
@@ -724,7 +724,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.288Z",
+        "measured_at": "2026-10-28T21:59:03.106Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -751,7 +751,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -773,7 +773,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -783,7 +783,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -805,7 +805,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -815,7 +815,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -837,7 +837,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -847,7 +847,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -862,14 +862,14 @@
           "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:ee67b562cd454cae0f6145258b998877d99670e3efad84d4399e578507af621e",
+        "state_fingerprint": "sha256:69baf4af57249ad206283ef86da39fc89a98fd57640657d3379b962233078fb7",
         "observation": {
           "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -881,7 +881,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -911,7 +911,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -938,7 +938,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -968,7 +968,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -998,7 +998,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1028,7 +1028,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1055,7 +1055,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1077,7 +1077,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1087,7 +1087,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1109,7 +1109,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1119,7 +1119,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1141,7 +1141,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1151,7 +1151,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1166,14 +1166,14 @@
           "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:82e4ce593d38d893bf5e40befa8f762c9740b39b9e852e84ba73329f9a6e5cf2",
+        "state_fingerprint": "sha256:79e90fa3f8d8fe085ba6c6dc8dfd60137f605a62658c3796d75bb17ac1cc4ee1",
         "observation": {
           "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1185,7 +1185,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1215,7 +1215,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1242,7 +1242,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1272,7 +1272,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1302,7 +1302,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1332,7 +1332,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1359,7 +1359,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1381,7 +1381,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1391,7 +1391,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1413,7 +1413,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1423,7 +1423,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1445,7 +1445,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1455,7 +1455,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1470,14 +1470,14 @@
           "page": "_site/apf-funnel/foundation-checkout/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:a46e39210feace16b7e3cda6e2c633fc6d6be7a397bf4f57851d536d6845d7fd",
+        "state_fingerprint": "sha256:bb276c3d8cefbd0b3f1b08dc78d948648558189fd18629655302394462088253",
         "observation": {
           "page": "_site/apf-funnel/foundation-checkout/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1489,7 +1489,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1519,7 +1519,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1546,7 +1546,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1576,7 +1576,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1606,7 +1606,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1633,7 +1633,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1655,7 +1655,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1665,7 +1665,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1687,7 +1687,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1697,7 +1697,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1719,7 +1719,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1729,7 +1729,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1744,14 +1744,14 @@
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:ee2dfa90832c00d7720e90dac368e00d19271f541f8649e3630c37bffaa0b715",
+        "state_fingerprint": "sha256:0a4ce9b77bd540277aa6072c18bca542988208d57dc54beedf745c91b00a5d1c",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1763,7 +1763,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1793,7 +1793,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1820,7 +1820,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1850,7 +1850,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1880,7 +1880,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1907,7 +1907,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1929,7 +1929,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1939,7 +1939,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1961,7 +1961,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -1971,7 +1971,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1993,7 +1993,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2003,7 +2003,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2018,14 +2018,14 @@
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:d78a1c30f977e236d7f3382ad39de4cd060e1300065c2a872abe2ab9be95e90b",
+        "state_fingerprint": "sha256:1a21a7bdddc20f7c8a37bfe3a1a86a12f6b5e7e9fe855e51ed7760fc72c77f91",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2037,7 +2037,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2067,7 +2067,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2094,7 +2094,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2124,7 +2124,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2154,7 +2154,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2181,7 +2181,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2203,7 +2203,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2213,7 +2213,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2235,7 +2235,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2245,7 +2245,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2267,7 +2267,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2277,7 +2277,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2292,14 +2292,14 @@
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:23b1bae3aa7d9baf0a260240c773319c0572ca983174991e87c6432c2cd7800b",
+        "state_fingerprint": "sha256:ebabb9eb4c6985bc8e4e8900d9ce1a515e9cd1a9060adaef7f36a9e96c8284a1",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2311,7 +2311,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2341,7 +2341,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2368,7 +2368,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2398,7 +2398,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2425,7 +2425,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2447,7 +2447,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2457,7 +2457,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2479,7 +2479,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2489,7 +2489,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2511,7 +2511,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2521,7 +2521,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2536,14 +2536,14 @@
           "page": "_site/apf-funnel/foundation-thank-you/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:ec3d78591d673f4156326ced62b84eada72ba08027270a2ef5dc98516943053e",
+        "state_fingerprint": "sha256:1cb5261006207899041cf3f961f9edc15bfe7abf0cc46d60075f83f570024f5f",
         "observation": {
           "page": "_site/apf-funnel/foundation-thank-you/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2555,7 +2555,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2585,7 +2585,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2612,7 +2612,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2642,7 +2642,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2672,7 +2672,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2699,7 +2699,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2721,7 +2721,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2731,7 +2731,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2753,7 +2753,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2763,7 +2763,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2785,7 +2785,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2795,7 +2795,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2810,14 +2810,14 @@
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:71b7e9a8884d3a9b6419c9867ce7a802fb7895e3fbce1e681d04069abb631083",
+        "state_fingerprint": "sha256:390f04ac9ddb72315d35e75d1aad577ac49926678a21592e60b4fbf0b58b8a7b",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -2829,7 +2829,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2859,7 +2859,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2886,7 +2886,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2916,7 +2916,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2946,7 +2946,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2973,7 +2973,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2995,7 +2995,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -3005,7 +3005,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3027,7 +3027,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -3037,7 +3037,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3059,7 +3059,7 @@
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -3069,7 +3069,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3084,14 +3084,14 @@
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "key": "og:image_target"
         },
-        "state_fingerprint": "sha256:0a884ae0b63572c3cda00de0f49ff2f1ff29aa1f8183cf96d97afe29fd4d1da4",
+        "state_fingerprint": "sha256:41fe257bd90df031c6457c0a7941fed4bbe7621418a75b247e0933e58e52da00",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "og": {
             "title": true,
             "description": true,
             "image": "absolute_remote",
-            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-a0c5c5.jpg"
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-28ddd2.jpg"
           }
         },
         "members": [],
@@ -3103,7 +3103,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3133,7 +3133,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3160,7 +3160,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3190,7 +3190,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T21:36:41.385Z",
+        "measured_at": "2026-10-28T21:59:03.261Z",
         "producer": "campaigns-os doctor"
       }
     ],
@@ -3204,7 +3204,7 @@
       "reason": "Page-load evidence has no hidden eager media above 1,048,576 bytes.",
       "waivable": false,
       "subject": {
-        "build_fingerprint": "sha256:2fc15b76c89b4fe08273d4ae7bf5fed2515959f51d63ef5bd6c3bbf27d5dd629",
+        "build_fingerprint": "sha256:ed85e82beefded4e998eb3b3870aaa322a22ddb18b2d57f46f9907bed2f6e9ad",
         "campaign_slug": "apf-funnel",
         "route_scope": "selected",
         "routes": [
@@ -3219,7 +3219,7 @@
       "state": {
         "findings": []
       },
-      "state_fingerprint": "sha256:582cee18ef250bf850cdca3d95eb0359699c58c6756266a66e0e765625230a88",
+      "state_fingerprint": "sha256:674a2b5d8c95f803cac36fc561d3a32a2fdd7413da50d7f17a08d72dd35de4cc",
       "findings": [],
       "waiver": null,
       "waiver_assessment": {
@@ -3384,10 +3384,10 @@
     "build_output_fingerprint": {
       "root": "_site/apf-funnel/",
       "algorithm": "sha256-manifest/v1",
-      "value": "sha256:2fc15b76c89b4fe08273d4ae7bf5fed2515959f51d63ef5bd6c3bbf27d5dd629",
+      "value": "sha256:ed85e82beefded4e998eb3b3870aaa322a22ddb18b2d57f46f9907bed2f6e9ad",
       "file_count": 188,
       "excluded": [],
-      "recorded": "sha256:2fc15b76c89b4fe08273d4ae7bf5fed2515959f51d63ef5bd6c3bbf27d5dd629",
+      "recorded": "sha256:ed85e82beefded4e998eb3b3870aaa322a22ddb18b2d57f46f9907bed2f6e9ad",
       "status": "pass"
     },
     "live_campaign_refs": {
@@ -3447,8 +3447,8 @@
       "status": "pass",
       "code": "polish.evidence_current",
       "reason": "Polish evidence is current, structured, and produced by next-campaigns-polish.",
-      "build_fingerprint": "sha256:2fc15b76c89b4fe08273d4ae7bf5fed2515959f51d63ef5bd6c3bbf27d5dd629",
-      "source_build_fingerprint": "sha256:2fc15b76c89b4fe08273d4ae7bf5fed2515959f51d63ef5bd6c3bbf27d5dd629",
+      "build_fingerprint": "sha256:ed85e82beefded4e998eb3b3870aaa322a22ddb18b2d57f46f9907bed2f6e9ad",
+      "source_build_fingerprint": "sha256:ed85e82beefded4e998eb3b3870aaa322a22ddb18b2d57f46f9907bed2f6e9ad",
       "source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
       "current_source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
       "assembly_source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",

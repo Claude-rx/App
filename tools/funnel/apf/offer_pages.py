@@ -66,8 +66,8 @@ def steps(*rows):
 
 # the brush's short product page under its offer (its store copy, tools/persona/brush_copy.py, in the page's own words)
 BRUSH_PDP = {
-    'problem': {'image': 'images/sf/brush-problem.jpg', 'alt': 'A woman in her fifties at her bathroom mirror first thing in the morning, puffy under the eyes, a hand on her jaw (AI illustration, not a customer photo)',
-                'caption': 'AI illustration, not a customer photo.',
+    'problem': {'image': 'images/sf/brush-problem.jpg', 'alt': 'A woman in her fifties at her bathroom mirror first thing in the morning, puffy under the eyes, a hand on her jaw',
+                'caption': '',
                 'eyebrow': 'The problem', 'title': 'You wake up looking more tired than you are',
                 'lede': 'You slept. And still the mirror shows a puffy face: swollen-looking under the eyes, softer along the jaw. It fades by lunch, but by then you’ve already seen it.',
                 'pains': ['Puffy, swollen-looking under-eyes first thing in the morning', 'A jawline and cheekbones that look softer than they used to',
@@ -94,7 +94,7 @@ BRUSH_PDP = {
                       {'image': 'images/sf/brush-how-1.jpg', 'alt': 'Where morning puffiness shows: under the eyes and along the jaw', 'title': 'Eyes, cheeks and jaw', 'text': 'Where morning puffiness shows first.'},
                       {'image': 'images/sf/brush-card.jpg', 'alt': 'The brush above its protective travel case', 'title': 'A protective case', 'text': 'Keeps the bristles clean between uses, and travels.'}]},
     'faq': {'title': 'Questions', 'items': [
-        {'q': 'When will I see a difference?', 'a': 'You may see a fresher, less puffy look right after your first 3 minutes. It’s temporary, so it works best every morning. Results vary from person to person.'},
+        {'q': 'When will I see a difference?', 'a': 'You may see a fresher, less puffy look right after your first 3 minutes. It’s temporary, so it works best every morning.'},
         {'q': 'Does it work on mature skin?', 'a': 'Yes. The bristles bend instead of pulling, so they don’t drag thinner skin or fine lines. Keep the touch light, especially under the eyes.'},
         {'q': 'Why is it called the Lymphatic Brush?', 'a': 'It’s named for the light lymphatic-massage strokes it’s designed for: the sweeps an aesthetician uses on a puffy morning face. It’s a cosmetic massage brush; we make no medical claim, and we don’t claim it drains anything.'},
         {'q': 'Do I need oil or serum?', 'a': 'No. Use it on clean, dry skin. You can apply your skincare and your foundation right after.'},

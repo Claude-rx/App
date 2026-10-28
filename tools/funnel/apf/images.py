@@ -181,7 +181,6 @@ def one_shade():
         d.text((x + cw // 2, y0 + ph + 52), word, font=P.sans(34, 'SemiBold'), fill=INK, anchor='ms')
     d.text((W // 2, y0 + ph + 160), 'The same white drop, your tone as you blend', font=P.sans(36, 'Medium'), fill=INK, anchor='ms')
     # the fair-to-deep sentence is the panel's own bullets (in the page's HTML, readable at any width: at 390 the 22 px line was 9 px, live review 3)
-    P.note(d, (W // 2, H - 50), 'Illustration of how the colour blends, not a photo. Results vary.', size=34)
     save(im, 'one-shade', size=1080)
 
 
@@ -296,11 +295,12 @@ def allday_clip(encode=True, fps=25, seconds=6.0):
     print('allday clip', n, 'frames')
 
 
-def split_pair(key, out, size=1080, height=900, band=150):
+def split_pair(key, out, size=1080, height=900, band=100):
     """A generated split portrait (gen/ba-split-<key>.png: the same woman twice in one frame, her bare skin with its
     lines, spots and redness on the left, the foundation on with an even, luminous tone on the right, a white line
     between) laid out as the pages' before/after: each half fitted to its column (no upscaling at 1376 px wide),
-    Before / After and the AI line in ink on a white band at the foot, a white line between the halves."""
+    Before / After in ink on a white band at the foot, a white line between the halves (no disclaimer line: the owner's
+    instruction, 28 Oct 2026)."""
     im = Image.open(GEN / f'ba-split-{key}.png').convert('RGB')
     w, h = im.size
     g = np.asarray(im.convert('L'), dtype=np.float32).mean(axis=0)       # the divider: the brightest column near the middle
@@ -313,9 +313,8 @@ def split_pair(key, out, size=1080, height=900, band=150):
         out_im.paste(ImageOps.fit(half, (col_w, col_h), Image.LANCZOS, centering=(0.5, 0.35)), (j * col_w, 0))
     d = ImageDraw.Draw(out_im)
     d.rectangle((size // 2 - 3, 0, size // 2 + 3, col_h), fill=PAPER)
-    d.text((34, height - 88), 'Before', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
-    d.text((size // 2 + 34, height - 88), 'After', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
-    P.note(d, (34, height - 30), P.AI_NOTE, anchor='ls', size=38)
+    d.text((34, height - 32), 'Before', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
+    d.text((size // 2 + 34, height - 32), 'After', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
     save(out_im, out, size=size)
 
 
@@ -450,7 +449,18 @@ def copies(video=True):
     save(feat, 'brush-features', size=1080)
     save(Image.open(BRUSH / 'source' / 'in-hand.jpg'), 'brush-in-hand', size=1080)
     save(Image.open(BRUSH / 'source' / 'problem.jpg'), 'brush-problem', size=1080)
-    for f in ('up2-how.mp4', 'up2-how.webm', 'up2-how-poster.jpg'): shutil.copyfile(BRAND / 'stick-funnel' / 'videos' / f, OUT / f.replace('up2-how', 'brush-how'))
+    # the stick funnel's loop of the brush, its baked "Illustration" pill (bottom right, on white) painted out of every frame
+    # and of the poster (the owner's instruction, 28 Oct 2026: no disclaimer or illustration line on any image)
+    pill = dict(x=510, y=824, w=200, h=66)   # the pill's outline spans 520..700 × 834..880 in the 720×900 frame
+    src_dir = BRAND / 'stick-funnel' / 'videos'
+    poster = Image.open(src_dir / 'up2-how-poster.jpg').convert('RGB')
+    ImageDraw.Draw(poster).rectangle((pill['x'], pill['y'], pill['x'] + pill['w'], pill['y'] + pill['h']), fill=(255, 255, 255))
+    save(poster, 'brush-how-poster', size=poster.width)
+    if video:
+        box = f"drawbox=x={pill['x']}:y={pill['y']}:w={pill['w']}:h={pill['h']}:color=white@1:t=fill"
+        for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                          ('webm', ['-c:v', 'libvpx-vp9', '-crf', '30', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):
+            subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src_dir / f'up2-how.{ext}'), '-vf', box, '-an', *args, str(OUT / f'brush-how.{ext}')], check=True)
     # the store's how-it-works loop (white dots, blended, the ingredients) and its poster
     for f in ('howto.mp4', 'howto.webm'): shutil.copyfile(APF / 'howto' / f, OUT / f)
     save(Image.open(APF / 'howto' / 'howto-poster.jpg'), 'howto-poster', size=864)
@@ -466,10 +476,7 @@ def copies(video=True):
     # v2 (28 Oct 2026): the generated sources in gen/ (the science cross-section with the real bottle, the split-face
     # "wow" portrait, two problem photos), the store's Korean formulator portrait, the stick funnel's ingredient
     # textures (the same ingredients, the same photos)
-    wow = ImageOps.fit(Image.open(GEN / 'wow-split.png').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35))
-    d = ImageDraw.Draw(wow); d.rectangle((0, 1350 - 72, 1080, 1350), fill=PAPER)   # the AI line on a white band (grey on skin was unreadable, live review 1)
-    P.note(d, (540, 1350 - 26), P.AI_NOTE, fill=INK, size=34)
-    save(wow, 'wow', size=1350)
+    save(ImageOps.fit(Image.open(GEN / 'wow-split.png').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35)), 'wow', size=1350)
     for n in ('problem-mirror', 'problem-orange'):
         im = Image.open(GEN / f'{n}.png').convert('RGB')
         if n == 'problem-mirror': im = soften_patch(im, (0.19, 0.27, 0.47, 0.49))   # her cheek's pigment read as a bruise at page size (live review 3)
@@ -499,5 +506,5 @@ if __name__ == '__main__':
     allday_clip(encode='--no-video' not in sys.argv)
     reviews(work)
     copies(video='--no-video' not in sys.argv)
-    # (every before/after says on the image that it is an AI illustration; the buyers' photos are their own, uncut on
+    # (no image carries a disclaimer or illustration line, the owner's instruction of 28 Oct 2026; the buyers' photos are their own, uncut on
     # the face; no "after" changes a face: the same woman, the same age, her lines softened, not erased)
