@@ -31,9 +31,12 @@ campaign key): six one-time packages on the existing store variants, one free sh
 vouchers, payment methods card, Klarna, Link, PayPal and Apple Pay (no Affirm or Afterpay: the pages never offered
 them). The skill's `verify` read every object back and priced every pack and voucher through the Cart API: 13 cart
 cases, all PASS ($39 / $57 / $75; $35 / $51 / $67 with APF10; $39 and $99 for offer 1; $23, $19, $14, $9 on the
-offers). **Owner's step the API cannot do:** add `try.skinofab.com` under Allowed Domains (Production) in the
-Campaigns App for campaign 2221; until then the live pages on that host are refused by the SDK (CORS). Localhost is
-always allowed, so the local build and Campaigns OS QA run regardless. Campaign 2211 still carries the foundation's
+offers). **Live on try.skinofab.com the same day:** the campaign's SDK answered on that host at once (campaign read
+and cart calculations 200 with the new key, 249 shipping countries on the new checkout), so no Allowed Domains step
+stood in the way; check the campaign's Settings > Allowed Domains in the Campaigns App anyway and add
+`try.skinofab.com` as a Production domain if the list is empty, since the API cannot write it. Localhost is always
+allowed, so the local build and Campaigns OS QA run regardless. The campaign has no shipping-country restriction
+(every country the store ships to), which matches the pages' shipping promise. Campaign 2211 still carries the foundation's
 old packages (refs 6–11) and vouchers (offers 6–10); nothing uses them now and they can be deleted in the dashboard.
 
 **Proven live on campaign 2211 (28 Oct 2026, before the move, `tools/funnel/live_order.mjs` on try.skinofab.com, NEXT's test card):** order **101534**,
@@ -46,14 +49,14 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
 
 ## Before launch (owner)
 
-0. **Allow the domain on campaign 2221.** Campaigns App > campaign "SKINOFAB Adaptive Peptide Foundation Funnel" >
-   Settings > Allowed Domains: add `try.skinofab.com` as a Production domain (the API cannot set it). Until then every
-   live page of this funnel is refused by the SDK on that host; the pages built for localhost work, and the old
-   campaign 2211 still answers its own key, which these pages no longer carry.
+0. **Check the domain on campaign 2221.** Campaigns App > campaign "SKINOFAB Adaptive Peptide Foundation Funnel" >
+   Settings > Allowed Domains: the live host answered the new campaign's key straight away (28 Oct 2026), but the API
+   cannot read or write that list, so confirm `try.skinofab.com` is there as a Production domain.
 1. **Cancel the QA test orders** (test card, no charge, flagged as tests; real orders in the store):
    101520 to 101525 and 101527, 101528, 101530, 101531 (Campaigns OS QA, `qa-test@campaigns-os.test`), 101534 and
-   101536 (the live proofs, `qa-live@skinofab.test`), all on campaign 2211; the campaign 2221 test orders are listed
-   in the Campaigns OS section below. The stick funnel's are listed in `docs/stick-funnel.md`.
+   101536 (the live proofs, `qa-live@skinofab.test`), all on campaign 2211; on campaign 2221: 101552, 101554, 101555,
+   101557, 101558, 101561, 101563 (Campaigns OS and the local proof, both test emails) and **101565** (the live proof
+   on try.skinofab.com, `qa-live@skinofab.test`). The stick funnel's are listed in `docs/stick-funnel.md`.
 2. **The gifts.** The 2- and 3-bottle packs promise a SKINOFAB Blender brush and a mystery gift; the 3-bottle pack and
    offer 1's 6-bottle pack a Lymphatic Brush with its travel case. Fulfilment must pack them: the campaign's packages
    name them in their titles (the store sees "2 bottles + free gifts"), nothing else tells the warehouse.
@@ -262,7 +265,11 @@ checks take their numbers from the spec. The theme serves this funnel's assets f
   screenshots (long pages in parts), console errors, overflow, live prices; `ORDER_REF=<ref_id>` opens the offer and
   thank-you pages with a real order.
 - `FUNNEL=apf node tools/funnel/live_order.mjs https://try.skinofab.com <out-dir> [--path accept,decline,…] [--tier
-  supply-b3g3]`: one real test order through the live funnel, following the routes from each page's own meta tags.
+  supply-b3g3] [--cookie preview_theme=<theme id>]`: one real test order through the live funnel, following the routes
+  from each page's own meta tags. The store caches every page for 30 minutes (`cache-control: max-age=1800`,
+  `app-cache: HIT`), so for half an hour after a theme push the live pages are still the old ones; `--cookie
+  preview_theme=34` (the theme's id, the same value `?preview_theme=34` takes in a browser) sets the store's preview
+  cookie on the first page, and every page after it is served from the theme as pushed.
 
 ### Campaigns OS
 
@@ -279,6 +286,13 @@ read-back was equal on that path and on the other five; and `price-claim-mismatc
 sum-of-both-cards reading explained under run 2. Before that run, `tools/funnel/live_order.mjs` placed order **101552** on campaign
 2221 through the local build (checkout, offer 1's 2-bottle card accepted, both brush offers declined, the receipt
 with both lines and the gifts named): the first proof of the new campaign end to end.
+
+**Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
+2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
+cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the
+2-bottle pack ($57), offer 1 declined, offer 2 accepted (one more bottle, $23), both brush offers declined, the
+receipt with both lines, "Free" shipping, the $80 total and the gifts line, no console errors on any of the nine
+steps. The campaign's SDK answered on the live host without any dashboard change.
 
 **Independent review 2 (28 Oct 2026, the v2 pages on the local build, order 101552):** verdict "fix first, then
 ship", no blockers, 4 major, 9 minor, every one fixed in the same round: the checkout's pack cards are in the page

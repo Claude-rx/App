@@ -14,6 +14,8 @@
 //   --pack   the checkout card to buy (default: the funnel's featured card)
 //   --tier   on a supply-card offer (apf's offer 1), the card whose Buy now is pressed on accept (default: the selected one)
 //   --resume <ref_id> [--start <page file>]  skip the checkout: walk the offers of an order already placed, from that page
+//   --cookie name=value[;name=value]  cookies set on the host before the first page: the store's theme preview
+//            (preview_theme=<id>) serves the theme as pushed, skipping the store's 30-minute page cache
 // Writes a screenshot per step and order.json (order number, lines, terms, total) to <out-dir>; exits 1 when a step
 // does not arrive where the page routes it.
 //
@@ -34,6 +36,7 @@ const pack = opt('--pack', FN.pack);
 const tier = opt('--tier', null);
 const resume = opt('--resume', null);                  // an order's ref_id: start on an offer page with it
 const start = opt('--start', FN.first);                // with --resume: the page to start on
+const cookies = opt('--cookie', '');                   // name=value[;name=value], set on the host before the first page
 const CARD = '6011111111111117', CVV = '123';          // NEXT's test card (as Campaigns OS's QA uses)
 const ADDRESS = { fname: 'Quinn', lname: 'Tester', email: 'qa-live@skinofab.test', address1: '1600 Amphitheatre Pkwy',
   city: 'Mountain View', province: 'CA', postal: '94043' };
@@ -42,6 +45,9 @@ fs.mkdirSync(out, { recursive: true });
 // the agent proxy only for a remote host: it answers 405 to a local address (a run on Page Kit's _site, http://127.0.0.1:<port>/<slug>)
 const browser = await chromium.launch({ proxy: process.env.HTTPS_PROXY && !/127\.0\.0\.1|localhost/.test(host) ? { server: process.env.HTTPS_PROXY } : undefined, args: ['--disable-dev-shm-usage'] });
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'en-US', ignoreHTTPSErrors: true });
+if (cookies) await ctx.addCookies(cookies.split(';').filter(Boolean).map((kv) => {
+  const [name, ...rest] = kv.split('='); return { name: name.trim(), value: rest.join('=').trim(), domain: new URL(host).hostname, path: '/' };
+}));
 const page = await ctx.newPage();
 const errors = [];
 page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text().slice(0, 200)); });
