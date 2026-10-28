@@ -209,7 +209,7 @@ before_after:
   title: "What a thin layer does"
   lede: "Illustrations of the one thing a foundation does: it evens the look of skin tone and softens the look of lines. The face, its shape and its creases stay hers."
   items:
-    - { image: "images/sf/ba-closeup.jpg", alt: "A woman in her fifties, close up, before and after: redness and uneven tone evened out, lines softened (AI illustration, not a customer photo)", caption: "Redness and uneven tone, evened. Lines softened, not erased." }
+    - { image: "images/sf/ba-closeup.jpg", height: 900, alt: "A woman of about 58, close up, before and after: sun spots, redness and lines on her bare skin, then the foundation on, her tone even and luminous, the lines softened (AI illustration, not a customer photo)", caption: "Sun spots and redness, covered. Tone evened. Lines softened, not erased." }
   before: ["A shade that sits grey or orange on your cheeks", "Concealer, then powder, then a touch-up by noon", "Dry patches catching the foundation", "“You can tell I’m wearing makeup”"]
   after: ["A colour that shifts toward your own tone as you blend", "One pump, fingertips, about a minute", "Dry skin kept comfortable by the serum base", "“They just see me, rested”"]
   quote: "I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!"
@@ -545,7 +545,7 @@ closing:
     <p class="sf-eyebrow" style="text-align:center">{{ before_after.eyebrow }}</p>
     <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ before_after.title }}</h2>
     <p style="text-align:center;max-width:720px;margin:0 auto 18px">{{ before_after.lede }}</p>
-    <div class="sf-ba-grid sf-ba-grid--one">{% for b in before_after.items %}<figure><img src="{{ b.image | campaign_asset }}" alt="{{ b.alt }}" width="1080" height="1080" loading="lazy" decoding="async"><figcaption>{{ b.caption }}</figcaption></figure>{% endfor %}</div>
+    <div class="sf-ba-grid sf-ba-grid--one">{% for b in before_after.items %}<figure><img src="{{ b.image | campaign_asset }}" alt="{{ b.alt }}" width="1080" height="{{ b.height | default: 1080 }}" loading="lazy" decoding="async"><figcaption>{{ b.caption }}</figcaption></figure>{% endfor %}</div>
     <div class="sf-lifegrid">
       <div class="sf-life"><h3>Before this foundation</h3><ul>{% for l in before_after.before %}<li>{{ l }}</li>{% endfor %}</ul></div>
       <div class="sf-life sf-life--after"><h3>After it</h3><ul>{% for l in before_after.after %}<li>{{ l }}</li>{% endfor %}</ul></div>

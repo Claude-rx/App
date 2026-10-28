@@ -117,8 +117,9 @@ as `docs/apf-funnel/copy-deck.md` and validates it with the skill's validator (P
 row). Sections 1–5 sell on their own above the fold: hero with the how-it-works loop, headline, summary, seven benefits
 with the guarantee, the three packs with gifts and the button. Then the problem (her day, hour by hour), its mechanism
 ("the fixed-shade trap"), the solution (encapsulated pigments in a serum base), the comparison table, the complaints the
-formula answers, four before/afters (persona photos with the skin tone evened and every line kept, each labelled "AI
-illustration, not a customer photo"), proof (the imported reviews' numbers, the actives on the label, what we don't
+formula answers, the before/after (a generated split portrait: the same woman of 58 with her lines, sun spots and
+redness bare on the left and the foundation on, even and luminous, on the right, labelled "AI illustration, not a
+customer photo"), proof (the imported reviews' numbers, the actives on the label, what we don't
 claim), the promise, four steps with four demo clips of women 45+ (the first with sound), the 30-Day Daylight Promise,
 the value stack ($225.95 of value for $75, and why the price is only here), what is limited (the launch brush), the
 review wall with the buyers' own photos and nine reviews (two of them four stars), eleven questions, how to reach us,
@@ -202,8 +203,14 @@ The listicle follows the Facelove structure reason for reason, as the stick funn
 - **Product and images**: the liquid foundation's own approved photos from the store (women past 45 with the real
   bottle, the white dots, the infographics), the product sheet's renders for the packs, the buyers' own review photos,
   four vetted demo clips of women 45+. No new AI generation (no image model had credit on 27 Oct 2026).
-- **Before/after**: persona photos with the skin tone evened and nothing else, each labelled "AI illustration, not a
-  customer photo" (`funnel_images.even_tone`).
+- **Before/after** (the owner's brief of 28 Oct 2026: a before with wrinkles, dark spots and uneven tone, an after
+  with glowing, even skin, always a woman of 45+): generated split portraits, one woman twice in one frame so both
+  halves are the same person (`brand/adaptive-peptide-foundation/gen/README.md`: Gemini 3.1 Flash Image through
+  Figma, the only route with credit that evening), cut and labelled by `images.py` (`split_pair`). Two exist: the
+  sales page's close-up (58) and the listicle's first reason (64, the silver bob). The listicle's lines, dry-skin and
+  ages reasons show a persona photo on its own (`reason-lines/dry/ages.jpg`) and the shade panel keeps its
+  evened-tone afters until their six pairs are made: every image wallet was empty afterwards (Kie.ai, Higgsfield,
+  4SToken; Figma's AI credits reset on 1 Nov 2026). The README lists the six prompts to run.
 - **Reason 5** (Facelove: SPF): "made not to turn orange by the afternoon", with a note that it has no SPF by design.
 - **Reason 9** (Facelove: "dermatologist recommended"): the foundation's real ratings, 9,855 reviews averaging 4.8,
   drawn with the count per star and labelled as imported from our earlier store.
@@ -228,7 +235,7 @@ Campaign Cart SDK 0.4.43, its own `config.js` with the campaign's public key), w
 |---|---|
 | `funnels/apf.py` | the funnel's pages, routes, packages, vouchers, packs and offer tiers (loaded by `funnel.py` with `FUNNEL=apf`) |
 | `apf/commerce.py` | the campaign's commerce, idempotent (the `next-campaigns-create` plan created it; this finds it in place): the store variants, packages 1–6, offers 1–5; `--verify` checks the Cart API against `funnels/apf.py` |
-| `apf/images.py` | the images and clips: the store's photos, pack cards, labelled before/afters, review crops, demo clips, the thank-you page's range cards |
+| `apf/images.py` | the images and clips: the store's photos, pack cards, the labelled before/afters cut from the generated split portraits, review crops, demo clips, the thank-you page's range cards |
 | `apf/offer_pages.py` | the five offer pages (supply cards, offer 2 and its downsell, the brush offer and its downsell) |
 | `apf/copy_deck.py` | `docs/apf-funnel/copy-deck.md` from the sales page's frontmatter, validated |
 | `apf/check_apf.py` | the offline checks (below); the store build fails on any problem |
@@ -244,7 +251,9 @@ Campaign Cart SDK 0.4.43, its own `config.js` with the campaign's public key), w
     FUNNEL=apf python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/apf-funnel skinofab-theme
     python3 -I tools/funnel/apf/check_apf.py skinofab-theme
 
-then push the changed theme files with ntk and, for new pages, `FUNNEL=apf python3 -I tools/funnel/store_pages.py`.
+then push the changed theme files with ntk (`ntk push -a "$NEXT_API_TOKEN" <files>` from `skinofab-theme/`; the
+kit has no remove command, so a hashed asset that a rebuild retired stays on the store theme unreferenced) and, for
+new pages, `FUNNEL=apf python3 -I tools/funnel/store_pages.py`.
 After a campaign change, run `FUNNEL=apf python3 -I tools/funnel/campaign_spec.py` first: the offer pages and the
 checks take their numbers from the spec. The theme serves this funnel's assets from `assets/sfa/` (the stick's from
 `assets/sfc/`); the hosting notes in `docs/stick-funnel.md` (30-minute page cache, `?preview_theme=34`) apply.

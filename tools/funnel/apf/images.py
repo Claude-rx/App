@@ -10,10 +10,12 @@ approved):
 - the live product page's photos (brand/adaptive-peptide-foundation/pdp/, with their origin in manifest.json): the
   women past 45 with the real bottle, the "goes on white" dots, the two infographics, the problem and solution photos;
 - the product sheet's renders (brand/adaptive-peptide-foundation/*.png) for the packshots and the packs' cards;
-- the persona photos (brand/persona/age-*.jpg, women 45+ made for the store) for the before/afters: the "after" is
-  the same photo with the skin's colour evened out and nothing else (funnel_images.even_tone, the stick funnel's
-  honest after: every line, pore and the face's shape kept), and every one says on the image that it is an AI
-  illustration, not a customer photo;
+- the generated split portraits (brand/adaptive-peptide-foundation/gen/ba-split-*.png, 28 Oct 2026: one woman of
+  45+ twice in one frame, bare skin with its lines, sun spots and redness on the left, the foundation on with an
+  even, luminous tone on the right; gen/README.md has the model and prompts) for the before/afters, every one saying
+  on the image that it is an AI illustration, not a customer photo; the pairs no image credit could make yet (the
+  listicle's lines, dry-skin and ages reasons, the shade panel's three women) show a persona photo (brand/persona/
+  age-*.jpg, women 45+ made for the store) on its own, or the shade panel's evened-tone after, until they are made;
 - the buyers' own photos (reviews/photos-approved.txt), square on the face;
 - the seven demo clips the homepage plays (brand/videos/gj-*, the old bottle replaced by the real one): the four
   with women 45+, at 540 px with a WebM copy, posters from the live page or a frame;
@@ -282,24 +284,37 @@ def allday_clip(encode=True, fps=25, seconds=6.0):
     print('allday clip', n, 'frames')
 
 
-def before_after(name, src, out, size=1080, crop=None):
-    """A split-screen before/after: the persona photo and the same photo with its skin tone evened out, Before / After and
-    the AI line in ink on a white band at the foot, a white line between the halves. crop: (left, top, right, bottom) as
-    fractions, the part of the photo to show."""
-    im = Image.open(src).convert('RGB')
+def split_pair(key, out, size=1080, height=900, band=150):
+    """A generated split portrait (gen/ba-split-<key>.png: the same woman twice in one frame, her bare skin with its
+    lines, spots and redness on the left, the foundation on with an even, luminous tone on the right, a white line
+    between) laid out as the pages' before/after: each half fitted to its column (no upscaling at 1376 px wide),
+    Before / After and the AI line in ink on a white band at the foot, a white line between the halves."""
+    im = Image.open(GEN / f'ba-split-{key}.png').convert('RGB')
+    w, h = im.size
+    g = np.asarray(im.convert('L'), dtype=np.float32).mean(axis=0)       # the divider: the brightest column near the middle
+    lo, hi = int(w * 0.45), int(w * 0.55)
+    mid = lo + int(np.argmax(g[lo:hi]))
+    halves = (im.crop((0, 0, mid - 6, h)), im.crop((mid + 6, 0, w, h)))
+    col_w, col_h = size // 2, height - band
+    out_im = Image.new('RGB', (size, height), PAPER)
+    for j, half in enumerate(halves):
+        out_im.paste(ImageOps.fit(half, (col_w, col_h), Image.LANCZOS, centering=(0.5, 0.35)), (j * col_w, 0))
+    d = ImageDraw.Draw(out_im)
+    d.rectangle((size // 2 - 3, 0, size // 2 + 3, col_h), fill=PAPER)
+    d.text((34, height - 88), 'Before', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
+    d.text((size // 2 + 34, height - 88), 'After', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
+    P.note(d, (34, height - 30), P.AI_NOTE, anchor='ls', size=38)
+    save(out_im, out, size=size)
+
+
+def portrait(src, out, size=1080, crop=None, centering=(0.5, 0.3)):
+    """A persona photo on its own, square: the stand-in for a reason whose before/after is not made yet. crop: (left,
+    top, right, bottom) as fractions, the part of the photo to show."""
+    im = Image.open(PERSONA / f'{src}.jpg').convert('RGB')
     if crop:
         w, h = im.size
         im = im.crop((int(crop[0] * w), int(crop[1] * h), int(crop[2] * w), int(crop[3] * h)))
-    half = ImageOps.fit(im, (size // 2, size - 150), Image.LANCZOS, centering=(0.5, 0.22))
-    after = FI.foundation_look(half)        # v2: the after plainly made up (even tone, lines softened, a satin glow)
-    out_im = Image.new('RGB', (size, size), PAPER)
-    out_im.paste(half, (0, 0)); out_im.paste(after, (size // 2, 0))
-    d = ImageDraw.Draw(out_im)
-    d.rectangle((size // 2 - 3, 0, size // 2 + 3, size - 150), fill=PAPER)
-    d.text((34, size - 88), 'Before', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
-    d.text((size // 2 + 34, size - 88), 'After', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
-    P.note(d, (34, size - 30), P.AI_NOTE, anchor='ls', size=38)
-    save(out_im, out, size=size)
+    save(ImageOps.fit(im, (size, size), Image.LANCZOS, centering=centering), out, size=size)
 
 
 def hero_collage():
@@ -378,7 +393,6 @@ def clip(key, src, poster, label, encode=True):
 def copies(video=True):
     for name, src in PDP_PHOTOS.items(): save(Image.open(PDP / f'{src}.jpg'), name, size=1080 if not name.startswith('gift') else 240)
     save(Image.open(APF / 'composites' / 'two-bottles.jpg'), 'two-bottles', size=1080)
-    for n in ('age-109', 'age-223', 'age-255', 'age-200'): save(Image.open(PERSONA / f'{n}.jpg'), n, size=1080)
     # the brush: its page's images, in-hand and problem photos, the before/after it already shows (its own illustration
     # label is on the image) and the stick funnel's loop of it
     for n in ('hero', 'case', 'how-to-use', 'features', 'vs-tools', 'ba-puffy', 'card', 'how-1', 'how-2', 'how-3', 'compare-ours'):
@@ -417,20 +431,19 @@ if __name__ == '__main__':
     pack_cards()
     hero_collage()
     offer_card()
-    # the honest before/afters: four persona photos (women 45+), the after the same photo with the skin's colour evened
-    before_after('close-up', PERSONA / 'age-73.jpg', 'ba-closeup')
-    before_after('redness', PERSONA / 'age-264.jpg', 'ba-tone', crop=(0.08, 0.0, 0.92, 0.84))
-    before_after('spots', PERSONA / 'age-238.jpg', 'ba-spots', crop=(0.1, 0.0, 0.9, 0.8))
-    before_after('dry', PERSONA / 'age-107.jpg', 'ba-dry', crop=(0.05, 0.05, 0.95, 0.95))
-    # v2: the listicle's own four (the sales page keeps the four above: no photo on both pages), and the shade panel
-    before_after('lines', PERSONA / 'age-109.jpg', 'ba-lines')
-    before_after('glow', PERSONA / 'age-200.jpg', 'ba-glow', crop=(0.15, 0.0, 0.85, 0.8))
-    before_after('olive', PERSONA / 'age-255.jpg', 'ba-olive', crop=(0.2, 0.0, 0.8, 0.75))
-    before_after('sun', PERSONA / 'age-223.jpg', 'ba-sun', crop=(0.25, 0.0, 0.75, 0.5))
+    # the before/afters (28 Oct 2026, the owner's brief: a before with lines, sun spots and uneven tone, an after with
+    # even, glowing skin, the same woman of 45+): the sales page's close-up and the listicle's first reason from the
+    # generated split portraits; the listicle's lines, dry-skin and ages reasons show a persona photo on its own until
+    # their pairs are made (no image credit was left after the first two; gen/README.md)
+    split_pair('closeup', 'ba-closeup')
+    split_pair('glow', 'ba-glow')
+    portrait('age-109', 'reason-lines', centering=(0.5, 0.4))
+    portrait('age-255', 'reason-dry', crop=(0.2, 0.0, 0.8, 0.75))
+    portrait('age-223', 'reason-ages', crop=(0.25, 0.0, 0.75, 0.5))
     one_shade()
     science_clip(encode='--no-video' not in sys.argv)
     allday_clip(encode='--no-video' not in sys.argv)
     reviews(work)
     copies(video='--no-video' not in sys.argv)
     # (every before/after says on the image that it is an AI illustration; the buyers' photos are their own, uncut on
-    # the face; no "after" smooths a line, lifts a jaw or changes a face)
+    # the face; no "after" changes a face: the same woman, the same age, her lines softened, not erased)

@@ -31,7 +31,8 @@ hero_alt: "Three women in their fifties and sixties, each with the black SKINOFA
 reasons:
   - title: "No More Guessing Your Shade"
     image: "images/sf/ba-glow.jpg"
-    alt: "A woman in her sixties before and after the foundation: her tone evened, spots and redness lifted (AI illustration, not a customer photo)"
+    image_h: 900
+    alt: "A woman of about 64 with a silver bob, before and after: sun spots, redness and lines on her bare skin, then the foundation on, her tone even and glowing (AI illustration, not a customer photo)"
     paras:
       - "Most of us have a drawer of foundations that looked right in the store and wrong at home. After 45 it gets harder: more redness, more sun spots, and an undertone that isn’t quite what it was."
       - "This foundation has no shade to pick. It goes on white; its colour pigments wait in tiny capsules that open as you blend, so the colour shifts toward your own tone while you work it in."
@@ -43,8 +44,8 @@ reasons:
     quote_by: "Virginia Z., verified buyer, from our earlier store"
     video: true
   - title: "Designed Not to Settle Into Fine Lines and Wrinkles"
-    image: "images/sf/ba-lines.jpg"
-    alt: "A woman in her fifties, close up, before and after: the lines around her eyes and mouth softened, her tone evened (AI illustration, not a customer photo)"
+    image: "images/sf/reason-lines.jpg"
+    alt: "A woman in her fifties, close up, her hands on her cheeks: the fine lines around her eyes and mouth that a matte foundation settles into"
     paras:
       - "Traditional foundations settle into fine lines and wrinkles, highlighting exactly what you wanted to soften."
       - "This one is a satin serum, not a matte formula. Round silica and boron nitride powders scatter the light so lines and pores look softer, and the thin, hydrating layer is made to move with your skin instead of collecting in it."
@@ -55,8 +56,8 @@ reasons:
     quote: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. It doesn’t settle to lines at all."
     quote_by: "Tina C., verified buyer, from our earlier store"
   - title: "It Gives Dry Skin a Fresh, Satin Finish"
-    image: "images/sf/ba-olive.jpg"
-    alt: "A woman in her fifties with long dark hair before and after: an even, satin look on dry skin (AI illustration, not a customer photo)"
+    image: "images/sf/reason-dry.jpg"
+    alt: "A woman in her fifties with long dark hair, bare skin in window light"
     paras:
       - "As estrogen drops, skin gets drier and loses that fresh, hydrated look, and matte foundations only make it more obvious."
       - "This is a serum first. Two forms of hyaluronic acid, ceramide NP, squalane and panthenol keep dry skin comfortable, so the foundation doesn’t crack or cling to dry patches."
@@ -101,8 +102,8 @@ reasons:
     quote: "No break outs, no drying, no burning sensation. Really Happy"
     quote_by: "Michele W., who has rosacea, verified buyer, from our earlier store"
   - title: "One Bottle, at 45, 55 or 70"
-    image: "images/sf/ba-sun.jpg"
-    alt: "A woman in her sixties outdoors before and after: sun spots and redness softened, her tone evened (AI illustration, not a customer photo)"
+    image: "images/sf/reason-ages.jpg"
+    alt: "A woman in her sixties outdoors in the sun, bare skin, smiling"
     paras:
       - "Whether you’re in your 40s, 50s, 60s or beyond, the foundation adapts to your tone as you blend, and its serum is made for the dry, mature skin most foundations ignore."
       - "It is made for fair to deep skin. Very fair or very deep? Email us at <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a> before you order and we’ll tell you honestly how it will suit you, or wear it for 30 days and let the guarantee decide."
@@ -227,7 +228,7 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
     </figure>
     {% else %}
     <figure class="sf-reason__media">
-      <img src="{{ r.image | campaign_asset }}" alt="{{ r.alt }}" loading="{% if forloop.index > 1 %}lazy{% else %}eager{% endif %}" decoding="async" width="1080" height="1080">
+      <img src="{{ r.image | campaign_asset }}" alt="{{ r.alt }}" loading="{% if forloop.index > 1 %}lazy{% else %}eager{% endif %}" decoding="async" width="1080" height="{{ r.image_h | default: 1080 }}">
     </figure>
     {% endif %}
     <div class="sf-reason__copy">
