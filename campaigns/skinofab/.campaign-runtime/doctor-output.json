@@ -1,96 +1,10 @@
 {
   "schema_version": "campaigns-os-doctor-output/v0",
-  "generated_at": "2026-10-28T17:14:31.034Z",
+  "generated_at": "2026-10-28T17:22:33.601Z",
   "generated_by": "next",
-  "ok": false,
-  "status": "blocked",
-  "errors": [
-    {
-      "code": "polish.evidence_missing",
-      "message": "Polish evidence missing for current build. Run next-campaigns-polish before QA. Required action: next-campaigns-polish | campaigns-os polish capture --packet <packet> --base-url <url>.",
-      "detail": {
-        "polish_gate": {
-          "status": "blocked",
-          "code": "polish.evidence_missing",
-          "reason": "Polish evidence missing for current build. Run next-campaigns-polish before QA.",
-          "build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
-          "waiver": null,
-          "required_actions": [
-            {
-              "id": "run_polish",
-              "kind": "skill",
-              "command": "next-campaigns-polish",
-              "description": "Run the distinct Polish stage and record stages.polish.performed_by, source_build_fingerprint, source_package_material_fingerprint when available, completed_at, and structured evidence."
-            },
-            {
-              "id": "polish.hidden_eager_media.capture",
-              "kind": "command",
-              "command": "campaigns-os polish capture --packet <packet> --base-url <url>",
-              "description": "Capture package-owned page-load evidence for every mapped route and fixed viewport."
-            }
-          ],
-          "owned_checkpoint_id": "polish.hidden_eager_media",
-          "owned_checkpoint_status": "blocked",
-          "owned_checkpoint_only": false
-        }
-      },
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "polish.hidden_eager_media.capture_stale",
-      "message": "Page-load evidence does not match the current build fingerprint, campaign, route scope, routes, and viewports. Required action: campaigns-os polish capture --packet <packet> --base-url <url>.",
-      "detail": {
-        "polish_checkpoint_gate": {
-          "id": "polish.hidden_eager_media",
-          "scope": "polish.hidden_eager_media",
-          "status": "blocked",
-          "checkpoint_status": "blocked",
-          "severity": "blocker",
-          "code": "polish.hidden_eager_media.capture_stale",
-          "reason": "Page-load evidence does not match the current build fingerprint, campaign, route scope, routes, and viewports.",
-          "waivable": false,
-          "subject": {
-            "build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
-            "campaign_slug": "apf-funnel",
-            "route_scope": "selected",
-            "routes": [
-              "/apf-funnel/10-reasons-adaptive-foundation/",
-              "/apf-funnel/adaptive-foundation-offer/"
-            ],
-            "viewports": [
-              "desktop",
-              "mobile"
-            ]
-          },
-          "state": null,
-          "state_fingerprint": null,
-          "findings": [],
-          "measurement": null,
-          "waiver": null,
-          "waiver_assessment": {
-            "active": null,
-            "inert_counts": {
-              "stale": 0,
-              "foreign": 0,
-              "malformed": 0,
-              "expired": 0
-            }
-          },
-          "required_actions": [
-            {
-              "id": "polish.hidden_eager_media.capture",
-              "kind": "command",
-              "command": "campaigns-os polish capture --packet <packet> --base-url <url>",
-              "description": "Capture package-owned page-load evidence for every mapped route and fixed viewport."
-            }
-          ]
-        }
-      },
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    }
-  ],
+  "ok": true,
+  "status": "ready_with_warnings",
+  "errors": [],
   "warnings": [
     {
       "code": "local_proof.production_parity",
@@ -138,7 +52,7 @@
             "expected": 1,
             "limits": []
           },
-          "measured_at": "2026-10-28T17:14:30.648Z",
+          "measured_at": "2026-10-28T17:22:33.187Z",
           "producer": "campaigns-os doctor"
         }
       },
@@ -236,7 +150,9 @@
     "report.adapter_decisions adapter decision fields loaded",
     "report.proof_policy loaded: browser=true, typed_card_depth=common, order_path_depth=common",
     "Theme gate passed: Brand theme is applied after next-core.css on commerce pages.",
-    "Campaign CSS has no display:none rules on apollo pricing surfaces"
+    "Campaign CSS has no display:none rules on apollo pricing surfaces",
+    "Polish gate passed: structured evidence is current for this build.",
+    "Hidden eager-media checkpoint passed: package-owned page-load evidence is complete and current."
   ],
   "derived": {
     "packet_path": "./campaign-runtime.build.json",
@@ -567,7 +483,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -603,7 +519,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -639,7 +555,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -675,7 +591,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -711,7 +627,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -750,7 +666,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -786,7 +702,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -822,7 +738,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -858,7 +774,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.648Z",
+        "measured_at": "2026-10-28T17:22:33.187Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -885,7 +801,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -917,7 +833,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -949,7 +865,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -981,7 +897,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1015,7 +931,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1045,7 +961,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1072,7 +988,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1102,7 +1018,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1132,7 +1048,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1162,7 +1078,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1189,7 +1105,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1221,7 +1137,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1253,7 +1169,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1285,7 +1201,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1319,7 +1235,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1349,7 +1265,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1376,7 +1292,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1406,7 +1322,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1436,7 +1352,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1466,7 +1382,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1496,7 +1412,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1523,7 +1439,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1555,7 +1471,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1587,7 +1503,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1619,7 +1535,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1653,7 +1569,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1683,7 +1599,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1710,7 +1626,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1740,7 +1656,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1770,7 +1686,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1797,7 +1713,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1829,7 +1745,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1861,7 +1777,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1893,7 +1809,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1927,7 +1843,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1957,7 +1873,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1984,7 +1900,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2014,7 +1930,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2044,7 +1960,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2071,7 +1987,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2103,7 +2019,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2135,7 +2051,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2167,7 +2083,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2201,7 +2117,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2231,7 +2147,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2258,7 +2174,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2288,7 +2204,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2318,7 +2234,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2345,7 +2261,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2377,7 +2293,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2409,7 +2325,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2441,7 +2357,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2475,7 +2391,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2505,7 +2421,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2532,7 +2448,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2562,7 +2478,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2589,7 +2505,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2621,7 +2537,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2653,7 +2569,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2685,7 +2601,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2719,7 +2635,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2749,7 +2665,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2776,7 +2692,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2806,7 +2722,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2836,7 +2752,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2863,7 +2779,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2895,7 +2811,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2927,7 +2843,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2959,7 +2875,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2993,7 +2909,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3023,7 +2939,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3050,7 +2966,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3080,7 +2996,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3110,7 +3026,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3137,7 +3053,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3169,7 +3085,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3201,7 +3117,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3233,7 +3149,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3267,7 +3183,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3297,7 +3213,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3324,7 +3240,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3354,18 +3270,18 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-28T17:14:30.766Z",
+        "measured_at": "2026-10-28T17:22:33.283Z",
         "producer": "campaigns-os doctor"
       }
     ],
     "polish_checkpoint_gate": {
       "id": "polish.hidden_eager_media",
       "scope": "polish.hidden_eager_media",
-      "status": "blocked",
-      "checkpoint_status": "blocked",
-      "severity": "blocker",
-      "code": "polish.hidden_eager_media.capture_stale",
-      "reason": "Page-load evidence does not match the current build fingerprint, campaign, route scope, routes, and viewports.",
+      "status": "pass",
+      "checkpoint_status": "ready",
+      "severity": "info",
+      "code": "polish.hidden_eager_media.pass",
+      "reason": "Page-load evidence has no hidden eager media above 1,048,576 bytes.",
       "waivable": false,
       "subject": {
         "build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
@@ -3380,10 +3296,11 @@
           "mobile"
         ]
       },
-      "state": null,
-      "state_fingerprint": null,
+      "state": {
+        "findings": []
+      },
+      "state_fingerprint": "sha256:a9185f9d69a440d48e6cd2ba338c12e91072e1255c466a30476cceb305d4a3f4",
       "findings": [],
-      "measurement": null,
       "waiver": null,
       "waiver_assessment": {
         "active": null,
@@ -3394,14 +3311,7 @@
           "expired": 0
         }
       },
-      "required_actions": [
-        {
-          "id": "polish.hidden_eager_media.capture",
-          "kind": "command",
-          "command": "campaigns-os polish capture --packet <packet> --base-url <url>",
-          "description": "Capture package-owned page-load evidence for every mapped route and fixed viewport."
-        }
-      ]
+      "required_actions": []
     },
     "prepare_build_gate": null,
     "brand_contract": {
@@ -3587,7 +3497,7 @@
       },
       "stages": {
         "assembly": "current",
-        "polish": "not_applicable",
+        "polish": "current",
         "qa": "current"
       },
       "reasons": {
@@ -3614,53 +3524,41 @@
       "required_actions": []
     },
     "polish_gate": {
-      "status": "blocked",
-      "code": "polish.evidence_missing",
-      "reason": "Polish evidence missing for current build. Run next-campaigns-polish before QA.",
+      "status": "pass",
+      "code": "polish.evidence_current",
+      "reason": "Polish evidence is current, structured, and produced by next-campaigns-polish.",
       "build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
+      "source_build_fingerprint": "sha256:b4fce6ecfd83089bdb33848caae1f68011b079fd897453ad40a299c6a9cc3f7d",
+      "source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
+      "current_source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
+      "assembly_source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
+      "performed_by": "next-campaigns-polish",
       "waiver": null,
-      "required_actions": [
-        {
-          "id": "run_polish",
-          "kind": "skill",
-          "command": "next-campaigns-polish",
-          "description": "Run the distinct Polish stage and record stages.polish.performed_by, source_build_fingerprint, source_package_material_fingerprint when available, completed_at, and structured evidence."
-        },
-        {
-          "id": "polish.hidden_eager_media.capture",
-          "kind": "command",
-          "command": "campaigns-os polish capture --packet <packet> --base-url <url>",
-          "description": "Capture package-owned page-load evidence for every mapped route and fixed viewport."
-        }
-      ],
+      "warnings": [],
       "owned_checkpoint_id": "polish.hidden_eager_media",
-      "owned_checkpoint_status": "blocked",
+      "owned_checkpoint_status": "pass",
       "owned_checkpoint_only": false
     }
   },
   "next": {
-    "stage": "polish",
-    "status": "blocked",
-    "stage_blocked": true,
-    "owner": "polish",
-    "default_skill": "next-campaigns-polish",
-    "command": "npx --no-install campaigns-os next polish --packet ./campaign-runtime.build.json",
-    "reason": "Polish evidence missing for current build. Run next-campaigns-polish before QA.",
+    "stage": "qa",
+    "status": "ready_with_warnings",
+    "stage_blocked": false,
+    "owner": "qa",
+    "default_skill": "next-campaigns-qa",
+    "command": "npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json",
+    "reason": "QA recorded zero executed order paths, so a declared \"common\" order-path depth is not proved. A `--test-order off` run is a diagnostic, not purchase proof; re-run QA at the declared depth or change the declared depth deliberately.",
     "actions": [
-      "Polish evidence missing for current build. Run next-campaigns-polish before QA. Run next-campaigns-polish and record structured evidence before deploy/QA handoff.",
-      "Page-load evidence does not match the current build fingerprint, campaign, route scope, routes, and viewports. Run npx --no-install campaigns-os polish capture before marking Polish complete."
+      "Run npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json."
     ],
-    "blocked_stages": [
-      "deploy",
-      "qa"
-    ]
+    "blocked_stages": []
   },
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "doctor",
-    "total": 9,
+    "total": 7,
     "counts": {
-      "caused_by_change": 4,
+      "caused_by_change": 2,
       "pre_existing": 5,
       "test_environment": 0,
       "upstream_drift": 0,
@@ -3668,9 +3566,5 @@
     },
     "prior_run_id": "run_1793201833092_0994c5d5",
     "comparison": "prior_run"
-  },
-  "stale": true,
-  "stale_marked_by": "polish capture",
-  "stale_marked_at": "2026-10-28T17:15:57.870Z",
-  "stale_reason": "Package-owned polish page-load evidence changed after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
+  }
 }

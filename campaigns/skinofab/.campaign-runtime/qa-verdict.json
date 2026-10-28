@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVSAFX9DEITLQA20U1HQNCARHJ",
+  "run_id": "MVSDSJR9J7FAFD76PPPTS5SIH2",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2221,
   "spec_version": "5.0",
   "spec_hash": "sha256:c9cf7d1073841ea2d9fc2af6248abc536214168a8da36fd7ec3790be7cb74331",
-  "started_at": "2026-10-28T15:47:34.561Z",
-  "completed_at": "2026-10-28T15:50:53.708Z",
-  "generated_at": "2026-10-28T15:50:53.789Z",
+  "started_at": "2026-10-28T17:21:22.437Z",
+  "completed_at": "2026-10-28T17:22:10.207Z",
+  "generated_at": "2026-10-28T17:22:10.240Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -1005,258 +1005,34 @@
       "severity": "info"
     },
     {
-      "id": "browser-test-order:checkout",
+      "id": "browser-test-order:upsell-action-coverage",
       "family": "browser-test-order",
       "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:checkout",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:checkout",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:checkout",
-      "family": "analytics-correctness",
-      "page": "checkout:order:checkout",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:checkout:url",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:checkout:order",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:accept",
-      "family": "analytics-correctness",
-      "page": "checkout:order:accept",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:accept:url",
-      "family": "browser-test-order",
-      "page": "accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:accept:order",
-      "family": "browser-test-order",
-      "page": "accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:decline",
-      "family": "analytics-correctness",
-      "page": "checkout:order:decline",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:decline:url",
-      "family": "browser-test-order",
-      "page": "decline",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:decline:order",
-      "family": "browser-test-order",
-      "page": "decline",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:accept-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:accept-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:accept-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-receipt-rendering:accept-accept",
-      "family": "browser-receipt-rendering",
-      "page": "checkout:receipt:accept-accept",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:accept-accept",
-      "family": "analytics-correctness",
-      "page": "checkout:order:accept-accept",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:accept-accept:url",
-      "family": "browser-test-order",
-      "page": "accept-accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:accept-accept:order",
-      "family": "browser-test-order",
-      "page": "accept-accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-receipt-rendering:accept-decline-decline",
-      "family": "browser-receipt-rendering",
-      "page": "checkout:receipt:accept-decline-decline",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:accept-decline-decline",
-      "family": "analytics-correctness",
-      "page": "checkout:order:accept-decline-decline",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:accept-decline-decline:url",
-      "family": "browser-test-order",
-      "page": "accept-decline-decline",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:accept-decline-decline:order",
-      "family": "browser-test-order",
-      "page": "accept-decline-decline",
       "status": "manual_review",
       "severity": "warn",
       "cause": "caused_by_change",
       "cause_reason": "new_since_prior_run"
     },
     {
-      "id": "browser-test-order:decline-decline-decline-accept",
+      "id": "qc.tracking.url:run:url",
       "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:decline-decline-decline-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:decline-decline-decline-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-receipt-rendering:decline-decline-decline-accept",
-      "family": "browser-receipt-rendering",
-      "page": "checkout:receipt:decline-decline-decline-accept",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:decline-decline-decline-accept",
-      "family": "analytics-correctness",
-      "page": "checkout:order:decline-decline-decline-accept",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:decline-decline-decline-accept:url",
-      "family": "browser-test-order",
-      "page": "decline-decline-decline-accept",
-      "status": "pass",
+      "page": "run",
+      "status": "skipped",
       "severity": "info"
     },
     {
-      "id": "qc.tracking.order:decline-decline-decline-accept:order",
+      "id": "qc.tracking.order:run:order",
       "family": "browser-test-order",
-      "page": "decline-decline-decline-accept",
-      "status": "pass",
+      "page": "run",
+      "status": "skipped",
       "severity": "info"
     },
     {
-      "id": "browser-test-order:upsell-action-coverage",
+      "id": "qc.tracking.tag:run:tag",
       "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
+      "page": "run",
+      "status": "skipped",
+      "severity": "info"
     },
     {
       "id": "price-claim-mismatch:offer-1:bundle.supply.price",
@@ -1271,9 +1047,9 @@
   "test_orders": [],
   "exceptions": [
     {
-      "id": "qc.tracking.order:accept-decline-decline:order",
+      "id": "browser-test-order:upsell-action-coverage",
       "family": "browser-test-order",
-      "page": "accept-decline-decline",
+      "page": "checkout",
       "status": "manual_review",
       "severity": "warn",
       "cause": "caused_by_change",
@@ -1300,8 +1076,8 @@
       "upstream_drift": 0,
       "unknown": 0
     },
-    "prior_run_id": "run_1793180219231_d5a6e5d9",
-    "prior_qa_attempt_run_id": "MVRXCDNA3MJV4LVHEK4IOTPM5S",
+    "prior_run_id": "run_1793201833092_0994c5d5",
+    "prior_qa_attempt_run_id": "MVSAFX9DEITLQA20U1HQNCARHJ",
     "comparison": "prior_run"
   }
 }
