@@ -61,6 +61,15 @@
 .exit-intent-popup__cta { border: 0 !important; }
 .exit-intent-popup__cta::after { filter: invert(1); }
 .exit-intent-close { width: 44px !important; height: 44px !important; line-height: 44px !important; font-size: 28px !important; }
+/* on a phone the SDK's fixed wrapper shrinks to its content (the template's 100% dialog came out 195 px wide): give it
+   the screen's width less a gutter, and let a tall dialog scroll inside the screen */
+@media (max-width: 767px) {
+  [data-exit-intent="popup"] { width: calc(100vw - 32px) !important; max-width: 440px !important; max-height: 86vh !important; }
+  .exit-intent-popup__dialog { width: 100%; max-height: 86vh; overflow: auto; }
+  .exit-intent-popup__content { min-height: 0; padding: 18px 14px 16px; }
+}
+/* the rating line's link to the reviews, a 44 px target on a phone */
+.sf-co-rating a { display: inline-block; padding: 11px 0; }
 /* a pack card's offer pill with nothing to show (no campaign offer on the pack) stays out of the badge row */
 .bundle-card__badge.next-discounts-empty { display: none; }
 /* the checkout's trust (sf-checkout-trust.html) around a form that comes first: one rating line above the pack cards,

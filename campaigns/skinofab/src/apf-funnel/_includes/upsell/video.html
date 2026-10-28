@@ -1,4 +1,4 @@
-{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/video.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%} SKINOFAB: upsell_video.webm adds a VP9 source after the H.264 one (a browser without H.264 then plays the loop). Otherwise GENERATED from _shared/upsell/_includes/upsell/video.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
 {%- comment -%}
   next_component: upsell-video
   next_version: 1
@@ -26,7 +26,7 @@
   {%- if upsell_video.title %}<p class="upsell-video__title">{{ upsell_video.title }}</p>{% endif %}
   <div class="upsell-video__frame">
     {%- if upsell_video.autoplay == false -%}{%- assign uv_preload = upsell_video.preload | default: 'none' -%}{%- else -%}{%- assign uv_preload = upsell_video.preload | default: 'metadata' -%}{%- endif %}
-    <video class="upsell-video__player" data-upsell-video{% if upsell_video.id %} id="{{ upsell_video.id }}"{% endif %} src="{{ upsell_video.src | campaign_asset }}"{% if upsell_video.poster %} poster="{{ upsell_video.poster | campaign_asset }}"{% endif %} playsinline preload="{{ uv_preload }}"{% unless upsell_video.controls == false %} controls{% endunless %}{% unless upsell_video.autoplay == false %} autoplay muted{% endunless %}{% if upsell_video.loop %} loop{% endif %}></video>
+    <video class="upsell-video__player" data-upsell-video{% if upsell_video.id %} id="{{ upsell_video.id }}"{% endif %}{% unless upsell_video.webm %} src="{{ upsell_video.src | campaign_asset }}"{% endunless %}{% if upsell_video.poster %} poster="{{ upsell_video.poster | campaign_asset }}"{% endif %} playsinline preload="{{ uv_preload }}"{% unless upsell_video.controls == false %} controls{% endunless %}{% unless upsell_video.autoplay == false %} autoplay muted{% endunless %}{% if upsell_video.loop %} loop{% endif %}>{% if upsell_video.webm %}<source src="{{ upsell_video.src | campaign_asset }}" type="video/mp4"><source src="{{ upsell_video.webm | campaign_asset }}" type="video/webm">{% endif %}</video>
   </div>
 </div>
 {%- endif -%}

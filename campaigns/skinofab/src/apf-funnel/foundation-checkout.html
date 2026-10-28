@@ -8,7 +8,8 @@ meta_tags:
   next-success-url: "/apf-funnel/foundation-offer-1/"
 # Apollo's single-step checkout (the flagship family) with the funnel's three packs, campaign packages 1, 2 and 3
 # (tools/funnel/funnels/apf.py: campaign 2221, packages 1, 2 and 3), the 2-bottle pack preselected. The form comes first (v2: she chose the foundation on the
-# sales page, so the page asks for her pack, her details, her address and her payment straight away); the trust sits
+# sales page, so the page asks for her pack, her details, her address and her payment straight away; the pack cards
+# are in the page from the first paint, no await skeleton, with the campaign's own names and prices); the trust sits
 # where she decides: one rating line above the pack cards, the guarantee line and the one-time terms by the order
 # button, four badges under it, three buyers' reviews (green stars, their own photos) right after it on a phone, and the
 # proof column (ratings by stars, ten reviews, the guarantee card, the questions) beside the form on a computer:
@@ -147,7 +148,7 @@ bundles:
     shipping_method: "standard"
     selected: true
     image: "images/sf/pack-2.jpg"
-    name: "2 bottles + free gifts"
+    name: "Adaptive Peptide Foundation - 2 bottles + free gifts"
     price: "$57.00"
     subtitle_text: "One-time. Free shipping, a free Blender brush and a free mystery gift"
     badge_text: "Most popular"
@@ -157,7 +158,7 @@ bundles:
     quantity: 1
     shipping_method: "standard"
     image: "images/sf/pack-3.jpg"
-    name: "3 bottles + free gifts + free Lymphatic Brush"
+    name: "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush"
     price: "$75.00"
     subtitle_text: "One-time. Free shipping, a free Lymphatic Brush, a free Blender brush and a free mystery gift"
     badge_text: "Best value"
@@ -167,7 +168,7 @@ bundles:
     quantity: 1
     shipping_method: "standard"
     image: "images/sf/pack-1.jpg"
-    name: "1 bottle"
+    name: "Adaptive Peptide Foundation - 1 bottle"
     price: "$39.00"
     subtitle_text: "One-time. Free shipping"
 # what she pays today (the SDK's cart total, after any exit coupon) and what the pack is, by the express buttons (they place
@@ -208,7 +209,7 @@ exit_intent:
                         <div class="form-sections">
                           <div class="form-section grid-row-gap2 form-section--first">
                             <h2 class="form-section__title">Step 1: Choose your pack</h2>
-                            {% campaign_include 'bundle-selector.html' selector_id='main' card_style=bundle_card_style packages=packages shipping_methods=shipping_methods bundles=bundles %}
+                            {% campaign_include 'bundle-selector.html' selector_id='main' card_style=bundle_card_style packages=packages shipping_methods=shipping_methods bundles=bundles await=false %}
                           </div>
                           <div data-next-component="shipping-form" class="form-sections">
                             {% campaign_include 'customer-info-form.html' section_title='Step 2: Your details' %}

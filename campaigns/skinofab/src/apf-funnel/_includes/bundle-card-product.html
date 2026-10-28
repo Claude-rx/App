@@ -8,7 +8,7 @@
   card_price (a bundle's name and price) show until the SDK writes the campaign's (the cards were blank for ~6 s);
   the coupon badge says "EXTRA 10% OFF" (a bare "+10%" read as a surcharge).
 {%- endcomment -%}
-<div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="bundle-card">
+<div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="bundle-card{% if selected %} next-selected{% endif %}">
   <div class="bundle-card__badges">
     {% if badge_text and badge_text != "" %}<div class="bundle-card__badge bundle-card__badge--{{ badge_tone | default: 'popular' }}">{{ badge_text }}</div>{% endif %}
     <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>

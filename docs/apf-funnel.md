@@ -280,6 +280,25 @@ sum-of-both-cards reading explained under run 2. Before that run, `tools/funnel/
 2221 through the local build (checkout, offer 1's 2-bottle card accepted, both brush offers declined, the receipt
 with both lines and the gifts named): the first proof of the new campaign end to end.
 
+**Independent review 2 (28 Oct 2026, the v2 pages on the local build, order 101552):** verdict "fix first, then
+ship", no blockers, 4 major, 9 minor, every one fixed in the same round: the checkout's pack cards are in the page
+from the first paint (no await skeleton; the preselected card marked; the campaign's own names so nothing jumps when
+the SDK answers); the exit pop on a phone takes the screen's width and scrolls inside it (the SDK's fixed wrapper had
+shrunk to 195 px); offer 2b and the brush downsell say "last chance" and the SDK's own percentage, never "lowest
+price anywhere" (offer 1 sells bottles for less in its packs) or a second figure for the same discount; the sales
+hero's tag sits at the top of the picture, off its "AI illustration" note; the receipt's "Thank you" is its H1 and
+the summary label is no heading, the payment notes are h3; the sticky bar reads the buy button's position on every
+scroll (it stayed on after a jump back to the top); the rating line's link and the gallery arrows are 44 px targets;
+the receipt's range no longer re-offers the brush she just declined; the brush loop carries its VP9 source beside the
+H.264 one (the reviewer's Chromium has no H.264); the clock's line says "this price is gone", not "the offer is not
+in our store". Left as it is, documented: the offers' names in the campaign ("40% off one more bottle") carry the
+voucher's percentage while the pages show the landed one (41%, the whole-dollar rounding); upstream copy should quote
+the price, not a percentage. The reviewer verified: no console errors or failed requests on 36 captures, no
+horizontal scroll, every price the campaign's, the compliance copy clean, the brush downsell's countdown moving the
+page on at 0:00 and again at once on a reopen, offer 1's closing card following the selected card, the receipt's
+gifts and "Free" shipping. Not verifiable there: the mobile exit trigger on a real touch scroll (the SDK's own), the
+10-minute clocks to 0:00 (same markup as the 5-minute one it watched).
+
 The earlier runs, on campaign 2211 and the v1 pages: the funnel went through the Campaigns OS 1.60.0 lifecycle on
 28 Oct 2026 (brief, build, theme, Page Kit parity, polish capture, deploy, QA resolve, QA run with typed-card test
 orders on the local build), twice. Run 1 (verdict

@@ -49,7 +49,7 @@ ONCE = 'charged once to the payment you just used. Nothing renews, and it ships 
 GUARANTEE = 'Backed by our 30-day money-back guarantee.'
 # the honest countdown: 10 minutes on an offer, 5 on a last chance; at 0:00 the page declines the offer itself
 TIMER, TIMER_LAST = 600, 300
-EXPIRES = 'When the clock reaches 0:00 this page moves on and the offer is gone: it is not in our store and we won’t email it.'
+EXPIRES = 'When the clock reaches 0:00 this page moves on and this price is gone: you won’t find it in our store or in an email.'
 
 
 def q(s):
@@ -105,7 +105,7 @@ BRUSH_IMAGES = [('brush-in-hand', 'The Lymphatic Brush in a hand'),
                 ('brush-features', 'The brush’s soft bristles, raised tufts and curved shape')]
 BRUSH_BULLETS = ['Hundreds of ultra-soft tips that bend instead of pressing', 'On dry skin, no oils: under the eyes, along the cheeks and jaw, down the neck',
                  'A 3-minute ritual before your foundation', 'Comes with a SKINOFAB travel case', 'Bought once: nothing renews']
-BRUSH_VIDEO = {'src': 'images/sf/brush-how.mp4', 'poster': 'images/sf/brush-how-poster.jpg', 'autoplay': True, 'loop': True, 'controls': False,
+BRUSH_VIDEO = {'src': 'images/sf/brush-how.mp4', 'webm': 'images/sf/brush-how.webm', 'poster': 'images/sf/brush-how-poster.jpg', 'autoplay': True, 'loop': True, 'controls': False,
                'id': 'sf-brush-loop'}
 FOUNDATION_IMAGES = [('g-hold', 'A woman in her sixties, silver-haired, holding the Adaptive Peptide Foundation by her cheek'),
                      ('bottle', 'The Adaptive Peptide Foundation bottle'),
@@ -268,16 +268,16 @@ OFFERS = {
     },
     'offer-2b': {
         'announcement': 'Offer 2 of 3 · One more chance', 'seconds': TIMER_LAST, 'eyebrow': 'One more chance',
-        'hero_title': 'Last chance: one more bottle at half price',
-        'hero_text': '{price} is the lowest price we sell one bottle for, anywhere. Charged once, in the same box as your order.',
-        'pretitle': 'Our lowest price',
+        'hero_title': 'Last chance: one more bottle, {discount} off',
+        'hero_text': '{price} instead of $39 for one more bottle, charged once, in the same box as your order. After this page the price is gone.',
+        'pretitle': 'Last chance',
         'title': 'One more Adaptive Peptide Foundation',
-        'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Half price, charged once, nothing renews', 'A bottle lasts about a month', 'Ships with your order, in the same box'],
+        'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Charged once, nothing renews', 'A bottle lasts about a month', 'Ships with your order, in the same box'],
         'images': FOUNDATION_IMAGES,
-        'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, not even at half price',
+        'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, not even at this price',
         'features_title': 'Why we make this offer',
         'features_text': 'A second bottle in the same box costs us little to ship, and it keeps you from running out of the shade that finally works.',
-        'features': [('Half the price, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of $39.'),
+        'features': [('{discount} off, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of $39.'),
                      ('Charged once', 'To the payment you just used. Nothing renews, nothing else is charged.'),
                      ('The same guarantee', '30 days from delivery, a full refund even opened, on this bottle too.')],
         'closing': 'Add one more bottle for {price} today?',
@@ -298,8 +298,8 @@ OFFERS = {
     'brush-offer-b': {
         'announcement': 'Offer 3 of 3 · Last chance', 'seconds': TIMER_LAST, 'eyebrow': 'Last chance',
         'hero_title': 'Last chance: the brush at {discount} off',
-        'hero_text': '{price} is the lowest price we sell the brush for, with its travel case, charged once, in the same box as your foundation.',
-        'pretitle': 'Our lowest price',
+        'hero_text': '{price} instead of $24.95 for the brush with its travel case, charged once, in the same box as your foundation. After this page the price is gone.',
+        'pretitle': 'Last chance',
         'title': 'The Lymphatic Brush',
         'bullets': BRUSH_BULLETS,
         'images': BRUSH_IMAGES,

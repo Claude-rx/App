@@ -178,6 +178,8 @@
 .sf-h3 { font-size: 22px; line-height: 1.25; margin-bottom: 12px !important; }
 .sf-hero2--v2 { align-items: start; }
 .sf-hero2__media--tall img { aspect-ratio: 4 / 5; }
+/* the tag sits at the top of the picture: its bottom edge carries the picture's own "AI illustration" note */
+.sf-hero2--v2 .sf-hero2__tag { top: 12px; bottom: auto; }
 .sf-hero2__bullets { list-style: none; padding: 0; margin: 0 0 18px; display: grid; gap: 8px; }
 .sf-hero2__bullets li { position: relative; padding-left: 30px; font-size: 16px; line-height: 1.4; color: var(--text); }
 .sf-hero2__bullets li::before { content: ''; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink)

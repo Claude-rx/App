@@ -12,6 +12,11 @@
   var videos = document.querySelectorAll('video[data-sf-lazy]');
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (still) Array.prototype.forEach.call(videos, function (v) { v.controls = true; });
+  // a clip the page autoplays itself (the brush offer's loop, upsell/video.html): for anyone who asks their device
+  // for less motion it waits for a tap instead, with its controls
+  if (still) Array.prototype.forEach.call(document.querySelectorAll('video[autoplay]:not([data-sf-lazy])'), function (v) {
+    v.removeAttribute('autoplay'); v.controls = true; try { v.pause(); } catch (e) {}
+  });
   if (videos.length && !still && 'IntersectionObserver' in window) {
     var vo = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -77,14 +82,22 @@
     if (first) sync(first.value);
   }
 
+  // the sticky bar on phones: on once the buy button has scrolled above the viewport, off again when it is back below
+  // or in view. Read on every scroll (an observer alone misses a jump from far below to the top: the button is out
+  // of view both times, so nothing intersects and the bar stayed on, funnel review 2).
   var sticky = document.querySelector('[data-sf-sticky]');
   var buyBtn = document.querySelector('[data-sf-sticky-anchor]');
-  if (sticky && buyBtn && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      var e = entries[0];
-      var on = !e.isIntersecting && e.boundingClientRect.top < 0;
+  if (sticky && buyBtn) {
+    var ticking = false;
+    var place = function () {
+      ticking = false;
+      var on = buyBtn.getBoundingClientRect().bottom < 0;
       sticky.classList.toggle('is-on', on);
       document.body.classList.toggle('sf-has-sticky', on);     // room for the footer's last line under the bar
-    }).observe(buyBtn);
+    };
+    var ask = function () { if (!ticking) { ticking = true; requestAnimationFrame(place); } };
+    window.addEventListener('scroll', ask, { passive: true });
+    window.addEventListener('resize', ask);
+    place();
   }
 })();
