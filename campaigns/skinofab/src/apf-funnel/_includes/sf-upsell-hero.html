@@ -3,7 +3,8 @@
   and the countdown (js/sf-offer-timer.js: the deadline is set once per order and page and survives a reload; at 0:00
   the page declines the offer itself and moves on, which the line under the clock says, so the clock is true).
     uh: { eyebrow, title, text, seconds, expires, cta, cta_text }   (title and text may use upsell/copy.html's tokens; cta
-    'accept': the offer's accept button under the clock, a proxy of the one SDK action; cta '#id': a jump to the choices)
+    'accept': the offer's accept button under the clock, a proxy of the one SDK action; cta 'supply': a button that buys
+    the supply card cta_card names (js/sf-supply.js) and a jump to the choices (cta_jump, cta_jump_text); cta '#id': a jump only)
   Her first name comes from the order (js/sf-offer-gate.js fills [data-sf-name]). Written by tools/funnel/apf/offer_pages.py.
 {%- endcomment -%}
 {%- campaign_include 'upsell/offer-context.html' -%}
@@ -19,6 +20,9 @@
     </div>
     {%- if uh.cta == 'accept' %}
     <div class="sf-uh__cta">{%- campaign_include 'upsell/cta.html' proxy=true compact=true -%}</div>
+    {%- elsif uh.cta == 'supply' %}
+    <div class="sf-uh__cta"><a href="#" class="button cc-xl" data-sf-supply-hero="{{ uh.cta_card }}">{{ uh.cta_text }}</a></div>
+    <a class="sf-uh__jump sf-uh__jump--line" href="{{ uh.cta_jump }}">{{ uh.cta_jump_text }}</a>
     {%- elsif uh.cta %}
     <a class="sf-uh__jump" href="{{ uh.cta }}">{{ uh.cta_text }}</a>
     {%- endif %}

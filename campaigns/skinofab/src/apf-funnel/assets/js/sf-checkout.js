@@ -16,7 +16,8 @@ window.addEventListener('next:initialized', function () {
   // going to pay, not leaving (live review 5: 220 px at 50 px/s opened it).
   var setup = Promise.resolve(window.next.exitIntent(Object.assign({ disableOnMobile: false, mobileScrollTrigger: false }, base)));
   var btn = document.querySelector('[data-next-checkout="form"] button[type="submit"]');
-  var steps = [], last = window.scrollY, seenPay = false, armed = false;
+  var steps = [], last = window.scrollY, seenPay = false, armed = false, lastField = 0;
+  document.addEventListener('focusout', function (e) { if (e.target && /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) lastField = Date.now(); }, true);
   var open = function () {
     setup.then(function () {
       var ex = window.next.popupsState && window.next.popupsState.exitIntentEnhancer;
@@ -31,11 +32,44 @@ window.addEventListener('next:initialized', function () {
     steps.push([t, d]);
     while (steps.length && t - steps[0][0] > 400) steps.shift();
     var up = 0; for (var k = 0; k < steps.length; k++) up += steps[k][1];   // net upward distance in the last 400 ms
-    if (!armed && r && seenPay && r.top > window.innerHeight && up >= 300) {   // the order button is below her now
+    // ...and only when the flick ends near the top of the page (toward the address bar) with no field in use: a flick
+    // mid-form, back to a field above, is someone checking her details (live review 7)
+    var typing = document.activeElement && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName) || Date.now() - lastField < 3000;
+    if (!armed && r && seenPay && r.top > window.innerHeight && up >= 300 && y < window.innerHeight * 0.6 && !typing) {   // the order button is below her now
       armed = true; window.removeEventListener('scroll', onScroll); open();
     }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
+});
+
+// The exit pop for the keyboard and a screen reader (live review 7): when the SDK shows it, its close button is named,
+// focus moves to the offer's button, Escape closes it, and focus returns to where she was.
+window.addEventListener('next:initialized', function () {
+  if (!window.next || typeof window.next.on !== 'function') return;
+  var before = null;
+  window.next.on('exit-intent:shown', function () {
+    before = document.activeElement;
+    setTimeout(function () {
+      var dlg = document.querySelector('.exit-intent-popup__dialog');
+      if (!dlg) return;
+      var root = dlg.parentElement && dlg.parentElement.parentElement ? dlg.parentElement.parentElement : document.body;
+      Array.prototype.forEach.call(root.querySelectorAll('button, [role="button"]'), function (b) {
+        if (!b.getAttribute('aria-label') && (/close/i.test(b.className) || /^[×✕✖x]$/i.test((b.textContent || '').trim()))) b.setAttribute('aria-label', 'Close');
+      });
+      var cta = dlg.querySelector('.exit-intent-popup__cta'); if (cta) cta.focus();
+      var esc = function (e) {
+        if (e.key !== 'Escape') return;
+        var close = root.querySelector('[aria-label="Close"]'); if (close) close.click();
+      };
+      document.addEventListener('keydown', esc);
+      var gone = new MutationObserver(function () {
+        if (document.querySelector('.exit-intent-popup__dialog')) return;
+        gone.disconnect(); document.removeEventListener('keydown', esc);
+        if (before && before.focus) before.focus();
+      });
+      gone.observe(document.body, { childList: true, subtree: true });
+    }, 60);
+  });
 });
 
 // The pay line by the express buttons and the order button: today's total is the SDK's; what the pack is (or, on the stick

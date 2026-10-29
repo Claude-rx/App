@@ -1,4 +1,4 @@
-{%- comment -%} SKINOFAB: the payment methods' notes are h3 (they follow the step's h2; the h4 skipped a level).  SKINOFAB: the redirect methods' notes name the funnel's button ("Complete My Order", the submit block's text). Otherwise GENERATED from _shared/checkout/_includes/payment-methods.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%} SKINOFAB: the card expiry selects are named for a screen reader (live review 7).  SKINOFAB: the payment methods' notes are h3 (they follow the step's h2; the h4 skipped a level).  SKINOFAB: the redirect methods' notes name the funnel's button ("Complete My Order", the submit block's text). Otherwise GENERATED from _shared/checkout/_includes/payment-methods.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
 {% comment %}
   next_component: payment-method-presentation
   next_version: 2.2.0
@@ -107,7 +107,7 @@
           <div class="form-grid__row">
             <div class="form-group">
               <div class="form-input">
-                <div class="select-form-wrapper"><select autocomplete="cc-exp-month" data-placeholder="Exp. Month" placeholder="Exp. Month" name="credit_card_exp_month" id="credit_card_exp_month" data-name="Credit Card Exp. Month" data-next-checkout-field="exp-month" class="input-flds select-field">
+                <div class="select-form-wrapper"><select aria-label="Card expiry month" autocomplete="cc-exp-month" data-placeholder="Exp. Month" placeholder="Exp. Month" name="credit_card_exp_month" id="credit_card_exp_month" data-name="Credit Card Exp. Month" data-next-checkout-field="exp-month" class="input-flds select-field">
                     <option value="">Exp. Month</option>
                   </select>
                   <div class="caret-down">
@@ -120,7 +120,7 @@
             </div>
             <div class="form-group">
               <div class="form-input">
-                <div class="select-form-wrapper"><select autocomplete="cc-exp-year" data-placeholder="Exp. Year" placeholder="Exp. Year" name="credit_card_exp_year" id="credit_card_exp_year" data-name="Credit Card Exp. Year" data-next-checkout-field="exp-year" class="input-flds select-field">
+                <div class="select-form-wrapper"><select aria-label="Card expiry year" autocomplete="cc-exp-year" data-placeholder="Exp. Year" placeholder="Exp. Year" name="credit_card_exp_year" id="credit_card_exp_year" data-name="Credit Card Exp. Year" data-next-checkout-field="exp-year" class="input-flds select-field">
                     <option value="">Exp. Year</option>
                   </select>
                   <div class="caret-down">

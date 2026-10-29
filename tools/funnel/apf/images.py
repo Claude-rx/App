@@ -64,7 +64,9 @@ REVIEW_PHOTOS = {
 # the live page's photos, by the name the pages use
 # (the store's "The Science" and "vs. others" graphics stay out: each carries a line the claims rules forbid)
 # the kept crops padded with a blurred band of themselves (live review 6): the photo's own columns, as a square
-REVIEW_TRIM = {'susan': (0.15, 0.85), 'virginia': (0.02, 0.92)}
+# (x0, x1[, y0]): the square of the kept photo that is her own picture, from y0 down (susan: brows to chin, live review 7:
+# from the top it cut her face below the nose)
+REVIEW_TRIM = {'susan': (0.15, 0.85, 0.30), 'virginia': (0.02, 0.92)}
 PDP_PHOTOS = {'g-hold': 'hold-cheek', 'g-dots': 'dots-eyes-closed', 'g-grey': 'hold-grey-hair',
               'g-inside': 'whats-inside', 'g-brush': 'buffing-brush',      # g-brush: offers 2 and 2b's gallery
               'g-bottle': 'bottle-korea', 'problem': 'problem', 'solution': 'solution-bottle',
@@ -354,11 +356,12 @@ def _frames_dir(key):
     return Path(tempfile.mkdtemp(prefix=f'{key}-'))
 
 
-def milky(a, m, k=0.72):
+def milky(a, m, k=0.72, base=(248, 245, 240), lo=0.78):
     """The serum's clear blue made the foundation's milky white where m (0..1, H x W x 1) is set: its lightness kept as
-    shading, its colour pulled k of the way to a warm white."""
+    shading (lo..1 of base), its colour pulled k of the way to base, a warm white. A drop in the air needs a creamy base
+    below the page's white, or only its outline shows and it reads as water (live review 7)."""
     lum = a.mean(-1, keepdims=True)
-    white = np.array([248, 245, 240], np.float32) * (0.78 + 0.22 * lum / 255)
+    white = np.array(base, np.float32) * (lo + (1 - lo) * lum / 255)
     return a * (1 - m * k) + white * (m * k)
 
 
@@ -370,6 +373,14 @@ def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
     src = src.resize((w, round(src.height * w / src.width)), Image.LANCZOS)
     a = np.asarray(src).astype(np.float32)
     H, W = a.shape[:2]
+    # the label's PDRN line, which this render lacks (live review 7: every other bottle on the funnel prints it), between
+    # FOUNDATION and the volume, at the label's slant (18 degrees down to the right), in its light print
+    s_ = w / 1080
+    lm = np.asarray(label_mask('PDRN', 31 * s_, 7.6 * s_, angle=-21, weight='SemiBold'), np.float32)[..., None] / 255
+    lx, ly = int(986 * s_ - lm.shape[1] / 2), int(209 * s_ - lm.shape[0] / 2)
+    reg = a[ly:ly + lm.shape[0], lx:lx + lm.shape[1]]
+    assert float(reg.mean()) < 60, 'science-cross-section.png changed: the PDRN line would not land on the black label'
+    a[ly:ly + lm.shape[0], lx:lx + lm.shape[1]] = reg * (1 - lm) + 232.0 * lm
     blue = (a[..., 2] - a[..., 0] > 14) & (a[..., 2] > 110)
     blue[:, : W // 2] = False
     blue[: int(H * 0.36)] = False
@@ -401,15 +412,29 @@ def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
     liquid = ((a[..., 2] - a[..., 0] > 10) & (a[..., 2] > 100)).astype(np.float32)
     liquid[:, : int(W * 0.55)] = 0; liquid[y_cut:] = 0
     liquid = FI._blur(liquid, 1.5)[..., None]
-    held = milky(held, np.maximum(bm * (1 - deep), liquid) * (1 - under))
+    # (k: the drop and the film the foundation's opaque milky white, live review 7: at 0.72 they read as clear water)
+    held = milky(held, np.maximum(bm * (1 - deep), liquid) * (1 - under), k=0.96, base=(240, 235, 227), lo=0.86)
     dry = dry * (1 - under) + clone * under                              # the loop's first frames: the same clean dermis
+    # the thin stream from the pump to the drop, in every frame: the same creamy white as the drop (live review 7: it stayed
+    # clear, so the foundation read as water); its light-blue body and its grey edges, below the bottle's lower edge only
+    hsv0 = np.asarray(src.convert('HSV')).astype(np.float32)
+    dark = a.max(-1) < 70
+    low = np.where(dark.any(0), H - 1 - np.argmax(dark[::-1], 0), -1)
+    sy, sx = np.mgrid[0:H, 0:W]
+    # (above the falling drop's box, which moves)
+    stream = ((sy > H * 0.17) & (sy < H * 0.25) & (sx > W * 0.60) & (sx < W * 0.65) & (sy > low[None, :] + 2) & (a.min(-1) < 247)
+              & ((hsv0[..., 1] < 41) | (a[..., 2] - a[..., 0] > 8)) & (a.max(-1) > 90)).astype(np.float32)
+    stream = FI._blur(stream, 0.8)[..., None]
+    dry, held = (milky(x, stream, k=1.0, base=(234, 228, 218), lo=0.86) for x in (dry, held))
     save(Image.fromarray(np.clip(held, 0, 255).astype(np.uint8)), 'science-poster', size=w)
     if not encode: return
     # the falling drop in the still: cut out (its box, as fractions of the still), its place filled white
     bx0, by0, bx1, by1 = int(W * 0.60), int(H * 0.25), int(W * 0.66), int(H * 0.355)
     box = a[by0:by1, bx0:bx1]
-    dmask = FI._blur(((255 - box.min(-1)) > 20).astype(np.float32), 1.0)[..., None]
-    drop = milky(box.copy(), dmask)
+    from scipy import ndimage
+    # (its faint rim too: at > 20 a ghost of the drop stayed where it started, live review 7)
+    dmask = FI._blur(ndimage.binary_dilation((255 - box.min(-1)) > 6, iterations=2).astype(np.float32), 1.0)[..., None]
+    drop = milky(box.copy(), dmask, k=1.0, base=(234, 228, 218), lo=0.86)
     for base in (a, dry, held): base[by0:by1, bx0:bx1] = base[by0:by1, bx0:bx1] * (1 - dmask) + 255 * dmask
     y_nozzle, y_land = int(H * 0.19), int(H * 0.40) - (by1 - by0)
     frames = _frames_dir('science')
@@ -457,7 +482,7 @@ def allday_clip(encode=True, fps=25, seconds=6.0):
         d.rounded_rectangle((120, 150, 120 + int((W - 240) * p), 164), 7, fill=INK)
         # the words hedge as the copy does: "made not to turn orange", not "the same tone all day" (live review 5)
         for k, (col, title, sub) in enumerate(((ours, 'This foundation', 'made not to turn orange'),
-                                               (tuple(int(theirs0[c] + (theirs1[c] - theirs0[c]) * p) for c in range(3)), 'One that oxidises', 'can turn orange by noon'))):
+                                               (tuple(int(theirs0[c] + (theirs1[c] - theirs0[c]) * p) for c in range(3)), 'One that oxidizes', 'can turn orange by noon'))):
             cx = W // 4 + k * (W // 2)
             d.ellipse((cx - 150, 220, cx + 150, 520), fill=col)
             f, fs = big, 44
@@ -496,7 +521,7 @@ def zoom_in(im, zoom, top=0.12):
     return im.crop((x0, y0, x0 + zw, y0 + zh))
 
 
-def split_pair(key, out, size=1080, height=900, band=100, src=None, centering=(0.5, 0.35), zoom_after=1.0):
+def split_pair(key, out, size=1080, height=900, band=100, src=None, centering=(0.5, 0.35), zoom_after=1.0, face=1.0, face_top=0.22):
     """A generated split portrait (gen/ba-split-<key>.png: the same woman twice in one frame, her bare skin with its
     lines, spots and redness on the left, the foundation on with an even, luminous tone on the right, a white line
     between) laid out as the pages' before/after: each half fitted to its column (no upscaling at 1376 px wide),
@@ -504,6 +529,9 @@ def split_pair(key, out, size=1080, height=900, band=100, src=None, centering=(0
     instruction, 28 Oct 2026)."""
     before, after = pair_halves(Image.open(src or GEN / f'ba-split-{key}.png'))
     halves = (before, zoom_in(after, zoom_after))      # zoom_after: an after shot from further away, at the before's scale
+    # face: both halves closer on the face, so the skin carries the comparison and the two shots' clothes and settings
+    # mostly leave the frame (live review 7: blue to beige sweater, garden to porch read as two sessions)
+    halves = tuple(zoom_in(h, face, top=face_top) for h in halves)
     col_w, col_h = size // 2, height - band
     out_im = Image.new('RGB', (size, height), PAPER)
     for j, half in enumerate(halves):
@@ -727,8 +755,9 @@ def reviews(work):
         if not kept.exists(): raise SystemExit(f'no photo for review {key} ({rid}): run with the work dir once')
         im = Image.open(kept)
         if key in REVIEW_TRIM:                                   # padded with a blur of itself: keep the photo's own part
-            x0, x1 = REVIEW_TRIM[key]; w = im.width
-            side = int(w * (x1 - x0)); im = im.crop((int(w * x0), 0, int(w * x0) + side, side))
+            x0, x1, *y = REVIEW_TRIM[key]; w = im.width
+            side = int(w * (x1 - x0)); top = int(im.height * (y[0] if y else 0))
+            im = im.crop((int(w * x0), top, int(w * x0) + side, top + side))
         save(im, f'review-{key}', size=600)
 
 
@@ -840,8 +869,10 @@ if __name__ == '__main__':
     # the owner's three pairs (29 Oct 2026: one woman each, before and after, a fair, an olive and a medium-deep
     # tone): the sales page's before/after row, and the kitchen pair on the listicle's shade reason (the owner's ask)
     # the garden after is shot from about twice as far: brought to the before's scale (live review 6)
-    for key, centering, z in (('kitchen', (0.5, 0.3), 1.0), ('car', (0.5, 0.3), 1.0), ('garden', (0.5, 0.3), 1.45)):
-        split_pair(key, f'ba-{key}', src=OWNER / f'ba-{key}.webp', centering=centering, zoom_after=z)
+    # every after is shot from further away than its before: brought to the before's scale (garden 1.45, live review 6;
+    # car and kitchen 1.3, live review 7), then both a little closer on the face (face=1.12)
+    for key, centering, z in (('kitchen', (0.5, 0.3), 1.3), ('car', (0.5, 0.3), 1.3), ('garden', (0.5, 0.3), 1.45)):
+        split_pair(key, f'ba-{key}', src=OWNER / f'ba-{key}.webp', centering=centering, zoom_after=z, face=1.12)
     portrait('age-255', 'reason-dry', crop=(0.2, 0.0, 0.8, 0.75))
     portrait('age-200', 'promise', crop=(0.08, 0.0, 0.92, 0.84))     # the sales page's Tomorrow at 8 a.m. (the duo photo cut a face, live review 6)
     portrait('age-223', 'reason-ages', crop=(0.25, 0.0, 0.75, 0.5))

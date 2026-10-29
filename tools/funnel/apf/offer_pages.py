@@ -114,7 +114,11 @@ BRUSH_IMAGES = [('brush-in-hand', 'The Lymphatic Brush in a hand'),
 BRUSH_BULLETS = ['Hundreds of ultra-soft tips that bend instead of pressing', 'On dry skin, no oils: under the eyes, along the cheeks and jaw, down the neck',
                  'A 3-minute ritual before your foundation', 'Comes with a SKINOFAB travel case', 'Bought once: nothing renews']
 BRUSH_VIDEO = {'src': 'images/sf/brush-how.mp4', 'webm': 'images/sf/brush-how.webm', 'poster': 'images/sf/brush-how-poster.jpg', 'autoplay': True, 'loop': True, 'controls': False,
-               'id': 'sf-brush-loop'}
+               'id': 'sf-brush-loop',
+               'label': 'How to use the Lymphatic Brush on clean, dry skin with a light touch, in four sweeps of ten, then the other side',
+               # the loop's own steps as text a phone can read (its small print is about 9 px at 390 px, live review 7)
+               'steps': ['<strong>Neck:</strong> sweep down to the collarbone, 10 times', '<strong>Jaw and cheeks:</strong> sweep toward the ear, 10 times',
+                         '<strong>Under the eyes:</strong> sweep out to the temples, 10 times', '<strong>Neck again:</strong> sweep down to finish, 10 times. Then the other side.']}
 FOUNDATION_IMAGES = [('g-hold', 'A woman in her sixties, silver-haired, holding the Adaptive Peptide Foundation by her cheek'),
                      ('bottle', 'The Adaptive Peptide Foundation bottle'),
                      ('g-brush', 'A woman in her fifties buffing the foundation into her cheek with a brush')]
@@ -143,12 +147,13 @@ GATE = """{% comment %} the order's facts js/sf-offer-gate.js reads (in the page
 """
 
 
-def hero(eyebrow, title, text, seconds, pid, cta=None, cta_text=None):
+def hero(eyebrow, title, text, seconds, pid, cta=None, cta_text=None, cta_card=None, cta_jump=None, cta_jump_text=None):
     """The offer's hero. cta 'accept': the offer's own accept button right under the clock (a proxy of the one SDK action,
     as the closing card's), so it is on her first screen (live review 6: it sat two screens down on every offer);
     cta '#id' with cta_text: a jump to the page's choices instead (offer 1, two cards to pick from)."""
     return ['uh:', f'  eyebrow: {q(eyebrow)}', f'  title: {q(title)}', f'  text: {q(text)}', f'  seconds: {seconds}', f'  expires: {q(expires(pid))}',
-            *([f'  cta: {q(cta)}'] if cta else []), *([f'  cta_text: {q(cta_text)}'] if cta_text else [])]
+            *([f'  cta: {q(cta)}'] if cta else []), *([f'  cta_text: {q(cta_text)}'] if cta_text else []),
+            *([f'  cta_card: {q(cta_card)}', f'  cta_jump: {q(cta_jump)}', f'  cta_jump_text: {q(cta_jump_text)}'] if cta_card else [])]
 
 
 def single_page(pid, spec, o):
@@ -169,7 +174,7 @@ def single_page(pid, spec, o):
         *hero(o['eyebrow'], o['hero_title'], o['hero_text'], o['seconds'], pid, cta='accept'),
         'upsell_layout:', '  style: card', '  boxed: true', f'  media: {"video" if brush else "carousel"}', '  media_position: right', f'  media_align: {"top" if brush else "center"}',   # the brush loop level with its text (a blank band sat above it at 1440, live review 4)
         '  show_bullets: true', '  show_ships_info: true', '  show_payment_logos: false', '  decline_position: below',   # no logo strip: the charge goes to the payment she just used
-        *(['media_video:', *[f'  {k}: {q(v) if isinstance(v, str) else str(v).lower()}' for k, v in BRUSH_VIDEO.items()]] if brush else []),
+        *(['media_video:', *[f'  {k}: {q(v) if isinstance(v, str) else ("[" + ", ".join(q(x) for x in v) + "]") if isinstance(v, list) else str(v).lower()}' for k, v in BRUSH_VIDEO.items()]] if brush else []),
         'upsell_offer:', '  type: single', '  pricing_mode: discounted', f'  package_id: {tier["ref"]}',
         f'  voucher: {q(tier["voucher"])}', f'  selector_id: {q(pid)}', '  show_rating: false',
         f'  pretitle: {q(o["pretitle"])}', f'  title: {q(o["title"])}', f'  retail_label: {q("Sales page price" if str(tier["package"]).startswith("apf") else "Regular price")}',   # one bottle's $39 is the sales page's price; the store's is $47 (live review 5)
@@ -226,11 +231,11 @@ def supply_page(spec):
               'charged': 'Charged once to the payment you just used. Nothing renews.', 'decline': 'No thanks, I don’t want to stock up'}
     features = [('A bottle lasts about a month', 'One pump a day. Two more bottles cover the next two months; six cover the next six months of photos, calls and lunches.'),
                 ('One at home, one in your bag', 'The one on your vanity stays there. The one in your bag saves the afternoon.'),
-                ('These packs exist only here', 'In our store one bottle is $47, bought once. These two packs are made for this page: a bottle works out at $19.50 in the 2-pack or $16.50 in the 6-pack, in the same box as your order.')]
+                ('These prices are only here', 'In our store, bought once, one bottle is $47 and two are $57 ($28.50 a bottle). Here a bottle works out at $19.50 in the 2-pack or $16.50 in the 6-pack, in the same box as your order.')]
     fm = head(pid, 'Stock up on the Adaptive Peptide Foundation', 'Offer 1 of 3 · Your order is placed', extra_scripts=['js/sf-supply.js']) + [
         *hero('A one-time offer', 'Just for you, right now: more bottles from $16.50 each',
               'Add bottles to the order you just placed: one tap, same box, same payment. These two packs exist on this page only.', TIMER, pid,
-              cta='#sf-supply-title', cta_text='SEE MY TWO CHOICES ↓'),
+              cta='supply', cta_text='YES, ADD 2 BOTTLES · $39', cta_card='supply-b1g1', cta_jump='#sf-supply-title', cta_jump_text='Or see the 6-bottle pack ↓'),
         f'supply: {q(supply)}',
         # the closing card prices the selected card (bundle.supply.*) and proxies its add / skip
         'upsell_offer:', '  type: tier-cards', f'  package_id: {two}', '  selector_id: "supply"', '  display_selector_id: "supply"', '  display_bundle_id: "supply-b1g1"',
@@ -300,7 +305,7 @@ OFFERS = {
         'announcement': 'Offer 3 of 3 · Your order is placed', 'seconds': TIMER, 'eyebrow': 'A one-time offer',
         'hero_title': 'Add the Lymphatic Brush, {discount} off, just for you',
         'hero_text': 'A 3-minute morning massage for the look of puffy eyes, cheeks and jaw, on dry skin, before your foundation. {price} with its travel case, charged once.',
-        'pretitle': 'Not sold in our store',
+        'pretitle': '$24.95 in our store',                                # (it is sold there: live review 7)
         'title': 'The Lymphatic Brush',
         'bullets': BRUSH_BULLETS,
         'images': BRUSH_IMAGES,

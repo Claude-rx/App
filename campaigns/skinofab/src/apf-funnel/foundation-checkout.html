@@ -151,7 +151,7 @@ bundles:
     name: "Adaptive Peptide Foundation - 2 bottles + free gifts"
     price: "$57.00"
     subtitle_text: "One-time. Free shipping, a free Blender sponge and a free mystery gift"
-    badge_text: "Most popular"
+    badge_text: "2 months’ supply"
     badge_pill_class: "os-card__label--pill-secondary"
   - id: "apf-3"
     package_id: 3
@@ -240,7 +240,7 @@ exit_intent:
                           </div>
                           <div class="sf-refill-terms" id="once-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{{ pay_terms | json }}'><strong>One-time purchase.</strong> {{ pay_text }}</p><p>{{ once_terms }}</p></div>
                           {% campaign_include 'sf-checkout-trust.html' part='inline' %}
-                          {% capture disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
+                          {% capture disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}?from=offer" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}?from=offer" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
                           {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · ONE-TIME PURCHASE · 30‑DAY GUARANTEE' disclaimer=disclaimer %}
                           {% campaign_include 'sf-checkout-trust.html' part='badges' %}
                         </div>

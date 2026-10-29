@@ -345,13 +345,13 @@
 .sf-steps--pics li { font-size: 15px; }
 .sf-steps--grid li { margin-bottom: 0; }
 .sf-value__img { width: 100%; max-width: 420px; margin: 0 auto 14px; border-radius: 12px; display: block; }
-/* reviews, green-star style (no review site's name or mark) */
+/* reviews: boxed stars in the brand ink (live review 7: no review site's green or "Excellent" label for our own reviews) */
 .sf-tp { display: inline-flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 10px; }
 .sf-tp__word { font-size: 22px; font-weight: 700; color: var(--ink); }
 .sf-tp__stars { display: inline-flex; gap: 3px; }
-.sf-tp__stars i { width: 28px; height: 28px; background: #00b67a; border-radius: 3px; display: grid; place-items: center; font-style: normal; }
+.sf-tp__stars i { width: 28px; height: 28px; background: var(--sf-star, #151515); border-radius: 3px; display: grid; place-items: center; font-style: normal; }
 .sf-tp__stars i::before { content: '★'; color: #fff; font-size: 20px; line-height: 1; }
-.sf-tp__stars i.half { background: linear-gradient(90deg, #00b67a 0 76%, #cfd0d6 76%); }
+.sf-tp__stars i.half { background: linear-gradient(90deg, var(--sf-star, #151515) 0 76%, #cfd0d6 76%); }
 .sf-tp__stars i.off { background: #cfd0d6; }
 .sf-tp__stars--sm { justify-content: center; margin: 2px 0 8px !important; }
 .sf-tp__stars--sm i { width: 20px; height: 20px; }
@@ -410,7 +410,7 @@ body:has([data-sf-sticky]) .sf-footer { padding-bottom: 110px; }   /* static roo
 /* live review 1: 44 px targets for the bar's button and the footer's links; 4.8 drawn as 4.8 */
 .sf-bar__btn { min-height: 44px; }
 .sf-footer__links a { padding: 12px 6px; }
-.sf-tp__stars i.part, .sf-co-tp i.part { background: linear-gradient(90deg, #00b67a 0 var(--p, 80%), #cfd0d6 var(--p, 80%)); }
+.sf-tp__stars i.part, .sf-co-tp i.part { background: linear-gradient(90deg, var(--sf-star, #151515) 0 var(--p, 80%), #cfd0d6 var(--p, 80%)); }
 
 /* live review 2 */
 .sf-star--part { position: relative; display: inline-block; }
@@ -492,3 +492,10 @@ body:has([data-sf-sticky]) .sf-footer { padding-bottom: 150px; }
 .sf-cta__from { display: flex; align-items: baseline; gap: 8px; margin: 4px 0 2px !important; color: var(--ink); }
 .sf-cta__from span { font-size: 16px; font-weight: 500; }
 .sf-cta__from b { font-size: 46px; line-height: 1; font-weight: 700; letter-spacing: -.02em; }
+
+/* desktop alignment (live review 7): the sales page's one-breath summary centred (`.sf p` took its auto margins), and
+   the listicle's headline, intro and byline on the hero's 800 px column instead of a 1,048 px line */
+.sf .sf-summary { margin-left: auto; margin-right: auto; }
+@media (min-width: 900px) {
+  .sf-article > .sf-h1, .sf-article > .sf-sub, .sf-article > .sf-intro, .sf-article > .sf-byline { max-width: 800px; margin-left: auto !important; margin-right: auto !important; }
+}

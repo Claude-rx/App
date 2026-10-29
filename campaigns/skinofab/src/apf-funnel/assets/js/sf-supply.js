@@ -1,4 +1,4 @@
-// Offer 1's supply cards (_includes/sf-supply-cards.html): every card's Buy now is the SDK's own add action, which adds
+// Offer 1's supply cards (_includes/sf-supply-cards.html) and the hero's button for the 2-bottle card: every card's Buy now is the SDK's own add action, which adds
 // the SELECTED card. A real click (hers, or a test harness's) on a card that is not selected is stopped before the SDK
 // sees it, the card is selected (the SDK's own click on the bundle card) and the same button is clicked again for her,
 // now for the right card; a proxied click (the closing card's button forwards one, upsells.js) is left alone, so it
@@ -25,6 +25,19 @@
     card.click();
     setTimeout(function () { buy.click(); }, 80);
   }, true);
+  // the hero's button (_includes/sf-upsell-hero.html, cta 'supply'): buys the card it names, the same way her own tap on
+  // that card's Buy now does (selected first when it is not, then its Buy now, which the SDK adds)
+  document.addEventListener('click', function (e) {
+    var hero = e.target && e.target.closest ? e.target.closest('[data-sf-supply-hero]') : null;
+    if (!hero) return;
+    e.preventDefault();
+    var card = document.querySelector('[data-sf-supply-card][data-next-bundle-id="' + hero.getAttribute('data-sf-supply-hero') + '"]');
+    var buy = card && card.querySelector('[data-sf-supply-buy]');
+    if (!buy) return;
+    if (card.classList.contains('next-selected')) { buy.click(); return; }
+    card.click();
+    setTimeout(function () { buy.click(); }, 80);
+  });
   cards.forEach(function (card) {
     new MutationObserver(mark).observe(card, { attributes: true, attributeFilter: ['class'] });
   });

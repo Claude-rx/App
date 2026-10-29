@@ -43,7 +43,7 @@ PACKS = [
     {'key': 'apf-1', 'bundle': 'apf-1', 'package': 1, 'bottles': 1, 'price': 39.00, 'compare': 47.00, 'gifts': [],
      'name': '1 bottle', 'supply': 'About a month'},
     {'key': 'apf-2-gifts', 'bundle': 'apf-2', 'package': 2, 'bottles': 2, 'price': 57.00, 'compare': 94.00,
-     'gifts': ['blender', 'mystery'], 'name': '2 bottles', 'supply': 'About two months', 'tab': 'Most popular'},
+     'gifts': ['blender', 'mystery'], 'name': '2 bottles', 'supply': 'About two months', 'tab': '2 months’ supply'},
     {'key': 'apf-3-gifts', 'bundle': 'apf-3', 'package': 3, 'bottles': 3, 'price': 75.00, 'compare': 141.00,
      'gifts': ['blender', 'mystery', 'brush'], 'name': '3 bottles', 'supply': 'About three months', 'selected': True,
      'tab': 'Buy 2, get 1 FREE'},   # true as priced: 3 bottles $75, 2 single bottles $78 (the owner, 29 Oct 2026)
@@ -54,7 +54,7 @@ GIFTS = {'blender': ('SKINOFAB Blender brush', 9.00), 'mystery': ('Mystery gift'
 # campaign rounds a voucher's price down to the dollar) and the crossed-out price
 OFFER_PAGES = {
     'offer-1': {'id': 'offer-1', 'tiers': [
-        {'key': 'b1g1', 'package': 'apf-2', 'ref': 4, 'bottles': 2, 'price': 39.00, 'compare': 78.00, 'badge': 'Most popular'},
+        {'key': 'b1g1', 'package': 'apf-2', 'ref': 4, 'bottles': 2, 'price': 39.00, 'compare': 78.00, 'badge': 'Two months’ supply'},
         {'key': 'b3g3', 'package': 'apf-6-brush', 'ref': 5, 'bottles': 6, 'price': 99.00, 'compare': 234.00, 'badge': 'Best value', 'gift': 'brush'}]},
     'offer-2': {'id': 'offer-2', 'tiers': [{'key': 'one', 'package': 'apf-1', 'ref': 1, 'bottles': 1, 'voucher': 'APF40', 'price': 23.00, 'compare': 39.00}]},
     'offer-2b': {'id': 'offer-2b', 'tiers': [{'key': 'one', 'package': 'apf-1', 'ref': 1, 'bottles': 1, 'voucher': 'APF50', 'price': 19.00, 'compare': 39.00}]},

@@ -33,11 +33,14 @@
       new IntersectionObserver(function (entries, obs) {
         if (entries[0].isIntersecting) { v.preload = 'metadata'; obs.disconnect(); }
       }, { rootMargin: '300px 0px' }).observe(v);
+      new IntersectionObserver(function (entries) {                // and pauses once she scrolls away from it
+        if (!entries[0].isIntersecting && !v.paused) v.pause();
+      }, { threshold: 0.15 }).observe(v);
     }
   });
 
   // the clip cards (_includes/sf-vrow.html): a tap plays the clip where it stands, one at a time; the one with a voice
-  // gets its controls and sound, a silent one pauses on a second tap
+  // gets its controls and sound, a silent one pauses on a second tap; any pauses once it is scrolled off the screen
   var cards = document.querySelectorAll('[data-sf-vcard]');
   Array.prototype.forEach.call(cards, function (card) {
     var v = card.querySelector('video'), btn = card.querySelector('.sf-vcard__play');
@@ -51,6 +54,10 @@
     if (!sound) v.addEventListener('click', function () { v.pause(); });
     v.addEventListener('pause', function () { if (!sound || v.ended) card.classList.remove('is-playing'); });
     v.addEventListener('ended', function () { card.classList.remove('is-playing'); });
+    // a card she scrolls away from pauses, so its voice does not play over the offer (live review 7)
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting && !v.paused) v.pause();
+    }, { threshold: 0.15 }).observe(card);
   });
 
   var gallery = document.querySelector('[data-sf-gallery]');

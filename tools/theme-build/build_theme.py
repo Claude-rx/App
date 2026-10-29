@@ -1121,7 +1121,11 @@ BTN_CSS = (
 base = base.replace("{% endblock styles %}",
     "{% endblock styles %}\n    {# Spark side cart in the design's look: black controls, design body font. #}\n"
     "    <style>:root{--primary-color:#000000;--primary-color-darker:#000000;--primary-color-lighter:#333333;--accent-color:#000000;"
-    "--font-body:var(--FONT-STACK-BODY, 'Jost', sans-serif);}" + BTN_CSS + "</style>", 1)
+    "--font-body:var(--FONT-STACK-BODY, 'Jost', sans-serif);}" + BTN_CSS + "</style>\n"
+    "    {# A policy page opened from a funnel's footer (?from=offer, the funnels' sf-footer.html) keeps the store's sale bar and menus out of it, set before the first paint (live review 7). Django comments are one line. #}\n"
+    "    <script>if (/[?&]from=offer(?:&|$)/.test(location.search)) document.documentElement.classList.add('sf-from-offer');</script>"
+    "<style>.sf-from-offer{--announcement-height:0px!important}.sf-from-offer .announcement-bar-static,.sf-from-offer #SiteHeader .menu__items,"
+    ".sf-from-offer #SiteHeader .menu__item--icons,.sf-from-offer #SiteHeader .mobile-menu,.sf-from-offer #SiteHeader .mobile-menu__button{display:none!important}</style>", 1)
 base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "{% block extrahead %}{% endblock extrahead %}\n"
     "    {% url 'storefrontapi:graphql' as sf_graphql_url %}\n"
