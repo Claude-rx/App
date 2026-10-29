@@ -9,12 +9,15 @@ ad account, in new creative sets that send to the campaign's own URL (no creativ
 Each: WEB, US, a daily budget, a CPP (cost per purchaser) goal, auto bidding with CPM billing, no end date.
 
 usage:
-  python3 -I tools/ads/axon_campaigns.py plan  --account-id <id> [--budget 100] [--cpp 31] [--out <plan.json>]
+  python3 -I tools/ads/axon_campaigns.py plan  --account-id <id> [--assets <id,id,...>] [--brand-icon <asset id>]
+                                               [--budget 100] [--cpp 31] [--out <plan.json>]
   python3 -I tools/ads/axon_campaigns.py apply --account-id <id> --plan <plan.json> --plan-sha256 <hash> --yes
   python3 -I tools/ads/axon_campaigns.py status --account-id <id> --manifest <manifest.json>
   python3 -I tools/ads/axon_campaigns.py pause  --account-id <id> --manifest <manifest.json> --yes
 
-The key is read from APPLOVIN_CAMPAIGN_MANAGEMENT_API_KEY and never printed. `plan` only reads (assets, creative sets,
+The key is read from the environment variable --key-env names (default APPLOVIN_CAMPAIGN_MANAGEMENT_API_KEY) and never
+printed or written. --assets limits the creatives to exactly those asset ids (each must be ACTIVE); --brand-icon sets the
+creative sets' brand card (SKINOFAB, the line below, a "Shop now" button) with that IMG_ICON asset. `plan` only reads (assets, creative sets,
 campaigns) and writes the plan with its sha256; `apply` sends exactly that plan and refuses any other. The API blocks a key
 for 24 hours after 100 error responses in five minutes, so every write stops at its first error (no blind retries) and
 validates the plan before sending anything."""
@@ -30,11 +33,14 @@ CAMPAIGNS = [   # key, name, entry page
 VIDEO = ('VID_LONG_P', 'VID_SHORT_P')
 PER_TYPE = 10                       # a V2 creative set holds up to 10 assets of each type
 COUNTRIES = ['US']                  # the funnel's offer, prices and shipping promise are US
+BRAND = {'title': 'SKINOFAB', 'description': 'Adaptive serum foundation made for skin after 45',
+         'button_label': 'Shop now', 'button_color': '#151515'}
+KEY_ENV = ['APPLOVIN_CAMPAIGN_MANAGEMENT_API_KEY']
 
 
 def key():
-    k = os.environ.get('APPLOVIN_CAMPAIGN_MANAGEMENT_API_KEY', '')
-    if not k: sys.exit('APPLOVIN_CAMPAIGN_MANAGEMENT_API_KEY is not set')
+    k = os.environ.get(KEY_ENV[0], '')
+    if not k: sys.exit(f'{KEY_ENV[0]} is not set')
     return k
 
 
@@ -94,6 +100,17 @@ def plan(a):
     account = a.account_id
     assets = pages('asset/list', account)
     active = [x for x in assets if x.get('status') == 'ACTIVE' and x.get('asset_type') in ('HOSTED_HTML', 'IMG_INTER_P', 'IMG_BANNER', *VIDEO)]
+    if a.assets:                                            # exactly these, every one live in the account
+        want = [i.strip() for i in a.assets.split(',') if i.strip()]
+        byid = {str(x.get('id')): x for x in assets}
+        bad = [f"{i} ({byid[i].get('status')} {byid[i].get('asset_type')})" if i in byid else f'{i} (not in the account)'
+               for i in want if i not in byid or byid[i] not in active]
+        if bad: sys.exit(f'--assets: not usable: {bad}')
+        active = [byid[i] for i in want]
+    icon = None
+    if a.brand_icon:
+        icon = next((x for x in assets if str(x.get('id')) == a.brand_icon and x.get('asset_type') == 'IMG_ICON' and x.get('status') == 'ACTIVE'), None)
+        if not icon: sys.exit(f'--brand-icon {a.brand_icon} is not an ACTIVE IMG_ICON asset of the account')
     sets = pages('creative_set/list', account)
     camps = pages('campaign/list', account)
     taken = {c['name'] for c in camps}
@@ -117,6 +134,7 @@ def plan(a):
             'bidding_strategy': 'AUTO_BIDDING_WITH_CPM_BILLING', 'audience_strategy': 'UNIVERSAL',
             'website_url': landing(entry, k), 'is_dynamic_ads_enabled': False},
             'creative_sets': [{'name': f'{name} - set {i + 1}', 'type': 'WEB', 'countries': COUNTRIES, 'assets': [{'id': x} for x in s['assets']],
+                               **({'use_account_level_brand_info': False, 'brand_info': {**BRAND, 'icon': {'id': str(icon['id'])}}} if icon else {}),
                                '_asset_names': s['names']} for i, s in enumerate(x for x in built if 'assets' in x)]})
     if bad: out['blocked'] = bad
     text = json.dumps(out, indent=2, sort_keys=True)
@@ -146,7 +164,7 @@ def apply(a):
             out.write_text(json.dumps(manifest, indent=2))
         print(f'created campaign {cid} ({entry["name"]}) with {len(entry["creative_sets"])} creative set(s)')
     print(f'manifest: {out}')
-    status(argparse.Namespace(account_id=a.account_id, manifest=str(out)))
+    status(argparse.Namespace(account_id=a.account_id, manifest=str(out), key_env=KEY_ENV[0]))
 
 
 def status(a):
@@ -173,14 +191,17 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     sub = ap.add_subparsers(dest='cmd', required=True)
     for n in ('plan', 'apply', 'status', 'pause'):
-        s = sub.add_parser(n); s.add_argument('--account-id', required=True)
+        s = sub.add_parser(n); s.add_argument('--account-id', required=True); s.add_argument('--key-env', default=KEY_ENV[0])
         if n == 'plan':
             s.add_argument('--budget', type=float, default=100.0, help='daily budget per campaign, USD')
             s.add_argument('--cpp', type=float, default=31.0, help='cost-per-purchaser goal, USD')
             s.add_argument('--window', default='DAY7', choices=['DAY0', 'DAY7'], help='purchases counted within this window')
             s.add_argument('--out', default='axon-plan.json')
+            s.add_argument('--assets', default='', help='comma-separated asset ids: exactly these creatives')
+            s.add_argument('--brand-icon', default='', help='an IMG_ICON asset id for the creative sets\' brand card')
         if n == 'apply': s.add_argument('--plan', required=True); s.add_argument('--plan-sha256', required=True); s.add_argument('--yes', action='store_true')
         if n in ('status', 'pause'): s.add_argument('--manifest', required=True)
         if n == 'pause': s.add_argument('--yes', action='store_true')
     a = ap.parse_args()
+    KEY_ENV[0] = a.key_env
     {'plan': plan, 'apply': apply, 'status': status, 'pause': pause}[a.cmd](a)
