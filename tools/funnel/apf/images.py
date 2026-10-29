@@ -12,9 +12,9 @@ approved):
 - the product sheet's renders (brand/adaptive-peptide-foundation/*.png) for the packshots and the packs' cards;
 - the generated split portraits (brand/adaptive-peptide-foundation/gen/ba-split-*.png, 28 Oct 2026: one woman of
   45+ twice in one frame, bare skin with its lines, sun spots and redness on the left, the foundation on with an
-  even, luminous tone on the right; gen/README.md has the model and prompts) for the listicle's shade reason (no
-  disclaimer line on any image, the owner's instruction of 28 Oct 2026); the listicle's lines, dry-skin and ages
-  reasons, which have no pair yet, show a persona photo (brand/persona/age-*.jpg, women 45+ made for the store);
+  even, luminous tone on the right; gen/README.md has the model and prompts): retired on 29 Oct 2026 for the owner's
+  own pairs (no disclaimer line on any image, the owner's instruction of 28 Oct 2026); the listicle's lines, dry-skin
+  and ages reasons, which have no pair yet, show a persona photo (brand/persona/age-*.jpg, women 45+ made for the store);
 - the owner's own images (brand/adaptive-peptide-foundation/owner/, 29 Oct 2026): three before/after pairs of
   women past 45 (bare skin with lines, spots and uneven tone, then the foundation on, glowing and even) and the
   SKINOFAB doctor in her clinic holding the bottle, its small print reset by doctor_photo();
@@ -568,16 +568,16 @@ if __name__ == '__main__':
     pack_cards()
     hero_collage()
     offer_card()
-    # the before/afters (28 Oct 2026, the owner's brief: a before with lines, sun spots and uneven tone, an after with
-    # even, glowing skin, the same woman of 45+): the sales page's close-up and the listicle's first reason from the
-    # generated split portraits; the listicle's lines, dry-skin and ages reasons show a persona photo on its own
-    # until their pairs are made (gen/README.md)
-    split_pair('glow', 'ba-glow')
+    # the before/afters (the owner's brief: a before with lines, sun spots and uneven tone, an after with even,
+    # glowing skin, the same woman of 45+): the owner's own pairs below; the listicle's lines, dry-skin and ages
+    # reasons show a persona photo on its own until their pairs are made
     portrait('age-109', 'reason-lines', centering=(0.5, 0.4))
+    # (the generated glow pair is retired too: the owner asked for one of their own pairs on the listicle's shade
+    # reason, 29 Oct 2026; it shows the kitchen pair, also on the sales page)
     # (the generated close-up pair is retired: its "after" erased forehead lines and crow's feet, more than a
     # foundation does, live review 5)
     # the owner's three pairs (29 Oct 2026: one woman each, before and after, a fair, an olive and a medium-deep
-    # tone): the sales page's before/after row (the two pages share no image)
+    # tone): the sales page's before/after row, and the kitchen pair on the listicle's shade reason (the owner's ask)
     for key, centering in (('kitchen', (0.5, 0.3)), ('car', (0.5, 0.3)), ('garden', (0.5, 0.3))):
         split_pair(key, f'ba-{key}', src=OWNER / f'ba-{key}.webp', centering=centering)
     portrait('age-255', 'reason-dry', crop=(0.2, 0.0, 0.8, 0.75))
