@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVTK946MG7GQBTEJ7QDTHS1EID",
+  "run_id": "MVTMX41GE1D3A4DHE6D3LV9U43",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2221,
   "spec_version": "5.0",
   "spec_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
-  "started_at": "2026-10-29T13:09:59.278Z",
-  "completed_at": "2026-10-29T13:10:51.677Z",
-  "generated_at": "2026-10-29T13:10:51.718Z",
+  "started_at": "2026-10-29T14:24:38.068Z",
+  "completed_at": "2026-10-29T14:25:22.482Z",
+  "generated_at": "2026-10-29T14:25:22.517Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -508,8 +508,8 @@
       "page": "checkout",
       "status": "manual_review",
       "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "id": "browser-payment-surface:checkout",
@@ -607,8 +607,8 @@
       "page": "checkout",
       "status": "warn",
       "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "id": "browser-load:offer-1",
@@ -1064,8 +1064,8 @@
       "page": "checkout",
       "status": "manual_review",
       "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "id": "browser-request-failures:checkout",
@@ -1073,8 +1073,8 @@
       "page": "checkout",
       "status": "warn",
       "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "id": "browser-test-order:upsell-action-coverage",
@@ -1100,14 +1100,14 @@
     "surface": "qa",
     "total": 4,
     "counts": {
-      "caused_by_change": 2,
-      "pre_existing": 2,
+      "caused_by_change": 0,
+      "pre_existing": 4,
       "test_environment": 0,
       "upstream_drift": 0,
       "unknown": 0
     },
-    "prior_run_id": "run_1793201833092_0994c5d5",
-    "prior_qa_attempt_run_id": "MVT375YGKUMEV7UA4LCKL68DO5",
+    "prior_run_id": "run_1793270414928_af54ec6a",
+    "prior_qa_attempt_run_id": "MVTK946MG7GQBTEJ7QDTHS1EID",
     "comparison": "prior_run"
   }
 }
