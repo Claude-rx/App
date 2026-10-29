@@ -54,7 +54,7 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
     
-  <script>if (navigator.globalPrivacyControl === true) { window.axon = function () {}; window.__sfGPC = true; }</script>
+  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
   
 
 
@@ -95,9 +95,9 @@
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-next-core-e875b0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-812cc4.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-3487f8.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-0e99ff.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-3450e0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -114,7 +114,7 @@
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
 <div class="page-wrapper">
 
-      <div class="main-wrapper">
+      <main class="main-wrapper">
         
 <div data-next-catalog-component="receipt-skeleton" data-next-skeleton="" class="skeleton-wrapper">
   <div class="checkout-content">
@@ -421,7 +421,7 @@
 
                   
 <div class="receipt_section sf-more">
-  <div class="receipt_section-head"><h2 class="display-xs">Women who love the foundation also use</h2>
+  <div class="receipt_section-head"><h2 class="display-xs">More from SKINOFAB, at the store</h2>
     <div class="receipt_section-head--desc">More SKINOFAB made for skin after 45, in our store, each with the same 30-day money-back guarantee.</div></div>
   <span hidden data-sf-ship-country data-next-display="order.shippingAddress.country"></span>
   <div class="sf-more__grid">
@@ -492,6 +492,9 @@
                     </a>
                     <a href="https://try.skinofab.com/privacy-policy/?from=offer" target="_blank" class="link">
                       <div>Privacy policy</div>
+                    </a>
+                    <a href="https://try.skinofab.com/data-sharing-opt-out/?from=offer" target="_blank" class="link">
+                      <div>Your privacy choices</div>
                     </a>
                     <a href="https://try.skinofab.com/terms-of-service/?from=offer" target="_blank" class="link">
                       <div>Terms of service</div>
@@ -597,7 +600,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
 
     

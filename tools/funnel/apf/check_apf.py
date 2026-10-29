@@ -577,7 +577,7 @@ if '.sf-from-offer #shopify-section-sf-more' not in _base: fail('theme', 'a poli
 if 'data-sharing-opt-out' not in _base.split('var keep =')[1][:400]: fail('theme', 'the privacy choices page drops ?from=offer')
 for p in F.PAGES:
     h = html(p['id'])
-    if not re.search(r'<a href="https://try\.skinofab\.com/data-sharing-opt-out/\?from=offer"[^>]*>Your privacy choices</a>', h): fail(p['id'], 'no "Your privacy choices" link in the footer')
+    if not re.search(r'<a href="https://try\.skinofab\.com/data-sharing-opt-out/\?from=offer"[^>]*>\s*(?:<div>)?Your privacy choices', h): fail(p['id'], 'no "Your privacy choices" link in the footer')
     if 's.axon.ai' in h and 'sf_optout' not in h.split('s.axon.ai')[0]: fail(p['id'], 'the ad pixel does not honour the privacy choices opt-out')
 _opt = THEME / 'partials' / 'sf_pages' / 'data-sharing-opt-out' / 'content.html'
 if not _opt.is_file() or 'data-sf-optout-btn' not in _opt.read_text(encoding='utf-8') or 'pc--optOutFormContainer' in _opt.read_text(encoding='utf-8'): fail('theme', 'the privacy choices page has no working opt-out')

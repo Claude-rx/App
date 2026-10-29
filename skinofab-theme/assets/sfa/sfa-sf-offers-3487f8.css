@@ -189,6 +189,8 @@ html:not(.next-display-ready) .upsell-wrapper[data-next-await] [data-upsell-prox
    placed", says so above it and can't be accepted (live review 10, F14). The class lifts if the SDK loads an order. */
 .sf-no-order [data-sf-has-order], .sf-no-order [data-sf-placed] { display: none !important; }
 .sf-no-order [data-sf-no-order] { display: block !important; }
+/* one message, not two: with no order, the no-order card says it; the SDK-failed banner stays out (live review 11) */
+.sf-no-order [data-sf-failsafe] { display: none !important; }
 .sf-no-order [data-next-upsell-action="add"], .sf-no-order [data-upsell-proxy="add"] { pointer-events: none; opacity: .45; }
 .sf-no-order-note { max-width: 560px; margin: 32px auto; padding: 24px 22px; text-align: center; background: #fff; border: 1px solid #e6e1da; border-radius: 12px; color: #151515; }
 .sf-no-order-note h1, .sf-no-order-note__title { font-size: 22px; line-height: 1.25; font-weight: 600; margin: 16px 0 10px; }

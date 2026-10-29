@@ -57,11 +57,19 @@
         if (v.paused) { v.sfHeld = false; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.sfHeld = true; v.pause(); }
       });
       v.addEventListener('play', draw); v.addEventListener('pause', draw);
-      // at the video's own bottom corner, not the card's: under a caption the button sat on its words (live review 10)
-      var place = function () { b.style.bottom = Math.max(10, box.clientHeight - (v.offsetTop + v.offsetHeight) + 10) + 'px'; };
+      // on the video's own top-right corner, wherever the video sits in its card: at the card's corner it sat on a
+      // caption (live review 10) and, in a two-column card, a column away from its video; at the video's bottom corner
+      // it covered the clip's own burned-in label (live review 11)
+      var place = function () {
+        var bb = box.getBoundingClientRect(), vb = v.getBoundingClientRect();
+        if (!vb.width) return;
+        b.style.bottom = 'auto'; b.style.right = 'auto';
+        b.style.top = Math.round(vb.top - bb.top - box.clientTop + 8) + 'px';
+        b.style.left = Math.round(vb.right - bb.left - box.clientLeft - 44 - 8) + 'px';
+      };
       box.appendChild(b); draw(); place();
       v.addEventListener('loadedmetadata', place);
-      if ('ResizeObserver' in window) new ResizeObserver(place).observe(box); else window.addEventListener('resize', place);
+      if ('ResizeObserver' in window) { var ro = new ResizeObserver(place); ro.observe(box); ro.observe(v); } else window.addEventListener('resize', place);
     });
   }
 
@@ -228,3 +236,12 @@
   window.addEventListener('load', function () { fix(); setTimeout(stop, 1500); });
   setTimeout(stop, 6000);
 })();
+
+// the offers' controls the SDK binds are links (<a href="#"> with role="button" in the markup, live review 11): Space
+// presses them as it presses a button (Enter already does)
+document.addEventListener('keydown', function (e) {
+  if (e.key !== ' ' && e.key !== 'Spacebar') return;
+  var a = e.target && e.target.closest && e.target.closest('a[role="button"]');
+  if (!a) return;
+  e.preventDefault(); a.click();
+});

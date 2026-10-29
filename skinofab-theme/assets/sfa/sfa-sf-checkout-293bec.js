@@ -61,7 +61,8 @@ window.addEventListener('next:initialized', function () {
       var x = root.querySelector('[aria-label="Close"]');
       if (x && !dlg.contains(x)) dlg.appendChild(x);          // in the dialog: read with it, and in its Tab order
       var top = dlg; while (top.parentElement && top.parentElement !== document.body) top = top.parentElement;
-      var made = Array.prototype.filter.call(document.body.children, function (el) { return el !== top && !el.inert && !/^(SCRIPT|STYLE|TEMPLATE)$/.test(el.tagName); });
+      // the SDK's dark overlay is a body child of its own: it stays live, so a tap outside the box closes the pop (live review 11)
+      var made = Array.prototype.filter.call(document.body.children, function (el) { return el !== top && !el.inert && !/^(SCRIPT|STYLE|TEMPLATE)$/.test(el.tagName) && !/exit-intent/.test(String(el.className)) && !el.hasAttribute('data-exit-intent'); });
       made.forEach(function (el) { el.inert = true; });
       var overflow = document.documentElement.style.overflow, bodyOverflow = document.body.style.overflow;
       document.documentElement.style.overflow = 'hidden'; document.body.style.overflow = 'hidden';
@@ -77,9 +78,14 @@ window.addEventListener('next:initialized', function () {
         else if (!dlg.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
       };
       document.addEventListener('keydown', esc);
+      var outside = function (e) {
+        if (!document.contains(dlg) || dlg.contains(e.target)) return;
+        var close = root.querySelector('[aria-label="Close"]'); if (close) close.click();
+      };
+      document.addEventListener('click', outside);
       var gone = new MutationObserver(function () {
         if (document.querySelector('.exit-intent-popup__dialog')) return;
-        gone.disconnect(); document.removeEventListener('keydown', esc);
+        gone.disconnect(); document.removeEventListener('keydown', esc); document.removeEventListener('click', outside);
         made.forEach(function (el) { el.inert = false; });
         document.documentElement.style.overflow = overflow; document.body.style.overflow = bodyOverflow;
         var back = before && before !== document.body && before !== document.documentElement && document.contains(before) ? before
@@ -103,9 +109,52 @@ window.addEventListener('next:initialized', function () {
     const on = document.querySelector('[data-next-bundle-card].next-selected');
     const text = on && terms[on.getAttribute('data-next-bundle-id')];
     if (text) document.querySelectorAll('[data-sf-renew]').forEach((el) => { el.textContent = text; });
+    const box = document.querySelector('[data-sf-renew-short]');
+    let short = {};
+    try { short = JSON.parse(box ? box.getAttribute('data-sf-renew-short') : '{}'); } catch (e) { short = {}; }
+    const s = on && short[on.getAttribute('data-next-bundle-id')];
+    if (s) document.querySelectorAll('[data-sf-renew-short-text]').forEach((el) => { el.textContent = s; });
   };
   const watch = new MutationObserver(sync);
   cards.forEach((c) => watch.observe(c, { attributes: true, attributeFilter: ['class'] }));
+  sync();
+})();
+
+// The separate consent to the Automatic Refills (live review 11: consent rode on the order button and the ToS sentence).
+// Until the box is ticked, nothing pays: the express buttons (PayPal draws its own frames, which take clicks the page can't
+// see) are dimmed, inert and covered by a button that explains; the order button and the form's submit are held in the
+// capture phase, before the SDK's own handlers. Either way the box is brought into view, focused and the reason shown.
+(function initRefillConsent() {
+  const box = document.querySelector('[data-sf-refill-consent]');
+  if (!box) return;
+  const wrap = box.closest('[data-sf-consent]');
+  const err = document.getElementById('sf-consent-err');
+  const gate = document.querySelector('[data-sf-consent-gate]');
+  const express = gate && gate.querySelector('[data-next-express-checkout="container"]');
+  const cover = gate && gate.querySelector('[data-sf-consent-cover]');
+  const sync = () => {
+    const ok = box.checked;
+    if (gate) gate.classList.toggle('sf-consent-off', !ok);
+    if (express) express.inert = !ok;
+    if (cover) cover.hidden = ok;
+    if (ok) { wrap.classList.remove('sf-consent--error'); err.hidden = true; err.removeAttribute('role'); }
+  };
+  const ask = () => {
+    wrap.classList.add('sf-consent--error');
+    err.hidden = false; err.setAttribute('role', 'alert');
+    wrap.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    box.focus({ preventScroll: true });
+  };
+  box.addEventListener('change', sync);
+  if (cover) cover.addEventListener('click', ask);
+  const hold = (e) => {
+    if (box.checked) return;
+    const btn = e.type === 'submit' ? e.target : e.target.closest && e.target.closest('.submit-section__button .submit-button, #combo_form button[type="submit"]');
+    if (!btn) return;
+    e.preventDefault(); e.stopImmediatePropagation(); ask();
+  };
+  document.addEventListener('click', hold, true);
+  document.addEventListener('submit', hold, true);
   sync();
 })();
 
@@ -224,7 +273,8 @@ window.sfSplitGiftName = function (title) {
   title.textContent = m[1];
   const note = document.createElement('div'); note.className = 'sf-first-order';
   note.textContent = 'With this first order only: + ' + m[2] + '. Refills are the bottles.';
-  title.insertAdjacentElement('afterend', note);
+  // under the line's header row, full width: beside the name it was a 64 px column at 390 (live review 11)
+  (title.closest('.cart-item__header') || title).insertAdjacentElement('afterend', note);
 };
 (function initRenewingNames() {
   const box = document.querySelector('[data-next-cart-summary]');

@@ -51,7 +51,7 @@
   <link href="{% endverbatim %}{{ 'sfc/sfc-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/png">
   <link href="{% endverbatim %}{{ 'sfc/sfc-webclip-8b0c9c.png'|asset_url }}{% verbatim %}" rel="apple-touch-icon">
   
-  <script>if (navigator.globalPrivacyControl === true) { window.axon = function () {}; window.__sfGPC = true; }</script>
+  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
   
 
 
@@ -365,6 +365,7 @@
   <img src="{% endverbatim %}{{ 'sfc/sfc-skinofab-wordmark-d7216f.svg'|asset_url }}{% verbatim %}" alt="SKINOFAB" width="120" height="24" loading="lazy">
   <nav class="sf-footer__links" aria-label="Store policies">
     <a href="https://try.skinofab.com/privacy-policy/?from=offer">Privacy policy</a>
+    <a href="https://try.skinofab.com/data-sharing-opt-out/?from=offer">Your privacy choices</a>
     <a href="https://try.skinofab.com/terms-of-service/?from=offer">Terms of service</a>
     <a href="https://try.skinofab.com/refund-policy/?from=offer">Refund policy</a>
     <a href="https://try.skinofab.com/shipping-policy/?from=offer">Shipping policy</a>

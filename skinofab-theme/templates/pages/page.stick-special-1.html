@@ -56,7 +56,7 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
     
-  <script>if (navigator.globalPrivacyControl === true) { window.axon = function () {}; window.__sfGPC = true; }</script>
+  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
   
 
 
@@ -97,7 +97,7 @@
 
     <link href="{% endverbatim %}{{ 'sfc/sfc-next-core-e875b0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfc/sfc-swiper-bundle-min-d34353.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
     <link href="{% endverbatim %}{{ 'sfc/sfc-checkout-brand-06326f.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
@@ -449,6 +449,7 @@
           <a href="https://try.skinofab.com/shipping-policy/?from=offer" target="_blank" class="footer_legal-link">Shipping Policy</a>
           <a href="https://try.skinofab.com/refund-policy/?from=offer" target="_blank" class="footer_legal-link">Refund Policy</a>
           <a href="https://try.skinofab.com/privacy-policy/?from=offer" target="_blank" class="footer_legal-link">Privacy Policy</a>
+          <a href="https://try.skinofab.com/data-sharing-opt-out/?from=offer" target="_blank" class="footer_legal-link">Your privacy choices</a>
           <a href="https://try.skinofab.com/terms-of-service/?from=offer" target="_blank" class="footer_legal-link">Terms of Service</a>
         </div>
         <div class="text-xs">Copyright © <span class="copyright-year"></span> SKINOFAB</div>
@@ -462,7 +463,7 @@
 </div>
 
     
-    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer src="{% endverbatim %}{{ 'sfc/sfc-swiper-bundle-min-2f3c4d.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfc/sfc-upsells-22339a.js'|asset_url }}{% verbatim %}"></script>
     

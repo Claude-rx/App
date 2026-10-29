@@ -184,11 +184,11 @@ Not because you chose badly. Most were made for a tone that holds still and skin
 
 
 
-> “Doesn’t match my skin tone.” — the most common complaint
+> “Doesn’t match my skin tone.” — a complaint we hear often
 
 One adaptive shade that shifts toward your tone as you blend, and a 30-day guarantee if it doesn’t.
 
-> “It dried out my skin.” — the second most common
+> “It dried out my skin.” — another we hear often
 
 A serum base with two forms of hyaluronic acid, ceramide NP, squalane and panthenol.
 
@@ -221,12 +221,6 @@ The one thing a foundation does: it evens the look of skin tone and softens the 
 [BEFORE: A shade that sits gray or orange on your cheeks; Concealer, then powder, then a touch-up by noon; Dry patches catching the foundation; “You can tell I’m wearing makeup”]
 
 [AFTER: A color that shifts toward your own tone as you blend; One pump, fingertips, about a minute; Dry skin kept comfortable by the serum base; “They just see me, rested”]
-
-> “…blurs imperfections and cover redness, and it looks like skin, not something put on top!” — Gillian S., 65, verified buyer, from our earlier store (a buyer on redness)
-
-> “I’m 65 and my skin has uneven color. This product has evened out those places. …” — Lora Z., 65, verified buyer, from our earlier store (a buyer on uneven color)
-
-> “…colour matches to my skin tone, doesn’t oxidise as the day goes on… I frequently get told how nice my skin looks. …” — Judith L., verified buyer, from our earlier store (a buyer on her match)
 
 ## 12 · Proof Elements
 
@@ -368,13 +362,13 @@ The free Lymphatic Brush is a launch gift. It comes free with the 3-bottle pack 
 
 [REVIEW: Judith L. | Verified buyer, from our earlier store | 5 | | This make up does what it says, colour matches to my skin tone, doesn’t oxidise as the day goes on, feels light and moisturising, being older it it doesn’t settle in any lines. It blends nicely with the brush or the blender. I frequently get told how nice my skin looks. … | images/sf/review-judith.jpg | yes]
 
-> “… At 56, I also am happy it doesn’t cake or settle in fine lines. …” — Maria R., verified buyer
+> “I love how the texture and feel is not greasy or heavy. …” — Maria R., verified buyer
 
 > “Easy application and covers well. Looks good on my 81 year old face!” — Vicki M., verified buyer
 
 > “I am 60 years old and don’t wear much makeup. This product I love it is light weight and matches perfectly. This is mid afternoon even.” — Diane O., verified buyer
 
-> “Love that it doesn’t go in my wrinkles !!” — Dotty H., verified buyer
+> “I love how the color is an exact match and it isn’t heavy.” — Kathryn S., verified buyer
 
 > “Love this lightweight creamy foundation that keeps my face moist! …” — Barbara A., verified buyer
 

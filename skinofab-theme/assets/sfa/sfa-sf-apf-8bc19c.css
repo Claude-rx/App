@@ -35,6 +35,7 @@
 .sf-offerbox__trust { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; font-size: 13px; color: var(--soft); }
 .sf-offerbox__trust li::before { content: '✓'; margin-right: 5px; color: var(--ok); font-weight: 700; }
 .sf-once { margin: 12px 0 0 !important; font-size: 13px; line-height: 1.5; color: var(--soft); text-align: center; }
+.sf-once a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; }   /* "Cancel my refills", a 44 px target (live review 11) */
 /* the chosen pack's renewal under the button (js/sf-apf.js keeps it on the chosen pack) */
 .sf-renew-line { margin: 12px 0 0 !important; font-size: 14px; line-height: 1.45; color: var(--ink); text-align: center; }
 .sf-savings { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 999px; background: #fdecec; color: #b3261e; font-size: 12px; font-weight: 600; }

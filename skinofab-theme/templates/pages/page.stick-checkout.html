@@ -54,7 +54,7 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
     
-  <script>if (navigator.globalPrivacyControl === true) { window.axon = function () {}; window.__sfGPC = true; }</script>
+  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
   
 
 
@@ -872,6 +872,7 @@
           <a href="https://try.skinofab.com/shipping-policy/?from=offer" target="_blank" class="footer_legal-link">Shipping Policy</a>
           <a href="https://try.skinofab.com/refund-policy/?from=offer" target="_blank" class="footer_legal-link">Refund Policy</a>
           <a href="https://try.skinofab.com/privacy-policy/?from=offer" target="_blank" class="footer_legal-link">Privacy Policy</a>
+          <a href="https://try.skinofab.com/data-sharing-opt-out/?from=offer" target="_blank" class="footer_legal-link">Your privacy choices</a>
           <a href="https://try.skinofab.com/terms-of-service/?from=offer" target="_blank" class="footer_legal-link">Terms of Service</a>
         </div>
         <div class="text-xs">Copyright © <span class="copyright-year"></span> SKINOFAB</div>
