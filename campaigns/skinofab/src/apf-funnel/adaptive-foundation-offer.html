@@ -221,14 +221,14 @@ proof:
   eyebrow: "Why you can trust it"
   title: "Nothing to take on faith: the label, the reviews, the guarantee."
   cards:
-    - { title: "4.8 out of 5 from 9,855 reviews", text: "The published reviews of this foundation from our earlier store, imported in October 2026, word for word. 7,719 gave it five stars, 2,132 four." }
-    - { title: "The actives are on the label", text: "PDRN leads the list of actives. Peptides, Pro-Xylane, hyaluronic acid, ceramide NP and squalane are in the ingredient list on the box." }
-    - { title: "A guarantee you can read", text: "30 days from delivery, a full refund even opened, nothing to send back. No restocking fee, no form." }
-    - { title: "What we don’t claim", text: "No clinical study, no medical claim: it’s a foundation, not a treatment. No promise that it matches every woman: it adapts to your tone, and if it doesn’t, the guarantee is the proof." }
+    - { kind: "stars", title: "4.8 out of 5", text: "9,855 reviews from our earlier store, word for word" }
+    - { kind: "image", image: "images/sf/cmp-ours.jpg", w: 119, h: 330, alt: "The bottle’s label: Adaptive Peptide Foundation, PDRN", title: "The actives are on the label", text: "PDRN, peptides, Pro-Xylane, hyaluronic acid" }
+    - { kind: "image", image: "images/sf/guarantee-seal.png", w: 360, h: 360, alt: "30-day money-back guarantee seal: full refund, even opened", title: "30 days to decide", text: "A full refund, even opened. Nothing to send back." }
+    - { kind: "icon", icon: "shield", title: "What we don’t claim", text: "No clinical study, no medical claim: it’s a foundation, not a treatment." }
   quotes:
-    - { text: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. It doesn’t settle to lines at all.", by: "Tina C., verified buyer" }
-    - { text: "I’ve ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn’t love my wrinkles.", by: "Hope H., 74, verified buyer" }
-    - { text: "I have rosacea and normally foundation flakes off so I have to put on multiple layers. This is by far the lightest feeling, no cakey look, full coverage I’ve had and it stays all day.", by: "Michele W., verified buyer" }
+    - { photo: "images/sf/review-tina.jpg", text: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM.", by: "Tina C." }
+    - { photo: "images/sf/review-hope.jpg", text: "…they turn orange as the day goes along. This by far is THE best!!!", by: "Hope H., 74" }
+    - { photo: "images/sf/review-michele.jpg", text: "…by far the lightest feeling, no cakey look, full coverage I’ve had and it stays all day.", by: "Michele W." }
 promise:
   eyebrow: "Picture this"
   title: "Tomorrow at 8 a.m."
@@ -238,10 +238,10 @@ usage:
   eyebrow: "How to use it"
   title: "Four steps. About a minute."
   steps:
-    - { title: "Moisturiser and sunscreen first", text: "Your usual moisturiser, then your daily sunscreen. No primer needed." }
-    - { title: "One pump, five dots", text: "Forehead, cheeks, nose, chin. It looks white. That’s the point." }
-    - { title: "Blend and watch", text: "Fingertips or a brush, outward. The white shifts toward your tone in about a minute." }
-    - { title: "Tap more where you want it", text: "A second thin layer on a spot or redness. Skip powder on dry areas so lines stay soft." }
+    - { image: "step-1", alt: "A woman in her fifties, bare skin, before she starts", title: "Moisturiser and sunscreen first", text: "Your usual moisturiser, then your daily sunscreen. No primer needed." }
+    - { image: "step-2", alt: "The same woman with white dots of the foundation on her forehead, cheeks, nose and chin", title: "One pump, five dots", text: "Forehead, cheeks, nose, chin. It looks white. That’s the point." }
+    - { image: "step-3", alt: "A woman in her fifties buffing the foundation into her cheek with a brush", title: "Blend and watch", text: "Fingertips or a brush, outward. The white shifts toward your tone in about a minute." }
+    - { image: "step-4", alt: "A woman in her fifties tapping a little more onto her chin with a brush", title: "Tap more where you want it", text: "A second thin layer on a spot or redness. Skip powder on dry areas so lines stay soft." }
   demos_title: "See it on women like you"
   demos_lede: "Tap a clip to watch it. The first one has sound."
   demos:
@@ -565,8 +565,8 @@ closing:
     <div class="sf-sec__in">
       <p class="sf-eyebrow" style="text-align:center">{{ proof.eyebrow }}</p>
       <h2 class="sf-h2" style="text-align:center">{{ proof.title }}</h2>
-      <div class="sf-proof sf-proof--four">{% for c in proof.cards %}<div class="sf-proof__card"><strong>{{ c.title }}</strong><p>{{ c.text }}</p></div>{% endfor %}</div>
-      <div class="sf-proof" style="margin-top:14px">{% for q in proof.quotes %}<blockquote class="sf-proof__quote">“{{ q.text }}”<cite>{{ q.by }}, from our earlier store</cite></blockquote>{% endfor %}</div>
+      <div class="sf-proof sf-proof--four">{% for c in proof.cards %}<div class="sf-proof__card"><div class="sf-proof__vis sf-proof__vis--{{ c.kind }}">{% case c.kind %}{% when 'stars' %}<b>{{ ratings.average }}</b><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="{{ ratings.average }} out of 5 stars"><i></i><i></i><i></i><i></i><i class="half"></i></span>{% when 'image' %}<img src="{{ c.image | campaign_asset }}" alt="{{ c.alt }}" width="{{ c.w }}" height="{{ c.h }}" loading="lazy" decoding="async">{% else %}<span class="sf-proof__icon">{% campaign_include 'sf-icon.html' name=c.icon %}</span>{% endcase %}</div><strong>{{ c.title }}</strong><p>{{ c.text }}</p></div>{% endfor %}</div>
+      <div class="sf-proof sf-proof--quotes">{% for q in proof.quotes %}<blockquote class="sf-proof__quote"><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="5 out of 5 stars"><i></i><i></i><i></i><i></i><i></i></span><p>“{{ q.text }}”</p><footer><img src="{{ q.photo | campaign_asset }}" alt="" width="36" height="36" loading="lazy" decoding="async"><cite><b>{{ q.by }}</b>verified buyer, from our earlier store</cite></footer></blockquote>{% endfor %}</div>
     </div>
   </section>
 
@@ -575,7 +575,7 @@ closing:
     <div class="sf-sec__in">
       <p class="sf-eyebrow" style="text-align:center">{{ usage.eyebrow }}</p>
       <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ usage.title }}</h2>
-      <ol class="sf-steps sf-steps--grid">{% for s in usage.steps %}<li><strong>{{ s.title }}</strong>{{ s.text }}</li>{% endfor %}</ol>
+      <ol class="sf-steps sf-steps--grid sf-steps--pics">{% for s in usage.steps %}<li>{% if s.image %}<img src="{{ 'images/sf/' | append: s.image | append: '.jpg' | campaign_asset }}" alt="{{ s.alt }}" width="600" height="600" loading="lazy" decoding="async">{% endif %}<strong>{{ s.title }}</strong>{{ s.text }}</li>{% endfor %}</ol>
       <h3 class="sf-h3 sf-vrow__title">{{ usage.demos_title }}</h3>
       <p class="sf-vrow__lede">{{ usage.demos_lede }}</p>
       {% campaign_include 'sf-vrow.html' items=usage.demos %}

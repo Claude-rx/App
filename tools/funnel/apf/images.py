@@ -404,6 +404,37 @@ def old_routine():
     save(Image.fromarray(a.clip(0, 255).astype(np.uint8)), 'old-routine', size=1080)
 
 
+# the four steps of "How to use it", each a still from the demo clips the page plays (the owner's ask, 29 Oct 2026:
+# an image for each step): (source clip, second, where her face sits). No clip shows a moisturiser, so step 1 is
+# her bare skin before she starts.
+STEP_FRAMES = {'step-1': ('gj-43e0f648-cut', 0.4, 0.18), 'step-2': ('gj-43e0f648-cut', 24.0, 0.2),
+               'step-3': ('gj-41b77ec4-clean', 7.5, 0.24), 'step-4': ('gj-b705ce67', 8.6, 0.22)}
+
+
+def step_frames():
+    """Each step's still, square on her face, 600 px."""
+    for key, (src, t, y) in STEP_FRAMES.items():
+        tmp = _frames_dir(key) / 'f.png'
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(t), '-i', str(BRAND / 'videos' / f'{src}.mp4'), '-frames:v', '1', str(tmp)], check=True)
+        im = Image.open(tmp).convert('RGB')
+        save(ImageOps.fit(im, (im.width, im.width), Image.LANCZOS, centering=(0.5, y)), key, size=600)
+        shutil.rmtree(tmp.parent, ignore_errors=True)
+
+
+def guarantee_seal():
+    """The guarantee seal cut out of its cream square (guarantee.jpg) with a soft edge, as a PNG, for the trust card's
+    tinted panel (the square showed on it)."""
+    im = Image.open(OUT / 'guarantee.jpg').convert('RGB')
+    a = np.asarray(im).astype(np.float32)
+    bg = np.median(np.concatenate([a[:8].reshape(-1, 3), a[-8:].reshape(-1, 3)]), axis=0)
+    alpha = np.clip((np.abs(a - bg).max(axis=2) - 10) * 12, 0, 255).astype(np.uint8)
+    m = Image.fromarray(alpha, 'L').filter(ImageFilter.GaussianBlur(0.8))
+    rgba = im.convert('RGBA'); rgba.putalpha(m)
+    rgba = rgba.crop(m.getbbox()); rgba.thumbnail((360, 360), Image.LANCZOS)
+    rgba.quantize(colors=128, method=Image.Quantize.FASTOCTREE).save(OUT / 'guarantee-seal.png', optimize=True)   # a palette PNG: a third of the size
+    print('guarantee-seal', rgba.size)
+
+
 def compare_heads():
     """The sales page's comparison table heads: our bottle cut tall from its packshot (bottle.jpg), and for regular
     foundation five overlapping swatches from fair to deep (the shade you have to guess), drawn, on white. Both are
@@ -651,6 +682,8 @@ def copies(video=True):
     doctor_photo()
     old_routine()
     compare_heads()
+    step_frames()
+    guarantee_seal()
     stick = ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'images' / 'sf'
     for n in ('pdrn', 'peptides', 'ha', 'ceramides', 'squalane', 'niacinamide'): shutil.copyfile(stick / f'ing-{n}.jpg', OUT / f'ing-{n}.jpg')
 

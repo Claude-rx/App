@@ -234,27 +234,27 @@ The one thing a foundation does: it evens the look of skin tone and softens the 
 
 [RATING: 4.8 | 9,855 verified reviews of this foundation, from our earlier store]
 
-#### 4.8 out of 5 from 9,855 reviews
+#### 4.8 out of 5
 
-The published reviews of this foundation from our earlier store, imported in October 2026, word for word. 7,719 gave it five stars, 2,132 four.
+9,855 reviews from our earlier store, word for word
 
 #### The actives are on the label
 
-PDRN leads the list of actives. Peptides, Pro-Xylane, hyaluronic acid, ceramide NP and squalane are in the ingredient list on the box.
+PDRN, peptides, Pro-Xylane, hyaluronic acid
 
-#### A guarantee you can read
+#### 30 days to decide
 
-30 days from delivery, a full refund even opened, nothing to send back. No restocking fee, no form.
+A full refund, even opened. Nothing to send back.
 
 #### What we don’t claim
 
-No clinical study, no medical claim: it’s a foundation, not a treatment. No promise that it matches every woman: it adapts to your tone, and if it doesn’t, the guarantee is the proof.
+No clinical study, no medical claim: it’s a foundation, not a treatment.
 
-> “I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. It doesn’t settle to lines at all.” — Tina C., verified buyer
+> “I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM.” — Tina C.
 
-> “I’ve ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn’t love my wrinkles.” — Hope H., 74, verified buyer
+> “…they turn orange as the day goes along. This by far is THE best!!!” — Hope H., 74
 
-> “I have rosacea and normally foundation flakes off so I have to put on multiple layers. This is by far the lightest feeling, no cakey look, full coverage I’ve had and it stays all day.” — Michele W., verified buyer
+> “…by far the lightest feeling, no cakey look, full coverage I’ve had and it stays all day.” — Michele W.
 
 ## 13 · Big Promise and Dream Outcome
 

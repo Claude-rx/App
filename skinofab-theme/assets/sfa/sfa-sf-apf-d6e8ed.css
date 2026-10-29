@@ -86,11 +86,33 @@
 
 /* 12: the proof: the ratings and the facts */
 .sf-proof { display: grid; gap: 14px; }
-.sf-proof__card { padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
-.sf-proof__card strong { display: block; font-size: 16px; margin-bottom: 4px; }
-.sf-proof__card p { margin: 0 !important; font-size: 14.5px; }
-.sf-proof__quote { margin: 0; padding: 14px 16px; border-radius: 12px; background: var(--cream); font-size: 15px; }
-.sf-proof__quote cite { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--soft); }
+/* the trust cards: a picture or a mark first, a short title, one line (the owner's ask, 29 Oct 2026: less text, more
+   images and icons); the quotes as small review cards with the buyer's photo */
+.sf-proof__card { padding: 12px 12px 18px; border: 1px solid var(--line); border-radius: 14px; background: #fff; text-align: center; }
+.sf-proof__vis { height: 132px; margin-bottom: 14px; border-radius: 10px; background: var(--cream); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; overflow: hidden; }
+.sf-proof__vis img { height: 118px; width: auto; mix-blend-mode: multiply; }
+.sf-proof__vis--stars b { font-size: 44px; line-height: 1; font-weight: 700; color: var(--ink); }
+.sf-proof__icon { width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; }
+.sf-proof__icon svg { width: 30px; height: 30px; }
+.sf-proof__card strong { display: block; font-size: 17px; margin-bottom: 4px; }
+.sf-proof__card p { margin: 0 !important; font-size: 14.5px; color: var(--soft); }
+.sf-proof--quotes { margin-top: 14px; }
+@media (max-width: 599px) {
+  .sf-proof--four { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sf-proof--four .sf-proof__card { padding: 8px 8px 14px; }
+  .sf-proof__vis { height: 96px; margin-bottom: 10px; }
+  .sf-proof__vis img { height: 84px; }
+  .sf-proof__vis--stars b { font-size: 34px; }
+  .sf-proof__icon { width: 52px; height: 52px; }
+  .sf-proof--four .sf-proof__card strong { font-size: 15px; line-height: 1.25; }
+  .sf-proof--four .sf-proof__card p { font-size: 13px; line-height: 1.4; }
+}
+.sf-proof__quote { margin: 0; padding: 16px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+.sf-proof__quote p { margin: 8px 0 12px !important; font-size: 15px; line-height: 1.45; color: var(--ink); }
+.sf-proof__quote footer { display: flex; align-items: center; gap: 10px; }
+.sf-proof__quote footer img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none; }
+.sf-proof__quote cite { font-style: normal; font-size: 12.5px; line-height: 1.3; color: var(--soft); }
+.sf-proof__quote cite b { display: block; color: var(--ink); font-size: 14px; }
 
 /* 13: the promise */
 .sf-promise { padding: 28px 20px; border-radius: var(--radius); background: var(--ink); color: #fff; }
@@ -312,6 +334,12 @@
 .sf-ba-grid--row { max-width: 560px; margin: 0 auto; grid-template-columns: 1fr !important; gap: 18px; }
 @media (min-width: 900px) { .sf-ba-grid--row { max-width: 1120px; grid-template-columns: repeat(3, 1fr) !important; gap: 14px; } }
 .sf-steps--grid { display: grid; gap: 10px; }
+/* each step with its still on top, the step's number on the picture (the owner's ask, 29 Oct 2026) */
+.sf-steps--pics li { padding: 10px 10px 16px; display: flex; flex-direction: column; }
+.sf-steps--pics li img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
+.sf-steps--pics li::before { left: 20px; top: 20px; width: 34px; height: 34px; font-size: 16px; box-shadow: 0 0 0 3px #fff; }
+.sf-steps--pics li strong { margin: 0 4px 2px; }
+.sf-steps--pics li { font-size: 15px; }
 .sf-steps--grid li { margin-bottom: 0; }
 .sf-value__img { width: 100%; max-width: 420px; margin: 0 auto 14px; border-radius: 12px; display: block; }
 /* reviews, green-star style (no review site's name or mark) */
