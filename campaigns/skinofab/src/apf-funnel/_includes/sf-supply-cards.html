@@ -38,7 +38,7 @@
       </div>
       {%- comment -%} the offer's decline (its add actions are the cards' Buy now buttons) {%- endcomment -%}
       <div class="sf-supply__guarantee"><img src="{{ 'images/sf/guarantee.jpg' | campaign_asset }}" alt="" width="56" height="56" loading="lazy"><p>{{ supply.guarantee }}</p></div>
-      <div class="upsell-decline text-center"><a data-next-upsell-action="skip" href="#" class="sf-supply__decline">{{ supply.decline }}</a></div>
+      <div class="upsell-decline text-center"><a role="button" data-next-upsell-action="skip" href="#" class="sf-supply__decline">{{ supply.decline }}</a></div>
     </div>
   </div>
 </section>

@@ -70,6 +70,25 @@
   .exit-intent-popup__dialog { width: 100%; max-height: 86vh; overflow: auto; }
   .exit-intent-popup__content { min-height: 0; padding: 18px 14px 16px; }
 }
+/* tablet portrait (768 to 991 px): one column, sized to the SDK's box (its 90vw cap cut the dialog's right edge, the
+   price line and the close button at 768 to 880, live review 11) */
+@media (min-width: 768px) and (max-width: 991px) {
+  [data-exit-intent="popup"] { width: min(560px, calc(100vw - 48px)) !important; max-width: 90vw !important; max-height: 86vh !important; }
+  .exit-intent-popup__dialog { width: 100%; max-height: 86vh; overflow: auto; }
+  .exit-intent-popup__content { min-height: 0; padding: 22px 18px 18px; }
+}
+.exit-intent-popup__dialog { max-width: 100%; }
+/* the separate consent to the Automatic Refills (sf-checkout.js holds every way to pay until it is ticked) */
+.sf-consent { margin: 0 0 14px; padding: 12px 14px; border: 1.5px solid #151515; border-radius: 10px; background: #fff; }
+.sf-consent__box { display: flex; gap: 12px; align-items: flex-start; margin: 0; font-size: 16px; line-height: 1.45; color: #151515; cursor: pointer; }
+.sf-consent__box input { flex: 0 0 24px; width: 24px; height: 24px; margin: 1px 0 0; accent-color: #151515; cursor: pointer; }
+.sf-consent--error { border-color: #b3261e; box-shadow: 0 0 0 2px rgba(179, 38, 30, .15); }
+.sf-consent__err { margin: 8px 0 0 36px; font-size: 15px; line-height: 1.4; font-weight: 600; color: #b3261e; }
+.sf-consent-gate { position: relative; }
+.sf-consent-gate.sf-consent-off [data-next-express-checkout="container"] { opacity: .45; filter: grayscale(.4); }
+.sf-consent-cover { position: absolute; inset: 0; z-index: 2; width: 100%; margin: 0; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.sf-consent-cover[hidden] { display: none; }
+.sf-consent-cover:focus-visible { outline: 3px solid #151515; outline-offset: 3px; border-radius: 8px; }
 /* the rating line's link to the reviews, a 44 px target on a phone */
 .sf-co-rating a { display: inline-block; padding: 11px 0; }
 /* a pack card's offer pill with nothing to show (no campaign offer on the pack) stays out of the badge row */

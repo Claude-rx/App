@@ -222,7 +222,26 @@ else:
             if not terms.get(bid, '').startswith(want): fail('checkout', f'pay line {bid}: "{terms.get(bid)}", not "{want}…"')
     if co.count('data-sf-pay-terms=') < 2: fail('checkout', 'the pay line is not both above the express buttons and by the order button')
 if 'until you cancel' not in text(co): fail('checkout', '"until you cancel" missing from the pay line')
-if 'you agree to Automatic Refills' not in text(co[co.find('Step 4: Payment'):]): fail('checkout', 'the order button does not ask her to agree to the refills')
+# the refills have their own consent (live review 11: it rode on the order button and the ToS sentence): an unticked box,
+# above the express buttons, its amount the chosen pack's; the ToS sentence carries the ToS and the privacy policy only
+_pay = co[co.find('Step 4: Payment'):]
+_cb = re.search(r'<input type="checkbox" id="sf-refill-consent" data-sf-refill-consent[^>]*>', _pay)
+if not _cb or re.search(r'\schecked\b', _cb.group(0)): fail('checkout', 'no unticked Automatic Refills consent box in the payment step')
+elif not 0 <= _pay.find('data-sf-refill-consent') < _pay.find('data-next-express-checkout="container"'): fail('checkout', 'the refills consent box is not above the express buttons')
+if 'I agree to Automatic Refills' not in text(_pay): fail('checkout', 'the consent box does not say "I agree to Automatic Refills"')
+_rs = re.search(r"data-sf-renew-short='([^']+)'", co)
+if not _rs: fail('checkout', 'the consent box has no per-pack renewal amounts')
+else:
+    _short = json.loads(unescape(_rs.group(1)))
+    for bid, items, attrs, body in cards:
+        ref = json.loads(items)[0]['packageId']
+        if ref in PACK_BY_REF:
+            p_ = PACK_BY_REF[ref]
+            if _short.get(bid) != f"${p_['price']:.2f} every {p_['every']} days": fail('checkout', f'consent amount for {bid}: "{_short.get(bid)}"')
+if re.search(r'By placing your order you agree to Automatic Refills', text(co)): fail('checkout', 'the ToS sentence still carries the consent to the refills')
+_scj = (SITE / 'js' / 'sf-checkout.js').read_text(encoding='utf-8')
+for need in ("document.addEventListener('click', hold, true)", "document.addEventListener('submit', hold, true)", 'express.inert = !ok'):
+    if need not in _scj: fail('checkout', f'sf-checkout.js does not hold the payment until the box is ticked ({need})')
 if 'id="refill-terms"' not in co or 'To skip or cancel' not in text(co): fail('checkout', 'no refill terms (how to skip or cancel) by the order button')
 # the summary's renewal line is the SDK's ({item.frequency}); an inline display:none on it kept it hidden (29 Oct 2026)
 _freq = re.search(r'<span data-next-show="item.isRecurring"([^>]*)>([^<]*)</span>', co)
@@ -507,7 +526,7 @@ if not re.search(r'prefers-reduced-motion: reduce\)\s*\{\s*\[pb-animate\]\[pb-an
 for p in F.PAGES:
     h = html(p['id'])
     if p['sdk'] == 'upsell':
-        if not re.search(r'<a href="#" class="sf-uh__decline" data-upsell-proxy="skip">No thanks, (?:continue|show my order)</a>', h): fail(p['id'], 'no decline right under the hero\'s accept')
+        if not re.search(r'<a (?:role="button" )?href="#" class="sf-uh__decline" data-upsell-proxy="skip">No thanks, (?:continue|show my order)</a>', h): fail(p['id'], 'no decline right under the hero\'s accept')
         if 'data-sf-no-order' not in h or 'sf-no-order' not in h.split('data-sf-no-order')[0]: fail(p['id'], 'no "we can\'t find an order" state for a visit without one')
 if 'data-sf-has-order' not in _ty or 'data-sf-no-order' not in _ty: fail('thank-you', 'no "we can\'t find an order" state: it says "your order is confirmed" over an empty one')
 if re.search(r'data-next-display="order\.[^"]*"[^>]*>[^<{\s][^<]*<', _ty): fail('thank-you', 'a starter placeholder in an order field (shows before the SDK fills it)')
@@ -515,6 +534,70 @@ if re.search(r'data-next-display="order\.[^"]*"[^>]*>[^<{\s][^<]*<', _ty): fail(
 for pid, h in (('listicle', _lst), ('offer', _sp)):
     if re.search(r'<video[^>]*\sposter=', h): fail(pid, 'a video poster loads with the page (it took bandwidth from the hero)')
     if re.search(r'<video data-sf-lazy[^>]*\sautoplay', h): fail(pid, 'a lazy loop carries autoplay (it loads before it is near)')
+
+# live review 11 --------------------------------------------------------------------------------------------------------
+_occss = (SITE / 'css' / 'checkout-brand.css').read_text(encoding='utf-8')
+_apfjs = (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8')
+# F1: the owner's before/after photos carry no buyer's review, name or photo (the women shown are not the reviewers)
+_ba = re.search(r'id="s11-before-after"(.*?)</section>', _sp, re.S)
+if not _ba or re.search(r'verified buyer|sf-ba-review|review-[a-z]+[^"]*\.jpg', _ba.group(1)): fail('offer', 'a buyer\'s review, name or photo beside the owner\'s before/after photos')
+if not re.search(r'<figcaption class="sf-reason__cap">Our own before and after', _lst): fail('listicle', 'the before/after does not say it is the brand\'s own photo (a buyer\'s quote sits by it)')
+# F2: the exit pop fits the SDK's box on a tablet, and a tap outside it closes it
+if not re.search(r'@media \(min-width: 768px\) and \(max-width: 991px\) \{\s*\[data-exit-intent="popup"\]', _occss): fail('checkout', 'the exit pop overflows its box at 768 to 991 px')
+if "!/exit-intent/.test(String(el.className))" not in _scj or "document.addEventListener('click', outside)" not in _scj: fail('checkout', 'a tap outside the exit pop does not close it')
+# F4: no ranking of complaints without a source
+for p in F.PAGES:
+    m = re.search(r'(?:the )?(?:most common|second most common) complaint|the complaint we hear most|the second most common', text(html(p['id'])), re.I)
+    if m: fail(p['id'], f'an unsourced ranking of complaints: "{m.group(0)}"')
+# F5: a renewing price always with its renewal
+for p in F.PAGES:
+    m = re.search(r'1 bottle for \$39(?!(?:\.00)?,? then \$39(?:\.00)? every 28 days)', text(html(p['id'])))
+    if m: fail(p['id'], 'the 1-bottle price without its renewal ("then $39 every 28 days")')
+# F6: a featured quote carries no absolute claim about lines (the full review cards stay verbatim)
+_more = re.search(r'<ul class="sf-morequotes">(.*?)</ul>', _sp, re.S)
+for pid, chunk in (('offer', _more.group(1) if _more else ''), ('listicle', _lst)):
+    m = re.search(r'doesn.t (?:cake or )?settle (?:in|to|into)[^.]*lines|doesn.t go in my wrinkles', text(chunk), re.I)
+    if m: fail(pid, f'a featured quote with an absolute claim about lines: "{m.group(0)}"')
+# F7: the pause button sits on its own video's top corner, wherever the video is in its card
+if 'b.style.top = Math.round(vb.top - bb.top' not in _apfjs: fail('listicle', 'the pause button is not placed on its video')
+# F8: the first-order line goes under the summary line's header row, full width
+if "title.closest('.cart-item__header')" not in _scj: fail('checkout', 'the first-order gift line squeezes in beside the product name')
+# F10: the shade picture's declared size is the picture's (its words were enlarged; the page reserves the right box)
+from PIL import Image as _Img
+_shade = SITE / 'images' / 'sf' / 'one-shade.jpg'
+if _shade.is_file():
+    _w, _h = _Img.open(_shade).size
+    if f'width="{_w}" height="{_h}"' not in _sp.split('sf-shade__img')[0][-400:] and f'width="{_w}" height="{_h}"' not in _sp: fail('offer', f'the shade picture is {_w}x{_h}, the page reserves another size')
+if re.search(r'Korean flag and the words', _sp): fail('offer', 'the Korea bottle\'s alt names words the picture no longer has')
+# F11: with no order, one message: the no-order card, not the SDK-failed banner as well
+if '.sf-no-order [data-sf-failsafe] { display: none !important; }' not in _oc: fail('offers', 'with no order, the failsafe banner shows under the no-order card')
+# F12, F13: the policy flow hides the store's product cards; the privacy choices link, its page and the opt-out
+_base = (THEME / 'layouts' / 'base.html').read_text(encoding='utf-8')
+if '.sf-from-offer #shopify-section-sf-more' not in _base: fail('theme', 'a policy page opened from the funnel shows the store\'s "You might like these too"')
+if 'data-sharing-opt-out' not in _base.split('var keep =')[1][:400]: fail('theme', 'the privacy choices page drops ?from=offer')
+for p in F.PAGES:
+    h = html(p['id'])
+    if not re.search(r'<a href="https://try\.skinofab\.com/data-sharing-opt-out/\?from=offer"[^>]*>Your privacy choices</a>', h): fail(p['id'], 'no "Your privacy choices" link in the footer')
+    if 's.axon.ai' in h and 'sf_optout' not in h.split('s.axon.ai')[0]: fail(p['id'], 'the ad pixel does not honour the privacy choices opt-out')
+_opt = THEME / 'partials' / 'sf_pages' / 'data-sharing-opt-out' / 'content.html'
+if not _opt.is_file() or 'data-sf-optout-btn' not in _opt.read_text(encoding='utf-8') or 'pc--optOutFormContainer' in _opt.read_text(encoding='utf-8'): fail('theme', 'the privacy choices page has no working opt-out')
+_foot = THEME / 'partials' / 'footer.html'
+if _foot.is_file() and 'href="/data-sharing-opt-out/">Your privacy choices</a>' not in _foot.read_text(encoding='utf-8'): fail('theme', 'the store footer has no "Your privacy choices" link')
+# F14: no script or style from a CDN on a floating version (a release would ship to the pages that charge her card)
+for p in F.PAGES:
+    for m in re.finditer(r'(?:src|href)="(https://cdn\.jsdelivr\.net/npm/[^"]+)"', html(p['id'])):
+        if not re.search(r'@v?\d+\.\d+\.\d+/', m.group(1)): fail(p['id'], f'an unpinned CDN file: {m.group(1)}')
+# F15: offer actions are announced as buttons, the post-checkout pages have a main landmark, the cancel link is 44 px tall
+for p in F.PAGES:
+    h = html(p['id'])
+    for m in re.finditer(r'<a [^>]*(?:data-next-upsell-action|data-upsell-proxy|data-sf-supply-hero)[^>]*>', h):
+        if 'role="button"' not in m.group(0): fail(p['id'], f'an offer action read as a link: {m.group(0)[:90]}')
+    if p['id'] in ('checkout', 'thank-you') or p['sdk'] == 'upsell':
+        if '<main' not in h: fail(p['id'], 'no <main> landmark')
+if not re.search(r'\.sf-once a \{[^}]*min-height: 44px', (SITE / 'css' / 'sf-apf.css').read_text(encoding='utf-8')): fail('offer', '"Cancel my refills" is under 44 px tall')
+if "closest('a[role=\"button\"]')" not in _apfjs: fail('offers', 'Space does not press an offer action')
+# no claim of what other buyers also use (it was not measured)
+if re.search(r'Women who love the foundation also use', text(_ty)): fail('thank-you', 'an unmeasured claim of what other buyers also use')
 
 # reviews: every quote the pages put a buyer's name to is her own words from the imported reviews (SF_REVIEWS, the store
 # build's reviews/reviews.json), and a shortened one says so with "…" (live review 9: Sharon E.'s review was cut where it

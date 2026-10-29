@@ -334,16 +334,18 @@ def one_shade():
     women's before and after): a fair-to-deep swatch row, then the owner's three pairs (owner/ba-*.webp: fair, olive
     and medium-deep skin, past 45) as Before over After, square on the face, each column named by its skin. No count
     of tones (the claims rules), no disclaimer line (the owner's instruction, 28 Oct 2026)."""
-    W, H = 1080, 1196
+    # every word at least 38 px of the 1080: 12.6 px where the picture is narrowest (358 px at 390; 7 to 10 px before,
+    # live review 11)
+    W, H = 1080, 1260
     im = Image.new('RGB', (W, H), PAPER)
     d = ImageDraw.Draw(im)
-    d.text((W // 2, 104), 'One shade, no number to guess', font=P.serif(58, 'Bold'), fill=INK, anchor='ms')
-    d.text((W // 2, 154), 'It goes on white and blends into your own tone', font=P.sans(30, 'Regular'), fill=SOFT, anchor='ms')
+    d.text((W // 2, 100), 'One shade, no number to guess', font=P.serif(62, 'Bold'), fill=INK, anchor='ms')
+    d.text((W // 2, 160), 'It goes on white, then blends into your tone', font=P.sans(40, 'Regular'), fill=SOFT, anchor='ms')
     # nine swatches, fair to deep, each a soft dome with a white rim and a contact shadow
     tones = np.array([[int(c[i:i + 2], 16) for i in (1, 3, 5)] for c in P.SKIN_TONES], dtype=np.float32)
     n, r, gap = 9, 44, 21
     xs = np.linspace(0, len(tones) - 1, n)
-    x0, cy, K = (W - (n * 2 * r + (n - 1) * gap)) // 2, 236, 4
+    x0, cy, K = (W - (n * 2 * r + (n - 1) * gap)) // 2, 246, 4
     shadow = Image.new('L', (W, H), 0); sd = ImageDraw.Draw(shadow)
     for k in range(n): cx = x0 + r + k * (2 * r + gap); sd.ellipse((cx - r + 2, cy - r + 6, cx + r + 2, cy + r + 6), fill=70)
     im.paste(Image.new('RGB', (W, H), (110, 96, 84)), (0, 0), shadow.filter(ImageFilter.GaussianBlur(7)))
@@ -358,27 +360,27 @@ def one_shade():
         d.ellipse((cx - r, cy - r, cx + r, cy + r), outline=PAPER, width=3)
     # the three women: Before over After, square on the face
     # (key, her skin, where her face sits, how far to zoom the after: the garden after is the wider shot)
-    cols = (('car', 'Fair skin', (0.5, 0.22), 1.0), ('kitchen', 'Olive skin', (0.5, 0.2), 1.0), ('garden', 'Medium-deep skin', (0.5, 0.22), 1.45))
+    cols = (('car', 'Fair', (0.5, 0.22), 1.0), ('kitchen', 'Olive', (0.5, 0.2), 1.0), ('garden', 'Medium-deep', (0.5, 0.22), 1.45))
     cw, g2 = 316, 26
-    cx0, top = (W - 3 * cw - 2 * g2) // 2, 330
+    cx0, top = (W - 3 * cw - 2 * g2) // 2, 356
     def spaced(x, y, text, font, fill):
         w = sum(font.getlength(ch) for ch in text) + 3 * (len(text) - 1)
         x -= w / 2
         for ch in text: d.text((x, y), ch, font=font, fill=fill, anchor='ls'); x += font.getlength(ch) + 3
-    lab = P.sans(22, 'Bold')
+    lab = P.sans(38, 'Bold')
     for k, (key, word, centering, zoom) in enumerate(cols):
         before, after = pair_halves(Image.open(OWNER / f'ba-{key}.webp'))
         x = cx0 + k * (cw + g2)
-        d.text((x + cw // 2, top), word, font=P.sans(30, 'SemiBold'), fill=INK, anchor='ms')
+        d.text((x + cw // 2, top), word, font=P.sans(40, 'SemiBold'), fill=INK, anchor='ms')
         after = zoom_in(after, zoom)
         for row, (half, name) in enumerate(((before, 'BEFORE'), (after, 'AFTER'))):
-            y = top + 42 + row * (cw + 58)
+            y = top + 62 + row * (cw + 76)
             spaced(x + cw // 2, y, name, lab, SOFT if row == 0 else INK)
             ph = ImageOps.fit(half, (cw, cw), Image.LANCZOS, centering=centering)
             m = Image.new('L', (cw, cw), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, cw - 1, cw - 1), 18, fill=255)
-            im.paste(ph, (x, y + 14), m)
-    d.text((W // 2, H - 44), 'The same bottle on every one of them', font=P.sans(36, 'Medium'), fill=INK, anchor='ms')
-    save(im, 'one-shade', size=1196)
+            im.paste(ph, (x, y + 16), m)
+    d.text((W // 2, H - 38), 'The same bottle on every one of them', font=P.sans(40, 'Medium'), fill=INK, anchor='ms')
+    save(im, 'one-shade', size=H)
 
 
 def _encode(frames, key, fps=25):
@@ -846,8 +848,30 @@ def clip(key, src, poster, label, encode=True):
     print(key, 'clip', label[:40])
 
 
+def drop_flag_caption(im):
+    """The store's Korea pack shot without its caption under the flag ("Formulated in Korea / Advanced formula"): at a
+    phone's width it was 6 px text inside the picture (live review 11); the page's pill beside it says the same in
+    HTML. The caption's rows are refilled, column by column, with the background just above and below it (a soft
+    vertical shade), so the flag and the bottle stay as they are."""
+    a = np.asarray(im.convert('RGB')).astype(np.float32)
+    H, W = a.shape[:2]
+    x0, x1 = int(W * 0.74), W                          # right of the bottle, under the flag
+    y0, y1 = int(H * 0.19), int(H * 0.265)
+    ink = (255 - a[y0:y1, x0:x1].min(-1)) > 60          # the caption's letters
+    rows = np.where(ink.any(1))[0]
+    if not len(rows): return im
+    top, bot = y0 + rows[0] - 6, y0 + rows[-1] + 7
+    above, below = a[top - 4:top].mean(0), a[bot:bot + 4].mean(0)
+    w = np.linspace(0, 1, bot - top, dtype=np.float32)[:, None, None]
+    a[top:bot, x0:x1] = above[None, x0:x1] * (1 - w) + below[None, x0:x1] * w
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+
+
 def copies(video=True):
-    for name, src in PDP_PHOTOS.items(): save(Image.open(PDP / f'{src}.jpg'), name, size=1080 if not name.startswith('gift') else 240)
+    for name, src in PDP_PHOTOS.items():
+        im = Image.open(PDP / f'{src}.jpg')
+        if name == 'g-bottle': im = drop_flag_caption(im)
+        save(im, name, size=1080 if not name.startswith('gift') else 240)
     save(Image.open(APF / 'composites' / 'two-bottles.jpg'), 'two-bottles', size=1080)
     # the brush: its page's images, in-hand and problem photos, the before/after it already shows (its own illustration
     # label is on the image) and the stick funnel's loop of it

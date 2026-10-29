@@ -18,7 +18,7 @@
   next_dont_touch: data-next-upsell-action, data-next-display, data-next-format
 {% endcomment %}
 {%- if cta_style == 'box' -%}
-<a {% if proxy %}data-upsell-proxy="add"{% else %}data-next-upsell-action="add"{% endif %} href="#" class="button cc-xl" pb-animate="pulse-upsell">
+<a role="button" {% if proxy %}data-upsell-proxy="add"{% else %}data-next-upsell-action="add"{% endif %} href="#" class="button cc-xl" pb-animate="pulse-upsell">
   <div data-button="content" class="button_content"><div>{{ offer.accept_text | default: 'Yes, Add To My Order For' }}{% unless offer.accept_show_price == false %} <span data-next-display="{{ price_path }}" data-next-format="currency">{{ offer.fallback_price }}</span>{% endunless %}</div></div>
 </a>
 {%- if offer.cta_note %}<p class="upsell-cta__note">{% campaign_include 'upsell/copy.html' text=offer.cta_note %}</p>{% endif %}
@@ -31,7 +31,7 @@
 {%- endunless %}
 {%- endunless %}
 {%- else -%}
-<a {% if proxy %}data-upsell-proxy="add"{% else %}data-next-upsell-action="add"{% endif %} href="#" class="button cc-xl" pb-animate="pulse-upsell">
+<a role="button" {% if proxy %}data-upsell-proxy="add"{% else %}data-next-upsell-action="add"{% endif %} href="#" class="button cc-xl" pb-animate="pulse-upsell">
   <div data-button="content" class="button_content"><div>{{ offer.accept_text | default: 'Yes, Add to My Order' }}{% if offer.accept_show_price %} <span data-next-display="{{ price_path }}" data-next-format="currency">{{ offer.fallback_price }}</span>{% endif %}</div></div>
 </a>
 {%- if offer.cta_note %}

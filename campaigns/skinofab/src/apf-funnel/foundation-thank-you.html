@@ -44,7 +44,7 @@ scripts:
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
 <div class="page-wrapper">
 
-      <div class="main-wrapper">
+      <main class="main-wrapper">
         {% campaign_include 'receipt-skeleton.html' %}
         <script>if (!/[?&]ref_id=/.test(location.search)) document.documentElement.classList.add('sf-no-order');</script>
         {% comment %} opened with no order reference (Back, a bookmark, a shared link): no "your order is confirmed" over an empty order, live review 10 {% endcomment %}
@@ -260,5 +260,5 @@ scripts:
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>

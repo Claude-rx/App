@@ -188,6 +188,9 @@ try {
     result.checkout_total = (await page.locator('[data-next-display="cart.total"]').first().textContent())?.trim();
   });
   await step('place-order', async () => {
+    // the APF checkout's separate consent to the Automatic Refills (live review 11): nothing pays until it is ticked
+    const consent = page.locator('[data-sf-refill-consent]');
+    if (await consent.count()) await consent.first().check();
     await page.locator('#combo_form button[type="submit"]').first().click();
     try { await arrive(FN.first); }
     catch (e) {

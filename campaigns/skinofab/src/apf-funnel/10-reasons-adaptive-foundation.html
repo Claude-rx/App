@@ -39,6 +39,8 @@ reasons:
   - title: "No More Guessing Your Shade"
     image: "images/sf/ba-kitchen.jpg"
     image_h: 900
+    # the photo says what it is, so the buyer's quote below it is not read as the woman shown (live review 11)
+    caption: "Our own before and after: bare skin, then one pump of the foundation, blended."
     alt: "A woman in her mid fifties with dark curly hair and olive skin, before and after: freckles, redness, uneven tone and lines on her bare skin, then the foundation on, her tone even and fresh"
     paras:
       - "Most of us have a drawer of foundations that looked right in the store and wrong at home. After 45 it gets harder: more redness, more sun spots, and an undertone that isn’t quite what it was."
@@ -60,7 +62,7 @@ reasons:
       - "<strong>Satin finish,</strong> not matte"
       - "<strong>Soft-focus powders</strong> that blur the look of lines"
       - "<strong>Tip:</strong> one thin layer, and skip powder on dry areas"
-    quote: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. It doesn’t settle to lines at all."
+    quote: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. …"
     quote_by: "Tina C., verified buyer, from our earlier store"
   - title: "It Gives Dry Skin a Fresh, Satin Finish"
     image: "images/sf/reason-dry.jpg"
@@ -88,7 +90,7 @@ reasons:
     clip: "allday"
     alt: "Two swatches through a day, this foundation keeping its tone while a foundation that oxidizes drifts orange"
     paras:
-      - "It’s the complaint we hear most about color-changing foundations: right at 8 AM, orange by lunch."
+      - "It’s a complaint we hear often about color-changing foundations: right at 8 AM, orange by lunch."
       - "The pigments here are made not to turn orange or gray as the day goes on, and the serum layer is made to move with your skin instead of drying on top of it. Judge it in your own daylight: that’s the test that counts."
     quote: "I’ve ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn’t love my wrinkles."
     quote_by: "Hope H., 74, verified buyer, from our earlier store"
@@ -149,7 +151,7 @@ cta:
     - "<strong>30-day money-back guarantee</strong>, even opened"
   from: "$25"
   from_unit: "a bottle"
-  from_note: "In the 3-bottle pack ($75, then $75 every 84 days). Or start with 1 bottle for $39."
+  from_note: "In the 3-bottle pack ($75, then $75 every 84 days). Or start with 1 bottle for $39, then $39 every 28 days."
   button: "SEE THE OFFER →"
   note: "FREE SHIPPING · SKIP OR CANCEL ANY TIME · 30-DAY MONEY-BACK GUARANTEE"
   image_alt: "The Adaptive Peptide Foundation: three bottles with the free Lymphatic Brush and its case"
@@ -236,6 +238,7 @@ closing: "No shade to guess, and 30 days to decide."
     {% else %}
     <figure class="sf-reason__media">
       <img src="{{ r.image | campaign_asset }}" alt="{{ r.alt }}" loading="{% if forloop.index > 1 %}lazy{% else %}eager{% endif %}" decoding="async" width="1080" height="{{ r.image_h | default: 1080 }}">
+      {% if r.caption %}<figcaption class="sf-reason__cap">{{ r.caption }}</figcaption>{% endif %}
     </figure>
     {% endif %}
     <div class="sf-reason__copy">
