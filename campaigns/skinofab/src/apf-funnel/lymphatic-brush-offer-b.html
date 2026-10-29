@@ -27,6 +27,7 @@ payment_flags:
   show_affirm: false
   show_afterpay: false
 thank_you_url: "/apf-funnel/foundation-thank-you/"
+offer_url: "/apf-funnel/adaptive-foundation-offer/"
 skip_skus: "SKF-APF-3-GIFTS,SKF-APF-6-BRUSH"
 uh:
   eyebrow: "Last chance"
@@ -35,6 +36,7 @@ uh:
   seconds: 300
   expires: "When the clock reaches 0:00 this page moves on and this offer is gone: it isn’t in our store or in an email."
   cta: "accept"
+  decline: "No thanks, show my order"
 upsell_layout:
   style: card
   boxed: true
@@ -109,6 +111,9 @@ closing_cta:
 ---
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them; the items list's empty state is a blank span, not the SDK's "No items found in order") {% endcomment %}
 <div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div aria-hidden="true" data-next-order-items data-item-template-id="sf-gate-items" data-empty-template="&lt;span&gt;&lt;/span&gt;"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
+<script>if (!/[?&]ref_id=/.test(location.search)) document.documentElement.classList.add('sf-no-order');</script>
+{% comment %} opened with no order reference (Back, a bookmark, a shared link): it says so above the offer, whose accept is off (live review 10) {% endcomment %}
+<div class="sf-no-order-note" data-sf-no-order hidden><p class="sf-no-order-note__title">We can’t find an order on this page</p><p>These offers come right after checkout and are added to that order, so there is nothing to add this one to here.</p><p><a class="sf-no-order-note__cta" href="{{ offer_url }}">See the Adaptive Peptide Foundation</a></p></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper sf-brush-page">

@@ -34,6 +34,7 @@
     const can = (ok.textContent || '').trim().toLowerCase();
     if (!can) return;                                     // the order is not loaded yet
     noteOff();
+    document.documentElement.classList.remove('sf-no-order');   // an order after all (the page's no-order note goes)
     // (the SDK writes the flag as "Yes" / "No")
     if ((can === 'no' || can === 'false') && thankYou) { done = true; hide(); location.replace(thankYou + location.search); return; }
     if (skipSkus.length) {

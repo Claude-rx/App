@@ -368,8 +368,8 @@ Campaign Cart SDK 0.4.43, its own `config.js` with the campaign's public key), w
     python3 -I tools/funnel/apf/check_apf.py skinofab-theme
 
 then push the changed theme files with `NEXT_API_TOKEN=… python3 -I tools/funnel/push_theme.py` (`--dry-run` lists
-them). It pushes a file only when its bytes differ from the last push, by `skinofab-theme/.push-manifest.json`
-(committed with the theme): the store stores every uploaded asset as a new copy and drops the old one, even an
+them). It pushes a file only when its bytes differ from the last push, by `tools/funnel/theme-push-manifest.json`
+(committed; outside the theme folder, which a build regenerates): the store stores every uploaded asset as a new copy and drops the old one, even an
 unchanged file, and a page it has cached (30 minutes) then points at a dead URL; on 29 Oct a second push re-sent the
 sales hero's mobile picture unchanged and public visitors saw a broken hero for 16 minutes (live review 10). Never push
 a hashed asset by hand. The kit has no remove command, so a hashed asset that a rebuild retired stays on the store

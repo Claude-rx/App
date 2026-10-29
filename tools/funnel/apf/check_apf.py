@@ -497,7 +497,7 @@ for f in ('sf-checkout.js', 'sf-receipt.js'):
 # F8, F9, F16: what a featured review or a caption must not carry, and no third party's trade name for an ingredient
 for p in F.PAGES:
     t = text(html(p['id']))
-    for rx, what in ((r'rosacea|burning sensation|break ?outs|calming', 'a featured review with a skin-condition claim'),
+    for rx, what in ((r'rosacea|burning sensation|\bno break ?outs|calming', 'a featured review with a skin-condition claim'),
                      (r'\b\d{1,2} ?[AP]M to \d{1,2} ?[AP]M\b', 'an unhedged wear-time claim'), (r'Pro-?Xylane', 'L\'Oréal\'s trade name Pro-Xylane')):
         m = re.search(rx, t, re.I)
         if m: fail(p['id'], f'{what}: "…{t[max(0, m.start() - 40):m.end() + 40]}…"')

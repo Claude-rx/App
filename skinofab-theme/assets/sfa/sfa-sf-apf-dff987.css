@@ -140,7 +140,7 @@
 .sf-vcard__play:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
 /* from a tablet up the three clips stand side by side, none cut (the third was cut mid-face at 768 with no hint it
    scrolls), and from 900 px at a clip's own size, centred under the title (live review 8) */
-@media (min-width: 600px) { .sf-vrow { grid-auto-columns: calc((100% - 24px) / 3); overflow: visible; margin: 0; padding: 0; } }
+@media (min-width: 600px) { .sf-vrow { grid-auto-columns: calc((100% - 24px) / 3); overflow: visible; margin: 0; padding: 0; justify-content: center; } }   /* centred: two clips since live review 10 */
 @media (min-width: 900px) { .sf-vrow { grid-auto-columns: 280px; justify-content: center; } }
 .sf-demos-sec { padding: 10px 0 30px; }
 .sf-timeline { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }

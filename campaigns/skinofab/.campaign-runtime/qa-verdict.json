@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVTMX41GE1D3A4DHE6D3LV9U43",
+  "run_id": "MVTRDB4KO562CV7SBUI96DDLUI",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2221,
   "spec_version": "5.0",
   "spec_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
-  "started_at": "2026-10-29T14:24:38.068Z",
-  "completed_at": "2026-10-29T14:25:22.482Z",
-  "generated_at": "2026-10-29T14:25:22.517Z",
+  "started_at": "2026-10-29T16:29:12.212Z",
+  "completed_at": "2026-10-29T16:29:56.971Z",
+  "generated_at": "2026-10-29T16:29:57.013Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -602,15 +602,6 @@
       "status": "pass"
     },
     {
-      "id": "browser-request-failures:checkout",
-      "family": "browser-runtime",
-      "page": "checkout",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "pre_existing",
-      "cause_reason": "same_status_in_prior_run"
-    },
-    {
       "id": "browser-load:offer-1",
       "family": "browser-runtime",
       "page": "offer-1",
@@ -1068,15 +1059,6 @@
       "cause_reason": "same_status_in_prior_run"
     },
     {
-      "id": "browser-request-failures:checkout",
-      "family": "browser-runtime",
-      "page": "checkout",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "pre_existing",
-      "cause_reason": "same_status_in_prior_run"
-    },
-    {
       "id": "browser-test-order:upsell-action-coverage",
       "family": "browser-test-order",
       "page": "checkout",
@@ -1098,10 +1080,10 @@
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "qa",
-    "total": 4,
+    "total": 3,
     "counts": {
       "caused_by_change": 0,
-      "pre_existing": 4,
+      "pre_existing": 3,
       "test_environment": 0,
       "upstream_drift": 0,
       "unknown": 0

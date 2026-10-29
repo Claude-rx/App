@@ -1,6 +1,6 @@
 {
   "schema_version": "campaigns-os-doctor-output/v0",
-  "generated_at": "2026-10-29T14:25:31.336Z",
+  "generated_at": "2026-10-29T16:30:06.385Z",
   "generated_by": "next",
   "ok": true,
   "status": "ready_with_warnings",
@@ -82,7 +82,7 @@
     "Mapped source pages pass the page-kit preparation check (document wrappers stripped, no leftover frontmatter, no source-file internal links)",
     "CampaignSpec package purchase availability has no unavailable package refs in active build data",
     "Built output root found at _site/apf-funnel/",
-    "Build output fingerprint matches stages.assembly.build_fingerprint (196 file(s) under _site/apf-funnel/)",
+    "Build output fingerprint matches stages.assembly.build_fingerprint (193 file(s) under _site/apf-funnel/)",
     "Built HTML structure and commerce refs checked in _site/apf-funnel/ for 9 page(s)",
     "Every bundle selector on 5 built post-purchase page(s) is scoped away from the live cart (5 selector(s) scanned)",
     "All 9 built page(s) agree on campaign identity (next-funnel \"SKINOFAB Adaptive Peptide Foundation\", API key consistent)",
@@ -437,7 +437,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 28504,
+          "bytes": 27872,
           "candidates": 0
         },
         "members": [],
@@ -449,7 +449,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -473,7 +473,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 71534,
+          "bytes": 70487,
           "candidates": 0
         },
         "members": [],
@@ -485,7 +485,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -509,7 +509,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 62423,
+          "bytes": 62375,
           "candidates": 26
         },
         "members": [],
@@ -521,7 +521,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -545,7 +545,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 15809,
+          "bytes": 16550,
           "candidates": 0
         },
         "members": [],
@@ -557,7 +557,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -581,7 +581,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 25948,
+          "bytes": 26689,
           "candidates": 0
         },
         "members": [],
@@ -593,7 +593,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -617,7 +617,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 24874,
+          "bytes": 25587,
           "candidates": 0
         },
         "members": [],
@@ -629,7 +629,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -653,7 +653,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 35699,
+          "bytes": 36456,
           "candidates": 10
         },
         "members": [],
@@ -665,7 +665,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -689,7 +689,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 29279,
+          "bytes": 29997,
           "candidates": 0
         },
         "members": [],
@@ -701,7 +701,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -725,7 +725,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 29466,
+          "bytes": 30207,
           "candidates": 0
         },
         "members": [],
@@ -737,7 +737,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.897Z",
+        "measured_at": "2026-10-29T16:30:05.911Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -764,7 +764,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -796,7 +796,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -828,7 +828,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -860,7 +860,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -894,7 +894,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -924,7 +924,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -951,7 +951,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -981,7 +981,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1011,7 +1011,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1041,7 +1041,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1071,7 +1071,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1098,7 +1098,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1130,7 +1130,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1162,7 +1162,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1194,7 +1194,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1228,7 +1228,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1258,7 +1258,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1285,7 +1285,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1315,7 +1315,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1345,7 +1345,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1375,7 +1375,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1402,7 +1402,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1434,7 +1434,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1466,7 +1466,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1498,7 +1498,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1532,7 +1532,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1562,7 +1562,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1589,7 +1589,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1619,7 +1619,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1634,7 +1634,7 @@
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:a56c3e4c51d5c6f09e6aed4a989369707264cf41e5c64535b82811d13fcfc615",
+        "state_fingerprint": "sha256:ab15237ba6129802d48219385f3d4f9fd03f7474661fa5c07535a91f202744a2",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "target": "",
@@ -1649,7 +1649,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1664,7 +1664,7 @@
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "key": "anchor:sf-supply-title"
         },
-        "state_fingerprint": "sha256:037cbfd5aa46b084896fffad6d4160cee8a689ccf4429408baa1b724fda3d566",
+        "state_fingerprint": "sha256:909bb40bf380d106837befa30f8b85a6861c0b897d7fda62a5a4a70855fe5be9",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "target": "sf-supply-title",
@@ -1679,7 +1679,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1706,7 +1706,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1738,7 +1738,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1770,7 +1770,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1802,7 +1802,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1836,7 +1836,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1866,7 +1866,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1893,7 +1893,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1923,7 +1923,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1938,7 +1938,7 @@
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:ba9e4455a3c30ad841ed97cd9aaa8c3f6135a726b52bc79ecbcbf07c0de21d32",
+        "state_fingerprint": "sha256:7ca65c6a35d55e1cc402dc113813a025c543f3a0b0bcc356bffccd3517d0e3c0",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "target": "",
@@ -1953,7 +1953,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1980,7 +1980,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2012,7 +2012,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2044,7 +2044,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2076,7 +2076,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2110,7 +2110,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2140,7 +2140,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2167,7 +2167,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2197,7 +2197,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2212,7 +2212,7 @@
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:4fa3d4e33cab1fa24c21dc4f52af677cd28dbca2f3ebc38b254d813a15377662",
+        "state_fingerprint": "sha256:1d6a5848dc6267b17cb31f64d7c1ab6144b63e3fcc99a0fc4b4de2411ae46822",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "target": "",
@@ -2227,7 +2227,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2254,7 +2254,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2286,7 +2286,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2318,7 +2318,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2350,7 +2350,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2384,7 +2384,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2414,7 +2414,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2441,7 +2441,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2471,7 +2471,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2498,7 +2498,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2530,7 +2530,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2562,7 +2562,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2594,7 +2594,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2628,7 +2628,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2658,7 +2658,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2685,7 +2685,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2715,7 +2715,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2730,7 +2730,7 @@
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:dffe4e34a38383c6ebe21b53b25afe9d6c1fe4187f921e387010b68cf1567534",
+        "state_fingerprint": "sha256:1a2049f893f76a2f82c632422c1bdc05d15f5bdc90aa86d87a05304f09a4c8ae",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "target": "",
@@ -2745,7 +2745,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2772,7 +2772,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2804,7 +2804,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2836,7 +2836,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2868,7 +2868,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2902,7 +2902,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2932,7 +2932,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2959,7 +2959,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2989,7 +2989,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3004,7 +3004,7 @@
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:ae1500b20a47562cd9f466eec485f9f106c754c6cfc32e100e895ec87ddc9f62",
+        "state_fingerprint": "sha256:31212033e3a18f44528438bfc4405d51363a4b6faee9e44404c5dd72639766ae",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "target": "",
@@ -3019,7 +3019,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3046,7 +3046,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3078,7 +3078,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3110,7 +3110,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3142,7 +3142,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3176,7 +3176,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3206,7 +3206,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3233,7 +3233,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3263,7 +3263,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T14:25:30.977Z",
+        "measured_at": "2026-10-29T16:30:05.995Z",
         "producer": "campaigns-os doctor"
       }
     ],
@@ -3277,7 +3277,7 @@
       "reason": "Page-load evidence has no hidden eager media above 1,048,576 bytes.",
       "waivable": false,
       "subject": {
-        "build_fingerprint": "sha256:8714d7c0e8816453f5e5db0a3b0fe0262aec1af036bcfe92e4ee5048194726ef",
+        "build_fingerprint": "sha256:cb331ab4a790fb3e00e064d84d0134ebee29367994bafd0766bc40885674220c",
         "campaign_slug": "apf-funnel",
         "route_scope": "selected",
         "routes": [
@@ -3292,7 +3292,7 @@
       "state": {
         "findings": []
       },
-      "state_fingerprint": "sha256:1e6f39479883468f2b000958671af1a7c9cef5e9eca06a0e005916aede549012",
+      "state_fingerprint": "sha256:2f766254b382cc214bff7cf6b8a32c258550ded7998b19be6d2a1ca946b94374",
       "findings": [],
       "waiver": null,
       "waiver_assessment": {
@@ -3457,10 +3457,10 @@
     "build_output_fingerprint": {
       "root": "_site/apf-funnel/",
       "algorithm": "sha256-manifest/v1",
-      "value": "sha256:8714d7c0e8816453f5e5db0a3b0fe0262aec1af036bcfe92e4ee5048194726ef",
-      "file_count": 196,
+      "value": "sha256:cb331ab4a790fb3e00e064d84d0134ebee29367994bafd0766bc40885674220c",
+      "file_count": 193,
       "excluded": [],
-      "recorded": "sha256:8714d7c0e8816453f5e5db0a3b0fe0262aec1af036bcfe92e4ee5048194726ef",
+      "recorded": "sha256:cb331ab4a790fb3e00e064d84d0134ebee29367994bafd0766bc40885674220c",
       "status": "pass"
     },
     "live_campaign_refs": {
@@ -3520,8 +3520,8 @@
       "status": "pass",
       "code": "polish.evidence_current",
       "reason": "Polish evidence is current, structured, and produced by next-campaigns-polish.",
-      "build_fingerprint": "sha256:8714d7c0e8816453f5e5db0a3b0fe0262aec1af036bcfe92e4ee5048194726ef",
-      "source_build_fingerprint": "sha256:8714d7c0e8816453f5e5db0a3b0fe0262aec1af036bcfe92e4ee5048194726ef",
+      "build_fingerprint": "sha256:cb331ab4a790fb3e00e064d84d0134ebee29367994bafd0766bc40885674220c",
+      "source_build_fingerprint": "sha256:cb331ab4a790fb3e00e064d84d0134ebee29367994bafd0766bc40885674220c",
       "source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
       "current_source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
       "assembly_source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",

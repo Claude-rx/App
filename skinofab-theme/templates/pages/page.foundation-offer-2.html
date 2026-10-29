@@ -58,6 +58,8 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
     
+  <script>if (navigator.globalPrivacyControl === true) { window.axon = function () {}; window.__sfGPC = true; }</script>
+  
 
 
 
@@ -99,9 +101,9 @@
     
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-63ff75.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-0e99ff.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-0d732b.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-812cc4.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -115,12 +117,15 @@
 
     
 <div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="/foundation-thank-you/"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span></div>
+<script>if (!/[?&]ref_id=/.test(location.search)) document.documentElement.classList.add('sf-no-order');</script>
+
+<div class="sf-no-order-note" data-sf-no-order hidden><p class="sf-no-order-note__title">We can’t find an order on this page</p><p>These offers come right after checkout and are added to that order, so there is nothing to add this one to here.</p><p><a class="sf-no-order-note__cta" href="/adaptive-foundation-offer/">See the Adaptive Peptide Foundation</a></p></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
     <div class="announcement cc-dark">
   <div class="announcement__block">
-    <div class="announcement__text"><strong>Offer 2 of 3 · Your order is placed</strong></div>
+    <div class="announcement__text"><strong>Offer 2 of 3<span data-sf-placed> · Your order is placed</span></strong></div>
   </div>
 </div>
     <section class="upsell-header-bar">
@@ -178,6 +183,8 @@
   <div data-button="content" class="button_content"><div>Yes, add one more bottle for <span data-next-display="bundle.offer-2.price" data-next-format="currency">$23.00</span></div></div>
 </a>
 <p class="upsell-cta__note"><span data-next-display="bundle.offer-2.price" data-next-format="currency">$23.00</span> today, charged once to the payment you just used. This one doesn’t renew, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy.</p></div>
+    
+    <a href="#" class="sf-uh__decline" data-upsell-proxy="skip">No thanks, continue</a>
     <p class="sf-uh__expires">When the clock reaches 0:00 this page moves on, and this offer and its last-chance price are both gone: neither is in our store or in an email.</p>
     <p class="sf-uh__wait" data-sf-await-note aria-live="polite">Confirming your order…</p>
   </div>
@@ -424,11 +431,11 @@
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-failsafe-396ae4.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-offer-gate-11a37f.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-offer-gate-082c2c.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-offer-timer-f72493.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-57045c.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-67e013.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

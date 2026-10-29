@@ -6,7 +6,7 @@ The store gives every uploaded asset a new stored copy and drops the old one, ev
 the store has cached (up to 30 minutes) still points at the old copy, which then answers 403: on 29 Oct 2026 a second
 push re-sent the sales hero's mobile picture unchanged, and for 16 minutes every public visitor saw a broken hero
 (live review 10). So this pushes a file only when its bytes differ from what was last pushed, by the record in
-skinofab-theme/.push-manifest.json (path -> sha256, committed with the theme). The funnels' assets carry their
+tools/funnel/theme-push-manifest.json (path -> sha256, committed; not in the theme folder, which a build regenerates). The funnels' assets carry their
 content hash in their names, so a changed picture is a new name and the old one stays for the cached pages.
 
 --init records the theme as it is in git HEAD as pushed (run once, right after a push whose files are committed).
@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 THEME = ROOT / 'skinofab-theme'
-MANIFEST = THEME / '.push-manifest.json'
+MANIFEST = ROOT / 'tools' / 'funnel' / 'theme-push-manifest.json'   # outside the theme: build_theme.py regenerates the theme folder
 SKIP = {'.push-manifest.json'}
 THEME_DIRS = ('assets/', 'configs/', 'layouts/', 'locales/', 'partials/', 'templates/')   # what the store takes; not DESIGN.md, scripts/…
 

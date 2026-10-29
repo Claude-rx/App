@@ -54,6 +54,8 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
     
+  <script>if (navigator.globalPrivacyControl === true) { window.axon = function () {}; window.__sfGPC = true; }</script>
+  
 
 
 
@@ -93,9 +95,9 @@
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-next-core-e875b0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-0d732b.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-812cc4.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-63ff75.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-0e99ff.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -276,7 +278,10 @@
   </div>
 </div>
 
-        <div class="checkout-content">
+        <script>if (!/[?&]ref_id=/.test(location.search)) document.documentElement.classList.add('sf-no-order');</script>
+        
+        <div class="sf-no-order-note" data-sf-no-order hidden><img src="{% endverbatim %}{{ 'sfa/sfa-skinofab-wordmark-d7216f.svg'|asset_url }}{% verbatim %}" alt="SKINOFAB" width="140" height="22"><h1>We can’t find an order on this page</h1><p>This page shows your order right after checkout. Your confirmation email has your order number and its details.</p><p>Questions about an order? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p><p><a class="sf-no-order-note__cta" href="/adaptive-foundation-offer/">See the Adaptive Peptide Foundation</a></p></div>
+        <div class="checkout-content" data-sf-has-order>
           <div class="checkout__content">
             <div class="checkout__layout">
               <div class="checkout__column checkout__column--left">
@@ -392,8 +397,8 @@
                         <path d="M15 24.5113L22.3067 31.818L35.1247 19" stroke="currentColor" stroke-width="2"></path>
                       </svg></div>
                     <div class="receipt-heading">
-                      <div class="receipt-subtitle">Confirmation #<span data-next-display="order.number">DQFDHG5E0</span><br></div>
-                      <h1 class="receipt_order">Thank you, <span data-next-display="order.customer.name">Taylor!</span></h1>
+                      <div class="receipt-subtitle">Confirmation #<span data-next-display="order.number"></span><br></div>
+                      <h1 class="receipt_order">Thank you<span class="sf-ty-name">, <span data-next-display="order.customer.firstName"></span></span>!</h1>
                     </div>
                   </div>
                   <div class="receipt_section">
@@ -433,16 +438,16 @@
                       <div class="order_receipt-col">
                         <div class="order_receipt-sec">
                           <div class="sec_title">Contact information</div>
-                          <div data-next-display="order.customer.email" class="sec_value">jordan.chen@domain.com</div>
+                          <div data-next-display="order.customer.email" class="sec_value"></div>
                         </div>
                         <div class="order_receipt-sec">
                           <div class="sec_title">Shipping address</div>
                           <div class="order_receipt--group">
-                            <div data-next-display="order.customer.name" class="sec_value">Jordan Chen</div>
-                            <div data-next-display="order.shippingAddress.line1" class="sec_value">151 O'Connor St</div>
-                            <div data-next-display="order.shippingAddress.line2" class="sec_value">Apt 1011</div>
-                            <div class="sec_value"><span data-next-display="order.shippingAddress.city">Ottawa</span>, <span data-next-display="order.shippingAddress.state">ON</span>, <span data-next-display="order.shippingAddress.postcode">K2P 2L8</span></div>
-                            <div data-next-display="order.shippingAddress.country" class="sec_value">Canada</div>
+                            <div data-next-display="order.customer.name" class="sec_value"></div>
+                            <div data-next-display="order.shippingAddress.line1" class="sec_value"></div>
+                            <div data-next-display="order.shippingAddress.line2" class="sec_value"></div>
+                            <div class="sec_value"><span data-next-display="order.shippingAddress.city"></span>, <span data-next-display="order.shippingAddress.state"></span>, <span data-next-display="order.shippingAddress.postcode"></span></div>
+                            <div data-next-display="order.shippingAddress.country" class="sec_value"></div>
                           </div>
                         </div>
                         <div class="order_receipt-sec">
@@ -455,16 +460,16 @@
                       <div class="order_receipt-col">
                         <div class="order_receipt-sec">
                           <div class="sec_title">Payment method</div>
-                          <div data-next-display="order.paymentMethod" class="sec_value">Credit Card</div>
+                          <div data-next-display="order.paymentMethod" class="sec_value"></div>
                         </div>
                         <div class="order_receipt-sec">
                           <div class="sec_title">Billing address</div>
                           <div class="order_receipt--group">
-                            <div data-next-display="order.billingAddress.name" class="sec_value">Jordan Chen</div>
-                            <div data-next-display="order.billingAddress.line1" class="sec_value">151 O'Connor St</div>
-                            <div data-next-display="order.billingAddress.line2" class="sec_value">Apt 1011</div>
-                            <div class="sec_value"><span data-next-display="order.billingAddress.city">Ottawa</span>, <span data-next-display="order.billingAddress.state">ON</span>, <span data-next-display="order.billingAddress.postcode">K2P 2L8</span></div>
-                            <div data-next-display="order.billingAddress.country" class="sec_value">Canada</div>
+                            <div data-next-display="order.billingAddress.name" class="sec_value"></div>
+                            <div data-next-display="order.billingAddress.line1" class="sec_value"></div>
+                            <div data-next-display="order.billingAddress.line2" class="sec_value"></div>
+                            <div class="sec_value"><span data-next-display="order.billingAddress.city"></span>, <span data-next-display="order.billingAddress.state"></span>, <span data-next-display="order.billingAddress.postcode"></span></div>
+                            <div data-next-display="order.billingAddress.country" class="sec_value"></div>
                           </div>
                         </div>
                       </div>
@@ -596,7 +601,7 @@
     </div>
 
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-receipt-c97512.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-receipt-0a04a3.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-failsafe-396ae4.js'|asset_url }}{% verbatim %}"></script>
     

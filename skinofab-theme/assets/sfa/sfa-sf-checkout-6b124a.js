@@ -214,3 +214,25 @@ window.sfSummaryFallback = function (id) {
   document.addEventListener('next:initialized', onReady);
   window.addEventListener('next:initialized', onReady);
 })();
+
+// a pack that renews is named by what renews: the SDK's line name is the store variant's ("… - 3 bottles + free gifts + free
+// Lymphatic Brush"), which sat on the line marked "Refills: Every 84 days" while every term says the gifts come with the
+// first order only (live review 10): the bottles stay in the name, the gifts go to a "with this first order only" line
+window.sfSplitGiftName = function (title) {
+  const m = (title.textContent || '').match(/^(.+? - \d+ bottles?) \+ (.+)$/);
+  if (!m) return;
+  title.textContent = m[1];
+  const note = document.createElement('div'); note.className = 'sf-first-order';
+  note.textContent = 'With this first order only: + ' + m[2] + '. Refills are the bottles.';
+  title.insertAdjacentElement('afterend', note);
+};
+(function initRenewingNames() {
+  const box = document.querySelector('[data-next-cart-summary]');
+  if (!box) return;
+  const fix = () => box.querySelectorAll('.cart-item').forEach((line) => {
+    const f = line.querySelector('.cart-item__frequency'), t = line.querySelector('.cart-item__title');
+    if (t && f && /^\s*Refills:/.test(f.textContent || '')) window.sfSplitGiftName(t);
+  });
+  new MutationObserver(fix).observe(box, { childList: true, subtree: true });
+  fix();
+})();

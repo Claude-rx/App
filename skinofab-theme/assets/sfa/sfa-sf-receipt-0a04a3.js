@@ -13,11 +13,19 @@
   const giftLine = document.querySelector('[data-sf-gift-line]');
   const join = (xs) => xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1];
   const fill = () => {
+    const num = document.querySelector('[data-next-display="order.number"]');
+    if (num && num.textContent.trim()) document.documentElement.classList.remove('sf-no-order');   // an order after all
     const skus = [];
     document.querySelectorAll('.sf-line-renew[data-sf-sku]').forEach((el) => {
       const sku = el.getAttribute('data-sf-sku'); skus.push(sku);
       const text = renewals[sku];
       if (text && el.textContent !== text) el.textContent = text;
+      // a pack that renews is named by its bottles, its gifts on a first-order line (as on the checkout, live review 10)
+      const title = el.parentElement && el.parentElement.querySelector('.cart-item__title');
+      if (title && text && /^Then /.test(text)) {
+        const m = (title.textContent || '').match(/^(.+? - \d+ bottles?) \+ (.+)$/);
+        if (m) { title.textContent = m[1]; const n = document.createElement('div'); n.className = 'sf-first-order'; n.textContent = 'With this first order only: + ' + m[2] + '. Refills are the bottles.'; title.insertAdjacentElement('afterend', n); }
+      }
     });
     // each line's own picture (two bottles for the 2-pack, not the campaign's one-bottle image on every line)
     document.querySelectorAll('img[data-sf-sku-img]').forEach((img) => {
