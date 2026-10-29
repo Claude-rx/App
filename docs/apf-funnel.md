@@ -341,6 +341,8 @@ checks take their numbers from the spec. The theme serves this funnel's assets f
 
 ### Campaigns OS
 
+**Run 5, after live review 7 (29 Oct 2026):** build, theme and Page Kit parity recorded on the development render, polish capture READY with no hidden eager media, polish recorded (`completed_with_warnings`: the three owner decisions listed under review 7), deploy recorded on the served build, then `qa run --browser --test-order off` (no test orders: none approved since run 4): verdict `MVTESAIYGUQ0GE9LS74IKN3JE6`, **ready_with_exceptions**, 154 pass, 7 skipped, 6 warn, 1 manual_review. Five of the warnings were `policy.presence` (the pages linked the policies with `?from=offer`, the spec without it), so the marker now lives in the configured URLs themselves (`campaigns.json` for both funnels and `STORE_FIELDS` in `tools/funnel/campaign_spec.py`) and the templates link `campaign.store_*` as configured; `check_funnel.py` and `check_apf.py` fail a policy link without the marker (their old pattern only matched a link ending in `/`, so a query hid the link from the check). The rendered pages are byte-identical, so Campaigns OS holds the build as owed after the spec change (`output_unchanged_after_input_change`, also after a fresh `start --force`): recording it needs `record build --deviation-reason`, which takes the owner's own reason.
+
 **Run 4, after the AppLovin wiring (29 Oct 2026):** Campaigns OS proves a local build in its development render, and
 since the Axon base code is production-only the two renders now differ, so the lifecycle runs on
 `CPK_ENV=development npx --no-install campaign-build` and the theme deploy on the production build (`npm run build`;

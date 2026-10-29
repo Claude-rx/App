@@ -23,11 +23,15 @@ CONFIG_JS = next((PROJECT / 'src' / s / 'assets' / 'config.js' for s in (F.SLUG,
                   if (PROJECT / 'src' / s / 'assets' / 'config.js').is_file()), PROJECT / 'src' / F.SLUG / 'assets' / 'config.js')
 OUT = PROJECT / F.SPEC_FILE
 PROXY = 'https://campaign-map.nextcommerce.com/api/campaign'
+# the policy and contact pages as the funnel links them: ?from=offer keeps the store's sale bar, menus and cart off them
+# (the theme's base layout, tools/theme-build/build_theme.py; live review 7), and the spec names the same URLs the
+# pages link to, so QA's policy-presence check matches them exactly
+OFFER = '?from=offer'
 STORE_FIELDS = {
     'store_url': F.FUNNEL_HOST, 'store_name': 'SKINOFAB',
-    'store_contact': f'{F.FUNNEL_HOST}/contact/', 'store_terms': f'{F.FUNNEL_HOST}/terms-of-service/',
-    'store_shipping': f'{F.FUNNEL_HOST}/shipping-policy/', 'store_privacy': f'{F.FUNNEL_HOST}/privacy-policy/',
-    'store_returns': f'{F.FUNNEL_HOST}/refund-policy/', 'store_phone': '+1 (563) 239-5520', 'store_phone_tel': 'tel:+15632395520',
+    'store_contact': f'{F.FUNNEL_HOST}/contact/{OFFER}', 'store_terms': f'{F.FUNNEL_HOST}/terms-of-service/{OFFER}',
+    'store_shipping': f'{F.FUNNEL_HOST}/shipping-policy/{OFFER}', 'store_privacy': f'{F.FUNNEL_HOST}/privacy-policy/{OFFER}',
+    'store_returns': f'{F.FUNNEL_HOST}/refund-policy/{OFFER}', 'store_phone': '+1 (563) 239-5520', 'store_phone_tel': 'tel:+15632395520',
 }
 PACKAGE_KEYS = ['ref_id', 'name', 'qty', 'price', 'price_retail', 'image', 'product_name', 'product_sku',
                 'product_variant_name', 'product_purchase_availability', 'product_inventory_availability',

@@ -113,7 +113,7 @@ def deck(fm):
 def write(fm):
     front = {
         'brand': 'SKINOFAB', 'product': 'Adaptive Peptide Foundation', 'language': 'en', 'direction': 'ltr', 'currency': 'USD',
-        'primary_color': '"#151515"', 'accent_color': '"#e8a33d"', 'cta_url': f'{CHECKOUT}?forceBundleId=apf-2', 'cta_label': 'GET MY FOUNDATION',
+        'primary_color': '"#151515"', 'accent_color': '"#e8a33d"', 'cta_url': f'{CHECKOUT}?forceBundleId=apf-3', 'cta_label': 'GET MY FOUNDATION',
         'font_heading': 'Playfair Display', 'font_body': 'Montserrat', 'support_email': F.EMAIL, 'company': 'SKINOFAB',
         'shipping_url': f'{HOST}/shipping-policy/', 'refund_url': f'{HOST}/refund-policy/', 'privacy_url': f'{HOST}/privacy-policy/',
         'terms_url': f'{HOST}/terms-of-service/', 'contact_url': f'{HOST}/contact/', 'announcement': fm['offer_bar'],

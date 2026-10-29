@@ -1,6 +1,6 @@
 {
   "schema_version": "campaign-runtime-build-packet/v0",
-  "generated_at": "2026-10-28T15:44:53.773Z",
+  "generated_at": "2026-10-29T10:40:10.615Z",
   "campaigns_os_version": "1.60.0",
   "campaign": {
     "public_route_slug": "apf-funnel",
@@ -19,8 +19,8 @@
   "design_source_package": {
     "path": ".campaign-runtime/input/design-source-package.json",
     "schema_version": "campaign-design-source-package/v0",
-    "sha256": "sha256:958c8ec4e8d510014b26745c12fb6458e34fd53f2798f98752fd1aaa1b42adfa",
-    "material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b"
+    "sha256": "sha256:b9ec091758602b2fbe0963c94cd09206816ba9e6319ce59a96bb2046c19b902d",
+    "material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7"
   },
   "source_html": {
     "root": "./design-source-apf",

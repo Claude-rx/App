@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVT9XFCCGFKCUK569QG85V568U",
+  "run_id": "MVTESAIYGUQ0GE9LS74IKN3JE6",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2221,
   "spec_version": "5.0",
-  "spec_hash": "sha256:c9cf7d1073841ea2d9fc2af6248abc536214168a8da36fd7ec3790be7cb74331",
-  "started_at": "2026-10-29T08:20:57.708Z",
-  "completed_at": "2026-10-29T08:24:10.261Z",
-  "generated_at": "2026-10-29T08:24:10.331Z",
+  "spec_hash": "sha256:e053ce74c08fa44628219ccd9067f8b8c44ea66dc51bd261336f94871110424a",
+  "started_at": "2026-10-29T10:36:56.266Z",
+  "completed_at": "2026-10-29T10:37:40.125Z",
+  "generated_at": "2026-10-29T10:37:40.159Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -20,10 +20,7 @@
       "id": "page_kit.store_profile",
       "family": "api-metadata",
       "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "page_kit.sdk_version",
@@ -59,10 +56,7 @@
       "id": "page-binding:listicle",
       "family": "api-metadata",
       "page": "listicle",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:listicle",
@@ -92,10 +86,7 @@
       "id": "page-binding:offer",
       "family": "api-metadata",
       "page": "offer",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:offer",
@@ -125,10 +116,7 @@
       "id": "page-binding:checkout",
       "family": "api-metadata",
       "page": "checkout",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:checkout",
@@ -164,10 +152,7 @@
       "id": "page-binding:offer-1",
       "family": "api-metadata",
       "page": "offer-1",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:offer-1",
@@ -221,10 +206,7 @@
       "id": "page-binding:offer-2",
       "family": "api-metadata",
       "page": "offer-2",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:offer-2",
@@ -278,10 +260,7 @@
       "id": "page-binding:offer-2b",
       "family": "api-metadata",
       "page": "offer-2b",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:offer-2b",
@@ -335,10 +314,7 @@
       "id": "page-binding:brush-offer",
       "family": "api-metadata",
       "page": "brush-offer",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:brush-offer",
@@ -392,10 +368,7 @@
       "id": "page-binding:brush-offer-b",
       "family": "api-metadata",
       "page": "brush-offer-b",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:brush-offer-b",
@@ -449,10 +422,7 @@
       "id": "page-binding:thank-you",
       "family": "api-metadata",
       "page": "thank-you",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass"
     },
     {
       "id": "http:thank-you",
@@ -476,7 +446,7 @@
       "id": "live-campaign-refs",
       "family": "api-metadata",
       "page": "campaign",
-      "status": "skipped"
+      "status": "pass"
     },
     {
       "id": "browser-load:listicle",
@@ -503,24 +473,6 @@
       "status": "pass"
     },
     {
-      "id": "browser-console-errors:listicle",
-      "family": "browser-runtime",
-      "page": "listicle",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:listicle",
-      "family": "browser-runtime",
-      "page": "listicle",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
       "id": "browser-load:offer",
       "family": "browser-runtime",
       "page": "offer",
@@ -543,24 +495,6 @@
       "family": "template_residue",
       "page": "offer",
       "status": "pass"
-    },
-    {
-      "id": "browser-console-errors:offer",
-      "family": "browser-runtime",
-      "page": "offer",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:offer",
-      "family": "browser-runtime",
-      "page": "offer",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "browser-load:checkout",
@@ -665,24 +599,6 @@
       "status": "pass"
     },
     {
-      "id": "browser-console-errors:checkout",
-      "family": "browser-runtime",
-      "page": "checkout",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:checkout",
-      "family": "browser-runtime",
-      "page": "checkout",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
       "id": "browser-load:offer-1",
       "family": "browser-runtime",
       "page": "offer-1",
@@ -747,24 +663,6 @@
       "family": "browser-runtime",
       "page": "offer-1",
       "status": "pass"
-    },
-    {
-      "id": "browser-console-errors:offer-1",
-      "family": "browser-runtime",
-      "page": "offer-1",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:offer-1",
-      "family": "browser-runtime",
-      "page": "offer-1",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "browser-load:offer-2",
@@ -833,24 +731,6 @@
       "status": "pass"
     },
     {
-      "id": "browser-console-errors:offer-2",
-      "family": "browser-runtime",
-      "page": "offer-2",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:offer-2",
-      "family": "browser-runtime",
-      "page": "offer-2",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
       "id": "browser-load:offer-2b",
       "family": "browser-runtime",
       "page": "offer-2b",
@@ -903,24 +783,6 @@
       "family": "browser-runtime",
       "page": "offer-2b",
       "status": "pass"
-    },
-    {
-      "id": "browser-console-errors:offer-2b",
-      "family": "browser-runtime",
-      "page": "offer-2b",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:offer-2b",
-      "family": "browser-runtime",
-      "page": "offer-2b",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "browser-load:brush-offer",
@@ -989,24 +851,6 @@
       "status": "pass"
     },
     {
-      "id": "browser-console-errors:brush-offer",
-      "family": "browser-runtime",
-      "page": "brush-offer",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:brush-offer",
-      "family": "browser-runtime",
-      "page": "brush-offer",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
       "id": "browser-load:brush-offer-b",
       "family": "browser-runtime",
       "page": "brush-offer-b",
@@ -1061,24 +905,6 @@
       "status": "pass"
     },
     {
-      "id": "browser-console-errors:brush-offer-b",
-      "family": "browser-runtime",
-      "page": "brush-offer-b",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:brush-offer-b",
-      "family": "browser-runtime",
-      "page": "brush-offer-b",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
       "id": "browser-load:thank-you",
       "family": "browser-runtime",
       "page": "thank-you",
@@ -1109,35 +935,132 @@
       "status": "pass"
     },
     {
-      "id": "browser-console-errors:thank-you",
-      "family": "browser-runtime",
-      "page": "thank-you",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:thank-you",
-      "family": "browser-runtime",
-      "page": "thank-you",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
       "id": "qc.policy.presence:store_terms",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "id": "qc.policy.availability:store_terms",
       "family": "browser-runtime",
       "page": "campaign",
       "status": "pass",
       "severity": "info"
     },
     {
-      "id": "qc.policy.availability:store_terms",
+      "id": "qc.policy.presence:store_privacy",
       "family": "browser-runtime",
       "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "id": "qc.policy.availability:store_privacy",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.presence:store_returns",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "id": "qc.policy.availability:store_returns",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.presence:store_shipping",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "id": "qc.policy.availability:store_shipping",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.presence:store_contact",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "id": "qc.policy.availability:store_contact",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "browser-test-order:upsell-action-coverage",
+      "family": "browser-test-order",
+      "page": "checkout",
       "status": "manual_review",
+      "severity": "warn",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "id": "qc.tracking.url:run:url",
+      "family": "browser-test-order",
+      "page": "run",
+      "status": "skipped",
+      "severity": "info"
+    },
+    {
+      "id": "qc.tracking.order:run:order",
+      "family": "browser-test-order",
+      "page": "run",
+      "status": "skipped",
+      "severity": "info"
+    },
+    {
+      "id": "qc.tracking.tag:run:tag",
+      "family": "browser-test-order",
+      "page": "run",
+      "status": "skipped",
+      "severity": "info"
+    },
+    {
+      "id": "price-claim-mismatch:offer-1:bundle.supply.price",
+      "family": "pricing",
+      "page": "offer-1",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    }
+  ],
+  "test_orders": [],
+  "exceptions": [
+    {
+      "id": "qc.policy.presence:store_terms",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "warn",
       "severity": "warn",
       "cause": "caused_by_change",
       "cause_reason": "new_since_prior_run"
@@ -1146,14 +1069,7 @@
       "id": "qc.policy.presence:store_privacy",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.policy.availability:store_privacy",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
+      "status": "warn",
       "severity": "warn",
       "cause": "caused_by_change",
       "cause_reason": "new_since_prior_run"
@@ -1162,14 +1078,7 @@
       "id": "qc.policy.presence:store_returns",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.policy.availability:store_returns",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
+      "status": "warn",
       "severity": "warn",
       "cause": "caused_by_change",
       "cause_reason": "new_since_prior_run"
@@ -1178,14 +1087,7 @@
       "id": "qc.policy.presence:store_shipping",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.policy.availability:store_shipping",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
+      "status": "warn",
       "severity": "warn",
       "cause": "caused_by_change",
       "cause_reason": "new_since_prior_run"
@@ -1194,578 +1096,37 @@
       "id": "qc.policy.presence:store_contact",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.policy.availability:store_contact",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
+      "status": "warn",
       "severity": "warn",
       "cause": "caused_by_change",
       "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-test-order:checkout",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:checkout",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:checkout",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:checkout",
-      "family": "analytics-correctness",
-      "page": "checkout:order:checkout",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:checkout:url",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:checkout:order",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:accept",
-      "family": "analytics-correctness",
-      "page": "checkout:order:accept",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:accept:url",
-      "family": "browser-test-order",
-      "page": "accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:accept:order",
-      "family": "browser-test-order",
-      "page": "accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:decline",
-      "family": "analytics-correctness",
-      "page": "checkout:order:decline",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:decline:url",
-      "family": "browser-test-order",
-      "page": "decline",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:decline:order",
-      "family": "browser-test-order",
-      "page": "decline",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:accept-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:accept-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:accept-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-receipt-rendering:accept-accept",
-      "family": "browser-receipt-rendering",
-      "page": "checkout:receipt:accept-accept",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:accept-accept",
-      "family": "analytics-correctness",
-      "page": "checkout:order:accept-accept",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:accept-accept:url",
-      "family": "browser-test-order",
-      "page": "accept-accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:accept-accept:order",
-      "family": "browser-test-order",
-      "page": "accept-accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:accept-decline-decline",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-receipt-rendering:accept-decline-decline",
-      "family": "browser-receipt-rendering",
-      "page": "checkout:receipt:accept-decline-decline",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:accept-decline-decline",
-      "family": "analytics-correctness",
-      "page": "checkout:order:accept-decline-decline",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:accept-decline-decline:url",
-      "family": "browser-test-order",
-      "page": "accept-decline-decline",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:accept-decline-decline:order",
-      "family": "browser-test-order",
-      "page": "accept-decline-decline",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "browser-test-order:decline-decline-decline-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-display-parity:decline-decline-decline-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-order-total-parity:decline-decline-decline-accept",
-      "family": "browser-test-order",
-      "page": "checkout",
-      "status": "pass"
-    },
-    {
-      "id": "browser-receipt-rendering:decline-decline-decline-accept",
-      "family": "browser-receipt-rendering",
-      "page": "checkout:receipt:decline-decline-decline-accept",
-      "status": "pass"
-    },
-    {
-      "id": "analytics-correctness:data-layer-purchase:decline-decline-decline-accept",
-      "family": "analytics-correctness",
-      "page": "checkout:order:decline-decline-decline-accept",
-      "status": "pass"
-    },
-    {
-      "id": "qc.tracking.url:decline-decline-decline-accept:url",
-      "family": "browser-test-order",
-      "page": "decline-decline-decline-accept",
-      "status": "pass",
-      "severity": "info"
-    },
-    {
-      "id": "qc.tracking.order:decline-decline-decline-accept:order",
-      "family": "browser-test-order",
-      "page": "decline-decline-decline-accept",
-      "status": "pass",
-      "severity": "info"
     },
     {
       "id": "browser-test-order:upsell-action-coverage",
       "family": "browser-test-order",
       "page": "checkout",
-      "status": "pass"
-    }
-  ],
-  "test_orders": [],
-  "exceptions": [
-    {
-      "id": "page_kit.store_profile",
-      "family": "api-metadata",
-      "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "page-binding:listicle",
-      "family": "api-metadata",
-      "page": "listicle",
       "status": "manual_review",
       "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
-      "id": "page-binding:offer",
-      "family": "api-metadata",
-      "page": "offer",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "page-binding:checkout",
-      "family": "api-metadata",
-      "page": "checkout",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "page-binding:offer-1",
-      "family": "api-metadata",
-      "page": "offer-1",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "page-binding:offer-2",
-      "family": "api-metadata",
-      "page": "offer-2",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "page-binding:offer-2b",
-      "family": "api-metadata",
-      "page": "offer-2b",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "page-binding:brush-offer",
-      "family": "api-metadata",
-      "page": "brush-offer",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "page-binding:brush-offer-b",
-      "family": "api-metadata",
-      "page": "brush-offer-b",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "page-binding:thank-you",
-      "family": "api-metadata",
-      "page": "thank-you",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:listicle",
-      "family": "browser-runtime",
-      "page": "listicle",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:listicle",
-      "family": "browser-runtime",
-      "page": "listicle",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:offer",
-      "family": "browser-runtime",
-      "page": "offer",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:offer",
-      "family": "browser-runtime",
-      "page": "offer",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:checkout",
-      "family": "browser-runtime",
-      "page": "checkout",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:checkout",
-      "family": "browser-runtime",
-      "page": "checkout",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:offer-1",
-      "family": "browser-runtime",
+      "id": "price-claim-mismatch:offer-1:bundle.supply.price",
+      "family": "pricing",
       "page": "offer-1",
       "status": "warn",
       "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:offer-1",
-      "family": "browser-runtime",
-      "page": "offer-1",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:offer-2",
-      "family": "browser-runtime",
-      "page": "offer-2",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:offer-2",
-      "family": "browser-runtime",
-      "page": "offer-2",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:offer-2b",
-      "family": "browser-runtime",
-      "page": "offer-2b",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:offer-2b",
-      "family": "browser-runtime",
-      "page": "offer-2b",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:brush-offer",
-      "family": "browser-runtime",
-      "page": "brush-offer",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:brush-offer",
-      "family": "browser-runtime",
-      "page": "brush-offer",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:brush-offer-b",
-      "family": "browser-runtime",
-      "page": "brush-offer-b",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:brush-offer-b",
-      "family": "browser-runtime",
-      "page": "brush-offer-b",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-console-errors:thank-you",
-      "family": "browser-runtime",
-      "page": "thank-you",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "browser-request-failures:thank-you",
-      "family": "browser-runtime",
-      "page": "thank-you",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "qc.policy.availability:store_terms",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "qc.policy.availability:store_privacy",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "qc.policy.availability:store_returns",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "qc.policy.availability:store_shipping",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "qc.policy.availability:store_contact",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "manual_review",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     }
   ],
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "qa",
-    "total": 33,
+    "total": 7,
     "counts": {
-      "caused_by_change": 33,
-      "pre_existing": 0,
+      "caused_by_change": 5,
+      "pre_existing": 2,
       "test_environment": 0,
       "upstream_drift": 0,
       "unknown": 0

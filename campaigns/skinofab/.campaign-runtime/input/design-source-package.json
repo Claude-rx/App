@@ -143,7 +143,7 @@
           "kind": "html_file",
           "path": "apf-pdp.html",
           "role": "page",
-          "sha256": "sha256:b75e4c7913104a9e8a4bf3e47b72ecd5f98f28510f6c5bc0b05de44fcb708481"
+          "sha256": "sha256:e3437dea668109c3fc0d67472383e6a88eda05956e93b683a9abaf74be299c11"
         }
       ],
       "trust": "structured"
@@ -354,8 +354,8 @@
     }
   ],
   "divergences": [],
-  "generated_at": "2026-10-28T08:58:55.655Z",
-  "material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
+  "generated_at": "2026-10-29T10:40:10.605Z",
+  "material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
   "notes": [],
   "package_id": "null:design-source",
   "proposed_exceptions": [],
@@ -387,7 +387,7 @@
   "readiness": {
     "blocking_reasons": [],
     "gap_count": 0,
-    "generated_at": "2026-10-28T08:58:55.655Z",
+    "generated_at": "2026-10-29T10:40:10.605Z",
     "status": "ready",
     "todo_count": 0,
     "waiver_count": 0

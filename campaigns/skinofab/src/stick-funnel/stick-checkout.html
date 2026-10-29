@@ -214,7 +214,7 @@ exit_intent:
                           </div>
                           <div class="sf-refill-terms" id="refill-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{{ pay_terms | json }}'><strong>Automatic Refills.</strong> {{ pay_text }}</p><p>{{ refill_terms }}</p></div>
                           {% campaign_include 'sf-checkout-trust.html' part='inline' %}
-                          {% capture disclaimer %}By placing your order you agree to Automatic Refills as described above, our <a href="{{ campaign.store_terms }}?from=offer" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}?from=offer" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
+                          {% capture disclaimer %}By placing your order you agree to Automatic Refills as described above, our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
                           {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · SKIP OR CANCEL ANY TIME' disclaimer=disclaimer %}
                         </div>
                       </div>

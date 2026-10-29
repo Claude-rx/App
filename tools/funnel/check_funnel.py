@@ -176,8 +176,10 @@ for p in F.PAGES:
     t = THEME / 'templates' / 'pages' / f'page.{p["file"]}.html'
     hosts = REDIRECT.findall(t.read_text(encoding='utf-8')) if t.is_file() else []
     if hosts != [F.FUNNEL_HOST]: fail(p['id'], f'deployed page redirects to {hosts or "nothing"}, not {F.FUNNEL_HOST}')
-    for link in re.findall(r'href="(https://[^/"]+)/(?:terms-of-service|privacy-policy|refund-policy|shipping-policy|contact)/"', h):
+    # (every policy and contact link carries ?from=offer, which keeps the store's chrome off the page; live review 7)
+    for link, query in re.findall(r'href="(https://[^/"]+)/(?:terms-of-service|privacy-policy|refund-policy|shipping-policy|contact)/([^"]*)"', h):
         if link != F.FUNNEL_HOST: fail(p['id'], f'policy link on {link}, not {F.FUNNEL_HOST}')
+        if query != '?from=offer': fail(p['id'], f'policy link with {query or "no query"}, not ?from=offer')
 
 # theme -------------------------------------------------------------------------------------------------------------
 for p in F.PAGES:

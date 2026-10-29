@@ -6,7 +6,7 @@ direction: ltr
 currency: USD
 primary_color: "#151515"
 accent_color: "#e8a33d"
-cta_url: https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-2
+cta_url: https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-3
 cta_label: GET MY FOUNDATION
 font_heading: Playfair Display
 font_body: Montserrat

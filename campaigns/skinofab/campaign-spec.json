@@ -59,17 +59,22 @@
         "label": "$ USD"
       }
     ],
-    "available_shipping_countries": [],
+    "available_shipping_countries": [
+      {
+        "code": "US",
+        "label": "United States"
+      }
+    ],
     "preferred_template_family": "apollo",
     "store_url": "https://try.skinofab.com",
     "store_name": "SKINOFAB",
-    "store_contact": "https://try.skinofab.com/contact/",
-    "store_terms": "https://try.skinofab.com/terms-of-service/",
-    "store_shipping": "https://try.skinofab.com/shipping-policy/",
-    "store_privacy": "https://try.skinofab.com/privacy-policy/",
-    "store_returns": "https://try.skinofab.com/refund-policy/",
-    "store_phone": null,
-    "store_phone_tel": null
+    "store_contact": "https://try.skinofab.com/contact/?from=offer",
+    "store_terms": "https://try.skinofab.com/terms-of-service/?from=offer",
+    "store_shipping": "https://try.skinofab.com/shipping-policy/?from=offer",
+    "store_privacy": "https://try.skinofab.com/privacy-policy/?from=offer",
+    "store_returns": "https://try.skinofab.com/refund-policy/?from=offer",
+    "store_phone": "+1 (563) 239-5520",
+    "store_phone_tel": "tel:+15632395520"
   },
   "global_config": {
     "sdk_version": "0.4.43"

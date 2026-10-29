@@ -702,7 +702,7 @@ closing:
         <a class="sf-btn sf-btn--ghost" href="{{ campaign.store_phone_tel }}">CALL {{ campaign.store_phone }}</a></div>
       </div>
       <div class="sf-service">
-        {% for c in service.cards %}<a class="sf-card" href="{% if c.href == 'shipping' %}{{ campaign.store_shipping }}?from=offer{% elsif c.href == 'returns' %}{{ campaign.store_returns }}?from=offer{% else %}{{ c.href }}{% endif %}"{% if c.href == 'shipping' or c.href == 'returns' %} target="_blank" rel="noopener"{% endif %}><div><strong>{{ c.title }}</strong>{{ c.text }}</div></a>{% endfor %}
+        {% for c in service.cards %}<a class="sf-card" href="{% if c.href == 'shipping' %}{{ campaign.store_shipping }}{% elsif c.href == 'returns' %}{{ campaign.store_returns }}{% else %}{{ c.href }}{% endif %}"{% if c.href == 'shipping' or c.href == 'returns' %} target="_blank" rel="noopener"{% endif %}><div><strong>{{ c.title }}</strong>{{ c.text }}</div></a>{% endfor %}
       </div>
     </div>
   </section>

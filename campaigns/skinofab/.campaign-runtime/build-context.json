@@ -1,6 +1,6 @@
 {
   "schema_version": "campaign-runtime-build-context/v0",
-  "generated_at": "2026-10-28T15:44:53.774Z",
+  "generated_at": "2026-10-29T10:40:10.616Z",
   "source_adapter": "html_funnel",
   "intake": {
     "spec_source": "local",
@@ -23,13 +23,13 @@
   "design_source_package": {
     "path": "input/design-source-package.json",
     "schema_version": "campaign-design-source-package/v0",
-    "sha256": "sha256:958c8ec4e8d510014b26745c12fb6458e34fd53f2798f98752fd1aaa1b42adfa",
-    "material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b"
+    "sha256": "sha256:b9ec091758602b2fbe0963c94cd09206816ba9e6319ce59a96bb2046c19b902d",
+    "material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7"
   },
   "spec": {
     "path": "./campaign-spec.apf.json",
-    "hash": "c3682ac057e2cef202f711624aba4f6645b713277d04a099441c7d63657da464",
-    "material_hash": "sha256:c9cf7d1073841ea2d9fc2af6248abc536214168a8da36fd7ec3790be7cb74331",
+    "hash": "48203d37c01e0e28cd5b823512c194b66db21c383ad4135ed39110516a2c57a4",
+    "material_hash": "sha256:399e8176423e5b68d1cc25747937fc6774921ac0da2c70992d42a86c87501006",
     "active_pages": [
       {
         "id": "listicle",
@@ -94,8 +94,8 @@
         "path": "apf-pdp.html",
         "name": "apf-pdp.html",
         "basename": "apf-pdp",
-        "bytes": 511249,
-        "sha256": "b75e4c7913104a9e8a4bf3e47b72ecd5f98f28510f6c5bc0b05de44fcb708481"
+        "bytes": 511237,
+        "sha256": "e3437dea668109c3fc0d67472383e6a88eda05956e93b683a9abaf74be299c11"
       },
       {
         "path": "facelove-listicle.html",
@@ -124,8 +124,8 @@
         {
           "path": "apf-pdp.html",
           "kind": "html",
-          "bytes": 511249,
-          "sha256": "b75e4c7913104a9e8a4bf3e47b72ecd5f98f28510f6c5bc0b05de44fcb708481"
+          "bytes": 511237,
+          "sha256": "e3437dea668109c3fc0d67472383e6a88eda05956e93b683a9abaf74be299c11"
         },
         {
           "path": "facelove-listicle.html",
@@ -320,7 +320,7 @@
     "output_dir": "./src/apf-funnel",
     "handoff_skill": "next-campaigns-build",
     "handoff_artifact": ".campaign-runtime/setup-handoff.json",
-    "reason": "Setup recorded by campaigns-os record setup at 2026-10-28T15:44:57.204Z; the campaign output directory exists."
+    "reason": "Setup recorded by campaigns-os record setup at 2026-10-29T10:40:15.686Z; the campaign output directory exists."
   },
   "template": {
     "family": "apollo",
