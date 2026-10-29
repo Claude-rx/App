@@ -95,7 +95,7 @@
     
     <link href="{% endverbatim %}{{ 'sfa/sfa-exit-intent-popup-e7738f.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-805e14.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-6c26c2.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -166,7 +166,7 @@
   <div class="bundle-cards">
     <div data-next-bundle-card data-next-bundle-id="apf-2" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":2,"quantity":1}]' data-next-selected="true" role="button" class="bundle-card next-selected">
   <div class="bundle-card__badges">
-    <div class="bundle-card__badge bundle-card__badge--deal">Most popular</div>
+    <div class="bundle-card__badge bundle-card__badge--deal">2 months’ supply</div>
     <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
     <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>EXTRA {discount.percentage} OFF</span></template></div>
   </div>
@@ -340,7 +340,7 @@
           <div class="form-grid__row">
             <div class="form-group">
               <div class="form-input">
-                <div class="select-form-wrapper"><select autocomplete="cc-exp-month" data-placeholder="Exp. Month" placeholder="Exp. Month" name="credit_card_exp_month" id="credit_card_exp_month" data-name="Credit Card Exp. Month" data-next-checkout-field="exp-month" class="input-flds select-field">
+                <div class="select-form-wrapper"><select aria-label="Card expiry month" autocomplete="cc-exp-month" data-placeholder="Exp. Month" placeholder="Exp. Month" name="credit_card_exp_month" id="credit_card_exp_month" data-name="Credit Card Exp. Month" data-next-checkout-field="exp-month" class="input-flds select-field">
                     <option value="">Exp. Month</option>
                   </select>
                   <div class="caret-down">
@@ -353,7 +353,7 @@
             </div>
             <div class="form-group">
               <div class="form-input">
-                <div class="select-form-wrapper"><select autocomplete="cc-exp-year" data-placeholder="Exp. Year" placeholder="Exp. Year" name="credit_card_exp_year" id="credit_card_exp_year" data-name="Credit Card Exp. Year" data-next-checkout-field="exp-year" class="input-flds select-field">
+                <div class="select-form-wrapper"><select aria-label="Card expiry year" autocomplete="cc-exp-year" data-placeholder="Exp. Year" placeholder="Exp. Year" name="credit_card_exp_year" id="credit_card_exp_year" data-name="Credit Card Exp. Year" data-next-checkout-field="exp-year" class="input-flds select-field">
                     <option value="">Exp. Year</option>
                   </select>
                   <div class="caret-down">
@@ -675,7 +675,7 @@
                           
                           
 <div data-next-catalog-component="submit-block" class="submit-section">
-  <div class="submit-section__disclaimer">By placing your order you agree to our <a href="https://try.skinofab.com/terms-of-service/" target="_blank" rel="noopener">Terms of Service</a> and our <a href="https://try.skinofab.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>.</div>
+  <div class="submit-section__disclaimer">By placing your order you agree to our <a href="https://try.skinofab.com/terms-of-service/?from=offer" target="_blank" rel="noopener">Terms of Service</a> and our <a href="https://try.skinofab.com/privacy-policy/?from=offer" target="_blank" rel="noopener">Privacy Policy</a>.</div>
   <div class="submit-section__button"><button os-checkout-payment="combo" data-action="submit" type="submit" class="submit-button">
       <div data-pb-element="checkout-button-spinner" class="submit-button__loader">
         <div class="three-quarter-spinner black"></div>
@@ -804,7 +804,7 @@
 
     <article class="sf-co-review">
   <header>
-    <img src="{% endverbatim %}{{ 'sfa/sfa-review-susan-cb61ad.jpg'|asset_url }}{% verbatim %}" alt="Susan B., 70, her own photo" width="64" height="64" loading="lazy" decoding="async">
+    <img src="{% endverbatim %}{{ 'sfa/sfa-review-susan-e58d22.jpg'|asset_url }}{% verbatim %}" alt="Susan B., 70, her own photo" width="64" height="64" loading="lazy" decoding="async">
     <div><p class="sf-co-review__name">Susan B., 70</p><p class="sf-co-tp sf-co-tp--sm" role="img" aria-label="5 out of 5 stars"><i></i><i></i><i></i><i></i><i></i></p></div>
   </header>
   <p class="sf-co-review__body">“Lovely smooth finish and colour is great on my 70 year old skin”</p>
@@ -889,10 +889,10 @@
     <div class="footer_layout">
       <div class="footer_copy-info">
         <div class="footer_link-wrapper">
-          <a href="https://try.skinofab.com/shipping-policy/" target="_blank" class="footer_legal-link">Shipping Policy</a>
-          <a href="https://try.skinofab.com/refund-policy/" target="_blank" class="footer_legal-link">Refund Policy</a>
-          <a href="https://try.skinofab.com/privacy-policy/" target="_blank" class="footer_legal-link">Privacy Policy</a>
-          <a href="https://try.skinofab.com/terms-of-service/" target="_blank" class="footer_legal-link">Terms of Service</a>
+          <a href="https://try.skinofab.com/shipping-policy/?from=offer" target="_blank" class="footer_legal-link">Shipping Policy</a>
+          <a href="https://try.skinofab.com/refund-policy/?from=offer" target="_blank" class="footer_legal-link">Refund Policy</a>
+          <a href="https://try.skinofab.com/privacy-policy/?from=offer" target="_blank" class="footer_legal-link">Privacy Policy</a>
+          <a href="https://try.skinofab.com/terms-of-service/?from=offer" target="_blank" class="footer_legal-link">Terms of Service</a>
         </div>
         <div class="text-xs">Copyright © <span class="copyright-year"></span> SKINOFAB</div>
 <script>(function(){ var y = new Date().getFullYear(); document.querySelectorAll(".copyright-year").forEach(function(el){ el.textContent = y; }); })();</script>
@@ -906,7 +906,7 @@
 
 <template data-template="exit-intent">
   <div class="exit-intent-popup">
-    <div class="exit-intent-popup__dialog">
+    <div class="exit-intent-popup__dialog" role="dialog" aria-modal="true" aria-labelledby="sf-exit-title">
 
       <div class="exit-intent-popup__image">
         <picture>
@@ -918,7 +918,7 @@
         <div class="exit-intent-popup__inner">
 
           <div class="exit-intent-popup__header">
-            <h3>Wait!</h3>
+            <h3 id="sf-exit-title">Wait!</h3>
             <p>One more reason to order today.</p>
             <h4>An extra <strong>10% off</strong> your pack</h4>
           </div>
@@ -948,7 +948,7 @@
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-checkout-3fa1e4.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-checkout-496285.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-checkout-4dc703.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-failsafe-396ae4.js'|asset_url }}{% verbatim %}"></script>
     

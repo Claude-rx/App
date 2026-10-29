@@ -426,8 +426,13 @@ def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
               & ((hsv0[..., 1] < 41) | (a[..., 2] - a[..., 0] > 8)) & (a.max(-1) > 90)).astype(np.float32)
     stream = FI._blur(stream, 0.8)[..., None]
     dry, held = (milky(x, stream, k=1.0, base=(234, 228, 218), lo=0.86) for x in (dry, held))
-    save(Image.fromarray(np.clip(held, 0, 255).astype(np.uint8)), 'science-poster', size=w)
-    if not encode: return
+    # the pool on the right block, its glassy rim too: the same milky white (on the review 7 build only its centre had
+    # caught the blue mask, so the layer still read as clear water); the ellipse is the pool's in the still, and its
+    # orange skin (red well above blue) stays as it is
+    pool = ((((sx - W * 0.6565) / (W * 0.112)) ** 2 + ((sy - H * 0.4139) / (H * 0.034)) ** 2 < 1)
+            & (a[..., 0] - a[..., 2] < 35) & (a.min(-1) < 250)).astype(np.float32)
+    pool = FI._blur(pool, 1.2)[..., None]
+    dry, held = (milky(x, pool, k=0.9, base=(240, 235, 227), lo=0.86) for x in (dry, held))
     # the falling drop in the still: cut out (its box, as fractions of the still), its place filled white
     bx0, by0, bx1, by1 = int(W * 0.60), int(H * 0.25), int(W * 0.66), int(H * 0.355)
     box = a[by0:by1, bx0:bx1]
@@ -435,6 +440,10 @@ def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
     # (its faint rim too: at > 20 a ghost of the drop stayed where it started, live review 7)
     dmask = FI._blur(ndimage.binary_dilation((255 - box.min(-1)) > 6, iterations=2).astype(np.float32), 1.0)[..., None]
     drop = milky(box.copy(), dmask, k=1.0, base=(234, 228, 218), lo=0.86)
+    # the poster (the still before the clip plays, and for anyone who asks for less motion) shows that milky drop too
+    poster = held.copy(); poster[by0:by1, bx0:bx1] = poster[by0:by1, bx0:bx1] * (1 - dmask) + drop * dmask
+    save(Image.fromarray(np.clip(poster, 0, 255).astype(np.uint8)), 'science-poster', size=w)
+    if not encode: return
     for base in (a, dry, held): base[by0:by1, bx0:bx1] = base[by0:by1, bx0:bx1] * (1 - dmask) + 255 * dmask
     y_nozzle, y_land = int(H * 0.19), int(H * 0.40) - (by1 - by0)
     frames = _frames_dir('science')

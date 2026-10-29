@@ -161,3 +161,11 @@
 
 /* the numbered feature cards: text left, beside the number (centred text sat off-axis at 390, live review 4) */
 .checkout-features__item--card .heading-box { text-align: left; }
+
+/* offer 1's hero (live review 7): the 2-bottle card's button on the first screen, the jump to the choices under it as a line */
+.sf-uh__jump--line { display: flex; width: max-content; min-height: 44px; margin: 6px auto 0; padding: 10px 16px; background: transparent;
+  color: #fff; text-decoration: underline; text-underline-offset: 3px; font-weight: 600; box-shadow: none; }
+
+/* the brush loop's steps as text under it (live review 7) */
+.upsell-video__steps { margin: 12px 0 0; padding: 0 0 0 22px; display: grid; gap: 6px; font-size: 15px; line-height: 1.4; color: #3b3b3b; text-align: left; }
+.upsell-video__steps li::marker { font-weight: 700; color: #151515; }

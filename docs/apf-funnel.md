@@ -572,6 +572,38 @@ kitchen pair (`ba-glow` retired); the how-it-works loop (`howto_loop()` in `imag
 screenshots of reasons 5 and 6). `check_apf.py` fails a build whose wide-reason media is sticky; the live probe at
 390/768/1024/1440 found no media over text on either listicle.
 
+**Independent live review 7 (29 Oct 2026, after Buy 2, get 1 FREE):** 1 blocker, 4 major, 16 minor. Fixed in the tools
+and the source, built, pushed and checked live (every page at 390/768/1024/1440, no console error, failed request,
+broken image or overflow; `r7-fixes.mjs` in the session's scratchpad checks each item below):
+- **Store claims** (M1, M2): the sales page's why-now line says only what is true of the store (no 3-bottle pack, no
+  pack with the Lymphatic Brush, one bottle $47 bought once); the brush offer quotes "$24.95 in our store" instead of
+  "Not sold in our store"; offer 1 says "These prices are only here" with the store's own prices beside them.
+- **Rating badges** (M4): no Trustpilot green or "Excellent" label; the stars are the brand's black (`--sf-star`) and
+  the label reads "Rated". The 2-bottle packs say "2 months' supply", not "Most popular" (minor 12).
+- **Offer 1's hero** (minor 2) is its accept button ("YES, ADD 2 BOTTLES · $39", which presses the 2-bottle card's
+  own buy button, `sf-supply.js`), with a link down to the 6-bottle pack; it sits inside the first screen at 375x667.
+- **Checkout** (minors 3, 15): the exit pop needs a flick in the top 60 % of the screen with no field focused or
+  left in the last 3 s; it is a labelled dialog (focus moves into it, Escape closes it, focus comes back); the card
+  expiry selects are named; the field labels are #6b6b6b.
+- **Thank-you without an order** (minor 4): the confirmation head and both summaries are hidden (`[hidden]` now wins
+  over their `display:flex`), so only the "We couldn't find an order" banner shows. The cross-sell (minor 5) shows both
+  store prices (with refills and bought once) and leaves the EGF serum out for a European address.
+- **Policy pages from the funnel** (minor 6): every policy and contact link in both funnels carries `?from=offer`, and
+  the store theme (`build_theme.py`, the base layout's head) then hides the sale bar, the menus and the cart before the
+  first paint. Opened from the store, the same pages keep the store's chrome.
+- **The science loop** (minor 7): the bottle prints its PDRN line, and the drop, its stream and the pool on the skin
+  are the foundation's milky white in every frame and in the poster (the pool's glassy rim had stayed clear);
+  "sink in" and "melts into" are gone from the copy (minor 8).
+- **Before/after pairs** (minor 9): each after is brought to its before's scale and both are cropped closer on the face
+  (`face=1.12`); the clothes and backgrounds of the owner's own photos still differ, which only new photos can change.
+- **Also:** Susan's 230 px review photo is off the listicle (Vicki M.'s review instead) and trimmed on the sales page
+  (minor 10); a tapped clip with sound pauses once scrolled off (minor 11); the 1440 sales intro and listicle top
+  column are centred (minor 13); US spellings in brand copy (minor 14); the brush offer's how-to steps are page text
+  under the loop, 15 px (minor 16).
+- **For the owner** (not changed here): *B1*, "Buy 2, get 1 FREE" at $75 beside the $57 2-bottle pack (the free bottle
+  then costs $18); *M3*, the white-coat clinic photo reads as a clinician presenting the product; *minor 1*, offer 2b's
+  $19 bottle is cheaper than offer 1's $19.50 a bottle.
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the

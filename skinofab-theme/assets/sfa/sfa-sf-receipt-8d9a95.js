@@ -47,7 +47,9 @@
 (function () {
   const note = document.querySelector('[data-sf-no-order]');
   if (!note) return;
-  const head = () => document.querySelectorAll('.receipt_head, .order-summary-mobile');
+  // everything that speaks of an order: the heading, the confirmed card and the sections under it, both summaries
+  // (live review 7: "Your order is confirmed" and a $0.00 desktop summary stayed under the note)
+  const head = () => document.querySelectorAll('.receipt_head, .receipt_section, .order-summary-mobile, .summary-desktop');
   const hasOrder = () => !!document.querySelector('[data-order-line-id]');   // (the loading skeleton is .cart-item too)
   setTimeout(() => {
     if (hasOrder()) return;
@@ -60,4 +62,28 @@
       note.hidden = true; head().forEach((el) => { el.hidden = false; }); obs.disconnect();
     }).observe(document.body, { childList: true, subtree: true });
   }, 8000);
+})();
+
+// The range under the order: the EGF serum's card goes for an order shipping to Europe (EU, EEA, UK, Switzerland: its EGF
+// is not allowed in cosmetics sold there; the store's offer gate skips it the same way), once the SDK writes the country.
+(function () {
+  const country = document.querySelector('.sf-more [data-sf-ship-country]');
+  if (!country) return;
+  const EUROPE = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU',
+    'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'CH', 'GB', 'UK'];
+  const NAMES = ['austria', 'belgium', 'bulgaria', 'croatia', 'cyprus', 'czechia', 'czech republic', 'denmark', 'estonia',
+    'finland', 'france', 'germany', 'greece', 'hungary', 'ireland', 'italy', 'latvia', 'lithuania', 'luxembourg', 'malta',
+    'netherlands', 'poland', 'portugal', 'romania', 'slovakia', 'slovenia', 'spain', 'sweden', 'iceland', 'liechtenstein',
+    'norway', 'switzerland', 'united kingdom'];
+  const check = () => {
+    const c = (country.textContent || '').trim();
+    if (!c) return;
+    if (EUROPE.includes(c.toUpperCase()) || NAMES.includes(c.toLowerCase())) {
+      document.querySelectorAll('.sf-more [data-sf-not-europe]').forEach((el) => { el.hidden = true; });
+    }
+    obs.disconnect();
+  };
+  const obs = new MutationObserver(check);
+  obs.observe(country, { childList: true, characterData: true, subtree: true });
+  check();
 })();

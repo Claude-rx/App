@@ -16,7 +16,7 @@
   --brand--color--cta-primary: #151515;
   --brand--color--accent: #151515;
   --brand--color--complementary-1: #faf8f5;
-  --brand--color--rating-star: #00b67a;          /* the review site's green: boxed stars (.sf-co-tp), no site named */
+  --brand--color--rating-star: #151515;          /* boxed stars (.sf-co-tp) in the brand ink, not a review site's green (live review 7: no third-party badge look for our own reviews) */
   --brand--color--pill-primary: #151515;
   --brand--color--pill-primary-surface: #f1ede7;
   --brand--color--pill-secondary: #151515;
@@ -91,7 +91,7 @@
 @media (min-width: 600px) and (max-width: 991px) { .sf-co .checkout__form-container { margin-left: auto; margin-right: auto; } }
 .sf-co-left { gap: 20px; }
 .sf-co-proof { display: grid; gap: 16px; align-content: start; }
-/* the green boxed stars (a review site's look, no site named) */
+/* the boxed stars, in the brand ink */
 .sf-co-tp { display: inline-flex; gap: 3px; margin: 0; vertical-align: middle; }
 .sf-co-tp i { width: 22px; height: 22px; background: var(--brand--color--rating-star); border-radius: 3px; display: grid; place-items: center; font-style: normal; }
 .sf-co-tp i::before { content: '★'; color: #fff; font-size: 15px; line-height: 1; }
@@ -224,3 +224,12 @@ body {
 /* before the SDK answers, the billing block is empty: its heading stays hidden with it (an empty "Billing Address" showed under the
    ticked box for the first seconds, live review 4) */
 .billing-address__form:has([data-next-address="billing"]:empty) { display: none; }
+
+/* the thank-you page with no order to show (live review 7): what sf-receipt.js hides stays hidden, though its own rule
+   sets display: flex (the "Thank you / Your order is confirmed / $0.00" blocks showed under "We couldn't find an order") */
+.receipt_head[hidden], .receipt_section[hidden], .order-summary-mobile[hidden], .summary-desktop[hidden] { display: none !important; }
+.sf-more__card[hidden] { display: none !important; }
+
+/* the floating field labels ("Country", "Email"…) at a readable contrast: next-core's #b3b3b3 is about 2:1 on white
+   (live review 7); the brand's soft grey is 5.3:1 */
+.label-checkout, .next-address-label { color: #6b6b6b !important; }
