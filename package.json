@@ -5,7 +5,8 @@
     "nc": "campaigns-os",
     "nc:login": "campaigns-os login",
     "nc:status": "campaigns-os tooling status --platform claude",
-    "skills:update": "scripts/update-nextcommerce-skills.sh"
+    "skills:update": "scripts/update-nextcommerce-skills.sh",
+    "test:axon": "ADAPTER=fixes/axon-purchase-user-data/sfa-axon-adapter-3194de.js node --test fixes/axon-purchase-user-data/axon-adapter.test.mjs"
   },
   "repository": {
     "type": "git",
