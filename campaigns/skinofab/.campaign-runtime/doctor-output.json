@@ -1,11 +1,246 @@
 {
   "schema_version": "campaigns-os-doctor-output/v0",
-  "generated_at": "2026-10-29T06:09:19.977Z",
-  "generated_by": "qa run",
-  "ok": true,
-  "status": "ready_with_warnings",
-  "errors": [],
+  "generated_at": "2026-10-29T08:18:31.159Z",
+  "generated_by": "next",
+  "ok": false,
+  "status": "blocked",
+  "errors": [
+    {
+      "code": "built_output.fingerprint_stale",
+      "message": "Built output under _site/apf-funnel/ no longer matches stages.assembly.build_fingerprint (recorded sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3, current sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7, 195 file(s)). Against the manifest build recorded: 11 extra: images/sf/cmp-ours.jpg, images/sf/cmp-theirs.jpg, images/sf/guarantee-seal.png, images/sf/offer-3.jpg, images/sf/old-routine.jpg, images/sf/promise.jpg, images/sf/reason-fingers.jpg, images/sf/step-1.jpg, images/sf/step-2.jpg, images/sf/step-3.jpg, images/sf/step-4.jpg; 2 missing: images/sf/ba-glow.jpg, images/sf/g-duo.jpg; 34 changed: 10-reasons-adaptive-foundation/index.html, adaptive-foundation-offer/index.html, css/checkout-brand.css, css/sf-apf.css, css/sf-funnel.css, css/sf-offers.css, foundation-checkout/index.html, foundation-offer-1/index.html, foundation-offer-2/index.html, foundation-offer-2b/index.html, foundation-thank-you/index.html, images/sf/allday.webm, images/sf/ba-garden.jpg, images/sf/bottle.jpg, images/sf/brush-how.webm, images/sf/howto-poster.jpg, images/sf/howto.mp4, images/sf/howto.webm, images/sf/offer.jpg, images/sf/one-shade.jpg (+14 more). The output changed after build recorded it; re-run build (page-kit build, then record the current fingerprint) before polish or QA evidence can bind to it.",
+      "detail": {
+        "root": "_site/apf-funnel/",
+        "recorded": "sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3",
+        "current": "sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7",
+        "file_count": 195,
+        "assembly_complete": true,
+        "drift": {
+          "manifest": "recorded",
+          "extra_count": 11,
+          "missing_count": 2,
+          "changed_count": 34,
+          "extra": [
+            "images/sf/cmp-ours.jpg",
+            "images/sf/cmp-theirs.jpg",
+            "images/sf/guarantee-seal.png",
+            "images/sf/offer-3.jpg",
+            "images/sf/old-routine.jpg",
+            "images/sf/promise.jpg",
+            "images/sf/reason-fingers.jpg",
+            "images/sf/step-1.jpg",
+            "images/sf/step-2.jpg",
+            "images/sf/step-3.jpg",
+            "images/sf/step-4.jpg"
+          ],
+          "missing": [
+            "images/sf/ba-glow.jpg",
+            "images/sf/g-duo.jpg"
+          ],
+          "changed": [
+            "10-reasons-adaptive-foundation/index.html",
+            "adaptive-foundation-offer/index.html",
+            "css/checkout-brand.css",
+            "css/sf-apf.css",
+            "css/sf-funnel.css",
+            "css/sf-offers.css",
+            "foundation-checkout/index.html",
+            "foundation-offer-1/index.html",
+            "foundation-offer-2/index.html",
+            "foundation-offer-2b/index.html",
+            "foundation-thank-you/index.html",
+            "images/sf/allday.webm",
+            "images/sf/ba-garden.jpg",
+            "images/sf/bottle.jpg",
+            "images/sf/brush-how.webm",
+            "images/sf/howto-poster.jpg",
+            "images/sf/howto.mp4",
+            "images/sf/howto.webm",
+            "images/sf/offer.jpg",
+            "images/sf/one-shade.jpg"
+          ],
+          "conflict_copies": []
+        }
+      },
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "code": "polish.output_drift",
+      "message": "Built output no longer matches stages.assembly.build_fingerprint (recorded sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3, current sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7); polish evidence is bound to a build that no longer exists. Re-run build, then next-campaigns-polish before QA. Required action: next-campaigns-build | next-campaigns-polish.",
+      "detail": {
+        "polish_gate": {
+          "status": "blocked",
+          "code": "polish.output_drift",
+          "reason": "Built output no longer matches stages.assembly.build_fingerprint (recorded sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3, current sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7); polish evidence is bound to a build that no longer exists. Re-run build, then next-campaigns-polish before QA.",
+          "build_fingerprint": "sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3",
+          "current_output_fingerprint": "sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7",
+          "source_build_fingerprint": "sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3",
+          "source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
+          "assembly_source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
+          "waiver": null,
+          "required_actions": [
+            {
+              "id": "rerun_build",
+              "kind": "skill",
+              "command": "next-campaigns-build",
+              "description": "Re-run Build (page-kit build) and record the current output fingerprint (doctor --json derived.build_output_fingerprint.value) on stages.assembly.build_fingerprint before Polish."
+            },
+            {
+              "id": "run_polish",
+              "kind": "skill",
+              "command": "next-campaigns-polish",
+              "description": "Run the distinct Polish stage and record stages.polish.performed_by, source_build_fingerprint, source_package_material_fingerprint when available, completed_at, and structured evidence."
+            }
+          ],
+          "owned_checkpoint_id": "polish.hidden_eager_media",
+          "owned_checkpoint_status": "pass",
+          "owned_checkpoint_only": false
+        }
+      },
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    }
+  ],
   "warnings": [
+    {
+      "code": "page_kit.store_profile.target_only",
+      "message": "Target Store Profile has target-only value(s): store_phone, store_phone_tel.",
+      "detail": {
+        "checkpoint_gate": {
+          "id": "page_kit.store_profile",
+          "scope": "page_kit.store_profile",
+          "status": "pass",
+          "code": "page_kit.store_profile.target_only",
+          "reason": "Target Store Profile has target-only value(s): store_phone, store_phone_tel.",
+          "waivable": false,
+          "subject": {
+            "public_route_slug": "apf-funnel",
+            "target_path": "_data/campaigns.json"
+          },
+          "state": {
+            "discrepancies": [
+              {
+                "field": "store_phone",
+                "kind": "target_only",
+                "spec": "",
+                "target": "+1 (563) 239-5520"
+              },
+              {
+                "field": "store_phone_tel",
+                "kind": "target_only",
+                "spec": "",
+                "target": "tel:+15632395520"
+              }
+            ]
+          },
+          "state_fingerprint": "sha256:272fd733b55c3f7db09fb6394599346f521af57c37a99e1be483403a86ccf923",
+          "matrix": [
+            {
+              "field": "store_name",
+              "kind": "match",
+              "spec": "SKINOFAB",
+              "target": "SKINOFAB",
+              "severity": "clean"
+            },
+            {
+              "field": "store_url",
+              "kind": "match",
+              "spec": "https://try.skinofab.com",
+              "target": "https://try.skinofab.com",
+              "severity": "clean"
+            },
+            {
+              "field": "store_terms",
+              "kind": "match",
+              "spec": "https://try.skinofab.com/terms-of-service/",
+              "target": "https://try.skinofab.com/terms-of-service/",
+              "severity": "clean"
+            },
+            {
+              "field": "store_privacy",
+              "kind": "match",
+              "spec": "https://try.skinofab.com/privacy-policy/",
+              "target": "https://try.skinofab.com/privacy-policy/",
+              "severity": "clean"
+            },
+            {
+              "field": "store_contact",
+              "kind": "match",
+              "spec": "https://try.skinofab.com/contact/",
+              "target": "https://try.skinofab.com/contact/",
+              "severity": "clean"
+            },
+            {
+              "field": "store_returns",
+              "kind": "match",
+              "spec": "https://try.skinofab.com/refund-policy/",
+              "target": "https://try.skinofab.com/refund-policy/",
+              "severity": "clean"
+            },
+            {
+              "field": "store_shipping",
+              "kind": "match",
+              "spec": "https://try.skinofab.com/shipping-policy/",
+              "target": "https://try.skinofab.com/shipping-policy/",
+              "severity": "clean"
+            },
+            {
+              "field": "store_phone",
+              "kind": "target_only",
+              "spec": "",
+              "target": "+1 (563) 239-5520",
+              "severity": "warning"
+            },
+            {
+              "field": "store_phone_tel",
+              "kind": "target_only",
+              "spec": "",
+              "target": "tel:+15632395520",
+              "severity": "warning"
+            }
+          ],
+          "blocker_fields": [],
+          "warning_fields": [
+            "store_phone",
+            "store_phone_tel"
+          ],
+          "waiver": null,
+          "waiver_assessment": {
+            "active": null,
+            "inert_counts": {
+              "stale": 0,
+              "foreign": 0,
+              "malformed": 0,
+              "expired": 0
+            }
+          },
+          "required_actions": []
+        }
+      },
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "code": "source_html.pages.source_hash",
+      "message": "Source page \"offer\" hash mismatch — file at apf-pdp.html has changed since intake recorded it in the Build Packet (recorded sha256=b75e4c791310…, on-disk sha256=e3437dea6681…). This warning does not block. Re-running start or prepare-build with --force records the current file and clears recorded stage evidence; editing the source-html manifest alone does not change the hash the packet holds.",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "code": "built_output.build_summary_stale",
+      "message": "Page Kit build summary predates 9 built page(s); the build ran again without re-capturing. Re-run `npx campaign-build --json > .campaign-runtime/page-kit-build-summary.json`.",
+      "detail": {
+        "newer_pages": 9
+      },
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "code": "campaign.api_key_source",
+      "message": "Environment variable CAMPAIGNS_API_KEY is not set, and the local CampaignSpec does not include campaign.campaigns_api_key. API-side package/shipping/offer confirmation is deferred.",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
     {
       "code": "adapter.raw_html_conversion_status",
       "message": "Assembly is recorded complete, but report.adapter_decisions.raw_html_conversion_status is \"pending\". Use record build --adapter-decision raw_html_conversion_status=<value> to record completed/not_required after wrapper stripping, frontmatter, asset moves, script/style refs, CTA rewrites, route policy, and layout choice are settled.",
@@ -54,7 +289,6 @@
     "CampaignSpec store_url points at a non-placeholder storefront",
     "Built checkout carries no google_pay payment-method markup (_site/apf-funnel/foundation-checkout/index.html); left to browser QA: shared chrome asset upsell-payment-logos.svg",
     "Target campaigns.json SDK version matches CampaignSpec (0.4.43).",
-    "Target campaigns.json Store Profile matches the CampaignSpec across all nine governed fields.",
     "CampaignSpec shipping countries: all countries",
     "CampaignSpec routing meta deferred to built-output verification (_site/apf-funnel/).",
     "Source-html manifest source-html-manifest/v0 validated",
@@ -64,18 +298,15 @@
     "Mapped source pages pass the page-kit preparation check (document wrappers stripped, no leftover frontmatter, no source-file internal links)",
     "CampaignSpec package purchase availability has no unavailable package refs in active build data",
     "Built output root found at _site/apf-funnel/",
-    "Build output fingerprint matches stages.assembly.build_fingerprint (186 file(s) under _site/apf-funnel/)",
     "Built HTML structure and commerce refs checked in _site/apf-funnel/ for 9 page(s)",
     "Every bundle selector on 5 built post-purchase page(s) is scoped away from the live cart (5 selector(s) scanned)",
     "All 9 built page(s) agree on campaign identity (next-funnel \"SKINOFAB Adaptive Peptide Foundation\", API key consistent)",
     "SDK markup: 3 data-next-* name(s) not in the Campaign Cart 0.4.42 attribute index (advisory; the SDK does not read them): data-next-catalog-component, data-next-content, data-next-skeleton",
     "SDK markup checks passed on 9 built page(s)",
-    "All 11 campaign-owned script(s) loaded by built pages parse",
+    "All 13 campaign-owned script(s) loaded by built pages parse",
     "Built SDK meta tags checked in _site/apf-funnel/ for 9 page(s)",
-    "Page Kit build summary verified for \"apf-funnel\": 9 page(s) built, no build errors, shape warnings or asset warnings",
     "Built routes match CampaignSpec page routes (9/9 verified)",
     "Built output carries no needs-input markers, unverified urgency chrome, or template demo residue",
-    "Campaigns API key available via env:CAMPAIGNS_API_KEY",
     "Commerce catalog sharedFrontmatterVocabulary loaded",
     "Template agentContract loaded for apollo",
     "Template brand/residue/pricing contract loaded for apollo",
@@ -99,7 +330,6 @@
     "report.proof_policy loaded: browser=true, typed_card_depth=common, order_path_depth=common",
     "Theme gate passed: Brand theme is applied after next-core.css on commerce pages.",
     "Campaign CSS has no display:none rules on apollo pricing surfaces",
-    "Polish gate passed: structured evidence is current for this build.",
     "Hidden eager-media checkpoint passed: package-owned page-load evidence is complete and current."
   ],
   "derived": {
@@ -188,17 +418,30 @@
         "id": "page_kit.store_profile",
         "scope": "page_kit.store_profile",
         "status": "pass",
-        "code": "page_kit.store_profile.pass",
-        "reason": "Target Store Profile exactly matches the CampaignSpec for all nine governed fields.",
+        "code": "page_kit.store_profile.target_only",
+        "reason": "Target Store Profile has target-only value(s): store_phone, store_phone_tel.",
         "waivable": false,
         "subject": {
           "public_route_slug": "apf-funnel",
           "target_path": "_data/campaigns.json"
         },
         "state": {
-          "discrepancies": []
+          "discrepancies": [
+            {
+              "field": "store_phone",
+              "kind": "target_only",
+              "spec": "",
+              "target": "+1 (563) 239-5520"
+            },
+            {
+              "field": "store_phone_tel",
+              "kind": "target_only",
+              "spec": "",
+              "target": "tel:+15632395520"
+            }
+          ]
         },
-        "state_fingerprint": "sha256:07a07ea0fa248cb0e6493357af1164ac6835e6753e7e32b05fe1037d137e4e73",
+        "state_fingerprint": "sha256:272fd733b55c3f7db09fb6394599346f521af57c37a99e1be483403a86ccf923",
         "matrix": [
           {
             "field": "store_name",
@@ -251,21 +494,24 @@
           },
           {
             "field": "store_phone",
-            "kind": "both_empty",
+            "kind": "target_only",
             "spec": "",
-            "target": "",
-            "severity": "clean"
+            "target": "+1 (563) 239-5520",
+            "severity": "warning"
           },
           {
             "field": "store_phone_tel",
-            "kind": "both_empty",
+            "kind": "target_only",
             "spec": "",
-            "target": "",
-            "severity": "clean"
+            "target": "tel:+15632395520",
+            "severity": "warning"
           }
         ],
         "blocker_fields": [],
-        "warning_fields": [],
+        "warning_fields": [
+          "store_phone",
+          "store_phone_tel"
+        ],
         "waiver": null,
         "waiver_assessment": {
           "active": null,
@@ -387,9 +633,9 @@
         "waiver": null,
         "status": "pass",
         "code": "built_output.script_syntax.pass",
-        "reason": "All 11 campaign-owned script(s) loaded by 9 built page(s) parse.",
+        "reason": "All 13 campaign-owned script(s) loaded by 9 built page(s) parse.",
         "findings": [],
-        "scripts_scanned": 11,
+        "scripts_scanned": 13,
         "scripts_unresolved": [],
         "scripts_outside_site": [],
         "warned": [],
@@ -419,7 +665,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 26430,
+          "bytes": 29618,
           "candidates": 0
         },
         "members": [],
@@ -431,7 +677,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -455,7 +701,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 63172,
+          "bytes": 69654,
           "candidates": 0
         },
         "members": [],
@@ -467,7 +713,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -491,7 +737,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 59218,
+          "bytes": 60719,
           "candidates": 26
         },
         "members": [],
@@ -503,7 +749,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -527,7 +773,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 15274,
+          "bytes": 16709,
           "candidates": 0
         },
         "members": [],
@@ -539,7 +785,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -563,7 +809,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 24794,
+          "bytes": 26790,
           "candidates": 0
         },
         "members": [],
@@ -575,7 +821,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -599,7 +845,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 23810,
+          "bytes": 25795,
           "candidates": 0
         },
         "members": [],
@@ -611,7 +857,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -635,8 +881,8 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 33952,
-          "candidates": 8
+          "bytes": 35695,
+          "candidates": 10
         },
         "members": [],
         "accept_eligible": false,
@@ -647,7 +893,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -671,7 +917,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 28013,
+          "bytes": 29933,
           "candidates": 0
         },
         "members": [],
@@ -683,7 +929,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -707,7 +953,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 28096,
+          "bytes": 30018,
           "candidates": 0
         },
         "members": [],
@@ -719,7 +965,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.496Z",
+        "measured_at": "2026-10-29T08:18:30.811Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -746,7 +992,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -778,7 +1024,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -810,7 +1056,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -842,7 +1088,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -876,7 +1122,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -906,7 +1152,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -933,7 +1179,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -963,7 +1209,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -978,7 +1224,7 @@
           "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
           "key": "anchor:offer"
         },
-        "state_fingerprint": "sha256:d430e9fd8caf311f3b7170323242d4290ad99c8964c0a107c6def8c8d2631299",
+        "state_fingerprint": "sha256:e0bfac998abd7a58bb3657c4438275fbb3aed9ad08935fa348f90b2e557f5d4d",
         "observation": {
           "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
           "target": "offer",
@@ -993,7 +1239,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1023,7 +1269,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1053,7 +1299,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1080,7 +1326,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1112,7 +1358,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1144,7 +1390,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1176,7 +1422,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1210,7 +1456,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1240,7 +1486,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1267,7 +1513,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1297,7 +1543,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1327,7 +1573,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1357,7 +1603,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1384,7 +1630,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1416,7 +1662,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1448,7 +1694,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1480,7 +1726,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1514,7 +1760,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1544,7 +1790,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1571,7 +1817,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1601,7 +1847,37 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:anchor:sf-supply-title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "anchor:sf-supply-title"
+        },
+        "state_fingerprint": "sha256:037cbfd5aa46b084896fffad6d4160cee8a689ccf4429408baa1b724fda3d566",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "target": "sf-supply-title",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1631,7 +1907,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1658,7 +1934,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1690,7 +1966,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1722,7 +1998,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1754,7 +2030,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1788,7 +2064,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1818,7 +2094,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1845,7 +2121,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1875,7 +2151,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1890,7 +2166,7 @@
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:c2e94a737c7c83984ed5e16445e9cd12782c0c160294be6421b9981e96623140",
+        "state_fingerprint": "sha256:ba9e4455a3c30ad841ed97cd9aaa8c3f6135a726b52bc79ecbcbf07c0de21d32",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "target": "",
@@ -1905,7 +2181,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1932,7 +2208,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1964,7 +2240,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1996,7 +2272,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2028,7 +2304,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2062,7 +2338,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2092,7 +2368,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2119,7 +2395,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2149,7 +2425,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2164,7 +2440,7 @@
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:0931f51352bf4bd1c619216f0c0ad5674cfbf9776bf3a7d283159c1d0252d0ef",
+        "state_fingerprint": "sha256:4fa3d4e33cab1fa24c21dc4f52af677cd28dbca2f3ebc38b254d813a15377662",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "target": "",
@@ -2179,7 +2455,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2206,7 +2482,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2238,7 +2514,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2270,7 +2546,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2302,7 +2578,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2336,7 +2612,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2366,7 +2642,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2393,7 +2669,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2423,7 +2699,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2450,7 +2726,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2482,7 +2758,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2514,7 +2790,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2546,7 +2822,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2580,7 +2856,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2610,7 +2886,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2637,7 +2913,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2667,7 +2943,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2682,7 +2958,7 @@
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:019e994edf3bbe5aa8098c146b15d912200367b9a4fb482cf01df43e035c7ab7",
+        "state_fingerprint": "sha256:dffe4e34a38383c6ebe21b53b25afe9d6c1fe4187f921e387010b68cf1567534",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "target": "",
@@ -2697,7 +2973,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2724,7 +3000,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2756,7 +3032,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2788,7 +3064,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2820,7 +3096,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2854,7 +3130,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2884,7 +3160,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2911,7 +3187,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2941,7 +3217,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2956,7 +3232,7 @@
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "key": "anchor:"
         },
-        "state_fingerprint": "sha256:67e1ad146725ce7109fbf2d87de5e0728ec70869125d9824118e89b27143d934",
+        "state_fingerprint": "sha256:ae1500b20a47562cd9f466eec485f9f106c754c6cfc32e100e895ec87ddc9f62",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "target": "",
@@ -2971,7 +3247,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2998,7 +3274,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3030,7 +3306,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3062,7 +3338,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3094,7 +3370,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3128,7 +3404,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3158,7 +3434,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3185,7 +3461,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3215,7 +3491,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-29T06:09:19.613Z",
+        "measured_at": "2026-10-29T08:18:30.878Z",
         "producer": "campaigns-os doctor"
       }
     ],
@@ -3409,11 +3685,11 @@
     "build_output_fingerprint": {
       "root": "_site/apf-funnel/",
       "algorithm": "sha256-manifest/v1",
-      "value": "sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3",
-      "file_count": 186,
+      "value": "sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7",
+      "file_count": 195,
       "excluded": [],
       "recorded": "sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3",
-      "status": "pass"
+      "status": "stale"
     },
     "live_campaign_refs": {
       "status": "not_run",
@@ -3469,41 +3745,60 @@
       "required_actions": []
     },
     "polish_gate": {
-      "status": "pass",
-      "code": "polish.evidence_current",
-      "reason": "Polish evidence is current, structured, and produced by next-campaigns-polish.",
+      "status": "blocked",
+      "code": "polish.output_drift",
+      "reason": "Built output no longer matches stages.assembly.build_fingerprint (recorded sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3, current sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7); polish evidence is bound to a build that no longer exists. Re-run build, then next-campaigns-polish before QA.",
       "build_fingerprint": "sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3",
+      "current_output_fingerprint": "sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7",
       "source_build_fingerprint": "sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3",
       "source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
-      "current_source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
       "assembly_source_package_material_fingerprint": "sha256:952ccdb4c5623f76c4b27a8f6fe4980d6e6d9e62f6492325c8122a039ee4f08b",
-      "performed_by": "next-campaigns-polish",
       "waiver": null,
-      "warnings": [],
+      "required_actions": [
+        {
+          "id": "rerun_build",
+          "kind": "skill",
+          "command": "next-campaigns-build",
+          "description": "Re-run Build (page-kit build) and record the current output fingerprint (doctor --json derived.build_output_fingerprint.value) on stages.assembly.build_fingerprint before Polish."
+        },
+        {
+          "id": "run_polish",
+          "kind": "skill",
+          "command": "next-campaigns-polish",
+          "description": "Run the distinct Polish stage and record stages.polish.performed_by, source_build_fingerprint, source_package_material_fingerprint when available, completed_at, and structured evidence."
+        }
+      ],
       "owned_checkpoint_id": "polish.hidden_eager_media",
       "owned_checkpoint_status": "pass",
       "owned_checkpoint_only": false
     }
   },
   "next": {
-    "stage": "qa",
-    "status": "ready_with_warnings",
+    "stage": "doctor-blocked",
+    "status": "blocked",
     "stage_blocked": false,
-    "owner": "qa",
-    "default_skill": "next-campaigns-qa",
-    "command": "npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json --context ./.campaign-runtime/build-context.json --report ./.campaign-runtime/assembly-report.json",
-    "reason": "QA recorded zero executed order paths, so a declared \"common\" order-path depth is not proved. A `--test-order off` run is a diagnostic, not purchase proof; re-run QA at the declared depth or change the declared depth deliberately.",
+    "owner": "operator",
+    "default_skill": "next-campaigns-os",
+    "command": "npx --no-install campaigns-os doctor --packet ./campaign-runtime.build.json",
+    "reason": "Doctor reported 2 blocker(s); resolve them before any stage runs.",
     "actions": [
-      "Run npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json --context ./.campaign-runtime/build-context.json --report ./.campaign-runtime/assembly-report.json."
+      "Resolve packet blockers before assembly.",
+      "Built output no longer matches stages.assembly.build_fingerprint (recorded sha256:7790259b5015ab00e067af8c9024ac11278ec0839b0b1bdae1e209748b79a3b3, current sha256:802218958db503fbea7bee405b502d6e0fdfaf7d476efc9c180cb85a01018aa7); polish evidence is bound to a build that no longer exists. Re-run build, then next-campaigns-polish before QA. Run next-campaigns-polish and record structured evidence before deploy/QA handoff."
     ],
-    "blocked_stages": []
+    "blocked_stages": [
+      "setup",
+      "build",
+      "polish",
+      "deploy",
+      "qa"
+    ]
   },
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "doctor",
-    "total": 5,
+    "total": 11,
     "counts": {
-      "caused_by_change": 0,
+      "caused_by_change": 6,
       "pre_existing": 5,
       "test_environment": 0,
       "upstream_drift": 0,
@@ -3511,5 +3806,9 @@
     },
     "prior_run_id": "run_1793201833092_0994c5d5",
     "comparison": "prior_run"
-  }
+  },
+  "stale": true,
+  "stale_marked_by": "record deploy",
+  "stale_marked_at": "2026-10-29T08:20:42.978Z",
+  "stale_reason": "stages.deploy was recorded after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
 }
