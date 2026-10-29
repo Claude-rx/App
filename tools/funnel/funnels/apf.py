@@ -46,7 +46,7 @@ PACKS = [
      'gifts': ['blender', 'mystery'], 'name': '2 bottles', 'supply': 'About two months', 'tab': '2 months’ supply'},
     {'key': 'apf-3-gifts', 'bundle': 'apf-3', 'package': 3, 'bottles': 3, 'price': 75.00, 'compare': 141.00,
      'gifts': ['blender', 'mystery', 'brush'], 'name': '3 bottles', 'supply': 'About three months', 'selected': True,
-     'tab': 'Buy 2, get 1 FREE'},   # true as priced: 3 bottles $75, 2 single bottles $78 (the owner, 29 Oct 2026)
+     'tab': 'Best value'},   # $25 a bottle; no "buy 2, get 1 free" beside the $57 2-pack (the owner, 29 Oct 2026)
 ]
 GIFTS = {'blender': ('SKINOFAB Blender brush', 9.00), 'mystery': ('Mystery gift', 15.00), 'brush': ('The Lymphatic Brush', 24.95)}
 

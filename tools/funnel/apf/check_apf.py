@@ -93,6 +93,12 @@ FORBIDDEN = [
     (r'\blowest price we will ever\b', 'a "lowest ever" price (the downsells go lower)'),
     (r'\blowest single-bottle price anywhere\b', 'a "lowest anywhere" price on offer 2 (its downsell goes lower)'),
     (r'\bsix for the price of three\b', '"six for the price of three" (no shown price backs it)'),
+    # live review 7, B1 (the owner, 29 Oct 2026, before the ads): the 3-bottle pack is "3 bottles for $75, $25 a bottle";
+    # "buy 2, get 1 free" beside the $57 2-bottle pack made the free bottle cost $18
+    (r'\bbuy\s+(?:2|two),?\s+get\s+(?:1|one)\b', '"buy 2, get 1 free" (the 2-bottle pack costs $57)'),
+    (r'\b(?:3rd|third)\s+(?:bottle\s+)?(?:is\s+)?free\b', '"the 3rd bottle free" (the 2-bottle pack costs $57)'),
+    (r'\bpay\s+for\s+(?:2|two)\b', '"pay for 2" (the 2-bottle pack costs $57)'),
+    (r'\+\s?1\s+free\b', '"+1 free" (the 2-bottle pack costs $57)'),
 ]
 # SPF may only be mentioned as what the foundation does not have, or as her own sunscreen under it
 SPF_OK = re.compile(r"(?:no|not an?|has no|without|doesn[’']t have|does it have|left)\s+SPF|SPF\s+out\b|SPF\?|"

@@ -224,9 +224,9 @@ def pack_cards():
 
     for n, wb, name in ((1, False, 'pack-1'), (2, False, 'pack-2'), (3, True, 'pack-3'), (6, True, 'pack-6')):
         save(scene(n, wb, 900, 'white'), name, size=700)
-    # the sales page's 3-pack: the buy-2-get-1-free ribbon over its three badges (the owner, 29 Oct 2026: "add the offer
-    # of buy 2 get one free"; true as priced: 3 bottles are $75, 2 single bottles $78), the scene a little smaller
-    # under them, and a "+1 FREE" tag beside the third bottle's cap (never on a label)
+    # the sales page's 3-pack: a "3 bottles for $75" ribbon over its three badges, the scene a little smaller under them,
+    # and a "$25 a bottle" tag beside the third bottle's cap (never on a label). (It said "buy 2, get 1 free" until the
+    # owner chose, 29 Oct 2026, to drop that claim: the $57 2-bottle pack beside it made it untrue, live review 7.)
     k, A, s3 = 0.86, 1050, 1080 / 900
     items = [(bot, 270, 670, 470), (bot, 630, 670, 470), (bot, 450, 695, 500), (brush, 250, 878, 135), (case, 650, 884, 165)]
     im = stage(1080, [(o, 540 + (x * s3 - 540) * k, A - (A - y * s3) * k, h * s3 * k) for o, x, y, h in items], 'warm')
@@ -237,7 +237,7 @@ def pack_cards():
     d.polygon([(x1 + 34, y0 + 10), (x1 - 6, y0 + 10), (x1 - 6, y1 + 10), (x1 + 34, y1 + 10), (x1 + 34 - notch, (y0 + y1) / 2 + 10)], fill=(150, 124, 74))
     d.rounded_rectangle((x0, y0, x1, y1), radius=6, fill=INK)
     d.line((x0 + 14, y0 + 9, x1 - 14, y0 + 9), fill=GOLD, width=2); d.line((x0 + 14, y1 - 9, x1 - 14, y1 - 9), fill=GOLD, width=2)
-    f = P.sans(58, 'Bold'); a, b = 'BUY 2, GET 1 ', 'FREE'
+    f = P.sans(58, 'Bold'); a, b = '3 BOTTLES FOR ', '$75'
     wa, wb = d.textlength(a, font=f), d.textlength(b, font=f)
     tx = (x0 + x1) / 2 - (wa + wb) / 2
     d.text((tx, (y0 + y1) / 2 + 2), a, font=f, fill=PAPER, anchor='lm'); d.text((tx + wa, (y0 + y1) / 2 + 2), b, font=f, fill=GOLD, anchor='lm')
@@ -253,7 +253,7 @@ def pack_cards():
     d.text((540, 256), 'in Korea', font=P.serif(29, 'Bold'), fill=INK, anchor='ms')
     seal = Image.open(OUT / 'guarantee-seal.png').convert('RGBA'); seal.thumbnail((184, 184), Image.LANCZOS)
     im.paste(seal, (1080 - 58 - seal.width, 236 - seal.height // 2), seal)
-    tag = Image.new('L', (4 * 120, 4 * 120), 0); ImageDraw.Draw(tag).ellipse((0, 0, 479, 479), fill=255)   # the +1 FREE tag
+    tag = Image.new('L', (4 * 120, 4 * 120), 0); ImageDraw.Draw(tag).ellipse((0, 0, 479, 479), fill=255)   # the $25 a bottle tag
     tag = tag.resize((120, 120), Image.LANCZOS)
     tx, ty = 852, 430
     sh = Image.new('L', im.size, 0); sh.paste(tag, (tx - 60 + 4, ty - 60 + 6)); sh = sh.filter(ImageFilter.GaussianBlur(6))
@@ -261,8 +261,8 @@ def pack_cards():
     im.paste(Image.new('RGB', (120, 120), GOLD), (tx - 60, ty - 60), tag)
     d = ImageDraw.Draw(im)
     d.ellipse((tx - 52, ty - 52, tx + 52, ty + 52), outline=INK, width=2)
-    d.text((tx, ty - 6), '+1', font=P.sans(36, 'Bold'), fill=INK, anchor='ms')
-    d.text((tx, ty + 26), 'FREE', font=P.sans(26, 'Bold'), fill=INK, anchor='ms')
+    d.text((tx, ty - 2), '$25', font=P.sans(38, 'Bold'), fill=INK, anchor='ms')
+    d.text((tx, ty + 24), 'A BOTTLE', font=P.sans(17, 'Bold'), fill=INK, anchor='ms')
     save(im, 'offer-3', size=1080)
     save(ground(bottle(1080)), 'bottle', size=1080)
 

@@ -23,8 +23,8 @@ meta_tags:
 # tools/funnel/apf/copy_deck.py; tools/funnel/apf/check_apf.py holds every price here to the live campaign and
 # every claim to the rules: adapts to your tone (never every tone), designed not to settle, no SPF, no study, no
 # doctor, no countdown, every AI portrait labelled.
-offer_bar: "BUY 2, GET 1 FREE + a FREE Lymphatic Brush · Free shipping · 30-day money-back guarantee"
-offer_bar_short: "Buy 2, get 1 FREE"
+offer_bar: "3 BOTTLES FOR $75 + a FREE Lymphatic Brush · Free shipping · 30-day money-back guarantee"
+offer_bar_short: "3 bottles for $75"
 hero:
   eyebrow: "For skin after 45"
   headline: "Even, fresh skin in about a minute. <em>No shade to guess.</em>"
@@ -37,8 +37,9 @@ hero:
     - "<strong>30-day money-back guarantee,</strong> even opened."
   trust: ["4.8 out of 5 from 9,855 reviews at our earlier store", "Formulated in Korea", "One-time purchase, free shipping"]
   button: "CHOOSE MY PACK ↓"
-  # the buy-2-get-1-free offer (the owner, 29 Oct 2026), true as priced: 3 bottles are $75, 2 single bottles $78
-  deal: "<strong>Buy 2, get 1 FREE</strong> · 3 bottles for $75, less than two single bottles ($78)"
+  # the 3-bottle pack at its price per bottle (the owner, 29 Oct 2026, before the ads: no "buy 2, get 1 free", which the
+  # $57 2-bottle pack beside it made untrue; live review 7, B1)
+  deal: "<strong>3 bottles for $75</strong> · $25 a bottle, with a free Lymphatic Brush"
   note: "$25 a bottle in the 3-pack · Free shipping · Pay with card, PayPal, Apple Pay, Klarna or Link"
   image: "images/sf/wow.jpg"
   image_alt: "A woman in her late fifties: white foundation dots on one side of her face, the other side blended into her own tone"
@@ -58,7 +59,7 @@ guarantee:
 # the packs: campaign packages 6, 7, 8 (one-time, free shipping); the crossed-out price is the store's $47 times the bottles
 offer:
   title: "Choose your pack"
-  lead: "<strong>Buy 2, get 1 FREE</strong> in the 3-bottle pack, with the free Lymphatic Brush. Every pack is a one-time purchase and ships free."
+  lead: "<strong>3 bottles for $75</strong>, $25 a bottle, with the free Lymphatic Brush. Every pack is a one-time purchase and ships free."
   button: "GET MY FOUNDATION"
   trust: ["Free shipping", "Ships in 1 business day", "Secure checkout", "30-day money-back guarantee"]
   once: "One-time purchase. Nothing renews, and nothing is added at checkout: shipping is free."
@@ -88,17 +89,16 @@ packs:
   - id: "apf-3"
     package: 3
     name: "3 bottles"
-    short: "3 bottles · Buy 2, get 1 FREE"
-    supply: "Pay for 2, the 3rd is FREE · about three months · $25 a bottle"
+    short: "3 bottles · $25 a bottle"
+    supply: "About three months · $25 a bottle"
     price: "$75"
     compare: "$141"
     save: "SAVE $66"
-    tab: "Buy 2, get 1 FREE"
+    tab: "Best value"
     deal: true
     selected: true
-    label: "3 bottles (buy 2, get 1 free) with 3 free gifts, free shipping"
+    label: "3 bottles with 3 free gifts, free shipping"
     gifts:
-      - { image: "images/sf/pack-1.jpg", name: "3rd bottle FREE", value: "$39" }
       - { image: "images/sf/brush-card.jpg", name: "FREE Lymphatic Brush + case", value: "$24.95" }
       - { image: "images/sf/gift-blender.jpg", name: "FREE SKINOFAB Blender sponge", value: "$9" }
       - { image: "images/sf/gift-mystery.jpg", name: "FREE Mystery gift", value: "$15" }
@@ -268,17 +268,17 @@ guarantee_section:
   why: "We can promise this because of what 9,855 reviews say about it. Read them above, then decide in your own light."
 value:
   eyebrow: "Your launch offer"
-  title: "Buy 2, get the 3rd bottle FREE"
+  title: "3 bottles for $75, the brush and gifts free"
   stack:
-    - { item: "3 bottles of Adaptive Peptide Foundation: pay for 2, the 3rd is free (about three months)", value: "$141" }
+    - { item: "3 bottles of Adaptive Peptide Foundation (about three months)", value: "$141" }
     - { item: "The Lymphatic Brush with its travel case", value: "$24.95" }
     - { item: "The SKINOFAB Blender sponge", value: "$9" }
     - { item: "A mystery gift from our range", value: "$15" }
     - { item: "Free shipping, tracked", value: "included" }
     - { item: "30-day money-back guarantee", value: "included" }
   total: { item: "Total value", value: "$189.95" }
-  today: { item: "Buy 2, get 1 FREE, today", value: "$75" }
-  math: "Two single bottles cost $78 here. The 3-bottle pack is $75: you pay less than for two, and the third bottle, the brush and both gifts come free."
+  today: { item: "Your price today", value: "$75" }
+  math: "That is $25 a bottle: one bottle is $39 here and $47 bought once in our store. The brush and both gifts come free."
   why_now: "<strong>Why the 3-bottle pack is only here:</strong> our store has no 3-bottle pack, and none of its foundation packs comes with the Lymphatic Brush; one bottle there is $47 bought once. The 3-bottle pack with the free brush is made for this launch. There is no countdown on this page, and no pack costs more than it says here."
 scarcity:
   title: "What is limited"
@@ -649,7 +649,7 @@ closing:
       <div>
         <p class="sf-eyebrow">{{ value.eyebrow }}</p>
         <h2 class="sf-h2 sf-h2--big">{{ value.title }}</h2>
-        <img src="{{ 'images/sf/offer-3.jpg' | campaign_asset }}" alt="Buy 2, get 1 free: three bottles of Adaptive Peptide Foundation, the third marked free, with the free Lymphatic Brush and its case, under three badges: free Lymphatic Brush and 2 gifts, formulated in Korea, 30-day money-back guarantee" width="1080" height="1080" loading="lazy" decoding="async" class="sf-value__img">
+        <img src="{{ 'images/sf/offer-3.jpg' | campaign_asset }}" alt="3 bottles for $75: three bottles of Adaptive Peptide Foundation, $25 a bottle, with the free Lymphatic Brush and its case, under three badges: free Lymphatic Brush and 2 gifts, formulated in Korea, 30-day money-back guarantee" width="1080" height="1080" loading="lazy" decoding="async" class="sf-value__img">
         <ul class="sf-stack">
           {% for s in value.stack %}<li><span>{{ s.item }}</span><span>{{ s.value }}</span></li>{% endfor %}
           <li class="sf-stack__total"><span>{{ value.total.item }}</span><span>{{ value.total.value }}</span></li>
