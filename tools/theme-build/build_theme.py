@@ -722,7 +722,12 @@ header_html = slots.render(frag_html(hdr_nodes, 'index.html', slots))
 write('partials/header.html', "{# SKINOFAB header: design markup (announcement bar, navigation, mobile drawer). Cart opens the Spark side cart. #}\n" + header_html + '\n')
 slots = Slots()
 ftr_nodes = [k for k in hsoup.body.find_all(recursive=False) if 'shopify-section-group-group-footer' in ' '.join(k.get('class', []))]
-write('partials/footer.html', "{# SKINOFAB footer: design markup. #}\n" + slots.render(frag_html(ftr_nodes, 'index.html', slots)) + '\n')
+# "Your privacy choices" beside the policies (live review 11: the privacy policy promises a privacy choices link; the
+# page is /data-sharing-opt-out/, whose opt-out tools/persona/company.py makes work)
+footer_html = slots.render(frag_html(ftr_nodes, 'index.html', slots))
+footer_html, n_pc = re.subn(r'(<a href="/cookie-policy/">Cookie policy</a>)(</nav>)', r'\1<a href="/data-sharing-opt-out/">Your privacy choices</a>\2', footer_html, count=1)
+assert n_pc == 1, 'the footer policies changed: place the privacy choices link again'
+write('partials/footer.html', "{# SKINOFAB footer: design markup. #}\n" + footer_html + '\n')
 
 # ---------------------------------------------------------------- 7. page families
 MAIN_OPEN = lambda m: str(m).split('>', 1)[0] + '>'

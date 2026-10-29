@@ -54,12 +54,11 @@ RULES = [
     # TikTok's in the advertising section, in the same form, and AppLovin among the third parties of that purpose
     (r'(?s)(<h4>TikTok conversion tracking \(TikTok Pixel\)</h4>(?:(?!<details).)*?</details>\n)(?!<details class="legalDoc__accordion" data-sf-applovin>)', '\\1' + '<details class="legalDoc__accordion" data-sf-applovin>\n<summary>\n<figure>\n\n</figure>\n<div>\n<h4>AppLovin conversion tracking (Axon pixel)</h4>\n<div class="accordion__meta">\n<p class="meta__company"><span class="sr-only">Company: </span>AppLovin Corporation</p>\n<p class="meta__location"><span class="sr-only">Place of processing: </span>United States</p>\n<p class="meta__keys"><span class="sr-only">Personal Data processed: </span> Trackers +1</p>\n</div>\n</div>\n</summary>\n<div class="accordion__body">\n<p>AppLovin conversion tracking (Axon pixel) is an analytics and behavioral targeting service provided by AppLovin Corporation that connects data from the AppLovin advertising network with actions performed on this Application. The Axon pixel tracks page views, products viewed, items added to the cart, checkouts started and purchases, so that ads in the AppLovin network can be measured and shown to groups of Users on the base of their past use of this Application.</p>\n<div class="body__details-box">\n<h5>Personal Data processed:</h5>\n<ul>\n<li>Trackers</li>\n<li>Usage Data</li>\n</ul>\n<h5>Service provided by:</h5>\n<ul>\n<li>AppLovin Corporation (United States) – <a href="https://www.applovin.com/privacy/" rel="noopener noreferrer" target="_blank">Privacy Policy</a></li>\n</ul>\n<h5>Category of Personal Information collected according to the CCPA</h5>\n<ul>\n<li>internet or other electronic network activity information</li>\n</ul>\n<h5>This processing constitutes:</h5>\n<ul>\n<li>a Sale in the United States</li>\n</ul>\n</div>\n</div>\n</details>\n', True),
     (r'TikTok Inc\.,(?! AppLovin Corporation,)', 'TikTok Inc., AppLovin Corporation,', True),
-    # "Your privacy choices" (live review 11: the privacy policy promises a privacy choices link, and no page had one): the
-    # store footer links the opt-out page, and that page's opt-out works. The export's form was a Shopify privacy app's
-    # empty container (it needs the app's script, which NEXT has not got): in its place one button opts this browser out
-    # (a cookie for every skinofab.com host and this browser's storage, which the funnels' pixel gate reads like GPC), and
-    # a ready-made email opts out the customer account
-    (r'(<a href="/cookie-policy/">Cookie policy</a>)(</nav>)', '\\1<a href="/data-sharing-opt-out/">Your privacy choices</a>\\2', True),
+    # "Your privacy choices" (live review 11: the privacy policy promises a privacy choices link, and no page had one; the
+    # store footer links it, tools/theme-build/build_theme.py): the opt-out page's form was a Shopify privacy app's empty
+    # container (it needs the app's script, which NEXT has not got). In its place one button opts this browser out (a
+    # cookie for every skinofab.com host and this browser's storage, which the funnels' pixel gate reads like GPC), and a
+    # ready-made email opts out the customer account
     (r'<div data-description=\'[^\']*\'[^>]*id="pc--optOutFormContainer"></div>',
      '<div class="sf-optout" data-sf-optout>'
      '<h2>Opt out on this browser</h2>'
