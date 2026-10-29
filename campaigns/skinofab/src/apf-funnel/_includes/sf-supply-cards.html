@@ -5,10 +5,11 @@
   always the card she pressed, while a proxied click (the closing card's button) adds the selection. The card itself
   is the SDK's click target (it selects the card); its Buy now is the one button, so the card carries no button role
   of its own (a button inside a button, funnel review). Each card's price is the SDK's (bundle display, scoped to the
-  card); the crossed-out price, the per-day and per-bottle figures are the page's (tools/funnel/apf/offer_pages.py,
+  card); the crossed-out price (what the store charges for the same bottles bought once, named under it: compare_note),
+  the per-day and per-bottle figures are the page's (tools/funnel/apf/offer_pages.py,
   held to the campaign by check_apf.py). The closing card's picture follows the selected card (data-sf-image).
     supply: { title, lede, tiers[] { id, items_json, image, alt, badge, name, deal, per_day, per_bottle, price,
-              compare, save, gift, selected, button }, guarantee, charged, decline }
+              compare, compare_note, save, gift, selected, button }, guarantee, charged, decline }
   Reads from the page's frontmatter (supply).
 {%- endcomment -%}
 <section class="section cc-sm sf-supply-sec" aria-labelledby="sf-supply-title">
@@ -29,6 +30,7 @@
           <p class="sf-supply__perday">{{ t.per_day }}<small>{{ t.per_bottle }}</small></p>
           <p class="sf-supply__stars"><span class="sf-co-tp sf-co-tp--sm" role="img" aria-label="4.8 out of 5">{% campaign_include 'sf-stars.html' n=5 %}</span> 4.8 · 9,855 reviews, earlier store</p>
           <p class="sf-supply__price"><s>{{ t.compare }}</s> <strong><span data-next-bundle-display="price">{{ t.price }}</span></strong></p>
+          {%- if t.compare_note %}<p class="sf-supply__was">{{ t.compare_note }}: {{ t.compare }}</p>{% endif %}
           <button type="button" class="button cc-xl sf-supply__buy" data-next-upsell-action="add" data-sf-supply-buy>{{ t.button }}</button>
           <p class="sf-supply__charged">{{ supply.charged }}</p>
         </div>

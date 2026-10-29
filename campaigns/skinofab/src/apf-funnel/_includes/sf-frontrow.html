@@ -4,8 +4,8 @@
   `count` is a floor of FrontrowMD's live count ("700+" when it read 704): check_apf.py reads the live count and fails the
   build if it falls below it. Nothing else of FrontrowMD's is restated, and nothing links out. {%- endcomment -%}
 {%- if count -%}
-<div class="sf-clin">
-  <img src="{{ 'images/sf/clinicians-choice.jpg' | campaign_asset }}" alt="Clinicians’ Choice" width="173" height="96" loading="lazy" decoding="async">
+<div class="sf-clin-wrap"><div class="sf-clin">
+  <img src="{{ 'images/sf/clinicians-choice.jpg' | campaign_asset }}" alt="Clinicians’ Choice" width="170" height="84" loading="lazy" decoding="async">
   <p><strong>{{ count }} clinicians</strong> share this on <em>FrontrowMD</em> without compensation.</p>
-</div>
+</div></div>
 {%- endif -%}

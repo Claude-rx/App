@@ -1,29 +1,37 @@
 """Offline checks of the Adaptive Peptide Foundation funnel, run by tools/build_store.sh after the funnel is deployed into
-the theme: they fail the build when a page drifts from the campaign, from its one-time terms or from the claims the brand
-may make.
+the theme: they fail the build when a page drifts from the campaign, from its refill or one-time terms or from the claims
+the brand may make.
 
 usage: python3 -I tools/funnel/apf/check_apf.py [<theme dir>]      (default: skinofab-theme)
 
 Reads the CampaignSpec (campaigns/skinofab/campaign-spec.apf.json, the live campaign as campaign_spec.py read it with
 FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the theme templates deploy_theme.py wrote. Checks:
   routes      every page is built, carries the SDK meta tags funnels/apf.py gives it, and links only to funnel routes
-  checkout    one card per checkout package, one selected, each card says it is bought once and names its gifts, and
-              shows its name and price before the SDK answers; the pay line by the buttons names every card; no coupon
+  checkout    one card per checkout package, one selected, each card says what it refills at (its price, every 28 days a
+              bottle: funnels/apf.py PACKS, and the campaign's own interval once the package recurs) and names its gifts, and
+              shows its name and price before the SDK answers; the pay line by the buttons gives every card's renewal,
+              "until you cancel", and the order button asks her to agree to the refills; no coupon
               box; no post-purchase voucher code anywhere on the page; the exit pop applies the exit offer; the
               guarantee right above the order button, the three featured reviews after it (never between the address
               and the payment), 8+ review cards each with the buyer's photo, the reviews' rating and where they are from
-  sales page  each pack's price is its package's, its crossed-out price the list price times its bottles, its saving
-              the difference, every checkout link names a checkout card, no disclaimer or illustration line anywhere
-  offer 1     the supply cards: each card's package is the page's, its price the package's, its crossed-out, per-bottle
-              and per-day prices arithmetic from the one-bottle price; the cards sit in an upsell-context selector inside
+  sales page  each pack's price is its package's, its renewal the same price every 28 days a bottle, no crossed-out price
+              and no saving on a pack (the store's own refills are lower, live review 8), every checkout link names a
+              checkout card, no disclaimer or illustration line anywhere
+  offer 1     the supply cards: each card's package is the page's, its price the package's, its crossed-out price the
+              store's one-time price for the same bottles (funnels/apf.py store_once), named, its per-bottle and per-day
+              prices arithmetic; the cards sit in an upsell-context selector inside
               the one offer, each card's Buy now the offer's add action (no hidden one), with a skip action; charged once
   offers 2-3  each offer's package and voucher are the campaign's; the fallback price is the voucher's price rounded
-              down to dollars, the crossed-out price the package's; charged once; the brush offers skip an order that
+              down to dollars, the crossed-out price the package's; charged once, it doesn't renew; the brush offers skip an order that
               already has a brush (the SKUs of the campaign's packages that include one), the foundation offers never
-  thank you   each package's line (by its SKU) says it was bought once; a package with the brush says so
+  thank you   each checkout package's line (by its SKU) gives its renewal, each offer package's says it was bought once;
+              a package with the brush says so
+  campaign    the checkout's packages recur at their own price, every 28 days a bottle, and no offer's package recurs
+              (APF_RECURRING_PENDING=1 lets a build through while the campaign is not switched yet: the pages may then
+              promise refills the campaign does not charge, never the other way round)
   host        each page sends other hosts to the funnel's; its policy links are on it
   theme       a template per page, marked GENERATED for this funnel, no Page Kit route left, every asset it names on disk
-  claims      none of the claims the brand may not make; nothing recurs; no countdown but the offers' own honest one
+  claims      none of the claims the brand may not make; no renewal wording on an offer page; no countdown but the offers' own honest one
               (js/sf-offer-timer.js: it declines the offer at 0:00 and says so); no disclaimer or illustration line (the owner's instruction); the
               reviews say where they are from; SPF is only ever mentioned as absent
 """
@@ -72,11 +80,7 @@ FORBIDDEN = [
     (r'\bnot\s+(?:a\s+)?(?:customer\s+)?photos?\b', 'a not-a-photo line'),
     (r'\bnot\s+an?\s+(?:endorsement|measurement)\b', 'a not-an-endorsement/measurement line'),
     (r'\bnot\s+to\s+scale\b', 'a not-to-scale line'),
-    # nothing in this funnel recurs: no renewal wording anywhere (the stick funnel's terms must not be copied in)
-    (r'\bevery\s+\d+\s+days\b', 'a renewal interval'),
-    (r'\bThen\s+\$\d', 'a "Then $X" renewal line'),
-    (r'\buntil you cancel\b', '"until you cancel"'),
-    (r'\bfirst charge\b', '"first charge" (nothing is charged again)'),
+    (r'\bfirst charge\b', '"first charge" (the offers are charged once, the packs refill at the same price)'),
     (r'\bevery review\b', '"every review" (the imported reviews are the published ones)'),
     (r'\bsave a further\b', '"a further" discount with no first one'),
     (r'\bfuller\b.{0,30}\bin seconds\b', 'instant plumping'),
@@ -103,6 +107,20 @@ FORBIDDEN = [
 # SPF may only be mentioned as what the foundation does not have, or as her own sunscreen under it
 SPF_OK = re.compile(r"(?:no|not an?|has no|without|doesn[’']t have|does it have|left)\s+SPF|SPF\s+out\b|SPF\?|"
                     r"your (?:daily |usual )?(?:SPF|sunscreen)|over your SPF|no[- ]SPF", re.I)
+# the offer pages sell one-time add-ons: no renewal wording there (the checkout's packs are the ones that refill)
+ONE_TIME_ONLY = [
+    (r'\bevery\s+\d+\s+days\b', 'a renewal interval on a one-time offer'),
+    (r'\bThen\s+\$\d', 'a "Then $X" renewal line on a one-time offer'),
+    (r'\buntil you cancel\b', '"until you cancel" on a one-time offer'),
+]
+OFFER_IDS = set(F.OFFER_PAGES)
+PACK_BY_REF = {p['package']: p for p in F.PACKS}
+PENDING = os.environ.get('APF_RECURRING_PENDING') == '1'
+
+
+def renew(p): return f"Then ${p['price']:.0f} every {p['every']} days"          # "Then $57 every 56 days"
+
+
 problems = []
 
 
@@ -160,7 +178,7 @@ for bid, items, attrs, body in cards:
     ref = json.loads(items)[0]['packageId']
     if ref not in pkgs: fail('checkout', f'card {bid} sells package {ref}, not a checkout package'); continue
     t = text(body)
-    if 'One-time' not in t: fail('checkout', f'card {bid}: not said to be bought once')
+    if ref in PACK_BY_REF and renew(PACK_BY_REF[ref]) not in t: fail('checkout', f'card {bid}: does not say "{renew(PACK_BY_REF[ref])}"')
     gifts_said(f'checkout card {bid}', pkgs[ref]['product_sku'], t)
 if re.search(r'data-next-coupon=', co): fail('checkout', 'a coupon box (post-purchase vouchers could be typed in)')
 exit_code = PAGES['checkout']['exit_intent']['offer_code']
@@ -175,7 +193,7 @@ g, btn = co.find('data-sf-guarantee-inline'), co.find('COMPLETE MY ORDER')
 # (the owner, 29 Oct 2026: the order button straight after the payment options, the guarantee line under it)
 pay = co.find('Step 4: Payment')
 if btn < 0 or pay < 0 or btn < pay: fail('checkout', 'no order button after the payment step')
-elif any(m in co[pay:btn] for m in ('data-sf-summary-box', 'data-sf-guarantee-inline', 'id="once-terms"')):
+elif any(m in co[pay:btn] for m in ('data-sf-summary-box', 'data-sf-guarantee-inline', 'id="refill-terms"')):
     fail('checkout', 'something stands between the payment options and the order button')
 if g < 0 or g < btn: fail('checkout', 'no guarantee line under the order button')
 cards_r = re.findall(r'<article class="sf-co-review">(.*?)</article>', co, re.S)
@@ -197,9 +215,18 @@ else:
     terms = json.loads(unescape(m.group(1)))
     if set(terms) != {c[0] for c in cards}: fail('checkout', f'pay line names {sorted(terms)}, the cards are {sorted(c[0] for c in cards)}')
     for bid, items, attrs, body in cards:
-        gifts_said(f'checkout pay line {bid}', pkgs[json.loads(items)[0]['packageId']]['product_sku'], terms.get(bid, ''))
+        ref = json.loads(items)[0]['packageId']
+        gifts_said(f'checkout pay line {bid}', pkgs[ref]['product_sku'], terms.get(bid, ''))
+        if ref in PACK_BY_REF:
+            p = PACK_BY_REF[ref]; want = f"${p['price']:.2f} every {p['every']} days for {p['bottles']} bottle"
+            if not terms.get(bid, '').startswith(want): fail('checkout', f'pay line {bid}: "{terms.get(bid)}", not "{want}…"')
     if co.count('data-sf-pay-terms=') < 2: fail('checkout', 'the pay line is not both above the express buttons and by the order button')
-if 'Nothing renews' not in co: fail('checkout', '"Nothing renews" missing by the order button')
+if 'until you cancel' not in text(co): fail('checkout', '"until you cancel" missing from the pay line')
+if 'you agree to Automatic Refills' not in text(co[co.find('Step 4: Payment'):]): fail('checkout', 'the order button does not ask her to agree to the refills')
+if 'id="refill-terms"' not in co or 'To skip or cancel' not in text(co): fail('checkout', 'no refill terms (how to skip or cancel) by the order button')
+# the summary's renewal line is the SDK's ({item.frequency}); an inline display:none on it kept it hidden (29 Oct 2026)
+_freq = re.search(r'<span data-next-show="item.isRecurring"([^>]*)>([^<]*)</span>', co)
+if not _freq or 'display:none' in _freq.group(1) or '{item.frequency}' not in _freq.group(2): fail('checkout', 'the order summary does not show the SDK\'s refill frequency')
 
 # the FrontrowMD "Clinicians' Choice" badge (the owner, 29 Oct 2026, as a badge with no link) on the sales page and the
 # checkout: its count is a floor of FrontrowMD's live count for the foundation's listing (product 4694, the store's
@@ -228,16 +255,19 @@ pp = html('offer')
 card_ids = {c[0] for c in cards}
 by_pkg = {int(json.loads(c[1])[0]['packageId']): c[0] for c in cards}
 seen = set()
-for m in re.finditer(r'<label class="sf-pack[^"]*" data-pack="([^"]+)" data-price="\$([\d.]+)" data-compare="\$([\d.]+)" '
-                     r'data-save="SAVE \$([\d.]+)" data-label="[^"]*" data-short="(\d+) bottles?[^"]*" data-package="(\d+)">', pp):
-    pack, price, compare, save, bottles, package = m.groups()
+for m in re.finditer(r'<label class="sf-pack[^"]*" data-pack="([^"]+)" data-price="\$([\d.]+)" data-every="([^"]+)" '
+                     r'data-renew="([^"]+)" data-label="[^"]*" data-short="(\d+) bottles?[^"]*" data-package="(\d+)">', pp):
+    pack, price, every, renewal, bottles, package = m.groups()
     seen.add(pack)
     if by_pkg.get(int(package)) != pack: fail('offer', f'pack {pack} names package {package}; the checkout card for it is {by_pkg.get(int(package))}'); continue
     p = pkgs[int(package)]
     if float(price) != float(p['price']): fail('offer', f'pack {pack}: {price}, campaign {money(p["price"])}')
-    if float(compare) != F.LIST_PRICE * int(bottles): fail('offer', f'pack {pack}: crossed-out ${compare}, not {F.LIST_PRICE} x {bottles} bottles')
-    if abs(float(save) - (float(compare) - float(price))) > 0.005: fail('offer', f'pack {pack}: saving ${save} is not ${compare} - ${price}')
-    gifts_said(f'offer pack {pack}', p['product_sku'], text(pp[m.end():pp.find('</label>', m.end())]))      # the pack's own card
+    want = PACK_BY_REF.get(int(package))
+    if not want or renewal != renew(want) or every != f"{want['every']} days": fail('offer', f'pack {pack}: renews "{renewal}" every "{every}", not "{renew(want) if want else "?"}"')
+    card = pp[m.end():pp.find('</label>', m.end())]
+    if renewal not in text(card): fail('offer', f'pack {pack}: its renewal is not on its card')
+    if re.search(r'<s>\$|SAVE \$', card.split('sf-gifts')[0]): fail('offer', f'pack {pack}: a crossed-out price or a saving (the store\'s own refills are lower)')
+    gifts_said(f'offer pack {pack}', p['product_sku'], text(card))      # the pack's own card
 if seen != card_ids: fail('offer', f'packs {sorted(seen)} are not the checkout cards {sorted(card_ids)}')
 for pack in re.findall(r'class="sf-pack[^"]*" data-pack="([^"]+)"', pp):
     if pack not in card_ids: fail('offer', f'pack {pack} is no checkout card')
@@ -265,7 +295,10 @@ for bid, items, attrs, body in cards1:
     bottles = int(mb.group(1))
     if money(price) not in t: fail('offer-1', f'card {bid}: fallback price {money(price)} missing')
     mc = re.search(r'\$([\d,.]+) ' + re.escape(money(price)), t)
-    if not mc or float(mc.group(1).replace(',', '')) != one * bottles: fail('offer-1', f'card {bid}: crossed-out price is not {bottles} x {money(one)}')
+    if not mc or float(mc.group(1).replace(',', '')) != F.store_once(bottles): fail('offer-1', f'card {bid}: crossed-out price is not the store\'s one-time {money(F.store_once(bottles))} for {bottles} bottles')
+    if 'Our store, bought once' not in t: fail('offer-1', f'card {bid}: the crossed-out price does not say whose it is')
+    ms = re.search(r'SAVE (\d+)%', t)
+    if not ms or int(ms.group(1)) != round((F.store_once(bottles) - price) / F.store_once(bottles) * 100): fail('offer-1', f'card {bid}: its saving is not against the store\'s one-time price')
     mp = re.search(r'\$([\d.]+) a bottle', t)
     if not mp or abs(float(mp.group(1)) - price / bottles) > 0.005: fail('offer-1', f'card {bid}: per-bottle price is not {money(price)} / {bottles}')
     md = re.search(r'\$([\d.]+) a day', t)
@@ -289,7 +322,7 @@ for pid in ('offer-2', 'offer-2b', 'brush-offer', 'brush-offer-b'):
     if f'>{money(pkg["price"])}<' not in h: fail(pid, f'crossed-out price {money(pkg["price"])} missing')
     t = text(h)
     if 'charged once' not in t.lower(): fail(pid, 'not said to be charged once')
-    if 'Nothing renews' not in t: fail(pid, '"Nothing renews" missing')
+    if 'doesn’t renew' not in t: fail(pid, '"doesn’t renew" missing (her pack refills; this add-on does not)')
     if pid.startswith('brush'):
         skip = re.search(r'data-sf-skip-skus="([^"]+)"', h)
         if not skip or set(skip.group(1).split(',')) != BRUSH_SKUS: fail(pid, f'brush skip rule is not {sorted(BRUSH_SKUS)}')
@@ -306,8 +339,22 @@ else:
     ren = json.loads(unescape(m.group(1)))
     for ref, p in ALL_PKGS.items():
         got = ren.get(p['product_sku'], '')
-        if not got.startswith('One-time purchase'): fail('thank-you', f'package {ref} ({p["product_sku"]}) says "{got}", not "One-time purchase…"')
+        want = (f"Then ${PACK_BY_REF[ref]['price']:.2f} every {PACK_BY_REF[ref]['every']} days, until you cancel" if ref in PACK_BY_REF else 'One-time purchase')
+        if not got.startswith(want): fail('thank-you', f'package {ref} ({p["product_sku"]}) says "{got}", not "{want}…"')
         if p['product_sku'] in BRUSH_SKUS and 'Lymphatic Brush' not in got: fail('thank-you', f'{p["product_sku"]}: the brush is not named')
+
+# campaign: the checkout's packages recur at their own price and interval, and no offer's package recurs ----------------
+for ref, want in PACK_BY_REF.items():
+    live = pkgs.get(ref)
+    if not live: fail('campaign', f'package {ref} ({want["key"]}) is not on the checkout'); continue
+    if not live.get('is_recurring'):
+        if PENDING: print(f'check_apf: package {ref} does not recur in the campaign yet (APF_RECURRING_PENDING=1)'); continue
+        fail('campaign', f'package {ref} ({want["key"]}) is one-time in the campaign; the pages sell it with refills'); continue
+    if (live.get('interval'), live.get('interval_count')) != ('day', want['every']) or float(live.get('price_recurring') or 0) != want['price']:
+        fail('campaign', f'package {ref} renews ${live.get("price_recurring")} every {live.get("interval_count")} {live.get("interval")}, the pages say ${want["price"]:.2f} every {want["every"]} days')
+for pid in OFFER_IDS:
+    for p in PAGES[pid].get('packages', []):
+        if p.get('is_recurring'): fail(pid, f'package {p["ref_id"]} recurs: the offers are one-time')
 
 # host: each deployed page sends a visit on another host to the funnel's (the only one the campaign allows), and its
 # policy links stay on it. The redirect is read from the theme template: the layout leaves it out of a development
@@ -345,7 +392,7 @@ for p in F.PAGES:
     h = html(p['id'])
     # the page's words, and what a screen reader is told (aria-label, alt and title attributes)
     for t in (text(h), ' '.join(re.findall(r'(?:aria-label|alt|title)="([^"]*)"', h))):
-        for rx, what in FORBIDDEN:
+        for rx, what in FORBIDDEN + (ONE_TIME_ONLY if p['id'] in OFFER_IDS else []):
             for m in re.finditer(rx, t, re.I):
                 if what.startswith('unhedged') and re.search(r'(?:made|designed)\s+not\s+to\s+$', t[max(0, m.start() - 20):m.start()], re.I): continue
                 fail(p['id'], f'{what}: "…{t[max(0, m.start() - 40):m.end() + 40]}…"')

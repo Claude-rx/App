@@ -48,7 +48,8 @@ SHIPPING_TAB_HTML = (f'<p><strong>Processing and delivery</strong><br/>{html.esc
 
 GUARANTEE = (f'Try any SKINOFAB product for 30 days from the day it arrives. If you don’t love it, email {MAIL} with your '
              'order number within those 30 days and we’ll refund the product’s price in full, even if you’ve opened '
-             'and used it. There is no restocking fee.')
+             'and used it. You don’t need to send the product back for a refund, and there is no restocking fee.')
+# (live review 8: the funnels promise "you don't send it back"; the policy they link to now says so too)
 
 # FAQ page: (the start of the export's question, the question to show or None to keep it, the answer HTML or None to
 # drop the question). Matched against the question as the page shows it after the copy rules.

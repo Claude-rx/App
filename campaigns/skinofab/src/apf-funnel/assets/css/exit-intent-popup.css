@@ -1,6 +1,7 @@
 /* ─── Exit intent popup ──────────────────────────────────────────────────── */
 
 .exit-intent-popup__dialog {
+  position: relative;                      /* the SDK's close button sits inside it (js/sf-checkout.js) */
   background: #fff;
   border: solid 1px #000;
   overflow: hidden;

@@ -2,13 +2,17 @@
 one-time package per pack, and the vouchers its offers apply. Prints what it finds or creates; writes nothing but the
 store. The Admin token comes from $NEXT_API_TOKEN and is never printed.
 
-usage: NEXT_API_TOKEN=... python3 -I tools/funnel/apf/commerce.py [--dry-run] [--verify]
+usage: NEXT_API_TOKEN=... python3 -I tools/funnel/apf/commerce.py [--dry-run] [--variants-only] [--verify]
 
 The campaign is the funnel's own, 2221 "SKINOFAB Adaptive Peptide Foundation Funnel" (created 28 Oct 2026 by the
 next-campaigns-create skill from next-campaigns-create-runs/skinofab-apf/campaign-plan.json, which also verified every
 price; this script finds those packages and offers in place and creates nothing twice). Its Allowed Domains
-(try.skinofab.com) are a dashboard setting. The foundation's packages are one-time (the persona report: refills
-opt-in only, never pre-checked). A campaign takes one package per store variant:
+(try.skinofab.com) are a dashboard setting. The three main packs are subscriptions since 29 Oct 2026 (the owner:
+"make sure all is subscription"; renewals at the same price every 28 days a bottle: 1 bottle every 28, 2 bottles every
+56, 3 bottles every 84; the free gifts ship with the first order only, which fulfilment is told); the post-purchase
+offers stay one-time. Their recurrence and the add-on package are set through the next-campaigns-create plan
+(next-campaigns-create-runs/skinofab-apf/), which owns the campaign; this script only makes the store variants they
+need (--variants-only) and verifies prices. A campaign takes one package per store variant:
 - the store's own "1 bottle" (15) and "2 bottles + free gifts" (103) carry the funnel's first two packs at the
   funnel's prices (a package's price is the campaign's, not the store's);
 - the 3-bottle pack, the offer-1 packs (2 bottles; 6 bottles + free brush) are new variants of product 14, named for
@@ -41,6 +45,9 @@ VARIANTS = {
         {'sku': 'SKF-APF-3-GIFTS', 'value': '3 bottles + free gifts + free Lymphatic Brush', 'price': '75.00', 'retail': '177.00'},
         {'sku': 'SKF-APF-2', 'value': '2 bottles', 'price': '39.00', 'retail': '118.00'},
         {'sku': 'SKF-APF-6-BRUSH', 'value': '6 bottles + free Lymphatic Brush', 'price': '99.00', 'retail': '354.00'},
+        # offers 2 and 2b's one more bottle, bought once: the main 1-bottle pack (variant 15) is a subscription now, and a
+        # campaign takes one package per variant
+        {'sku': 'SKF-APF-1-ADD', 'value': '1 bottle (add-on)', 'price': '39.00', 'retail': '47.00'},
     ],
     BRUSH: [
         {'sku': 'SKF-LYB-1T', 'value': '1 brush + free travel case', 'price': '24.95', 'retail': '24.95'},
@@ -54,12 +61,13 @@ PACKAGES = [
     ('apf-2', FOUNDATION, 'SKF-APF-2', '39.00'),
     ('apf-6-brush', FOUNDATION, 'SKF-APF-6-BRUSH', '99.00'),
     ('brush-1', BRUSH, 'SKF-LYB-1T', '24.95'),
+    ('apf-1-add', FOUNDATION, 'SKF-APF-1-ADD', '39.00'),
 ]
 # the vouchers: code -> (name as the order summary shows it, % off, package keys)
 OFFERS = [
     ('APF10', '10% off your foundation today', '10.00', ['apf-1', 'apf-2-gifts', 'apf-3-gifts']),
-    ('APF40', '40% off one more bottle', '40.00', ['apf-1']),
-    ('APF50', '50% off one more bottle', '50.00', ['apf-1']),
+    ('APF40', '40% off one more bottle', '40.00', ['apf-1-add']),
+    ('APF50', '50% off one more bottle', '50.00', ['apf-1-add']),
     ('BRUSH40', '40% off the Lymphatic Brush', '40.00', ['brush-1']),
     ('BRUSH60', '60% off the Lymphatic Brush', '60.00', ['brush-1']),
 ]
@@ -202,6 +210,7 @@ def verify(ids):
 if __name__ == '__main__':
     if not os.environ.get('NEXT_API_TOKEN'): sys.exit('NEXT_API_TOKEN is not set')
     by_sku = ensure_variants()
+    if '--variants-only' in sys.argv: sys.exit(0)
     ids = ensure_packages(by_sku)
     offers = ensure_offers(ids)
     print('packages', json.dumps(ids), 'offers', json.dumps(offers))

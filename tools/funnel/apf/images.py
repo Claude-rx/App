@@ -268,19 +268,41 @@ def pack_cards():
 
 
 def clinicians_badge():
-    """The "Clinicians' Choice" mark of the FrontrowMD badge on the sales page and checkout (the owner, 29 Oct 2026:
-    as a badge, no link): the words in a laurel, in ink on white, drawn at twice its 173 x 96 px display size; the
-    count beside it is page text (_includes/sf-frontrow.html), held to FrontrowMD's live count by check_apf.py."""
-    # the wreath drawn once and split: its left branch at the left edge, its right at the right, the words between
-    wreath = Image.new('RGB', (220, 192), PAPER); laurel(wreath, 110, 96, 70, INK)
-    im = Image.new('RGB', (346, 192), PAPER)
-    im.paste(wreath.crop((0, 0, 110, 192)), (0, 0)); im.paste(wreath.crop((110, 0, 220, 192)), (236, 0))
-    d = ImageDraw.Draw(im)
-    f = P.serif(36, 'Regular')
-    d.text((173, 90), 'Clinicians\u2019', font=f, fill=INK, anchor='ms')
-    d.text((173, 134), 'Choice', font=f, fill=INK, anchor='ms')
-    save(im, 'clinicians-choice', size=346)
-
+    """The "Clinicians' Choice" mark of the FrontrowMD badge on the sales page and checkout (the owner, 29 Oct 2026: as a
+    badge, no link, "like this one", FrontrowMD's own sticker): the two words in Lora between two short laurel branches
+    that hug them, four rounded leaves a side turned up and out, in ink on white, drawn 4x and brought down to twice its
+    170 x 84 px display size; the count beside it is page text (_includes/sf-frontrow.html), held to FrontrowMD's live
+    count by check_apf.py."""
+    import math
+    from PIL import ImageFont
+    K, W, H = 4, 340, 168
+    lay = Image.new('L', (W * K, H * K), 0); d = ImageDraw.Draw(lay)
+    font = ImageFont.truetype(str(ROOT / 'tools' / 'persona' / 'assets' / 'fonts' / 'Lora-Regular.ttf'), 40 * K)
+    d.text((W / 2 * K, 76 * K), 'Clinicians\u2019', font=font, fill=255, anchor='ms')
+    d.text((W / 2 * K, 124 * K), 'Choice', font=font, fill=255, anchor='ms')
+    def leaf(x, y, ang, length, width):                     # a rounded leaf: blunt at its base, pointed at its tip
+        pts = []
+        for t in [i / 24 for i in range(25)]:
+            w = width / 2 * math.sin(math.pi * t) * (1 - 0.35 * t)
+            pts.append((t * length, w))
+        pts += [(t * length, -w) for t, w in reversed([(q, width / 2 * math.sin(math.pi * q) * (1 - 0.35 * q)) for q in [i / 24 for i in range(25)]])]
+        ca, sa = math.cos(ang), math.sin(ang)
+        d.polygon([((x + px * ca - py * sa) * K, (y + px * sa + py * ca) * K) for px, py in pts], fill=255)
+    for side in (-1, 1):                                    # each branch a "(" beside the words: foot, outward bulge, top
+        P0, P1, P2 = (80, 152), (14, 96), (60, 26)
+        if side > 0: P0, P1, P2 = ((W - x, y) for x, y in (P0, P1, P2))
+        bez = lambda t: ((1 - t) ** 2 * P0[0] + 2 * (1 - t) * t * P1[0] + t * t * P2[0],
+                         (1 - t) ** 2 * P0[1] + 2 * (1 - t) * t * P1[1] + t * t * P2[1])
+        stem = [bez(k / 40) for k in range(41)]
+        d.line([(x * K, y * K) for x, y in stem], fill=255, width=int(2.6 * K), joint='curve')
+        for t, ln, wd in ((0.06, 26, 13), (0.34, 29, 15), (0.62, 29, 15), (0.90, 27, 14)):
+            (x0, y0), (x1, y1) = bez(t), bez(min(1, t + 0.02))
+            tang = math.atan2(y1 - y0, x1 - x0)            # along the stem, from the foot up
+            leaf(x0, y0, tang + (math.radians(42) if side > 0 else -math.radians(42)), ln, wd)   # turned out, away from the words
+        x0, y0 = bez(1.0); x1, y1 = bez(0.97)              # and one at the tip, along the stem
+        leaf(x0, y0, math.atan2(y0 - y1, x0 - x1), 22, 11)
+    im = Image.new('RGB', (W * K, H * K), PAPER); im.paste(Image.new('RGB', im.size, INK), (0, 0), lay)
+    save(im.resize((W, H), Image.LANCZOS), 'clinicians-choice', size=W)
 
 def ground(im, strength=1.0):
     """A natural shadow under a product on white (the owner, 28 Oct 2026: the packshots' shadows looked pasted on):
@@ -785,15 +807,29 @@ def reviews(work):
         save(im, f'review-{key}', size=600)
 
 
+# the seconds of a clip's voice that are silenced (live review 8: the navy clip's speaker says the foundation blurs
+# lines "in seconds", where every page says about a minute, and that it "melts right into your skin", a claim the
+# brand does not make). Word times from a faster-whisper transcript of brand/videos/gj-43e0f648-cut.mp4, 29 Oct 2026.
+MUTE = {'demo-navy': [(26.85, 27.90), (28.35, 30.20)]}
+
+
 def clip(key, src, poster, label, encode=True):
     """A demo clip at 540 px (H.264 + WebM) and its poster. Nothing is redrawn: the clips are the re-makes the store plays.
-    A clip already written is kept; with encode=False (--no-video) none is written, but the poster always is."""
+    A clip already written is kept, unless its silenced seconds (MUTE) changed since; with encode=False (--no-video)
+    none is written, but the poster always is."""
     src_path = BRAND / 'videos' / f'{src}.mp4'
+    mute = MUTE.get(key, [])
+    af = ['-af', ','.join(f"volume=enable='between(t,{a},{b})':volume=0" for a, b in mute)] if mute else []
+    mark = Path(__file__).resolve().parent / 'clips' / f'{key}.mute'                         # the ranges the written clip was encoded with (kept with the tools, not shipped)
+    mark.parent.mkdir(exist_ok=True)
+    if encode and (mark.read_text() if mark.exists() else '') != repr(mute):
+        for ext in ('mp4', 'webm'): (OUT / f'{key}.{ext}').unlink(missing_ok=True)
     for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '24', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-c:a', 'aac', '-b:a', '96k']),
                       ('webm', ['-c:v', 'libvpx-vp9', '-crf', '34', '-b:v', '0', '-row-mt', '1', '-c:a', 'libopus', '-b:a', '64k'])):
         out = OUT / f'{key}.{ext}'
         if out.exists() or not encode: continue
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src_path), '-vf', f'scale={CLIP_WIDTH}:-2', *args, str(out)], check=True)
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src_path), '-vf', f'scale={CLIP_WIDTH}:-2', *af, *args, str(out)], check=True)
+        mark.write_text(repr(mute))
     if poster and poster != 'sharp': save(Image.open(PDP / f'{poster}.jpg'), f'{key}-poster', size=720)
     else:
         # the sharpest frame of the first two seconds (a mid-motion blur as the poster, live review 2), or the frame at 1 s

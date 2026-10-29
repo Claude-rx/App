@@ -1,17 +1,18 @@
 /* The Adaptive Peptide Foundation funnel: the listicle's and sales page's own behaviour (the SDK owns cart, checkout and
-   offers). As the stick funnel's sf-funnel.js, for a one-time purchase:
+   offers). As the stick funnel's sf-funnel.js:
    - videos marked data-sf-lazy play only while on screen (they load nothing until then), and not at all when the
      device asks for reduced motion (then they show their controls); a clip marked data-sf-sound keeps its controls
      and never autoplays (it has a voice); the clip cards play on a tap
-   - the sales page: the pack choice (every checkout link opens the checkout on that pack; the price, the saving, the
-     button and the sticky bar follow it), the gallery thumbnails, and the sticky bar on phones once the buy button
+   - the sales page: the pack choice (every checkout link opens the checkout on that pack; the price, what it renews
+     at, the button and the sticky bar follow it), the gallery thumbnails, and the sticky bar on phones once the buy button
      scrolls away */
 (function () {
   'use strict';
 
   var videos = document.querySelectorAll('video[data-sf-lazy]');
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (still) Array.prototype.forEach.call(videos, function (v) { v.controls = true; });
+  // (the lazy loops carry autoplay too, so the browser starts them before this runs: stop them, live review 8)
+  if (still) Array.prototype.forEach.call(videos, function (v) { v.removeAttribute('autoplay'); v.controls = true; try { v.pause(); } catch (e) {} });
   // a clip the page autoplays itself (the brush offer's loop, upsell/video.html): for anyone who asks their device
   // for less motion it waits for a tap instead, with its controls
   if (still) Array.prototype.forEach.call(document.querySelectorAll('video[autoplay]:not([data-sf-lazy])'), function (v) {
@@ -21,11 +22,36 @@
     var vo = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         var v = e.target;
-        if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.pause(); }
+        if (e.isIntersecting) { if (v.sfHeld) return; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.pause(); }
       });
     }, { rootMargin: '200px 0px' });
     Array.prototype.forEach.call(videos, function (v) { vo.observe(v); });
   }
+  // a pause button on every loop that plays by itself (motion longer than 5 s must be stoppable, WCAG 2.2.2; live review
+  // 8): a loop she paused stays paused when it scrolls back into view (sfHeld)
+  var loops = document.querySelectorAll('video[data-sf-lazy], video[data-upsell-video][loop]');
+  if (loops.length && !still) {
+    var css = document.createElement('style');
+    css.textContent = '.sf-vpause{position:absolute;right:10px;bottom:10px;z-index:3;width:44px;height:44px;padding:0;border:0;border-radius:50%;'
+      + 'background:rgba(21,21,21,.72);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}'
+      + '.sf-vpause svg{width:16px;height:16px;fill:currentColor}.sf-vpause:focus-visible{outline:2px solid #fff;outline-offset:2px}';
+    document.head.appendChild(css);
+    var PAUSE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg>';
+    var PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg>';
+    Array.prototype.forEach.call(loops, function (v) {
+      var box = v.parentElement; if (!box) return;
+      if (getComputedStyle(box).position === 'static') box.style.position = 'relative';
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sf-vpause';
+      var draw = function () { var on = !v.paused; b.setAttribute('aria-label', on ? 'Pause the video' : 'Play the video'); b.innerHTML = on ? PAUSE : PLAY; };
+      b.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (v.paused) { v.sfHeld = false; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.sfHeld = true; v.pause(); }
+      });
+      v.addEventListener('play', draw); v.addEventListener('pause', draw);
+      box.appendChild(b); draw();
+    });
+  }
+
   // a clip with a voice: loads its first seconds when it comes near, plays on her tap
   Array.prototype.forEach.call(document.querySelectorAll('video[data-sf-sound]'), function (v) {
     v.controls = true;
@@ -82,7 +108,7 @@
     var sync = function (id) {
       var card = document.querySelector('.sf-pack[data-pack="' + id + '"]');
       if (!card) return;
-      var price = card.getAttribute('data-price'), compare = card.getAttribute('data-compare'), save = card.getAttribute('data-save');
+      var price = card.getAttribute('data-price'), every = card.getAttribute('data-every'), renew = card.getAttribute('data-renew') || '';
       Array.prototype.forEach.call(document.querySelectorAll('.sf-pack'), function (c) {
         var on = c.getAttribute('data-pack') === id;
         c.classList.toggle('is-on', on);
@@ -90,12 +116,13 @@
       });
       set('[data-sf-cta]', function (a) { a.href = a.href.replace(/forceBundleId=[^&#]*/, 'forceBundleId=' + id); });
       set('[data-sf-price]', function (e) { e.textContent = price; });
-      set('[data-sf-compare]', function (e) { e.textContent = compare; });
-      set('[data-sf-save]', function (e) { e.textContent = save; });
+      // what the chosen pack renews at (Automatic Refills): under the button, "$75 today, then $75 every 84 days, until you cancel"
+      set('[data-sf-renew-line] strong', function (e) { e.textContent = price + ' today'; });
+      set('[data-sf-renew-text]', function (e) { e.textContent = renew.charAt(0).toLowerCase() + renew.slice(1); });
       set('[data-sf-label]', function (e) { e.textContent = card.getAttribute('data-label'); });
       set('[data-sf-btn-price]', function (e) { e.textContent = '| ' + price; });
       set('[data-sf-sticky-pack]', function (e) { e.textContent = card.getAttribute('data-short'); });
-      set('[data-sf-sticky-price]', function (e) { e.textContent = price + ' · one-time · free shipping'; });
+      set('[data-sf-sticky-price]', function (e) { e.textContent = price + ' today · then every ' + every; });
     };
     Array.prototype.forEach.call(pickers, function (p) {
       p.addEventListener('change', function (e) {

@@ -1125,7 +1125,10 @@ base = base.replace("{% endblock styles %}",
     "    {# A policy page opened from a funnel's footer (?from=offer, the funnels' sf-footer.html) keeps the store's sale bar and menus out of it, set before the first paint (live review 7). Django comments are one line. #}\n"
     "    <script>if (/[?&]from=offer(?:&|$)/.test(location.search)) document.documentElement.classList.add('sf-from-offer');</script>"
     "<style>.sf-from-offer{--announcement-height:0px!important}.sf-from-offer .announcement-bar-static,.sf-from-offer #SiteHeader .menu__items,"
-    ".sf-from-offer #SiteHeader .menu__item--icons,.sf-from-offer #SiteHeader .mobile-menu,.sf-from-offer #SiteHeader .mobile-menu__button{display:none!important}</style>", 1)
+    ".sf-from-offer #SiteHeader .menu__item--icons,.sf-from-offer #SiteHeader .mobile-menu,.sf-from-offer #SiteHeader .mobile-menu__button,"
+    # (live review 8: the footer's shop and customer-care menus and the newsletter sign-up led into the store mid-purchase)
+    ".sf-from-offer #SiteFooter .sf__signup,.sf-from-offer #SiteFooter .sf__menu{display:none!important}"
+    ".sf-from-offer #SiteFooter .sf__logo,.sf-from-offer #SiteHeader a[href=\"/\"]{pointer-events:none;cursor:default}</style>", 1)
 base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "{% block extrahead %}{% endblock extrahead %}\n"
     "    {% url 'storefrontapi:graphql' as sf_graphql_url %}\n"

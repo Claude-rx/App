@@ -42,8 +42,9 @@ window.addEventListener('next:initialized', function () {
   window.addEventListener('scroll', onScroll, { passive: true });
 });
 
-// The exit pop for the keyboard and a screen reader (live review 7): when the SDK shows it, its close button is named,
-// focus moves to the offer's button, Escape closes it, and focus returns to where she was.
+// The exit pop for the keyboard and a screen reader (live review 7): when the SDK shows it, its close button is named
+// and moved inside the dialog, focus moves to the offer's button and Tab stays in the dialog, the page behind is inert
+// and does not scroll (live review 8), Escape closes it, and focus returns to where she was.
 window.addEventListener('next:initialized', function () {
   if (!window.next || typeof window.next.on !== 'function') return;
   var before = null;
@@ -56,15 +57,28 @@ window.addEventListener('next:initialized', function () {
       Array.prototype.forEach.call(root.querySelectorAll('button, [role="button"]'), function (b) {
         if (!b.getAttribute('aria-label') && (/close/i.test(b.className) || /^[×✕✖x]$/i.test((b.textContent || '').trim()))) b.setAttribute('aria-label', 'Close');
       });
+      var x = root.querySelector('[aria-label="Close"]');
+      if (x && !dlg.contains(x)) dlg.appendChild(x);          // in the dialog: read with it, and in its Tab order
+      var top = dlg; while (top.parentElement && top.parentElement !== document.body) top = top.parentElement;
+      var made = Array.prototype.filter.call(document.body.children, function (el) { return el !== top && !el.inert && !/^(SCRIPT|STYLE|TEMPLATE)$/.test(el.tagName); });
+      made.forEach(function (el) { el.inert = true; });
+      var overflow = document.documentElement.style.overflow; document.documentElement.style.overflow = 'hidden';
       var cta = dlg.querySelector('.exit-intent-popup__cta'); if (cta) cta.focus();
       var esc = function (e) {
-        if (e.key !== 'Escape') return;
-        var close = root.querySelector('[aria-label="Close"]'); if (close) close.click();
+        if (e.key === 'Escape') { var close = root.querySelector('[aria-label="Close"]'); if (close) close.click(); return; }
+        if (e.key !== 'Tab') return;
+        var f = Array.prototype.filter.call(dlg.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])'), function (el) { return el.offsetParent !== null; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!dlg.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
       };
       document.addEventListener('keydown', esc);
       var gone = new MutationObserver(function () {
         if (document.querySelector('.exit-intent-popup__dialog')) return;
         gone.disconnect(); document.removeEventListener('keydown', esc);
+        made.forEach(function (el) { el.inert = false; }); document.documentElement.style.overflow = overflow;
         if (before && before.focus) before.focus();
       });
       gone.observe(document.body, { childList: true, subtree: true });

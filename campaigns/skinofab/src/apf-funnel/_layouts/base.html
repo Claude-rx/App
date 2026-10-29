@@ -5,7 +5,11 @@
     <title>{{ title }}</title>
     {% comment %} Social share meta {% endcomment %}
     {% campaign_include 'meta-social.html' %}
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% comment %} the checkout, the offers and the thank-you page are reached from the funnel only: not in search results,
+       where the offers' prices would show without the order they follow (live review 8; the listicle and sales page
+       say the same in base-sf.html) {% endcomment %}
+    <meta name="robots" content="noindex, nofollow">
   {% comment %} SKINOFAB: the campaign allows one domain (campaign.funnel_host, the Campaigns App's Allowed Domain): the
      SDK's calls fail from any other host the store answers on (skinofab.29next.store, skinofab.com), so a visit there
      goes to the same page on the funnel's host. Production builds only (local proof runs on localhost). {% endcomment %}

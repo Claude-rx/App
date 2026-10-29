@@ -3,7 +3,7 @@
     part='top'       one rating line above the pack cards: green boxed stars (a review site's look, no site named),
                      the figure said to be this foundation's, from our earlier store
     part='inline'    the guarantee in one line, right above the order button
-    part='badges'    four badges right under the order button: the guarantee, free shipping, one-time, secure
+    part='badges'    four badges right under the order button: the guarantee, free shipping, skip or cancel, secure
     part='featured'  three reviews after the order button, on a phone and tablet (there the proof column comes
                      right after, so no link to it: the wall then shows the other seven, checkout-brand.css hides
                      its first three below 1200 px)
@@ -18,7 +18,7 @@
 {%- if part == 'top' -%}
 <div class="sf-co-top">
   {%- comment -%} the FrontrowMD "Clinicians' Choice" badge under the rating (the owner, 29 Oct 2026), when the page gives its count {%- endcomment -%}
-  <p class="sf-co-rating"><span class="sf-co-tp" role="img" aria-label="Rated {{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
+  <p class="sf-co-rating"><span class="sf-co-tp sf-co-tp--plain" role="img" aria-label="Rated {{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
   {% campaign_include 'sf-frontrow.html' count=frontrow_clinicians %}
 </div>
 {%- elsif part == 'badges' -%}

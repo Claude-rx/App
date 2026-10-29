@@ -12,11 +12,12 @@ meta_tags:
 # (tools/funnel/funnels/apf.py: campaign 2221, packages 1, 2 and 3), the 2-bottle pack preselected. The form comes first (v2: she chose the foundation on the
 # sales page, so the page asks for her pack, her details, her address and her payment straight away; the pack cards
 # are in the page from the first paint, no await skeleton, with the campaign's own names and prices); the trust sits
-# where she decides: one rating line above the pack cards, the guarantee line and the one-time terms by the order
+# where she decides: one rating line above the pack cards, the guarantee line and the refill terms by the order
 # button, four badges under it, three buyers' reviews (green stars, their own photos) right after it on a phone, and the
 # proof column (ratings by stars, ten reviews, the guarantee card, the questions) beside the form on a computer:
-# _includes/sf-checkout-trust.html. Every pack is a one-time purchase (nothing renews), said by the express buttons and
-# the order button. The exit pop applies APF10 (offer 6, 10% off the foundation packs), on a phone too (a scroll up
+# _includes/sf-checkout-trust.html. Every pack has Automatic Refills at the same price (the owner, 29 Oct 2026: 1 bottle
+# every 28 days, 2 every 56, 3 every 84; the gifts with the first order only), said on each card, by the express buttons
+# and by the order button, which also asks for her agreement to them. The exit pop applies APF10 (offer 6, 10% off the foundation packs), on a phone too (a scroll up
 # toward the address bar). No coupon box: the post-purchase vouchers must not be usable here.
 cart_summary_variant: "02"
 payment_flags:
@@ -54,14 +55,14 @@ trust:
   points:
     - { icon: shield, title: "30-day money-back guarantee", text: "Not your match? A full refund, even opened. You don’t send it back." }
     - { icon: truck, title: "Free tracked shipping", text: "Your order ships in 1 business day." }
-    - { icon: mail, title: "One-time purchase", text: "Nothing renews. Questions? A person replies within one business day." }
+    - { icon: mail, title: "Skip or cancel any time", text: "Refills at the same price. We email you before each one; skip or cancel by email, no fees." }
     - { icon: lock, title: "Secure checkout", text: "Your card number goes straight to our payment processor, encrypted." }
   allergy: "Contains salmon-derived PDRN: not for anyone with a fish allergy."
   faq:
     - q: "What if it isn’t my shade?"
       a: "It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
     - q: "Is this a subscription?"
-      a: "No. Every pack is a one-time purchase: you pay today’s total once and nothing renews."
+      a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($39), 2 bottles every 56 days ($57), 3 bottles every 84 days ($75). We email you before every refill. To skip or cancel, just email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a>: a person replies within one business day. No minimum, no fees. The free gifts come with your first order; refills are the bottles only."
     - q: "When does it ship?"
       a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days in the US, 6–9 to Europe, the UK, Canada, Australia and New Zealand, 8–12 elsewhere."
     - q: "Are these reviews of this foundation?"
@@ -152,7 +153,7 @@ bundles:
     image: "images/sf/pack-2.jpg"
     name: "Adaptive Peptide Foundation - 2 bottles + free gifts"
     price: "$57.00"
-    subtitle_text: "One-time. Free shipping, a free Blender sponge and a free mystery gift"
+    subtitle_text: "Then $57 every 56 days. Free shipping. A free Blender sponge and a free mystery gift with your first order"
     badge_text: "2 months’ supply"
     badge_pill_class: "os-card__label--pill-secondary"
   - id: "apf-3"
@@ -162,7 +163,7 @@ bundles:
     image: "images/sf/pack-3.jpg"
     name: "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush"
     price: "$75.00"
-    subtitle_text: "One-time. $25 a bottle. Free shipping, a free Lymphatic Brush, a free Blender sponge and a free mystery gift"
+    subtitle_text: "Then $75 every 84 days, $25 a bottle. Free shipping. A free Lymphatic Brush, a free Blender sponge and a free mystery gift with your first order"
     badge_text: "Best value"
     badge_pill_class: "os-card__label--pill-primary"
   - id: "apf-1"
@@ -172,14 +173,14 @@ bundles:
     image: "images/sf/pack-1.jpg"
     name: "Adaptive Peptide Foundation - 1 bottle"
     price: "$39.00"
-    subtitle_text: "One-time. Free shipping"
-# what she pays today (the SDK's cart total, after any exit coupon) and what the pack is, by the express buttons (they place
+    subtitle_text: "Then $39 every 28 days. Free shipping"
+# what she pays today (the SDK's cart total, after any exit coupon) and what renews, by the express buttons (they place
 # the order too) and by the button; sf-checkout.js keeps the pack's line in step with the chosen card
 pay_terms:
-  apf-2: "2 bottles with a free Blender sponge and a free mystery gift"
-  apf-3: "3 bottles with a free Lymphatic Brush, a free Blender sponge and a free mystery gift"
-  apf-1: "1 bottle"
-once_terms: "A one-time purchase: nothing renews and nothing else is charged. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
+  apf-2: "$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)"
+  apf-3: "$75.00 every 84 days for 3 bottles (your free Lymphatic Brush, Blender sponge and mystery gift come with this first order)"
+  apf-1: "$39.00 every 28 days for 1 bottle"
+refill_terms: "Your pack ships again at the same price until you cancel. We email you before every refill. To skip or cancel, just email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a>: no minimum, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
 # the exit pop: the bottle (the pack she picked may not be the 3-pack), one offer said once, the saving applied at the button
 exit_intent:
   coupon_code: "APF10"
@@ -188,7 +189,7 @@ exit_intent:
   subheadline: "One more reason to order today."
   offer_title: "An extra <strong>10% off</strong> your pack"
   offer_label: "Applied to your order right away"
-  offer_detail: "It comes off the foundation pack in today’s order, rounded down to the dollar: $67 for 3 bottles, $51 for 2, $35 for 1. The gifts and free shipping stay."
+  offer_detail: "It comes off the foundation pack in today’s order, rounded down to the dollar: $67 for 3 bottles, $51 for 2, $35 for 1. The gifts and free shipping stay; refills are at the pack’s own price."
   cta_label: "Apply it to my order"
 ---
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
@@ -222,14 +223,14 @@ exit_intent:
                               <h2 class="form-section__title" id="sf-co-pay">Step 4: Payment</h2>
                               <div class="form-section__subtitle">All transactions are secure and encrypted.</div>
                             </div>
-                            {% capture pay_text %}<strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$57.00</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ {% for b in bundles %}{% unless forloop.first %},{% endunless %}"{{ b.id }}":"{{ b.price }}"{% endfor %} }'>$57.00</span></strong>, charged once, for <span data-sf-renew>{{ pay_terms['apf-2'] }}</span>.{% endcapture %}
-                            <p class="sf-pay-terms" data-sf-pay-terms='{{ pay_terms | json }}'>{{ pay_text }} Nothing renews.</p>
+                            {% capture pay_text %}<strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$57.00</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ {% for b in bundles %}{% unless forloop.first %},{% endunless %}"{{ b.id }}":"{{ b.price }}"{% endfor %} }'>$57.00</span> today</strong>, then <span data-sf-renew>{{ pay_terms['apf-2'] }}</span>, until you cancel.{% endcapture %}
+                            <p class="sf-pay-terms" data-sf-pay-terms='{{ pay_terms | json }}'>{{ pay_text }}</p>
                             {% campaign_include 'express-checkout.html' show_title=false %}
                             {% campaign_include 'payment-methods.html' %}
                             {% comment %} the order button straight after the payment options (the owner, 29 Oct 2026): the pay line above the
-                               express buttons already says what is charged; the guarantee, the one-time terms and the summary follow it {% endcomment %}
-                            {% capture disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
-                            {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · ONE-TIME PURCHASE · 30‑DAY GUARANTEE' disclaimer=disclaimer %}
+                               express buttons already says what is charged and what renews; the guarantee, the refill terms and the summary follow it {% endcomment %}
+                            {% capture disclaimer %}By placing your order you agree to Automatic Refills of your pack at the price above until you cancel, and to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
+                            {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · SKIP OR CANCEL ANY TIME' disclaimer=disclaimer %}
                             {% campaign_include 'sf-checkout-trust.html' part='badges' %}
                           </div>
                           {% campaign_include 'sf-checkout-trust.html' part='inline' %}
@@ -246,7 +247,7 @@ exit_intent:
                               {% campaign_include 'cart-summary02.html' %}
                             </div>
                           </div>
-                          <div class="sf-refill-terms" id="once-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{{ pay_terms | json }}'><strong>One-time purchase.</strong> {{ pay_text }}</p><p>{{ once_terms }}</p></div>
+                          <div class="sf-refill-terms" id="refill-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{{ pay_terms | json }}'><strong>Automatic Refills.</strong> {{ pay_text }}</p><p>{{ refill_terms }}</p></div>
                         </div>
                       </div>
                     </form>

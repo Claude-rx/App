@@ -84,7 +84,9 @@
                               <div class="cart-item__title">{item.name}</div>
                             </div>
                             <div class="cart-item__frequency">
-                              <span data-next-show="item.isRecurring" style="display:none">{item.frequency}</span>
+                              {% comment %} the SDK resolves these two inside the summary template itself (it drops the one that does not
+                                 apply): an inline display:none here kept "Every 56 days" hidden on the refill packs, 29 Oct 2026 {% endcomment %}
+                              <span data-next-show="item.isRecurring">Refills: {item.frequency}</span>
                               <span data-next-hide="item.isRecurring">One-time purchase</span>
                             </div>
                             <div>

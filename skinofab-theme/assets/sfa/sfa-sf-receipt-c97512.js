@@ -1,4 +1,4 @@
-// The thank-you page: under each order line, its terms (the page's renewals, by SKU: here every line is bought once),
+// The thank-you page: under each order line, its terms (the page's renewals, by SKU: what the pack refills at, or that an add-on is bought once),
 // and in "what happens next" the gifts in her box (the page's gifts, by SKU, joined for the lines the order has).
 // The SDK renders the lines after the order loads, so both are filled as the lines appear. The shipping total the
 // SDK writes as $0.00 reads "Free" (the campaign's one method is free, and the checkout said so).
@@ -27,8 +27,8 @@
     if (giftLine && skus.length) {
       const gifts = []; skus.forEach((k) => (giftMap[k] || []).forEach((g) => { if (!gifts.includes(g)) gifts.push(g); }));
       const strong = giftLine.querySelector('strong'), span = giftLine.querySelector('[data-sf-gifts]');
-      const title = gifts.length ? 'Your gifts are in the box.' : 'Everything ships in one parcel.';
-      const body = gifts.length ? join(gifts).replace(/^./, (c) => c.toUpperCase()) + (gifts.length > 1 ? ' ship' : ' ships') + ' in the same parcel as your foundation, free.' : 'Your order ships in 1 business day, with tracking.';
+      const title = gifts.length ? 'Your gifts are in the box.' : 'Everything ships in one package.';
+      const body = gifts.length ? join(gifts).replace(/^./, (c) => c.toUpperCase()) + (gifts.length > 1 ? ' ship' : ' ships') + ' in the same package as your foundation, free.' : 'Your order ships in 1 business day, with tracking.';
       if (strong && strong.textContent !== title) strong.textContent = title;
       if (span && span.textContent !== body) span.textContent = body;
     }

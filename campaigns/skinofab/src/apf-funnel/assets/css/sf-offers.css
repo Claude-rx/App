@@ -19,7 +19,10 @@
 .sf-supply__stars { margin: 0; font-size: 13px; color: #3b3b3b; }
 .sf-supply__stars span { color: #e8a33d; letter-spacing: 1px; }
 .sf-supply__price { margin: 4px 0 0; font-size: 18px; }
-.sf-supply__price s { color: #8a8a8a; margin-right: 6px; }
+.sf-supply__price s { color: #5f5f5f; margin-right: 6px; }      /* 6.4:1 on white (it was 3.1:1, live review 8) */
+.sf-supply__was { margin: 2px 0 0; font-size: 12.5px; color: #5f5f5f; }
+/* the offers' crossed-out prices, readable (2.96:1 at 32 px, live review 8) */
+.upsell-offer .text-strike.color-muted, .upsell-offer .diagonal-strike.color-muted, .upsell-offer__heading-compare { color: #5f5f5f !important; }
 .sf-supply__price strong { font-size: 30px; }
 .sf-supply__buy { width: 100%; margin-top: 8px; }
 .sf-supply__charged { margin: 0; font-size: 12.5px; line-height: 1.4; color: #6b6b6b; }
@@ -153,6 +156,7 @@
 .sf-footer__links a, .sf-footer a { color: #6b6b6b; }
 .sf-footer__links a { display: inline-flex; align-items: center; min-height: 44px; }   /* 43 px, live review 6 */
 .sf-footer__links a { display: inline-block; padding: 11px 6px; }
+.sf-footer a[href^="mailto:"], .sf-footer a[href^="tel:"] { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 4px; }   /* (114 x 20, live review 8) */
 .sf-footer__small { font-size: 12px; line-height: 1.5; }
 /* three "why" cards in one row where they fit (2 + 1 left an orphan at 1024 and 1440, live review 3) */
 @media (min-width: 900px) {
