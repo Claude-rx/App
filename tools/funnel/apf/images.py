@@ -167,42 +167,57 @@ def ground(im, strength=1.0):
 
 
 def one_shade():
-    """The shade objection answered in one picture (the owner's ask, 28 Oct 2026, after a competitor's "16 skin
-    tones" panel): a white drop of the foundation blending into a fair, a medium and a deep skin tone under a
-    fair-to-deep tone bar. No faces (the persona photos' filtered "afters" showed no difference, live review 2; the
-    real pairs wait for image credit), no count of tones (the claims rules), the illustration line in full."""
-    W, H = 1080, 1000
+    """The shade question in one picture (the owner's reference, 29 Oct 2026: a competitor's swatch row over three
+    women's before and after): a fair-to-deep swatch row, then the owner's three pairs (owner/ba-*.webp: fair, olive
+    and medium-deep skin, past 45) as Before over After, square on the face, each column named by its skin. No count
+    of tones (the claims rules), no disclaimer line (the owner's instruction, 28 Oct 2026)."""
+    W, H = 1080, 1196
     im = Image.new('RGB', (W, H), PAPER)
     d = ImageDraw.Draw(im)
-    d.text((W // 2, 150), 'One shade, no number to guess', font=P.serif(58, 'Bold'), fill=INK, anchor='ms')
-    d.text((W // 2, 202), 'It goes on white and blends into your own tone', font=P.sans(32, 'Regular'), fill=SOFT, anchor='ms')
-    x0b, x1b, bh, cy = 60, W - 60, 34, 262
-    tones = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in P.SKIN_TONES[:9]]   # fair to deep, as the words say
-    xs = np.linspace(0, len(tones) - 1, x1b - x0b)
-    lo = np.floor(xs).astype(int).clip(0, len(tones) - 2); f = (xs - lo)[:, None]
-    row = (np.array(tones)[lo] * (1 - f) + np.array(tones)[lo + 1] * f).astype(np.uint8)
-    bar = Image.fromarray(np.repeat(row[None], bh, 0), 'RGB')
-    mask = Image.new('L', bar.size, 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, bar.width - 1, bh - 1), bh // 2, fill=255)
-    im.paste(bar, (x0b, cy - bh // 2), mask)
-    cw, g, ph = 316, 26, 316
-    x0, y0 = (W - 3 * cw - 2 * g) // 2, cy + 90
-    yy, xx = np.mgrid[0:ph, 0:cw].astype(np.float32)
-    for k, (tone, word) in enumerate(((tones[1], 'Fair'), (tones[4], 'Medium'), (tones[8], 'Deep'))):
-        # the tone as a swatch; a white drop at the top left fading into it, as the foundation does as it is blended
-        dist = np.sqrt((xx - cw * 0.34) ** 2 + (yy - ph * 0.34) ** 2)
-        t = np.clip((dist - 52) / 120, 0, 1)[..., None]
-        px = (np.array([255, 255, 255], dtype=np.float32) * (1 - t) + np.array(tone, dtype=np.float32) * t).astype(np.uint8)
-        swatch = Image.fromarray(px, 'RGB')
-        m = Image.new('L', (cw, ph), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, cw - 1, ph - 1), 28, fill=255)
-        x = x0 + k * (cw + g)
-        im.paste(swatch, (x, y0), m)
-        d.text((x + cw // 2, y0 + ph + 52), word, font=P.sans(34, 'SemiBold'), fill=INK, anchor='ms')
-    d.text((W // 2, y0 + ph + 160), 'The same white drop, your tone as you blend', font=P.sans(36, 'Medium'), fill=INK, anchor='ms')
-    # the fair-to-deep sentence is the panel's own bullets (in the page's HTML, readable at any width: at 390 the 22 px line was 9 px, live review 3)
-    save(im, 'one-shade', size=1080)
-
-
-GEN = APF / 'gen'                    # the v2 sources (GPT Image 2 through 4SToken, 28 Oct 2026; gen/README.md has the prompts)
+    d.text((W // 2, 104), 'One shade, no number to guess', font=P.serif(58, 'Bold'), fill=INK, anchor='ms')
+    d.text((W // 2, 154), 'It goes on white and blends into your own tone', font=P.sans(30, 'Regular'), fill=SOFT, anchor='ms')
+    # nine swatches, fair to deep, each a soft dome with a white rim and a contact shadow
+    tones = np.array([[int(c[i:i + 2], 16) for i in (1, 3, 5)] for c in P.SKIN_TONES], dtype=np.float32)
+    n, r, gap = 9, 44, 21
+    xs = np.linspace(0, len(tones) - 1, n)
+    x0, cy, K = (W - (n * 2 * r + (n - 1) * gap)) // 2, 236, 4
+    shadow = Image.new('L', (W, H), 0); sd = ImageDraw.Draw(shadow)
+    for k in range(n): cx = x0 + r + k * (2 * r + gap); sd.ellipse((cx - r + 2, cy - r + 6, cx + r + 2, cy + r + 6), fill=70)
+    im.paste(Image.new('RGB', (W, H), (110, 96, 84)), (0, 0), shadow.filter(ImageFilter.GaussianBlur(7)))
+    yy, xx = np.mgrid[0:2 * r * K, 0:2 * r * K].astype(np.float32) / K - r
+    lit = np.clip(1.08 - 0.16 * np.hypot(xx + r * 0.35, yy + r * 0.4) / r, 0.9, 1.08)[..., None]   # light from the top left
+    for k, f in enumerate(xs):
+        lo_ = min(int(f), len(tones) - 2); c = tones[lo_] * (1 - (f - lo_)) + tones[lo_ + 1] * (f - lo_)
+        dome = Image.fromarray(np.clip(c * lit, 0, 255).astype(np.uint8), 'RGB').resize((2 * r, 2 * r), Image.LANCZOS)
+        m = Image.new('L', (2 * r * K, 2 * r * K), 0); ImageDraw.Draw(m).ellipse((0, 0, 2 * r * K - 1, 2 * r * K - 1), fill=255)
+        cx = x0 + r + k * (2 * r + gap)
+        im.paste(dome, (cx - r, cy - r), m.resize((2 * r, 2 * r), Image.LANCZOS))
+        d.ellipse((cx - r, cy - r, cx + r, cy + r), outline=PAPER, width=3)
+    # the three women: Before over After, square on the face
+    # (key, her skin, where her face sits, how far to zoom the after: the garden after is the wider shot)
+    cols = (('car', 'Fair skin', (0.5, 0.22), 1.0), ('kitchen', 'Olive skin', (0.5, 0.2), 1.0), ('garden', 'Medium-deep skin', (0.5, 0.22), 1.45))
+    cw, g2 = 316, 26
+    cx0, top = (W - 3 * cw - 2 * g2) // 2, 330
+    def spaced(x, y, text, font, fill):
+        w = sum(font.getlength(ch) for ch in text) + 3 * (len(text) - 1)
+        x -= w / 2
+        for ch in text: d.text((x, y), ch, font=font, fill=fill, anchor='ls'); x += font.getlength(ch) + 3
+    lab = P.sans(22, 'Bold')
+    for k, (key, word, centering, zoom) in enumerate(cols):
+        before, after = pair_halves(Image.open(OWNER / f'ba-{key}.webp'))
+        x = cx0 + k * (cw + g2)
+        d.text((x + cw // 2, top), word, font=P.sans(30, 'SemiBold'), fill=INK, anchor='ms')
+        if zoom > 1:
+            aw, ah = after.size; zw, zh = int(aw / zoom), int(ah / zoom)
+            after = after.crop(((aw - zw) // 2, int((ah - zh) * 0.12), (aw - zw) // 2 + zw, int((ah - zh) * 0.12) + zh))
+        for row, (half, name) in enumerate(((before, 'BEFORE'), (after, 'AFTER'))):
+            y = top + 42 + row * (cw + 58)
+            spaced(x + cw // 2, y, name, lab, SOFT if row == 0 else INK)
+            ph = ImageOps.fit(half, (cw, cw), Image.LANCZOS, centering=centering)
+            m = Image.new('L', (cw, cw), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, cw - 1, cw - 1), 18, fill=255)
+            im.paste(ph, (x, y + 14), m)
+    d.text((W // 2, H - 44), 'One bottle. Three skin tones.', font=P.sans(36, 'Medium'), fill=INK, anchor='ms')
+    save(im, 'one-shade', size=1196)
 
 
 def _encode(frames, key, fps=25):
@@ -316,21 +331,27 @@ def allday_clip(encode=True, fps=25, seconds=6.0):
     print('allday clip', n, 'frames')
 
 
+def pair_halves(im):
+    """A before/after made as one frame (the same woman twice, a white bar between): its two halves, cut either side of
+    the whole white bar (the brightest column near the middle and every column around it above 235)."""
+    im = im.convert('RGB')
+    w, h = im.size
+    g = np.asarray(im.convert('L'), dtype=np.float32).mean(axis=0)
+    lo, hi = int(w * 0.45), int(w * 0.55)
+    mid = lo + int(np.argmax(g[lo:hi]))
+    left, right = mid, mid
+    while left > lo and g[left - 1] > 235: left -= 1
+    while right < hi and g[right + 1] > 235: right += 1
+    return im.crop((0, 0, left - 4, h)), im.crop((right + 5, 0, w, h))
+
+
 def split_pair(key, out, size=1080, height=900, band=100, src=None, centering=(0.5, 0.35)):
     """A generated split portrait (gen/ba-split-<key>.png: the same woman twice in one frame, her bare skin with its
     lines, spots and redness on the left, the foundation on with an even, luminous tone on the right, a white line
     between) laid out as the pages' before/after: each half fitted to its column (no upscaling at 1376 px wide),
     Before / After in ink on a white band at the foot, a white line between the halves (no disclaimer line: the owner's
     instruction, 28 Oct 2026)."""
-    im = Image.open(src or GEN / f'ba-split-{key}.png').convert('RGB')
-    w, h = im.size
-    g = np.asarray(im.convert('L'), dtype=np.float32).mean(axis=0)       # the divider: the brightest column near the middle
-    lo, hi = int(w * 0.45), int(w * 0.55)
-    mid = lo + int(np.argmax(g[lo:hi]))
-    left, right = mid, mid                                                # and the whole white bar around it
-    while left > lo and g[left - 1] > 235: left -= 1
-    while right < hi and g[right + 1] > 235: right += 1
-    halves = (im.crop((0, 0, left - 4, h)), im.crop((right + 5, 0, w, h)))
+    halves = pair_halves(Image.open(src or GEN / f'ba-split-{key}.png'))
     col_w, col_h = size // 2, height - band
     out_im = Image.new('RGB', (size, height), PAPER)
     for j, half in enumerate(halves):

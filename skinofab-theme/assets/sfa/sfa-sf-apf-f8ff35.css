@@ -293,6 +293,19 @@
 .sf-ticks--big li { font-size: 17px; margin-bottom: 10px; }
 .sf-ticks--big a { text-decoration: underline; }
 .sf-shade__img { width: 100%; max-width: 520px; justify-self: center; }
+/* each before/after with a short review from a buyer on the same concern, her own photo beside her name (the owner's
+   ask, 29 Oct 2026: a mini testimonial for each) */
+.sf-ba-card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 10px 14px; }
+.sf-ba-card figcaption { margin: 8px 4px 0 !important; font-size: 13.5px !important; }
+.sf-ba-review { margin: 12px 4px 0; padding: 12px 0 0; border-top: 1px solid var(--line); }
+.sf-ba-review__topic { margin: 0 0 6px !important; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+.sf-tp__stars--xs i { width: 18px; height: 18px; border-radius: 2px; }
+.sf-tp__stars--xs i::before { font-size: 13px; }
+.sf-ba-review__text { margin: 8px 0 10px !important; font-size: 15px; line-height: 1.45; color: var(--ink); }
+.sf-ba-review footer { display: flex; align-items: center; gap: 10px; }
+.sf-ba-review footer img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none; }
+.sf-ba-review cite { font-style: normal; font-size: 12.5px; line-height: 1.3; color: var(--soft); }
+.sf-ba-review cite b { display: block; color: var(--ink); font-size: 14px; }
 .sf-ba-grid--one { max-width: 760px; margin: 0 auto; grid-template-columns: 1fr !important; }
 /* three women side by side from 900 px (each pair is one picture, its Before / After drawn on it: below 900 px three
    across would set those words at 9-11 px); stacked below, no wider than 560 px so a tablet shows faces, not walls */

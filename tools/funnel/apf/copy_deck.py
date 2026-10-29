@@ -86,7 +86,7 @@ def deck(fm):
         *sum([[f"> “{x['quote']}”" + (f" — {x['source']}" if x['source'] else ''), x['fix']] for x in w['fixes']], []))
     sec('11 · Include Before and After Scenarios', f"### {ba['title']}", ba['lede'],
         *sum([[f"[IMAGE: {i['image']} — {i['alt']}]", f"*{i['caption']}*"] for i in ba['items']], []),
-        f"[BEFORE: {'; '.join(ba['before'])}]", f"[AFTER: {'; '.join(ba['after'])}]", f"> “{ba['quote']}” — {ba['quote_by']}", *([f"*{ba['label']}*"] if ba.get('label') else []))   # no label since 28 Oct 2026 (the owner: no illustration line)
+        f"[BEFORE: {'; '.join(ba['before'])}]", f"[AFTER: {'; '.join(ba['after'])}]", *[f"> “{b['review']['text']}” — {b['review']['name']}, verified buyer, from our earlier store ({b['review']['topic'].lower()})" for b in ba['items'] if b.get('review')], *([f"*{ba['label']}*"] if ba.get('label') else []))   # no label since 28 Oct 2026 (the owner: no illustration line)
     r = fm['ratings']
     sec('12 · Proof Elements', f"### {pr['title']}", f"[RATING: {r['average']} | {r['count']} verified reviews of this foundation, from our earlier store]",
         *sum([[f"#### {x['title']}", x['text']] for x in pr['cards']], []), *[f"> “{q['text']}” — {q['by']}" for q in pr['quotes']])

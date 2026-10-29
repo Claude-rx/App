@@ -222,7 +222,11 @@ The one thing a foundation does: it evens the look of skin tone and softens the 
 
 [AFTER: A colour that shifts toward your own tone as you blend; One pump, fingertips, about a minute; Dry skin kept comfortable by the serum base; “They just see me, rested”]
 
-> “I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!” — Lora Z., 65, verified buyer, from our earlier store
+> “…blurs imperfections and cover redness, and it looks like skin, not something put on top!” — Gillian S., 65, verified buyer, from our earlier store (a buyer on redness)
+
+> “I’m 65 and my skin has uneven color. This product has evened out those places.” — Lora Z., 65, verified buyer, from our earlier store (a buyer on uneven colour)
+
+> “…colour matches to my skin tone, doesn’t oxidise as the day goes on… I frequently get told how nice my skin looks.” — Judith L., verified buyer, from our earlier store (a buyer on her match)
 
 ## 12 · Proof Elements
 

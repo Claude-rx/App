@@ -206,19 +206,17 @@ one_shade:
     - "Very fair or very deep? A few women find it a little light or dark. That is exactly what the 30-day guarantee is for"
     - "Not sure? Email <a href=\"mailto:hello@skinofab.com?subject=Is%20it%20my%20shade%3F\">hello@skinofab.com</a> before you order and we will tell you honestly"
   image: "images/sf/one-shade.jpg"
-  image_alt: "A white drop of the foundation blending into three skin tones, fair, medium and deep, under a fair-to-deep tone bar"
+  image_alt: "One shade, no number to guess: a row of skin-tone swatches from fair to deep, then three women past 45 with fair, olive and medium-deep skin, each before (bare skin with spots, redness and uneven tone) and after (the foundation on, her tone even)"
 before_after:
   eyebrow: "Before and after"
   title: "One bottle, three skin tones"
   lede: "The one thing a foundation does: it evens the look of skin tone and softens the look of lines. Each face, its shape and its creases stay hers."
   items:
-    - { image: "images/sf/ba-car.jpg", height: 900, alt: "A fair-skinned woman in her early fifties with shoulder-length hair, before and after: freckles, sun spots and redness on her bare skin, then the foundation on, her tone even and glowing", caption: "Fair skin: sun spots and redness evened, the same one shade." }
-    - { image: "images/sf/ba-kitchen.jpg", height: 900, alt: "A woman in her mid fifties with dark curly hair and olive skin, before and after: freckles, redness, uneven tone and lines on her bare skin, then the foundation on, her tone even and fresh", caption: "Olive skin: redness and uneven tone evened, lines softened, not erased." }
-    - { image: "images/sf/ba-garden.jpg", height: 900, alt: "A woman in her late fifties with short dark hair and medium-deep skin, before and after: dark spots and uneven tone on her bare skin, then the foundation on, her tone even and luminous", caption: "Medium-deep skin: dark spots evened, still her own tone." }
+    - { image: "images/sf/ba-car.jpg", height: 900, alt: "A fair-skinned woman in her early fifties with shoulder-length hair, before and after: freckles, sun spots and redness on her bare skin, then the foundation on, her tone even and glowing", caption: "Fair skin: sun spots and redness evened, the same one shade.", review: { topic: "A buyer on redness", name: "Gillian S., 65", photo: "images/sf/review-gillian.jpg", text: "…blurs imperfections and cover redness, and it looks like skin, not something put on top!" } }
+    - { image: "images/sf/ba-kitchen.jpg", height: 900, alt: "A woman in her mid fifties with dark curly hair and olive skin, before and after: freckles, redness, uneven tone and lines on her bare skin, then the foundation on, her tone even and fresh", caption: "Olive skin: redness and uneven tone evened, lines softened, not erased.", review: { topic: "A buyer on uneven colour", name: "Lora Z., 65", photo: "images/sf/review-lora.jpg", text: "I’m 65 and my skin has uneven color. This product has evened out those places." } }
+    - { image: "images/sf/ba-garden.jpg", height: 900, alt: "A woman in her late fifties with short dark hair and medium-deep skin, before and after: dark spots and uneven tone on her bare skin, then the foundation on, her tone even and luminous", caption: "Medium-deep skin: dark spots evened, still her own tone.", review: { topic: "A buyer on her match", name: "Judith L.", photo: "images/sf/review-judith.jpg", text: "…colour matches to my skin tone, doesn’t oxidise as the day goes on… I frequently get told how nice my skin looks." } }
   before: ["A shade that sits grey or orange on your cheeks", "Concealer, then powder, then a touch-up by noon", "Dry patches catching the foundation", "“You can tell I’m wearing makeup”"]
   after: ["A colour that shifts toward your own tone as you blend", "One pump, fingertips, about a minute", "Dry skin kept comfortable by the serum base", "“They just see me, rested”"]
-  quote: "I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!"
-  quote_by: "Lora Z., 65, verified buyer, from our earlier store"
 proof:
   eyebrow: "Why you can trust it"
   title: "Nothing to take on faith: the label, the reviews, the guarantee."
@@ -496,6 +494,19 @@ closing:
     </ul>
   </section>
 
+  {% comment %} 11a: the shade question, answered in one picture {% endcomment %}
+  <section class="sf-sec sf-sec--cream" id="s11-shade">
+    <div class="sf-sec__in sf-two sf-two--top">
+      <img src="{{ one_shade.image | campaign_asset }}" alt="{{ one_shade.image_alt }}" width="1080" height="1196" loading="lazy" decoding="async" class="sf-round sf-shade__img">
+      <div>
+        <p class="sf-eyebrow">{{ one_shade.eyebrow }}</p>
+        <h2 class="sf-h2 sf-h2--big">{{ one_shade.title }}</h2>
+        <ul class="sf-ticks sf-ticks--big">{% for b in one_shade.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
+        <div class="sf-guarantee"><span class="sf-guarantee__seal">30<br>DAYS</span><div><strong>{{ guarantee.title }}</strong>{{ guarantee.short }}</div></div>
+      </div>
+    </div>
+  </section>
+
   {% comment %} 10: the skincare inside: PDRN and the rest, one by one; the complaints we answered {% endcomment %}
   <section class="sf-sec sf-sec--cream" id="s10-why">
     <div class="sf-sec__in">
@@ -524,30 +535,16 @@ closing:
     </div>
   </section>
 
-  {% comment %} 11a: the shade question, answered in one picture {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s11-shade">
-    <div class="sf-sec__in sf-two sf-two--top">
-      <img src="{{ one_shade.image | campaign_asset }}" alt="{{ one_shade.image_alt }}" width="1080" height="1000" loading="lazy" decoding="async" class="sf-round sf-shade__img">
-      <div>
-        <p class="sf-eyebrow">{{ one_shade.eyebrow }}</p>
-        <h2 class="sf-h2 sf-h2--big">{{ one_shade.title }}</h2>
-        <ul class="sf-ticks sf-ticks--big">{% for b in one_shade.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
-        <div class="sf-guarantee"><span class="sf-guarantee__seal">30<br>DAYS</span><div><strong>{{ guarantee.title }}</strong>{{ guarantee.short }}</div></div>
-      </div>
-    </div>
-  </section>
-
   {% comment %} 11b: before and after, and the life around it {% endcomment %}
   <section class="sf-sec" id="s11-before-after">
     <p class="sf-eyebrow" style="text-align:center">{{ before_after.eyebrow }}</p>
     <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ before_after.title }}</h2>
     <p style="text-align:center;max-width:720px;margin:0 auto 18px">{{ before_after.lede }}</p>
-    <div class="sf-ba-grid {% if before_after.items.size > 1 %}sf-ba-grid--row{% else %}sf-ba-grid--one{% endif %}">{% for b in before_after.items %}<figure><img src="{{ b.image | campaign_asset }}" alt="{{ b.alt }}" width="1080" height="{{ b.height | default: 1080 }}" loading="lazy" decoding="async"><figcaption>{{ b.caption }}</figcaption></figure>{% endfor %}</div>
+    <div class="sf-ba-grid {% if before_after.items.size > 1 %}sf-ba-grid--row{% else %}sf-ba-grid--one{% endif %}">{% for b in before_after.items %}<figure class="sf-ba-card"><img src="{{ b.image | campaign_asset }}" alt="{{ b.alt }}" width="1080" height="{{ b.height | default: 1080 }}" loading="lazy" decoding="async"><figcaption>{{ b.caption }}</figcaption>{% if b.review %}<blockquote class="sf-ba-review"><p class="sf-ba-review__topic">{{ b.review.topic }}</p><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="5 out of 5 stars"><i></i><i></i><i></i><i></i><i></i></span><p class="sf-ba-review__text">“{{ b.review.text }}”</p><footer><img src="{{ b.review.photo | campaign_asset }}" alt="" width="36" height="36" loading="lazy" decoding="async"><cite><b>{{ b.review.name }}</b>verified buyer, from our earlier store</cite></footer></blockquote>{% endif %}</figure>{% endfor %}</div>
     <div class="sf-lifegrid">
       <div class="sf-life"><h3>Before this foundation</h3><ul>{% for l in before_after.before %}<li>{{ l }}</li>{% endfor %}</ul></div>
       <div class="sf-life sf-life--after"><h3>After it</h3><ul>{% for l in before_after.after %}<li>{{ l }}</li>{% endfor %}</ul></div>
     </div>
-    <blockquote class="sf-quote" style="margin-top:18px"><p>“{{ before_after.quote }}”</p><cite>{{ before_after.quote_by }}</cite></blockquote>
   </section>
 
   {% comment %} 13: the dream outcome: the mirror tomorrow, the photo on Saturday {% endcomment %}
