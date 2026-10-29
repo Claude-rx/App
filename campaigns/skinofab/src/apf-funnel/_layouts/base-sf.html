@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   {% if next_url %}<link rel="prefetch" href="{{ next_url | campaign_link }}" as="document">{% endif %}
-  {% if preload_image %}<link rel="preload" as="image" href="{{ preload_image | campaign_asset }}" fetchpriority="high">{% endif %}
+  {% if preload_image_mobile %}<link rel="preload" as="image" href="{{ preload_image_mobile | campaign_asset }}" media="(max-width: 599px)" fetchpriority="high"><link rel="preload" as="image" href="{{ preload_image | campaign_asset }}" media="(min-width: 600px)" fetchpriority="high">{% elsif preload_image %}<link rel="preload" as="image" href="{{ preload_image | campaign_asset }}" fetchpriority="high">{% endif %}
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ 'css/sf-funnel.css' | campaign_asset }}">
   {% for style in styles %}<link rel="stylesheet" href="{{ style | campaign_asset }}">

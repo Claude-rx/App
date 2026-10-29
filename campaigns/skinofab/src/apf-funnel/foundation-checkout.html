@@ -227,6 +227,14 @@ exit_intent:
                           </div>
                           <div class="form-section form-section--last">
                             <div class="cart-box cart-box--card" data-sf-summary-box>
+                              {% comment %} the summary before the SDK has the campaign (an empty box with one line for 2+ s, live review 5): the chosen pack, free shipping and the total from the page's own prices; sf-checkout.js follows ?forceBundleId and an early tap, and hides it once the SDK's own summary is in {% endcomment %}
+                              {% assign sb = bundles | where: "selected", true | first %}
+                              <div class="sf-co-sumfb" aria-hidden="true" data-sf-sumfb='{ {% for b in bundles %}{% unless forloop.first %},{% endunless %}"{{ b.id }}":{"name":{{ b.name | json }},"price":"{{ b.price }}","image":"{{ b.image | campaign_asset }}"}{% endfor %} }'>
+                                <p class="sf-co-sumfb__title">Order summary</p>
+                                <div class="sf-co-sumfb__line"><img src="{{ sb.image | campaign_asset }}" alt="" width="56" height="56" data-sf-sumfb-img><span data-sf-sumfb-name>{{ sb.name }}</span><strong data-sf-sumfb-price>{{ sb.price }}</strong></div>
+                                <div class="sf-co-sumfb__row"><span>Shipping</span><span>Free</span></div>
+                                <div class="sf-co-sumfb__row sf-co-sumfb__total"><span>Total today</span><strong data-sf-sumfb-total>{{ sb.price }}</strong></div>
+                              </div>
                               {% campaign_include 'cart-summary02.html' %}
                             </div>
                           </div>

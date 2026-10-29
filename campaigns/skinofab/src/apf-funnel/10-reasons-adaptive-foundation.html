@@ -6,6 +6,7 @@ page_type: product
 next_url: adaptive-foundation-offer.html
 body_class: "sf-listicle sf-apf"
 preload_image: "images/sf/hero.jpg"
+preload_image_mobile: "images/sf/hero-m.jpg"   # a phone shows one woman, square (the three-panel strip was 140 px tall, live review 5)
 styles:
   - css/sf-apf.css
 og_image: ""
@@ -27,7 +28,7 @@ intro:
   - "The SKINOFAB Adaptive Peptide Foundation was. It won’t make you look 30, and no honest brand will tell you it does. What it does is even out the look of your skin in about a minute, so the rest of you shows. Here are the 10 reasons behind its 9,855 reviews, which average 4.8 out of 5."
 byline: "By the SKINOFAB Beauty Team"
 byline_role: "Made for skin after 45"
-hero_alt: "Three women in their fifties and sixties, each with the black SKINOFAB Adaptive Peptide Foundation"
+hero_alt: "Women in their fifties and sixties, each holding the black SKINOFAB Adaptive Peptide Foundation by her face"
 reasons:
   - title: "No More Guessing Your Shade"
     image: "images/sf/ba-glow.jpg"
@@ -143,7 +144,7 @@ cta:
   today: { item: "Today, in this launch offer", value: "$75" }
   per_bottle: "$25 a bottle · one-time purchase, nothing renews"
   alt_packs: "Or 2 bottles with 2 free gifts for $57, or 1 bottle for $39. Every pack ships free."
-  button: "CLAIM YOUR LAUNCH OFFER NOW →"
+  button: "SEE THE LAUNCH OFFER →"
   note: "FREE SHIPPING · ONE-TIME PURCHASE · 30-DAY MONEY-BACK GUARANTEE"
   image_alt: "The Adaptive Peptide Foundation: three bottles with the free Lymphatic Brush and its case, the Blender brush and the mystery gift"
   price: "3 bottles for $75 ($25 a bottle; $141 for three in our store). One-time purchase: nothing renews. This offer is only in this launch; our store sells one bottle for $47."
@@ -181,13 +182,13 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
   <div class="sf-bar__in">
     <img class="sf-bar__logo" src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="110" height="22">
     <span class="sf-bar__text"><span class="sf-bar__long">{{ offer_bar }}</span><span class="sf-bar__short">{{ offer_bar_short }}</span></span>
-    <a class="sf-bar__btn" href="{{ offer_link }}">CLAIM OFFER →</a>
+    <a class="sf-bar__btn" href="{{ offer_link }}">SEE OFFER →</a>
   </div>
 </header>
 
 <main class="sf-article">
   <figure class="sf-hero">
-    <img src="{{ 'images/sf/hero.jpg' | campaign_asset }}" alt="{{ hero_alt }}" width="1688" height="840" fetchpriority="high">
+    <picture><source media="(max-width: 599px)" srcset="{{ 'images/sf/hero-m.jpg' | campaign_asset }}" width="1080" height="1080"><img src="{{ 'images/sf/hero.jpg' | campaign_asset }}" alt="{{ hero_alt }}" width="1688" height="844" fetchpriority="high"></picture>
   </figure>
   <h1 class="sf-h1">{{ headline }}</h1>
   <p class="sf-sub">{{ subhead }}</p>

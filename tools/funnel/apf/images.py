@@ -12,10 +12,12 @@ approved):
 - the product sheet's renders (brand/adaptive-peptide-foundation/*.png) for the packshots and the packs' cards;
 - the generated split portraits (brand/adaptive-peptide-foundation/gen/ba-split-*.png, 28 Oct 2026: one woman of
   45+ twice in one frame, bare skin with its lines, sun spots and redness on the left, the foundation on with an
-  even, luminous tone on the right; gen/README.md has the model and prompts) for the before/afters, every one saying
-  on the image that it is an AI illustration, not a customer photo; the pairs no image credit could make yet (the
-  listicle's lines, dry-skin and ages reasons, the shade panel's three women) show a persona photo (brand/persona/
-  age-*.jpg, women 45+ made for the store) on its own, or the shade panel's evened-tone after, until they are made;
+  even, luminous tone on the right; gen/README.md has the model and prompts) for the listicle's shade reason (no
+  disclaimer line on any image, the owner's instruction of 28 Oct 2026); the listicle's lines, dry-skin and ages
+  reasons, which have no pair yet, show a persona photo (brand/persona/age-*.jpg, women 45+ made for the store);
+- the owner's own images (brand/adaptive-peptide-foundation/owner/, 29 Oct 2026): three before/after pairs of
+  women past 45 (bare skin with lines, spots and uneven tone, then the foundation on, glowing and even) and the
+  SKINOFAB doctor in her clinic holding the bottle, its small print reset by doctor_photo();
 - the buyers' own photos (reviews/photos-approved.txt), square on the face;
 - the seven demo clips the homepage plays (brand/videos/gj-*, the old bottle replaced by the real one): the four
   with women 45+, at 540 px with a WebM copy, posters from the live page or a frame;
@@ -37,6 +39,7 @@ import product_photos as P          # fonts, the AI line
 BRAND = ROOT / 'brand'
 APF, PDP, PERSONA, BRUSH = BRAND / 'adaptive-peptide-foundation', BRAND / 'adaptive-peptide-foundation' / 'pdp', BRAND / 'persona', BRAND / 'lymphatic-brush'
 KEPT = APF / 'reviews'              # the buyers' photo crops, kept in git
+OWNER = APF / 'owner'               # the owner's own images (29 Oct 2026): three before/after pairs, the doctor in her clinic
 OUT = ROOT / 'campaigns' / 'skinofab' / 'src' / 'apf-funnel' / 'assets' / 'images' / 'sf'
 INK, PAPER, SOFT, CREAM = (21, 21, 21), (255, 255, 255), (96, 96, 96), (246, 242, 236)
 
@@ -79,8 +82,22 @@ def save(im, name, size=None, q=84):
 
 
 def bottle(size):
-    """The bottle on white: the live page's own render (the product sheet's, its grey backdrop already lifted)."""
+    """The bottle on white: the live page's own render (the product sheet's, its grey backdrop already lifted), with
+    the label's PDRN line, which that copy lacks: the line is taken from the product sheet's own front render
+    (01-front.png, relabelled by tools/persona/relabel_bottles.py), whose label sits 127 px right of and 3 px below this
+    one at the same scale, as its light print over the bottle's black (live review 5: the pack shots read without the
+    PDRN line every held bottle and the store's photos print)."""
     im = Image.open(PDP / 'solution-bottle.jpg').convert('RGB')
+    front = np.asarray(Image.open(APF / '01-front.png').convert('L'), dtype=np.float32)
+    fx0, fy0, fx1, fy1, dx, dy = 586, 1046, 668, 1074, -127, -3               # the PDRN line on the front render
+    patch = front[fy0:fy1, fx0:fx1]
+    bg = np.median(np.concatenate([front[1030:1042, fx0:fx1], front[1080:1100, fx0:fx1]]), axis=0)   # its black, per column
+    alpha = np.clip((patch - bg[None]) / (238.0 - bg[None]), 0, 1)[..., None]
+    a = np.asarray(im).astype(np.float32)
+    region = a[fy0 + dy:fy1 + dy, fx0 + dx:fx1 + dx]
+    assert float(region.mean()) < 60, 'solution-bottle.jpg changed: the PDRN line would not land on the black label'
+    a[fy0 + dy:fy1 + dy, fx0 + dx:fx1 + dx] = region * (1 - alpha) + 238.0 * alpha
+    im = Image.fromarray(a.clip(0, 255).astype(np.uint8))
     # the faint grey smear to the lower right of the base goes (a detached shadow, live reviews 1 and 2); the darker
     # contact shadow under the base stays
     a = np.asarray(im).copy(); y0 = int(a.shape[0] * 0.84)
@@ -269,7 +286,7 @@ def allday_clip(encode=True, fps=25, seconds=6.0):
     ours, theirs0, theirs1 = (214, 166, 131), (214, 166, 131), (221, 136, 70)
     frames = _frames_dir('allday')
     n = int(fps * seconds)
-    big, small, tiny = P.sans(44, 'SemiBold'), P.sans(26, 'Regular'), P.sans(22, 'Regular')
+    big, small, tiny = P.sans(48, 'SemiBold'), P.sans(38, 'Regular'), P.sans(22, 'Regular')   # the sub line 12 px on a phone, not 8 (live review 5)
     for i in range(n):
         p = min(1.0, max(0.0, (i / fps - 0.5) / (seconds - 1.5)))
         im = Image.new('RGB', (W, H), PAPER)
@@ -279,14 +296,17 @@ def allday_clip(encode=True, fps=25, seconds=6.0):
         d.text((W // 2, 92), label, font=P.serif(64, 'Bold'), fill=INK, anchor='ms')
         d.rounded_rectangle((120, 150, W - 120, 164), 7, fill=(232, 228, 222))
         d.rounded_rectangle((120, 150, 120 + int((W - 240) * p), 164), 7, fill=INK)
-        for k, (col, title, sub) in enumerate(((ours, 'This foundation', 'the same tone all day'),
-                                               (tuple(int(theirs0[c] + (theirs1[c] - theirs0[c]) * p) for c in range(3)), 'One that oxidises', 'orange by the afternoon'))):
+        # the words hedge as the copy does: "made not to turn orange", not "the same tone all day" (live review 5)
+        for k, (col, title, sub) in enumerate(((ours, 'This foundation', 'made not to turn orange'),
+                                               (tuple(int(theirs0[c] + (theirs1[c] - theirs0[c]) * p) for c in range(3)), 'One that oxidises', 'can turn orange by noon'))):
             cx = W // 4 + k * (W // 2)
             d.ellipse((cx - 150, 220, cx + 150, 520), fill=col)
             f, fs = big, 44
             while d.textlength(title, font=f) > W // 2 - 60 and fs > 28: fs -= 2; f = P.sans(fs, 'SemiBold')
-            d.text((cx, 580), title, font=f, fill=INK, anchor='ms')
-            d.text((cx, 622), sub, font=small, fill=SOFT, anchor='ms')
+            d.text((cx, 584), title, font=f, fill=INK, anchor='ms')
+            sf_, ss = small, 38
+            while d.textlength(sub, font=sf_) > W // 2 - 50 and ss > 28: ss -= 2; sf_ = P.sans(ss, 'Regular')
+            d.text((cx, 638), sub, font=sf_, fill=SOFT, anchor='ms')
         # the disclosure is the page's caption under the clip (the baked line repeated it, live review 3)
         im.save(frames / f'f{i + 1:04d}.png')
     save(Image.open(frames / f'f{n:04d}.png'), 'allday-poster', size=W)
@@ -295,27 +315,58 @@ def allday_clip(encode=True, fps=25, seconds=6.0):
     print('allday clip', n, 'frames')
 
 
-def split_pair(key, out, size=1080, height=900, band=100):
+def split_pair(key, out, size=1080, height=900, band=100, src=None, centering=(0.5, 0.35)):
     """A generated split portrait (gen/ba-split-<key>.png: the same woman twice in one frame, her bare skin with its
     lines, spots and redness on the left, the foundation on with an even, luminous tone on the right, a white line
     between) laid out as the pages' before/after: each half fitted to its column (no upscaling at 1376 px wide),
     Before / After in ink on a white band at the foot, a white line between the halves (no disclaimer line: the owner's
     instruction, 28 Oct 2026)."""
-    im = Image.open(GEN / f'ba-split-{key}.png').convert('RGB')
+    im = Image.open(src or GEN / f'ba-split-{key}.png').convert('RGB')
     w, h = im.size
     g = np.asarray(im.convert('L'), dtype=np.float32).mean(axis=0)       # the divider: the brightest column near the middle
     lo, hi = int(w * 0.45), int(w * 0.55)
     mid = lo + int(np.argmax(g[lo:hi]))
-    halves = (im.crop((0, 0, mid - 6, h)), im.crop((mid + 6, 0, w, h)))
+    left, right = mid, mid                                                # and the whole white bar around it
+    while left > lo and g[left - 1] > 235: left -= 1
+    while right < hi and g[right + 1] > 235: right += 1
+    halves = (im.crop((0, 0, left - 4, h)), im.crop((right + 5, 0, w, h)))
     col_w, col_h = size // 2, height - band
     out_im = Image.new('RGB', (size, height), PAPER)
     for j, half in enumerate(halves):
-        out_im.paste(ImageOps.fit(half, (col_w, col_h), Image.LANCZOS, centering=(0.5, 0.35)), (j * col_w, 0))
+        out_im.paste(ImageOps.fit(half, (col_w, col_h), Image.LANCZOS, centering=centering), (j * col_w, 0))
     d = ImageDraw.Draw(out_im)
     d.rectangle((size // 2 - 3, 0, size // 2 + 3, col_h), fill=PAPER)
     d.text((34, height - 32), 'Before', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
     d.text((size // 2 + 34, height - 32), 'After', font=P.sans(42, 'SemiBold'), fill=INK, anchor='ls')
     save(out_im, out, size=size)
+
+
+def doctor_photo():
+    """The owner's portrait of the SKINOFAB doctor in her clinic holding the bottle (owner/doctor-clinic.webp, 29 Oct
+    2026). The image model misspelt the small print under the wordmark ("PORN" for PDRN, "PEPTIOE"): that block is
+    painted out with the bottle's own black, column by column from the rows above and below it (feathered over 4 px,
+    no text within them), and set again in the label's sizes and greys: ADAPTIVE PEPTIDE / FOUNDATION / PDRN /
+    30 mL / 1.01 fl oz. The wordmark, her hand and the rest of the photo are untouched."""
+    a = np.asarray(Image.open(OWNER / 'doctor-clinic.webp').convert('RGB')).astype(np.float32)
+    assert a.shape[:2] == (1402, 1122), 'doctor-clinic.webp changed: measure the label block again'
+    x0, x1, y0, y1 = 304, 383, 671, 734
+    top, bot = np.median(a[662:668, x0:x1], axis=0), np.median(a[733:740, x0:x1], axis=0)
+    t = np.linspace(0, 1, y1 - y0)[:, None, None]
+    fill = top[None] * (1 - t) + bot[None] * t + np.random.default_rng(7).normal(0, 1.4, (y1 - y0, x1 - x0, 1))
+    yy, xx = np.mgrid[0:y1 - y0, 0:x1 - x0]
+    wgt = np.clip(np.minimum.reduce([xx, x1 - x0 - 1 - xx, yy, y1 - y0 - 1 - yy]).astype(np.float32) / 4.0, 0, 1)[..., None]
+    a[y0:y1, x0:x1] = a[y0:y1, x0:x1] * (1 - wgt) + fill * wgt
+    im, K = Image.fromarray(a.clip(0, 255).astype(np.uint8)), 8
+    for text, cx, cy, width, cap, tone in (('ADAPTIVE PEPTIDE', 342, 680.5, 62, 6.0, 236), ('FOUNDATION', 343, 688.5, 44, 6.0, 236),
+                                           ('PDRN', 345.5, 706, 15, 4.6, 205), ('30 mL / 1.01 fl oz', 345, 725, 42, 5.0, 214)):
+        f = P.sans(int(round(cap / 0.70 * K)), 'Medium')                 # drawn 8x, condensed to the label's own width
+        l, tp, r, b = f.getbbox(text)
+        lay = Image.new('L', (r - l + 4 * K, b - tp + 4 * K), 0)
+        ImageDraw.Draw(lay).text((2 * K - l, 2 * K - tp), text, font=f, fill=255)
+        lay = lay.resize((int(width * K + 4 * K * width * K / (r - l)), lay.height), Image.LANCZOS)
+        small = lay.resize((max(1, round(lay.width / K)), max(1, round(lay.height / K))), Image.LANCZOS)
+        im.paste(Image.new('RGB', small.size, (tone,) * 3), (int(round(cx - small.width / 2)), int(round(cy - small.height / 2))), small)
+    save(ImageOps.fit(im, (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), 'doctor', size=1350)
 
 
 def portrait(src, out, size=1080, crop=None, centering=(0.5, 0.3)):
@@ -344,14 +395,37 @@ def soften_patch(im, box):
     return Image.fromarray(np.clip(a * (1 - m) + soft * m, 0, 255).astype(np.uint8))
 
 
+def soften_seam(im, x=512, band=40, probe=6, smooth=25):
+    """A split portrait's vertical seam (the two halves of the generated face meet at column x with a step in colour,
+    clearest at the chin, live review 5) spread over band px each side: per row, the step between the probe px either
+    side is measured, smoothed down the rows, and half of it fades in on the left and half fades out on the right, so
+    the halves meet at one colour. Only colour moves; no detail is blurred."""
+    a = np.asarray(im.convert('RGB')).astype(np.float32)
+    step = a[:, x + 1:x + 1 + probe].mean(axis=1) - a[:, x - probe:x].mean(axis=1)          # right minus left, per row
+    k = np.exp(-0.5 * (np.arange(-3 * smooth, 3 * smooth + 1) / smooth) ** 2); k /= k.sum()
+    step = np.stack([np.convolve(np.pad(step[:, c], 3 * smooth, mode='edge'), k, mode='valid') for c in range(3)], axis=1)
+    a[:, x - band + 1:x + 1] += (step[:, None, :] / 2) * np.linspace(1 / band, 1, band)[None, :, None]
+    a[:, x + 1:x + 1 + band] -= (step[:, None, :] / 2) * np.linspace(1, 1 / band, band)[None, :, None]
+    # the seam's own light hairline (its two columns either side) redrawn from the columns beyond it
+    l, r = a[:, x - 2].copy(), a[:, x + 3].copy()
+    for j, c in enumerate(range(x - 1, x + 3)):
+        t = (j + 1) / 5
+        a[:, c] = l * (1 - t) + r * t
+    return Image.fromarray(a.clip(0, 255).astype(np.uint8))
+
+
 def hero_collage():
-    """Three women past 45 with the bottle, side by side (the listicle's top image), 2:3 each."""
-    w, h = 560, 840
-    panels = [ImageOps.fit(Image.open(PDP / f'{n}.jpg').convert('RGB'), (w, h), Image.LANCZOS, centering=c)
-              for n, c in (('hold-cheek', (0.5, 0.4)), ('dots-eyes-closed', (1.0, 0.45)), ('hold-grey-hair', (0.5, 0.4)))]   # the middle panel on her face, not the seam through her eye (live review 3)
-    im = Image.new('RGB', (w * 3 + 8, h), PAPER)
-    for i, p in enumerate(panels): im.paste(p, (i * (w + 4), 0))
+    """The listicle's top image: two women past 45 holding the bottle by the face, each photo whole and square, side by
+    side (2:1, 1688 x 844). The three 2:3 panels it was cut the face of the right-hand woman at the frame and the middle
+    woman's forehead, and showed on a phone as a 140 px strip (live review 5). A phone gets one of them on its own,
+    square (hero-m, the page's <picture>)."""
+    side = 842
+    sq = [ImageOps.fit(Image.open(PDP / f'{n}.jpg').convert('RGB'), (side, side), Image.LANCZOS, centering=c)
+          for n, c in (('hold-cheek', (0.5, 0.5)), ('hold-grey-hair', (0.5, 0.5)))]
+    im = Image.new('RGB', (side * 2 + 4, side), PAPER)
+    for i, p in enumerate(sq): im.paste(p, (i * (side + 4), 0))
     save(im, 'hero', size=1688)
+    save(ImageOps.fit(Image.open(PDP / 'hold-cheek.jpg').convert('RGB'), (1080, 1080), Image.LANCZOS, centering=(0.5, 0.5)), 'hero-m', size=1080)
 
 
 def offer_card():
@@ -430,11 +504,10 @@ def copies(video=True):
     save(Image.open(APF / 'composites' / 'two-bottles.jpg'), 'two-bottles', size=1080)
     # the brush: its page's images, in-hand and problem photos, the before/after it already shows (its own illustration
     # label is on the image) and the stick funnel's loop of it
-    for n in ('hero', 'how-to-use', 'vs-tools', 'card', 'how-1', 'how-2', 'how-3', 'compare-ours'):
-        im = Image.open(BRUSH / f'{n}.jpg').convert('RGB')
-        if n == 'how-to-use':   # its first printed line ("Repeat on the other side.") sat above the title (live review 4): cut off, the square padded
-            w, h = im.size; im = ImageOps.pad(im.crop((0, int(h * 0.091), w, h)), (w, w), Image.LANCZOS, color=PAPER)
-        save(im, f'brush-{n}', size=1080)
+    # (only the ones the brush page shows: its how-to infographic repeated the page's four steps, live review 5, and the
+    # hero, tools and channel diagrams were not shown at all)
+    for n in ('card', 'how-1', 'compare-ours'):
+        save(Image.open(BRUSH / f'{n}.jpg').convert('RGB'), f'brush-{n}', size=1080)
     # the case photo without its baked headline (illegible at card size, live review 2), and the brush's head alone
     # cut from the clean product shot
     case = Image.open(BRUSH / 'case.jpg').convert('RGB'); cw, ch = case.size
@@ -479,12 +552,12 @@ def copies(video=True):
     # v2 (28 Oct 2026): the generated sources in gen/ (the science cross-section with the real bottle, the split-face
     # "wow" portrait, two problem photos), the store's Korean formulator portrait, the stick funnel's ingredient
     # textures (the same ingredients, the same photos)
-    save(ImageOps.fit(Image.open(GEN / 'wow-split.png').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35)), 'wow', size=1350)
+    save(ImageOps.fit(soften_seam(Image.open(GEN / 'wow-split.png')), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35)), 'wow', size=1350)
     for n in ('problem-mirror', 'problem-orange'):
         im = Image.open(GEN / f'{n}.png').convert('RGB')
         if n == 'problem-mirror': im = soften_patch(im, (0.19, 0.27, 0.47, 0.49))   # her cheek's pigment read as a bruise at page size (live review 3)
         save(ImageOps.fit(im, (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), n, size=1350)
-    save(ImageOps.fit(Image.open(APF / 'doctor.jpg').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), 'doctor', size=1350)
+    doctor_photo()
     stick = ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'images' / 'sf'
     for n in ('pdrn', 'peptides', 'ha', 'ceramides', 'squalane', 'niacinamide'): shutil.copyfile(stick / f'ing-{n}.jpg', OUT / f'ing-{n}.jpg')
 
@@ -497,11 +570,16 @@ if __name__ == '__main__':
     offer_card()
     # the before/afters (28 Oct 2026, the owner's brief: a before with lines, sun spots and uneven tone, an after with
     # even, glowing skin, the same woman of 45+): the sales page's close-up and the listicle's first reason from the
-    # generated split portraits; the listicle's lines, dry-skin and ages reasons show a persona photo on its own until
-    # their pairs are made (no image credit was left after the first two; gen/README.md)
-    split_pair('closeup', 'ba-closeup')
+    # generated split portraits; the listicle's lines, dry-skin and ages reasons show a persona photo on its own
+    # until their pairs are made (gen/README.md)
     split_pair('glow', 'ba-glow')
     portrait('age-109', 'reason-lines', centering=(0.5, 0.4))
+    # (the generated close-up pair is retired: its "after" erased forehead lines and crow's feet, more than a
+    # foundation does, live review 5)
+    # the owner's three pairs (29 Oct 2026: one woman each, before and after, a fair, an olive and a medium-deep
+    # tone): the sales page's before/after row (the two pages share no image)
+    for key, centering in (('kitchen', (0.5, 0.3)), ('car', (0.5, 0.3)), ('garden', (0.5, 0.3))):
+        split_pair(key, f'ba-{key}', src=OWNER / f'ba-{key}.webp', centering=centering)
     portrait('age-255', 'reason-dry', crop=(0.2, 0.0, 0.8, 0.75))
     portrait('age-223', 'reason-ages', crop=(0.25, 0.0, 0.75, 0.5))
     one_shade()

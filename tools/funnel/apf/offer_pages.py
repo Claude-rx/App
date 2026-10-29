@@ -50,6 +50,14 @@ GUARANTEE = 'Backed by our 30-day money-back guarantee.'
 # the honest countdown: 10 minutes on an offer, 5 on a last chance; at 0:00 the page declines the offer itself
 TIMER, TIMER_LAST = 600, 300
 EXPIRES = 'When the clock reaches 0:00 this page moves on and this offer is gone: it isn’t in our store or in an email.'
+# an offer whose decline leads to its own downsell (the same item for less on the next page) must not say "gone"
+# (live review 5): the clock still moves the page on, and the offer is still in no store and no email
+EXPIRES_DOWNSELL_NEXT = 'When the clock reaches 0:00 this page moves on. This offer isn’t in our store or in an email.'
+
+
+def expires(pid):
+    nxt = F.BY_ID[F.BY_ID[pid]['decline']]
+    return EXPIRES_DOWNSELL_NEXT if nxt.get('type') == 'downsell' else EXPIRES
 
 
 def q(s):
@@ -80,8 +88,7 @@ BRUSH_PDP = {
                            {'title': 'No pressing.', 'text': 'Hundreds of soft tips bend instead of pressing: no red marks, no drag on thinner skin.'},
                            {'title': 'No tutorial.', 'text': 'Four sweeps: neck, jaw, under the eyes, neck again.'},
                            {'title': 'No tool rolling around the counter.', 'text': 'A protective travel case comes with every brush.'}]},
-    'use': {'image': 'images/sf/brush-how-to-use.jpg', 'alt': 'How to use the Lymphatic Brush: the four sweeps on a face, neck, jaw and cheeks, under the eyes, neck again',
-            'eyebrow': 'How to use it', 'title': 'Four sweeps, about 3 minutes', 'lede': 'On clean, dry skin, in the morning, before your skincare and foundation.',
+    'use': {'eyebrow': 'How to use it', 'title': 'Four sweeps, about 3 minutes', 'lede': 'On clean, dry skin, in the morning, before your skincare and foundation.',
             'steps': steps(('Neck', 'Sweep down from under the ear to the collarbone.'), ('Jaw and cheeks', 'Sweep from your chin along the jaw toward the ear.'),
                            ('Under the eyes', 'Sweep out from the nose to the temples, very lightly.'), ('Neck again', 'Finish with a few sweeps down the neck.')),
             'note': 'Repeat each sweep about 10 times, then do the other side. Keep it clean: a quick sweep on a cloth with a brush cleaner or 70% alcohol before each use, and a gentle wash of the tips once a month.'},
@@ -136,8 +143,8 @@ GATE = """{% comment %} the order's facts js/sf-offer-gate.js reads (in the page
 """
 
 
-def hero(eyebrow, title, text, seconds):
-    return ['uh:', f'  eyebrow: {q(eyebrow)}', f'  title: {q(title)}', f'  text: {q(text)}', f'  seconds: {seconds}', f'  expires: {q(EXPIRES)}']
+def hero(eyebrow, title, text, seconds, pid):
+    return ['uh:', f'  eyebrow: {q(eyebrow)}', f'  title: {q(title)}', f'  text: {q(text)}', f'  seconds: {seconds}', f'  expires: {q(expires(pid))}']
 
 
 def single_page(pid, spec, o):
@@ -155,13 +162,13 @@ def single_page(pid, spec, o):
     brush = o.get('brush_pdp')
     fm = head(pid, o['title'], o['announcement']) + [
         *([f'skip_skus: {q(o["skip_skus"])}'] if o.get('skip_skus') else []),
-        *hero(o['eyebrow'], o['hero_title'], o['hero_text'], o['seconds']),
+        *hero(o['eyebrow'], o['hero_title'], o['hero_text'], o['seconds'], pid),
         'upsell_layout:', '  style: card', '  boxed: true', f'  media: {"video" if brush else "carousel"}', '  media_position: right', f'  media_align: {"top" if brush else "center"}',   # the brush loop level with its text (a blank band sat above it at 1440, live review 4)
         '  show_bullets: true', '  show_ships_info: true', '  show_payment_logos: false', '  decline_position: below',   # no logo strip: the charge goes to the payment she just used
         *(['media_video:', *[f'  {k}: {q(v) if isinstance(v, str) else str(v).lower()}' for k, v in BRUSH_VIDEO.items()]] if brush else []),
         'upsell_offer:', '  type: single', '  pricing_mode: discounted', f'  package_id: {tier["ref"]}',
         f'  voucher: {q(tier["voucher"])}', f'  selector_id: {q(pid)}', '  show_rating: false',
-        f'  pretitle: {q(o["pretitle"])}', f'  title: {q(o["title"])}', '  retail_label: "Regular price"',
+        f'  pretitle: {q(o["pretitle"])}', f'  title: {q(o["title"])}', f'  retail_label: {q("Sales page price" if str(tier["package"]).startswith("apf") else "Regular price")}',   # one bottle's $39 is the sales page's price; the store's is $47 (live review 5)
         '  price_label: "Today, on this page"', '  retail_shipping: ""', '  offer_shipping: "FREE SHIPPING · CHARGED ONCE"', f'  accept_text: {q(o["accept"])}', '  accept_show_price: true',
         f'  cta_note: {q(terms)}', f'  decline_text: {q(o["decline"])}', f'  closing_title: {q(o["closing"])}',
         f'  image: {q("images/sf/" + o["images"][0][0] + ".jpg")}',
@@ -218,7 +225,7 @@ def supply_page(spec):
                 ('These packs exist only here', 'In our store one bottle is $47, bought once. These two packs are made for this page: a bottle works out at $19.50 in the 2-pack or $16.50 in the 6-pack, in the same box as your order.')]
     fm = head(pid, 'Stock up on the Adaptive Peptide Foundation', 'Offer 1 of 3 · Your order is placed', extra_scripts=['js/sf-supply.js']) + [
         *hero('A one-time offer', 'Just for you, right now: more bottles from $16.50 each',
-              'Add bottles to the order you just placed: one tap, same box, same payment. These two packs exist on this page only.', TIMER),
+              'Add bottles to the order you just placed: one tap, same box, same payment. These two packs exist on this page only.', TIMER, pid),
         f'supply: {q(supply)}',
         # the closing card prices the selected card (bundle.supply.*) and proxies its add / skip
         'upsell_offer:', '  type: tier-cards', f'  package_id: {two}', '  selector_id: "supply"', '  display_selector_id: "supply"', '  display_bundle_id: "supply-b1g1"',

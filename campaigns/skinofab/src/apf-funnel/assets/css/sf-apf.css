@@ -263,6 +263,10 @@
 .sf-ticks--big a { text-decoration: underline; }
 .sf-shade__img { width: 100%; max-width: 520px; justify-self: center; }
 .sf-ba-grid--one { max-width: 760px; margin: 0 auto; grid-template-columns: 1fr !important; }
+/* three women side by side from 900 px (each pair is one picture, its Before / After drawn on it: below 900 px three
+   across would set those words at 9-11 px); stacked below, no wider than 560 px so a tablet shows faces, not walls */
+.sf-ba-grid--row { max-width: 560px; margin: 0 auto; grid-template-columns: 1fr !important; gap: 18px; }
+@media (min-width: 900px) { .sf-ba-grid--row { max-width: 1120px; grid-template-columns: repeat(3, 1fr) !important; gap: 14px; } }
 .sf-steps--grid { display: grid; gap: 10px; }
 .sf-steps--grid li { margin-bottom: 0; }
 .sf-value__img { width: 100%; max-width: 420px; margin: 0 auto 14px; border-radius: 12px; display: block; }
@@ -370,4 +374,22 @@ body:has([data-sf-sticky]) .sf-footer { padding-bottom: 150px; }
 @media (min-width: 768px) {
   .sf-reason--wide .sf-reason__media, .sf-reason--wide .sf-science { max-width: 680px; margin-left: auto; margin-right: auto; }
   .sf-reason:has(img[src*="guarantee"]) .sf-reason__media { max-width: 360px; margin-left: auto; margin-right: auto; }
+}
+/* the hero's rating, right under the headline (it sat under the button, on the second screen of a phone) */
+.sf-hero2__rating { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: -4px 0 12px !important; font-size: 15px; color: var(--text); }
+.sf-hero2__rating a { color: inherit; text-decoration: underline; text-underline-offset: 3px; display: inline-block; padding: 10px 0; margin: -10px 0; }
+/* a phone's first screen (CRO before the ads, 29 Oct 2026): the photo, the promise, the rating, the button and the
+   price line, then the line about it and the five bullets. The photo 5:4 (4:5 took the whole first screen, the headline began
+   at its foot and the button was on the second screen) */
+@media (max-width: 599px) {
+  .sf-hero2__media--tall img { aspect-ratio: 5 / 4; object-position: 50% 32%; }   /* the button inside an iPhone's 664 px first screen */
+  .sf-hero2--v2 .sf-hero2__copy { display: flex; flex-direction: column; }
+  .sf-hero2--v2 .sf-hero2__eyebrow { display: none; }   /* the line under the headline says "made for skin after 45" */
+  .sf-hero2--v2 { gap: 14px; }
+  .sf-hero2--v2 .sf-hero2__copy > .sf-btn { order: 1; align-self: stretch; }
+  .sf-hero2--v2 .sf-hero2__note { order: 2; margin: 8px 0 14px !important; text-align: center; }
+  .sf-hero2--v2 .sf-hero2__sub { order: 3; }   /* after the button: the button inside an iPhone SE's 615 px */
+  .sf-hero2--v2 .sf-hero2__bullets { order: 4; }
+  .sf-hero2--v2 .sf-trustline { order: 5; }
+  .sf-hero2 h1 { font-size: 28px; }
 }

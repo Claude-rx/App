@@ -2,25 +2,37 @@
 // the pay line's renewal (below) and the exit pop (the _includes/exit-intent-popup.html template) that applies the page's exit code (APF10 here, the
 // campaign's 10%-off exit offer on the foundation packs; STICK10 on the stick funnel), at most once per visit: on a
 // computer when the pointer leaves through the top, on a phone on a fast scroll back up toward the address bar once she
-// has been past the pay step (the SDK's own mobile trigger is armed at that gesture; alone it fires at half the page).
+// has been past the order button and is above it again (opened by this page; the SDK's own trigger fires at half the page).
 window.addEventListener('next:initialized', function () {
   if (!window.next || typeof window.next.exitIntent !== 'function') return;
   var base = { template: 'exit-intent', showCloseButton: true, maxTriggers: 1 };
   var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   if (!coarse) { window.next.exitIntent(base); return; }
   // a phone: the SDK's own scroll trigger fires once the page is half scrolled, which is the order button, while she is
-  // still filling in the form (live review 4). Here it is armed only by a fast scroll back up (toward the address bar or
-  // the back button) once she has been past the pay step, and fires straight away on that gesture.
-  var last = window.scrollY, lastT = 0, up = 0, armed = false;
+  // still filling in the form (live review 4), and only below half the page, where the order button is not (it sits at
+  // 35-43 % on a phone). So the pop is set up without it, and opened here, once per visit, by a fast scroll back up
+  // (toward the address bar or the back button): at least 300 px up within 400 ms, after she has seen the order button,
+  // once she is above it again. A slow scroll back up, or one from the reviews below the button back to it, is someone
+  // going to pay, not leaving (live review 5: 220 px at 50 px/s opened it).
+  var setup = Promise.resolve(window.next.exitIntent(Object.assign({ disableOnMobile: false, mobileScrollTrigger: false }, base)));
+  var btn = document.querySelector('[data-next-checkout="form"] button[type="submit"]');
+  var steps = [], last = window.scrollY, seenPay = false, armed = false;
+  var open = function () {
+    setup.then(function () {
+      var ex = window.next.popupsState && window.next.popupsState.exitIntentEnhancer;
+      if (ex && typeof ex.triggerExitIntent === 'function' && !ex.popupElement && ex.triggerCount < ex.maxTriggers) ex.triggerExitIntent();
+    });
+  };
   var onScroll = function () {
     var y = window.scrollY, t = Date.now(), d = last - y;                 // d > 0: scrolling up
-    up = d > 0 ? (t - lastT <= 300 ? up + d : d) : 0;                   // one flick's upward distance (events ≤ 300 ms apart)
-    last = y; lastT = t;
-    var depth = y / Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    if (!armed && up >= 220 && depth >= 0.45) {
-      armed = true; window.removeEventListener('scroll', onScroll);
-      Promise.resolve(window.next.exitIntent(Object.assign({ disableOnMobile: false, mobileScrollTrigger: true }, base)))
-        .then(function () { window.dispatchEvent(new Event('scroll')); });   // the SDK fires on it when the page is still half scrolled
+    last = y;
+    var r = btn ? btn.getBoundingClientRect() : null;
+    if (r && r.top < window.innerHeight && r.bottom > 0) seenPay = true;
+    steps.push([t, d]);
+    while (steps.length && t - steps[0][0] > 400) steps.shift();
+    var up = 0; for (var k = 0; k < steps.length; k++) up += steps[k][1];   // net upward distance in the last 400 ms
+    if (!armed && r && seenPay && r.top > window.innerHeight && up >= 300) {   // the order button is below her now
+      armed = true; window.removeEventListener('scroll', onScroll); open();
     }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -72,6 +84,20 @@ window.addEventListener('next:initialized', function () {
   name();
 })();
 
+// the order summary's stand-in (before the SDK has the campaign): the pack, its price and the total for a pack id
+window.sfSummaryFallback = function (id) {
+  const box = document.querySelector('[data-sf-sumfb]');
+  if (!box) return;
+  let packs = {};
+  try { packs = JSON.parse(box.getAttribute('data-sf-sumfb') || '{}'); } catch (_) { return; }
+  const p = packs[id];
+  if (!p) return;
+  box.querySelector('[data-sf-sumfb-name]').textContent = p.name;
+  box.querySelector('[data-sf-sumfb-price]').textContent = p.price;
+  box.querySelector('[data-sf-sumfb-total]').textContent = p.price;
+  box.querySelector('[data-sf-sumfb-img]').setAttribute('src', p.image);
+};
+
 // the pay line before the SDK answers: its fallback amount is the pack the URL asks for (?forceBundleId=apf-3 showed
 // $57.00 for ~4 s; live review 1), read from the bundles' prices on the element
 (function initPayFallback() {
@@ -80,6 +106,7 @@ window.addEventListener('next:initialized', function () {
   let prices = {};
   try { prices = JSON.parse(e.getAttribute('data-sf-prices') || '{}'); } catch (_) { return; }
   const id = (new URLSearchParams(location.search).get('forceBundleId') || '').split(':').pop();
+  if (id) window.sfSummaryFallback(id);
   if (id && prices[id]) {
     e.textContent = prices[id];
     const live = e.previousElementSibling && e.previousElementSibling.querySelector('[data-next-display="cart.total"]');
@@ -113,7 +140,9 @@ window.addEventListener('next:initialized', function () {
   const couponOn = () => !!document.querySelector('[data-next-discounts="voucher"].next-discounts-has-items');
   const show = (card) => {
     sel.querySelectorAll('[data-next-bundle-card]').forEach((c) => { const on = c === card; c.classList.toggle('next-selected', on); c.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-    const price = prices[(card.getAttribute('data-next-bundle-id') || '').split(':').pop()];
+    const bid = (card.getAttribute('data-next-bundle-id') || '').split(':').pop();
+    window.sfSummaryFallback(bid);
+    const price = prices[bid];
     if (!price || couponOn()) return;
     if (fb) fb.textContent = price;
     document.querySelectorAll('[data-next-display="cart.total"]').forEach((el) => { el.textContent = price; });

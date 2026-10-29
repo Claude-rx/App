@@ -514,6 +514,54 @@ Lifecycle on that build: build recorded, polish READY and completed, deploy reco
 `MVSNOLCU080Q3069M343O69O9O` ready_with_exceptions (the same two exceptions); verified live with the preview cookie: no such
 line in any page's text, alt or aria-label, the new image hashes served, zero console errors.
 
+**Independent live review 5 and the CRO pass before ads (29 Oct 2026):** review 5 (the nine pages at
+390/768/1024/1440 with the preview cookie) found no blocker, 3 major and 15 minor defects; the owner then sent three
+before/after pairs and a photo of the SKINOFAB doctor in her clinic, and asked for more CRO before the ads. Done in
+the tools and the source, deployed, verified live:
+
+- **The owner's before/after pairs** (`brand/adaptive-peptide-foundation/owner/ba-{car,kitchen,garden}.webp`: fair,
+  olive and medium-deep skin, each the same woman before and after) are the sales page's "One bottle, three skin
+  tones" row (three across from 900 px, stacked below at 560 px at most so the Before / After words stay legible).
+  `split_pair()` now cuts at the whole white divider. The generated close-up pair is retired (review 5: its "after"
+  erased forehead lines, more than a foundation does); the listicle keeps its shade pair and the persona photos.
+- **The doctor photo** (`owner/doctor-clinic.webp`) is the "Formulated in Korea" picture. The image model misspelt
+  the small print ("PORN", "PEPTIOE"); `doctor_photo()` paints that block out with the bottle's own black and sets
+  ADAPTIVE PEPTIDE / FOUNDATION / PDRN / 30 mL / 1.01 fl oz again in the label's sizes. She is not named or called a
+  doctor on the page, and the proof card now says "No clinical study, no medical claim" (it said "no doctor" next to
+  her photo, review 5).
+- **One label everywhere** (review 5's M2): the bottles held in the photos print a PDRN line, as the store's label
+  and the product-sheet render do; the funnel's bottle on white (the pack cards, the offer image) lacked it. `bottle()`
+  now takes that line from `01-front.png` onto the render, at its own place and size.
+- **The phone exit pop** (M1) opened on any 220 px upward scroll past 45 % depth, however slow. It now opens only on a
+  fast flick (300 px within 400 ms), after she has seen the order button, once she is above it again; the page opens
+  the SDK's pop itself (the SDK's own trigger fires only below half the page, and the button sits at 35-43 %). Tested:
+  a slow scroll up from the reviews, a fast scroll back to the button and a flick before the button never open it; a
+  flick toward the top after the button does.
+- **The countdown** (M3) on offer 2 and the brush offer no longer says the offer "is gone" at 0:00 (their downsell
+  sells the same item for less next): "When the clock reaches 0:00 this page moves on. This offer isn't in our store
+  or in an email." Offers 2 and 2b call $39 the "Sales page price", not the "Regular price" (the store's is $47).
+- **Minors:** the all-day clip says "made not to turn orange" / "can turn orange by noon" at 12 px on a phone; the
+  hero's split-face seam is spread over 40 px each side (no step at the chin); the listicle hero is two whole square
+  photos (no face cut) and one on a phone (360 px tall instead of a 140 px strip); the comparison table has no bare
+  dash and no sweeping claim about other brands ("can", "varies", "check the label"); the checkout form is centred
+  and 640 px wide at 992-1199 px; the order summary shows the chosen pack, free shipping and the total from the first
+  paint instead of "Loading…"; the brush page says its four sweeps once (the infographic is gone); a link to
+  `#offer` stays on the offer while the page above settles; footer, legal and email links are 44 px; "Nothing to take
+  on faith: the label, the reviews, the guarantee."; the listicle's buttons say "SEE THE LAUNCH OFFER" and "SEE
+  OFFER" (they open the sales page, nothing is claimed). The empty checkout heading review 5 saw did not reproduce.
+- **CRO, the sales page's first screen on a phone:** the photo 5:4, the headline, the 4.8 rating with its link to the
+  reviews right under it, then "CHOOSE MY PACK" and the price line, then the line about the foundation and the five
+  bullets: the button is on the first screen of an iPhone SE (615 px), an iPhone 13 (664 px) and a Pixel 7. It was on
+  the second screen of all three.
+
+`check_apf.py: 9 pages ok`, `check_funnel.py` OK, `copy_deck.py` PASS (it failed since 28 Oct on the retired
+before/after label). Verified live with the preview cookie: no horizontal scroll, no empty heading and no console
+error on the changed pages; the summary stand-in showed the 3-bottle pack at $75 0.7 s after the page began and gave
+way to the SDK's; offer 2 shows the new clock line and "Sales page price"; `#offer` held at 84 px from 1 s to 4 s.
+Lifecycle on this build (development render, as run 4): build recorded, polish READY and completed, parity passed
+(the Axon lines the only gated difference), deploy recorded, browser QA `MVT575T3RRMFFAENF3TIHN9Q9V` ready_with_exceptions
+(the same two exceptions).
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the

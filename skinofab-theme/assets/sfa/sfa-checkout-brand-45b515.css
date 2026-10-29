@@ -1,0 +1,223 @@
+/* checkout-brand.css: SKINOFAB's brand layer over next-core.css (loaded after it on the checkout, special offers and thank-you page):
+   root tokens only, plus the funnel's own blocks (refill terms, review note). SDK-owned selectors are left alone. */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+:root {
+  --_text---font-family--primary: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --_text---font-family--heading: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --brand--color--background: #fff;
+  --brand--color--surface: #f6f2ec;
+  --brand--color--foreground: #151515;
+  --brand--color--border: #e6e2dc;
+  --brand--color--primary: #151515;
+  --brand--color--primary-dark: #151515;
+  --brand--color--primary-light: #f1ede7;
+  --brand--color--primary-lighter: #faf8f5;
+  --brand--color--primary-foreground: #fff;
+  --brand--color--cta-primary: #151515;
+  --brand--color--accent: #151515;
+  --brand--color--complementary-1: #faf8f5;
+  --brand--color--rating-star: #00b67a;          /* the review site's green: boxed stars (.sf-co-tp), no site named */
+  --brand--color--pill-primary: #151515;
+  --brand--color--pill-primary-surface: #f1ede7;
+  --brand--color--pill-secondary: #151515;
+}
+.sf-refill-terms { margin: 4px 0 14px; padding: 12px 14px; border: 1px solid var(--brand--color--border); border-radius: 10px;
+  background: var(--brand--color--primary-lighter); font-size: 14px; line-height: 1.5; color: #3b3b3b; }
+.sf-refill-terms p { margin: 0 0 8px; }
+.sf-refill-terms p:last-child { margin: 0; }
+.sf-pay-terms--plain { padding: 0; background: none; font-size: inherit; color: inherit; }
+.sf-refill-terms a, .submit-section__disclaimer a { color: inherit; text-decoration: underline; }
+.checkout-header__logo { width: 140px; height: auto; }
+.brand-logo { width: 130px; height: auto; }
+.guarantee-badge { border-radius: 50%; }
+.sf-next__list { margin: 12px 0 0; padding-left: 20px; font-size: 14px; line-height: 1.55; color: #3b3b3b; }
+.sf-next__list li { margin-bottom: 10px; }
+.sf-next__list a { color: inherit; text-decoration: underline; }
+/* a pack's crossed-out price only when the SDK reports a discount (the exit coupon): without one, originalPrice is
+   the same as the price, and the same number struck through beside itself reads as a fake saving */
+.bundle-card:has(.bundle-card__savings[style*="display: none"]) .bundle-card__price-reg { display: none; }
+/* what she pays today and what renews, by the express buttons and the order button */
+.sf-pay-terms { margin: 0 0 12px; padding: 10px 12px; border-radius: 8px; background: #f1ede7; font-size: 14px; line-height: 1.45; color: #151515; }
+.submit-section__disclaimer { font-size: 14px !important; line-height: 1.5; }
+/* the special offers: the shipping row's icon at its size (the SVG fills its box), the % under its label on phones,
+   and the closing card's price larger than its label */
+.upsell-ships-info__icon { width: 36px; height: 36px; flex: none; }
+.upsell-ships-info__text { flex: 1; min-width: 0; }
+@media (max-width: 479px) {
+  .upsell-offer__price-heading { flex-direction: column; gap: 2px; }
+}
+.upsell-closing .prices-text-wrapper.cc-start > div:last-child { font-size: 17px; font-weight: 600; }
+.upsell-closing .prices-text-wrapper.cc-start > div:last-child [data-next-display] { font-size: 30px; font-weight: 700; margin-left: 4px; }
+.sf-line-renew { margin-top: 2px; font-size: 12px; line-height: 1.4; color: #6b6b6b; }
+.sf-line-renew:empty { display: none; }
+/* sf-failsafe.js: the message when the SDK can't load the campaign (the page would otherwise stay blank) */
+.sf-failsafe { margin: 0; padding: 14px 16px; background: #fff4e5; border-bottom: 2px solid #e8a33d; color: #151515; font-size: 15px; line-height: 1.5; text-align: center; }
+.sf-failsafe a { color: inherit; text-decoration: underline; }
+/* sf-skip-europe.js: while the serum offer declines itself for a European address, show nothing of it */
+.sf-skipping .page-wrapper { visibility: hidden; }
+.sf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }  /* in the page (the SDK fills it), not shown */
+/* funnel review 2: the exit pop's button in the brand's black pill; its close (the SDK's own button) a 44 px target */
+.exit-intent-popup__cta { background: #151515 !important; color: #fff !important; border-radius: 999px; }
+.exit-intent-popup__cta { border: 0 !important; }
+.exit-intent-popup__cta::after { filter: invert(1); }
+.exit-intent-close { width: 44px !important; height: 44px !important; line-height: 44px !important; font-size: 28px !important; }
+/* on a phone the SDK's fixed wrapper shrinks to its content (the template's 100% dialog came out 195 px wide): give it
+   the screen's width less a gutter, and let a tall dialog scroll inside the screen */
+@media (max-width: 767px) {
+  [data-exit-intent="popup"] { width: calc(100vw - 32px) !important; max-width: 440px !important; max-height: 86vh !important; }
+  .exit-intent-popup__dialog { width: 100%; max-height: 86vh; overflow: auto; }
+  .exit-intent-popup__content { min-height: 0; padding: 18px 14px 16px; }
+}
+/* the rating line's link to the reviews, a 44 px target on a phone */
+.sf-co-rating a { display: inline-block; padding: 11px 0; }
+/* a pack card's offer pill with nothing to show (no campaign offer on the pack) stays out of the badge row */
+.bundle-card__badge.next-discounts-empty { display: none; }
+/* the checkout's trust (sf-checkout-trust.html) around a form that comes first: one rating line above the pack cards,
+   the guarantee by the order button, four badges under it, three reviews after it on a phone, and the proof column
+   (ratings, reviews, guarantee card, questions): after the form in the page, on the left on a computer */
+@media (min-width: 1200px) {
+  .sf-co .sf-co-left { order: -1; width: 46%; }
+}
+/* between 992 and 1199 px the family's two columns leave no room for a third: the proof column goes under the form at
+   full width, its reviews two a row (at 1024 the three columns were cramped, one word a line, live review 1) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .sf-co.checkout-wrapper { flex-direction: column; align-items: center; }
+  .sf-co .checkout-layout__right, .sf-co .sf-co-left { flex: 0 0 auto; width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .sf-co .sf-co-left { order: 1; }
+  /* the form in the middle of that 760 px column, as wide as a comfortable line (next-core caps it at 528 px and
+     left-aligns it: a 364 px empty band beside Steps 1-4 at 1024, live review 5) */
+  .sf-co .checkout__form-container { max-width: 640px; margin-left: auto; margin-right: auto; }
+}
+@media (min-width: 600px) and (max-width: 991px) { .sf-co .checkout__form-container { margin-left: auto; margin-right: auto; } }
+.sf-co-left { gap: 20px; }
+.sf-co-proof { display: grid; gap: 16px; align-content: start; }
+/* the green boxed stars (a review site's look, no site named) */
+.sf-co-tp { display: inline-flex; gap: 3px; margin: 0; vertical-align: middle; }
+.sf-co-tp i { width: 22px; height: 22px; background: var(--brand--color--rating-star); border-radius: 3px; display: grid; place-items: center; font-style: normal; }
+.sf-co-tp i::before { content: '★'; color: #fff; font-size: 15px; line-height: 1; }
+.sf-co-tp i.off { background: #cfd0d6; }
+.sf-co-tp--sm i { width: 18px; height: 18px; }
+.sf-co-tp--sm i::before { font-size: 12px; }
+.sf-co-top { margin: 0 0 16px; }
+.sf-co-rating { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 0; font-size: 15px; line-height: 1.45; color: #151515; }
+.sf-co-rating a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.sf-co-rating strong { font-weight: 600; }
+/* the four badges right under the order button */
+.sf-co-badges { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.sf-co-badges li { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; padding: 10px 6px; border: 1px solid var(--brand--color--border); border-radius: 12px; background: var(--brand--color--primary-lighter); text-align: center; }
+.sf-co-badges .sf-co-icon { width: 26px; height: 26px; }
+.sf-co-badges strong { font-size: 13px; line-height: 1.25; font-weight: 600; }
+@media (max-width: 479px) {
+  .sf-co-badges { grid-template-columns: 1fr 1fr; }
+}
+.sf-co-featured { display: grid; gap: 10px; margin: 22px 0 4px; }
+.sf-co-featured__title { margin: 0; font-size: 17px; font-weight: 600; }
+.sf-co-guarantee-line { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: center; margin: 4px 0 14px; padding: 12px 14px; border: 1.5px solid #151515; border-radius: 12px; background: #fff; scroll-margin-top: 90px; }
+.sf-co-guarantee-line img { width: 64px; height: 64px; border-radius: 50%; }
+.sf-co-guarantee-line p { margin: 0; font-size: 15px; line-height: 1.45; color: #151515; }
+.sf-co-card { padding: 22px; border-radius: 16px; background: var(--brand--color--surface); }
+.sf-co-card h2, .sf-co-reviews__title { margin: 0 0 8px; font-size: 22px; line-height: 1.25; font-weight: 600; }
+.sf-co-reviews__title { margin: 8px 0 0; }
+.sf-co-guarantee { display: grid; grid-template-columns: 112px 1fr; gap: 20px; align-items: center; }
+.sf-co-guarantee img { width: 112px; height: 112px; border-radius: 50%; }
+.sf-co-guarantee p { margin: 0; font-size: 15px; line-height: 1.5; color: #3b3b3b; }
+.sf-co-guarantee p a, .sf-co-faq details p a { color: inherit; text-decoration: underline; }
+.sf-co-guarantee ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+.sf-co-guarantee li { position: relative; margin: 0; padding-left: 22px; font-size: 14.5px; line-height: 1.4; font-weight: 500; }
+.sf-co-guarantee li::before { content: "✓"; position: absolute; left: 0; top: 0; font-weight: 700; }
+@media (max-width: 479px) {
+  .sf-co-guarantee { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .sf-co-guarantee ul { grid-template-columns: 1fr; text-align: left; justify-self: stretch; }
+}
+.sf-co-ratings { display: grid; grid-template-columns: auto 1fr; gap: 8px 22px; align-items: center; scroll-margin-top: 20px; }
+.sf-co-ratings h2 { grid-column: 1 / -1; }
+.sf-co-ratings__score { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.sf-co-ratings__score strong { font-size: 44px; line-height: 1; font-weight: 600; }
+.sf-co-ratings__score span:last-child { font-size: 14px; color: #3b3b3b; }
+.sf-co-ratings__rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.sf-co-ratings__rows li { display: grid; grid-template-columns: 34px 1fr 52px; gap: 10px; align-items: center; margin: 0; font-size: 14px; }
+.sf-co-ratings__rows i { display: block; height: 8px; border-radius: 4px; background: #e2ddd5; overflow: hidden; }
+.sf-co-ratings__rows b { display: block; height: 100%; background: var(--brand--color--rating-star); }
+.sf-co-ratings__rows li span:last-child { text-align: right; color: #4a4a4a; }
+.sf-co-ratings__of { grid-column: 1 / -1; margin: 6px 0 0; font-size: 14px; line-height: 1.45; color: #4a4a4a; }
+/* the review wall flows in two columns (a grid row stretched every card to its tallest neighbour, live review 3) */
+.sf-co-reviews { columns: 2; column-gap: 14px; }
+.sf-co-reviews .sf-co-review { break-inside: avoid; margin-bottom: 14px; }
+@media (max-width: 599px) { .sf-co-reviews { columns: 1; } }
+.sf-co-review { padding: 18px; border: 1px solid var(--brand--color--border); border-radius: 14px; background: #fff; }
+.sf-co-review header { display: flex; gap: 12px; align-items: center; margin: 0 0 10px; }
+.sf-co-review header img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex: none; }
+.sf-co-review__name { margin: 0; font-size: 16px; line-height: 1.3; font-weight: 600; color: #151515; }
+.sf-co-review .sf-co-tp { margin: 4px 0 0; }
+.sf-co-review__body { margin: 0; font-size: 15.5px; line-height: 1.55; color: #2c2c2c; }
+.sf-co-review .sf-review__who { margin: 10px 0 0; font-size: 14px; line-height: 1.4; color: #4a4a4a; }
+.sf-co-faq details { border-top: 1px solid #ddd7ce; }
+.sf-co-faq details:last-of-type { border-bottom: 1px solid #ddd7ce; }
+.sf-co-faq summary { cursor: pointer; list-style: none; position: relative; padding: 14px 28px 14px 0; font-size: 16px; font-weight: 600; line-height: 1.35; }
+.sf-co-faq summary::-webkit-details-marker { display: none; }
+.sf-co-faq summary::after { content: "+"; position: absolute; right: 2px; top: 10px; font-size: 22px; font-weight: 400; }
+.sf-co-faq details[open] summary::after { content: "–"; }
+.sf-co-faq details p { margin: 0 0 14px; font-size: 15px; line-height: 1.55; color: #3b3b3b; }
+.sf-co-faq__contact { margin: 14px 0 0; font-size: 15px; line-height: 1.5; }
+.sf-co-faq__contact a { color: inherit; text-decoration: underline; }
+.sf-co-back { display: block; padding: 16px; border-radius: 10px; background: #151515; color: #fff !important; text-align: center; text-decoration: none; font-size: 16px; font-weight: 600; }
+/* readable for her: the header's promises were 10 px capitals (next-core's apollo rule outranks a bare class), the
+   button's line 12 px, the order totals and the billing checkbox 12 px */
+.checkout-header--apollo .checkout-header__badge { font-size: 12px; }
+.submit-button__subtext { font-size: 13px; }
+.cart-box .order-totals__label, .cart-box .order-totals__value { font-size: 14px; }
+.checkout__checkbox .checkbox__label { font-size: 14px; }
+/* the billing form the SDK folds away ("use shipping address") is out of the tab order too */
+.billing-form-collapsed { visibility: hidden; }
+/* where the page's own links land: a little air above */
+#sf-co-featured, #sf-co-pay, #sf-co-reviews { scroll-margin-top: 16px; }
+/* on a phone and tablet the three reviews before the payment step are not repeated at the top of the wall */
+@media (max-width: 1199px) {
+  .sf-co-reviews .sf-co-review:nth-child(-n+3) { display: none; }
+}
+/* 44 px targets: the footer's legal links and every email link (20-24 px tall, live review 1) */
+.footer_legal-link, .footer_link-wrapper a { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 6px; }
+.footer_copy-info { align-items: center; }   /* the copyright beside the taller links, not above them (live review 3) */
+a[href^="mailto:"]:not(.sf-btn):not(.btn), .submit-section__disclaimer a, a.link { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 0; margin: -12px 0; }   /* a.link: the receipt's policy and Contact Us links too */   /* 44 px targets without a taller line box */
+/* a tablet: the columns no wider than a comfortable line of text */
+@media (min-width: 600px) and (max-width: 991px) {
+  .sf-co .checkout-layout__right, .sf-co .sf-co-left { width: 100%; max-width: 620px; margin-left: auto; margin-right: auto; }
+}
+/* the brand's typeface on phones and tablets too: next-core.css sets the system font on body below 992 px */
+body {
+  --_text---font-family--primary: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --_text---font-family--heading: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.sf-co-tp i.part { background: linear-gradient(90deg, var(--brand--color--rating-star) 0 var(--p, 80%), #cfd0d6 var(--p, 80%)); }
+
+/* before the SDK has the campaign (3-5 s on a slow connection): no empty red pill, no "Instant savings:" with nothing
+   after it, and the order summary's lines hidden behind one short line instead of an empty frame (live review 1) */
+.bundle-card__badge--save:not(.next-discounts-has-items) { display: none; }
+.bundle-card__savings:has(> span:empty) { display: none; }
+[data-sf-summary-box]:not(.sf-co-ready) [data-next-cart-summary] { visibility: hidden; height: 0; overflow: hidden; }
+/* its stand-in until then: the chosen pack, free shipping and the total from the page's own prices (live review 5) */
+.sf-co-sumfb { display: grid; gap: 12px; padding: 4px 2px; font-size: 15px; color: #151515; }
+.sf-co-ready .sf-co-sumfb { display: none; }
+.sf-co-sumfb__title { margin: 0; font-weight: 600; font-size: 17px; }
+.sf-co-sumfb__line { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 12px; }
+.sf-co-sumfb__line img { width: 56px; height: 56px; object-fit: contain; border: 1px solid #e6e2dc; border-radius: 8px; background: #fff; }
+.sf-co-sumfb__row { display: flex; justify-content: space-between; font-size: 14px; color: #555; }
+.sf-co-sumfb__total { padding-top: 10px; border-top: 1px solid #e6e2dc; font-size: 16px; color: #151515; }
+
+/* live review 2: a line in Step 3 while the SDK builds the address form (an empty heading for 3-6 s); the featured
+   reviews' link a 44 px target */
+[data-next-address="shipping"]:not(:has(*))::before { content: 'Loading the address form…'; display: block; padding: 12px 0; font-size: 14px; color: #6b6b6b; }
+
+/* a phone: the first screen shows the pack cards (the promo bar wrapped to three lines and the three header badges stacked
+   under the logo, so Step 1 began below the fold, live review 3); the rating line, the guarantee line and the badges under
+   the order button carry the same three promises further down */
+@media (max-width: 767px) {
+  .checkout-header--apollo .checkout-header__trust, .checkout-header--apollo .checkout-header__divider { display: none; }
+  .checkout-header--apollo .checkout-header__inner { justify-content: center; padding: 10px 0; }
+  .promo-banner--apollo .promo-banner__text { font-size: 12.5px; line-height: 1.35; }
+}
+
+/* before the SDK answers, the billing block is empty: its heading stays hidden with it (an empty "Billing Address" showed under the
+   ticked box for the first seconds, live review 4) */
+.billing-address__form:has([data-next-address="billing"]:empty) { display: none; }

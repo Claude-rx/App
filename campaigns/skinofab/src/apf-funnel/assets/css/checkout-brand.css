@@ -84,7 +84,11 @@
   .sf-co.checkout-wrapper { flex-direction: column; align-items: center; }
   .sf-co .checkout-layout__right, .sf-co .sf-co-left { flex: 0 0 auto; width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
   .sf-co .sf-co-left { order: 1; }
+  /* the form in the middle of that 760 px column, as wide as a comfortable line (next-core caps it at 528 px and
+     left-aligns it: a 364 px empty band beside Steps 1-4 at 1024, live review 5) */
+  .sf-co .checkout__form-container { max-width: 640px; margin-left: auto; margin-right: auto; }
 }
+@media (min-width: 600px) and (max-width: 991px) { .sf-co .checkout__form-container { margin-left: auto; margin-right: auto; } }
 .sf-co-left { gap: 20px; }
 .sf-co-proof { display: grid; gap: 16px; align-content: start; }
 /* the green boxed stars (a review site's look, no site named) */
@@ -172,9 +176,9 @@
   .sf-co-reviews .sf-co-review:nth-child(-n+3) { display: none; }
 }
 /* 44 px targets: the footer's legal links and every email link (20-24 px tall, live review 1) */
-.footer_legal-link, .footer_link-wrapper a { display: inline-block; padding: 11px 6px; }
+.footer_legal-link, .footer_link-wrapper a { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 6px; }
 .footer_copy-info { align-items: center; }   /* the copyright beside the taller links, not above them (live review 3) */
-a[href^="mailto:"]:not(.sf-btn):not(.btn), .submit-section__disclaimer a, a.link { display: inline-block; padding: 10px 0; margin: -10px 0; }   /* a.link: the receipt's policy and Contact Us links too */   /* 44 px targets without a taller line box */
+a[href^="mailto:"]:not(.sf-btn):not(.btn), .submit-section__disclaimer a, a.link { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 0; margin: -12px 0; }   /* a.link: the receipt's policy and Contact Us links too */   /* 44 px targets without a taller line box */
 /* a tablet: the columns no wider than a comfortable line of text */
 @media (min-width: 600px) and (max-width: 991px) {
   .sf-co .checkout-layout__right, .sf-co .sf-co-left { width: 100%; max-width: 620px; margin-left: auto; margin-right: auto; }
@@ -191,9 +195,15 @@ body {
    after it, and the order summary's lines hidden behind one short line instead of an empty frame (live review 1) */
 .bundle-card__badge--save:not(.next-discounts-has-items) { display: none; }
 .bundle-card__savings:has(> span:empty) { display: none; }
-[data-sf-summary-box]:not(.sf-co-ready) [data-next-cart-summary] { visibility: hidden; }
-[data-sf-summary-box]:not(.sf-co-ready) { position: relative; min-height: 120px; }
-[data-sf-summary-box]:not(.sf-co-ready)::after { content: 'Loading your pack and total…'; position: absolute; left: 20px; top: 56px; font-size: 14px; color: #6b6b6b; }
+[data-sf-summary-box]:not(.sf-co-ready) [data-next-cart-summary] { visibility: hidden; height: 0; overflow: hidden; }
+/* its stand-in until then: the chosen pack, free shipping and the total from the page's own prices (live review 5) */
+.sf-co-sumfb { display: grid; gap: 12px; padding: 4px 2px; font-size: 15px; color: #151515; }
+.sf-co-ready .sf-co-sumfb { display: none; }
+.sf-co-sumfb__title { margin: 0; font-weight: 600; font-size: 17px; }
+.sf-co-sumfb__line { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 12px; }
+.sf-co-sumfb__line img { width: 56px; height: 56px; object-fit: contain; border: 1px solid #e6e2dc; border-radius: 8px; background: #fff; }
+.sf-co-sumfb__row { display: flex; justify-content: space-between; font-size: 14px; color: #555; }
+.sf-co-sumfb__total { padding-top: 10px; border-top: 1px solid #e6e2dc; font-size: 16px; color: #151515; }
 
 /* live review 2: a line in Step 3 while the SDK builds the address form (an empty heading for 3-6 s); the featured
    reviews' link a 44 px target */

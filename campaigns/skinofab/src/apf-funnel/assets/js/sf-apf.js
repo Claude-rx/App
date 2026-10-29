@@ -142,3 +142,24 @@
       .catch(go);
   }, true);
 })();
+
+// A link that lands on a section (the listicle's ?pack=apf-3#offer) stays on it while the page above settles: the
+// browser scrolls to the anchor before the photos and fonts above it are in, so the section slid ~840 px away and
+// jumped back about a second later (live review 5). Until she touches, scrolls or presses a key, every layout change
+// until 1.5 s after the page has loaded (6 s at most) puts the section back at the top, without an animation.
+(function keepAnchor() {
+  var id = decodeURIComponent((location.hash || '').slice(1));
+  var el = id && document.getElementById(id);
+  if (!el || !('ResizeObserver' in window)) return;
+  var done = false, stop = function () { done = true; ro.disconnect(); };
+  var fix = function () {
+    if (done) return;
+    var y = el.getBoundingClientRect().top + window.scrollY - (parseFloat(getComputedStyle(el).scrollMarginTop) || 0);
+    if (Math.abs(window.scrollY - y) > 2) window.scrollTo({ top: y, behavior: 'instant' });
+  };
+  var ro = new ResizeObserver(fix);
+  ro.observe(document.body);
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) { window.addEventListener(t, stop, { passive: true, once: true }); });
+  window.addEventListener('load', function () { fix(); setTimeout(stop, 1500); });
+  setTimeout(stop, 6000);
+})();

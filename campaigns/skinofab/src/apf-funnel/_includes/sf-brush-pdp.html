@@ -33,8 +33,9 @@
   </section>
 
   <section class="sf-bp__sec" aria-labelledby="sf-bp-use">
-    <div class="sf-bp__two">
-      <img src="{{ brush.use.image | campaign_asset }}" alt="{{ brush.use.alt }}" width="1080" height="1080" loading="lazy" decoding="async">
+    {% comment %} no picture beside the steps: the how-to infographic said the same four sweeps again, at 8 px on a phone (live review 5) {% endcomment %}
+    <div class="{% if brush.use.image %}sf-bp__two{% else %}sf-bp__one{% endif %}">
+      {% if brush.use.image %}<img src="{{ brush.use.image | campaign_asset }}" alt="{{ brush.use.alt }}" width="1080" height="1080" loading="lazy" decoding="async">{% endif %}
       <div>
         <span class="sf-bp__eyebrow">{{ brush.use.eyebrow }}</span>
         <h2 class="display-md" id="sf-bp-use">{{ brush.use.title }}</h2>

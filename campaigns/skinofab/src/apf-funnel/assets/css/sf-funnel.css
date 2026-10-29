@@ -287,3 +287,5 @@ body.sf { margin: 0; background: var(--paper); color: var(--text); font: 400 17p
 
 /* 44 px targets for the email links in running text, without a taller line box (live review 3) */
 a[href^="mailto:"]:not(.sf-btn) { display: inline-block; padding: 10px 0; margin: -10px 0; }
+/* 44 px tap targets on a phone: the footer's links measured 41-43 px (live review 5) */
+.sf-footer__links a, .sf-footer a[href^="mailto:"] { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 6px; }

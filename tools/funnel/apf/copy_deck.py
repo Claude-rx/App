@@ -85,7 +85,7 @@ def deck(fm):
         *sum([[f"> “{x['quote']}”" + (f" — {x['source']}" if x['source'] else ''), x['fix']] for x in w['fixes']], []))
     sec('11 · Include Before and After Scenarios', f"### {ba['title']}", ba['lede'],
         *sum([[f"[IMAGE: {i['image']} — {i['alt']}]", f"*{i['caption']}*"] for i in ba['items']], []),
-        f"[BEFORE: {'; '.join(ba['before'])}]", f"[AFTER: {'; '.join(ba['after'])}]", f"> “{ba['quote']}” — {ba['quote_by']}", f"*{ba['label']}*")
+        f"[BEFORE: {'; '.join(ba['before'])}]", f"[AFTER: {'; '.join(ba['after'])}]", f"> “{ba['quote']}” — {ba['quote_by']}", *([f"*{ba['label']}*"] if ba.get('label') else []))   # no label since 28 Oct 2026 (the owner: no illustration line)
     r = fm['ratings']
     sec('12 · Proof Elements', f"### {pr['title']}", f"[RATING: {r['average']} | {r['count']} verified reviews of this foundation, from our earlier store]",
         *sum([[f"#### {x['title']}", x['text']] for x in pr['cards']], []), *[f"> “{q['text']}” — {q['by']}" for q in pr['quotes']])
@@ -125,7 +125,7 @@ def write(fm):
            '- **Problem mechanism (07):** the fixed-shade trap: several tones in one face, thinner and drier skin, formulas built for 25-year-old skin.',
            '- **Solution mechanism (08):** encapsulated pigments that go on white and open toward her tone, in a hydrating serum base with soft-focus powders and the actives named on the label.',
            '- **Offer architecture:** 1 bottle $39 ($47 in our store), 2 bottles $57 with the Blender brush and a mystery gift (most popular), 3 bottles $75 with the Lymphatic Brush and both gifts (best value); one-time, free shipping, 30-day money-back guarantee even opened, nothing to send back. Post-purchase: offer 1 supply cards (2 bottles $39, 6 bottles $99 with the brush), offer 2 one bottle $23 (downsell $19), offer 3 the brush $14 (downsell $9).',
-           '- **Proof inventory:** 9,855 imported reviews of this foundation (4.8), the buyers\' own photos, the actives printed on the label and box, formulated in Korea, the guarantee; no study, no doctor, no fabricated review, AI before/afters labelled as such.',
+           '- **Proof inventory:** 9,855 imported reviews of this foundation (4.8), the buyers\' own photos, the actives printed on the label and box, formulated in Korea, the guarantee, the owner’s before/after photos; no clinical study, no medical claim, no fabricated review.',
            '- **Urgency:** honest only: the launch gift (the brush) while launch stock lasts, the price only on this page; no countdown.', '']
     for title, lines in deck(fm):
         out += [f'## {title}', '', *sum([[l, ''] for l in lines], [])]
