@@ -2,7 +2,8 @@
   SKINOFAB: a special offer's hero: the page's H1, what the offer is in one line, "reserved for you, <her first name>"
   and the countdown (js/sf-offer-timer.js: the deadline is set once per order and page and survives a reload; at 0:00
   the page declines the offer itself and moves on, which the line under the clock says, so the clock is true).
-    uh: { eyebrow, title, text, seconds, expires }   (title and text may use upsell/copy.html's tokens)
+    uh: { eyebrow, title, text, seconds, expires, cta, cta_text }   (title and text may use upsell/copy.html's tokens; cta
+    'accept': the offer's accept button under the clock, a proxy of the one SDK action; cta '#id': a jump to the choices)
   Her first name comes from the order (js/sf-offer-gate.js fills [data-sf-name]). Written by tools/funnel/apf/offer_pages.py.
 {%- endcomment -%}
 {%- campaign_include 'upsell/offer-context.html' -%}
@@ -16,6 +17,11 @@
       <span class="sf-uh__clock" role="timer" aria-live="off" data-sf-timer-display>{{ uh.seconds | divided_by: 60 | prepend: '00' | slice: -2, 2 }}:00</span>
       <span class="sf-uh__for">left</span>
     </div>
+    {%- if uh.cta == 'accept' %}
+    <div class="sf-uh__cta">{%- campaign_include 'upsell/cta.html' proxy=true compact=true -%}</div>
+    {%- elsif uh.cta %}
+    <a class="sf-uh__jump" href="{{ uh.cta }}">{{ uh.cta_text }}</a>
+    {%- endif %}
     <p class="sf-uh__expires">{{ uh.expires }}</p>
     <p class="sf-uh__wait" data-sf-await-note aria-live="polite">Confirming your order…</p>
   </div>

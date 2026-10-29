@@ -270,7 +270,7 @@ PAGE = {
          "entirely. Try it on your skin, in your lighting, with your routine. If it's not your perfect match, simply let us "
          "know within 30 days and we'll process your full refund immediately.",
          "Buying foundation online after 45 feels like a gamble, so try it on your skin, in your lighting, with your "
-         "routine. If you don't love it, email hello@skinofab.com within 30 days and we'll refund it in full, even "
+         "routine. If you don't love it, email info@skinofab.com within 30 days and we'll refund it in full, even "
          "opened, no questions asked."),
         # "Shipping and returns" and two FAQ answers came from the old store: 24-48 h dispatch, 5-7 days, "65+ countries",
         # returns "new, unused, in their original packaging". The store's terms instead (support_copy.py, as the
@@ -306,7 +306,7 @@ PAGE = {
         ("Our adaptive pigment formula removes the need to choose a shade. As you blend, micro-encapsulated pigments react to your skin’s warmth and undertones, shifting within seconds to match your unique complexion. Made for fair to medium tones, it evens redness, blurs imperfections, and melts into the skin for a seamless, second-skin finish.",
          "Most color-changing foundations are a basic, drying base with fragrance and nothing in it for your skin. Ours is a serum. Hyaluronic acid, ceramide NP, squalane and panthenol keep dry skin comfortable; peptides (Matrixyl 3000), PDRN and Pro-Xylane are there for the skin underneath; soft-focus powders blur the look of lines and pores. Adaptive pigments go on white and shift to your tone as you blend, inside the base you choose."),
         ("Our Color Changing Foundation is suitable for all skin tones above and in between.",
-         "There is one shade. It goes on white and adapts to your skin tone as you blend, so there is nothing to match or mix. If your skin is very fair or deep, email us first at hello@skinofab.com and we'll tell you honestly how it's likely to look. Either way, wear it in your own daylight for 30 days; if you don't love it, we'll refund you."),
+         "There is one shade. It goes on white and adapts to your skin tone as you blend, so there is nothing to match or mix. If your skin is very fair or deep, email us first at info@skinofab.com and we'll tell you honestly how it's likely to look. Either way, wear it in your own daylight for 30 days; if you don't love it, we'll refund you."),
         # under "There is one shade", 14 fair-to-medium swatches read as a shade chart (review 3)
         (r'RE:<div class="accordion-content-image">\s*<img alt="" loading="lazy" src="\.\./assets/img/foundation_png_1-[^"]+"[^>]*/>\s*</div>', ''),
         ("Step 1: Create the Perfect Canvas", "Step 1: Moisturizer and sunscreen first"),
@@ -403,7 +403,7 @@ def pdp_faq_orders():
         ('How do Automatic Refills work?',
          f"Your pack ships again every {REFILL['every']} days at the refill price: {usd(one['refill'])} for 1 bottle, "
          f"{usd(two['refill'])} for 2 bottles. We email you before every refill. To skip or cancel, just email "
-         "hello@skinofab.com: no minimum, no fees."),
+         "info@skinofab.com: no minimum, no fees."),
         ('Can I buy just once?',
          f"Yes. In your bag, tap Change under the bottle, then on the cart page set it to One-time purchase before checkout: {usd(one['price'])} for 1 bottle or "
          f"{usd(two['price'])} for 2 bottles, with no refills."),

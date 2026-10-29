@@ -52,7 +52,7 @@ upsell_offer:
   offer_shipping: "FREE SHIPPING"
   accept_text: "Yes, add the balm for"
   accept_show_price: true
-  cta_note: "{price} today ({discount} off this first charge). After that, $19.95 every 28 days for this one until you cancel. We email you before every refill; to skip or cancel, just email hello@skinofab.com. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy."
+  cta_note: "{price} today ({discount} off this first charge). After that, $19.95 every 28 days for this one until you cancel. We email you before every refill; to skip or cancel, just email info@skinofab.com. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy."
   decline_text: "No thanks, I don’t want the balm"
   closing_title: "Add the PDRN Plumping Balm for {price}?"
   image: "images/sf/up3-balm.jpg"
@@ -101,7 +101,7 @@ closing_cta:
      (its accept / skip proxy the offer's own). {% endcomment %}
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
 <div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
-<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
     {% campaign_include 'upsell/announcement.html' announcement_text=announcement_text %}

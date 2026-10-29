@@ -16,7 +16,7 @@ DESCRIPTIONS = {
                       'serum, a plumping balm and a lymphatic brush.',
     'faq': 'Answers about SKINOFAB orders, free shipping, refills and returns, how the Adaptive Peptide Foundation '
            'adapts to your skin, and our 30-day guarantee.',
-    'contact': 'Questions about an order, a refill, a return or our products? Email hello@skinofab.com and the SKINOFAB '
+    'contact': 'Questions about an order, a refill, a return or our products? Email info@skinofab.com and the SKINOFAB '
                'team will help.',
     'postflows-track-your-order': 'Track your SKINOFAB order with its tracking number. Every order ships free and '
                                   'tracked, within 1 business day.',

@@ -45,7 +45,7 @@ guarantee in the cart drawer):
 >
 > Packs bought on the product page come with Automatic Refills at the refill price. 1 bottle: you pay
 > $37 today, then $37 every 28 days until you cancel. 2 bottles + free gifts: you pay $47 today, then $47 every
-> 28 days until you cancel. We email you before every refill. To skip or cancel, just email hello@skinofab.com.
+> 28 days until you cancel. We email you before every refill. To skip or cancel, just email info@skinofab.com.
 > No minimum, no fees.
 >
 > Wear it in your own daylight for 30 days. If you don't love it, we'll refund you.

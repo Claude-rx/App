@@ -21,7 +21,7 @@ SOURCES = {'terms': ('pages/terms-of-service.html', 'main .rte'),
            'refund': ('policies/refund-policy.html', '.shopify-policy__body .rte'),
            'shipping': ('policies/shipping-policy.html', '.shopify-policy__body .rte')}
 KEEP = {'h1', 'h2', 'h3', 'h4', 'p', 'ul', 'ol', 'li', 'strong', 'b', 'em', 'i', 'a', 'br', 'table', 'tr', 'td', 'th'}
-STALE = re.compile(r'Skinofab LLC|8605 Santa Monica|West Hollywood|(?:hey|info|contact)@skinofab\.com|demo\.29next', re.I)
+STALE = re.compile(r'Skinofab LLC|8605 Santa Monica|West Hollywood|(?:hey|hello|contact)@skinofab\.com|demo\.29next', re.I)
 
 
 def clean(el):

@@ -20,7 +20,7 @@ HANDLE = 'the-lymphatic-brush'
 TITLE = 'The Lymphatic Brush'
 SHOPIFY_ID, SHOPIFY_VARIANT = 15517563191626, 61233683038538       # Solena's ids (the design markup carries them)
 PRICE, COMPARE = '24.95', '24.95'                                # one brush; no "was" price (a new product)
-EMAIL = 'hello@skinofab.com'
+EMAIL = 'info@skinofab.com'
 DESCRIPTION = ('<p>A 3-minute depuffing massage for your morning face. Hundreds of ultra-soft tips sweep from under '
                'your eyes, along your cheeks and jaw and down your neck with a light touch, on dry skin, no oil. '
                'Includes a SKINOFAB travel case.</p>')
@@ -145,7 +145,7 @@ FAQ = {'items': [
     ('Can I use it before my foundation?',
      'Yes, that’s the best time: brush first on dry skin, then your skincare and foundation.'),
     ('What if it doesn’t work for me?',
-     'Email hello@skinofab.com within 30 days and we’ll refund it in full, even opened. No questions asked.'),
+     'Email info@skinofab.com within 30 days and we’ll refund it in full, even opened. No questions asked.'),
     ('Is it safe for sensitive skin?',
      'The bristles are soft and the pressure stays light, so it’s gentle on most skin types. Avoid using it on irritated or broken skin, '
      'sunburn or active breakouts. If your swelling doesn’t go away during the day, or if you have a medical condition, check with your doctor first.'),
@@ -287,10 +287,10 @@ BUYBOX_CSS = r"""
 
 
 REFILL_TERMS = ('You pay {amount} today, then {amount} every {every} days until you cancel. We email you before every '
-                'refill. To skip or cancel, just email hello@skinofab.com: a person replies within one business day. No minimum, no fees.')
+                'refill. To skip or cancel, just email info@skinofab.com: a person replies within one business day. No minimum, no fees.')
 
 
-def refill_faq(bundles, refill, email='hello@skinofab.com'):
+def refill_faq(bundles, refill, email='info@skinofab.com'):
     """The two refill questions the foundation's FAQ answers, for a product sold with Automatic Refills (P.REFILL):
     how they work (each pack's refill price and how often it ships) and how to buy once."""
     unit = refill.get('unit', 'item')

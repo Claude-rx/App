@@ -102,6 +102,11 @@
 .sf-uh__for { font-size: 15px; font-weight: 600; }
 .sf-uh__clock { display: inline-block; min-width: 86px; padding: 6px 12px; border-radius: 999px; background: #fff; color: #151515; font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; text-align: center; }
 .sf-uh__timer.is-ending .sf-uh__clock { background: #e8a33d; }
+/* the accept button (or the jump to the choices) under the clock: on her first screen (live review 6) */
+.sf-uh__cta { max-width: 440px; margin: 16px auto 0; }
+.sf-uh__cta .button { width: 100%; background: #fff !important; color: #151515 !important; border-color: #fff !important; }
+.sf-uh__cta .upsell-cta__note { margin: 8px 0 0; font-size: 13px; color: rgba(255,255,255,.78); }
+.sf-uh__jump { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; margin: 16px auto 0; padding: 12px 26px; border-radius: 999px; background: #fff; color: #151515; font-weight: 700; font-size: 15px; letter-spacing: .04em; text-decoration: none; }
 .sf-uh__expires { max-width: 560px; margin: 10px auto 0; font-size: 13.5px; line-height: 1.45; color: rgba(255,255,255,.72); text-wrap: balance; }
 @media (max-width: 599px) {
   .sf-uh { padding: 22px 0 18px; }
@@ -146,6 +151,7 @@
 .sf-footer p { margin: 8px auto 0; max-width: 720px; }
 .sf-footer__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 10px; margin-bottom: 8px; }
 .sf-footer__links a, .sf-footer a { color: #6b6b6b; }
+.sf-footer__links a { display: inline-flex; align-items: center; min-height: 44px; }   /* 43 px, live review 6 */
 .sf-footer__links a { display: inline-block; padding: 11px 6px; }
 .sf-footer__small { font-size: 12px; line-height: 1.5; }
 /* three "why" cards in one row where they fit (2 + 1 left an orphan at 1024 and 1440, live review 3) */

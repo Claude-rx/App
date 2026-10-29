@@ -23,8 +23,8 @@ meta_tags:
 # tools/funnel/apf/copy_deck.py; tools/funnel/apf/check_apf.py holds every price here to the live campaign and
 # every claim to the rules: adapts to your tone (never every tone), designed not to settle, no SPF, no study, no
 # doctor, no countdown, every AI portrait labelled.
-offer_bar: "FREE Lymphatic Brush + 2 gifts with 3 bottles · Free shipping · 30-day money-back guarantee"
-offer_bar_short: "Gifts with 2+ bottles"
+offer_bar: "BUY 2, GET 1 FREE + a FREE Lymphatic Brush · Free shipping · 30-day money-back guarantee"
+offer_bar_short: "Buy 2, get 1 FREE"
 hero:
   eyebrow: "For skin after 45"
   headline: "Even, fresh skin in about a minute. <em>No shade to guess.</em>"
@@ -37,7 +37,9 @@ hero:
     - "<strong>30-day money-back guarantee,</strong> even opened."
   trust: ["4.8 out of 5 from 9,855 reviews at our earlier store", "Formulated in Korea", "One-time purchase, free shipping"]
   button: "CHOOSE MY PACK ↓"
-  note: "From $25 a bottle in the 3-pack · Free shipping · Pay with card, PayPal, Apple Pay, Klarna or Link"
+  # the buy-2-get-1-free offer (the owner, 29 Oct 2026), true as priced: 3 bottles are $75, 2 single bottles $78
+  deal: "<strong>Buy 2, get 1 FREE</strong> · 3 bottles for $75, less than two single bottles ($78)"
+  note: "$25 a bottle in the 3-pack · Free shipping · Pay with card, PayPal, Apple Pay, Klarna or Link"
   image: "images/sf/wow.jpg"
   image_alt: "A woman in her late fifties: white foundation dots on one side of her face, the other side blended into her own tone"
   video_label: "A woman in her late fifties with the foundation on white dots on one side of her face and blended into her tone on the other"
@@ -48,15 +50,15 @@ benefits:
   - "<strong>Hydrating, not drying.</strong> Two forms of hyaluronic acid, ceramide NP, squalane and panthenol."
   - "<strong>Evens the look of sun spots and redness.</strong> Buildable medium coverage: one thin layer, a second tap where you need it."
   - "<strong>Skincare in every layer.</strong> PDRN, Matrixyl 3000 peptides, Pro-Xylane, niacinamide and adenosine, named on the label."
-  - "<strong>One minute, fingertips.</strong> No primer, no powder, no sponge to wash."
+  - "<strong>One minute, fingertips.</strong> No primer, no powder, nothing to wash."
 guarantee:
   title: "30-day money-back guarantee"
   short: "Wear it in your own daylight for 30 days. Not your match? Email us for a full refund, even opened. You don’t send it back."
-  long: "Try it on your skin, in your bathroom light and in daylight, for 30 days from delivery. If you don’t love how it looks, email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a> and we refund you in full, even if the bottle is open and half used. You don’t have to send anything back."
+  long: "Try it on your skin, in your bathroom light and in daylight, for 30 days from delivery. If you don’t love how it looks, email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> and we refund you in full, even if the bottle is open and half used. You don’t have to send anything back."
 # the packs: campaign packages 6, 7, 8 (one-time, free shipping); the crossed-out price is the store's $47 times the bottles
 offer:
   title: "Choose your pack"
-  lead: "Every pack ships free, once, with no refills unless you ask for them. The 2- and 3-bottle packs come with gifts."
+  lead: "<strong>Buy 2, get 1 FREE</strong> in the 3-bottle pack, with the free Lymphatic Brush. Every pack is a one-time purchase and ships free."
   button: "GET MY FOUNDATION"
   trust: ["Free shipping", "Ships in 1 business day", "Secure checkout", "30-day money-back guarantee"]
   once: "One-time purchase. Nothing renews, and nothing is added at checkout: shipping is free."
@@ -79,24 +81,26 @@ packs:
     compare: "$94"
     save: "SAVE $37"
     tab: "Most popular"
-    selected: true
     label: "2 bottles with 2 free gifts, free shipping"
     gifts:
-      - { image: "images/sf/gift-blender.jpg", name: "FREE SKINOFAB Blender brush", value: "$9" }
+      - { image: "images/sf/gift-blender.jpg", name: "FREE SKINOFAB Blender sponge", value: "$9" }
       - { image: "images/sf/gift-mystery.jpg", name: "FREE Mystery gift", value: "$15" }
   - id: "apf-3"
     package: 3
     name: "3 bottles"
-    short: "3 bottles + brush + 2 gifts"
-    supply: "About three months · $25 a bottle"
+    short: "3 bottles · Buy 2, get 1 FREE"
+    supply: "Pay for 2, the 3rd is FREE · about three months · $25 a bottle"
     price: "$75"
     compare: "$141"
     save: "SAVE $66"
-    tab: "Best value"
-    label: "3 bottles with 3 free gifts, free shipping"
+    tab: "Buy 2, get 1 FREE"
+    deal: true
+    selected: true
+    label: "3 bottles (buy 2, get 1 free) with 3 free gifts, free shipping"
     gifts:
-      - { image: "images/sf/brush-card.jpg", name: "FREE The Lymphatic Brush + case", value: "$24.95" }
-      - { image: "images/sf/gift-blender.jpg", name: "FREE SKINOFAB Blender brush", value: "$9" }
+      - { image: "images/sf/pack-1.jpg", name: "3rd bottle FREE", value: "$39" }
+      - { image: "images/sf/brush-card.jpg", name: "FREE Lymphatic Brush + case", value: "$24.95" }
+      - { image: "images/sf/gift-blender.jpg", name: "FREE SKINOFAB Blender sponge", value: "$9" }
       - { image: "images/sf/gift-mystery.jpg", name: "FREE Mystery gift", value: "$15" }
 problem:
   eyebrow: "Sound familiar?"
@@ -117,7 +121,7 @@ mechanism:
   lede: "Three things change, and most foundations ignore all three."
   causes:
     - { title: "1. Your tone isn’t one colour anymore", text: "Sun spots, redness, a shifted undertone. A fixed pigment matches one of them, so you see patches, a white cast or an orange edge." }
-    - { title: "2. Thinner, drier skin", text: "Around menopause skin makes less oil and holds less water. Matte formulas pull out what is left, then crack and collect in lines." }
+    - { title: "2. Thinner, drier skin", text: "Around menopause, skin makes less oil and holds less water. Matte formulas pull out what is left, then crack and collect in lines." }
     - { title: "3. Formulas built for 25-year-old skin", text: "Heavy pigment, mattifying powders, drying alcohol, fragrance: made to sit on young, oily skin. On yours they emphasise every line." }
   end: "A shade chart can’t fix that. The foundation has to adapt to you, and be kind to the skin underneath."
 solution:
@@ -133,7 +137,7 @@ solution:
   video_caption: "A cream sits on top of the skin. A serum melts into the surface."
 ease:
   eyebrow: "How easy it is"
-  title: "One pump instead of four products"
+  title: "One pump instead of five products"
   old_title: "The old routine"
   old: ["Primer", "Foundation in a shade you guessed", "Concealer on the spots", "Powder to hold it", "Contour and bronzer to bring it back to life"]
   old_time: "15 to 20 minutes, three brushes, a mirror you can’t see well in."
@@ -189,9 +193,9 @@ why:
     - { quote: "Stings my sensitive skin.", source: "", fix: "Fragrance-free, made without propylene glycol, drying alcohol or parabens." }
 korea:
   eyebrow: "Where it comes from"
-  title: "Formulated in Korea"
+  title: "Made by a K-beauty lab"
   bullets:
-    - "Made by a K-beauty lab for thinner, drier skin after 45"
+    - "Made for thinner, drier skin after 45"
     - "Fragrance-free: no parabens, no drying alcohol, no propylene glycol"
     - "The full ingredient list is printed on the box, in English"
   badge: ["Formulated", "in Korea"]
@@ -204,12 +208,12 @@ one_shade:
     - "It goes on white and shifts toward your own tone as you blend"
     - "Made for fair to deep skin: the same bottle at 45, 55 or 70"
     - "Very fair or very deep? A few women find it a little light or dark. That is exactly what the 30-day guarantee is for"
-    - "Not sure? Email <a href=\"mailto:hello@skinofab.com?subject=Is%20it%20my%20shade%3F\">hello@skinofab.com</a> before you order and we will tell you honestly"
+    - "Not sure? Email <a href=\"mailto:info@skinofab.com?subject=Is%20it%20my%20shade%3F\">info@skinofab.com</a> before you order and we will tell you honestly"
   image: "images/sf/one-shade.jpg"
   image_alt: "One shade, no number to guess: a row of skin-tone swatches from fair to deep, then three women past 45 with fair, olive and medium-deep skin, each before (bare skin with spots, redness and uneven tone) and after (the foundation on, her tone even)"
 before_after:
   eyebrow: "Before and after"
-  title: "One bottle, three skin tones"
+  title: "What changes, and what stays hers"
   lede: "The one thing a foundation does: it evens the look of skin tone and softens the look of lines. Each face, its shape and its creases stay hers."
   items:
     - { image: "images/sf/ba-car.jpg", height: 900, alt: "A fair-skinned woman in her early fifties with shoulder-length hair, before and after: freckles, sun spots and redness on her bare skin, then the foundation on, her tone even and glowing", caption: "Fair skin: sun spots and redness evened, the same one shade.", review: { topic: "A buyer on redness", name: "Gillian S., 65", photo: "images/sf/review-gillian.jpg", text: "…blurs imperfections and cover redness, and it looks like skin, not something put on top!" } }
@@ -246,7 +250,6 @@ usage:
   demos_lede: "Tap a clip to watch it. The first one has sound."
   demos:
     - { key: "demo-navy", sound: true, chip: "The whole routine", caption: "The whole routine in a minute, from the white dots to the finish (60 s, with sound)" }
-    - { key: "demo-black", chip: "Pump, dot, buff", caption: "Pumped, dotted and buffed in with a brush" }
     - { key: "demo-silver", chip: "Fingertips only", caption: "Blended in with the fingertips" }
     - { key: "demo-robe", chip: "White dots, blended", caption: "Dotted on the cheeks and forehead, buffed in" }
   timeline:
@@ -260,25 +263,26 @@ guarantee_section:
   text: "Buying foundation online after 45 feels like a bet. So we take the bet off you."
   terms:
     - "Wear it for up to 30 days from delivery, in your bathroom light, in daylight, on a video call."
-    - "Not your match? Email <a href=\"mailto:hello@skinofab.com\">hello@skinofab.com</a>. A person replies within one business day and refunds you in full."
+    - "Not your match? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a>. A person replies within one business day and refunds you in full."
     - "Even opened. Even half used. You don’t send anything back."
   why: "We can promise this because of what 9,855 reviews say about it. Read them above, then decide in your own light."
 value:
   eyebrow: "Your launch offer"
-  title: "Everything in the 3-bottle pack"
+  title: "Buy 2, get the 3rd bottle FREE"
   stack:
-    - { item: "3 bottles of Adaptive Peptide Foundation (about three months)", value: "$141" }
+    - { item: "3 bottles of Adaptive Peptide Foundation: pay for 2, the 3rd is free (about three months)", value: "$141" }
     - { item: "The Lymphatic Brush with its travel case", value: "$24.95" }
-    - { item: "The SKINOFAB Blender brush", value: "$9" }
+    - { item: "The SKINOFAB Blender sponge", value: "$9" }
     - { item: "A mystery gift from our range", value: "$15" }
     - { item: "Free shipping, tracked", value: "included" }
     - { item: "30-day money-back guarantee", value: "included" }
   total: { item: "Total value", value: "$189.95" }
-  today: { item: "Today, on this page", value: "$75" }
-  why_now: "<strong>Why these packs are only here:</strong> our store sells one bottle for $47 bought once, and no pack there comes with the Lymphatic Brush, the Blender brush or the mystery gift. The launch packs exist only here, for women who found us through this offer; you won’t find them in our store. There is no countdown on this page, and no pack costs more than it says here."
+  today: { item: "Buy 2, get 1 FREE, today", value: "$75" }
+  math: "Two single bottles cost $78 here. The 3-bottle pack is $75: you pay less than for two, and the third bottle, the brush and both gifts come free."
+  why_now: "<strong>Why these packs are only here:</strong> our store sells one bottle for $47 bought once, and no pack there comes with the Lymphatic Brush, the Blender sponge or the mystery gift. The launch packs exist only here, for women who found us through this offer; you won’t find them in our store. There is no countdown on this page, and no pack costs more than it says here."
 scarcity:
   title: "What is limited"
-  text: "The free Lymphatic Brush is a launch gift. It ships with the 3-bottle pack while our launch stock of brushes lasts; after that the pack ships with the Blender brush and the mystery gift only. The foundation itself is made in Korea in batches, and a pack that sells out shows as sold out at the checkout rather than shipping late."
+  text: "The free Lymphatic Brush is a launch gift. It comes free with the 3-bottle pack while our launch stock lasts; after that the pack ships with the Blender sponge and the mystery gift only. The foundation itself is made in Korea in batches, and a pack that sells out shows as sold out at the checkout rather than shipping late."
 reviews_section:
   eyebrow: "Reviews"
   excellent: "Excellent"
@@ -321,30 +325,32 @@ faq:
   - q: "I have sensitive skin. Will it sting?"
     a: "It is fragrance-free and made without propylene glycol, drying alcohol or parabens, the usual reasons thinner skin stings. As with anything new, try it on your jawline first. It contains salmon-derived DNA (PDRN): not for anyone with a fish allergy."
   - q: "Does it have SPF?"
-    a: "No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation layers on top made to layer without pilling."
+    a: "No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation is made to layer on top without pilling."
   - q: "Is this a subscription?"
-    a: "No. Every pack on this page is a one-time purchase: you pay once and nothing renews. If you want refills later, you can set them up in our store yourself; we never tick that box for you."
+    a: "No. Every pack on this page is a one-time purchase: you pay once and nothing renews."
   - q: "How long does a bottle last?"
     a: "About a month of daily use with one pump a day. The 2-bottle pack is about two months, the 3-bottle pack about three."
   - q: "When will it arrive?"
     a: "Your order ships within 1 business day, free and tracked: 2–4 business days in the US, 6–9 to Europe, the UK, Canada, Australia and New Zealand, 8–12 elsewhere."
   - q: "How does the guarantee work?"
-    a: "Wear it in your own daylight for up to 30 days from delivery. If you don’t love it, email hello@skinofab.com and we refund you in full, even opened. You don’t have to send it back."
+    a: "Wear it in your own daylight for up to 30 days from delivery. If you don’t love it, email info@skinofab.com and we refund you in full, even opened. You don’t have to send it back."
   - q: "Is my payment secure?"
     a: "Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal, Apple Pay, Klarna or Link."
 service:
   eyebrow: "We’re here"
   title: "Real people, real answers"
-  text: "Questions about your order or your skin? Write to us. A real person on our team replies within one business day, Monday to Friday."
+  text: "Questions about your order or your skin? Write or call. A real person on our team replies within one business day, Monday to Friday."
   cards:
-    - { title: "Email us", text: "hello@skinofab.com, Monday to Friday, replies within one business day.", href: "mailto:hello@skinofab.com" }
-    - { title: "Ask about your skin", text: "Very fair, deep, dry, sensitive? Ask us before you order and we answer honestly.", href: "mailto:hello@skinofab.com?subject=Is%20it%20for%20my%20skin%3F" }
+    - { title: "Email us", text: "info@skinofab.com, Monday to Friday, replies within one business day.", href: "mailto:info@skinofab.com" }
+    - { title: "Call us", text: "Prefer to talk? Call +1 (563) 239-5520.", href: "tel:+15632395520" }
+    - { title: "Ask about your skin", text: "Very fair, deep, dry, sensitive? Ask us before you order and we answer honestly.", href: "mailto:info@skinofab.com?subject=Is%20it%20for%20my%20skin%3F" }
     - { title: "Shipping", text: "Free and tracked: 2–4 business days in the US, 6–9 to Europe, the UK, Canada, Australia and New Zealand, 8–12 elsewhere.", href: "shipping" }
     - { title: "Returns and refunds", text: "The 30-day money-back guarantee, by email, nothing to send back.", href: "returns" }
 closing:
   title: "Your shade, without guessing"
   text: "Pick your pack, wear it in your own daylight, and decide in 30 days."
 ---
+{% for p in packs %}{% if p.selected %}{% assign sel = p %}{% endif %}{% endfor %}
 {% assign checkout_link = next_url | campaign_link %}
 <header class="sf-bar">
   <div class="sf-bar__in">
@@ -367,6 +373,7 @@ closing:
       <p class="sf-hero2__rating"><span class="sf-stars__row" aria-hidden="true">★★★★<span class="sf-star--part"><span class="sf-star--part__base">★</span><span class="sf-star--part__fill">★</span></span></span> <a href="#s18-reviews">{{ hero.trust[0] }}</a></p>
       <p class="sf-hero2__sub">{{ hero.sub }}</p>
       <ul class="sf-hero2__bullets">{% for b in hero.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
+      {% if hero.deal %}<p class="sf-hero2__deal">{{ hero.deal }}</p>{% endif %}
       <a class="sf-btn sf-btn--xl" href="#offer" data-sf-sticky-anchor>{{ hero.button }}</a>
       <ul class="sf-trustline">
         <li>🇰🇷 {{ hero.trust[1] }}</li>
@@ -378,7 +385,7 @@ closing:
 
   {% comment %} 3: the summary, one breath {% endcomment %}
   <section class="sf-sec" id="s03-summary" style="padding:10px 0 26px">
-    <p class="sf-summary">{{ summary }}</p>
+    <div class="sf-sec__in"><p class="sf-summary">{{ summary }}</p></div>
   </section>
 
   {% comment %} 6: the problem, right after the hero: her mornings, in photos {% endcomment %}
@@ -442,7 +449,7 @@ closing:
           <source src="{{ 'images/sf/science.webm' | campaign_asset }}" type="video/webm">
           <source src="{{ 'images/sf/science.mp4' | campaign_asset }}" type="video/mp4">
         </video>
-        <figcaption><span class="sf-science__l">Cream: sits on top</span><span class="sf-science__r">Serum: melts into the surface</span><small>{{ solution.video_caption }}</small></figcaption>
+        <figcaption><span class="sf-science__l">Cream: sits on top</span><span class="sf-science__r">Serum: melts into the surface</span></figcaption>
       </figure>
       <div>
         <p class="sf-eyebrow">{{ solution.eyebrow }}</p>
@@ -550,7 +557,7 @@ closing:
   {% comment %} 13: the dream outcome: the mirror tomorrow, the photo on Saturday {% endcomment %}
   <section class="sf-sec" id="s13-promise" style="padding-top:0">
     <div class="sf-promise sf-two">
-      <img src="{{ 'images/sf/g-duo.jpg' | campaign_asset }}" alt="Two women in their fifties and sixties with fresh, even skin" width="1080" height="1080" loading="lazy" decoding="async">
+      <img src="{{ 'images/sf/promise.jpg' | campaign_asset }}" alt="A woman in her sixties with silver hair in warm morning light, her skin fresh and even" width="1080" height="1080" loading="lazy" decoding="async">
       <div>
         <p class="sf-eyebrow">{{ promise.eyebrow }}</p>
         <h2 class="sf-h2 sf-h2--big">{{ promise.title }}</h2>
@@ -642,12 +649,13 @@ closing:
       <div>
         <p class="sf-eyebrow">{{ value.eyebrow }}</p>
         <h2 class="sf-h2 sf-h2--big">{{ value.title }}</h2>
-        <img src="{{ 'images/sf/offer-3.jpg' | campaign_asset }}" alt="The 3-bottle pack: three bottles of Adaptive Peptide Foundation with the free Lymphatic Brush and its case, under three badges: free Lymphatic Brush and 2 gifts, formulated in Korea, 30-day money-back guarantee" width="1080" height="1080" loading="lazy" decoding="async" class="sf-value__img">
+        <img src="{{ 'images/sf/offer-3.jpg' | campaign_asset }}" alt="Buy 2, get 1 free: three bottles of Adaptive Peptide Foundation, the third marked free, with the free Lymphatic Brush and its case, under three badges: free Lymphatic Brush and 2 gifts, formulated in Korea, 30-day money-back guarantee" width="1080" height="1080" loading="lazy" decoding="async" class="sf-value__img">
         <ul class="sf-stack">
           {% for s in value.stack %}<li><span>{{ s.item }}</span><span>{{ s.value }}</span></li>{% endfor %}
           <li class="sf-stack__total"><span>{{ value.total.item }}</span><span>{{ value.total.value }}</span></li>
           <li class="sf-stack__today"><span>{{ value.today.item }}</span><span>{{ value.today.value }}</span></li>
         </ul>
+        {% if value.math %}<p class="sf-value__math">{{ value.math }}</p>{% endif %}
         <p class="sf-why-now">{{ value.why_now }}</p>
         <div class="sf-limited"><strong>{{ scarcity.title }}.</strong> {{ scarcity.text }}</div>
       </div>
@@ -659,7 +667,7 @@ closing:
           <legend>Your pack</legend>
           {% for p in packs %}
           <label class="sf-pack{% if p.selected %} is-on{% endif %}" data-pack="{{ p.id }}" data-price="{{ p.price }}" data-compare="{{ p.compare }}" data-save="{{ p.save }}" data-label="{{ p.label }}" data-short="{{ p.short }}" data-package="{{ p.package }}">
-            {% if p.tab %}<em class="sf-pack__tab">{{ p.tab }}</em>{% endif %}
+            {% if p.tab %}<em class="sf-pack__tab{% if p.deal %} sf-pack__tab--deal{% endif %}">{{ p.tab }}</em>{% endif %}
             <input type="radio" name="sf_pack" value="{{ p.id }}"{% if p.selected %} checked{% endif %}>
             <span class="sf-pack__row">
               <span class="sf-pack__dot" aria-hidden="true"></span>
@@ -674,7 +682,7 @@ closing:
           </label>
           {% endfor %}
         </fieldset>
-        <a class="sf-btn sf-buy__btn" href="{{ checkout_link }}?forceBundleId=apf-2" data-sf-cta>{{ offer.button }} <span data-sf-btn-price>| $57</span></a>
+        <a class="sf-btn sf-buy__btn" href="{{ checkout_link }}?forceBundleId={{ sel.id }}" data-sf-cta>{{ offer.button }} <span data-sf-btn-price>| {{ sel.price }}</span></a>
         <ul class="sf-offerbox__trust">{% for t in offer.trust %}<li>{{ t }}</li>{% endfor %}</ul>
         <p class="sf-once">{{ offer.once }}</p>
         <p class="sf-fine" style="text-align:center">Contains salmon-derived PDRN: not for anyone with a fish allergy.</p>
@@ -690,7 +698,8 @@ closing:
         <p class="sf-eyebrow">{{ service.eyebrow }}</p>
         <h2 class="sf-h2">{{ service.title }}</h2>
         <p>{{ service.text }}</p>
-        <a class="sf-btn" href="mailto:hello@skinofab.com">EMAIL HELLO@SKINOFAB.COM</a>
+        <div class="sf-service__btns"><a class="sf-btn" href="mailto:{{ campaign.store_email }}">EMAIL {{ campaign.store_email | upcase }}</a>
+        <a class="sf-btn sf-btn--ghost" href="{{ campaign.store_phone_tel }}">CALL {{ campaign.store_phone }}</a></div>
       </div>
       <div class="sf-service">
         {% for c in service.cards %}<a class="sf-card" href="{% if c.href == 'shipping' %}{{ campaign.store_shipping }}{% elsif c.href == 'returns' %}{{ campaign.store_returns }}{% else %}{{ c.href }}{% endif %}"{% if c.href == 'shipping' or c.href == 'returns' %} target="_blank" rel="noopener"{% endif %}><div><strong>{{ c.title }}</strong>{{ c.text }}</div></a>{% endfor %}
@@ -706,7 +715,7 @@ closing:
 </main>
 
 <div class="sf-sticky" data-sf-sticky>
-  <div class="sf-sticky__txt"><b data-sf-sticky-pack>2 bottles + 2 gifts</b><span data-sf-sticky-price>$57 · one-time · free shipping</span></div>
-  <a class="sf-btn" href="{{ checkout_link }}?forceBundleId=apf-2" data-sf-cta>CHECKOUT</a>
+  <div class="sf-sticky__txt"><b data-sf-sticky-pack>{{ sel.short }}</b><span data-sf-sticky-price>{{ sel.price }} · one-time · free shipping</span></div>
+  <a class="sf-btn" href="{{ checkout_link }}?forceBundleId={{ sel.id }}" data-sf-cta>CHECKOUT</a>
 </div>
 {% campaign_include 'sf-footer.html' %}

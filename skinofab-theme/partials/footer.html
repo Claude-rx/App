@@ -8,7 +8,7 @@
 <footer class="sf" data-section-id="sections--20029865066652__footer" data-section-type="footer" id="SiteFooter">
 <div class="sf__signup"><div class="sf__wrap">
 <div><h2>A little more SKINOFAB in your inbox.</h2><p>New arrivals, beauty tips and little treats.</p></div>
-<div><form accept-charset="UTF-8" class="newsletter-form" data-newsletter-form="" data-sf-mailto="newsletter" data-sf-to="hello@skinofab.com" id="NewsletterForm--sections--20029865066652__footer" method="get">
+<div><form accept-charset="UTF-8" class="newsletter-form" data-newsletter-form="" data-sf-mailto="newsletter" data-sf-to="info@skinofab.com" id="NewsletterForm--sections--20029865066652__footer" method="get">
 <div class="input-group">
 <div class="input-group__fields"><div class="input-group__item input-group__item--email">
 <input aria-label="Your email" autocapitalize="off" autocorrect="off" class="input-group__field input-group__field--email" id="Email--sections--20029865066652__footer" name="contact[email]" placeholder="Your email" required="" type="email" value=""/>
@@ -16,14 +16,14 @@
 </div>
 <div class="input-group__item input-group__item--btn">
 <button class="input-group__btn btn" id="SubscribeSubmit--sections--20029865066652__footer" name="subscribe" type="submit">Sign up</button>
-</div></div><p class="sf-mailto-note" style="margin:10px 0 0;font-size:13px;color:#5a5a5a">Signing up opens an email to us, ready to send. No email app? Write to hello@skinofab.com with “Newsletter” in the subject.</p></form></div>
+</div></div><p class="sf-mailto-note" style="margin:10px 0 0;font-size:13px;color:#5a5a5a">Signing up opens an email to us, ready to send. No email app? Write to info@skinofab.com with “Newsletter” in the subject.</p></form></div>
 </div></div>
 <div class="sf__wrap sf__main">
 <div class="sf__brand">
 <a class="sf__logo" href="{{ homepage_url|default:'/' }}"><img alt="SKINOFAB" height="48" loading="lazy" sizes="180px" src="{{ 'sf/img/skinofab-logo-white.svg'|asset_url }}" srcset="{{ 'sf/img/skinofab-logo-white.svg'|asset_url }} 180w, {{ 'sf/img/skinofab-logo-white.svg'|asset_url }} 360w" width="360"/></a>
 <p><em><strong>SKINOFAB</strong> makes makeup and skincare for skin after 45: simple to use, comfortable on dry skin, and honest about what each product does.</em></p>
 <p class="sf__company"><strong>Synderra Inc</strong><br/>2525 Arapahoe Ave, Ste E4 Unit 1280<br/>Boulder, CO 80302<br/>United States</p>
-<a class="sf__email" href="mailto:hello@skinofab.com">hello@skinofab.com</a>
+<a class="sf__email" href="mailto:info@skinofab.com">info@skinofab.com</a><br/><a class="sf__email sf__phone" href="tel:+15632395520">+1 (563) 239-5520</a>
 </div>
 <details class="sf__menu" open=""><summary class="sf__menu-title">Shop</summary><ul>
 <li><a href="{% url 'catalogue:index' %}">Shop all</a></li><li><a href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Adaptive Peptide Foundation</a></li><li><a href="{% if settings.sf_p_adaptive_foundation_stick %}{{ settings.sf_p_adaptive_foundation_stick.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Adaptive Foundation Stick</a></li><li><a href="{% if settings.sf_p_egf_nad_firming_serum %}{{ settings.sf_p_egf_nad_firming_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">EGF + NAD+ Firming Serum</a></li><li><a href="{% if settings.sf_p_pdrn_plumping_balm %}{{ settings.sf_p_pdrn_plumping_balm.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">PDRN Plumping Balm</a></li><li><a href="{% if settings.sf_p_the_lymphatic_brush %}{{ settings.sf_p_the_lymphatic_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">The Lymphatic Brush</a></li><li><a href="{{ settings.sf_c_the_hits|default:'/catalogue/' }}">Bestsellers</a></li>

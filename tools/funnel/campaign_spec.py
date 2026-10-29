@@ -27,7 +27,7 @@ STORE_FIELDS = {
     'store_url': F.FUNNEL_HOST, 'store_name': 'SKINOFAB',
     'store_contact': f'{F.FUNNEL_HOST}/contact/', 'store_terms': f'{F.FUNNEL_HOST}/terms-of-service/',
     'store_shipping': f'{F.FUNNEL_HOST}/shipping-policy/', 'store_privacy': f'{F.FUNNEL_HOST}/privacy-policy/',
-    'store_returns': f'{F.FUNNEL_HOST}/refund-policy/', 'store_phone': None, 'store_phone_tel': None,
+    'store_returns': f'{F.FUNNEL_HOST}/refund-policy/', 'store_phone': '+1 (563) 239-5520', 'store_phone_tel': 'tel:+15632395520',
 }
 PACKAGE_KEYS = ['ref_id', 'name', 'qty', 'price', 'price_retail', 'image', 'product_name', 'product_sku',
                 'product_variant_name', 'product_purchase_availability', 'product_inventory_availability',

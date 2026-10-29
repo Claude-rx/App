@@ -8,6 +8,8 @@
   let renewals, giftMap = {};
   try { renewals = JSON.parse(holder.getAttribute('data-sf-renewals')); } catch (e) { return; }
   try { giftMap = JSON.parse(holder.getAttribute('data-sf-gift-map') || '{}'); } catch (e) { giftMap = {}; }
+  let packImages = {};
+  try { packImages = JSON.parse(holder.getAttribute('data-sf-pack-images') || '{}'); } catch (e) { packImages = {}; }
   const giftLine = document.querySelector('[data-sf-gift-line]');
   const join = (xs) => xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1];
   const fill = () => {
@@ -16,6 +18,11 @@
       const sku = el.getAttribute('data-sf-sku'); skus.push(sku);
       const text = renewals[sku];
       if (text && el.textContent !== text) el.textContent = text;
+    });
+    // each line's own picture (two bottles for the 2-pack, not the campaign's one-bottle image on every line)
+    document.querySelectorAll('img[data-sf-sku-img]').forEach((img) => {
+      const src = packImages[img.getAttribute('data-sf-sku-img')];
+      if (src && img.getAttribute('src') !== src) img.setAttribute('src', src);
     });
     if (giftLine && skus.length) {
       const gifts = []; skus.forEach((k) => (giftMap[k] || []).forEach((g) => { if (!gifts.includes(g)) gifts.push(g); }));

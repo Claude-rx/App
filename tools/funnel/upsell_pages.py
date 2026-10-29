@@ -28,7 +28,7 @@ import stick_copy as SC, balm_copy as BC, serum_copy as SEC
 ROOT = HERE.parents[1]
 SRC = ROOT / 'campaigns' / 'skinofab' / 'src' / F.SLUG
 SPEC = ROOT / 'campaigns' / 'skinofab' / 'campaign-spec.json'
-EMAIL = 'hello@skinofab.com'
+EMAIL = 'info@skinofab.com'
 
 
 def video(name, label, size=(720, 900)):
@@ -253,7 +253,7 @@ def page(pid, spec):
      (its accept / skip proxy the offer's own). {% endcomment %}
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown: the SDK fills them) {% endcomment %}
 <div class="sf-sr" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_europe %}<span data-sf-ship-country data-next-display="order.shippingAddress.country"></span>{% endif %}</div>
-<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
     {% campaign_include 'upsell/announcement.html' announcement_text=announcement_text %}

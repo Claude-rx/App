@@ -28,7 +28,7 @@ TITLE = 'PDRN Plumping Balm'
 NAV_LABEL = 'PDRN Balm'
 SHOPIFY_ID, SHOPIFY_VARIANT = 15517563191700, 61233683038600    # ids for the design markup's product JSON (not Shopify's)
 PRICE, COMPARE = '24.95', '24.95'                                # one stick; no "was" price
-EMAIL = 'hello@skinofab.com'
+EMAIL = 'info@skinofab.com'
 NET = '10 g / 0.35 oz'
 IMG = Path(__file__).resolve().parents[2] / 'brand' / 'pdrn-balm'     # product_photos.py writes the images here
 # the card's "PDRN" line (in card.jpg's pixels), left out of the sticky bar's 52 px thumbnail, where it read PORN

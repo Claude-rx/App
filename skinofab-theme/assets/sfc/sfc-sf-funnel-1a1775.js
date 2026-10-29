@@ -53,7 +53,7 @@
       set('[data-sf-renew]', function (e) { e.textContent = 'Renews at ' + price + ' every ' + every + ' days'; });
       set('[data-sf-terms]', function (e) {
         e.textContent = 'You pay ' + price + ' today, then ' + price + ' every ' + every + ' days until you cancel. We email you ' +
-          'before every refill. To skip or cancel, just email hello@skinofab.com: a person replies within one business day. ' +
+          'before every refill. To skip or cancel, just email info@skinofab.com: a person replies within one business day. ' +
           'No minimum, no fees.';
       });
       set('[data-sf-sticky-pack]', function (e) { e.textContent = id === 'stick-2' ? '2 sticks + free brush' : '1 stick'; });

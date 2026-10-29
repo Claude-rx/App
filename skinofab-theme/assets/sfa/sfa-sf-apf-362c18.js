@@ -107,16 +107,17 @@
   // of view both times, so nothing intersects and the bar stayed on, funnel review 2).
   var sticky = document.querySelector('[data-sf-sticky]');
   var buyBtn = document.querySelector('[data-sf-sticky-anchor]');
-  var offerSec = document.getElementById('offer');
+  // Off only while the pack chooser or its own button is on screen (not over them, live review 4), so the value
+  // list beside them keeps a way to buy (live review 6: three screens with nothing to tap).
+  var chooser = document.querySelector('[data-sf-packs]');
+  var packBtn = document.querySelector('.sf-offerbox .sf-buy__btn');
+  var inView = function (el) { if (!el) return false; var r = el.getBoundingClientRect(); return r.top < window.innerHeight && r.bottom > 0; };
   if (sticky && buyBtn) {
     var ticking = false;
     var place = function () {
       ticking = false;
       var on = buyBtn.getBoundingClientRect().bottom < 0;
-      if (on && offerSec) {                                        // not over the pack chooser and its own button (live review 4)
-        var o = offerSec.getBoundingClientRect();
-        if (o.top < window.innerHeight && o.bottom > 0) on = false;
-      }
+      if (on && (inView(chooser) || inView(packBtn))) on = false;
       sticky.classList.toggle('is-on', on);
       document.body.classList.toggle('sf-has-sticky', on);     // room for the footer's last line under the bar
     };

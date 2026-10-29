@@ -11,14 +11,22 @@ meta_tags:
 # where the SDK writes the shipping's $0.00; the shipping method is named, not read (the campaign's one method is free).
 renewals:
   SKF-APF-1: "One-time purchase. Nothing renews."
-  SKF-APF-2-GIFTS: "One-time purchase, with your free Blender brush and mystery gift in the box. Nothing renews."
-  SKF-APF-3-GIFTS: "One-time purchase, with your free Lymphatic Brush, Blender brush and mystery gift in the box. Nothing renews."
+  SKF-APF-2-GIFTS: "One-time purchase, with your free Blender sponge and mystery gift in the box. Nothing renews."
+  SKF-APF-3-GIFTS: "One-time purchase, with your free Lymphatic Brush, Blender sponge and mystery gift in the box. Nothing renews."
   SKF-APF-2: "One-time purchase. Nothing renews."
   SKF-APF-6-BRUSH: "One-time purchase, with your free Lymphatic Brush in the box. Nothing renews."
   SKF-LYB-1T: "One-time purchase, with its travel case. Nothing renews."
+# each line's picture by SKU (the campaign's package image is one bottle on every line, live review 6)
+pack_images:
+  SKF-APF-1: "images/sf/pack-1.jpg"
+  SKF-APF-2: "images/sf/pack-2.jpg"
+  SKF-APF-2-GIFTS: "images/sf/pack-2.jpg"
+  SKF-APF-3-GIFTS: "images/sf/pack-3.jpg"
+  SKF-APF-6-BRUSH: "images/sf/pack-6.jpg"
+  SKF-LYB-1T: "images/sf/brush-card.jpg"
 gifts:
-  SKF-APF-2-GIFTS: ["the SKINOFAB Blender brush", "the mystery gift"]
-  SKF-APF-3-GIFTS: ["the SKINOFAB Blender brush", "the mystery gift", "the Lymphatic Brush with its travel case"]
+  SKF-APF-2-GIFTS: ["the SKINOFAB Blender sponge", "the mystery gift"]
+  SKF-APF-3-GIFTS: ["the SKINOFAB Blender sponge", "the mystery gift", "the Lymphatic Brush with its travel case"]
   SKF-APF-6-BRUSH: ["the Lymphatic Brush with its travel case"]
   SKF-LYB-1T: ["the brush’s travel case"]
 styles:
@@ -28,9 +36,9 @@ scripts:
   - js/sf-receipt.js
   - js/sf-failsafe.js
 ---
-<div hidden data-sf-renewals='{{ renewals | json }}' data-sf-gift-map='{{ gifts | json }}'></div>
-<p class="sf-failsafe" role="status" hidden data-sf-no-order>We couldn’t find an order to show here. If you just ordered, your confirmation email has your order details. Questions? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
-<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
+<div hidden data-sf-renewals='{{ renewals | json }}' data-sf-gift-map='{{ gifts | json }}' data-sf-pack-images='{ {% for p in pack_images %}"{{ p[0] }}":"{{ p[1] | campaign_asset }}"{% unless forloop.last %},{% endunless %}{% endfor %} }'></div>
+<p class="sf-failsafe" role="status" hidden data-sf-no-order>We couldn’t find an order to show here. If you just ordered, your confirmation email has your order details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
 <div class="page-wrapper">
 
       <div class="main-wrapper">

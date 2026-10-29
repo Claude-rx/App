@@ -33,6 +33,7 @@ uh:
   text: "One for your vanity, one for your bag: {price} instead of $39, charged once, in the same box as your order."
   seconds: 600
   expires: "When the clock reaches 0:00 this page moves on. This offer isn’t in our store or in an email."
+  cta: "accept"
 upsell_layout:
   style: card
   boxed: true
@@ -50,7 +51,7 @@ upsell_offer:
   voucher: "APF40"
   selector_id: "offer-2"
   show_rating: false
-  pretitle: "Only on this page"
+  pretitle: "Not in our store at this price"
   title: "One more Adaptive Peptide Foundation"
   retail_label: "Sales page price"
   price_label: "Today, on this page"
@@ -104,7 +105,7 @@ closing_cta:
 ---
 {% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them) {% endcomment %}
 <div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
-<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:hello@skinofab.com">hello@skinofab.com</a>.</p>
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">
     {% campaign_include 'upsell/announcement.html' announcement_text=announcement_text %}

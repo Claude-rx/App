@@ -52,7 +52,7 @@ ICONS = {
 }
 # Refill terms, shown next to the button whenever refills are ticked ({amount} = the chosen pack's refill price)
 TERMS = ("You pay {amount} today, then {amount} every %d days until you cancel. We email you before every refill. "
-         "To skip or cancel, just email hello@skinofab.com: a person replies within one business day. No minimum, "
+         "To skip or cancel, just email info@skinofab.com: a person replies within one business day. No minimum, "
          "no fees." % REFILL['every'])
 TRUST_CSS = r"""
 .apf-trust{text-align:center;margin:16px 0 0;color:#151515}
@@ -297,7 +297,7 @@ FAQ = [
     ('How do Automatic Refills work?',
      (f"Tick Automatic Refills on the product page and your pack costs less: {REFILLED} instead of {ONCE} for one bottle. " if CHOICE else
       f"Every pack comes with Automatic Refills at the lower price: {REFILLED} for one bottle. ") +
-     f"It ships again every {REFILL['every']} days, and we email you before every refill. To skip or cancel, email hello@skinofab.com: no minimum, no fees." +
+     f"It ships again every {REFILL['every']} days, and we email you before every refill. To skip or cancel, email info@skinofab.com: no minimum, no fees." +
      (" Prefer to buy once? Leave the box unticked." if CHOICE else "")),
     ('Will it settle into my fine lines?',
      'It\'s designed not to. The base is a satin serum, not a matte formula, and soft-focus powders blur the look of lines instead of filling them with pigment. For the smoothest finish, use one thin layer and skip powder on dry areas.'),
@@ -360,7 +360,7 @@ def guarantee_html(href, black=False):
   <p style="margin-top:16px;font-size:18px">Wear it for 30 days in your own bathroom light, in daylight, on a video call. If you don't love it,
   email us and we'll refund you. No forms to argue with.</p>
   <div style="margin-top:28px"><a class="apf-btn{' apf-btn--white' if black else ''}" href="{href}">Try it risk-free</a></div>
-  {_micro(['30-day money-back guarantee', 'Free shipping', 'Real people at hello@skinofab.com'])}</div></section>'''
+  {_micro(['30-day money-back guarantee', 'Free shipping', 'Real people at info@skinofab.com'])}</div></section>'''
 
 
 # ------------------------------------------------------------------------------------------------ homepage
@@ -615,7 +615,7 @@ def pdp_sections():
     <h2>Real people, real answers</h2>
     <p style="margin-top:16px;font-size:18px">Questions about your order or your skin? Write to us. A real person on our team replies within one business day,
     Monday to Friday.</p>
-    <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px"><a class="apf-btn" href="mailto:hello@skinofab.com">Email hello@skinofab.com</a><a class="apf-btn apf-btn--line" href="../pages/contact.html">Contact page</a></div>
+    <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px"><a class="apf-btn" href="mailto:info@skinofab.com">Email info@skinofab.com</a><a class="apf-btn apf-btn--line" href="../pages/contact.html">Contact page</a></div>
   </div>
   <div class="apf-grid2" style="gap:14px;align-items:stretch">
     <a class="apf-card" style="text-decoration:none" href="../pages/postflows-track-your-order.html"><h4>Track your order</h4><p>Ships within 1 business day, with tracking.</p></a>
@@ -642,7 +642,7 @@ BUYBOX = [
     ('Find your flawless shade with zero risk. Our Color Changing Foundation comes with a complete satisfaction promise: if your shade isn\'t spot-on, we\'ll make it right with a full refund—no questions asked.',
      'Wear it in your own daylight for 30 days. If you don\'t love it, email us and we\'ll refund you.'),
     ('We know finding the perfect foundation match online can feel like a gamble. That\'s why we\'ve eliminated the risk entirely. Try it on your skin, in your lighting, with your routine. If it\'s not your perfect match, simply let us know within 30 days and we\'ll process your full refund immediately.',
-     'We know buying foundation online after 45 feels like a gamble. Try it on your skin, in your lighting, with your routine. Write to hello@skinofab.com within 30 days and a real person will sort it out.'),
+     'We know buying foundation online after 45 feels like a gamble. Try it on your skin, in your lighting, with your routine. Write to info@skinofab.com within 30 days and a real person will sort it out.'),
     ('All returns must be postmarked within thirty (30) days of delivery. All returned items must be new, unused, and in their original packaging. See our',
      'Refunds are handled by email within 30 days of delivery. See our'),
 ]

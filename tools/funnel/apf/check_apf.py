@@ -46,7 +46,7 @@ OFFERS = {o['ref_id']: o for o in SPEC['offers']}
 ALL_PKGS = {p['ref_id']: p for pg in PAGES.values() for p in pg.get('packages', [])}
 SKUS = {p['product_sku'] for p in ALL_PKGS.values()}
 BRUSH_SKUS = {'SKF-APF-3-GIFTS', 'SKF-APF-6-BRUSH'}      # the packages that include the Lymphatic Brush
-GIFT_SKUS = {'SKF-APF-2-GIFTS', 'SKF-APF-3-GIFTS'}       # the packages with the Blender brush and the mystery gift
+GIFT_SKUS = {'SKF-APF-2-GIFTS', 'SKF-APF-3-GIFTS'}       # the packages with the Blender sponge and the mystery gift
 ONE_SKU = 'SKF-APF-1'                                    # one bottle: the price the supply cards' arithmetic starts from
 # what the pages may never say (the foundation's claims rules, docs/apf-funnel/persona.md; "made not to" / "designed not
 # to" keep "settle" hedged)
@@ -146,7 +146,7 @@ def gifts_said(where, sku, t):
     """A package with gifts names them; one without names none."""
     t = t.lower()
     if sku in BRUSH_SKUS and 'lymphatic brush' not in t: fail(where, f'{sku}: the free Lymphatic Brush is not named')
-    if sku in GIFT_SKUS and ('blender brush' not in t or 'mystery gift' not in t): fail(where, f'{sku}: the Blender brush and mystery gift are not named')
+    if sku in GIFT_SKUS and ('blender sponge' not in t or 'mystery gift' not in t): fail(where, f'{sku}: the Blender sponge and mystery gift are not named')
     if sku not in GIFT_SKUS | BRUSH_SKUS and re.search(r'\bfree [a-z]+ (?:brush|gift)', t): fail(where, f'{sku}: a gift named on a package without one')
 
 

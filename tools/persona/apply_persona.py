@@ -1644,7 +1644,7 @@ TRACK_FORM = (
     '<p class="sf-track-note">Your tracking code is in your shipping confirmation email. It opens on 17TRACK, which follows every '
     'carrier we ship with.</p></form>'
     f'<p class="sf-track-help">Only have your order number? Email <a href="mailto:{company.EMAIL}?subject=Where%20is%20my%20order%3F">'
-    f'{company.EMAIL}</a> with it and we will send you your tracking link.</p></div>'
+    f'{company.EMAIL}</a> with it, or call <a href="tel:{company.PHONE_TEL}">{company.PHONE}</a>, and we will send you your tracking link.</p></div>'
     '<style>.sf-track{max-width:560px;margin:0 auto 48px;text-align:left}.sf-track label{display:block;font-weight:600;margin-bottom:8px}'
     '.sf-track-row{display:flex;gap:8px;flex-wrap:wrap}.sf-track-row input{flex:1 1 220px;min-width:0;height:52px;padding:0 16px;'
     'border:1px solid #cfcfcf;border-radius:8px;font-size:16px}.sf-track-row button{flex:0 0 auto;height:52px;padding:0 32px}'
@@ -3344,7 +3344,7 @@ def main():
             t1, k = company.rewrite(p.relative_to(DST).as_posix(), t0)
             if k: p.write_text(t1, encoding='utf-8', errors='surrogateescape'); co += k; co_files += 1
     print('company details', co, 'changes in', co_files, 'files')
-    stale = re.compile(r'Skinofab LLC|8605 Santa Monica|West Hollywood|(?:hey|info|contact)@skinofab\.com|Xevio|John M\. Schneider|12345678|HRB 123456|Anna Becker|Musterstra')
+    stale = re.compile(r'Skinofab LLC|8605 Santa Monica|West Hollywood|(?:hey|hello|contact)@skinofab\.com|Xevio|John M\. Schneider|12345678|HRB 123456|Anna Becker|Musterstra')
     left = [p.relative_to(DST).as_posix() for p in DST.rglob('*') if p.is_file() and p.suffix.lower() in ('.html', '.js', '.json')
             and stale.search(p.read_text(encoding='utf-8', errors='surrogateescape'))]
     if left: missing.append(('company details', 'old details left in ' + ', '.join(left[:8])))

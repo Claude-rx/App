@@ -41,6 +41,7 @@ BRAND = ROOT / 'brand'
 APF, PDP, PERSONA, BRUSH = BRAND / 'adaptive-peptide-foundation', BRAND / 'adaptive-peptide-foundation' / 'pdp', BRAND / 'persona', BRAND / 'lymphatic-brush'
 KEPT = APF / 'reviews'              # the buyers' photo crops, kept in git
 OWNER = APF / 'owner'               # the owner's own images (29 Oct 2026): three before/after pairs, the doctor in her clinic
+GEN = APF / 'gen'                   # the generated sources (GPT Image 2 through 4SToken; gen/README.md has the prompts)
 OUT = ROOT / 'campaigns' / 'skinofab' / 'src' / 'apf-funnel' / 'assets' / 'images' / 'sf'
 INK, PAPER, SOFT, CREAM = (21, 21, 21), (255, 255, 255), (96, 96, 96), (246, 242, 236)
 
@@ -62,8 +63,10 @@ REVIEW_PHOTOS = {
 }
 # the live page's photos, by the name the pages use
 # (the store's "The Science" and "vs. others" graphics stay out: each carries a line the claims rules forbid)
-PDP_PHOTOS = {'g-hold': 'hold-cheek', 'g-dots': 'dots-eyes-closed', 'g-grey': 'hold-grey-hair', 'g-duo': 'duo-women',
-              'g-inside': 'whats-inside', 'g-brush': 'buffing-brush',
+# the kept crops padded with a blurred band of themselves (live review 6): the photo's own columns, as a square
+REVIEW_TRIM = {'susan': (0.15, 0.85), 'virginia': (0.02, 0.92)}
+PDP_PHOTOS = {'g-hold': 'hold-cheek', 'g-dots': 'dots-eyes-closed', 'g-grey': 'hold-grey-hair',
+              'g-inside': 'whats-inside', 'g-brush': 'buffing-brush',      # g-brush: offers 2 and 2b's gallery
               'g-bottle': 'bottle-korea', 'problem': 'problem', 'solution': 'solution-bottle',
               'gift-blender': 'gift-blender', 'gift-mystery': 'gift-mystery', 'gift-shipping': 'gift-shipping'}
 # the demo clips (brand/videos/gj-<key>*.mp4): women 45+ with the real bottle; poster from the live page or a frame
@@ -82,22 +85,32 @@ def save(im, name, size=None, q=84):
     print(name, im.size)
 
 
-def bottle(size):
+def bottle(size, pdrn=2.0):
     """The bottle on white: the live page's own render (the product sheet's, its grey backdrop already lifted), with
     the label's PDRN line, which that copy lacks: the line is taken from the product sheet's own front render
     (01-front.png, relabelled by tools/persona/relabel_bottles.py), whose label sits 127 px right of and 3 px below this
     one at the same scale, as its light print over the bottle's black (live review 5: the pack shots read without the
-    PDRN line every held bottle and the store's photos print)."""
+    PDRN line every held bottle and the store's photos print).
+    pdrn: the line's size against the label's own. Every use of this bottle is a pack shot shown 300-470 px wide,
+    where the line at its own size was 3-4 px tall on a 1x screen and "PDRN" read "PORN" (29 Oct 2026); at
+    twice its size, centred where it was, it stays inside the black between FOUNDATION and the volume."""
     im = Image.open(PDP / 'solution-bottle.jpg').convert('RGB')
     front = np.asarray(Image.open(APF / '01-front.png').convert('L'), dtype=np.float32)
     fx0, fy0, fx1, fy1, dx, dy = 586, 1046, 668, 1074, -127, -3               # the PDRN line on the front render
     patch = front[fy0:fy1, fx0:fx1]
     bg = np.median(np.concatenate([front[1030:1042, fx0:fx1], front[1080:1100, fx0:fx1]]), axis=0)   # its black, per column
-    alpha = np.clip((patch - bg[None]) / (238.0 - bg[None]), 0, 1)[..., None]
+    alpha = np.clip((patch - bg[None]) / (238.0 - bg[None]), 0, 1)
+    h, w = alpha.shape
+    if pdrn != 1.0:
+        big = Image.fromarray((alpha * 255).astype(np.uint8), 'L').resize((round(w * pdrn), round(h * pdrn)), Image.LANCZOS)
+        alpha = np.asarray(big, dtype=np.float32) / 255
+    H2, W2 = alpha.shape
+    cy, cx = fy0 + dy + h / 2, fx0 + dx + w / 2                                 # centred where the line was
+    y0, x0 = round(cy - H2 / 2), round(cx - W2 / 2)
     a = np.asarray(im).astype(np.float32)
-    region = a[fy0 + dy:fy1 + dy, fx0 + dx:fx1 + dx]
+    region = a[y0:y0 + H2, x0:x0 + W2]
     assert float(region.mean()) < 60, 'solution-bottle.jpg changed: the PDRN line would not land on the black label'
-    a[fy0 + dy:fy1 + dy, fx0 + dx:fx1 + dx] = region * (1 - alpha) + 238.0 * alpha
+    a[y0:y0 + H2, x0:x0 + W2] = region * (1 - alpha[..., None]) + 238.0 * alpha[..., None]
     im = Image.fromarray(a.clip(0, 255).astype(np.uint8))
     # the faint grey smear to the lower right of the base goes (a detached shadow, live reviews 1 and 2); the darker
     # contact shadow under the base stays
@@ -209,21 +222,45 @@ def pack_cards():
 
     for n, wb, name in ((1, False, 'pack-1'), (2, False, 'pack-2'), (3, True, 'pack-3'), (6, True, 'pack-6')):
         save(scene(n, wb, 900, 'white'), name, size=700)
-    # the sales page's 3-pack, with its three badges
-    im = scene(3, True, 1080, 'warm')
+    # the sales page's 3-pack: the buy-2-get-1-free ribbon over its three badges (the owner, 29 Oct 2026: "add the offer
+    # of buy 2 get one free"; true as priced: 3 bottles are $75, 2 single bottles $78), the scene a little smaller
+    # under them, and a "+1 FREE" tag beside the third bottle's cap (never on a label)
+    k, A, s3 = 0.86, 1050, 1080 / 900
+    items = [(bot, 270, 670, 470), (bot, 630, 670, 470), (bot, 450, 695, 500), (brush, 250, 878, 135), (case, 650, 884, 165)]
+    im = stage(1080, [(o, 540 + (x * s3 - 540) * k, A - (A - y * s3) * k, h * s3 * k) for o, x, y, h in items], 'warm')
     d = ImageDraw.Draw(im)
-    cx, cy, r = 142, 142, 96                                                      # the free brush, and the gifts
+    GOLD = (222, 190, 128)
+    x0, x1, y0, y1, notch = 150, 930, 30, 120, 26                                 # the ribbon, its ends cut in
+    d.polygon([(x0 - 34, y0 + 10), (x0 + 6, y0 + 10), (x0 + 6, y1 + 10), (x0 - 34, y1 + 10), (x0 - 34 + notch, (y0 + y1) / 2 + 10)], fill=(150, 124, 74))
+    d.polygon([(x1 + 34, y0 + 10), (x1 - 6, y0 + 10), (x1 - 6, y1 + 10), (x1 + 34, y1 + 10), (x1 + 34 - notch, (y0 + y1) / 2 + 10)], fill=(150, 124, 74))
+    d.rounded_rectangle((x0, y0, x1, y1), radius=6, fill=INK)
+    d.line((x0 + 14, y0 + 9, x1 - 14, y0 + 9), fill=GOLD, width=2); d.line((x0 + 14, y1 - 9, x1 - 14, y1 - 9), fill=GOLD, width=2)
+    f = P.sans(58, 'Bold'); a, b = 'BUY 2, GET 1 ', 'FREE'
+    wa, wb = d.textlength(a, font=f), d.textlength(b, font=f)
+    tx = (x0 + x1) / 2 - (wa + wb) / 2
+    d.text((tx, (y0 + y1) / 2 + 2), a, font=f, fill=PAPER, anchor='lm'); d.text((tx + wa, (y0 + y1) / 2 + 2), b, font=f, fill=GOLD, anchor='lm')
+    cx, cy, r = 150, 236, 88                                                      # the free brush, and the gifts
     d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=INK)
     d.ellipse((cx - r + 8, cy - r + 8, cx + r - 8, cy + r - 8), outline=(200, 170, 110), width=2)
-    d.text((cx, cy - 32), 'FREE', font=P.sans(38, 'Bold'), fill=(222, 190, 128), anchor='ms')
-    d.text((cx, cy + 2), 'Lymphatic', font=P.sans(24, 'SemiBold'), fill=PAPER, anchor='ms')
-    d.text((cx, cy + 30), 'Brush', font=P.sans(24, 'SemiBold'), fill=PAPER, anchor='ms')
-    d.text((cx, cy + 60), '+ 2 gifts', font=P.sans(20, 'Medium'), fill=(222, 190, 128), anchor='ms')
-    laurel(im, 540, 118, 118, INK)                                                # formulated in Korea, in a laurel
-    d.text((540, 112), 'Formulated', font=P.serif(32, 'Bold'), fill=INK, anchor='ms')
-    d.text((540, 150), 'in Korea', font=P.serif(32, 'Bold'), fill=INK, anchor='ms')
-    seal = Image.open(OUT / 'guarantee-seal.png').convert('RGBA'); seal.thumbnail((196, 196), Image.LANCZOS)
-    im.paste(seal, (1080 - 46 - seal.width, 46), seal)
+    d.text((cx, cy - 30), 'FREE', font=P.sans(34, 'Bold'), fill=GOLD, anchor='ms')
+    d.text((cx, cy + 2), 'Lymphatic', font=P.sans(22, 'SemiBold'), fill=PAPER, anchor='ms')
+    d.text((cx, cy + 28), 'Brush', font=P.sans(22, 'SemiBold'), fill=PAPER, anchor='ms')
+    d.text((cx, cy + 56), '+ 2 gifts', font=P.sans(19, 'Medium'), fill=GOLD, anchor='ms')
+    laurel(im, 540, 228, 104, INK)                                                # formulated in Korea, in a laurel
+    d.text((540, 222), 'Formulated', font=P.serif(29, 'Bold'), fill=INK, anchor='ms')
+    d.text((540, 256), 'in Korea', font=P.serif(29, 'Bold'), fill=INK, anchor='ms')
+    seal = Image.open(OUT / 'guarantee-seal.png').convert('RGBA'); seal.thumbnail((184, 184), Image.LANCZOS)
+    im.paste(seal, (1080 - 58 - seal.width, 236 - seal.height // 2), seal)
+    tag = Image.new('L', (4 * 120, 4 * 120), 0); ImageDraw.Draw(tag).ellipse((0, 0, 479, 479), fill=255)   # the +1 FREE tag
+    tag = tag.resize((120, 120), Image.LANCZOS)
+    tx, ty = 852, 430
+    sh = Image.new('L', im.size, 0); sh.paste(tag, (tx - 60 + 4, ty - 60 + 6)); sh = sh.filter(ImageFilter.GaussianBlur(6))
+    im.paste(Image.new('RGB', im.size, (90, 72, 50)), (0, 0), sh.point(lambda v: v * 0.45))
+    im.paste(Image.new('RGB', (120, 120), GOLD), (tx - 60, ty - 60), tag)
+    d = ImageDraw.Draw(im)
+    d.ellipse((tx - 52, ty - 52, tx + 52, ty + 52), outline=INK, width=2)
+    d.text((tx, ty - 6), '+1', font=P.sans(36, 'Bold'), fill=INK, anchor='ms')
+    d.text((tx, ty + 26), 'FREE', font=P.sans(26, 'Bold'), fill=INK, anchor='ms')
     save(im, 'offer-3', size=1080)
     save(ground(bottle(1080)), 'bottle', size=1080)
 
@@ -293,16 +330,14 @@ def one_shade():
         before, after = pair_halves(Image.open(OWNER / f'ba-{key}.webp'))
         x = cx0 + k * (cw + g2)
         d.text((x + cw // 2, top), word, font=P.sans(30, 'SemiBold'), fill=INK, anchor='ms')
-        if zoom > 1:
-            aw, ah = after.size; zw, zh = int(aw / zoom), int(ah / zoom)
-            after = after.crop(((aw - zw) // 2, int((ah - zh) * 0.12), (aw - zw) // 2 + zw, int((ah - zh) * 0.12) + zh))
+        after = zoom_in(after, zoom)
         for row, (half, name) in enumerate(((before, 'BEFORE'), (after, 'AFTER'))):
             y = top + 42 + row * (cw + 58)
             spaced(x + cw // 2, y, name, lab, SOFT if row == 0 else INK)
             ph = ImageOps.fit(half, (cw, cw), Image.LANCZOS, centering=centering)
             m = Image.new('L', (cw, cw), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, cw - 1, cw - 1), 18, fill=255)
             im.paste(ph, (x, y + 14), m)
-    d.text((W // 2, H - 44), 'One bottle. Three skin tones.', font=P.sans(36, 'Medium'), fill=INK, anchor='ms')
+    d.text((W // 2, H - 44), 'The same bottle on every one of them', font=P.sans(36, 'Medium'), fill=INK, anchor='ms')
     save(im, 'one-shade', size=1196)
 
 
@@ -317,6 +352,14 @@ def _encode(frames, key, fps=25):
 def _frames_dir(key):
     import tempfile
     return Path(tempfile.mkdtemp(prefix=f'{key}-'))
+
+
+def milky(a, m, k=0.72):
+    """The serum's clear blue made the foundation's milky white where m (0..1, H x W x 1) is set: its lightness kept as
+    shading, its colour pulled k of the way to a warm white."""
+    lum = a.mean(-1, keepdims=True)
+    white = np.array([248, 245, 240], np.float32) * (0.78 + 0.22 * lum / 255)
+    return a * (1 - m * k) + white * (m * k)
 
 
 def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
@@ -339,20 +382,34 @@ def science_clip(encode=True, w=1080, fps=25, seconds=6.0):
     dry = a * (1 - bm) + dry * bm
     # the serum stays in the surface layer: below the epidermis (the cobbled band ends at 54% of the still) the block keeps its
     # own pink, in the poster and at the end of the loop (the blue through the dermis read as a penetration claim, live review 3)
-    y_cut = int(H * 0.54)
+    # live review 6: still read as sinking in, and clear blue is not the product: the serum now stays in the top of the
+    # surface layer (above 45.5%, the cobbled band begins at 40%) and is the foundation's own milky white
+    y_cut = int(H * 0.455)
     # below the cut the right block borrows the left block's dermis (the same render, one block-width to the left), so no
     # pale channel marks where the blue was; the seam is feathered
     dx = W * 457 // 1080
     deep = FI._blur(blue.astype(np.float32), 6.0)[..., None]; deep[: y_cut] = 0
     clone = a.copy(); clone[:, dx:] = a[:, : W - dx]
     held = a * (1 - deep) + clone * deep
+    # the right block's whole dermis below the cut is the left block's (the render's faint blue haze in its fibres
+    # still read as the serum reaching them), feathered over 12 px at the cut
+    yy_, xx_ = np.mgrid[0:H, 0:W]
+    under = ((yy_ >= y_cut) & (xx_ >= int(W * 0.48)) & (xx_ <= int(W * 0.875))).astype(np.float32)
+    under = FI._blur(under, 6.0)[..., None]
+    held = held * (1 - under) + clone * under
+    # the drop, its stream and the pool: the foundation's milky white, not a clear blue
+    liquid = ((a[..., 2] - a[..., 0] > 10) & (a[..., 2] > 100)).astype(np.float32)
+    liquid[:, : int(W * 0.55)] = 0; liquid[y_cut:] = 0
+    liquid = FI._blur(liquid, 1.5)[..., None]
+    held = milky(held, np.maximum(bm * (1 - deep), liquid) * (1 - under))
+    dry = dry * (1 - under) + clone * under                              # the loop's first frames: the same clean dermis
     save(Image.fromarray(np.clip(held, 0, 255).astype(np.uint8)), 'science-poster', size=w)
     if not encode: return
     # the falling drop in the still: cut out (its box, as fractions of the still), its place filled white
     bx0, by0, bx1, by1 = int(W * 0.60), int(H * 0.25), int(W * 0.66), int(H * 0.355)
     box = a[by0:by1, bx0:bx1]
     dmask = FI._blur(((255 - box.min(-1)) > 20).astype(np.float32), 1.0)[..., None]
-    drop = box.copy()
+    drop = milky(box.copy(), dmask)
     for base in (a, dry, held): base[by0:by1, bx0:bx1] = base[by0:by1, bx0:bx1] * (1 - dmask) + 255 * dmask
     y_nozzle, y_land = int(H * 0.19), int(H * 0.40) - (by1 - by0)
     frames = _frames_dir('science')
@@ -431,13 +488,22 @@ def pair_halves(im):
     return im.crop((0, 0, left - 4, h)), im.crop((right + 5, 0, w, h))
 
 
-def split_pair(key, out, size=1080, height=900, band=100, src=None, centering=(0.5, 0.35)):
+def zoom_in(im, zoom, top=0.12):
+    """The middle 1/zoom of a photo, from `top` of the spare height down (a wider shot brought to a closer one's scale)."""
+    if zoom <= 1: return im
+    w, h = im.size; zw, zh = int(w / zoom), int(h / zoom)
+    x0, y0 = (w - zw) // 2, int((h - zh) * top)
+    return im.crop((x0, y0, x0 + zw, y0 + zh))
+
+
+def split_pair(key, out, size=1080, height=900, band=100, src=None, centering=(0.5, 0.35), zoom_after=1.0):
     """A generated split portrait (gen/ba-split-<key>.png: the same woman twice in one frame, her bare skin with its
     lines, spots and redness on the left, the foundation on with an even, luminous tone on the right, a white line
     between) laid out as the pages' before/after: each half fitted to its column (no upscaling at 1376 px wide),
     Before / After in ink on a white band at the foot, a white line between the halves (no disclaimer line: the owner's
     instruction, 28 Oct 2026)."""
-    halves = pair_halves(Image.open(src or GEN / f'ba-split-{key}.png'))
+    before, after = pair_halves(Image.open(src or GEN / f'ba-split-{key}.png'))
+    halves = (before, zoom_in(after, zoom_after))      # zoom_after: an after shot from further away, at the before's scale
     col_w, col_h = size // 2, height - band
     out_im = Image.new('RGB', (size, height), PAPER)
     for j, half in enumerate(halves):
@@ -494,7 +560,9 @@ def old_routine():
 # an image for each step): (source clip, second, where her face sits). No clip shows a moisturiser, so step 1 is
 # her bare skin before she starts.
 STEP_FRAMES = {'step-1': ('gj-43e0f648-cut', 0.4, 0.18), 'step-2': ('gj-43e0f648-cut', 24.0, 0.2),
-               'step-3': ('gj-41b77ec4-clean', 7.5, 0.24), 'step-4': ('gj-b705ce67', 8.6, 0.22)}
+               'step-3': ('gj-41b77ec4-clean', 7.5, 0.24), 'step-4': ('gj-b705ce67', 8.6, 0.22),
+               # listicle reason 4 ("One pump, your fingertips"): her fingertips working it in (the brush photo was not)
+               'reason-fingers': ('gj-88d49199', 14.0, 0.2)}
 
 
 def step_frames():
@@ -554,29 +622,20 @@ def label_mask(text, width, cap, angle=0.0, weight='Medium', K=8):
 
 
 def howto_loop(encode=True):
-    """The store's how-it-works loop (white dots, blended, one shade; brand/adaptive-peptide-foundation/howto/, 864x1080)
-    and its poster, for the listicle. Its baked "Illustration" pill (bottom right, over her neck, 697..842 x 1022..1056)
-    is cut away: the frame is cropped to 812x1015 (8 px off the left, 44 off the right, 65 off the bottom, still 4:5) and
-    scaled back to 864x1080 (the owner's instruction, 28 Oct 2026: no disclaimer or illustration line on any image).
-    The bottle stands still in every frame, so its label gets the PDRN line the real label carries (as on the doctor's
-    and the solution bottle), set once in the label's tilt (7.6 deg), sizes and grey, between FOUNDATION and 30 mL."""
-    src = APF / 'howto'
-    poster = Image.open(src / 'howto-poster.jpg').convert('RGB')
-    assert poster.size == (864, 1080), 'howto-poster.jpg changed: measure the label and the pill again'
-    mask = label_mask('PDRN', 28, 6.4, angle=7.6, weight='SemiBold')   # a touch above the label's 0.77 cap, SemiBold: thinner, the encoded D read as an O
-    lay = Image.new('RGBA', poster.size, (0, 0, 0, 0))
-    lay.paste(Image.new('RGBA', mask.size, (205, 205, 207, 255)), (int(round(138.4 - mask.width / 2)), int(round(933.9 - mask.height / 2))), mask)
-    crop, size = (8, 0, 820, 1015), (864, 1080)
-    save(Image.alpha_composite(poster.convert('RGBA'), lay).convert('RGB').crop(crop).resize(size, Image.LANCZOS), 'howto-poster', size=864)
+    """The listicle's how-it-works loop, v3 (live review 6: the store's loop faded the dots out under a still hand and
+    cut her forehead): eleven seconds of the demo clip the sales page plays with sound (brand/videos/gj-43e0f648-cut,
+    21.5 to 32.5 s): the white dots go on, then the brush blends them into her tone. Silent, 4:5 on her whole head,
+    at the clip's own 606 px width; the poster is a frame with every dot on."""
+    src, t0, dur = BRAND / 'videos' / 'gj-43e0f648-cut.mp4', 21.5, 11.0
+    vf = 'crop=606:758:0:40'
+    tmp = _frames_dir('howto') / 'p.png'
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(t0 + 2.8), '-i', str(src), '-frames:v', '1', '-vf', vf, str(tmp)], check=True)
+    save(Image.open(tmp), 'howto-poster', size=758)
     if not encode: return
-    tmp = _frames_dir('howto') / 'pdrn.png'
-    lay.save(tmp)
-    vf = f'[0:v][1:v]overlay=0:0,crop={crop[2] - crop[0]}:{crop[3] - crop[1]}:{crop[0]}:{crop[1]},scale={size[0]}:{size[1]}:flags=lanczos,format=yuv420p'
-    for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '24', '-movflags', '+faststart']),    # about the source's own size
-                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '35', '-b:v', '0', '-row-mt', '1'])):
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src / f'howto.{ext}'), '-i', str(tmp), '-filter_complex', vf, '-an', *args,
-                        str(OUT / f'howto.{ext}')], check=True)
-
+    for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '29',   # about 400 kB for the 11 s
+                      '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '40', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(t0), '-t', str(dur), '-i', str(src), '-vf', vf, '-an', *args, str(OUT / f'howto.{ext}')], check=True)
 
 def portrait(src, out, size=1080, crop=None, centering=(0.5, 0.3)):
     """A persona photo on its own, square: the stand-in for a reason whose before/after is not made yet. crop: (left,
@@ -638,30 +697,16 @@ def hero_collage():
 
 
 def offer_card():
-    """The listicle's offer image, v2 (28 Oct 2026, the owner: the lettered composite was not good): a flat lay with
-    no words, the three bottles standing on the left, the three gifts (the Lymphatic Brush with its case, the Blender
-    brush, the mystery gift) stacked on the right, grounded shadows. The words are the page's (sf-cta)."""
-    size = 1080
-    im = Image.new('RGB', (size, size), PAPER)
-    one = bottle(1254)
-    bbox = ImageOps.invert(one.convert('L')).point(lambda v: 255 if v > 40 else 0).getbbox()
-    cut = one.crop(bbox)
-    h = 700
-    b = cut.resize((int(cut.width * h / cut.height), h), Image.LANCZOS)
-    gap = 22
-    x0, y0 = 70, (size - h) // 2 - 20
-    for i in range(3): im.paste(b, (x0 + i * (b.width + gap), y0))
-    tiles = [(BRUSH / 'card.jpg', 0.0), (PDP / 'gift-blender.jpg', 0.0), (PDP / 'gift-mystery.jpg', 0.0)]
-    t, tg = 292, 18
-    tx = size - t - 60
-    ty0 = (size - 3 * t - 2 * tg) // 2
-    for k, (path, _) in enumerate(tiles):
-        tile = ImageOps.fit(Image.open(path).convert('RGB'), (t, t), Image.LANCZOS)
-        mask = Image.new('L', (t, t), 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, t - 1, t - 1), 26, fill=255)
-        im.paste(tile, (tx, ty0 + k * (t + tg)), mask)
-        ImageDraw.Draw(im).rounded_rectangle((tx, ty0 + k * (t + tg), tx + t - 1, ty0 + k * (t + tg) + t - 1), 26, outline=(226, 222, 216), width=2)
-    save(ground(im), 'offer')
-
+    """The listicle's offer image, v3 (live review 6: the gift tiles overlapped the third bottle and the 120 px sponge
+    tile was soft): the three bottles on a warm sweep with the Lymphatic Brush's case and the brush in front, each on
+    its own shadow (stage()), no words (the page's sf-cta box lists the pack and its gifts)."""
+    bot = cutout(bottle(1254))
+    card_im = Image.open(BRUSH / 'card.jpg').convert('RGB')
+    brush = cutout(card_im.crop((250, 180, 830, 515)), dark=None, fill=False)
+    case = cutout(card_im.crop((250, 515, 830, 905)), dark=None)
+    s = 1080 / 900
+    items = [(bot, 300, 600, 470), (bot, 600, 600, 470), (bot, 450, 628, 505), (case, 245, 838, 170), (brush, 660, 832, 140)]
+    save(stage(1080, [(o, x * s, y * s, h * s) for o, x, y, h in items], 'warm'), 'offer')
 
 def reviews(work):
     """Each buyer's own photo, square on her face (kept in brand/adaptive-peptide-foundation/reviews/<key>.jpg)."""
@@ -680,7 +725,11 @@ def reviews(work):
             crop.thumbnail((600, 600), Image.LANCZOS)
             crop.save(kept, quality=88)
         if not kept.exists(): raise SystemExit(f'no photo for review {key} ({rid}): run with the work dir once')
-        save(Image.open(kept), f'review-{key}', size=600)
+        im = Image.open(kept)
+        if key in REVIEW_TRIM:                                   # padded with a blur of itself: keep the photo's own part
+            x0, x1 = REVIEW_TRIM[key]; w = im.width
+            side = int(w * (x1 - x0)); im = im.crop((int(w * x0), 0, int(w * x0) + side, side))
+        save(im, f'review-{key}', size=600)
 
 
 def clip(key, src, poster, label, encode=True):
@@ -790,9 +839,11 @@ if __name__ == '__main__':
     # foundation does, live review 5)
     # the owner's three pairs (29 Oct 2026: one woman each, before and after, a fair, an olive and a medium-deep
     # tone): the sales page's before/after row, and the kitchen pair on the listicle's shade reason (the owner's ask)
-    for key, centering in (('kitchen', (0.5, 0.3)), ('car', (0.5, 0.3)), ('garden', (0.5, 0.3))):
-        split_pair(key, f'ba-{key}', src=OWNER / f'ba-{key}.webp', centering=centering)
+    # the garden after is shot from about twice as far: brought to the before's scale (live review 6)
+    for key, centering, z in (('kitchen', (0.5, 0.3), 1.0), ('car', (0.5, 0.3), 1.0), ('garden', (0.5, 0.3), 1.45)):
+        split_pair(key, f'ba-{key}', src=OWNER / f'ba-{key}.webp', centering=centering, zoom_after=z)
     portrait('age-255', 'reason-dry', crop=(0.2, 0.0, 0.8, 0.75))
+    portrait('age-200', 'promise', crop=(0.08, 0.0, 0.92, 0.84))     # the sales page's Tomorrow at 8 a.m. (the duo photo cut a face, live review 6)
     portrait('age-223', 'reason-ages', crop=(0.25, 0.0, 0.75, 0.5))
     one_shade()
     science_clip(encode='--no-video' not in sys.argv)

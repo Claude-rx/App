@@ -20,7 +20,9 @@ REGISTRY = 'Colorado Secretary of State'
 STREET, SUITE = '2525 Arapahoe Ave', 'Ste E4 Unit 1280'
 CITY, REGION, POSTCODE, COUNTRY = 'Boulder', 'CO', '80302', 'United States'
 AGENT = 'Global Accounting service inc'
-EMAIL = 'hello@skinofab.com'
+EMAIL = 'info@skinofab.com'                       # the owner, 29 Oct 2026: every customer-support contact
+PHONE = '+1 (563) 239-5520'
+PHONE_TEL = '+15632395520'                         # for tel: links
 WEBSITE = 'www.skinofab.com'
 UPDATED = 'October 23, 2026'                       # the legal pages' "last updated" after the change
 
@@ -38,7 +40,14 @@ RULES = [
     (r'West Hollywood,? CA 90069', f'{CITY}, {REGION} {POSTCODE}', True),
     (r'Skinofab LLC', LEGAL_NAME, False),
     (r'<span>© (\d{4}) Skinofab\.</span>', f'<span>© \\1 {LEGAL_NAME}. {BRAND} is a brand of {LEGAL_NAME}.</span>', True),
-    (r'(?:hey|info|contact)@skinofab\.com', EMAIL, True),
+    (r'(?:hey|hello|contact)@skinofab\.com', EMAIL, True),   # (hello@ until 29 Oct 2026)
+    # the support phone beside the support email (the owner, 29 Oct 2026): the footer on every page, the contact page's
+    # "Email us" card, the FAQ's how-to-reach-us answer (each once: the lookaheads keep a rebuild from adding it twice)
+    (r'(<a class="sf__email" href="mailto:[^"]+">[^<]+</a>)(?!<br/><a class="sf__email sf__phone")',
+     f'\\1<br/><a class="sf__email sf__phone" href="tel:{PHONE_TEL}">{PHONE}</a>', True),
+    (r'(<div class="cs-info__item">\s*<div class="cs-info__label">Email us</div>\s*<div class="cs-info__value"><a href="mailto:[^"]+">[^<]+</a></div>\s*</div>)(?!<div class="cs-info__item"><div class="cs-info__label">Call us)',
+     f'\\1<div class="cs-info__item"><div class="cs-info__label">Call us</div><div class="cs-info__value"><a href="tel:{PHONE_TEL}">{PHONE}</a></div></div>', True),
+    (r'(<a href="mailto:[^"]+">[^<]+</a>), or use the form on our', f'\\1, call <a href="tel:{PHONE_TEL}">{PHONE}</a>, or use the form on our', True),
     # the collaboration agreement: the company's own state and courts
     (r'laws of the State of Delaware', f'laws of the State of {STATE}', False),
     (r'courts located in Wilmington, Delaware', f'courts located in Boulder County, {STATE}', False),
@@ -48,6 +57,7 @@ RULES = [
 CONTACT_INFO = (f'<p><strong>Trade name:</strong> {BRAND}</p>'
                 f'<p><strong>Company:</strong> {LEGAL_NAME}, a {STATE} corporation ({REGISTRY}, company number {COMPANY_NUMBER})</p>'
                 f'<p><strong>Email:</strong> <a href="mailto:{EMAIL}">{EMAIL}</a></p>'
+                f'<p><strong>Phone:</strong> <a href="tel:{PHONE_TEL}">{PHONE}</a></p>'
                 f'<p><strong>Address:</strong> {LEGAL_NAME}, {ADDRESS_LINE}</p>'
                 f'<p><strong>Registered agent:</strong> {AGENT_LINE}</p>')
 
@@ -60,7 +70,7 @@ IMPRESSUM = ('<p><b>Angaben gemäß § 5 DDG</b></p>'
              + (f'<p><b>Vertreten durch:</b> {OFFICER}</p>' if OFFICER else '') +
              f'<p><b>Registereintrag:</b> {REGISTRY}, Company Number {COMPANY_NUMBER}</p>'
              f'<p><b>Registered Agent:</b> {AGENT_LINE.replace(COUNTRY, "USA")}</p>'
-             f'<p><b>Kontakt:</b><br>E-Mail: <a href="mailto:{EMAIL}">{EMAIL}</a><br>Webseite: {WEBSITE}</p>'
+             f'<p><b>Kontakt:</b><br>E-Mail: <a href="mailto:{EMAIL}">{EMAIL}</a><br>Telefon: <a href="tel:{PHONE_TEL}">{PHONE}</a><br>Webseite: {WEBSITE}</p>'
              '<p><b>Verbraucherstreitbeilegung:</b> Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren '
              'vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>')
 

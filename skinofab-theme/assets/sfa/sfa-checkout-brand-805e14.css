@@ -171,6 +171,9 @@
 .billing-form-collapsed { visibility: hidden; }
 /* where the page's own links land: a little air above */
 #sf-co-featured, #sf-co-pay, #sf-co-reviews { scroll-margin-top: 16px; }
+/* 44 px tap rows for the payment methods and the billing toggle (24 px and 21 px, live review 6) */
+.payment-method__label { min-height: 44px; display: flex; align-items: center; }
+label:has(> .checkbox__label), label:has(.checkbox__label) { min-height: 44px; display: flex; align-items: center; }
 /* on a phone and tablet the three reviews before the payment step are not repeated at the top of the wall */
 @media (max-width: 1199px) {
   .sf-co-reviews .sf-co-review:nth-child(-n+3) { display: none; }
