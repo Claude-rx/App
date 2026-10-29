@@ -245,12 +245,12 @@ usage:
     - { title: "Blend and watch", text: "Fingertips or a brush, outward. The white shifts toward your tone in about a minute." }
     - { title: "Tap more where you want it", text: "A second thin layer on a spot or redness. Skip powder on dry areas so lines stay soft." }
   demos_title: "See it on women like you"
-  demos_lede: "Four short clips of the foundation going on: the white dots, the blend, the finish. The first one has sound."
+  demos_lede: "Tap a clip to watch it. The first one has sound."
   demos:
-    - { key: "demo-navy", sound: true, caption: "The whole routine in a minute, from the white dots to the finish (60 s, with sound)." }
-    - { key: "demo-black", caption: "Pumped, dotted and buffed in with a brush." }
-    - { key: "demo-silver", caption: "Blended in with the fingertips." }
-    - { key: "demo-robe", caption: "Dotted on the cheeks and forehead, buffed in." }
+    - { key: "demo-navy", sound: true, chip: "The whole routine", caption: "The whole routine in a minute, from the white dots to the finish (60 s, with sound)" }
+    - { key: "demo-black", chip: "Pump, dot, buff", caption: "Pumped, dotted and buffed in with a brush" }
+    - { key: "demo-silver", chip: "Fingertips only", caption: "Blended in with the fingertips" }
+    - { key: "demo-robe", chip: "White dots, blended", caption: "Dotted on the cheeks and forehead, buffed in" }
   timeline:
     - { when: "Minute 1", text: "The white dots become your tone as you blend." }
     - { when: "Day 1", text: "The daylight test: look in the car mirror at noon. That’s the one that counts." }
@@ -579,19 +579,9 @@ closing:
       <p class="sf-eyebrow" style="text-align:center">{{ usage.eyebrow }}</p>
       <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ usage.title }}</h2>
       <ol class="sf-steps sf-steps--grid">{% for s in usage.steps %}<li><strong>{{ s.title }}</strong>{{ s.text }}</li>{% endfor %}</ol>
-      <h3 class="sf-h3" style="text-align:center;margin-top:28px">{{ usage.demos_title }}</h3>
-      <p style="text-align:center;max-width:640px;margin:6px auto 0">{{ usage.demos_lede }}</p>
-      <div class="sf-demos">
-        {% for d in usage.demos %}
-        <figure class="sf-demo{% if d.sound %} sf-demo--wide{% endif %}">
-          <video {% if d.sound %}data-sf-sound preload="none" controls{% else %}data-sf-lazy muted loop playsinline preload="none"{% endif %} poster="{{ 'images/sf/' | append: d.key | append: '-poster.jpg' | campaign_asset }}" width="540" height="960" aria-label="{{ d.caption }}">
-            <source src="{{ 'images/sf/' | append: d.key | append: '.webm' | campaign_asset }}" type="video/webm">
-            <source src="{{ 'images/sf/' | append: d.key | append: '.mp4' | campaign_asset }}" type="video/mp4">
-          </video>
-          <figcaption>{{ d.caption }}</figcaption>
-        </figure>
-        {% endfor %}
-      </div>
+      <h3 class="sf-h3 sf-vrow__title">{{ usage.demos_title }}</h3>
+      <p class="sf-vrow__lede">{{ usage.demos_lede }}</p>
+      {% campaign_include 'sf-vrow.html' items=usage.demos %}
       <ul class="sf-timeline">{% for t in usage.timeline %}<li><b>{{ t.when }}</b><span>{{ t.text }}</span></li>{% endfor %}</ul>
     </div>
   </section>

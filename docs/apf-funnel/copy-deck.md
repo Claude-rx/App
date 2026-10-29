@@ -158,23 +158,25 @@ Formulated in Korea. Fragrance-free. The full ingredient list is printed on the 
 
 Not because you chose badly. Most were made for a tone that holds still and skin that stays moist; after 45, neither is true.
 
-| | Adaptive Peptide Foundation | Regular liquid foundation | Other colour-changing foundations | Tinted moisturiser / CC cream |
+| What matters | SKINOFAB Adaptive Peptide Foundation | Regular foundation |
 
-|---|---|---|---|---|
+|---|---|---|
 
-| Choosing a shade | Nothing to choose: it adapts to your tone, with a 30-day money-back guarantee | A shade to pick, often from a screen | One shade, but some turn ashy or orange on the skin | A few shades to pick from |
+| Choosing a shade | ✓ Nothing to choose: it adapts to your tone | ✕ You guess a shade, often from a screen |
 
-| On dry, mature skin | A hydrating serum base | Matte and long-wear formulas can feel dry and crack | Depends on the base | Comfortable, with light coverage |
+| On dry, mature skin | ✓ A hydrating serum base | ✕ Matte formulas can feel dry and crack |
 
-| Fine lines | Designed not to settle: satin finish, soft-focus powders | Thicker formulas can settle into lines | Can settle as the day goes on | Sheer, so lines show through |
+| Fine lines | ✓ Designed not to settle: a satin finish | ✕ Thicker formulas can settle into lines |
 
-| Sun spots and redness | Buildable medium coverage | Covers, but can look heavy | Varies, often sheer on spots | Sheer: spots show through |
+| Sun spots and redness | ✓ Buildable medium coverage | – Covers, but can look heavy |
 
-| Skincare actives | PDRN, peptides, Pro-Xylane, hyaluronic acid | Varies by brand | Varies by brand | Some add vitamins |
+| Skincare inside | ✓ PDRN, peptides, Pro-Xylane, hyaluronic acid | – Varies by brand |
 
-| Fragrance | Fragrance-free | Check the label for parfum | Check the label for parfum | Check the label for parfum |
+| Fragrance | ✓ Fragrance-free | – Check the label for parfum |
 
-| If it’s the wrong match | 30 days to ask for a full refund, even opened | A new bottle in another shade | Terms vary by brand | A new bottle in another shade |
+| If it’s the wrong match | ✓ 30 days for a full refund, even opened | ✕ Buy another bottle in another shade |
+
+[IMAGE: images/sf/old-routine.jpg — the old routine: a woman in her late fifties at a vanity crowded with a primer, four foundations, concealers, powder, a contour palette and brushes, fed up]
 
 ## 10 · Explain Why Your Solution is Effective
 
@@ -272,15 +274,15 @@ One pump, one minute, fingertips. You look in the mirror and **your skin looks l
 
 #### See it on women like you
 
-Four short clips of the foundation going on: the white dots, the blend, the finish. The first one has sound.
+Tap a clip to watch it. The first one has sound.
 
-[VIDEO: images/sf/demo-navy.mp4 — The whole routine in a minute, from the white dots to the finish (60 s, with sound).]
+[VIDEO: images/sf/demo-navy.mp4 — The whole routine in a minute, from the white dots to the finish (60 s, with sound)]
 
-[VIDEO: images/sf/demo-black.mp4 — Pumped, dotted and buffed in with a brush.]
+[VIDEO: images/sf/demo-black.mp4 — Pumped, dotted and buffed in with a brush]
 
-[VIDEO: images/sf/demo-silver.mp4 — Blended in with the fingertips.]
+[VIDEO: images/sf/demo-silver.mp4 — Blended in with the fingertips]
 
-[VIDEO: images/sf/demo-robe.mp4 — Dotted on the cheeks and forehead, buffed in.]
+[VIDEO: images/sf/demo-robe.mp4 — Dotted on the cheeks and forehead, buffed in]
 
 - **Minute 1** The white dots become your tone as you blend.
 

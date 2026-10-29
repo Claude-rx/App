@@ -2,7 +2,7 @@
    offers). As the stick funnel's sf-funnel.js, for a one-time purchase:
    - videos marked data-sf-lazy play only while on screen (they load nothing until then), and not at all when the
      device asks for reduced motion (then they show their controls); a clip marked data-sf-sound keeps its controls
-     and never autoplays (it has a voice)
+     and never autoplays (it has a voice); the clip cards play on a tap
    - the sales page: the pack choice (every checkout link opens the checkout on that pack; the price, the saving, the
      button and the sticky bar follow it), the gallery thumbnails, and the sticky bar on phones once the buy button
      scrolls away */
@@ -34,6 +34,23 @@
         if (entries[0].isIntersecting) { v.preload = 'metadata'; obs.disconnect(); }
       }, { rootMargin: '300px 0px' }).observe(v);
     }
+  });
+
+  // the clip cards (_includes/sf-vrow.html): a tap plays the clip where it stands, one at a time; the one with a voice
+  // gets its controls and sound, a silent one pauses on a second tap
+  var cards = document.querySelectorAll('[data-sf-vcard]');
+  Array.prototype.forEach.call(cards, function (card) {
+    var v = card.querySelector('video'), btn = card.querySelector('.sf-vcard__play');
+    var sound = card.hasAttribute('data-sf-vcard-sound');
+    btn.addEventListener('click', function () {
+      Array.prototype.forEach.call(cards, function (o) { if (o !== card) { var ov = o.querySelector('video'); if (!ov.paused) ov.pause(); } });
+      if (sound) { v.controls = true; v.muted = false; }
+      card.classList.add('is-playing');
+      var p = v.play(); if (p && p.catch) p.catch(function () { card.classList.remove('is-playing'); });
+    });
+    if (!sound) v.addEventListener('click', function () { v.pause(); });
+    v.addEventListener('pause', function () { if (!sound || v.ended) card.classList.remove('is-playing'); });
+    v.addEventListener('ended', function () { card.classList.remove('is-playing'); });
   });
 
   var gallery = document.querySelector('[data-sf-gallery]');

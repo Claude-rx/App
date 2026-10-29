@@ -38,7 +38,7 @@
   <link rel="preload" as="image" href="{% endverbatim %}{{ 'sfa/sfa-wow-448847.jpg'|asset_url }}{% verbatim %}" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% endverbatim %}{{ 'sfa/sfa-sf-funnel-cac564.css'|asset_url }}{% verbatim %}">
-  <link rel="stylesheet" href="{% endverbatim %}{{ 'sfa/sfa-sf-apf-5d38e7.css'|asset_url }}{% verbatim %}">
+  <link rel="stylesheet" href="{% endverbatim %}{{ 'sfa/sfa-sf-apf-1bb519.css'|asset_url }}{% verbatim %}">
   
 
   
@@ -327,43 +327,39 @@
       <p class="sf-eyebrow" style="text-align:center">How to use it</p>
       <h2 class="sf-h2 sf-h2--big" style="text-align:center">Four steps. About a minute.</h2>
       <ol class="sf-steps sf-steps--grid"><li><strong>Moisturiser and sunscreen first</strong>Your usual moisturiser, then your daily sunscreen. No primer needed.</li><li><strong>One pump, five dots</strong>Forehead, cheeks, nose, chin. It looks white. That’s the point.</li><li><strong>Blend and watch</strong>Fingertips or a brush, outward. The white shifts toward your tone in about a minute.</li><li><strong>Tap more where you want it</strong>A second thin layer on a spot or redness. Skip powder on dry areas so lines stay soft.</li></ol>
-      <h3 class="sf-h3" style="text-align:center;margin-top:28px">See it on women like you</h3>
-      <p style="text-align:center;max-width:640px;margin:6px auto 0">Four short clips of the foundation going on: the white dots, the blend, the finish. The first one has sound.</p>
-      <div class="sf-demos">
-        
-        <figure class="sf-demo sf-demo--wide">
-          <video data-sf-sound preload="none" controls poster="{% endverbatim %}{{ 'sfa/sfa-demo-navy-poster-4b6b76.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="The whole routine in a minute, from the white dots to the finish (60 s, with sound).">
-            <source src="{% endverbatim %}{{ 'sfa/sfa-demo-navy-9b213f.webm'|asset_url }}{% verbatim %}" type="video/webm">
-            <source src="{% endverbatim %}{{ 'sfa/sfa-demo-navy-e818c4.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
-          </video>
-          <figcaption>The whole routine in a minute, from the white dots to the finish (60 s, with sound).</figcaption>
-        </figure>
-        
-        <figure class="sf-demo">
-          <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfa/sfa-demo-black-poster-1a80df.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="Pumped, dotted and buffed in with a brush.">
-            <source src="{% endverbatim %}{{ 'sfa/sfa-demo-black-dac517.webm'|asset_url }}{% verbatim %}" type="video/webm">
-            <source src="{% endverbatim %}{{ 'sfa/sfa-demo-black-3e3fdd.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
-          </video>
-          <figcaption>Pumped, dotted and buffed in with a brush.</figcaption>
-        </figure>
-        
-        <figure class="sf-demo">
-          <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfa/sfa-demo-silver-poster-535af7.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="Blended in with the fingertips.">
-            <source src="{% endverbatim %}{{ 'sfa/sfa-demo-silver-ca4658.webm'|asset_url }}{% verbatim %}" type="video/webm">
-            <source src="{% endverbatim %}{{ 'sfa/sfa-demo-silver-c7dfda.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
-          </video>
-          <figcaption>Blended in with the fingertips.</figcaption>
-        </figure>
-        
-        <figure class="sf-demo">
-          <video data-sf-lazy muted loop playsinline preload="none" poster="{% endverbatim %}{{ 'sfa/sfa-demo-robe-poster-6a6998.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="Dotted on the cheeks and forehead, buffed in.">
-            <source src="{% endverbatim %}{{ 'sfa/sfa-demo-robe-6a6cd3.webm'|asset_url }}{% verbatim %}" type="video/webm">
-            <source src="{% endverbatim %}{{ 'sfa/sfa-demo-robe-3118bf.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
-          </video>
-          <figcaption>Dotted on the cheeks and forehead, buffed in.</figcaption>
-        </figure>
-        
-      </div>
+      <h3 class="sf-h3 sf-vrow__title">See it on women like you</h3>
+      <p class="sf-vrow__lede">Tap a clip to watch it. The first one has sound.</p>
+      <div class="sf-vrow" role="list">
+  <figure class="sf-vcard" role="listitem" data-sf-vcard data-sf-vcard-sound>
+    <video preload="none" playsinline poster="{% endverbatim %}{{ 'sfa/sfa-demo-navy-poster-4b6b76.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="The whole routine in a minute, from the white dots to the finish (60 s, with sound)">
+      <source src="{% endverbatim %}{{ 'sfa/sfa-demo-navy-9b213f.webm'|asset_url }}{% verbatim %}" type="video/webm">
+      <source src="{% endverbatim %}{{ 'sfa/sfa-demo-navy-e818c4.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
+    </video>
+    <button type="button" class="sf-vcard__play" aria-label="Play: The whole routine in a minute, from the white dots to the finish (60 s, with sound)"><span class="sf-vcard__chip">The whole routine</span><span class="sf-vcard__btn" aria-hidden="true"></span></button>
+  </figure>
+  <figure class="sf-vcard" role="listitem" data-sf-vcard>
+    <video preload="none" playsinline muted loop poster="{% endverbatim %}{{ 'sfa/sfa-demo-black-poster-1a80df.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="Pumped, dotted and buffed in with a brush">
+      <source src="{% endverbatim %}{{ 'sfa/sfa-demo-black-dac517.webm'|asset_url }}{% verbatim %}" type="video/webm">
+      <source src="{% endverbatim %}{{ 'sfa/sfa-demo-black-3e3fdd.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
+    </video>
+    <button type="button" class="sf-vcard__play" aria-label="Play: Pumped, dotted and buffed in with a brush"><span class="sf-vcard__chip">Pump, dot, buff</span><span class="sf-vcard__btn" aria-hidden="true"></span></button>
+  </figure>
+  <figure class="sf-vcard" role="listitem" data-sf-vcard>
+    <video preload="none" playsinline muted loop poster="{% endverbatim %}{{ 'sfa/sfa-demo-silver-poster-535af7.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="Blended in with the fingertips">
+      <source src="{% endverbatim %}{{ 'sfa/sfa-demo-silver-ca4658.webm'|asset_url }}{% verbatim %}" type="video/webm">
+      <source src="{% endverbatim %}{{ 'sfa/sfa-demo-silver-c7dfda.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
+    </video>
+    <button type="button" class="sf-vcard__play" aria-label="Play: Blended in with the fingertips"><span class="sf-vcard__chip">Fingertips only</span><span class="sf-vcard__btn" aria-hidden="true"></span></button>
+  </figure>
+  <figure class="sf-vcard" role="listitem" data-sf-vcard>
+    <video preload="none" playsinline muted loop poster="{% endverbatim %}{{ 'sfa/sfa-demo-robe-poster-6a6998.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="Dotted on the cheeks and forehead, buffed in">
+      <source src="{% endverbatim %}{{ 'sfa/sfa-demo-robe-6a6cd3.webm'|asset_url }}{% verbatim %}" type="video/webm">
+      <source src="{% endverbatim %}{{ 'sfa/sfa-demo-robe-3118bf.mp4'|asset_url }}{% verbatim %}" type="video/mp4">
+    </video>
+    <button type="button" class="sf-vcard__play" aria-label="Play: Dotted on the cheeks and forehead, buffed in"><span class="sf-vcard__chip">White dots, blended</span><span class="sf-vcard__btn" aria-hidden="true"></span></button>
+  </figure>
+</div>
+
       <ul class="sf-timeline"><li><b>Minute 1</b><span>The white dots become your tone as you blend.</span></li><li><b>Day 1</b><span>The daylight test: look in the car mirror at noon. That’s the one that counts.</span></li><li><b>Week 1</b><span>You stop thinking about your shade. Most women use one pump; a bottle lasts about a month.</span></li><li><b>Day 30</b><span>Love it, or email us for a full refund. Even opened.</span></li></ul>
     </div>
   </section>
@@ -548,7 +544,7 @@
 </footer>
 
 
-  <script src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-6ea376.js'|asset_url }}{% verbatim %}" defer></script>
+  <script src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-2ba3ad.js'|asset_url }}{% verbatim %}" defer></script>
   
 </body>
 </html>

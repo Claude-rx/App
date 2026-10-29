@@ -10,6 +10,14 @@ preload_image_mobile: "images/sf/hero-m.jpg"   # a phone shows one woman, square
 styles:
   - css/sf-apf.css
 og_image: ""
+demos:
+  title: "See it on women like you"
+  lede: "Tap a clip to watch it. The first one has sound."
+  items:
+    - { key: "demo-navy", sound: true, chip: "The whole routine", caption: "The whole routine in a minute, from the white dots to the finish (60 s, with sound)" }
+    - { key: "demo-black", chip: "Pump, dot, buff", caption: "Pumped, dotted and buffed in with a brush" }
+    - { key: "demo-silver", chip: "Fingertips only", caption: "Blended in with the fingertips" }
+    - { key: "demo-robe", chip: "White dots, blended", caption: "Dotted on the cheeks and forehead, buffed in" }
 meta_tags:
   next-funnel: "SKINOFAB Adaptive Peptide Foundation"
   next-page-type: "product"
@@ -267,6 +275,12 @@ closing: "If you made it to the end, you deserve to love your skin at any age!"
   </aside>
   {% endif %}
   {% endfor %}
+
+  <section class="sf-demos-sec" id="see-it">
+    <h2 class="sf-h3 sf-vrow__title">{{ demos.title }}</h2>
+    <p class="sf-vrow__lede">{{ demos.lede }}</p>
+    {% campaign_include 'sf-vrow.html' items=demos.items %}
+  </section>
 
   <section class="sf-cta sf-cta--v2" id="offer">
     <figure class="sf-cta__media"><img src="{{ 'images/sf/offer.jpg' | campaign_asset }}" alt="{{ cta.image_alt }}" loading="lazy" decoding="async" width="1080" height="1080"></figure>
