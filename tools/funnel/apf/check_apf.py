@@ -407,13 +407,14 @@ for p in F.PAGES:
 
 
 # live review 9 ---------------------------------------------------------------------------------------------------------
-# no clinician in the pictures: a generated white-coat "clinic" portrait read as an invented medical endorsement (F2)
+# no clinician in the pictures: a generated white-coat "clinic" portrait read as an invented medical endorsement (F2;
+# the FrontrowMD "Clinicians’ Choice" badge is a real listing, the owner's)
 for p in F.PAGES:
     h = html(p['id'])
     for a in re.findall(r'<img[^>]*\balt="([^"]*)"', h):
-        if re.search(r'white[- ]coat|lab coat|\bclinic|\bdoctor|dermatologist|physician|\bnurse\b', a, re.I): fail(p['id'], f'an image of a clinician: alt "{a[:80]}"')
+        if re.search(r'white[- ]coat|lab coat|\bclinic\b|\bdoctor|dermatologist|physician|\bnurse\b', a, re.I): fail(p['id'], f'an image of a clinician: alt "{a[:80]}"')
     for src in re.findall(r'<(?:img|source|video)[^>]*\b(?:src|srcset|poster)="([^"]+)"', h):
-        if re.search(r'doctor|clinician|derm', src, re.I): fail(p['id'], f'a clinician image: {src}')
+        if re.search(r'doctor|derm', src, re.I): fail(p['id'], f'a clinician image: {src}')
 # a countdown that ends on the same item cheaper is a pressure trick: at 0:00 an offer whose decline is its downsell
 # goes past the downsell (data-sf-timer-to), and the page says the last-chance price goes too (F1)
 for p in F.PAGES:
@@ -428,7 +429,7 @@ for p in F.PAGES:
 for p in F.PAGES:
     if p['sdk'] != 'upsell': continue
     for m in re.finditer(r'data-(?:next-upsell-action|upsell-proxy)="skip"[^>]*>(.*?)</a>', html(p['id']), re.S):
-        label = text(m.group(1))
+        label = text(m.group(1)).strip()
         if label not in ('No thanks, continue', 'No thanks, show my order'): fail(p['id'], f'decline "{label}" is not a plain "No thanks, continue"')
 # the store's $37 refill is not a reason to buy here, and nothing is a "launch" price (F4)
 for p in F.PAGES:
@@ -446,6 +447,11 @@ if _on_pack and _sel != [_on_pack.group(1)]: fail('checkout', f'opens on {_sel},
 for pid in ('offer', 'checkout'):
     t = text(html(pid))
     if 'Key ingredients: Sodium Hyaluronate' not in t or 'subject=Full%20ingredient%20list' not in html(pid): fail(pid, 'no ingredient list (or no way to ask for the full one) before she orders')
+# a policy page opened from the funnel keeps ?from=offer on every legal or contact link, its link to itself included,
+# and switches off the rest of the store (F5)
+_base = (THEME / 'layouts' / 'base.html').read_text(encoding='utf-8')
+if "u.searchParams.set('from', 'offer')" not in _base or 'sf-off-link' not in _base: fail('theme', 'policy pages opened from the funnel do not keep ?from=offer on their links')
+if 'u.pathname === location.pathname' in _base: fail('theme', 'a policy page\'s link to itself drops ?from=offer (the full store comes back)')
 # the gate's order lines are not read aloud, and their empty state is not the SDK's "No items found in order" (F12)
 for p in F.PAGES:
     h = html(p['id'])
