@@ -219,6 +219,13 @@ if re.search(r'\.(?:addItem|clearCart|swapPackage)\(', _js): fail('offer', 'sf-f
 if 'trackAddToCart(' not in _js: fail('offer', 'sf-funnel.js does not report the checkout button as an add_to_cart')
 if not re.search(r'<meta name="next-analytics-view-item" content="\d+">', html('offer')): fail('offer', 'no next-analytics-view-item tag (no view_item for the ad pixels)')
 
+# the Axon adapter sends item_category_id only when it is a number (a text id gets the whole event a 400, live review 6)
+_axf = SITE / 'js' / 'axon.adapter.js'
+if _axf.exists():
+    _ax = _axf.read_text(encoding='utf-8')
+    if 'out.item_category_id = it.item_category' in _ax or 'Number(it.item_category)' not in _ax:
+        fail('all pages', 'axon.adapter.js sends the text item_category as item_category_id (Axon answers 400)')
+
 if problems:
     print(f'check_funnel: {len(problems)} problem(s)'); print('\n'.join('  ' + x for x in problems)); sys.exit(1)
 print(f'check_funnel: {len(F.PAGES)} pages, {len(cards)} checkout packs, 4 offers, theme templates and claims OK')

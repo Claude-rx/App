@@ -1,4 +1,6 @@
 /* GENERATED from _shared/analytics/js/axon.adapter.js — edit the source and run `npm run sync:shared`. Do not edit this copy. */
+/* SKINOFAB LOCAL PATCH (29 Oct 2026): mapItems() sends item_category_id only when numeric (Axon answered 400 to the
+   SDK's text category). tools/funnel/apf/check_apf.py and tools/funnel/check_funnel.py fail a build without it. */
 /**
  * axon.adapter.js — AppLovin Axon adapter for next-forwarder-core.js (Route C, no GTM).
  *
@@ -66,7 +68,10 @@
       if (it.quantity !== undefined && it.quantity !== null) out.quantity = it.quantity;
       if (it.item_brand) out.item_brand = it.item_brand;
       if (it.item_variant_id) out.item_variant_id = it.item_variant_id;
-      if (it.item_category) out.item_category_id = it.item_category; // Axon: item_category_id
+      // Axon: item_category_id is an integer id. The SDK's item_category is the campaign's name, which Axon rejects
+      // with HTTP 400 for the whole event (view_item, begin_checkout, purchase: live review 6, 29 Oct 2026), so it is
+      // sent only when it is a whole number. LOCAL PATCH over the generated copy: keep it when re-syncing.
+      if (it.item_category !== undefined && it.item_category !== null && /^\d+$/.test(String(it.item_category))) out.item_category_id = Number(it.item_category);
       if (it.item_image) out.image_url = it.item_image;               // Axon: image_url
       if (it.discount !== undefined && it.discount !== null && it.discount !== '') out.discount = it.discount;
       return out;

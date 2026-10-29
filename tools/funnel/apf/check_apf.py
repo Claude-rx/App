@@ -338,6 +338,12 @@ if not re.search(r'<meta name="next-analytics-view-item" content="\d+">', html('
 _css = (SITE / 'css' / 'sf-funnel.css').read_text(encoding='utf-8')
 if not re.search(r'\.sf-reason--wide \.sf-reason__media \{[^}]*position:\s*static', _css): fail('listicle', 'a wide reason\'s media is sticky: it slides over the text under it')
 
+# the Axon adapter sends item_category_id only when it is a number: the SDK's item_category is the campaign's name,
+# and Axon rejects the whole event with HTTP 400 for a text id (live review 6, 29 Oct 2026)
+_ax = (SITE / 'js' / 'axon.adapter.js').read_text(encoding='utf-8')
+if 'out.item_category_id = it.item_category' in _ax or 'Number(it.item_category)' not in _ax:
+    fail('all pages', 'axon.adapter.js sends the text item_category as item_category_id (Axon answers 400 to view_item, begin_checkout and purchase)')
+
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)
 print(f'check_apf: {len(F.PAGES)} pages ok')
