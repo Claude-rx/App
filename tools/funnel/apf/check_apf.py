@@ -332,6 +332,9 @@ _js = (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8')
 if re.search(r'\.(?:addItem|clearCart|swapPackage)\(', _js): fail('offer', 'sf-apf.js changes the cart (next.addItem/clearCart): the checkout would sell the pack twice')
 if 'trackAddToCart(' not in _js: fail('offer', 'sf-apf.js does not report the checkout button as an add_to_cart')
 if not re.search(r'<meta name="next-analytics-view-item" content="\d+">', html('offer')): fail('offer', 'no next-analytics-view-item tag (no view_item for the ad pixels)')
+_vi = re.search(r'<meta name="next-analytics-view-item" content="(\d+)">', html('offer'))
+_on = re.search(r'<label class="sf-pack is-on"[^>]*data-package="(\d+)"', html('offer'))
+if _vi and _on and _vi.group(1) != _on.group(1): fail('offer', f'view_item reports package {_vi.group(1)}, the page opens on package {_on.group(1)} (live 29 Oct: $57 reported for the $75 pack)')
 
 # a reason's photo or loop sticks beside its text only where the two stand side by side: a one-column (wide) reason's
 # media must scroll with the page, or the text under it slides beneath the stuck video (the owner, 29 Oct 2026)
