@@ -333,6 +333,11 @@ if re.search(r'\.(?:addItem|clearCart|swapPackage)\(', _js): fail('offer', 'sf-a
 if 'trackAddToCart(' not in _js: fail('offer', 'sf-apf.js does not report the checkout button as an add_to_cart')
 if not re.search(r'<meta name="next-analytics-view-item" content="\d+">', html('offer')): fail('offer', 'no next-analytics-view-item tag (no view_item for the ad pixels)')
 
+# a reason's photo or loop sticks beside its text only where the two stand side by side: a one-column (wide) reason's
+# media must scroll with the page, or the text under it slides beneath the stuck video (the owner, 29 Oct 2026)
+_css = (SITE / 'css' / 'sf-funnel.css').read_text(encoding='utf-8')
+if not re.search(r'\.sf-reason--wide \.sf-reason__media \{[^}]*position:\s*static', _css): fail('listicle', 'a wide reason\'s media is sticky: it slides over the text under it')
+
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)
 print(f'check_apf: {len(F.PAGES)} pages ok')

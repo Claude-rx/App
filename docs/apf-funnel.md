@@ -562,6 +562,14 @@ Lifecycle on this build (development render, as run 4): build recorded, polish R
 (the Axon lines the only gated difference), deploy recorded, browser QA `MVT575T3RRMFFAENF3TIHN9Q9V` ready_with_exceptions
 (the same two exceptions).
 
+**Owner's fixes, 29 Oct 2026 (after the CRO pass):** the listicle's first before/after is the owner's olive-skin
+kitchen pair (`ba-glow` retired); the how-it-works loop (`howto_loop()` in `images.py`) is cropped clear of its baked
+"Illustration" pill and its bottle label carries the PDRN line, as every other bottle on the funnel does; and a wide
+(one-column) reason's media no longer sticks: `position: sticky` stays only where the media stands beside its text
+(two columns), because in one column the stuck science and all-day loops slid over the text under them (the owner's
+screenshots of reasons 5 and 6). `check_apf.py` fails a build whose wide-reason media is sticky; the live probe at
+390/768/1024/1440 found no media over text on either listicle.
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the

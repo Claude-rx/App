@@ -21,7 +21,8 @@ approved):
 - the buyers' own photos (reviews/photos-approved.txt), square on the face;
 - the seven demo clips the homepage plays (brand/videos/gj-*, the old bottle replaced by the real one): the four
   with women 45+, at 540 px with a WebM copy, posters from the live page or a frame;
-- the store's how-it-works loop (brand/adaptive-peptide-foundation/howto/) and the stick funnel's brush loop
+- the store's how-it-works loop (brand/adaptive-peptide-foundation/howto/, its pill cropped away and its label's PDRN
+  line set, howto_loop()) and the stick funnel's brush loop
   (brand/stick-funnel/videos/up2-how.*);
 - the brush's own images (brand/lymphatic-brush/) and the stick funnel's guarantee seal.
 """
@@ -356,17 +357,49 @@ def doctor_photo():
     yy, xx = np.mgrid[0:y1 - y0, 0:x1 - x0]
     wgt = np.clip(np.minimum.reduce([xx, x1 - x0 - 1 - xx, yy, y1 - y0 - 1 - yy]).astype(np.float32) / 4.0, 0, 1)[..., None]
     a[y0:y1, x0:x1] = a[y0:y1, x0:x1] * (1 - wgt) + fill * wgt
-    im, K = Image.fromarray(a.clip(0, 255).astype(np.uint8)), 8
+    im = Image.fromarray(a.clip(0, 255).astype(np.uint8))
     for text, cx, cy, width, cap, tone in (('ADAPTIVE PEPTIDE', 342, 680.5, 62, 6.0, 236), ('FOUNDATION', 343, 688.5, 44, 6.0, 236),
                                            ('PDRN', 345.5, 706, 15, 4.6, 205), ('30 mL / 1.01 fl oz', 345, 725, 42, 5.0, 214)):
-        f = P.sans(int(round(cap / 0.70 * K)), 'Medium')                 # drawn 8x, condensed to the label's own width
-        l, tp, r, b = f.getbbox(text)
-        lay = Image.new('L', (r - l + 4 * K, b - tp + 4 * K), 0)
-        ImageDraw.Draw(lay).text((2 * K - l, 2 * K - tp), text, font=f, fill=255)
-        lay = lay.resize((int(width * K + 4 * K * width * K / (r - l)), lay.height), Image.LANCZOS)
-        small = lay.resize((max(1, round(lay.width / K)), max(1, round(lay.height / K))), Image.LANCZOS)
+        small = label_mask(text, width, cap)
         im.paste(Image.new('RGB', small.size, (tone,) * 3), (int(round(cx - small.width / 2)), int(round(cy - small.height / 2))), small)
     save(ImageOps.fit(im, (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), 'doctor', size=1350)
+
+
+def label_mask(text, width, cap, angle=0.0, weight='Medium', K=8):
+    """One line of the bottle label's small print as a mask: Montserrat (Medium) drawn 8x at cap px cap height, condensed
+    to width px (the label's own width for that line), turned angle degrees counter-clockwise, brought down to 1x."""
+    f = P.sans(int(round(cap / 0.70 * K)), weight)
+    l, tp, r, b = f.getbbox(text)
+    lay = Image.new('L', (r - l + 4 * K, b - tp + 4 * K), 0)
+    ImageDraw.Draw(lay).text((2 * K - l, 2 * K - tp), text, font=f, fill=255)
+    lay = lay.resize((int(width * K + 4 * K * width * K / (r - l)), lay.height), Image.LANCZOS)
+    if angle: lay = lay.rotate(angle, resample=Image.BICUBIC, expand=True)
+    return lay.resize((max(1, round(lay.width / K)), max(1, round(lay.height / K))), Image.LANCZOS)
+
+
+def howto_loop(encode=True):
+    """The store's how-it-works loop (white dots, blended, one shade; brand/adaptive-peptide-foundation/howto/, 864x1080)
+    and its poster, for the listicle. Its baked "Illustration" pill (bottom right, over her neck, 697..842 x 1022..1056)
+    is cut away: the frame is cropped to 812x1015 (8 px off the left, 44 off the right, 65 off the bottom, still 4:5) and
+    scaled back to 864x1080 (the owner's instruction, 28 Oct 2026: no disclaimer or illustration line on any image).
+    The bottle stands still in every frame, so its label gets the PDRN line the real label carries (as on the doctor's
+    and the solution bottle), set once in the label's tilt (7.6 deg), sizes and grey, between FOUNDATION and 30 mL."""
+    src = APF / 'howto'
+    poster = Image.open(src / 'howto-poster.jpg').convert('RGB')
+    assert poster.size == (864, 1080), 'howto-poster.jpg changed: measure the label and the pill again'
+    mask = label_mask('PDRN', 28, 6.4, angle=7.6, weight='SemiBold')   # a touch above the label's 0.77 cap, SemiBold: thinner, the encoded D read as an O
+    lay = Image.new('RGBA', poster.size, (0, 0, 0, 0))
+    lay.paste(Image.new('RGBA', mask.size, (205, 205, 207, 255)), (int(round(138.4 - mask.width / 2)), int(round(933.9 - mask.height / 2))), mask)
+    crop, size = (8, 0, 820, 1015), (864, 1080)
+    save(Image.alpha_composite(poster.convert('RGBA'), lay).convert('RGB').crop(crop).resize(size, Image.LANCZOS), 'howto-poster', size=864)
+    if not encode: return
+    tmp = _frames_dir('howto') / 'pdrn.png'
+    lay.save(tmp)
+    vf = f'[0:v][1:v]overlay=0:0,crop={crop[2] - crop[0]}:{crop[3] - crop[1]}:{crop[0]}:{crop[1]},scale={size[0]}:{size[1]}:flags=lanczos,format=yuv420p'
+    for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '24', '-movflags', '+faststart']),    # about the source's own size
+                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '35', '-b:v', '0', '-row-mt', '1'])):
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src / f'howto.{ext}'), '-i', str(tmp), '-filter_complex', vf, '-an', *args,
+                        str(OUT / f'howto.{ext}')], check=True)
 
 
 def portrait(src, out, size=1080, crop=None, centering=(0.5, 0.3)):
@@ -537,9 +570,8 @@ def copies(video=True):
         for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
                           ('webm', ['-c:v', 'libvpx-vp9', '-crf', '30', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):
             subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src_dir / f'up2-how.{ext}'), '-vf', box, '-an', *args, str(OUT / f'brush-how.{ext}')], check=True)
-    # the store's how-it-works loop (white dots, blended, the ingredients) and its poster
-    for f in ('howto.mp4', 'howto.webm'): shutil.copyfile(APF / 'howto' / f, OUT / f)
-    save(Image.open(APF / 'howto' / 'howto-poster.jpg'), 'howto-poster', size=864)
+    # the store's how-it-works loop (white dots, blended, one shade) and its poster: no pill, the label's PDRN line
+    howto_loop(encode=video)
     shutil.copyfile(ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'images' / 'sf' / 'guarantee.jpg', OUT / 'guarantee.jpg')
     # the thank-you page's range cards: the balm's and the serum's store cards
     save(Image.open(BRAND / 'pdrn-balm' / 'card.jpg'), 'more-balm', size=400)
