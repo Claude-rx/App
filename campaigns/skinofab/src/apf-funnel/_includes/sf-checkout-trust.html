@@ -17,7 +17,9 @@
 {%- endcomment -%}
 {%- if part == 'top' -%}
 <div class="sf-co-top">
+  {%- comment -%} the FrontrowMD "Clinicians' Choice" badge under the rating (the owner, 29 Oct 2026), when the page gives its count {%- endcomment -%}
   <p class="sf-co-rating"><span class="sf-co-tp" role="img" aria-label="Rated {{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
+  {% campaign_include 'sf-frontrow.html' count=frontrow_clinicians %}
 </div>
 {%- elsif part == 'badges' -%}
 <ul class="sf-co-badges" aria-label="What every order gets">

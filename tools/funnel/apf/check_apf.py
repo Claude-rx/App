@@ -172,7 +172,12 @@ if exit_code != OFFERS[PAGES['checkout']['exit_intent']['offer_ref_id']]['code']
 # the checkout sells on trust: the guarantee right above the order button, the review wall with each buyer's own photo,
 # and the ratings as the listicle and sales page give them, with where they are from
 g, btn = co.find('data-sf-guarantee-inline'), co.find('COMPLETE MY ORDER')
-if g < 0 or btn < 0 or g > btn: fail('checkout', 'no guarantee line right above the order button')
+# (the owner, 29 Oct 2026: the order button straight after the payment options, the guarantee line under it)
+pay = co.find('Step 4: Payment')
+if btn < 0 or pay < 0 or btn < pay: fail('checkout', 'no order button after the payment step')
+elif any(m in co[pay:btn] for m in ('data-sf-summary-box', 'data-sf-guarantee-inline', 'id="once-terms"')):
+    fail('checkout', 'something stands between the payment options and the order button')
+if g < 0 or g < btn: fail('checkout', 'no guarantee line under the order button')
 cards_r = re.findall(r'<article class="sf-co-review">(.*?)</article>', co, re.S)
 if len(cards_r) < 8: fail('checkout', f'{len(cards_r)} review cards, not at least 8')
 if any('<img ' not in c for c in cards_r): fail('checkout', 'a review card without its buyer\'s photo')
@@ -195,6 +200,28 @@ else:
         gifts_said(f'checkout pay line {bid}', pkgs[json.loads(items)[0]['packageId']]['product_sku'], terms.get(bid, ''))
     if co.count('data-sf-pay-terms=') < 2: fail('checkout', 'the pay line is not both above the express buttons and by the order button')
 if 'Nothing renews' not in co: fail('checkout', '"Nothing renews" missing by the order button')
+
+# the FrontrowMD "Clinicians' Choice" badge (the owner, 29 Oct 2026, as a badge with no link) on the sales page and the
+# checkout: its count is a floor of FrontrowMD's live count for the foundation's listing (product 4694, the store's
+# ccf_copy.FRONTROW_PRODUCT_ID), read here on every build; a build that cannot reach FrontrowMD says so and goes on
+FRONTROW_ID = 4694
+_said = {}
+for pid in ('offer', 'checkout'):
+    m = re.search(r'<strong>(\d+)\+? clinicians</strong> share this on <em>FrontrowMD</em> without compensation\.', html(pid))
+    if not m: fail(pid, 'no FrontrowMD "Clinicians\' Choice" badge with its count')
+    else: _said[pid] = int(m.group(1))
+if _said:
+    import urllib.request
+    try:
+        with urllib.request.urlopen(f'https://app.thefrontrowhealth.com/api/widgets?presentation_type=sticker&product_id={FRONTROW_ID}', timeout=15) as r:
+            _live = re.search(r'(\d[\d,]*)\s*(?:<[^>]*>\s*)*clinicians', r.read().decode('utf-8', 'replace'))
+        _n = int(_live.group(1).replace(',', '')) if _live else None
+        if _n is None: print('check_apf: FrontrowMD answered without a clinician count; the badge count was not checked')
+        else:
+            for pid, n in _said.items():
+                if n > _n: fail(pid, f'the badge says {n}+ clinicians, FrontrowMD counts {_n} now')
+    except Exception as e:
+        print(f'check_apf: FrontrowMD not reachable ({type(e).__name__}); the badge count was not checked')
 
 # sales page --------------------------------------------------------------------------------------------------------
 pp = html('offer')

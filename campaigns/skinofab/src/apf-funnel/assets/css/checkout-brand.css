@@ -16,7 +16,7 @@
   --brand--color--cta-primary: #151515;
   --brand--color--accent: #151515;
   --brand--color--complementary-1: #faf8f5;
-  --brand--color--rating-star: #151515;          /* boxed stars (.sf-co-tp) in the brand ink, not a review site's green (live review 7: no third-party badge look for our own reviews) */
+  --brand--color--rating-star: #00b67a;          /* boxed stars (.sf-co-tp) and the rating bars in green on white, the Trustpilot look (the owner, 29 Oct 2026); no review site's name or logo */
   --brand--color--pill-primary: #151515;
   --brand--color--pill-primary-surface: #f1ede7;
   --brand--color--pill-secondary: #151515;
@@ -233,3 +233,10 @@ body {
 /* the floating field labels ("Country", "Email"…) at a readable contrast: next-core's #b3b3b3 is about 2:1 on white
    (live review 7); the brand's soft grey is 5.3:1 */
 .label-checkout, .next-address-label { color: #6b6b6b !important; }
+
+/* the FrontrowMD "Clinicians' Choice" badge under the top rating (the owner, 29 Oct 2026), _includes/sf-frontrow.html */
+.sf-clin { display: flex; align-items: center; gap: 12px; max-width: 460px; margin: 10px auto 4px; padding: 8px 14px 8px 8px; background: #fff; border: 1px solid #e6e6e6; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.05); text-align: left; }
+.sf-clin img { width: 132px; height: auto; flex: none; }
+.sf-clin p { margin: 0 !important; font-size: 15px; line-height: 1.35; color: #151515; }
+.sf-clin strong { font-weight: 700; }
+@media (max-width: 400px) { .sf-clin img { width: 112px; } .sf-clin p { font-size: 14px; } }

@@ -95,7 +95,7 @@
     
     <link href="{% endverbatim %}{{ 'sfa/sfa-exit-intent-popup-e7738f.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-6c26c2.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-935167.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -152,8 +152,11 @@
               <div class="checkout-layout__form">
                 <div class="checkout__form-container">
                   <h1 class="sf-sr">Secure checkout: Adaptive Peptide Foundation</h1>
-                  <div class="sf-co-top">
-  <p class="sf-co-rating"><span class="sf-co-tp" role="img" aria-label="Rated 4.8 out of 5"><i></i><i></i><i></i><i></i><i class="part" style="--p:80%"></i></span> <span><strong>4.8 out of 5</strong> from <span class="hide-tablet-down">9,855 reviews</span><a class="hide-tablet-up" href="#sf-co-featured">9,855 reviews</a> of this foundation, at our earlier store</span></p>
+                  <div class="sf-co-top"><p class="sf-co-rating"><span class="sf-co-tp" role="img" aria-label="Rated 4.8 out of 5"><i></i><i></i><i></i><i></i><i class="part" style="--p:80%"></i></span> <span><strong>4.8 out of 5</strong> from <span class="hide-tablet-down">9,855 reviews</span><a class="hide-tablet-up" href="#sf-co-featured">9,855 reviews</a> of this foundation, at our earlier store</span></p>
+  <div class="sf-clin">
+  <img src="{% endverbatim %}{{ 'sfa/sfa-clinicians-choice-906046.jpg'|asset_url }}{% verbatim %}" alt="Clinicians’ Choice" width="173" height="96" loading="lazy" decoding="async">
+  <p><strong>700+ clinicians</strong> share this on <em>FrontrowMD</em> without compensation.</p>
+</div>
 </div>
                   <div class="checkout-form">
                     <form data-next-checkout="form" id="combo_form" method="post">
@@ -489,7 +492,39 @@
 
 </div>
 
+                            
+                            
+                            
+<div data-next-catalog-component="submit-block" class="submit-section">
+  <div class="submit-section__disclaimer">By placing your order you agree to our <a href="https://try.skinofab.com/terms-of-service/?from=offer" target="_blank" rel="noopener">Terms of Service</a> and our <a href="https://try.skinofab.com/privacy-policy/?from=offer" target="_blank" rel="noopener">Privacy Policy</a>.</div>
+  <div class="submit-section__button"><button os-checkout-payment="combo" data-action="submit" type="submit" class="submit-button">
+      <div data-pb-element="checkout-button-spinner" class="submit-button__loader">
+        <div class="three-quarter-spinner black"></div>
+      </div>
+      <div data-pb-element="checkout-button-info" class="submit-button__content">
+        <div class="submit-button__text">
+          <div data-i18n="complete_purchase" class="submit-button__main-text">COMPLETE MY ORDER →</div>
+        </div>
+        <div data-i18n="try_risk_free" class="submit-button__subtext">FREE SHIPPING · ONE-TIME PURCHASE · 30‑DAY GUARANTEE</div>
+      </div>
+    </button></div>
+</div>
+
+                            <ul class="sf-co-badges" aria-label="What every order gets">
+  <li><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.5c0 4.3-2.9 8-7 9.5-4.1-1.5-7-5.2-7-9.5V6l7-3z"/><path d="M8.8 12.2l2.2 2.2 4.3-4.5"/></svg>
+<strong>30-day money-back guarantee</strong></li>
+  <li><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5h11v9h-11z"/><path d="M13.5 9.5h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+<strong>Free tracked shipping</strong></li>
+  <li><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>
+<strong>One-time purchase</strong></li>
+  <li><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/></svg>
+<strong>Secure checkout</strong></li>
+</ul>
                           </div>
+                          <div class="sf-co-guarantee-line" data-sf-guarantee-inline>
+  <img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-50cdfb.jpg'|asset_url }}{% verbatim %}" alt="" width="64" height="64" loading="lazy" decoding="async">
+  <p><strong>30-Day Money-Back Guarantee.</strong> Not your match? Email us within 30 days of delivery for a full refund, even opened.</p>
+</div>
                           <div class="form-section form-section--last">
                             <div class="cart-box cart-box--card" data-sf-summary-box>
                               
@@ -668,37 +703,6 @@
                             </div>
                           </div>
                           <div class="sf-refill-terms" id="once-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{"apf-2":"2 bottles with a free Blender sponge and a free mystery gift","apf-3":"3 bottles with a free Lymphatic Brush, a free Blender sponge and a free mystery gift","apf-1":"1 bottle"}'><strong>One-time purchase.</strong> <strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$57.00</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "apf-2":"$57.00","apf-3":"$75.00","apf-1":"$39.00" }'>$57.00</span></strong>, charged once, for <span data-sf-renew>2 bottles with a free Blender sponge and a free mystery gift</span>.</p><p>A one-time purchase: nothing renews and nothing else is charged. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p></div>
-                          <div class="sf-co-guarantee-line" data-sf-guarantee-inline>
-  <img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-50cdfb.jpg'|asset_url }}{% verbatim %}" alt="" width="64" height="64" loading="lazy" decoding="async">
-  <p><strong>30-Day Money-Back Guarantee.</strong> Not your match? Email us within 30 days of delivery for a full refund, even opened.</p>
-</div>
-                          
-                          
-<div data-next-catalog-component="submit-block" class="submit-section">
-  <div class="submit-section__disclaimer">By placing your order you agree to our <a href="https://try.skinofab.com/terms-of-service/?from=offer" target="_blank" rel="noopener">Terms of Service</a> and our <a href="https://try.skinofab.com/privacy-policy/?from=offer" target="_blank" rel="noopener">Privacy Policy</a>.</div>
-  <div class="submit-section__button"><button os-checkout-payment="combo" data-action="submit" type="submit" class="submit-button">
-      <div data-pb-element="checkout-button-spinner" class="submit-button__loader">
-        <div class="three-quarter-spinner black"></div>
-      </div>
-      <div data-pb-element="checkout-button-info" class="submit-button__content">
-        <div class="submit-button__text">
-          <div data-i18n="complete_purchase" class="submit-button__main-text">COMPLETE MY ORDER →</div>
-        </div>
-        <div data-i18n="try_risk_free" class="submit-button__subtext">FREE SHIPPING · ONE-TIME PURCHASE · 30‑DAY GUARANTEE</div>
-      </div>
-    </button></div>
-</div>
-
-                          <ul class="sf-co-badges" aria-label="What every order gets">
-  <li><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.5c0 4.3-2.9 8-7 9.5-4.1-1.5-7-5.2-7-9.5V6l7-3z"/><path d="M8.8 12.2l2.2 2.2 4.3-4.5"/></svg>
-<strong>30-day money-back guarantee</strong></li>
-  <li><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5h11v9h-11z"/><path d="M13.5 9.5h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
-<strong>Free tracked shipping</strong></li>
-  <li><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>
-<strong>One-time purchase</strong></li>
-  <li><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/></svg>
-<strong>Secure checkout</strong></li>
-</ul>
                         </div>
                       </div>
                     </form>

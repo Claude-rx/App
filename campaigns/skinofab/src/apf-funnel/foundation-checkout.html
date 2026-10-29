@@ -1,5 +1,7 @@
 ---
 title: "Secure checkout | SKINOFAB Adaptive Peptide Foundation"
+# the FrontrowMD "Clinicians' Choice" badge under the rating (_includes/sf-frontrow.html): a floor of the live count
+frontrow_clinicians: "700+"
 page_type: checkout
 next_url: foundation-offer-1.html
 meta_tags:
@@ -224,7 +226,13 @@ exit_intent:
                             <p class="sf-pay-terms" data-sf-pay-terms='{{ pay_terms | json }}'>{{ pay_text }} Nothing renews.</p>
                             {% campaign_include 'express-checkout.html' show_title=false %}
                             {% campaign_include 'payment-methods.html' %}
+                            {% comment %} the order button straight after the payment options (the owner, 29 Oct 2026): the pay line above the
+                               express buttons already says what is charged; the guarantee, the one-time terms and the summary follow it {% endcomment %}
+                            {% capture disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
+                            {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · ONE-TIME PURCHASE · 30‑DAY GUARANTEE' disclaimer=disclaimer %}
+                            {% campaign_include 'sf-checkout-trust.html' part='badges' %}
                           </div>
+                          {% campaign_include 'sf-checkout-trust.html' part='inline' %}
                           <div class="form-section form-section--last">
                             <div class="cart-box cart-box--card" data-sf-summary-box>
                               {% comment %} the summary before the SDK has the campaign (an empty box with one line for 2+ s, live review 5): the chosen pack, free shipping and the total from the page's own prices; sf-checkout.js follows ?forceBundleId and an early tap, and hides it once the SDK's own summary is in {% endcomment %}
@@ -239,10 +247,6 @@ exit_intent:
                             </div>
                           </div>
                           <div class="sf-refill-terms" id="once-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{{ pay_terms | json }}'><strong>One-time purchase.</strong> {{ pay_text }}</p><p>{{ once_terms }}</p></div>
-                          {% campaign_include 'sf-checkout-trust.html' part='inline' %}
-                          {% capture disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
-                          {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · ONE-TIME PURCHASE · 30‑DAY GUARANTEE' disclaimer=disclaimer %}
-                          {% campaign_include 'sf-checkout-trust.html' part='badges' %}
                         </div>
                       </div>
                     </form>

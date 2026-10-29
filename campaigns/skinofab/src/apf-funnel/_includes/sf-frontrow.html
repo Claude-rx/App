@@ -1,0 +1,11 @@
+{%- comment -%} SKINOFAB: the FrontrowMD "Clinicians' Choice" badge, as a badge (the owner, 29 Oct 2026: "like the one we have" on the
+  store's foundation page, "no need to send to link just put as badge"). The listing is the foundation's on FrontrowMD
+  (product 4694, tools/persona/ccf_copy.py FRONTROW_PRODUCT_ID; the owner runs both brands, confirmed 22 Oct 2026).
+  `count` is a floor of FrontrowMD's live count ("700+" when it read 704): check_apf.py reads the live count and fails the
+  build if it falls below it. Nothing else of FrontrowMD's is restated, and nothing links out. {%- endcomment -%}
+{%- if count -%}
+<div class="sf-clin">
+  <img src="{{ 'images/sf/clinicians-choice.jpg' | campaign_asset }}" alt="Clinicians’ Choice" width="173" height="96" loading="lazy" decoding="async">
+  <p><strong>{{ count }} clinicians</strong> share this on <em>FrontrowMD</em> without compensation.</p>
+</div>
+{%- endif -%}

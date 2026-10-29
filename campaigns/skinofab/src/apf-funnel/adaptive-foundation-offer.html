@@ -25,6 +25,8 @@ meta_tags:
 # doctor, no countdown, every AI portrait labelled.
 offer_bar: "3 BOTTLES FOR $75 + a FREE Lymphatic Brush · Free shipping · 30-day money-back guarantee"
 offer_bar_short: "3 bottles for $75"
+# the FrontrowMD "Clinicians' Choice" badge under the hero (_includes/sf-frontrow.html): a floor of the live count
+frontrow_clinicians: "700+"
 hero:
   eyebrow: "For skin after 45"
   headline: "Even, fresh skin in about a minute. <em>No shade to guess.</em>"
@@ -370,7 +372,7 @@ closing:
     <div class="sf-hero2__copy">
       <span class="sf-hero2__eyebrow">{{ hero.eyebrow }}</span>
       <h1 id="s02-headline">{{ hero.headline }}</h1>
-      <p class="sf-hero2__rating"><span class="sf-stars__row" aria-hidden="true">★★★★<span class="sf-star--part"><span class="sf-star--part__base">★</span><span class="sf-star--part__fill">★</span></span></span> <a href="#s18-reviews">{{ hero.trust[0] }}</a></p>
+      <p class="sf-hero2__rating"><span class="sf-tp__stars sf-tp__stars--xs" aria-hidden="true">{% campaign_include 'sf-stars.html' n=4.8 %}</span> <a href="#s18-reviews">{{ hero.trust[0] }}</a></p>
       <p class="sf-hero2__sub">{{ hero.sub }}</p>
       <ul class="sf-hero2__bullets">{% for b in hero.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
       {% if hero.deal %}<p class="sf-hero2__deal">{{ hero.deal }}</p>{% endif %}
@@ -380,6 +382,7 @@ closing:
         <li>✓ {{ hero.trust[2] }}</li>
       </ul>
       <p class="sf-hero2__note">{{ hero.note }}</p>
+      {% campaign_include 'sf-frontrow.html' count=frontrow_clinicians %}
     </div>
   </section>
 
@@ -662,7 +665,7 @@ closing:
       <div class="sf-offerbox" id="s05-offer">
         <h2>{{ offer.title }}</h2>
         <p class="sf-offerbox__lead">{{ offer.lead }}</p>
-        <p class="sf-rating"><span class="sf-rating__stars" aria-hidden="true">★★★★★</span><span>4.8 out of 5 in <a href="#reviews">9,855 reviews</a> from our earlier store</span></p>
+        <p class="sf-rating"><span class="sf-tp__stars sf-tp__stars--xs" aria-hidden="true">{% campaign_include 'sf-stars.html' n=4.8 %}</span><span>4.8 out of 5 in <a href="#reviews">9,855 reviews</a> from our earlier store</span></p>
         <fieldset class="sf-packs" data-sf-packs>
           <legend>Your pack</legend>
           {% for p in packs %}

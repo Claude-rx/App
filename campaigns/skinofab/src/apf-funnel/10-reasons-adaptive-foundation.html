@@ -211,7 +211,7 @@ closing: "No shade to guess, and 30 days to decide."
     {% if r.ratings %}
     <figure class="sf-reason__media sf-ratings" aria-label="{{ ratings.average }} out of 5 from {{ ratings.count }} reviews">
       <p class="sf-ratings__avg">{{ ratings.average }}<small>/5</small></p>
-      <p class="sf-stars__row" aria-hidden="true">★★★★★</p>
+      <p class="sf-tp__stars sf-tp__stars--sm" aria-hidden="true">{% campaign_include 'sf-stars.html' n=4.8 %}</p>
       <p class="sf-ratings__count">{{ ratings.count }} reviews of this foundation</p>
       <ul class="sf-ratings__rows">{% for row in ratings.rows %}{% assign pct = row[1] | times: 100.0 | divided_by: ratings.total %}
         <li><span>{{ row[0] }} ★</span><i><b style="width:{{ pct | round: 1 }}%{% if row[1] == 0 %};min-width:0{% endif %}"></b></i><span>{{ row[1] }}</span></li>{% endfor %}

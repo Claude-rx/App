@@ -267,6 +267,21 @@ def pack_cards():
     save(ground(bottle(1080)), 'bottle', size=1080)
 
 
+def clinicians_badge():
+    """The "Clinicians' Choice" mark of the FrontrowMD badge on the sales page and checkout (the owner, 29 Oct 2026:
+    as a badge, no link): the words in a laurel, in ink on white, drawn at twice its 173 x 96 px display size; the
+    count beside it is page text (_includes/sf-frontrow.html), held to FrontrowMD's live count by check_apf.py."""
+    # the wreath drawn once and split: its left branch at the left edge, its right at the right, the words between
+    wreath = Image.new('RGB', (220, 192), PAPER); laurel(wreath, 110, 96, 70, INK)
+    im = Image.new('RGB', (346, 192), PAPER)
+    im.paste(wreath.crop((0, 0, 110, 192)), (0, 0)); im.paste(wreath.crop((110, 0, 220, 192)), (236, 0))
+    d = ImageDraw.Draw(im)
+    f = P.serif(36, 'Regular')
+    d.text((173, 90), 'Clinicians\u2019', font=f, fill=INK, anchor='ms')
+    d.text((173, 134), 'Choice', font=f, fill=INK, anchor='ms')
+    save(im, 'clinicians-choice', size=346)
+
+
 def ground(im, strength=1.0):
     """A natural shadow under a product on white (the owner, 28 Oct 2026: the packshots' shadows looked pasted on):
     a tight contact shadow along the base of whatever is not white and a wider, fainter pool under it, feathered
@@ -886,6 +901,7 @@ if __name__ == '__main__':
     portrait('age-200', 'promise', crop=(0.08, 0.0, 0.92, 0.84))     # the sales page's Tomorrow at 8 a.m. (the duo photo cut a face, live review 6)
     portrait('age-223', 'reason-ages', crop=(0.25, 0.0, 0.75, 0.5))
     one_shade()
+    clinicians_badge()
     science_clip(encode='--no-video' not in sys.argv)
     allday_clip(encode='--no-video' not in sys.argv)
     reviews(work)
