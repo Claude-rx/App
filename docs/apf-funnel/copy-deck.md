@@ -88,7 +88,7 @@ After 45 your tone shifts and your skin gets drier. The shade that matched at 40
 
 [TRUST: Free shipping; Ships in 1 business day; Secure checkout; 30-day money-back guarantee]
 
-Automatic Refills: your pack ships again at the same price until you cancel, 1 bottle every 28 days, 2 bottles every 56 days, 3 bottles every 84 days. We email you before every refill. To skip or cancel, just email info@skinofab.com: a person replies within one business day. No minimum, no fees. The free gifts come with your first order; refills are the bottles only.
+Automatic Refills: your pack ships again at the same price until you cancel, 1 bottle every 28 days, 2 bottles every 56 days, 3 bottles every 84 days. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only.
 
 ## 06 · State the Problem Clearly
 
@@ -224,9 +224,9 @@ The one thing a foundation does: it evens the look of skin tone and softens the 
 
 > “…blurs imperfections and cover redness, and it looks like skin, not something put on top!” — Gillian S., 65, verified buyer, from our earlier store (a buyer on redness)
 
-> “I’m 65 and my skin has uneven color. This product has evened out those places.” — Lora Z., 65, verified buyer, from our earlier store (a buyer on uneven color)
+> “I’m 65 and my skin has uneven color. This product has evened out those places. …” — Lora Z., 65, verified buyer, from our earlier store (a buyer on uneven color)
 
-> “…colour matches to my skin tone, doesn’t oxidise as the day goes on… I frequently get told how nice my skin looks.” — Judith L., verified buyer, from our earlier store (a buyer on her match)
+> “…colour matches to my skin tone, doesn’t oxidise as the day goes on… I frequently get told how nice my skin looks. …” — Judith L., verified buyer, from our earlier store (a buyer on her match)
 
 ## 12 · Proof Elements
 
@@ -236,7 +236,7 @@ The one thing a foundation does: it evens the look of skin tone and softens the 
 
 #### 4.8 out of 5
 
-9,855 reviews from our earlier store, word for word
+9,855 reviews from our earlier store, in the buyers’ own words
 
 #### The actives are on the label
 
@@ -250,7 +250,7 @@ A full refund, even opened. Nothing to send back.
 
 No clinical study, no medical claim: it’s a foundation, not a treatment.
 
-> “I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM.” — Tina C.
+> “I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. It doesn’t settle to lines at all.” — Tina C.
 
 > “…they turn orange as the day goes along. This by far is THE best!!!” — Hope H., 74
 
@@ -366,11 +366,11 @@ The free Lymphatic Brush is a launch gift. It comes free with the 3-bottle pack 
 
 [REVIEW: Michele W. | Verified buyer, from our earlier store | 5 | | I have rosacea and normally foundation flakes off so I have to put on multiple layers. I’ve used bare minerals, Clinique, I’l Makiage and Victoria Jackson makeup. This is by far the lightest feeling, no cakey look, full coverage I’ve had and it stays all day. Very pleased I purchased this and bought 2!! I’ll be using this one from now on. No break outs, no drying, no burning sensation. Really Happy | images/sf/review-michele.jpg | yes]
 
-[REVIEW: Sharon E., 54 | Verified buyer, from our earlier store | 4 | | It is a lovely product, the colour change is impressive. I was expecting a bit more coverage - but you can add more. It doesn’t appear to settle into my 54 year old lines & wrinkles like other products, which is a huge bonus. | images/sf/review-sharon.jpg | yes]
+[REVIEW: Sharon E., 54 | Verified buyer, from our earlier store | 4 | | It is a lovely product, the colour change is impressive. I was expecting a bit more coverage - but you can add more. It doesn’t appear to settle into my 54 year old lines & wrinkles like other products, which is a huge bonus. I’ve recently learned to stop using face powder, so that helps to stop the settling as well. My 19 year old tried it too, she is very pale skinned - with red acne - and it struggled to get to the right shade for her (not a surprise really). … | images/sf/review-sharon.jpg | yes]
 
-[REVIEW: Judith L. | Verified buyer, from our earlier store | 5 | | This make up does what it says, colour matches to my skin tone, doesn’t oxidise as the day goes on, feels light and moisturising, being older it it doesn’t settle in any lines. It blends nicely with the brush or the blender. I frequently get told how nice my skin looks. | images/sf/review-judith.jpg | yes]
+[REVIEW: Judith L. | Verified buyer, from our earlier store | 5 | | This make up does what it says, colour matches to my skin tone, doesn’t oxidise as the day goes on, feels light and moisturising, being older it it doesn’t settle in any lines. It blends nicely with the brush or the blender. I frequently get told how nice my skin looks. … | images/sf/review-judith.jpg | yes]
 
-> “At 56, I also am happy it doesn’t cake or settle in fine lines.” — Maria R., verified buyer
+> “… At 56, I also am happy it doesn’t cake or settle in fine lines. …” — Maria R., verified buyer
 
 > “Easy application and covers well. Looks good on my 81 year old face!” — Vicki M., verified buyer
 
@@ -378,9 +378,9 @@ The free Lymphatic Brush is a launch gift. It comes free with the 3-bottle pack 
 
 > “Love that it doesn’t go in my wrinkles !!” — Dotty H., verified buyer
 
-> “Love this lightweight creamy foundation that keeps my face moist!” — Barbara A., verified buyer
+> “Love this lightweight creamy foundation that keeps my face moist! …” — Barbara A., verified buyer
 
-*Ratings and reviews of the Adaptive Peptide Foundation, imported from our earlier store in October 2026. None is edited; names are shown as first name and initial.*
+*Ratings and reviews of the Adaptive Peptide Foundation, imported from our earlier store in October 2026. None is reworded; “…” marks where a long one is shortened; names are shown as first name and initial.*
 
 ## 19 · Address FAQs
 
@@ -406,13 +406,17 @@ One pump gives an even, natural, medium coverage that softens sun spots and redn
 
 It is fragrance-free and made without propylene glycol, drying alcohol or parabens, the usual reasons thinner skin stings. As with anything new, try it on your jawline first. It contains salmon-derived DNA (PDRN): not for anyone with a fish allergy.
 
+**Q: What’s in it? Can I see the full ingredient list?**
+
+Key ingredients: Sodium Hyaluronate, Sodium Hyaluronate Crosspolymer, Ceramide NP, Squalane, Panthenol, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Sodium DNA (PDRN, from salmon), Hydroxypropyl Tetrahydropyrantriol (Pro-Xylane), Niacinamide, Adenosine, Silica, Boron Nitride, Mica, Iron Oxides. Fragrance-free, with no propylene glycol, drying alcohol or parabens. It contains salmon-derived PDRN, so it is not for anyone with a fish allergy. The full ingredient list is printed on the box. To check it before you order, email <a href="mailto:info@skinofab.com?subject=Full%20ingredient%20list%2C%20Adaptive%20Peptide%20Foundation">info@skinofab.com</a> and we’ll send it to you.
+
 **Q: Does it have SPF?**
 
 No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation is made to layer on top without pilling.
 
 **Q: Is this a subscription?**
 
-Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($39), 2 bottles every 56 days ($57), 3 bottles every 84 days ($75). We email you before every refill. To skip or cancel, just email <a href="mailto:info@skinofab.com">info@skinofab.com</a>: a person replies within one business day. No minimum, no fees. The free gifts come with your first order; refills are the bottles only.
+Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($39), 2 bottles every 56 days ($57), 3 bottles every 84 days ($75). We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only.
 
 **Q: How long does a bottle last?**
 

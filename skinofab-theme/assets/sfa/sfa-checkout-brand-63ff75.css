@@ -266,3 +266,18 @@ input.next-address-control:not(:placeholder-shown), select.next-address-control:
 .cart-item__frequency { color: #5a5a5a; }
 /* the email and phone in the terms and the failsafe line: 44 px to tap without moving the text (114 x 20, live review 8) */
 .sf-refill-terms a[href^="tel:"], .sf-refill-terms a[href^="mailto:"], .sf-co-faq a[href^="mailto:"] { display: inline-block; padding: 12px 2px; margin: -12px -2px; }
+/* motion (live review 9): the offers' accept buttons pulse three times, not forever, and with "reduce motion" nothing on the
+   checkout, the offers or the thank-you page moves (the pulse, the loading shimmer, the SDK's spinners) */
+[pb-animate="pulse-upsell"] { animation-iteration-count: 3 !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+/* live review 9: the summary's discount rows read at 7:1 (they were #969696, 2.96:1); the quantity in the badge at 12 px
+   (next-core sets .6rem below 480 px); the "Hide/Show Order Summary" toggle 44 px tall */
+.order-totals__discount-list .text-muted, .order-totals__discount-list .order-totals__label, .order-totals__discount-list .order-totals__value { color: #4f4f4f !important; }
+.cart-item__quantity-badge .cart-item__quantity, .cart-item__quantity { font-size: 12px !important; }
+.order-summary__accordion-trigger { min-height: 44px; display: flex; align-items: center; }
+/* the loading shimmer slides with transform, not left: next-core's left animation counted as ~100 layout shifts in 4 s on
+   the offers (live review 9, CLS 0.4-0.8 throttled). Same path: -55% to 100% of the box is 282% of the 55%-wide sweep. */
+@keyframes sf-await-sweep { from { transform: translateX(0); } to { transform: translateX(282%); } }
+html:not(.next-display-ready) [data-next-await]::after { left: -55% !important; animation: sf-await-sweep .95s linear infinite !important; will-change: transform; }

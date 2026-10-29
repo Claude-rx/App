@@ -292,3 +292,7 @@ body.sf { margin: 0; background: var(--paper); color: var(--text); font: 400 17p
 a[href^="mailto:"]:not(.sf-btn) { display: inline-block; padding: 10px 0; margin: -10px 0; }
 /* 44 px tap targets on a phone: the footer's links measured 41-43 px (live review 5) */
 .sf-footer__links a, .sf-footer a[href^="mailto:"], .sf-footer a[href^="tel:"] { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 6px; }   /* the phone too (114 x 20, live review 8) */
+/* with "reduce motion", nothing on the listicle or the sales page animates either (live review 9) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}

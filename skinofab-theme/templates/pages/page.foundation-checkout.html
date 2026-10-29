@@ -97,7 +97,7 @@
     
     <link href="{% endverbatim %}{{ 'sfa/sfa-exit-intent-popup-5692da.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-a64111.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-63ff75.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -169,7 +169,31 @@
                             
 <div data-next-catalog-component="bundle-selector" data-component="bundle-selector" data-next-bundle-selector data-next-selector-id="main" data-next-selection-mode="swap" data-next-include-shipping="true" class="os-option">
   <div class="bundle-cards">
-    <div data-next-bundle-card data-next-bundle-id="apf-2" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":2,"quantity":1}]' data-next-selected="true" role="button" class="bundle-card next-selected">
+    <div data-next-bundle-card data-next-bundle-id="apf-1" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":1,"quantity":1}]' role="button" class="bundle-card">
+  <div class="bundle-card__badges">
+    
+    <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
+    <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>EXTRA {discount.percentage} OFF</span></template></div>
+  </div>
+  <div class="bundle-card__main" data-next-package-id="1">
+    <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
+    <img src="{% endverbatim %}{{ 'sfa/sfa-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image">
+    <div class="bundle-card__copy">
+      <div class="bundle-card__title"><span data-next-display="package.name">Adaptive Peptide Foundation - 1 bottle</span></div>
+      <div class="bundle-card__subtitle">Then $39 every 28 days. Free shipping</div>
+    </div>
+    <div class="bundle-card__price">
+      <div class="bundle-card__price-row">
+        <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
+        <span data-next-bundle-display="price" class="bundle-card__price-total">$39.00</span>
+      </div>
+      <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>
+    </div>
+  </div>
+</div>
+
+
+    <div data-next-bundle-card data-next-bundle-id="apf-2" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":2,"quantity":1}]' role="button" class="bundle-card">
   <div class="bundle-card__badges">
     <div class="bundle-card__badge bundle-card__badge--deal">2 months’ supply</div>
     <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
@@ -193,7 +217,7 @@
 </div>
 
 
-    <div data-next-bundle-card data-next-bundle-id="apf-3" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":3,"quantity":1}]' role="button" class="bundle-card">
+    <div data-next-bundle-card data-next-bundle-id="apf-3" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":3,"quantity":1}]' data-next-selected="true" role="button" class="bundle-card next-selected">
   <div class="bundle-card__badges">
     <div class="bundle-card__badge bundle-card__badge--popular">Best value</div>
     <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
@@ -210,30 +234,6 @@
       <div class="bundle-card__price-row">
         <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
         <span data-next-bundle-display="price" class="bundle-card__price-total">$75.00</span>
-      </div>
-      <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>
-    </div>
-  </div>
-</div>
-
-
-    <div data-next-bundle-card data-next-bundle-id="apf-1" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":1,"quantity":1}]' role="button" class="bundle-card">
-  <div class="bundle-card__badges">
-    
-    <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
-    <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>EXTRA {discount.percentage} OFF</span></template></div>
-  </div>
-  <div class="bundle-card__main" data-next-package-id="1">
-    <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
-    <img src="{% endverbatim %}{{ 'sfa/sfa-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image">
-    <div class="bundle-card__copy">
-      <div class="bundle-card__title"><span data-next-display="package.name">Adaptive Peptide Foundation - 1 bottle</span></div>
-      <div class="bundle-card__subtitle">Then $39 every 28 days. Free shipping</div>
-    </div>
-    <div class="bundle-card__price">
-      <div class="bundle-card__price-row">
-        <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
-        <span data-next-bundle-display="price" class="bundle-card__price-total">$39.00</span>
       </div>
       <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>
     </div>
@@ -285,7 +285,7 @@
                               <div class="form-section__subtitle">All transactions are secure and encrypted.</div>
                             </div>
                             
-                            <p class="sf-pay-terms" data-sf-pay-terms='{"apf-2":"$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)","apf-3":"$75.00 every 84 days for 3 bottles (your free Lymphatic Brush, Blender sponge and mystery gift come with this first order)","apf-1":"$39.00 every 28 days for 1 bottle"}'><strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$57.00</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "apf-2":"$57.00","apf-3":"$75.00","apf-1":"$39.00" }'>$57.00</span> today</strong>, then <span data-sf-renew>$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)</span>, until you cancel.</p>
+                            <p class="sf-pay-terms" data-sf-pay-terms='{"apf-2":"$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)","apf-3":"$75.00 every 84 days for 3 bottles (your free Lymphatic Brush, Blender sponge and mystery gift come with this first order)","apf-1":"$39.00 every 28 days for 1 bottle"}'><strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$57.00</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "apf-1":"$39.00","apf-2":"$57.00","apf-3":"$75.00" }'>$57.00</span> today</strong>, then <span data-sf-renew>$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)</span>, until you cancel. <span class="sf-pay-agree">Paying with PayPal, Apple Pay or the order button below means you agree to these Automatic Refills.</span></p>
                             
 <div data-next-catalog-component="express-checkout" data-next-express-checkout="container" class="exp-checkout">
   
@@ -531,11 +531,11 @@
                             <div class="cart-box cart-box--card" data-sf-summary-box>
                               
                               
-                              <div class="sf-co-sumfb" aria-hidden="true" data-sf-sumfb='{ "apf-2":{"name":"Adaptive Peptide Foundation - 2 bottles + free gifts","price":"$57.00","image":"{% endverbatim %}{{ 'sfa/sfa-pack-2-b2d817.jpg'|asset_url }}{% verbatim %}"},"apf-3":{"name":"Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush","price":"$75.00","image":"{% endverbatim %}{{ 'sfa/sfa-pack-3-15156b.jpg'|asset_url }}{% verbatim %}"},"apf-1":{"name":"Adaptive Peptide Foundation - 1 bottle","price":"$39.00","image":"{% endverbatim %}{{ 'sfa/sfa-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}"} }'>
+                              <div class="sf-co-sumfb" aria-hidden="true" data-sf-sumfb='{ "apf-1":{"name":"Adaptive Peptide Foundation - 1 bottle","price":"$39.00","image":"{% endverbatim %}{{ 'sfa/sfa-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}"},"apf-2":{"name":"Adaptive Peptide Foundation - 2 bottles + free gifts","price":"$57.00","image":"{% endverbatim %}{{ 'sfa/sfa-pack-2-b2d817.jpg'|asset_url }}{% verbatim %}"},"apf-3":{"name":"Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush","price":"$75.00","image":"{% endverbatim %}{{ 'sfa/sfa-pack-3-15156b.jpg'|asset_url }}{% verbatim %}"} }'>
                                 <p class="sf-co-sumfb__title">Order summary</p>
-                                <div class="sf-co-sumfb__line"><img src="{% endverbatim %}{{ 'sfa/sfa-pack-2-b2d817.jpg'|asset_url }}{% verbatim %}" alt="" width="56" height="56" data-sf-sumfb-img><span data-sf-sumfb-name>Adaptive Peptide Foundation - 2 bottles + free gifts</span><strong data-sf-sumfb-price>$57.00</strong></div>
+                                <div class="sf-co-sumfb__line"><img src="{% endverbatim %}{{ 'sfa/sfa-pack-3-15156b.jpg'|asset_url }}{% verbatim %}" alt="" width="56" height="56" data-sf-sumfb-img><span data-sf-sumfb-name>Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush</span><strong data-sf-sumfb-price>$75.00</strong></div>
                                 <div class="sf-co-sumfb__row"><span>Shipping</span><span>Free</span></div>
-                                <div class="sf-co-sumfb__row sf-co-sumfb__total"><span>Total today</span><strong data-sf-sumfb-total>$57.00</strong></div>
+                                <div class="sf-co-sumfb__row sf-co-sumfb__total"><span>Total today</span><strong data-sf-sumfb-total>$75.00</strong></div>
                               </div>
                               
 <div data-next-catalog-component="order-summary" data-initial-state="open" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary__accordion">
@@ -705,7 +705,7 @@
 
                             </div>
                           </div>
-                          <div class="sf-refill-terms" id="refill-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{"apf-2":"$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)","apf-3":"$75.00 every 84 days for 3 bottles (your free Lymphatic Brush, Blender sponge and mystery gift come with this first order)","apf-1":"$39.00 every 28 days for 1 bottle"}'><strong>Automatic Refills.</strong> <strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$57.00</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "apf-2":"$57.00","apf-3":"$75.00","apf-1":"$39.00" }'>$57.00</span> today</strong>, then <span data-sf-renew>$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)</span>, until you cancel.</p><p>Your pack ships again at the same price until you cancel. We email you before every refill. To skip or cancel, just email <a href="mailto:info@skinofab.com">info@skinofab.com</a>: no minimum, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p></div>
+                          <div class="sf-refill-terms" id="refill-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{"apf-2":"$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)","apf-3":"$75.00 every 84 days for 3 bottles (your free Lymphatic Brush, Blender sponge and mystery gift come with this first order)","apf-1":"$39.00 every 28 days for 1 bottle"}'><strong>Automatic Refills.</strong> <strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$57.00</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "apf-1":"$39.00","apf-2":"$57.00","apf-3":"$75.00" }'>$57.00</span> today</strong>, then <span data-sf-renew>$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)</span>, until you cancel.</p><p>Your pack ships again at the same price until you cancel. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p></div>
                         </div>
                       </div>
                     </form>
@@ -768,7 +768,7 @@
       <li><span>2 ★</span><i><b style="width:0.01%"></b></i><span>1</span></li>
       <li><span>1 ★</span><i><b style="width:0.03%"></b></i><span>3</span></li>
     </ul>
-    <p class="sf-co-ratings__of">Ratings and reviews of the Adaptive Peptide Foundation from our earlier store, imported in October 2026, none edited.</p>
+    <p class="sf-co-ratings__of">Ratings and reviews of the Adaptive Peptide Foundation from our earlier store, imported in October 2026, none reworded.</p>
   </div>
 
   <h2 class="sf-co-reviews__title">What buyers of this foundation say</h2>
@@ -877,11 +877,11 @@
   <div class="sf-co-card sf-co-faq">
     <h2>Before you order</h2>
     <details open><summary>What if it isn’t my shade?</summary><p>It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href="mailto:info@skinofab.com">info@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back.</p></details>
-    <details><summary>Is this a subscription?</summary><p>Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($39), 2 bottles every 56 days ($57), 3 bottles every 84 days ($75). We email you before every refill. To skip or cancel, just email <a href="mailto:info@skinofab.com">info@skinofab.com</a>: a person replies within one business day. No minimum, no fees. The free gifts come with your first order; refills are the bottles only.</p></details>
+    <details><summary>Is this a subscription?</summary><p>Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($39), 2 bottles every 56 days ($57), 3 bottles every 84 days ($75). We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only.</p></details>
     <details><summary>When does it ship?</summary><p>Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days in the US, 6–9 to Europe, the UK, Canada, Australia and New Zealand, 8–12 elsewhere.</p></details>
     <details><summary>Are these reviews of this foundation?</summary><p>Yes. They are the published reviews of the Adaptive Peptide Foundation from our earlier store, imported in October 2026 word for word, with the buyers’ own photos.</p></details>
     <details><summary>Is my payment secure?</summary><p>Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal, Apple Pay, Klarna or Link.</p></details>
-    <details><summary>Anything I should know before I order?</summary><p>The formula contains salmon-derived PDRN, so it is not for anyone with a fish allergy. If your skin is very reactive, try it on your jawline first. The full ingredient list is printed on the box.</p></details>
+    <details><summary>Anything I should know before I order?</summary><p>The formula contains salmon-derived PDRN, so it is not for anyone with a fish allergy. If your skin is very reactive, try it on your jawline first. Key ingredients: Sodium Hyaluronate, Sodium Hyaluronate Crosspolymer, Ceramide NP, Squalane, Panthenol, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Sodium DNA (PDRN, from salmon), Hydroxypropyl Tetrahydropyrantriol (Pro-Xylane), Niacinamide, Adenosine, Silica, Boron Nitride, Mica, Iron Oxides. Fragrance-free. The full ingredient list is printed on the box. To check it before you order, email <a href="mailto:info@skinofab.com?subject=Full%20ingredient%20list%2C%20Adaptive%20Peptide%20Foundation">info@skinofab.com</a> and we’ll send it to you.</p></details>
     <p class="sf-co-faq__contact">Still unsure? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p>
   </div><a class="sf-co-back hide-tablet-up" href="#sf-co-pay">Back to my order</a>
 </section>
@@ -955,7 +955,7 @@
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-checkout-3fa1e4.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-checkout-f7ea7e.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-checkout-3ba5b9.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-failsafe-396ae4.js'|asset_url }}{% verbatim %}"></script>
     

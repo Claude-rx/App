@@ -71,7 +71,7 @@ upsell_offer:
   accept_text: "Yes, add the brush for"
   accept_show_price: true
   cta_note: "{price} today, charged once to the payment you just used. This one doesn’t renew, and it ships in the same box. Backed by our 30-day money-back guarantee."
-  decline_text: "No thanks, I’ll pass on the brush"
+  decline_text: "No thanks, show my order"
   closing_title: "Add the Lymphatic Brush for {price} today?"
   image: "images/sf/brush-in-hand.jpg"
   fallback_price: "$9.00"
@@ -107,8 +107,8 @@ closing_cta:
   note: "Backed by our 30-day money-back guarantee. The clock above is the offer’s: at 0:00 this page moves on."
   image: "images/sf/brush-in-hand.jpg"
 ---
-{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them) {% endcomment %}
-<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
+{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them; the items list's empty state is a blank span, not the SDK's "No items found in order") {% endcomment %}
+<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div aria-hidden="true" data-next-order-items data-item-template-id="sf-gate-items" data-empty-template="&lt;span&gt;&lt;/span&gt;"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper sf-brush-page">

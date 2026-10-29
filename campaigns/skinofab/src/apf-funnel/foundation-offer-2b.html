@@ -60,7 +60,7 @@ upsell_offer:
   accept_text: "Yes, add one more bottle for"
   accept_show_price: true
   cta_note: "{price} today, charged once to the payment you just used. This one doesn’t renew, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy."
-  decline_text: "No thanks, not even at this price"
+  decline_text: "No thanks, continue"
   closing_title: "Add one more bottle for {price} today?"
   image: "images/sf/g-hold.jpg"
   fallback_price: "$19.00"
@@ -93,7 +93,7 @@ upsell_body:
     title: "Why we make this offer"
     text: "A second bottle in the same box costs us little to ship, and it keeps you from running out of the shade that finally works."
     items:
-      - { title: "51% off, same bottle", text: "The same 30 mL airless pump, the same serum, $19.00 instead of the sales page price of $39 ($47 bought once in our store, $37 with refills)." }
+      - { title: "51% off, same bottle", text: "The same 30 mL airless pump, the same serum, $19.00 instead of the sales page price of $39 ($47 bought once in our store)." }
       - { title: "Charged once", text: "To the payment you just used. This bottle doesn’t renew, and nothing else is charged." }
       - { title: "The same guarantee", text: "30 days from delivery, a full refund even opened, on this bottle too." }
 closing_cta:
@@ -102,8 +102,8 @@ closing_cta:
   note: "Contains salmon-derived PDRN: not for anyone with a fish allergy. Backed by our 30-day money-back guarantee. The clock above is the offer’s: at 0:00 this page moves on."
   image: "images/sf/bottle.jpg"
 ---
-{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them) {% endcomment %}
-<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
+{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them; the items list's empty state is a blank span, not the SDK's "No items found in order") {% endcomment %}
+<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div aria-hidden="true" data-next-order-items data-item-template-id="sf-gate-items" data-empty-template="&lt;span&gt;&lt;/span&gt;"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">

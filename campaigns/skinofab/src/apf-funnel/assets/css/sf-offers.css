@@ -173,3 +173,13 @@
 /* the brush loop's steps as text under it (live review 7) */
 .upsell-video__steps { margin: 12px 0 0; padding: 0 0 0 22px; display: grid; gap: 6px; font-size: 15px; line-height: 1.4; color: #3b3b3b; text-align: left; }
 .upsell-video__steps li::marker { font-weight: 700; color: #151515; }
+
+/* The offer's words, pictures and prices need no order, so they show at the first paint: the prices are the landed ones
+   (the SDK only confirms them). Its buttons wait for the SDK, which binds them, and stay dimmed and untappable until
+   then. The whole offer used to sit behind the loading skeleton until the order loaded: ~9 s to the largest paint on
+   throttled 4G (live review 9, F11). */
+html:not(.next-display-ready) .upsell-wrapper[data-next-await]::before,
+html:not(.next-display-ready) .upsell-wrapper[data-next-await]::after { display: none !important; }
+.upsell-wrapper[data-next-await] * { opacity: 1; }
+html:not(.next-display-ready) .upsell-wrapper[data-next-await] [data-next-upsell-action],
+html:not(.next-display-ready) .upsell-wrapper[data-next-await] [data-upsell-proxy] { opacity: .45; pointer-events: none; }

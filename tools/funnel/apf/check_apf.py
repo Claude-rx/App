@@ -452,6 +452,11 @@ for pid in ('offer', 'checkout'):
 _base = (THEME / 'layouts' / 'base.html').read_text(encoding='utf-8')
 if "u.searchParams.set('from', 'offer')" not in _base or 'sf-off-link' not in _base: fail('theme', 'policy pages opened from the funnel do not keep ?from=offer on their links')
 if 'u.pathname === location.pathname' in _base: fail('theme', 'a policy page\'s link to itself drops ?from=offer (the full store comes back)')
+# the offers' words, pictures and landed prices show at the first paint, not behind the loading skeleton until the order
+# loads (F11: ~9 s to the largest paint on throttled 4G); only their buttons wait for the SDK
+_oc = (SITE / 'css' / 'sf-offers.css').read_text(encoding='utf-8')
+if not re.search(r'\.upsell-wrapper\[data-next-await\] \* \{ opacity: 1; \}', _oc) or 'upsell-wrapper[data-next-await]::before' not in _oc:
+    fail('offers', 'the offer waits behind the loading skeleton for the SDK (it has its landed prices already)')
 # the gate's order lines are not read aloud, and their empty state is not the SDK's "No items found in order" (F12)
 for p in F.PAGES:
     h = html(p['id'])

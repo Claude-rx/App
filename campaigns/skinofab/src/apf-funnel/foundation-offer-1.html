@@ -39,7 +39,7 @@ uh:
   cta_card: "supply-b1g1"
   cta_jump: "#sf-supply-title"
   cta_jump_text: "Or see the 6-bottle pack ↓"
-supply: {"title": "Choose your pack", "lede": "$19.50 a bottle in the 2-pack, $16.50 in the 6-pack, charged once, shipped in the same box as the order you just placed.", "tiers": [{"id": "supply-b1g1", "items_json": "[{\"packageId\": 4, \"quantity\": 1}]", "image": "images/sf/pack-2.jpg", "alt": "Two bottles of Adaptive Peptide Foundation", "badge": "Two months’ supply", "save": "32%", "name": "2 more bottles", "deal": "Add 1, get 1 FREE", "gift": "", "per_day": "$0.65 a day", "per_bottle": "$19.50 a bottle · 2 bottles", "price": "$39.00", "compare": "$57", "compare_note": "Our store, bought once", "selected": true, "button": "BUY NOW · $39"}, {"id": "supply-b3g3", "items_json": "[{\"packageId\": 5, \"quantity\": 1}]", "image": "images/sf/pack-6.jpg", "alt": "Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush", "badge": "Best value", "save": "42%", "name": "6 more bottles", "deal": "$16.50 a bottle", "gift": "FREE Lymphatic Brush + case ($24.95)", "per_day": "$0.55 a day", "per_bottle": "$16.50 a bottle · 6 bottles", "price": "$99.00", "compare": "$171", "compare_note": "Our store, bought once", "selected": false, "button": "BUY NOW · $99"}], "guarantee": "30-day money-back guarantee on every bottle, even opened. You don’t send anything back.", "charged": "Charged once to the payment you just used. This pack doesn’t renew.", "decline": "No thanks, I don’t want to stock up"}
+supply: {"title": "Choose your pack", "lede": "$19.50 a bottle in the 2-pack, $16.50 in the 6-pack, charged once, shipped in the same box as the order you just placed.", "tiers": [{"id": "supply-b1g1", "items_json": "[{\"packageId\": 4, \"quantity\": 1}]", "image": "images/sf/pack-2.jpg", "alt": "Two bottles of Adaptive Peptide Foundation", "badge": "Two months’ supply", "save": "32%", "name": "2 more bottles", "deal": "Add 1, get 1 FREE", "gift": "", "per_day": "$0.65 a day", "per_bottle": "$19.50 a bottle · 2 bottles", "price": "$39.00", "compare": "$57", "compare_note": "Our store, bought once", "selected": true, "button": "BUY NOW · $39"}, {"id": "supply-b3g3", "items_json": "[{\"packageId\": 5, \"quantity\": 1}]", "image": "images/sf/pack-6.jpg", "alt": "Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush", "badge": "Best value", "save": "42%", "name": "6 more bottles", "deal": "$16.50 a bottle", "gift": "FREE Lymphatic Brush + case ($24.95)", "per_day": "$0.55 a day", "per_bottle": "$16.50 a bottle · 6 bottles", "price": "$99.00", "compare": "$171", "compare_note": "Our store, bought once", "selected": false, "button": "BUY NOW · $99"}], "guarantee": "30-day money-back guarantee on every bottle, even opened. You don’t send anything back.", "charged": "Charged once to the payment you just used. This pack doesn’t renew.", "decline": "No thanks, continue"}
 upsell_offer:
   type: tier-cards
   package_id: 4
@@ -48,7 +48,7 @@ upsell_offer:
   display_bundle_id: "supply-b1g1"
   accept_text: "Yes, add it for"
   accept_show_price: true
-  decline_text: "No thanks, I don’t want to stock up"
+  decline_text: "No thanks, continue"
   fallback_price: "$39.00"
   fallback_compare: "$57.00"
   cta_note: "Charged once to the payment you just used. This pack doesn’t renew, and it ships in the same box. Backed by our 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy."
@@ -74,8 +74,8 @@ closing_cta:
   note: "The pack selected above is what this adds: the 2-pack unless you change it. Backed by our 30-day money-back guarantee. The clock above is the offer’s: at 0:00 this page moves on."
   image: "images/sf/pack-2.jpg"
 ---
-{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them) {% endcomment %}
-<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
+{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them; the items list's empty state is a blank span, not the SDK's "No items found in order") {% endcomment %}
+<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div aria-hidden="true" data-next-order-items data-item-template-id="sf-gate-items" data-empty-template="&lt;span&gt;&lt;/span&gt;"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 <div class="page-wrapper">
   <div class="main-wrapper">

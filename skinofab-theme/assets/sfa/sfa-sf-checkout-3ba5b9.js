@@ -44,7 +44,8 @@ window.addEventListener('next:initialized', function () {
 
 // The exit pop for the keyboard and a screen reader (live review 7): when the SDK shows it, its close button is named
 // and moved inside the dialog, focus moves to the offer's button and Tab stays in the dialog, the page behind is inert
-// and does not scroll (live review 8), Escape closes it, and focus returns to where she was.
+// and does not scroll (live review 8; the body too, for iOS Safari, live review 9), Escape closes it, and focus returns to
+// where she was, or to the order button when nothing had focus (live review 9: it went to the body, the top of the page).
 window.addEventListener('next:initialized', function () {
   if (!window.next || typeof window.next.on !== 'function') return;
   var before = null;
@@ -62,7 +63,8 @@ window.addEventListener('next:initialized', function () {
       var top = dlg; while (top.parentElement && top.parentElement !== document.body) top = top.parentElement;
       var made = Array.prototype.filter.call(document.body.children, function (el) { return el !== top && !el.inert && !/^(SCRIPT|STYLE|TEMPLATE)$/.test(el.tagName); });
       made.forEach(function (el) { el.inert = true; });
-      var overflow = document.documentElement.style.overflow; document.documentElement.style.overflow = 'hidden';
+      var overflow = document.documentElement.style.overflow, bodyOverflow = document.body.style.overflow;
+      document.documentElement.style.overflow = 'hidden'; document.body.style.overflow = 'hidden';
       var cta = dlg.querySelector('.exit-intent-popup__cta'); if (cta) cta.focus();
       var esc = function (e) {
         if (e.key === 'Escape') { var close = root.querySelector('[aria-label="Close"]'); if (close) close.click(); return; }
@@ -78,8 +80,11 @@ window.addEventListener('next:initialized', function () {
       var gone = new MutationObserver(function () {
         if (document.querySelector('.exit-intent-popup__dialog')) return;
         gone.disconnect(); document.removeEventListener('keydown', esc);
-        made.forEach(function (el) { el.inert = false; }); document.documentElement.style.overflow = overflow;
-        if (before && before.focus) before.focus();
+        made.forEach(function (el) { el.inert = false; });
+        document.documentElement.style.overflow = overflow; document.body.style.overflow = bodyOverflow;
+        var back = before && before !== document.body && before !== document.documentElement && document.contains(before) ? before
+          : document.querySelector('.submit-section__button .submit-button');
+        if (back && back.focus) back.focus({ preventScroll: true });
       });
       gone.observe(document.body, { childList: true, subtree: true });
     }, 60);
