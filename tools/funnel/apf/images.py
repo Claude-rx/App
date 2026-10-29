@@ -350,19 +350,57 @@ def doctor_photo():
     30 mL / 1.01 fl oz. The wordmark, her hand and the rest of the photo are untouched."""
     a = np.asarray(Image.open(OWNER / 'doctor-clinic.webp').convert('RGB')).astype(np.float32)
     assert a.shape[:2] == (1402, 1122), 'doctor-clinic.webp changed: measure the label block again'
-    x0, x1, y0, y1 = 304, 383, 671, 734
-    top, bot = np.median(a[662:668, x0:x1], axis=0), np.median(a[733:740, x0:x1], axis=0)
-    t = np.linspace(0, 1, y1 - y0)[:, None, None]
-    fill = top[None] * (1 - t) + bot[None] * t + np.random.default_rng(7).normal(0, 1.4, (y1 - y0, x1 - x0, 1))
-    yy, xx = np.mgrid[0:y1 - y0, 0:x1 - x0]
-    wgt = np.clip(np.minimum.reduce([xx, x1 - x0 - 1 - xx, yy, y1 - y0 - 1 - yy]).astype(np.float32) / 4.0, 0, 1)[..., None]
-    a[y0:y1, x0:x1] = a[y0:y1, x0:x1] * (1 - wgt) + fill * wgt
+    paint_out(a, (304, 671, 383, 734), (662, 668), (733, 740))
     im = Image.fromarray(a.clip(0, 255).astype(np.uint8))
     for text, cx, cy, width, cap, tone in (('ADAPTIVE PEPTIDE', 342, 680.5, 62, 6.0, 236), ('FOUNDATION', 343, 688.5, 44, 6.0, 236),
                                            ('PDRN', 345.5, 706, 15, 4.6, 205), ('30 mL / 1.01 fl oz', 345, 725, 42, 5.0, 214)):
         small = label_mask(text, width, cap)
         im.paste(Image.new('RGB', small.size, (tone,) * 3), (int(round(cx - small.width / 2)), int(round(cy - small.height / 2))), small)
     save(ImageOps.fit(im, (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), 'doctor', size=1350)
+
+
+def paint_out(a, box, top_rows, bot_rows, feather=4.0):
+    """Paint a block of a photo (a: float array, changed in place) out with its own surface: box (x0, y0, x1, y1) is
+    filled column by column from the median of top_rows to the median of bot_rows (row ranges with nothing in them),
+    with a little grain, feathered into the photo over feather px."""
+    x0, y0, x1, y1 = box
+    top, bot = np.median(a[top_rows[0]:top_rows[1], x0:x1], axis=0), np.median(a[bot_rows[0]:bot_rows[1], x0:x1], axis=0)
+    t = np.linspace(0, 1, y1 - y0)[:, None, None]
+    fill = top[None] * (1 - t) + bot[None] * t + np.random.default_rng(7).normal(0, 1.4, (y1 - y0, x1 - x0, 1))
+    yy, xx = np.mgrid[0:y1 - y0, 0:x1 - x0]
+    wgt = np.clip(np.minimum.reduce([xx, x1 - x0 - 1 - xx, yy, y1 - y0 - 1 - yy]).astype(np.float32) / feather, 0, 1)[..., None]
+    a[y0:y1, x0:x1] = a[y0:y1, x0:x1] * (1 - wgt) + fill * wgt
+
+
+def old_routine():
+    """The sales page's "old routine" card: a woman in her late fifties at a vanity crowded with a primer, four
+    foundations in four shades, concealers, spilled powder, a contour palette and a cup of brushes, swatches on the back
+    of her hand, fed up (gen/old-routine.png, GPT Image 2 through 4SToken, 29 Oct 2026, the owner's request). The model's
+    made-up small print on the white primer tube is painted out with the tube's own white; nothing else is changed."""
+    a = np.asarray(Image.open(GEN / 'old-routine.png').convert('RGB')).astype(np.float32)
+    assert a.shape[:2] == (1254, 1254), 'old-routine.png changed: measure the tube print again'
+    paint_out(a, (84, 948, 142, 984), (940, 946), (986, 992))
+    save(Image.fromarray(a.clip(0, 255).astype(np.uint8)), 'old-routine', size=1080)
+
+
+def compare_heads():
+    """The sales page's comparison table heads: our bottle cut tall from its packshot (bottle.jpg), and for regular
+    foundation five overlapping swatches from fair to deep (the shade you have to guess), drawn, on white. Both are
+    shown multiplied onto the table, so their white drops away."""
+    save(Image.open(OUT / 'bottle.jpg').convert('RGB').crop((360, 40, 720, 1040)), 'cmp-ours', size=330)
+    K, W, H = 4, 300, 330
+    im = Image.new('RGB', (W * K, H * K), PAPER)
+    shades = [(243, 214, 190), (229, 189, 158), (205, 156, 118), (166, 112, 78), (112, 72, 48)]
+    shadow = Image.new('L', im.size, 0)
+    sd = ImageDraw.Draw(shadow)
+    spots = [(78, 120), (150, 92), (222, 120), (112, 205), (188, 205)]
+    r = 52
+    for x, y in spots: sd.ellipse(((x - r + 3) * K, (y - r + 7) * K, (x + r + 3) * K, (y + r + 7) * K), fill=60)
+    im.paste(Image.new('RGB', im.size, (120, 110, 100)), (0, 0), shadow.filter(ImageFilter.GaussianBlur(8 * K)))
+    d = ImageDraw.Draw(im)
+    for (x, y), c in zip(spots, shades):
+        d.ellipse(((x - r) * K, (y - r) * K, (x + r) * K, (y + r) * K), fill=c, outline=PAPER, width=3 * K)
+    save(im.resize((W, H), Image.LANCZOS), 'cmp-theirs', size=330)
 
 
 def label_mask(text, width, cap, angle=0.0, weight='Medium', K=8):
@@ -590,6 +628,8 @@ def copies(video=True):
         if n == 'problem-mirror': im = soften_patch(im, (0.19, 0.27, 0.47, 0.49))   # her cheek's pigment read as a bruise at page size (live review 3)
         save(ImageOps.fit(im, (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), n, size=1350)
     doctor_photo()
+    old_routine()
+    compare_heads()
     stick = ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'images' / 'sf'
     for n in ('pdrn', 'peptides', 'ha', 'ceramides', 'squalane', 'niacinamide'): shutil.copyfile(stick / f'ing-{n}.jpg', OUT / f'ing-{n}.jpg')
 

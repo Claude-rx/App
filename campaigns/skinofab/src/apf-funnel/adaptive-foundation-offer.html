@@ -137,21 +137,25 @@ ease:
   old_title: "The old routine"
   old: ["Primer", "Foundation in a shade you guessed", "Concealer on the spots", "Powder to hold it", "Contour and bronzer to bring it back to life"]
   old_time: "15 to 20 minutes, three brushes, a mirror you can’t see well in."
+  old_image_alt: "A woman in her late fifties at her bathroom vanity, fed up, one hand on her forehead and foundation swatches on the other, the counter crowded with a primer, four foundations in different shades, concealers, spilled powder, a contour palette and a cup of brushes"
   new_title: "This foundation"
   new: ["One pump, five dots", "Blend with your fingertips", "Done"]
   new_time: "About a minute. Nothing to wash afterwards."
 compare:
   title: "Why the foundations you tried fell short"
   lede: "Not because you chose badly. Most were made for a tone that holds still and skin that stays moist; after 45, neither is true."
-  columns: ["Adaptive Peptide Foundation", "Regular liquid foundation", "Other colour-changing foundations", "Tinted moisturiser / CC cream"]
+  what: "What matters"
+  us: "Adaptive Peptide Foundation"
+  us_alt: "The SKINOFAB Adaptive Peptide Foundation bottle"
+  them: "Regular foundation"
   rows:
-    - ["Choosing a shade", "Nothing to choose: it adapts to your tone, with a 30-day money-back guarantee", "A shade to pick, often from a screen", "One shade, but some turn ashy or orange on the skin", "A few shades to pick from"]
-    - ["On dry, mature skin", "A hydrating serum base", "Matte and long-wear formulas can feel dry and crack", "Depends on the base", "Comfortable, with light coverage"]
-    - ["Fine lines", "Designed not to settle: satin finish, soft-focus powders", "Thicker formulas can settle into lines", "Can settle as the day goes on", "Sheer, so lines show through"]
-    - ["Sun spots and redness", "Buildable medium coverage", "Covers, but can look heavy", "Varies, often sheer on spots", "Sheer: spots show through"]
-    - ["Skincare actives", "PDRN, peptides, Pro-Xylane, hyaluronic acid", "Varies by brand", "Varies by brand", "Some add vitamins"]
-    - ["Fragrance", "Fragrance-free", "Check the label for parfum", "Check the label for parfum", "Check the label for parfum"]
-    - ["If it’s the wrong match", "30 days to ask for a full refund, even opened", "A new bottle in another shade", "Terms vary by brand", "A new bottle in another shade"]
+    - { label: "Choosing a shade", us: "Nothing to choose: it adapts to your tone", them: "You guess a shade, often from a screen", mark: "no" }
+    - { label: "On dry, mature skin", us: "A hydrating serum base", them: "Matte formulas can feel dry and crack", mark: "no" }
+    - { label: "Fine lines", us: "Designed not to settle: a satin finish", them: "Thicker formulas can settle into lines", mark: "no" }
+    - { label: "Sun spots and redness", us: "Buildable medium coverage", them: "Covers, but can look heavy", mark: "some" }
+    - { label: "Skincare inside", us: "PDRN, peptides, Pro-Xylane, hyaluronic acid", them: "Varies by brand", mark: "some" }
+    - { label: "Fragrance", us: "Fragrance-free", them: "Check the label for parfum", mark: "some" }
+    - { label: "If it’s the wrong match", us: "30 days for a full refund, even opened", them: "Buy another bottle in another shade", mark: "no" }
 badges:
   - { icon: "leaf", text: "Fragrance-free" }
   - { icon: "ban", text: "No parabens" }
@@ -462,6 +466,7 @@ closing:
         <h3>{{ ease.old_title }}</h3>
         <ol>{% for s in ease.old %}<li>{{ s }}</li>{% endfor %}</ol>
         <p>{{ ease.old_time }}</p>
+        <img src="{{ 'images/sf/old-routine.jpg' | campaign_asset }}" alt="{{ ease.old_image_alt }}" width="1080" height="1080" loading="lazy" decoding="async">
       </div>
       <div class="sf-ease__col sf-ease__col--new">
         <h3>{{ ease.new_title }}</h3>
@@ -477,9 +482,9 @@ closing:
     <div class="sf-sec__in">
       <h2 class="sf-h2" style="text-align:center">{{ compare.title }}</h2>
       <p style="text-align:center;max-width:680px;margin:0 auto 18px">{{ compare.lede }}</p>
-      <table class="sf-vs sf-vs--four">
-        <thead><tr><th scope="col"><span class="sr-only">What it does</span></th>{% for c in compare.columns %}<th scope="col">{% if forloop.first %}<img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="96" height="19"><br>{% endif %}{{ c }}</th>{% endfor %}</tr></thead>
-        <tbody>{% for r in compare.rows %}<tr><th scope="row">{{ r[0] }}</th><td data-th="{{ compare.columns[0] }}">{{ r[1] }}</td><td data-th="{{ compare.columns[1] }}">{{ r[2] }}</td><td data-th="{{ compare.columns[2] }}">{{ r[3] }}</td><td data-th="{{ compare.columns[3] }}">{{ r[4] }}</td></tr>{% endfor %}</tbody>
+      <table class="sf-cmp">
+        <thead><tr><th scope="col" class="sf-cmp__what">{{ compare.what }}</th><th scope="col" class="sf-cmp__us"><img src="{{ 'images/sf/cmp-ours.jpg' | campaign_asset }}" alt="{{ compare.us_alt }}" width="119" height="330" loading="lazy" decoding="async"><span>SKINOFAB</span>{{ compare.us }}</th><th scope="col" class="sf-cmp__them"><img src="{{ 'images/sf/cmp-theirs.jpg' | campaign_asset }}" alt="" width="300" height="330" loading="lazy" decoding="async"><span>&nbsp;</span>{{ compare.them }}</th></tr></thead>
+        <tbody>{% for r in compare.rows %}<tr><th scope="row">{{ r.label }}</th><td class="sf-cmp__us"><span class="sf-cmp__v"><i class="sf-cmp__ic sf-cmp__ic--yes" aria-hidden="true"></i><span><span class="sr-only">Yes: </span>{{ r.us }}</span></span></td><td class="sf-cmp__them"><span class="sf-cmp__v"><i class="sf-cmp__ic sf-cmp__ic--{{ r.mark }}" aria-hidden="true"></i><span><span class="sr-only">{% if r.mark == "no" %}No: {% else %}It varies: {% endif %}</span>{{ r.them }}</span></span></td></tr>{% endfor %}</tbody>
       </table>
     </div>
   </section>

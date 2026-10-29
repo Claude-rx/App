@@ -232,16 +232,38 @@
 .sf-ease__col--old li { color: #7a2e2e; text-decoration: line-through; text-decoration-color: rgba(122,46,46,.5); }
 .sf-ease__col--new { border: 2px solid var(--ink); }
 .sf-ease__col--new li { font-weight: 600; color: var(--ink); }
-.sf-ease__col--new img { width: 100%; max-width: 320px; margin: 14px auto 0; border-radius: 12px; display: block; }
-/* the table on a phone: each row a card, every cell labelled (reviewer: the fourth column was off screen) */
+.sf-ease__col img { width: 100%; max-width: 320px; margin: 14px auto 0; border-radius: 12px; display: block; }   /* the old routine's mess and the new one's dots, the same size side by side */
+/* the comparison: two products side by side, a mark and a few words a cell (the owner's reference, 29 Oct 2026: the
+   four-column table was hard to read); on a phone the row's name sits above its two cells */
+.sf-cmp { width: 100%; max-width: 920px; margin: 0 auto; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: 16px; line-height: 1.4; }
+.sf-cmp th, .sf-cmp td { padding: 18px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; text-align: left; }
+.sf-cmp tbody tr:last-child > * { border-bottom: 0; }
+.sf-cmp thead th { padding: 22px 16px 18px; text-align: center; vertical-align: bottom; font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); }
+.sf-cmp thead th.sf-cmp__what { text-align: left; }
+.sf-cmp thead th.sf-cmp__us { color: var(--ink); }
+.sf-cmp thead img { display: block; height: 118px; width: auto; margin: 0 auto 12px; mix-blend-mode: multiply; }
+.sf-cmp thead th > span { display: block; font-size: 11px; letter-spacing: .16em; margin-bottom: 2px; }
+.sf-cmp .sf-cmp__us { background: #f7f2ec; }
+.sf-cmp tbody th { width: 30%; font-weight: 600; color: var(--ink); }
+.sf-cmp td { width: 35%; }
+.sf-cmp__v { display: flex; gap: 12px; align-items: center; }
+.sf-cmp__us .sf-cmp__v { color: var(--ink); font-weight: 600; }
+.sf-cmp__them .sf-cmp__v { color: var(--soft); }
+.sf-cmp__ic { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #ece6df center / 16px no-repeat; }
+.sf-cmp__ic--yes { background-color: var(--ink); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.sf-cmp__ic--no { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6.5 6.5l7 7M13.5 6.5l-7 7' fill='none' stroke='%23857c74' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.sf-cmp__ic--some { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10h8' fill='none' stroke='%23857c74' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
 @media (max-width: 599px) {
-  .sf-vs--four thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .sf-vs--four, .sf-vs--four tbody, .sf-vs--four tr, .sf-vs--four th, .sf-vs--four td { display: block; }
-  .sf-vs--four tr { padding: 10px 12px 4px; border-bottom: 1px solid var(--line); }
-  .sf-vs--four tbody th { padding: 0 0 6px; font-weight: 600; border: 0; }
-  .sf-vs--four td { padding: 6px 0; text-align: left; border: 0; font-size: 14px; }
-  .sf-vs--four td::before { content: attr(data-th); display: block; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); }
-  .sf-vs--four td:nth-child(2) { background: #faf8f5; margin: 0 -12px; padding: 6px 12px; font-weight: 600; color: var(--ink); }
+  .sf-cmp, .sf-cmp thead, .sf-cmp tbody { display: block; }
+  .sf-cmp tr { display: grid; grid-template-columns: 1fr 1fr; }
+  .sf-cmp tbody th, .sf-cmp td { width: auto; }
+  .sf-cmp thead th.sf-cmp__what { display: none; }
+  .sf-cmp thead th { padding: 16px 10px 14px; font-size: 11.5px; letter-spacing: .08em; }
+  .sf-cmp thead img { height: 92px; }
+  .sf-cmp tbody th { grid-column: 1 / -1; padding: 14px 14px 6px; border-bottom: 0; font-size: 15px; }
+  .sf-cmp td { padding: 8px 12px 14px; font-size: 14.5px; }
+  .sf-cmp td.sf-cmp__us { border-radius: 0; }
+  .sf-cmp__v { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 /* the feature marks */
 .sf-badges { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }

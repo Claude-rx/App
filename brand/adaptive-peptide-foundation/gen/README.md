@@ -36,3 +36,13 @@ no grey or orange cast), `ba-split-ages` (a woman of 63 outdoors, white hair, su
 same daylight), and the shade panel's three (fair 50 with rosacea redness; medium 56, East Asian, melasma; deep 60,
 hyperpigmentation and an ashy cast → even, no grey). Until then the listicle shows a persona photo on its own in
 those three reasons and the shade panel keeps its evened-tone afters.
+
+## The old routine (29 Oct 2026)
+
+The owner asked for a realistic image of a fed-up woman with a lot of products for the sales page's "The old routine"
+card. Made with GPT Image 2 through 4SToken (`run_provider`, $0.009; Kie.ai had no credit), 1254×1254;
+`old_routine()` in `images.py` paints the model's made-up small print off the white primer tube and saves it at 1080.
+
+| File | What it is | Prompt (abridged) |
+|---|---|---|
+| `old-routine.png` | A woman around 58, ash-blonde hair with grey, at a bathroom vanity, one hand on her forehead, a sponge in the other, foundation swatches on the back of her hand, patchy foundation on her cheek; the marble counter crowded with a primer tube, four foundations in four shades, two concealers, an open powder compact with powder spilled, a contour palette, a cup of brushes, sponges, used cotton pads and tissues. | "Photorealistic editorial lifestyle photograph, square frame. A woman around 58 years old … at a cluttered bathroom vanity in soft morning window light, visibly frustrated and fed up … Her face shows her age honestly … half-finished patchy makeup in a foundation shade that does not match her neck. The marble counter in front of her is overloaded with makeup … Plain unbranded generic packaging … No text, no labels, no brand names, no logos, no watermark." |

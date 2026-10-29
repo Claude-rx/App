@@ -79,7 +79,8 @@ def deck(fm):
         '[IMAGE: images/sf/g-dots.jpg — a woman in her fifties, eyes closed, the foundation dotted white on her cheeks before it blends]')
     c = fm['compare']
     sec('09 · Clarify Why Other Solutions Fall Short', f"### {c['title']}", c['lede'],
-        '| | ' + ' | '.join(c['columns']) + ' |', '|' + '---|' * (len(c['columns']) + 1), *['| ' + ' | '.join(r) + ' |' for r in c['rows']])
+        f"| {c['what']} | SKINOFAB {c['us']} | {c['them']} |", '|---|---|---|', *[f"| {r['label']} | ✓ {r['us']} | {'✕' if r['mark'] == 'no' else '–'} {r['them']} |" for r in c['rows']],
+        '[IMAGE: images/sf/old-routine.jpg — the old routine: a woman in her late fifties at a vanity crowded with a primer, four foundations, concealers, powder, a contour palette and brushes, fed up]')
     w = fm['why']
     sec('10 · Explain Why Your Solution is Effective', f"### {w['title']}", w['lede'],
         *sum([[f"> “{x['quote']}”" + (f" — {x['source']}" if x['source'] else ''), x['fix']] for x in w['fixes']], []))
