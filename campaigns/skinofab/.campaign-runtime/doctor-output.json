@@ -1,7 +1,7 @@
 {
   "schema_version": "campaigns-os-doctor-output/v0",
-  "generated_at": "2026-10-29T10:40:22.181Z",
-  "generated_by": "doctor",
+  "generated_at": "2026-10-29T13:11:05.137Z",
+  "generated_by": "next",
   "ok": true,
   "status": "ready_with_warnings",
   "errors": [],
@@ -9,188 +9,50 @@
     {
       "code": "source_html.pages.source_hash",
       "message": "Source page \"offer\" hash mismatch — file at apf-pdp.html has changed since intake recorded it in the Build Packet (recorded sha256=b75e4c791310…, on-disk sha256=e3437dea6681…). This warning does not block. Re-running start or prepare-build with --force records the current file and clears recorded stage evidence; editing the source-html manifest alone does not change the hash the packet holds.",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
-      "code": "built_output.fingerprint_missing",
-      "message": "Build has not recorded stages.assembly.build_fingerprint. The current output fingerprint of _site/apf-funnel/ is sha256:c316f4606736709a556e2caed3621c8fd5f05c2299383aaeca9ded511c2ee7de (195 file(s); doctor --json derived.build_output_fingerprint.value); record it on stages.assembly.build_fingerprint after page-kit build.",
-      "detail": {
-        "root": "_site/apf-funnel/",
-        "current": "sha256:c316f4606736709a556e2caed3621c8fd5f05c2299383aaeca9ded511c2ee7de",
-        "file_count": 195,
-        "assembly_complete": false
-      },
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: packages.main_package=1",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: packages.prepurchase_1=7",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: packages.prepurchase_2=9",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: shipping_methods.standard=2",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: shipping_methods.free=1",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: bundle_card_style=product",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: selector_order_bump_variant=check03",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: order_bump_variant=check01+switch01",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: order_bump.check03.sync_quantity=1",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: upsell_offer.package_id=3",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: upsell_offer.vouchers_json=[\"UP50\"]",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.demoOnlyValues",
-      "message": "Replace demo-only starter value before launch: upsell_bundle_tiers packageId=3",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.replaceFromSpecOrApi",
-      "message": "Must be replaced from CampaignSpec/API: packages.*",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.replaceFromSpecOrApi",
-      "message": "Must be replaced from CampaignSpec/API: shipping_methods.*",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.replaceFromSpecOrApi",
-      "message": "Must be replaced from CampaignSpec/API: bundles[].shipping_method",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.replaceFromSpecOrApi",
-      "message": "Must be replaced from CampaignSpec/API: order_bump.*.package_id",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.replaceFromSpecOrApi",
-      "message": "Must be replaced from CampaignSpec/API: upsell_offer.*",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.replaceFromSpecOrApi",
-      "message": "Must be replaced from CampaignSpec/API: upsell_bundle_tiers[].items_json",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.replaceFromSpecOrApi",
-      "message": "Must be replaced from CampaignSpec/API: upsell_bundle_tiers[].vouchers_json",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.removeWhenUnsupported",
-      "message": "Remove when unsupported by target campaign: bundles[].shipping_method when no tier-specific shipping exists",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.removeWhenUnsupported",
-      "message": "Remove when unsupported by target campaign: selector_order_bump_variant when no selector-area bump package exists",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.removeWhenUnsupported",
-      "message": "Remove when unsupported by target campaign: bump includes when prepurchase packages are absent",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.removeWhenUnsupported",
-      "message": "Remove when unsupported by target campaign: unsupported payment method rows",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "frontmatter.removeWhenUnsupported",
-      "message": "Remove when unsupported by target campaign: upsell pages not present in the funnel",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "code": "market_copy.us_specific_claims",
+      "message": "Campaign market scope needs copy review (non-US shipping countries: [object Object]), and source/template files contain US-specific starter copy: source:apf-pdp.html:1659 \"USPS\"; source:apf-pdp.html:1614 \"US warehouse\"; target:_includes/upsell/ships-info.html:8 \"USPS\"; target:_includes/upsell/ships-info.html:16 \"ships from the USA\". Confirm or replace this copy; do not remove it automatically.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "code": "copy.hardcoded_phone",
       "message": "Campaign Store Profile phone is \"+1 (563) 239-5520\", but prepared HTML contains different hardcoded phone numbers outside skipped regions: source:apf-pdp.html:6 \"2166136261\"; source:apf-pdp.html:2014 \"3050799260\"; source:apf-pdp.html:2014 \"3063185564\"; source:apf-pdp.html:2014 \"3050832028\"; source:apf-pdp.html:2014 \"3063218332\"; source:apf-pdp.html:2014 \"2585002140\"; source:apf-pdp.html:2014 \"2584969372\"; source:apf-pdp.html:2014 \"2585034908\"; plus 77 more. Use the campaign.store_phone binding or remove static phone strings.",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.raw_html_conversion_status",
+      "message": "Assembly is recorded complete, but report.adapter_decisions.raw_html_conversion_status is \"pending\". Use record build --adapter-decision raw_html_conversion_status=<value> to record completed/not_required after wrapper stripping, frontmatter, asset moves, script/style refs, CTA rewrites, route policy, and layout choice are settled.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.wrapper_policy",
+      "message": "Assembly is recorded complete with report.adapter_decisions.wrapper_policy=\"preserve_document_wrappers\". Select wrapper_policy at intake with prepare-build --wrapper-policy or the source-html manifest's wrapper_policy option; page-kit source should normally strip document wrappers unless preserving them is explicitly not_required.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.commerce_shell_adoption",
+      "message": "Assembly is recorded complete, but report.adapter_decisions.commerce_shell_adoption is \"not_required\" for runtime commerce pages (checkout, offer-1, offer-2, offer-2b, brush-offer, brush-offer-b, thank-you). Use record build --adapter-decision commerce_shell_adoption=<value> after commerce pages are template-clone-first, then styled, with SDK-owned surfaces preserved.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.template_files_copied",
+      "message": "Assembly is recorded complete, but report.adapter_decisions.template_files_copied.status is \"pending\". Copy or verify the selected template family as one atomic slice, not individual commerce pages.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
     },
     {
       "code": "build_brief.payment_methods_spec_drift",
       "message": "Campaign Build Brief allows payment method(s) not found in CampaignSpec data: card. Confirm runtime/catalog support before rendering them.",
       "cause": "pre_existing",
       "cause_reason": "same_status_in_prior_run"
-    },
-    {
-      "code": "report.theme.needs_review",
-      "message": "Assembly report theme is needs_review: a generatable brand theme has not been generated/applied. The theme gate blocks polish/deploy/QA for commerce-page campaigns until report.theme is applied (load_order after-next-core) or explicitly waived (campaigns-os theme waive).",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "code": "theme_gate.generatable_not_applied",
-      "message": "theme inspect proved a brand theme can be generated, but it has not been generated and applied to commerce pages. Starter-template commerce families consume --brand--* tokens; without the brand layer they ship the starter palette. Polish/deploy/QA are gated until resolved. Run: campaigns-os theme generate --packet ./campaign-runtime.build.json | campaigns-os theme waive --packet ./campaign-runtime.build.json --reason \"<why the starter palette is acceptable>\" --waived-by \"<named human>\"",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
     }
   ],
   "ready": [
@@ -198,7 +60,8 @@
     "Template family \"apollo\" is certified (commerce catalog + brand contract)",
     "Template family \"apollo\" certification is current: last verified against SDK 0.4.42 (2026-10-16), the current SDK recorded by the vendored contracts.",
     "Deploy target is local-serve and the deploy URL http://127.0.0.1:8090/apf-funnel/ is a loopback origin: it is served locally for QA. Campaigns App states its Development-domain rule for the hostname localhost on any port; if SDK initialization is refused on this host, open the same server as http://localhost:<port>/ and record that URL instead.",
-    "Local proof mode: the build stage renders the development environment (CPK_ENV=development npx campaign-build --json > .campaign-runtime/page-kit-build-summary.json) and records stages.assembly.evidence.build_environment with npx --no-install campaigns-os record build --packet <packet> --build-environment development; polish capture and QA run against that served output, and npx --no-install campaigns-os page-kit parity --packet <packet> proves the production render before commit.",
+    "Local proof mode: the built _site/ is recorded as a development render (stages.assembly.evidence.build_environment); vendor loaders are environment-gated out, SDK dl_* events still fire.",
+    "Local proof production parity: PASS — 9 page(s) identical to the current development render; production differs only in environment-gated output (360 line(s); loaders: https://c.albss.com, https://s.axon.ai); Campaign Cart pin 0.4.43.",
     "Target campaign output directory exists",
     "Target page-kit dependency 0.3.0",
     "Local CampaignSpec parsed",
@@ -210,8 +73,8 @@
     "Built checkout carries no google_pay payment-method markup (_site/apf-funnel/foundation-checkout/index.html); left to browser QA: shared chrome asset upsell-payment-logos.svg",
     "Target campaigns.json SDK version matches CampaignSpec (0.4.43).",
     "Target campaigns.json Store Profile matches the CampaignSpec across all nine governed fields.",
-    "CampaignSpec shipping countries: all countries",
-    "CampaignSpec SDK routing meta tags are runtime-rooted for /apf-funnel/",
+    "CampaignSpec shipping countries: [object Object]",
+    "CampaignSpec routing meta deferred to built-output verification (_site/apf-funnel/).",
     "Source-html manifest source-html-manifest/v0 validated",
     "Template-stock page(s) materialised by the build stage: checkout (apollo), offer-1 (apollo), offer-2 (apollo), offer-2b (apollo), brush-offer (apollo), brush-offer-b (apollo), thank-you (apollo)",
     "Source mappings cover active CampaignSpec pages",
@@ -219,8 +82,8 @@
     "Mapped source pages pass the page-kit preparation check (document wrappers stripped, no leftover frontmatter, no source-file internal links)",
     "CampaignSpec package purchase availability has no unavailable package refs in active build data",
     "Built output root found at _site/apf-funnel/",
+    "Build output fingerprint matches stages.assembly.build_fingerprint (196 file(s) under _site/apf-funnel/)",
     "Built HTML structure and commerce refs checked in _site/apf-funnel/ for 9 page(s)",
-    "Built page shipping and package refs are served by the live campaign (9 page(s))",
     "Every bundle selector on 5 built post-purchase page(s) is scoped away from the live cart (5 selector(s) scanned)",
     "All 9 built page(s) agree on campaign identity (next-funnel \"SKINOFAB Adaptive Peptide Foundation\", API key consistent)",
     "SDK markup: 3 data-next-* name(s) not in the Campaign Cart 0.4.42 attribute index (advisory; the SDK does not read them): data-next-catalog-component, data-next-content, data-next-skeleton",
@@ -229,11 +92,17 @@
     "Built SDK meta tags checked in _site/apf-funnel/ for 9 page(s)",
     "Page Kit build summary verified for \"apf-funnel\": 9 page(s) built, no build errors, shape warnings or asset warnings",
     "Built routes match CampaignSpec page routes (9/9 verified)",
+    "Built output carries no needs-input markers, unverified urgency chrome, or template demo residue",
     "Campaigns API key available via env:CAMPAIGNS_API_KEY",
     "Commerce catalog sharedFrontmatterVocabulary loaded",
     "Template agentContract loaded for apollo",
     "Template brand/residue/pricing contract loaded for apollo",
     "Template family inventory matrix loaded for apollo",
+    "Built target output has no obvious demo-only or unsupported starter contract residue",
+    "Built target output has no generic starter placeholder or promo-code residue",
+    "Built target output has no promo discount claims above CampaignSpec max (60%)",
+    "Built target output has no literal template placeholder text",
+    "Built target output references no template demo placeholder assets",
     "apollo upsell offers have code-backed discounts or no code-less discount offer binding requirement",
     "apollo exit-pop/promo-code behavior is governed by CampaignSpec offer-surface fields",
     "source_html.adapter_contract adapter decision fields loaded",
@@ -243,10 +112,13 @@
     "context.adapter_decisions adapter decision fields loaded",
     "Brand theme context ready_with_warnings (medium confidence)",
     "Assembly report schema campaign-runtime-assembly-report/v0",
+    "Assembly report theme applied",
     "report.adapter_decisions adapter decision fields loaded",
     "report.proof_policy loaded: browser=true, typed_card_depth=common, order_path_depth=common",
+    "Theme gate passed: Brand theme is applied after next-core.css on commerce pages.",
     "Campaign CSS has no display:none rules on apollo pricing surfaces",
-    "Hidden eager-media checkpoint not applicable before completed assembly."
+    "Polish gate passed: structured evidence is current for this build.",
+    "Hidden eager-media checkpoint passed: package-owned page-load evidence is complete and current."
   ],
   "derived": {
     "packet_path": "./campaign-runtime.build.json",
@@ -565,7 +437,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 28393,
+          "bytes": 28562,
           "candidates": 0
         },
         "members": [],
@@ -577,7 +449,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -601,7 +473,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 68402,
+          "bytes": 69483,
           "candidates": 0
         },
         "members": [],
@@ -613,7 +485,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -637,7 +509,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 59636,
+          "bytes": 61172,
           "candidates": 26
         },
         "members": [],
@@ -649,7 +521,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -673,7 +545,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 15619,
+          "bytes": 15849,
           "candidates": 0
         },
         "members": [],
@@ -685,7 +557,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -709,7 +581,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 25546,
+          "bytes": 25625,
           "candidates": 0
         },
         "members": [],
@@ -721,7 +593,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -745,7 +617,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 24551,
+          "bytes": 24650,
           "candidates": 0
         },
         "members": [],
@@ -757,7 +629,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -781,7 +653,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 34607,
+          "bytes": 35413,
           "candidates": 10
         },
         "members": [],
@@ -793,7 +665,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -817,7 +689,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 29163,
+          "bytes": 29238,
           "candidates": 0
         },
         "members": [],
@@ -829,7 +701,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -853,7 +725,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 29246,
+          "bytes": 29321,
           "candidates": 0
         },
         "members": [],
@@ -865,7 +737,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.611Z",
+        "measured_at": "2026-10-29T13:11:04.601Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -892,7 +764,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -924,7 +796,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -956,7 +828,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -988,7 +860,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1022,7 +894,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1031,17 +903,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:e50721563b4f1fdf1175fda01d31554af192862935c7203f9f9cc2bcf56df515",
+        "state_fingerprint": "sha256:4531c06aaad00a9110b4cd2f570f58714430384c0c801b191712cad1888157e6",
         "observation": {
           "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -1049,10 +921,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1079,7 +951,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1088,17 +960,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:181928cd11650106b22e5076c12ff62d6afb07f6a352686ec7801e781d71b403",
+        "state_fingerprint": "sha256:73f9eff1f930d676eeb0fa0d9df4b464215c073b27c78d8fcf8b57ebd46d4eff",
         "observation": {
           "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -1106,10 +978,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1139,7 +1011,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1169,7 +1041,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1199,7 +1071,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1226,7 +1098,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1258,7 +1130,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1290,7 +1162,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1322,7 +1194,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1356,7 +1228,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1365,17 +1237,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:515c7c03a6111b8e4323b1c831af941bab6ebff6cddc825df901e45ff6acfda9",
+        "state_fingerprint": "sha256:4ff666abcf1a990f69ae26aabafdfde511791da86c5d267a609f1d15ce12b249",
         "observation": {
           "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -1383,10 +1255,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1413,7 +1285,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1422,17 +1294,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:a6cfe3faee9c06bc49264545407de380c04aec9374807e1480af02aa419ac847",
+        "state_fingerprint": "sha256:00fa265f860112ab1633d090d53ccbcefd333bd8351fd30596f93dc5bfa64d3c",
         "observation": {
           "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -1440,10 +1312,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1473,7 +1345,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1503,7 +1375,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1530,7 +1402,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1562,7 +1434,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1594,7 +1466,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1626,7 +1498,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1660,7 +1532,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1669,17 +1541,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-checkout/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:661c1a22e9822e817ed45bd2d63da968029e05cf17d9234c8b3aa0acd710454b",
+        "state_fingerprint": "sha256:58a0e378caaba83472dcfc0c34903ed8873a02d89aeab8383411107c811e53a2",
         "observation": {
           "page": "_site/apf-funnel/foundation-checkout/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -1687,10 +1559,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1717,7 +1589,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1726,17 +1598,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-checkout/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:94a2179d4c4fbab5b3f9624d7568b959b46d93fc36738593e33eacd7bd59edba",
+        "state_fingerprint": "sha256:f1b948325d78b43ca3cec9bbef37181d3918a6a56d18e82ed9d0301614cbfe0c",
         "observation": {
           "page": "_site/apf-funnel/foundation-checkout/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -1744,10 +1616,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1777,7 +1649,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1807,7 +1679,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1834,7 +1706,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1866,7 +1738,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1898,7 +1770,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1930,7 +1802,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1964,7 +1836,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1973,17 +1845,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:4f2f72f77bfc4b1c53d64acca535a3f209260a32036b4fa37840151dd0b948c5",
+        "state_fingerprint": "sha256:917112fff69797adcbaddff7685cee6cda61a4bab2a6be0b634be1b0fe747fac",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -1991,10 +1863,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2021,7 +1893,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2030,17 +1902,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:7ef6961b44960ee0ca542d706d9aa463dc9b4d0193f066aaf80ab12076ea2dd0",
+        "state_fingerprint": "sha256:1e8fc2efdb7d5f15f5d762eae19a13c2e2a2f58f7fbd276f02d1585ea1c764e9",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-1/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -2048,10 +1920,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2081,7 +1953,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2108,7 +1980,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2140,7 +2012,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2172,7 +2044,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2204,7 +2076,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2238,7 +2110,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2247,17 +2119,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:cd12b9544af7599093003b7db8fab13a1a3965f53e31a66df9778171ad05fa33",
+        "state_fingerprint": "sha256:cedff65c2be1052b18b2bdbbb3eb62fcf069c18e4a040468b07b0de5fc75c70c",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -2265,10 +2137,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2295,7 +2167,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2304,17 +2176,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:d55b513bccf380353304dafefce1f7922abb691176bcbfd4a173e89e78224820",
+        "state_fingerprint": "sha256:701b8bb889b6a3158d8c16129cb3ae250a2c95e0de08d6cff5535dcba3aa94e0",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -2322,10 +2194,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2355,7 +2227,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2382,7 +2254,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2414,7 +2286,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2446,7 +2318,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2478,7 +2350,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2512,7 +2384,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2521,17 +2393,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:f477731881e786187a30aa972a243ad57f8812a30cee395c88633a443511ed3f",
+        "state_fingerprint": "sha256:adce3eaa837f09e10ceb5cbc7d675a83351a5fdc4605599706bc2b19f0f7734a",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -2539,10 +2411,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2569,7 +2441,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2578,17 +2450,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:c5c27e3ed91157f405112556407d6cbcf3b2db68b0f1f4e1244465a2f367e581",
+        "state_fingerprint": "sha256:5b4f69ffb210740ee8227d3cc6822c3780ab56aa56f359c71b31c8cfcd7a1afb",
         "observation": {
           "page": "_site/apf-funnel/foundation-offer-2b/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -2596,10 +2468,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2626,7 +2498,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2658,7 +2530,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2690,7 +2562,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2722,7 +2594,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2756,7 +2628,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2765,17 +2637,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-thank-you/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:e91fde02c3f10a07370e37cc6f52c6e6f7db154e5562fc3574b1e458345179bf",
+        "state_fingerprint": "sha256:4e38de1cd1c30cab651d851051cb5ae9a80be1343e0db79dabfc95da4d1be259",
         "observation": {
           "page": "_site/apf-funnel/foundation-thank-you/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -2783,10 +2655,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2813,7 +2685,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2822,17 +2694,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/foundation-thank-you/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:0e7660fce4d2d184503b8235d9d18d822b18c138bf6d3398fb42f20546bfa336",
+        "state_fingerprint": "sha256:6ba49065584eda4f3ccf715048acfd0ab8b02d21fe2766ac6ed6a334ce3d6249",
         "observation": {
           "page": "_site/apf-funnel/foundation-thank-you/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -2840,10 +2712,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2873,7 +2745,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2900,7 +2772,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2932,7 +2804,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2964,7 +2836,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2996,7 +2868,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3030,7 +2902,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3039,17 +2911,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:8b04c90ce531f1638a04846b36221f43dcedf690dce43f4b9b3324d7ab89caf4",
+        "state_fingerprint": "sha256:d3408eca4aad89eb46bd2a4a416e6f3103844a632f3c6454e50d22efa75de18d",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -3057,10 +2929,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3087,7 +2959,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3096,17 +2968,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:4cc650329119688b164509f6bdd0ed124291bb0c2448a49feec560629ce8134b",
+        "state_fingerprint": "sha256:ff1217306f175428cc0c97929ff950d10e02cf4607c9e5e681dc0535055dded1",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -3114,10 +2986,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3147,7 +3019,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3174,7 +3046,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3206,7 +3078,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3238,7 +3110,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3270,7 +3142,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3304,7 +3176,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3313,17 +3185,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "key": "tailwind_cdn:cdn.tailwindcss.com"
         },
-        "state_fingerprint": "sha256:9c4916494a19cd188c50015c0a2dbccaaa1af6bc883c1040e37f8ed9150e457a",
+        "state_fingerprint": "sha256:19a1e3ff42d90f45eeeb68c59bc7828275c20cbdc7fb2cdd56c24b6be4bd0f7e",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "tailwind_cdn": 0,
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -3331,10 +3203,10 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3361,7 +3233,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3370,17 +3242,17 @@
         "check": "smoke_qc",
         "leg": "doctor",
         "result": "unexercised",
-        "reason_code": "build_environment_unknown",
+        "reason_code": "development_render",
         "subject": {
           "check": "smoke_qc",
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "key": "loopback:loopback"
         },
-        "state_fingerprint": "sha256:fe74f352f3dbc00083c244b203e9b6d30bbbccec7d20834d675652563101d196",
+        "state_fingerprint": "sha256:b8ea4f74387a54199797590bc78371f60bdd283eb0093fe54f068835da3b4931",
         "observation": {
           "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
           "loopback_refs": [],
-          "environment": "unknown"
+          "environment": "development"
         },
         "members": [],
         "accept_eligible": false,
@@ -3388,25 +3260,39 @@
           "observed": 0,
           "expected": 1,
           "limits": [
-            "build_environment_unknown"
+            "development_render"
           ]
         },
-        "measured_at": "2026-10-29T10:40:21.752Z",
+        "measured_at": "2026-10-29T13:11:04.703Z",
         "producer": "campaigns-os doctor"
       }
     ],
     "polish_checkpoint_gate": {
       "id": "polish.hidden_eager_media",
       "scope": "polish.hidden_eager_media",
-      "status": "not_applicable",
-      "checkpoint_status": "not_applicable",
+      "status": "pass",
+      "checkpoint_status": "ready",
       "severity": "info",
-      "code": "polish.hidden_eager_media.not_applicable",
-      "reason": "Hidden eager-media page-load evidence is required only after assembly is completed.",
+      "code": "polish.hidden_eager_media.pass",
+      "reason": "Page-load evidence has no hidden eager media above 1,048,576 bytes.",
       "waivable": false,
-      "subject": null,
-      "state": null,
-      "state_fingerprint": null,
+      "subject": {
+        "build_fingerprint": "sha256:467de24b221904e3b8051f615731a1fcb9bb56ea5f2f5383da85aa1512a561b9",
+        "campaign_slug": "apf-funnel",
+        "route_scope": "selected",
+        "routes": [
+          "/apf-funnel/10-reasons-adaptive-foundation/",
+          "/apf-funnel/adaptive-foundation-offer/"
+        ],
+        "viewports": [
+          "desktop",
+          "mobile"
+        ]
+      },
+      "state": {
+        "findings": []
+      },
+      "state_fingerprint": "sha256:3c36b481a04f60f6086a92d3eef39fbc40a9a5872b12b6e4f42823fe12396eb9",
       "findings": [],
       "waiver": null,
       "waiver_assessment": {
@@ -3571,15 +3457,16 @@
     "build_output_fingerprint": {
       "root": "_site/apf-funnel/",
       "algorithm": "sha256-manifest/v1",
-      "value": "sha256:c316f4606736709a556e2caed3621c8fd5f05c2299383aaeca9ded511c2ee7de",
-      "file_count": 195,
+      "value": "sha256:467de24b221904e3b8051f615731a1fcb9bb56ea5f2f5383da85aa1512a561b9",
+      "file_count": 196,
       "excluded": [],
-      "recorded": null,
-      "status": "missing"
+      "recorded": "sha256:467de24b221904e3b8051f615731a1fcb9bb56ea5f2f5383da85aa1512a561b9",
+      "status": "pass"
     },
     "live_campaign_refs": {
-      "status": "pass",
-      "key_source": "env:CAMPAIGNS_API_KEY",
+      "status": "not_run",
+      "reason_code": "not_read",
+      "reason": "This invocation does not read the live campaign.",
       "checked_pages": 9,
       "page_findings": [],
       "drift": null
@@ -3597,14 +3484,14 @@
         "status": "current"
       },
       "spec": {
-        "bound": "sha256:399e8176423e5b68d1cc25747937fc6774921ac0da2c70992d42a86c87501006",
-        "current": "sha256:399e8176423e5b68d1cc25747937fc6774921ac0da2c70992d42a86c87501006",
+        "bound": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
+        "current": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
         "snapshot_material": "current"
       },
       "stages": {
-        "assembly": "not_applicable",
-        "polish": "not_applicable",
-        "qa": "not_applicable"
+        "assembly": "current",
+        "polish": "current",
+        "qa": "current"
       },
       "reasons": {
         "assembly": null,
@@ -3613,9 +3500,9 @@
       }
     },
     "theme_gate": {
-      "status": "blocked",
-      "code": "theme_gate.generatable_not_applied",
-      "reason": "theme inspect proved a brand theme can be generated, but it has not been generated and applied to commerce pages. Starter-template commerce families consume --brand--* tokens; without the brand layer they ship the starter palette.",
+      "status": "pass",
+      "code": "theme_gate.applied",
+      "reason": "Brand theme is applied after next-core.css on commerce pages.",
       "commerce_pages": [
         "checkout",
         "offer-1",
@@ -3627,62 +3514,50 @@
       ],
       "commerce_pages_out_of_scope": [],
       "waiver": null,
-      "required_actions": [
-        {
-          "id": "theme_generate",
-          "kind": "command",
-          "command": "campaigns-os theme generate --packet /home/user/App/campaigns/skinofab/campaign-runtime.build.json",
-          "description": "Generate .campaign-runtime/theme/brand-theme.css from the inspected source tokens."
-        },
-        {
-          "id": "apply_brand_layer",
-          "kind": "manual",
-          "command": null,
-          "description": "Copy brand-theme.css into the campaign assets/css folder, list it after next-core.css in the frontmatter styles of the commerce pages that render family components, rebuild, run campaigns-os record build, then campaigns-os record theme --packet /home/user/App/campaigns/skinofab/campaign-runtime.build.json, which records report.theme from the built pages."
-        },
-        {
-          "id": "waive_theme",
-          "kind": "command",
-          "command": "campaigns-os theme waive --packet /home/user/App/campaigns/skinofab/campaign-runtime.build.json --reason \"<why the starter palette is acceptable>\" --waived-by \"<named human>\"",
-          "description": "Or record an explicit operator waiver instead of applying the brand layer."
-        }
-      ]
+      "required_actions": []
     },
     "polish_gate": {
-      "status": "not_applicable",
-      "code": "polish.not_applicable",
-      "reason": "Assembly is not completed yet; polish evidence is required after build completion."
+      "status": "pass",
+      "code": "polish.evidence_current",
+      "reason": "Polish evidence is current, structured, and produced by next-campaigns-polish.",
+      "build_fingerprint": "sha256:467de24b221904e3b8051f615731a1fcb9bb56ea5f2f5383da85aa1512a561b9",
+      "source_build_fingerprint": "sha256:467de24b221904e3b8051f615731a1fcb9bb56ea5f2f5383da85aa1512a561b9",
+      "source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
+      "current_source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
+      "assembly_source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
+      "performed_by": "next-campaigns-polish",
+      "waiver": null,
+      "warnings": [],
+      "owned_checkpoint_id": "polish.hidden_eager_media",
+      "owned_checkpoint_status": "pass",
+      "owned_checkpoint_only": false
     }
   },
   "next": {
-    "stage": "build",
+    "stage": "qa",
     "status": "ready_with_warnings",
     "stage_blocked": false,
-    "owner": "build",
-    "default_skill": "next-campaigns-build",
-    "command": "npx --no-install campaigns-os next build --packet ./campaign-runtime.build.json",
-    "reason": "Stage \"assembly\" has status \"pending\"; run \"build\" next.",
+    "owner": "qa",
+    "default_skill": "next-campaigns-qa",
+    "command": "npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json",
+    "reason": "QA recorded zero executed order paths, so a declared \"common\" order-path depth is not proved. A `--test-order off` run is a diagnostic, not purchase proof; re-run QA at the declared depth or change the declared depth deliberately.",
     "actions": [
-      "Use the template agentContract to replace demo values from CampaignSpec/API."
+      "Run npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json."
     ],
     "blocked_stages": []
   },
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "doctor",
-    "total": 30,
+    "total": 8,
     "counts": {
-      "caused_by_change": 29,
-      "pre_existing": 1,
+      "caused_by_change": 0,
+      "pre_existing": 8,
       "test_environment": 0,
       "upstream_drift": 0,
       "unknown": 0
     },
-    "prior_run_id": "run_1793201833092_0994c5d5",
+    "prior_run_id": "run_1793270414928_af54ec6a",
     "comparison": "prior_run"
-  },
-  "stale": true,
-  "stale_marked_by": "record build",
-  "stale_marked_at": "2026-10-29T10:40:28.637Z",
-  "stale_reason": "stages.assembly was recorded after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
+  }
 }

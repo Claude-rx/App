@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVTESAIYGUQ0GE9LS74IKN3JE6",
+  "run_id": "MVTK946MG7GQBTEJ7QDTHS1EID",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2221,
   "spec_version": "5.0",
-  "spec_hash": "sha256:e053ce74c08fa44628219ccd9067f8b8c44ea66dc51bd261336f94871110424a",
-  "started_at": "2026-10-29T10:36:56.266Z",
-  "completed_at": "2026-10-29T10:37:40.125Z",
-  "generated_at": "2026-10-29T10:37:40.159Z",
+  "spec_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
+  "started_at": "2026-10-29T13:09:59.278Z",
+  "completed_at": "2026-10-29T13:10:51.677Z",
+  "generated_at": "2026-10-29T13:10:51.718Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -506,7 +506,10 @@
       "id": "browser-primary-cta:checkout",
       "family": "browser-runtime",
       "page": "checkout",
-      "status": "pass"
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "browser-payment-surface:checkout",
@@ -597,6 +600,15 @@
       "family": "browser-runtime",
       "page": "checkout",
       "status": "pass"
+    },
+    {
+      "id": "browser-request-failures:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "browser-load:offer-1",
@@ -938,10 +950,8 @@
       "id": "qc.policy.presence:store_terms",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass",
+      "severity": "info"
     },
     {
       "id": "qc.policy.availability:store_terms",
@@ -954,10 +964,8 @@
       "id": "qc.policy.presence:store_privacy",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass",
+      "severity": "info"
     },
     {
       "id": "qc.policy.availability:store_privacy",
@@ -970,10 +978,8 @@
       "id": "qc.policy.presence:store_returns",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass",
+      "severity": "info"
     },
     {
       "id": "qc.policy.availability:store_returns",
@@ -986,10 +992,8 @@
       "id": "qc.policy.presence:store_shipping",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass",
+      "severity": "info"
     },
     {
       "id": "qc.policy.availability:store_shipping",
@@ -1002,10 +1006,8 @@
       "id": "qc.policy.presence:store_contact",
       "family": "browser-runtime",
       "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
+      "status": "pass",
+      "severity": "info"
     },
     {
       "id": "qc.policy.availability:store_contact",
@@ -1057,45 +1059,18 @@
   "test_orders": [],
   "exceptions": [
     {
-      "id": "qc.policy.presence:store_terms",
+      "id": "browser-primary-cta:checkout",
       "family": "browser-runtime",
-      "page": "campaign",
-      "status": "warn",
+      "page": "checkout",
+      "status": "manual_review",
       "severity": "warn",
       "cause": "caused_by_change",
       "cause_reason": "new_since_prior_run"
     },
     {
-      "id": "qc.policy.presence:store_privacy",
+      "id": "browser-request-failures:checkout",
       "family": "browser-runtime",
-      "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "qc.policy.presence:store_returns",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "qc.policy.presence:store_shipping",
-      "family": "browser-runtime",
-      "page": "campaign",
-      "status": "warn",
-      "severity": "warn",
-      "cause": "caused_by_change",
-      "cause_reason": "new_since_prior_run"
-    },
-    {
-      "id": "qc.policy.presence:store_contact",
-      "family": "browser-runtime",
-      "page": "campaign",
+      "page": "checkout",
       "status": "warn",
       "severity": "warn",
       "cause": "caused_by_change",
@@ -1123,9 +1098,9 @@
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "qa",
-    "total": 7,
+    "total": 4,
     "counts": {
-      "caused_by_change": 5,
+      "caused_by_change": 2,
       "pre_existing": 2,
       "test_environment": 0,
       "upstream_drift": 0,

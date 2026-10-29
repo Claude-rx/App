@@ -28,8 +28,8 @@
   },
   "spec": {
     "path": "./campaign-spec.apf.json",
-    "hash": "48203d37c01e0e28cd5b823512c194b66db21c383ad4135ed39110516a2c57a4",
-    "material_hash": "sha256:399e8176423e5b68d1cc25747937fc6774921ac0da2c70992d42a86c87501006",
+    "hash": "df49043ca3ff8a7b48aa1032e60e3d84e4680b9a1a2066590152c6c244b84d96",
+    "material_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
     "active_pages": [
       {
         "id": "listicle",
@@ -40,7 +40,7 @@
       {
         "id": "offer",
         "type": "landing",
-        "label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts",
+        "label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts, refills at the same price",
         "page_url": "adaptive-foundation-offer/"
       },
       {
