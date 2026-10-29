@@ -55,8 +55,11 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
 1. **Cancel the QA test orders** (test card, no charge, flagged as tests; real orders in the store):
    101520 to 101525 and 101527, 101528, 101530, 101531 (Campaigns OS QA, `qa-test@campaigns-os.test`), 101534 and
    101536 (the live proofs, `qa-live@skinofab.test`), all on campaign 2211; on campaign 2221: 101552, 101554, 101555,
-   101557, 101558, 101561, 101563 (Campaigns OS and the local proof, both test emails) and **101565** (the live proof
-   on try.skinofab.com, `qa-live@skinofab.test`). The stick funnel's are listed in `docs/stick-funnel.md`.
+   101557, 101558, 101561, 101563 (Campaigns OS and the local proof, both test emails), **101565** (the live proof
+   on try.skinofab.com, `qa-live@skinofab.test`) and the AppLovin walks of 29 Oct: **101586, 101588, 101594**
+   (101588 carries a doubled $150 line from the cart bug fixed that morning, see "AppLovin Axon"). The storefront's
+   AppLovin proof is **101593** (`qa-live@example.com`, store checkout), and it started test subscription **100**:
+   cancel both. The stick funnel's are listed in `docs/stick-funnel.md`.
 2. **The gifts.** The 2- and 3-bottle packs promise a SKINOFAB Blender brush and a mystery gift; the 3-bottle pack and
    offer 1's 6-bottle pack a Lymphatic Brush with its travel case. Fulfilment must pack them: the campaign's packages
    name them in their titles (the store sees "2 bottles + free gifts"), nothing else tells the warehouse.
@@ -67,13 +70,69 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
 4. **Store prices quoted.** The pages say the store sells one bottle for $47 and the 2-pack for $57 without the brush,
    and the brush for $24.95 (the 3-pack of brushes at $16.63 each). If a store price changes, change `why_now` on the
    sales page and the "reserved for you" copy in `tools/funnel/apf/offer_pages.py`, and rebuild.
-5. **Tracking (before paid traffic).** `gtm_id` and `fb_pixel_id` on the `apf-funnel` entry of
-   `campaigns/skinofab/_data/campaigns.json` are empty, so no tags load. Set them, and enable the matching providers in
-   `src/apf-funnel/assets/config.js`.
+5. **Tracking (before paid traffic).** AppLovin Axon is on, on every page (see "AppLovin Axon" below). `gtm_id` and
+   `fb_pixel_id` on the `apf-funnel` entry of `campaigns/skinofab/_data/campaigns.json` are still empty, so no GTM or
+   Meta tags load. Set them, and enable the matching providers in `src/apf-funnel/assets/config.js`.
+   **Tell whoever reads the AppLovin dashboard:** Axon has no custom event names, so each accepted offer is reported
+   as one more `purchase`, with its own transaction id (`<order ref>-US1`, `-US2`). Revenue is right; the purchase
+   count is higher than the order count.
 6. **Shipping promise.** The pages promise "ships within 1 business day, free and tracked: 2–4 business days in the US,
    6–9 to Europe, 8–12 elsewhere" (the store's shipping policy). Keep the policy and the pages in step.
 7. **The mystery gift** is "a mystery gift from our range", valued at $15 on the value stack. Decide what ships (a
    deluxe sample of the balm or the serum fits) and keep its value honest.
+
+## AppLovin Axon
+
+One AppLovin event key (`a156ae42-…-0d43c77eda18`, the key in the store's AppLovin app) tracks the funnels and the
+store. Proven live on 29 Oct 2026 with the funnel walks below and a storefront order.
+
+**Funnels (both).** `axon_event_key` is set on the `apf-funnel` and `stick-funnel` entries of
+`campaigns/skinofab/_data/campaigns.json`; GTM and Meta keys are untouched. The build then puts the Axon base code in
+the head of every page (`_includes/analytics-head.html`, production builds only) and loads two scripts after it:
+`js/next-forwarder-core.js` (reads the SDK's `dl_*` events) and `js/axon.adapter.js` (sends them to Axon). Both are
+the starter templates' Route C files, generated upstream: edit them there, never here
+(reference: NextCommerceCo/campaign-cart-starter-templates, `_shared/analytics/README.md`).
+`deploy_theme.py` copies the two scripts into the theme as hashed assets (`sfa-…`, `sfc-…`), rewrites their tags,
+and stops the deploy when any page, upsells and thank-you included, lacks the base code or either script, or loads
+the adapter before the core.
+
+| Page | Events sent to Axon |
+|---|---|
+| Listicle | page_view |
+| Sales page | view_item (the featured pack, from its `next-analytics-view-item` tag), page_view, add_to_cart (the pack the checkout button names) |
+| Checkout | page_view, begin_checkout, add_payment_info |
+| First offer page | page_view, purchase (the order: value, currency, transaction id = order number, tax, shipping) |
+| Each offer page | page_view, view_item; an accepted offer sends another purchase with transaction id `<order ref>-US<n>` |
+| Thank-you | page_view |
+
+**Add to cart never touches the cart.** The checkout buttons call `next.trackAddToCart(package, 1)` (the SDK's
+tracking call) and then follow the link. A cart add there (`next.addItem`) doubles the order, because the
+checkout's pack selector keeps every line it did not add itself and then adds the pack `forceBundleId` names: on
+29 Oct a $75 pack reached the checkout as $150 for eight minutes after a push (test order 101588; no real order was
+placed in that window). `check_apf.py` and `check_funnel.py` now fail on a cart call in the funnel scripts, on a
+checkout button that is not reported, and on a sales page without its view-item tag.
+
+**Testing.** Open the listicle with `?debugger=true` (add `&nfdebug=true` for the forwarder's console lines) in a
+fresh tab, with the AppLovin Pixel Helper open. **Do not add `?ignore=true`:** it turns the SDK's analytics off for
+the whole tab session, so no event reaches Axon at all. The store's page cache (30 minutes) can serve the previous
+build after a push; the `preview_theme=34` cookie skips it. The walk tool records the same thing headless:
+
+    FUNNEL=apf node tools/funnel/live_order.mjs https://try.skinofab.com <out> \
+      --entry '?debugger=true&nfdebug=true' --track --path accept --cookie preview_theme=34
+
+It writes `tracking.json` (every `axon()` call per page, AppLovin's requests, and pass/fail per event). Live proofs:
+**101594** (APF: page_view, view_item 57, add_to_cart 75, begin_checkout 75, purchase 75, purchase 39 `…-US1`) and
+**101596** (stick: the same events, purchase 47 and 18 `…-US1`). Funnel test orders are reported to AppLovin as
+purchases: the adapter has no test-order filter.
+
+**Store front.** The AppLovin app covers it with no theme code: it loads the pixel in the head of every store page
+and runs a tracker in the platform's customer-event frame (`/pixels/customer-events/1/`, rendered by the theme's
+`{% pixels %}` block). It sends page_view, view_item (product page), add_to_cart and remove_from_cart (cart drawer),
+begin_checkout (store checkout) and purchase (order status page). Proven on 29 Oct: home, product page, add to cart,
+checkout and test order 101593 sent every event but purchase. The purchase was held back on purpose: the app's
+**Skip test orders** setting is on, so a test order sends none; a real order does. To see a storefront purchase in
+the Pixel Helper with a test card, switch that setting off in the app for the test, then on again. Funnel pages do
+not load the app's code, so nothing is counted twice.
 
 ## Commerce (Campaigns App campaign 2221)
 
@@ -281,6 +340,17 @@ checks take their numbers from the spec. The theme serves this funnel's assets f
   cookie on the first page, and every page after it is served from the theme as pushed.
 
 ### Campaigns OS
+
+**Run 4, after the AppLovin wiring (29 Oct 2026):** Campaigns OS proves a local build in its development render, and
+since the Axon base code is production-only the two renders now differ, so the lifecycle runs on
+`CPK_ENV=development npx --no-install campaign-build` and the theme deploy on the production build (`npm run build`;
+`deploy_theme.py` refuses a page without the base code, so a development render cannot reach the store). Build
+recorded, polish capture READY (the production render's capture fails here only because this sandbox cannot reach
+AppLovin's `re.applovin.com`), polish recorded, Page Kit parity passed with the Axon lines as the only
+environment-gated difference, deploy recorded on the served build, then `qa run --browser` without test orders:
+verdict `MVT375YGKUMEV7UA4LCKL68DO5`, **ready_with_exceptions**, 159 pass, 7 skipped, 1 manual_review, 1 warn. The
+manual review is the offer-page action coverage that only test orders exercise (the three live walks above did); the
+warning is the pre-existing `price-claim-mismatch:offer-1` explained under run 2.
 
 **Run 3, on campaign 2221 and the v2 pages (28 Oct 2026):** the lifecycle started again from the new CampaignSpec
 (`start --force`, setup, doctor, build and theme recorded, Page Kit parity, polish capture READY with no hidden eager

@@ -60,6 +60,29 @@
 
 
 
+<script>
+  var AXON_EVENT_KEY = "a156ae42-0799-457e-b1a2-0d43c77eda18";
+  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
+  axon("init");
+  // Exposed for axon.adapter.js: confirms Axon is active + supplies per-campaign event toggles.
+  // allowed_events: ""=default main set, "all"=every mapped event, or a subset; blocked removes from allowed.
+  window.__axonEventKey = AXON_EVENT_KEY;
+  window.__axonAllowedEvents = "";
+  window.__axonBlockedEvents = "";
+</script>
+
+
+
+
+
+
+
+
+<script src="{% endverbatim %}{{ 'sfc/sfc-next-forwarder-core-fc21de.js'|asset_url }}{% verbatim %}"></script>
+
+<script src="{% endverbatim %}{{ 'sfc/sfc-axon-adapter-9a3ab4.js'|asset_url }}{% verbatim %}"></script>
+
+
 
 
 

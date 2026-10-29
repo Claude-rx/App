@@ -44,6 +44,7 @@
   <script src="{% endverbatim %}{{ 'sfc/sfc-config-18e8d6.js'|asset_url }}{% verbatim %}"></script>
   <meta name="next-funnel" content="SKINOFAB Foundation Stick">
   <meta name="next-page-type" content="product">
+  <meta name="next-analytics-view-item" content="2">
   
   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
@@ -54,6 +55,29 @@
 
 
 
+
+
+<script>
+  var AXON_EVENT_KEY = "a156ae42-0799-457e-b1a2-0d43c77eda18";
+  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
+  axon("init");
+  // Exposed for axon.adapter.js: confirms Axon is active + supplies per-campaign event toggles.
+  // allowed_events: ""=default main set, "all"=every mapped event, or a subset; blocked removes from allowed.
+  window.__axonEventKey = AXON_EVENT_KEY;
+  window.__axonAllowedEvents = "";
+  window.__axonBlockedEvents = "";
+</script>
+
+
+
+
+
+
+
+
+<script src="{% endverbatim %}{{ 'sfc/sfc-next-forwarder-core-fc21de.js'|asset_url }}{% verbatim %}"></script>
+
+<script src="{% endverbatim %}{{ 'sfc/sfc-axon-adapter-9a3ab4.js'|asset_url }}{% verbatim %}"></script>
 
 
 
@@ -114,7 +138,7 @@
       <fieldset class="sf-packs" data-sf-packs>
         <legend>Choose your pack</legend>
         
-        <label class="sf-pack" data-pack="stick-1" data-price="$37" data-compare="" data-every="28" data-label="1 stick with Automatic Refills">
+        <label class="sf-pack" data-pack="stick-1" data-price="$37" data-compare="" data-every="28" data-label="1 stick with Automatic Refills" data-package="1">
           
           <input type="radio" name="sf_pack" value="stick-1">
           <span class="sf-pack__row">
@@ -127,7 +151,7 @@
           
         </label>
         
-        <label class="sf-pack is-on" data-pack="stick-2" data-price="$47" data-compare="$74" data-every="56" data-label="2 sticks with Automatic Refills, $23.50 a stick">
+        <label class="sf-pack is-on" data-pack="stick-2" data-price="$47" data-compare="$74" data-every="56" data-label="2 sticks with Automatic Refills, $23.50 a stick" data-package="2">
           <em class="sf-pack__tab">Best value</em>
           <input type="radio" name="sf_pack" value="stick-2" checked>
           <span class="sf-pack__row">
@@ -350,7 +374,7 @@
 </footer>
 
 
-  <script src="{% endverbatim %}{{ 'sfc/sfc-sf-funnel-d0ecd8.js'|asset_url }}{% verbatim %}" defer></script>
+  <script src="{% endverbatim %}{{ 'sfc/sfc-sf-funnel-3e4a62.js'|asset_url }}{% verbatim %}" defer></script>
   
 </body>
 </html>

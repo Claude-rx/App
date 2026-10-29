@@ -16,6 +16,13 @@
 //   --resume <ref_id> [--start <page file>]  skip the checkout: walk the offers of an order already placed, from that page
 //   --cookie name=value[;name=value]  cookies set on the host before the first page: the store's theme preview
 //            (preview_theme=<id>) serves the theme as pushed, skipping the store's 30-minute page cache
+//   --entry <query>  start on the funnel's first page (the listicle) with this query (e.g. '?debugger=true&nfdebug=true')
+//            and click through as a shopper does: the listicle's offer link, then the sales page's checkout button (the
+//            pack is whatever that button carries). Without it the walk opens the checkout directly.
+//   --track  record the AppLovin Axon tracking: every axon(...) call on every page (a transparent Proxy on window.axon,
+//            kept in sessionStorage across the funnel's pages), every request to AppLovin's hosts, the forwarder's
+//            debug lines; writes tracking.json and a per-page summary of the events. NB: the SDK's ?ignore=true turns
+//            its analytics off for the whole session (no dl_* event, so nothing reaches Axon): leave it out to test.
 // Writes a screenshot per step and order.json (order number, lines, terms, total) to <out-dir>; exits 1 when a step
 // does not arrive where the page routes it.
 //
@@ -27,8 +34,8 @@ import fs from 'node:fs';
 const [host, out] = process.argv.slice(2);
 const opt = (name, dflt) => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : dflt; };
 const FUNNELS = {
-  stick: { checkout: 'stick-checkout', pack: 'stick-2', first: 'stick-special-1', thankYou: 'stick-thank-you' },
-  apf: { checkout: 'foundation-checkout', pack: 'apf-2', first: 'foundation-offer-1', thankYou: 'foundation-thank-you' },
+  stick: { listicle: '10-reasons-foundation-stick', sales: 'foundation-stick-offer', checkout: 'stick-checkout', pack: 'stick-2', first: 'stick-special-1', thankYou: 'stick-thank-you' },
+  apf: { listicle: '10-reasons-adaptive-foundation', sales: 'adaptive-foundation-offer', checkout: 'foundation-checkout', pack: 'apf-2', first: 'foundation-offer-1', thankYou: 'foundation-thank-you' },
 };
 const FN = FUNNELS[process.env.FUNNEL || 'stick'];
 const path = opt('--path', 'decline').split(',');
@@ -37,6 +44,8 @@ const tier = opt('--tier', null);
 const resume = opt('--resume', null);                  // an order's ref_id: start on an offer page with it
 const start = opt('--start', FN.first);                // with --resume: the page to start on
 const cookies = opt('--cookie', '');                   // name=value[;name=value], set on the host before the first page
+const entry = opt('--entry', null);                     // a query: start on the listicle and click through to the checkout
+const track = process.argv.includes('--track');          // record the Axon calls and AppLovin requests (tracking.json)
 const CARD = '6011111111111117', CVV = '123';          // NEXT's test card (as Campaigns OS's QA uses)
 const ADDRESS = { fname: 'Quinn', lname: 'Tester', email: 'qa-live@skinofab.test', address1: '1600 Amphitheatre Pkwy',
   city: 'Mountain View', province: 'CA', postal: '94043' };
@@ -48,9 +57,31 @@ const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, l
 if (cookies) await ctx.addCookies(cookies.split(';').filter(Boolean).map((kv) => {
   const [name, ...rest] = kv.split('='); return { name: name.trim(), value: rest.join('=').trim(), domain: new URL(host).hostname, path: '/' };
 }));
+// --track: window.axon becomes a Proxy of itself the moment the base code defines it, so every call (init, each track)
+// is recorded and still reaches AppLovin unchanged (property reads and writes, e.g. pixel.js's performOperation, pass
+// straight through to the real function); the log lives in sessionStorage, which every funnel page on the host shares
+const AXON_HOSTS = /axon\.ai|albss\.com|applovin\.com/;
+const tracked = { requests: [], failed: [], forwarder: [] };
+if (track) {
+  await ctx.addInitScript(() => {
+    const KEY = '__lo_axon_calls';
+    const save = (rec) => { try { const a = JSON.parse(sessionStorage.getItem(KEY) || '[]'); a.push(rec); sessionStorage.setItem(KEY, JSON.stringify(a)); } catch (e) {} };
+    let real;
+    Object.defineProperty(window, 'axon', { configurable: true, enumerable: true,
+      get() { return real; },
+      set(v) { real = typeof v === 'function' ? new Proxy(v, { apply(t, self, args) {
+        try { save({ page: location.pathname, at: Date.now(), args: JSON.parse(JSON.stringify([...args])) }); } catch (e) {}
+        return Reflect.apply(t, self, args); } }) : v; } });
+  });
+  ctx.on('request', (r) => { if (AXON_HOSTS.test(r.url())) tracked.requests.push({ from: (() => { try { return new URL(r.frame().url()).pathname; } catch (e) { return ''; } })(), method: r.method(), url: r.url().slice(0, 160), body: (r.postData() || '').slice(0, 300) }); });
+  ctx.on('requestfailed', (r) => { if (AXON_HOSTS.test(r.url())) tracked.failed.push({ url: r.url().slice(0, 160), error: r.failure()?.errorText }); });
+}
 const page = await ctx.newPage();
 const errors = [];
-page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text().slice(0, 200)); });
+page.on('console', (m) => {
+  if (m.type() === 'error') errors.push(m.text().slice(0, 200));
+  if (track && /\[NextForwarder\]|tracking skipped due to ignore|Analytics ignored/.test(m.text())) tracked.forwarder.push({ page: (() => { try { return new URL(page.url()).pathname; } catch (e) { return ''; } })(), text: m.text().slice(0, 200) });
+});
 const log = [];
 const step = async (name, fn) => {
   const t0 = Date.now();
@@ -77,17 +108,61 @@ const retypeErrored = async () => {
 };
 const arrive = async (file) => page.waitForURL(new RegExp(`/${file}/`), { timeout: 90000 });
 const fileOf = (u) => new URL(u, host).pathname.split('/').filter(Boolean).pop();
+// --track: the recorded calls, as {page, event, value, currency, transaction_id, items}, and what they prove
+const trackingReport = async () => {
+  await page.waitForTimeout(4000);                       // the last page's events (the thank-you page's purchase)
+  const calls = await page.evaluate(() => { try { return JSON.parse(sessionStorage.getItem('__lo_axon_calls') || '[]'); } catch (e) { return []; } }).catch(() => []);
+  const events = calls.filter((c) => c.args[0] === 'track').map((c) => {
+    const p = c.args[2] || {};
+    return { page: c.page.split('/').filter(Boolean).pop() || '/', event: c.args[1], value: p.value, currency: p.currency,
+      transaction_id: p.transaction_id, items: (p.items || []).map((i) => `${i.quantity}x ${i.item_name || i.item_id}`).join(', ') };
+  });
+  const pages = [...new Set(log.map((l) => { try { return fileOf(l.url); } catch (e) { return ''; } }).filter(Boolean))];
+  const purchases = events.filter((e) => e.event === 'purchase');
+  const has = (n) => events.some((e) => e.event === n);
+  const checks = {
+    init_on_every_page: pages.every((pg) => calls.some((c) => c.args[0] === 'init' && c.page.includes(`/${pg}/`))),
+    page_view_on_every_page: pages.every((pg) => events.some((e) => e.event === 'page_view' && e.page === pg)),
+    view_item: has('view_item'), add_to_cart: has('add_to_cart'), begin_checkout: has('begin_checkout'),
+    purchase: purchases.some((e) => e.transaction_id && !/-US\d+$/.test(String(e.transaction_id))),
+    upsell_purchase: purchases.some((e) => /-US1$/.test(String(e.transaction_id || ''))),
+    every_purchase_has_value_currency_id: purchases.every((e) => e.value !== undefined && e.currency && e.transaction_id),
+  };
+  return { pages, events, checks, init_calls: calls.filter((c) => c.args[0] === 'init').length,
+    requests: tracked.requests.length, request_hosts: [...new Set(tracked.requests.map((r) => new URL(r.url).host))],
+    failed_requests: tracked.failed, forwarder_log: tracked.forwarder.slice(0, 80), raw: tracked.requests.slice(0, 60) };
+};
 
-let result = { funnel: process.env.FUNNEL || 'stick', host, pack, path };
+let result = { funnel: process.env.FUNNEL || 'stick', host, pack, path, entry };
 try {
   if (!resume) {
+  if (entry) {
+    // as a shopper arrives: the listicle, its offer link, the sales page, its checkout button
+    await step('listicle', async () => {
+      await page.goto(`${host}/${FN.listicle}/${entry}`, { waitUntil: 'load', timeout: 60000 });
+      await page.waitForTimeout(3000);
+      const cta = page.locator(`a[href*="/${FN.sales}/"]:visible`).first();
+      await cta.click({ timeout: 15000 });
+      await arrive(FN.sales);
+    });
+    await step('sales-page', async () => {
+      await page.waitForTimeout(3000);
+      const buy = page.locator(`#offer a[href*="/${FN.checkout}/"]:visible, a[href*="/${FN.checkout}/"]:visible`).first();
+      await buy.scrollIntoViewIfNeeded();
+      await buy.click({ timeout: 15000 });
+      await arrive(FN.checkout);
+      result.pack = new URL(page.url()).searchParams.get('forceBundleId') || result.pack;
+    });
+  }
   await step('checkout', async () => {
-    await page.goto(`${host}/${FN.checkout}/?forceBundleId=${pack}`, { waitUntil: 'load', timeout: 60000 });
+    if (!entry) await page.goto(`${host}/${FN.checkout}/?forceBundleId=${pack}`, { waitUntil: 'load', timeout: 60000 });
     await page.waitForFunction(() => [...document.querySelectorAll('[data-next-bundle-card] .bundle-card__price-total')]
       .some((e) => /\$\d/.test(e.textContent)), null, { timeout: 30000 });
-    // the SDK binds the form after it has priced the cards: the country select gets its options last. A field typed
-    // before that keeps its value but not the SDK's state ("Enter a first name" on a filled field)
-    await page.waitForFunction(() => document.querySelectorAll('[data-next-checkout-field="country"] option').length > 1, null, { timeout: 30000 });
+    // the SDK binds the form after it has priced the cards: its address block turns ready and the country select gets
+    // its options last (one, the US, on a campaign that ships nowhere else). A field typed before that keeps its value
+    // but not the SDK's state ("Enter a first name" on a filled field)
+    await page.waitForFunction(() => document.querySelector('[data-next-address="shipping"][data-next-address-state="ready"]')
+      && document.querySelectorAll('[data-next-checkout-field="country"] option').length > 0, null, { timeout: 30000 });
     await page.waitForTimeout(1500);
   });
   await step('details', async () => {
@@ -188,6 +263,11 @@ try {
 }
 result.steps = log;
 result.console_errors = errors.slice(0, 10);
+if (track) {
+  const t = await trackingReport();
+  fs.writeFileSync(`${out}/tracking.json`, JSON.stringify(t, null, 2));
+  result.tracking = { checks: t.checks, events: t.events.map((e) => [e.page, e.event, e.value, e.currency, e.transaction_id].filter((x) => x !== undefined).join(' | ')) };
+}
 fs.writeFileSync(`${out}/order.json`, JSON.stringify(result, null, 2));
 console.log(JSON.stringify(result, null, 2));
 await browser.close();

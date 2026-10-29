@@ -9,6 +9,7 @@ preload_image: "images/sf/g-one-stick.jpg"
 meta_tags:
   next-funnel: "SKINOFAB Foundation Stick"
   next-page-type: "product"
+  next-analytics-view-item: "2"   # the SDK's dl_view_item for the featured 2-stick pack (campaign package 2): view_item for the ad pixels
 # The store's stick page (tools/persona/stick_copy.py) in the funnel: its gallery, buy box, refill row, guarantee,
 # tabs and FAQ (the last two generated from stick_copy.py by tools/funnel/copy_includes.py). The two packs are the
 # campaign's packages 1 and 2 (tools/funnel/funnel.py): tools/funnel/check_funnel.py checks their prices here against
@@ -135,7 +136,7 @@ compare:
       <fieldset class="sf-packs" data-sf-packs>
         <legend>Choose your pack</legend>
         {% for p in packs %}
-        <label class="sf-pack{% if p.selected %} is-on{% endif %}" data-pack="{{ p.id }}" data-price="{{ p.price }}" data-compare="{{ p.compare }}" data-every="{{ p.every }}" data-label="{{ p.label }}">
+        <label class="sf-pack{% if p.selected %} is-on{% endif %}" data-pack="{{ p.id }}" data-price="{{ p.price }}" data-compare="{{ p.compare }}" data-every="{{ p.every }}" data-label="{{ p.label }}" data-package="{{ p.package }}">
           {% if p.tab %}<em class="sf-pack__tab">{{ p.tab }}</em>{% endif %}
           <input type="radio" name="sf_pack" value="{{ p.id }}"{% if p.selected %} checked{% endif %}>
           <span class="sf-pack__row">

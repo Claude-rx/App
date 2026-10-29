@@ -72,3 +72,36 @@
     }).observe(buyBtn);
   }
 })();
+
+// The checkout buttons ([data-sf-cta]): the pack they name is reported as an add to cart first (next.trackAddToCart: the
+// SDK's own tracking call, which pushes its dl_add_to_cart, the add_to_cart the ad pixels read, and leaves the cart
+// alone), then the link is followed and the checkout builds the cart from the pack its forceBundleId names. Never a
+// cart add here: the checkout's pack selector keeps every line it did not add itself, so a pack put in the cart on this
+// page would be bought twice. The link wins whenever the event cannot go first: the SDK not ready, a click that opens
+// a new tab, an error, or 1.2 s.
+(function () {
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[data-sf-cta]') : null;
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var sdk = window.next;
+    if (!sdk || typeof sdk.trackAddToCart !== 'function') return;
+    var m = /forceBundleId=([^&#]+)/.exec(a.href);
+    var card = m && document.querySelector('.sf-pack[data-pack="' + m[1] + '"]');
+    var pkg = card ? parseInt(card.getAttribute('data-package'), 10) : NaN;
+    if (!pkg) return;
+    e.preventDefault();
+    var href = a.href, gone = false;
+    var go = function () { if (!gone) { gone = true; window.location.href = href; } };
+    setTimeout(go, 1200);
+    var from = (window.NextDataLayer || []).length;
+    Promise.resolve(sdk.trackAddToCart(pkg, 1))
+      .then(function () {
+        (function wait(n) {                                  // the SDK pushes dl_add_to_cart a microtask later
+          var l = window.NextDataLayer || [];
+          for (var i = from; i < l.length; i++) if (l[i] && l[i].event === 'dl_add_to_cart') { setTimeout(go, 200); return; }
+          if (n > 0) setTimeout(function () { wait(n - 1); }, 25); else go();
+        })(40);
+      })
+      .catch(go);
+  }, true);
+})();

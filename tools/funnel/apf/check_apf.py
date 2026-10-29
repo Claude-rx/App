@@ -323,6 +323,16 @@ for p in F.PAGES:
         if p['sdk'] != 'upsell': fail(p['id'], 'a countdown on a page that is not an offer')
     if 'images/sf/review-' in h and 'earlier store' not in text(h): fail(p['id'], 'buyers\' reviews without where they are from')
 
+
+# the sales page reports its pack to the ad pixels (AppLovin Axon) without touching the cart: view_item from its
+# next-analytics-view-item tag, add_to_cart from next.trackAddToCart on the checkout button. A cart add there
+# (next.addItem) doubles the order, because the checkout's pack selector keeps every line it did not add itself and
+# then adds the pack its forceBundleId names (live 29 Oct: a $75 pack reached the checkout as $150).
+_js = (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8')
+if re.search(r'\.(?:addItem|clearCart|swapPackage)\(', _js): fail('offer', 'sf-apf.js changes the cart (next.addItem/clearCart): the checkout would sell the pack twice')
+if 'trackAddToCart(' not in _js: fail('offer', 'sf-apf.js does not report the checkout button as an add_to_cart')
+if not re.search(r'<meta name="next-analytics-view-item" content="\d+">', html('offer')): fail('offer', 'no next-analytics-view-item tag (no view_item for the ad pixels)')
+
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)
 print(f'check_apf: {len(F.PAGES)} pages ok')

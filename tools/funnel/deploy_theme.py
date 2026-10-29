@@ -15,8 +15,16 @@ routing meta tags move from /stick-funnel/<file>/ to /<file>/.
 Everything this writes is marked GENERATED (with the funnel's slug) and is replaced on every run: templates/pages/
 page.<file>.html for the funnel's pages (stale ones with this funnel's marker are removed) and the whole
 assets/<funnel ASSET_DIR>/ folder (sfc/ for the stick funnel, sfa/ for the foundation's).
+
+Tracking (Route C, _includes/analytics-head.html): for every vendor id set on the campaign in _data/campaigns.json
+(axon_event_key, ga4_id, …), each page must carry the vendor's base code, the shared js/next-forwarder-core.js and the
+vendor's js/<vendor>.adapter.js, the core before the adapter, in the head; and after the rewrite both scripts must load
+from theme assets (assets/<ASSET_DIR>/<ASSET_DIR>-next-forwarder-core-<hash6>.js, …-axon-adapter-<hash6>.js). The
+storefront's own {% pixels %} never renders here (the templates have no base layout), so these are the funnel's only
+tracking. A page that misses any of it stops the run: the upsell and thank-you pages most of all, where the purchases
+fire.
 """
-import hashlib, re, shutil, sys
+import hashlib, json, re, shutil, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -32,6 +40,53 @@ CSS_URL = re.compile(r'url\(\s*([\'"]?)([^\'")]+)\1\s*\)')
 # mixed units ("Incompatible units: 'px' and 'vw'"). CSS function names are case-insensitive and Sass's are not, so the
 # upper-case spelling passes through to the browser unchanged in meaning.
 SASS_MINMAX = re.compile(r'(?<![\w-])(min|max)\(')
+
+
+# the Route C vendors of _includes/analytics-head.html: campaigns.json id -> (adapter file, a marker of its base code)
+VENDORS = {
+    'axon_event_key': ('axon.adapter.js', 'axon("init")'),
+    'ga4_id': ('ga4.adapter.js', "gtag('config'"),
+    'taboola_account_id': ('taboola.adapter.js', 'window._tfa'),
+    'triplewhale_name': ('triplewhale.adapter.js', 'TriplePixel'),
+    'tiktok_pixel_id': ('tiktok.adapter.js', 'ttq.load'),
+    'northbeam_client_id': ('northbeam.adapter.js', 'northbeam'),
+    'snap_pixel_id': ('snapchat.adapter.js', "snaptr('init'"),
+    'pinterest_tag_id': ('pinterest.adapter.js', "pintrk('load'"),
+}
+CORE = 'next-forwarder-core.js'
+
+
+def tracking(site):
+    """The campaign's Route C vendors: {id key: (value, adapter file, base-code marker)} from _data/campaigns.json."""
+    data = json.loads((site.resolve().parents[1] / '_data' / 'campaigns.json').read_text(encoding='utf-8'))[F.SLUG]
+    return {k: (str(data[k]), a, m) for k, (a, m) in VENDORS.items() if str(data.get(k) or '').strip()}
+
+
+def check_built(html, f, vendors):
+    """Before the rewrite: each active vendor's base code, the core and its adapter, core first, all in the head."""
+    head = html[: html.find('</head>')] if '</head>' in html else ''
+    core = head.find('/' + F.SLUG + '/js/' + CORE)
+    if vendors and core < 0: raise SystemExit(f'{f}: tracking is on but js/{CORE} is not in the head')
+    for k, (value, adapter, marker) in vendors.items():
+        at = head.find('/' + F.SLUG + '/js/' + adapter)
+        if value not in head or marker not in head: raise SystemExit(f'{f}: {k} is set but its base code is not in the head')
+        if at < 0: raise SystemExit(f'{f}: {k} is set but js/{adapter} is not in the head')
+        if at < core: raise SystemExit(f'{f}: js/{adapter} loads before js/{CORE}')
+
+
+def check_template(tpl, f, vendors):
+    """After the rewrite: the core and each adapter load from theme assets, core first."""
+    def asset(js):
+        stem = re.sub(r'[^a-z0-9-]+', '-', Path(js).stem.lower()).strip('-')[:48]
+        m = re.search(r"\{\{ '" + re.escape(ASSET_DIR) + '/' + re.escape(ASSET_DIR) + '-' + re.escape(stem) + r"-[0-9a-f]{6}\.js'\|asset_url \}\}", tpl)
+        return m.start() if m else -1
+    if not vendors: return
+    core = asset(CORE)
+    if core < 0: raise SystemExit(f'{f}: js/{CORE} is not a theme asset after the rewrite')
+    for k, (_, adapter, _) in vendors.items():
+        at = asset(adapter)
+        if at < 0: raise SystemExit(f'{f}: js/{adapter} is not a theme asset after the rewrite')
+        if at < core: raise SystemExit(f'{f}: js/{adapter} loads before js/{CORE} after the rewrite')
 
 
 class Assets:
@@ -88,12 +143,20 @@ def main(site, theme):
     tdir = theme / 'templates' / 'pages'
     for old in tdir.glob('page.*.html'):                     # earlier runs' pages that are no longer in the funnel
         if old.read_text(errors='ignore').startswith(MARK) and old.name[5:-5] not in pages: old.unlink()
+    vendors = tracking(site)
     for f in sorted(pages):
         built = site / f / 'index.html'
         if not built.is_file(): raise SystemExit(f'not built: {built}')
-        (tdir / f'page.{f}.html').write_text(template(built.read_text(encoding='utf-8'), assets, pages), encoding='utf-8')
+        html = built.read_text(encoding='utf-8')
+        check_built(html, f, vendors)
+        tpl = template(html, assets, pages)
+        check_template(tpl, f, vendors)
+        (tdir / f'page.{f}.html').write_text(tpl, encoding='utf-8')
     size = sum(p.stat().st_size for p in (theme / 'assets' / ASSET_DIR).iterdir())
     print(f'funnel: {len(pages)} templates, {len(assets.names)} assets ({size / 1e6:.1f} MB) in assets/{ASSET_DIR}/')
+    if vendors:
+        js = sorted(n for r, n in assets.names.items() if r.startswith('js/') and (r.endswith(CORE) or r.endswith('.adapter.js')))
+        print(f'  tracking on every page: {", ".join(sorted(vendors))}; scripts {", ".join(js)}')
     if assets.missing: print('  stylesheet urls left as they are (no such file in the build):', ', '.join(sorted(assets.missing)))
 
 

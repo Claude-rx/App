@@ -209,6 +209,16 @@ for p in F.PAGES:
     for who in re.findall(r'class="(?:sf-review__who|checkout-review__verified)">([^<]*)<', h):
         if 'liquid foundation' not in who or 'earlier store' not in who: fail(p['id'], f'review card labelled "{who}"')
 
+
+# the sales page reports its pack to the ad pixels (AppLovin Axon) without touching the cart: view_item from its
+# next-analytics-view-item tag, add_to_cart from next.trackAddToCart on the checkout button. A cart add there
+# (next.addItem) doubles the order, because the checkout's pack selector keeps every line it did not add itself and
+# then adds the pack its forceBundleId names (live 29 Oct: a $75 pack reached the checkout as $150).
+_js = (SITE / 'js' / 'sf-funnel.js').read_text(encoding='utf-8')
+if re.search(r'\.(?:addItem|clearCart|swapPackage)\(', _js): fail('offer', 'sf-funnel.js changes the cart (next.addItem/clearCart): the checkout would sell the pack twice')
+if 'trackAddToCart(' not in _js: fail('offer', 'sf-funnel.js does not report the checkout button as an add_to_cart')
+if not re.search(r'<meta name="next-analytics-view-item" content="\d+">', html('offer')): fail('offer', 'no next-analytics-view-item tag (no view_item for the ad pixels)')
+
 if problems:
     print(f'check_funnel: {len(problems)} problem(s)'); print('\n'.join('  ' + x for x in problems)); sys.exit(1)
 print(f'check_funnel: {len(F.PAGES)} pages, {len(cards)} checkout packs, 4 offers, theme templates and claims OK')

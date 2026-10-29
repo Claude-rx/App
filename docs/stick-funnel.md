@@ -31,16 +31,19 @@ each line's renewal; order total $80.00, confirmed by the campaign API (`tools/f
    offers and thank-you page say so if the SDK still can't load (`sf-failsafe.js`). Policy links point to
    try.skinofab.com. To move the funnel to another domain: allow it in the Campaigns App, link it to the store, set
    `FUNNEL_HOST` and `funnel_host` / `store_*` in `_data/campaigns.json`, run `campaign_spec.py`, rebuild.
-2. **Cancel the 7 QA test orders**: 101436, 101437, 101439, 101440, 101445 (local QA), 101449 and 101519 (the live
-   runs) (test card, no charge, flagged as tests). They are real orders in the store and each started a subscription.
+2. **Cancel the QA test orders**: 101436, 101437, 101439, 101440, 101445 (local QA), 101449 and 101519 (the live
+   runs), and 101596 (the AppLovin walk of 29 Oct, which started test subscriptions 101 and 102) (test card, no charge,
+   flagged as tests). They are real orders in the store and each started a subscription.
 3. **Upsell 4's discount.** The brief named the serum without a discount; it is offered at 20% off (SERUM20) like
    offers 2 and 3 ($22 instead of $27.95). For full price, offer 4 would come off `special-4` in `funnel.py` and
    the page would show the package price (a small change in `upsell_pages.py` and `check_funnel.py`).
 4. **Reviews.** The listicle, product page and checkout show the store's existing reviews of the **Adaptive Peptide
    Foundation** (the liquid foundation), each labelled as such, because the stick has no reviews of its own yet. Swap
    them for stick reviews as they come in; never relabel foundation reviews as stick reviews (FTC).
-5. **Tracking (before paid traffic).** `gtm_id` and `fb_pixel_id` in `campaigns/skinofab/_data/campaigns.json` are
-   empty, so no tags load and Meta gets no page views or purchases. Set them, and enable the matching providers in
+5. **Tracking (before paid traffic).** AppLovin Axon is on, on every page, the same way as the foundation funnel
+   (`docs/apf-funnel.md`, "AppLovin Axon"; live proof 101596). `gtm_id` and `fb_pixel_id` in
+   `campaigns/skinofab/_data/campaigns.json` are still empty, so no GTM or Meta tags load and Meta gets no page views
+   or purchases. Set them, and enable the matching providers in
    `src/stick-funnel/assets/config.js` (`analytics.providers.gtm` / `.facebook` with the pixel id; `storeName` is
    already `skinofab`, for Meta's purchase deduplication).
 6. **The 2-stick refill ships a brush every time.** Package 2 is "2 sticks + free Lymphatic Brush" and every refill is
