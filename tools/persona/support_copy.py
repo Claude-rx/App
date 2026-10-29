@@ -7,7 +7,7 @@ the balm carry salmon-derived PDRN, the balm and the serum collagen), a 15% rest
 questions asked" guarantee, and three different sets of delivery times. apply_persona.support_pages() writes these
 in their place. Facts used here, and where they come from:
 - the formula: the product pages (ccf_copy, apf_copy): one adaptive shade that goes on white; hyaluronic acid,
-  ceramide NP, squalane, panthenol; peptides (Matrixyl 3000), PDRN, Pro-Xylane; soft-focus powders; fragrance-free;
+  ceramide NP, squalane, panthenol; peptides (Matrixyl 3000), PDRN, niacinamide; soft-focus powders; fragrance-free;
   no SPF; comfortable through a full day
 - the numbers: the product page's 12-week customer survey of women aged 35-65 (self-reported, not a clinical study)
 - shipping: one free shipping method for every country (the NEXT store's only method, $0.00); processing and
@@ -63,7 +63,7 @@ FAQ = [
     ('How does the', 'How does the Adaptive Peptide Foundation work?',
      '<p>It goes on white. As you blend, its color-adapting pigments release and mix into your skin tone in about a '
      'minute, so there is no shade to choose. The base is a serum: hyaluronic acid, ceramide NP, squalane and panthenol '
-     'keep dry skin comfortable; peptides (Matrixyl 3000), PDRN and Pro-Xylane are there for the skin underneath; '
+     'keep dry skin comfortable; peptides (Matrixyl 3000), PDRN and niacinamide are there for the skin underneath; '
      'soft-focus powders blur the look of lines and pores.</p>'),
     ('What skin tones', 'What skin tones does the foundation work for?',
      f'<p>There is one shade. It goes on white and adapts to your skin tone as you blend. If your skin is very fair or '
@@ -76,7 +76,7 @@ FAQ = [
      f'Firming Serum contain collagen. If you avoid animal-derived ingredients, email {MAIL} and we’ll tell you what is '
      'in each one.</p>'),
     ('What are the key ingredients', 'What are the key ingredients in the Adaptive Peptide Foundation?',
-     '<ul><li><strong>Peptides (Matrixyl 3000), PDRN and Pro-Xylane</strong>: K-beauty actives for the skin underneath.</li>'
+     '<ul><li><strong>Peptides (Matrixyl 3000), PDRN and niacinamide</strong>: K-beauty actives for the skin underneath.</li>'
      '<li><strong>Hyaluronic acid, ceramide NP, squalane and panthenol</strong>: a hydrating serum base for dry, mature '
      'skin.</li><li><strong>Color-adapting pigments</strong>: they go on white and shift to your tone as you blend.</li>'
      '<li><strong>Soft-focus powders</strong> (silica, boron nitride): they blur the look of lines and pores.</li></ul>'
@@ -157,7 +157,7 @@ within 30 days of delivery. We send a replacement or a full refund, your choice,
 <p>You can exchange an unopened product for another SKINOFAB product. If the new product costs more or less, we
 charge or refund the difference.</p>
 <h3>Automatic Refills</h3>
-<p>You can skip or cancel your Automatic Refills at any time before the next refill date by emailing {MAIL}. A refill
+<p>You can skip or cancel your Automatic Refills by emailing {MAIL} at least one day before the next refill date. A refill
 that has already shipped is covered by the same 30-day guarantee.</p>
 <h3>How refunds are paid</h3>
 <p>Refunds go to your original payment method once they are approved. Your bank or card provider usually shows them

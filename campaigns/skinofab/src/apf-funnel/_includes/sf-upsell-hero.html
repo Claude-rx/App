@@ -27,6 +27,10 @@
     {%- elsif uh.cta %}
     <a class="sf-uh__jump" href="{{ uh.cta }}">{{ uh.cta_text }}</a>
     {%- endif %}
+    {%- if uh.decline %}
+    {% comment %} saying no is as close as saying yes: a decline right under the first accept (it was 2 to 3 phone screens down, live review 10) {% endcomment %}
+    <a href="#" class="sf-uh__decline" data-upsell-proxy="skip">{{ uh.decline }}</a>
+    {%- endif %}
     <p class="sf-uh__expires">{{ uh.expires }}</p>
     <p class="sf-uh__wait" data-sf-await-note aria-live="polite">Confirming your order…</p>
   </div>

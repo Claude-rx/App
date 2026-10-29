@@ -7,7 +7,7 @@
 <div class="sf-vrow" role="list">
   {%- for d in items %}
   <figure class="sf-vcard" role="listitem" data-sf-vcard{% if d.sound %} data-sf-vcard-sound{% endif %}>
-    <video preload="none" playsinline{% unless d.sound %} muted loop{% endunless %} poster="{{ 'images/sf/' | append: d.key | append: '-poster.jpg' | campaign_asset }}" width="540" height="960" aria-label="{{ d.caption }}">
+    <video preload="none" playsinline{% unless d.sound %} muted loop{% endunless %} data-sf-poster="{{ 'images/sf/' | append: d.key | append: '-poster.jpg' | campaign_asset }}" width="540" height="960" aria-label="{{ d.caption }}">
       <source src="{{ 'images/sf/' | append: d.key | append: '.webm' | campaign_asset }}" type="video/webm">
       <source src="{{ 'images/sf/' | append: d.key | append: '.mp4' | campaign_asset }}" type="video/mp4">
     </video>

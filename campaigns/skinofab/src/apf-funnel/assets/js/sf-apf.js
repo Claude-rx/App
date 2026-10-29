@@ -9,9 +9,18 @@
 (function () {
   'use strict';
 
+  // the posters of videos down the page wait until a video comes within about a screen: loaded at once they took the
+  // phone's bandwidth from the hero picture (live review 10); a lazy loop loads its first seconds then too
+  var near = document.querySelectorAll('video[data-sf-poster]');
+  var wake = function (v) { if (!v.getAttribute('poster')) v.setAttribute('poster', v.getAttribute('data-sf-poster')); if (v.hasAttribute('data-sf-lazy') && v.preload === 'none') v.preload = 'metadata'; };
+  if ('IntersectionObserver' in window) {
+    var po = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { wake(e.target); po.unobserve(e.target); } }); }, { rootMargin: '900px 0px' });
+    Array.prototype.forEach.call(near, function (v) { po.observe(v); });
+  } else Array.prototype.forEach.call(near, wake);
+
   var videos = document.querySelectorAll('video[data-sf-lazy]');
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // (the lazy loops carry autoplay too, so the browser starts them before this runs: stop them, live review 8)
+  // (the lazy loops no longer carry autoplay, live review 10; any that still does is stopped here, live review 8)
   if (still) Array.prototype.forEach.call(videos, function (v) { v.removeAttribute('autoplay'); v.controls = true; try { v.pause(); } catch (e) {} });
   // a clip the page autoplays itself (the brush offer's loop, upsell/video.html): for anyone who asks their device
   // for less motion it waits for a tap instead, with its controls
@@ -48,7 +57,11 @@
         if (v.paused) { v.sfHeld = false; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.sfHeld = true; v.pause(); }
       });
       v.addEventListener('play', draw); v.addEventListener('pause', draw);
-      box.appendChild(b); draw();
+      // at the video's own bottom corner, not the card's: under a caption the button sat on its words (live review 10)
+      var place = function () { b.style.bottom = Math.max(10, box.clientHeight - (v.offsetTop + v.offsetHeight) + 10) + 'px'; };
+      box.appendChild(b); draw(); place();
+      v.addEventListener('loadedmetadata', place);
+      if ('ResizeObserver' in window) new ResizeObserver(place).observe(box); else window.addEventListener('resize', place);
     });
   }
 

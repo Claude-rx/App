@@ -72,8 +72,9 @@ PDP_PHOTOS = {'g-hold': 'hold-cheek', 'g-dots': 'dots-eyes-closed', 'g-grey': 'h
               'g-bottle': 'bottle-korea', 'problem': 'problem', 'solution': 'solution-bottle',
               'gift-blender': 'gift-blender', 'gift-mystery': 'gift-mystery', 'gift-shipping': 'gift-shipping'}
 # the demo clips (brand/videos/gj-<key>*.mp4): women 45+ with the real bottle; poster from the live page or a frame
-CLIPS = {'demo-navy': ('gj-43e0f648-cut', 'poster-navy', 'A woman in her fifties, blonde, in a navy top, dots the foundation on white and blends it in while she talks (60 s, with sound)'),
-         'demo-black': ('gj-41b77ec4-clean', 'sharp', 'A woman in her fifties in black pumps the bottle and buffs the foundation in with a brush'),
+# (no demo-navy any more: its speaker is an AI model talking as a buyer, "I'll be buying this on repeat", which the
+# funnel showed as "women like you": an invented testimonial, live review 10, F1. The silent clips show how it goes on.)
+CLIPS = {'demo-black': ('gj-41b77ec4-clean', 'sharp', 'A woman in her fifties in black pumps the bottle and buffs the foundation in with a brush'),
          'demo-silver': ('gj-88d49199', None, 'A silver-haired woman in her sixties blends the foundation in with her fingers'),
          'demo-robe': ('gj-b705ce67', 'sharp', 'A blonde woman in a grey robe dots the foundation on her cheeks and forehead and buffs it in')}
 CLIP_WIDTH = 540
@@ -807,10 +808,9 @@ def reviews(work):
         save(im, f'review-{key}', size=600)
 
 
-# the seconds of a clip's voice that are silenced (live review 8: the navy clip's speaker says the foundation blurs
-# lines "in seconds", where every page says about a minute, and that it "melts right into your skin", a claim the
-# brand does not make). Word times from a faster-whisper transcript of brand/videos/gj-43e0f648-cut.mp4, 29 Oct 2026.
-MUTE = {'demo-navy': [(26.85, 27.90), (28.35, 30.20)]}
+# the seconds of a clip's voice that are silenced, by clip key, as (start, end) seconds. None now: the one clip with a
+# voice (demo-navy, silenced in two places at live review 8) left the funnel at live review 10.
+MUTE = {}
 
 
 def clip(key, src, poster, label, encode=True):

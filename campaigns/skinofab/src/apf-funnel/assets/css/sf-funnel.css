@@ -115,7 +115,7 @@ body.sf { margin: 0; background: var(--paper); color: var(--text); font: 400 17p
   .sf-reason__media { position: sticky; top: 76px; }
   .sf-reason:nth-of-type(even) .sf-reason__media { order: 2; }
   .sf-reason--wide { grid-template-columns: 1fr; }
-  .sf-reason--wide .sf-reason__media { order: 0 !important; position: static; }   /* one column: a sticky media slid over the text under it */
+  .sf-reason--wide .sf-reason__media { order: 0 !important; position: static; top: auto; }   /* one column: a sticky media slid over the text under it; top: auto, or the pause button's position: relative shifted it 76 px down onto its heading (live review 10) */
   .sf-cta { grid-template-columns: 1fr 1fr; align-items: center; padding: 22px; }
   .sf-reviews__grid { grid-template-columns: repeat(3, 1fr); }
 }

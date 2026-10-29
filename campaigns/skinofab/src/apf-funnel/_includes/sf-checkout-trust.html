@@ -42,7 +42,7 @@
 {%- elsif part == 'proof' -%}
 <section class="sf-co-proof" aria-label="Reviews and guarantee">
   <div class="sf-co-card sf-co-ratings" id="sf-co-reviews">
-    <h2>{{ trust.rating.count }} reviews of this foundation</h2>
+    <h2>{{ trust.rating.count }} reviews of this formula</h2>
     <div class="sf-co-ratings__score">
       <strong>{{ trust.rating.average }}</strong>
       <span class="sf-co-tp" role="img" aria-label="{{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span>

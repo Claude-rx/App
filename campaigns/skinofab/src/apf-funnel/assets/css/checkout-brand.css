@@ -1,6 +1,8 @@
 /* checkout-brand.css: SKINOFAB's brand layer over next-core.css (loaded after it on the checkout, special offers and thank-you page):
    root tokens only, plus the funnel's own blocks (refill terms, review note). SDK-owned selectors are left alone. */
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+/* display=optional: a buyer coming through the funnel has these font files from the sales page already; a cold load keeps
+   its first font rather than re-wrapping the offer's hero when Jost arrives (CLS 0.11 on the brush offer, live review 10) */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=optional');
 :root {
   --_text---font-family--primary: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --_text---font-family--heading: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -281,3 +283,6 @@ input.next-address-control:not(:placeholder-shown), select.next-address-control:
    the offers (live review 9, CLS 0.4-0.8 throttled). Same path: -55% to 100% of the box is 282% of the 55%-wide sweep. */
 @keyframes sf-await-sweep { from { transform: translateX(0); } to { transform: translateX(282%); } }
 html:not(.next-display-ready) [data-next-await]::after { left: -55% !important; animation: sf-await-sweep .95s linear infinite !important; will-change: transform; }
+
+/* a renewing pack's first-order gifts, under its name (js/sf-checkout.js, js/sf-receipt.js; live review 10) */
+.sf-first-order { margin-top: 2px; font-size: 13px; line-height: 1.35; color: #4f4f4f; }

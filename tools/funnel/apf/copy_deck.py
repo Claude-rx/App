@@ -75,7 +75,7 @@ def deck(fm):
     sec('07 · Explain the Problem Mechanism', f"### {m['title']}", m['lede'], *sum([[f"#### {c['title']}", c['text']] for c in m['causes']], []), m['end'])
     s = fm['solution']
     sec('08 · Detail the Solution Mechanism', f"### {s['title']}", s['lede'], *sum([[f"#### {c['title']}", c['text']] for c in s['parts']], []), s['note'],
-        '[IMAGE: images/sf/g-inside.jpg — the “what’s inside” infographic: the actives (PDRN, peptides, Pro-Xylane, niacinamide, adenosine), the hydrators (two hyaluronic acids, ceramide NP, squalane, panthenol), fragrance-free]',
+        '[IMAGE: images/sf/g-inside.jpg — the “what’s inside” infographic: the actives (PDRN, peptides, niacinamide, adenosine, a beech-sugar active), the hydrators (two hyaluronic acids, ceramide NP, squalane, panthenol), fragrance-free]',
         '[IMAGE: images/sf/g-dots.jpg — a woman in her fifties, eyes closed, the foundation dotted white on her cheeks before it blends]')
     c = fm['compare']
     sec('09 · Clarify Why Other Solutions Fall Short', f"### {c['title']}", c['lede'],
@@ -88,7 +88,7 @@ def deck(fm):
         *sum([[f"[IMAGE: {i['image']} — {i['alt']}]", f"*{i['caption']}*"] for i in ba['items']], []),
         f"[BEFORE: {'; '.join(ba['before'])}]", f"[AFTER: {'; '.join(ba['after'])}]", *[f"> “{b['review']['text']}” — {b['review']['name']}, verified buyer, from our earlier store ({b['review']['topic'].lower()})" for b in ba['items'] if b.get('review')], *([f"*{ba['label']}*"] if ba.get('label') else []))   # no label since 28 Oct 2026 (the owner: no illustration line)
     r = fm['ratings']
-    sec('12 · Proof Elements', f"### {pr['title']}", f"[RATING: {r['average']} | {r['count']} verified reviews of this foundation, from our earlier store]",
+    sec('12 · Proof Elements', f"### {pr['title']}", f"[RATING: {r['average']} | {r['count']} verified reviews of this formula, from our earlier store]",
         *sum([[f"#### {x['title']}", x['text']] for x in pr['cards']], []), *[f"> “{q['text']}” — {q['by']}" for q in pr['quotes']])
     pm = fm['promise']
     sec('13 · Big Promise and Dream Outcome', f"### {pm['title']}", md(pm['text']), cta(pm['button']))
@@ -126,7 +126,7 @@ def write(fm):
            '- **Problem mechanism (07):** the fixed-shade trap: several tones in one face, thinner and drier skin, formulas built for 25-year-old skin.',
            '- **Solution mechanism (08):** encapsulated pigments that go on white and open toward her tone, in a hydrating serum base with soft-focus powders and the actives named on the label.',
            '- **Offer architecture:** 1 bottle $39, 2 bottles $57 with the Blender sponge and a mystery gift (two months), 3 bottles $75 with the Lymphatic Brush and both gifts ($25 a bottle, \"Best value\"; the sales page opens on it); Automatic Refills at the same price (every 28, 56 and 84 days; skip or cancel by email; the gifts with the first order only), free shipping, 30-day money-back guarantee even opened, nothing to send back. Post-purchase: offer 1 supply cards (2 bottles $39, 6 bottles $99 with the brush), offer 2 one bottle $23 (downsell $19), offer 3 the brush $14 (downsell $9).',
-           '- **Proof inventory:** 9,855 imported reviews of this foundation (4.8), the buyers\' own photos, the actives printed on the label and box, formulated in Korea, the guarantee, the owner’s before/after photos; no clinical study, no medical claim, no fabricated review.',
+           '- **Proof inventory:** 9,855 imported reviews of this formula (4.8), the buyers\' own photos, the actives printed on the label and box, formulated in Korea, the guarantee, the owner’s before/after photos; no clinical study, no medical claim, no fabricated review.',
            '- **Urgency:** honest only: the launch gift (the brush) while launch stock lasts, the price only on this page; no countdown.', '']
     for title, lines in deck(fm):
         out += [f'## {title}', '', *sum([[l, ''] for l in lines], [])]

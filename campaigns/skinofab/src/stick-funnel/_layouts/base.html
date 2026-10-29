@@ -44,7 +44,9 @@
     {% comment %} Campaign Cart SDK {% endcomment %}
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v{{ campaign.sdk_version }}/dist/loader.js" type="module"></script>
 
-    {% campaign_include 'analytics-head.html' %}
+    {% comment %} Global Privacy Control: a browser that sends it gets no ad tracking, as the privacy policy promises (live review 10). The Axon base code below loads its scripts only while window.axon is undefined, so a no-op one stops it, and axon.adapter.js's calls go nowhere. {% endcomment %}
+  <script>if (navigator.globalPrivacyControl === true) { window.axon = function () {}; window.__sfGPC = true; }</script>
+  {% campaign_include 'analytics-head.html' %}
 
     <link href="{{ 'css/next-core.css' | campaign_asset }}" rel="stylesheet" type="text/css">
     {% for style in styles %}

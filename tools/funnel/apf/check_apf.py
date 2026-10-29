@@ -464,6 +464,58 @@ for p in F.PAGES:
         if 'data-sf-sku' in h[m.end():m.end() + 200] and ('aria-hidden="true"' not in m.group(0) or 'data-empty-template=' not in m.group(0)):
             fail(p['id'], 'the gate\'s order-items list is read aloud or prints "No items found in order"')
 
+# live review 10 --------------------------------------------------------------------------------------------------------
+_lst, _sp, _co, _ty = html('listicle'), html('offer'), html('checkout'), html('thank-you')
+_fcss = (SITE / 'css' / 'sf-funnel.css').read_text(encoding='utf-8')
+# F1: no clip of a person talking as a buyer: the demo row shows how it goes on, and nobody is "a woman like you"
+for p in F.PAGES:
+    h = html(p['id'])
+    if 'demo-navy' in h: fail(p['id'], 'the talking clip (an AI model speaking as a buyer) is on the page')
+    if re.search(r'women like you', text(h), re.I): fail(p['id'], '"women like you" over clips of models')
+# F2: a one-column reason's media stays in its row (sticky's top: 76px moved it onto its heading)
+if not re.search(r'\.sf-reason--wide \.sf-reason__media \{[^}]*top:\s*auto', _fcss): fail('listicle', 'a wide reason\'s media keeps top: 76px and covers its heading')
+# F3: no dollar value for what the store does not sell (the Blender sponge, the mystery gift), and the value stack adds up
+for m in re.finditer(r'(Blender sponge|[Mm]ystery gift)(.{0,40})', text(_sp)):
+    if re.search(r'\$\d', m.group(2).split('+')[0]): fail('offer', f'a dollar value for the {m.group(1)}, which the store does not sell: "…{m.group(0)[:80]}"')
+_stack = re.search(r'<ul class="sf-stack[^"]*">(.*?)</ul>', _sp, re.S)
+if _stack:
+    _vals = [float(v) for v in re.findall(r'<li><span>[^<]*</span><span>\$([\d.]+)</span></li>', _stack.group(1))]
+    _tot = re.search(r'sf-stack__total"><span>[^<]*</span><span>\$([\d.]+)</span>', _stack.group(1))
+    if not _tot or abs(sum(_vals) - float(_tot.group(1))) > 0.005: fail('offer', f'the value stack does not add up: {_vals} vs {_tot.group(1) if _tot else "?"}')
+# F4: the campaign ships to the US only, so no delivery times to other countries
+for p in F.PAGES:
+    if re.search(r'(?:to|in) (?:Europe|the UK|Canada|Australia|New Zealand)\b|\d+[–-]\d+ elsewhere', text(html(p['id']))): fail(p['id'], 'a delivery promise outside the US (the campaign ships to the US only)')
+# F5: a browser that sends Global Privacy Control gets no ad pixel (the policy promises it), and the policy names AppLovin
+for p in F.PAGES:
+    h = html(p['id']); g, a = h.find('navigator.globalPrivacyControl'), h.find('s.axon.ai')
+    if a >= 0 and not 0 <= g < a: fail(p['id'], 'the Axon pixel loads without the Global Privacy Control gate before it')
+_priv = THEME / 'partials' / 'sf_pages' / 'privacy-policy' / 'content.html'
+if _priv.is_file() and 'AppLovin Corporation' not in _priv.read_text(encoding='utf-8'): fail('theme', 'the privacy policy does not name AppLovin, the ad pixel on every page')
+# F6: a renewing pack is named by its bottles on the checkout and the receipt, its gifts on a first-order line
+for f in ('sf-checkout.js', 'sf-receipt.js'):
+    if 'With this first order only' not in (SITE / 'js' / f).read_text(encoding='utf-8'): fail('checkout', f'{f} leaves the gifts in the name of a pack that renews')
+# F8, F9, F16: what a featured review or a caption must not carry, and no third party's trade name for an ingredient
+for p in F.PAGES:
+    t = text(html(p['id']))
+    for rx, what in ((r'rosacea|burning sensation|break ?outs|calming', 'a featured review with a skin-condition claim'),
+                     (r'\b\d{1,2} ?[AP]M to \d{1,2} ?[AP]M\b', 'an unhedged wear-time claim'), (r'Pro-?Xylane', 'L\'Oréal\'s trade name Pro-Xylane')):
+        m = re.search(rx, t, re.I)
+        if m: fail(p['id'], f'{what}: "…{t[max(0, m.start() - 40):m.end() + 40]}…"')
+# F10: no pulsing button under reduced motion
+if not re.search(r'prefers-reduced-motion: reduce\)\s*\{\s*\[pb-animate\]\[pb-animate\] \{ animation: none !important; \}', _oc): fail('offers', 'the accept buttons pulse under reduced motion')
+# F12, F14: the decline right under the first accept; a page opened with no order says so
+for p in F.PAGES:
+    h = html(p['id'])
+    if p['sdk'] == 'upsell':
+        if not re.search(r'<a href="#" class="sf-uh__decline" data-upsell-proxy="skip">No thanks, (?:continue|show my order)</a>', h): fail(p['id'], 'no decline right under the hero\'s accept')
+        if 'data-sf-no-order' not in h or 'sf-no-order' not in h.split('data-sf-no-order')[0]: fail(p['id'], 'no "we can\'t find an order" state for a visit without one')
+if 'data-sf-has-order' not in _ty or 'data-sf-no-order' not in _ty: fail('thank-you', 'no "we can\'t find an order" state: it says "your order is confirmed" over an empty one')
+if re.search(r'data-next-display="order\.[^"]*"[^>]*>[^<{\s][^<]*<', _ty): fail('thank-you', 'a starter placeholder in an order field (shows before the SDK fills it)')
+# F13: the posters of videos down the page wait for the video to come near, and the loops load nothing before
+for pid, h in (('listicle', _lst), ('offer', _sp)):
+    if re.search(r'<video[^>]*\sposter=', h): fail(pid, 'a video poster loads with the page (it took bandwidth from the hero)')
+    if re.search(r'<video data-sf-lazy[^>]*\sautoplay', h): fail(pid, 'a lazy loop carries autoplay (it loads before it is near)')
+
 # reviews: every quote the pages put a buyer's name to is her own words from the imported reviews (SF_REVIEWS, the store
 # build's reviews/reviews.json), and a shortened one says so with "…" (live review 9: Sharon E.'s review was cut where it
 # says the shade did not suit her daughter's very pale skin, under "none is edited")

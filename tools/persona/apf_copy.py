@@ -5,7 +5,7 @@ Sources
   sun spots, redness, a tone that shifted; tried 5-10 foundations; fears the wrong shade, looking cakey or
   "done", wasted money and hidden subscriptions; values honesty, women her age, easy returns), the review
   complaints (shade match 52-58% negative, coverage 40-51%, "dries mature skin" 62%, value 47-74%, trust), the
-  product answer (one adaptive shade, serum base, PDRN + peptides + Pro-Xylane, fragrance-free, 30-day money-back
+  product answer (one adaptive shade, serum base, PDRN + peptides + niacinamide, fragrance-free, 30-day money-back
   guarantee, Automatic Refills) and the compliance rules (no SPF claim, never "matches every skin tone",
   cosmetic claims only).
 - The offer: ccf_copy.PACKS / REFILL (1 bottle or 2 bottles + free gifts, one-time or with Automatic Refills).
@@ -430,7 +430,7 @@ def home_sections(pdp):
     <p style="margin-top:16px;font-size:18px">Most color-changing foundations are a basic, drying base with fragrance and nothing in it for your skin.
     Ours is a serum, with the actives named on the bottle.</p>
     <div class="apf-grid2" style="gap:16px;margin-top:26px;align-items:stretch">
-      <div class="apf-card"><h4>PDRN + Pro-Xylane</h4><p>Skincare actives for thinner, drier skin after 45.</p></div>
+      <div class="apf-card"><h4>PDRN + peptides</h4><p>Skincare actives for thinner, drier skin after 45.</p></div>
       <div class="apf-card"><h4>Peptides</h4><p>Matrixyl 3000 to smooth the look of fine lines while you wear it.</p></div>
       <div class="apf-card"><h4>Hyaluronic acid + ceramide</h4><p>With squalane and panthenol, so the finish never cracks.</p></div>
       <div class="apf-card"><h4>Fragrance-free</h4><p>No fragrance, propylene glycol, drying alcohol or parabens.</p></div>
@@ -446,7 +446,7 @@ def home_sections(pdp):
     <div class="apf-fix"><q>&ldquo;It dried out my skin.&rdquo;</q><b>&rarr;</b><div>A serum base with hyaluronic acid, ceramide NP and squalane.</div></div>
     <div class="apf-fix"><q>&ldquo;Settles into my wrinkles.&rdquo;</q><b>&rarr;</b><div>Satin, never matte, with soft-focus powders that blur instead of fill.</div></div>
     <div class="apf-fix"><q>&ldquo;No coverage for my spots.&rdquo;</q><b>&rarr;</b><div>Buildable medium coverage: a second thin layer only where you want it.</div></div>
-    <div class="apf-fix"><q>&ldquo;Not worth the price.&rdquo;</q><b>&rarr;</b><div>PDRN, peptides and Pro-Xylane from {REFILLED} a bottle, shipped free.</div></div>
+    <div class="apf-fix"><q>&ldquo;Not worth the price.&rdquo;</q><b>&rarr;</b><div>PDRN, peptides and niacinamide from {REFILLED} a bottle, shipped free.</div></div>
     <div class="apf-fix"><q>&ldquo;I couldn't cancel my subscription.&rdquo;</q><b>&rarr;</b><div>{'Buy once, no strings. Refills are optional: a' if CHOICE else 'No traps: a'} reminder before each refill, and one email cancels them.</div></div>
   </div>
 </div></section>
@@ -504,7 +504,7 @@ def pdp_sections():
     <div style="display:grid;gap:14px;margin-top:24px">
       <div class="apf-card"><h4>1. Color-adapting pigments</h4><p>Encapsulated pigments go on white. As you blend, they release and mix into your skin tone. No shade to guess.</p></div>
       <div class="apf-card"><h4>2. A hydrating serum base</h4><p>Two forms of hyaluronic acid, ceramide NP, squalane and panthenol keep dry, mature skin comfortable, so the finish stays satin instead of tight or flaky.</p></div>
-      <div class="apf-card"><h4>3. PDRN, peptides and Pro-Xylane</h4><p>Skincare actives for thinner skin after 45, with Matrixyl 3000 peptides, niacinamide and adenosine. Named on the bottle, not hidden in a "complex".</p></div>
+      <div class="apf-card"><h4>3. PDRN, peptides and niacinamide</h4><p>Skincare actives for thinner skin after 45, with Matrixyl 3000 peptides, niacinamide and adenosine. Named on the bottle, not hidden in a "complex".</p></div>
       <div class="apf-card"><h4>4. Soft-focus powders</h4><p>Silica and boron nitride scatter light to blur the look of lines and pores, without the dry, matte finish that settles into them.</p></div>
     </div>
   </div>
@@ -524,7 +524,7 @@ def pdp_sections():
       <tr><td>Choosing a shade</td><td class="apf-us">Nothing to choose: one adaptive shade + 30-day money-back guarantee</td><td>Dozens of shades to guess online</td><td>Often turns ashy or orange, with no guarantee</td></tr>
       <tr><td>On dry, mature skin</td><td class="apf-us">Satin serum base, hydrating</td><td>Matte and long-wear formulas dry out and crack</td><td>Often a basic, drying base</td></tr>
       <tr><td>Fine lines</td><td class="apf-us">Blurs the look of lines, made not to settle</td><td>Pigment collects in lines</td><td>Often settles by midday</td></tr>
-      <tr><td>Skincare actives</td><td class="apf-us">PDRN, peptides, Pro-Xylane, hyaluronic acid</td><td>Rarely</td><td>Usually none</td></tr>
+      <tr><td>Skincare actives</td><td class="apf-us">PDRN, peptides, niacinamide, hyaluronic acid</td><td>Rarely</td><td>Usually none</td></tr>
       <tr><td>Fragrance</td><td class="apf-us">Fragrance-free</td><td>Often fragranced</td><td>Often contains parfum</td></tr>
       <tr><td>Buying</td><td class="apf-us">{'Buy once, or optional refills' if CHOICE else 'Refills every %d days' % REFILL['every']}: a reminder before each, cancel with one email</td><td>&mdash;</td><td>Complaints about surprise charges and hard cancellations</td></tr>
     </tbody></table></div>
@@ -566,7 +566,7 @@ def pdp_sections():
 <section class="apf-sec apf-sec--grey"><div class="apf-wrap">
   <div class="apf-head apf-center"><span class="apf-eyebrow">Why you can trust it</span><h2>No hype. Just what's in the bottle and what we promise.</h2></div>
   <div class="apf-grid4">
-    <div class="apf-card"><h4>Actives on the label</h4><p>PDRN is printed on the bottle. Peptides, Pro-Xylane and hyaluronic acid are listed in the ingredients.</p></div>
+    <div class="apf-card"><h4>Actives on the label</h4><p>PDRN is printed on the bottle. Peptides, niacinamide and hyaluronic acid are listed in the ingredients.</p></div>
     <div class="apf-card"><h4>Fragrance-free</h4><p>No fragrance, propylene glycol, drying alcohol or parabens, for thinner, reactive skin.</p></div>
     <div class="apf-card"><h4>Honest shade promise</h4><p>It adapts to your tone as you blend. If you don't love how it looks on you, we'll refund you within 30 days.</p></div>
     <div class="apf-card"><h4>Refills without traps</h4><p>{'Buy once, or tick Automatic Refills to save. ' if CHOICE else ''}We email you before every refill, and one email cancels it.</p></div>
@@ -679,7 +679,7 @@ SOLUTION_FIXES = [
     ('Guessing your shade', 'One adaptive shade. It goes on white and turns into your skin tone as you blend.'),
     ('Dry patches and cracking', 'A hydrating serum base with two forms of hyaluronic acid, ceramide NP and squalane.'),
     ('Settling into lines', 'Soft-focus powders blur the look of lines and pores instead of filling them with pigment.'),
-    ('Makeup that does nothing for your skin', 'Skincare in every layer: Matrixyl 3000 peptides, PDRN and Pro-Xylane.'),
+    ('Makeup that does nothing for your skin', 'Skincare in every layer: Matrixyl 3000 peptides, PDRN and niacinamide.'),
     ('Four steps every morning', 'One step with your fingertips, in about a minute. Fragrance-free.'),
 ]
 
@@ -1309,7 +1309,7 @@ KOREA = {
              'Peptide Foundation is formulated in Korea on a serum base, so the shade that adapts to you sits on top of '
              'actives your skin can use all day.'),
     'rows': [('A serum base', 'Hyaluronic acid, ceramide NP, squalane and panthenol keep dry, mature skin comfortable.'),
-             ('K-beauty actives', 'PDRN, Matrixyl 3000 peptides and Pro-Xylane, each named on the ingredient list.'),
+             ('K-beauty actives', 'PDRN, Matrixyl 3000 peptides and niacinamide, each named on the ingredient list.'),
              ('One adaptive shade', 'It goes on white and shifts to your tone as you blend.')],
     'note': 'Model portrayal.',
     'button': 'Choose your pack',
@@ -1343,7 +1343,7 @@ KBEAUTY = {
         ('PDRN (sodium DNA)', 'The active behind Korea’s favourite recovery serums, here for tired, thinner skin that needs comfort.'),
         ('Matrixyl 3000 peptides', 'Palmitoyl tripeptide-1 and tetrapeptide-7: signal peptides that soften the look of fine lines while you wear it.'),
         ('Adenosine + niacinamide', 'Two mainstays of Korean anti-aging formulas: adenosine for smoother-looking skin, niacinamide for a more even tone.'),
-        ('Pro-Xylane + hyaluronic acid', 'A firming active and a hydrating serum base with ceramide NP and squalane, so the finish never cracks or settles into lines.'),
+        ('A beech-sugar active + hyaluronic acid', 'A skincare active from beech-wood sugar and a hydrating serum base with ceramide NP and squalane, so the finish never cracks or settles into lines.'),
     ],
     'note': 'Fragrance-free. Every active is named in the ingredient list, not hidden in a “complex”.',
     'button': 'Choose your pack',
@@ -1378,6 +1378,6 @@ def kbeauty_html(img, buy_href='#apf-buy', k=None, video=None):
             + (f'<div class="sfps-photo sfps-photo--video" style="aspect-ratio:{video[2]}/{video[3]}"><video muted loop playsinline preload="none" poster="{video[1]}" '
                f'width="{video[2]}" height="{video[3]}" aria-label="{html.escape(video[4])}"><source src="{video[0]}" type="video/mp4">{_webm(video[5:])}</video>'
                f'{_AUTOPLAY}</div>' if video else
-               f'<div class="sfps-photo"><img src="{src}" alt="{html.escape(k.get("alt", "Adaptive Peptide Foundation with PDRN, peptides and Pro-Xylane"))}" '
+               f'<div class="sfps-photo"><img src="{src}" alt="{html.escape(k.get("alt", "Adaptive Peptide Foundation with PDRN, peptides and niacinamide"))}" '
                f'width="{w}" height="{h}" loading="lazy" decoding="async"></div>')
             + '</div></div></section>')

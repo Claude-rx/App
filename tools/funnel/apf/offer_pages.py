@@ -150,23 +150,28 @@ def head(pid, title, n_text, extra_scripts=(), extra_styles=()):
         'announcement_variant: dark',
         'payment_flags:', '  show_affirm: false', '  show_afterpay: false',      # the campaign offers neither (the logos row reads the campaign; this keeps the fallback honest)
         f'thank_you_url: {q(F.route("thank-you"))}',
+        f'offer_url: {q(F.route("offer"))}',
     ]
 
 
 GATE = """{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them; the items list's empty state is a blank span, not the SDK's "No items found in order") {% endcomment %}
 <div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div aria-hidden="true" data-next-order-items data-item-template-id="sf-gate-items" data-empty-template="&lt;span&gt;&lt;/span&gt;"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
+<script>if (!/[?&]ref_id=/.test(location.search)) document.documentElement.classList.add('sf-no-order');</script>
+{% comment %} opened with no order reference (Back, a bookmark, a shared link): it says so above the offer, whose accept is off (live review 10) {% endcomment %}
+<div class="sf-no-order-note" data-sf-no-order hidden><p class="sf-no-order-note__title">We can’t find an order on this page</p><p>These offers come right after checkout and are added to that order, so there is nothing to add this one to here.</p><p><a class="sf-no-order-note__cta" href="{{ offer_url }}">See the Adaptive Peptide Foundation</a></p></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 """
 
 
-def hero(eyebrow, title, text, seconds, pid, cta=None, cta_text=None, cta_card=None, cta_jump=None, cta_jump_text=None):
+def hero(eyebrow, title, text, seconds, pid, cta=None, cta_text=None, cta_card=None, cta_jump=None, cta_jump_text=None, decline=None):
     """The offer's hero. cta 'accept': the offer's own accept button right under the clock (a proxy of the one SDK action,
     as the closing card's), so it is on her first screen (live review 6: it sat two screens down on every offer);
     cta '#id' with cta_text: a jump to the page's choices instead (offer 1, two cards to pick from)."""
     return ['uh:', f'  eyebrow: {q(eyebrow)}', f'  title: {q(title)}', f'  text: {q(text)}', f'  seconds: {seconds}', f'  expires: {q(expires(pid))}',
             *([f'  expiry_url: {q(expiry_url(pid))}'] if expiry_url(pid) else []),
             *([f'  cta: {q(cta)}'] if cta else []), *([f'  cta_text: {q(cta_text)}'] if cta_text else []),
-            *([f'  cta_card: {q(cta_card)}', f'  cta_jump: {q(cta_jump)}', f'  cta_jump_text: {q(cta_jump_text)}'] if cta_card else [])]
+            *([f'  cta_card: {q(cta_card)}', f'  cta_jump: {q(cta_jump)}', f'  cta_jump_text: {q(cta_jump_text)}'] if cta_card else []),
+            *([f'  decline: {q(decline)}'] if decline else [])]
 
 
 def single_page(pid, spec, o):
@@ -184,7 +189,7 @@ def single_page(pid, spec, o):
     brush = o.get('brush_pdp')
     fm = head(pid, o['title'], o['announcement']) + [
         *([f'skip_skus: {q(o["skip_skus"])}'] if o.get('skip_skus') else []),
-        *hero(o['eyebrow'], o['hero_title'], o['hero_text'], o['seconds'], pid, cta='accept'),
+        *hero(o['eyebrow'], o['hero_title'], o['hero_text'], o['seconds'], pid, cta='accept', decline=o['decline']),
         'upsell_layout:', '  style: card', '  boxed: true', f'  media: {"video" if brush else "carousel"}', '  media_position: right', f'  media_align: {"top" if brush else "center"}',   # the brush loop level with its text (a blank band sat above it at 1440, live review 4)
         '  show_bullets: true', '  show_ships_info: true', '  show_payment_logos: false', '  decline_position: below',   # no logo strip: the charge goes to the payment she just used
         *(['media_video:', *[f'  {k}: {q(v) if isinstance(v, str) else ("[" + ", ".join(q(x) for x in v) + "]") if isinstance(v, list) else str(v).lower()}' for k, v in BRUSH_VIDEO.items()]] if brush else []),
@@ -248,10 +253,11 @@ def supply_page(spec):
     features = [('A bottle lasts about a month', 'One pump a day. Two more bottles cover the next two months; six cover the next six months of photos, calls and lunches.'),
                 ('One at home, one in your bag', 'The one on your vanity stays there. The one in your bag saves the afternoon.'),
                 ('These prices are only here', 'In our store two bottles are $57 bought once, or $47 with refills, and three 2-packs bought once are $171. Here a bottle works out at $19.50 in the 2-pack or $16.50 in the 6-pack, charged once, in the same box as your order.')]
-    fm = head(pid, 'Stock up on the Adaptive Peptide Foundation', 'Offer 1 of 3 · Your order is placed', extra_scripts=['js/sf-supply.js']) + [
+    fm = head(pid, 'Stock up on the Adaptive Peptide Foundation', 'Offer 1 of 3<span data-sf-placed> · Your order is placed</span>', extra_scripts=['js/sf-supply.js']) + [
         *hero('A one-time offer', 'Just for you, right now: more bottles from $16.50 each',
               'Add bottles to the order you just placed: one tap, same box, same payment. These two packs exist on this page only.', TIMER, pid,
-              cta='supply', cta_text='YES, ADD 2 BOTTLES · $39', cta_card='supply-b1g1', cta_jump='#sf-supply-title', cta_jump_text='Or see the 6-bottle pack ↓'),
+              cta='supply', cta_text='YES, ADD 2 BOTTLES · $39', cta_card='supply-b1g1', cta_jump='#sf-supply-title', cta_jump_text='Or see the 6-bottle pack ↓',
+              decline=supply['decline']),
         f'supply: {q(supply)}',
         # the closing card prices the selected card (bundle.supply.*) and proxies its add / skip
         'upsell_offer:', '  type: tier-cards', f'  package_id: {two}', '  selector_id: "supply"', '  display_selector_id: "supply"', '  display_bundle_id: "supply-b1g1"',
@@ -284,7 +290,7 @@ def supply_page(spec):
 
 OFFERS = {
     'offer-2': {
-        'announcement': 'Offer 2 of 3 · Your order is placed', 'seconds': TIMER, 'eyebrow': 'Just for you, with this order',
+        'announcement': 'Offer 2 of 3<span data-sf-placed> · Your order is placed</span>', 'seconds': TIMER, 'eyebrow': 'Just for you, with this order',
         'hero_title': 'One more bottle, {discount} off, just for you',
         'hero_text': 'One for your vanity, one for your bag: {price} instead of $39, charged once, in the same box as your order.',
         'pretitle': 'Not in our store at this price',
@@ -318,7 +324,7 @@ OFFERS = {
         'allergy': ALLERGY, 'note': ALLERGY,
     },
     'brush-offer': {
-        'announcement': 'Offer 3 of 3 · Your order is placed', 'seconds': TIMER, 'eyebrow': 'Just for you, with this order',
+        'announcement': 'Offer 3 of 3<span data-sf-placed> · Your order is placed</span>', 'seconds': TIMER, 'eyebrow': 'Just for you, with this order',
         'hero_title': 'Add the Lymphatic Brush, {discount} off, just for you',
         'hero_text': 'A 3-minute morning massage for the look of puffy eyes, cheeks and jaw, on dry skin, before your foundation. {price} with its travel case, charged once.',
         'pretitle': '$24.95 in our store',                                # (it is sold there: live review 7)

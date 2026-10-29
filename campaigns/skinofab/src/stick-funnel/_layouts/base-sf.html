@@ -34,6 +34,8 @@
 
   <link href="{{ 'images/favicon.png' | campaign_asset }}" rel="shortcut icon" type="image/png">
   <link href="{{ 'images/webclip.png' | campaign_asset }}" rel="apple-touch-icon">
+  {% comment %} Global Privacy Control: a browser that sends it gets no ad tracking, as the privacy policy promises (live review 10). The Axon base code below loads its scripts only while window.axon is undefined, so a no-op one stops it, and axon.adapter.js's calls go nowhere. {% endcomment %}
+  <script>if (navigator.globalPrivacyControl === true) { window.axon = function () {}; window.__sfGPC = true; }</script>
   {% campaign_include 'analytics-head.html' %}
 </head>
 <body class="sf {{ body_class }}">

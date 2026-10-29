@@ -183,3 +183,26 @@ html:not(.next-display-ready) .upsell-wrapper[data-next-await]::after { display:
 .upsell-wrapper[data-next-await] * { opacity: 1; }
 html:not(.next-display-ready) .upsell-wrapper[data-next-await] [data-next-upsell-action],
 html:not(.next-display-ready) .upsell-wrapper[data-next-await] [data-upsell-proxy] { opacity: .45; pointer-events: none; }
+
+/* A page opened with no order reference (Back, a bookmark, a shared link): the thank-you page says it can't find an
+   order instead of "Your order is confirmed" over an empty one; an offer keeps its content but drops "Your order is
+   placed", says so above it and can't be accepted (live review 10, F14). The class lifts if the SDK loads an order. */
+.sf-no-order [data-sf-has-order], .sf-no-order [data-sf-placed] { display: none !important; }
+.sf-no-order [data-sf-no-order] { display: block !important; }
+.sf-no-order [data-next-upsell-action="add"], .sf-no-order [data-upsell-proxy="add"] { pointer-events: none; opacity: .45; }
+.sf-no-order-note { max-width: 560px; margin: 32px auto; padding: 24px 22px; text-align: center; background: #fff; border: 1px solid #e6e1da; border-radius: 12px; color: #151515; }
+.sf-no-order-note h1, .sf-no-order-note__title { font-size: 22px; line-height: 1.25; font-weight: 600; margin: 16px 0 10px; }
+.sf-no-order-note p { font-size: 16px; line-height: 1.5; margin: 0 0 12px; }
+.sf-no-order-note a { color: #151515; text-decoration: underline; }
+.sf-no-order-note a.sf-no-order-note__cta { display: inline-flex; min-height: 48px; align-items: center; padding: 0 22px; border-radius: 999px; background: #151515; color: #fff; text-decoration: none; font-weight: 600; }
+.sf-ty-name:has(> span:empty) { display: none; }
+
+/* reduced motion: no pulsing accept button (next-core's [pb-animate="pulse-upsell"] animation is !important and more
+   specific than the global reset, so the buttons kept pulsing; live review 10, F10) */
+@media (prefers-reduced-motion: reduce) {
+  [pb-animate][pb-animate] { animation: none !important; }
+}
+
+/* the hero's decline, right under its accept (live review 10, F12): a plain text link, 44 px tall, light on the dark hero */
+.sf-uh__decline { display: flex; width: max-content; max-width: 100%; min-height: 44px; align-items: center; margin: 6px auto 0; padding: 8px 14px; color: rgba(255,255,255,.9); font-size: 15px; text-decoration: underline; text-underline-offset: 3px; }
+.sf-uh__decline:hover, .sf-uh__decline:focus-visible { color: #fff; }

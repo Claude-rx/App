@@ -78,8 +78,10 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    count is higher than the order count.
 6. **Shipping promise.** The pages promise "ships within 1 business day, free and tracked: 2–4 business days in the US,
    6–9 to Europe, 8–12 elsewhere" (the store's shipping policy). Keep the policy and the pages in step.
-7. **The mystery gift** is "a mystery gift from our line", valued at $15 on the value stack. Decide what ships (a
-   deluxe sample of the balm or the serum fits) and keep its value honest.
+7. **The mystery gift** is "a mystery gift from our line". Decide what ships (a deluxe sample of the balm or the serum
+   fits). Neither it nor the Blender sponge shows a dollar value since live review 10: the store sells neither, so a
+   crossed-out "$15" or "$9" had no price behind it. To show a value again, sell the item in the store at that price
+   first, then add it back to the pack cards and the value stack (the total adds up by itself in `check_apf.py`).
 8. **Refills (since 29 Oct 2026).** (a) Fulfilment: a refill of packages 2 and 3 is **the bottles only**, never the
    gifts; the package titles still say "+ free gifts", so tell the warehouse. (b) The pages promise "we email you
    before every refill" and offer a ready-made cancel email ("Cancel my refills": a `mailto:` with the subject
@@ -101,6 +103,22 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    and drop the email line (live review 9, F16). The repo has no full INCI for this foundation: the old export's list
    (water, titanium dioxide, propylene glycol, parfum…) is the original store's and contradicts "fragrance-free, no
    propylene glycol", so it must not be used.
+11. **Shipping countries.** Campaign 2221 ships to the United States only (`available_shipping_countries: ["US"]`,
+   USD), and since live review 10 the funnel says so ("This offer ships to US addresses only"). The store's shipping
+   policy still lists times for Europe, the UK, Canada, Australia and New Zealand (the store's own checkout). To sell
+   the funnel abroad, add the countries (and currencies) to campaign 2221 and bring back the times in the FAQs.
+12. **Privacy and ad tracking.** The privacy policy promises to honour Global Privacy Control. The funnels' pages do
+   (no AppLovin pixel loads when the browser sends it); the **store's own AppLovin app** (storefront events) is not
+   theme code: check with AppLovin or NEXT that it honours GPC, or turn it off for GPC visitors. The policy now names
+   AppLovin (Axon) in its advertising section (a `tools/persona/company.py` rule).
+13. **Pack names on renewals.** The order lines take the store variants' names: "2 bottles + free gifts" (variant 103,
+   the store's own) and "3 bottles + free gifts + free Lymphatic Brush" (268). The funnel's checkout and thank-you
+   page show them as the bottles with the gifts on a "With this first order only" line, but the platform's emails and
+   every renewal order still carry the full names. Tell fulfilment that a renewal is the bottles only, or rename the
+   variants in the dashboard (103 is also the store's 2-pack).
+14. **Trade names.** "Matrixyl 3000" is Sederma's trade name, normally licensed with the raw material: confirm the
+   supplier's licence in writing. "Pro-Xylane" (L'Oréal's) is gone from the funnel and the store since live review 10:
+   the ingredient is named hydroxypropyl tetrahydropyrantriol, "a beech-sugar active".
 
 ## AppLovin Axon
 
@@ -349,9 +367,14 @@ Campaign Cart SDK 0.4.43, its own `config.js` with the campaign's public key), w
     FUNNEL=apf python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/apf-funnel skinofab-theme
     python3 -I tools/funnel/apf/check_apf.py skinofab-theme
 
-then push the changed theme files with ntk (`ntk push -a "$NEXT_API_TOKEN" <files>` from `skinofab-theme/`; the
-kit has no remove command, so a hashed asset that a rebuild retired stays on the store theme unreferenced) and, for
-new pages, `FUNNEL=apf python3 -I tools/funnel/store_pages.py`.
+then push the changed theme files with `NEXT_API_TOKEN=… python3 -I tools/funnel/push_theme.py` (`--dry-run` lists
+them). It pushes a file only when its bytes differ from the last push, by `skinofab-theme/.push-manifest.json`
+(committed with the theme): the store stores every uploaded asset as a new copy and drops the old one, even an
+unchanged file, and a page it has cached (30 minutes) then points at a dead URL; on 29 Oct a second push re-sent the
+sales hero's mobile picture unchanged and public visitors saw a broken hero for 16 minutes (live review 10). Never push
+a hashed asset by hand. The kit has no remove command, so a hashed asset that a rebuild retired stays on the store
+theme unreferenced, which keeps cached pages working. For new pages, `FUNNEL=apf python3 -I tools/funnel/store_pages.py`.
+After a push, `python3 -I tools/funnel/check_live_assets.py` requests every asset the public pages reference.
 After a campaign change, run `FUNNEL=apf python3 -I tools/funnel/campaign_spec.py` first: the offer pages and the
 checks take their numbers from the spec. The theme serves this funnel's assets from `assets/sfa/` (the stick's from
 `assets/sfc/`); the hosting notes in `docs/stick-funnel.md` (30-minute page cache, `?preview_theme=34`) apply.
@@ -662,6 +685,8 @@ broken image or overflow; `r7-fixes.mjs` in the session's scratchpad checks each
 **Live review 8 (29 Oct 2026), fixed in the same build:** the crossed-out prices and SAVE badges (B1: gone from the packs; offer 1 compares with the store's one-time price, named); pinch-zoom on the checkout, offers and thank-you page (no `maximum-scale`), the checkout's 10.4 px labels and 9.6 px badge (now 12 px; fields 16 px); the hydration line ("holds water at the surface"); the demo clip's "in seconds" and "melts right into your skin" (silenced in `images.py` `MUTE`); offers 2 and 2b's "page you came from" (now "the sales page price of $39"); "none of its Adaptive Peptide Foundation packs comes with the brush"; "Formulated by a K-beauty lab" and "formulated in Korea and made in batches"; five products on both pages; "54 to 74"; Susan B.'s quote once; the checkout footer names Synderra Inc.; US spelling (moisturized, store windows, afterward, from our line, package); the refund policy now says the product need not be sent back; policy pages opened from the funnel hide the store footer's menus and newsletter and make the logo inert; the exit pop keeps Tab inside, its close button in the dialog, the page behind inert and unscrolled; under reduced motion the loops stop (they carried `autoplay`), and every loop has a 44 px pause button; small text to 12 px; 44 px phone and email links; darker crossed-out prices on the offers; `autocomplete="tel"`; the clip row fits at 768 and centres at 1024/1440; `noindex` on the checkout, offers and thank-you page. Left: the buyers' small photos (review 8, 16: the originals are that size), the store sitemap (Before launch 9).
 
 **Live review 9 (29 Oct 2026), fixed in the next build:** the countdowns (F1: nothing is "reserved" any more, the eyebrow is "Just for you"; at 0:00 an offer whose decline leads to its downsell goes past the downsell, `data-sf-timer-to`, and says the last-chance price goes too, so waiting is never cheaper; the deadline holds across tabs); the white-coat "clinic" portrait under "Formulated by a K-beauty lab" (F2: the bottle with the Korean flag, square, no person; `doctor_photo()` no longer runs); every quote a page puts a buyer's name to is checked against her imported words and a shortened one carries "…" (F3: Sharon E., Tina, Lora, Maria, Barbara, Judith; "None is reworded"); offers 2 and 2b no longer quote the store's $37 refill and nothing says "launch offer" (F4; the price gap itself is Before launch 8d); policy pages opened from the funnel (`?from=offer`) keep `from=offer` on their links, a page's link to itself included, and disarm every other store link (F5); a ready-made cancel email everywhere refills are explained (F6); the offers' button pulse runs three times and not at all under reduced motion (F7); the express buttons now say that paying with them agrees to the refills (F8); strike prices and the coupon line darker (F9); 44 px order-summary toggle, 12 px badges and quantity (F10); the sales hero's mobile image is a 760×950 crop preloaded, the listicle's 760×760, and the offers show their words, pictures and landed prices at the first paint (only the buttons wait for the SDK, dimmed): on throttled 4G at 390 (1.6 Mbps, 150 ms, 4× CPU) the largest paint went from 6.6 s to 4.6 s on the listicle, 5.9 s to 4.7 s on the sales page and 9.2 s to 4.2 s on offer 2, with layout shift at most 0.06 (F11; what still holds the first paint is the synchronous Axon forwarder and adapter in the head, from the kit's generated analytics partial: deferring them is worth testing against the Axon events before paid traffic); the brush offers' order-lines list is hidden from screen readers and has a blank empty state (F12); "Michele W." without rosacea (F15); the key ingredients and a way to get the full list before ordering (F16, Before launch 10); plain "No thanks, continue" declines (F17); the checkout's packs in the sales page's 1/2/3 order and opening on the 3-bottle pack like the sales page, with or without `forceBundleId` (F18); the exit pop locks the body too and returns focus to the order button when nothing had focus (F19); the listicle hero's alt names the one woman it shows (F21). Left: the sales hero's centred stars (F20, the owner's request), the 30-minute store cache after a push (F13) and the sitemap (F14, Before launch 9).
+
+**Live review 10 (29 Oct 2026), fixed in the next build:** the talking clip in the "See it on women like you" row (F1, the blocker: an AI model speaking as a buyer, "I'll be buying this on repeat", the clip the store labels as made with AI models) is out of both pages and out of `images.py`; the row is "See how it blends", two silent clips of how it goes on; listicle reasons 5 and 6 at 768 px and up had their headings under their video (F2: the pause button's `position: relative` with the sticky rule's `top: 76px`; `top: auto` now); the Blender sponge and mystery gift lost their "$9"/"$15" (F3, total $99.95: the foundation and the brush, both store prices); "This offer ships to US addresses only" where the pages promised Europe, the UK, Canada, Australia and New Zealand (F4, Before launch 11); no AppLovin pixel when the browser sends Global Privacy Control, and AppLovin named in the privacy policy (F5, Before launch 12); a renewing pack named by its bottles in the checkout summary and on the receipt, its gifts on a "With this first order only" line (F6, Before launch 13); `tools/funnel/push_theme.py` pushes only changed bytes, so a push never re-sends an unchanged asset that cached pages still use (F7); Michele W.'s rosacea and "no burning", Gillian S.'s "calming" and Tina C.'s "doesn't settle to lines at all" out of the featured quotes (F8; Tina's full words stay on the listicle's reason 2, beside "designed not to settle"); "Made to keep its tone from morning to evening" for "8 AM to 6 PM, one application" (F9); no pulse under reduced motion (F10); the pause button at the video's own corner, off its caption (F11); "No thanks, continue" right under the hero's accept on every offer (F12); posters and loop data down the page wait until a video is about a screen away, and the offers, checkout and thank-you page load their fonts with `display=optional` (F13: the brush offer's 0.11 layout shift was the font arriving); an offer or the thank-you page opened without an order says "We can't find an order on this page" instead of "Your order is placed/confirmed", and the starter's demo customer (Taylor, Jordan Chen, Ottawa) is gone from the receipt fields (F14); one cancel deadline (at least a day before a refill, the refund policy too), one reply time (one business day, the contact page too) and "reviews of this formula" as the store says (F15); no Pro-Xylane, L'Oréal's trade name (F16, Before launch 14).
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
