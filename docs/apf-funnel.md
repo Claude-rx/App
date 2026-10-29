@@ -69,7 +69,7 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    scarcity, `foundation-checkout.html` bundles, `funnels/apf.py` PACKS, `check_apf.py` BRUSH_SKUS) in one pass.
 4. **Store prices quoted.** The pages say the store sells one bottle for $47 and the 2-pack for $57 without the brush,
    and the brush for $24.95 (the 3-pack of brushes at $16.63 each). If a store price changes, change `why_now` on the
-   sales page and the "reserved for you" copy in `tools/funnel/apf/offer_pages.py`, and rebuild.
+   sales page and the offers' store comparisons in `tools/funnel/apf/offer_pages.py`, and rebuild.
 5. **Tracking (before paid traffic).** AppLovin Axon is on, on every page (see "AppLovin Axon" below). `gtm_id` and
    `fb_pixel_id` on the `apf-funnel` entry of `campaigns/skinofab/_data/campaigns.json` are still empty, so no GTM or
    Meta tags load. Set them, and enable the matching providers in `src/apf-funnel/assets/config.js`.
@@ -82,8 +82,11 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    deluxe sample of the balm or the serum fits) and keep its value honest.
 8. **Refills (since 29 Oct 2026).** (a) Fulfilment: a refill of packages 2 and 3 is **the bottles only**, never the
    gifts; the package titles still say "+ free gifts", so tell the warehouse. (b) The pages promise "we email you
-   before every refill" and "to skip or cancel, just email info@skinofab.com": make sure the store's subscription
-   reminder emails are on, and that someone cancels on request within a business day. (c) Klarna, Afterpay, Affirm
+   before every refill" and offer a ready-made cancel email ("Cancel my refills": a `mailto:` with the subject
+   "Cancel my Automatic Refills" and the body filled in) that stops a refill when sent a day before it: make sure the
+   store's subscription reminder emails are on, and that every such email is cancelled the same day, no questions
+   asked (California's auto-renewal law expects cancelling to be as easy as signing up; a cancel page in the store
+   would be better still if NEXT offers one). (c) Klarna, Afterpay, Affirm
    and Link may not allow a later charge; check with NEXT whether a refill on those is charged or fails, and turn them
    off on campaign 2221 if it fails. (d) **Pricing:** the store's own refills ($37 for 1 bottle, $47 for 2) are lower
    than the funnel's ($39, $57): a buyer who compares pays less in the store. Match them (or keep them apart on
@@ -91,6 +94,13 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
 9. **The store's sitemap** (`/sitemap-pages.xml`) lists the funnel's pages. They are `noindex` now (the checkout, the
    offers and the thank-you page since live review 8), but the platform builds the sitemap from published pages and
    the API cannot leave them out: remove them in the dashboard if it offers that.
+10. **The full ingredient list.** The sales page's FAQ and the checkout's "Anything I should know" list the key
+   ingredients (the store PDP's list) and say the full list is printed on the box, with a `mailto:` asking for it
+   ("Full ingredient list, Adaptive Peptide Foundation"): answer those emails with the box's INCI the same day. When
+   the supplier's INCI is in hand, paste it into both FAQs (`adaptive-foundation-offer.html`, `foundation-checkout.html`)
+   and drop the email line (live review 9, F16). The repo has no full INCI for this foundation: the old export's list
+   (water, titanium dioxide, propylene glycol, parfum…) is the original store's and contradicts "fragrance-free, no
+   propylene glycol", so it must not be used.
 
 ## AppLovin Axon
 
@@ -242,9 +252,9 @@ product page with an autoplaying clip above the fold"):
 **The hero and the clock** (`_includes/sf-upsell-hero.html`, `js/sf-offer-timer.js`, `css/sf-offers.css`): every offer
 page opens with its H1 ("Just for you, right now: more bottles at half price or less"; "One more bottle, 41% off, just
 for you"; "Add the Lymphatic Brush, 44% off, just for you"; the downsells "Last chance: …"), one line on the offer,
-"Reserved for you, <her first name>" and a countdown: 10 minutes on an offer, 5 on a last chance. The clock is honest:
-its deadline is set the first time she sees the page for that order and kept in sessionStorage, so a reload or Back
-does not restart it, and at 0:00 the page declines the offer itself (the SDK's own skip action, which goes where a
+"Just for you, <her first name>" and a countdown: 10 minutes on an offer, 5 on a last chance. The clock is honest:
+its deadline is set the first time she sees the page for that order and kept in localStorage (sessionStorage if that
+is blocked), so a reload, Back or a second tab does not restart it, and at 0:00 the page declines the offer itself (the SDK's own skip action, which goes where a
 decline goes with her order reference; if the SDK is not there, the page goes to the decline URL itself) and the hero
 says so under the clock: "When the clock reaches 0:00 this page moves on and the offer is gone: it is not in our store
 and we won't email it." If she is mid-accept when it runs out, the page waits for the SDK rather than pull the offer
@@ -280,7 +290,7 @@ the sentence), only on offer pages, and still refuses the kit's timers. The perc
    card. The downsell is the last chance at 60% off. Both skip an order that already has a brush.
 
 Every offer page carries the gate (`js/sf-offer-gate.js`, hidden from screen readers): an order the platform marks as
-unable to take a one-click offer goes straight to the thank-you page; her first name follows "Reserved for you". The
+unable to take a one-click offer goes straight to the thank-you page; her first name follows "Just for you". The
 payment logos row never shows Affirm or Afterpay (the campaign offers neither); the decline links and the footer's
 policy links are 44 px targets.
 
@@ -358,6 +368,11 @@ checks take their numbers from the spec. The theme serves this funnel's assets f
   and policy links; the theme templates and assets; the claims rules (now also the unhedged "nothing sitting in your
   lines" and the "lowest ever / lowest anywhere" superlatives the downsells contradict), nothing recurring, no
   countdown but the offers' honest one, AI labels, the reviews' origin, SPF only ever as absent.
+  Since live review 9 also: no clinician in an image or its alt text; each countdown's 0:00 route (past the downsell
+  when the decline leads to one) and nothing "reserved"; only "No thanks, continue" / "No thanks, show my order" as
+  declines; no $37 on the offers and no "launch offer"; the checkout's packs in the sales page's order and opening on
+  its pack; the ingredient list on the sales page and the checkout; the gate's order lines hidden and blank when
+  empty; with `SF_REVIEWS=<reviews.json>` (the store build passes it), every named quote is the buyer's own words.
 - `FUNNEL=apf node tools/funnel/funnel_check.mjs <base-url> <out-dir> [--served]`: every page at 390 and 1440,
   screenshots (long pages in parts), console errors, overflow, live prices; `ORDER_REF=<ref_id>` opens the offer and
   thank-you pages with a real order.
@@ -645,6 +660,8 @@ broken image or overflow; `r7-fixes.mjs` in the session's scratchpad checks each
 **Owner's changes, 29 Oct 2026 (afternoon):** *The hero ratings in plain black stars.* The sales page's hero rating and the checkout's top rating are plain black text stars, centred above their line (`sf-tp__stars--plain` / `sf-co-tp--plain`); every other rating keeps the green boxes. *The order button* stands off the page with a deep shadow, and its second line reads "FREE SHIPPING · SKIP OR CANCEL ANY TIME" (no guarantee on it: the guarantee line sits right under the button). *Everything is a subscription* (see "Commerce"): each pack card on the sales page and the checkout says what it renews at beside its price ("Then $57 every 56 days"), the line under the sales page's button and the pay line by the checkout's buttons say "$57.00 today, then $57.00 every 56 days … until you cancel", the order button asks her to agree to the refills, the checkout's terms box says how to skip or cancel, the gifts are "with your first order", the order summary shows the SDK's "Refills: Every 56 days", and the thank-you page gives each pack's renewal under its line (the offers' add-ons say they don't renew). The listicle's offer box says the same in one line.
 
 **Live review 8 (29 Oct 2026), fixed in the same build:** the crossed-out prices and SAVE badges (B1: gone from the packs; offer 1 compares with the store's one-time price, named); pinch-zoom on the checkout, offers and thank-you page (no `maximum-scale`), the checkout's 10.4 px labels and 9.6 px badge (now 12 px; fields 16 px); the hydration line ("holds water at the surface"); the demo clip's "in seconds" and "melts right into your skin" (silenced in `images.py` `MUTE`); offers 2 and 2b's "page you came from" (now "the sales page price of $39"); "none of its Adaptive Peptide Foundation packs comes with the brush"; "Formulated by a K-beauty lab" and "formulated in Korea and made in batches"; five products on both pages; "54 to 74"; Susan B.'s quote once; the checkout footer names Synderra Inc.; US spelling (moisturized, store windows, afterward, from our line, package); the refund policy now says the product need not be sent back; policy pages opened from the funnel hide the store footer's menus and newsletter and make the logo inert; the exit pop keeps Tab inside, its close button in the dialog, the page behind inert and unscrolled; under reduced motion the loops stop (they carried `autoplay`), and every loop has a 44 px pause button; small text to 12 px; 44 px phone and email links; darker crossed-out prices on the offers; `autocomplete="tel"`; the clip row fits at 768 and centres at 1024/1440; `noindex` on the checkout, offers and thank-you page. Left: the buyers' small photos (review 8, 16: the originals are that size), the store sitemap (Before launch 9).
+
+**Live review 9 (29 Oct 2026), fixed in the next build:** the countdowns (F1: nothing is "reserved" any more, the eyebrow is "Just for you"; at 0:00 an offer whose decline leads to its downsell goes past the downsell, `data-sf-timer-to`, and says the last-chance price goes too, so waiting is never cheaper; the deadline holds across tabs); the white-coat "clinic" portrait under "Formulated by a K-beauty lab" (F2: the bottle with the Korean flag, square, no person; `doctor_photo()` no longer runs); every quote a page puts a buyer's name to is checked against her imported words and a shortened one carries "…" (F3: Sharon E., Tina, Lora, Maria, Barbara, Judith; "None is reworded"); offers 2 and 2b no longer quote the store's $37 refill and nothing says "launch offer" (F4; the price gap itself is Before launch 8d); policy pages opened from the funnel (`?from=offer`) keep `from=offer` on their own links and disarm every other store link (F5); a ready-made cancel email everywhere refills are explained (F6); the offers' button pulse runs three times and not at all under reduced motion (F7); the express buttons now say that paying with them agrees to the refills (F8); strike prices and the coupon line darker (F9); 44 px order-summary toggle, 12 px badges and quantity (F10); the sales hero's mobile image is a 760×950 crop preloaded, the listicle's 760×760 (F11); the brush offers' order-lines list is hidden from screen readers and has a blank empty state (F12); "Michele W." without rosacea (F15); the key ingredients and a way to get the full list before ordering (F16, Before launch 10); plain "No thanks, continue" declines (F17); the checkout's packs in the sales page's 1/2/3 order and opening on the 3-bottle pack like the sales page, with or without `forceBundleId` (F18); the exit pop locks the body too and returns focus to the order button when nothing had focus (F19); the listicle hero's alt names the one woman it shows (F21). Left: the sales hero's centred stars (F20, the owner's request), the 30-minute store cache after a push (F13) and the sitemap (F14, Before launch 9).
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page

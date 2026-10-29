@@ -22,7 +22,7 @@
 .sf-supply__price s { color: #5f5f5f; margin-right: 6px; }      /* 6.4:1 on white (it was 3.1:1, live review 8) */
 .sf-supply__was { margin: 2px 0 0; font-size: 12.5px; color: #5f5f5f; }
 /* the offers' crossed-out prices, readable (2.96:1 at 32 px, live review 8) */
-.upsell-offer .text-strike.color-muted, .upsell-offer .diagonal-strike.color-muted, .upsell-offer__heading-compare { color: #5f5f5f !important; }
+.text-strike.color-muted, .diagonal-strike.color-muted, .upsell-offer__heading-compare, .upsell-offer__price.color-muted { color: #5f5f5f !important; }   /* (the scoped rule matched nothing, live review 9) */
 .sf-supply__price strong { font-size: 30px; }
 .sf-supply__buy { width: 100%; margin-top: 8px; }
 .sf-supply__charged { margin: 0; font-size: 12.5px; line-height: 1.4; color: #6b6b6b; }
@@ -94,7 +94,7 @@
 .sf-more__card span { font-size: 13.5px; line-height: 1.4; color: #3b3b3b; }
 /* (one column at every width: the receipt column is narrow on a computer too) */
 
-/* v2: the offer's hero (sf-upsell-hero.html): the page's H1, one line, "reserved for you" and the honest clock
+/* v2: the offer's hero (sf-upsell-hero.html): the page's H1, one line, "just for you" and the honest clock
    (js/sf-offer-timer.js) in a black band with no empty space under its last line (funnel review: the kit's band
    left 100 px of black) */
 .sf-uh { padding: 26px 0 22px; background: #151515; color: #fff; text-align: center; }

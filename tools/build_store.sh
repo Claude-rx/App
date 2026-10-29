@@ -35,7 +35,7 @@ python3 -I tools/funnel/apf/offer_pages.py > /dev/null && python3 -I tools/funne
 python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/stick-funnel skinofab-theme
 python3 -I tools/funnel/check_funnel.py skinofab-theme      # prices, renewal terms, refs, routes, claims
 FUNNEL=apf python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/apf-funnel skinofab-theme
-python3 -I tools/funnel/apf/check_apf.py skinofab-theme     # prices, refill and one-time terms, refs, routes, claims
+SF_REVIEWS="$W/reviews/reviews.json" python3 -I tools/funnel/apf/check_apf.py skinofab-theme     # prices, refill and one-time terms, refs, routes, claims, quotes
 
 cd skinofab-theme
 python3 scripts/check-dtl.py --require

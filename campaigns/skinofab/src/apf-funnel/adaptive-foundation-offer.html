@@ -6,6 +6,7 @@ page_type: product
 next_url: foundation-checkout.html
 body_class: "sf-product sf-apf"
 preload_image: "images/sf/wow.jpg"
+preload_image_mobile: "images/sf/wow-m.jpg"   # the phone's copy (images.py), live review 9
 styles:
   - css/sf-apf.css
 meta_tags:
@@ -67,7 +68,7 @@ offer:
   lead: "<strong>3 bottles for $75</strong>, $25 a bottle, with the free Lymphatic Brush. Every pack ships free and refills at the same price until you cancel."
   button: "GET MY FOUNDATION"
   trust: ["Free shipping", "Ships in 1 business day", "Secure checkout", "30-day money-back guarantee"]
-  once: "Automatic Refills: your pack ships again at the same price until you cancel, 1 bottle every 28 days, 2 bottles every 56 days, 3 bottles every 84 days. We email you before every refill. To skip or cancel, just email info@skinofab.com: a person replies within one business day. No minimum, no fees. The free gifts come with your first order; refills are the bottles only."
+  once: "Automatic Refills: your pack ships again at the same price until you cancel, 1 bottle every 28 days, 2 bottles every 56 days, 3 bottles every 84 days. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only."
 packs:
   - id: "apf-1"
     package: 1
@@ -204,8 +205,11 @@ korea:
     - "Fragrance-free: no parabens, no drying alcohol, no propylene glycol"
     - "The full ingredient list is printed on the box, in English"
   badge: ["Formulated", "in Korea"]
-  image: "images/sf/doctor.jpg"
-  image_alt: "A woman in a white coat in a bright clinic office, smiling, holding up the black Adaptive Peptide Foundation bottle"
+  # the bottle with the Korean flag and "Formulated in Korea" (the store's own pack shot): no person. The white-coat
+  # "clinic" portrait it replaces was generated, so it read as an invented clinician endorsement (live review 9, F2)
+  image: "images/sf/g-bottle.jpg"
+  image_square: true
+  image_alt: "The black Adaptive Peptide Foundation bottle, with the Korean flag and the words Formulated in Korea, Advanced formula"
 one_shade:
   eyebrow: "The shade question"
   title: "“How do I pick my shade?” You don’t."
@@ -222,20 +226,20 @@ before_after:
   lede: "The one thing a foundation does: it evens the look of skin tone and softens the look of lines. Each face, its shape and its creases stay hers."
   items:
     - { image: "images/sf/ba-car.jpg", height: 900, alt: "A fair-skinned woman in her early fifties with shoulder-length hair, before and after: freckles, sun spots and redness on her bare skin, then the foundation on, her tone even and glowing", caption: "Fair skin: sun spots and redness evened, the same one shade.", review: { topic: "A buyer on redness", name: "Gillian S., 65", photo: "images/sf/review-gillian.jpg", text: "…blurs imperfections and cover redness, and it looks like skin, not something put on top!" } }
-    - { image: "images/sf/ba-kitchen.jpg", height: 900, alt: "A woman in her mid fifties with dark curly hair and olive skin, before and after: freckles, redness, uneven tone and lines on her bare skin, then the foundation on, her tone even and fresh", caption: "Olive skin: redness and uneven tone evened, lines softened, not erased.", review: { topic: "A buyer on uneven color", name: "Lora Z., 65", photo: "images/sf/review-lora.jpg", text: "I’m 65 and my skin has uneven color. This product has evened out those places." } }
-    - { image: "images/sf/ba-garden.jpg", height: 900, alt: "A woman in her late fifties with short dark hair and medium-deep skin, before and after: dark spots and uneven tone on her bare skin, then the foundation on, her tone even and luminous", caption: "Medium-deep skin: dark spots evened, still her own tone.", review: { topic: "A buyer on her match", name: "Judith L.", photo: "images/sf/review-judith.jpg", text: "…colour matches to my skin tone, doesn’t oxidise as the day goes on… I frequently get told how nice my skin looks." } }
+    - { image: "images/sf/ba-kitchen.jpg", height: 900, alt: "A woman in her mid fifties with dark curly hair and olive skin, before and after: freckles, redness, uneven tone and lines on her bare skin, then the foundation on, her tone even and fresh", caption: "Olive skin: redness and uneven tone evened, lines softened, not erased.", review: { topic: "A buyer on uneven color", name: "Lora Z., 65", photo: "images/sf/review-lora.jpg", text: "I’m 65 and my skin has uneven color. This product has evened out those places. …" } }
+    - { image: "images/sf/ba-garden.jpg", height: 900, alt: "A woman in her late fifties with short dark hair and medium-deep skin, before and after: dark spots and uneven tone on her bare skin, then the foundation on, her tone even and luminous", caption: "Medium-deep skin: dark spots evened, still her own tone.", review: { topic: "A buyer on her match", name: "Judith L.", photo: "images/sf/review-judith.jpg", text: "…colour matches to my skin tone, doesn’t oxidise as the day goes on… I frequently get told how nice my skin looks. …" } }
   before: ["A shade that sits gray or orange on your cheeks", "Concealer, then powder, then a touch-up by noon", "Dry patches catching the foundation", "“You can tell I’m wearing makeup”"]
   after: ["A color that shifts toward your own tone as you blend", "One pump, fingertips, about a minute", "Dry skin kept comfortable by the serum base", "“They just see me, rested”"]
 proof:
   eyebrow: "Why you can trust it"
   title: "Nothing to take on faith: the label, the reviews, the guarantee."
   cards:
-    - { kind: "stars", title: "4.8 out of 5", text: "9,855 reviews from our earlier store, word for word" }
+    - { kind: "stars", title: "4.8 out of 5", text: "9,855 reviews from our earlier store, in the buyers’ own words" }
     - { kind: "image", image: "images/sf/cmp-ours.jpg", w: 119, h: 330, alt: "The bottle’s label: Adaptive Peptide Foundation, PDRN", title: "The actives are on the label", text: "PDRN, peptides, Pro-Xylane, hyaluronic acid" }
     - { kind: "image", image: "images/sf/guarantee-seal.png", w: 360, h: 360, alt: "30-day money-back guarantee seal: full refund, even opened", title: "30 days to decide", text: "A full refund, even opened. Nothing to send back." }
     - { kind: "icon", icon: "shield", title: "What we don’t claim", text: "No clinical study, no medical claim: it’s a foundation, not a treatment." }
   quotes:
-    - { photo: "images/sf/review-tina.jpg", text: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM.", by: "Tina C." }
+    - { photo: "images/sf/review-tina.jpg", text: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. It doesn’t settle to lines at all.", by: "Tina C." }
     - { photo: "images/sf/review-hope.jpg", text: "…they turn orange as the day goes along. This by far is THE best!!!", by: "Hope H., 74" }
     - { photo: "images/sf/review-michele.jpg", text: "…by far the lightest feeling, no cakey look, full coverage I’ve had and it stays all day.", by: "Michele W." }
 promise:
@@ -272,7 +276,7 @@ guarantee_section:
     - "Even opened. Even half used. You don’t send anything back."
   why: "We can promise this because of what 9,855 reviews say about it. Read them above, then decide in your own light."
 value:
-  eyebrow: "Your launch offer"
+  eyebrow: "Your offer"
   title: "3 bottles for $75, the brush and gifts free"
   stack:
     - { item: "3 bottles of Adaptive Peptide Foundation (about three months)", value: "$75" }
@@ -294,14 +298,14 @@ reviews_section:
   stars: "4.8 out of 5 · 9,855 reviews"
   title: "Women over 45, in their own words"
   lede: "The published reviews of this foundation from our earlier store, word for word, with the buyers’ own photos. Two of the nine are four stars, as 2,132 of the reviews are."
-  note: "Ratings and reviews of the Adaptive Peptide Foundation, imported from our earlier store in October 2026. None is edited; names are shown as first name and initial."
+  note: "Ratings and reviews of the Adaptive Peptide Foundation, imported from our earlier store in October 2026. None is reworded; “…” marks where a long one is shortened; names are shown as first name and initial."
   wall: ["lora", "hope", "tina", "gillian", "darla", "diane", "mary", "vicki", "judith", "susan", "dotty", "patricia", "rachel", "melissa", "barbara", "sharyl"]
   more:
-    - { text: "At 56, I also am happy it doesn’t cake or settle in fine lines.", by: "Maria R." }
+    - { text: "… At 56, I also am happy it doesn’t cake or settle in fine lines. …", by: "Maria R." }
     - { text: "Easy application and covers well. Looks good on my 81 year old face!", by: "Vicki M." }
     - { text: "I am 60 years old and don’t wear much makeup. This product I love it is light weight and matches perfectly. This is mid afternoon even.", by: "Diane O." }
     - { text: "Love that it doesn’t go in my wrinkles !!", by: "Dotty H." }
-    - { text: "Love this lightweight creamy foundation that keeps my face moist!", by: "Barbara A." }
+    - { text: "Love this lightweight creamy foundation that keeps my face moist! …", by: "Barbara A." }
 reviews:
   - { name: "Lora Z., 65", photo: "images/sf/review-lora.jpg", stars: 5, text: "I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased!" }
   - { name: "Hope H., 74", photo: "images/sf/review-hope.jpg", stars: 5, text: "I’ve ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn’t love my wrinkles." }
@@ -310,8 +314,8 @@ reviews:
   - { name: "Susan B., 70", photo: "images/sf/review-susan.jpg", stars: 5, text: "Lovely smooth finish and colour is great on my 70 year old skin" }
   - { name: "Rachel H.", photo: "images/sf/review-rachel.jpg", stars: 4, text: "Easy to blend , natural everyday foundation. Aging skin so hard to find something that doesn’t sink into the wrinkles…very happy" }
   - { name: "Michele W.", photo: "images/sf/review-michele.jpg", stars: 5, text: "I have rosacea and normally foundation flakes off so I have to put on multiple layers. I’ve used bare minerals, Clinique, I’l Makiage and Victoria Jackson makeup. This is by far the lightest feeling, no cakey look, full coverage I’ve had and it stays all day. Very pleased I purchased this and bought 2!! I’ll be using this one from now on. No break outs, no drying, no burning sensation. Really Happy" }
-  - { name: "Sharon E., 54", photo: "images/sf/review-sharon.jpg", stars: 4, text: "It is a lovely product, the colour change is impressive. I was expecting a bit more coverage - but you can add more. It doesn’t appear to settle into my 54 year old lines & wrinkles like other products, which is a huge bonus." }
-  - { name: "Judith L.", photo: "images/sf/review-judith.jpg", stars: 5, text: "This make up does what it says, colour matches to my skin tone, doesn’t oxidise as the day goes on, feels light and moisturising, being older it it doesn’t settle in any lines. It blends nicely with the brush or the blender. I frequently get told how nice my skin looks." }
+  - { name: "Sharon E., 54", photo: "images/sf/review-sharon.jpg", stars: 4, text: "It is a lovely product, the colour change is impressive. I was expecting a bit more coverage - but you can add more. It doesn’t appear to settle into my 54 year old lines & wrinkles like other products, which is a huge bonus. I’ve recently learned to stop using face powder, so that helps to stop the settling as well. My 19 year old tried it too, she is very pale skinned - with red acne - and it struggled to get to the right shade for her (not a surprise really). …" }
+  - { name: "Judith L.", photo: "images/sf/review-judith.jpg", stars: 5, text: "This make up does what it says, colour matches to my skin tone, doesn’t oxidise as the day goes on, feels light and moisturising, being older it it doesn’t settle in any lines. It blends nicely with the brush or the blender. I frequently get told how nice my skin looks. …" }
 ratings:
   average: "4.8"
   count: "9,855"
@@ -328,10 +332,12 @@ faq:
     a: "One pump gives an even, natural, medium coverage that softens sun spots and redness. For a darker spot, tap a second thin layer just there. It builds without looking heavy; some buyers wanted more coverage, and said so in their four-star reviews above."
   - q: "I have sensitive skin. Will it sting?"
     a: "It is fragrance-free and made without propylene glycol, drying alcohol or parabens, the usual reasons thinner skin stings. As with anything new, try it on your jawline first. It contains salmon-derived DNA (PDRN): not for anyone with a fish allergy."
+  - q: "What’s in it? Can I see the full ingredient list?"
+    a: "Key ingredients: Sodium Hyaluronate, Sodium Hyaluronate Crosspolymer, Ceramide NP, Squalane, Panthenol, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Sodium DNA (PDRN, from salmon), Hydroxypropyl Tetrahydropyrantriol (Pro-Xylane), Niacinamide, Adenosine, Silica, Boron Nitride, Mica, Iron Oxides. Fragrance-free, with no propylene glycol, drying alcohol or parabens. It contains salmon-derived PDRN, so it is not for anyone with a fish allergy. The full ingredient list is printed on the box. To check it before you order, email <a href=\"mailto:info@skinofab.com?subject=Full%20ingredient%20list%2C%20Adaptive%20Peptide%20Foundation\">info@skinofab.com</a> and we’ll send it to you."
   - q: "Does it have SPF?"
     a: "No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation is made to layer on top without pilling."
   - q: "Is this a subscription?"
-    a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($39), 2 bottles every 56 days ($57), 3 bottles every 84 days ($75). We email you before every refill. To skip or cancel, just email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a>: a person replies within one business day. No minimum, no fees. The free gifts come with your first order; refills are the bottles only."
+    a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($39), 2 bottles every 56 days ($57), 3 bottles every 84 days ($75). We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only."
   - q: "How long does a bottle last?"
     a: "About a month of daily use with one pump a day. The 2-bottle pack is about two months, the 3-bottle pack about three."
   - q: "When will it arrive?"
@@ -368,7 +374,7 @@ closing:
   {% comment %} 1-2: the hero: the big promise, its benefits as bullets, the wow still {% endcomment %}
   <section class="sf-hero2 sf-hero2--v2" id="s01-hero">
     <figure class="sf-hero2__media sf-hero2__media--tall">
-      <img src="{{ hero.image | campaign_asset }}" alt="{{ hero.image_alt }}" width="1080" height="1350" fetchpriority="high" decoding="async">
+      <picture><source media="(max-width: 599px)" srcset="{{ 'images/sf/wow-m.jpg' | campaign_asset }}" width="760" height="950"><img src="{{ hero.image | campaign_asset }}" alt="{{ hero.image_alt }}" width="1080" height="1350" fetchpriority="high" decoding="async"></picture>
       <span class="sf-hero2__tag">Goes on white → your tone</span>
     </figure>
     <div class="sf-hero2__copy">
@@ -531,11 +537,11 @@ closing:
     </div>
   </section>
 
-  {% comment %} 10b: formulated in Korea: the lab portrait and an honest laurel {% endcomment %}
+  {% comment %} 10b: formulated in Korea: the bottle with the flag, and the facts {% endcomment %}
   <section class="sf-sec" id="s10-korea">
     <div class="sf-korea">
-      <figure class="sf-korea__fig">
-        <img src="{{ korea.image | campaign_asset }}" alt="{{ korea.image_alt }}" width="1080" height="1350" loading="lazy" decoding="async">
+      <figure class="sf-korea__fig{% if korea.image_square %} sf-korea__fig--square{% endif %}">
+        <img src="{{ korea.image | campaign_asset }}" alt="{{ korea.image_alt }}" width="1080" height="{% if korea.image_square %}1080{% else %}1350{% endif %}" loading="lazy" decoding="async">
       </figure>
       <div class="sf-korea__copy">
         <p class="sf-korea__pill">{{ korea.badge[0] }} {{ korea.badge[1] }}</p>

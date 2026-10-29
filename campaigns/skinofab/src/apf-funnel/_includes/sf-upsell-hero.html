@@ -1,8 +1,9 @@
 {%- comment -%}
-  SKINOFAB: a special offer's hero: the page's H1, what the offer is in one line, "reserved for you, <her first name>"
-  and the countdown (js/sf-offer-timer.js: the deadline is set once per order and page and survives a reload; at 0:00
-  the page declines the offer itself and moves on, which the line under the clock says, so the clock is true).
-    uh: { eyebrow, title, text, seconds, expires, cta, cta_text }   (title and text may use upsell/copy.html's tokens; cta
+  SKINOFAB: a special offer's hero: the page's H1, what the offer is in one line, "for you, <her first name>" and the
+  countdown (js/sf-offer-timer.js: the deadline is set once per order and page, in every tab, and survives a reload; at
+  0:00 the page declines the offer itself and moves on, past its downsell when it has one (expiry_url), which the line
+  under the clock says, so the clock is true; "reserved" is gone: nothing is held, live review 9).
+    uh: { eyebrow, title, text, seconds, expires, expiry_url, cta, cta_text }   (title and text may use upsell/copy.html's tokens; cta
     'accept': the offer's accept button under the clock, a proxy of the one SDK action; cta 'supply': a button that buys
     the supply card cta_card names (js/sf-supply.js) and a jump to the choices (cta_jump, cta_jump_text); cta '#id': a jump only)
   Her first name comes from the order (js/sf-offer-gate.js fills [data-sf-name]). Written by tools/funnel/apf/offer_pages.py.
@@ -13,8 +14,8 @@
     <p class="sf-uh__eyebrow">{{ uh.eyebrow }}</p>
     <h1 class="sf-uh__title" id="sf-uh-title">{% campaign_include 'upsell/copy.html' text=uh.title %}</h1>
     <p class="sf-uh__text">{% campaign_include 'upsell/copy.html' text=uh.text %}</p>
-    <div class="sf-uh__timer" data-sf-timer="{{ uh.seconds }}" data-sf-timer-expires="skip">
-      <span class="sf-uh__for">Reserved for you<span data-sf-name></span> ·</span>
+    <div class="sf-uh__timer" data-sf-timer="{{ uh.seconds }}" data-sf-timer-expires="skip"{% if uh.expiry_url %} data-sf-timer-to="{{ uh.expiry_url }}"{% endif %}>
+      <span class="sf-uh__for">Just for you<span data-sf-name></span> ·</span>
       <span class="sf-uh__clock" role="timer" aria-live="off" data-sf-timer-display>{{ uh.seconds | divided_by: 60 | prepend: '00' | slice: -2, 2 }}:00</span>
       <span class="sf-uh__for">left</span>
     </div>

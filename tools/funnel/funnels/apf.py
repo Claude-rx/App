@@ -84,7 +84,7 @@ PAGES = [
     {'id': 'offer', 'file': 'adaptive-foundation-offer', 'type': 'landing', 'sdk': 'product', 'next': 'checkout',
      'label': 'Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts, refills at the same price'},
     {'id': 'checkout', 'file': 'foundation-checkout', 'type': 'checkout', 'sdk': 'checkout', 'packages': [1, 2, 3],
-     'default_package': 2, 'success': 'offer-1', 'exit_offer': 1, 'label': 'Checkout'},
+     'default_package': 3, 'success': 'offer-1', 'exit_offer': 1, 'label': 'Checkout'},
     {'id': 'offer-1', 'file': 'foundation-offer-1', 'type': 'upsell', 'sdk': 'upsell', 'packages': [4, 5], 'offers': [],
      'accept': 'brush-offer', 'decline': 'offer-2', 'label': 'Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)'},
     {'id': 'offer-2', 'file': 'foundation-offer-2', 'type': 'upsell', 'sdk': 'upsell', 'packages': [7], 'offers': [2],

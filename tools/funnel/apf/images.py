@@ -767,7 +767,7 @@ def hero_collage():
     im = Image.new('RGB', (side * 2 + 4, side), PAPER)
     for i, p in enumerate(sq): im.paste(p, (i * (side + 4), 0))
     save(im, 'hero', size=1688)
-    save(ImageOps.fit(Image.open(PDP / 'hold-cheek.jpg').convert('RGB'), (1080, 1080), Image.LANCZOS, centering=(0.5, 0.5)), 'hero-m', size=1080)
+    save(ImageOps.fit(Image.open(PDP / 'hold-cheek.jpg').convert('RGB'), (1080, 1080), Image.LANCZOS, centering=(0.5, 0.5)), 'hero-m', size=760)   # phones only: 760 px is 390 at 2x (live review 9)
 
 
 def offer_card():
@@ -898,12 +898,14 @@ def copies(video=True):
     # v2 (28 Oct 2026): the generated sources in gen/ (the science cross-section with the real bottle, the split-face
     # "wow" portrait, two problem photos), the store's Korean formulator portrait, the stick funnel's ingredient
     # textures (the same ingredients, the same photos)
-    save(ImageOps.fit(soften_seam(Image.open(GEN / 'wow-split.png')), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35)), 'wow', size=1350)
+    wow = ImageOps.fit(soften_seam(Image.open(GEN / 'wow-split.png')), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35))
+    save(wow, 'wow', size=1350)
+    save(wow, 'wow-m', size=950)        # a phone's copy (760 x 950, enough for 390 px at 2x): the sales page's LCP on a slow line, live review 9
     for n in ('problem-mirror', 'problem-orange'):
         im = Image.open(GEN / f'{n}.png').convert('RGB')
         if n == 'problem-mirror': im = soften_patch(im, (0.19, 0.27, 0.47, 0.49))   # her cheek's pigment read as a bruise at page size (live review 3)
         save(ImageOps.fit(im, (1080, 1350), Image.LANCZOS, centering=(0.5, 0.3)), n, size=1350)
-    doctor_photo()
+    # (doctor_photo() is no longer called: the sales page shows the pack shot with the flag, live review 9, F2)
     old_routine()
     compare_heads()
     step_frames()

@@ -10,7 +10,7 @@ is bought once: each page says, by its button, that the price is charged once to
 this item doesn't renew (offers 2 and 2b sell package 7, a one-time bottle, not the checkout's refilling one).
 
 v2 (the owner's brief): every offer is "just for you, now": the hero (_includes/sf-upsell-hero.html) is the page's H1,
-one line on the offer, "Reserved for you, <her first name>" and an honest countdown (js/sf-offer-timer.js: the deadline
+one line on the offer, "Just for you, <her first name>" and an honest countdown (js/sf-offer-timer.js: the deadline
 is set once per order and page, survives a reload, and at 0:00 the page declines the offer itself and moves on, which
 the hero says under the clock). The foundation offers are short (she knows the product): the offer, three reasons, the
 closing card. Only the brush gets a product page, and its loop plays above the fold.
@@ -53,14 +53,22 @@ GUARANTEE = 'Backed by our 30-day money-back guarantee.'
 # the honest countdown: 10 minutes on an offer, 5 on a last chance; at 0:00 the page declines the offer itself
 TIMER, TIMER_LAST = 600, 300
 EXPIRES = 'When the clock reaches 0:00 this page moves on and this offer is gone: it isn’t in our store or in an email.'
-# an offer whose decline leads to its own downsell (the same item for less on the next page) must not say "gone"
-# (live review 5): the clock still moves the page on, and the offer is still in no store and no email
-EXPIRES_DOWNSELL_NEXT = 'When the clock reaches 0:00 this page moves on. This offer isn’t in our store or in an email.'
+# an offer whose decline leads to its own downsell (the same item for less on the next page): letting the clock run out
+# must not be the way to the lower price (live review 9), so at 0:00 the page skips the downsell too (expiry_url) and
+# says so; only her "No thanks" leads to the last-chance price
+EXPIRES_DOWNSELL_NEXT = 'When the clock reaches 0:00 this page moves on, and this offer and its last-chance price are both gone: neither is in our store or in an email.'
 
 
 def expires(pid):
     nxt = F.BY_ID[F.BY_ID[pid]['decline']]
     return EXPIRES_DOWNSELL_NEXT if nxt.get('type') == 'downsell' else EXPIRES
+
+
+def expiry_url(pid):
+    """Where the page goes at 0:00: past its downsell when its decline leads to one, else where a decline goes (none:
+    the SDK's own skip action)."""
+    nxt = F.BY_ID[F.BY_ID[pid]['decline']]
+    return F.route(nxt['decline']) if nxt.get('type') == 'downsell' else ''
 
 
 def q(s):
@@ -111,6 +119,7 @@ BRUSH_PDP = {
         {'q': 'Is it safe for sensitive skin?', 'a': 'The bristles are soft and the pressure stays light, so it’s gentle on most skin types. Avoid using it on irritated or broken skin, sunburn or active breakouts. If swelling doesn’t go away during the day, or you have a medical condition, check with your doctor first.'},
         {'q': 'What if it doesn’t work for me?', 'a': f'Email {EMAIL} within 30 days of delivery and we’ll refund it in full, even opened. No questions asked.'}]},
 }
+# (every decline is a plain "No thanks": live review 9 read the old ones, "not even at this price", as confirmshaming)
 BRUSH_IMAGES = [('brush-in-hand', 'The Lymphatic Brush in a hand'),
                 ('brush-case', 'The Lymphatic Brush and its SKINOFAB travel case'),
                 ('brush-features', 'The brush’s soft bristles, raised tufts and curved shape')]
@@ -144,8 +153,8 @@ def head(pid, title, n_text, extra_scripts=(), extra_styles=()):
     ]
 
 
-GATE = """{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them) {% endcomment %}
-<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div data-next-order-items data-item-template-id="sf-gate-items"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
+GATE = """{% comment %} the order's facts js/sf-offer-gate.js reads (in the page, not shown and not read aloud: the SDK fills them; the items list's empty state is a blank span, not the SDK's "No items found in order") {% endcomment %}
+<div class="sf-sr" aria-hidden="true" data-sf-offer-gate data-sf-thank-you="{{ thank_you_url }}"{% if skip_skus %} data-sf-skip-skus="{{ skip_skus }}"{% endif %}><span data-sf-upsell-ok data-next-display="order.supportsUpsells"></span><span data-sf-first-name data-next-display="order.customer.firstName"></span>{% if skip_skus %}<div aria-hidden="true" data-next-order-items data-item-template-id="sf-gate-items" data-empty-template="&lt;span&gt;&lt;/span&gt;"><template id="sf-gate-items"><span data-sf-sku="{item.sku}"></span></template></div>{% endif %}</div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>This offer didn’t load, but your order is placed and confirmed by email. Refresh the page to see the offer, or email <a href="mailto:info@skinofab.com">info@skinofab.com</a>.</p>
 """
 
@@ -155,6 +164,7 @@ def hero(eyebrow, title, text, seconds, pid, cta=None, cta_text=None, cta_card=N
     as the closing card's), so it is on her first screen (live review 6: it sat two screens down on every offer);
     cta '#id' with cta_text: a jump to the page's choices instead (offer 1, two cards to pick from)."""
     return ['uh:', f'  eyebrow: {q(eyebrow)}', f'  title: {q(title)}', f'  text: {q(text)}', f'  seconds: {seconds}', f'  expires: {q(expires(pid))}',
+            *([f'  expiry_url: {q(expiry_url(pid))}'] if expiry_url(pid) else []),
             *([f'  cta: {q(cta)}'] if cta else []), *([f'  cta_text: {q(cta_text)}'] if cta_text else []),
             *([f'  cta_card: {q(cta_card)}', f'  cta_jump: {q(cta_jump)}', f'  cta_jump_text: {q(cta_jump_text)}'] if cta_card else [])]
 
@@ -234,7 +244,7 @@ def supply_page(spec):
     ]
     supply = {'title': 'Choose your pack', 'lede': '$19.50 a bottle in the 2-pack, $16.50 in the 6-pack, charged once, shipped in the same box as the order you just placed.',
               'tiers': cards, 'guarantee': '30-day money-back guarantee on every bottle, even opened. You don’t send anything back.',
-              'charged': 'Charged once to the payment you just used. This pack doesn’t renew.', 'decline': 'No thanks, I don’t want to stock up'}
+              'charged': 'Charged once to the payment you just used. This pack doesn’t renew.', 'decline': 'No thanks, continue'}
     features = [('A bottle lasts about a month', 'One pump a day. Two more bottles cover the next two months; six cover the next six months of photos, calls and lunches.'),
                 ('One at home, one in your bag', 'The one on your vanity stays there. The one in your bag saves the afternoon.'),
                 ('These prices are only here', 'In our store two bottles are $57 bought once, or $47 with refills, and three 2-packs bought once are $171. Here a bottle works out at $19.50 in the 2-pack or $16.50 in the 6-pack, charged once, in the same box as your order.')]
@@ -245,7 +255,7 @@ def supply_page(spec):
         f'supply: {q(supply)}',
         # the closing card prices the selected card (bundle.supply.*) and proxies its add / skip
         'upsell_offer:', '  type: tier-cards', f'  package_id: {two}', '  selector_id: "supply"', '  display_selector_id: "supply"', '  display_bundle_id: "supply-b1g1"',
-        '  accept_text: "Yes, add it for"', '  accept_show_price: true', '  decline_text: "No thanks, I don’t want to stock up"',
+        '  accept_text: "Yes, add it for"', '  accept_show_price: true', '  decline_text: "No thanks, continue"',
         '  fallback_price: "$39.00"', f'  fallback_compare: "${by["b1g1"]["compare"]:.2f}"',
         f'  cta_note: {q("Charged once to the payment you just used. This pack doesn’t renew, and it ships in the same box. " + GUARANTEE + " " + ALLERGY)}',
         'upsell_bundle_tiers:',
@@ -274,18 +284,18 @@ def supply_page(spec):
 
 OFFERS = {
     'offer-2': {
-        'announcement': 'Offer 2 of 3 · Your order is placed', 'seconds': TIMER, 'eyebrow': 'A one-time offer',
+        'announcement': 'Offer 2 of 3 · Your order is placed', 'seconds': TIMER, 'eyebrow': 'Just for you, with this order',
         'hero_title': 'One more bottle, {discount} off, just for you',
         'hero_text': 'One for your vanity, one for your bag: {price} instead of $39, charged once, in the same box as your order.',
         'pretitle': 'Not in our store at this price',
         'title': 'One more Adaptive Peptide Foundation',
         'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Keep one at home and one in your bag', 'A bottle lasts about a month', 'Bought once: it doesn’t renew', 'Ships with your order, in the same box'],
         'images': FOUNDATION_IMAGES, 'closing_image': 'bottle',
-        'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, I don’t want another bottle',
+        'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, continue',
         'features_title': 'Why women keep a second bottle',
         'features_text': 'The one you keep at home stays at home. The one in your bag saves the afternoon.',
         'features': [('For touch-ups on the go', 'One pump in your bag: a thin layer over the nose and chin and it looks fresh again.'),
-                     ('Less than one bottle in our store', 'One is $47 there bought once, or $37 with refills, and $39 at the sales page price. Here, {price}, charged once.'),
+                     ('Less than one bottle in our store', 'One is $47 there, bought once, and $39 at the sales page price. Here, {price}, charged once.'),
                      ('30 days to love it', 'Or email us within 30 days of delivery for a full refund, even opened.')],
         'closing': 'Add one more bottle for {price} today?',
         'allergy': ALLERGY, 'note': ALLERGY,
@@ -298,24 +308,24 @@ OFFERS = {
         'title': 'One more Adaptive Peptide Foundation',
         'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Charged once: it doesn’t renew', 'A bottle lasts about a month', 'Ships with your order, in the same box'],
         'images': FOUNDATION_IMAGES, 'closing_image': 'bottle',
-        'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, not even at this price',
+        'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, continue',
         'features_title': 'Why we make this offer',
         'features_text': 'A second bottle in the same box costs us little to ship, and it keeps you from running out of the shade that finally works.',
-        'features': [('{discount} off, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of the sales page price of $39 ($47 bought once in our store, $37 with refills).'),
+        'features': [('{discount} off, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of the sales page price of $39 ($47 bought once in our store).'),
                      ('Charged once', 'To the payment you just used. This bottle doesn’t renew, and nothing else is charged.'),
                      ('The same guarantee', '30 days from delivery, a full refund even opened, on this bottle too.')],
         'closing': 'Add one more bottle for {price} today?',
         'allergy': ALLERGY, 'note': ALLERGY,
     },
     'brush-offer': {
-        'announcement': 'Offer 3 of 3 · Your order is placed', 'seconds': TIMER, 'eyebrow': 'A one-time offer',
+        'announcement': 'Offer 3 of 3 · Your order is placed', 'seconds': TIMER, 'eyebrow': 'Just for you, with this order',
         'hero_title': 'Add the Lymphatic Brush, {discount} off, just for you',
         'hero_text': 'A 3-minute morning massage for the look of puffy eyes, cheeks and jaw, on dry skin, before your foundation. {price} with its travel case, charged once.',
         'pretitle': '$24.95 in our store',                                # (it is sold there: live review 7)
         'title': 'The Lymphatic Brush',
         'bullets': BRUSH_BULLETS,
         'images': BRUSH_IMAGES,
-        'accept': 'Yes, add the brush for', 'decline': 'No thanks, I don’t want the brush',
+        'accept': 'Yes, add the brush for', 'decline': 'No thanks, continue',
         'closing': 'Add the Lymphatic Brush for {price} today?',
         'brush_pdp': True, 'skip_skus': 'SKF-APF-3-GIFTS,SKF-APF-6-BRUSH',
     },
@@ -327,7 +337,7 @@ OFFERS = {
         'title': 'The Lymphatic Brush',
         'bullets': BRUSH_BULLETS,
         'images': BRUSH_IMAGES,
-        'accept': 'Yes, add the brush for', 'decline': 'No thanks, I’ll pass on the brush',
+        'accept': 'Yes, add the brush for', 'decline': 'No thanks, show my order',
         'closing': 'Add the Lymphatic Brush for {price} today?',
         'brush_pdp': True, 'skip_skus': 'SKF-APF-3-GIFTS,SKF-APF-6-BRUSH',
     },

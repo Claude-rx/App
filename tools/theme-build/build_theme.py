@@ -1123,12 +1123,20 @@ base = base.replace("{% endblock styles %}",
     "    <style>:root{--primary-color:#000000;--primary-color-darker:#000000;--primary-color-lighter:#333333;--accent-color:#000000;"
     "--font-body:var(--FONT-STACK-BODY, 'Jost', sans-serif);}" + BTN_CSS + "</style>\n"
     "    {# A policy page opened from a funnel's footer (?from=offer, the funnels' sf-footer.html) keeps the store's sale bar and menus out of it, set before the first paint (live review 7). Django comments are one line. #}\n"
-    "    <script>if (/[?&]from=offer(?:&|$)/.test(location.search)) document.documentElement.classList.add('sf-from-offer');</script>"
+    "    {# On such a page every link to another legal or contact page keeps ?from=offer, and any other link into the store is switched off (live review 9: one tap on a footer link opened the full store). #}\n"
+    "    <script>if (/[?&]from=offer(?:&|$)/.test(location.search)) { document.documentElement.classList.add('sf-from-offer');"
+    " document.addEventListener('DOMContentLoaded', function () { var keep = /^\\/(?:[a-z]{2}\\/)?(?:privacy-policy|terms-of-service|refund-policy|shipping-policy|cookie-policy|contact|contact-information|postflows-track-your-order)\\/?$/;"
+    " document.querySelectorAll('a[href]').forEach(function (a) { var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (e) { return; }"
+    " if (u.origin !== location.origin || (u.pathname === location.pathname && !u.search)) return;"
+    " if (keep.test(u.pathname)) { u.searchParams.set('from', 'offer'); a.setAttribute('href', u.pathname + u.search + u.hash); }"
+    " else { a.removeAttribute('href'); a.setAttribute('aria-disabled', 'true'); a.classList.add('sf-off-link'); } }); }); }</script>"
     "<style>.sf-from-offer{--announcement-height:0px!important}.sf-from-offer .announcement-bar-static,.sf-from-offer #SiteHeader .menu__items,"
     ".sf-from-offer #SiteHeader .menu__item--icons,.sf-from-offer #SiteHeader .mobile-menu,.sf-from-offer #SiteHeader .mobile-menu__button,"
     # (live review 8: the footer's shop and customer-care menus and the newsletter sign-up led into the store mid-purchase)
     ".sf-from-offer #SiteFooter .sf__signup,.sf-from-offer #SiteFooter .sf__menu{display:none!important}"
-    ".sf-from-offer #SiteFooter .sf__logo,.sf-from-offer #SiteHeader a[href=\"/\"]{pointer-events:none;cursor:default}</style>", 1)
+    ".sf-from-offer #SiteFooter .sf__logo,.sf-from-offer #SiteHeader a[href=\"/\"]{pointer-events:none;cursor:default}"
+    ".sf-from-offer .sf-off-link{pointer-events:none;color:inherit;text-decoration:none}"
+    ".sf-from-offer #SiteFooter .sf__policies a{display:inline-block;padding:12px 4px}</style>", 1)
 base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "{% block extrahead %}{% endblock extrahead %}\n"
     "    {% url 'storefrontapi:graphql' as sf_graphql_url %}\n"

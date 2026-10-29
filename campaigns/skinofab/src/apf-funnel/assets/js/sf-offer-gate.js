@@ -7,7 +7,7 @@
 //   - on the brush offers (their gate has data-sf-skip-skus), an order whose lines already include a brush (the
 //     3-bottle pack, the 6-bottle pack: their SKUs) goes where a decline goes, to the thank-you page: the order's lines
 //     are read from the gate's hidden order-items list ([data-sf-sku], the SDK fills it from the order).
-// It also puts her first name after "Reserved for you" ([data-sf-name], sf-upsell-reserved.html) once the order has one.
+// It also puts her first name after "Just for you" ([data-sf-name], sf-upsell-reserved.html) once the order has one.
 (function () {
   const EUROPE = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU',
     'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'CH', 'GB', 'UK'];

@@ -406,6 +406,85 @@ for p in F.PAGES:
     if 'images/sf/review-' in h and 'earlier store' not in text(h): fail(p['id'], 'buyers\' reviews without where they are from')
 
 
+# live review 9 ---------------------------------------------------------------------------------------------------------
+# no clinician in the pictures: a generated white-coat "clinic" portrait read as an invented medical endorsement (F2)
+for p in F.PAGES:
+    h = html(p['id'])
+    for a in re.findall(r'<img[^>]*\balt="([^"]*)"', h):
+        if re.search(r'white[- ]coat|lab coat|\bclinic|\bdoctor|dermatologist|physician|\bnurse\b', a, re.I): fail(p['id'], f'an image of a clinician: alt "{a[:80]}"')
+    for src in re.findall(r'<(?:img|source|video)[^>]*\b(?:src|srcset|poster)="([^"]+)"', h):
+        if re.search(r'doctor|clinician|derm', src, re.I): fail(p['id'], f'a clinician image: {src}')
+# a countdown that ends on the same item cheaper is a pressure trick: at 0:00 an offer whose decline is its downsell
+# goes past the downsell (data-sf-timer-to), and the page says the last-chance price goes too (F1)
+for p in F.PAGES:
+    if p['sdk'] != 'upsell' or 'data-sf-timer=' not in html(p['id']): continue
+    h, nxt = html(p['id']), F.BY_ID[F.BY_ID[p['id']]['decline']]
+    want = F.route(nxt['decline']) if nxt.get('type') == 'downsell' else ''
+    m = re.search(r'data-sf-timer-to="([^"]*)"', h)
+    if (m.group(1) if m else '') != want: fail(p['id'], f'at 0:00 the page goes to {m.group(1) if m else "where a decline goes"}, not {want or "where a decline goes"}')
+    if want and 'last-chance price' not in text(h): fail(p['id'], 'the countdown does not say the last-chance price goes with it')
+    if re.search(r'\breserved\b', text(h), re.I): fail(p['id'], '"reserved": nothing is held for her')
+# declines say what happens, nothing about her (confirmshaming, F17)
+for p in F.PAGES:
+    if p['sdk'] != 'upsell': continue
+    for m in re.finditer(r'data-(?:next-upsell-action|upsell-proxy)="skip"[^>]*>(.*?)</a>', html(p['id']), re.S):
+        label = text(m.group(1))
+        if label not in ('No thanks, continue', 'No thanks, show my order'): fail(p['id'], f'decline "{label}" is not a plain "No thanks, continue"')
+# the store's $37 refill is not a reason to buy here, and nothing is a "launch" price (F4)
+for p in F.PAGES:
+    t = text(html(p['id']))
+    if p['id'] in OFFER_IDS and '$37' in t: fail(p['id'], 'quotes the store\'s $37 refill price')
+    if re.search(r'launch (?:offer|price)', t, re.I): fail(p['id'], '"launch offer": the funnel\'s prices are not an introductory price')
+# the checkout shows the packs in the sales page's order and opens on the sales page's pack, with or without
+# forceBundleId (F18)
+_sales_order = re.findall(r'class="sf-pack[^"]*" data-pack="([^"]+)"', html('offer'))
+if [c[0] for c in cards] != _sales_order: fail('checkout', f'packs in the order {[c[0] for c in cards]}, the sales page has {_sales_order}')
+_sel = [c[0] for c in cards if 'data-next-selected="true"' in c[2]]
+_on_pack = re.search(r'<label class="sf-pack is-on"[^>]*data-pack="([^"]+)"', html('offer'))
+if _on_pack and _sel != [_on_pack.group(1)]: fail('checkout', f'opens on {_sel}, the sales page on {_on_pack.group(1)}')
+# the ingredients before she pays: the key list on the sales page and the checkout, and the full list on request (F16)
+for pid in ('offer', 'checkout'):
+    t = text(html(pid))
+    if 'Key ingredients: Sodium Hyaluronate' not in t or 'subject=Full%20ingredient%20list' not in html(pid): fail(pid, 'no ingredient list (or no way to ask for the full one) before she orders')
+# the gate's order lines are not read aloud, and their empty state is not the SDK's "No items found in order" (F12)
+for p in F.PAGES:
+    h = html(p['id'])
+    for m in re.finditer(r'<div[^>]*data-next-order-items[^>]*>', h):
+        if 'data-sf-sku' in h[m.end():m.end() + 200] and ('aria-hidden="true"' not in m.group(0) or 'data-empty-template=' not in m.group(0)):
+            fail(p['id'], 'the gate\'s order-items list is read aloud or prints "No items found in order"')
+
+# reviews: every quote the pages put a buyer's name to is her own words from the imported reviews (SF_REVIEWS, the store
+# build's reviews/reviews.json), and a shortened one says so with "…" (live review 9: Sharon E.'s review was cut where it
+# says the shade did not suit her daughter's very pale skin, under "none is edited")
+_rev = os.environ.get('SF_REVIEWS', '')
+if _rev and Path(_rev).is_file():
+    import yaml
+    _n = lambda s: re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', s).replace('’', "'").replace('‘', "'").replace('“', '"').replace('”', '"').replace('—', '-')).strip()
+    _by = {}
+    for r in json.loads(Path(_rev).read_text())['reviews']: _by.setdefault(r.get('name', '').split(',')[0].strip(), []).append(_n(re.sub(r'\.\.\.$', '', r.get('body', ''))))
+    def _walk(o, at=''):
+        if isinstance(o, dict):
+            t, who = o.get('text') or o.get('body') or o.get('quote'), o.get('by') or o.get('author') or o.get('name') or o.get('quote_by')
+            if isinstance(t, str) and isinstance(who, str): yield at, who, t
+            if isinstance(o.get('quote'), str) and isinstance(o.get('quote_by'), str): yield at, o['quote_by'], o['quote']
+            for k, v in o.items(): yield from _walk(v, f'{at}.{k}')
+        elif isinstance(o, list):
+            for i, v in enumerate(o): yield from _walk(v, f'{at}[{i}]')
+    _quoted = 0
+    for _f in sorted((PROJECT / 'src' / F.SLUG).glob('*.html')):
+        _m = re.match(r'---\n(.*?)\n---\n', _f.read_text(encoding='utf-8'), re.S)
+        for at, who, t in (_walk(yaml.safe_load(_m.group(1))) if _m else []):
+            name = re.split(r'[,(]', who)[0].strip()
+            if name not in _by: continue
+            _quoted += 1
+            q = _n(t).strip('"')
+            parts = [x.strip() for x in q.split('…') if x.strip()]
+            if not all(any(x in b for b in _by[name]) for x in parts): fail(_f.stem, f'{at}: {name}\'s quote is not her imported words: "{q[:80]}…"')
+            elif q not in _by[name] and '…' not in q: fail(_f.stem, f'{at}: {name}\'s review is shortened with no "…"')
+    if not _quoted: fail('reviews', 'no quote matched a reviewer in SF_REVIEWS (the names changed?)')
+else:
+    print('check_apf: SF_REVIEWS not set: the quotes were not checked against the imported reviews')
+
 # the sales page reports its pack to the ad pixels (AppLovin Axon) without touching the cart: view_item from its
 # next-analytics-view-item tag, add_to_cart from next.trackAddToCart on the checkout button. A cart add there
 # (next.addItem) doubles the order, because the checkout's pack selector keeps every line it did not add itself and

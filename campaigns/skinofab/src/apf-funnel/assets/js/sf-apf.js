@@ -129,7 +129,7 @@
         var input = e.target; if (input && input.name === 'sf_pack') sync(input.value);
       });
     });
-    // the pack the URL names comes first (the listicle's launch offer is the 3-bottle pack: ?pack=apf-3), then the page's own
+    // the pack the URL names comes first (the listicle's offer is the 3-bottle pack: ?pack=apf-3), then the page's own
     var asked = (new URLSearchParams(location.search).get('pack') || '').replace(/[^a-z0-9-]/g, '');
     var wanted = asked && document.querySelector('.sf-pack input[name=sf_pack][value="' + asked + '"]');
     var first = wanted || document.querySelector('.sf-pack input[name=sf_pack]:checked') || document.querySelector('.sf-pack input[name=sf_pack]');
