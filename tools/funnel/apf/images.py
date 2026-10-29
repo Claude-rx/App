@@ -107,38 +107,124 @@ def bottle(size):
     return ImageOps.pad(im, (size, size), Image.LANCZOS, color=PAPER)
 
 
-def pack_cards():
-    """The checkout cards' and the offers' pack images on white, no words (they show at 64 px): 1, 2, 3 and 6 bottles,
-    the 3 and the 6 with the free brush."""
-    one = bottle(1254)
-    bbox = ImageOps.invert(one.convert('L')).point(lambda v: 255 if v > 40 else 0).getbbox()      # the bottle itself
-    cut = one.crop(bbox)
-    brush = ImageOps.fit(Image.open(BRUSH / 'card.jpg').convert('RGB'), (420, 420), Image.LANCZOS)
+def cutout(im, dark=110, fill=True):
+    """A product cut from its white backdrop as RGBA: what is darker than `dark` (or not white, dark=None), its holes
+    filled (the label's white print stays), the edge softened over a pixel."""
+    from scipy import ndimage
+    im = im.convert('RGB')
+    L = np.asarray(im.convert('L'))
+    m = (L < dark) if dark else (np.asarray(im).min(-1) < 236)
+    if fill: m = ndimage.binary_fill_holes(m)
+    m = ndimage.binary_opening(m, iterations=1)
+    alpha = Image.fromarray((m * 255).astype(np.uint8), 'L').filter(ImageFilter.GaussianBlur(0.9))
+    out = im.convert('RGBA'); out.putalpha(alpha)
+    return out.crop(alpha.getbbox())
 
-    def card(n, with_brush=False, name=''):
-        """v2 (28 Oct 2026): with the brush, the bottles stand clear of it (no bottle half hidden behind the brush's
-        box: the owner's "the offer image is not good"): a shorter row shifted left, the brush and its case at the
-        bottom right on their own."""
-        size = 900
-        im = Image.new('RGB', (size, size), PAPER)
-        if with_brush: h = 560 if n <= 3 else 360
-        else: h = 640 if n <= 3 else 400
-        b = cut.resize((int(cut.width * h / cut.height), h), Image.LANCZOS)
-        gap = 18
-        cols = n if n <= 3 else 3
-        rows = 1 if n <= 3 else 2
-        total_w = cols * b.width + (cols - 1) * gap
-        x0 = (size - total_w) // 2 - (130 if with_brush else 0)
-        y0 = ((size - rows * h - (rows - 1) * gap) // 2) - (60 if with_brush else 0)
-        for i in range(n):
-            im.paste(b, (x0 + (i % cols) * (b.width + gap), y0 + (i // cols) * (h + gap)))
+
+def stage(size, items, bg='white'):
+    """Products on a table (the owner, 29 Oct 2026: "more natural shadow and better design"): each item (rgba, x
+    centre, y of its base, height) is drawn back to front over its own shadow, light from the upper left: a tight dark
+    contact under the base and a wide soft pool falling to the right. bg 'white' (the checkout cards) or 'warm' (a
+    cream studio sweep)."""
+    W = H = size
+    if bg == 'warm':
+        yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+        r = np.hypot((xx - W * 0.5) / W, (yy - H * 0.36) / H)
+        top, edge = np.array([252, 250, 246], np.float32), np.array([236, 228, 218], np.float32)
+        t = np.clip(r / 0.75, 0, 1)[..., None] ** 1.4
+        canvas = Image.fromarray((top * (1 - t) + edge * t).astype(np.uint8), 'RGB')
+    else:
+        canvas = Image.new('RGB', (W, H), PAPER)
+    for rgba, xc, base, h in items:
+        obj = rgba.resize((max(1, int(rgba.width * h / rgba.height)), int(h)), Image.LANCZOS)
+        w = obj.width
+        sh = Image.new('L', (W, H), 0); d = ImageDraw.Draw(sh)
+        d.ellipse((xc + 0.12 * w - 0.78 * w, base - 0.07 * w, xc + 0.12 * w + 0.78 * w, base + 0.13 * w), fill=70)
+        sh = sh.filter(ImageFilter.GaussianBlur(max(2, 0.08 * w)))
+        c = Image.new('L', (W, H), 0)
+        ImageDraw.Draw(c).ellipse((xc + 0.03 * w - 0.47 * w, base - 0.03 * w, xc + 0.03 * w + 0.47 * w, base + 0.035 * w), fill=150)
+        c = c.filter(ImageFilter.GaussianBlur(max(1.5, 0.022 * w)))
+        shade = Image.fromarray(np.maximum(np.asarray(sh), np.asarray(c)), 'L')
+        canvas.paste(Image.new('RGB', (W, H), (58, 46, 38)), (0, 0), shade)
+        canvas.paste(obj, (int(xc - w / 2), int(base - h)), obj)
+    return canvas
+
+
+def laurel(im, cx, cy, r, color, K=4):
+    """Two laurel branches either side of (cx, cy), the wreath of an award badge around words that are true: a thin
+    stem curving up each side, pointed leaves along it turned up and alternately out and in, drawn 4x and brought
+    down so the edges stay smooth."""
+    import math
+    W = int(r * 2.9)
+    lay = Image.new('L', (W * K, W * K), 0)
+    d = ImageDraw.Draw(lay)
+    o = W * K / 2
+    def leaf(x, y, ang, length, width):
+        pts = []
+        for t in np.linspace(0, 1, 14):                                          # a pointed leaf: two arcs tip to tip
+            pts.append((t * length, math.sin(t * math.pi) * width / 2))
+        pts += [(t * length, -math.sin(t * math.pi) * width / 2) for t in np.linspace(1, 0, 14)]
+        ca, sa = math.cos(ang), math.sin(ang)
+        d.polygon([(o + (x + px * ca - py * sa) * K, o + (y + px * sa + py * ca) * K) for px, py in pts], fill=255)
+    for side in (-1, 1):
+        stem = []
+        for n, th in enumerate(np.radians(np.linspace(108, 238, 40))):
+            stem.append((o + (r * math.cos(th) if side < 0 else -r * math.cos(th)) * K, o + r * math.sin(th) * 0.9 * K))
+        d.line(stem, fill=255, width=int(2.6 * K))
+        for n, th in enumerate(np.radians(np.linspace(116, 228, 7))):
+            x = r * math.cos(th) if side < 0 else -r * math.cos(th)
+            y = r * math.sin(th) * 0.9
+            tang = math.atan2(-math.cos(th) * 0.9, -math.sin(th)) if side < 0 else math.atan2(-math.cos(th) * 0.9, math.sin(th))
+            up = tang + (math.pi if side < 0 else 0)                              # along the stem, toward its tip
+            for flip in (-1, 1):
+                leaf(x, y, up + flip * side * 0.62, 30 - n * 1.6, 12 - n * 0.5)
+    lay = lay.resize((W, W), Image.LANCZOS)
+    im.paste(Image.new('RGB', lay.size, color), (int(cx - W / 2), int(cy - W / 2)), lay)
+
+
+def pack_cards():
+    """The packs as products on a table: the checkout cards' and the offers' pack images on white (no words: they
+    show at 64 px), 1, 2, 3 and 6 bottles, the 3 and the 6 with the free brush and its case beside them (never in
+    front of a bottle's label); and the sales page's 3-pack (offer-3) on a warm sweep with three true badges: the
+    free brush and gifts, formulated in Korea (a laurel, no clinical claim: there is no clinical study), the 30-day
+    guarantee seal."""
+    bot = cutout(bottle(1254))
+    card_im = Image.open(BRUSH / 'card.jpg').convert('RGB')
+    brush = cutout(card_im.crop((250, 180, 830, 515)), dark=None, fill=False)    # the brush: its comb's gaps stay open
+    case = cutout(card_im.crop((250, 515, 830, 905)), dark=None)                  # its case, the SKINOFAB print kept
+
+    def scene(n, with_brush, size, bg):
+        s = size / 900
+        items = []
+        if n == 1: items = [(bot, 450, 800, 700)]
+        elif n == 2: items = [(bot, 360, 790, 640), (bot, 545, 812, 660)]
+        elif n == 3:
+            items = [(bot, 270, 670, 470), (bot, 630, 670, 470), (bot, 450, 695, 500)] if with_brush else \
+                    [(bot, 250, 770, 600), (bot, 650, 770, 600), (bot, 450, 800, 630)]
+        else:                                                                     # six: three behind, three in front
+            items = [(bot, x, 600, 430) for x in (300, 450, 600)] + [(bot, 225, 655, 450), (bot, 450, 668, 462), (bot, 675, 655, 450)]
         if with_brush:
-            br = brush.resize((300, 300) if n > 3 else (340, 340), Image.LANCZOS)
-            # pasted by its own mask (what is not its white backdrop), so it never blanks out a bottle behind it
-            m = Image.fromarray(((255 - np.asarray(br.convert('L'))) > 10).astype(np.uint8) * 255, 'L').filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(1.2))
-            im.paste(br, (size - br.width - 24, size - br.height - 40), m)
-        save(ground(im), name, size=700)
-    card(1, name='pack-1'); card(2, name='pack-2'); card(3, True, 'pack-3'); card(6, True, 'pack-6')
+            items += [(brush, 250, 878, 135), (case, 650, 884, 165)]
+        return stage(size, [(o, x * s, y * s, h * s) for o, x, y, h in items], bg)
+
+    for n, wb, name in ((1, False, 'pack-1'), (2, False, 'pack-2'), (3, True, 'pack-3'), (6, True, 'pack-6')):
+        save(scene(n, wb, 900, 'white'), name, size=700)
+    # the sales page's 3-pack, with its three badges
+    im = scene(3, True, 1080, 'warm')
+    d = ImageDraw.Draw(im)
+    cx, cy, r = 142, 142, 96                                                      # the free brush, and the gifts
+    d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=INK)
+    d.ellipse((cx - r + 8, cy - r + 8, cx + r - 8, cy + r - 8), outline=(200, 170, 110), width=2)
+    d.text((cx, cy - 32), 'FREE', font=P.sans(38, 'Bold'), fill=(222, 190, 128), anchor='ms')
+    d.text((cx, cy + 2), 'Lymphatic', font=P.sans(24, 'SemiBold'), fill=PAPER, anchor='ms')
+    d.text((cx, cy + 30), 'Brush', font=P.sans(24, 'SemiBold'), fill=PAPER, anchor='ms')
+    d.text((cx, cy + 60), '+ 2 gifts', font=P.sans(20, 'Medium'), fill=(222, 190, 128), anchor='ms')
+    laurel(im, 540, 118, 118, INK)                                                # formulated in Korea, in a laurel
+    d.text((540, 112), 'Formulated', font=P.serif(32, 'Bold'), fill=INK, anchor='ms')
+    d.text((540, 150), 'in Korea', font=P.serif(32, 'Bold'), fill=INK, anchor='ms')
+    seal = Image.open(OUT / 'guarantee-seal.png').convert('RGBA'); seal.thumbnail((196, 196), Image.LANCZOS)
+    im.paste(seal, (1080 - 46 - seal.width, 46), seal)
+    save(im, 'offer-3', size=1080)
     save(ground(bottle(1080)), 'bottle', size=1080)
 
 
