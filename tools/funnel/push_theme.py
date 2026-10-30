@@ -52,6 +52,24 @@ def head_files():
     return rec
 
 
+IGNORED_REF = __import__('re').compile(r"sf/(?:img|media|fonts)/[\w.@%-]+")   # the store's generated binaries: git-ignored
+
+
+def new_refs(todo):
+    """The git-ignored theme binaries (assets/sf/img, media, fonts: generated, so not in git and not in files()) that a
+    changed file now references and its HEAD version did not: a rebuilt picture gets a new hashed name, and without its
+    file the page would point at nothing (the serum's two regenerated gallery images, live review 14, F9). Only new
+    names: re-sending one the store already has would drop its stored copy under the cached pages."""
+    out = set()
+    for rel in todo:
+        if not rel.endswith(('.html', '.json', '.css', '.js')): continue
+        now = set(IGNORED_REF.findall((THEME / rel).read_text(encoding='utf-8', errors='ignore')))
+        head = subprocess.run(['git', 'show', f'HEAD:skinofab-theme/{rel}'], cwd=ROOT, capture_output=True, text=True, errors='ignore')
+        was = set(IGNORED_REF.findall(head.stdout)) if head.returncode == 0 else set()
+        out |= {f'assets/{n}' for n in now - was if (THEME / 'assets' / n).is_file()}
+    return sorted(out)
+
+
 def main():
     if '--init' in sys.argv:
         rec = head_files()
@@ -62,6 +80,7 @@ def main():
         sys.exit('push_theme: no .push-manifest.json: run with --init right after a committed push first')
     rec = json.loads(MANIFEST.read_text())
     todo = sorted(rel for rel, p in files().items() if rec.get(rel) != sha(p.read_bytes()))
+    todo = [r for r in new_refs(todo) if rec.get(r) != sha((THEME / r).read_bytes())] + todo   # the pictures before the pages
     print(f'push_theme: {len(todo)} changed files')
     for rel in todo: print('  ' + rel)
     if not todo or '--dry-run' in sys.argv: return

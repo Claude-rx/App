@@ -253,3 +253,4 @@ window.sfSplitGiftName = function (title) {
   new MutationObserver(fix).observe(box, { childList: true, subtree: true });
   fix();
 })();
+

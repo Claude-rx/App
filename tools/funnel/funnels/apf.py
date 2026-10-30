@@ -110,7 +110,7 @@ TITLES = {
     'listicle': ('10 Reasons Why Women Over 45 Look Fresher With This Shade-Adapting Foundation',
                  'The serum foundation that goes on white and adapts to your skin tone as you blend. Made for skin after 45.'),
     'offer': ('Adaptive Peptide Foundation: your shade, without guessing',
-              'One adaptive shade in a hydrating serum base with PDRN and peptides. From $33.97: buy 2, get 1 free; buy 3, get 2 free. 30-day guarantee.'),
+              'One adaptive shade in a hydrating serum base with PDRN and peptides. From $19.99 a bottle: buy 3, get 2 free, or buy 2, get 1 free. 30-day guarantee.'),
     'checkout': ('Secure checkout', 'Checkout for the Adaptive Peptide Foundation.'),
     'offer-1': ('Special offer', 'A one-time offer for your order.'),
     'offer-2': ('Special offer', 'A one-time offer for your order.'),

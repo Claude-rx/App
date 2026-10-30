@@ -97,7 +97,7 @@
     
     <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-55297d.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-2683e7.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-c08699.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -288,7 +288,7 @@
                   <div class="checkout__header-brand cc-shop"><img src="{% endverbatim %}{{ 'sfa/sfa-skinofab-wordmark-d7216f.svg'|asset_url }}{% verbatim %}" loading="eager" alt="SKINOFAB" class="brand-logo"></div>
                   <div class="order-summary-mobile">
                     <div data-initial-state="closed" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary-mobile__accordion">
-                      <div data-next-accordion-trigger="order-summary" class="order-summary__trigger">
+                      <div data-next-accordion-trigger="order-summary" id="order-summary" role="button" class="order-summary__trigger">
                         <div class="order-summary__inner">
                           <div class="order-summary__mobile-left">
                             <div class="summary-toggle">
@@ -301,7 +301,7 @@
                           </div>
                         </div>
                       </div>
-                      <div data-next-accordion-panel="order-summary" class="accordion__panel payment-method__form--expanded">
+                      <div data-next-accordion-panel="order-summary" id="order-summary-content" class="accordion__panel payment-method__form--expanded">
                         <div class="order-summary">
                           <p class="order-summary__title">Order Summary</p>
                           <div class="order-summary__content">
@@ -413,7 +413,7 @@
     <li><strong>Your first morning.</strong> Moisturizer and sunscreen first. One pump, five dots on your forehead, cheeks, nose and chin (they look white), then blend outward with your fingertips for about a minute until the white has turned into your tone. Tap a little more over a spot or redness. Skip powder on dry areas.</li>
     <li><strong>The daylight test.</strong> Look in the car mirror at noon on day one. That’s the one that counts, and it’s the one the guarantee is for.</li>
     <li data-sf-gift-line><strong>Everything ships in one package.</strong> <span data-sf-gifts>Any free gift your pack includes is listed under it in your order summary and ships in the same box, free.</span></li>
-    <li><strong>Your refills.</strong> Your foundation pack ships again at the same price until you cancel: the price and how often are under it in your order summary. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No fees. Anything you added after checkout was charged once and doesn’t renew.</li>
+    <li><strong>Your refills.</strong> Your foundation pack ships again at the pack’s own price until you cancel, even if a code took money off today: the price and how often are under it in your order summary. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No fees. Anything you added after checkout was charged once and doesn’t renew.</li>
     <li><strong>30 days to love it.</strong> If it isn’t right for you, email <a href="mailto:info@skinofab.com">info@skinofab.com</a> within 30 days of delivery for a full refund, even opened. You don’t have to send it back.</li>
   </ol>
 </div>
@@ -612,6 +612,8 @@
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-receipt-0a04a3.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-failsafe-396ae4.js'|asset_url }}{% verbatim %}"></script>
+    
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-accordion-aria-3492c4.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

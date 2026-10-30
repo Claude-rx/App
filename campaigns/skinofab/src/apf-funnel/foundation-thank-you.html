@@ -38,6 +38,7 @@ styles:
 scripts:
   - js/sf-receipt.js
   - js/sf-failsafe.js
+  - js/sf-accordion-aria.js
 ---
 <div hidden data-sf-renewals='{{ renewals | json }}' data-sf-gift-map='{{ gifts | json }}' data-sf-pack-images='{ {% for p in pack_images %}"{{ p[0] }}":"{{ p[1] | campaign_asset }}"{% unless forloop.last %},{% endunless %}{% endfor %} }'></div>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
@@ -56,7 +57,7 @@ scripts:
                   <div class="checkout__header-brand cc-shop"><img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" loading="eager" alt="{{ campaign.store_name }}" class="brand-logo"></div>
                   <div class="order-summary-mobile">
                     <div data-initial-state="closed" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary-mobile__accordion">
-                      <div data-next-accordion-trigger="order-summary" class="order-summary__trigger">
+                      <div data-next-accordion-trigger="order-summary" id="order-summary" role="button" class="order-summary__trigger">
                         <div class="order-summary__inner">
                           <div class="order-summary__mobile-left">
                             <div class="summary-toggle">
@@ -69,7 +70,7 @@ scripts:
                           </div>
                         </div>
                       </div>
-                      <div data-next-accordion-panel="order-summary" class="accordion__panel payment-method__form--expanded">
+                      <div data-next-accordion-panel="order-summary" id="order-summary-content" class="accordion__panel payment-method__form--expanded">
                         <div class="order-summary">
                           <p class="order-summary__title">Order Summary</p>
                           <div class="order-summary__content">

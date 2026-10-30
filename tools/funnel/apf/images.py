@@ -418,12 +418,24 @@ def one_shade():
     save(im, 'one-shade', size=H)
 
 
+def _pair(key, encs, cmd):
+    """Encodes <key>.mp4, then <key>.webm (encs: the mp4's args first; cmd(ext, args, out) gives ffmpeg's argv). x264
+    gives the same bytes for the same input, VP9 with row-mt does not: when the new mp4 is the one already on disk and
+    the webm exists, the webm is kept, so a rebuild does not give an unchanged clip a new hashed name and a push does not
+    re-send it (the review 14 build re-encoded four unchanged clips)."""
+    mp4, webm = OUT / f'{key}.mp4', OUT / f'{key}.webm'
+    old = mp4.read_bytes() if mp4.exists() else None
+    for ext, args in encs:
+        if ext == 'webm' and old is not None and webm.exists() and mp4.read_bytes() == old: continue
+        subprocess.run(cmd(ext, args, OUT / f'{key}.{ext}'), check=True)
+
+
 def _encode(frames, key, fps=25):
     """frames (a folder of f0001.png…) as <key>.mp4 (H.264) and <key>.webm (VP9), silent, and the last frame as
     the poster."""
-    for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
-                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '32', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):   # yuv420p: an RGB VP9 painted blank in some captures (live review 2)
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(fps), '-i', str(frames / 'f%04d.png'), '-an', *args, str(OUT / f'{key}.{ext}')], check=True)
+    _pair(key, (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                ('webm', ['-c:v', 'libvpx-vp9', '-crf', '32', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])),   # yuv420p: an RGB VP9 painted blank in some captures (live review 2)
+          lambda ext, args, out: ['ffmpeg', '-v', 'error', '-y', '-framerate', str(fps), '-i', str(frames / 'f%04d.png'), '-an', *args, str(out)])
 
 
 def _frames_dir(key):
@@ -744,10 +756,10 @@ def howto_loop(encode=True):
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(t0 + 2.8), '-i', str(src), '-frames:v', '1', '-vf', vf, str(tmp)], check=True)
     save(Image.open(tmp), 'howto-poster', size=758)
     if not encode: return
-    for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '29',   # about 400 kB for the 11 s
-                      '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
-                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '40', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(t0), '-t', str(dur), '-i', str(src), '-vf', vf, '-an', *args, str(OUT / f'howto.{ext}')], check=True)
+    _pair('howto', (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '29',   # about 400 kB for the 11 s
+                             '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                    ('webm', ['-c:v', 'libvpx-vp9', '-crf', '40', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])),
+          lambda ext, args, out: ['ffmpeg', '-v', 'error', '-y', '-ss', str(t0), '-t', str(dur), '-i', str(src), '-vf', vf, '-an', *args, str(out)])
 
 def portrait(src, out, size=1080, crop=None, centering=(0.5, 0.3)):
     """A persona photo on its own, square: the stand-in for a reason whose before/after is not made yet. crop: (left,
@@ -941,9 +953,9 @@ def copies(video=True):
     save(poster, 'brush-how-poster', size=poster.width)
     if video:
         box = f"drawbox=x={pill['x']}:y={pill['y']}:w={pill['w']}:h={pill['h']}:color=white@1:t=fill"
-        for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
-                          ('webm', ['-c:v', 'libvpx-vp9', '-crf', '30', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):
-            subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src_dir / f'up2-how.{ext}'), '-vf', box, '-an', *args, str(OUT / f'brush-how.{ext}')], check=True)
+        _pair('brush-how', (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                            ('webm', ['-c:v', 'libvpx-vp9', '-crf', '30', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])),
+              lambda ext, args, out: ['ffmpeg', '-v', 'error', '-y', '-i', str(src_dir / f'up2-how.{ext}'), '-vf', box, '-an', *args, str(out)])
     # the store's how-it-works loop (white dots, blended, one shade) and its poster: no pill, the label's PDRN line
     howto_loop(encode=video)
     shutil.copyfile(ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'images' / 'sf' / 'guarantee.jpg', OUT / 'guarantee.jpg')

@@ -600,11 +600,11 @@ def serum():
     results_grid(P, ['ba-jaw', 'ba-cheeks', 'ba-neck', 'ba-glow'], ('Firmer, smoother,', 'brighter-looking.'))
     whats_inside(P, 'swatch', [('EGF', 'sh-Oligopeptide-1, for renewed-looking skin'), ('NAD+', 'For skin that looks tired and dull'),
                                ('Collagen', 'For firmer-feeling, plumper-looking skin')], size=610)
-    science(P, 'science', ('EGF, NAD+ and collagen in a light serum that sinks in.',
+    science(P, 'science', ('EGF, NAD+ and collagen in a light serum that dries down fast.',
                            'Two drops, face and neck: skin looks smoother, firmer',
                            'and more radiant with daily use.'))
     vs_others(P, 'tall', 'others', 'A basic serum', [('Why one serum', False), ('does the work', False), ('of three', True)],
-              ['EGF + NAD+ + collagen\nin one bottle', 'Made for skin after 45', 'Light, sinks in\nin a minute', 'Face and neck'],
+              ['EGF + NAD+ + collagen\nin one bottle', 'Made for skin after 45', 'Light, dries down\nin a minute', 'Face and neck'],
               others_thresh=246, others_h=230)
     for n in ('drop', 'hold-black', 'friends', 'apply-neck', 'trio'):
         plain(P, n)

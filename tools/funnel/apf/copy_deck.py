@@ -110,6 +110,26 @@ def deck(fm):
     return sections
 
 
+def offer_architecture():
+    """The deck's offer line from funnels/apf.py (PACKS, GIFTS, OFFER_PAGES), so it cannot fall behind the pages (it still
+    described the retired $39/$57/$75 packs and the mystery gift after the owner's offer of 30 Oct 2026, live review 14)."""
+    def money(v): return f'${v:.2f}'.replace('.00', '')
+    def unit(pk): return money(int(pk['price'] / pk['bottles'] * 100) / 100)          # to the cent below, as the pages say it
+    def name(g): return F.GIFTS[g][0] if F.GIFTS[g][0].startswith('The ') else 'a ' + F.GIFTS[g][0]
+    def n(b): return f'{b} bottle{"s" if b > 1 else ""}'
+    packs = []
+    for pk in F.PACKS:
+        free = pk['bottles'] - pk['paid']
+        packs.append(f'{n(pk["bottles"])} {money(pk["price"])}' + (' with ' + ' and '.join(map(name, pk['gifts'])) if pk['gifts'] else '')
+                     + (f' (buy {pk["paid"]}, get {free} free: {unit(pk)} a bottle)' if free else '') + f', refilled every {pk["every"]} days'
+                     + ('; the sales page opens on it' if pk.get('selected') else ''))
+    def tiers(pid): return ' or '.join(f'{n(t["bottles"])} {money(t["price"])}' if t.get('bottles') else money(t['price']) for t in F.OFFER_PAGES[pid]['tiers'])
+    return ('- **Offer architecture:** ' + '; '.join(packs) + '. Automatic Refills at the pack\'s own price (skip or cancel by email; the gifts '
+            'with the first order only), free shipping, 30-day money-back guarantee even opened, nothing to send back. Post-purchase, '
+            f'each charged once: offer 1 {tiers("offer-1")}, offer 2 {tiers("offer-2")} (downsell {tiers("offer-2b")}), '
+            f'the Lymphatic Brush {tiers("brush-offer")} (downsell {tiers("brush-offer-b")}).')
+
+
 def write(fm):
     front = {
         'brand': 'SKINOFAB', 'product': 'Adaptive Peptide Foundation', 'language': 'en', 'direction': 'ltr', 'currency': 'USD',
@@ -125,7 +145,7 @@ def write(fm):
            '- **Big idea:** the shade that matched at 45 looks wrong at 56 because her tone moved and her skin got drier; a foundation that adapts to her tone, in a serum made for skin after 45, ends the shade guessing.',
            '- **Problem mechanism (07):** the fixed-shade trap: several tones in one face, thinner and drier skin, formulas built for 25-year-old skin.',
            '- **Solution mechanism (08):** encapsulated pigments that go on white and open toward her tone, in a hydrating serum base with soft-focus powders and the actives named on the label.',
-           '- **Offer architecture:** 1 bottle $39, 2 bottles $57 with the Blender sponge and a mystery gift (two months), 3 bottles $75 with the Lymphatic Brush and both gifts ($25 a bottle, \"Best value\"; the sales page opens on it); Automatic Refills at the same price (every 28, 56 and 84 days; skip or cancel by email; the gifts with the first order only), free shipping, 30-day money-back guarantee even opened, nothing to send back. Post-purchase: offer 1 supply cards (2 bottles $39, 6 bottles $99 with the brush), offer 2 one bottle $23 (downsell $19), offer 3 the brush $14 (downsell $9).',
+           offer_architecture(),
            '- **Proof inventory:** 9,855 imported reviews of this formula (4.8), the buyers\' own photos, the actives printed on the label and box, formulated in Korea, the guarantee, the owner’s before/after photos; no clinical study, no medical claim, no fabricated review.',
            '- **Urgency:** honest only: the launch gift (the brush) while launch stock lasts, the price only on this page; no countdown.', '']
     for title, lines in deck(fm):

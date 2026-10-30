@@ -3559,5 +3559,9 @@
     },
     "prior_run_id": "run_1793270414928_af54ec6a",
     "comparison": "prior_run"
-  }
+  },
+  "stale": true,
+  "stale_marked_by": "page-kit parity",
+  "stale_marked_at": "2026-10-30T12:21:08.898Z",
+  "stale_reason": "Local proof production parity was recorded after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
 }

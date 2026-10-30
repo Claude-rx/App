@@ -37,7 +37,7 @@ IMG = Path(__file__).resolve().parents[2] / 'brand' / 'egf-nad-serum'   # produc
 IMG_PREFIX, GIFT_PREFIX = 'skinofab-egf-nad-serum', 'skinofab-serum-gift'
 OFFERS_FILE, REVIEWS_DIR, AMAZON_FILE = 'serum-offers.json', 'reviews-serum', None
 DESCRIPTION = ('<p>A light firming serum for face and neck. EGF (sh-Oligopeptide-1), NAD+ and collagen in a water-based serum '
-               'that sinks in within a minute: skin looks hydrated and smoother from the first use, and firmer and more radiant '
+               'that dries down in about a minute: skin looks hydrated and smoother from the first use, and firmer and more radiant '
                f'with daily use. {SIZE}, about two months of daily use.</p>')
 META_TITLE = 'EGF + NAD+ Firming Serum | Light firming serum for face and neck after 45 | SKINOFAB'
 META_DESCRIPTION = ('EGF, NAD+ and collagen in one light serum for skin after 45. Two drops for the face, two for the neck, '
@@ -52,8 +52,8 @@ KOREAN = True          # the foundation's "Formulated in Korea" line stays in th
 # the buy box --------------------------------------------------------------------------------------------------------
 EYEBROW = None
 SHIPPING_BADGE = '\U0001F69A FREE SHIPPING'   # a truck: no gift comes with this product (a gift box suggested one, stick review 9)
-LEAD = ('One light step for skin that looks less firm, drier and duller: EGF, NAD+ and collagen in a serum that sinks in '
-        'within a minute. Two drops for your face, two for your neck.')
+LEAD = ('One light step for skin that looks less firm, drier and duller: EGF, NAD+ and collagen in a serum that dries down '
+        'in about a minute. Two drops for your face, two for your neck.')
 BUNDLES = [
     {'key': '1', 'name': '1 Bottle', 'note': 'About 2 months', 'variant': '1 bottle', 'sku': 'SKF-ENS-1',
      'price': '34.95', 'refill': '27.95', 'every': 56, 'compare': '34.95', 'gifts': []},
@@ -84,7 +84,7 @@ INGREDIENTS = [
     ('Glycerin', 'Pulls water into skin',
      'Draws in moisture so skin stays soft and hydrated, and fine lines look less obvious.'),
 ]
-TEXTURE = 'Water-based and light: it sinks in within a minute and sits well under moisturiser, SPF and makeup.'
+TEXTURE = 'Water-based and light: it dries down in about a minute and sits well under moisturiser, SPF and makeup.'
 
 
 def _list(items): return '<ul>' + ''.join(f'<li>{i}</li>' for i in items) + '</ul>'
@@ -96,7 +96,7 @@ def tabs():
         ('What makes it different?',
          '<p>Most serums do one thing, for the face only. This one puts EGF, NAD+ and collagen in one light serum made for '
          'skin after 45, for the face and the neck.</p>'
-         + _list(['EGF, NAD+ and collagen in one bottle', 'Light and water-based: sinks in within a minute',
+         + _list(['EGF, NAD+ and collagen in one bottle', 'Light and water-based: dries down in about a minute',
                   'Face and neck, morning and night', 'Under moisturiser, SPF and makeup'])),
         ('Does it work on my skin?',
          '<p>It’s made for skin after 45: skin that looks less firm, drier and duller is exactly where these actives show the most.</p>'
@@ -128,13 +128,13 @@ FAQ = {'items': [
      'After cleansing, two drops for your face and two for your neck, morning and night. Press it in, wait a minute, then '
      'your moisturiser, and SPF in the morning.'),
     ('Will it feel sticky or heavy?',
-     'No. It’s a light, water-based serum that sinks in within a minute and leaves skin soft, not tacky.'),
+     'No. It’s a light, water-based serum that dries down in about a minute and leaves skin soft, not tacky.'),
     ('Can I wear it under makeup?',
-     'Yes. Let it sink in for a minute, then your moisturiser and foundation: it gives makeup a smoother surface.'),
+     'Yes. Let it dry down for a minute, then your moisturiser and foundation: it gives makeup a smoother surface.'),
     ('Does it work on mature skin?',
      'It’s made for it. Skin after 45 looks less firm, drier and duller, and that’s exactly what EGF, NAD+ and collagen are there for.'),
     ('Can I use it with retinol or vitamin C?',
-     'Yes. Use it after cleansing and before heavier creams; at night, apply it first and let it sink in before your retinol. '
+     'Yes. Use it after cleansing and before heavier creams; at night, apply it first and let it dry down before your retinol. '
      'If your skin is sensitive, start one new product at a time.'),
     ('How long until I see a difference?',
      'Skin looks hydrated and smoother from the first use. A firmer, more radiant look comes with daily use over a few weeks. '
@@ -157,7 +157,7 @@ TWIN = {
     'loved': {'lead': 'Made for real life', 'mark': 'after 45'},
     'moments': [
         ('hold-cheek', 'Every morning', 'Two drops before your moisturiser.', 'A woman in her late fifties holding the EGF + NAD+ Firming Serum'),
-        ('hold-black', 'Before makeup', 'It sinks in within a minute, so foundation goes on smooth.', 'A woman in her sixties holding the serum'),
+        ('hold-black', 'Before makeup', 'It dries down in about a minute, so foundation goes on smooth.', 'A woman in her sixties holding the serum'),
         ('friends', 'One to keep, one to share', 'The 2-bottle pack: yours and your best friend’s.', 'Two women in their fifties and sixties with the serum'),
         ('mirror', 'At night', 'The last drops of the day, before your night cream.', 'A woman applying the serum at her bathroom mirror'),
         ('trio', 'Months of routine', 'Buy 2, get 1 free: about six months, morning and night.', 'Three bottles of the EGF + NAD+ Firming Serum'),
@@ -186,11 +186,11 @@ TWIN = {
         'root_end': 'So the problem was never you. It’s a routine that wasn’t made for skin after 45.',
         'solution': ('The solution', 'So we put three actives', 'in one light serum'),
         'solution_lede': 'The EGF + NAD+ Firming Serum starts from skin after 45: EGF, NAD+ and collagen in a light serum '
-                         'that sinks in within a minute, for the face and the neck.',
+                         'that dries down in about a minute, for the face and the neck.',
         'fixes': [('Skin that looks less firm', 'EGF and collagen for skin that looks firmer and smoother.'),
                   ('Dull, tired-looking skin', 'NAD+, the longevity skincare ingredient, for a fresher, more radiant look.'),
                   ('Dry, deeper-looking lines', 'Glycerin and collagen hydrate, so fine lines look softer.'),
-                  ('Heavy creams that pill', 'A light, water-based serum: it sinks in and sits well under makeup.'),
+                  ('Heavy creams that pill', 'A light, water-based serum: it dries down and sits well under makeup.'),
                   ('A routine that skips the neck', 'Two drops for the face, two for the neck: one step for both.')],
         'button': 'Get yours', 'note': 'Try it for 30 days: love it, or your money back.',
         'product_alt': 'The EGF + NAD+ Firming Serum',
@@ -201,7 +201,7 @@ TWIN = {
              'headline_lead': '&hellip;one light step', 'headline_mark': 'for skin after 45.',
              'paragraphs': ['We make SKINOFAB for skin after 45. It changes: it looks less firm, drier and duller, and the neck '
                             'shows it as much as the face.',
-                            'So we put EGF, NAD+ and collagen in a light serum that sinks in within a minute: <strong>two drops '
+                            'So we put EGF, NAD+ and collagen in a light serum that dries down in about a minute: <strong>two drops '
                             'for your face, two for your neck, morning and night.</strong>',
                             'It isn’t a facelift in a bottle, and we won’t pretend it is. It’s the one step that helps your skin '
                             'look firmer, smoother and more rested.'],
@@ -209,7 +209,7 @@ TWIN = {
     'science': {'img': 'swatch', 'alt': 'The EGF + NAD+ Firming Serum with its dropper and a drop of serum',
                 'eyebrow': 'K-beauty skin science', 'lead': 'The Korean skincare actives,', 'mark': 'in one light serum',
                 'lede': 'Korean skincare made EGF and NAD+ serums the step for skin that looks tired and less firm. We put them '
-                        'with collagen in a light, water-based serum that sinks in within a minute.',
+                        'with collagen in a light, water-based serum that dries down in about a minute.',
                 'rows': [(n, d) for n, _, d in INGREDIENTS],
                 'note': 'Water-based and light. The full ingredient list is on the box.',
                 'button': 'Choose your pack'},
@@ -222,7 +222,7 @@ TWIN = {
         {'img': 'drop', 'alt': 'A woman applying the serum with its dropper',
          'lead': 'How does it work?', 'mark': None,
          'paras': ['Two drops on your face, morning and night, after cleansing.',
-                   'Press it in with your fingertips: the light serum sinks in within a minute, and skin looks hydrated and smoother.',
+                   'Pat it on with your fingertips: the light serum dries down in about a minute, and skin looks hydrated and smoother.',
                    'Two more drops down your neck. Then your moisturiser, and SPF in the morning.'],
          'usps': ['Sinks in within a minute', 'Under makeup and SPF']},
     ],
@@ -231,19 +231,19 @@ TWIN = {
                           ('Day 1', 'Skin looks hydrated and smoother', 'A cosmetic effect you can see right away'),
                           ('8 weeks', 'Of daily use from one bottle', 'Morning and night, face and neck')]},
     'compare': {'title': 'Why SKINOFAB?', 'others': 'Basic serums',
-                'rows': ['EGF, NAD+ and collagen in one bottle', 'Made for skin after 45', 'Light, sinks in within a minute',
+                'rows': ['EGF, NAD+ and collagen in one bottle', 'Made for skin after 45', 'Light, dries down in about a minute',
                          'Face and neck', 'Under moisturiser, SPF and makeup']},
     'inside': {'title': 'What’s inside, and why your skin will love it',
                'intro': 'The EGF + NAD+ Firming Serum is K-beauty skincare in one light step: three actives made for skin after 45.',
                'cards': [('ing-egf', 'EGF', 'A lab-made peptide modelled on a growth factor in skin'),
                          ('ing-nad', 'NAD+', 'The ingredient behind the longevity skincare trend'),
                          ('ing-collagen', 'Collagen', 'Holds water so skin feels firmer and looks plumper'),
-                         ('palm', 'A light serum', 'Water-light: it sinks in within a minute'),
+                         ('palm', 'A light serum', 'Water-light: it dries down in about a minute'),
                          ('swatch', 'Two drops is enough', 'For your face; two more for your neck')]},
     # the foundation's customer clips: how to use it, in the same cards (not reviews)
     'cards': {'eyebrow': 'How to use it', 'title': 'Two drops, face and neck', 'items': [
         {'img': 'palm', 'title': 'Two drops', 'text': 'Into your fingertips, after cleansing.', 'alt': 'Two drops of serum from the dropper into a palm'},
-        {'img': 'apply-cheeks', 'title': 'Press it in', 'text': 'Over your face, no rubbing: it sinks in within a minute.', 'alt': 'A woman pressing the serum into her cheeks'},
+        {'img': 'apply-cheeks', 'title': 'Pat it on', 'text': 'Over your face, no rubbing: it dries down in about a minute.', 'alt': 'A woman patting the serum onto her cheeks'},
         {'img': 'apply-neck', 'title': 'Down the neck', 'text': 'Two more drops, swept down toward the chest.', 'alt': 'A woman smoothing the serum down her neck'},
         {'img': 'mirror', 'title': 'Morning and night', 'text': 'Then your moisturiser, and SPF in the morning.', 'alt': 'A woman applying the serum at her mirror'}]},
     'why': {'title': 'The SKINOFAB difference', 'img': 'temple', 'button': 'Choose your pack',

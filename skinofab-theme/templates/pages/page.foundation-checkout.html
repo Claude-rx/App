@@ -99,7 +99,7 @@
     
     <link href="{% endverbatim %}{{ 'sfa/sfa-exit-intent-popup-5692da.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-2683e7.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-c08699.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
 
     <link href="{% endverbatim %}{{ 'sfa/sfa-favicon-28585c.png'|asset_url }}{% verbatim %}" rel="shortcut icon" type="image/x-icon">
@@ -117,7 +117,7 @@
     <script>(function(p,c){p=new URLSearchParams(location.search);c=document.documentElement.classList;if(p.get('banner')==='n')c.add('cc-promo-banner-off');if(p.get('topbar')==='on')c.add('cc-promo-topbar-on');if(p.get('topbar')==='off')c.add('cc-promo-topbar-off');})();</script>
 <div class="section_header" data-promo-banner>
   <div class="promo-banner promo-banner--apollo">
-    <p class="promo-banner__text"><span class="promo-banner__emoji">🎁</span> <span class="promo-banner__highlight">Buy 3, get 2 FREE</span> + a <span class="promo-banner__strong">FREE Lymphatic Brush</span> · Free shipping · 30-day money-back guarantee</p>
+    <p class="promo-banner__text"><span class="promo-banner__emoji">🎁</span> <span class="promo-banner__highlight">Buy 3, get 2 FREE</span> + a <span class="promo-banner__strong">FREE Lymphatic Brush</span><span class="promo-banner__sep"> · </span><span class="promo-banner__trail">Free shipping · 30-day money-back guarantee</span></p>
   </div>
 </div>
     
@@ -545,7 +545,7 @@
                               </div>
                               
 <div data-next-catalog-component="order-summary" data-initial-state="open" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary__accordion">
-  <div data-next-accordion-trigger="order-summary" class="order-summary__accordion-trigger">
+  <div data-next-accordion-trigger="order-summary" id="order-summary" role="button" class="order-summary__accordion-trigger">
     <div class="order-summary__accordion-inner">
       <div class="order-summary__accordion-head">
         <div data-next-accordion-text="order-summary" class="summary-toggle__text">Order Summary</div>
@@ -557,7 +557,7 @@
       </div>
     </div>
   </div>
-  <div data-next-accordion-panel="order-summary" class="order-summary__accordion-panel">
+  <div data-next-accordion-panel="order-summary" id="order-summary-content" class="order-summary__accordion-panel">
     <div class="order-summary--accordion">
 
         <div data-next-cart-summary class="order-summary__content">
@@ -711,7 +711,7 @@
 
                             </div>
                           </div>
-                          <div class="sf-refill-terms" id="refill-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{"apf-3":"$66.97 every 84 days for 3 bottles (your free Blender sponge comes with this first order)","apf-5":"$99.97 every 140 days for 5 bottles (your free Lymphatic Brush comes with this first order)","apf-1":"$33.97 every 28 days for 1 bottle"}'><strong>Automatic Refills.</strong> <strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$99.97</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "apf-1":"$33.97","apf-3":"$66.97","apf-5":"$99.97" }'>$99.97</span> today</strong>, then <span data-sf-renew>$99.97 every 140 days for 5 bottles (your free Lymphatic Brush comes with this first order)</span>, until you cancel.</p><p>Your pack ships again at the same price until you cancel. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p></div>
+                          <div class="sf-refill-terms" id="refill-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{"apf-3":"$66.97 every 84 days for 3 bottles (your free Blender sponge comes with this first order)","apf-5":"$99.97 every 140 days for 5 bottles (your free Lymphatic Brush comes with this first order)","apf-1":"$33.97 every 28 days for 1 bottle"}'><strong>Automatic Refills.</strong> <strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$99.97</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "apf-1":"$33.97","apf-3":"$66.97","apf-5":"$99.97" }'>$99.97</span> today</strong>, then <span data-sf-renew>$99.97 every 140 days for 5 bottles (your free Lymphatic Brush comes with this first order)</span>, until you cancel.</p><p>Your pack ships again at the pack’s own price, the “Renews at” amount under the order button, until you cancel, even if a code took money off today. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p></div>
                         </div>
                       </div>
                     </form>
@@ -829,7 +829,7 @@
     <img src="{% endverbatim %}{{ 'sfa/sfa-review-rachel-a1280e.jpg'|asset_url }}{% verbatim %}" alt="Rachel H., her own photo" width="64" height="64" loading="lazy" decoding="async">
     <div><p class="sf-co-review__name">Rachel H.</p><p class="sf-co-tp sf-co-tp--sm" role="img" aria-label="4 out of 5 stars"><i></i><i></i><i></i><i></i><i class="off"></i></p></div>
   </header>
-  <p class="sf-co-review__body">“Easy to blend , natural everyday foundation. Aging skin so hard to find something that doesn’t sink into the wrinkles…very happy”</p>
+  <p class="sf-co-review__body">“Easy to blend , natural everyday foundation. …very happy”</p>
   <p class="sf-review__who">Verified buyer, from our earlier store</p>
 </article>
 
@@ -883,7 +883,7 @@
   <div class="sf-co-card sf-co-faq">
     <h2>Before you order</h2>
     <details open><summary>What if it isn’t my shade?</summary><p>It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href="mailto:info@skinofab.com">info@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back.</p></details>
-    <details><summary>Is this a subscription?</summary><p>Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only.</p></details>
+    <details><summary>Is this a subscription?</summary><p>Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the pack’s own price until you cancel, even if a code took money off today: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only.</p></details>
     <details><summary>When does it ship?</summary><p>Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days. This offer ships to US addresses only.</p></details>
     <details><summary>Are these reviews of this formula?</summary><p>Yes. They are the published reviews of this formula from our earlier store, imported in October 2026 word for word, with the buyers’ own photos.</p></details>
     <details><summary>Is my payment secure?</summary><p>Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal, Apple Pay, Klarna or Link.</p></details>
@@ -962,9 +962,11 @@
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-checkout-3fa1e4.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-checkout-b21847.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-checkout-ae14eb.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-failsafe-396ae4.js'|asset_url }}{% verbatim %}"></script>
+    
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-accordion-aria-3492c4.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-payment-logos-7f9699.js'|asset_url }}{% verbatim %}"></script>
     

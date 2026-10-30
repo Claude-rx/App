@@ -95,15 +95,20 @@
   Array.prototype.forEach.call(cards, function (card) {
     var v = card.querySelector('video'), btn = card.querySelector('.sf-vcard__play');
     var sound = card.hasAttribute('data-sf-vcard-sound');
+    // a silent clip keeps its button while it plays, a pause button now, so Enter or Space stops the loop she started
+    // (live review 14, F7: the button went invisible and only a tap on the video paused it)
+    var base = (btn.getAttribute('aria-label') || '').replace(/^Play: /, '');
+    var label = function () { btn.setAttribute('aria-label', (card.classList.contains('is-playing') ? 'Pause: ' : 'Play: ') + base); };
     btn.addEventListener('click', function () {
+      if (!sound && card.classList.contains('is-playing')) { v.pause(); return; }
       Array.prototype.forEach.call(cards, function (o) { if (o !== card) { var ov = o.querySelector('video'); if (!ov.paused) ov.pause(); } });
       if (sound) { v.controls = true; v.muted = false; }
-      card.classList.add('is-playing');
-      var p = v.play(); if (p && p.catch) p.catch(function () { card.classList.remove('is-playing'); });
+      card.classList.add('is-playing'); label();
+      var p = v.play(); if (p && p.catch) p.catch(function () { card.classList.remove('is-playing'); label(); });
     });
     if (!sound) v.addEventListener('click', function () { v.pause(); });
-    v.addEventListener('pause', function () { if (!sound || v.ended) card.classList.remove('is-playing'); });
-    v.addEventListener('ended', function () { card.classList.remove('is-playing'); });
+    v.addEventListener('pause', function () { if (!sound || v.ended) card.classList.remove('is-playing'); label(); });
+    v.addEventListener('ended', function () { card.classList.remove('is-playing'); label(); });
     // a card she scrolls away from pauses, so its voice does not play over the offer (live review 7)
     if ('IntersectionObserver' in window) new IntersectionObserver(function (entries) {
       if (!entries[0].isIntersecting && !v.paused) v.pause();

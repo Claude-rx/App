@@ -70,6 +70,7 @@ FORBIDDEN = [
     (r'\bclinically\s+(?:proven|tested|shown)', 'a clinical claim'),
     (r'\b\d{1,3}\s?%\s+of\s+(?:women|users|customers|testers)', 'study percentage'),
     (r"\b(?:won['’]t|will not|never)\s+settle", 'unhedged "won\'t settle"'),
+    (r"\b(?:doesn['’]t|does not|didn['’]t)\s+(?:cake or )?(?:settle|sink)\b", 'unhedged "doesn\'t settle/sink" (live review 14, F4: two reviews kept it)'),
     (r'\bonly\s+\d+\s+(?:left|pieces|in stock)', 'scarcity count'),
     (r"order isn[’']t complete", '"your order isn\'t complete" after the order is placed'),
     (r"\bdon[’']t close this page\b", 'pressure: "don\'t close this page"'),
@@ -449,10 +450,20 @@ for p in F.PAGES:
         if re.search(r'doctor|derm', src, re.I): fail(p['id'], f'a clinician image: {src}')
 # a countdown that ends on the same item cheaper is a pressure trick: at 0:00 an offer whose decline is its downsell
 # goes past the downsell (data-sf-timer-to), and the page says the last-chance price goes too (F1)
+def _skip_to(pid):
+    # the same rule as offer_pages.skip_to: past every page down the decline path selling the same product cheaper a
+    # bottle than this page's dearest (live review 14, F2: offer 1's clock led to offer 2's cheaper bottle)
+    units = lambda q: [t['price'] / t.get('bottles', 1) for t in F.OFFER_PAGES[q]['tiers']]
+    prod = lambda q: 'brush' if F.OFFER_PAGES[q]['tiers'][0]['package'].startswith('brush') else 'foundation'
+    top, nxt, skipped = max(units(pid)), F.BY_ID[pid]['decline'], False
+    while nxt in F.OFFER_PAGES and prod(nxt) == prod(pid) and min(units(nxt)) < top: nxt, skipped = F.BY_ID[nxt]['decline'], True
+    return nxt if skipped else None
+
+
 for p in F.PAGES:
     if p['sdk'] != 'upsell' or 'data-sf-timer=' not in html(p['id']): continue
-    h, nxt = html(p['id']), F.BY_ID[F.BY_ID[p['id']]['decline']]
-    want = F.route(nxt['decline']) if nxt.get('type') == 'downsell' else ''
+    h = html(p['id'])
+    want = F.route(_skip_to(p['id'])) if _skip_to(p['id']) else ''
     m = re.search(r'data-sf-timer-to="([^"]*)"', h)
     if (m.group(1) if m else '') != want: fail(p['id'], f'at 0:00 the page goes to {m.group(1) if m else "where a decline goes"}, not {want or "where a decline goes"}')
     if want and 'last-chance price' not in text(h): fail(p['id'], 'the countdown does not say the last-chance price goes with it')
@@ -766,6 +777,42 @@ for pk in F.PACKS:
     if _w not in unescape(co): fail('checkout', f'the exit pop does not say "{_w}"')        # (the pop lives in a <template>)
 # the 3-bottle pack comes with the Blender sponge, the 5-bottle pack with the Lymphatic Brush (the owner's words)
 if [pk['gifts'] for pk in F.PACKS] != [[], ['blender'], ['brush']]: fail('funnel', f'the packs\' gifts are {[pk["gifts"] for pk in F.PACKS]}')
+# the checkout: refills are at the pack's own price, never "the same price", which reads as today's once the exit code
+# has taken 10% off (live review 14, F5)
+for _pid in ('checkout', 'thank-you'):
+    if re.search(r'at the same price', text(html(_pid)), re.I): fail(_pid, 'refills "at the same price": with the exit code today\'s price differs')
+# live review 14, F6: muted text, the cards' crossed-out prices with it, at 4.5:1 or better (next-core's #969696 is 2.95:1)
+if '--brand--color--text-muted: #5c5c5c;' not in _occss: fail('checkout', 'muted text is not #5c5c5c (the crossed-out card prices failed contrast)')
+# F7: a playing silent clip keeps a visible pause button that Enter or Space stops; every star row that has a name is an
+# image; the skin diagram's name is on its svg; the summary toggle is a button over the panel its aria-controls names
+if "if (!sound && card.classList.contains('is-playing')) { v.pause(); return; }" not in _apfjs or "'Pause: ' : 'Play: '" not in _apfjs:
+    fail('listicle', 'a playing clip card has no pause button for the keyboard')
+if '.sf-vcard.is-playing:not([data-sf-vcard-sound]) .sf-vcard__play { opacity: 1; pointer-events: auto;' not in (SITE / 'css' / 'sf-apf.css').read_text(encoding='utf-8'):
+    fail('listicle', 'the playing clip card hides its button')
+for p in F.PAGES:
+    for m in re.finditer(r'<(?:p|div|span)\b[^>]*\baria-label="[^"]*out of 5 stars"[^>]*>', html(p['id'])):
+        if 'role="img"' not in m.group(0): fail(p['id'], f'a star row with a name but no role="img": {m.group(0)[:80]}')
+    for m in re.finditer(r'<svg\b[^>]*\brole="img"[^>]*>', html(p['id'])):
+        if 'aria-label=' not in m.group(0) and 'aria-hidden="true"' not in m.group(0): fail(p['id'], f'an svg image without a name: {m.group(0)[:80]}')
+for _pid in ('checkout', 'thank-you'):
+    _h = html(_pid)
+    if not re.search(r'data-next-accordion-trigger="order-summary"[^>]*role="button"', _h) or 'id="order-summary-content"' not in _h \
+            or 'sf-accordion-aria.js' not in _h:
+        fail(_pid, 'the order-summary toggle is not a button whose aria-controls names its panel (the SDK names it "order-summary-content")')
+# F8: at 768 to 1023 px the header is the logo over one row of the three badges, the promo bar balanced
+if '.checkout-header--apollo .checkout-header__badges { flex-wrap: nowrap;' not in _occss or 'text-wrap: balance' not in _occss:
+    fail('checkout', 'the tablet header still wraps its badges and promo bar')
+# one "From" price a bottle: the lowest a bottle of any pack ($19.99), never the 1-bottle price, which is the highest
+# (live review 14, F3: "From $33.97" in the top bar over "From $20.38 a bottle" in the offer box); "Packs from" names
+# the entry pack and is the only other "from" price. The pages before the order only: an offer's own one-time
+# pack has its own lowest price a bottle (offer 1's 6 bottles at $16.50)
+_low = usd(int(min(pk['price'] / pk['bottles'] for pk in F.PACKS) * 100) / 100)
+for p in [F.BY_ID[q] for q in ('listicle', 'offer', 'checkout')]:
+    for m in re.finditer(r'(\w+\s+)?\bfrom\s+(\$\d+(?:\.\d\d)?)', unescape(html(p['id'])), re.I):
+        if (m.group(1) or '').strip().lower() != 'packs' and m.group(2) != _low: fail(p['id'], f'"{m.group(0).strip()}": the lowest a bottle is {_low}')
+for k, (t, d) in ((k, v) for k, v in F.TITLES.items() if k in ('listicle', 'offer', 'checkout')):
+    for m in re.finditer(r'(\w+\s+)?\bfrom\s+(\$\d+(?:\.\d\d)?)', f'{t} {d}', re.I):
+        if (m.group(1) or '').strip().lower() != 'packs' and m.group(2) != _low: fail(k, f'store page meta "{m.group(0).strip()}": the lowest a bottle is {_low}')
 
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)

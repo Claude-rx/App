@@ -59,18 +59,35 @@ EXPIRES = 'When the clock reaches 0:00 this page moves on and this offer is gone
 # must not be the way to the lower price (live review 9), so at 0:00 the page skips the downsell too (expiry_url) and
 # says so; only her "No thanks" leads to the last-chance price
 EXPIRES_DOWNSELL_NEXT = 'When the clock reaches 0:00 this page moves on, and this offer and its last-chance price are both gone: neither is in our store or in an email.'
+# offer 1: its decline leads to one bottle at a lower price a bottle, then that bottle's last chance
+EXPIRES_CHEAPER_NEXT = 'When the clock reaches 0:00 this page moves on, and this offer and the one-bottle and last-chance prices after it are all gone: none is in our store or in an email.'
+
+
+def skip_to(pid):
+    """Where the page goes at 0:00 when letting the clock run out would lead to the same product for less: past every
+    page down its decline path that sells it cheaper a bottle than this page's dearest, to the first that does not
+    (offer 1's $19.50 a bottle past offer 2's $19 and its downsell's $15, to the brush offer: live review 14, F2; a
+    downsell's own offer past it, live review 9). None when the decline path is not cheaper."""
+    def units(q):
+        return [t['price'] / t.get('bottles', 1) for t in F.OFFER_PAGES[q]['tiers']]
+    def product(q):
+        return 'brush' if F.OFFER_PAGES[q]['tiers'][0]['package'].startswith('brush') else 'foundation'
+    top, nxt, skipped = max(units(pid)), F.BY_ID[pid]['decline'], False
+    while nxt in F.OFFER_PAGES and product(nxt) == product(pid) and min(units(nxt)) < top:
+        nxt, skipped = F.BY_ID[nxt]['decline'], True
+    return nxt if skipped else None
 
 
 def expires(pid):
-    nxt = F.BY_ID[F.BY_ID[pid]['decline']]
-    return EXPIRES_DOWNSELL_NEXT if nxt.get('type') == 'downsell' else EXPIRES
+    if not skip_to(pid): return EXPIRES
+    return EXPIRES_DOWNSELL_NEXT if F.BY_ID[F.BY_ID[pid]['decline']].get('type') == 'downsell' else EXPIRES_CHEAPER_NEXT
 
 
 def expiry_url(pid):
-    """Where the page goes at 0:00: past its downsell when its decline leads to one, else where a decline goes (none:
-    the SDK's own skip action)."""
-    nxt = F.BY_ID[F.BY_ID[pid]['decline']]
-    return F.route(nxt['decline']) if nxt.get('type') == 'downsell' else ''
+    """Where the page goes at 0:00: past the cheaper pages of the same product down its decline path (skip_to), else
+    where a decline goes (none: the SDK's own skip action)."""
+    t = skip_to(pid)
+    return F.route(t) if t else ''
 
 
 def q(s):

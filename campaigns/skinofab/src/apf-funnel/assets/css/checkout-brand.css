@@ -10,6 +10,9 @@
   --brand--color--surface: #f6f2ec;
   --brand--color--foreground: #151515;
   --brand--color--border: #e6e2dc;
+  /* muted text at 4.5:1 or better on white and on #faf8f5 (next-core's #969696 is 2.95:1: the pack cards' crossed-out
+     prices failed, live review 14, F6) */
+  --brand--color--text-muted: #5c5c5c;
   --brand--color--primary: #151515;
   --brand--color--primary-dark: #151515;
   --brand--color--primary-light: #f1ede7;
@@ -233,6 +236,21 @@ body {
   .promo-banner--apollo .promo-banner__text { font-size: 12.5px; line-height: 1.35; }
 }
 
+/* a tablet (768 to 1023 px): the logo over one row of the three badges, and the promo bar's lines balanced (the bar left
+   "GUARANTEE" alone on its second line and the badges put "SKIP OR CANCEL ANY TIME" alone under the other two, live review
+   14, F8) */
+.promo-banner--apollo .promo-banner__text { text-wrap: balance; }
+/* below 1024 px the bar is two lines: the trail on its own line, without the separator that began it ("· FREE SHIPPING…") */
+@media (max-width: 1023px) {
+  .promo-banner--apollo .promo-banner__sep { display: none; }
+  .promo-banner--apollo .promo-banner__trail { display: block; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .checkout-header--apollo .checkout-header__inner { flex-flow: column; gap: 6px; }
+  .checkout-header--apollo .checkout-header__divider { display: none; }
+  .checkout-header--apollo .checkout-header__badges { flex-wrap: nowrap; gap: 14px; }
+}
+
 /* before the SDK answers, the billing block is empty: its heading stays hidden with it (an empty "Billing Address" showed under the
    ticked box for the first seconds, live review 4) */
 .billing-address__form:has([data-next-address="billing"]:empty) { display: none; }
@@ -303,6 +321,7 @@ html:not(.next-display-ready) [data-next-await]::after { left: -55% !important; 
 
 /* the free bottles' crossed-out price on a pack card (bundle-card-product.html, card_compare): it steps aside once the SDK
    strikes a price of its own (the exit coupon), so a card never shows two crossed-out prices */
-.bundle-card .sf-card-was { color: var(--brand--color--text-muted); font-size: var(--font-size--base); font-weight: 700; text-decoration: line-through; }
+.bundle-card .sf-card-was, .bundle-card .bundle-card__price-reg { color: #5c5c5c; }
+.bundle-card .sf-card-was { color: #5c5c5c; font-size: var(--font-size--base); font-weight: 700; text-decoration: line-through; }
 /* (its own class: the rule above that hides .bundle-card__price-reg without an SDK discount must not hide it) */
 .bundle-card:not(:has(.bundle-card__savings[style*="display: none"])):has([data-next-bundle-display="originalPrice"]:not(:empty)) .sf-card-was { display: none; }

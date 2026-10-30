@@ -415,9 +415,15 @@ them). It pushes a file only when its bytes differ from the last push, by `tools
 (committed; outside the theme folder, which a build regenerates): the store stores every uploaded asset as a new copy and drops the old one, even an
 unchanged file, and a page it has cached (30 minutes) then points at a dead URL; on 29 Oct a second push re-sent the
 sales hero's mobile picture unchanged and public visitors saw a broken hero for 16 minutes (live review 10). Never push
-a hashed asset by hand. The kit has no remove command, so a hashed asset that a rebuild retired stays on the store
+a hashed asset by hand. The store's generated binaries (`assets/sf/img`, `media`, `fonts`) are not in git; `push_theme.py`
+sends one only when a changed file newly references it (against git HEAD), ahead of that file. The kit has no remove command, so a hashed asset that a rebuild retired stays on the store
 theme unreferenced, which keeps cached pages working. For new pages, `FUNNEL=apf python3 -I tools/funnel/store_pages.py`.
 After a push, `python3 -I tools/funnel/check_live_assets.py` requests every asset the public pages reference.
+**A price change** reaches the checkout at once (the SDK reads the campaign live) but the pages only when the store's
+cache expires, up to 30 minutes after the push: in that window a visitor can see the old price on the page and the new
+one at the checkout (live review 14, F1). So change prices when traffic is low, push the pages first when the new price
+is higher than the old one, check the public pages with no cookie at +30 minutes (`check_live_assets.py`, then the
+pages' prices), and start a review only after that.
 After a campaign change, run `FUNNEL=apf python3 -I tools/funnel/campaign_spec.py` first: the offer pages and the
 checks take their numbers from the spec. The theme serves this funnel's assets from `assets/sfa/` (the stick's from
 `assets/sfc/`); the hosting notes in `docs/stick-funnel.md` (30-minute page cache, `?preview_theme=34`) apply.
@@ -791,6 +797,34 @@ bottles it charges for, so both free-bottle claims stay true (`check_apf.py` now
 price times the bottles she pays for). Two package price changes through the update path (packages 8 and 9, refills at
 the same prices), the exit pop's amounts $89 / $60 / $30, the value stack's "Your price today" $99.97 against $194.80,
 the offer-5 tag "$19.99 a bottle"; every price re-verified through the Cart API.
+
+**Live review 14 (30 Oct 2026), fix first: 1 blocker, 1 major, 7 minor.** F1 (the blocker: the checkout charged $66.97
+and $99.97 while the pages said $67.94 and $101.91) was the store's 30-minute page cache, not a defect: the review began
+at 11:06, a minute before the .97 push, and the public pages showed the new prices from 11:39 (see "A price change"
+under Rebuild and deploy). Fixed in the next build: at 0:00 offer 1's clock goes past offers 2 and 2b to the brush offer,
+so waiting it out never reaches a cheaper bottle (F2: `offer_pages.skip_to` skips every page down the decline path that
+sells the same product for less a bottle than the page's dearest, and the copy says the one-bottle and last-chance prices
+go too); one "From" price, the lowest a bottle ($19.99), in the top bars, the meta descriptions and the store page titles,
+and "1 bottle $33.97" in the hero note (F3); Judith L.'s and Rachel H.'s reviews cut at "doesn't settle in any lines" and
+"doesn't sink into the wrinkles", as Tina C.'s already was (F4); the checkout's refill paragraph, its FAQ and the
+thank-you page say refills are at the pack's own price, the "Renews at" amount, even when a code took money off today
+(F5); muted text at #5c5c5c (6.3:1 on white) where next-core's #969696 was 2.95:1, the cards' crossed-out prices
+included (F6); the clip cards keep a visible, focusable pause button that reads "Pause: …" while a clip plays and pauses
+it on Enter or Space, the per-review stars are `role="img"`, the skin diagram's name is on its svg, and the order-summary
+toggles on the checkout and the thank-you page are buttons whose `aria-controls` names their panel (F7: the SDK 0.4.43
+accordion sets `aria-controls` to the accordion's name but the panel's id to `<name>-content`; `sf-accordion-aria.js`
+points it back at the panel each time the SDK writes it, and the toggle carries the name as its id, so the panel's
+`aria-labelledby` resolves to it); at 768 to 1023 px the checkout header is the logo over one row of its three badges,
+and below 1024 px the promo bar is two lines, the shipping and guarantee on the second without a leading "·" (F8); the store's EGF + NAD+ serum, which
+the thank-you page links to, "dries down in about a minute" where it "sank in", in its copy and its two text images
+(`product_photos.py serum`), and the first funnel's serum offer the same (F9). Each has a gate in `check_apf.py` (one
+"From" price; no unhedged "doesn't settle/sink"; no "at the same price" on the checkout or the thank-you page; the clock's
+target from the same rule as the page's). The copy deck's offer line is now built from `funnels/apf.py`, so it no longer
+describes the retired packs. Two deploy fixes came out of the build: `push_theme.py` now also pushes the git-ignored store
+binaries (`assets/sf/img`, `media`, `fonts`) that a changed file newly references, before the file (the serum's two
+regenerated gallery images would otherwise have been missing on the store), and never one the store already has;
+and `images.py` keeps a clip's WebM when its MP4 comes out byte-identical (x264 is deterministic, VP9 with `row-mt`
+is not), so a rebuild no longer renames four unchanged clips.
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page

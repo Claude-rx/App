@@ -17,7 +17,7 @@ meta_tags:
 # where she decides: one rating line above the pack cards, the guarantee line and the refill terms by the order
 # button, four badges under it, three buyers' reviews (green stars, their own photos) right after it on a phone, and the
 # proof column (ratings by stars, ten reviews, the guarantee card, the questions) beside the form on a computer:
-# _includes/sf-checkout-trust.html. Every pack has Automatic Refills at the same price (the owner, 29 Oct 2026: 1 bottle
+# _includes/sf-checkout-trust.html. Every pack has Automatic Refills at the pack's own price (the owner, 29 Oct 2026: 1 bottle
 # every 28 days, 3 every 84, 5 every 140; the gift with the first order only), said on each card, by the express buttons
 # and by the order button, which also asks for her agreement to them. The exit pop applies APF10 (offer 6, 10% off the foundation packs), on a phone too (a scroll up
 # toward the address bar). No coupon box: the post-purchase vouchers must not be usable here.
@@ -59,7 +59,7 @@ trust:
     - q: "What if it isn’t my shade?"
       a: "It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
     - q: "Is this a subscription?"
-      a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only."
+      a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the pack’s own price until you cancel, even if a code took money off today: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only."
     - q: "When does it ship?"
       a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days. This offer ships to US addresses only."
     - q: "Are these reviews of this formula?"
@@ -97,7 +97,7 @@ reviews:
     photo: "images/sf/review-susan.jpg"
     rating: 5
     verified: "Verified buyer, from our earlier store"
-  - body: "Easy to blend , natural everyday foundation. Aging skin so hard to find something that doesn’t sink into the wrinkles…very happy"
+  - body: "Easy to blend , natural everyday foundation. …very happy"
     author: "Rachel H."
     photo: "images/sf/review-rachel.jpg"
     rating: 4
@@ -136,6 +136,7 @@ scripts:
   - js/checkout.js
   - js/sf-checkout.js
   - js/sf-failsafe.js
+  - js/sf-accordion-aria.js
   - js/payment-logos.js
 packages:
   main_package: 9
@@ -194,7 +195,7 @@ renew_short:
   apf-1: "$33.97 every 28 days"
   apf-3: "$66.97 every 84 days"
   apf-5: "$99.97 every 140 days"
-refill_terms: "Your pack ships again at the same price until you cancel. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
+refill_terms: "Your pack ships again at the pack’s own price, the “Renews at” amount under the order button, until you cancel, even if a code took money off today. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
 # the exit pop: the bottle (the pack she picked may not be the 5-pack), one offer said once, the saving applied at the button;
 # "10% off", not "an extra 10%" (live review 13, F3)
 exit_intent:

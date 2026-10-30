@@ -68,7 +68,7 @@
   </div>
 {%- else %}
   <div class="promo-banner promo-banner--apollo">
-    <p class="promo-banner__text">{% if promo_banner.emoji %}<span class="promo-banner__emoji">{{ promo_banner.emoji }}</span> {% endif %}<span class="promo-banner__highlight">{{ promo_banner.highlight }}</span> {{ promo_banner.lead }} <span class="promo-banner__strong">{{ promo_banner.strong }}</span> {{ promo_banner.trail }}</p>
+    <p class="promo-banner__text">{% if promo_banner.emoji %}<span class="promo-banner__emoji">{{ promo_banner.emoji }}</span> {% endif %}<span class="promo-banner__highlight">{{ promo_banner.highlight }}</span> {{ promo_banner.lead }} <span class="promo-banner__strong">{{ promo_banner.strong }}</span>{% assign sf_trail = promo_banner.trail | strip %}{% assign sf_lead = sf_trail | slice: 0, 2 %}{% if sf_lead == "· " %}<span class="promo-banner__sep"> · </span><span class="promo-banner__trail">{{ sf_trail | remove_first: "· " }}</span>{% else %} {{ promo_banner.trail }}{% endif %}</p>
   </div>
 {%- endif %}
 </div>

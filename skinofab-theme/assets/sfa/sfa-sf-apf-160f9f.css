@@ -138,6 +138,10 @@
 .sf-vcard__chip { background: var(--ink); color: #fff; font-size: 14px; font-weight: 600; line-height: 1.25; padding: 6px 10px; border-radius: 6px; }
 .sf-vcard__btn { flex: none; width: 48px; height: 48px; border-radius: 50%; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23151515'/%3E%3C/svg%3E") center / 24px no-repeat; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
 .sf-vcard.is-playing .sf-vcard__play { opacity: 0; pointer-events: none; }
+/* a silent clip that plays keeps its button, as a pause button in the corner (live review 14, F7) */
+.sf-vcard.is-playing:not([data-sf-vcard-sound]) .sf-vcard__play { opacity: 1; pointer-events: auto; background: transparent; }
+.sf-vcard.is-playing:not([data-sf-vcard-sound]) .sf-vcard__chip { visibility: hidden; }
+.sf-vcard.is-playing:not([data-sf-vcard-sound]) .sf-vcard__btn { margin-left: auto; opacity: .9; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6.5' y='5' width='4' height='14' rx='1' fill='%23151515'/%3E%3Crect x='13.5' y='5' width='4' height='14' rx='1' fill='%23151515'/%3E%3C/svg%3E"); }
 .sf-vcard__play:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
 /* from a tablet up the three clips stand side by side, none cut (the third was cut mid-face at 768 with no hint it
    scrolls), and from 900 px at a clip's own size, centred under the title (live review 8) */

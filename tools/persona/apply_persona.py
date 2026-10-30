@@ -1016,7 +1016,7 @@ def home_features():
         sec = re.sub(r'<div class="fh-story-copy">.*?</a></div>',
                      '<div class="fh-story-copy"><div class="fh-eyebrow"><span>EGF + NAD+ Firming Serum</span></div>'
                      '<h2>Firmer-looking skin, face and neck</h2><div class="fh-story-body">'
-                     '<p>EGF, NAD+ and collagen in a light serum that sinks in within a minute. Two drops for your face, two for '
+                     '<p>EGF, NAD+ and collagen in a light serum that dries down in about a minute. Two drops for your face, two for '
                      'your neck, morning and night.</p><p>Skin looks smoother, firmer and more radiant with daily use, and it '
                      'layers under your foundation without pilling.</p></div>'
                      f'<a class="fh-button" href="products/{serum_copy.HANDLE}.html">Learn more</a></div>', sec, count=1, flags=re.S)
