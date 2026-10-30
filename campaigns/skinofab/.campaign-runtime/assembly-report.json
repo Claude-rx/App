@@ -631679,7 +631679,7 @@
       "status": "completed_with_warnings",
       "inputs": [],
       "outputs": [
-        "./qa-output/local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47/MVUY00ILRSHCQQN284O224SLPG.json",
+        "./qa-output/local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47/MVV1X231FC64TUVKKRUE5369ND.json",
         ".campaign-runtime/qa-verdict.json"
       ],
       "commands": [
@@ -631690,641 +631690,6 @@
         "QA passed with explicitly attributed exceptions. Report them to the operator; do not clear or waive them, or change markup just to make them pass."
       ],
       "history": [
-        {
-          "archived_at": "2026-10-30T08:42:49.167Z",
-          "archived_by": "qa run",
-          "reason_code": "rerecorded",
-          "status": "completed_with_warnings",
-          "completed_at": "2026-10-29T18:19:54.452Z",
-          "source_brief_material": {
-            "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
-            "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
-          },
-          "source_spec_material_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
-          "verdict_run_id": "MVTVALBQ9H8DKIOJP6PAH2MN4T",
-          "checked_at": "2026-10-29T18:19:54.452Z",
-          "purchase_proof": {
-            "declared_order_path_depth": "common",
-            "declared_typed_card_depth": "common",
-            "order_paths_executed": 0,
-            "test_order_attempts": 0,
-            "orders_created": 0,
-            "orders_verified": 0,
-            "all_orders_test_mode": null
-          },
-          "outputs": [
-            "./qa-output/local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47/MVTVALBQ9H8DKIOJP6PAH2MN4T.json",
-            ".campaign-runtime/qa-verdict.json"
-          ],
-          "evidence": {
-            "source_build_fingerprint": "sha256:b6253f78d425e681df17e7503977ba6bd2aad6424871fcb9fd16b7551249af2b",
-            "gates": {
-              "placeholder_text_residue": {
-                "status": "pass",
-                "pages_checked": 9,
-                "pages_failed": 0
-              }
-            },
-            "qc_results": [
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.presence:campaign:store_terms",
-                "check": "policy.presence",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.presence",
-                  "page": "campaign",
-                  "key": "store_terms"
-                },
-                "state_fingerprint": "sha256:b2fd50927327fbff85b88aeea7fdc5c24e177c38af07347997cc615568ca4efb",
-                "observation": {
-                  "check": "policy.presence",
-                  "field": "store_terms",
-                  "configured": "https://try.skinofab.com/terms-of-service/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:2633b3975df78c2abc4a737ce45340e4100b1a7c7edee82e96d390d40a54a174",
-                    "path_sha256": "sha256:6b889ba788ccfba1c66b44ef3baf6456967fe42f4267e89b0995cc2e10b7a9d6",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "presence": {
-                    "pages_expected": 9,
-                    "pages_read": 9,
-                    "pages_with_match": 9,
-                    "path_match_query_differs": 0,
-                    "label_declared": false,
-                    "label_anchor_mismatch_pages": 0,
-                    "hint_anchor_elsewhere": 0
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 9,
-                  "expected": 9,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.availability:campaign:store_terms",
-                "check": "policy.availability",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.availability",
-                  "page": "campaign",
-                  "key": "store_terms"
-                },
-                "state_fingerprint": "sha256:9e3ba80c0af5679d8eb2cbddbdc062b2f6c10c7df16505426a8a83b8c4d2ba83",
-                "observation": {
-                  "check": "policy.availability",
-                  "field": "store_terms",
-                  "configured": "https://try.skinofab.com/terms-of-service/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:2633b3975df78c2abc4a737ce45340e4100b1a7c7edee82e96d390d40a54a174",
-                    "path_sha256": "sha256:6b889ba788ccfba1c66b44ef3baf6456967fe42f4267e89b0995cc2e10b7a9d6",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "availability": {
-                    "chain": [
-                      {
-                        "url": "https://try.skinofab.com/terms-of-service/",
-                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                        "status": 200
-                      }
-                    ],
-                    "chain_identity": [
-                      {
-                        "url_sha256": "sha256:2633b3975df78c2abc4a737ce45340e4100b1a7c7edee82e96d390d40a54a174",
-                        "path_sha256": "sha256:6b889ba788ccfba1c66b44ef3baf6456967fe42f4267e89b0995cc2e10b7a9d6",
-                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                      }
-                    ],
-                    "final": "https://try.skinofab.com/terms-of-service/",
-                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                    "status": 200,
-                    "content_type": "text/html",
-                    "outcome": "pass",
-                    "next_hop": null
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 1,
-                  "expected": 1,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.presence:campaign:store_privacy",
-                "check": "policy.presence",
-                "leg": "qa",
-                "result": "review",
-                "reason_code": "possible_policy_link_mismatch",
-                "subject": {
-                  "check": "policy.presence",
-                  "page": "campaign",
-                  "key": "store_privacy"
-                },
-                "state_fingerprint": "sha256:354eb02051cd1399ce519fca6e879a51de85a2e48bf23798a8c2abed9fb9a469",
-                "observation": {
-                  "check": "policy.presence",
-                  "field": "store_privacy",
-                  "configured": "https://try.skinofab.com/privacy-policy/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:2ed7c3152c0f766cf0f7910af704035c84ca208132d3bae42b36dd6aa1d03205",
-                    "path_sha256": "sha256:81e51d8c796fc7fea19db455dbb993de8a566efda1d2de3be227ea792f598811",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "presence": {
-                    "pages_expected": 9,
-                    "pages_read": 9,
-                    "pages_with_match": 9,
-                    "path_match_query_differs": 0,
-                    "label_declared": false,
-                    "label_anchor_mismatch_pages": 0,
-                    "hint_anchor_elsewhere": 9
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 9,
-                  "expected": 9,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.availability:campaign:store_privacy",
-                "check": "policy.availability",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.availability",
-                  "page": "campaign",
-                  "key": "store_privacy"
-                },
-                "state_fingerprint": "sha256:b78ea256358568715ef06e37624ab27c99959e9d60288ee7602fb53a2c29c126",
-                "observation": {
-                  "check": "policy.availability",
-                  "field": "store_privacy",
-                  "configured": "https://try.skinofab.com/privacy-policy/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:2ed7c3152c0f766cf0f7910af704035c84ca208132d3bae42b36dd6aa1d03205",
-                    "path_sha256": "sha256:81e51d8c796fc7fea19db455dbb993de8a566efda1d2de3be227ea792f598811",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "availability": {
-                    "chain": [
-                      {
-                        "url": "https://try.skinofab.com/privacy-policy/",
-                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                        "status": 200
-                      }
-                    ],
-                    "chain_identity": [
-                      {
-                        "url_sha256": "sha256:2ed7c3152c0f766cf0f7910af704035c84ca208132d3bae42b36dd6aa1d03205",
-                        "path_sha256": "sha256:81e51d8c796fc7fea19db455dbb993de8a566efda1d2de3be227ea792f598811",
-                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                      }
-                    ],
-                    "final": "https://try.skinofab.com/privacy-policy/",
-                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                    "status": 200,
-                    "content_type": "text/html",
-                    "outcome": "pass",
-                    "next_hop": null
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 1,
-                  "expected": 1,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.presence:campaign:store_returns",
-                "check": "policy.presence",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.presence",
-                  "page": "campaign",
-                  "key": "store_returns"
-                },
-                "state_fingerprint": "sha256:92f6a625242dad933c13eba0ebd73f7d337080adee13c73cf6d20e8478b204b1",
-                "observation": {
-                  "check": "policy.presence",
-                  "field": "store_returns",
-                  "configured": "https://try.skinofab.com/refund-policy/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:9640150ee478e375a401e0e6330bb5f54ffef181d4dc4f84883a9c3acd4981a1",
-                    "path_sha256": "sha256:6bcd16e98f3ed9492126d24fbc694510f4f9088126cb6dd5061c5470cc5776f3",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "presence": {
-                    "pages_expected": 9,
-                    "pages_read": 9,
-                    "pages_with_match": 9,
-                    "path_match_query_differs": 0,
-                    "label_declared": false,
-                    "label_anchor_mismatch_pages": 0,
-                    "hint_anchor_elsewhere": 0
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 9,
-                  "expected": 9,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.availability:campaign:store_returns",
-                "check": "policy.availability",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.availability",
-                  "page": "campaign",
-                  "key": "store_returns"
-                },
-                "state_fingerprint": "sha256:7b3a5ba86e7e09ac68fa55aa0b449b5450dd1535fbd258d3ec4df419a6e8919a",
-                "observation": {
-                  "check": "policy.availability",
-                  "field": "store_returns",
-                  "configured": "https://try.skinofab.com/refund-policy/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:9640150ee478e375a401e0e6330bb5f54ffef181d4dc4f84883a9c3acd4981a1",
-                    "path_sha256": "sha256:6bcd16e98f3ed9492126d24fbc694510f4f9088126cb6dd5061c5470cc5776f3",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "availability": {
-                    "chain": [
-                      {
-                        "url": "https://try.skinofab.com/refund-policy/",
-                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                        "status": 200
-                      }
-                    ],
-                    "chain_identity": [
-                      {
-                        "url_sha256": "sha256:9640150ee478e375a401e0e6330bb5f54ffef181d4dc4f84883a9c3acd4981a1",
-                        "path_sha256": "sha256:6bcd16e98f3ed9492126d24fbc694510f4f9088126cb6dd5061c5470cc5776f3",
-                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                      }
-                    ],
-                    "final": "https://try.skinofab.com/refund-policy/",
-                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                    "status": 200,
-                    "content_type": "text/html",
-                    "outcome": "pass",
-                    "next_hop": null
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 1,
-                  "expected": 1,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.presence:campaign:store_shipping",
-                "check": "policy.presence",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.presence",
-                  "page": "campaign",
-                  "key": "store_shipping"
-                },
-                "state_fingerprint": "sha256:5bec843f944dcff5162206c264dfcc4339028951f7e63e800b66447727924229",
-                "observation": {
-                  "check": "policy.presence",
-                  "field": "store_shipping",
-                  "configured": "https://try.skinofab.com/shipping-policy/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:ff8125e737844c009e62788a1080523374b5c8fca64ae09f9199078e3cf6ae3a",
-                    "path_sha256": "sha256:643cc6ba479a3652774a1f004893b28c19598be2025b88f2870155987a434335",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "presence": {
-                    "pages_expected": 9,
-                    "pages_read": 9,
-                    "pages_with_match": 8,
-                    "path_match_query_differs": 0,
-                    "label_declared": false,
-                    "label_anchor_mismatch_pages": 0,
-                    "hint_anchor_elsewhere": 0
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 9,
-                  "expected": 9,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.availability:campaign:store_shipping",
-                "check": "policy.availability",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.availability",
-                  "page": "campaign",
-                  "key": "store_shipping"
-                },
-                "state_fingerprint": "sha256:57eeced0be403bf8b8383822b5c1201bfd6371dd445dd7dde4973cd2ab5ff9f1",
-                "observation": {
-                  "check": "policy.availability",
-                  "field": "store_shipping",
-                  "configured": "https://try.skinofab.com/shipping-policy/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:ff8125e737844c009e62788a1080523374b5c8fca64ae09f9199078e3cf6ae3a",
-                    "path_sha256": "sha256:643cc6ba479a3652774a1f004893b28c19598be2025b88f2870155987a434335",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "availability": {
-                    "chain": [
-                      {
-                        "url": "https://try.skinofab.com/shipping-policy/",
-                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                        "status": 200
-                      }
-                    ],
-                    "chain_identity": [
-                      {
-                        "url_sha256": "sha256:ff8125e737844c009e62788a1080523374b5c8fca64ae09f9199078e3cf6ae3a",
-                        "path_sha256": "sha256:643cc6ba479a3652774a1f004893b28c19598be2025b88f2870155987a434335",
-                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                      }
-                    ],
-                    "final": "https://try.skinofab.com/shipping-policy/",
-                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                    "status": 200,
-                    "content_type": "text/html",
-                    "outcome": "pass",
-                    "next_hop": null
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 1,
-                  "expected": 1,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.presence:campaign:store_contact",
-                "check": "policy.presence",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.presence",
-                  "page": "campaign",
-                  "key": "store_contact"
-                },
-                "state_fingerprint": "sha256:8f0974efb103caaa925a35cc9a4128cd5d040828fcca5ef3f5f957184e002f0d",
-                "observation": {
-                  "check": "policy.presence",
-                  "field": "store_contact",
-                  "configured": "https://try.skinofab.com/contact/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:c340d9c2bf2b9c7e6ebf714148fd6e0cd54974215f27cbe8e845085d7cb3d606",
-                    "path_sha256": "sha256:4eb950636535d637ee743743cfbc75724f464688f94a426d3dedea4097aeb993",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "presence": {
-                    "pages_expected": 9,
-                    "pages_read": 9,
-                    "pages_with_match": 8,
-                    "path_match_query_differs": 0,
-                    "label_declared": false,
-                    "label_anchor_mismatch_pages": 0,
-                    "hint_anchor_elsewhere": 0
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 9,
-                  "expected": 9,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "policy.availability:campaign:store_contact",
-                "check": "policy.availability",
-                "leg": "qa",
-                "result": "pass",
-                "reason_code": null,
-                "subject": {
-                  "check": "policy.availability",
-                  "page": "campaign",
-                  "key": "store_contact"
-                },
-                "state_fingerprint": "sha256:9d1da6aa0b08613d5599aa9e5eabf198bce85d0be87212fe756c26843fa4cb7a",
-                "observation": {
-                  "check": "policy.availability",
-                  "field": "store_contact",
-                  "configured": "https://try.skinofab.com/contact/",
-                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                  "configured_identity": {
-                    "url_sha256": "sha256:c340d9c2bf2b9c7e6ebf714148fd6e0cd54974215f27cbe8e845085d7cb3d606",
-                    "path_sha256": "sha256:4eb950636535d637ee743743cfbc75724f464688f94a426d3dedea4097aeb993",
-                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                  },
-                  "scheme": "https",
-                  "availability": {
-                    "chain": [
-                      {
-                        "url": "https://try.skinofab.com/contact/",
-                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                        "status": 200
-                      }
-                    ],
-                    "chain_identity": [
-                      {
-                        "url_sha256": "sha256:c340d9c2bf2b9c7e6ebf714148fd6e0cd54974215f27cbe8e845085d7cb3d606",
-                        "path_sha256": "sha256:4eb950636535d637ee743743cfbc75724f464688f94a426d3dedea4097aeb993",
-                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
-                      }
-                    ],
-                    "final": "https://try.skinofab.com/contact/",
-                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
-                    "status": 200,
-                    "content_type": "text/html",
-                    "outcome": "pass",
-                    "next_hop": null
-                  }
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 1,
-                  "expected": 1,
-                  "limits": []
-                },
-                "measured_at": "2026-10-29T18:19:50.303Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "tracking.url:run:url",
-                "check": "tracking.url",
-                "leg": "qa",
-                "result": "excluded",
-                "reason_code": "test_order_not_requested",
-                "subject": {
-                  "check": "tracking.url",
-                  "page": "run",
-                  "key": "url"
-                },
-                "state_fingerprint": "sha256:a39cf21d2c9d8b32a79298e4a29f9e1b2d83e02a438bb5b2e244ec73ec7b51c9",
-                "observation": {
-                  "scope": "run",
-                  "check": "tracking.url",
-                  "run_id": "MVTVALBQ9H8DKIOJP6PAH2MN4T",
-                  "reason_code": "test_order_not_requested"
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 0,
-                  "expected": null,
-                  "limits": [],
-                  "loader_pins": null
-                },
-                "measured_at": "2026-10-29T18:19:50.427Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "tracking.order:run:order",
-                "check": "tracking.order",
-                "leg": "qa",
-                "result": "excluded",
-                "reason_code": "test_order_not_requested",
-                "subject": {
-                  "check": "tracking.order",
-                  "page": "run",
-                  "key": "order"
-                },
-                "state_fingerprint": "sha256:8fca1bd9df402d84182cac0ce92261020810ac5b003629c5a9a3c0781c39fa69",
-                "observation": {
-                  "scope": "run",
-                  "check": "tracking.order",
-                  "run_id": "MVTVALBQ9H8DKIOJP6PAH2MN4T",
-                  "reason_code": "test_order_not_requested"
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 0,
-                  "expected": null,
-                  "limits": [],
-                  "loader_pins": null
-                },
-                "measured_at": "2026-10-29T18:19:50.427Z",
-                "producer": "campaigns-os qa run"
-              },
-              {
-                "schema": "campaigns-os-qc-result/v0",
-                "id": "tracking.tag:run:tag",
-                "check": "tracking.tag",
-                "leg": "qa",
-                "result": "excluded",
-                "reason_code": "test_order_not_requested",
-                "subject": {
-                  "check": "tracking.tag",
-                  "page": "run",
-                  "key": "tag"
-                },
-                "state_fingerprint": "sha256:8fecdabf2a0ffbc53c2222e4004e2fa4450302a7bd989c5432161887cd49f2be",
-                "observation": {
-                  "scope": "run",
-                  "check": "tracking.tag",
-                  "run_id": "MVTVALBQ9H8DKIOJP6PAH2MN4T",
-                  "reason_code": "test_order_not_requested"
-                },
-                "members": [],
-                "accept_eligible": false,
-                "coverage": {
-                  "observed": 0,
-                  "expected": null,
-                  "limits": [],
-                  "loader_pins": null
-                },
-                "measured_at": "2026-10-29T18:19:50.427Z",
-                "producer": "campaigns-os qa run"
-              }
-            ],
-            "qc_build_fingerprint": "sha256:b6253f78d425e681df17e7503977ba6bd2aad6424871fcb9fd16b7551249af2b"
-          }
-        },
         {
           "archived_at": "2026-10-30T08:58:14.686Z",
           "archived_by": "qa run",
@@ -634863,15 +634228,650 @@
             ],
             "qc_build_fingerprint": "sha256:6759dde51c708cb14eeb70fce915d88a343ecefb926ad630437c2c86d6242706"
           }
+        },
+        {
+          "archived_at": "2026-10-30T14:13:02.511Z",
+          "archived_by": "qa run",
+          "reason_code": "rerecorded",
+          "status": "completed_with_warnings",
+          "completed_at": "2026-10-30T12:23:20.462Z",
+          "source_brief_material": {
+            "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
+            "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+          },
+          "source_spec_material_hash": "sha256:1809d43366d5eca98db323ce5730627190f1e17c85cf15883e9388c78dd010fc",
+          "verdict_run_id": "MVUY00ILRSHCQQN284O224SLPG",
+          "checked_at": "2026-10-30T12:23:20.462Z",
+          "purchase_proof": {
+            "declared_order_path_depth": "common",
+            "declared_typed_card_depth": "common",
+            "order_paths_executed": 0,
+            "test_order_attempts": 0,
+            "orders_created": 0,
+            "orders_verified": 0,
+            "all_orders_test_mode": null
+          },
+          "outputs": [
+            "./qa-output/local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47/MVUY00ILRSHCQQN284O224SLPG.json",
+            ".campaign-runtime/qa-verdict.json"
+          ],
+          "evidence": {
+            "source_build_fingerprint": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381",
+            "gates": {
+              "placeholder_text_residue": {
+                "status": "pass",
+                "pages_checked": 9,
+                "pages_failed": 0
+              }
+            },
+            "qc_results": [
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.presence:campaign:store_terms",
+                "check": "policy.presence",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.presence",
+                  "page": "campaign",
+                  "key": "store_terms"
+                },
+                "state_fingerprint": "sha256:b2fd50927327fbff85b88aeea7fdc5c24e177c38af07347997cc615568ca4efb",
+                "observation": {
+                  "check": "policy.presence",
+                  "field": "store_terms",
+                  "configured": "https://try.skinofab.com/terms-of-service/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:2633b3975df78c2abc4a737ce45340e4100b1a7c7edee82e96d390d40a54a174",
+                    "path_sha256": "sha256:6b889ba788ccfba1c66b44ef3baf6456967fe42f4267e89b0995cc2e10b7a9d6",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "presence": {
+                    "pages_expected": 9,
+                    "pages_read": 9,
+                    "pages_with_match": 9,
+                    "path_match_query_differs": 0,
+                    "label_declared": false,
+                    "label_anchor_mismatch_pages": 0,
+                    "hint_anchor_elsewhere": 0
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 9,
+                  "expected": 9,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.availability:campaign:store_terms",
+                "check": "policy.availability",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.availability",
+                  "page": "campaign",
+                  "key": "store_terms"
+                },
+                "state_fingerprint": "sha256:9e3ba80c0af5679d8eb2cbddbdc062b2f6c10c7df16505426a8a83b8c4d2ba83",
+                "observation": {
+                  "check": "policy.availability",
+                  "field": "store_terms",
+                  "configured": "https://try.skinofab.com/terms-of-service/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:2633b3975df78c2abc4a737ce45340e4100b1a7c7edee82e96d390d40a54a174",
+                    "path_sha256": "sha256:6b889ba788ccfba1c66b44ef3baf6456967fe42f4267e89b0995cc2e10b7a9d6",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "availability": {
+                    "chain": [
+                      {
+                        "url": "https://try.skinofab.com/terms-of-service/",
+                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                        "status": 200
+                      }
+                    ],
+                    "chain_identity": [
+                      {
+                        "url_sha256": "sha256:2633b3975df78c2abc4a737ce45340e4100b1a7c7edee82e96d390d40a54a174",
+                        "path_sha256": "sha256:6b889ba788ccfba1c66b44ef3baf6456967fe42f4267e89b0995cc2e10b7a9d6",
+                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                      }
+                    ],
+                    "final": "https://try.skinofab.com/terms-of-service/",
+                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                    "status": 200,
+                    "content_type": "text/html",
+                    "outcome": "pass",
+                    "next_hop": null
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 1,
+                  "expected": 1,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.presence:campaign:store_privacy",
+                "check": "policy.presence",
+                "leg": "qa",
+                "result": "review",
+                "reason_code": "possible_policy_link_mismatch",
+                "subject": {
+                  "check": "policy.presence",
+                  "page": "campaign",
+                  "key": "store_privacy"
+                },
+                "state_fingerprint": "sha256:354eb02051cd1399ce519fca6e879a51de85a2e48bf23798a8c2abed9fb9a469",
+                "observation": {
+                  "check": "policy.presence",
+                  "field": "store_privacy",
+                  "configured": "https://try.skinofab.com/privacy-policy/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:2ed7c3152c0f766cf0f7910af704035c84ca208132d3bae42b36dd6aa1d03205",
+                    "path_sha256": "sha256:81e51d8c796fc7fea19db455dbb993de8a566efda1d2de3be227ea792f598811",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "presence": {
+                    "pages_expected": 9,
+                    "pages_read": 9,
+                    "pages_with_match": 9,
+                    "path_match_query_differs": 0,
+                    "label_declared": false,
+                    "label_anchor_mismatch_pages": 0,
+                    "hint_anchor_elsewhere": 9
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 9,
+                  "expected": 9,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.availability:campaign:store_privacy",
+                "check": "policy.availability",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.availability",
+                  "page": "campaign",
+                  "key": "store_privacy"
+                },
+                "state_fingerprint": "sha256:b78ea256358568715ef06e37624ab27c99959e9d60288ee7602fb53a2c29c126",
+                "observation": {
+                  "check": "policy.availability",
+                  "field": "store_privacy",
+                  "configured": "https://try.skinofab.com/privacy-policy/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:2ed7c3152c0f766cf0f7910af704035c84ca208132d3bae42b36dd6aa1d03205",
+                    "path_sha256": "sha256:81e51d8c796fc7fea19db455dbb993de8a566efda1d2de3be227ea792f598811",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "availability": {
+                    "chain": [
+                      {
+                        "url": "https://try.skinofab.com/privacy-policy/",
+                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                        "status": 200
+                      }
+                    ],
+                    "chain_identity": [
+                      {
+                        "url_sha256": "sha256:2ed7c3152c0f766cf0f7910af704035c84ca208132d3bae42b36dd6aa1d03205",
+                        "path_sha256": "sha256:81e51d8c796fc7fea19db455dbb993de8a566efda1d2de3be227ea792f598811",
+                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                      }
+                    ],
+                    "final": "https://try.skinofab.com/privacy-policy/",
+                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                    "status": 200,
+                    "content_type": "text/html",
+                    "outcome": "pass",
+                    "next_hop": null
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 1,
+                  "expected": 1,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.presence:campaign:store_returns",
+                "check": "policy.presence",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.presence",
+                  "page": "campaign",
+                  "key": "store_returns"
+                },
+                "state_fingerprint": "sha256:92f6a625242dad933c13eba0ebd73f7d337080adee13c73cf6d20e8478b204b1",
+                "observation": {
+                  "check": "policy.presence",
+                  "field": "store_returns",
+                  "configured": "https://try.skinofab.com/refund-policy/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:9640150ee478e375a401e0e6330bb5f54ffef181d4dc4f84883a9c3acd4981a1",
+                    "path_sha256": "sha256:6bcd16e98f3ed9492126d24fbc694510f4f9088126cb6dd5061c5470cc5776f3",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "presence": {
+                    "pages_expected": 9,
+                    "pages_read": 9,
+                    "pages_with_match": 9,
+                    "path_match_query_differs": 0,
+                    "label_declared": false,
+                    "label_anchor_mismatch_pages": 0,
+                    "hint_anchor_elsewhere": 0
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 9,
+                  "expected": 9,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.availability:campaign:store_returns",
+                "check": "policy.availability",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.availability",
+                  "page": "campaign",
+                  "key": "store_returns"
+                },
+                "state_fingerprint": "sha256:7b3a5ba86e7e09ac68fa55aa0b449b5450dd1535fbd258d3ec4df419a6e8919a",
+                "observation": {
+                  "check": "policy.availability",
+                  "field": "store_returns",
+                  "configured": "https://try.skinofab.com/refund-policy/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:9640150ee478e375a401e0e6330bb5f54ffef181d4dc4f84883a9c3acd4981a1",
+                    "path_sha256": "sha256:6bcd16e98f3ed9492126d24fbc694510f4f9088126cb6dd5061c5470cc5776f3",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "availability": {
+                    "chain": [
+                      {
+                        "url": "https://try.skinofab.com/refund-policy/",
+                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                        "status": 200
+                      }
+                    ],
+                    "chain_identity": [
+                      {
+                        "url_sha256": "sha256:9640150ee478e375a401e0e6330bb5f54ffef181d4dc4f84883a9c3acd4981a1",
+                        "path_sha256": "sha256:6bcd16e98f3ed9492126d24fbc694510f4f9088126cb6dd5061c5470cc5776f3",
+                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                      }
+                    ],
+                    "final": "https://try.skinofab.com/refund-policy/",
+                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                    "status": 200,
+                    "content_type": "text/html",
+                    "outcome": "pass",
+                    "next_hop": null
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 1,
+                  "expected": 1,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.presence:campaign:store_shipping",
+                "check": "policy.presence",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.presence",
+                  "page": "campaign",
+                  "key": "store_shipping"
+                },
+                "state_fingerprint": "sha256:97ae1161b34ca16d7f6494e34973bfa9aa0095f4bff9b62b633c9d4997b1709f",
+                "observation": {
+                  "check": "policy.presence",
+                  "field": "store_shipping",
+                  "configured": "https://try.skinofab.com/shipping-policy/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:ff8125e737844c009e62788a1080523374b5c8fca64ae09f9199078e3cf6ae3a",
+                    "path_sha256": "sha256:643cc6ba479a3652774a1f004893b28c19598be2025b88f2870155987a434335",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "presence": {
+                    "pages_expected": 9,
+                    "pages_read": 9,
+                    "pages_with_match": 9,
+                    "path_match_query_differs": 0,
+                    "label_declared": false,
+                    "label_anchor_mismatch_pages": 0,
+                    "hint_anchor_elsewhere": 0
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 9,
+                  "expected": 9,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.availability:campaign:store_shipping",
+                "check": "policy.availability",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.availability",
+                  "page": "campaign",
+                  "key": "store_shipping"
+                },
+                "state_fingerprint": "sha256:57eeced0be403bf8b8383822b5c1201bfd6371dd445dd7dde4973cd2ab5ff9f1",
+                "observation": {
+                  "check": "policy.availability",
+                  "field": "store_shipping",
+                  "configured": "https://try.skinofab.com/shipping-policy/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:ff8125e737844c009e62788a1080523374b5c8fca64ae09f9199078e3cf6ae3a",
+                    "path_sha256": "sha256:643cc6ba479a3652774a1f004893b28c19598be2025b88f2870155987a434335",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "availability": {
+                    "chain": [
+                      {
+                        "url": "https://try.skinofab.com/shipping-policy/",
+                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                        "status": 200
+                      }
+                    ],
+                    "chain_identity": [
+                      {
+                        "url_sha256": "sha256:ff8125e737844c009e62788a1080523374b5c8fca64ae09f9199078e3cf6ae3a",
+                        "path_sha256": "sha256:643cc6ba479a3652774a1f004893b28c19598be2025b88f2870155987a434335",
+                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                      }
+                    ],
+                    "final": "https://try.skinofab.com/shipping-policy/",
+                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                    "status": 200,
+                    "content_type": "text/html",
+                    "outcome": "pass",
+                    "next_hop": null
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 1,
+                  "expected": 1,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.presence:campaign:store_contact",
+                "check": "policy.presence",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.presence",
+                  "page": "campaign",
+                  "key": "store_contact"
+                },
+                "state_fingerprint": "sha256:8f0974efb103caaa925a35cc9a4128cd5d040828fcca5ef3f5f957184e002f0d",
+                "observation": {
+                  "check": "policy.presence",
+                  "field": "store_contact",
+                  "configured": "https://try.skinofab.com/contact/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:c340d9c2bf2b9c7e6ebf714148fd6e0cd54974215f27cbe8e845085d7cb3d606",
+                    "path_sha256": "sha256:4eb950636535d637ee743743cfbc75724f464688f94a426d3dedea4097aeb993",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "presence": {
+                    "pages_expected": 9,
+                    "pages_read": 9,
+                    "pages_with_match": 8,
+                    "path_match_query_differs": 0,
+                    "label_declared": false,
+                    "label_anchor_mismatch_pages": 0,
+                    "hint_anchor_elsewhere": 0
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 9,
+                  "expected": 9,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "policy.availability:campaign:store_contact",
+                "check": "policy.availability",
+                "leg": "qa",
+                "result": "pass",
+                "reason_code": null,
+                "subject": {
+                  "check": "policy.availability",
+                  "page": "campaign",
+                  "key": "store_contact"
+                },
+                "state_fingerprint": "sha256:9d1da6aa0b08613d5599aa9e5eabf198bce85d0be87212fe756c26843fa4cb7a",
+                "observation": {
+                  "check": "policy.availability",
+                  "field": "store_contact",
+                  "configured": "https://try.skinofab.com/contact/",
+                  "configured_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                  "configured_identity": {
+                    "url_sha256": "sha256:c340d9c2bf2b9c7e6ebf714148fd6e0cd54974215f27cbe8e845085d7cb3d606",
+                    "path_sha256": "sha256:4eb950636535d637ee743743cfbc75724f464688f94a426d3dedea4097aeb993",
+                    "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                  },
+                  "scheme": "https",
+                  "availability": {
+                    "chain": [
+                      {
+                        "url": "https://try.skinofab.com/contact/",
+                        "query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                        "status": 200
+                      }
+                    ],
+                    "chain_identity": [
+                      {
+                        "url_sha256": "sha256:c340d9c2bf2b9c7e6ebf714148fd6e0cd54974215f27cbe8e845085d7cb3d606",
+                        "path_sha256": "sha256:4eb950636535d637ee743743cfbc75724f464688f94a426d3dedea4097aeb993",
+                        "host_sha256": "sha256:ffc1015db0c27b18a190e99b1480ca6857df01ace5fd54da5280fb9d6f7215ee"
+                      }
+                    ],
+                    "final": "https://try.skinofab.com/contact/",
+                    "final_query_sha256": "sha256:cb1d028365e21e15d5e9cedb89c8bebc194b29ae1502be96c440e45d9846011b",
+                    "status": 200,
+                    "content_type": "text/html",
+                    "outcome": "pass",
+                    "next_hop": null
+                  }
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 1,
+                  "expected": 1,
+                  "limits": []
+                },
+                "measured_at": "2026-10-30T12:23:19.158Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "tracking.url:run:url",
+                "check": "tracking.url",
+                "leg": "qa",
+                "result": "excluded",
+                "reason_code": "test_order_not_requested",
+                "subject": {
+                  "check": "tracking.url",
+                  "page": "run",
+                  "key": "url"
+                },
+                "state_fingerprint": "sha256:2aaa0ced19b9d946168177567764b6956c5ae5c44260a29f745075c24ebe6e83",
+                "observation": {
+                  "scope": "run",
+                  "check": "tracking.url",
+                  "run_id": "MVUY00ILRSHCQQN284O224SLPG",
+                  "reason_code": "test_order_not_requested"
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 0,
+                  "expected": null,
+                  "limits": [],
+                  "loader_pins": null
+                },
+                "measured_at": "2026-10-30T12:23:19.303Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "tracking.order:run:order",
+                "check": "tracking.order",
+                "leg": "qa",
+                "result": "excluded",
+                "reason_code": "test_order_not_requested",
+                "subject": {
+                  "check": "tracking.order",
+                  "page": "run",
+                  "key": "order"
+                },
+                "state_fingerprint": "sha256:2d8facde162d4fc92eb6df47d8f2b5074281ab4ab7cd4c36ad62a85ab4483fb2",
+                "observation": {
+                  "scope": "run",
+                  "check": "tracking.order",
+                  "run_id": "MVUY00ILRSHCQQN284O224SLPG",
+                  "reason_code": "test_order_not_requested"
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 0,
+                  "expected": null,
+                  "limits": [],
+                  "loader_pins": null
+                },
+                "measured_at": "2026-10-30T12:23:19.303Z",
+                "producer": "campaigns-os qa run"
+              },
+              {
+                "schema": "campaigns-os-qc-result/v0",
+                "id": "tracking.tag:run:tag",
+                "check": "tracking.tag",
+                "leg": "qa",
+                "result": "excluded",
+                "reason_code": "test_order_not_requested",
+                "subject": {
+                  "check": "tracking.tag",
+                  "page": "run",
+                  "key": "tag"
+                },
+                "state_fingerprint": "sha256:b4227549dca9f8679d0cfc1ff076c3097ec5ba33f3c0a95901f1655ce01907fa",
+                "observation": {
+                  "scope": "run",
+                  "check": "tracking.tag",
+                  "run_id": "MVUY00ILRSHCQQN284O224SLPG",
+                  "reason_code": "test_order_not_requested"
+                },
+                "members": [],
+                "accept_eligible": false,
+                "coverage": {
+                  "observed": 0,
+                  "expected": null,
+                  "limits": [],
+                  "loader_pins": null
+                },
+                "measured_at": "2026-10-30T12:23:19.303Z",
+                "producer": "campaigns-os qa run"
+              }
+            ],
+            "qc_build_fingerprint": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381"
+          }
         }
       ],
-      "checked_at": "2026-10-30T12:23:20.462Z",
+      "checked_at": "2026-10-30T14:13:02.511Z",
       "required_by": "spec",
       "required_for": [],
-      "completed_at": "2026-10-30T12:23:20.462Z",
-      "verdict_run_id": "MVUY00ILRSHCQQN284O224SLPG",
+      "completed_at": "2026-10-30T14:13:02.511Z",
+      "verdict_run_id": "MVV1X231FC64TUVKKRUE5369ND",
       "evidence": {
-        "source_build_fingerprint": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381",
+        "source_build_fingerprint": "sha256:08977a685a44e4ef5eccfafc4e2e66d67713f27ea91df4b7ea4a96ea203b15eb",
         "gates": {
           "placeholder_text_residue": {
             "status": "pass",
@@ -634921,7 +634921,7 @@
               "expected": 9,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -634978,7 +634978,7 @@
               "expected": 1,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635022,7 +635022,7 @@
               "expected": 9,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635079,7 +635079,7 @@
               "expected": 1,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635123,7 +635123,7 @@
               "expected": 9,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635180,7 +635180,7 @@
               "expected": 1,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635224,7 +635224,7 @@
               "expected": 9,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635281,7 +635281,7 @@
               "expected": 1,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635325,7 +635325,7 @@
               "expected": 9,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635382,7 +635382,7 @@
               "expected": 1,
               "limits": []
             },
-            "measured_at": "2026-10-30T12:23:19.158Z",
+            "measured_at": "2026-10-30T14:13:00.748Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635397,11 +635397,11 @@
               "page": "run",
               "key": "url"
             },
-            "state_fingerprint": "sha256:2aaa0ced19b9d946168177567764b6956c5ae5c44260a29f745075c24ebe6e83",
+            "state_fingerprint": "sha256:c5a8b5dca027ad28d9243244c9bffba1c95c2f64b16e3d08194f1861934026b3",
             "observation": {
               "scope": "run",
               "check": "tracking.url",
-              "run_id": "MVUY00ILRSHCQQN284O224SLPG",
+              "run_id": "MVV1X231FC64TUVKKRUE5369ND",
               "reason_code": "test_order_not_requested"
             },
             "members": [],
@@ -635412,7 +635412,7 @@
               "limits": [],
               "loader_pins": null
             },
-            "measured_at": "2026-10-30T12:23:19.303Z",
+            "measured_at": "2026-10-30T14:13:00.917Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635427,11 +635427,11 @@
               "page": "run",
               "key": "order"
             },
-            "state_fingerprint": "sha256:2d8facde162d4fc92eb6df47d8f2b5074281ab4ab7cd4c36ad62a85ab4483fb2",
+            "state_fingerprint": "sha256:2d7fc8c0fdc13be9ad401389a4fb14b51f9b5400b07b961155c01cd9d594dc90",
             "observation": {
               "scope": "run",
               "check": "tracking.order",
-              "run_id": "MVUY00ILRSHCQQN284O224SLPG",
+              "run_id": "MVV1X231FC64TUVKKRUE5369ND",
               "reason_code": "test_order_not_requested"
             },
             "members": [],
@@ -635442,7 +635442,7 @@
               "limits": [],
               "loader_pins": null
             },
-            "measured_at": "2026-10-30T12:23:19.303Z",
+            "measured_at": "2026-10-30T14:13:00.917Z",
             "producer": "campaigns-os qa run"
           },
           {
@@ -635457,11 +635457,11 @@
               "page": "run",
               "key": "tag"
             },
-            "state_fingerprint": "sha256:b4227549dca9f8679d0cfc1ff076c3097ec5ba33f3c0a95901f1655ce01907fa",
+            "state_fingerprint": "sha256:3ded0d064db24a6a499d659a4ff9f61f786f0517e5bc68cc723787cb1e4a41e3",
             "observation": {
               "scope": "run",
               "check": "tracking.tag",
-              "run_id": "MVUY00ILRSHCQQN284O224SLPG",
+              "run_id": "MVV1X231FC64TUVKKRUE5369ND",
               "reason_code": "test_order_not_requested"
             },
             "members": [],
@@ -635472,11 +635472,11 @@
               "limits": [],
               "loader_pins": null
             },
-            "measured_at": "2026-10-30T12:23:19.303Z",
+            "measured_at": "2026-10-30T14:13:00.917Z",
             "producer": "campaigns-os qa run"
           }
         ],
-        "qc_build_fingerprint": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381"
+        "qc_build_fingerprint": "sha256:08977a685a44e4ef5eccfafc4e2e66d67713f27ea91df4b7ea4a96ea203b15eb"
       },
       "purchase_proof": {
         "declared_order_path_depth": "common",

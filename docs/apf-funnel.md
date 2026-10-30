@@ -843,7 +843,8 @@ lazily: its largest paint on slow 4G at 390 went from 3.4 s to 2.1 s (F6). The n
 breaks, its button grows with its words and its heading is balanced (F7). `check_apf.py` gates each: "less than N cost"
 without its basis and a basis that is not N x $33.97, a supply in months, a pack price on the listicle, sales page or
 checkout without its renewal within the next sentence, an unhedged soft-focus claim about lines, the placeholder
-colour, the listicle's WebP hero and no eager image, and the note's styles.
+colour, the listicle's WebP hero and no eager image, and the note's styles. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, the same
+exceptions as after review 14.
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
