@@ -11,7 +11,7 @@ checks. This page is the map.
 | SKINOFAB Foundation Stick | `stick-funnel` | `try.skinofab.com/10-reasons-foundation-stick/` | 2211 |
 
 Both run Campaign Cart SDK **0.4.43**, with AXON (event key in `_data/campaigns.json`) wired through
-`next-forwarder-core.js` + `axon.adapter.js`. GTM / Meta keys are present but empty.
+`next-forwarder-core.js` + `axon.adapter.js` (fixed adapter live on both funnels since 30 Oct 2026). GTM / Meta keys are present but empty.
 
 ## Where things are
 
