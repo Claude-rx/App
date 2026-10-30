@@ -824,7 +824,10 @@ describes the retired packs. Two deploy fixes came out of the build: `push_theme
 binaries (`assets/sf/img`, `media`, `fonts`) that a changed file newly references, before the file (the serum's two
 regenerated gallery images would otherwise have been missing on the store), and never one the store already has;
 and `images.py` keeps a clip's WebM when its MP4 comes out byte-identical (x264 is deterministic, VP9 with `row-mt`
-is not), so a rebuild no longer renames four unchanged clips.
+is not), so a rebuild no longer renames four unchanged clips. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, the same
+exceptions as before (`spec.campaign_drift` for the retired packages 2 and 3; the offers' and checkout's primary-CTA
+manual reviews, the offers' buttons greyed with no order by design; the second privacy-worded link; upsell action
+coverage; offer 1's price-claim warning).
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
