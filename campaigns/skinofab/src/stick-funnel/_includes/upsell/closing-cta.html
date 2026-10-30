@@ -1,0 +1,68 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/closing-cta.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-closing-cta
+  next_version: 1
+  next_sdk_owns: price display only — the accept / skip here are PROXIES, not SDK actions
+  next_sdk_surface: upsell page (closing CTA — the repeated accept / decline at the bottom of a long page)
+  next_params: reads offer / *_path via upsell/offer-context.html — same upsell_offer.type as the main offer,
+    so it always prices and proxies the offer above.
+    closing_cta: object.
+      variant cta (default) | card
+        cta  → centered: title · accept button · note · decline  (the fluff closing block)
+        card → boxed two-column: image · title · price rows · accept · decline  (the upsell-single closing card)
+      title (HTML; default upsell_offer.closing_title), note (line above the block; default guarantee_note), image (card),
+      background: surface (default — the page surface colour, distinguishes the block from the body) | tint
+        (brand primary-light) | none.
+      show_guarantees: true → the upsell_guarantees cards again under the button. No quantity control here on
+        purpose: the closing CTA adds exactly what the shopper selected in the main offer.
+    variant / force: include args — force=true renders even without closing_cta (used by the upsell-single shim).
+  next_dont_touch: data-next-display, data-next-format, data-next-show, data-next-package-id
+
+  Why proxies: UpsellEnhancer resolves the bundle to add from the FIRST [data-next-bundle-selector] inside
+  its own [data-next-upsell="offer"], so a second offer wrapper down the page would need its own selector
+  copy and would drift from the tier / qty the shopper picked above. Instead data-upsell-proxy="add|skip"
+  buttons forward the click to the real in-offer actions (initUpsellProxyActions() in upsells.js): one SDK
+  offer per page, the closing CTA always adds exactly what the main offer shows.
+  Renders nothing without closing_cta.
+{% endcomment %}
+{%- if closing_cta or force -%}
+{%- campaign_include 'upsell/offer-context.html' offer_type=offer_type -%}
+{%- assign sec_variant = variant | default: closing_cta.variant | default: 'cta' -%}
+{%- assign sec_title = closing_cta.title | default: offer.closing_title -%}
+{%- assign sec_note = closing_cta.note | default: guarantee_note -%}
+<div data-next-catalog-component="upsell-closing-cta">
+{%- assign sec_bg = closing_cta.background | default: 'surface' -%}
+<section class="section cc-sm upsell-closing{% if sec_bg == 'surface' %} color-surface{% elsif sec_bg == 'tint' %} cc-tint{% endif %}">
+  <div class="container cc-medium">
+    {%- if sec_note %}
+    <p class="text-lg text-center max-width-medium align-center margin-12">{% campaign_include 'upsell/copy.html' text=sec_note %}</p>
+    {%- endif %}
+    {%- if sec_variant == 'card' %}
+    <div class="upsell-container upsell-container--box margin-32"{% if price_is_scoped %} data-next-package-id="{{ package_id }}"{% endif %}>
+      <div class="upsell-offer__card">
+        <div class="grid-full flex-col flex-horizontal-lg-up gap-xl">
+          <div class="upsell-offer__image-column cc-narrow align-self-center">
+            <img loading="lazy" src="{{ closing_cta.image | default: offer.image | default: 'images/1x1_1.svg' | campaign_asset }}" alt="" class="width-full">
+          </div>
+          <div class="upsell-content__column cc-fluid flex-col gap-lg">
+            <h2 class="display-md">{% if sec_title %}{% campaign_include 'upsell/copy.html' text=sec_title %}{% else %}Add this to your order?{% endif %}</h2>
+            {%- campaign_include 'upsell/offer-prices.html' price_layout='inline' -%}
+            {%- campaign_include 'upsell/cta.html' proxy=true compact=true cta_style='box' -%}
+            {%- if closing_cta.show_guarantees -%}{%- campaign_include 'upsell/guarantees.html' upsell_guarantees=upsell_guarantees -%}{%- endif -%}
+            {%- campaign_include 'upsell/decline.html' proxy=true show_icon=false -%}
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- else %}
+    <div class="upsell-closing__inner"{% if price_is_scoped %} data-next-package-id="{{ package_id }}"{% endif %}>
+      {%- if sec_title %}<h2 class="display-md text-center">{% campaign_include 'upsell/copy.html' text=sec_title %}</h2>{% endif %}
+      {%- campaign_include 'upsell/cta.html' proxy=true compact=true -%}
+      {%- if closing_cta.show_guarantees -%}{%- campaign_include 'upsell/guarantees.html' upsell_guarantees=upsell_guarantees -%}{%- endif -%}
+      {%- campaign_include 'upsell/decline.html' proxy=true show_icon=false -%}
+    </div>
+    {%- endif %}
+  </div>
+</section>
+</div>
+{%- endif -%}

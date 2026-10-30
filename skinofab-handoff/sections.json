@@ -1,0 +1,2403 @@
+{
+  "schema_version": "next-theme-dev/handoff-sections/v1",
+  "sections": [
+    {
+      "section_id": "home.announcement",
+      "route_id": "home",
+      "order": 1,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865099420__announcement-bar",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_announcement.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [
+        "home.announcement.desktop.sticky",
+        "home.announcement.tablet.sticky",
+        "home.announcement.mobile.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.header",
+      "route_id": "home",
+      "order": 2,
+      "in_scope": true,
+      "source_selector": "#SiteHeader",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_header.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.header.skinofab-logo",
+        "home.header.skinofab-logo-white",
+        "home.header.sm_-_sales_banner_-_mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-814w-f7",
+        "home.header.stain-814w-00001a"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "prices-from-next",
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.hero",
+      "route_id": "home",
+      "order": 3,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__hero",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/hero.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.hero.smooche-color-changing-foundation-hero-1800w-4e504a",
+        "home.hero.figma-51a30-7aff97",
+        "home.hero.smooche-reverse-time-peptide-serum-hero-1800w-19c378",
+        "home.hero.smooche-reverse-time-peptide-serum-hero-mobile-1680w-cb2c05"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [
+        "home.hero.cta-dest",
+        "home.hero.slider"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.bestsellers",
+      "route_id": "home",
+      "order": 4,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__bestsellers",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Product data (title, price, variants, add-to-cart) bound to NEXT; layout and copy from the source markup.",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/bestsellers.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "product-data",
+      "asset_ids": [
+        "home.bestsellers.figma-c6870-61a09e",
+        "home.bestsellers.figma-c99bd-57b22a",
+        "home.bestsellers.figma-e7087-d171e9",
+        "home.bestsellers.colorchangingfoundation-productimage_31cddf53-0315-41bf-bfe5-19",
+        "home.bestsellers.figma-d6f92-cf03de",
+        "home.bestsellers.group5-1920w-a68c0d",
+        "home.bestsellers.1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-1920w-636306",
+        "home.bestsellers.1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1920w-56e486",
+        "home.bestsellers.koreancolorchangingfoundation-productimages_1_cee537ea-54c2--80",
+        "home.bestsellers.group5-800w-e7d539",
+        "home.bestsellers.1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-800w-8676c6",
+        "home.bestsellers.1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-800w-f1e769",
+        "home.bestsellers.vc_1d8f5d7e-2690-4cbc-8390-13ac8b063c2c-800w-55f218",
+        "home.bestsellers.elpc-800w-8921eb",
+        "home.bestsellers.1_5abef206-af49-4330-b807-2d7403d6c81e-800w-4a80bb",
+        "home.bestsellers.1_20b6ec93-6006-4a9f-9321-81c12e325c04-800w-1d65a3",
+        "home.bestsellers.1_9d8bf569-c117-4525-bcba-350526dfa674-800w-bfb72f",
+        "home.bestsellers.2_eeed0bb2-535e-4b98-978a-2de5f0c5d2e6-800w-575e50",
+        "home.bestsellers.1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-800w-0f4c8e",
+        "home.bestsellers.sdfsd1-800w-c9c362",
+        "home.bestsellers.elpc_d895921e-0066-4d7f-852d-19866356f9f4-800w-bcbfcb",
+        "home.bestsellers.espresso-800w-fc7fd3",
+        "home.bestsellers.1_806b81e8-e466-4549-be40-160b224b6b3f-800w-46bee4",
+        "home.bestsellers.1_baf8104b-c432-4b62-af61-27a2c0166176-800w-c04663",
+        "home.bestsellers.smooche-800w-df7a9f",
+        "home.bestsellers.jsdfsd-800w-eb1645",
+        "home.bestsellers.1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-800w-fdbfa8",
+        "home.bestsellers.colorchangingfoundation-productimage_31cddf53-0315-41bf-bfe5-72",
+        "home.bestsellers.group5-720w-48af37",
+        "home.bestsellers.1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-720w-076aba",
+        "home.bestsellers.1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-720w-8c0afb"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims",
+        "prices-from-next"
+      ],
+      "behavior_ids": [
+        "home.bestsellers.slider"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.reviews",
+      "route_id": "home",
+      "order": 5,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__reviews",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/reviews.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.reviews.figma-05a32-cdf6be",
+        "home.reviews.amber-t-foundation-review-poster-720w-956cc4",
+        "home.reviews.figma-a61f9-bfe08c",
+        "home.reviews.figma-65dc5-de03df",
+        "home.reviews.koreancolorchangingfoundation-productimages_1_cee537ea-54c2--80w-78",
+        "home.reviews.makeup-artist-foundation-review-poster-720w-68c7bf",
+        "home.reviews.softer-lines-foundation-review-poster-720w-645465",
+        "home.reviews.figma-c99bd-57b22a",
+        "home.reviews.figma-e7087-d171e9",
+        "home.reviews.43e0f6484a4b45a08fed8078280871e7-hd-1080p-2-5mbps-97900995-2974e9",
+        "home.reviews.88d49199f410441eb42151e8aa0d62ca-hd-1080p-2-5mbps-97901333-174c63",
+        "home.reviews.41b77ec426134227829d7762a7af3f49-hd-1080p-2-5mbps-97901334-c97e00"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [
+        "home.reviews.media0",
+        "home.reviews.media1",
+        "home.reviews.media2",
+        "home.reviews.slider"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.categories",
+      "route_id": "home",
+      "order": 6,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__categories",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/categories.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.categories.figma-c6870-61a09e",
+        "home.categories.smooche-face-makeup-category-800w-29ddb8",
+        "home.categories.smooche-lip-makeup-category-710w-d67956",
+        "home.categories.smooche-lash-category-710w-303525",
+        "home.categories.smooche-brow-makeup-category-800w-8edef6",
+        "home.categories.smooche-lip-makeup-category-mobile-680w-f80112",
+        "home.categories.smooche-lash-category-mobile-800w-c2c328"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [
+        "home.categories.cta-dest"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.foundation",
+      "route_id": "home",
+      "order": 7,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__foundation",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/foundation.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.foundation.smooche-color-changing-foundation-model-1460w-7ca9e3",
+        "home.foundation.figma-73f40-615bb0",
+        "home.foundation.smooche-color-changing-foundation-model-mobile-660w-ea20d6"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [
+        "home.foundation.cta-dest"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.bundles",
+      "route_id": "home",
+      "order": 8,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__bundles",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Product data (title, price, variants, add-to-cart) bound to NEXT; layout and copy from the source markup.",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/bundles.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "product-data",
+      "asset_ids": [
+        "home.bundles.figma-c6870-61a09e",
+        "home.bundles.smooche-foundation-mega-pack-bundle-710w-6e7d5c",
+        "home.bundles.smooche-triple-lip-plumper-bundle-710w-375590",
+        "home.bundles.smooche-lash-brow-growth-kit-bundle-710w-fac38c",
+        "home.bundles.smooche-bestseller-duo-kit-bundle-710w-471aff",
+        "home.bundles.figma-c99bd-57b22a",
+        "home.bundles.figma-e7087-d171e9"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "prices-from-next"
+      ],
+      "behavior_ids": [
+        "home.bundles.slider"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.serum",
+      "route_id": "home",
+      "order": 9,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__serum",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/serum.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.serum.serum-how-to-poster-20261017-1080w-8b69db",
+        "home.serum.figma-serum-eyebrow-dot-783ff2",
+        "home.serum.67378f79edd346c2b378736ef6cc3207-hd-1080p-2-5mbps-97955903-1096c8",
+        "home.serum.serum-how-to-poster-20261017-720w-c468b4"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [
+        "home.serum.media3",
+        "home.serum.cta-dest"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.formulas",
+      "route_id": "home",
+      "order": 10,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__formulas",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/formulas.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.formulas.smooche-skin-loving-ingredients-texture-190w-941abf",
+        "home.formulas.smooche-high-performance-formula-texture-190w-ecbf63",
+        "home.formulas.smooche-proven-results-texture-190w-f558ab",
+        "home.formulas.smooche-korean-formulas-foundation-application-2190w-e256b5",
+        "home.formulas.smooche-korean-formulas-foundation-application-1800w-2dc986"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.arrivals_desktop",
+      "route_id": "home",
+      "order": 11,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__arrivals_desktop",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/arrivals_desktop.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.arrivals_desktop.smooche-lifting-mask-under-eye-patches-new-arrivals-3360w",
+        "home.arrivals_desktop.figma-73f40-615bb0",
+        "home.arrivals_desktop.smooche-lifting-mask-under-eye-patches-new-arrivals-1800w"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [
+        "home.arrivals_desktop.cta-dest"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.experts",
+      "route_id": "home",
+      "order": 12,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__experts",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/experts.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.experts.smooche-dr-aiza-mamaeva-avatar-95w-91a09d",
+        "home.experts.smooche-skincare-expert-avatar-2-95w-871255",
+        "home.experts.smooche-skincare-expert-avatar-3-95w-4ee213",
+        "home.experts.smooche-dermatologist-dr-aiza-mamaeva-1400w-47c60d"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.essentials",
+      "route_id": "home",
+      "order": 13,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__essentials",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Product data (title, price, variants, add-to-cart) bound to NEXT; layout and copy from the source markup.",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/essentials.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "product-data",
+      "asset_ids": [
+        "home.essentials.figma-c6870-61a09e",
+        "home.essentials.1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-2400w-041931",
+        "home.essentials.1_806b81e8-e466-4549-be40-160b224b6b3f-2400w-747dad",
+        "home.essentials.espresso-2400w-e9e621",
+        "home.essentials.smooche-2400w-3438c3",
+        "home.essentials.figma-c99bd-57b22a",
+        "home.essentials.figma-e7087-d171e9"
+      ],
+      "divergence_ids": [
+        "prices-from-next"
+      ],
+      "behavior_ids": [
+        "home.essentials.slider"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.celebration_desktop",
+      "route_id": "home",
+      "order": 14,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__celebration_desktop",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/celebration_desktop.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.celebration_desktop.smooche-beauty-celebration-models-3370w-79cf79"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [
+        "home.celebration_desktop.cta-dest"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.social",
+      "route_id": "home",
+      "order": 15,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--22228899201180__social",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/index.html",
+        "partials": [
+          "partials/sf/home/social.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.social.figma-c99bd-57b22a",
+        "home.social.figma-e7087-d171e9",
+        "home.social.phenomenon-01-20261017-780w-9b422f",
+        "home.social.phenomenon-02-20261017-poster-780w-e1661e",
+        "home.social.phenomenon-03-20261017-poster-780w-f7e445",
+        "home.social.phenomenon-04-20261017-poster-780w-9f10e8",
+        "home.social.phenomenon-05-20261017-poster-780w-7f3b3b",
+        "home.social.phenomenon-06-20261017-780w-afa8b8",
+        "home.social.phenomenon-07-20261017-poster-780w-5b663f",
+        "home.social.phenomenon-08-20261017-780w-97d6e8",
+        "home.social.ce67af4f2ffb4251b8b9d9bdd9462bef-hd-720p-1-6mbps-97954774-bf46a0",
+        "home.social.f8efa52f3caa47c49dfcd5559dfac42f-hd-1080p-2-5mbps-97954775-1016b6",
+        "home.social.2ff54da7c0a546d9a1ac06160b9df70a-hd-1080p-2-5mbps-97954776-f31cb3",
+        "home.social.b705ce67f07b41119b80cf8e7765b43a-hd-1080p-2-5mbps-97954777-9c3f53",
+        "home.social.de65acac52f6451f832b76762138f0d1-hd-720p-1-6mbps-97954778-642859"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [
+        "home.social.media4",
+        "home.social.media5",
+        "home.social.media6",
+        "home.social.media7",
+        "home.social.media8",
+        "home.social.slider"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "home.footer",
+      "route_id": "home",
+      "order": 16,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865066652__footer",
+      "capture_refs": {
+        "desktop": "home-desktop-static",
+        "tablet": "home-tablet-static",
+        "mobile": "home-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "footer",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/footer.html",
+        "partials": [
+          "partials/sf_footer.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "home.footer.skinofab-logo-white"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.announcement",
+      "route_id": "pdp",
+      "order": 1,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865099420__announcement-bar",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_announcement.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [
+        "pdp.announcement.desktop.sticky",
+        "pdp.announcement.tablet.sticky",
+        "pdp.announcement.mobile.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.header",
+      "route_id": "pdp",
+      "order": 2,
+      "in_scope": true,
+      "source_selector": "#SiteHeader",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_header.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "pdp.header.skinofab-logo",
+        "pdp.header.skinofab-logo-white",
+        "pdp.header.sm_-_sales_banner_-_mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-814w-f7d",
+        "pdp.header.stain-814w-00001a"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.main",
+      "route_id": "pdp",
+      "order": 3,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__main",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Product data (title, price, variants, add-to-cart) bound to NEXT; layout and copy from the source markup.",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/main.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "product-data",
+      "asset_ids": [
+        "pdp.main.koreancolorchangingfoundation-productimages_1_cee537ea-54c2--1080w-586b",
+        "pdp.main.2_221c6006-6944-4b6f-a085-220e11ef092d-1080w-993850",
+        "pdp.main.colorchangingfoundation-productimagesphotos_5-1080w-399b0a",
+        "pdp.main.colorchangingfoundation-productimagesphotos_412bfd2c-43db-4b-1350w-9654",
+        "pdp.main.colorchangingfoundation-productimagesphotos_4_35e0c406-0a8b--1080w-c5ab",
+        "pdp.main.6_d0973846-a064-4cd2-9242-119e14c8d593-1080w-ed1a18",
+        "pdp.main.colorchangingfoundation-productimagesphotos_2_1791540a-febe--1080w-4c27",
+        "pdp.main.7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-1080w-eb255a",
+        "pdp.main.8_87ca3242-b11c-40e2-beab-fb1aa34022a6-1080w-c0ac61",
+        "pdp.main.colorchangingfoundation-productimagesphotos_1_87f31fb4-5811--1080w-a42f",
+        "pdp.main.21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-1350w-c0cca5",
+        "pdp.main.22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1350w-a496df",
+        "pdp.main.24_e2816f7f-0236-4d48-8794-a7b92c9b627d-1350w-5828d9",
+        "pdp.main.25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-83fb34",
+        "pdp.main.ap_logo_badge_6328x2204_blackmint_png-ced85f",
+        "pdp.main.icons_smooche_new_17-738b31",
+        "pdp.main.icons_smooche_new_18-cab4e8",
+        "pdp.main.icons_smooche_new_8d474301-a5ef-4be6-bd48-ff9f51a41207-dd43b4",
+        "pdp.main.icons_smooche_new_19-8baa19",
+        "pdp.main.color_changing_foundation_-_product_images_photos_2-810w-33934c",
+        "pdp.main.maison-suitability-even-radiant-841bcc",
+        "pdp.main.maison-suitability-buildable-coverage-465f3f",
+        "pdp.main.maison-suitability-verified-range-844d73",
+        "pdp.main.maison-suitability-mature-skin-8d9076",
+        "pdp.main.ab-customer-survey-ring-83-desktop-1fa0b2",
+        "pdp.main.ab-customer-survey-ring-83-f27b15",
+        "pdp.main.ab-customer-survey-ring-87-desktop-d40989",
+        "pdp.main.ab-customer-survey-ring-87-44da98",
+        "pdp.main.ab-customer-survey-ring-89-desktop-7422ef",
+        "pdp.main.ab-customer-survey-ring-89-83dbe0",
+        "pdp.main.icons_smooche_new_c7df49e1-6425-4add-ad30-a7dfb74c5db3_750x7-482a97",
+        "pdp.main.icons_smooche_new_18_750x750-d60992",
+        "pdp.main.icons_smooche_new_8d474301-a5ef-4be6-bd48-ff9f51a41207_750x7-c2cd7f",
+        "pdp.main.icons_smooche_new_19_750x750-3e60fa",
+        "pdp.main.foundation_png_1-800w-f3d51a",
+        "pdp.main.koreancolorchangingfoundation-productimages_1_cee537ea-54c2--180w-1ebfc",
+        "pdp.main.colorchangingfoundation-productimagesphotos_412bfd2c-43db-4b-1350w-5c3e",
+        "pdp.main.colorchangingfoundation-productimagesphotos_4_35e0c406-0a8b--1080w-6c8f",
+        "pdp.main.6_d0973846-a064-4cd2-9242-119e14c8d593-1080w-3ec6b5",
+        "pdp.main.colorchangingfoundation-productimagesphotos_2_1791540a-febe--1080w-a407",
+        "pdp.main.7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-1080w-c2f1f5",
+        "pdp.main.8_87ca3242-b11c-40e2-beab-fb1aa34022a6-1080w-6e0ec5",
+        "pdp.main.colorchangingfoundation-productimagesphotos_1_87f31fb4-5811--1080w-5cf1",
+        "pdp.main.21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-1350w-e7e9f9",
+        "pdp.main.22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1350w-9bb846",
+        "pdp.main.24_e2816f7f-0236-4d48-8794-a7b92c9b627d-1350w-9608d0",
+        "pdp.main.25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-d89302"
+      ],
+      "divergence_ids": [
+        "social-proof-claims",
+        "prices-from-next",
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [
+        "pdp.main.desktop.sticky",
+        "pdp.main.tablet.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.section_text_rlda4j",
+      "route_id": "pdp",
+      "order": 4,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__section_text_rLDa4j",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/section_text_rlda4j.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.kopstorm_testomonials_9xvcek",
+      "route_id": "pdp",
+      "order": 5,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__kopstorm_testomonials_9XVcek",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/kopstorm_testomonials_9xvcek.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "pdp.kopstorm_testomonials_9xvcek.5_9146d931-fc02-41ef-80bc-663d593c60b8_800x800",
+        "pdp.kopstorm_testomonials_9xvcek.6_1a1cbb1e-0e99-4eb2-a8c6-f1e23de7b15c_800x800",
+        "pdp.kopstorm_testomonials_9xvcek.4_80c5ec42-b5e2-4ec4-953b-4ae927043b20_800x800",
+        "pdp.kopstorm_testomonials_9xvcek.1_b944fd48-e480-4f21-abb9-4fb17f00599b_800x800",
+        "pdp.kopstorm_testomonials_9xvcek.3_bd0bdd54-c308-410a-b798-8a8fea628997_800x800",
+        "pdp.kopstorm_testomonials_9xvcek.2_9c7e1c85-81c7-4ffb-8ccb-a246f8658467_800x800"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.section_image_with_text_xdx7dm",
+      "route_id": "pdp",
+      "order": 6,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__section_image_with_text_xdx7DM",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/section_image_with_text_xdx7dm.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "pdp.section_image_with_text_xdx7dm.hidden_1_1200x1200-402cf9",
+        "pdp.section_image_with_text_xdx7dm.icons_smooche_new_c7df49e1-6425-4add-ad30-a7d",
+        "pdp.section_image_with_text_xdx7dm.icons_smooche_new_18_100x100-111831"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.section_image_with_text_cyzhwr",
+      "route_id": "pdp",
+      "order": 7,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__section_image_with_text_Cyzhwr",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/section_image_with_text_cyzhwr.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "pdp.section_image_with_text_cyzhwr.new_iamges_1200x1200-02db41",
+        "pdp.section_image_with_text_cyzhwr.icons_smooche_new_8d474301-a5ef-4be6-bd48-ff9",
+        "pdp.section_image_with_text_cyzhwr.icons_smooche_new_19_100x100-171c53"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.kopstorm_results_nnthgp",
+      "route_id": "pdp",
+      "order": 8,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__kopstorm_results_nntHGp",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/kopstorm_results_nnthgp.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.kopstorm_compare_lqnyxd",
+      "route_id": "pdp",
+      "order": 9,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__kopstorm_compare_LQNYXd",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/kopstorm_compare_lqnyxd.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "pdp.kopstorm_compare_lqnyxd.skinofab-logo",
+        "pdp.kopstorm_compare_lqnyxd.checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-20w-c",
+        "pdp.kopstorm_compare_lqnyxd.checkmark_0c308043-95c7-4133-96eb-3f92e22eefa7-60w-e"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.kopstorm_ingredients_v2",
+      "route_id": "pdp",
+      "order": 10,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__kopstorm_ingredients_V2",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/kopstorm_ingredients_v2.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "pdp.kopstorm_ingredients_v2.foundation-1-spf15-800w-c686fa",
+        "pdp.kopstorm_ingredients_v2.foundation-2-glycerin-800w-391446",
+        "pdp.kopstorm_ingredients_v2.foundation-3-color-changing-pigments-800w-01e70a",
+        "pdp.kopstorm_ingredients_v2.foundation-4-natural-coverage-800w-5c647f",
+        "pdp.kopstorm_ingredients_v2.foundation-5-mica-800w-18685b"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.section_accordions_k6qprc",
+      "route_id": "pdp",
+      "order": 11,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__section_accordions_k6qPrc",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/section_accordions_k6qprc.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "social-proof-claims",
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.kopstorm_why_gca7fq",
+      "route_id": "pdp",
+      "order": 12,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__kopstorm_why_gcA7fQ",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/kopstorm_why_gca7fq.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "pdp.kopstorm_why_gca7fq.icons_smooche_new_4_bfdf70f5-3226-4cbd-b987-f623e75dd045",
+        "pdp.kopstorm_why_gca7fq.icons_smooche_new_12_500x500-488fb2",
+        "pdp.kopstorm_why_gca7fq.icons_smooche_new_13_500x500-c4009e"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [
+        "pdp.kopstorm_why_gca7fq.cta-dest"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.17343673251239a5d7",
+      "route_id": "pdp",
+      "order": 13,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029865361564__17343673251239a5d7",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/product.color-changing-foundation.html",
+        "partials": [
+          "partials/sf/pdp/17343673251239a5d7.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "pdp.footer",
+      "route_id": "pdp",
+      "order": 14,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865066652__footer",
+      "capture_refs": {
+        "desktop": "pdp-desktop-static",
+        "tablet": "pdp-tablet-static",
+        "mobile": "pdp-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "footer",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/footer.html",
+        "partials": [
+          "partials/sf_footer.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "pdp.footer.skinofab-logo-white"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "collection.announcement",
+      "route_id": "collection",
+      "order": 1,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865099420__announcement-bar",
+      "capture_refs": {
+        "desktop": "collection-desktop-static",
+        "tablet": "collection-tablet-static",
+        "mobile": "collection-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_announcement.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [
+        "collection.announcement.desktop.sticky",
+        "collection.announcement.tablet.sticky",
+        "collection.announcement.mobile.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "collection.header",
+      "route_id": "collection",
+      "order": 2,
+      "in_scope": true,
+      "source_selector": "#SiteHeader",
+      "capture_refs": {
+        "desktop": "collection-desktop-static",
+        "tablet": "collection-tablet-static",
+        "mobile": "collection-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_header.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "collection.header.skinofab-logo",
+        "collection.header.skinofab-logo-white",
+        "collection.header.sm_-_sales_banner_-_mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-8",
+        "collection.header.stain-814w-00001a"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "collection.section_banner_image_mpxjcd",
+      "route_id": "collection",
+      "order": 3,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029874864284__section_banner_image_MpXJcd",
+      "capture_refs": {
+        "desktop": "collection-desktop-static",
+        "tablet": "collection-tablet-static",
+        "mobile": "collection-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/category.html",
+        "partials": [
+          "partials/sf/collection/section_banner_image_mpxjcd.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "collection.section_banner_image_mpxjcd.skin-1512w-1c9dc0",
+        "collection.section_banner_image_mpxjcd.sm_-_sales_banner_-_mobile_2_b5923ad5-6f3"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "collection.section_icons_row_cudwgr",
+      "route_id": "collection",
+      "order": 4,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029874864284__section_icons_row_CUdWGR",
+      "capture_refs": {
+        "desktop": "collection-desktop-static",
+        "tablet": "collection-tablet-static",
+        "mobile": "collection-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/category.html",
+        "partials": [
+          "partials/sf/collection/section_icons_row_cudwgr.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "collection.section_icons_row_cudwgr.icons_smooche_new_30add47d-feca-4f9d-813b-a8",
+        "collection.section_icons_row_cudwgr.icojns_smooche_1_7fe7112d-a198-42a9-8bf5-d68",
+        "collection.section_icons_row_cudwgr.icojns_smooche_2_fcd549a2-4c5f-41b5-86af-d5f",
+        "collection.section_icons_row_cudwgr.icons_smooche_new_30add47d-feca-4f9d-813b-a8-x",
+        "collection.section_icons_row_cudwgr.icojns_smooche_1_7fe7112d-a198-42a9-8bf5-d68-x",
+        "collection.section_icons_row_cudwgr.icojns_smooche_2_fcd549a2-4c5f-41b5-86af-d5f-x"
+      ],
+      "divergence_ids": [
+        "social-proof-claims",
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "collection.main",
+      "route_id": "collection",
+      "order": 5,
+      "in_scope": true,
+      "source_selector": "#shopify-section-template--20029874864284__main",
+      "capture_refs": {
+        "desktop": "collection-desktop-static",
+        "tablet": "collection-tablet-static",
+        "mobile": "collection-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Product data (title, price, variants, add-to-cart) bound to NEXT; layout and copy from the source markup.",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/catalogue/category.html",
+        "partials": [
+          "partials/sf/collection/main.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "product-data",
+      "asset_ids": [
+        "collection.main.vc_1d8f5d7e-2690-4cbc-8390-13ac8b063c2c-814w-92b763",
+        "collection.main.vc_2-814w-12b291",
+        "collection.main.koreancolorchangingfoundation-productimages_1_cee537ea-54c2--814",
+        "collection.main.2_221c6006-6944-4b6f-a085-220e11ef092d-814w-8ff8e1",
+        "collection.main.elpc_d895921e-0066-4d7f-852d-19866356f9f4-814w-17738f",
+        "collection.main.elpc_2_457b56a7-e82c-45d8-b040-c676308b84a5-814w-dfa555",
+        "collection.main.elpc-814w-f9fa70",
+        "collection.main.elpc_2-814w-4fd1ca",
+        "collection.main.1_5abef206-af49-4330-b807-2d7403d6c81e-814w-d6217a",
+        "collection.main.4_cc5acc0d-21fd-4ebc-b400-38bd9f37a81d-814w-115bbb",
+        "collection.main.1_baf8104b-c432-4b62-af61-27a2c0166176-814w-1fd6fa",
+        "collection.main.2_979b2865-7472-4b00-9b48-ae95b3565a4d-814w-6ffbee",
+        "collection.main.1_20b6ec93-6006-4a9f-9321-81c12e325c04-814w-cc6bba",
+        "collection.main.7_a5b19fff-c938-4b92-8191-75ddd91edefb-814w-3f685f",
+        "collection.main.1_806b81e8-e466-4549-be40-160b224b6b3f-814w-8bc327",
+        "collection.main.lipgloss-productimagesphotos-814w-b8d0e8",
+        "collection.main.2_27b1e8c4-6c32-4b80-b596-f87b74c78c5d-814w-470ae5",
+        "collection.main.elpc_2_c8959d5b-4e60-4366-b033-f52e13d21aa6-814w-52e8a5",
+        "collection.main.espresso-814w-30d461",
+        "collection.main.espresso_2-814w-bac1e8",
+        "collection.main.1_efdc2718-118f-4d9f-85f0-c80fe96389a4-814w-8bc7a3",
+        "collection.main.elpc_2_838f3136-557d-4e8f-a572-1fa6acc01413-814w-487eea",
+        "collection.main.jsdfsd-814w-3ed709",
+        "collection.main.9_16c9c86e-ca27-4c16-870c-74bde2111f4c-814w-2f91a7",
+        "collection.main.smooche-814w-7e29dd",
+        "collection.main.eyelashcurler-814w-077c6f",
+        "collection.main.1_98cbc7ee-1f98-4c8c-a7a4-da0a9ecbe863-814w-c05511",
+        "collection.main.2_d86a6eca-1cdf-434a-8014-b6e5fe94088e-814w-af9566",
+        "collection.main.1_9d8bf569-c117-4525-bcba-350526dfa674-814w-f878d9",
+        "collection.main.3_8018fff5-0f4b-4c50-9c6e-0d592daa81a6-814w-27d1a7",
+        "collection.main.2_eeed0bb2-535e-4b98-978a-2de5f0c5d2e6-814w-d5ac36",
+        "collection.main.4_b67614f9-e789-4d7e-a2e1-dbdf8dd7ea6a-814w-d14980",
+        "collection.main.hf_20260928_113042_4517db50-1fcd-414c-b718-5b2cbc23af39-814w-ac1",
+        "collection.main.1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-814w-d986f1",
+        "collection.main.9_00897f9a-c241-4c94-8159-d2487a68033a-814w-4efa0b",
+        "collection.main.1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-814w-99b418",
+        "collection.main.3_5f40db4f-a195-4379-835e-dd0911bac474-814w-102640",
+        "collection.main.sdfsd1-814w-f71f4b",
+        "collection.main.beautyblender-productpicsimagesphotos_16ba3af3-8839-4806-aed-814",
+        "collection.main.hf_20260514_093039_c5845811-d3e7-48ee-a798-2b072efabab4-2048w-7a",
+        "collection.main.hidden_9d612eb5-9e19-4288-9929-6afb87034e41-1080w-5a0d5a",
+        "collection.main.group5-2322w-d35fb0",
+        "collection.main.2_9aa29eee-6514-4721-97ec-a22b4b6a553c-1080w-5d0df3",
+        "collection.main.1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-1080w-4fc443",
+        "collection.main.2_bddbfd7c-cafc-435b-972c-375e6b569d8d-1080w-aed8ac",
+        "collection.main.1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1080w-7ecfe9",
+        "collection.main.2cf1f10d49d541a4a45c9228be643ee3-thumbnail-0000000000-1440w-0b3f",
+        "collection.main.hf_20260514_093039_c5845811-d3e7-48ee-a798-2b072efabab4-814w-b63",
+        "collection.main.hidden_9d612eb5-9e19-4288-9929-6afb87034e41-814w-66e654",
+        "collection.main.1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-1080w-981de8",
+        "collection.main.3_5f40db4f-a195-4379-835e-dd0911bac474-1080w-876740",
+        "collection.main.sdfsd1-2322w-5dfdc3",
+        "collection.main.beautyblender-productpicsimagesphotos_16ba3af3-8839-4806-aed-108"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "prices-from-next",
+        "social-proof-claims"
+      ],
+      "behavior_ids": [
+        "collection.main.desktop.sticky",
+        "collection.main.tablet.sticky",
+        "collection.main.mobile.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "collection.footer",
+      "route_id": "collection",
+      "order": 6,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865066652__footer",
+      "capture_refs": {
+        "desktop": "collection-desktop-static",
+        "tablet": "collection-tablet-static",
+        "mobile": "collection-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "footer",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/footer.html",
+        "partials": [
+          "partials/sf_footer.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "collection.footer.skinofab-logo-white"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "page-faq.announcement",
+      "route_id": "page-faq",
+      "order": 1,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865099420__announcement-bar",
+      "capture_refs": {
+        "desktop": "page-faq-desktop-static",
+        "tablet": "page-faq-tablet-static",
+        "mobile": "page-faq-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_announcement.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [
+        "page-faq.announcement.desktop.sticky",
+        "page-faq.announcement.tablet.sticky",
+        "page-faq.announcement.mobile.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "page-faq.header",
+      "route_id": "page-faq",
+      "order": 2,
+      "in_scope": true,
+      "source_selector": "#SiteHeader",
+      "capture_refs": {
+        "desktop": "page-faq-desktop-static",
+        "tablet": "page-faq-tablet-static",
+        "mobile": "page-faq-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_header.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "page-faq.header.skinofab-logo",
+        "page-faq.header.skinofab-logo-white",
+        "page-faq.header.sm_-_sales_banner_-_mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-814",
+        "page-faq.header.stain-814w-00001a"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "page-faq.s0",
+      "route_id": "page-faq",
+      "order": 3,
+      "in_scope": true,
+      "source_selector": "#Page--template--20029877452956__main > div:nth-child(1) > h1:nth-child(1)",
+      "capture_refs": {
+        "desktop": "page-faq-desktop-static",
+        "tablet": "page-faq-tablet-static",
+        "mobile": "page-faq-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.faq.html",
+        "partials": [
+          "partials/sf/page-faq/s0.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "page-faq.s1",
+      "route_id": "page-faq",
+      "order": 4,
+      "in_scope": true,
+      "source_selector": "#Page--template--20029877452956__main > div:nth-child(1) > div:nth-child(2)",
+      "capture_refs": {
+        "desktop": "page-faq-desktop-static",
+        "tablet": "page-faq-tablet-static",
+        "mobile": "page-faq-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.faq.html",
+        "partials": [
+          "partials/sf/page-faq/s1.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "social-proof-claims",
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "page-faq.footer",
+      "route_id": "page-faq",
+      "order": 5,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865066652__footer",
+      "capture_refs": {
+        "desktop": "page-faq-desktop-static",
+        "tablet": "page-faq-tablet-static",
+        "mobile": "page-faq-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "footer",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/footer.html",
+        "partials": [
+          "partials/sf_footer.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "page-faq.footer.skinofab-logo-white"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "policy-terms.announcement",
+      "route_id": "policy-terms",
+      "order": 1,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865099420__announcement-bar",
+      "capture_refs": {
+        "desktop": "policy-terms-desktop-static",
+        "tablet": "policy-terms-tablet-static",
+        "mobile": "policy-terms-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_announcement.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [
+        "policy-terms.announcement.desktop.sticky",
+        "policy-terms.announcement.tablet.sticky",
+        "policy-terms.announcement.mobile.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "policy-terms.header",
+      "route_id": "policy-terms",
+      "order": 2,
+      "in_scope": true,
+      "source_selector": "#SiteHeader",
+      "capture_refs": {
+        "desktop": "policy-terms-desktop-static",
+        "tablet": "policy-terms-tablet-static",
+        "mobile": "policy-terms-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_header.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "policy-terms.header.skinofab-logo",
+        "policy-terms.header.skinofab-logo-white",
+        "policy-terms.header.sm_-_sales_banner_-_mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5",
+        "policy-terms.header.stain-814w-00001a"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "policy-terms.s0",
+      "route_id": "policy-terms",
+      "order": 3,
+      "in_scope": true,
+      "source_selector": "#Page--template--20029877452956__main > div:nth-child(1) > h1:nth-child(1)",
+      "capture_refs": {
+        "desktop": "policy-terms-desktop-static",
+        "tablet": "policy-terms-tablet-static",
+        "mobile": "policy-terms-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.terms-of-service.html",
+        "partials": [
+          "partials/sf/policy-terms/s0.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "policy-terms.s1",
+      "route_id": "policy-terms",
+      "order": 4,
+      "in_scope": true,
+      "source_selector": "#Page--template--20029877452956__main > div:nth-child(1) > div:nth-child(2)",
+      "capture_refs": {
+        "desktop": "policy-terms-desktop-static",
+        "tablet": "policy-terms-tablet-static",
+        "mobile": "policy-terms-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.terms-of-service.html",
+        "partials": [
+          "partials/sf/policy-terms/s1.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "policy-terms.footer",
+      "route_id": "policy-terms",
+      "order": 5,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865066652__footer",
+      "capture_refs": {
+        "desktop": "policy-terms-desktop-static",
+        "tablet": "policy-terms-tablet-static",
+        "mobile": "policy-terms-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "footer",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/footer.html",
+        "partials": [
+          "partials/sf_footer.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "policy-terms.footer.skinofab-logo-white"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "article.announcement",
+      "route_id": "article",
+      "order": 1,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865099420__announcement-bar",
+      "capture_refs": {
+        "desktop": "article-desktop-static",
+        "tablet": "article-tablet-static",
+        "mobile": "article-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_announcement.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [
+        "article.announcement.desktop.sticky",
+        "article.announcement.tablet.sticky",
+        "article.announcement.mobile.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "article.header",
+      "route_id": "article",
+      "order": 2,
+      "in_scope": true,
+      "source_selector": "#SiteHeader",
+      "capture_refs": {
+        "desktop": "article-desktop-static",
+        "tablet": "article-tablet-static",
+        "mobile": "article-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "header",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/header.html",
+        "partials": [
+          "partials/sf_header.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "article.header.skinofab-logo",
+        "article.header.skinofab-logo-white",
+        "article.header.sm_-_sales_banner_-_mobile_2_b5923ad5-6f3e-45ef-ae9b-bbeb3a5-814w",
+        "article.header.stain-814w-00001a"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "article.s0",
+      "route_id": "article",
+      "order": 3,
+      "in_scope": true,
+      "source_selector": "#Article--template--20405406269596__main > div:nth-child(1) > article:nth-child(1) > header:nth-child(1)",
+      "capture_refs": {
+        "desktop": "article-desktop-static",
+        "tablet": "article-tablet-static",
+        "mobile": "article-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/blog/post.html",
+        "partials": [
+          "partials/sf/article/s0.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "article.s1",
+      "route_id": "article",
+      "order": 4,
+      "in_scope": true,
+      "source_selector": "#Article--template--20405406269596__main > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)",
+      "capture_refs": {
+        "desktop": "article-desktop-static",
+        "tablet": "article-tablet-static",
+        "mobile": "article-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/blog/post.html",
+        "partials": [
+          "partials/sf/article/s1.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "article.s2",
+      "route_id": "article",
+      "order": 5,
+      "in_scope": true,
+      "source_selector": "#Article--template--20405406269596__main > div:nth-child(1) > article:nth-child(1) > ul:nth-child(3)",
+      "capture_refs": {
+        "desktop": "article-desktop-static",
+        "tablet": "article-tablet-static",
+        "mobile": "article-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/blog/post.html",
+        "partials": [
+          "partials/sf/article/s2.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "article.s3",
+      "route_id": "article",
+      "order": 6,
+      "in_scope": true,
+      "source_selector": "#Article--template--20405406269596__main > div:nth-child(1) > article:nth-child(1) > div:nth-child(4)",
+      "capture_refs": {
+        "desktop": "article-desktop-static",
+        "tablet": "article-tablet-static",
+        "mobile": "article-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/blog/post.html",
+        "partials": [
+          "partials/sf/article/s3.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "article.footer",
+      "route_id": "article",
+      "order": 7,
+      "in_scope": true,
+      "source_selector": "#shopify-section-sections--20029865066652__footer",
+      "capture_refs": {
+        "desktop": "article-desktop-static",
+        "tablet": "article-tablet-static",
+        "mobile": "article-mobile-static"
+      },
+      "classification": "live-commerce-component",
+      "classification_rationale": "Shared storefront chrome: exported markup kept 1:1, menus/cart trigger wired to NEXT (cart badge, side cart).",
+      "spark_section": "footer",
+      "roster_status": "chrome",
+      "implementation_target": {
+        "template": "partials/footer.html",
+        "partials": [
+          "partials/sf_footer.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "article.footer.skinofab-logo-white"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s0",
+      "route_id": "lander",
+      "order": 1,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s0.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s0.215a694d-fed6-490c-9ad7-df4f828e3557"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s1",
+      "route_id": "lander",
+      "order": 2,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(3)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s1.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s1.adc2be4a-7515-4935-8eba-0f6eebc9bdd5",
+        "lander.s1.adc2be4a-7515-4935-8eba-0f6eebc9bdd5-x",
+        "lander.s1.215a694d-fed6-490c-9ad7-df4f828e3557"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims",
+        "prices-from-next"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s2",
+      "route_id": "lander",
+      "order": 3,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(4)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s2.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s2.6d517e73-b58a-4aaf-a13f-db8e55fb01df",
+        "lander.s2.adc2be4a-7515-4935-8eba-0f6eebc9bdd5"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
+      "behavior_ids": [
+        "lander.s2.media0"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s3",
+      "route_id": "lander",
+      "order": 4,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(6)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s3.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s3.0c813290-ef20-4ba5-aff1-f92dc1e44a10",
+        "lander.s3.39279355-93ee-4899-bdeb-ee8ce659ab45",
+        "lander.s3.6d517e73-b58a-4aaf-a13f-db8e55fb01df"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s4",
+      "route_id": "lander",
+      "order": 5,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(8)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s4.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s4.44cf4517-3767-4a0b-a299-8a7cd69ca514",
+        "lander.s4.39279355-93ee-4899-bdeb-ee8ce659ab45",
+        "lander.s4.0c813290-ef20-4ba5-aff1-f92dc1e44a10"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s5",
+      "route_id": "lander",
+      "order": 6,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(10)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s5.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s5.44cf4517-3767-4a0b-a299-8a7cd69ca514"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [
+        "lander.s5.media2"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s6",
+      "route_id": "lander",
+      "order": 7,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(12)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s6.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s6.8123a267-73c7-41ec-86d7-f0c4f831cda9",
+        "lander.s6.39279355-93ee-4899-bdeb-ee8ce659ab45"
+      ],
+      "divergence_ids": [],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s7",
+      "route_id": "lander",
+      "order": 8,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(14)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s7.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s7.3a3d4846-90bf-4602-9fc2-9482ac586678",
+        "lander.s7.be382ee1-283a-4a2d-90ae-3c4370cfcec9",
+        "lander.s7.8123a267-73c7-41ec-86d7-f0c4f831cda9"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s8",
+      "route_id": "lander",
+      "order": 9,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(16)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s8.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s8.a42aa7c8-a061-4010-9669-5abac190a9a7",
+        "lander.s8.39279355-93ee-4899-bdeb-ee8ce659ab45",
+        "lander.s8.3a3d4846-90bf-4602-9fc2-9482ac586678"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s9",
+      "route_id": "lander",
+      "order": 10,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(18)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s9.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s9.a42aa7c8-a061-4010-9669-5abac190a9a7"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [
+        "lander.s9.media4"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s10",
+      "route_id": "lander",
+      "order": 11,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(20)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s10.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s10.9be7e268-4413-428c-b92c-b660e1331473",
+        "lander.s10.39279355-93ee-4899-bdeb-ee8ce659ab45"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s11",
+      "route_id": "lander",
+      "order": 12,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(22)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s11.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s11.3a3d4846-90bf-4602-9fc2-9482ac586678",
+        "lander.s11.be382ee1-283a-4a2d-90ae-3c4370cfcec9",
+        "lander.s11.9be7e268-4413-428c-b92c-b660e1331473"
+      ],
+      "divergence_ids": [
+        "promotions-need-offers",
+        "social-proof-claims"
+      ],
+      "behavior_ids": [],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s12",
+      "route_id": "lander",
+      "order": 13,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(24)",
+      "capture_refs": {
+        "desktop": "lander-desktop-static",
+        "tablet": "lander-tablet-static",
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s12.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s12.e7af3cac-3a0f-4f3a-bee9-48a09b656a9a",
+        "lander.s12.3a3d4846-90bf-4602-9fc2-9482ac586678"
+      ],
+      "divergence_ids": [
+        "social-proof-claims",
+        "promotions-need-offers"
+      ],
+      "behavior_ids": [
+        "lander.s12.desktop.sticky",
+        "lander.s12.tablet.sticky"
+      ],
+      "responsive_notes": ""
+    },
+    {
+      "section_id": "lander.s13",
+      "route_id": "lander",
+      "order": 14,
+      "in_scope": true,
+      "source_selector": "#replo-fullpage-element > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(24)",
+      "capture_refs": {
+        "mobile": "lander-mobile-static"
+      },
+      "classification": "semantic-rebuild",
+      "classification_rationale": "Source markup kept as live HTML text, links, and media (no screenshots).",
+      "spark_section": "",
+      "roster_status": "unmapped",
+      "implementation_target": {
+        "template": "templates/pages/page.bestfoundation.html",
+        "partials": [
+          "partials/sf/lander/s13.html"
+        ],
+        "settings": []
+      },
+      "commerce_surface": "",
+      "asset_ids": [
+        "lander.s13.e7af3cac-3a0f-4f3a-bee9-48a09b656a9a"
+      ],
+      "divergence_ids": [
+        "social-proof-claims"
+      ],
+      "behavior_ids": [
+        "lander.s13.mobile.sticky"
+      ],
+      "responsive_notes": ""
+    }
+  ]
+}

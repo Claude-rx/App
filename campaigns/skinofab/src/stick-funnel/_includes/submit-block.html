@@ -1,0 +1,54 @@
+{% comment %}
+  next_component: submit-block
+  next_version: 1.0.0
+  next_sdk_min: 0.4.18
+  next_purpose: Final submit button + disclaimer/T&C. Lives inside <form data-next-checkout="form"> so SDK can intercept real and browser-driven submits.
+  next_params:
+    cta_text:        string, default "COMPLETE PURCHASE →". Main button label.
+    subtext:         string, default "TRY IT RISK FREE! - 30 DAY MONEY BACK GUARANTEE!". Smaller line under CTA.
+    disclaimer:      string, default "By clicking the button below, you agree with our Terms of Use and Privacy Policy."
+    button_attr:     string, default 'os-checkout-payment="combo"'. Combo-mode submit (handles credit / express / paypal / etc).
+    cta_i18n_key:    string, default "complete_purchase". data-i18n key for translation.
+    subtext_i18n_key:string, default "try_risk_free".
+  next_sdk_owns:
+    - The <button type="submit"> living inside <form data-next-checkout="form">
+    - data-action="submit"
+    - os-checkout-payment (value: combo, credit, paypal, apple_pay, google_pay, klarna)
+    - data-pb-element (values: checkout-button-spinner, checkout-button-info)
+  next_theming:
+    classes_designer_owns: [.submit-section, .submit-section__disclaimer, .submit-section__button, .submit-button, .submit-button__loader, .submit-button__content, .submit-button__text, .submit-button__main-text, .submit-button__subtext, .three-quarter-spinner]
+    css_vars_designer_owns: []
+  next_dont_touch:
+    - Button must remain inside the canonical <form data-next-checkout="form"> element or SDK will not submit
+    - data-action="submit" + os-checkout-payment combo together drive SDK submission flow
+    - data-pb-element="checkout-button-spinner" and "checkout-button-info" are toggled by SDK during submit; keep both children
+    - Automated browser checks click this real submit button; keep it visible and scriptable from outside hosted payment iframes
+  next_gotchas:
+    - If the disclaimer text needs links to Terms / Privacy / Returns, prefer the campaign.store_terms etc. Liquid filters; do not hardcode merchant URLs
+    - The spinner and content divs are siblings inside the button; SDK shows one at a time via class toggles — don't restructure
+    - Multiple submit buttons inside the same form is unsupported; keep this partial as the only submit
+  next_variants:
+    - default (this partial; combo payment mode)
+  next_related:
+    - payment-methods.html (selects which payment mode the submit will use)
+{% endcomment %}
+{% assign cta = cta_text | default: 'COMPLETE PURCHASE →' -%}
+{% assign sub = subtext | default: 'TRY IT RISK FREE! - 30 DAY MONEY BACK GUARANTEE!' -%}
+{% assign disc = disclaimer | default: 'By clicking the button below, you agree with our Terms of Use and Privacy Policy.' -%}
+{% assign cta_key = cta_i18n_key | default: 'complete_purchase' -%}
+{% assign sub_key = subtext_i18n_key | default: 'try_risk_free' -%}
+{% assign payment_mode = button_attr | default: 'combo' -%}
+<div data-next-catalog-component="submit-block" class="submit-section">
+  <div class="submit-section__disclaimer">{{ disc }}</div>
+  <div class="submit-section__button"><button os-checkout-payment="{{ payment_mode }}" data-action="submit" type="submit" class="submit-button">
+      <div data-pb-element="checkout-button-spinner" class="submit-button__loader">
+        <div class="three-quarter-spinner black"></div>
+      </div>
+      <div data-pb-element="checkout-button-info" class="submit-button__content">
+        <div class="submit-button__text">
+          <div data-i18n="{{ cta_key }}" class="submit-button__main-text">{{ cta }}</div>
+        </div>
+        <div data-i18n="{{ sub_key }}" class="submit-button__subtext">{{ sub }}</div>
+      </div>
+    </button></div>
+</div>

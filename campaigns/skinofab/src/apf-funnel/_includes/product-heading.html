@@ -1,0 +1,26 @@
+{%- comment -%}
+  product-heading.html — product title + divider + feature list.
+  Data comes from the `product_heading` frontmatter object (pass it in):
+    {% campaign_include 'product-heading.html' product_heading=product_heading %}
+  Contract:
+    product_heading.title          string  — heading text
+    product_heading.features[]     array   — each: { text, emoji? }
+                                             emoji set  -> renders that emoji (e.g. flag)
+                                             emoji unset -> renders the green check icon
+{%- endcomment -%}
+<div class="product-heading">
+  <h1 class="product-heading__title"><span>{{ product_heading.title }}</span></h1>
+  <div class="product-heading__divider" aria-hidden="true"></div>
+  <ul class="product-heading__features">
+    {% for feature in product_heading.features -%}
+    <li class="product-heading__feature{% if feature.emoji %} product-heading__feature--flag{% endif %}">
+      {% if feature.emoji -%}
+      <span class="product-heading__flag" aria-hidden="true">{{ feature.emoji }}</span>
+      {%- else -%}
+      <svg class="product-heading__check" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      {%- endif %}
+      <span>{{ feature.text }}</span>
+    </li>
+    {% endfor -%}
+  </ul>
+</div>

@@ -1,0 +1,115 @@
+{# SKINOFAB header: design markup (announcement bar, navigation, mobile drawer). Cart opens the Spark side cart. #}
+<div class="shopify-section shopify-section-group-group-header announcement-bar-static" id="shopify-section-sections--20029865099420__announcement-bar">
+<div data-announcement-bar="">
+<div class="section-padding" data-announcement-wrapper="" data-section-id="sections--20029865099420__announcement-bar" data-section-type="announcement-bar" id="announcement-bar--sections--20029865099420__announcement-bar">
+<div class="ie11-error-message">
+<p>This site has limited support for your browser. We recommend switching to Edge, Chrome, Safari, or Firefox.</p>
+</div>
+<style data-shopify="">:root{--announcement-height: calc(0.75rem * var(--FONT-ADJUST-SUBHEADING) * 1.2 * 1.5 + 8px * 2);}@media screen and (max-width: 767px){:root{--announcement-height: calc(0.75rem * var(--FONT-ADJUST-SUBHEADING) * 1.2 * 1.5 + 8px * 2);}}#shopify-section-sections--20029865099420__announcement-bar.announcement-bar-static{position: sticky;
+              top: 0;
+              z-index: 9999;}body.js-drawer-open #shopify-section-sections--20029865099420__announcement-bar.announcement-bar-static,body.js-quick-view-from-cart #shopify-section-sections--20029865099420__announcement-bar.announcement-bar-static,body.js-quick-view-visible #shopify-section-sections--20029865099420__announcement-bar.announcement-bar-static{opacity: 0 !important;
+              visibility: hidden !important;
+              pointer-events: none !important;}.has-scrolled .site-header,.has-scrolled .site-header--fixed{top: var(--announcement-height, 0px) !important;}.has-scrolled .site-header--fixed,.has-scrolled.hide-header .site-header--fixed{animation-duration: 0s !important;}#announcement-bar--sections--20029865099420__announcement-bar .announcement{--adjust-body: calc(var(--FONT-ADJUST-BODY) * 1.2);
+          --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 1.2);
+          --adjust-accent: calc(var(--FONT-ADJUST-SUBHEADING) * 1.2);
+          --padding: 8px;
+          --letter-spacing: 0.0em;
+          --line-height: 1.5;
+          --type-adjustment: var(--FONT-ADJUST-SUBHEADING);--bg: #0c0c0c;
+--text: #ffffff;}#announcement-bar--sections--20029865099420__announcement-bar .flickity-enabled .ticker--animated{padding: 0 25px;}@media screen and (max-width: 767px){% templatetag opencomment %}announcement-bar--sections--20029865099420__announcement-bar .announcement{--adjust-body: calc(var(--FONT-ADJUST-BODY) * 1.2);
+            --adjust-heading: calc(var(--FONT-ADJUST-HEADING) * 1.2);
+            --adjust-accent: calc(var(--FONT-ADJUST-SUBHEADING) * 1.2);}}</style><div class="announcement subheading-text" data-announcement=""><div class="announcement__slider" data-slider="" data-slider-speed="5000">
+<div class="announcement__block announcement__block--text announcement__slide" data-block-id="text_MDmdHz" data-slide="text_MDmdHz" data-slide-index="0" style="--text: #ffffff;--highlight-color: #f7f7f7;--highlight-text-color: #ffffff;">
+<div class="announcement__message" data-ticker-frame="">
+<div class="announcement__scale" data-ticker-scale="">
+<div class="announcement__text" data-ticker-text="">
+<span class="text-highlight__break">{% if '/adaptive-foundation-stick_' in request.path %}Free Lymphatic Brush with 2 sticks · Free shipping · 30-day money-back guarantee{% elif request.path == '/cart/' %}Free shipping on every order · 30-day money-back guarantee{% else %}🍂 Fall Sale: Up to 60% OFF + FREE Gifts on Select Packs{% endif %}</span>
+</div>
+</div>
+</div>
+</div>
+</div></div></div>
+</div><script>
+  
+  
+  
+  
+  (function () {
+    var section = document.getElementById('announcement-bar--sections--20029865099420__announcement-bar');
+    if (!section) return;
+    function setBarHeight() {
+      var bar = section.querySelector('.announcement');
+      if (bar && bar.offsetHeight > 0) {
+        document.documentElement.style.setProperty('--announcement-height', bar.offsetHeight + 'px');
+      }
+    }
+    setBarHeight();
+    window.addEventListener('load', setBarHeight);
+    window.addEventListener('resize', setBarHeight);
+    if (typeof ResizeObserver === 'function') {
+      var bar = section.querySelector('.announcement');
+      if (bar) new ResizeObserver(setBarHeight).observe(bar);
+    }
+  })();
+</script>
+<style data-shopify="">:root{--announcement-height: 37px;}#shopify-section-sections--20029865099420__announcement-bar.announcement-bar-static{height: 37px; min-height: 37px; background: #0c0c0c;}#shopify-section-sections--20029865099420__announcement-bar [data-announcement-wrapper]{padding: 0;}#shopify-section-sections--20029865099420__announcement-bar .announcement{--padding: 8px; --line-height: 1.3; height: 37px; min-height: 37px; background: #0c0c0c; color: #ffffff;}#shopify-section-sections--20029865099420__announcement-bar .announcement__text,#shopify-section-sections--20029865099420__announcement-bar .announcement__text :is(p,strong,a,span){font-family: "futura-pt", "Futura Book", sans-serif; font-size: 16.0px !important; font-weight: 500 !important; line-height: 1.3 !important; letter-spacing: -.02em; color: #ffffff; text-transform: none;}#shopify-section-sections--20029865099420__announcement-bar .announcement__text p{margin: 0;}@media(max-width:749px){:root{--announcement-height: 35px;}#shopify-section-sections--20029865099420__announcement-bar.announcement-bar-static,#shopify-section-sections--20029865099420__announcement-bar .announcement{height: 35px; min-height: 35px;}#shopify-section-sections--20029865099420__announcement-bar .announcement__text,#shopify-section-sections--20029865099420__announcement-bar .announcement__text :is(p,strong,a,span){font-size: 15.0px !important;}}</style>
+</div><div class="shopify-section shopify-section-group-group-header shopify-section-header" id="shopify-section-sections--20029865099420__header"><div class="drawer drawer--left drawer--nav cv-h" data-drawer="" id="nav-drawer" role="navigation">
+<div class="drawer__header"><div class="drawer__title"><a class="drawer__logo" href="{{ homepage_url|default:'/' }}">
+<img class="drawer__logo-image" height="20.125223613595708" sizes="(max-width: 300px) 50vw, 150px" src="{{ 'sf/img/skinofab-logo.svg'|asset_url }}" srcset="{{ 'sf/img/skinofab-logo.svg'|asset_url }} 300w" width="150"/>
+</a></div><button aria-controls="nav-drawer" class="drawer__close-button" data-drawer-toggle="" type="button">
+<span class="visually-hidden">Close</span><svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+</div><ul class="mobile-nav mobile-nav--weight-normal"><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Adaptive Peptide Foundation</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_adaptive_foundation_stick %}{{ settings.sf_p_adaptive_foundation_stick.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">Adaptive Foundation Stick</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_egf_nad_firming_serum %}{{ settings.sf_p_egf_nad_firming_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">EGF + NAD+ Firming Serum</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_pdrn_plumping_balm %}{{ settings.sf_p_pdrn_plumping_balm.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">PDRN Plumping Balm</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% if settings.sf_p_the_lymphatic_brush %}{{ settings.sf_p_the_lymphatic_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}">The Lymphatic Brush</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="{% url 'catalogue:index' %}">Shop all</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="/postflows-track-your-order/">Track your order</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="/about-skinofab/">About</a></li><li class="mobile-menu__item mobile-menu__item--level-1"> <a class="mobile-navlink mobile-navlink--level-1" data-nav-link-mobile="" href="/contact/">Contact</a></li></ul><style></style>
+<ul class="mobile-nav mobile-nav--bottom mobile-nav--weight-normal"><li class="mobile-menu__item"><a class="mobile-navlink mobile-navlink--small" href="{% url 'customer:summary' %}" id="customer_login_link" rel="noopener" target="_blank">Log in or create an account</a></li></ul></div>
+<style>[maison-test-id="MC_CART_GUARANTEEBANNER_SKINOFAB"]{width: 100%;
+    margin: 0 0 10px;
+    display: none;}[maison-test-id="MC_CART_GUARANTEEBANNER_SKINOFAB"] img{display: block;
+    width: 100%;
+    height: auto;}</style>
+
+
+
+
+
+<style data-shopify="">:root{--header-height: 60px;
+    --header-sticky-height: 60px;
+    --header-background-height: 60px;}.no-js{--header-sticky-height: 0px;}:root{--full-height: calc(100vh - var(--header-sticky-height));}</style><header class="site-header site-header--fixed site-header--nav-left site-header--nav-normal site-header--has-logo" data-header-height="" data-header-sticky="" data-height="60" data-nav-alignment="left" data-position="fixed" data-section-id="sections--20029865099420__header" data-section-type="header" data-site-header="" data-transparent="false" id="SiteHeader" role="banner">
+<div class="site-header__background" data-header-background=""></div>
+<div class="wrapper" data-wrapper="">
+<button aria-controls="nav-drawer" class="mobile-menu__button mobile-menu__button--burger js-drawer-open" data-drawer-toggle="" data-toggle="mobile-nav" type="button">
+<span class="visually-hidden">Open navigation menu</span><svg aria-hidden="true" class="icon icon-hamburger" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M30 48h132M30 144h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><style data-shopify="">.logo__image-link{width: 150px;
+      height: 20px;}.has-scrolled .logo__image-link{width: 150px;
+      height: 20px;}</style><h1 class="logo" data-logo="" data-takes-space=""><a aria-label="Skinofab" class="logo__image-link logo__image-link--other" href="{{ homepage_url|default:'/' }}"><img alt="SKINOFAB" class="logo__image" fetchpriority="high" height="20.125223613595708" loading="eager" sizes="(max-width: 300px) 50vw, 150px" src="{{ 'sf/img/skinofab-logo.svg'|asset_url }}" srcset="{{ 'sf/img/skinofab-logo.svg'|asset_url }} 300w" width="150"/>
+<span class="logo__image-push" style="padding-top: 13.4%"></span>
+</a><a aria-label="Skinofab" class="logo__image-link logo__image-link--home" href="{{ homepage_url|default:'/' }}"><img alt="SKINOFAB" class="logo__image" fetchpriority="high" height="20.125223613595708" loading="eager" sizes="(max-width: 300px) 50vw, 150px" src="{{ 'sf/img/skinofab-logo-white.svg'|asset_url }}" srcset="{{ 'sf/img/skinofab-logo-white.svg'|asset_url }} 300w" width="150"/>
+<span class="logo__image-push" style="padding-top: 13.4%"></span>
+</a></h1><nav class="nav nav--default caps-letter-spacing-nav" data-nav="" id="NavStandard">
+<div class="menu__item menu__item--compress" data-nav-items-compress=""><div class="menu__item menu__item--icon">
+<a aria-controls="cart-drawer" aria-expanded="false" class="navlink navlink--icon cart__toggle cart__toggle cart__toggle--animation caps" data-cart-drawer-toggle="" href="#cart-modal">
+<span class="visually-hidden">Open cart</span>
+<svg aria-hidden="true" class="icon icon-shopping-bag" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M156.6 162H35.4a6.075 6.075 0 0 1-6-5.325l-10.65-96A6 6 0 0 1 24.675 54h142.65a6.001 6.001 0 0 1 5.925 6.675l-10.65 96a6.076 6.076 0 0 1-6 5.325v0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M66 78V54a30 30 0 1 1 60 0v24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><circle class="cart-indicator" cx="96" cy="108" r="15"></circle></svg>
+<span aria-live="polite" class="cart-badge" id="cart-badge" style="display: none;"></span></a>
+</div>
+</div>
+<div class="menu__items" data-takes-space=""><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="{% if settings.sf_p_color_changing_foundation %}{{ settings.sf_p_color_changing_foundation.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> <span class="navtext">Adaptive Peptide Foundation</span> </a></div><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="{% if settings.sf_p_adaptive_foundation_stick %}{{ settings.sf_p_adaptive_foundation_stick.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> <span class="navtext">Adaptive Foundation Stick</span> </a></div><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="{% if settings.sf_p_egf_nad_firming_serum %}{{ settings.sf_p_egf_nad_firming_serum.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> <span class="navtext">EGF + NAD+ Firming Serum</span> </a></div><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="{% if settings.sf_p_pdrn_plumping_balm %}{{ settings.sf_p_pdrn_plumping_balm.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> <span class="navtext">PDRN Plumping Balm</span> </a></div><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="{% if settings.sf_p_the_lymphatic_brush %}{{ settings.sf_p_the_lymphatic_brush.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}"> <span class="navtext">The Lymphatic Brush</span> </a></div><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="{% url 'catalogue:index' %}"> <span class="navtext">Shop all</span> </a></div><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="/postflows-track-your-order/"> <span class="navtext">Track your order</span> </a></div><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="/about-skinofab/"> <span class="navtext">About</span> </a></div><div class="menu__item" data-nav-item=""> <a class="navlink navlink--toplevel caps" data-top-link="" href="/contact/"> <span class="navtext">Contact</span> </a></div></div>
+<div class="menu__item menu__item--icons menu__item--secondary" data-nav-icons="" data-takes-space=""><div class="menu__items menu__items--secondary"><div class="menu__item child" data-hover-disclosure-toggle="" data-nav-item="">
+<a class="navlink navlink--toplevel caps" data-top-link="" href="/contact/">
+<span class="navtext">Contact</span>
+</a></div>
+</div><div class="menu__item menu__item--icon">
+<a class="navlink navlink--icon caps" href="#">
+<span class="visually-hidden">My Account</span><svg aria-hidden="true" class="icon icon-user" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M96 168c39.765 0 72-32.235 72-72 0-39.764-32.235-72-72-72-39.764 0-72 32.236-72 72 0 39.765 32.236 72 72 72Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M96 120c16.569 0 30-13.431 30-30 0-16.569-13.431-30-30-30-16.569 0-30 13.431-30 30 0 16.569 13.431 30 30 30Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M47.85 149.55a54.002 54.002 0 0 1 76.399-21.577 54.005 54.005 0 0 1 19.901 21.577" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+</div><div class="menu__item menu__item--icon">
+<a aria-controls="cart-drawer" aria-expanded="false" class="navlink navlink--icon cart__toggle cart__toggle--animation caps" data-cart-drawer-toggle="" href="#cart-modal">
+<span class="visually-hidden">Open cart</span><svg aria-hidden="true" class="icon icon-shopping-bag" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M156.6 162H35.4a6.075 6.075 0 0 1-6-5.325l-10.65-96A6 6 0 0 1 24.675 54h142.65a6.001 6.001 0 0 1 5.925 6.675l-10.65 96a6.076 6.076 0 0 1-6 5.325v0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M66 78V54a30 30 0 1 1 60 0v24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><circle class="cart-indicator" cx="96" cy="108" r="15"></circle></svg>
+</a>
+</div>
+</div>
+</nav>
+<div class="mobile-menu" data-mobile-menu=""><a aria-controls="cart-drawer" aria-expanded="false" class="mobile-menu__button cart__toggle cart__toggle--animation" data-cart-drawer-toggle="" href="#cart-modal">
+<span class="visually-hidden">Open cart</span>
+<svg aria-hidden="true" class="icon icon-shopping-bag" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M156.6 162H35.4a6.075 6.075 0 0 1-6-5.325l-10.65-96A6 6 0 0 1 24.675 54h142.65a6.001 6.001 0 0 1 5.925 6.675l-10.65 96a6.076 6.076 0 0 1-6 5.325v0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M66 78V54a30 30 0 1 1 60 0v24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><circle class="cart-indicator" cx="96" cy="108" r="15"></circle></svg>
+</a>
+</div></div>
+<div class="drawer__overlay"></div>
+</header>
+</div>

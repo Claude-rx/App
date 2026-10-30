@@ -1,0 +1,71 @@
+{% extends "layouts/base.html" %}
+{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ 'main.css'|asset_url }}">{% endblock spark_css %}
+{% block body_class %}{% firstof "template-page body--rounded-corners palette--light no-outline" %}{% endblock body_class %}
+{% block sf_head %}{% include 'partials/sf_pages/contact/head.html' %}<style>#main-content .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@media (min-width:40rem){ #main-content .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:48rem){ #main-content .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}#main-content .md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}#main-content nav ol{list-style:none;margin:0;padding:0}#main-content nav ol li{list-style:none}#main-content nav ol li::before,#main-content nav ol li::marker{content:none}#main-content form input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]),#main-content form textarea{border:1px solid #cfcfcf !important;border-radius:10px !important;background:#fff !important}#main-content form select{border:1px solid #cfcfcf !important;border-radius:10px !important;-webkit-appearance:none;appearance:none;padding-right:34px !important;background:#fff url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%278%27 viewBox=%270 0 12 8%27%3E%3Cpath d=%27M1 1.5l5 5 5-5%27 fill=%27none%27 stroke=%27%23151515%27 stroke-width=%271.6%27/%3E%3C/svg%3E") no-repeat right 12px center/12px 8px !important}#main-content form select{min-width:140px}#main-content .text-slate-400{color:#475569}#main-content a.text-slate-400:hover{color:#151515}#cart_formset .flex.items-center.mt-3{flex-wrap:wrap;row-gap:8px}#main-content #cart_formset select{min-width:0;max-width:100%}#cart_formset .flex.items-start.justify-between{gap:16px}#cart_formset .flex.items-start.justify-between>div:last-child{white-space:nowrap;flex-shrink:0}#main-content .container{width:calc(100% - 64px);max-width:1440px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}@media (max-width:749px){ #main-content .container{width:calc(100% - 32px)}}#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}#main-content .btn-secondary:hover,#main-content .btn-secondary:focus-visible{background:#333 !important;border-color:#333 !important;color:#fff !important}</style>{% endblock sf_head %}
+{% block sf_lead %}{% include 'partials/sf_pages/contact/lead.html' %}{% endblock sf_lead %}
+{% block sf_tail %}{% include 'partials/sf_pages/contact/tail.html' %}{% endblock sf_tail %}
+
+{% block title %}
+    {{ category.name }} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container py-3">
+    <nav aria-label="{% t 'navigation.breadcrumb' %}">
+        <ol class="flex items-center gap-2 text-xs text-slate-400">
+            <li><a href="{{ homepage_url }}" class="hover:text-slate-600">{% t "navigation.main.home" %}</a></li>
+            <li>/</li>
+            <li><a href="{% url 'support:category-list' %}" class="hover:text-slate-600">{% t "navigation.main.support" %}</a></li>
+            <li>/</li>
+            <li class="text-slate-600">{{ category.name }}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="container py-8 md:py-12">
+    {# Search #}
+    <form method="get" class="flex gap-2 mb-8 max-w-xl">
+        <input type="text" name="text"
+               placeholder="{% t 'global.button.search' %}"
+               class="flex-1 text-sm border border-slate-200 px-4 py-2" />
+        <button class="btn btn-primary text-sm" type="submit">
+            {% t "global.button.search" %}
+        </button>
+    </form>
+
+    <h1 class="text-2xl font-semibold text-slate-800 mb-6">
+        {{ category.name }} {% t "store.support.articles" %}
+    </h1>
+
+    {% if articles %}
+        <ul class="divide-y divide-slate-200 border border-slate-200 mb-8">
+            {% for article in articles %}
+                <li class="flex items-center justify-between px-4 py-3">
+                    <a href="{{ article.get_absolute_url }}" class="text-sm text-slate-700 hover:text-slate-900">
+                        {{ article.title }}
+                    </a>
+                    <a href="{{ article.get_absolute_url }}" class="btn btn-secondary text-xs px-3 py-1">
+                        {% t "store.support.view" %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="text-sm text-slate-500">
+            {% url 'customer:support-ticket-create' as create_ticket_link %}
+            {% t "store.support.create_support_request" with link=create_ticket_link %}
+        </p>
+    {% else %}
+        {% if not is_search %}
+            <p class="text-slate-500 mb-4">{% t "store.support.no_articles" %}</p>
+        {% else %}
+            <p class="text-slate-500 mb-4">{% t "store.support.search_not_found" %}</p>
+        {% endif %}
+        <p class="text-sm text-slate-500">
+            {% url 'customer:support-ticket-create' as create_ticket_link %}
+            {% t "store.support.create_support_request" with link=create_ticket_link %}
+        </p>
+    {% endif %}
+</div>
+{% endblock content %}

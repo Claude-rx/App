@@ -1,0 +1,178 @@
+{
+  "schema_version": "campaign-runtime-build-packet/v0",
+  "generated_at": "2026-10-29T10:40:10.615Z",
+  "campaigns_os_version": "1.60.0",
+  "campaign": {
+    "public_route_slug": "apf-funnel",
+    "campaign_directory": "apf-funnel",
+    "live_url_path": "/apf-funnel/",
+    "campaigns_app_url": null,
+    "api_key_source": "env:CAMPAIGNS_API_KEY",
+    "allowed_domains_confirmed": false
+  },
+  "spec": {
+    "map_id": null,
+    "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
+    "spec_url": null,
+    "local_path": "./campaign-spec.apf.json"
+  },
+  "design_source_package": {
+    "path": ".campaign-runtime/input/design-source-package.json",
+    "schema_version": "campaign-design-source-package/v0",
+    "sha256": "sha256:b9ec091758602b2fbe0963c94cd09206816ba9e6319ce59a96bb2046c19b902d",
+    "material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7"
+  },
+  "source_html": {
+    "root": "./design-source-apf",
+    "pages": [
+      {
+        "page_id": "listicle",
+        "path": "facelove-listicle.html",
+        "source_hash": "2300c09ed1f5cf7ac38e16dc17f38db205aedeb955aa8af2ca976334714629ce",
+        "page_kit": {
+          "target_path": "10-reasons-adaptive-foundation.html",
+          "output_path": "src/apf-funnel/10-reasons-adaptive-foundation.html",
+          "public_route": "/apf-funnel/10-reasons-adaptive-foundation/",
+          "spec_route": "10-reasons-adaptive-foundation/",
+          "page_type": "product",
+          "permalink_required": false,
+          "frontmatter": {
+            "page_type": "product",
+            "next_url": "/apf-funnel/adaptive-foundation-offer/"
+          }
+        }
+      },
+      {
+        "page_id": "offer",
+        "path": "apf-pdp.html",
+        "source_hash": "b75e4c7913104a9e8a4bf3e47b72ecd5f98f28510f6c5bc0b05de44fcb708481",
+        "page_kit": {
+          "target_path": "adaptive-foundation-offer.html",
+          "output_path": "src/apf-funnel/adaptive-foundation-offer.html",
+          "public_route": "/apf-funnel/adaptive-foundation-offer/",
+          "spec_route": "adaptive-foundation-offer/",
+          "page_type": "product",
+          "permalink_required": false,
+          "frontmatter": {
+            "page_type": "product",
+            "next_url": "/apf-funnel/foundation-checkout/"
+          }
+        }
+      },
+      {
+        "page_id": "checkout",
+        "skip_reason": "template stock: Apollo checkout page, no bespoke design"
+      },
+      {
+        "page_id": "offer-1",
+        "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+      },
+      {
+        "page_id": "offer-2",
+        "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+      },
+      {
+        "page_id": "offer-2b",
+        "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+      },
+      {
+        "page_id": "brush-offer",
+        "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+      },
+      {
+        "page_id": "brush-offer-b",
+        "skip_reason": "template stock: Apollo upsell page, no bespoke design"
+      },
+      {
+        "page_id": "thank-you",
+        "skip_reason": "template stock: Apollo receipt page, no bespoke design"
+      }
+    ],
+    "adapter_contract": {
+      "raw_html_conversion_status": "pending",
+      "source_asset_strategy": "pagekit_campaign_asset_root",
+      "route_rewrite_policy": "campaignspec_routes_via_campaign_link",
+      "config_script_strategy": "campaign_asset",
+      "commerce_shell_adoption": "not_required",
+      "wrapper_policy": "preserve_document_wrappers",
+      "frontmatter_policy": "pagekit_yaml_frontmatter",
+      "script_style_reference_policy": "frontmatter_or_campaign_asset",
+      "cta_rewrite_policy": "campaignspec_routes_via_campaign_link",
+      "layout_choice": "campaign_layout",
+      "template_files_copied": {
+        "status": "pending",
+        "required_groups": [
+          "pages",
+          "_includes",
+          "_layouts",
+          "assets/css",
+          "assets/js",
+          "frontmatter_vocabulary"
+        ],
+        "groups": [],
+        "paths": []
+      }
+    }
+  },
+  "build_brief": {
+    "schema_version": "campaigns-os-build-brief/v1",
+    "mode": "guided_draft",
+    "status": "complete",
+    "input_path": "./campaign-build-brief.apf.json",
+    "normalized_path": ".campaign-runtime/input/campaign-build-brief.normalized.json",
+    "question_count": 0,
+    "gate_count": 1,
+    "material": {
+      "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
+      "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+    },
+    "input_sha256": "sha256:10e7ebb547568b6081e1cec469e66a3e17e5e1eeab0d4c81cf75f039607a8460"
+  },
+  "assembly": {
+    "implementation": "next-campaigns-build",
+    "target_repo": ".",
+    "output_dir": "src/apf-funnel",
+    "template_family": "apollo",
+    "template_decision_notes": "Template family locked by prepare-build --template-family apollo.",
+    "template_lock": {
+      "locked": true,
+      "locked_by": "operator_flag",
+      "confidence": "high",
+      "evidence": [
+        "prepare-build --template-family"
+      ]
+    },
+    "template_certification": {
+      "certified": true
+    },
+    "commerce_catalog": {
+      "required": true,
+      "family": "apollo",
+      "version": null,
+      "path": null
+    },
+    "compatible_outputs": [
+      "static-html",
+      "campaign-cart-sdk"
+    ]
+  },
+  "deploy": {
+    "target": "local-serve",
+    "preview_url": "http://127.0.0.1:8090/apf-funnel/",
+    "production_url": "https://try.skinofab.com/",
+    "live_url_path": "/apf-funnel/"
+  },
+  "qa": {
+    "proof_policy": {
+      "browser_qa_required": true,
+      "typed_card_depth": "common",
+      "localhost_development_domain_allowed": true,
+      "non_localhost_origin_allowlist_required": true,
+      "order_path_depth": "common",
+      "operator_approval_state": "not_required_global_test_cards",
+      "qa_portal_publish_default": true
+    },
+    "test_order_policy_notes": "Test Orders use global test cards that bypass the gateway and create no transactions, but each creates a real store order record. Unless the operator has already said test orders are fine for this campaign, ask once, up front, before placing test orders; then run `qa run --test-order common`: when every actual terminal path in the selected checkout topology fits under the flood cap, common runs them all (effective depth `full`, reason `under_cap`); above the cap it runs checkout, first-offer accept/decline and a deduplicated shortest real receipt path, then adds the shortest path that clicks the decline on each offer or downsell page no planned path declines yet, up to the cap, and names any page left out. The `browser-test-order:upsell-action-coverage` verdict row warns naming each offer page whose decline no executed order clicked. Use `--test-order full` for every actual terminal path in the selected checkout topology; cycles, missing routes, and reachable nonterminals block exhaustive proof before browser launch. Use `--test-order tiers` (or `tiers:common` / `tiers:full`) to drive one strict-selection order per selector tier the CampaignSpec declares on the checkout page, crossed with those path shapes; order-bump rows marked `is_order_bump` or `is_upsell` are add-ons, not tiers, so a three-tier checkout with one bump plans 3 tiers, and `--select-package <ref[:qty],...>` narrows a tiers run to the listed tiers. The default accidental-flood cap is 6, and an overflow names the exact explicit `--max-test-orders` raise and lists the planned paths (up to 40 ids, the remainder counted). That cap bounds planned paths; `--max-order-creations` bounds actual order creations, defaults to the planned path count, and is reserved before each submit. Localhost on any port is a globally allowed Development domain; non-localhost preview/production origins still need SDK origin allowlist confirmation. There is no permission flag; depth controls coverage after the operator has answered."
+  },
+  "notes": "Generated by campaigns-os prepare-build. Replace demo refs from CampaignSpec/API before launch."
+}

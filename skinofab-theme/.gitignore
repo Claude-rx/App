@@ -1,0 +1,33 @@
+# Tailwind CLI binary (platform-specific, ~76MB, downloaded separately)
+# The platform doesn't preserve binaries on push, and binaries don't pull
+# from git on theme install. Devs run `make install-tailwind` to fetch
+# the right binary for their platform.
+tailwindcss
+
+# NOTE: assets/main.css IS committed. Themes pulled via ntk/git must be
+# self-contained — the platform doesn't compile CSS server-side, so the
+# minified production build needs to ship with the theme code. Recompile
+# and commit it whenever css/input.css or any source file changes.
+
+# ntk config (contains API keys and store-specific settings)
+config.yml
+
+# Tool/session state
+.gstack/
+.claude/
+.preview/
+
+# Python bytecode from the tooling tests (`make test`, `make verify-theme`)
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/

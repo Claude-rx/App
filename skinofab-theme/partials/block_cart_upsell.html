@@ -1,0 +1,35 @@
+{% load theme_tags %}
+{% comment %}
+  Spark Cart Upsells - renders upsell product slots inside the side cart.
+  Products configured via theme settings (upsell_product_1, _2, _3).
+  Hidden by default; JS shows/hides based on cart contents and product metadata.
+{% endcomment %}
+
+{% if settings.enable_upsells %}
+    {% if settings.upsell_product_1 or settings.upsell_product_2 or settings.upsell_product_3 %}
+    <div class="spark-upsells" data-upsell-section>
+        {% t "side_cart.default.upsell_section_title" as default_upsell_section_title %}
+        <h3 style="font-size:14px;font-weight:600;color:#1E293B;margin:12px 0 8px;font-family:var(--font-header,var(--font-body,inherit));">
+            {{ settings.upsell_section_title|default:default_upsell_section_title }}
+        </h3>
+
+        {% if settings.upsell_product_1 %}
+            {% with product=settings.upsell_product_1 slot="1" %}
+                {% include "partials/block_cart_upsell_item.html" %}
+            {% endwith %}
+        {% endif %}
+
+        {% if settings.upsell_product_2 %}
+            {% with product=settings.upsell_product_2 slot="2" %}
+                {% include "partials/block_cart_upsell_item.html" %}
+            {% endwith %}
+        {% endif %}
+
+        {% if settings.upsell_product_3 %}
+            {% with product=settings.upsell_product_3 slot="3" %}
+                {% include "partials/block_cart_upsell_item.html" %}
+            {% endwith %}
+        {% endif %}
+    </div>
+    {% endif %}
+{% endif %}

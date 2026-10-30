@@ -1,5 +1,30 @@
+tools/site-export/npm/
+tools/site-export/capture/
+skinofab-home.zip
+tools/site-export/cache/
+skinofab-site*.zip
+.capture-tmp/
+# generated binary theme assets (recreated by tools/theme-build/build_theme.py from the export)
+skinofab-theme/assets/sf/img/
+skinofab-theme/assets/sf/media/
+skinofab-theme/assets/sf/fonts/
+skinofab-handoff/media/
+skinofab-theme*.zip
+
+# Python bytecode
 __pycache__/
 *.pyc
+# source PDF of the product sheet (21 MB); its views are extracted under brand/adaptive-peptide-foundation/
+brand/adaptive-peptide-foundation/product-sheet.pdf
+
+# Next Commerce campaign runs (manifests hold campaign keys)
+next-campaigns-create-runs/
+.env
+# the funnel's Page Kit project: installed packages and build output (tools/build_store.sh rebuilds _site/)
+campaigns/skinofab/node_modules/
+campaigns/skinofab/_site/
+
+# Agent workspace
 node_modules/
 .DS_Store
 cowork-skills/

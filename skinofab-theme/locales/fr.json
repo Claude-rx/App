@@ -1,0 +1,307 @@
+{
+    "global": {
+        "button": {
+            "more": "Plus",
+            "search": "Rechercher",
+            "close": "Fermer",
+            "save": "Économisez",
+            "save_loading": "Économiser...",
+            "go_back": "Retournez",
+            "learn_more": "En savoir plus",
+            "dismiss": "Ignorer"
+        },
+        "error": {
+            "please_check_error": "<strong>Oups ! Nous avons trouvé quelques erreurs</strong> . Veuillez vérifier les messages d'erreur ci-dessous et réessayer",
+            "403": "Permission refusée !",
+            "403_message": "Nous sommes désolés, mais vous n'êtes pas autorisé à accéder à cette page.",
+            "404": "Page introuvable",
+            "404_message": "Nous sommes désolés, mais la page que vous recherchez est introuvable.",
+            "500": "Erreur 500 du serveur interne",
+            "500_heading": "Désolé, ce n'est pas vous, c'est nous.",
+            "500_message": "Nous avons été informés du problème, veuillez réessayer plus tard.",
+            "generic_try_again": "Une erreur est survenue. Veuillez réessayer.",
+            "connection_try_again": "Problème de connexion. Veuillez réessayer."
+        },
+        "confirm": {
+            "delete": "Voulez-vous vraiment supprimer cet élément ?"
+        },
+        "accessibility": {
+            "skip_to_main_content": "Aller au contenu principal"
+        }
+    },
+    "navigation": {
+        "main": {
+            "home": "Accueil",
+            "shop": "Magasiner",
+            "blog": "Blogue",
+            "support": "Assistance",
+            "contact": "Contacter",
+            "cart": "Chariot"
+        },
+        "account": {
+            "account": "Compte",
+            "subscriptions": "Abonnements",
+            "orders": "Historique des commandes",
+            "profile": "Profil",
+            "addresses": "Adresses",
+            "support": "Assistance",
+            "dashboard": "Tableau de bord",
+            "logout": "Déconnexion",
+            "login_or_register": "Connectez-vous ou inscrivez-vous",
+            "welcome": "Bon retour"
+        },
+        "footer": {
+            "about_us": "À propos de nous",
+            "contact_us": "Contactez-nous",
+            "account_info": "Compte et informations",
+            "support_terms": "Assistance et conditions",
+            "support": "FAQ",
+            "terms_conditions": "Conditions générales",
+            "privacy": "Politique de confidentialité",
+            "address": "Adresse",
+            "copyright": "Tous droits réservés",
+            "help": "Centre d'aide",
+            "rights": "Tous droits réservés."
+        },
+        "pagination": {
+            "next": "Suivant"
+        },
+        "search": "Rechercher",
+        "cart": "Panier",
+        "menu": {
+            "toggle": "Menu"
+        },
+        "breadcrumb": "Fil d’Ariane"
+    },
+    "tables": {
+        "heading": {
+            "product_name": "Nom du produit",
+            "product": "Produit",
+            "quantity": "Quantité",
+            "schedule": "Horaire",
+            "price": "Prix",
+            "discount": "Rabais",
+            "total": "Total",
+            "items_to_buy_now": "Articles à acheter maintenant"
+        },
+        "content": {
+            "price": "Prix",
+            "discount": "Rabais"
+        },
+        "actions": {
+            "remove": "Supprimer",
+            "add_coupon": "Ajouter un coupon",
+            "add_coupon_loading": "Ajout de...",
+            "reload": "Recharger",
+            "reload_loading": "Mise à jour...",
+            "add": "Ajouter"
+        }
+    },
+    "order": {
+        "cart": {
+            "title": "Chariot",
+            "summary": "Résumé",
+            "cart_total": "Total du panier",
+            "cart_total_discount": "Total du panier (après remises)",
+            "applied_offer": "Offre appliquée",
+            "applied_coupons": "Coupons appliqués",
+            "shipping": "Expédition",
+            "order_total": "Total de la commande",
+            "proceed_to_checkout": "Procéder à la caisse",
+            "upsell_message_detail": "{{ message }} pour bénéficier de l'offre spéciale <b>{{ offer_name }}</b>",
+            "continue_shopping": "Continuer vos achats",
+            "cart_empty": "Votre panier est vide.",
+            "items_count": {
+                "one": "{{ count }} article",
+                "other": "{{ count }} articles"
+            },
+            "subscription_items": {
+                "one": "Abonnement ({{ count }} article)",
+                "other": "Abonnement ({{ count }} articles)"
+            },
+            "calculated_at_checkout": "Calculé au moment du paiement",
+            "subscription_details": "Détails de l'abonnement",
+            "product": "Produit",
+            "quantity": "Quantité",
+            "price": "Prix",
+            "subscription_total": "Total de l'abonnement",
+            "subscription_renewal_message": "Votre abonnement sera renouvelé chaque",
+            "coupon_code": "Code de réduction",
+            "empty_hint": "Ajoutez des articles pour commencer"
+        }
+    },
+    "store": {
+        "blog": {
+            "title": "Blogue",
+            "no_posts": "Aucun article n'a encore été créé.",
+            "search_not_found": "Trouvé <strong>0</strong> résultats.",
+            "all_categories": "Toutes les catégories",
+            "category_filter": "Filtrer par catégorie"
+        },
+        "catalogue": {
+            "filters": "Filtres",
+            "filter_clear": "Transparent",
+            "free": "Gratuit",
+            "sale": "Vente",
+            "none_found": "Aucun produit n'a été trouvé.",
+            "edit_this_category": "Modifier cette catégorie",
+            "edit_this_product": "Modifier ce produit",
+            "buy_option": "Option d'achat",
+            "one_time": "Une fois",
+            "subscribe_save": "Économisez en vous abonnant",
+            "order_arrival_frequency": "À quelle fréquence souhaitez-vous que votre commande arrive ?",
+            "add_to_cart": "Ajouter au panier",
+            "add_to_cart_loading": "Ajout de...",
+            "product_unavailable": "Indisponible",
+            "out_of_stock": "En rupture de stock",
+            "size_guide": "Guide des tailles",
+            "about": "À propos",
+            "reviews": "Avis",
+            "no_reviews": "Ce produit n'a pas encore d'avis",
+            "no_reviews_add": "soyez le premier à en écrire un",
+            "customer_reviews": "Avis des clients",
+            "see_all_reviews": "Voir tous les avis",
+            "write_a_review": "Écrire un avis",
+            "recommended_products_header": "Produits recommandés",
+            "apply_filters": "Appliquer les filtres",
+            "description": "Description",
+            "filter_reset": "Réinitialiser",
+            "product_images": "Images du produit",
+            "previous_image": "Image précédente",
+            "next_image": "Image suivante",
+            "one_time_purchase": "Achat unique",
+            "one_time_subtitle": "Achetez une fois, sans engagement",
+            "recurring_delivery": "Livraison récurrente",
+            "delivery_frequency": "Fréquence de livraison",
+            "added_to_cart": "Ajouté",
+            "product_not_found": "Produit introuvable",
+            "add_to_cart_error": "Impossible d'ajouter au panier",
+            "subscription_frequency_error": "Veuillez choisir une fréquence d'abonnement valide.",
+            "view_image": "Voir l’image {{ count }}",
+            "select_variant": "Sélectionner une variante",
+            "product_image_alt": "{{ title }} - image {{ count }}"
+        },
+        "review": {
+            "reviews": "Avis",
+            "customer_reviews": "Avis des clients",
+            "all_reviews": "Tous les avis",
+            "customer_reviews_count": {
+                "one": "{{ count }} avis client",
+                "other": "{{ count }} avis clients"
+            },
+            "reviewed_by_you": "Avis de votre part",
+            "reviewed_by_other": "Avis déposé par <b>{{ name }}</b>",
+            "no_reviews": "Ce produit n'a pas encore d'avis.",
+            "leave_review": "Laisser un avis produit",
+            "save_review": "Enregistrer un avis"
+        },
+        "search": {
+            "products_matching": "Produits assortis {{ q }}",
+            "search_not_found": "0 résultats trouvés.",
+            "search_placeholder": "Rechercher des produits",
+            "suggestion": "Recherchez des produits par nom, description ou catégorie.",
+            "close_search": "Fermer la recherche"
+        },
+        "support": {
+            "title": "Assistance",
+            "heading": "Comment pouvons-nous vous aider ?",
+            "search_not_found": "0 résultats trouvés.",
+            "view": "Voir",
+            "create_support_request": "Vous avez encore besoin d'aide ? Créez <a href='{{ link }}'>une demande d'assistance</a> avec notre équipe de service client et nous serions heureux de vous aider.",
+            "no_categories": "Aucune catégorie n'a encore été créée.",
+            "articles": "Des articles",
+            "no_articles": "Aucun article n'a encore été créé.",
+            "edit_this_article": "Modifier cet article",
+            "last_updated": "Dernière mise à jour"
+        }
+    },
+    "side_cart": {
+        "default": {
+            "your_order": "Votre commande",
+            "your_cart_is_empty": "Votre panier est vide !",
+            "oops_You_have_nothing_here": "Oups ! Tu n'as rien ici.",
+            "quantity": "Quantité",
+            "qty": "Quantité",
+            "schedule": "Calendrier",
+            "price": "Prix",
+            "savings": "Des économies",
+            "regular": "Régulier",
+            "your_price": "Votre prix",
+            "cart_subtotal": "Sous-total du panier",
+            "discount": "Réduction",
+            "shipping": "Expédition",
+            "cart": "Chariot",
+            "total": "Total",
+            "product": "Produit",
+            "subscription_details": "Détails de l'abonnement",
+            "applied_coupons": "Coupons appliqués",
+            "subscription_items_one": "Abonnement ({{count}} article)",
+            "subscription_items_other": "Abonnement ({{count}} articles)",
+            "calculated_at_checkout": "Calculé au moment du paiement",
+            "subscription_total": "Total de l'abonnement",
+            "subscription_renewal_message": "Votre abonnement sera renouvelé chaque",
+            "proceed_to_checkout": "Procéder au paiement",
+            "have_a_coupon": "Vous avez un coupon ?",
+            "coupon_code": "Code de réduction",
+            "apply_coupon": "Appliquer le coupon",
+            "close_cart": "Fermer le panier",
+            "frequency_template": "Tous les {count} {interval}",
+            "decrease_quantity": "Diminuer la quantité",
+            "increase_quantity": "Augmenter la quantité",
+            "remove_item": "Supprimer {title}",
+            "item_removed_announcement": "Article supprimé du panier.",
+            "quantity_updated_announcement": "Quantité du panier mise à jour.",
+            "remove_voucher": "Supprimer le coupon",
+            "invalid_coupon_code": "Code de coupon invalide",
+            "shipping_progress_message": "Il vous manque {amount} pour la livraison GRATUITE",
+            "gift_progress_message": "Il vous manque {amount} pour un cadeau GRATUIT",
+            "final_progress_message": "Vous avez débloqué toutes les récompenses",
+            "upsell_section_title": "Vous aimerez aussi"
+        }
+    },
+    "footer": {
+        "support": "Assistance",
+        "help": "Centre d'aide",
+        "rights": "Tous droits réservés."
+    },
+    "pagination": {
+        "label": "Pagination",
+        "previous": "Précédent",
+        "next": "Suivant"
+    },
+    "product": {
+        "no_image": "Aucune image",
+        "sold_out": "Épuisé"
+    },
+    "catalogue": {
+        "continue_shopping": "Continuer vos achats"
+    },
+    "membership": {
+        "price_label": "Prix membre",
+        "applied_at_checkout": "Appliqué au paiement"
+    },
+    "homepage": {
+        "cta": {
+            "shop_now": "Acheter maintenant",
+            "view_all": "Tout voir",
+            "view_product": "Voir le produit"
+        },
+        "heading": {
+            "on_sale": "En promotion",
+            "featured_products": "Produits en vedette",
+            "featured_categories": "Acheter par catégorie",
+            "promo_banner": "Offre à durée limitée",
+            "featured_product": "Produit en vedette"
+        },
+        "placeholder": {
+            "hero_image": "Image principale",
+            "hero_image_path": "Paramètres > Accueil > Image principale",
+            "featured_products": "Produits en vedette - Paramètres > Accueil > Produits en vedette",
+            "featured_categories": "Catégories en vedette - Paramètres > Accueil > Catégories en vedette",
+            "on_sale": "En promotion - Paramètres > Accueil > En promotion > Produits",
+            "featured_product": "Produit en vedette - Paramètres > Accueil > Produit en vedette",
+            "image_text": "Image avec texte - Paramètres > Accueil > Image avec texte",
+            "text_block": "Bloc de texte - Paramètres > Accueil > Bloc de texte"
+        }
+    }
+}

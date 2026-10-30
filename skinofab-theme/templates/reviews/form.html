@@ -1,0 +1,30 @@
+{% extends "templates/reviews/index.html" %}
+
+{% block product_review %}
+<hr class="my-8 border-slate-200">
+<div class="max-w-2xl">
+    <h4 class="text-lg font-semibold text-slate-800 mb-6">{% t "store.review.leave_review" %}</h4>
+    <form method="post" id="add_review_form" action=".">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% if form.name %}
+                {% include 'partials/form_field.html' with field=form.name %}
+            {% endif %}
+            {% if form.email %}
+                {% include 'partials/form_field.html' with field=form.email %}
+            {% endif %}
+            {% include 'partials/form_field.html' with field=form.title %}
+            <fieldset class="sf-score"><legend class="block text-sm font-medium text-slate-700 mb-1">{{ form.score.label }} <span class="text-red-500">*</span></legend><div class="sf-stars">{% for v in "54321" %}<input type="radio" id="sf-score-{{ v }}" name="{{ form.score.html_name }}" value="{{ v }}" required{% if form.score.value == v %} checked{% endif %}><label for="sf-score-{{ v }}" title="{{ v }} of 5 stars">&#9733;</label>{% endfor %}</div>{% for error in form.score.errors %}<p class="text-xs text-red-500 mt-1">{{ error }}</p>{% endfor %}</fieldset><style>.sf-score{border:0;margin:0;padding:0}.sf-stars{display:inline-flex;flex-direction:row-reverse;gap:6px}.sf-stars input{position:absolute;opacity:0;width:1px;height:1px}.sf-stars label{font-size:34px;line-height:1;color:#d6d6d6;cursor:pointer}.sf-stars input:checked~label,.sf-stars label:hover,.sf-stars label:hover~label{color:#151515}.sf-stars input:focus-visible+label{outline:2px solid #151515;outline-offset:2px;border-radius:4px}</style>
+        </div>
+        <div class="mt-4">
+            {% include 'partials/form_field.html' with field=form.body %}
+        </div>
+        <div class="mt-6">
+            <button type="submit" class="btn btn-primary"
+                    data-loading-text='{% t "global.button.save_loading" %}'>
+                {% t "store.review.save_review" %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

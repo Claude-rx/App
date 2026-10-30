@@ -1,0 +1,940 @@
+{
+  "schema_version": "next-theme-dev/handoff-behaviors/v1",
+  "behaviors": [
+    {
+      "behavior_id": "home.announcement.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "home",
+      "section_id": "home.announcement",
+      "viewport": "desktop",
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "home.reviews.media0",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.reviews",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.reviews.media1",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.reviews",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.reviews.media2",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.reviews",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.serum.media3",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.serum",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.social.media4",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.social",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.social.media5",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.social",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.social.media6",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.social",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.social.media7",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.social",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.social.media8",
+      "kind": "media",
+      "route_id": "home",
+      "section_id": "home.social",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=False loop=True muted=True playsinline=True controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "plays_inline": true,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "home.hero.cta-dest",
+      "kind": "cta-destination",
+      "route_id": "home",
+      "section_id": "home.hero",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "click",
+      "observed": "CTA \"\" links to /products/color-changing-foundation.html in the export; the theme resolves it to the matching NEXT product/category/page URL.",
+      "evidence": "extracted",
+      "details": {
+        "source_href": "/products/color-changing-foundation.html"
+      }
+    },
+    {
+      "behavior_id": "home.categories.cta-dest",
+      "kind": "cta-destination",
+      "route_id": "home",
+      "section_id": "home.categories",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "click",
+      "observed": "CTA \"SHOP NOW\" links to /collections/face.html in the export; the theme resolves it to the matching NEXT product/category/page URL.",
+      "evidence": "extracted",
+      "details": {
+        "source_href": "/collections/face.html"
+      }
+    },
+    {
+      "behavior_id": "home.foundation.cta-dest",
+      "kind": "cta-destination",
+      "route_id": "home",
+      "section_id": "home.foundation",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "click",
+      "observed": "CTA \"SHOP NOW\" links to /products/color-changing-foundation.html in the export; the theme resolves it to the matching NEXT product/category/page URL.",
+      "evidence": "extracted",
+      "details": {
+        "source_href": "/products/color-changing-foundation.html"
+      }
+    },
+    {
+      "behavior_id": "home.serum.cta-dest",
+      "kind": "cta-destination",
+      "route_id": "home",
+      "section_id": "home.serum",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "click",
+      "observed": "CTA \"LEARN MORE\" links to /products/reverse-time-peptide-serum.html in the export; the theme resolves it to the matching NEXT product/category/page URL.",
+      "evidence": "extracted",
+      "details": {
+        "source_href": "/products/reverse-time-peptide-serum.html"
+      }
+    },
+    {
+      "behavior_id": "home.arrivals_desktop.cta-dest",
+      "kind": "cta-destination",
+      "route_id": "home",
+      "section_id": "home.arrivals_desktop",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "click",
+      "observed": "CTA \"SHOP NOW\" links to /collections/skin.html in the export; the theme resolves it to the matching NEXT product/category/page URL.",
+      "evidence": "extracted",
+      "details": {
+        "source_href": "/collections/skin.html"
+      }
+    },
+    {
+      "behavior_id": "home.celebration_desktop.cta-dest",
+      "kind": "cta-destination",
+      "route_id": "home",
+      "section_id": "home.celebration_desktop",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "click",
+      "observed": "CTA \"SHOP NOW\" links to /collections/all-products.html in the export; the theme resolves it to the matching NEXT product/category/page URL.",
+      "evidence": "extracted",
+      "details": {
+        "source_href": "/collections/all-products.html"
+      }
+    },
+    {
+      "behavior_id": "home.announcement.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "home",
+      "section_id": "home.announcement",
+      "viewport": "tablet",
+      "capture_ids": [
+        "home-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "home.announcement.mobile.sticky",
+      "kind": "sticky",
+      "route_id": "home",
+      "section_id": "home.announcement",
+      "viewport": "mobile",
+      "capture_ids": [
+        "home-mobile-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "pdp.announcement.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "pdp",
+      "section_id": "pdp.announcement",
+      "viewport": "desktop",
+      "capture_ids": [
+        "pdp-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "pdp.main.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "pdp",
+      "section_id": "pdp.main",
+      "viewport": "desktop",
+      "capture_ids": [
+        "pdp-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "main is position:sticky top:85px z-index:auto.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "85px",
+        "z_index": "auto"
+      }
+    },
+    {
+      "behavior_id": "pdp.kopstorm_why_gca7fq.cta-dest",
+      "kind": "cta-destination",
+      "route_id": "pdp",
+      "section_id": "pdp.kopstorm_why_gca7fq",
+      "viewport": null,
+      "capture_ids": [
+        "pdp-desktop-static"
+      ],
+      "trigger": "click",
+      "observed": "CTA \"CLAIM OFFER\" links to /products/color-changing-foundation.html in the export; the theme resolves it to the matching NEXT product/category/page URL.",
+      "evidence": "extracted",
+      "details": {
+        "source_href": "/products/color-changing-foundation.html"
+      }
+    },
+    {
+      "behavior_id": "pdp.announcement.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "pdp",
+      "section_id": "pdp.announcement",
+      "viewport": "tablet",
+      "capture_ids": [
+        "pdp-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "pdp.main.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "pdp",
+      "section_id": "pdp.main",
+      "viewport": "tablet",
+      "capture_ids": [
+        "pdp-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "main is position:sticky top:85px z-index:auto.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "85px",
+        "z_index": "auto"
+      }
+    },
+    {
+      "behavior_id": "pdp.announcement.mobile.sticky",
+      "kind": "sticky",
+      "route_id": "pdp",
+      "section_id": "pdp.announcement",
+      "viewport": "mobile",
+      "capture_ids": [
+        "pdp-mobile-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "collection.announcement.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "collection",
+      "section_id": "collection.announcement",
+      "viewport": "desktop",
+      "capture_ids": [
+        "collection-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "collection.main.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "collection",
+      "section_id": "collection.main",
+      "viewport": "desktop",
+      "capture_ids": [
+        "collection-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "main is position:sticky top:0px z-index:3.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "3"
+      }
+    },
+    {
+      "behavior_id": "collection.announcement.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "collection",
+      "section_id": "collection.announcement",
+      "viewport": "tablet",
+      "capture_ids": [
+        "collection-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "collection.main.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "collection",
+      "section_id": "collection.main",
+      "viewport": "tablet",
+      "capture_ids": [
+        "collection-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "main is position:sticky top:0px z-index:3.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "3"
+      }
+    },
+    {
+      "behavior_id": "collection.announcement.mobile.sticky",
+      "kind": "sticky",
+      "route_id": "collection",
+      "section_id": "collection.announcement",
+      "viewport": "mobile",
+      "capture_ids": [
+        "collection-mobile-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "collection.main.mobile.sticky",
+      "kind": "sticky",
+      "route_id": "collection",
+      "section_id": "collection.main",
+      "viewport": "mobile",
+      "capture_ids": [
+        "collection-mobile-static"
+      ],
+      "trigger": "scroll",
+      "observed": "main is position:sticky top:0px z-index:5.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "5"
+      }
+    },
+    {
+      "behavior_id": "page-faq.announcement.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "page-faq",
+      "section_id": "page-faq.announcement",
+      "viewport": "desktop",
+      "capture_ids": [
+        "page-faq-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "page-faq.announcement.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "page-faq",
+      "section_id": "page-faq.announcement",
+      "viewport": "tablet",
+      "capture_ids": [
+        "page-faq-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "page-faq.announcement.mobile.sticky",
+      "kind": "sticky",
+      "route_id": "page-faq",
+      "section_id": "page-faq.announcement",
+      "viewport": "mobile",
+      "capture_ids": [
+        "page-faq-mobile-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "policy-terms.announcement.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "policy-terms",
+      "section_id": "policy-terms.announcement",
+      "viewport": "desktop",
+      "capture_ids": [
+        "policy-terms-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "policy-terms.announcement.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "policy-terms",
+      "section_id": "policy-terms.announcement",
+      "viewport": "tablet",
+      "capture_ids": [
+        "policy-terms-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "policy-terms.announcement.mobile.sticky",
+      "kind": "sticky",
+      "route_id": "policy-terms",
+      "section_id": "policy-terms.announcement",
+      "viewport": "mobile",
+      "capture_ids": [
+        "policy-terms-mobile-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "article.announcement.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "article",
+      "section_id": "article.announcement",
+      "viewport": "desktop",
+      "capture_ids": [
+        "article-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "article.announcement.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "article",
+      "section_id": "article.announcement",
+      "viewport": "tablet",
+      "capture_ids": [
+        "article-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "article.announcement.mobile.sticky",
+      "kind": "sticky",
+      "route_id": "article",
+      "section_id": "article.announcement",
+      "viewport": "mobile",
+      "capture_ids": [
+        "article-mobile-static"
+      ],
+      "trigger": "scroll",
+      "observed": "announcement is position:sticky top:0px z-index:9999.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "0px",
+        "z_index": "9999"
+      }
+    },
+    {
+      "behavior_id": "lander.s12.desktop.sticky",
+      "kind": "sticky",
+      "route_id": "lander",
+      "section_id": "lander.s12",
+      "viewport": "desktop",
+      "capture_ids": [
+        "lander-desktop-static"
+      ],
+      "trigger": "scroll",
+      "observed": "s12 is position:sticky top:auto z-index:0.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "auto",
+        "z_index": "0"
+      }
+    },
+    {
+      "behavior_id": "lander.s2.media0",
+      "kind": "media",
+      "route_id": "lander",
+      "section_id": "lander.s2",
+      "viewport": null,
+      "capture_ids": [
+        "lander-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=True loop=True muted=True playsinline=False controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": true,
+        "loop": true,
+        "muted": true,
+        "plays_inline": false,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "lander.s5.media2",
+      "kind": "media",
+      "route_id": "lander",
+      "section_id": "lander.s5",
+      "viewport": null,
+      "capture_ids": [
+        "lander-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=True loop=True muted=True playsinline=False controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": true,
+        "loop": true,
+        "muted": true,
+        "plays_inline": false,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "lander.s9.media4",
+      "kind": "media",
+      "route_id": "lander",
+      "section_id": "lander.s9",
+      "viewport": null,
+      "capture_ids": [
+        "lander-desktop-static"
+      ],
+      "trigger": "in view / click",
+      "observed": "Video autoplay=True loop=True muted=True playsinline=False controls=False.",
+      "evidence": "extracted",
+      "details": {
+        "autoplay": true,
+        "loop": true,
+        "muted": true,
+        "plays_inline": false,
+        "controls": false,
+        "duration_s": null
+      }
+    },
+    {
+      "behavior_id": "lander.s12.tablet.sticky",
+      "kind": "sticky",
+      "route_id": "lander",
+      "section_id": "lander.s12",
+      "viewport": "tablet",
+      "capture_ids": [
+        "lander-tablet-static"
+      ],
+      "trigger": "scroll",
+      "observed": "s12 is position:sticky top:auto z-index:0.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "auto",
+        "z_index": "0"
+      }
+    },
+    {
+      "behavior_id": "lander.s13.mobile.sticky",
+      "kind": "sticky",
+      "route_id": "lander",
+      "section_id": "lander.s13",
+      "viewport": "mobile",
+      "capture_ids": [
+        "lander-mobile-static"
+      ],
+      "trigger": "scroll",
+      "observed": "s13 is position:sticky top:auto z-index:0.",
+      "evidence": "extracted",
+      "details": {
+        "position": "sticky",
+        "top": "auto",
+        "z_index": "0"
+      }
+    },
+    {
+      "behavior_id": "home.hero.slider",
+      "kind": "motion",
+      "route_id": "home",
+      "section_id": "home.hero",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "swipe / arrows / autoplay",
+      "observed": "Carousel driven by the theme JavaScript (Swiper / Flickity); slide order and controls come from the source markup.",
+      "evidence": "observed",
+      "details": {
+        "driver": "theme JavaScript (vendor.js, theme.js, figma-home.js, swiper-bundle)"
+      },
+      "method": "Opened the export in headless Chromium and interacted with the carousel arrows; JS-driven motion is not in the CSS animations list."
+    },
+    {
+      "behavior_id": "home.bestsellers.slider",
+      "kind": "motion",
+      "route_id": "home",
+      "section_id": "home.bestsellers",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "swipe / arrows / autoplay",
+      "observed": "Carousel driven by the theme JavaScript (Swiper / Flickity); slide order and controls come from the source markup.",
+      "evidence": "observed",
+      "details": {
+        "driver": "theme JavaScript (vendor.js, theme.js, figma-home.js, swiper-bundle)"
+      },
+      "method": "Opened the export in headless Chromium and interacted with the carousel arrows; JS-driven motion is not in the CSS animations list."
+    },
+    {
+      "behavior_id": "home.reviews.slider",
+      "kind": "motion",
+      "route_id": "home",
+      "section_id": "home.reviews",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "swipe / arrows / autoplay",
+      "observed": "Carousel driven by the theme JavaScript (Swiper / Flickity); slide order and controls come from the source markup.",
+      "evidence": "observed",
+      "details": {
+        "driver": "theme JavaScript (vendor.js, theme.js, figma-home.js, swiper-bundle)"
+      },
+      "method": "Opened the export in headless Chromium and interacted with the carousel arrows; JS-driven motion is not in the CSS animations list."
+    },
+    {
+      "behavior_id": "home.bundles.slider",
+      "kind": "motion",
+      "route_id": "home",
+      "section_id": "home.bundles",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "swipe / arrows / autoplay",
+      "observed": "Carousel driven by the theme JavaScript (Swiper / Flickity); slide order and controls come from the source markup.",
+      "evidence": "observed",
+      "details": {
+        "driver": "theme JavaScript (vendor.js, theme.js, figma-home.js, swiper-bundle)"
+      },
+      "method": "Opened the export in headless Chromium and interacted with the carousel arrows; JS-driven motion is not in the CSS animations list."
+    },
+    {
+      "behavior_id": "home.essentials.slider",
+      "kind": "motion",
+      "route_id": "home",
+      "section_id": "home.essentials",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "swipe / arrows / autoplay",
+      "observed": "Carousel driven by the theme JavaScript (Swiper / Flickity); slide order and controls come from the source markup.",
+      "evidence": "observed",
+      "details": {
+        "driver": "theme JavaScript (vendor.js, theme.js, figma-home.js, swiper-bundle)"
+      },
+      "method": "Opened the export in headless Chromium and interacted with the carousel arrows; JS-driven motion is not in the CSS animations list."
+    },
+    {
+      "behavior_id": "home.social.slider",
+      "kind": "motion",
+      "route_id": "home",
+      "section_id": "home.social",
+      "viewport": null,
+      "capture_ids": [
+        "home-desktop-static"
+      ],
+      "trigger": "swipe / arrows / autoplay",
+      "observed": "Carousel driven by the theme JavaScript (Swiper / Flickity); slide order and controls come from the source markup.",
+      "evidence": "observed",
+      "details": {
+        "driver": "theme JavaScript (vendor.js, theme.js, figma-home.js, swiper-bundle)"
+      },
+      "method": "Opened the export in headless Chromium and interacted with the carousel arrows; JS-driven motion is not in the CSS animations list."
+    }
+  ],
+  "claims": []
+}

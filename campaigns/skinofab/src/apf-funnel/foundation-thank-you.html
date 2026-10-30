@@ -1,0 +1,267 @@
+---
+title: "Thank you | SKINOFAB"
+page_type: receipt
+meta_tags:
+  next-funnel: "SKINOFAB Adaptive Peptide Foundation"
+  next-page-type: "receipt"
+# Apollo's receipt (order.* bindings only: the SDK clears the cart before this page), with the brand's logo, what happens
+# next (the first morning, the daylight test, the refills, the guarantee, the gifts) and the rest of the line. The checkout's
+# packs refill at the same price until she cancels and the offers' add-ons are bought once: each line says which under
+# its name, by its SKU (order lines carry the SKU, not the package id),
+# through js/sf-receipt.js, which also names the gifts in the box from the same lines (gifts, by SKU) and writes "Free"
+# where the SDK writes the shipping's $0.00; the shipping method is named, not read (the campaign's one method is free).
+renewals:
+  SKF-APF-1: "Then $39.00 every 28 days, until you cancel. To skip or cancel, use the ready-made email under “Your refills” below."
+  SKF-APF-2-GIFTS: "Then $57.00 every 56 days, until you cancel (the bottles only: your free Blender sponge and mystery gift are in this first box). To skip or cancel, use the ready-made email under “Your refills” below."
+  SKF-APF-3-GIFTS: "Then $75.00 every 84 days, until you cancel (the bottles only: your free Lymphatic Brush, Blender sponge and mystery gift are in this first box). To skip or cancel, use the ready-made email under “Your refills” below."
+  SKF-APF-1-ADD: "One-time purchase, in the same box. It doesn’t renew."
+  SKF-APF-2: "One-time purchase, in the same box. It doesn’t renew."
+  SKF-APF-6-BRUSH: "One-time purchase, with your free Lymphatic Brush in the box. It doesn’t renew."
+  SKF-LYB-1T: "One-time purchase, with its travel case. It doesn’t renew."
+# each line's picture by SKU (the campaign's package image is one bottle on every line, live review 6)
+pack_images:
+  SKF-APF-1: "images/sf/pack-1.jpg"
+  SKF-APF-1-ADD: "images/sf/pack-1.jpg"
+  SKF-APF-2: "images/sf/pack-2.jpg"
+  SKF-APF-2-GIFTS: "images/sf/pack-2.jpg"
+  SKF-APF-3-GIFTS: "images/sf/pack-3.jpg"
+  SKF-APF-6-BRUSH: "images/sf/pack-6.jpg"
+  SKF-LYB-1T: "images/sf/brush-card.jpg"
+gifts:
+  SKF-APF-2-GIFTS: ["the SKINOFAB Blender sponge", "the mystery gift"]
+  SKF-APF-3-GIFTS: ["the SKINOFAB Blender sponge", "the mystery gift", "the Lymphatic Brush with its travel case"]
+  SKF-APF-6-BRUSH: ["the Lymphatic Brush with its travel case"]
+  SKF-LYB-1T: ["the brush’s travel case"]
+styles:
+  - css/sf-offers.css
+  - css/checkout-brand.css
+scripts:
+  - js/sf-receipt.js
+  - js/sf-failsafe.js
+---
+<div hidden data-sf-renewals='{{ renewals | json }}' data-sf-gift-map='{{ gifts | json }}' data-sf-pack-images='{ {% for p in pack_images %}"{{ p[0] }}":"{{ p[1] | campaign_asset }}"{% unless forloop.last %},{% endunless %}{% endfor %} }'></div>
+<p class="sf-failsafe" role="status" hidden data-sf-no-order>We couldn’t find an order to show here. If you just ordered, your confirmation email has your order details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
+<p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
+<div class="page-wrapper">
+
+      <main class="main-wrapper">
+        {% campaign_include 'receipt-skeleton.html' %}
+        <script>if (!/[?&]ref_id=/.test(location.search)) document.documentElement.classList.add('sf-no-order');</script>
+        {% comment %} opened with no order reference (Back, a bookmark, a shared link): no "your order is confirmed" over an empty order, live review 10 {% endcomment %}
+        <div class="sf-no-order-note" data-sf-no-order hidden><img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="140" height="22"><h1>We can’t find an order on this page</h1><p>This page shows your order right after checkout. Your confirmation email has your order number and its details.</p><p>Questions about an order? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p><p><a class="sf-no-order-note__cta" href="{{ 'adaptive-foundation-offer.html' | campaign_link }}">See the Adaptive Peptide Foundation</a></p></div>
+        <div class="checkout-content" data-sf-has-order>
+          <div class="checkout__content">
+            <div class="checkout__layout">
+              <div class="checkout__column checkout__column--left">
+                <div class="checkout__form-container cc-checkout">
+                  <div class="checkout__header-brand cc-shop"><img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" loading="eager" alt="{{ campaign.store_name }}" class="brand-logo"></div>
+                  <div class="order-summary-mobile">
+                    <div data-initial-state="closed" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary-mobile__accordion">
+                      <div data-next-accordion-trigger="order-summary" class="order-summary__trigger">
+                        <div class="order-summary__inner">
+                          <div class="order-summary__mobile-left">
+                            <div class="summary-toggle">
+                              <div data-next-accordion-text="order-summary" class="summary-toggle__text show_text">Show Order Summary</div><img os-summary-icon="" loading="lazy" alt="" src="{{ 'images/arrow-down.svg' | campaign_asset }}" class="summary-toggle__icon">
+                            </div>
+                          </div>
+                          <div data-next-show="order.hasItems" class="order-summary__mobile-right">
+                            <div data-next-show="order.hasDiscounts" class="summary_price price--crossed cc-sm"><span data-next-display="order.subtotal"></span></div>
+                            <div data-next-display="order.total" class="summary_price price--total"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div data-next-accordion-panel="order-summary" class="accordion__panel payment-method__form--expanded">
+                        <div class="order-summary">
+                          <p class="order-summary__title">Order Summary</p>
+                          <div class="order-summary__content">
+                            {% campaign_include 'receipt-orders.html' %}
+                            <div data-next-content="">
+                              <div class="order-totals">
+                                <div class="order-totals__line">
+                                  <div class="order-totals__label">Subtotal</div>
+                                  <div data-next-display="order.subtotal" class="order-totals__value"></div>
+                                </div>
+                                <div class="order-totals__section">
+                                  <div class="order-totals__line">
+                                    <div class="order-totals__label-group">
+                                      <div class="order-totals__label">Shipping<br></div>
+                                    </div>
+                                    <div class="order-totals__value-group">
+                                      <div class="order-totals__value" data-sf-shipping><span data-next-display="order.shipping"></span></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div data-next-show="order.hasTax" class="order-totals__section">
+                                  <div class="order-totals__line">
+                                    <div class="order-totals__label-group">
+                                      <div class="order-totals__label">Tax<br></div>
+                                    </div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.tax" class="order-totals__value"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="order-totals__section cc-total">
+                                  <div class="order-totals__line order-totals__line--total">
+                                    <div class="order-totals__label order-totals__label--total">Total</div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.currency" class="summary-total__coin"></div>
+                                      <div data-next-display="order.total" class="order-totals__value order-totals__value--total"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="receipt_head">
+                    <div class="receipt-check"><svg width="100%" height="100%" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M49 25C49 38.2548 38.2548 49 25 49C11.7452 49 1 38.2548 1 25C1 11.7452 11.7452 1 25 1C38.2548 1 49 11.7452 49 25Z" stroke="currentColor" stroke-width="2"></path>
+                        <path d="M15 24.5113L22.3067 31.818L35.1247 19" stroke="currentColor" stroke-width="2"></path>
+                      </svg></div>
+                    <div class="receipt-heading">
+                      <div class="receipt-subtitle">Confirmation #<span data-next-display="order.number"></span><br></div>
+                      <h1 class="receipt_order">Thank you<span class="sf-ty-name">, <span data-next-display="order.customer.firstName"></span></span>!</h1>
+                    </div>
+                  </div>
+                  <div class="receipt_section">
+                    <div class="receipt_section-head">
+                      <h2 class="display-xs">Your order is confirmed</h2>
+                      <div class="receipt_section-head--desc">You’ll get a confirmation email with your order number soon. Your order ships in 1 business day, with tracking.</div>
+                    </div>
+                  </div>
+                  {% campaign_include 'sf-next-steps.html' %}
+                  {% campaign_include 'sf-more.html' %}
+                  <div class="receipt_section">
+                    <div class="receipt_section-head">
+                      <p class="display-xs">Order details</p>
+                    </div>
+                    <div class="order_receipt-grid">
+                      <div class="order_receipt-col">
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Contact information</div>
+                          <div data-next-display="order.customer.email" class="sec_value"></div>
+                        </div>
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Shipping address</div>
+                          <div class="order_receipt--group">
+                            <div data-next-display="order.customer.name" class="sec_value"></div>
+                            <div data-next-display="order.shippingAddress.line1" class="sec_value"></div>
+                            <div data-next-display="order.shippingAddress.line2" class="sec_value"></div>
+                            <div class="sec_value"><span data-next-display="order.shippingAddress.city"></span>, <span data-next-display="order.shippingAddress.state"></span>, <span data-next-display="order.shippingAddress.postcode"></span></div>
+                            <div data-next-display="order.shippingAddress.country" class="sec_value"></div>
+                          </div>
+                        </div>
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Shipping method</div>
+                          <div class="order_receipt--group">
+                            <div class="sec_value">Free shipping, tracked</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="order_receipt-col">
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Payment method</div>
+                          <div data-next-display="order.paymentMethod" class="sec_value"></div>
+                        </div>
+                        <div class="order_receipt-sec">
+                          <div class="sec_title">Billing address</div>
+                          <div class="order_receipt--group">
+                            <div data-next-display="order.billingAddress.name" class="sec_value"></div>
+                            <div data-next-display="order.billingAddress.line1" class="sec_value"></div>
+                            <div data-next-display="order.billingAddress.line2" class="sec_value"></div>
+                            <div class="sec_value"><span data-next-display="order.billingAddress.city"></span>, <span data-next-display="order.billingAddress.state"></span>, <span data-next-display="order.billingAddress.postcode"></span></div>
+                            <div data-next-display="order.billingAddress.country" class="sec_value"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="receipt_info">
+                    <div class="receipt-flex">
+                      <div>Need help?</div>
+                      <a href="{{ campaign.store_contact }}" target="_blank" class="link">
+                        <div>Contact Us</div>
+                      </a>
+                    </div>
+                    <a href="https://skinofab.com/" target="_blank" rel="noopener" class="button cc-auto">
+                      <div>Visit the SKINOFAB store</div>
+                    </a>
+                  </div>
+                  <div class="checkout-footer-links">
+                    <a href="{{ campaign.store_returns }}" target="_blank" class="link">
+                      <div>Return policy</div>
+                    </a>
+                    <a href="{{ campaign.store_privacy }}" target="_blank" class="link">
+                      <div>Privacy policy</div>
+                    </a>
+                    <a href="{{ campaign.store_privacy_choices }}" target="_blank" class="link">
+                      <div>Your privacy choices</div>
+                    </a>
+                    <a href="{{ campaign.store_terms }}" target="_blank" class="link">
+                      <div>Terms of service</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="checkout__column checkout__column--right">
+                <div class="checkout__summary">
+                  <div class="summary-desktop">
+                    <div class="summary-wrap">
+                      <div class="summary-holder">
+                        <div class="order-summary">
+                          <p class="order-summary__title checkout">Order Summary</p>
+                          <div class="order-summary__content">
+                            {% campaign_include 'receipt-orders.html' %}
+                            <div data-next-content="">
+                              <div class="order-totals">
+                                <div class="order-totals__line">
+                                  <div class="order-totals__label">Subtotal</div>
+                                  <div data-next-display="order.subtotal" class="order-totals__value"></div>
+                                </div>
+                                <div class="order-totals__section">
+                                  <div class="order-totals__line">
+                                    <div class="order-totals__label-group">
+                                      <div class="order-totals__label">Shipping<br></div>
+                                    </div>
+                                    <div class="order-totals__value-group">
+                                      <div class="order-totals__value" data-sf-shipping><span data-next-display="order.shipping"></span></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div data-next-show="order.hasTax" class="order-totals__section">
+                                  <div class="order-totals__line">
+                                    <div class="order-totals__label-group">
+                                      <div class="order-totals__label">Tax<br></div>
+                                    </div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.tax" class="order-totals__value"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="order-totals__section cc-total">
+                                  <div class="order-totals__line order-totals__line--total">
+                                    <div class="order-totals__label order-totals__label--total">Total</div>
+                                    <div class="order-totals__value-group">
+                                      <div data-next-display="order.currency" class="summary-total__coin"></div>
+                                      <div data-next-display="order.total" class="order-totals__value order-totals__value--total"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>

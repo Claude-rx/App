@@ -1,0 +1,6 @@
+{# Shared product grid helper. Expects products, columns, and optional card_bg. #}
+<div class="product-grid" {% if columns %}style="--product-grid-columns: {{ columns|floatformat:0 }};"{% endif %}>
+    {% for product in products %}
+        {% include 'partials/product_card.html' with product=product card_bg=card_bg %}
+    {% endfor %}
+</div>

@@ -1,0 +1,22 @@
+{# Spark Theme — Announcement Bar #}
+{% if settings.ab_text %}
+<div id="announcement-bar"
+     class="text-center py-2 px-4 text-xs font-medium"
+     style="background-color: {% if settings.ab_bg_color %}{{ settings.ab_bg_color }}{% else %}var(--primary-color){% endif %}; color: {% if settings.ab_text_color %}{{ settings.ab_text_color }}{% else %}#fff{% endif %};">
+    <div class="container flex items-center justify-center gap-4">
+        <span>{{ settings.ab_text }}</span>
+        {% if settings.ab_link %}
+            <a href="{{ settings.ab_link }}" class="underline text-white hover:opacity-80">
+                {% t "global.button.learn_more" as default_ab_link_text %}
+                {{ settings.ab_link_text|default:default_ab_link_text }}
+            </a>
+        {% endif %}
+        <button type="button"
+                class="ml-2 text-white/70 hover:text-white"
+                aria-label="{% t 'global.button.dismiss' %}"
+                data-dismiss="announcement-bar">
+            {% include 'partials/icons/close.html' %}
+        </button>
+    </div>
+</div>
+{% endif %}

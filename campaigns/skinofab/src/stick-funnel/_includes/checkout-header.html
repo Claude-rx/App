@@ -1,0 +1,28 @@
+{% comment %} The checkout's header: the brand and what every order gets (the starter's "10,000+ 5-Star Reviews",
+     "60-Day Guarantee" and "2 Year Warranty" were demo copy, none of them SKINOFAB's). {% endcomment %}
+<section class="checkout-header checkout-header--apollo">
+  <div class="container">
+    <div class="checkout-header__inner">
+      <div class="checkout-header__brand">
+        <img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" loading="eager" alt="{{ campaign.store_name }}" class="checkout-header__logo" width="140" height="28">
+      </div>
+      <span class="checkout-header__divider" aria-hidden="true"></span>
+      <div class="checkout-header__trust">
+        <ul class="checkout-header__badges">
+          <li class="checkout-header__badge">
+            <img src="{{ 'images/icon-shipping.svg' | campaign_asset }}" alt="" class="checkout-header__badge-icon" loading="lazy">
+            <span>Free shipping</span>
+          </li>
+          <li class="checkout-header__badge">
+            <img src="{{ 'images/icon-dollar.svg' | campaign_asset }}" alt="" class="checkout-header__badge-icon" loading="lazy">
+            <span>30-day money-back guarantee</span>
+          </li>
+          <li class="checkout-header__badge">
+            <img src="{{ 'images/icon-guarantee.svg' | campaign_asset }}" alt="" class="checkout-header__badge-icon" loading="lazy">
+            <span>Cancel refills any time</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

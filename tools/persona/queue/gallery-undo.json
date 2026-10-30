@@ -1,0 +1,59 @@
+[
+ {
+  "product": 14,
+  "replaced_at": "2026-10-21T16:31:56",
+  "images": [
+   {
+    "id": 427,
+    "caption": "Color Changing Foundation",
+    "display_order": 0
+   },
+   {
+    "id": 428,
+    "caption": "Color Changing Foundation",
+    "display_order": 1
+   },
+   {
+    "id": 429,
+    "caption": "Color Changing Foundation",
+    "display_order": 2
+   },
+   {
+    "id": 430,
+    "caption": "Color Changing Foundation",
+    "display_order": 3
+   },
+   {
+    "id": 431,
+    "caption": "Color Changing Foundation",
+    "display_order": 4
+   },
+   {
+    "id": 432,
+    "caption": "Color Changing Foundation",
+    "display_order": 5
+   },
+   {
+    "id": 433,
+    "caption": "Color Changing Foundation",
+    "display_order": 6
+   },
+   {
+    "id": 434,
+    "caption": "Color Changing Foundation",
+    "display_order": 7
+   },
+   {
+    "id": 435,
+    "caption": "Color Changing Foundation",
+    "display_order": 8
+   },
+   {
+    "id": 436,
+    "caption": "Color Changing Foundation",
+    "display_order": 9
+   }
+  ],
+  "note": "attachment URLs were not captured on this run; the replaced images were the design export packshots (KoreanColorChangingFoundation-Productimages_1_* first), re-creatable with tools/next-deploy/deploy_catalog.py --replace-images --only=color-changing-foundation"
+ }
+]

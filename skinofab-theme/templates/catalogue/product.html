@@ -1,0 +1,1408 @@
+{% extends 'layouts/base.html' %}
+{% block critical_preloads %}<link rel="preload" as="style" href="{{ 'sf/css/sfb-a7807184.css'|asset_url }}">{% endblock critical_preloads %}
+{% block sf_handle_pk %}{% with sf_pp_color_changing_foundation=settings.sf_p_color_changing_foundation %}"color-changing-foundation":"{% firstof sf_pp_color_changing_foundation.children.first.pk sf_pp_color_changing_foundation.pk %}"{% endwith %}{% endblock sf_handle_pk %}
+{% block title %}{% if store.name|upper in product.get_meta_title|upper %}{{ product.get_meta_title }}{% else %}{{ product.get_meta_title }} | {{ block.super }}{% endif %}{% endblock %}
+{% block body_id %}{% firstof "color-adapting-foundation-for-flawless-skin-skinofab" %}{% endblock %}
+{% block body_class %}{% firstof "template-product body--rounded-corners palette--light no-outline" %}{% endblock %}
+{% block sf_head %}
+<style></style><style>.product__form .btn--submit,#locationinfop,.btn,.btn--primary,input.btn{border-radius: 10px!important;}.input-group{border-radius: 10px!important;}#SiteFooter .input-group__fields input{border-top-left-radius: 10px!important;
+        border-bottom-left-radius: 10px!important;}.input-group__btn{border-top-right-radius: 10px!important;
+        border-bottom-right-radius: 10px!important;}@media only screen and (max-width: 767px){.product-single .product__title{font-size: clamp(26px, 7.1vw, 29px);
+          line-height: 1.12;}}body.js-drawer-open-cart .announcement-bar-static,body:has(#cart-drawer.is-open) .announcement-bar-static{z-index: 8999 !important;}body.js-drawer-open .announcement-bar-static,body.js-quick-view-from-cart .announcement-bar-static,body.js-quick-view-visible .announcement-bar-static,body:has(#nav-drawer.is-open) .announcement-bar-static,body:has(.drawer.is-open) .announcement-bar-static{display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;}</style><style>.swiper-scrollbar{display: none!important;}</style><script defer src="{{ 'sf/js/swiper-bundle-min-9426df.js'|asset_url }}"></script><style data-shopify="">:root{--loader-image-size: 60px;}:root{--loader-image-size: 320px;}html:not(.is-loading) .loading-overlay{opacity: 0; visibility: hidden; pointer-events: none;}.loading-overlay{position: fixed; top: 0; left: 0; z-index: 99999; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;}.loading-overlay .loader__image--fallback{width: 320px; height: 100%; background: var(--loader-image) no-repeat center center/contain;}.loader__image__holder{position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; animation: pulse-loading 2s infinite ease-in-out;}.loader__image{max-width: 60px; height: auto; object-fit: contain;}</style><script>
+        const loadingAppearance = "once";
+        const loaded = sessionStorage.getItem('loaded');
+
+        if (loadingAppearance === 'once') {
+          if (loaded === null) {
+            sessionStorage.setItem('loaded', true);
+            document.documentElement.classList.add('is-loading');
+          }
+        } else {
+          document.documentElement.classList.add('is-loading');
+        }
+      </script><style data-shopify="">@font-face{
+  font-family: Jost;
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n6-ec1178db7a7515114a2d84e3dd680832b7af8b99-95c3c8.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n6-b1178bb6bdd3979fef38e103a3816f6980aeaff9-d2e08f.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n7-921dc18c13fa0b0c94c5e2517ffe06139c3615a3-b4c8ea.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n7-cbfc16c98c1e195f46c536e775e4e959c5f2f22b-a1d2d5.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n4-d47a1b6347ce4a4c9f437608011273009d91f2b7-e6c840.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n4-791c46290e672b3f85c3d1c651ef2efa3819eadd-eb0da7.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n9-cd269fa9adcae864ab1df15826ceb2fd310a3d4a-47fc43.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n9-fd15e8012129a3f22bd292bf1f8b87a15f894bd5-007988.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n1-546362ec0aa4045fdc2721192f7d2462716cc7d1-180608.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n1-9b0529f29bfd479cc9556e047a2bf95152767216-827392.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i4-b690098389649750ada222b9763d55796c5283a5-53af7a.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i4-fd766415a47e50b9e391ae7ec04e2ae25e7e28b0-6004fd.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_i7-d8201b854e41e19d7ed9b1a31fe4fe71deea6d3f-a5eb25.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_i7-eae515c34e26b6c853efddc3fc0c552e0de63757-ffa1df.woff'|asset_url }}") format("woff");
+}@font-face{
+  font-family: Jost;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("{{ 'sf/fonts/jost_n5-7c8497861ffd15f4e1284cd221f14658b0e95d61-d321c4.woff2'|asset_url }}") format("woff2"),
+       url("{{ 'sf/fonts/jost_n5-fb6a06896db583cc2df5ba1b30d9c04383119dd9-63f27f.woff'|asset_url }}") format("woff");
+}:root{--COLOR-PRIMARY-OPPOSITE: #ffffff;
+  --COLOR-PRIMARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-PRIMARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --PRIMARY-BUTTONS-COLOR-BG: #000000;
+  --PRIMARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --PRIMARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --PRIMARY-BUTTONS-COLOR-LIGHTEN-DARKEN: #1a1a1a;
+
+  --PRIMARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --PRIMARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--COLOR-SECONDARY-OPPOSITE: #ffffff;
+  --COLOR-SECONDARY-OPPOSITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-20: rgba(26, 26, 26, 0.2);
+  --COLOR-SECONDARY-LIGHTEN-DARKEN-ALPHA-30: rgba(26, 26, 26, 0.3);
+
+  --SECONDARY-BUTTONS-COLOR-BG: #000000;
+  --SECONDARY-BUTTONS-COLOR-TEXT: #ffffff;
+  --SECONDARY-BUTTONS-COLOR-BORDER: #000000;
+
+  --SECONDARY-BUTTONS-COLOR-ALPHA-05: rgba(0, 0, 0, 0.05);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --SECONDARY-BUTTONS-COLOR-ALPHA-50: rgba(0, 0, 0, 0.5);--OUTLINE-BUTTONS-PRIMARY-BG: transparent;
+  --OUTLINE-BUTTONS-PRIMARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-PRIMARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-SECONDARY-BG: transparent;
+  --OUTLINE-BUTTONS-SECONDARY-TEXT: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BORDER: #000000;
+  --OUTLINE-BUTTONS-SECONDARY-BG-HOVER: rgba(26, 26, 26, 0.2);
+
+  --OUTLINE-BUTTONS-WHITE-BG: transparent;
+  --OUTLINE-BUTTONS-WHITE-TEXT: #ffffff;
+  --OUTLINE-BUTTONS-WHITE-BORDER: #ffffff;
+
+  --OUTLINE-BUTTONS-BLACK-BG: transparent;
+  --OUTLINE-BUTTONS-BLACK-TEXT: #000000;
+  --OUTLINE-BUTTONS-BLACK-BORDER: #000000;--OUTLINE-SOLID-BUTTONS-PRIMARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-PRIMARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BORDER: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-SECONDARY-BG-HOVER: rgba(255, 255, 255, 0.2);
+
+  --OUTLINE-SOLID-BUTTONS-WHITE-BG: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-WHITE-TEXT: #000000;
+  --OUTLINE-SOLID-BUTTONS-WHITE-BORDER: #000000;
+
+  --OUTLINE-SOLID-BUTTONS-BLACK-BG: #000000;
+  --OUTLINE-SOLID-BUTTONS-BLACK-TEXT: #ffffff;
+  --OUTLINE-SOLID-BUTTONS-BLACK-BORDER: #ffffff;--COLOR-HEADING: #151515;
+  --COLOR-TEXT: #151515;
+  --COLOR-TEXT-DARKEN: #000000;
+  --COLOR-TEXT-LIGHTEN: #484848;
+  --COLOR-TEXT-ALPHA-5: rgba(21, 21, 21, 0.05);
+  --COLOR-TEXT-ALPHA-8: rgba(21, 21, 21, 0.08);
+  --COLOR-TEXT-ALPHA-10: rgba(21, 21, 21, 0.1);
+  --COLOR-TEXT-ALPHA-15: rgba(21, 21, 21, 0.15);
+  --COLOR-TEXT-ALPHA-20: rgba(21, 21, 21, 0.2);
+  --COLOR-TEXT-ALPHA-25: rgba(21, 21, 21, 0.25);
+  --COLOR-TEXT-ALPHA-50: rgba(21, 21, 21, 0.5);
+  --COLOR-TEXT-ALPHA-60: rgba(21, 21, 21, 0.6);
+  --COLOR-TEXT-ALPHA-85: rgba(21, 21, 21, 0.85);
+
+  --COLOR-BG: #ffffff;
+  --COLOR-BG-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-BG-ALPHA-35: rgba(255, 255, 255, 0.35);
+  --COLOR-BG-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BG-ALPHA-65: rgba(255, 255, 255, 0.65);
+  --COLOR-BG-ALPHA-85: rgba(255, 255, 255, 0.85);
+  --COLOR-BG-OVERLAY: rgba(255, 255, 255, 0.75);
+  --COLOR-BG-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-BG: #fafafa;
+  --COLOR-BG-LIGHTEN-DARKEN-SHIMMER-EFFECT: #f5f5f5;
+  --COLOR-BG-LIGHTEN-DARKEN-FOREGROUND: #f7f7f7;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER: #cccccc;
+  --COLOR-BG-LIGHTEN-DARKEN-SEARCH-LOADER-LINE: #e6e6e6;
+  --COLOR-BG-LIGHTEN-DARKEN-2: #cdcdcd;
+  --COLOR-BG-LIGHTEN-DARKEN-3: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-4: #9a9a9a;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST: #b3b3b3;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-2: #999999;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-3: #808080;
+  --COLOR-BG-LIGHTEN-DARKEN-CONTRAST-4: #666666;
+
+  --COLOR-BG-SECONDARY: #f7f7f7;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN: #dedede;
+  --COLOR-BG-SECONDARY-LIGHTEN-DARKEN-CONTRAST: #777777;
+
+  --COLOR-INPUT-BG: #ffffff;
+
+  --COLOR-ACCENT: #000000;
+  --COLOR-ACCENT-TEXT: #fff;
+
+  --COLOR-BORDER: #f7f7f7;
+  --COLOR-BORDER-ALPHA-15: rgba(247, 247, 247, 0.15);
+  --COLOR-BORDER-ALPHA-30: rgba(247, 247, 247, 0.3);
+  --COLOR-BORDER-ALPHA-50: rgba(247, 247, 247, 0.5);
+  --COLOR-BORDER-ALPHA-65: rgba(247, 247, 247, 0.65);
+  --COLOR-BORDER-LIGHTEN-DARKEN: #ababab;
+  --COLOR-BORDER-HAIRLINE: #f7f7f7;
+
+  --COLOR-SALE-BG: #000000;
+  --COLOR-SALE-TEXT: #ffffff;
+  --COLOR-CUSTOM-BG: #000000;
+  --COLOR-CUSTOM-TEXT: #ffffff;
+  --COLOR-SOLD-BG: #000000;
+  --COLOR-SOLD-TEXT: #ffffff;
+  --COLOR-SAVING-BG: #000000;
+  --COLOR-SAVING-TEXT: #ffffff;
+
+  --COLOR-WHITE-BLACK: fff;
+  --COLOR-BLACK-WHITE: #000;
+  --COLOR-BLACK-WHITE-ALPHA-25: rgba(0, 0, 0, 0.25);--COLOR-DISABLED-GREY: rgba(21, 21, 21, 0.05);
+  --COLOR-DISABLED-GREY-DARKEN: rgba(21, 21, 21, 0.45);
+  --COLOR-ERROR: #D02E2E;
+  --COLOR-ERROR-BG: #dfdfdf;
+  --COLOR-SUCCESS: #56AD6A;
+  --COLOR-SUCCESS-BG: #ECFEF0;
+  --COLOR-WARN: #ECBD5E;
+  --COLOR-TRANSPARENT: rgba(255, 255, 255, 0);
+
+  --COLOR-WHITE: #ffffff;
+  --COLOR-WHITE-DARKEN: #f2f2f2;
+  --COLOR-WHITE-ALPHA-10: rgba(255, 255, 255, 0.1);
+  --COLOR-WHITE-ALPHA-20: rgba(255, 255, 255, 0.2);
+  --COLOR-WHITE-ALPHA-25: rgba(255, 255, 255, 0.25);
+  --COLOR-WHITE-ALPHA-50: rgba(255, 255, 255, 0.5);
+  --COLOR-WHITE-ALPHA-60: rgba(255, 255, 255, 0.6);
+  --COLOR-BLACK: #000000;
+  --COLOR-BLACK-LIGHTEN: #1a1a1a;
+  --COLOR-BLACK-ALPHA-10: rgba(0, 0, 0, 0.1);
+  --COLOR-BLACK-ALPHA-20: rgba(0, 0, 0, 0.2);
+  --COLOR-BLACK-ALPHA-25: rgba(0, 0, 0, 0.25);
+  --COLOR-BLACK-ALPHA-50: rgba(0, 0, 0, 0.5);
+  --COLOR-BLACK-ALPHA-60: rgba(0, 0, 0, 0.6);--FONT-STACK-BODY: futura-pt, sans-serif;
+  --FONT-STYLE-BODY: normal;
+  --FONT-STYLE-BODY-ITALIC: italic;
+  --FONT-ADJUST-BODY: 1.0;
+
+  --FONT-WEIGHT-BODY: 400;
+  --FONT-WEIGHT-BODY-LIGHT: 100;
+  --FONT-WEIGHT-BODY-MEDIUM: 700;
+  --FONT-WEIGHT-BODY-BOLD: 500;
+
+  --FONT-STACK-HEADING: futura-pt, sans-serif;
+  --FONT-STYLE-HEADING: normal;
+  --FONT-STYLE-HEADING-ITALIC: italic;
+  --FONT-ADJUST-HEADING: 1.1;
+
+  --FONT-WEIGHT-HEADING: 600;
+  --FONT-WEIGHT-HEADING-LIGHT: 400;
+  --FONT-WEIGHT-HEADING-MEDIUM: 900;
+  --FONT-WEIGHT-HEADING-BOLD: 600;
+
+  --FONT-STACK-NAV: futura-pt, sans-serif;
+  --FONT-STYLE-NAV: normal;
+  --FONT-STYLE-NAV-ITALIC: italic;
+  --FONT-ADJUST-NAV: 0.8;
+  --FONT-ADJUST-NAV-TOP-LEVEL: 0.8;
+
+  --FONT-WEIGHT-NAV: 600;
+  --FONT-WEIGHT-NAV-LIGHT: 400;
+  --FONT-WEIGHT-NAV-MEDIUM: 900;
+  --FONT-WEIGHT-NAV-BOLD: 700;
+
+  --FONT-ADJUST-PRODUCT-GRID: 0.9;
+
+  --FONT-STACK-BUTTON: futura-pt, sans-serif;
+  --FONT-STYLE-BUTTON: normal;
+  --FONT-STYLE-BUTTON-ITALIC: italic;
+  --FONT-ADJUST-BUTTON: 0.8;
+
+  --FONT-WEIGHT-BUTTON: 600;
+  --FONT-WEIGHT-BUTTON-MEDIUM: 900;
+  --FONT-WEIGHT-BUTTON-BOLD: 700;
+
+  --FONT-STACK-SUBHEADING: futura-pt, sans-serif;
+  --FONT-STYLE-SUBHEADING: normal;
+  --FONT-ADJUST-SUBHEADING: 1.0;
+
+  --FONT-WEIGHT-SUBHEADING: 400;
+  --FONT-WEIGHT-SUBHEADING-BOLD: 500;
+
+  --FONT-STACK-LABEL: futura-pt, sans-serif;
+  --FONT-STYLE-LABEL: normal;
+  --FONT-ADJUST-LABEL: 0.65;
+
+  --FONT-WEIGHT-LABEL: 500;
+
+  --LETTER-SPACING-NAV: 0.075em;
+  --LETTER-SPACING-SUBHEADING: 0.025em;
+  --LETTER-SPACING-BUTTON: 0.125em;
+  --LETTER-SPACING-LABEL: 0.05em;
+
+  --BUTTON-TEXT-CAPS: uppercase;
+  --HEADING-TEXT-CAPS: none;
+  --SUBHEADING-TEXT-CAPS: uppercase;
+  --LABEL-TEXT-CAPS: uppercase;--FONT-SIZE-INPUT: 1.0rem;--RADIUS: 30px;
+  --RADIUS-SMALL: 22px;
+  --RADIUS-TINY: 14px;
+  --RADIUS-BADGE: 3px;
+  --RADIUS-CHECKBOX: 4px;
+  --RADIUS-TEXTAREA: 8px;--PRODUCT-MEDIA-PADDING-TOP: 100%;--BORDER-WIDTH: 1px;--STROKE-WIDTH: 12px;--SITE-WIDTH: 1440px;
+  --SITE-WIDTH-NARROW: 840px;--COLOR-UPSELLS-BG: #f7f7f7;
+  --COLOR-UPSELLS-TEXT: #000000;
+  --COLOR-UPSELLS-TEXT-LIGHTEN: #333333;
+  --COLOR-UPSELLS-DISABLED-GREY-DARKEN: rgba(0, 0, 0, 0.45);
+  --UPSELLS-HEIGHT: 155px;
+  --UPSELLS-IMAGE-WIDTH: 20%;--ICON-ARROW-RIGHT: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik03MiAzNkwxMzIgOTZMNzIgMTU2IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==");--loading-svg: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjRweCIgdmlld0JveD0iMCAwIDMyMCA0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIwIiBoZWlnaHQ9IjQiIGZpbGw9IiMwMDAiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieCIgZnJvbT0iMCIgdG89IjMyMCIgZHVyPSIyLjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0id2lkdGgiIGZyb209IjAiIHRvPSIzMjAiIGR1cj0iMi4xcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4KICA8L3JlY3Q+Cjwvc3ZnPgo=");
+  --icon-check: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgZmlsbD0iI2ZmZiI+CiAgPHBhdGggZD0iTTExLjY1Mzg4MywxLjU1NDU5NjIxIEwxMy4yMDgxNzQ5LDIuODEzMjM2OTkgTDcuNTQ0MjkxMzgsOS44MDc1NTA2NSBMNy41MzI0MzQxOCw5Ljc5NzU5NjIxIEw3LjE1NzMwOTk1LDEwLjI2MzM1NTEgTDIuNDk0NDM0MTgsNi40ODc0MzI4IEwzLjc1MzA3NDk2LDQuOTMzMTQwODcgTDYuODcyNDM0MTgsNy40NTg1OTYyMSBMMTEuNjUzODgzLDEuNTU0NTk2MjEgWiI+PC9wYXRoPgo8L3N2Zz4K");
+  --icon-check-swatch: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTUgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cGF0aCBkPSJNMTEuNjUzODgzLDEuNTU0NTk2MjEgTDEzLjIwODE3NDksMi44MTMyMzY5OSBMNy41NDQyOTEzOCw5LjgwNzU1MDY1IEw3LjUzMjQzNDE4LDkuNzk3NTk2MjEgTDcuMTU3MzA5OTUsMTAuMjYzMzU1MSBMMi40OTQ0MzQxOCw2LjQ4NzQzMjggTDMuNzUzMDc0OTYsNC45MzMxNDA4NyBMNi44NzI0MzQxOCw3LjQ1ODU5NjIxIEwxMS42NTM4ODMsMS41NTQ1OTYyMSBaIiBpZD0icGF0aC1hd18xZXVwNi1xLTEiPjwvcGF0aD4KICAgIDxmaWx0ZXIgeD0iLTI4LjAlIiB5PSItMzQuNCUiIHdpZHRoPSIxNTYuMCUiIGhlaWdodD0iMTY4LjklIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItYXdfMWV1cDYtcS0yIj4KICAgICAgPGZlT2Zmc2V0IGR4PSIwIiBkeT0iMCIgaW49IlNvdXJjZUFscGhhIiByZXN1bHQ9InNoYWRvd09mZnNldE91dGVyMSI+PC9mZU9mZnNldD4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMSIgaW49InNoYWRvd09mZnNldE91dGVyMSIgcmVzdWx0PSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlR2F1c3NpYW5CbHVyPgogICAgICA8ZmVDb2xvck1hdHJpeCB2YWx1ZXM9IjAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgMCAwIDAgMSAwIiB0eXBlPSJtYXRyaXgiIGluPSJzaGFkb3dCbHVyT3V0ZXIxIj48L2ZlQ29sb3JNYXRyaXg+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPGcgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgIDx1c2UgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIiBmaWx0ZXI9InVybCgjZmlsdGVyLWF3XzFldXA2LXEtMikiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgICA8dXNlIGZpbGw9IiNmZmZmZmYiIHhsaW5rOmhyZWY9IiNwYXRoLWF3XzFldXA2LXEtMSI+PC91c2U+CiAgPC9nPgo8L3N2Zz4K");
+  --icon-zoom-in: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICAgICAgPHBhdGggZD0iTTEyLjYsOSBMMTIuNiwxNi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");
+  --icon-zoom-out: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzhweCIgaGVpZ2h0PSIzOHB4IiB2aWV3Qm94PSIwIDAgMzggMzgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgMS4wMDAwMDApIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjEyLjYiIGN5PSIxMi42IiByPSIxMi42Ij48L2NpcmNsZT4KICAgICAgICAgICAgPHBhdGggZD0iTTksMTIuNiBMMTYuMiwxMi42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");--collection-sticky-bar-height: 0px;
+  --collection-image-padding-top: 60%;
+
+  --drawer-width: 400px;
+  --drawer-transition: transform 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);--gutter: 60px;
+  --gutter-mobile: 20px;
+  --grid-gutter: 20px;
+  --grid-gutter-mobile: 35px;--inner: 20px;
+  --inner-tablet: 18px;
+  --inner-mobile: 16px;--grid: repeat(4, minmax(0, 1fr));
+  --grid-tablet: repeat(3, minmax(0, 1fr));
+  --grid-mobile: repeat(2, minmax(0, 1fr));
+  --megamenu-grid: repeat(4, minmax(0, 1fr));
+  --grid-row: 1 / span 4;--scrollbar-width: 0px;--overlay: #000;
+  --overlay-opacity: 1;--swatch-width: 38px;
+  --swatch-height: 26px;
+  --swatch-size: 32px;
+  --swatch-size-mobile: 30px;
+
+  
+  --move-offset: 20px;
+
+  
+  --autoplay-speed: 2200ms;
+
+  
+--filter-bg: .97;
+  --product-filter-bg: .97;}</style><link href="{{ 'sf/css/sfb-a7807184.css'|asset_url }}" rel="stylesheet"><script type="text/javascript">
+    if (window.MSInputMethodContext && document.documentMode) {
+      var scripts = document.getElementsByTagName('script')[0];
+      var polyfill = document.createElement("script");
+      polyfill.defer = true;
+      polyfill.src = "{{ 'sf/js/ie11-831ade.js'|asset_url }}";
+
+      scripts.parentNode.insertBefore(polyfill, scripts);
+
+      document.documentElement.classList.add('ie11');
+    } else {
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    }
+
+    let root = '/';
+    if (root[root.length - 1] !== '/') {
+      root = `${root}/`;
+    }
+
+    window.theme = {
+      routes: {
+        root: root,
+        cart_url: "\/cart",
+        cart_add_url: "\/cart\/add",
+        cart_change_url: "\/cart\/change",
+        shop_url: "\/",
+        searchUrl: '/search',
+        predictiveSearchUrl: '/search/suggest',
+        product_recommendations_url: "\/recommendations\/products"
+      },
+      assets: {
+        photoswipe: '{{ 'sf/js/photoswipe-7aaf31.js'|asset_url }}',
+        smoothscroll: '{{ 'sf/js/smoothscroll-ed7758.js'|asset_url }}',
+        no_image: "{{ 'sf/img/no-image-2048-a2addb12_1024x-08329a.gif'|asset_url }}",
+        swatches: '{{ 'sf/js/swatches-835cb3.json'|asset_url }}',
+        base: "\/"
+      },
+      strings: {
+        add_to_cart: "Add to Cart",
+        cart_acceptance_error: "You must accept our terms and conditions.",
+        cart_empty: "Your cart is currently empty.",
+        cart_price: "Price",
+        cart_quantity: "Quantity",
+        cart_items_one: "{% templatetag openvariable %} count }} item",
+        cart_items_many: "{% templatetag openvariable %} count }} items",
+        cart_title: "Cart",
+        cart_total: "Total",
+        continue_shopping: "Continue Shopping",
+        free: "Free",
+        limit_error: "Sorry, looks like we don\u0026#39;t have enough of this product.",
+        preorder: "Pre-Order",
+        remove: "Remove",
+        sale_badge_text: "Sale",
+        saving_badge: "Save {% templatetag openvariable %} discount }}",
+        saving_up_to_badge: "Save up to {% templatetag openvariable %} discount }}",
+        sold_out: "Sold Out",
+        subscription: "Subscription",
+        unavailable: "Unavailable",
+        unit_price_label: "Unit price",
+        unit_price_separator: "per",
+        zero_qty_error: "Quantity must be greater than 0.",
+        delete_confirm: "Are you sure you wish to delete this address?",
+        newsletter_product_availability: "Notify Me When It’s Available"
+      },
+      icons: {
+        plus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-plus" viewBox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        minus: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-toggle-minus" viewBox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        close: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      },
+      settings: {
+        animations: false,
+        cartType: "drawer",
+        enableAcceptTerms: false,
+        enableInfinityScroll: false,
+        enablePaymentButton: true,
+        gridImageSize: "cover",
+        gridImageAspectRatio: 1,
+        mobileMenuBehaviour: "link",
+        productGridHover: "image",
+        savingBadgeType: "percentage",
+        showSaleBadge: true,
+        showSoldBadge: true,
+        showSavingBadge: true,
+        quickBuy: "none",
+        suggestArticles: false,
+        suggestCollections: true,
+        suggestProducts: true,
+        suggestPages: false,
+        suggestionsResultsLimit: 10,
+        currency_code_enable: true,
+        hideInventoryCount: true,
+        enableColorSwatchesCollection: true,
+      },
+      sizes: {
+        mobile: 480,
+        small: 768,
+        large: 1024,
+        widescreen: 1440
+      },
+      moneyFormat: "${% templatetag openvariable %}amount_no_decimals}}",
+      moneyWithCurrencyFormat: "${% templatetag openvariable %}amount_no_decimals}} USD",
+      subtotal: 0,
+      info: {
+        name: 'Palo Alto'
+      },
+      version: '5.6.0'
+    };
+    window.PaloAlto = window.PaloAlto || {};
+    window.slate = window.slate || {};
+    window.isHeaderTransparent = false;
+    window.stickyHeaderHeight = 60;
+    window.lastWindowWidth = window.innerWidth || document.documentElement.clientWidth;
+    </script><script defer="defer" src="{{ 'sf/js/vendor-7337b2.js'|asset_url }}"></script><script defer="defer" src="{{ 'sf/js/theme-c9db46.js'|asset_url }}"></script><style>@media screen and (max-width: 767px){.product-single__details{overflow: ;}}</style><style></style><style id="kaching-bundles-custom-css"></style><style></style>
+{% endblock sf_head %}
+{% block sf_lead %}<div class="loading-overlay"><style data-shopify="">:root{--loader-image: var(--loading-svg);}</style><div class="loader loader--image">
+<div class="loader__image__holder"><div class="loader__image loader__image--fallback"></div></div>
+</div>
+</div><a class="in-page-link skip-link" data-skip-content="" href="#MainContent">Skip to content</a>{% endblock sf_lead %}
+{% block content_wrapper %}
+<div data-template="product.default"><main class="main-content" data-main="" id="MainContent">
+<div class="shopify-section shopify-section--product" id="shopify-section-template--20029865361564__main"><style data-shopify="">#ProductTemplate--template--20029865361564__main{--PT: 60px;
+    --PB: 0px;}</style><section class="section-padding product-single" data-enable-history-state="true" data-section-id="template--20029865361564__main" data-section-type="product-template" data-sticky-enabled="true" data-tall-layout="false" id="ProductTemplate--template--20029865361564__main">
+<div class="wrapper"><div class="product-single__wrapper product-single__wrapper--carousel product-single__wrapper--large" data-product="" data-section-id="template--20029865361564__main"><style data-sf-gallery-reserve="">[data-product-single-media-slider]:not(.flickity-enabled){aspect-ratio:1/1;overflow:hidden}[data-product-single-media-thumbs]:not(.flickity-enabled){height:100px;overflow:hidden;margin-top:5px}@media (min-width:768px) and (max-width:1023px){[data-product-single-media-group]{max-width:560px;margin-left:auto!important;margin-right:auto!important}}@media(min-width:768px) and (max-width:1023px){.product-single__wrapper{display:block!important}.product-single__gallery{position:relative!important;top:0!important;height:auto!important}}@media(min-width:1024px) and (max-width:1279px){.product-single__wrapper--large{grid-template-columns:repeat(2,minmax(0,1fr))!important}}</style><div class="product-single__gallery" data-autoplay-video="false" data-gallery="true" data-product-single-media-group="" id="ProductPhoto--template--20029865361564__main">
+<div class="product-single__media-slider" data-product-single-media-slider=""><div class="product-single__media-slide" data-aspectratio="1.0" data-id="37636019814556" data-media-id="template--20029865361564__main-37636019814556" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-37636019814556"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--1080w-lfe75ea.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading img-object-cover" data-image-id="37636019814556" data-product-image="" fetchpriority="high" height="1080" loading="eager" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--1080w-lfe75ea.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="{{ 'sf/img/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--1080w-lfe75ea.jpg'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37636030562460" data-media-id="template--20029865361564__main-37636030562460" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-37636030562460"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2_221c6006-6944-4b6f-a085-220e11ef092d-1080w-l8f277e.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading img-object-cover" data-image-id="37636030562460" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/2_221c6006-6944-4b6f-a085-220e11ef092d-1080w-l8f277e.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="{{ 'sf/img/2_221c6006-6944-4b6f-a085-220e11ef092d-1080w-l8f277e.jpg'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37607597047964" data-media-id="template--20029865361564__main-37607597047964" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-37607597047964"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-1350w-l255dbd.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading img-object-cover" data-image-id="37607597047964" data-product-image="" height="1350" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-1350w-l255dbd.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }} 1350w" style="" width="1350"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1350" data-image-width="1350" data-zoom-wrapper="" href="{{ 'sf/img/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-1350w-l255dbd.jpg'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34785675149468" data-media-id="template--20029865361564__main-34785675149468" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-34785675149468"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/6_d0973846-a064-4cd2-9242-119e14c8d593-1080w-w164c09.png'|asset_url %}<img alt="Adaptive Peptide Foundation, lifestyle photo" class="is-loading img-object-cover" data-image-id="34785675149468" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/6_d0973846-a064-4cd2-9242-119e14c8d593-1080w-w164c09.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="{{ 'sf/img/6_d0973846-a064-4cd2-9242-119e14c8d593-1080w-w164c09.png'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34785675182236" data-media-id="template--20029865361564__main-34785675182236" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-34785675182236"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-1080w-w776d3d.png'|asset_url %}<img alt="Adaptive Peptide Foundation, lifestyle photo" class="is-loading img-object-cover" data-image-id="34785675182236" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-1080w-w776d3d.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="{{ 'sf/img/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-1080w-w776d3d.png'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="34785675215004" data-media-id="template--20029865361564__main-34785675215004" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-34785675215004"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-1080w-lc6a648.png'|asset_url %}<img alt="Adaptive Peptide Foundation, lifestyle photo" class="is-loading img-object-cover" data-image-id="34785675215004" data-product-image="" height="1080" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-1080w-lc6a648.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }} 1080w" style="" width="1080"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1080" data-image-width="1080" data-zoom-wrapper="" href="{{ 'sf/img/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-1080w-lc6a648.png'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37607715143836" data-media-id="template--20029865361564__main-37607715143836" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-37607715143836"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-1350w-ld6800d.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading img-object-cover" data-image-id="37607715143836" data-product-image="" height="1350" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-1350w-ld6800d.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }} 1350w" style="" width="1350"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1350" data-image-width="1350" data-zoom-wrapper="" href="{{ 'sf/img/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-1350w-ld6800d.jpg'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37607715176604" data-media-id="template--20029865361564__main-37607715176604" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-37607715176604"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1350w-l2f70b5.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading img-object-cover" data-image-id="37607715176604" data-product-image="" height="1350" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1350w-l2f70b5.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }} 1350w" style="" width="1350"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1350" data-image-width="1350" data-zoom-wrapper="" href="{{ 'sf/img/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1350w-l2f70b5.jpg'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37607715242140" data-media-id="template--20029865361564__main-37607715242140" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-37607715242140"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-1350w-l025409.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading img-object-cover" data-image-id="37607715242140" data-product-image="" height="1350" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-1350w-l025409.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }} 1350w" style="" width="1350"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1350" data-image-width="1350" data-zoom-wrapper="" href="{{ 'sf/img/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-1350w-l025409.jpg'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+<div class="product-single__media-slide media--hidden" data-aspectratio="1.0" data-id="37607714914460" data-media-id="template--20029865361564__main-37607714914460" data-product-single-media-wrapper="" data-product-slide="" data-type="image" id="FeaturedMedia-template--20029865361564__main-37607714914460"><div class="product-single__media product-single__media--image">
+<div class="product-single__media--image-height" style="padding-top: 100.0%;"></div>
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-w4083fd.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading img-object-cover" data-image-id="37607714914460" data-product-image="" height="1350" loading="lazy" sizes="(min-width: 1400px) 762px, (min-width: 1024px) calc((100vw - 40px) * 0.6 - 30px), calc(100vw - 40px)" src="{{ 'sf/img/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-w4083fd.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=360 360w, {{ sf_img }}&amp;width=540 540w, {{ sf_img }}&amp;width=720 720w, {{ sf_img }}&amp;width=1080 1080w, {{ sf_img }} 1350w" style="" width="1350"/>{% endwith %}
+</figure>
+<a class="product-single__media-link" data-image-height="1350" data-image-width="1350" data-zoom-wrapper="" href="{{ 'sf/img/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-w4083fd.jpg'|asset_url }}" rel="lightbox">
+<span class="visually-hidden">Open image lightbox</span>
+</a></div></div>
+</div><div class="product-single__thumbnails" data-product-single-media-thumbs="" id="ProductThumbs"><div class="product-single__thumbnail" data-id="37636019814556" data-thumbnail-id="template--20029865361564__main-37636019814556"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--thumb-b127cb.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--thumb-b127cb.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }} 267w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="37636030562460" data-thumbnail-id="template--20029865361564__main-37636030562460"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/2_221c6006-6944-4b6f-a085-220e11ef092d-thumb-f66db5.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/2_221c6006-6944-4b6f-a085-220e11ef092d-thumb-f66db5.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }} 267w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="37607597047964" data-thumbnail-id="template--20029865361564__main-37607597047964"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-thumb-cdefe7.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-thumb-cdefe7.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }} 267w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="34785675149468" data-thumbnail-id="template--20029865361564__main-34785675149468"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/6_d0973846-a064-4cd2-9242-119e14c8d593-thumb-854db1.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation, lifestyle photo" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/6_d0973846-a064-4cd2-9242-119e14c8d593-thumb-854db1.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }} 267w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="34785675182236" data-thumbnail-id="template--20029865361564__main-34785675182236"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-1080w-w776d3d.png'|asset_url %}<img alt="Adaptive Peptide Foundation, lifestyle photo" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-178w-w1e095d.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1080w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="34785675215004" data-thumbnail-id="template--20029865361564__main-34785675215004"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-thumb-dbe691.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation, lifestyle photo" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-thumb-dbe691.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }} 267w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="37607715143836" data-thumbnail-id="template--20029865361564__main-37607715143836"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-thumb-31c1e9.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-thumb-31c1e9.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }} 267w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="37607715176604" data-thumbnail-id="template--20029865361564__main-37607715176604"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-thumb-3f09fe.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-thumb-3f09fe.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }} 267w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="37607715242140" data-thumbnail-id="template--20029865361564__main-37607715242140"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-thumb-100d4a.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-thumb-100d4a.jpg'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }} 267w" style="" width="178"/>{% endwith %}
+</figure></a></div><div class="product-single__thumbnail" data-id="37607714914460" data-thumbnail-id="template--20029865361564__main-37607714914460"><a aria-label="Adaptive Peptide Foundation" class="product-single__thumbnail-link" href="#">
+<figure class="lazy-image is-loading lazy-image--cover">{% with sf_img='sf/img/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-w4083fd.jpg'|asset_url %}<img alt="Adaptive Peptide Foundation" class="is-loading product-single__thumbnail-img img-object-cover" height="178" loading="eager" sizes="89px" src="{{ 'sf/img/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-178w-w83b5e3.png'|asset_url }}" srcset="{{ sf_img }}&amp;width=89 89w, {{ sf_img }}&amp;width=178 178w, {{ sf_img }}&amp;width=267 267w, {{ sf_img }} 1350w" style="" width="178"/>{% endwith %}
+</figure></a></div></div></div>
+<div class="product-single__details" data-collapsible-single="" id="product_details">
+<div class="form__wrapper" data-product-info=""><div class="product__block" style="--PBB:20px;">
+<div class="product__icon__row product__icon__row--center" style="--adjust-body: calc(var(--FONT-ADJUST-BODY) * 0.9); --bg: #f7f7f7;padding: 5px 10px;"><div class="product__icon__text"><p>🇰🇷 Formulated in Korea · Advanced K-beauty formula</p></div></div>
+</div>
+<style></style>
+
+<div class="product__block product__title-and-price" id="product_link">
+<h1 class="product__title">{{ product.get_title }}</h1>
+</div><style>#productpricetemplate--20029865361564__main{font-size: 21px!important;}@media screen and (max-width: 767px){% templatetag opencomment %}productpricetemplate--20029865361564__main{font-size: 26px!important;}}</style>
+<div class="product__block product__price-and-badge" style="--PBB:20px;">
+<div class="product__price-and-rating">
+<div class="product__price" data-price-wrapper="" id="productpricetemplate--20029865361564__main">
+<s class="product__price--compare">{% include 'partials/sf_price.html' with p=product retail=1 %}</s><span class="product__price--regular product__price--sale">{% include 'partials/sf_price.html' with p=product %}</span>
+<span class="product__price--off hidden" data-price-off="">
+<span><p><strong>Bestseller</strong></p></span>
+<span data-price-off-type="" style="display: none">Sale</span>
+<em style="display: none">•</em>
+<span data-price-off-amount="" style="display: none"></span>
+</span>
+</div></div>
+</div>
+<div class="product__block" style="--PBB:10px;">
+<script>
+  (function () {
+    if (String(8462448984220) !== '8462448984220') return;
+    var grid = document.currentScript.closest('.product__block');
+    if (grid) grid.classList.add('ccf-v2-hide-usp-grid');
+  })();
+</script>
+<style>.ccf-v2-hide-usp-grid{display: none !important;}</style><div class="skinofab-usp-grid">
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_17-738b31.svg'|asset_url }}" width="24"/>
+<span>Adapts to your skin tone</span>
+</div>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_18-cab4e8.svg'|asset_url }}" width="24"/>
+<span>Won't settle into lines</span>
+</div>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_8d474301-a5ef-4be6-bd48-ff9f51a41207-dd43b4.svg'|asset_url }}" width="24"/>
+<span>Hydrates like a serum</span>
+</div>
+<div class="skinofab-usp-grid__item">
+<img alt="" height="24" src="{{ 'sf/img/icons_skinofab_new_19-8baa19.svg'|asset_url }}" width="24"/>
+<span>Fragrance-free</span>
+</div>
+</div>
+<style>.skinofab-usp-grid{display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;}.skinofab-usp-grid__item{display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #f7f7f7;
+  border-radius: 8px;}.skinofab-usp-grid__item img{width: 22px;
+  height: 22px;
+  flex-shrink: 0;}.skinofab-usp-grid__item span{font-size: 13px;
+  font-weight: 600;
+  color: #2D2D2D;
+  line-height: 1.3;}</style>
+</div><div class="product__block" style="--PBB:0px;"><div class="product__subheading">
+<p>Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines. </p>
+</div></div><div class="kopstorm_form2 product__block product__form__wrapper btn--half" data-form-wrapper="" style="--PBB:10px;">{% firstof product.children.first.pk product.pk as sf_atc_43 %}<form accept-charset="UTF-8" action="{% url 'cart:add' pk=sf_atc_43 %}" class="product__form" data-product-form="" data-recipient-errors="false" data-sf-product-form="" enctype="multipart/form-data" id="AddToCartForm--template--20029865361564__main" method="post"><input name="form_type" type="hidden" value="product"/><input name="utf8" type="hidden" value="✓"/>
+<input data-product-select="" data-sf-next-default="{% firstof product.children.first.pk product.pk %}" name="id" type="hidden" value="{% firstof product.children.first.pk product.pk %}"/><input name="quantity" type="hidden" value="1"/>
+<div class="shop-pay-terms">
+</div><span data-subscription-watch-price=""></span><div id="CTA_kopstorm"><div class="product__submit__holder product__submit__holder--notification">
+<div class="product__submit__buttons">
+<div class="product__submit__item">
+<button class="btn btn--primary btn--solid btn--large btn--submit product__submit__add" data-add-to-cart="" data-notification-popup="
+
+&lt;div class='product__notification' data-notification&gt;
+  &lt;h2 class='product__notification__title'&gt;Color Changing Foundation&lt;/h2&gt;&lt;form method='post' action='/contact#NotificationForm--template--20029865361564__main--45097716285596' id='NotificationForm--template--20029865361564__main--45097716285596' accept-charset='UTF-8' class='contact-form' data-notification-form=''&gt;&lt;input type='hidden' name='form_type' value='customer' /&gt;&lt;input type='hidden' name='utf8' value='✓' /&gt;&lt;div class='product__notification__message'&gt;
+      &lt;p&gt;Your email has been received.&lt;/p&gt;
+    &lt;/div&gt;&lt;div class='product__notification__form'&gt;
+      &lt;label for='Email--template--20029865361564__main'&gt;Please enter your email and we will let you know when your selected item becomes available.&lt;/label&gt;
+
+      &lt;input type='hidden' name='contact[tags]' value='newsletter, out-of-stock-notification--Color Changing Foundation'/&gt;
+      &lt;input type='hidden' name='contact[first_name]' value='Newsletter' /&gt;
+      &lt;input type='hidden' name='contact[last_name]' value='Subscriber' /&gt;
+
+      &lt;div class='input-group input-group--inline'&gt;
+        &lt;div class='input-group__item'&gt;
+          &lt;input type='email' value='' placeholder='Your email' name='contact[email]' id='Email--template--20029865361564__main' class='input-group__field input-group__field--email' aria-label='Your email' autocorrect='off' autocapitalize='off' required data-popup-input&gt;
+        &lt;/div&gt;
+        &lt;div class='input-group__item--btn'&gt;
+          &lt;button type='submit' name='subscribe' id='SubscribeSubmit--template--20029865361564__main' class='btn btn--primary btn--solid'&gt;
+            &lt;span data-notification-button-text&gt;Notify Me&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;/form&gt;&lt;button title='Close (Esc)' class='product__notification__close' data-popup-close&gt;&lt;svg aria-hidden='true' focusable='false' role='presentation' class='icon icon-close' viewBox='0 0 192 192'&gt;&lt;path d='M150 42 42 150M150 150 42 42' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/&gt;&lt;/svg&gt;&lt;/button&gt;
+&lt;/div&gt;" id="AddToCart--template--20029865361564__main" name="add" type="submit">
+<span data-add-to-cart-text="">Add to Cart
+</span>
+<em class="loader loader--line"><em class="loader-indeterminate"></em></em>
+</button>
+</div></div>
+<div class="product__form__errors" data-cart-errors-container="" role="alert"></div>
+</div>
+</div><div class="product__block sfp-trust"><style>.apf-trust{text-align:center;margin:16px 0 0;color:#151515}.apf-trust__head{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 14px !important;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#151515 !important}.apf-trust__head svg{flex:none;color:#151515}.apf-trust__row{list-style:none !important;margin:0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.apf-trust__row li{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:14px;line-height:1.3;color:#2b2b2b}.apf-trust__row li:before{content:none !important}.apf-trust__row[hidden]{display:none !important}.apf-trust__row b{font-weight:600}.apf-trust__row svg{width:26px;height:26px;color:#151515}.apf-trust__terms{margin:14px auto 0 !important;max-width:470px;font-size:13px !important;line-height:1.45;color:#4a4a4a !important}</style><div class="apf-trust"><p class="apf-trust__head"><svg aria-hidden="true" focusable="false" height="24" viewbox="0 0 24 24" width="24"><path d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z" fill="currentColor"></path><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span>Love it or your money back</span></p><ul class="apf-trust__row" data-sf-trust-row="refill"><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"></path></svg><span>Refill reminder</span></li><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"></path><path d="M3 3v5h5"></path><path d="M12 8.3l3.3 1.9v3.7L12 15.8l-3.3-1.9v-3.7z"></path><path d="M8.7 10.2 12 12l3.3-1.8M12 12v3.8"></path></svg><span>Cancel any time</span></li><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg><span>Renews at <b data-sf-renew="">{% include 'partials/sf_price.html' with p=product %}</b> <span style="white-space:nowrap">every <span data-sf-renew-every="">28</span> days</span></span></li></ul><ul class="apf-trust__row" data-sf-trust-row="once" hidden=""><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="M1 4h14v12H1z"></path><path d="M15 9h4l3 3v4h-7"></path><circle cx="6" cy="18.5" r="1.8"></circle><circle cx="18" cy="18.5" r="1.8"></circle></svg><span>Free shipping</span></li><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg><span>30-day guarantee</span></li><li><svg aria-hidden="true" fill="none" focusable="false" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="26"><rect height="10" rx="2" width="16" x="4" y="11"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span>Secure checkout</span></li></ul><p class="apf-trust__terms" data-sf-refill-terms="You pay {amount} today, then {amount} every 28 days until you cancel. We email you before every refill. To skip or cancel, just email info@skinofab.com: a person replies within one business day. No minimum, no fees.">You pay $37 today, then $37 every 28 days until you cancel. We email you before every refill. To skip or cancel, just email info@skinofab.com: a person replies within one business day. No minimum, no fees.</p></div></div><input name="product-id" type="hidden" value="8462448984220"/><input name="section-id" type="hidden" value="template--20029865361564__main"/></form></div>
+<div class="product__block" data-current-variant-id="45097716285596" data-default-usp="Free shipping on every order" data-shipping-usp="" data-us-delivery-max-days="4" data-us-delivery-min-days="2" data-us-fulfillable-variants="45097716285596," style="--PBB:10px;">
+<p id="stockinfop">
+<span class="stock-left">
+<span class="pulsing-dot" style="background-color: #16a34a;">
+<style>#stockinfop{list-style: none !important;}#stockinfop .pulsing-dot::before{background-color: #16a34a!important;}#stockinfop .stock-left > span:not(.pulsing-dot){color: #16a34a!important;}</style>
+</span>
+<span id="shippingUspText" style="color: #16a34a;">Free shipping on every order</span>
+</span>
+<span class="location-right" id="locationinfop"></span>
+</p>
+</div>
+<style>#locationinfop,#stockinfop{margin-bottom: 0px;
+    text-align: center;
+    font-size: 0.975rem;
+    font-weight: 500;
+    border-radius: 12px;
+    margin-top: 3px;}#stockinfop{display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;}.stock-left{display: flex;
+    align-items: center;
+    gap: 8px;}.location-right{display: flex;
+    align-items: center;
+    gap: 4px;}.location-right .shipping-country-flag{width: 20px;
+    height: 15px;
+    flex: 0 0 20px;}.pulsing-dot{position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: dot-breathe 2s ease-in-out infinite;}.pulsing-dot::before{content: none;}@keyframes dot-breathe{
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }@media only screen and (max-width: 767px){% templatetag opencomment %}locationinfop,#stockinfop{text-align: center;
+    font-size: 0.975rem;
+    font-weight: 500;
+    border-radius: 10px;
+    margin-top: 3px;
+    font-size: 14.5px;}}</style>
+<script>
+  
+  
+  let originalShippingAccordionHtml = null;
+
+  function setLocationInfo(countryCode, countryName) {
+    const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
+    const validCountryCode = /^[A-Z]{2}$/.test(normalizedCountryCode);
+    const flagMarkup = validCountryCode
+      ? `<span class="shipping-country-flag" aria-hidden="true">${String.fromCodePoint.apply(null, normalizedCountryCode.split('').map(function (c) { return 127397 + c.charCodeAt(0); }))}</span>`
+      : '<span aria-hidden="true">📦</span>';
+    const countryLabel = validCountryCode ? normalizedCountryCode : 'your country';
+    const locationInfoP = document.getElementById('locationinfop');
+    const locationInfoCart = document.getElementById('locationinfocart');
+    const showSeparator = true;
+    const separator = showSeparator ? '<span aria-hidden="true">|</span>' : '';
+
+    
+    const shippingMessage = `${flagMarkup} <span class="shipping_usp">Ships in 1 business day, tracked</span>`;
+    const shippingMessageCart = `to ${flagMarkup} ${countryLabel}`;
+
+    for (const [element, message] of [[locationInfoP, shippingMessage], [locationInfoCart, shippingMessageCart]]) {
+      if (!element) continue;
+      element.innerHTML = message;
+      const flagImage = element.querySelector('.shipping-country-flag');
+      if (flagImage) {
+        flagImage.addEventListener('error', () => flagImage.replaceWith(document.createTextNode('📦')), { once: true });
+      }
+    }
+
+    window.skinofabCustomerCountry = countryCode;
+    updateShippingUspText();
+  }
+
+  
+  function formatDeliveryDate(daysFromNow) {
+    const date = new Date();
+    date.setDate(date.getDate() + daysFromNow);
+    const month = date.toLocaleDateString('en-US', { month: 'long' });
+    return `${month} ${date.getDate()}`;
+  }
+
+  
+  function isVariantUsFulfillable(fulfillableVariantsAttr, currentVariantIdAttr, variantId) {
+    const fulfillableIds = (fulfillableVariantsAttr || '').split(',').filter(Boolean);
+    const currentVariantId = String(variantId || currentVariantIdAttr);
+    return fulfillableIds.includes(currentVariantId);
+  }
+
+  
+  
+  
+  function updateShippingUspText(variantId) {
+    const isUsCustomer = window.skinofabCustomerCountry === 'US';
+
+    const block = document.querySelector('[data-shipping-usp]');
+    const uspText = block ? document.getElementById('shippingUspText') : null;
+    const locationInfoP = document.getElementById('locationinfop');
+    const stockInfoP = document.getElementById('stockinfop');
+
+    if (block && uspText) {
+      if (block.dataset.originalUspColor === undefined) {
+        block.dataset.originalUspColor = uspText.style.color;
+      }
+      if (stockInfoP && block.dataset.originalStockJustify === undefined) {
+        block.dataset.originalStockJustify = stockInfoP.style.justifyContent;
+      }
+
+      const showUsDelivery = isUsCustomer && isVariantUsFulfillable(block.dataset.usFulfillableVariants, block.dataset.currentVariantId, variantId);
+
+      if (showUsDelivery) {
+        const minDays = parseInt(block.dataset.usDeliveryMinDays, 10) || 2;
+        const maxDays = parseInt(block.dataset.usDeliveryMaxDays, 10) || 4;
+        uspText.textContent = `🇺🇸 Fast & Free Delivery (${formatDeliveryDate(minDays)} - ${formatDeliveryDate(maxDays)})`;
+        uspText.style.setProperty('color', '#000', 'important');
+      } else {
+        uspText.textContent = block.dataset.defaultUsp;
+        uspText.style.setProperty('color', block.dataset.originalUspColor);
+      }
+
+      if (locationInfoP) {
+        locationInfoP.style.display = showUsDelivery ? 'none' : '';
+      }
+      if (stockInfoP) {
+        stockInfoP.style.justifyContent = showUsDelivery ? 'center' : block.dataset.originalStockJustify;
+      }
+    }
+
+    const shippingNote = document.getElementById('usShippingAccordionNote');
+    if (shippingNote) {
+      const showNote = isUsCustomer && isVariantUsFulfillable(shippingNote.dataset.usFulfillableVariants, shippingNote.dataset.currentVariantId, variantId);
+      if (showNote) {
+        const minDays = block ? (parseInt(block.dataset.usDeliveryMinDays, 10) || 2) : 2;
+        const maxDays = block ? (parseInt(block.dataset.usDeliveryMaxDays, 10) || 4) : 4;
+        const startDate = formatDeliveryDate(minDays);
+        const endDate = formatDeliveryDate(maxDays);
+        shippingNote.innerHTML = `<p><strong>🇺🇸 Fast & Free Delivery to the US!</strong></p><p>This item is in stock at our US warehouse, so your order ships domestically instead of internationally. Expect delivery between ${startDate} and ${endDate}, with tracked shipping included at no extra cost.</p>`;
+        shippingNote.style.display = '';
+      } else {
+        shippingNote.style.display = 'none';
+      }
+
+      
+      
+      const shippingContent = document.getElementById('shippingAccordionContent');
+      if (shippingContent) {
+        if (originalShippingAccordionHtml === null) {
+          originalShippingAccordionHtml = shippingContent.innerHTML;
+        }
+        const returnsMarker = '<strong>Returns</strong>';
+        const markerIndex = originalShippingAccordionHtml.indexOf(returnsMarker);
+
+        if (showNote && markerIndex !== -1) {
+          shippingContent.innerHTML = originalShippingAccordionHtml.slice(markerIndex);
+        } else {
+          shippingContent.innerHTML = originalShippingAccordionHtml;
+        }
+      }
+    }
+  }
+
+  
+  function fetchLocationInfo() {
+    setLocationInfo('', '');
+  }
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+    fetchLocationInfo();
+  });
+
+  document.addEventListener('cart:change', function(event) {
+    fetchLocationInfo();
+  });
+
+  document.addEventListener('theme:variant:change', function(event) {
+    const variant = event.detail && event.detail.variant;
+    if (variant) {
+      updateShippingUspText(variant.id);
+    }
+  });
+</script>
+<div class="product__block" style="--PBB:12px;"><div aria-live="polite" class="serum-subscription-usps" data-serum-subscription-usps="">
+<div class="serum-subscription-usps__buy-once" data-serum-buy-once-target=""></div>
+</div>
+<style>.serum-subscription-usps:has(.serum-subscription-usps__buy-once:empty){display: none !important;}.serum-subscription-usps__buy-once{border-top: 0 !important;
+      margin-top: 0;
+      padding-top: 0;}.product__block:has(> .hr--full){display: none !important;}.serum-subscription-usps{margin-top: 14px;}.serum-subscription-usps__buy-once{display: flex;
+    justify-content: center;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0, 0, 0, 0.18);}.serum-subscription-usps--serum-sub .serum-subscription-usps__buy-once{margin-top: 12px;
+    padding-top: 12px;}.serum-subscription-usps__buy-once:empty{display: none;}@media screen and (max-width: 749px){.serum-subscription-usps{margin-top: 12px;}.serum-subscription-usps__buy-once{margin-top: 12px;
+      padding-top: 12px;}}@media screen and (max-width: 600px){.serum-subscription-usps--serum-sub .serum-subscription-usps__buy-once{margin-top: 10px;
+      padding-top: 10px;}}</style>
+</div><div class="product__block" style="--PBB:20px;"><hr class="hr--full"/></div>
+<script>
+  (function() {
+    const timerType = 'daily';
+    const customDate = '';
+    const customTime = '23:59';
+    
+    function updateCountdown() {
+      const now = new Date();
+      let targetDate;
+      
+      if (timerType === 'daily') {
+        
+        targetDate = new Date();
+        targetDate.setHours(24, 0, 0, 0);
+      } else if (timerType === 'custom' && customDate) {
+        
+        const [year, month, day] = customDate.split('-').map(Number);
+        const [hours, minutes] = customTime ? customTime.split(':').map(Number) : [0, 0];
+        targetDate = new Date(year, month - 1, day, hours, minutes, 0, 0);
+        
+        
+        if (targetDate <= now) {
+          const display = document.getElementById('countdown-display');
+          if (display) {
+            display.textContent = '00:00:00';
+          }
+          return;
+        }
+      } else {
+        
+        targetDate = new Date();
+        targetDate.setHours(24, 0, 0, 0);
+      }
+      
+      
+      const timeRemaining = targetDate - now;
+      
+      if (timeRemaining > 0) {
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+        let formattedTime;
+        
+        if (days > 0) {
+          
+          formattedTime = days + 'd ' +
+            String(hours).padStart(2, '0') + ':' +
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+        } else {
+          
+          formattedTime = 
+            String(hours).padStart(2, '0') + ':' +
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+        }
+        
+        const display = document.getElementById('countdown-display');
+        if (display) {
+          display.textContent = formattedTime;
+        }
+      } else {
+        
+        const display = document.getElementById('countdown-display');
+        if (display) {
+          display.textContent = '00:00:00';
+        }
+        
+        
+        if (timerType === 'daily') {
+          setTimeout(updateCountdown, 1000);
+        }
+      }
+    }
+    
+    
+    updateCountdown();
+    
+    
+    setInterval(updateCountdown, 1000);
+  })();
+</script>
+<style>#product__featuretemplate--20029865361564__main{border-width: 2px!important;
+                    border-color: #000000!important;}@media screen and (max-width: 767px){% templatetag opencomment %}product__featuretemplate--20029865361564__main{border-width: 2px!important;
+                    border-color: #000000!important;}}</style>
+<div class="product__block product__features" data-slider="" style="--PBB:20px;"><div class="product__feature" data-block-id="feature_x9PXUw" id="product__featuretemplate--20029865361564__main" style="--bg: #f7f7f7;--text: #000000;--heading: #000000;padding: var(--grid-gutter);">
+<div class="product__feature__content"><div class="product__feature__icon__container"><div class="product__icon icon-stroke" style="--icon-size: 50px;--aspect-ratio: 100.0%;"><div class="product__icon__holder">
+<svg aria-label="30-day money-back guarantee" class="product__icon__img" height="50" role="img" style="display:block;position:absolute;top:0;left:0;width:100%;height:100%" viewbox="0 0 100 100" width="50"><circle cx="50" cy="50" fill="#151515" r="48"></circle><circle cx="50" cy="50" fill="none" r="40" stroke="#fff" stroke-dasharray="2.5 3.5" stroke-width="2"></circle><text fill="#fff" font-family="Jost,Arial,sans-serif" font-size="34" font-weight="700" text-anchor="middle" x="50" y="54">30</text><text fill="#fff" font-family="Jost,Arial,sans-serif" font-size="12" font-weight="600" letter-spacing="1.5" text-anchor="middle" x="50" y="73">DAYS</text></svg></div></div><div class="product__feature__heading">
+<h5>30-day money-back guarantee</h5>
+</div></div><div class="product__feature__text">
+<p>Wear it in your own daylight for 30 days. If you don't love it, we'll refund you.</p>
+</div></div>
+</div></div>
+<section aria-labelledby="ProductSuitability--template--20029865361564__main--product_suitability_maison-title" class="product__block product-suitability" id="ProductSuitability--template--20029865361564__main--product_suitability_maison" maison-ab-id="MC_PDP_SUITABILITYEXPECTATIONS_SMOCHE" style="--PBB:0px;">
+<div class="product-suitability__header">
+<h2 class="product-suitability__title" id="ProductSuitability--template--20029865361564__main--product_suitability_maison-title">Is This Product Right for Me?</h2><p class="product-suitability__subtitle">It may be right for you if you want</p></div>
+<div class="product-suitability__items">
+<div class="product-suitability__item"><img alt="An even, radiant look" class="product-suitability__image" height="480" loading="lazy" src="{{ 'sf/img/maison-suitability-even-radiant-841bcc.png'|asset_url }}" width="480"/><div class="product-suitability__copy">
+<h3>An even, radiant look</h3>
+<p>Younger-looking, without a heavy mask-like finish</p>
+</div>
+</div>
+<div class="product-suitability__item"><img alt="Buildable coverage" class="product-suitability__image" height="480" loading="lazy" src="{{ 'sf/img/maison-suitability-buildable-coverage-465f3f.png'|asset_url }}" width="480"/><div class="product-suitability__copy">
+<h3>Buildable coverage</h3>
+<p>Softens the visible look of redness and imperfections</p>
+</div>
+</div>
+<div class="product-suitability__item"><img alt="One adaptive shade" class="product-suitability__image" height="480" loading="lazy" src="{{ 'sf/img/maison-suitability-verified-range-844d73.png'|asset_url }}" width="480"/><div class="product-suitability__copy">
+<h3>One adaptive shade</h3>
+<p>Goes on white and adapts to your tone, so there is no shade to pick</p>
+</div>
+</div>
+<div class="product-suitability__item"><img alt="Built for mature skin" class="product-suitability__image" height="480" loading="lazy" src="{{ 'sf/img/maison-suitability-mature-skin-8d9076.png'|asset_url }}" width="480"/><div class="product-suitability__copy">
+<h3>Built for mature skin</h3>
+<p>Satin, skin-like finish made for dry, lined skin after 45</p>
+</div>
+</div>
+</div>
+</section><style data-shopify="">#ProductSuitability--template--20029865361564__main--product_suitability_maison{box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 20px;
+    color: #151515;
+    background: #ffffff;
+    border: 2px solid #fbf2f4;
+    border-radius: 8px;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__header{margin-bottom: 12px;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__title,#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__copy h3,#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__subtitle,#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__copy p{margin: 0;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__title{color: inherit;
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 16px;
+    font-style: var(--FONT-STYLE-HEADING);
+    font-weight: var(--FONT-WEIGHT-HEADING);
+    line-height: 20px;
+    text-transform: none;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__subtitle{margin: 4px 0 8px;
+    color: #4a4a4a;
+    font-size: 14px;
+    line-height: 16px;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__items{display: grid;
+    gap: 12px;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__item{display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    min-width: 0;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__image{display: block;
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 4px;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__copy{min-width: 0;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__copy h3{color: inherit;
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 16px;
+    font-style: var(--FONT-STYLE-HEADING);
+    font-weight: var(--FONT-WEIGHT-HEADING);
+    line-height: 17px;
+    margin-bottom: 4px;
+    text-transform: none;}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__copy p{color: #4a4a4a;
+    font-size: 14px;
+    line-height: 14px;}@media only screen and (min-width: 768px){% templatetag opencomment %}ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__item{grid-template-columns: 64px minmax(0, 1fr);}#ProductSuitability--template--20029865361564__main--product_suitability_maison .product-suitability__image{width: 64px;
+      height: 64px;}}[maison-ab-id="MC_PDP_SUITABILITYEXPECTATIONS_SMOCHE"]{display: none;}</style><script>
+  (() => {
+    if (window.location.hash !== '#maison-ab-preview=MC_PDP_SUITABILITYEXPECTATIONS_SMOCHE') return;
+
+    const previewRoot = document.getElementById("ProductSuitability--template--20029865361564__main--product_suitability_maison");
+    if (previewRoot) previewRoot.style.display = 'block';
+  })();
+</script>
+<div aria-labelledby="CustomerSurveyResultsHeading--template--20029865361564__main" class="product__block customer-survey-results" id="maison-ab-preview-MC_PDP_CUSTOMERSURVEY_SKINOFAB" maison-ab-id="MC_PDP_CUSTOMERSURVEY_SKINOFAB" maison-test-id="MC_PDP_CUSTOMERSURVEY_SKINOFAB" style="--PBB:10px;">
+<h2 class="customer-survey-results__heading" id="CustomerSurveyResultsHeading--template--20029865361564__main">
+<span>12-week customer survey</span>, women 35–65:<br/>
+    what participants reported
+  </h2>
+<div class="customer-survey-results__outcomes" role="list">
+<div class="customer-survey-results__outcome" role="listitem">
+<div aria-hidden="true" class="customer-survey-results__marker">
+<img alt="" class="customer-survey-results__ring customer-survey-results__ring--desktop" height="70" src="{{ 'sf/img/ab-customer-survey-ring-83-desktop-1fa0b2.svg'|asset_url }}" width="70"/>
+<img alt="" class="customer-survey-results__ring customer-survey-results__ring--mobile" height="62" src="{{ 'sf/img/ab-customer-survey-ring-83-f27b15.svg'|asset_url }}" width="62"/>
+<span>83%</span>
+</div>
+<p>reduced fine lines</p>
+</div>
+<div class="customer-survey-results__outcome" role="listitem">
+<div aria-hidden="true" class="customer-survey-results__marker">
+<img alt="" class="customer-survey-results__ring customer-survey-results__ring--desktop" height="70" src="{{ 'sf/img/ab-customer-survey-ring-87-desktop-d40989.svg'|asset_url }}" width="70"/>
+<img alt="" class="customer-survey-results__ring customer-survey-results__ring--mobile" height="62" src="{{ 'sf/img/ab-customer-survey-ring-87-44da98.svg'|asset_url }}" width="62"/>
+<span>87%</span>
+</div>
+<p>fewer facial imperfections</p>
+</div>
+<div class="customer-survey-results__outcome" role="listitem">
+<div aria-hidden="true" class="customer-survey-results__marker">
+<img alt="" class="customer-survey-results__ring customer-survey-results__ring--desktop" height="70" src="{{ 'sf/img/ab-customer-survey-ring-89-desktop-7422ef.svg'|asset_url }}" width="70"/>
+<img alt="" class="customer-survey-results__ring customer-survey-results__ring--mobile" height="62" src="{{ 'sf/img/ab-customer-survey-ring-89-83dbe0.svg'|asset_url }}" width="62"/>
+<span>89%</span>
+</div>
+<p>would continue using this product</p>
+</div>
+</div>
+<div aria-hidden="true" class="customer-survey-results__divider"></div>
+<div class="customer-survey-results__disclaimer">
+<p>Results reflect self-reported participant experiences in a 12-week customer survey of women aged 35–65 using this makeup product. This was a customer survey, not an FDA-approved study. Individual results may vary.</p><p>These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
+</div>
+</div><style data-shopify="">[maison-test-id="MC_PDP_CUSTOMERSURVEY_SKINOFAB"]{display: none;}[maison-test-id="MC_PDP_CUSTOMERSURVEY_SKINOFAB"]:target{display: flex;}.customer-survey-results{box-sizing: border-box;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    overflow: hidden;
+    padding: 20px;
+    margin-bottom: 16px;
+    color: #000;
+    background: #fff;
+    border: 2px solid rgb(223 128 150 / 10%);
+    border-radius: 8px;
+    font-family: var(--FONT-STACK-BODY);}.customer-survey-results__heading{margin: 0;
+    color: #000;
+    font-family: var(--FONT-STACK-BODY);
+    font-size: 16px;
+    font-weight: var(--FONT-WEIGHT-BODY-BOLD);
+    line-height: 24px;
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0;}.customer-survey-results__heading span{text-decoration: underline;
+    text-decoration-skip-ink: auto;
+    text-underline-position: from-font;}.customer-survey-results__outcomes{display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
+    width: 100%;}.customer-survey-results__outcome{display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    color: #000;
+    text-align: center;}.customer-survey-results__marker{position: relative;
+    display: grid;
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+    place-items: center;}.customer-survey-results__marker > span{position: relative;
+    z-index: 1;
+    font-size: 26px;
+    font-weight: var(--FONT-WEIGHT-BODY-BOLD);
+    line-height: 26px;}.customer-survey-results__ring{position: absolute;
+    inset: 50% auto auto 50%;
+    display: block;
+    max-width: none;
+    transform: translate(-50%, -50%);}.customer-survey-results__ring--mobile{display: none;}.customer-survey-results__outcome p{width: 100%;
+    margin: 0;
+    color: #000;
+    font-size: 16px;
+    font-weight: var(--FONT-WEIGHT-BODY-BOLD);
+    line-height: 20px;}.customer-survey-results__divider{width: 100%;
+    height: 1px;
+    background: #f7f7f7;}.customer-survey-results__disclaimer{color: rgb(0 0 0 / 70%);
+    font-size: 12px;
+    font-weight: var(--FONT-WEIGHT-BODY);
+    line-height: 1.15;
+    text-align: center;}.customer-survey-results__disclaimer p{margin: 0;
+    font-size: inherit;
+    line-height: inherit;}.customer-survey-results__disclaimer p + p{margin-top: 12px;}@media screen and (max-width: 749px){.customer-survey-results{padding: 12px 16px;}.customer-survey-results__marker{width: 72px;
+      height: 72px;
+      flex-basis: 72px;}.customer-survey-results__marker > span{font-size: 22px;}.customer-survey-results__ring--desktop{display: none;}.customer-survey-results__ring--mobile{display: block;}.customer-survey-results__outcome p{font-size: 14px;
+      line-height: 18px;}}</style><div class="product__block product__accordions" id="Block--product_accordion_Jeg4px" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-what-makes-it-different--template--20029865361564__main--product_accordion_Jeg4px" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span class="sf-acctitle">What makes it different?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-what-makes-it-different--template--20029865361564__main--product_accordion_Jeg4px">
+<div class="product__accordion__inner rte" data-collapsible-content="">{{ product.get_description|safe }}</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--product_accordion_Ytr7Rj" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-does-it-work-on-my-skin--template--20029865361564__main--product_accordion_Ytr7Rj" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span class="sf-acctitle">Does it work on my skin?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-does-it-work-on-my-skin--template--20029865361564__main--product_accordion_Ytr7Rj">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<p>There is one shade. It goes on white and adapts to your skin tone as you blend, so there is nothing to match or mix. If your skin is very fair or deep, email us first at info@skinofab.com and we'll tell you honestly how it's likely to look. Either way, wear it in your own daylight for 30 days; if you don't love it, we'll refund you.</p>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--product_accordion_gFcQpW" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-how-do-i-use-it--template--20029865361564__main--product_accordion_gFcQpW" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span class="sf-acctitle">How do I use it?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-how-do-i-use-it--template--20029865361564__main--product_accordion_gFcQpW">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<p><strong>Step 1: Moisturizer and sunscreen first</strong><br/>Apply your usual moisturizer and your daily sunscreen. No primer needed.</p><p><strong>Step 2: One pump, five dots</strong><br/>Dot one pump on your forehead, cheeks, nose and chin. It looks white. That's the point.</p><p><strong>Step 3: Blend and watch it change</strong><br/>Blend outward with your fingertips or a brush. In about a minute the white turns into your skin tone, with a satin finish that doesn't need good eyesight or a magnifying mirror to get right.</p><p><strong>Step 4: Add a second layer only where you want it</strong><br/>Tap a little more over sun spots or redness. Skip the powder on dry areas so lines stay soft.</p>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--product_accordion_3niwg4" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-how-does-the-money-back-guarantee-work--template--20029865361564__main--product_accordion_3niwg4" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span class="sf-acctitle">How does the money-back guarantee work?</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-how-does-the-money-back-guarantee-work--template--20029865361564__main--product_accordion_3niwg4">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<p>Find your flawless shade with zero risk. Our Adaptive Peptide Foundation comes with a complete satisfaction promise: if your shade isn't spot-on, we'll make it right with a full refund—no questions asked.</p><p>Buying foundation online after 45 feels like a gamble, so try it on your skin, in your lighting, with your routine. If you don't love it, email info@skinofab.com within 30 days and we'll refund it in full, even opened, no questions asked.</p>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--product_accordion" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-ingredients--template--20029865361564__main--product_accordion" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span class="sf-acctitle">Ingredients</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-ingredients--template--20029865361564__main--product_accordion">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<p><strong>What's inside</strong></p><ol><li><strong>Peptides (Matrixyl 3000)</strong>: smooth the look of fine lines while you wear it</li><li><strong>PDRN + niacinamide</strong>: skincare actives for thinner, drier skin after 45</li><li><strong>Hyaluronic acid + ceramide NP</strong>: keep dry skin comfortable, so the finish never cracks</li></ol>
+<div class="accordion__popup-link">
+<a class="accordion-popup-trigger" data-popup-trigger="product_accordion" href="#">See all key ingredients</a>
+</div></div>
+</div>
+</div><div class="popup-modal" data-popup-modal="product_accordion" id="popup-modal-product_accordion">
+<div class="popup-modal__overlay" data-popup-close="product_accordion"></div>
+<div class="popup-modal__content">
+<button aria-label="Close" class="popup-modal__close" data-popup-close="product_accordion" type="button">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24">
+<line x1="18" x2="6" y1="6" y2="18"></line>
+<line x1="6" x2="18" y1="6" y2="18"></line>
+</svg>
+</button>
+<h3 class="popup-modal__title">Key ingredients</h3>
+<div class="popup-modal__body rte">
+<p>Key ingredients: Sodium Hyaluronate, Sodium Hyaluronate Crosspolymer, Ceramide NP, Squalane, Panthenol, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Sodium DNA (PDRN, from salmon), Hydroxypropyl Tetrahydropyrantriol, Niacinamide, Adenosine, Silica, Boron Nitride, Mica, Iron Oxides. Fragrance-free. No propylene glycol, drying alcohol or parabens. The full ingredient list is printed on the box.</p>
+</div>
+</div>
+</div></div>
+<div class="product__block product__accordions" id="Block--9927e90d-2ecb-4104-af67-0dadf75b2a0a" style="--PBB:10px;"><div class="product__accordion">
+<button aria-controls="ProductAccordion--page-shipping-and-returns--template--20029865361564__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a" class="product__accordion__title font-heading" data-collapsible-trigger="">
+<span class="sf-acctitle">Shipping and returns</span><svg aria-hidden="true" class="icon icon-toggle-plus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132M96 30v132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" class="icon icon-toggle-minus" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M30 96h132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="product__accordion__content" data-collapsible-container="" id="ProductAccordion--page-shipping-and-returns--template--20029865361564__main--9927e90d-2ecb-4104-af67-0dadf75b2a0a">
+<div class="product__accordion__inner rte" data-collapsible-content="">
+<div data-current-variant-id="45097716285596" data-us-fulfillable-variants="45097716285596," id="usShippingAccordionNote" style="display: none; margin-bottom: 12px;"></div><div id="shippingAccordionContent"><p><strong>Processing and delivery</strong><br/>We process orders within 1 business day and ship them free, with tracking. Standard delivery after that: United States 2–4 business days; Europe, the UK, Canada, Australia and New Zealand 6–9 (6–8 to the Netherlands, Belgium, France, Germany, Austria and Luxembourg); the rest of the world 8–12.</p><p><strong>Returns</strong><br/>Try it for 30 days from the day it arrives. If you don’t love it, email info@skinofab.com with your order number and we’ll refund the product’s price in full, even if you’ve opened and used it.</p></div>
+</div>
+</div>
+</div></div>
+</div>
+</div><script data-product-json="" id="ProductJson-template--20029865361564__main" type="application/json">
+      {"id":8462448984220,"title":"Adaptive Peptide Foundation","handle":"color-changing-foundation","description":"\u003cdiv class=\"product__block\" data-shopify-editor-block='{\"id\":\"template--19381720252572__main__text_ACNbkY\",\"domId\":\"text_ACNbkY\",\"type\":\"text\"}'\u003e\n\u003cdiv class=\"product__subheading\" data-shopify-editor-block='{\"id\":\"template--19381720252572__main__text_ACNbkY\",\"domId\":\"text_ACNbkY\",\"type\":\"text\"}' data-live-text-setting=\"template--19381720252572__main__text_ACNbkY.title\"\u003e\n\u003cp\u003eStop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines.\u003c\/p\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e","published_at":"2025-12-11T14:22:46-05:00","created_at":"2025-07-08T01:28:31-04:00","vendor":"Skinofab","type":"","tags":[],"price":4900,"price_min":4900,"price_max":4900,"available":true,"price_varies":false,"compare_at_price":5900,"compare_at_price_min":5900,"compare_at_price_max":5900,"compare_at_price_varies":false,"variants":[{"id":45097716285596,"title":"Default Title","option1":"Default Title","option2":null,"option3":null,"sku":"","requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Adaptive Peptide Foundation","public_title":null,"options":["Default Title"],"price":4900,"weight":80,"compare_at_price":5900,"inventory_management":"shopify","barcode":"","requires_selling_plan":false,"selling_plan_allocations":[{"price_adjustments":[{"position":1,"price":3900}],"price":3900,"compare_at_price":4900,"per_delivery_price":3900,"selling_plan_id":3050799260,"selling_plan_group_id":"865e3d1da774fc0b9150f97a116b6b0d40b81ef3"},{"price_adjustments":[{"position":1,"price":4900}],"price":4900,"compare_at_price":4900,"per_delivery_price":4900,"selling_plan_id":3063185564,"selling_plan_group_id":"054170701de1f9c7b1c02098d0bc73504c3878a9"},{"price_adjustments":[{"position":1,"price":2450}],"price":2450,"compare_at_price":4900,"per_delivery_price":2450,"selling_plan_id":3050832028,"selling_plan_group_id":"865e3d1da774fc0b9150f97a116b6b0d40b81ef3"},{"price_adjustments":[{"position":1,"price":4900}],"price":4900,"compare_at_price":4900,"per_delivery_price":4900,"selling_plan_id":3063218332,"selling_plan_group_id":"054170701de1f9c7b1c02098d0bc73504c3878a9"},{"price_adjustments":[{"position":1,"price":3920}],"price":3920,"compare_at_price":4900,"per_delivery_price":3920,"selling_plan_id":2585002140,"selling_plan_group_id":"dfa50a4fb2729931e61912474c64f57c6cd4e051"},{"price_adjustments":[{"position":1,"price":3920}],"price":3920,"compare_at_price":4900,"per_delivery_price":3920,"selling_plan_id":2584969372,"selling_plan_group_id":"74a702a1538f9fe8e71931fb8d75d2b4853ff73d"},{"price_adjustments":[{"position":1,"price":3920}],"price":3920,"compare_at_price":4900,"per_delivery_price":3920,"selling_plan_id":2585034908,"selling_plan_group_id":"8be5fe67dd903ea8d3324bba92ea234a6d648bc5"}],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":["..\/assets\/img\/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--160w-lf7232c.jpg","..\/assets\/img\/2_221c6006-6944-4b6f-a085-220e11ef092d-814w-l45cb3c.jpg","..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_5-160w-d9dc02.png","..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-160w-lce3204.jpg","..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_4_35e0c406-0a8b--1200w-w20cb48.jpg","..\/assets\/img\/6_d0973846-a064-4cd2-9242-119e14c8d593-800w-w010058.png","..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_2_1791540a-febe--80w-p480415.png","..\/assets\/img\/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-800w-w8340a6.png","..\/assets\/img\/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-800w-l9c95e5.png","..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_1_87f31fb4-5811--800w-l6e372c.png","..\/assets\/img\/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-160w-l6f432a.png","..\/assets\/img\/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1200w-l145f2d.jpg","..\/assets\/img\/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-80w-l7f9ef9.png","..\/assets\/img\/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-w4083fd.jpg"],"featured_image":"..\/assets\/img\/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--160w-lf7232c.jpg","options":["Title"],"media":[{"alt":null,"id":37636019814556,"position":1,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--160w-lf7232c.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--160w-lf7232c.jpg","width":1080},{"alt":null,"id":37636030562460,"position":2,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/2_221c6006-6944-4b6f-a085-220e11ef092d-814w-l45cb3c.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/2_221c6006-6944-4b6f-a085-220e11ef092d-814w-l45cb3c.jpg","width":1080},{"alt":null,"id":37636143579292,"position":3,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_5-160w-d9dc02.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_5-160w-d9dc02.png","width":1080},{"alt":null,"id":37607597047964,"position":4,"preview_image":{"aspect_ratio":1.0,"height":1350,"width":1350,"src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-160w-lce3204.jpg"},"aspect_ratio":1.0,"height":1350,"media_type":"image","src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_412bfd2c-43db-4b-160w-lce3204.jpg","width":1350},{"alt":null,"id":37635256516764,"position":5,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_4_35e0c406-0a8b--1200w-w20cb48.jpg"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_4_35e0c406-0a8b--1200w-w20cb48.jpg","width":1080},{"alt":"Adaptive Peptide Foundation, lifestyle photo","id":34785675149468,"position":6,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/6_d0973846-a064-4cd2-9242-119e14c8d593-800w-w010058.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/6_d0973846-a064-4cd2-9242-119e14c8d593-800w-w010058.png","width":1080},{"alt":null,"id":37606161154204,"position":7,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_2_1791540a-febe--80w-p480415.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_2_1791540a-febe--80w-p480415.png","width":1080},{"alt":"Adaptive Peptide Foundation, lifestyle photo","id":34785675182236,"position":8,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-800w-w8340a6.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-800w-w8340a6.png","width":1080},{"alt":"Adaptive Peptide Foundation, lifestyle photo","id":34785675215004,"position":9,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-800w-l9c95e5.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-800w-l9c95e5.png","width":1080},{"alt":null,"id":35791874031772,"position":10,"preview_image":{"aspect_ratio":1.0,"height":1080,"width":1080,"src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_1_87f31fb4-5811--800w-l6e372c.png"},"aspect_ratio":1.0,"height":1080,"media_type":"image","src":"..\/assets\/img\/ColorChangingFoundation-Productimagesphotos_1_87f31fb4-5811--800w-l6e372c.png","width":1080},{"alt":null,"id":37607715143836,"position":11,"preview_image":{"aspect_ratio":1.0,"height":1350,"width":1350,"src":"..\/assets\/img\/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-160w-l6f432a.png"},"aspect_ratio":1.0,"height":1350,"media_type":"image","src":"..\/assets\/img\/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-160w-l6f432a.png","width":1350},{"alt":null,"id":37607715176604,"position":12,"preview_image":{"aspect_ratio":1.0,"height":1350,"width":1350,"src":"..\/assets\/img\/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1200w-l145f2d.jpg"},"aspect_ratio":1.0,"height":1350,"media_type":"image","src":"..\/assets\/img\/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1200w-l145f2d.jpg","width":1350},{"alt":null,"id":37607715242140,"position":13,"preview_image":{"aspect_ratio":1.0,"height":1350,"width":1350,"src":"..\/assets\/img\/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-80w-l7f9ef9.png"},"aspect_ratio":1.0,"height":1350,"media_type":"image","src":"..\/assets\/img\/24_e2816f7f-0236-4d48-8794-a7b92c9b627d-80w-l7f9ef9.png","width":1350},{"alt":null,"id":37607714914460,"position":14,"preview_image":{"aspect_ratio":1.0,"height":1350,"width":1350,"src":"..\/assets\/img\/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-w4083fd.jpg"},"aspect_ratio":1.0,"height":1350,"media_type":"image","src":"..\/assets\/img\/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-w4083fd.jpg","width":1350}],"requires_selling_plan":false,"selling_plan_groups":[{"id":"865e3d1da774fc0b9150f97a116b6b0d40b81ef3","name":"Delivered every 28 days","options":[{"name":"Frequency","position":1,"values":["Every 28 days.","Every 28 days"]}],"selling_plans":[{"id":3050799260,"name":"Every 28 days.","description":"","options":[{"name":"Frequency","position":1,"value":"Every 28 days."}],"recurring_deliveries":true,"price_adjustments":[{"order_count":null,"position":1,"value_type":"fixed_amount","value":1000}],"checkout_charge":{"value_type":"percentage","value":100}},{"id":3050832028,"name":"Every 28 days","description":"","options":[{"name":"Frequency","position":1,"value":"Every 28 days"}],"recurring_deliveries":true,"price_adjustments":[{"order_count":null,"position":1,"value_type":"price","value":2450}],"checkout_charge":{"value_type":"percentage","value":100}}],"app_id":"5284869"},{"id":"054170701de1f9c7b1c02098d0bc73504c3878a9","name":"Portal delivery intervals — 45 and 60 days","options":[{"name":"Frequency","position":1,"values":["Every 45 days","Every 60 days"]}],"selling_plans":[{"id":3063185564,"name":"Deliver every 45 days","description":"","options":[{"name":"Frequency","position":1,"value":"Every 45 days"}],"recurring_deliveries":true,"price_adjustments":[{"order_count":null,"position":1,"value_type":"fixed_amount","value":0}],"checkout_charge":{"value_type":"percentage","value":100}},{"id":3063218332,"name":"Deliver every 60 days","description":"","options":[{"name":"Frequency","position":1,"value":"Every 60 days"}],"recurring_deliveries":true,"price_adjustments":[{"order_count":null,"position":1,"value_type":"fixed_amount","value":0}],"checkout_charge":{"value_type":"percentage","value":100}}],"app_id":"5284869"},{"id":"dfa50a4fb2729931e61912474c64f57c6cd4e051","name":"1 month subscription (Cancel Anytime)","options":[{"name":"Recharge Plan ID","position":1,"values":["21361418"]},{"name":"Order Frequency and Unit","position":2,"values":["28-day"]},{"name":"Product Quantity","position":3,"values":["0"]}],"selling_plans":[{"id":2585002140,"name":"1 month subscription (Cancel Anytime)","description":null,"options":[{"name":"Recharge Plan ID","position":1,"value":"21361418"},{"name":"Order Frequency and Unit","position":2,"value":"28-day"},{"name":"Product Quantity","position":3,"value":"0"}],"recurring_deliveries":true,"price_adjustments":[{"order_count":null,"position":1,"value_type":"percentage","value":20}],"checkout_charge":{"value_type":"percentage","value":100}}],"app_id":"294517"},{"id":"74a702a1538f9fe8e71931fb8d75d2b4853ff73d","name":"2 month subscription (Cancel Anytime)","options":[{"name":"Recharge Plan ID","position":1,"values":["21361419"]},{"name":"Order Frequency and Unit","position":2,"values":["28-day"]},{"name":"Product Quantity","position":3,"values":["0"]}],"selling_plans":[{"id":2584969372,"name":"2 month subscription (Cancel Anytime)","description":null,"options":[{"name":"Recharge Plan ID","position":1,"value":"21361419"},{"name":"Order Frequency and Unit","position":2,"value":"28-day"},{"name":"Product Quantity","position":3,"value":"0"}],"recurring_deliveries":true,"price_adjustments":[{"order_count":null,"position":1,"value_type":"percentage","value":20}],"checkout_charge":{"value_type":"percentage","value":100}}],"app_id":"294517"},{"id":"8be5fe67dd903ea8d3324bba92ea234a6d648bc5","name":"3 month subscription (Cancel Anytime)","options":[{"name":"Recharge Plan ID","position":1,"values":["21361420"]},{"name":"Order Frequency and Unit","position":2,"values":["28-day"]},{"name":"Product Quantity","position":3,"values":["0"]}],"selling_plans":[{"id":2585034908,"name":"3 month subscription (Cancel Anytime)","description":null,"options":[{"name":"Recharge Plan ID","position":1,"value":"21361420"},{"name":"Order Frequency and Unit","position":2,"value":"28-day"},{"name":"Product Quantity","position":3,"value":"0"}],"recurring_deliveries":true,"price_adjustments":[{"order_count":null,"position":1,"value_type":"percentage","value":20}],"checkout_charge":{"value_type":"percentage","value":100}}],"app_id":"294517"}],"content":"\u003cdiv class=\"product__block\" data-shopify-editor-block='{\"id\":\"template--19381720252572__main__text_ACNbkY\",\"domId\":\"text_ACNbkY\",\"type\":\"text\"}'\u003e\n\u003cdiv class=\"product__subheading\" data-shopify-editor-block='{\"id\":\"template--19381720252572__main__text_ACNbkY\",\"domId\":\"text_ACNbkY\",\"type\":\"text\"}' data-live-text-setting=\"template--19381720252572__main__text_ACNbkY.title\"\u003e\n\u003cp\u003eStop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines.\u003c\/p\u003e\n\u003c\/div\u003e\n\u003c\/div\u003e"}
+    </script>
+<script id="ModelJson-template--20029865361564__main" type="application/json">
+      []
+    </script>
+</div></div>
+<style>#frontrow-sticker{position:absolute;z-index:3;border-radius:0 !important;max-width:unset !important;left:0 !important;top:0 !important}@media (max-width:1023px){.product-single__gallery[data-product-single-media-group]{position:relative !important;top:0 !important}}@media only screen and (max-width:480px){% templatetag opencomment %}frontrow-sticker{transform:scale(.7) !important;transform-origin:0 0 !important}}@media only screen and (max-width:400px){% templatetag opencomment %}frontrow-sticker{transform:scale(.66) !important}}@media only screen and (max-width:480px){.sfrs-wrap #frontrow-sticker{transform:scale(.75) !important}}@media only screen and (max-width:374px){.sfrs-wrap #frontrow-sticker{transform:scale(.7) !important}}.iframe-modal-frontrow{display:none;position:fixed;z-index:99999999;inset:0;width:100%;height:100%;overflow:hidden}.iframe.frontrow{display:none;position:fixed;left:0;top:0;z-index:99999997;right:0;bottom:0;width:100%;height:100%;overflow:hidden}</style>
+</section>
+<style></style><style>.sf-sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#fff;box-shadow:0 -6px 24px rgba(0,0,0,.10);
+ transform:translateY(110%);transition:transform .3s ease;padding:10px 0 calc(10px + env(safe-area-inset-bottom))}.sf-sticky.is-on{transform:none}.sf-sticky__in{width:min(1180px,calc(100% - 32px));margin:0 auto;display:flex;align-items:center;gap:14px}.sf-sticky img{width:52px;height:52px;border-radius:10px;object-fit:cover;background:#f4f4f2;flex:none}.sf-sticky__txt{flex:1;min-width:0;line-height:1.3;color:#151515}.sf-sticky__txt b{display:block;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sf-sticky__txt span{font-size:13.5px;color:#3b3b3b}.sf-sticky__txt i{font-style:normal;color:#151515;letter-spacing:1px}.sf-sticky__btn{flex:none;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;border-radius:999px;background:#151515;
+ color:#fff!important;text-decoration:none!important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}@media (max-width:599px){.sf-sticky__txt b{font-size:14px}.sf-sticky__btn{padding:13px 18px;font-size:12px}}.sf-sticky__from{display:none}@media (max-width:599px){.sf-sticky{padding:8px 0 calc(8px + env(safe-area-inset-bottom))}.sf-sticky img,.sf-sticky__txt{display:none}.sf-sticky__btn{flex:1;padding:14px 16px}.sf-sticky__from{display:inline}}</style><div aria-hidden="true" class="sf-sticky" id="sf-sticky"><div class="sf-sticky__in"><img alt="" decoding="async" height="52" loading="lazy" src="{{ 'sf/img/skinofab-apf-sticky-09b964.jpg'|asset_url }}" width="52"/><div class="sf-sticky__txt"><b>Adaptive Peptide Foundation</b><span>From $37 · Free shipping <i aria-hidden="true">★</i> 4.8 (9,855)</span></div><a class="sf-sticky__btn" href="#apf-buy" tabindex="-1">Choose your pack<span class="sf-sticky__from"> · From $37</span></a></div><script>(function () {var bar = document.currentScript.parentNode;function start() {var btn = document.querySelector("form[data-product-form] [data-add-to-cart]") || document.querySelector("#apf-buy");if (!btn || !("IntersectionObserver" in window)) return;var out = false, above = false, seen = [];function paint() { var on = out && !seen.length && (innerWidth < 1024 || above);bar.classList.toggle("is-on", on); bar.setAttribute("aria-hidden", on ? "false" : "true");bar.querySelector("a").tabIndex = on ? 0 : -1;document.body.style.paddingBottom = on ? bar.offsetHeight + "px" : ""; }new IntersectionObserver(function (es) { var e = es[0]; out = !e.isIntersecting; above = e.boundingClientRect.top < 0; paint(); }).observe(btn);var io = new IntersectionObserver(function (es) { es.forEach(function (e) { var k = seen.indexOf(e.target); if (e.isIntersecting && k < 0) seen.push(e.target); else if (!e.isIntersecting && k >= 0) seen.splice(k, 1); }); paint(); });Array.prototype.forEach.call(document.querySelectorAll("a[href*='#apf-buy']"), function (a) { if (!bar.contains(a)) io.observe(a); }); }if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();})();</script></div>
+<style>.btn--submit{min-height: 35px;
+margin: 0;
+flex: 1;}@media only screen and (max-width: 767px){.btn--submit{width: 100%;
+margin-top: 5px;}}</style>
+<style>#shopify-section-template--20029865361564__main .product__form__wrapper{--PBB: 8px !important;}#shopify-section-template--20029865361564__main #locationinfop{margin-top: 0;}</style></div>
+</main></div>
+{% endblock content_wrapper %}
+{% block sf_tail %}
+<div aria-hidden="true" class="pswp pswp--custom-loader" data-index="0" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="pswp pswp--custom-loader" data-index="1" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close pswp__custom-close pswp__ui-over-close" title="Close (Esc)">
+<svg aria-hidden="true" class="icon icon-close" focusable="false" role="presentation" viewbox="0 0 192 192"><path d="M150 42 42 150M150 150 42 42" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous" type="button"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next" type="button"></button>
+<div class="pswp__thumbs"></div>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+<a class="pswp__caption-close" href="#">
+<span class="visually-hidden">Close</span>
+</a>
+</div>
+</div>
+</div>
+</div><script>
+      
+      function updateProductPrice(newPrice) {
+        const priceElement = document.getElementById('productpricingnew');
+        if (!priceElement) return;
+        priceElement.textContent = newPrice;
+      }
+
+      
+      document.addEventListener('DOMContentLoaded', function () {
+        
+        const regularPriceElement = document.querySelector('.product__price--regular');
+
+        if (regularPriceElement && document.getElementById('productpricingnew')) {
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+              
+              updateProductPrice(mutation.target.textContent);
+            });
+          });
+
+          
+          observer.observe(regularPriceElement, {
+            childList: true,
+            subtree: true,
+          });
+        }
+      });
+    </script><script>
+      document.addEventListener('DOMContentLoaded', () => {
+        
+        const swatchLabels = document.querySelectorAll('.swatch__label');
+
+        swatchLabels.forEach((label) => {
+          label.addEventListener('click', (event) => {
+            
+            const selectedSwatch = label.getAttribute('selected-swatch');
+
+            
+            const selectedSwatchElement = document.querySelector('.selected-swatch');
+            if (selectedSwatchElement && selectedSwatch) {
+              selectedSwatchElement.textContent = selectedSwatch;
+            }
+          });
+        });
+      });
+    </script><script>
+       
+
+(function() {
+  'use strict';
+
+  
+  function movePopupsToBody() {
+    document.querySelectorAll('.popup-modal[data-popup-modal]').forEach(function(popup) {
+      
+      if (popup.parentElement !== document.body) {
+        document.body.appendChild(popup);
+      }
+    });
+  }
+
+  function initAccordionPopups() {
+    
+    movePopupsToBody();
+
+    
+    document.querySelectorAll('[data-popup-trigger]').forEach(function(trigger) {
+      
+      trigger.removeEventListener('click', handleTriggerClick);
+      trigger.addEventListener('click', handleTriggerClick);
+    });
+
+    
+    document.querySelectorAll('[data-popup-close]').forEach(function(closeBtn) {
+      closeBtn.removeEventListener('click', handleCloseClick);
+      closeBtn.addEventListener('click', handleCloseClick);
+    });
+  }
+
+  function handleTriggerClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-trigger');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function handleCloseClick(e) {
+    e.preventDefault();
+    var blockId = this.getAttribute('data-popup-close');
+    var popup = document.querySelector('[data-popup-modal="' + blockId + '"]');
+    if (popup) {
+      popup.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var activePopup = document.querySelector('.popup-modal.is-active');
+      if (activePopup) {
+        activePopup.classList.remove('is-active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccordionPopups);
+  } else {
+    initAccordionPopups();
+  }
+
+  
+  document.addEventListener('shopify:section:load', initAccordionPopups);
+})();
+    </script><style>button[aria-expanded=true] .sf-acctitle:before{content:"";position:absolute;height:67%;right:-5%;left:-5%;top:33%;background-color:var(--text-highlight-color,#E7B5C1);opacity:.5;z-index:-1;transition:.25s all}.sf-acctitle{position:relative;transition:.25s all}</style><style data-sf-layout-fixes="">.skinofab-results__subtitle{color:#5c5c5c}.sfo-price s{color:#666}#shippingUspText{color:#15803d!important}.skinofab-testimonials__verified{font-size:12.5px}.si__dots{gap:0!important}.si__dot{box-sizing:content-box!important;padding:18px 8px!important;background-clip:content-box!important}.si__dot:not([aria-current="true"]){background-color:#b3b3b3!important}.sfb-rating{padding-top:10px;padding-bottom:6px;margin-top:-10px;margin-bottom:4px}.skinofab-testimonials .swiper-slide{height:auto}.skinofab-testimonials__card{height:100%}@media (max-width:1023px){.skinofab-testimonials{overflow:hidden}.skinofab-testimonials__nav{padding-left:0!important;padding-right:0!important}.skinofab-testimonials .skinofab-testimonials-swiper{overflow:visible}}@media (max-width:599px){.pswp__button--arrow--left,.pswp__button--arrow--right{display:none!important}}.product__accordions [data-collapsible-trigger]{-webkit-tap-highlight-color:transparent}.product__accordions [data-collapsible-trigger]:focus:not(:focus-visible){outline:none;background:none;box-shadow:none}@media (max-width:1023px){.skinofab-testimonials-prev,.skinofab-testimonials-next{display:none!important}}@media(min-width:768px) and (max-width:1023px){[data-product-single-media-thumbs]{padding-left:20px;padding-right:20px}}.skinofab-why-inner>*{min-width:0}@media(min-width:768px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}@media(min-width:768px) and (max-width:1023px){.skinofab-why-inner{grid-template-columns:minmax(0,1fr)}}@media(max-width:1023px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:1/1;min-height:0;background-size:cover;background-position:center 25%!important}}.skinofab-results__grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:56px}.skinofab-results__card{padding:28px 16px}}@media(min-width:1024px) and (max-width:1339px){.skinofab-results__percentage{font-size:60px}}.skinofab-compare-table th,.skinofab-compare-table td{font-size:14px!important}.si__body{font-size:14px}.skinofab-results__subtitle{font-size:14px}.text-highlight-wrapper--circle .text-highlight{margin-left:.22em;margin-right:.14em}.template-index .sf__policies,.template-index .sf__legal-bottom{font-size:12px;line-height:18px}.fh-social-play{top:auto;right:auto;left:14px;bottom:14px;margin:0;width:52px;height:52px}@media(max-width:749px){.fh-review-track{min-height:0}}@media(min-width:1024px){footer.sf .sf__wrap{width:calc(100% - 120px)!important;margin-left:auto!important;margin-right:auto!important}}@media(max-width:1023px){footer.sf .sf__wrap{width:calc(100% - 40px)!important;margin-left:auto!important;margin-right:auto!important}}@media(max-width:599px){.accordion__item__text-wrapper{padding-right:0!important}}@media(min-width:750px){.fh-review-track>.fh-review{width:auto;min-width:0;grid-template-columns:186.36px minmax(0,1fr)}}@media(min-width:750px) and (max-width:1023px){.fh-review-track>.fh-review{flex:0 0 100%}}@media(min-width:1024px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 12px) / 2)}}@media(min-width:1400px){.fh-review-track>.fh-review{flex:0 0 calc((100% - 24px) / 3)}}.skinofab-iwt__image.sf-has-note{border-radius:0;overflow:visible}.skinofab-iwt__image.sf-has-note img{border-radius:16px}.sf-illustration-note{margin:8px 0 0;font-size:12px;line-height:1.4;color:#595959;text-align:center}.accordion__item__title{min-height:44px}.skinofab-iwt__highlight{white-space:nowrap}.skinofab-results__percentage{white-space:nowrap}@media(max-width:767px){.skinofab-results__grid{display:grid!important;grid-template-columns:1fr!important;gap:12px}.skinofab-results__slider,.skinofab-results__nav,.skinofab-results .swiper-button-prev,.skinofab-results .swiper-button-next{display:none!important}.skinofab-results__card{padding:22px 20px}.skinofab-results__percentage{font-size:48px}}@media(min-width:768px) and (max-width:1023px){.skinofab-results__percentage{font-size:44px}}@media(min-width:1024px){.skinofab-why-inner .skinofab-why__image{aspect-ratio:auto!important;min-height:460px;height:auto;align-self:stretch}}</style><script data-sf-circle-room="">(function () {function room() { Array.prototype.forEach.call(document.querySelectorAll(".text-highlight-wrapper--circle .text-highlight"), function (e) { e.style.marginLeft = e.style.marginRight = Math.round(e.offsetWidth * 0.18 + 6) + "px"; }); }if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", room); else room();if (document.fonts && document.fonts.ready) document.fonts.ready.then(room);})();</script><script>document.addEventListener('submit', function (e) {var f = e.target, kind = f.getAttribute && f.getAttribute('data-sf-mailto'); if (!kind) return;e.preventDefault(); if (f.reportValidity && !f.reportValidity()) return;var v = function (n) { var el = f.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };var email = v('contact[email]'), name = v('contact[name]'), subject, body;if (kind === 'newsletter') { subject = 'Newsletter sign-up'; body = 'Please add ' + email + ' to the SKINOFAB newsletter.'; }else { subject = 'Message from ' + (name || email); body = v('contact[body]') + '\n\n' + [name, email, v('contact[phone]')].filter(Boolean).join('\n'); }location.href = 'mailto:' + f.getAttribute('data-sf-to') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);var note = f.nextElementSibling; if (!note || note.className !== 'sf-mail-sent') {note = document.createElement('p'); note.className = 'sf-mail-sent'; note.setAttribute('role', 'status');note.style.cssText = 'margin:10px 0 0;font-size:14px;line-height:1.45'; f.parentNode.insertBefore(note, f.nextSibling); }note.textContent = 'Your email app should now open with the message written: press send there to finish. '+ 'No email app? Write to ' + f.getAttribute('data-sf-to') + '.';});</script>
+<script type="application/json" id="sf-variant-options">[{% for field in variant_form %}{% if 'attr' in field.id_for_label %}{"code": "{{ field.html_name|slice:'5:'|escapejs }}", "label": "{{ field.label|escapejs }}", "choices": [{% for c in field.field.choices %}["{{ c.0|escapejs }}", "{{ c.1|escapejs }}"]{% if not forloop.last %},{% endif %}{% endfor %}]},{% endif %}{% endfor %}null]</script>
+{{ product.data|json_script:'product-data' }}
+{% app_hook "view_product" %}
+{% app_hook "add_to_cart" %}
+{% endblock sf_tail %}

@@ -1,0 +1,18 @@
+# campaigns-os: machine-local runtime state (managed block; edit the list, keep the marker)
+# Sessions, journals, Run Records, spec caches, capture evidence, and full
+# QA verdicts are per-machine. The readback bundle (build-context, assembly-report,
+# doctor-output, qa-verdict), input/, theme/, and agent-context/ are meant
+# to be committed and are deliberately not listed here.
+.campaign-runtime/run-session.json
+.campaign-runtime/command-lifecycle.jsonl
+.campaign-runtime/agent-deviations.jsonl
+.campaign-runtime/workflow-findings.jsonl
+.campaign-runtime/run-records/
+.campaign-runtime/fetched-specs/
+.campaign-runtime/progress/
+.campaign-runtime/polish-evidence/
+.campaign-runtime/evidence/
+qa-output/
+.campaign-runtime/*.log
+.campaign-runtime/*.tmp
+.campaign-runtime/**/*.tmp

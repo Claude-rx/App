@@ -1,0 +1,194 @@
+{
+ "hero": {
+  "src": "brand/adaptive-peptide-foundation/01-front.png",
+  "max": 1254
+ },
+ "pump": {
+  "src": "brand/adaptive-peptide-foundation/09-pump-detail.png",
+  "aspect": [
+   4,
+   3
+  ],
+  "max": 1254
+ },
+ "threequarter": {
+  "src": "brand/adaptive-peptide-foundation/03-three-quarter-right.png",
+  "max": 1000
+ },
+ "bases": {
+  "src": "brand/adaptive-peptide-foundation/composites/two-bottles.jpg",
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 1254
+ },
+ "label": {
+  "src": "brand/adaptive-peptide-foundation/composites/label-detail.jpg",
+  "max": 930
+ },
+ "problem": {
+  "src": "brand/persona/age-73.jpg",
+  "aspect": [
+   4,
+   5
+  ],
+  "max": 1200
+ },
+ "done": {
+  "src": "brand/persona/age-109.jpg",
+  "aspect": [
+   4,
+   3
+  ],
+  "max": 1200
+ },
+ "promise": {
+  "src": "brand/persona/pdp-duo-women.jpg",
+  "aspect": [
+   4,
+   3
+  ],
+  "max": 1400
+ },
+ "rev-margaret": {
+  "src": "brand/persona/age-238.jpg",
+  "crop": [
+   0.3,
+   0.1,
+   0.72,
+   0.52
+  ],
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 256
+ },
+ "rev-jennifer": {
+  "src": "brand/persona/age-255.jpg",
+  "crop": [
+   0.28,
+   0.08,
+   0.72,
+   0.52
+  ],
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 256
+ },
+ "rev-deborah": {
+  "src": "brand/persona/age-264.jpg",
+  "crop": [
+   0.3,
+   0.15,
+   0.7,
+   0.55
+  ],
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 256
+ },
+ "rev-mia": {
+  "src": "brand/persona/age-200.jpg",
+  "crop": [
+   0.3,
+   0.15,
+   0.7,
+   0.55
+  ],
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 256
+ },
+ "rev-patricia": {
+  "src": "brand/persona/age-107.jpg",
+  "crop": [
+   0.28,
+   0.18,
+   0.68,
+   0.58
+  ],
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 256
+ },
+ "rev-susan": {
+  "src": "brand/persona/age-223.jpg",
+  "crop": [
+   0.38,
+   0.02,
+   0.62,
+   0.26
+  ],
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 256
+ },
+ "g-front": {
+  "src": "brand/adaptive-peptide-foundation/01-front.png",
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 1080
+ },
+ "g-threequarter": {
+  "src": "brand/adaptive-peptide-foundation/03-three-quarter-right.png",
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 1080
+ },
+ "g-bases": {
+  "src": "brand/adaptive-peptide-foundation/composites/two-bottles.jpg",
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 1080
+ },
+ "g-pump": {
+  "src": "brand/adaptive-peptide-foundation/09-pump-detail.png",
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 1080
+ },
+ "g-done": {
+  "src": "brand/persona/age-109.jpg",
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 1080
+ },
+ "g-left": {
+  "src": "brand/adaptive-peptide-foundation/02-three-quarter-left.png",
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 1080
+ },
+ "g-promise": {
+  "src": "brand/persona/pdp-duo-women.jpg",
+  "aspect": [
+   1,
+   1
+  ],
+  "max": 1080
+ }
+}

@@ -1,0 +1,10 @@
+{% comment %} The thank-you page: the rest of the range, in the store (plain links; the order is placed and nothing here writes to it). Each card gives both store prices, bought once and with Automatic Refills, because the store page opens on the refills (live review 7). The serum's card is not shown for an order shipping to Europe: its EGF is not allowed in cosmetics sold there, as the store's own offer gate knows (js/sf-receipt.js reads the order's country). No brush card: she has just seen the brush offer and its downsell (funnel review 2). {% endcomment %}
+<div class="receipt_section sf-more">
+  <div class="receipt_section-head"><h2 class="display-xs">More from SKINOFAB, at the store</h2>
+    <div class="receipt_section-head--desc">More SKINOFAB made for skin after 45, in our store, each with the same 30-day money-back guarantee.</div></div>
+  <span hidden data-sf-ship-country data-next-display="order.shippingAddress.country"></span>
+  <div class="sf-more__grid">
+    <a class="sf-more__card" href="https://skinofab.com/catalogue/pdrn-plumping-balm_202/"><img src="{{ 'images/sf/more-balm.jpg' | campaign_asset }}" alt="" width="200" height="200" loading="lazy"><strong>PDRN Plumping Balm</strong><span>A melting balm you press on where your face looks tired: under the eyes, along smile lines. $24.95 bought once, or $19.95 with Automatic Refills.</span></a>
+    <a class="sf-more__card" href="https://skinofab.com/catalogue/egf-nad-firming-serum_206/" data-sf-not-europe><img src="{{ 'images/sf/more-serum.jpg' | campaign_asset }}" alt="" width="200" height="200" loading="lazy"><strong>EGF + NAD+ Firming Serum</strong><span>Two drops for your face, two for your neck, the light step before your foundation. $34.95 bought once, or $27.95 with Automatic Refills.</span></a>
+  </div>
+</div>

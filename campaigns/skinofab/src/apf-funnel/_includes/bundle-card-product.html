@@ -1,0 +1,35 @@
+{%- comment -%}
+  bundle-card-product.html — product-style bundle card.
+  One of the interchangeable bundle card styles dispatched by bundle-card.html.
+  Layout mirrors bump-check03: radio + image + title, one price line + savings;
+  badges grouped at the top-right edge (tier pill + red % OFF at the end).
+  Reads the shared card arg contract (see bundle-card.html). SDK attrs preserved.
+  SKINOFAB: card_image (bundle-selector.html, a bundle's image) replaces the package photo when set; card_name and
+  card_price (a bundle's name and price) show until the SDK writes the campaign's (the cards were blank for ~6 s); the
+  struck price, the savings line and the offer badge wait for the SDK (checkout-brand.css hides the badge until the SDK
+  marks it next-discounts-has-items and the savings line while its amount is empty: a dash and an empty red pill showed
+  for ~5 s, live review 1);
+  the coupon badge says "EXTRA 10% OFF" (a bare "+10%" read as a surcharge).
+{%- endcomment -%}
+<div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="bundle-card{% if selected %} next-selected{% endif %}">
+  <div class="bundle-card__badges">
+    {% if badge_text and badge_text != "" %}<div class="bundle-card__badge bundle-card__badge--{{ badge_tone | default: 'popular' }}">{{ badge_text }}</div>{% endif %}
+    <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
+    <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>EXTRA {discount.percentage} OFF</span></template></div>
+  </div>
+  <div class="bundle-card__main" data-next-package-id="{{ package_id }}">
+    <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
+    {% if card_image and card_image != "" %}<img src="{{ card_image | campaign_asset }}" loading="lazy" alt="" class="bundle-card__image">{% else %}<img data-next-display="package.image" loading="lazy" alt="" class="bundle-card__image">{% endif %}
+    <div class="bundle-card__copy">
+      <div class="bundle-card__title">{{ title_prefix }}<span data-next-display="package.name">{{ card_name | default: 'Package' }}</span></div>
+      {% if subtitle and subtitle != "" %}<div class="bundle-card__subtitle">{{ subtitle }}</div>{% endif %}
+    </div>
+    <div class="bundle-card__price">
+      <div class="bundle-card__price-row">
+        <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
+        <span data-next-bundle-display="price" class="bundle-card__price-total">{{ card_price | default: '--' }}</span>
+      </div>
+      <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>
+    </div>
+  </div>
+</div>

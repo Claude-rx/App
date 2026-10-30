@@ -1,0 +1,3563 @@
+{
+  "schema_version": "campaigns-os-doctor-output/v0",
+  "generated_at": "2026-10-29T18:20:04.388Z",
+  "generated_by": "next",
+  "ok": true,
+  "status": "ready_with_warnings",
+  "errors": [],
+  "warnings": [
+    {
+      "code": "source_html.pages.source_hash",
+      "message": "Source page \"offer\" hash mismatch — file at apf-pdp.html has changed since intake recorded it in the Build Packet (recorded sha256=b75e4c791310…, on-disk sha256=e3437dea6681…). This warning does not block. Re-running start or prepare-build with --force records the current file and clears recorded stage evidence; editing the source-html manifest alone does not change the hash the packet holds.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "market_copy.us_specific_claims",
+      "message": "Campaign market scope needs copy review (non-US shipping countries: [object Object]), and source/template files contain US-specific starter copy: source:apf-pdp.html:1659 \"USPS\"; source:apf-pdp.html:1614 \"US warehouse\"; target:_includes/upsell/ships-info.html:8 \"USPS\"; target:_includes/upsell/ships-info.html:16 \"ships from the USA\". Confirm or replace this copy; do not remove it automatically.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "copy.hardcoded_phone",
+      "message": "Campaign Store Profile phone is \"+1 (563) 239-5520\", but prepared HTML contains different hardcoded phone numbers outside skipped regions: source:apf-pdp.html:6 \"2166136261\"; source:apf-pdp.html:2014 \"3050799260\"; source:apf-pdp.html:2014 \"3063185564\"; source:apf-pdp.html:2014 \"3050832028\"; source:apf-pdp.html:2014 \"3063218332\"; source:apf-pdp.html:2014 \"2585002140\"; source:apf-pdp.html:2014 \"2584969372\"; source:apf-pdp.html:2014 \"2585034908\"; plus 77 more. Use the campaign.store_phone binding or remove static phone strings.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.raw_html_conversion_status",
+      "message": "Assembly is recorded complete, but report.adapter_decisions.raw_html_conversion_status is \"pending\". Use record build --adapter-decision raw_html_conversion_status=<value> to record completed/not_required after wrapper stripping, frontmatter, asset moves, script/style refs, CTA rewrites, route policy, and layout choice are settled.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.wrapper_policy",
+      "message": "Assembly is recorded complete with report.adapter_decisions.wrapper_policy=\"preserve_document_wrappers\". Select wrapper_policy at intake with prepare-build --wrapper-policy or the source-html manifest's wrapper_policy option; page-kit source should normally strip document wrappers unless preserving them is explicitly not_required.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.commerce_shell_adoption",
+      "message": "Assembly is recorded complete, but report.adapter_decisions.commerce_shell_adoption is \"not_required\" for runtime commerce pages (checkout, offer-1, offer-2, offer-2b, brush-offer, brush-offer-b, thank-you). Use record build --adapter-decision commerce_shell_adoption=<value> after commerce pages are template-clone-first, then styled, with SDK-owned surfaces preserved.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "adapter.template_files_copied",
+      "message": "Assembly is recorded complete, but report.adapter_decisions.template_files_copied.status is \"pending\". Copy or verify the selected template family as one atomic slice, not individual commerce pages.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "code": "build_brief.payment_methods_spec_drift",
+      "message": "Campaign Build Brief allows payment method(s) not found in CampaignSpec data: card. Confirm runtime/catalog support before rendering them.",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    }
+  ],
+  "ready": [
+    "Build Packet schema campaign-runtime-build-packet/v0",
+    "Template family \"apollo\" is certified (commerce catalog + brand contract)",
+    "Template family \"apollo\" certification is current: last verified against SDK 0.4.42 (2026-10-16), the current SDK recorded by the vendored contracts.",
+    "Deploy target is local-serve and the deploy URL http://127.0.0.1:8090/apf-funnel/ is a loopback origin: it is served locally for QA. Campaigns App states its Development-domain rule for the hostname localhost on any port; if SDK initialization is refused on this host, open the same server as http://localhost:<port>/ and record that URL instead.",
+    "Local proof mode: the built _site/ is recorded as a development render (stages.assembly.evidence.build_environment); vendor loaders are environment-gated out, SDK dl_* events still fire.",
+    "Local proof production parity: PASS — 9 page(s) identical to the current development render; production differs only in environment-gated output (360 line(s); loaders: https://c.albss.com, https://s.axon.ai); Campaign Cart pin 0.4.43.",
+    "Target campaign output directory exists",
+    "Target page-kit dependency 0.3.0",
+    "Local CampaignSpec parsed",
+    "CampaignSpec spec_identity includes local_spec_id and public_route_slug",
+    "Packet public_route_slug \"apf-funnel\" matches CampaignSpec identity and is not the Map ID",
+    "CampaignSpec public page routes are Page Kit-compatible",
+    "CampaignSpec required Store Profile fields are present for page-kit campaigns.json",
+    "CampaignSpec store_url points at a non-placeholder storefront",
+    "Built checkout carries no google_pay payment-method markup (_site/apf-funnel/foundation-checkout/index.html); left to browser QA: shared chrome asset upsell-payment-logos.svg",
+    "Target campaigns.json SDK version matches CampaignSpec (0.4.43).",
+    "Target campaigns.json Store Profile matches the CampaignSpec across all nine governed fields.",
+    "CampaignSpec shipping countries: [object Object]",
+    "CampaignSpec routing meta deferred to built-output verification (_site/apf-funnel/).",
+    "Source-html manifest source-html-manifest/v0 validated",
+    "Template-stock page(s) materialised by the build stage: checkout (apollo), offer-1 (apollo), offer-2 (apollo), offer-2b (apollo), brush-offer (apollo), brush-offer-b (apollo), thank-you (apollo)",
+    "Source mappings cover active CampaignSpec pages",
+    "All mapped CampaignSpec pages are build candidates",
+    "Mapped source pages pass the page-kit preparation check (document wrappers stripped, no leftover frontmatter, no source-file internal links)",
+    "CampaignSpec package purchase availability has no unavailable package refs in active build data",
+    "Built output root found at _site/apf-funnel/",
+    "Build output fingerprint matches stages.assembly.build_fingerprint (195 file(s) under _site/apf-funnel/)",
+    "Built HTML structure and commerce refs checked in _site/apf-funnel/ for 9 page(s)",
+    "Every bundle selector on 5 built post-purchase page(s) is scoped away from the live cart (5 selector(s) scanned)",
+    "All 9 built page(s) agree on campaign identity (next-funnel \"SKINOFAB Adaptive Peptide Foundation\", API key consistent)",
+    "SDK markup: 3 data-next-* name(s) not in the Campaign Cart 0.4.42 attribute index (advisory; the SDK does not read them): data-next-catalog-component, data-next-content, data-next-skeleton",
+    "SDK markup checks passed on 9 built page(s)",
+    "All 12 campaign-owned script(s) loaded by built pages parse",
+    "Built SDK meta tags checked in _site/apf-funnel/ for 9 page(s)",
+    "Page Kit build summary verified for \"apf-funnel\": 9 page(s) built, no build errors, shape warnings or asset warnings",
+    "Built routes match CampaignSpec page routes (9/9 verified)",
+    "Built output carries no needs-input markers, unverified urgency chrome, or template demo residue",
+    "Campaigns API key available via env:CAMPAIGNS_API_KEY",
+    "Commerce catalog sharedFrontmatterVocabulary loaded",
+    "Template agentContract loaded for apollo",
+    "Template brand/residue/pricing contract loaded for apollo",
+    "Template family inventory matrix loaded for apollo",
+    "Built target output has no obvious demo-only or unsupported starter contract residue",
+    "Built target output has no generic starter placeholder or promo-code residue",
+    "Built target output has no promo discount claims above CampaignSpec max (60%)",
+    "Built target output has no literal template placeholder text",
+    "Built target output references no template demo placeholder assets",
+    "apollo upsell offers have code-backed discounts or no code-less discount offer binding requirement",
+    "apollo exit-pop/promo-code behavior is governed by CampaignSpec offer-surface fields",
+    "source_html.adapter_contract adapter decision fields loaded",
+    "qa.proof_policy loaded: browser=true, typed_card_depth=common, order_path_depth=common",
+    "Campaign Build Brief is complete: merchandising/design presentation truth is available.",
+    "Build context schema campaign-runtime-build-context/v0",
+    "context.adapter_decisions adapter decision fields loaded",
+    "Brand theme context ready_with_warnings (medium confidence)",
+    "Assembly report schema campaign-runtime-assembly-report/v0",
+    "Assembly report theme applied",
+    "report.adapter_decisions adapter decision fields loaded",
+    "report.proof_policy loaded: browser=true, typed_card_depth=common, order_path_depth=common",
+    "Theme gate passed: Brand theme is applied after next-core.css on commerce pages.",
+    "Campaign CSS has no display:none rules on apollo pricing surfaces",
+    "Polish gate passed: structured evidence is current for this build.",
+    "Hidden eager-media checkpoint passed: package-owned page-load evidence is complete and current."
+  ],
+  "derived": {
+    "packet_path": "./campaign-runtime.build.json",
+    "assembly_report_path": ".campaign-runtime/assembly-report.json",
+    "map_id": null,
+    "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
+    "public_route_slug": "apf-funnel",
+    "template_family": "apollo",
+    "source_root": "./design-source-apf",
+    "target_repo": ".",
+    "target_output_dir": "./src/apf-funnel",
+    "spec_path": "./campaign-spec.apf.json",
+    "doctor_checks": [
+      "campaign-spec.rule-registry",
+      "spec.identity_export",
+      "campaign.route_slug_identity",
+      "campaign.route_root",
+      "spec.public_routes",
+      "spec.store_profile",
+      "page_kit.sdk_version",
+      "page_kit.store_profile",
+      "spec.shipping_countries",
+      "spec.routing_meta_tags",
+      "spec.routing_host_prefix",
+      "source_html.coverage",
+      "source_html.preparation",
+      "spec.package_availability",
+      "built_output.target_root",
+      "built_output.fingerprint",
+      "built_output.pages",
+      "built_output.live_campaign_refs",
+      "built_output.upsell_selector_scope",
+      "built_output.campaign_identity",
+      "built_output.sdk_markup",
+      "built_output.script_syntax",
+      "built_output.cart_placeholders",
+      "built_output.smoke_qc",
+      "built_output.sdk_meta_tags",
+      "built_output.build_summary",
+      "built_output.route_drift",
+      "built_output.content_residue",
+      "built_output.proof_attestation",
+      "campaign.api_key",
+      "assembly.commerce_catalog",
+      "market_copy",
+      "source_html.adapter_contract",
+      "qa.proof_policy",
+      "build_brief.artifact",
+      "context.shape",
+      "assembly_report.shape"
+    ],
+    "checkpoint_gates": [
+      {
+        "id": "page_kit.sdk_version",
+        "scope": "page_kit.sdk_version",
+        "status": "pass",
+        "code": "page_kit.sdk_version.pass",
+        "reason": "Target SDK version exactly matches the CampaignSpec (0.4.43).",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "apf-funnel",
+          "target_path": "_data/campaigns.json"
+        },
+        "state": {
+          "expected": "0.4.43",
+          "observed": "0.4.43"
+        },
+        "state_fingerprint": null,
+        "expected_sdk_version": "0.4.43",
+        "observed_sdk_version": "0.4.43",
+        "expected_source": "global_config.sdk_version",
+        "waiver": null,
+        "waiver_assessment": {
+          "active": null,
+          "inert_counts": {
+            "stale": 0,
+            "foreign": 0,
+            "malformed": 0,
+            "expired": 0
+          }
+        },
+        "required_actions": []
+      },
+      {
+        "id": "page_kit.store_profile",
+        "scope": "page_kit.store_profile",
+        "status": "pass",
+        "code": "page_kit.store_profile.pass",
+        "reason": "Target Store Profile exactly matches the CampaignSpec for all nine governed fields.",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "apf-funnel",
+          "target_path": "_data/campaigns.json"
+        },
+        "state": {
+          "discrepancies": []
+        },
+        "state_fingerprint": "sha256:07a07ea0fa248cb0e6493357af1164ac6835e6753e7e32b05fe1037d137e4e73",
+        "matrix": [
+          {
+            "field": "store_name",
+            "kind": "match",
+            "spec": "SKINOFAB",
+            "target": "SKINOFAB",
+            "severity": "clean"
+          },
+          {
+            "field": "store_url",
+            "kind": "match",
+            "spec": "https://try.skinofab.com",
+            "target": "https://try.skinofab.com",
+            "severity": "clean"
+          },
+          {
+            "field": "store_terms",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/terms-of-service/?from=offer",
+            "target": "https://try.skinofab.com/terms-of-service/?from=offer",
+            "severity": "clean"
+          },
+          {
+            "field": "store_privacy",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/privacy-policy/?from=offer",
+            "target": "https://try.skinofab.com/privacy-policy/?from=offer",
+            "severity": "clean"
+          },
+          {
+            "field": "store_contact",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/contact/?from=offer",
+            "target": "https://try.skinofab.com/contact/?from=offer",
+            "severity": "clean"
+          },
+          {
+            "field": "store_returns",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/refund-policy/?from=offer",
+            "target": "https://try.skinofab.com/refund-policy/?from=offer",
+            "severity": "clean"
+          },
+          {
+            "field": "store_shipping",
+            "kind": "match",
+            "spec": "https://try.skinofab.com/shipping-policy/?from=offer",
+            "target": "https://try.skinofab.com/shipping-policy/?from=offer",
+            "severity": "clean"
+          },
+          {
+            "field": "store_phone",
+            "kind": "match",
+            "spec": "+1 (563) 239-5520",
+            "target": "+1 (563) 239-5520",
+            "severity": "clean"
+          },
+          {
+            "field": "store_phone_tel",
+            "kind": "match",
+            "spec": "tel:+15632395520",
+            "target": "tel:+15632395520",
+            "severity": "clean"
+          }
+        ],
+        "blocker_fields": [],
+        "warning_fields": [],
+        "waiver": null,
+        "waiver_assessment": {
+          "active": null,
+          "inert_counts": {
+            "stale": 0,
+            "foreign": 0,
+            "malformed": 0,
+            "expired": 0
+          }
+        },
+        "required_actions": []
+      },
+      {
+        "id": "built_output.upsell_selector_scope",
+        "scope": "built_output.upsell_selector_scope",
+        "status": "pass",
+        "code": "built_output.upsell_selector_scope.pass",
+        "reason": "Every bundle selector on 5 built post-purchase page(s) is scoped away from the live cart.",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "apf-funnel",
+          "site_root": "./_site/apf-funnel"
+        },
+        "state": {
+          "findings": []
+        },
+        "state_fingerprint": null,
+        "findings": [],
+        "warned": [],
+        "pages_scanned": 5,
+        "selectors_scanned": 5,
+        "waiver": null,
+        "waiver_assessment": {
+          "active": null,
+          "inert_counts": {
+            "stale": 0,
+            "foreign": 0,
+            "malformed": 0,
+            "expired": 0
+          }
+        },
+        "required_actions": []
+      },
+      {
+        "id": "built_output.campaign_identity",
+        "scope": "built_output.campaign_identity",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "apf-funnel",
+          "site_root": "./_site/apf-funnel"
+        },
+        "waiver": null,
+        "status": "pass",
+        "code": "built_output.campaign_identity.pass",
+        "reason": "All 9 built page(s) agree on campaign identity (API key present, next-funnel \"SKINOFAB Adaptive Peptide Foundation\").",
+        "findings": [],
+        "pages_scanned": 9,
+        "pages_skipped": [],
+        "identity": {
+          "api_key": "n0TpIL5C2I6hMzCASiLEFkzjn4niyafhvfHUCkmR",
+          "api_key_source": "/apf-funnel/config.js nextConfig.apiKey",
+          "funnel": "SKINOFAB Adaptive Peptide Foundation"
+        },
+        "required_actions": []
+      },
+      {
+        "id": "built_output.sdk_markup",
+        "scope": "built_output.sdk_markup",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "apf-funnel",
+          "site_root": "./_site/apf-funnel"
+        },
+        "waiver": null,
+        "sdk_attribute_index_version": "0.4.42",
+        "campaign_sdk_version": "0.4.43",
+        "status": "pass",
+        "code": "built_output.sdk_markup.pass",
+        "reason": "SDK markup checks passed on 9 built page(s).",
+        "findings": [],
+        "warned": [],
+        "unknown_attributes": [
+          {
+            "name": "data-next-catalog-component",
+            "pages": [
+              "./_site/apf-funnel/foundation-checkout/index.html",
+              "./_site/apf-funnel/foundation-offer-1/index.html",
+              "./_site/apf-funnel/foundation-offer-2/index.html",
+              "./_site/apf-funnel/foundation-offer-2b/index.html",
+              "./_site/apf-funnel/foundation-thank-you/index.html",
+              "./_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+              "./_site/apf-funnel/lymphatic-brush-offer/index.html"
+            ]
+          },
+          {
+            "name": "data-next-content",
+            "pages": [
+              "./_site/apf-funnel/foundation-thank-you/index.html"
+            ]
+          },
+          {
+            "name": "data-next-skeleton",
+            "pages": [
+              "./_site/apf-funnel/foundation-thank-you/index.html"
+            ]
+          }
+        ],
+        "pages_scanned": 9,
+        "required_actions": []
+      },
+      {
+        "id": "built_output.script_syntax",
+        "scope": "built_output.script_syntax",
+        "waivable": false,
+        "subject": {
+          "public_route_slug": "apf-funnel",
+          "site_root": "./_site/apf-funnel"
+        },
+        "waiver": null,
+        "status": "pass",
+        "code": "built_output.script_syntax.pass",
+        "reason": "All 12 campaign-owned script(s) loaded by 9 built page(s) parse.",
+        "findings": [],
+        "scripts_scanned": 12,
+        "scripts_unresolved": [],
+        "scripts_outside_site": [],
+        "warned": [],
+        "pages_scanned": 9,
+        "required_actions": []
+      }
+    ],
+    "qc_results": [
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:2e2d68b2883465fce884bc3985bb9712ba89a59035dea4f08e1ee07776148517",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 28327,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/adaptive-foundation-offer/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:7403fed710ee188e19c0b3c3815b14a983f47b5b1cb3a37dd87786fb0d132396",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 69029,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/foundation-checkout/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:1461b5e4f1a669c3b64d9f712211d4649f13d71dff87e661d660c16f6b395cdc",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 63676,
+          "candidates": 26
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/foundation-offer-1/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:0c813f78c0048a7727ffce9c85a41e4f126341e8e20d0a5cf30ca1c3b573c0f6",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 16899,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/foundation-offer-2/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:fe4ec0ec58b6a4449f66dd488ecc48ae51ca82837eb946ece48f803bb2ffa040",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 27052,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/foundation-offer-2b/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:81f8171518c4957f278c7851b2984cfe34a36592341c395244b4fc4080307c10",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 25950,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/foundation-thank-you/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:2143439db5f363422cc7a909a19b2e8663fe9a7081e7592ceb7fd81ca8334bcc",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 36811,
+          "candidates": 10
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/lymphatic-brush-offer-b/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:3af746438468e50959bb67415569e563eda1ceb8c5c742cd6411043933a538b5",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 30360,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "cart_placeholders:_site/apf-funnel/lymphatic-brush-offer/index.html:page",
+        "check": "cart_placeholders",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "sdk_pin_unverified",
+        "subject": {
+          "check": "cart_placeholders",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "page"
+        },
+        "state_fingerprint": "sha256:b3731632ed55572517c3615a9358e33f22837c2e7f3fe68d58dea9e7362c88c7",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "sdk_pin": "0.4.43",
+          "sdk_pin_source": "loader",
+          "token": null,
+          "shape_sha256": null,
+          "known": false,
+          "occurrences": [],
+          "bytes": 30570,
+          "candidates": 0
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "sdk_pin_unverified"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.880Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:4baaa9ccb38e3ac6aa53af177b22b4e5b04847c7b02322f037053d5496876a8c",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:682490dd691eccdb189d007f22dda7302480e49461a5745bae9e7133af7fdcb3",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:7c1ab0dfe0329a0e7f983c52afe96a0949c6f86578959edda9c8fc9b1ad1db7e",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:527147ee7cc3deda2915b9fd174f988ea220cddf61569ea45ca5606f1b416305",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:4bccbb081c4962fcaedaf91612df994c660a2f4ece5a9b9d88ebae4b78658c22",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:4531c06aaad00a9110b4cd2f570f58714430384c0c801b191712cad1888157e6",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:11d12cb72536a91a2d3548be5a212d5f9c1b9304962b78ee32adb2b7ad190846",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/10-reasons-adaptive-foundation/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:73f9eff1f930d676eeb0fa0d9df4b464215c073b27c78d8fcf8b57ebd46d4eff",
+        "observation": {
+          "page": "_site/apf-funnel/10-reasons-adaptive-foundation/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:anchor:offer",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "anchor:offer"
+        },
+        "state_fingerprint": "sha256:e0bfac998abd7a58bb3657c4438275fbb3aed9ad08935fa348f90b2e557f5d4d",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "target": "offer",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:anchor:s18-reviews",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "anchor:s18-reviews"
+        },
+        "state_fingerprint": "sha256:29897b84fb818bed2c4e85b0d72eea94e0496c646a37043b6daca252f8f70c60",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "target": "s18-reviews",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:anchor:reviews",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "anchor:reviews"
+        },
+        "state_fingerprint": "sha256:8ec804572fa658d96afc0725f27b027c3daa1076faf8d2f5930e2a8adf2051f9",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "target": "reviews",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:7a0d0928db396b3f900dac003c4e9d30061704c89c96cae427166b94687e002e",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:3d4454e3f7f2c8c9c51b31a4836b0c403bc2f790742a6672112a04f043e2dad1",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:1e8ff4b76250a407c34ba52eb215fdeb520169c2c99b4a988c4bd3ace1acba49",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:5b9cb43eb620329e682a23daecfb4038e36dc01c7151f535fcc3655f366a3901",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:28e2fa16f410155536f83b4c4d1a050d7a319a53ee67b2cab2f8189219582cb3",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:4ff666abcf1a990f69ae26aabafdfde511791da86c5d267a609f1d15ce12b249",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:ee6b8b50df87fdafd1cf64b4c57ee571b2e130f6ee27670a5678bbac8eb0c948",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/adaptive-foundation-offer/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:00fa265f860112ab1633d090d53ccbcefd333bd8351fd30596f93dc5bfa64d3c",
+        "observation": {
+          "page": "_site/apf-funnel/adaptive-foundation-offer/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:anchor:sf-co-featured",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "anchor:sf-co-featured"
+        },
+        "state_fingerprint": "sha256:922ead2db1d29e0c00bf76af8d6b9a49786972c5fa17d6d1d439de1fd81b348b",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "target": "sf-co-featured",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:anchor:sf-co-pay",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "anchor:sf-co-pay"
+        },
+        "state_fingerprint": "sha256:add7dd0735697972aa44e8c632a2b8eb2933fb9d44de3158788ee32b7417bc33",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "target": "sf-co-pay",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:bc3a01335c6001dfd26682686d2b69afa973c3803980285e24425313407c5de4",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:852de59ae755f4337f7d466fbe5cc101e184505d7db2f45734add4b587f85203",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:ac34a4e65cb25bc78c804d731432e6c4c1ce490c5e8738c16402c344c5f774f5",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:5bcaa90133bb7c71c7ab0ccedec00ff6262d80f8b797dfb8aee78ae6843c9a78",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:07e9be00ef3faaef0de1354ee990759ba884726201fefa290dbdc590e644beb9",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:58a0e378caaba83472dcfc0c34903ed8873a02d89aeab8383411107c811e53a2",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:25682484f4e37e25c9a5c729b31f18ae9e2a6e8e258321d879ce82daf3e79f30",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-checkout/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:f1b948325d78b43ca3cec9bbef37181d3918a6a56d18e82ed9d0301614cbfe0c",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-checkout/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:6ee69ae3744cffd110faf38bcb61cbec1a31a7e71dcaf77a1609bf7d20ecb301",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:anchor:sf-supply-title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "anchor:sf-supply-title"
+        },
+        "state_fingerprint": "sha256:da50ca10c40f0b3517cc860c39b682dc00f57121bf5b1c18b6892812b6d80e73",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "target": "sf-supply-title",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:c209464dc44e0c10a05212f335ac7c94af1450fc40472d3696817ecbe6d9c7a1",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:4fd983d69bb461f9848e95b058ea45e7aa59836ae8c88024058448d5cc456d3c",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:52f6645265f3fb160f43a49eae893d3e15df0fcdd3309ea19ba0099f40a01c2d",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:a979fe25ef4e3beeb2c66a955a990d8476947da503d2d0e899278724af7afa96",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:210f58422639d6c3294e2cc50e1769cfecc86a64e7d9a66dbc1cd9925d2cb013",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:917112fff69797adcbaddff7685cee6cda61a4bab2a6be0b634be1b0fe747fac",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:d8118ea6ceb3cfd4860ee44488703bc941c29039da4172f9bd2befd7674c56f7",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-1/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:1e8fc2efdb7d5f15f5d762eae19a13c2e2a2f58f7fbd276f02d1585ea1c764e9",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-1/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:635523a76c7275fdc5b628ec9f1905627c88b3a80c4ef6d37b9ef02bb710f05c",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:f9a83729d30d78abaacd98cd2c015e0d733278e93a3debcc383cc0d8a2da0075",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:37c5f7daf873e6f3bf9488b1bf514964637b68b4d8521e1ca86ad69f3dc86b20",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:4597b9f493a8a4e162f7f359c74f5109de1b286e7fcdada328c0edab29510a76",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:06a61d1edbb86a026dc9889fa538abbc9823462b1f3041777bfb091610263acc",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:be77095272032ffa19e56615e71920b004e57a5494fffc8148c7c92f3463a0f6",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:cedff65c2be1052b18b2bdbbb3eb62fcf069c18e4a040468b07b0de5fc75c70c",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:86700c00854a45dc4a57373519dcf681200e04c582c04c49581914250082b848",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:701b8bb889b6a3158d8c16129cb3ae250a2c95e0de08d6cff5535dcba3aa94e0",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:1184810dfc4571982036ca5f941d3ecdb7b1cf2d64dc537719f71fa07afd69ef",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:cbe54dbe38b5709e24566a77bc8797fefb9718c3b0c10c8920032490a848c6a2",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:36135f900f0119719915d4b89a4e31d479ed093ccbb52e86f8f5fafd729cdbb1",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:fcdd24fe46e26623bb61fff9d08088343085f72b07cf1c47c152107fc97ea2a6",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:1c7c093f42e52d28a1e264defe28b0127fce0d0f3ffd89bd1c2a21293fec914a",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:c9eb17924f6589605a139870594cad1cf50162af15b3f6b2a83fe7571060aa94",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:adce3eaa837f09e10ceb5cbc7d675a83351a5fdc4605599706bc2b19f0f7734a",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:4157621787c697f02f3de32c383c4fa1fd368a55a6000bae8b0a4d476f03bc02",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-offer-2b/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:5b4f69ffb210740ee8227d3cc6822c3780ab56aa56f359c71b31c8cfcd7a1afb",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-offer-2b/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-thank-you/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:13fc2e0bdea6f1e3c24ea4a989714f7b18200909f977696d8c19b1704c563df5",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-thank-you/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:bfb43ea6ddc6e9ad2906146085cd57e40bfc6bd2e3fc66dbaaca53300e63d8e8",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-thank-you/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:e9769640d8fa3d061587fee503459ddd018a3f37a30e549eb9bb4376d8d8f0ab",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-thank-you/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:536ed84a9c1e19dc20a5f2825a4782d4aec517444bc5a37c5490a468ed27da08",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-thank-you/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:e08e6a96f45e09fac58fa88ce790a876d897580bade4e2fbd4362581ea7ff66e",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-thank-you/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:4e38de1cd1c30cab651d851051cb5ae9a80be1343e0db79dabfc95da4d1be259",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-thank-you/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:462ed8d556ccae7427fa1a99f26b6bae8104a479d1e19464509850d29e3d7c17",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/foundation-thank-you/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:6ba49065584eda4f3ccf715048acfd0ab8b02d21fe2766ac6ed6a334ce3d6249",
+        "observation": {
+          "page": "_site/apf-funnel/foundation-thank-you/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:2b06a5e1f65abe6d12d5179f5618ec14a0c981520673ae44a1062b75302658d2",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:329f0bf8d3cf2dd58a72f22bb7b73710c2516cfdc8d06fa9ee12f14a2767c8c5",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:17be79e312349d63609c18bcb4fb82587373b42c1054fdf51d6b99587e510d44",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:94de7d0c860c2cefcfd1bc1f979f057496102b41fd9bee15e312ba1fdbf26581",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:88828f9ba7cce265d3a5bd8daa2ab980f53491facb7aa10145e5fb82b35626ac",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:9307fa1ae951018026a104983aea19de2c1ff7cbd3f3d301cbcabe76424b88f0",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:d3408eca4aad89eb46bd2a4a416e6f3103844a632f3c6454e50d22efa75de18d",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:7b03b9e06b218ce7bd5bde3d68146f118c7f0c7a48754ffa79df2a3fbcf190fe",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer-b/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:ff1217306f175428cc0c97929ff950d10e02cf4607c9e5e681dc0535055dded1",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer-b/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:anchor:",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "anchor:"
+        },
+        "state_fingerprint": "sha256:ce7f79c24bf6ac9ee753ea10154b32686be2fc1e50bd722339c08b16b4ee2128",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "target": "",
+          "outcome": "resolved",
+          "scripts_read": null,
+          "scripts_loaded": null
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:favicon:link",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "favicon:link"
+        },
+        "state_fingerprint": "sha256:8f60b6692d031728c8a0f471842f2c5c5c5600e999fe8dad135651933059158f",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "favicon": true
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:og:title",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "og:title"
+        },
+        "state_fingerprint": "sha256:ee14364820d2003b2d6ecc4cedc6e20558d41f0f7ff25258e658c8761ff0486f",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:og:description",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "og:description"
+        },
+        "state_fingerprint": "sha256:791e6703c0c0e4cbad86e04e6b46d43db197ede89490db50097b55e6ee1b53db",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:og:image",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "og:image"
+        },
+        "state_fingerprint": "sha256:eb0b95369be5c63b2d1d3fe46c6ced21d499bee2d13f79854b55d9a724307b0a",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:og:image_target",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "og_image_remote_not_fetched",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "og:image_target"
+        },
+        "state_fingerprint": "sha256:623e2ba5b62334ef1ce9368f5db10bf25c04d68ae4fc9938970266164be5de32",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "og": {
+            "title": true,
+            "description": true,
+            "image": "absolute_remote",
+            "image_target": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg"
+          }
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "og_image_remote_not_fetched"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:tailwind_cdn:cdn.tailwindcss.com",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "tailwind_cdn:cdn.tailwindcss.com"
+        },
+        "state_fingerprint": "sha256:19a1e3ff42d90f45eeeb68c59bc7828275c20cbdc7fb2cdd56c24b6be4bd0f7e",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "tailwind_cdn": 0,
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:asset_host:cdn.29next.store",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "pass",
+        "reason_code": null,
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "asset_host:cdn.29next.store"
+        },
+        "state_fingerprint": "sha256:fdb09f142b889cc0fb301ac798d367c15faec9a2d835eb78b0ead7bc11e215b1",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "asset_host_refs": []
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 1,
+          "expected": 1,
+          "limits": []
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      },
+      {
+        "schema": "campaigns-os-qc-result/v0",
+        "id": "smoke_qc:_site/apf-funnel/lymphatic-brush-offer/index.html:loopback:loopback",
+        "check": "smoke_qc",
+        "leg": "doctor",
+        "result": "unexercised",
+        "reason_code": "development_render",
+        "subject": {
+          "check": "smoke_qc",
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "key": "loopback:loopback"
+        },
+        "state_fingerprint": "sha256:b8ea4f74387a54199797590bc78371f60bdd283eb0093fe54f068835da3b4931",
+        "observation": {
+          "page": "_site/apf-funnel/lymphatic-brush-offer/index.html",
+          "loopback_refs": [],
+          "environment": "development"
+        },
+        "members": [],
+        "accept_eligible": false,
+        "coverage": {
+          "observed": 0,
+          "expected": 1,
+          "limits": [
+            "development_render"
+          ]
+        },
+        "measured_at": "2026-10-29T18:20:03.967Z",
+        "producer": "campaigns-os doctor"
+      }
+    ],
+    "polish_checkpoint_gate": {
+      "id": "polish.hidden_eager_media",
+      "scope": "polish.hidden_eager_media",
+      "status": "pass",
+      "checkpoint_status": "ready",
+      "severity": "info",
+      "code": "polish.hidden_eager_media.pass",
+      "reason": "Page-load evidence has no hidden eager media above 1,048,576 bytes.",
+      "waivable": false,
+      "subject": {
+        "build_fingerprint": "sha256:b6253f78d425e681df17e7503977ba6bd2aad6424871fcb9fd16b7551249af2b",
+        "campaign_slug": "apf-funnel",
+        "route_scope": "selected",
+        "routes": [
+          "/apf-funnel/10-reasons-adaptive-foundation/",
+          "/apf-funnel/adaptive-foundation-offer/"
+        ],
+        "viewports": [
+          "desktop",
+          "mobile"
+        ]
+      },
+      "state": {
+        "findings": []
+      },
+      "state_fingerprint": "sha256:0e613e0e6ec966f23b82f9ab0e0a8f2b8b88013f3e01318200c7afbc3ae4f92a",
+      "findings": [],
+      "waiver": null,
+      "waiver_assessment": {
+        "active": null,
+        "inert_counts": {
+          "stale": 0,
+          "foreign": 0,
+          "malformed": 0,
+          "expired": 0
+        }
+      },
+      "required_actions": []
+    },
+    "prepare_build_gate": null,
+    "brand_contract": {
+      "state": "inspected",
+      "family": "apollo"
+    },
+    "page_kit_campaign_config": {
+      "status": "ok",
+      "public_route_slug": "apf-funnel",
+      "target_path": "_data/campaigns.json"
+    },
+    "scaffold_required": false,
+    "scaffold_reason": null,
+    "scope": {
+      "mode": "full",
+      "built_pages": [
+        {
+          "page_id": "listicle",
+          "type": "presell",
+          "role": "visual",
+          "route": "10-reasons-adaptive-foundation/",
+          "source_path": "facelove-listicle.html"
+        },
+        {
+          "page_id": "offer",
+          "type": "landing",
+          "role": "visual",
+          "route": "adaptive-foundation-offer/",
+          "source_path": "apf-pdp.html"
+        },
+        {
+          "page_id": "checkout",
+          "type": "checkout",
+          "role": "runtime",
+          "route": "foundation-checkout/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "offer-1",
+          "type": "upsell",
+          "role": "runtime",
+          "route": "foundation-offer-1/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "offer-2",
+          "type": "upsell",
+          "role": "runtime",
+          "route": "foundation-offer-2/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "offer-2b",
+          "type": "downsell",
+          "role": "runtime",
+          "route": "foundation-offer-2b/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "brush-offer",
+          "type": "upsell",
+          "role": "runtime",
+          "route": "lymphatic-brush-offer/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "brush-offer-b",
+          "type": "downsell",
+          "role": "runtime",
+          "route": "lymphatic-brush-offer-b/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        },
+        {
+          "page_id": "thank-you",
+          "type": "thankyou",
+          "role": "runtime",
+          "route": "foundation-thank-you/",
+          "source_path": null,
+          "template_stock": true,
+          "template_family": "apollo"
+        }
+      ],
+      "out_of_scope_pages": [],
+      "out_of_scope_reasons": [],
+      "previewable_routes": [
+        {
+          "page_id": "listicle",
+          "type": "presell",
+          "route": "10-reasons-adaptive-foundation/"
+        },
+        {
+          "page_id": "offer",
+          "type": "landing",
+          "route": "adaptive-foundation-offer/"
+        },
+        {
+          "page_id": "checkout",
+          "type": "checkout",
+          "route": "foundation-checkout/"
+        },
+        {
+          "page_id": "offer-1",
+          "type": "upsell",
+          "route": "foundation-offer-1/"
+        },
+        {
+          "page_id": "offer-2",
+          "type": "upsell",
+          "route": "foundation-offer-2/"
+        },
+        {
+          "page_id": "offer-2b",
+          "type": "downsell",
+          "route": "foundation-offer-2b/"
+        },
+        {
+          "page_id": "brush-offer",
+          "type": "upsell",
+          "route": "lymphatic-brush-offer/"
+        },
+        {
+          "page_id": "brush-offer-b",
+          "type": "downsell",
+          "route": "lymphatic-brush-offer-b/"
+        },
+        {
+          "page_id": "thank-you",
+          "type": "thankyou",
+          "route": "foundation-thank-you/"
+        }
+      ],
+      "blocked_runtime_pages": []
+    },
+    "source_preparation": {
+      "checked_page_count": 2,
+      "finding_codes": []
+    },
+    "build_output_fingerprint": {
+      "root": "_site/apf-funnel/",
+      "algorithm": "sha256-manifest/v1",
+      "value": "sha256:b6253f78d425e681df17e7503977ba6bd2aad6424871fcb9fd16b7551249af2b",
+      "file_count": 195,
+      "excluded": [],
+      "recorded": "sha256:b6253f78d425e681df17e7503977ba6bd2aad6424871fcb9fd16b7551249af2b",
+      "status": "pass"
+    },
+    "live_campaign_refs": {
+      "status": "not_run",
+      "reason_code": "not_read",
+      "reason": "This invocation does not read the live campaign.",
+      "checked_pages": 9,
+      "page_findings": [],
+      "drift": null
+    },
+    "input_currency": {
+      "brief": {
+        "bound": {
+          "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
+          "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+        },
+        "current": {
+          "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
+          "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+        },
+        "status": "current"
+      },
+      "spec": {
+        "bound": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
+        "current": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
+        "snapshot_material": "current"
+      },
+      "stages": {
+        "assembly": "current",
+        "polish": "current",
+        "qa": "current"
+      },
+      "reasons": {
+        "assembly": null,
+        "polish": null,
+        "qa": null
+      }
+    },
+    "theme_gate": {
+      "status": "pass",
+      "code": "theme_gate.applied",
+      "reason": "Brand theme is applied after next-core.css on commerce pages.",
+      "commerce_pages": [
+        "checkout",
+        "offer-1",
+        "offer-2",
+        "offer-2b",
+        "brush-offer",
+        "brush-offer-b",
+        "thank-you"
+      ],
+      "commerce_pages_out_of_scope": [],
+      "waiver": null,
+      "required_actions": []
+    },
+    "polish_gate": {
+      "status": "pass",
+      "code": "polish.evidence_current",
+      "reason": "Polish evidence is current, structured, and produced by next-campaigns-polish.",
+      "build_fingerprint": "sha256:b6253f78d425e681df17e7503977ba6bd2aad6424871fcb9fd16b7551249af2b",
+      "source_build_fingerprint": "sha256:b6253f78d425e681df17e7503977ba6bd2aad6424871fcb9fd16b7551249af2b",
+      "source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
+      "current_source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
+      "assembly_source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
+      "performed_by": "next-campaigns-polish",
+      "waiver": null,
+      "warnings": [],
+      "owned_checkpoint_id": "polish.hidden_eager_media",
+      "owned_checkpoint_status": "pass",
+      "owned_checkpoint_only": false
+    }
+  },
+  "next": {
+    "stage": "qa",
+    "status": "ready_with_warnings",
+    "stage_blocked": false,
+    "owner": "qa",
+    "default_skill": "next-campaigns-qa",
+    "command": "npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json",
+    "reason": "QA recorded zero executed order paths, so a declared \"common\" order-path depth is not proved. A `--test-order off` run is a diagnostic, not purchase proof; re-run QA at the declared depth or change the declared depth deliberately.",
+    "actions": [
+      "Run npx --no-install campaigns-os next qa --packet ./campaign-runtime.build.json."
+    ],
+    "blocked_stages": []
+  },
+  "cause_summary": {
+    "schema_version": "campaigns-os-finding-cause/v0",
+    "surface": "doctor",
+    "total": 8,
+    "counts": {
+      "caused_by_change": 0,
+      "pre_existing": 8,
+      "test_environment": 0,
+      "upstream_drift": 0,
+      "unknown": 0
+    },
+    "prior_run_id": "run_1793270414928_af54ec6a",
+    "comparison": "prior_run"
+  }
+}

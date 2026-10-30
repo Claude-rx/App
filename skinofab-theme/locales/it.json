@@ -1,0 +1,307 @@
+{
+    "global": {
+        "button": {
+            "more": "Altro",
+            "search": "Cerca",
+            "close": "Chiudi",
+            "save": "Salva",
+            "save_loading": "Risparmio...",
+            "go_back": "Torna indietro",
+            "learn_more": "Learn more",
+            "dismiss": "Dismiss"
+        },
+        "error": {
+            "please_check_error": "<strong>Oops! Abbiamo trovato alcuni errori</strong> - controlla i messaggi di errore qui sotto e riprova",
+            "403": "Permesso negato!",
+            "403_message": "Siamo spiacenti ma non è consentito accedere a questa pagina.",
+            "404": "Pagina non trovata",
+            "404_message": "Siamo spiacenti ma la pagina che stai cercando non è stata trovata.",
+            "500": "Errore interno del server 500",
+            "500_heading": "Scusa, non sei tu, siamo noi.",
+            "500_message": "Abbiamo ricevuto una notifica del problema, riprova più tardi.",
+            "generic_try_again": "Something went wrong - please try again",
+            "connection_try_again": "Connection issue - please try again"
+        },
+        "confirm": {
+            "delete": "Are you sure you want to delete?"
+        },
+        "accessibility": {
+            "skip_to_main_content": "Vai al contenuto principale"
+        }
+    },
+    "navigation": {
+        "main": {
+            "home": "Casa",
+            "shop": "Negozio",
+            "blog": "Blog",
+            "support": "Supporto",
+            "contact": "Contatto",
+            "cart": "Carrello"
+        },
+        "account": {
+            "account": "Conto",
+            "subscriptions": "Abbonamenti",
+            "orders": "Cronologia ordini",
+            "profile": "Profilo",
+            "addresses": "Indirizzi",
+            "support": "Supporto",
+            "dashboard": "Cruscotto",
+            "logout": "Disconnettersi",
+            "login_or_register": "Accedi o registrati",
+            "welcome": "Welcome back"
+        },
+        "footer": {
+            "about_us": "Su di noi",
+            "contact_us": "Contattaci",
+            "account_info": "Account e informazioni",
+            "support_terms": "Supporto e termini",
+            "support": "FAQ",
+            "terms_conditions": "Termini e condizioni",
+            "privacy": "Informativa sulla privacy",
+            "address": "Indirizzo",
+            "copyright": "Tutti i diritti riservati",
+            "help": "Centro assistenza",
+            "rights": "Tutti i diritti riservati."
+        },
+        "pagination": {
+            "next": "Successivo"
+        },
+        "search": "Cerca",
+        "cart": "Carrello",
+        "menu": {
+            "toggle": "Menu"
+        },
+        "breadcrumb": "Breadcrumb"
+    },
+    "tables": {
+        "heading": {
+            "product_name": "Nome prodotto",
+            "product": "prodotto",
+            "quantity": "Quantità",
+            "schedule": "Pianificazione",
+            "price": "Prezzo",
+            "discount": "Sconto",
+            "total": "Totale",
+            "items_to_buy_now": "Articoli da acquistare ora"
+        },
+        "content": {
+            "price": "Prezzo",
+            "discount": "Sconto"
+        },
+        "actions": {
+            "remove": "Rimuovi",
+            "add_coupon": "Aggiungi coupon",
+            "add_coupon_loading": "Aggiunta di...",
+            "reload": "Ricarica",
+            "reload_loading": "Aggiornamento...",
+            "add": "Aggiungi"
+        }
+    },
+    "order": {
+        "cart": {
+            "title": "Carrello",
+            "summary": "Riepilogo",
+            "cart_total": "Totale del carrello",
+            "cart_total_discount": "Totale del carrello (al netto degli sconti)",
+            "applied_offer": "Offerta applicata",
+            "applied_coupons": "Coupon applicati",
+            "shipping": "Spedizione",
+            "order_total": "Totale ordine",
+            "proceed_to_checkout": "Procedi al checkout",
+            "upsell_message_detail": "{{ message }} per qualificarsi per l'offerta speciale <b>{{ offer_name }}</b>",
+            "continue_shopping": "Continua gli acquisti",
+            "cart_empty": "Il tuo carrello è vuoto.",
+            "items_count": {
+                "one": "{{ count }} articolo",
+                "other": "{{ count }} articoli"
+            },
+            "subscription_items": {
+                "one": "Abbonamento (articolo{{ count }} )",
+                "other": "Abbonamento ({{ count }} articoli)"
+            },
+            "calculated_at_checkout": "Calcolato al momento del pagamento",
+            "subscription_details": "Dettagli dell'abbonamento",
+            "product": "Prodotto",
+            "quantity": "Qtà",
+            "price": "Prezzo",
+            "subscription_total": "Totale sottoscrizione",
+            "subscription_renewal_message": "Il tuo abbonamento si rinnoverà ogni",
+            "coupon_code": "Coupon code",
+            "empty_hint": "Add items to get started"
+        }
+    },
+    "store": {
+        "blog": {
+            "title": "Blog",
+            "no_posts": "Non sono ancora stati creati post.",
+            "search_not_found": "Trovati <strong>0</strong> risultati.",
+            "all_categories": "All categories",
+            "category_filter": "Filter by category"
+        },
+        "catalogue": {
+            "filters": "Filtri",
+            "filter_clear": "Trasparente",
+            "free": "Gratuito",
+            "sale": "Vendita",
+            "none_found": "Nessun prodotto trovato.",
+            "edit_this_category": "Modifica questa categoria",
+            "edit_this_product": "Modifica questo prodotto",
+            "buy_option": "Opzione di acquisto",
+            "one_time": "Una volta",
+            "subscribe_save": "Iscriviti e risparmia",
+            "order_arrival_frequency": "Quante volte vorresti che arrivasse il tuo ordine?",
+            "add_to_cart": "Aggiungi al carrello",
+            "add_to_cart_loading": "Aggiunta di...",
+            "product_unavailable": "Non disponibile",
+            "out_of_stock": "Esaurito",
+            "size_guide": "Guida alle taglie",
+            "about": "Informazioni su",
+            "reviews": "Recensioni",
+            "no_reviews": "Questo prodotto non ha ancora recensioni",
+            "no_reviews_add": "sii il primo a scriverne uno",
+            "customer_reviews": "Recensioni clienti",
+            "see_all_reviews": "Vedi tutte le recensioni",
+            "write_a_review": "Scrivi una recensione",
+            "recommended_products_header": "Prodotti consigliati",
+            "apply_filters": "Apply filters",
+            "description": "Description",
+            "filter_reset": "Reset",
+            "product_images": "Product images",
+            "previous_image": "Previous image",
+            "next_image": "Next image",
+            "one_time_purchase": "One-time purchase",
+            "one_time_subtitle": "Buy once, no commitment",
+            "recurring_delivery": "Recurring delivery",
+            "delivery_frequency": "Delivery frequency",
+            "added_to_cart": "Added",
+            "product_not_found": "Product not found",
+            "add_to_cart_error": "Could not add to cart",
+            "subscription_frequency_error": "Please choose a valid subscription frequency.",
+            "view_image": "View image {{ count }}",
+            "select_variant": "Select variant",
+            "product_image_alt": "{{ title }} - image {{ count }}"
+        },
+        "review": {
+            "reviews": "Recensioni",
+            "customer_reviews": "Recensioni dei clienti",
+            "all_reviews": "Tutte le recensioni",
+            "customer_reviews_count": {
+                "one": "{{ count }} recensioni dei clienti",
+                "other": "{{ count }} recensioni dei clienti"
+            },
+            "reviewed_by_you": "Recensito da te",
+            "reviewed_by_other": "Recensito da <b>{{ name }}</b>",
+            "no_reviews": "Questo prodotto non ha ancora recensioni.",
+            "leave_review": "Lascia una recensione del prodotto",
+            "save_review": "Salva recensione"
+        },
+        "search": {
+            "products_matching": "Prodotti corrispondenti a {{ q }}",
+            "search_not_found": "Trovati 0 risultati.",
+            "search_placeholder": "Search products",
+            "suggestion": "Search for products by name, description, or category.",
+            "close_search": "Close search"
+        },
+        "support": {
+            "title": "Supporto",
+            "heading": "Come possiamo aiutarti?",
+            "search_not_found": "Trovati 0 risultati.",
+            "view": "Visualizza",
+            "create_support_request": "Hai ancora bisogno di aiuto? Crea <a href='{{ link }}'>una richiesta di supporto</a> con il nostro team di assistenza clienti e saremo lieti di aiutarti.",
+            "no_categories": "Non sono ancora state create categorie.",
+            "articles": "articoli",
+            "no_articles": "Non sono ancora stati creati articoli.",
+            "edit_this_article": "Modifica questo articolo",
+            "last_updated": "Ultimo aggiornamento"
+        }
+    },
+    "side_cart": {
+        "default": {
+            "your_order": "Il tuo ordine",
+            "your_cart_is_empty": "Il tuo carrello è vuoto!",
+            "oops_You_have_nothing_here": "Ops! Non hai niente qui.",
+            "quantity": "Quantità",
+            "qty": "Qtà",
+            "schedule": "Pianificazione",
+            "price": "Prezzo",
+            "savings": "Risparmio",
+            "regular": "Regolare",
+            "your_price": "Il tuo prezzo",
+            "cart_subtotal": "Subtotale del carrello",
+            "discount": "Sconto",
+            "shipping": "Spedizioni",
+            "cart": "Carrello",
+            "total": "Totale",
+            "product": "Prodotto",
+            "subscription_details": "Dettagli dell'abbonamento",
+            "applied_coupons": "Buoni applicati",
+            "subscription_items_one": "Abbonamento ({{count}} articoli)",
+            "subscription_items_other": "Abbonamento ({{count}} articoli)",
+            "calculated_at_checkout": "Calcolato al momento del pagamento",
+            "subscription_total": "Totale sottoscrizione",
+            "subscription_renewal_message": "Il tuo abbonamento si rinnoverà ogni",
+            "proceed_to_checkout": "Procedi al pagamento",
+            "have_a_coupon": "Hai un coupon?",
+            "coupon_code": "Codice coupon",
+            "apply_coupon": "Applica il coupon",
+            "close_cart": "Close carrello",
+            "frequency_template": "Every {count} {interval}",
+            "decrease_quantity": "Decrease quantity",
+            "increase_quantity": "Increase quantity",
+            "remove_item": "Remove {title}",
+            "item_removed_announcement": "Articolo rimosso dal carrello.",
+            "quantity_updated_announcement": "Quantità del carrello aggiornata.",
+            "remove_voucher": "Remove voucher",
+            "invalid_coupon_code": "Invalid coupon code",
+            "shipping_progress_message": "You are {amount} away from FREE shipping",
+            "gift_progress_message": "You are {amount} away from a FREE gift!",
+            "final_progress_message": "You have unlocked all rewards!",
+            "upsell_section_title": "Potrebbe piacerti anche"
+        }
+    },
+    "footer": {
+        "support": "Support",
+        "help": "Help Center",
+        "rights": "All Rights Reserved."
+    },
+    "pagination": {
+        "label": "Pagination",
+        "previous": "Previous",
+        "next": "Next"
+    },
+    "product": {
+        "no_image": "No image",
+        "sold_out": "Esaurito"
+    },
+    "catalogue": {
+        "continue_shopping": "Continua lo shopping"
+    },
+    "membership": {
+        "price_label": "Member price",
+        "applied_at_checkout": "Applied at checkout"
+    },
+    "homepage": {
+        "cta": {
+            "shop_now": "Shop now",
+            "view_all": "View all",
+            "view_product": "View product"
+        },
+        "heading": {
+            "on_sale": "On sale",
+            "featured_products": "Prodotti in evidenza",
+            "featured_categories": "Acquista per categoria",
+            "promo_banner": "Offerta a tempo limitato",
+            "featured_product": "Prodotto in evidenza"
+        },
+        "placeholder": {
+            "hero_image": "Hero image",
+            "hero_image_path": "Settings > Homepage > Hero Image",
+            "featured_products": "Featured Products - Settings > Homepage > Featured Products",
+            "featured_categories": "Featured Categories - Settings > Homepage > Featured Categories",
+            "on_sale": "On Sale - Settings > Homepage > On Sale > Products",
+            "featured_product": "Featured Product - Settings > Homepage > Featured Product",
+            "image_text": "Image with Text - Settings > Homepage > Image with Text",
+            "text_block": "Text Block - Settings > Homepage > Text Block"
+        }
+    }
+}

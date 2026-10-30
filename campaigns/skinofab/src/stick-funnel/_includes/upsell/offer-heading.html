@@ -1,0 +1,58 @@
+{%- comment -%} SKINOFAB: the demo fallback prices ($9.99, $24.95, $0.00...) are the page's own (upsell_offer.fallback_price / fallback_compare, tools/funnel/upsell_pages.py). Otherwise GENERATED from _shared/upsell/_includes/upsell/offer-heading.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-offer-heading
+  next_version: 1
+  next_sdk_owns: package name / price display
+  next_sdk_surface: upsell offer (content header: pretitle · title · rating · optional inline prices)
+  next_params: reads offer / package_id / *_path from upsell/offer-context.html.
+    heading_style: include arg. card (default: title · rating · divider) | box (rating · display-md title ·
+      "% OFF" badge, no divider — the upsell-single look; pair with price_layout='inline').
+    offer.pretitle: small line above the title.
+    offer.title: HTML string override (upsell/copy.html tokens allowed, e.g. 'Premium {package_name}'); default = the package name span.
+    offer.show_rating: false hides the stars row (box and card styles). offer.rating_text: default "(19,569 Ratings)".
+    offer.heading_prices: true renders an inline strip — struck compare · price · "X% OFF" — under the rating
+      (the fluff-style header). The main price rows still render in upsell/offer-prices.html.
+  next_dont_touch: data-next-display, data-next-format, data-next-show
+{% endcomment %}
+{%- if heading_style == 'box' -%}
+{%- assign h_pricing_mode = pricing_mode | default: offer.pricing_mode | default: 'full_price' -%}
+{%- unless offer.show_rating == false %}
+<div class="review_component cc-sm">
+  <div class="review_component-wrapper">
+    <div class="review_stars-wrapper cc-color cc-black">
+      {%- for i in (1..5) %}<div class="review_component-star"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007l5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527l1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354L7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273l-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433l2.082-5.006Z" clip-rule="evenodd"></path></svg></div>{% endfor %}
+    </div>
+    <div class="text-sm">{{ offer.rating_text | default: '<strong>4.8/5</strong> - 19,569+ Reviews' }}</div>
+  </div>
+</div>
+{%- endunless %}
+<h2 class="display-md">{% if offer.title %}{% campaign_include 'upsell/copy.html' text=offer.title %}{% else %}<span data-next-display="{{ package_name_path }}">Product Title</span>{% endif %}</h2>
+{%- if h_pricing_mode == 'discounted' %}
+<div{% if price_is_scoped %} data-next-show="package.hasSavings"{% endif %}>
+  <span class="badge cc-inline text-xl tw-800"><span data-next-display="{{ pct_path }}" data-next-format="percentage"></span> OFF</span>
+</div>
+{%- endif %}
+{%- else -%}
+<div class="upsell-offer__heading">
+  {%- if offer.pretitle %}<p class="upsell-offer__pretitle">{% campaign_include 'upsell/copy.html' text=offer.pretitle %}</p>{% endif %}
+  <h2 class="display-lg">{% if offer.title %}{% campaign_include 'upsell/copy.html' text=offer.title %}{% else %}<span data-next-display="{{ package_name_path }}">Product Title</span>{% endif %}</h2>
+  {%- unless offer.show_rating == false %}
+  <div class="review_component cc-sm margin-12">
+    <div class="review_component-wrapper">
+      <div class="review_stars-wrapper cc-color cc-black">
+        {%- for i in (1..5) %}<div class="review_component-star"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007l5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527l1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354L7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273l-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433l2.082-5.006Z" clip-rule="evenodd"></path></svg></div>{% endfor %}
+      </div>
+      <div class="font-bold">{{ offer.rating_text | default: '(19,569 Ratings)' }}</div>
+    </div>
+  </div>
+  {%- endunless %}
+  {%- if offer.heading_prices %}
+  <div class="upsell-offer__heading-prices">
+    <div{% if price_is_scoped %} data-next-show="package.hasRetailPrice"{% endif %}><span class="upsell-offer__heading-compare" data-next-display="{{ compare_path }}" data-next-format="currency">{{ offer.fallback_compare }}</span></div>
+    <span class="upsell-offer__heading-price" data-next-display="{{ price_path }}" data-next-format="currency">{{ offer.fallback_price }}</span>
+    <div{% if price_is_scoped %} data-next-show="package.hasSavings"{% endif %}><span class="badge cc-inline tw-800"><span data-next-display="{{ pct_path }}" data-next-format="percentage"></span> OFF</span></div>
+  </div>
+  {%- endif %}
+</div>
+<div class="divider_line _25"></div>
+{%- endif -%}

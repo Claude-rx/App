@@ -1,0 +1,204 @@
+{% extends 'layouts/base.html' %}
+{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ 'main.css'|asset_url }}">{% endblock spark_css %}
+{% block body_class %}{% firstof "template-page body--rounded-corners palette--light no-outline" %}{% endblock body_class %}
+{% block sf_head %}{% include 'partials/sf_pages/contact/head.html' %}<style>#main-content .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@media (min-width:40rem){ #main-content .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:48rem){ #main-content .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}#main-content .md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}#main-content nav ol{list-style:none;margin:0;padding:0}#main-content nav ol li{list-style:none}#main-content nav ol li::before,#main-content nav ol li::marker{content:none}#main-content form input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]),#main-content form textarea{border:1px solid #cfcfcf !important;border-radius:10px !important;background:#fff !important}#main-content form select{border:1px solid #cfcfcf !important;border-radius:10px !important;-webkit-appearance:none;appearance:none;padding-right:34px !important;background:#fff url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%278%27 viewBox=%270 0 12 8%27%3E%3Cpath d=%27M1 1.5l5 5 5-5%27 fill=%27none%27 stroke=%27%23151515%27 stroke-width=%271.6%27/%3E%3C/svg%3E") no-repeat right 12px center/12px 8px !important}#main-content form select{min-width:140px}#main-content .text-slate-400{color:#475569}#main-content a.text-slate-400:hover{color:#151515}#cart_formset .flex.items-center.mt-3{flex-wrap:wrap;row-gap:8px}#main-content #cart_formset select{min-width:0;max-width:100%}#cart_formset .flex.items-start.justify-between{gap:16px}#cart_formset .flex.items-start.justify-between>div:last-child{white-space:nowrap;flex-shrink:0}#main-content .container{width:calc(100% - 64px);max-width:1440px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}@media (max-width:749px){ #main-content .container{width:calc(100% - 32px)}}#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}#main-content .btn-secondary:hover,#main-content .btn-secondary:focus-visible{background:#333 !important;border-color:#333 !important;color:#fff !important}</style>{% endblock sf_head %}
+{% block sf_lead %}{% include 'partials/sf_pages/contact/lead.html' %}{% endblock sf_lead %}
+{% block sf_tail %}{% include 'partials/sf_pages/contact/tail.html' %}{% endblock sf_tail %}
+
+{% block title %}{% t "order.cart.title" %} | {{ block.super }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container py-3">
+    <nav aria-label="{% t 'navigation.breadcrumb' %}">
+        <ol class="flex items-center gap-2 text-xs text-slate-400">
+            <li><a href="{{ homepage_url }}" class="hover:text-slate-600">{% t "navigation.main.home" %}</a></li>
+            <li>/</li>
+            <li class="text-slate-600">{% t "order.cart.title" %}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-8 md:py-12">
+    <style>@media (min-width:64rem){ #main-content .sf-cart-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem}#main-content .sf-cart-lines{grid-column:span 2/span 2}}</style><div class="grid grid-cols-1 gap-8 sf-cart-grid">
+
+        {# Cart items — 2/3 width #}
+        <div class="sf-cart-lines">
+
+            {% if cart_warnings %}
+                {% for warning in cart_warnings %}
+                    <div class="p-4 mb-4 text-sm text-amber-800 bg-amber-50 border border-amber-200">
+                        {{ warning }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if upsell_messages %}
+                {% for upsell in upsell_messages %}
+                    <div class="p-4 mb-4 text-sm border" style="border-color: var(--primary-color); background-color: var(--primary-color); color: white; opacity: 0.9;">
+                        {% t "order.cart.upsell_message_detail" with message=upsell.message offer_name=upsell.offer.name %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+            {% if not cart.is_empty %}
+                <form method="post" id="cart_formset">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+
+                    {# Cart line items #}
+                    {% for form in formset %}
+                        {% with line=form.instance product=form.instance.product %}
+                            {% purchase_info_for_line request line as session %}
+                            <div class="flex gap-4 py-6 {% if not forloop.first %}border-t border-slate-200{% endif %}">
+                                {{ form.id }}
+
+                                {# Product image #}
+                                {% with image=product.primary_image %}
+                                    {% if image.original %}
+                                        {% image_thumbnail image.original "300x300" crop="center" upscale=False as thumb %}
+                                        <a href="{{ product.get_absolute_url }}" class="flex-shrink-0">
+                                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" width="100" height="100" class="bg-slate-50" loading="lazy" />
+                                        </a>
+                                    {% endif %}
+                                {% endwith %}
+
+                                {# Product info #}
+                                <div class="flex-1">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <div class="text-sm font-medium text-slate-800">{{ line.description }}</div>
+                                            <div class="text-sm text-slate-500 mt-1">
+                                                {% if not line.unit_price_incl_tax and not line.unit_tax_excl_tax %}
+                                                    &mdash;
+                                                {% else %}
+                                                    {% if line.is_tax_known %}
+                                                        {{ line.unit_price_incl_tax|currency:line.price_currency }}
+                                                    {% else %}
+                                                        {{ line.unit_price_excl_tax|currency:line.price_currency }}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                            {% if line.discount_value %}
+                                                <div class="text-xs text-green-600 mt-1">
+                                                    {% t "tables.content.discount" %}: {{ line.discount_value|currency:line.price_currency }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="text-sm font-medium text-slate-800">
+                                            {{ line.line_price_incl_tax_incl_discounts|currency:line.price_currency }}
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-4 mt-3">
+                                        <div class="flex items-center gap-2">
+                                            {{ form.quantity }}
+                                        </div>
+                                        {% if settings.sf_subscription_product and product.parent.pk == settings.sf_subscription_product.pk or settings.sf_subscription_product and product.pk == settings.sf_subscription_product.pk %}<input type="hidden" name="{{ form.subscription_range.html_name }}" value="{{ settings.sf_subscription_interval_count|default:'1' }}-{{ settings.sf_subscription_interval|default:'month' }}"><span class="text-xs text-slate-600">Automatic refill &middot; cancel any time</span>{% else %}{{ form.subscription_range }}<i hidden data-sf-sku="{{ product.sku }}"></i>{% endif %}
+                                        <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="remove" class="remove-from-cart text-xs text-slate-400 hover:text-slate-700 ml-auto">
+                                            {% t "tables.actions.remove" %}
+                                            <div style="display:none">{{ form.DELETE }}</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endwith %}
+                    {% endfor %}
+                </form><script data-sf-refill-labels>(function () {var EVERY = {"SKF-PDB-1": 28, "SKF-PDB-2": 56, "SKF-PDB-3": 84, "SKF-ENS-1": 56, "SKF-ENS-2": 112, "SKF-ENS-3": 168, "SKF-AFS-1": 28, "SKF-AFS-2": 56}, PRICES = {"SKF-PDB-1": [24.95, 19.95], "SKF-PDB-2": [39.95, 31.95], "SKF-PDB-3": [49.9, 39.9], "SKF-ENS-1": [34.95, 27.95], "SKF-ENS-2": [59.95, 47.95], "SKF-ENS-3": [69.9, 55.9], "SKF-AFS-1": [47.0, 37.0], "SKF-AFS-2": [57.0, 47.0]};function money(v) { return " · $" + (v % 1 ? v.toFixed(2) : String(v)); }function set(el, prop, v) { if (el[prop] !== v) el[prop] = v; }function sku(s) { for (var p = s.parentNode, k = 0; p && k < 3; p = p.parentNode, k++) { var m = p.querySelector("[data-sf-sku]"); if (m) return m.getAttribute("data-sf-sku"); } return ""; }function label() { Array.prototype.forEach.call(document.querySelectorAll('select[name$="subscription_range"]'), function (s) {  if (s.options.length < 2) { if (!s.getAttribute("data-sf-single")) { s.setAttribute("data-sf-single", "1"); s.style.display = "none";   var w = document.createElement("span"); w.className = "text-xs text-slate-600"; w.textContent = "One-time purchase";   s.parentNode.insertBefore(w, s.nextSibling); } return; }  var every = EVERY[sku(s)], pr = PRICES[sku(s)];  if (every) Array.prototype.slice.call(s.options).forEach(function (o) {   var d = (o.textContent.match(/(\d+)\s*day/i) || [])[1];   if (d && +d !== every && !o.selected) s.removeChild(o); });  Array.prototype.forEach.call(s.options, function (o) {   var t = o.textContent.trim(), m = t.match(/^(\d+)\s+(day|week|month|year)s?$/i);   if (/^one time$/i.test(t)) set(o, "textContent", "One-time purchase" + (pr ? money(pr[0]) : ""));   else if (m) set(o, "textContent", "Refill every " + (m[1] === "1" ? "" : m[1] + " ") + m[2].toLowerCase() + (m[1] === "1" ? "" : "s")    + (pr ? money(pr[1]) : ""));  });  var row = s.parentNode, note = row.querySelector(".sf-refill-note");  if (!note) { note = document.createElement("p"); note.className = "sf-refill-note text-xs text-slate-600";   note.style.cssText = "flex-basis:100%;margin:0"; row.appendChild(note); }  var o = s.options[s.selectedIndex], on = !!o && /^Refill every/.test(o.textContent);  set(note, "textContent", on ? "Automatic refill: we ship and charge it " + o.textContent.replace("Refill every", "every").replace(/ · .*$/, "")   + " until you cancel. Skip or cancel any time by email." : "");  set(note, "hidden", !on);  if (!s.getAttribute("data-sf-refill")) { s.setAttribute("data-sf-refill", "1"); s.addEventListener("change", label); } });}label();var queued = false;new MutationObserver(function () { if (queued) return; queued = true; requestAnimationFrame(function () { queued = false; label(); }); }).observe(document.body, { childList: true, subtree: true });})();</script>
+
+                {# Voucher form #}
+                {% if voucher_form %}
+                <div class="border-t border-slate-200 pt-6 mt-2">
+                    <form id="voucher_form" action="{% url 'cart:vouchers-add' %}" method="post" class="flex gap-2">
+                        {% csrf_token %}
+                        <input type="text" name="code" required id="id_code" maxlength="128"
+                               class="flex-1 px-3 py-2 border border-slate-200 text-sm"
+                               placeholder="{% t 'tables.actions.add_coupon' %}" />
+                        <button type="submit" class="btn btn-secondary text-sm"
+                                data-loading-text='{% t "tables.actions.add_coupon_loading" %}'>
+                            {% t "tables.actions.add_coupon" %}
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+
+            {% else %}
+                {# Empty cart #}
+                <div class="py-16 text-center">
+                    <p class="text-slate-500 mb-4">{% t "order.cart.cart_empty" %}</p>
+                    <a href="{% url 'catalogue:index' %}" class="btn btn-primary">{% t "order.cart.continue_shopping" %}</a>
+                </div>
+            {% endif %}
+        </div>
+
+        {# Order summary — 1/3 width #}
+        {% if not cart.is_empty %}
+        <div>
+            <div class="bg-slate-50 p-6 md:sticky md:top-24">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-semibold text-slate-800">{% t "order.cart.summary" %}</h2>
+                    <span class="text-xs text-slate-500 bg-slate-200 px-2 py-1 rounded">
+                        {% t "order.cart.items_count" with count=cart.num_items %}
+                    </span>
+                </div>
+
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-slate-600">{% t "order.cart.cart_total" %}</span>
+                        <span>{{ cart.total_excl_tax_excl_discounts|currency:cart.currency }}</span>
+                    </div>
+
+                    {% with offer_discounts=cart.offer_discounts voucher_discounts=cart.grouped_voucher_discounts %}
+                        {% for discount in offer_discounts %}
+                            <div class="flex justify-between text-green-600">
+                                <span>{{ discount.name }}</span>
+                                <span>-{{ discount.discount|currency:cart.currency }}</span>
+                            </div>
+                        {% endfor %}
+                        {% for discount in voucher_discounts %}
+                            <div class="flex justify-between text-green-600">
+                                <span>{{ discount.voucher.code }}
+                                    <form action="{% url 'cart:vouchers-remove' pk=discount.voucher.id %}" method="POST" class="inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="text-xs text-slate-400 hover:text-red-500 ml-1">&times;</button>
+                                    </form>
+                                </span>
+                                <span>-{{ discount.discount|currency:cart.currency }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+
+                    <div class="flex justify-between text-slate-400">
+                        <span>{% t "order.cart.shipping" %}</span>
+                        {% if settings.sf_cart_free_shipping %}<span class="text-xs font-semibold" style="color:#1f7a3f">{% t 'store.catalogue.free' %}</span>{% else %}<span class="text-xs">{% t "order.cart.calculated_at_checkout" %}</span>{% endif %}
+                    </div>
+
+                    {% if cart.display_taxes %}
+                        <div class="flex justify-between">
+                            <span class="text-slate-600">{{ cart.display_taxes }}</span>
+                            <span>{{ order_total.tax|currency:cart.currency }}</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="flex justify-between pt-3 border-t border-slate-200 font-semibold text-slate-800">
+                        <span>{% t "order.cart.order_total" %}</span>
+                        <span>{{ order_total.incl_tax|currency:cart.currency }}</span>
+                    </div>
+                </div>
+
+                <a href="{% url 'checkout:index' %}" class="btn btn-primary w-full mt-6 py-3 text-base" data-sf-checkout-nowrap style="white-space:nowrap">
+                    {% t "order.cart.proceed_to_checkout" %}
+                </a>
+
+                <a href="{% url 'catalogue:index' %}" class="block text-center text-sm text-slate-500 hover:text-slate-700 mt-4">
+                    {% t "order.cart.continue_shopping" %}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

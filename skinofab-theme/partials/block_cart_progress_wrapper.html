@@ -1,0 +1,9 @@
+{% comment %}
+  Progress bar wrapper - selects Spark's default reward thresholds.
+  Included inside the cart drawer partial.
+
+  Spark ships one threshold pair to keep merchant settings focused.
+  Theme developers can extend this partial and settings_schema.json
+  for stores that need currency-specific reward rules.
+{% endcomment %}
+{% include "partials/block_cart_progress_bar.html" with first_value=settings.usd_goal_1 second_value=settings.usd_goal_2 max_value=settings.usd_goal_2|times:1.3 min_value=0 %}

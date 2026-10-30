@@ -1,0 +1,68 @@
+{# Spark Theme — PDP variant picker. Included from templates/catalogue/product.html. #}
+{# Style is controlled by settings.variant_picker: select (default), radio, chips. #}
+{# Every style renders a real control named attr_<code> with values from        #}
+{# variant_form, which is the contract SparkVariantState matches children on.   #}
+{% t 'store.catalogue.size_guide' as default_variant_size_guide_text %}
+{% for field in variant_form %}
+    {% if 'attr' in field.id_for_label %}
+        <div class="mt-6" data-variant-option-group data-variant-option-name="{{ field.html_name }}">
+            <div class="flex items-baseline justify-between gap-4 mb-2">
+                <label class="text-sm font-medium text-slate-700 block">
+                    {{ field.label }}{% if settings.variant_picker == 'chips' %}<span class="variant-option-value ml-1" data-variant-selected-label></span>{% endif %}
+                </label>
+                {% if settings.variant_size_guide_url %}
+                    {% with option_code=field.html_name|slice:"5:" %}
+                        {% if not settings.variant_size_guide_option or settings.variant_size_guide_option == option_code %}
+                            <a data-variant-size-guide-url="{{ settings.variant_size_guide_url }}" class="variant-size-guide flex-shrink-0">
+                                {{ settings.variant_size_guide_text|default:default_variant_size_guide_text }}
+                            </a>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+            </div>
+            {% if settings.variant_picker == 'chips' %}
+                <div class="variant-option-list"
+                     role="radiogroup"
+                     aria-label="{{ field.label }}">
+                    {% for choice in field.field.choices %}
+                        <span class="variant-option"
+                              data-variant-option
+                              data-variant-option-value="{{ choice.0 }}">
+                            <input type="radio"
+                                   id="{{ field.html_name }}-{{ choice.0 }}"
+                                   name="{{ field.html_name }}"
+                                   value="{{ choice.0 }}"
+                                   aria-describedby="{{ field.html_name }}-{{ choice.0 }}-availability"
+                                   {% if forloop.first %}checked{% endif %} />
+                            <label class="variant-option-label" for="{{ field.html_name }}-{{ choice.0 }}">
+                                <span data-variant-option-text>{{ choice.1 }}</span>
+                            </label>
+                            <span id="{{ field.html_name }}-{{ choice.0 }}-availability"
+                                  class="sr-only"
+                                  data-variant-option-status></span>
+                        </span>
+                    {% endfor %}
+                </div>
+            {% elif settings.variant_picker == 'radio' %}
+                <div class="flex flex-wrap gap-2">
+                    {% for choice in field.field.choices %}
+                        <label class="flex items-center gap-2 px-4 py-2.5 border border-slate-200 cursor-pointer hover:border-slate-400 transition-colors text-sm text-slate-700 min-h-[44px]">
+                            <input type="radio"
+                                   name="{{ field.html_name }}"
+                                   value="{{ choice.0 }}"
+                                   {% if forloop.first %}checked{% endif %}
+                                   class="accent-[var(--primary-color)]" />
+                            {{ choice.1 }}
+                        </label>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <select name="{{ field.html_name }}" class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-700 bg-white min-h-[44px]">
+                    {% for choice in field.field.choices %}
+                        <option value="{{ choice.0 }}" {% if forloop.first %}selected{% endif %}>{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endfor %}

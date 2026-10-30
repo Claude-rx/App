@@ -1,0 +1,42 @@
+{# Spark Theme -- Account Only Mode #}
+{# Shown when settings.account_only is enabled. Replaces all page content with a minimal login screen. #}
+<div id="main-content" tabindex="-1" class="flex flex-col items-center justify-center min-h-[70vh] p-8">
+    {# Logo at natural size -- not constrained like header #}
+    <div class="mb-6">
+        {% if store.branding.logo %}
+            {% with image=store.branding.logo %}
+            {% image_thumbnail image "200x" upscale=False as thumb_logo %}
+            {% image_thumbnail image "400x" upscale=False as thumb_logox2 %}
+            <img src="{{ thumb_logo.url }}"
+                 srcset="{{ thumb_logo.url }}, {{ thumb_logox2.url }} 2x"
+                 alt="{{ store.name }}"
+                 class="max-h-20" />
+            {% endwith %}
+        {% elif store.branding.icon %}
+            {% with image=store.branding.icon %}
+            {% image_thumbnail image "80x" upscale=False as thumb_icon %}
+            <img src="{{ thumb_icon.url }}" alt="{{ store.name }}" class="max-h-16" />
+            {% endwith %}
+        {% else %}
+            <span class="text-2xl font-semibold text-slate-800">{{ store.name }}</span>
+        {% endif %}
+    </div>
+
+    <h2 class="text-lg text-slate-600 mb-8">{% t "navigation.account.welcome" %}</h2>
+
+    {% if user.is_authenticated %}
+        <div class="flex flex-col gap-3 items-center">
+            <a href="{% url 'customer:summary' %}" class="btn btn-primary px-8">{% t "navigation.account.account" %}</a>
+            <a href="{% url 'customer:logout' %}" class="btn btn-secondary px-8">{% t "navigation.account.logout" %}</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{% url 'customer:login' %}" class="btn btn-primary px-8">{% t "navigation.account.login_or_register" %}</a>
+        </div>
+    {% endif %}
+</div>
+
+{# Footer in Account Only -- controlled by account_only_show_footer setting #}
+{% if settings.account_only_show_footer %}
+    {% include "partials/footer.html" %}
+{% endif %}

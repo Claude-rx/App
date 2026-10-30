@@ -1,0 +1,5879 @@
+[
+ {
+  "store": "skinofab",
+  "saved": "2026-10-25T08:29:04",
+  "products": [
+   {
+    "id": 3,
+    "url": "https://skinofab.com/catalogue/example-product_3/",
+    "title": "Example Product",
+    "slug": "example-product",
+    "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": false,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 1,
+      "name": "Example Category",
+      "slug": "example-category"
+     }
+    ],
+    "enable_subscription": true,
+    "interval": "day",
+    "interval_counts": [
+     90,
+     60,
+     30
+    ],
+    "images": [],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 2,
+      "product_id": 3,
+      "title": "Example Product",
+      "sku": "DEMO-SKU-123",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": false,
+      "images": [],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.99",
+        "retail": "49.99",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 1,
+        "location_id": 1,
+        "num_in_stock": 100,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2017-09-28T08:23:08.368000-04:00",
+      "date_updated": "2025-06-06T00:52:06.700632-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": null,
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2025-05-29T02:29:27.716896-04:00",
+    "date_updated": "2026-10-22T00:45:46.690812-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 4,
+    "url": "https://skinofab.com/catalogue/bestseller-duo-kit_4/",
+    "title": "Bestseller Duo Kit",
+    "slug": "bestseller-duo-kit",
+    "description": "<p>Two of Skinofab's most-loved products, bundled into one unbeatable deal. This kit pairs our viral Color Changing Foundation with the Extreme Lip Plumper for a complete face look — adaptive coverage that matches your skin tone, plus plump, glossy lips in seconds. Everything you need, nothing you don't.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 4,
+      "name": "Bundles",
+      "slug": "bundles"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 409,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-1600w-33ddee.png",
+      "caption": "Bestseller Duo Kit",
+      "display_order": 0,
+      "product": 4,
+      "variants": []
+     },
+     {
+      "id": 410,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_2_838f3136-557d-4e8f-a572-1fa6acc01413-1600w-p5cf467.jpg",
+      "caption": "Bestseller Duo Kit",
+      "display_order": 1,
+      "product": 4,
+      "variants": []
+     },
+     {
+      "id": 411,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_3_02b1c60c-e639-4fcc-908e-5c989ffead84-1600w-23aa71.jpg",
+      "caption": "Bestseller Duo Kit",
+      "display_order": 2,
+      "product": 4,
+      "variants": []
+     },
+     {
+      "id": 412,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_4_1bfc1568-7040-4eee-9aef-d9cf335c3e82-1600w-05b7e5.jpg",
+      "caption": "Bestseller Duo Kit",
+      "display_order": 3,
+      "product": 4,
+      "variants": []
+     },
+     {
+      "id": 413,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_5_025835d4-3ae3-4b78-a944-bed85d375f65-1600w-1cb38e.jpg",
+      "caption": "Bestseller Duo Kit",
+      "display_order": 4,
+      "product": 4,
+      "variants": []
+     },
+     {
+      "id": 414,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_6_cce2af13-4524-4b79-8a02-0da6a0e3dacb-1600w-13ed8f.jpg",
+      "caption": "Bestseller Duo Kit",
+      "display_order": 5,
+      "product": 4,
+      "variants": []
+     },
+     {
+      "id": 415,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_7_5fac8593-bb4f-4eee-986a-5cdc34f8c746-1600w-b2ff1f.jpg",
+      "caption": "Bestseller Duo Kit",
+      "display_order": 6,
+      "product": 4,
+      "variants": []
+     },
+     {
+      "id": 416,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_2_b972acf0-8eb4-49f5-8d53-387cb17f7432-1600w-701c82.jpg",
+      "caption": "Bestseller Duo Kit",
+      "display_order": 7,
+      "product": 4,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Transparent"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 5,
+      "product_id": 4,
+      "title": "Bestseller Duo Kit - Transparent",
+      "sku": "SKF-4-PACK-2X-EXTREME-2X-LONG-LASTING-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 409,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_efdc2718-118f-4d9f-85f0-c80fe96389a4-1600w-33ddee.png",
+        "caption": "Bestseller Duo Kit",
+        "display_order": 0,
+        "product": 4,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Transparent",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "59.00",
+        "retail": "156.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 2,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:23:55.236955-04:00",
+      "date_updated": "2026-10-20T21:23:55.257008-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "4-pack-2x-extreme-2x-long-lasting",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:23:55.061621-04:00",
+    "date_updated": "2026-10-21T13:36:44.965673-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 6,
+    "url": "https://skinofab.com/catalogue/beauty-mirror_6/",
+    "title": "Beauty Mirror",
+    "slug": "beauty-mirror",
+    "description": "<p>Mirror, mirror, on the wall, who's the fairest of them all? You of course! Take this compact beauty mirror everywhere with you to make sure your make-up always looks perfect.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 6,
+      "name": "Essentials",
+      "slug": "essentials"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 417,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_98cbc7ee-1f98-4c8c-a7a4-da0a9ecbe863-1600w-bdb855.jpg",
+      "caption": "Beauty Mirror",
+      "display_order": 0,
+      "product": 6,
+      "variants": []
+     },
+     {
+      "id": 418,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_d86a6eca-1cdf-434a-8014-b6e5fe94088e-1600w-p4e028f.jpg",
+      "caption": "Beauty Mirror",
+      "display_order": 1,
+      "product": 6,
+      "variants": []
+     },
+     {
+      "id": 419,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/3_689a4033-40c9-444a-9e3e-4ee409289c9a-1600w-p802563.jpg",
+      "caption": "Beauty Mirror",
+      "display_order": 2,
+      "product": 6,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 7,
+      "product_id": 6,
+      "title": "Beauty Mirror",
+      "sku": "SKF-BEAUTY-MIRROR-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 417,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_98cbc7ee-1f98-4c8c-a7a4-da0a9ecbe863-1600w-bdb855.jpg",
+        "caption": "Beauty Mirror",
+        "display_order": 0,
+        "product": 6,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 3,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:08.828061-04:00",
+      "date_updated": "2026-10-20T21:24:08.844510-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "beauty-mirror",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:24:08.789011-04:00",
+    "date_updated": "2026-10-21T13:36:46.108456-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 8,
+    "url": "https://skinofab.com/catalogue/fibre-brow-gel_8/",
+    "title": "Fibre Brow Gel",
+    "slug": "fibre-brow-gel",
+    "description": "<p>Thicker, fuller, defined brows — instantly. Skinofab's Fibre Brow Gel uses micro-fibre technology to coat and build each hair, creating a natural feathery finish that lasts all day. Waterproof and smudge-proof, it's the one product your brow routine has been missing. Available in 5 shades to match every hair colour.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 3,
+      "name": "Brows",
+      "slug": "brows"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 420,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1600w-5bee9b.png",
+      "caption": "Fibre Brow Gel",
+      "display_order": 0,
+      "product": 8,
+      "variants": []
+     },
+     {
+      "id": 421,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/9_00897f9a-c241-4c94-8159-d2487a68033a-1600w-p537770.jpg",
+      "caption": "Fibre Brow Gel",
+      "display_order": 1,
+      "product": 8,
+      "variants": []
+     },
+     {
+      "id": 422,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_18566978-f6a4-49c4-88e6-08d95a4a097a-1600w-pfc323d.jpg",
+      "caption": "Fibre Brow Gel",
+      "display_order": 2,
+      "product": 8,
+      "variants": []
+     },
+     {
+      "id": 423,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_6e6f7dd0-6398-4472-9ece-11700157e3d4-1600w-17e902.jpg",
+      "caption": "Fibre Brow Gel",
+      "display_order": 3,
+      "product": 8,
+      "variants": []
+     },
+     {
+      "id": 424,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_58bfce65-eb88-45f6-abe1-d88582154bc9-1600w-p637557.jpg",
+      "caption": "Fibre Brow Gel",
+      "display_order": 4,
+      "product": 8,
+      "variants": []
+     },
+     {
+      "id": 425,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_2835cf26-d2d3-4ea6-89ef-2f4a625b1f78-1600w-p48992b.jpg",
+      "caption": "Fibre Brow Gel",
+      "display_order": 5,
+      "product": 8,
+      "variants": []
+     },
+     {
+      "id": 426,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/12_c0ae5e55-53e2-4f87-96e7-9fc7037c9a08-1600w-740c85.jpg",
+      "caption": "Fibre Brow Gel",
+      "display_order": 6,
+      "product": 8,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Taupe",
+       "Dark Brown",
+       "Chocolate",
+       "Ash Brown",
+       "Smooth Black"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 9,
+      "product_id": 8,
+      "title": "Fibre Brow Gel - Taupe",
+      "sku": "SKF-BROW-GEL-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 420,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1600w-5bee9b.png",
+        "caption": "Fibre Brow Gel",
+        "display_order": 0,
+        "product": 8,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Taupe",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 4,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:13.892738-04:00",
+      "date_updated": "2026-10-20T21:24:13.904475-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 10,
+      "product_id": 8,
+      "title": "Fibre Brow Gel - Dark Brown",
+      "sku": "SKF-BROW-GEL-2",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 420,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1600w-5bee9b.png",
+        "caption": "Fibre Brow Gel",
+        "display_order": 0,
+        "product": 8,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Dark Brown",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 5,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:14.036235-04:00",
+      "date_updated": "2026-10-20T21:24:14.047379-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 11,
+      "product_id": 8,
+      "title": "Fibre Brow Gel - Chocolate",
+      "sku": "SKF-BROW-GEL-3",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 420,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1600w-5bee9b.png",
+        "caption": "Fibre Brow Gel",
+        "display_order": 0,
+        "product": 8,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Chocolate",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 6,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:14.201389-04:00",
+      "date_updated": "2026-10-20T21:24:14.212525-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 12,
+      "product_id": 8,
+      "title": "Fibre Brow Gel - Ash Brown",
+      "sku": "SKF-BROW-GEL-4",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 420,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1600w-5bee9b.png",
+        "caption": "Fibre Brow Gel",
+        "display_order": 0,
+        "product": 8,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Ash Brown",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 7,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:14.346201-04:00",
+      "date_updated": "2026-10-20T21:24:14.358068-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 13,
+      "product_id": 8,
+      "title": "Fibre Brow Gel - Smooth Black",
+      "sku": "SKF-BROW-GEL-5",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 420,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_a3c6413d-de5f-4c48-aa87-4c433f7ad347-1600w-5bee9b.png",
+        "caption": "Fibre Brow Gel",
+        "display_order": 0,
+        "product": 8,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Smooth Black",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 8,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:14.499023-04:00",
+      "date_updated": "2026-10-20T21:24:14.510248-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "brow-gel",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:24:13.810997-04:00",
+    "date_updated": "2026-10-21T13:36:47.296270-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 16,
+    "url": "https://skinofab.com/catalogue/luxury-lip-liner_16/",
+    "title": "Luxury Lip Liner",
+    "slug": "luxury-lip-liner",
+    "description": "<p><meta charset=\"utf-8\"><span>Give your plumped up lips extra definition and shape. Fill in uneven areas and make your lips more kissable than ever. Combine it with Volume Lip Gloss to give your lips a glossy finish.</span></p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 6,
+      "name": "Essentials",
+      "slug": "essentials"
+     },
+     {
+      "id": 10,
+      "name": "Lips",
+      "slug": "lips"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 437,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Espresso-1600w-081f7e.png",
+      "caption": "Luxury Lip Liner",
+      "display_order": 0,
+      "product": 16,
+      "variants": [
+       17
+      ]
+     },
+     {
+      "id": 438,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Espresso_2-1600w-p76446e.jpg",
+      "caption": "Luxury Lip Liner",
+      "display_order": 1,
+      "product": 16,
+      "variants": []
+     },
+     {
+      "id": 439,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Espresso_3-1600w-bccce5.jpg",
+      "caption": "Luxury Lip Liner",
+      "display_order": 2,
+      "product": 16,
+      "variants": []
+     },
+     {
+      "id": 440,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Hazelnut-1600w-e3c708.png",
+      "caption": "Luxury Lip Liner",
+      "display_order": 3,
+      "product": 16,
+      "variants": [
+       18
+      ]
+     },
+     {
+      "id": 441,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Hazelnut_2-1600w-96ec69.jpg",
+      "caption": "Luxury Lip Liner",
+      "display_order": 4,
+      "product": 16,
+      "variants": []
+     },
+     {
+      "id": 442,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Hazelnut_3-1600w-d868c6.jpg",
+      "caption": "Luxury Lip Liner",
+      "display_order": 5,
+      "product": 16,
+      "variants": []
+     },
+     {
+      "id": 443,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/blush-1600w-584bb5.png",
+      "caption": "Luxury Lip Liner",
+      "display_order": 6,
+      "product": 16,
+      "variants": [
+       19
+      ]
+     },
+     {
+      "id": 444,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/blush_2-1600w-a26de7.jpg",
+      "caption": "Luxury Lip Liner",
+      "display_order": 7,
+      "product": 16,
+      "variants": []
+     },
+     {
+      "id": 445,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/blush_3-1600w-5240f9.jpg",
+      "caption": "Luxury Lip Liner",
+      "display_order": 8,
+      "product": 16,
+      "variants": []
+     },
+     {
+      "id": 446,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Cherry-1600w-e975ec.png",
+      "caption": "Luxury Lip Liner",
+      "display_order": 9,
+      "product": 16,
+      "variants": [
+       20
+      ]
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Espresso",
+       "Hazelnut",
+       "Blush",
+       "Cherry"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 17,
+      "product_id": 16,
+      "title": "Luxury Lip Liner - Espresso",
+      "sku": "DPCD5-AZ374002",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 437,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Espresso-1600w-081f7e.png",
+        "caption": "Luxury Lip Liner",
+        "display_order": 0,
+        "product": 16,
+        "variants": [
+         17
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Espresso",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 10,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:42.587598-04:00",
+      "date_updated": "2026-10-20T21:24:42.598945-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 18,
+      "product_id": 16,
+      "title": "Luxury Lip Liner - Hazelnut",
+      "sku": "DPCD5-AZ374003",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 440,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Hazelnut-1600w-e3c708.png",
+        "caption": "Luxury Lip Liner",
+        "display_order": 3,
+        "product": 16,
+        "variants": [
+         18
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Hazelnut",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 11,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:42.739057-04:00",
+      "date_updated": "2026-10-20T21:24:42.750038-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 19,
+      "product_id": 16,
+      "title": "Luxury Lip Liner - Blush",
+      "sku": "smooche-luxury-lip-liner-redwood",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 443,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/blush-1600w-584bb5.png",
+        "caption": "Luxury Lip Liner",
+        "display_order": 6,
+        "product": 16,
+        "variants": [
+         19
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Blush",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 12,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:42.877197-04:00",
+      "date_updated": "2026-10-20T21:24:42.888122-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 20,
+      "product_id": 16,
+      "title": "Luxury Lip Liner - Cherry",
+      "sku": "DPCD5-AZ374001",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 446,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Cherry-1600w-e975ec.png",
+        "caption": "Luxury Lip Liner",
+        "display_order": 9,
+        "product": 16,
+        "variants": [
+         20
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Cherry",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 13,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:43.026510-04:00",
+      "date_updated": "2026-10-20T21:24:43.037473-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "essential-lip-liner",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:24:42.503201-04:00",
+    "date_updated": "2026-10-21T13:36:48.813286-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 21,
+    "url": "https://skinofab.com/catalogue/extreme-lip-plumper_21/",
+    "title": "Extreme Lip Plumper",
+    "slug": "extreme-lip-plumper",
+    "description": "<h2 class=\"products-list__heading subheading-text\"><strong>For an instant, extreme, effect</strong></h2>\n<p><span style=\"font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; font-size: 0.875rem;\">Feel the heat with our instant plumper for extreme results. Infused with powerful ingredients, our high-intensity lip serum provides instant, fiery plumping. Caution: this lip plumper delivers a tingling sensation and may feel hot on the lips.</span><br></p>\n<ul></ul>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 8,
+      "name": "Homepage",
+      "slug": "homepage-lips"
+     },
+     {
+      "id": 10,
+      "name": "Lips",
+      "slug": "lips"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 447,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC-1600w-9db6e8.png",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 0,
+      "product": 21,
+      "variants": [
+       22
+      ]
+     },
+     {
+      "id": 448,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_2-1600w-p4dec22.jpg",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 1,
+      "product": 21,
+      "variants": []
+     },
+     {
+      "id": 449,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_3-1600w-184599.jpg",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 2,
+      "product": 21,
+      "variants": []
+     },
+     {
+      "id": 450,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_4-1600w-p95224e.jpg",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 3,
+      "product": 21,
+      "variants": []
+     },
+     {
+      "id": 451,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_3_f22044c0-cda7-481f-87a1-3648b9f9ddc2-1600w-111299.jpg",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 4,
+      "product": 21,
+      "variants": []
+     },
+     {
+      "id": 452,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_6-1600w-84ee55.jpg",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 5,
+      "product": 21,
+      "variants": []
+     },
+     {
+      "id": 453,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_7-1600w-fd9981.jpg",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 6,
+      "product": 21,
+      "variants": []
+     },
+     {
+      "id": 454,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_8-1600w-pa4d732.jpg",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 7,
+      "product": 21,
+      "variants": []
+     },
+     {
+      "id": 455,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPR-1600w-838905.png",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 8,
+      "product": 21,
+      "variants": [
+       23
+      ]
+     },
+     {
+      "id": 456,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPR_2-1600w-p9bbe70.jpg",
+      "caption": "Extreme Lip Plumper",
+      "display_order": 9,
+      "product": 21,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Transparent",
+       "Raspberry"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 22,
+      "product_id": 21,
+      "title": "Extreme Lip Plumper - Transparent",
+      "sku": "DPCD5-KL168001",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 447,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC-1600w-9db6e8.png",
+        "caption": "Extreme Lip Plumper",
+        "display_order": 0,
+        "product": 21,
+        "variants": [
+         22
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Transparent",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "49.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 14,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:58.523104-04:00",
+      "date_updated": "2026-10-20T21:24:58.537105-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 23,
+      "product_id": 21,
+      "title": "Extreme Lip Plumper - Raspberry",
+      "sku": "DPCD5-YF267001",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 455,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPR-1600w-838905.png",
+        "caption": "Extreme Lip Plumper",
+        "display_order": 8,
+        "product": 21,
+        "variants": [
+         23
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Raspberry",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "49.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 15,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:24:58.692173-04:00",
+      "date_updated": "2026-10-20T21:24:58.704261-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "extreme-lip-plumper",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:24:58.425891-04:00",
+    "date_updated": "2026-10-21T13:36:50.091068-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 24,
+    "url": "https://skinofab.com/catalogue/eyebrow-growth-serum_24/",
+    "title": "Eyebrow Growth Serum",
+    "slug": "eyebrow-growth-serum",
+    "description": "<p>Achieve the fuller, thicker, and healthier brows you've always desired with our revolutionary Eyebrow Growth Serum. Our serum is expertly formulated to promote growth and strengthen each hair, and the skin around it, giving you bold and beautiful brows.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 3,
+      "name": "Brows",
+      "slug": "brows"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 13,
+      "name": "Serums",
+      "slug": "serums"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 457,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_5abef206-af49-4330-b807-2d7403d6c81e-1600w-d00d41.png",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 0,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 458,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_cc5acc0d-21fd-4ebc-b400-38bd9f37a81d-1600w-pd61460.jpg",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 1,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 459,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Eyebrowserum-Productimagesphotos_1-1600w-ecd13a.jpg",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 2,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 460,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/5_b28957a0-f7ff-496b-9b33-86cf4c24b7db-1600w-4bf982.png",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 3,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 461,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_a0de83e8-81e5-4aa1-893e-9621fbcf34c1-1600w-p27424b.jpg",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 4,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 462,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/EBSeyebrowserumProductpagephotosimagesnewbrandingrebranding-1600w-de4c32.jpg",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 5,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 463,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Eyebrowserum-Productimagesphotos-1600w-9ea690.jpg",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 6,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 464,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/9_4a9ce67f-41f3-468b-be8d-9189f26d2575-1600w-0e95c1.png",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 7,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 465,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/10_de6aa239-10b2-496f-895b-d50025ad9530-1600w-6f77d0.png",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 8,
+      "product": 24,
+      "variants": []
+     },
+     {
+      "id": 466,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/11_4551cd08-3d3f-4a7e-b5af-910189eb969f-1600w-pd5e664.jpg",
+      "caption": "Eyebrow Growth Serum",
+      "display_order": 9,
+      "product": 24,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 25,
+      "product_id": 24,
+      "title": "Eyebrow Growth Serum",
+      "sku": "DPCD5-PW431001",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 457,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_5abef206-af49-4330-b807-2d7403d6c81e-1600w-d00d41.png",
+        "caption": "Eyebrow Growth Serum",
+        "display_order": 0,
+        "product": 24,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 16,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:25:14.489602-04:00",
+      "date_updated": "2026-10-20T21:25:14.502060-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "eyebrow-serum",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:25:14.411823-04:00",
+    "date_updated": "2026-10-21T13:36:51.177280-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 26,
+    "url": "https://skinofab.com/catalogue/eyelash-curler_26/",
+    "title": "Eyelash Curler",
+    "slug": "eyelash-curler",
+    "description": "<p>This sleek eyelash curler is your secret weapon for captivating, wide-eyed allure. Compact and easy to use, it's perfect for creating stunning curls anytime, anywhere. Get ready to bat those lashes and turn heads wherever you go!</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 6,
+      "name": "Essentials",
+      "slug": "essentials"
+     },
+     {
+      "id": 9,
+      "name": "Lashes",
+      "slug": "lashes"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 257,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/skinofab-1600w-280862.jpg",
+      "caption": "Eyelash Curler",
+      "display_order": 0,
+      "product": 26,
+      "variants": []
+     },
+     {
+      "id": 258,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/eyelashcurler-1600w-fbdaf8.jpg",
+      "caption": "Eyelash Curler",
+      "display_order": 1,
+      "product": 26,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 27,
+      "product_id": 26,
+      "title": "Eyelash Curler",
+      "sku": "SKF-EYELASH-CURLER-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 257,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/skinofab-1600w-280862.jpg",
+        "caption": "Eyelash Curler",
+        "display_order": 0,
+        "product": 26,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 17,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:25:30.957111-04:00",
+      "date_updated": "2026-10-20T21:25:30.970364-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "eyelash-curler",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:25:30.908412-04:00",
+    "date_updated": "2026-10-21T13:36:52.442235-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 28,
+    "url": "https://skinofab.com/catalogue/eyelash-growth-serum_28/",
+    "title": "Eyelash Growth Serum",
+    "slug": "eyelash-growth-serum",
+    "description": "<p class=\"p1\"><span class=\"s1\">Achieve the fuller, thicker, and healthier lashes you've always desired with our revolutionary Eyelash Growth Serum. Our serum is expertly formulated to promote growth and strengthen each lash, and the skin around it, giving you bold and beautiful lashes.</span></p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 9,
+      "name": "Lashes",
+      "slug": "lashes"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 13,
+      "name": "Serums",
+      "slug": "serums"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 467,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_baf8104b-c432-4b62-af61-27a2c0166176-1600w-acddab.png",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 0,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 468,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_979b2865-7472-4b00-9b48-ae95b3565a4d-1600w-p41a4c5.jpg",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 1,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 469,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Eyelashserum-Productimagesphotos-1600w-47324f.jpg",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 2,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 470,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_d4f28808-2b02-456d-a431-8d8bf2bf0452-1600w-006941.png",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 3,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 471,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/5_bb0f63c4-7f41-4f4e-916c-89c4a35fe0b1-1600w-pda556f.jpg",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 4,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 472,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_f4e826ba-3cc0-416a-bb0e-da6f6b0c7bf6-1600w-020571.jpg",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 5,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 473,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/7_51fd221a-4773-48c5-aad4-e6e839a21cbf-1600w-d6dcff.jpg",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 6,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 474,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Eyelashserum-Productimagesphotos_1-1600w-31a711.png",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 7,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 475,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/9_8d6072a5-2a05-4826-8805-14fcdd0ad4e0-1600w-p979b09.jpg",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 8,
+      "product": 28,
+      "variants": []
+     },
+     {
+      "id": 476,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Eyelashserum-Productimagesphotos_104b61fe-7115-4c52-8d30-de8-1600w-e19c37.jpg",
+      "caption": "Eyelash Growth Serum",
+      "display_order": 9,
+      "product": 28,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 29,
+      "product_id": 28,
+      "title": "Eyelash Growth Serum",
+      "sku": "DPCD5-PW433001",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 467,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_baf8104b-c432-4b62-af61-27a2c0166176-1600w-acddab.png",
+        "caption": "Eyelash Growth Serum",
+        "display_order": 0,
+        "product": 28,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 18,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:25:33.729389-04:00",
+      "date_updated": "2026-10-20T21:25:33.740548-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "eyelash-serum",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:25:33.678710-04:00",
+    "date_updated": "2026-10-21T13:36:53.593016-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 30,
+    "url": "https://skinofab.com/catalogue/face-roller_30/",
+    "title": "Face Roller",
+    "slug": "face-roller",
+    "description": "<p>Reveal your skin’s natural glow with our sleek stainless steel Face Roller — designed to refresh, de-puff, and revive your complexion. This cooling tool helps boost circulation and promote lymphatic drainage, leaving your skin looking smoother, firmer, and more radiant. Indulge in a relaxing ritual that enhances your beauty and brings a spa-like calm to your daily routine.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 6,
+      "name": "Essentials",
+      "slug": "essentials"
+     },
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     },
+     {
+      "id": 14,
+      "name": "Skin",
+      "slug": "skin"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 477,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_eeed0bb2-535e-4b98-978a-2de5f0c5d2e6-1600w-7f6807.jpg",
+      "caption": "Face Roller",
+      "display_order": 0,
+      "product": 30,
+      "variants": []
+     },
+     {
+      "id": 478,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_b67614f9-e789-4d7e-a2e1-dbdf8dd7ea6a-1600w-p4286ed.jpg",
+      "caption": "Face Roller",
+      "display_order": 1,
+      "product": 30,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 31,
+      "product_id": 30,
+      "title": "Face Roller",
+      "sku": "SKF-FACE-ROLLER-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 477,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_eeed0bb2-535e-4b98-978a-2de5f0c5d2e6-1600w-7f6807.jpg",
+        "caption": "Face Roller",
+        "display_order": 0,
+        "product": 30,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 19,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:25:48.744084-04:00",
+      "date_updated": "2026-10-20T21:25:48.754579-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "face-roller",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:25:48.705618-04:00",
+    "date_updated": "2026-10-21T13:36:54.829750-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 32,
+    "url": "https://skinofab.com/catalogue/foundation-mega-pack_32/",
+    "title": "Foundation Mega Pack",
+    "slug": "foundation-mega-pack",
+    "description": "",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 4,
+      "name": "Bundles",
+      "slug": "bundles"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 479,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/hf_20260514_093039_c5845811-d3e7-48ee-a798-2b072efabab4-1600w-b83cfa.jpg",
+      "caption": "Foundation Mega Pack",
+      "display_order": 0,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 480,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/HIDDEN_9d612eb5-9e19-4288-9929-6afb87034e41-1600w-86af11.jpg",
+      "caption": "Foundation Mega Pack",
+      "display_order": 1,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 481,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/HIDDEN_1_aaff00b5-0f95-40e1-a2cc-d04359fdaf69-1600w-8179a1.jpg",
+      "caption": "Foundation Mega Pack",
+      "display_order": 2,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 482,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_d983168c-f27c-4f77-a4b4-fdb0c5e317ec-1600w-p491e36.jpg",
+      "caption": "Foundation Mega Pack",
+      "display_order": 3,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 483,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ColorChangingFoundation-Productimagesphotos_1_f1c23dd4-e0f9--1600w-6bdfcf.png",
+      "caption": "Foundation Mega Pack",
+      "display_order": 4,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 484,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_6b0046ae-1e9d-45ec-8fc0-c56877b55386-1600w-7d8e74.png",
+      "caption": "Foundation Mega Pack",
+      "display_order": 5,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 485,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/7_90f4a994-dc46-4dfb-a588-997301f4952e-1600w-2f8dd3.png",
+      "caption": "Foundation Mega Pack",
+      "display_order": 6,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 486,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/8_71a6dbbe-fa46-4d9b-9cdb-c196f793a610-1600w-eb5cef.png",
+      "caption": "Foundation Mega Pack",
+      "display_order": 7,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 487,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ColorChangingFoundation-Productimagesphotos_d40593e7-35c9-47-1600w-abf6fc.jpg",
+      "caption": "Foundation Mega Pack",
+      "display_order": 8,
+      "product": 32,
+      "variants": []
+     },
+     {
+      "id": 488,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/5_f96fc3f0-28e7-46e4-806e-30f9ec6c08d6-1600w-98baea.jpg",
+      "caption": "Foundation Mega Pack",
+      "display_order": 9,
+      "product": 32,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 33,
+      "product_id": 32,
+      "title": "Foundation Mega Pack",
+      "sku": "SKF-FOUNDATION-MEGA-PACK-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 479,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/hf_20260514_093039_c5845811-d3e7-48ee-a798-2b072efabab4-1600w-b83cfa.jpg",
+        "caption": "Foundation Mega Pack",
+        "display_order": 0,
+        "product": 32,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "119.00",
+        "retail": "194.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 20,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:25:51.812116-04:00",
+      "date_updated": "2026-10-20T21:25:51.823365-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "foundation-mega-pack",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:25:51.742165-04:00",
+    "date_updated": "2026-10-21T13:36:55.981847-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 34,
+    "url": "https://skinofab.com/catalogue/gua-sha_34/",
+    "title": "Gua Sha",
+    "slug": "gua-sha",
+    "description": "<p>Experience the smoother, more radiant skin you've always dreamed of with our innovative Gua Sha tool. Expertly crafted from stainless steel to enhance circulation and reduce puffiness, it provides you with a glowing complexion and a rejuvenated appearance. Enjoy the soothing effects and a flawless finish that highlights your natural beauty.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 6,
+      "name": "Essentials",
+      "slug": "essentials"
+     },
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     },
+     {
+      "id": 14,
+      "name": "Skin",
+      "slug": "skin"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 489,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_9d8bf569-c117-4525-bcba-350526dfa674-1600w-4d30eb.jpg",
+      "caption": "Gua Sha",
+      "display_order": 0,
+      "product": 34,
+      "variants": []
+     },
+     {
+      "id": 490,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/3_8018fff5-0f4b-4c50-9c6e-0d592daa81a6-1600w-pe6e9d8.jpg",
+      "caption": "Gua Sha",
+      "display_order": 1,
+      "product": 34,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 35,
+      "product_id": 34,
+      "title": "Gua Sha",
+      "sku": "SKF-GUA-SHA-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 489,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_9d8bf569-c117-4525-bcba-350526dfa674-1600w-4d30eb.jpg",
+        "caption": "Gua Sha",
+        "display_order": 0,
+        "product": 34,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 21,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:26:07.648614-04:00",
+      "date_updated": "2026-10-20T21:26:07.658190-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "gua-sha",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:26:07.611596-04:00",
+    "date_updated": "2026-10-21T13:36:57.115606-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 36,
+    "url": "https://skinofab.com/catalogue/normal-lip-plumper_36/",
+    "title": "Normal Lip Plumper",
+    "slug": "normal-lip-plumper",
+    "description": "<h2 class=\"products-list__heading subheading-text\"><strong>For longer lasting results</strong></h2>\n<p><span data-mce-fragment=\"1\">Lock in hydration with our long-lasting plumper, enriched with hydrating hyaluronic acid. For a long-lasting plump effect, apply regularly over time. </span></p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 8,
+      "name": "Homepage",
+      "slug": "homepage-lips"
+     },
+     {
+      "id": 10,
+      "name": "Lips",
+      "slug": "lips"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 491,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1600w-b32bb1.png",
+      "caption": "Normal Lip Plumper",
+      "display_order": 0,
+      "product": 36,
+      "variants": []
+     },
+     {
+      "id": 492,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_2_457b56a7-e82c-45d8-b040-c676308b84a5-1600w-p44042c.jpg",
+      "caption": "Normal Lip Plumper",
+      "display_order": 1,
+      "product": 36,
+      "variants": []
+     },
+     {
+      "id": 493,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_3_820bcdaf-7ecc-4732-b844-30cb38590f13-1600w-8e17cb.jpg",
+      "caption": "Normal Lip Plumper",
+      "display_order": 2,
+      "product": 36,
+      "variants": []
+     },
+     {
+      "id": 494,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_ce335ae6-5d49-4f81-a1a6-cc9b38f762c6-1600w-224f46.jpg",
+      "caption": "Normal Lip Plumper",
+      "display_order": 3,
+      "product": 36,
+      "variants": []
+     },
+     {
+      "id": 495,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/NLPC-1600w-9683a2.jpg",
+      "caption": "Normal Lip Plumper",
+      "display_order": 4,
+      "product": 36,
+      "variants": []
+     },
+     {
+      "id": 496,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_4e9cc6cf-cd1d-4378-9d21-776809481d65-1600w-c1c15f.jpg",
+      "caption": "Normal Lip Plumper",
+      "display_order": 5,
+      "product": 36,
+      "variants": []
+     },
+     {
+      "id": 497,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_7_a2bf3dfa-3e99-4647-85e7-5fac2f791487-1600w-88ea0b.jpg",
+      "caption": "Normal Lip Plumper",
+      "display_order": 6,
+      "product": 36,
+      "variants": []
+     },
+     {
+      "id": 498,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_8_3f7af03f-e925-436c-86b3-c4ba2aae5a3e-1600w-0fa70f.jpg",
+      "caption": "Normal Lip Plumper",
+      "display_order": 7,
+      "product": 36,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Transparent"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 37,
+      "product_id": 36,
+      "title": "Normal Lip Plumper - Transparent",
+      "sku": "SMO-NLP-TR",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 491,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_d895921e-0066-4d7f-852d-19866356f9f4-1600w-b32bb1.png",
+        "caption": "Normal Lip Plumper",
+        "display_order": 0,
+        "product": 36,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Transparent",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "49.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 22,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:26:10.478644-04:00",
+      "date_updated": "2026-10-20T21:26:10.488643-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "hyaluronic-acid-lip-plumper",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:26:10.420369-04:00",
+    "date_updated": "2026-10-21T13:36:58.430071-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 38,
+    "url": "https://skinofab.com/catalogue/lash-brow-growth-kit_38/",
+    "title": "Lash & Brow Growth Kit",
+    "slug": "lash-brow-growth-kit",
+    "description": "<p>One kit. Longer lashes. Fuller brows. Skinofab's Lash &amp; Brow Growth Kit combines our bestselling Eyelash Growth Serum and Eyebrow Growth Serum into a complete treatment duo — clinically inspired to visibly thicken and lengthen with consistent use. See results in as little as 4 weeks. Your transformation starts here.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 3,
+      "name": "Brows",
+      "slug": "brows"
+     },
+     {
+      "id": 4,
+      "name": "Bundles",
+      "slug": "bundles"
+     },
+     {
+      "id": 9,
+      "name": "Lashes",
+      "slug": "lashes"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 13,
+      "name": "Serums",
+      "slug": "serums"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 499,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/jsdfsd-1600w-3e3e9c.jpg",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 0,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 500,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/9_16c9c86e-ca27-4c16-870c-74bde2111f4c-1600w-p4a708f.jpg",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 1,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 501,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/8_d5e5d83f-a169-4c0d-b5bf-829120633b03-1600w-9a3c0d.png",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 2,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 502,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_a9614489-63aa-46d8-ba19-a12d084c44af-1600w-5c4337.jpg",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 3,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 503,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_eb826aa0-fe75-4660-9e70-105cf071d929-1600w-633ef7.jpg",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 4,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 504,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/5_d015d81d-27ef-4d9d-b978-4fea642b207e-1600w-pc1e066.jpg",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 5,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 505,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_6f404360-d45e-4277-8156-b88e7c1e757a-1600w-p9f83d7.jpg",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 6,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 506,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_9d2d3c05-3568-41dd-98b3-e2835bad3c75-1600w-b88fb8.png",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 7,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 507,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/3_797b397c-8d80-43ce-a6bf-55a0bec852c5-1600w-6ea70f.png",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 8,
+      "product": 38,
+      "variants": []
+     },
+     {
+      "id": 508,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Eyelashserum-Productimagesphotos_00a7d9f6-9d75-44d4-a249-e32-1600w-b23165.jpg",
+      "caption": "Lash & Brow Growth Kit",
+      "display_order": 9,
+      "product": 38,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 39,
+      "product_id": 38,
+      "title": "Lash & Brow Growth Kit",
+      "sku": "SKF-LASH-BROW-DUO-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 499,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/jsdfsd-1600w-3e3e9c.jpg",
+        "caption": "Lash & Brow Growth Kit",
+        "display_order": 0,
+        "product": 38,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "49.00",
+        "retail": "78.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 23,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:26:22.850919-04:00",
+      "date_updated": "2026-10-20T21:26:22.860724-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "lash-brow-duo",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:26:22.812002-04:00",
+    "date_updated": "2026-10-21T13:36:59.519824-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 40,
+    "url": "https://skinofab.com/catalogue/liquid-blender-brush_40/",
+    "title": "Liquid Blender Brush",
+    "slug": "liquid-blender-brush",
+    "description": "<p>Flawless application, zero mess. Skinofab's Liquid Blender Brush is designed to apply liquid and cream products with salon-level precision — think seamless foundation blending, no streaks, no waste. The densely packed bristles pick up the perfect amount of product every time, giving you a smooth, even finish in half the time.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 6,
+      "name": "Essentials",
+      "slug": "essentials"
+     },
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 509,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-1600w-ff9942.png",
+      "caption": "Liquid Blender Brush",
+      "display_order": 0,
+      "product": 40,
+      "variants": []
+     },
+     {
+      "id": 510,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/3_5f40db4f-a195-4379-835e-dd0911bac474-1600w-a72796.jpg",
+      "caption": "Liquid Blender Brush",
+      "display_order": 1,
+      "product": 40,
+      "variants": []
+     },
+     {
+      "id": 511,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_b5c66994-2116-4fc9-bf5b-2af254d6249c-1600w-d48ae1.png",
+      "caption": "Liquid Blender Brush",
+      "display_order": 2,
+      "product": 40,
+      "variants": []
+     },
+     {
+      "id": 512,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_8d841b11-7496-4249-8dfa-30382a3e2da6-1600w-p72c88a.jpg",
+      "caption": "Liquid Blender Brush",
+      "display_order": 3,
+      "product": 40,
+      "variants": []
+     },
+     {
+      "id": 513,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/5_3edb7b36-bcce-4403-be0f-31b36d7cf5cc-1600w-8101c2.png",
+      "caption": "Liquid Blender Brush",
+      "display_order": 4,
+      "product": 40,
+      "variants": []
+     },
+     {
+      "id": 514,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_16ab579d-3384-4c3a-a5d6-100f324f693f-1600w-pbcc4f8.jpg",
+      "caption": "Liquid Blender Brush",
+      "display_order": 5,
+      "product": 40,
+      "variants": []
+     },
+     {
+      "id": 515,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/7_d6fd28ae-33d1-4e73-b860-162311b65928-1600w-ae1df1.png",
+      "caption": "Liquid Blender Brush",
+      "display_order": 6,
+      "product": 40,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 41,
+      "product_id": 40,
+      "title": "Liquid Blender Brush",
+      "sku": "SMO-LBB-001",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 509,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_06a68ea1-cc57-4cb8-99d3-34d1cd889366-1600w-ff9942.png",
+        "caption": "Liquid Blender Brush",
+        "display_order": 0,
+        "product": 40,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "29.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 24,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:26:38.636964-04:00",
+      "date_updated": "2026-10-20T21:26:38.647420-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "liquid-blender-brush",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:26:38.593163-04:00",
+    "date_updated": "2026-10-21T13:37:00.716525-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 42,
+    "url": "https://skinofab.com/catalogue/2-in-1-serum-mascara_42/",
+    "title": "2-in-1 Serum Mascara",
+    "slug": "2-in-1-serum-mascara",
+    "description": "<div data-shopify-editor-block='{\"id\":\"template--18398378557596__main__text_dEqcaA\",\"domId\":\"text_dEqcaA\",\"type\":\"text\"}' class=\"product__block\">\n<div data-live-text-setting=\"template--18398378557596__main__text_dEqcaA.title\" data-shopify-editor-block='{\"id\":\"template--18398378557596__main__text_dEqcaA\",\"domId\":\"text_dEqcaA\",\"type\":\"text\"}' class=\"product__subheading\">\n<p>Instantly achieve the look of longer, fuller lashes with our best-selling mascara. The ultra-smooth formula glides on without clumping, flaking, or smudging — and stays put all day, even through heat and humidity.</p>\n</div>\n</div>\n<div data-shopify-editor-block='{\"id\":\"template--18398378557596__main__variant_new_CLdLF4\",\"domId\":\"variant_new_CLdLF4\",\"type\":\"variant_new\"}' data-form-wrapper=\"\" class=\"kopstorm_form1 product__block variant__labels--hide btn--half\"><form data-editor-form-attribute=\"\" data-recipient-errors=\"false\" data-product-form=\"\" enctype=\"multipart/form-data\" class=\"product__form\" id=\"AddToCartForm--template--18398378557596__main\" action=\"https://08f531-2.myshopify.com/cart/add?oseid=whpsVQ1eFSJ2ufpCh9UGeN3s\" method=\"post\">\n<div class=\"product__selectors\">\n<div data-option-position=\"1\" class=\"selector-wrapper selector-wrapper--swatches\"><br></div>\n</div>\n</form></div>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 9,
+      "name": "Lashes",
+      "slug": "lashes"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 516,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_20b6ec93-6006-4a9f-9321-81c12e325c04-1600w-380b76.png",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 0,
+      "product": 42,
+      "variants": []
+     },
+     {
+      "id": 517,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/7_a5b19fff-c938-4b92-8191-75ddd91edefb-1600w-82b4c6.jpg",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 1,
+      "product": 42,
+      "variants": []
+     },
+     {
+      "id": 518,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/3_98d24a51-c3d4-41c1-9fb0-6ca97f3122eb-1600w-6eea6f.jpg",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 2,
+      "product": 42,
+      "variants": []
+     },
+     {
+      "id": 519,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_af5e4524-6298-428a-96f9-73e05bb0e4df-1600w-p8b4664.jpg",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 3,
+      "product": 42,
+      "variants": []
+     },
+     {
+      "id": 520,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_6b004fb9-a729-4bd5-93a9-9393cd16fedd-1600w-c51a3c.jpg",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 4,
+      "product": 42,
+      "variants": []
+     },
+     {
+      "id": 521,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_011b66db-289a-4d6a-9999-bc77993824ae-1600w-c1abd5.jpg",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 5,
+      "product": 42,
+      "variants": []
+     },
+     {
+      "id": 522,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/7_3bcd31db-3fa7-4688-ab57-d218b337eb0a-1600w-91be01.png",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 6,
+      "product": 42,
+      "variants": []
+     },
+     {
+      "id": 523,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Mascara-Productimagesphotos_3-1600w-663fba.jpg",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 7,
+      "product": 42,
+      "variants": []
+     },
+     {
+      "id": 524,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/8_9b44ff89-6119-4081-b0d1-46a3d657b031-1600w-p4e90d7.jpg",
+      "caption": "2-in-1 Serum Mascara",
+      "display_order": 8,
+      "product": 42,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Perfect Black"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 43,
+      "product_id": 42,
+      "title": "2-in-1 Serum Mascara - Perfect Black",
+      "sku": "DPCD5-PW432001",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 516,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_20b6ec93-6006-4a9f-9321-81c12e325c04-1600w-380b76.png",
+        "caption": "2-in-1 Serum Mascara",
+        "display_order": 0,
+        "product": 42,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Perfect Black",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "49.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 25,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:26:48.839602-04:00",
+      "date_updated": "2026-10-20T21:26:48.865580-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "long-lash-mascara",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:26:48.764915-04:00",
+    "date_updated": "2026-10-21T13:37:01.969798-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 44,
+    "url": "https://skinofab.com/catalogue/peel-off-lip-stain_44/",
+    "title": "Peel-off Lip Stain",
+    "slug": "peel-off-lip-stain",
+    "description": "<p>The Skinofab Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Skinofab Peel-off Lip Stain, and it's easy to see why!</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 8,
+      "name": "Homepage",
+      "slug": "homepage-lips"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 317,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/free_7-1600w-c86593.png",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 0,
+      "product": 44,
+      "variants": []
+     },
+     {
+      "id": 318,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_2-1600w-0c276f.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 1,
+      "product": 44,
+      "variants": []
+     },
+     {
+      "id": 319,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/gn_b91b9af1-0628-472b-ad72-c25aece9d245-1600w-a5db35.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 2,
+      "product": 44,
+      "variants": []
+     },
+     {
+      "id": 320,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/gn-1600w-893c4a.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 3,
+      "product": 44,
+      "variants": []
+     },
+     {
+      "id": 321,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_3-1600w-43de86.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 4,
+      "product": 44,
+      "variants": []
+     },
+     {
+      "id": 322,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_5-1600w-d96ae0.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 5,
+      "product": 44,
+      "variants": []
+     },
+     {
+      "id": 323,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_2_d2d464b3-43ac-4008-a7bb-600471785909-1600w-b0860a.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 6,
+      "product": 44,
+      "variants": []
+     },
+     {
+      "id": 324,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_c1baec72-844d-48b2-8613-384e58eca7fc-1600w-af6536.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 7,
+      "product": 44,
+      "variants": []
+     },
+     {
+      "id": 325,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc-1600w-d0c843.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 8,
+      "product": 44,
+      "variants": [
+       48
+      ]
+     },
+     {
+      "id": 326,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/rk-1600w-265614.png",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 9,
+      "product": 44,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Raspberry Kiss",
+       "Watermelon Sugar",
+       "Mauve Berry",
+       "Velvet Cacao"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 45,
+      "product_id": 44,
+      "title": "Peel-off Lip Stain - Raspberry Kiss",
+      "sku": "SKF-PEEL-OFF-LIP-STAIN-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 317,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/free_7-1600w-c86593.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 44,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Raspberry Kiss",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "34.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 26,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:01.688369-04:00",
+      "date_updated": "2026-10-20T21:27:01.700334-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 46,
+      "product_id": 44,
+      "title": "Peel-off Lip Stain - Watermelon Sugar",
+      "sku": "SKF-PEEL-OFF-LIP-STAIN-2",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 317,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/free_7-1600w-c86593.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 44,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Watermelon Sugar",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "34.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 27,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:01.822613-04:00",
+      "date_updated": "2026-10-20T21:27:01.843487-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 47,
+      "product_id": 44,
+      "title": "Peel-off Lip Stain - Mauve Berry",
+      "sku": "SKF-PEEL-OFF-LIP-STAIN-3",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 317,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/free_7-1600w-c86593.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 44,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Mauve Berry",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "34.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 28,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:01.971935-04:00",
+      "date_updated": "2026-10-20T21:27:01.981433-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 48,
+      "product_id": 44,
+      "title": "Peel-off Lip Stain - Velvet Cacao",
+      "sku": "SKF-PEEL-OFF-LIP-STAIN-4",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 325,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc-1600w-d0c843.jpg",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 8,
+        "product": 44,
+        "variants": [
+         48
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Velvet Cacao",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "34.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 29,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:02.096463-04:00",
+      "date_updated": "2026-10-20T21:27:02.109419-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "peel-off-lip-stain",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:27:01.624618-04:00",
+    "date_updated": "2026-10-21T13:37:03.401012-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 49,
+    "url": "https://skinofab.com/catalogue/reverse-time-peptide-serum_49/",
+    "title": "Reverse-time Peptide Serum",
+    "slug": "reverse-time-peptide-serum",
+    "description": "<p class=\"font-claude-response-body break-words whitespace-normal\">Smoother, brighter, firmer-looking skin. Our peptide serum pairs Argireline and Matrixyl with niacinamide and vitamin C to visibly soften fine lines.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 14,
+      "name": "Skin",
+      "slug": "skin"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 525,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Group5-1600w-3c2307.png",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 0,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 526,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_9aa29eee-6514-4721-97ec-a22b4b6a553c-1600w-1605a5.jpg",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 1,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 527,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/reverse-timepeptideserumproductimages_5dc6279d-b739-4665-8b0-1600w-cd45e7.jpg",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 2,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 528,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/reverse-timepeptideserumproductimages_389a19f9-51e7-4653-afb-1600w-f2ace8.jpg",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 3,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 529,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_9f773047-33c8-46d6-8c9a-0da3617309dc-1600w-c6b90e.jpg",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 4,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 530,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/reverse-timepeptideserumproductimages_1_8adbdc43-e795-4bb2-8-1600w-647dbe.jpg",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 5,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 531,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/5_d4e035fe-aaee-46e9-96c7-96339d80b1ac-1600w-ada8fd.png",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 6,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 532,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_354533bf-df84-476a-96bc-3ce383db4f59-1600w-pab16de.jpg",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 7,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 533,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/7_9d6be28c-2b46-4a4c-92eb-38e9d7eade83-1600w-f26f57.jpg",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 8,
+      "product": 49,
+      "variants": []
+     },
+     {
+      "id": 534,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/8_1fc05fc5-926b-4316-bfcb-b8c65080ce97-1600w-p960cde.jpg",
+      "caption": "Reverse-time Peptide Serum",
+      "display_order": 9,
+      "product": 49,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 50,
+      "product_id": 49,
+      "title": "Reverse-time Peptide Serum",
+      "sku": "SKF-REVERSE-TIME-PEPTIDE-SERUM-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 525,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Group5-1600w-3c2307.png",
+        "caption": "Reverse-time Peptide Serum",
+        "display_order": 0,
+        "product": 49,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "63.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 30,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:15.760652-04:00",
+      "date_updated": "2026-10-20T21:27:15.772528-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "reverse-time-peptide-serum",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:27:15.714572-04:00",
+    "date_updated": "2026-10-21T13:37:04.790779-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 51,
+    "url": "https://skinofab.com/catalogue/volume-lip-gloss_51/",
+    "title": "Volume Lip Gloss",
+    "slug": "volume-lip-gloss",
+    "description": "<div class=\"w-full text-token-text-primary\" dir=\"auto\" data-testid=\"conversation-turn-5\" data-mce-fragment=\"1\">\n<div class=\"px-4 py-2 justify-center text-base md:gap-6 m-auto\" data-mce-fragment=\"1\">\n<div class=\"flex flex-1 text-base mx-auto gap-3 juice:gap-4 juice:md:gap-6 md:px-5 lg:px-1 xl:px-5 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]\" data-mce-fragment=\"1\">\n<div class=\"relative flex w-full flex-col agent-turn\" data-mce-fragment=\"1\">\n<div class=\"flex-col gap-1 md:gap-3\" data-mce-fragment=\"1\">\n<div class=\"flex flex-grow flex-col max-w-full\" data-mce-fragment=\"1\">\n<div data-message-author-role=\"assistant\" data-message-id=\"ce095959-67a0-4d17-82ab-276daa5b4e49\" dir=\"auto\" class=\"min-h-[20px] text-message flex flex-col items-start gap-3 whitespace-pre-wrap break-words [.text-message+&amp;]:mt-5 overflow-x-auto\" data-mce-fragment=\"1\">\n<div class=\"markdown prose w-full break-words dark:prose-invert light\" data-mce-fragment=\"1\">\n<p data-mce-fragment=\"1\">Discover the nourishing touch of our Shea Butter Lip Gloss. Infused with rich shea butter, this gloss hydrates and softens lips while adding a subtle sheen. Lightweight and non-sticky, it's perfect for daily wear and on-the-go touch-ups. Enjoy beautifully glossy lips with a natural look.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 6,
+      "name": "Essentials",
+      "slug": "essentials"
+     },
+     {
+      "id": 10,
+      "name": "Lips",
+      "slug": "lips"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 535,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_806b81e8-e466-4549-be40-160b224b6b3f-1600w-ab8f2d.png",
+      "caption": "Volume Lip Gloss",
+      "display_order": 0,
+      "product": 51,
+      "variants": [
+       52
+      ]
+     },
+     {
+      "id": 536,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/LipGloss-Productimagesphotos-1600w-2d8afa.jpg",
+      "caption": "Volume Lip Gloss",
+      "display_order": 1,
+      "product": 51,
+      "variants": []
+     },
+     {
+      "id": 537,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_849bdbe2-a7e7-4b75-bf68-bffcf3069d87-1600w-pc7ed47.jpg",
+      "caption": "Volume Lip Gloss",
+      "display_order": 2,
+      "product": 51,
+      "variants": []
+     },
+     {
+      "id": 538,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/clear1-1600w-2be5fa.jpg",
+      "caption": "Volume Lip Gloss",
+      "display_order": 3,
+      "product": 51,
+      "variants": []
+     },
+     {
+      "id": 539,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/LipGloss_Clear_-Productimagesphotos-1600w-a353fa.png",
+      "caption": "Volume Lip Gloss",
+      "display_order": 4,
+      "product": 51,
+      "variants": [
+       53
+      ]
+     },
+     {
+      "id": 540,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/pink_2-1600w-4a7675.jpg",
+      "caption": "Volume Lip Gloss",
+      "display_order": 5,
+      "product": 51,
+      "variants": []
+     },
+     {
+      "id": 541,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/pink-1600w-617133.jpg",
+      "caption": "Volume Lip Gloss",
+      "display_order": 6,
+      "product": 51,
+      "variants": []
+     },
+     {
+      "id": 542,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/pink1-1600w-569230.jpg",
+      "caption": "Volume Lip Gloss",
+      "display_order": 7,
+      "product": 51,
+      "variants": []
+     },
+     {
+      "id": 543,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/9_c1124540-be99-42e5-9107-7c2f1b459727-1600w-p5cb902.jpg",
+      "caption": "Volume Lip Gloss",
+      "display_order": 8,
+      "product": 51,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Clear",
+       "Sweet Pink"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 52,
+      "product_id": 51,
+      "title": "Volume Lip Gloss - Clear",
+      "sku": "smooche-shea-butter-lip-gloss",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 535,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_806b81e8-e466-4549-be40-160b224b6b3f-1600w-ab8f2d.png",
+        "caption": "Volume Lip Gloss",
+        "display_order": 0,
+        "product": 51,
+        "variants": [
+         52
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Clear",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 31,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:29.711787-04:00",
+      "date_updated": "2026-10-20T21:27:29.729888-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 53,
+      "product_id": 51,
+      "title": "Volume Lip Gloss - Sweet Pink",
+      "sku": "SKF-SHEA-BUTTER-LIP-GLOSS-2",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 539,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/LipGloss_Clear_-Productimagesphotos-1600w-a353fa.png",
+        "caption": "Volume Lip Gloss",
+        "display_order": 4,
+        "product": 51,
+        "variants": [
+         53
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Sweet Pink",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "19.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 32,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:29.858641-04:00",
+      "date_updated": "2026-10-20T21:27:29.869939-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "shea-butter-lip-gloss",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:27:29.633522-04:00",
+    "date_updated": "2026-10-21T13:37:06.606981-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 54,
+    "url": "https://skinofab.com/catalogue/skinofab-blender_54/",
+    "title": "Skinofab Blender",
+    "slug": "skinofab-blender",
+    "description": "",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 6,
+      "name": "Essentials",
+      "slug": "essentials"
+     },
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 544,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/sdfsd1-1600w-0b5aa4.jpg",
+      "caption": "Skinofab Blender",
+      "display_order": 0,
+      "product": 54,
+      "variants": []
+     },
+     {
+      "id": 545,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/BeautyBlender-Productpicsimagesphotos_16ba3af3-8839-4806-aed-1600w-p288a3a.jpg",
+      "caption": "Skinofab Blender",
+      "display_order": 1,
+      "product": 54,
+      "variants": []
+     },
+     {
+      "id": 546,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/BeautyBlender-Productpicsimagesphotos_1_98a4998a-92f2-48b3-9-1600w-9b5a02.jpg",
+      "caption": "Skinofab Blender",
+      "display_order": 2,
+      "product": 54,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 55,
+      "product_id": 54,
+      "title": "Skinofab Blender",
+      "sku": "SKF-SMOOCHE-BLENDER-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 544,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/sdfsd1-1600w-0b5aa4.jpg",
+        "caption": "Skinofab Blender",
+        "display_order": 0,
+        "product": 54,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "9.00",
+        "retail": "19.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 33,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:43.343366-04:00",
+      "date_updated": "2026-10-20T21:27:43.360637-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "skinofab-blender",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:27:43.305411-04:00",
+    "date_updated": "2026-10-21T13:37:07.963168-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 56,
+    "url": "https://skinofab.com/catalogue/skinofab-gift-card_56/",
+    "title": "Skinofab Gift Card",
+    "slug": "skinofab-gift-card",
+    "description": "<p>The best gift is skinofab.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 349,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/hf_20260928_113042_4517db50-1fcd-414c-b718-5b2cbc23af39-1600w-faff7b.jpg",
+      "caption": "Skinofab Gift Card",
+      "display_order": 0,
+      "product": 56,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Denominations",
+      "code": "denominations",
+      "values": [
+       "$10,00",
+       "$25,00",
+       "$50,00",
+       "$100,00"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 57,
+      "product_id": 56,
+      "title": "Skinofab Gift Card - $10,00",
+      "sku": "SKF-SMOOCHE-GIFT-CARD-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 349,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/hf_20260928_113042_4517db50-1fcd-414c-b718-5b2cbc23af39-1600w-faff7b.jpg",
+        "caption": "Skinofab Gift Card",
+        "display_order": 0,
+        "product": 56,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Denominations",
+        "value": "$10,00",
+        "code": "denominations"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "10.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 34,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:47.908503-04:00",
+      "date_updated": "2026-10-20T21:27:47.920582-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 58,
+      "product_id": 56,
+      "title": "Skinofab Gift Card - $25,00",
+      "sku": "SKF-SMOOCHE-GIFT-CARD-2",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 349,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/hf_20260928_113042_4517db50-1fcd-414c-b718-5b2cbc23af39-1600w-faff7b.jpg",
+        "caption": "Skinofab Gift Card",
+        "display_order": 0,
+        "product": 56,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Denominations",
+        "value": "$25,00",
+        "code": "denominations"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "25.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 35,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:48.066479-04:00",
+      "date_updated": "2026-10-20T21:27:48.080127-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 59,
+      "product_id": 56,
+      "title": "Skinofab Gift Card - $50,00",
+      "sku": "SKF-SMOOCHE-GIFT-CARD-3",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 349,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/hf_20260928_113042_4517db50-1fcd-414c-b718-5b2cbc23af39-1600w-faff7b.jpg",
+        "caption": "Skinofab Gift Card",
+        "display_order": 0,
+        "product": 56,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Denominations",
+        "value": "$50,00",
+        "code": "denominations"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "50.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 36,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:48.224068-04:00",
+      "date_updated": "2026-10-20T21:27:48.237555-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 60,
+      "product_id": 56,
+      "title": "Skinofab Gift Card - $100,00",
+      "sku": "SKF-SMOOCHE-GIFT-CARD-4",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 349,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/hf_20260928_113042_4517db50-1fcd-414c-b718-5b2cbc23af39-1600w-faff7b.jpg",
+        "caption": "Skinofab Gift Card",
+        "display_order": 0,
+        "product": 56,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Denominations",
+        "value": "$100,00",
+        "code": "denominations"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "100.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 37,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:48.406628-04:00",
+      "date_updated": "2026-10-20T21:27:48.420605-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "skinofab-gift-card",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:27:47.824231-04:00",
+    "date_updated": "2026-10-21T13:37:09.113357-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 61,
+    "url": "https://skinofab.com/catalogue/peel-off-lip-stain_61/",
+    "title": "Peel-off Lip Stain",
+    "slug": "peel-off-lip-stain",
+    "description": "<p>The Skinofab Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Skinofab Peel-off Lip Stain, and it's easy to see why!</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 8,
+      "name": "Homepage",
+      "slug": "homepage-lips"
+     },
+     {
+      "id": 10,
+      "name": "Lips",
+      "slug": "lips"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 11,
+      "name": "Stick & Stay Peel-off Lip Stain",
+      "slug": "lipstain"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 350,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_1d8f5d7e-2690-4cbc-8390-13ac8b063c2c-1600w-01dd67.png",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 0,
+      "product": 61,
+      "variants": [
+       65
+      ]
+     },
+     {
+      "id": 351,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_2-1600w-0c276f_LVCecQf.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 1,
+      "product": 61,
+      "variants": []
+     },
+     {
+      "id": 352,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/gn_b91b9af1-0628-472b-ad72-c25aece9d245-1600w-a5db35_WUtwgMI.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 2,
+      "product": 61,
+      "variants": []
+     },
+     {
+      "id": 353,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_a6415f9a-a786-4c30-a345-762748c3acc4-1600w-d9de92.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 3,
+      "product": 61,
+      "variants": []
+     },
+     {
+      "id": 354,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/gn-1600w-893c4a_8WaTTlm.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 4,
+      "product": 61,
+      "variants": []
+     },
+     {
+      "id": 355,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_3_eba4a04a-80a0-4691-8092-ff25dc08830f-1600w-9a46a5.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 5,
+      "product": 61,
+      "variants": []
+     },
+     {
+      "id": 356,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_5-1600w-d96ae0_8Ioqnml.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 6,
+      "product": 61,
+      "variants": []
+     },
+     {
+      "id": 357,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_2_eac4bdee-e837-4cbf-8081-d6d6ae428fbf-1600w-06422c.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 7,
+      "product": 61,
+      "variants": []
+     },
+     {
+      "id": 358,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc-1600w-d0c843_KPtpOR4.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 8,
+      "product": 61,
+      "variants": []
+     },
+     {
+      "id": 359,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/rk_96c7aa1a-67ed-4d74-a163-208797ac24ac-1600w-dfa6c5.png",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 9,
+      "product": 61,
+      "variants": [
+       62
+      ]
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Raspberry Kiss",
+       "Watermelon Sugar",
+       "Mauve Berry",
+       "Velvet Cacao"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 62,
+      "product_id": 61,
+      "title": "Peel-off Lip Stain - Raspberry Kiss",
+      "sku": "SMO-PLS-RK",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 359,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/rk_96c7aa1a-67ed-4d74-a163-208797ac24ac-1600w-dfa6c5.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 9,
+        "product": 61,
+        "variants": [
+         62
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Raspberry Kiss",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "29.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 38,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:50.618919-04:00",
+      "date_updated": "2026-10-20T21:27:50.629352-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 63,
+      "product_id": 61,
+      "title": "Peel-off Lip Stain - Watermelon Sugar",
+      "sku": "SMO-PLS-WS",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 350,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_1d8f5d7e-2690-4cbc-8390-13ac8b063c2c-1600w-01dd67.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 61,
+        "variants": [
+         65
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Watermelon Sugar",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "29.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 39,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:50.768492-04:00",
+      "date_updated": "2026-10-20T21:27:50.779268-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 64,
+      "product_id": 61,
+      "title": "Peel-off Lip Stain - Mauve Berry",
+      "sku": "SMO-PLS-MB",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 350,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_1d8f5d7e-2690-4cbc-8390-13ac8b063c2c-1600w-01dd67.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 61,
+        "variants": [
+         65
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Mauve Berry",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "29.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 40,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:50.897763-04:00",
+      "date_updated": "2026-10-20T21:27:50.907726-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 65,
+      "product_id": 61,
+      "title": "Peel-off Lip Stain - Velvet Cacao",
+      "sku": "SMO-PLS-VC",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 350,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_1d8f5d7e-2690-4cbc-8390-13ac8b063c2c-1600w-01dd67.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 61,
+        "variants": [
+         65
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Velvet Cacao",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "29.00",
+        "retail": null,
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 41,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:27:51.021716-04:00",
+      "date_updated": "2026-10-20T21:27:51.032091-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "stick-and-stain",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:27:50.523767-04:00",
+    "date_updated": "2026-10-21T13:37:10.269976-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 66,
+    "url": "https://skinofab.com/catalogue/peel-off-lip-stain_66/",
+    "title": "Peel-off Lip Stain",
+    "slug": "peel-off-lip-stain",
+    "description": "<p>The Skinofab Stick &amp; Stain is going viral because of the incredible before and after video's all over social media. People can't get enough of the Skinofab Peel-off Lip Stain, and it's easy to see why!</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": false,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 8,
+      "name": "Homepage",
+      "slug": "homepage-lips"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 360,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/free_7-1600w-c86593_T68J2Kk.png",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 0,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 361,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_2-1600w-0c276f_krv3COq.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 1,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 362,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/gn_b91b9af1-0628-472b-ad72-c25aece9d245-1600w-a5db35_ZkKLNiY.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 2,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 363,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/gn-1600w-893c4a_wiQd5Lk.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 3,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 364,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_3-1600w-43de86_BkES2nQ.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 4,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 365,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_5-1600w-d96ae0_qUwx3jn.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 5,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 366,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_2_d2d464b3-43ac-4008-a7bb-600471785909-1600w-b0860a_rv7lHN1.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 6,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 367,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc_c1baec72-844d-48b2-8613-384e58eca7fc-1600w-af6536_lTZoHel.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 7,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 368,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/vc-1600w-d0c843_GHCLRKA.jpg",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 8,
+      "product": 66,
+      "variants": []
+     },
+     {
+      "id": 369,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/rk-1600w-265614_7n2NkyU.png",
+      "caption": "Peel-off Lip Stain",
+      "display_order": 9,
+      "product": 66,
+      "variants": [
+       67
+      ]
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Raspberry Kiss",
+       "Watermelon Sugar",
+       "Mauve Berry",
+       "Velvet Cacao"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 67,
+      "product_id": 66,
+      "title": "Peel-off Lip Stain - Raspberry Kiss",
+      "sku": "SKF-STICK-STAIN3-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 369,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/rk-1600w-265614_7n2NkyU.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 9,
+        "product": 66,
+        "variants": [
+         67
+        ]
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Raspberry Kiss",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 42,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:28:05.021143-04:00",
+      "date_updated": "2026-10-20T21:28:05.031821-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 68,
+      "product_id": 66,
+      "title": "Peel-off Lip Stain - Watermelon Sugar",
+      "sku": "SKF-STICK-STAIN3-2",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 360,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/free_7-1600w-c86593_T68J2Kk.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 66,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Watermelon Sugar",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 43,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:28:05.137006-04:00",
+      "date_updated": "2026-10-20T21:28:05.146535-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 69,
+      "product_id": 66,
+      "title": "Peel-off Lip Stain - Mauve Berry",
+      "sku": "SKF-STICK-STAIN3-3",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 360,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/free_7-1600w-c86593_T68J2Kk.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 66,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Mauve Berry",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 44,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:28:05.251170-04:00",
+      "date_updated": "2026-10-20T21:28:05.260566-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 70,
+      "product_id": 66,
+      "title": "Peel-off Lip Stain - Velvet Cacao",
+      "sku": "SKF-STICK-STAIN3-4",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 360,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/free_7-1600w-c86593_T68J2Kk.png",
+        "caption": "Peel-off Lip Stain",
+        "display_order": 0,
+        "product": 66,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Velvet Cacao",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "59.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 45,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:28:05.359330-04:00",
+      "date_updated": "2026-10-20T21:28:05.368525-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "stick-stain3",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:28:04.958207-04:00",
+    "date_updated": "2026-10-23T00:45:32.417435-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 71,
+    "url": "https://skinofab.com/catalogue/triple-lip-plumper-bundle_71/",
+    "title": "Triple Lip Plumper Bundle",
+    "slug": "triple-lip-plumper-bundle",
+    "description": "<p>The Skinofab Lip plumper&nbsp;<strong>is going viral</strong>&nbsp;because of the insane before and after video's all over social media. After many tests and a long period of research, we are proud to say we have found&nbsp;<strong>the perfect formula for our plumpers.</strong>&nbsp;Made with 100% natural ingredients, our plumpers are the only natural and effective way to plump up your lips.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": false,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 4,
+      "name": "Bundles",
+      "slug": "bundles"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 547,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_27b1e8c4-6c32-4b80-b596-f87b74c78c5d-1600w-fafdd3.png",
+      "caption": "Triple Lip Plumper Bundle",
+      "display_order": 0,
+      "product": 71,
+      "variants": []
+     },
+     {
+      "id": 548,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_2_c8959d5b-4e60-4366-b033-f52e13d21aa6-1600w-p6c49c7.jpg",
+      "caption": "Triple Lip Plumper Bundle",
+      "display_order": 1,
+      "product": 71,
+      "variants": []
+     },
+     {
+      "id": 549,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_3_20130032-c9f8-41fd-9f0a-f78013801c56-1600w-2e7529.jpg",
+      "caption": "Triple Lip Plumper Bundle",
+      "display_order": 2,
+      "product": 71,
+      "variants": []
+     },
+     {
+      "id": 550,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_4_d1c0db4e-8fac-485f-8b49-bb1ffd95b670-1600w-pb91e74.jpg",
+      "caption": "Triple Lip Plumper Bundle",
+      "display_order": 3,
+      "product": 71,
+      "variants": []
+     },
+     {
+      "id": 551,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_2_cd4e152b-f94b-4bb2-8095-da60c86bc2fa-1600w-2df2cc.jpg",
+      "caption": "Triple Lip Plumper Bundle",
+      "display_order": 4,
+      "product": 71,
+      "variants": []
+     },
+     {
+      "id": 552,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_dc3cc3d7-aafd-4e32-a3b9-e6833e693188-1600w-ccc841.jpg",
+      "caption": "Triple Lip Plumper Bundle",
+      "display_order": 5,
+      "product": 71,
+      "variants": []
+     },
+     {
+      "id": 553,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/ELPC_7_6275b847-75cc-4b15-afa4-be3b018e9c12-1600w-1831fe.jpg",
+      "caption": "Triple Lip Plumper Bundle",
+      "display_order": 6,
+      "product": 71,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Color",
+      "code": "color",
+      "values": [
+       "Transparent"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 72,
+      "product_id": 71,
+      "title": "Triple Lip Plumper Bundle - Transparent",
+      "sku": "smooche-triple-lip-plumper-bundle",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 547,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_27b1e8c4-6c32-4b80-b596-f87b74c78c5d-1600w-fafdd3.png",
+        "caption": "Triple Lip Plumper Bundle",
+        "display_order": 0,
+        "product": 71,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Color",
+        "value": "Transparent",
+        "code": "color"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "49.00",
+        "retail": "117.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 46,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:28:18.804307-04:00",
+      "date_updated": "2026-10-20T21:28:18.814260-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "triple-lip-plumper-bundle",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:28:18.751064-04:00",
+    "date_updated": "2026-10-23T00:44:26.158533-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 73,
+    "url": "https://skinofab.com/catalogue/ultra-peptide-collagen-lifting-mask_73/",
+    "title": "Ultra Peptide & Collagen Lifting Mask",
+    "slug": "ultra-peptide-collagen-lifting-mask",
+    "description": "<p><meta charset=\"utf-8\">A deeply hydrating lifting mask that helps skin appear firmer, smoother, and plumper. Infused with 5 advanced peptides, collagen, ceramides, niacinamide, and 8 forms of hyaluronic acid to support the skin barrier and promote a healthy, radiant-looking complexion. The mask gradually turns transparent as the essence absorbs into the skin.<br></p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 14,
+      "name": "Skin",
+      "slug": "skin"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 554,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-1600w-1a6941.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 0,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 555,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_bddbfd7c-cafc-435b-972c-375e6b569d8d-1600w-p3c0d7e.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 1,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 556,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/3_c9a9ede6-ade7-4f07-b313-eb1b1ac1681b-1600w-p80f329.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 2,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 557,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_dcdb858c-129f-4ae5-9d06-7f9038421d86-1600w-56d1a0.png",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 3,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 558,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/5_a15a9b7c-28e5-490e-b62a-a7300c8a1f87-1600w-eb530a.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 4,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 559,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_e73141ef-bc15-4d30-b372-c5b0b26cca6e-1600w-pecc8e8.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 5,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 560,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/10_e9b6a7ba-5e3b-413d-9b47-9fdbfbeedfbd-1600w-687f9d.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 6,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 561,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/7_6beabaf2-f70e-411c-8539-a098331d1b7a-1600w-78bc7f.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 7,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 562,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/8_dda9261a-e302-44e8-ba92-241f8ef96947-1600w-p874f40.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 8,
+      "product": 73,
+      "variants": []
+     },
+     {
+      "id": 563,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/9_038db92d-cb6a-4bf4-8ba1-fa0c1dbf9bde-1600w-p5c8071.jpg",
+      "caption": "Ultra Peptide & Collagen Lifting Mask",
+      "display_order": 9,
+      "product": 73,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 74,
+      "product_id": 73,
+      "title": "Ultra Peptide & Collagen Lifting Mask",
+      "sku": "SKF-ULTRA-PEPTIDE-COLLAGEN-LIFTING-MASK-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 554,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_18ed1cc5-eaac-4c62-a3ed-90c9232743c6-1600w-1a6941.jpg",
+        "caption": "Ultra Peptide & Collagen Lifting Mask",
+        "display_order": 0,
+        "product": 73,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "39.00",
+        "retail": "49.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 47,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:28:28.327602-04:00",
+      "date_updated": "2026-10-20T21:28:28.338964-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "ultra-peptide-collagen-lifting-mask",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:28:28.280319-04:00",
+    "date_updated": "2026-10-21T13:37:17.042061-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 75,
+    "url": "https://skinofab.com/catalogue/under-eye-reset-patches_75/",
+    "title": "Under-eye Reset Patches",
+    "slug": "under-eye-reset-patches",
+    "description": "<p class=\"p1\">Hydrating under-eye patches that help depuff, brighten and smooth the delicate eye area for a refreshed, well-rested appearance.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": true,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 14,
+      "name": "Skin",
+      "slug": "skin"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 564,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1600w-3c7014.png",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 0,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 565,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/2_e8917bc3-d853-4c5c-b72d-85825210cf93-1600w-p0e56a0.jpg",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 1,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 566,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/3_b4f62ace-5fb2-4479-a6e2-73bae75d2d93-1600w-c80ef9.png",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 2,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 567,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/4_c61c2b4c-9943-47b2-87bb-2d290c5688e2-1600w-cf53c1.jpg",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 3,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 568,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Under-eyeResetPatches-Productimages_1-1600w-d12020.jpg",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 4,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 569,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/5_28967e09-2223-4d0c-bd80-8b72414db926-1600w-paa2bae.jpg",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 5,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 570,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/Under-eyeResetPatches-Productimages_2-1600w-7f9a8c.png",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 6,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 571,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/6_bf90aa6a-28cb-42ab-82c5-4369fe4c8a4e-1600w-p497960.jpg",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 7,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 572,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/8_d9b7520d-49e0-4ead-9acb-b2135f51e818-1600w-p74cc22.jpg",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 8,
+      "product": 75,
+      "variants": []
+     },
+     {
+      "id": 573,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/9_681657ec-b4d2-4868-aeea-b0c653b3caa7-1600w-p92401d.jpg",
+      "caption": "Under-eye Reset Patches",
+      "display_order": 9,
+      "product": 75,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [],
+    "variants": [
+     {
+      "id": 76,
+      "product_id": 75,
+      "title": "Under-eye Reset Patches",
+      "sku": "SKF-UNDER-EYE-RESET-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 564,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/1_d8cdd63e-85ca-4fdf-93c7-13ab0eb53b16-1600w-3c7014.png",
+        "caption": "Under-eye Reset Patches",
+        "display_order": 0,
+        "product": 75,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "29.00",
+        "retail": "39.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 48,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-20T21:28:42.061094-04:00",
+      "date_updated": "2026-10-20T21:28:42.072052-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": "under-eye-reset",
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-20T21:28:42.027122-04:00",
+    "date_updated": "2026-10-21T13:37:18.371569-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 104,
+    "url": "https://skinofab.com/catalogue/adaptive-peptide-foundation-duo_104/",
+    "title": "Adaptive Peptide Foundation Duo",
+    "slug": "adaptive-peptide-foundation-duo",
+    "description": "<p>Two bottles of the Adaptive Peptide Foundation, the color-adapting serum foundation made for skin after 45. Keep one at home and one in your bag, or pick one of each base.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": false,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 407,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/color-changing-foundation-duo.jpg",
+      "caption": "Color Changing Foundation Duo",
+      "display_order": 0,
+      "product": 104,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Base",
+      "code": "base",
+      "values": [
+       "2 × Light–Medium",
+       "2 × Medium–Deep",
+       "1 of each"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 105,
+      "product_id": 104,
+      "title": "Adaptive Peptide Foundation Duo - 2 × Light–Medium",
+      "sku": "SKF-COLOR-CHANGING-FOUND-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 407,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/color-changing-foundation-duo.jpg",
+        "caption": "Color Changing Foundation Duo",
+        "display_order": 0,
+        "product": 104,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Base",
+        "value": "2 × Light–Medium",
+        "code": "base"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "64.00",
+        "retail": "78.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 69,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-21T03:43:49.549627-04:00",
+      "date_updated": "2026-10-21T03:43:49.560122-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 106,
+      "product_id": 104,
+      "title": "Adaptive Peptide Foundation Duo - 2 × Medium–Deep",
+      "sku": "SKF-COLOR-CHANGING-FOUND-2",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 407,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/color-changing-foundation-duo.jpg",
+        "caption": "Color Changing Foundation Duo",
+        "display_order": 0,
+        "product": 104,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Base",
+        "value": "2 × Medium–Deep",
+        "code": "base"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "64.00",
+        "retail": "78.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 70,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-21T03:43:49.677692-04:00",
+      "date_updated": "2026-10-21T03:43:49.687975-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 107,
+      "product_id": 104,
+      "title": "Adaptive Peptide Foundation Duo - 1 of each",
+      "sku": "SKF-COLOR-CHANGING-FOUND-3",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 407,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/color-changing-foundation-duo.jpg",
+        "caption": "Color Changing Foundation Duo",
+        "display_order": 0,
+        "product": 104,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Base",
+        "value": "1 of each",
+        "code": "base"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "64.00",
+        "retail": "78.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 71,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-21T03:43:49.805227-04:00",
+      "date_updated": "2026-10-21T03:43:49.815818-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": null,
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-21T03:43:49.465023-04:00",
+    "date_updated": "2026-10-21T11:59:08.703126-04:00",
+    "metadata": {}
+   },
+   {
+    "id": 108,
+    "url": "https://skinofab.com/catalogue/complexion-set_108/",
+    "title": "Complexion Set",
+    "slug": "complexion-set",
+    "description": "<p>The Color Changing Foundation in your base, the Liquid Blender Brush that sweeps it on in a minute, and the Under-Eye Reset Patches for the area foundation alone can't fix.</p>",
+    "structure": "parent",
+    "is_discountable": true,
+    "is_public": false,
+    "ranking": 0,
+    "categories": [
+     {
+      "id": 2,
+      "name": "B2G5",
+      "slug": "b2g5"
+     },
+     {
+      "id": 7,
+      "name": "Face",
+      "slug": "face"
+     },
+     {
+      "id": 12,
+      "name": "SALE",
+      "slug": "sale"
+     },
+     {
+      "id": 15,
+      "name": "Bestsellers",
+      "slug": "the-hits"
+     }
+    ],
+    "enable_subscription": false,
+    "interval": null,
+    "interval_counts": [],
+    "images": [
+     {
+      "id": 408,
+      "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/complexion-set.jpg",
+      "caption": "Complexion Set",
+      "display_order": 0,
+      "product": 108,
+      "variants": []
+     }
+    ],
+    "recommended_products": [],
+    "external_tax_code": null,
+    "variant_attributes": [
+     {
+      "name": "Base",
+      "code": "base",
+      "values": [
+       "Light–Medium",
+       "Medium–Deep"
+      ]
+     }
+    ],
+    "variants": [
+     {
+      "id": 109,
+      "product_id": 108,
+      "title": "Complexion Set - Light–Medium",
+      "sku": "SKF-COMPLEXION-SET-1",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 408,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/complexion-set.jpg",
+        "caption": "Complexion Set",
+        "display_order": 0,
+        "product": 108,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Base",
+        "value": "Light–Medium",
+        "code": "base"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "79.00",
+        "retail": "97.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 72,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-21T03:43:50.679277-04:00",
+      "date_updated": "2026-10-21T03:43:50.689393-04:00",
+      "metadata": {}
+     },
+     {
+      "id": 110,
+      "product_id": 108,
+      "title": "Complexion Set - Medium–Deep",
+      "sku": "SKF-COMPLEXION-SET-2",
+      "upc": "",
+      "purchase_availability": "available",
+      "inventory_availability": "untracked",
+      "track_stock": false,
+      "allow_backorders": true,
+      "images": [
+       {
+        "id": 408,
+        "attachment": "https://cdn.29next.store/media/skinofab/images/products/2026/10/complexion-set.jpg",
+        "caption": "Complexion Set",
+        "display_order": 0,
+        "product": 108,
+        "variants": []
+       }
+      ],
+      "variant_attribute_values": [
+       {
+        "name": "Base",
+        "value": "Medium–Deep",
+        "code": "base"
+       }
+      ],
+      "prices": [
+       {
+        "currency": "USD",
+        "price": "79.00",
+        "retail": "97.00",
+        "subscription": null,
+        "subscription_suggested_downsell": null
+       }
+      ],
+      "stockrecords": [
+       {
+        "id": 73,
+        "location_id": 1,
+        "num_in_stock": 1000,
+        "num_allocated": 0,
+        "low_stock_threshold": 0
+       }
+      ],
+      "unit_cost": "0.00",
+      "requires_shipping": true,
+      "date_created": "2026-10-21T03:43:50.795993-04:00",
+      "date_updated": "2026-10-21T03:43:50.806026-04:00",
+      "metadata": {}
+     }
+    ],
+    "template": null,
+    "rating": null,
+    "meta_title": null,
+    "meta_description": null,
+    "date_created": "2026-10-21T03:43:50.620153-04:00",
+    "date_updated": "2026-10-21T11:59:09.329209-04:00",
+    "metadata": {}
+   }
+  ],
+  "pages": [
+   {
+    "id": 70,
+    "title": "I thought my brows were gone for good – until I tried this",
+    "slug": "aging-brows",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "aging-brows",
+    "meta_title": "I thought my brows were gone for good – until I tried this",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 71,
+    "title": "I thought my brows were gone for good – until I tried this",
+    "slug": "aging-brows2",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "aging-brows2",
+    "meta_title": "I thought my brows were gone for good – until I tried this",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 78,
+    "title": "Build Your Bundle",
+    "slug": "bundle-builder",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "bundle-builder",
+    "meta_title": "Build Your Bundle",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 82,
+    "title": "Complete Your Order",
+    "slug": "complete-your-order",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "complete-your-order",
+    "meta_title": "Complete Your Order",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 87,
+    "title": "I tried 7 collagen masks. Only 1 made me look younger.",
+    "slug": "facemask",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "facemask",
+    "meta_title": "I tried 7 collagen masks. Only 1 made me look younger.",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 92,
+    "title": "Fuller lips, but naturally.",
+    "slug": "fullerbutnatural",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "fullerbutnatural",
+    "meta_title": "Fuller lips, but naturally.",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 91,
+    "title": "This is how you get fuller lips without fillers",
+    "slug": "fuller-lips-without-fillers-copy-copy",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "fuller-lips-without-fillers-copy-copy",
+    "meta_title": "This is how you get fuller lips without fillers",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 97,
+    "title": "Lip Stain Restock - Sign up",
+    "slug": "lip-stain-restock-sign-up",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "lip-stain-restock-sign-up",
+    "meta_title": "Lip Stain Restock - Sign up",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 102,
+    "title": "Page",
+    "slug": "page",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "page",
+    "meta_title": "Page",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 103,
+    "title": "Plumper Quiz",
+    "slug": "plumper-quiz",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "plumper-quiz",
+    "meta_title": "Plumper Quiz",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 111,
+    "title": "Find your perfect lip shade",
+    "slug": "shadequiz",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "shadequiz",
+    "meta_title": "Find your perfect lip shade",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 114,
+    "title": "SKINOFAB - How To Use",
+    "slug": "skinofab-how-to-use",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "skinofab-how-to-use",
+    "meta_title": "SKINOFAB - How To Use",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 117,
+    "title": "I tried 7 anti-aging products. Only 1 made me look younger.",
+    "slug": "srm01",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "srm01",
+    "meta_title": "I tried 7 anti-aging products. Only 1 made me look younger.",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 116,
+    "title": "I tried 7 anti-aging products. Only 1 made me look younger.",
+    "slug": "srm01-2026-10-11-02-01-51-pm",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "srm01-2026-10-11-02-01-51-pm",
+    "meta_title": "I tried 7 anti-aging products. Only 1 made me look younger.",
+    "meta_description": null,
+    "metadata": {}
+   },
+   {
+    "id": 120,
+    "title": "Top 5 Best Lip Stain 2025",
+    "slug": "top5stains",
+    "content": "<p>Rendered by the theme template.</p>",
+    "template": "top5stains",
+    "meta_title": "Top 5 Best Lip Stain 2025",
+    "meta_description": null,
+    "metadata": {}
+   }
+  ],
+  "categories": [
+   {
+    "id": 3,
+    "name": "Brows",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "brows",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   },
+   {
+    "id": 4,
+    "name": "Bundles",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "bundles",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   },
+   {
+    "id": 5,
+    "name": "Canal Products",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "canal-products",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   },
+   {
+    "id": 1,
+    "name": "Example Category",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "example-category",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   },
+   {
+    "id": 8,
+    "name": "Homepage",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "homepage-lips",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   },
+   {
+    "id": 9,
+    "name": "Lashes",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "lashes",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   },
+   {
+    "id": 10,
+    "name": "Lips",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "lips",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   },
+   {
+    "id": 13,
+    "name": "Serums",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "serums",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   },
+   {
+    "id": 11,
+    "name": "Stick & Stay Peel-off Lip Stain",
+    "description": "",
+    "meta_title": null,
+    "meta_description": null,
+    "image": "",
+    "slug": "lipstain",
+    "is_public": true,
+    "external_tax_code": null,
+    "template": null
+   }
+  ]
+ }
+]

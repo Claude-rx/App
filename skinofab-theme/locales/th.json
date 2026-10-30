@@ -1,0 +1,307 @@
+{
+    "global": {
+        "button": {
+            "more": "เพิ่มเติม",
+            "search": "ค้นหา",
+            "close": "ปิด",
+            "save": "บันทึก",
+            "save_loading": "ประหยัด...",
+            "go_back": "กลับไป",
+            "learn_more": "Learn more",
+            "dismiss": "Dismiss"
+        },
+        "error": {
+            "please_check_error": "<strong>อุ๊บส์!เราพบข้อผิดพลาดบางอย่าง</strong> - โปรดตรวจสอบข้อความแสดงข้อผิดพลาดด้านล่างและลองอีกครั้ง",
+            "403": "ไม่อนุญาต",
+            "403_message": "ขออภัย แต่คุณไม่ได้รับอนุญาตให้เข้าถึงหน้านี้",
+            "404": "ไม่พบหน้าเว็บ",
+            "404_message": "ขออภัย ไม่พบหน้าเพจที่คุณกำลังค้นหา",
+            "500": "500 ข้อผิดพลาดภายในเซิร์ฟเวอร์",
+            "500_heading": "โทษที ไม่ใช่คุณ แต่เป็นพวกเรา",
+            "500_message": "เราได้รับแจ้งปัญหาแล้ว โปรดลองอีกครั้งในภายหลัง",
+            "generic_try_again": "Something went wrong - please try again",
+            "connection_try_again": "Connection issue - please try again"
+        },
+        "confirm": {
+            "delete": "Are you sure you want to delete?"
+        },
+        "accessibility": {
+            "skip_to_main_content": "ข้ามไปยังเนื้อหาหลัก"
+        }
+    },
+    "navigation": {
+        "main": {
+            "home": "หน้าหลัก",
+            "shop": "ซื้อของ",
+            "blog": "บล็อก",
+            "support": "การสนับสนุน",
+            "contact": "ติดต่อเรา",
+            "cart": "ตะกร้าสินค้า"
+        },
+        "account": {
+            "account": "บัญชีผู้ใช้",
+            "subscriptions": "การสมัครสมาชิก",
+            "orders": "ประวัติการสั่งซื้อ",
+            "profile": "โปรไฟล์",
+            "addresses": "ที่อยู่",
+            "support": "การสนับสนุน",
+            "dashboard": "แดชบอร์ด",
+            "logout": "ออกจากระบบ",
+            "login_or_register": "เข้าสู่ระบบหรือลงทะเบียน",
+            "welcome": "Welcome back"
+        },
+        "footer": {
+            "about_us": "เกี่ยวกับเรา",
+            "contact_us": "ติดต่อเรา",
+            "account_info": "ข้อมูลบัญชีและข้อมูล",
+            "support_terms": "การสนับสนุนและเงื่อนไข",
+            "support": "คำถามที่พบบ่อย",
+            "terms_conditions": "ข้อกำหนดและเงื่อนไข",
+            "privacy": "นโยบายความเป็นส่วนตัว",
+            "address": "ที่อยู่",
+            "copyright": "สงวนลิขสิทธิ์",
+            "help": "ศูนย์ช่วยเหลือ",
+            "rights": "สงวนลิขสิทธิ์"
+        },
+        "pagination": {
+            "next": "ถัดไป"
+        },
+        "search": "ค้นหา",
+        "cart": "รถเข็น",
+        "menu": {
+            "toggle": "Menu"
+        },
+        "breadcrumb": "Breadcrumb"
+    },
+    "tables": {
+        "heading": {
+            "product_name": "ชื่อสินค้า",
+            "product": "สินค้าและสินค้า",
+            "quantity": "จำนวนสินค้า",
+            "schedule": "กำหนดการ",
+            "price": "ราคา",
+            "discount": "ลดราคา",
+            "total": "รวมทั้งหมด",
+            "items_to_buy_now": "รายการที่จะซื้อตอนนี้"
+        },
+        "content": {
+            "price": "ราคา",
+            "discount": "ลดราคา"
+        },
+        "actions": {
+            "remove": "ลบออก",
+            "add_coupon": "เพิ่มคูปอง",
+            "add_coupon_loading": "กำลังเพิ่ม...",
+            "reload": "โหลดใหม่",
+            "reload_loading": "กำลังปรับปรุง...",
+            "add": "เพิ่ม"
+        }
+    },
+    "order": {
+        "cart": {
+            "title": "รถเข็น",
+            "summary": "สรุป",
+            "cart_total": "รวมตะกร้าสินค้า",
+            "cart_total_discount": "รวมตะกร้า (หลังจากส่วนลด)",
+            "applied_offer": "ข้อเสนอที่สมัครใช้",
+            "applied_coupons": "คูปองที่ใช้แล้วได้",
+            "shipping": "การจัดส่งสินค้า",
+            "order_total": "จำนวนการสั่งซื้อ",
+            "proceed_to_checkout": "ดำเนินการเช็คเอาท์",
+            "upsell_message_detail": "{{ message }} เพื่อรับข้อเสนอพิเศษ <b>{{ offer_name }}</b>",
+            "continue_shopping": "ซื้อสินค้าต่อ",
+            "cart_empty": "รถเข็นของคุณว่างเปล่า",
+            "items_count": {
+                "one": "{{ count }} รายการ",
+                "other": "{{ count }} รายการ"
+            },
+            "subscription_items": {
+                "one": "สมัครสมาชิก ({{ count }} รายการ)",
+                "other": "สมัครสมาชิก ({{ count }} รายการ)"
+            },
+            "calculated_at_checkout": "คำนวณเมื่อเช็คเอาท์",
+            "subscription_details": "รายละเอียดการสมัครสมาชิก",
+            "product": "สินค้าและสินค้า",
+            "quantity": "จำนวน",
+            "price": "ราคา",
+            "subscription_total": "จำนวนการสมัครสมาชิก",
+            "subscription_renewal_message": "การสมัครใช้งานของคุณจะต่ออายุทุก",
+            "coupon_code": "Coupon code",
+            "empty_hint": "Add items to get started"
+        }
+    },
+    "store": {
+        "blog": {
+            "title": "บล็อก",
+            "no_posts": "ยังไม่มีโพสต์ที่ถูกสร้างขึ้น",
+            "search_not_found": "พบผลลัพธ์ <strong>0</strong>",
+            "all_categories": "All categories",
+            "category_filter": "Filter by category"
+        },
+        "catalogue": {
+            "filters": "ตัวกรอง",
+            "filter_clear": "ล้างออก",
+            "free": "ฟรี",
+            "sale": "การขาย",
+            "none_found": "ไม่พบผลิตภัณฑ์",
+            "edit_this_category": "แก้ไขหมวดหมู่นี้",
+            "edit_this_product": "แก้ไขผลิตภัณฑ์นี้",
+            "buy_option": "ตัวเลือกการซื้อ",
+            "one_time": "หนึ่งครั้ง",
+            "subscribe_save": "สมัครสมาชิกและบันทึก",
+            "order_arrival_frequency": "คุณต้องการให้คำสั่งซื้อของคุณมาถึงบ่อยแค่ไหน?",
+            "add_to_cart": "เพิ่มลงในตะกร้า",
+            "add_to_cart_loading": "กำลังเพิ่ม...",
+            "product_unavailable": "ไม่พร้อมใช้งาน",
+            "out_of_stock": "สินค้าหมด",
+            "size_guide": "คู่มือขนาด",
+            "about": "เกี่ยวกับ",
+            "reviews": "รีวิวสินค้า",
+            "no_reviews": "ผลิตภัณฑ์นี้ยังไม่มีความคิดเห็นใด ๆ",
+            "no_reviews_add": "เป็นคนแรกที่เขียนอย่างใดอย่างหนึ่ง",
+            "customer_reviews": "รีวิวจากลูกค้า",
+            "see_all_reviews": "ดูรีวิวทั้งหมด",
+            "write_a_review": "เขียนรีวิว",
+            "recommended_products_header": "สินค้าแนะนำ",
+            "apply_filters": "Apply filters",
+            "description": "Description",
+            "filter_reset": "Reset",
+            "product_images": "Product images",
+            "previous_image": "Previous image",
+            "next_image": "Next image",
+            "one_time_purchase": "One-time purchase",
+            "one_time_subtitle": "Buy once, no commitment",
+            "recurring_delivery": "Recurring delivery",
+            "delivery_frequency": "Delivery frequency",
+            "added_to_cart": "Added",
+            "product_not_found": "Product not found",
+            "add_to_cart_error": "Could not add to cart",
+            "subscription_frequency_error": "Please choose a valid subscription frequency.",
+            "view_image": "View image {{ count }}",
+            "select_variant": "Select variant",
+            "product_image_alt": "{{ title }} - image {{ count }}"
+        },
+        "review": {
+            "reviews": "รีวิวสินค้า",
+            "customer_reviews": "ความคิดเห็นของลูกค้า",
+            "all_reviews": "รีวิวทั้งหมด",
+            "customer_reviews_count": {
+                "one": "{{ count }} รีวิวจากลูกค้า",
+                "other": "{{ count }} รีวิวจากลูกค้า"
+            },
+            "reviewed_by_you": "รีวิวโดยคุณ",
+            "reviewed_by_other": "ความคิดเห็นโดย <b>{{ name }}</b>",
+            "no_reviews": "ผลิตภัณฑ์นี้ยังไม่มีความคิดเห็นใด ๆ",
+            "leave_review": "เขียนรีวิวผลิตภัณฑ์",
+            "save_review": "บันทึกรีวิว"
+        },
+        "search": {
+            "products_matching": "สินค้าที่ตรงกับ {{ q }}",
+            "search_not_found": "ค้นพบ 0 ผลลัพธ์",
+            "search_placeholder": "Search products",
+            "suggestion": "Search for products by name, description, or category.",
+            "close_search": "Close search"
+        },
+        "support": {
+            "title": "การสนับสนุน",
+            "heading": "เราจะช่วยอะไรได้บ้าง",
+            "search_not_found": "ค้นพบ 0 ผลลัพธ์",
+            "view": "ดู",
+            "create_support_request": "ยังคงต้องการความช่วยเหลือสร้าง <a href='{{ link }}'>คำร้องขอการสนับสนุน</a> กับทีมบริการลูกค้าของเรา และเรายินดีที่จะให้ความช่วยเหลือ",
+            "no_categories": "ยังไม่มีหมวดหมู่ที่ถูกสร้างขึ้น",
+            "articles": "บทความ",
+            "no_articles": "ยังไม่มีบทความที่ถูกสร้างขึ้น",
+            "edit_this_article": "แก้ไขบทความนี้",
+            "last_updated": "อัปเดตล่าสุด"
+        }
+    },
+    "side_cart": {
+        "default": {
+            "your_order": "คำสั่งซื้อของคุณ",
+            "your_cart_is_empty": "รถเข็นของคุณว่างเปล่า!",
+            "oops_You_have_nothing_here": "อุ๊ปส์คุณไม่มีอะไรที่นี่",
+            "quantity": "จำนวนสินค้า",
+            "qty": "จำนวน",
+            "schedule": "กำหนดการ",
+            "price": "ราคา",
+            "savings": "เงินฝากออมทรัพย์",
+            "regular": "ปกติ",
+            "your_price": "ราคาของคุณ",
+            "cart_subtotal": "ยอดรวมย่อยของรถเข็น",
+            "discount": "ลดราคา",
+            "shipping": "การจัดส่งสินค้า",
+            "cart": "ตะกร้าสินค้า",
+            "total": "รวมทั้งหมด",
+            "product": "สินค้าและสินค้า",
+            "subscription_details": "รายละเอียดการสมัครสมาชิก",
+            "applied_coupons": "คูปองที่ใช้แล้วได้",
+            "subscription_items_one": "สมัครสมาชิก ({{count}} รายการ)",
+            "subscription_items_other": "สมัครสมาชิก ({{count}} รายการ)",
+            "calculated_at_checkout": "คำนวณเมื่อเช็คเอาท์",
+            "subscription_total": "จำนวนการสมัครสมาชิก",
+            "subscription_renewal_message": "การสมัครใช้งานของคุณจะต่ออายุทุก",
+            "proceed_to_checkout": "ดำเนินการเช็คเอาท์",
+            "have_a_coupon": "มีคูปองหรือไม่?",
+            "coupon_code": "รหัสคูปอง",
+            "apply_coupon": "ใช้คูปอง",
+            "close_cart": "Close รถเข็น",
+            "frequency_template": "Every {count} {interval}",
+            "decrease_quantity": "Decrease quantity",
+            "increase_quantity": "Increase quantity",
+            "remove_item": "Remove {title}",
+            "item_removed_announcement": "นำสินค้าออกจากรถเข็นแล้ว",
+            "quantity_updated_announcement": "อัปเดตจำนวนสินค้าในรถเข็นแล้ว",
+            "remove_voucher": "Remove voucher",
+            "invalid_coupon_code": "Invalid coupon code",
+            "shipping_progress_message": "You are {amount} away from FREE shipping",
+            "gift_progress_message": "You are {amount} away from a FREE gift!",
+            "final_progress_message": "You have unlocked all rewards!",
+            "upsell_section_title": "คุณอาจชอบ"
+        }
+    },
+    "footer": {
+        "support": "Support",
+        "help": "Help Center",
+        "rights": "All Rights Reserved."
+    },
+    "pagination": {
+        "label": "Pagination",
+        "previous": "Previous",
+        "next": "Next"
+    },
+    "product": {
+        "no_image": "No image",
+        "sold_out": "ขายหมดแล้ว"
+    },
+    "catalogue": {
+        "continue_shopping": "เลือกซื้อสินค้าต่อ"
+    },
+    "membership": {
+        "price_label": "Member price",
+        "applied_at_checkout": "Applied at checkout"
+    },
+    "homepage": {
+        "cta": {
+            "shop_now": "Shop now",
+            "view_all": "View all",
+            "view_product": "View product"
+        },
+        "heading": {
+            "on_sale": "On sale",
+            "featured_products": "สินค้าที่แนะนำ",
+            "featured_categories": "เลือกซื้อตามหมวดหมู่",
+            "promo_banner": "ข้อเสนอจำกัดเวลา",
+            "featured_product": "สินค้าที่แนะนำ"
+        },
+        "placeholder": {
+            "hero_image": "Hero image",
+            "hero_image_path": "Settings > Homepage > Hero Image",
+            "featured_products": "Featured Products - Settings > Homepage > Featured Products",
+            "featured_categories": "Featured Categories - Settings > Homepage > Featured Categories",
+            "on_sale": "On Sale - Settings > Homepage > On Sale > Products",
+            "featured_product": "Featured Product - Settings > Homepage > Featured Product",
+            "image_text": "Image with Text - Settings > Homepage > Image with Text",
+            "text_block": "Text Block - Settings > Homepage > Text Block"
+        }
+    }
+}

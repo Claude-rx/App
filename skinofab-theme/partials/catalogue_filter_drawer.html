@@ -1,0 +1,26 @@
+{# Spark Theme -- Mobile filter drawer #}
+{# Opened from either mobile filter button. Uses the same data-toggle/data-close #}
+{# convention as the mobile nav and search overlay.                            #}
+<div id="filter-drawer"
+     class="filter-drawer"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="filter-drawer-title"
+     aria-hidden="true"
+     inert>
+    <div class="filter-drawer-backdrop" data-close="filter-drawer"></div>
+    <div class="filter-drawer-panel">
+        <div class="filter-drawer-header">
+            <h2 id="filter-drawer-title" class="filter-drawer-title">{% t "store.catalogue.filters" %}</h2>
+            <button type="button"
+                    class="filter-drawer-close"
+                    data-close="filter-drawer"
+                    aria-label="{% t 'global.button.close' %}">
+                {% include 'partials/icons/close.html' %}
+            </button>
+        </div>
+        <div class="filter-drawer-body">
+            {% include 'partials/catalogue_filters.html' with filter_form_id='drawerFilters' hide_heading=True %}
+        </div>
+    </div>
+</div>

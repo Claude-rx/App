@@ -1,0 +1,44 @@
+{%- comment -%}
+  SKINOFAB: offer 1's supply cards (the Obvi "month supply" cards): one SDK offer with a visible bundle selector whose
+  cards ARE the tiers, each with its own Buy now. Every Buy now is the offer's own add action (the SDK adds the
+  selected card); a real click on a card's Buy now selects that card first (js/sf-supply.js), so what is added is
+  always the card she pressed, while a proxied click (the closing card's button) adds the selection. The card itself
+  is the SDK's click target (it selects the card); its Buy now is the one button, so the card carries no button role
+  of its own (a button inside a button, funnel review). Each card's price is the SDK's (bundle display, scoped to the
+  card); the crossed-out price (what the store charges for the same bottles bought once, named under it: compare_note),
+  the per-day and per-bottle figures are the page's (tools/funnel/apf/offer_pages.py,
+  held to the campaign by check_apf.py). The closing card's picture follows the selected card (data-sf-image).
+    supply: { title, lede, tiers[] { id, items_json, image, alt, badge, name, deal, per_day, per_bottle, price,
+              compare, compare_note, save, gift, selected, button }, guarantee, charged, decline }
+  Reads from the page's frontmatter (supply).
+{%- endcomment -%}
+<section class="section cc-sm sf-supply-sec" aria-labelledby="sf-supply-title">
+  <div class="container cc-medium">
+    <div class="heading-box text-center max-width-large align-center">
+      <h2 class="display-md" id="sf-supply-title">{{ supply.title }}</h2>
+      <p class="text-lg">{{ supply.lede }}</p>
+    </div>
+    <div class="upsell-wrapper sf-supply" data-next-upsell="offer" data-next-await="">
+      <div data-next-bundle-selector data-next-upsell-context data-next-selector-id="supply" class="sf-supply__grid" role="group" aria-label="Choose how many bottles to add">
+        {%- for t in supply.tiers %}
+        <div data-next-bundle-card data-next-bundle-id="{{ t.id }}" data-next-bundle-items='{{ t.items_json }}'{% if t.selected %} data-next-selected="true"{% endif %} class="sf-supply__card os-card{% if t.selected %} next-selected{% endif %}" data-sf-supply-card data-sf-image="{{ t.image | campaign_asset }}">
+          {%- if t.badge %}<span class="sf-supply__badge">{{ t.badge }}<b>SAVE {{ t.save }}</b></span>{% endif %}
+          <img src="{{ t.image | campaign_asset }}" alt="{{ t.alt }}" width="700" height="700" decoding="async">
+          <h3>{{ t.name }}</h3>
+          <p class="sf-supply__deal">{{ t.deal }}</p>
+          {%- if t.gift and t.gift != '' %}<p class="sf-supply__gift">+ {{ t.gift }}</p>{% endif %}
+          <p class="sf-supply__perday">{{ t.per_day }}<small>{{ t.per_bottle }}</small></p>
+          <p class="sf-supply__stars"><span class="sf-co-tp sf-co-tp--sm" role="img" aria-label="4.8 out of 5">{% campaign_include 'sf-stars.html' n=5 %}</span> 4.8 · 9,855 reviews, earlier store</p>
+          <p class="sf-supply__price"><s>{{ t.compare }}</s> <strong><span data-next-bundle-display="price">{{ t.price }}</span></strong></p>
+          {%- if t.compare_note %}<p class="sf-supply__was">{{ t.compare_note }}: {{ t.compare }}</p>{% endif %}
+          <button type="button" class="button cc-xl sf-supply__buy" data-next-upsell-action="add" data-sf-supply-buy>{{ t.button }}</button>
+          <p class="sf-supply__charged">{{ supply.charged }}</p>
+        </div>
+        {%- endfor %}
+      </div>
+      {%- comment -%} the offer's decline (its add actions are the cards' Buy now buttons) {%- endcomment -%}
+      <div class="sf-supply__guarantee"><img src="{{ 'images/sf/guarantee.jpg' | campaign_asset }}" alt="" width="56" height="56" loading="lazy"><p>{{ supply.guarantee }}</p></div>
+      <div class="upsell-decline text-center"><a role="button" data-next-upsell-action="skip" href="#" class="sf-supply__decline">{{ supply.decline }}</a></div>
+    </div>
+  </div>
+</section>

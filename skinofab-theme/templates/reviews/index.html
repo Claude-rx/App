@@ -1,0 +1,113 @@
+{% extends "layouts/base.html" %}
+{% block spark_css %}<link rel="stylesheet" type="text/css" href="{{ 'main.css'|asset_url }}">{% endblock spark_css %}
+{% block body_class %}{% firstof "template-page body--rounded-corners palette--light no-outline" %}{% endblock body_class %}
+{% block sf_head %}{% include 'partials/sf_pages/contact/head.html' %}<style>#main-content .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@media (min-width:40rem){ #main-content .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:48rem){ #main-content .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}#main-content .md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}#main-content nav ol{list-style:none;margin:0;padding:0}#main-content nav ol li{list-style:none}#main-content nav ol li::before,#main-content nav ol li::marker{content:none}#main-content form input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]),#main-content form textarea{border:1px solid #cfcfcf !important;border-radius:10px !important;background:#fff !important}#main-content form select{border:1px solid #cfcfcf !important;border-radius:10px !important;-webkit-appearance:none;appearance:none;padding-right:34px !important;background:#fff url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%278%27 viewBox=%270 0 12 8%27%3E%3Cpath d=%27M1 1.5l5 5 5-5%27 fill=%27none%27 stroke=%27%23151515%27 stroke-width=%271.6%27/%3E%3C/svg%3E") no-repeat right 12px center/12px 8px !important}#main-content form select{min-width:140px}#main-content .text-slate-400{color:#475569}#main-content a.text-slate-400:hover{color:#151515}#cart_formset .flex.items-center.mt-3{flex-wrap:wrap;row-gap:8px}#main-content #cart_formset select{min-width:0;max-width:100%}#cart_formset .flex.items-start.justify-between{gap:16px}#cart_formset .flex.items-start.justify-between>div:last-child{white-space:nowrap;flex-shrink:0}#main-content .container{width:calc(100% - 64px);max-width:1440px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}@media (max-width:749px){ #main-content .container{width:calc(100% - 32px)}}#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}#main-content .btn-secondary:hover,#main-content .btn-secondary:focus-visible{background:#333 !important;border-color:#333 !important;color:#fff !important}</style>{% endblock sf_head %}
+{% block sf_lead %}{% include 'partials/sf_pages/contact/lead.html' %}{% endblock sf_lead %}
+{% block sf_tail %}{% include 'partials/sf_pages/contact/tail.html' %}{% endblock sf_tail %}
+
+{% block title %}
+    {% t "store.review.all_reviews" %} | {{ product.title }} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container py-3">
+    <nav aria-label="{% t 'navigation.breadcrumb' %}">
+        <ol class="flex items-center gap-2 text-xs text-slate-400">
+            <li><a href="{{ homepage_url }}" class="hover:text-slate-600">{% t "navigation.main.home" %}</a></li>
+            <li>/</li>
+            <li><a href="{% url 'catalogue:index' %}" class="hover:text-slate-600">Shop</a></li>
+            <li>/</li>
+            <li><a href="{{ product.get_absolute_url }}" class="hover:text-slate-600">{{ product.title }}</a></li>
+            <li>/</li>
+            <li class="text-slate-600">{% t "store.review.all_reviews" %}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-8 md:py-12">
+
+    {# Product summary #}
+    <div class="flex flex-col sm:flex-row items-start gap-6 mb-10">
+        <div class="flex-shrink-0">
+            {% with image=product.primary_image %}
+                {% image_thumbnail image.original "x360" upscale=False as thumb %}
+                <a href="{{ product.get_absolute_url }}">
+                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-28 h-28 object-cover" loading="lazy" />
+                </a>
+            {% endwith %}
+        </div>
+        <div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-1">
+                <a href="{{ product.get_absolute_url }}">{{ product.get_title }}</a>
+            </h3>
+
+            {% if product.rating != None %}
+                <div class="flex items-center gap-3 mt-2">
+                    <div class="flex text-amber-400">
+                        {% for i in '12345' %}
+                            {% if forloop.counter <= product.rating %}
+                                <span>&#9733;</span>
+                            {% else %}
+                                <span class="text-slate-300">&#9733;</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <span class="text-xs text-slate-500">
+                        {% t "store.review.customer_reviews_count" with count=product.num_approved_reviews %}
+                    </span>
+                </div>
+            {% endif %}
+
+            {% if product|is_review_permitted:user %}
+                <a href="{% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id %}#addreview"
+                   class="inline-block px-4 py-2 text-sm text-white mt-3" style="background-color: var(--primary-color);">
+                    {% t "store.catalogue.write_a_review" %}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {# Reviews list #}
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="border border-slate-200 mb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50">
+                    <h4 class="font-medium text-slate-800">{{ review.title }}</h4>
+                    <div class="flex text-amber-400 text-sm">
+                        {% for i in '12345' %}
+                            {% if forloop.counter <= review.score %}
+                                <span>&#9733;</span>
+                            {% else %}
+                                <span class="text-slate-300">&#9733;</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="px-6 py-4">
+                    <p class="text-sm text-slate-600 leading-relaxed">{{ review.body|striptags }}</p>
+                </div>
+                <div class="px-6 py-3 text-xs text-slate-400 border-t border-slate-100">
+                    {% if review.user == user %}
+                        {% t "store.review.reviewed_by_you" with review_date=review.date_created %}
+                    {% else %}
+                        {% t "store.review.reviewed_by_other" with name=review.reviewer_name review_date=review.date_created %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+
+        {% include 'partials/pagination.html' %}
+    {% else %}
+        <p class="text-slate-600">Read what customers say on the <a href="{{ product.get_absolute_url }}#sf-review-wall" class="underline">{{ product.get_title }} page</a>.</p>
+    {% endif %}
+
+    {# Review form slot #}
+    <div id="addreview">
+        {% if product|is_review_permitted:user %}
+            {% block product_review %}{% endblock product_review %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

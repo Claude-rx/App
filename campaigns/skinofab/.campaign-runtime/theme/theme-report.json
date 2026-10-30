@@ -1,0 +1,470 @@
+{
+  "schema_version": "campaign-runtime-brand-theme/v0",
+  "generated_at": "2026-10-29T10:40:10.796Z",
+  "status": "ready_with_warnings",
+  "policy": "inspect_only",
+  "source_kind": "html_funnel",
+  "confidence": "medium",
+  "source_files": [
+    {
+      "path": "design-source-apf/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "5aad57328b9a752ff0a9e79f7c2fb132bb212d3e2284cd529c409b45eecfb35e",
+      "token_count": 254,
+      "inline_block_index": 3,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "856256cd4e85cbbcf759846ece5bf89971164231ba90c34bad3f6cdc35c0c89c",
+      "token_count": 1,
+      "inline_block_index": 7,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "7eacedf38715178b56bfca5b91c747922a1784f9d4286e2637840261164b03e0",
+      "token_count": 1,
+      "inline_block_index": 7,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/facelove-listicle.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "fac29213e78d094f792f953226ee4c392dea3434b9296d6fe7d149df98fc1a2d",
+      "token_count": 3,
+      "inline_block_index": 11,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "eeb51143a2bdb8ad06c7382ef8bc6421401aab8a92c6a760933c273dffd5e1e6",
+      "token_count": 12,
+      "inline_block_index": 1,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "666670e5a35a9b3b0d11c97109ffc3fe67365babb7874d9ff2546748e212bdc8",
+      "token_count": 11,
+      "inline_block_index": 2,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "fe44db56a7e3db4ad0977af3eeaef4ddec069afea6db7fa7c6773c2ea9088bf2",
+      "token_count": 1,
+      "inline_block_index": 6,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "59aef77efc4b135bad5d95550d242c3d2e3d30c0ec16446f7117dd63caaa4b10",
+      "token_count": 1,
+      "inline_block_index": 6,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "cbbce1c9c699cb5386f4350289b2a759a24de540d84501c8877e12b3a7e4faac",
+      "token_count": 236,
+      "inline_block_index": 7,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "49dde75f92131db2288e3f644a2b3068ffcae67ff30debeb11fe9212fb7f82ea",
+      "token_count": 1,
+      "inline_block_index": 13,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "045e9bdf6d4184f5c74e8f7ba9e039e4082d7726cbe8ea72c9d26e90acef3da6",
+      "token_count": 1,
+      "inline_block_index": 14,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "58892a7220e180b16bcbad456a78e282a57cc5fa91856039b5a05964738ed901",
+      "token_count": 1,
+      "inline_block_index": 14,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "7d7b56f127765b50f4b3b0fd02e01f51afb3ede34e35f5cc4dad307edd286e99",
+      "token_count": 2,
+      "inline_block_index": 15,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "dbecc77a44b3cbaaa3b010256940766a8cdcbb748d72e43c7c35c89fd8d451cb",
+      "token_count": 2,
+      "inline_block_index": 15,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "0c53df6f3809f7a1182e9d1df49a01228ce5778e0ef059f77c83250bd7dfd6e4",
+      "token_count": 3,
+      "inline_block_index": 18,
+      "referenced_by": []
+    },
+    {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "0cbb981e93ebc58b90c1f93bab0f8d8b210d20118ad2c5262d7daca8d0f72ab8",
+      "token_count": 1,
+      "inline_block_index": 18,
+      "referenced_by": []
+    }
+  ],
+  "selected_source": {
+    "path": "design-source-apf/apf-pdp.html",
+    "role": "page",
+    "source": "html_inline_root",
+    "hash": "eeb51143a2bdb8ad06c7382ef8bc6421401aab8a92c6a760933c273dffd5e1e6",
+    "token_count": 12,
+    "inline_block_index": 1,
+    "referenced_by": []
+  },
+  "producer_defaults": {
+    "matched": false,
+    "producer": "figma-sections-export",
+    "version": "v0",
+    "matched_tokens": [],
+    "unresolved_tokens": [],
+    "present_core_tokens": [
+      "--brand-primary",
+      "--brand-accent"
+    ]
+  },
+  "conflicts": [
+    {
+      "token": "--brand-primary",
+      "entries": [
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+          "role": "page",
+          "value": "#ffffff"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+          "role": "page",
+          "value": "#000000"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+          "role": "page",
+          "value": "#000000"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+          "role": "page",
+          "value": "#ffffff"
+        }
+      ]
+    },
+    {
+      "token": "--text-secondary",
+      "entries": [
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+          "role": "page",
+          "value": "#000000"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+          "role": "page",
+          "value": "#ffffff"
+        }
+      ]
+    },
+    {
+      "token": "--brand-accent",
+      "entries": [
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+          "role": "page",
+          "value": "#b69fd1"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+          "role": "page",
+          "value": "#f0f0f0"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+          "role": "page",
+          "value": "#000000"
+        },
+        {
+          "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+          "role": "page",
+          "value": "#000000"
+        }
+      ]
+    }
+  ],
+  "mappings": [
+    {
+      "source": "--brand-primary",
+      "target": "--brand--color--primary",
+      "value": "#000000",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--brand-accent",
+      "target": "--brand--color--accent",
+      "value": "#f0f0f0",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--rating-star",
+      "target": "--brand--color--rating-star",
+      "value": "#f0f0f0",
+      "confidence": "high",
+      "derivation": null
+    },
+    {
+      "source": "--brand-primary",
+      "target": "--brand--color--primary-dark",
+      "value": "#000000",
+      "confidence": "medium",
+      "derivation": {
+        "method": "mix-black",
+        "amount": 0.18
+      }
+    },
+    {
+      "source": "--brand-primary",
+      "target": "--brand--color--primary-light",
+      "value": "#333333",
+      "confidence": "medium",
+      "derivation": {
+        "method": "mix-white",
+        "amount": 0.2
+      }
+    },
+    {
+      "source": "--brand-primary",
+      "target": "--brand--color--primary-lighter",
+      "value": "#dbdbdb",
+      "confidence": "medium",
+      "derivation": {
+        "method": "mix-white",
+        "amount": 0.86
+      }
+    },
+    {
+      "source": "--brand-accent",
+      "target": "--brand--color--cta-primary",
+      "value": "#f0f0f0",
+      "confidence": "medium",
+      "derivation": {
+        "method": "cta-fallback-from-brand-accent"
+      }
+    },
+    {
+      "source": "--brand--color--cta-primary",
+      "target": "--brand--color--cta-foreground",
+      "value": "#0a0a0a",
+      "confidence": "high",
+      "derivation": {
+        "method": "foreground-from-luminance",
+        "background": "--brand--color--cta-primary",
+        "background_value": "#f0f0f0",
+        "on": "dark",
+        "contrast": 17.37
+      }
+    },
+    {
+      "source": "--brand--color--cta-primary",
+      "target": "--brand--color--text-inverse",
+      "value": "#0a0a0a",
+      "confidence": "high",
+      "derivation": {
+        "method": "foreground-from-luminance",
+        "background": "--brand--color--cta-primary",
+        "background_value": "#f0f0f0",
+        "on": "dark",
+        "contrast": 17.37
+      }
+    },
+    {
+      "source": "--brand--color--primary",
+      "target": "--brand--color--primary-foreground",
+      "value": "#ffffff",
+      "confidence": "high",
+      "derivation": {
+        "method": "foreground-from-luminance",
+        "background": "--brand--color--primary",
+        "background_value": "#000000",
+        "on": "light",
+        "contrast": 21
+      }
+    },
+    {
+      "source": "--brand--color--accent",
+      "target": "--brand--color--accent-foreground",
+      "value": "#0a0a0a",
+      "confidence": "high",
+      "derivation": {
+        "method": "foreground-from-luminance",
+        "background": "--brand--color--accent",
+        "background_value": "#f0f0f0",
+        "on": "dark",
+        "contrast": 17.37
+      }
+    }
+  ],
+  "generated": {
+    "css_path": ".campaign-runtime/theme/brand-theme.css",
+    "report_path": ".campaign-runtime/theme/theme-report.json",
+    "safety": {
+      "ok": true,
+      "errors": [],
+      "warnings": []
+    },
+    "stale": {
+      "stale": false,
+      "reasons": []
+    },
+    "can_generate": true,
+    "can_auto_generate": false,
+    "overwrite_requires_force": false
+  },
+  "existing_brand_layers": [
+    {
+      "path": ".campaign-runtime/theme/brand-theme.css",
+      "source": "expected_artifact_path"
+    },
+    {
+      "path": "src/apf-funnel/assets/css/checkout-brand.css",
+      "source": "target_repo_scan"
+    },
+    {
+      "path": "src/stick-funnel/assets/css/checkout-brand.css",
+      "source": "target_repo_scan"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "theme.source_tokens.conflict",
+      "message": "Source token --brand-primary has conflicting values across source files.",
+      "detail": {
+        "token": "--brand-primary",
+        "entries": [
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+            "role": "page",
+            "value": "#ffffff"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+            "role": "page",
+            "value": "#000000"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+            "role": "page",
+            "value": "#000000"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+            "role": "page",
+            "value": "#ffffff"
+          }
+        ]
+      }
+    },
+    {
+      "code": "theme.source_tokens.conflict",
+      "message": "Source token --text-secondary has conflicting values across source files.",
+      "detail": {
+        "token": "--text-secondary",
+        "entries": [
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+            "role": "page",
+            "value": "#000000"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+            "role": "page",
+            "value": "#ffffff"
+          }
+        ]
+      }
+    },
+    {
+      "code": "theme.source_tokens.conflict",
+      "message": "Source token --brand-accent has conflicting values across source files.",
+      "detail": {
+        "token": "--brand-accent",
+        "entries": [
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+            "role": "page",
+            "value": "#b69fd1"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+            "role": "page",
+            "value": "#f0f0f0"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+            "role": "page",
+            "value": "#000000"
+          },
+          {
+            "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+            "role": "page",
+            "value": "#000000"
+          }
+        ]
+      }
+    },
+    {
+      "code": "theme.cta.fallback",
+      "message": "No explicit CTA token or button background was found; using --brand-accent as --brand--color--cta-primary. This may be a rating or decorative accent; confirm the CTA colour against the design."
+    }
+  ],
+  "errors": [],
+  "next_action": "Run campaigns-os theme generate, then apply brand-theme.css after next-core.css on commerce pages."
+}

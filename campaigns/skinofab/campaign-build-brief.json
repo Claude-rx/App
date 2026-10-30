@@ -1,0 +1,166 @@
+{
+  "schema_version": "campaigns-os-build-brief/v1",
+  "campaign_intent": {
+    "audience": "Women 45+ with dry, mature skin and fair to medium skin tones (persona: Linda, 56) who have tried many foundations and fear the wrong shade, a cakey look and lines",
+    "conversion_goal": "Warm cold traffic with the listicle, convert on the product page and checkout, raise AOV with four post-purchase offers; every package is a subscription",
+    "tone": "clear, practical, benefit-led",
+    "compliance": {
+      "approved_claims": [
+        "goes on white and adapts to fair to medium skin tones as you blend",
+        "made not to settle into fine lines (hedged until the 6-hour wear panel)",
+        "skincare-infused foundation with PDRN, peptides and Volufiline",
+        "fragrance-free",
+        "made for skin after 45",
+        "30-day money-back guarantee, even opened"
+      ],
+      "forbidden_claims": [
+        "SPF or sun protection",
+        "reverses aging / age-reversing / look 35",
+        "produces collagen",
+        "every or all skin tones",
+        "any percentage or study result before the consumer study",
+        "dermatologist or expert recommended",
+        "fake countdowns or scarcity",
+        "reviews presented as the stick's own (the reviews are the liquid foundation's and say so)"
+      ],
+      "copy_rules": [
+        "before/after images are labelled AI illustrations",
+        "subscription terms are stated next to every buy button: price today, renewal price and interval, how to cancel",
+        "the manufacturing spec stays confidential: no percentages, suppliers or process"
+      ]
+    }
+  },
+  "design_authority": {
+    "listicle": {
+      "source": "provided_design_export",
+      "reference": "facelove-listicle.html"
+    },
+    "offer": {
+      "source": "provided_design_export",
+      "reference": "stick-pdp.html"
+    },
+    "checkout": {
+      "source": "template",
+      "reference": "template stock: Apollo checkout page, no bespoke design"
+    },
+    "special-1": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "special-2": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "special-3": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "special-4": {
+      "source": "template",
+      "reference": "template stock: Apollo upsell page, no bespoke design"
+    },
+    "thank-you": {
+      "source": "template",
+      "reference": "template stock: Apollo receipt page, no bespoke design"
+    }
+  },
+  "brand": {
+    "commerce_palette_source": "provided_design_export",
+    "primary_accent": "#151515",
+    "cta_style": "SKINOFAB: black (#151515) pill buttons with white uppercase Jost text; Jost body, Playfair Display for product names",
+    "avoid": [
+      "template-default brand colors"
+    ]
+  },
+  "media": {
+    "sold_variants": [
+      "Adaptive Foundation Stick - 1 stick (Light-Medium)",
+      "Adaptive Foundation Stick - 2 sticks + free Lymphatic Brush",
+      "The Lymphatic Brush - 1 brush + free case",
+      "PDRN Plumping Balm - 1 stick",
+      "EGF + NAD+ Firming Serum - 1 bottle"
+    ],
+    "allow_other_variant_colors": false,
+    "prefer": [
+      "clean product renders",
+      "lifestyle images without embedded text"
+    ],
+    "avoid": [
+      "wrong product variant",
+      "blurry stock-like crops"
+    ]
+  },
+  "offer_presentation": {
+    "bundle_cards": {
+      "primary_price": "pack_price_with_refill_interval",
+      "show_total": "multi_pack_only",
+      "show_compare_price": false,
+      "savings_badge": "rounded_percentage",
+      "hide_duplicate_discount_copy": true
+    },
+    "post_purchase": {
+      "show_voucher_code": "when_customer_needs_to_see_it",
+      "show_retail_price": true,
+      "show_shipping": "if_charged"
+    }
+  },
+  "promo_urgency": {
+    "header_claim_source": "campaign_offers",
+    "timer_label": "none",
+    "show_promo_code_in_timer": false,
+    "exit_pop": {
+      "enabled": true,
+      "code_source": "campaign_spec"
+    },
+    "forbid_placeholders": true
+  },
+  "commerce_surfaces": {
+    "payment_methods_allowed": [
+      "card",
+      "paypal",
+      "apple_pay",
+      "klarna"
+    ],
+    "hidden_payment_methods": [
+      "google_pay",
+      "afterpay",
+      "sezzle",
+      "shop_pay",
+      "amazon_pay",
+      "venmo",
+      "cash_app"
+    ],
+    "order_bump": {
+      "enabled": false,
+      "display_style": null
+    },
+    "guarantees": {
+      "use_campaign_or_merchant_policy_copy": true
+    }
+  },
+  "canonical_display": {
+    "product_name_source": "campaign_spec",
+    "allow_runtime_name_override": false,
+    "manual_overrides": {}
+  },
+  "template_residue_policy": {
+    "block_placeholders": true,
+    "block_template_favicon": true,
+    "block_demo_payment_methods": true,
+    "block_lorem_ipsum": true,
+    "block_unapproved_tracking_claims": true
+  },
+  "qa_policy": {
+    "enforcement": {
+      "status": "documented_expectation",
+      "enforced_by": "qa.proof_policy and report.proof_policy",
+      "note": "Build Brief qa_policy records business QA expectations; doctor and QA enforce the Build Packet qa.proof_policy and Assembly Report report.proof_policy contract."
+    },
+    "require_desktop_mobile_screenshots": true,
+    "require_checkout_flow": true,
+    "require_post_purchase_flow": true,
+    "fail_on_visible_placeholders": true,
+    "compare_live_runtime_data_to_spec": true
+  },
+  "brief_mode": "guided"
+}

@@ -1,0 +1,18 @@
+{# Spark homepage full-width promo banner. #}
+{% if settings.show_promo_banner %}
+    {% t "homepage.heading.promo_banner" as default_promo_banner_heading %}
+    <section class="py-band-y md:py-band-y-md text-center"
+             style="background-color: {{ settings.promo_banner_bg_color|default:'var(--primary-color)' }};
+                    color: {{ settings.promo_banner_text_color|default:'#ffffff' }};">
+        <div class="container">
+            <h2 class="text-h1 md:text-h1-md font-semibold mb-4">{{ settings.promo_banner_heading|default:default_promo_banner_heading }}</h2>
+            {% if settings.promo_banner_subheading %}
+                <p class="text-base md:text-lg mb-8 opacity-90">{{ settings.promo_banner_subheading }}</p>
+            {% endif %}
+            {% if settings.promo_banner_cta_url %}
+                {% t "homepage.cta.shop_now" as default_shop_now %}
+                {% include "partials/cta_button.html" with href=settings.promo_banner_cta_url label=settings.promo_banner_cta_text|default:default_shop_now style=settings.promo_banner_cta_style outline=settings.promo_banner_cta_outline outline_color=settings.promo_banner_text_color|default:"#ffffff" %}
+            {% endif %}
+        </div>
+    </section>
+{% endif %}

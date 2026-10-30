@@ -1,0 +1,135 @@
+/** Shopify CDN: Minification failed
+
+Line 127:0 Unexpected "}"
+
+**/
+.results_section {
+  max-width: none!important;
+}
+
+.border-radiusnew {
+      border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.product__complementary {
+    padding: var(--inner) !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+#looxReviews {
+  max-width: none!important;
+}
+
+.Ingredients div[aria-disabled="true"] {
+  display: none!important;
+}
+
+.Ingredients div[aria-disabled="true"] {
+  display: none!important;
+}
+
+.Ingredients .swiper-scrollbar {
+    margin-top: 10px;
+    position: relative !important;
+}
+
+.Ingredients .swiper-button-next {
+
+    background: #cc949b;
+    color: #ffffff;
+    border-radius: 500px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgb(0 0 0 / 8%) 0px 1px 4px;
+    left: auto;
+    margin: 0;
+    position: absolute;
+    right: 5px;
+                top: 41%;
+          }
+.Ingredients .swiper-button-next:after {
+  font-size: 13px;
+    font-weight: bold;
+}
+          .Ingredients .swiper-button-prev:after {
+  font-size: 13px;
+    font-weight: bold;
+}
+             .Ingredients .swiper-button-prev {
+
+    background: #cc949b;
+    color: #ffffff;
+    border-radius: 500px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgb(0 0 0 / 8%) 0px 1px 4px;
+    right: auto;
+    margin: 0;
+    position: absolute;
+                    top: 41%;    left: 5px;
+          }
+
+
+@media screen and (max-width:767px){
+.Ingredients .swiper-button-next {
+                background: #ffffff;
+    color: black;
+    border-radius: 500px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgb(0 0 0 / 8%) 0px 1px 4px;
+    left: auto;
+    margin: 0;
+    position: absolute;
+    right: 5px;
+                top: 39%;
+          }
+.Ingredients .swiper-button-next:after {
+  font-size: 13px;
+    font-weight: bold;
+}
+          .Ingredients .swiper-button-prev:after {
+  font-size: 13px;
+    font-weight: bold;
+}
+             .Ingredients .swiper-button-prev {
+                background: #ffffff;
+    color: black;
+    border-radius: 500px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgb(0 0 0 / 8%) 0px 1px 4px;
+    right: auto;
+    margin: 0;
+    position: absolute;
+                    top: 39%;
+          }
+}
+
+.ingredientcell img {
+  border-radius: 10px;
+}
+
+.Ingredients {
+  margin-bottom: 10px;
+    margin-top: 5px;
+}
+}
+
+.product-grid-item__rating .rating__star {
+  color: #df8096;
+}
+
+body .product-grid-item .loox-rating.custom-rating.index {
+  display: none !important;
+}

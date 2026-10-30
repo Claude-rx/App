@@ -1,0 +1,589 @@
+{
+  "schema_version": "next-theme-dev/design-handoff-report/v1",
+  "package": "skinofab-handoff",
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "readiness": {
+    "ready": false,
+    "reason": "blocked sections",
+    "sections": [
+      {
+        "section_id": "home.announcement",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.header",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": [
+          "copy ft_home_header_b678: omit",
+          "copy ft_home_header_b685: omit",
+          "copy ft_home_header_b686: omit"
+        ]
+      },
+      {
+        "section_id": "home.hero",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.bestsellers",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": [
+          "copy ft_home_bestsellers_86: omit",
+          "copy ft_home_bestsellers_87: omit",
+          "copy ft_home_bestsellers_94: omit",
+          "copy ft_home_bestsellers_95: omit",
+          "copy ft_home_bestsellers_101: omit",
+          "copy ft_home_bestsellers_h507: omit",
+          "copy ft_home_bestsellers_h508: omit",
+          "copy ft_home_bestsellers_h510: omit",
+          "copy ft_home_bestsellers_h511: omit",
+          "copy ft_home_bestsellers_h513: omit",
+          "copy ft_home_bestsellers_h514: omit",
+          "copy ft_home_bestsellers_h515: omit",
+          "copy ft_home_bestsellers_h516: omit",
+          "copy ft_home_bestsellers_h517: omit"
+        ]
+      },
+      {
+        "section_id": "home.reviews",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.categories",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.foundation",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.bundles",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": [
+          "copy ft_home_bundles_132: omit",
+          "copy ft_home_bundles_133: omit",
+          "copy ft_home_bundles_137: omit",
+          "copy ft_home_bundles_138: omit",
+          "copy ft_home_bundles_142: omit",
+          "copy ft_home_bundles_146: omit",
+          "copy ft_home_bundles_147: omit",
+          "copy ft_home_bundles_h523: omit",
+          "copy ft_home_bundles_h524: omit",
+          "copy ft_home_bundles_h526: omit",
+          "copy ft_home_bundles_h529: omit"
+        ]
+      },
+      {
+        "section_id": "home.serum",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.formulas",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.arrivals_desktop",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.experts",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.essentials",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": [
+          "copy ft_home_essentials_166: omit",
+          "copy ft_home_essentials_168: omit"
+        ]
+      },
+      {
+        "section_id": "home.celebration_desktop",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.social",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "home.footer",
+        "route_id": "home",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.announcement",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.header",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.main",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": [
+          "copy ft_pdp_main_287: omit",
+          "copy ft_pdp_main_288: omit",
+          "copy ft_pdp_main_h743: omit"
+        ]
+      },
+      {
+        "section_id": "pdp.section_text_rlda4j",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.kopstorm_testomonials_9xvcek",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.section_image_with_text_xdx7dm",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.section_image_with_text_cyzhwr",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.kopstorm_results_nnthgp",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.kopstorm_compare_lqnyxd",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.kopstorm_ingredients_v2",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.section_accordions_k6qprc",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.kopstorm_why_gca7fq",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.17343673251239a5d7",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "pdp.footer",
+        "route_id": "pdp",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "collection.announcement",
+        "route_id": "collection",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "collection.header",
+        "route_id": "collection",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "collection.section_banner_image_mpxjcd",
+        "route_id": "collection",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "collection.section_icons_row_cudwgr",
+        "route_id": "collection",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "collection.main",
+        "route_id": "collection",
+        "ready": true,
+        "blockers": [],
+        "surface": [
+          "copy ft_collection_main_435: omit",
+          "copy ft_collection_main_438: omit",
+          "copy ft_collection_main_443: omit",
+          "copy ft_collection_main_459: omit",
+          "copy ft_collection_main_464: omit",
+          "copy ft_collection_main_475: omit",
+          "copy ft_collection_main_478: omit",
+          "copy ft_collection_main_557: omit",
+          "copy ft_collection_main_566: omit",
+          "copy ft_collection_main_568: omit",
+          "copy ft_collection_main_570: omit",
+          "copy ft_collection_main_572: omit",
+          "copy ft_collection_main_577: omit",
+          "copy ft_collection_main_578: omit",
+          "copy ft_collection_main_579: omit",
+          "copy ft_collection_main_580: omit",
+          "copy ft_collection_main_581: omit",
+          "copy ft_collection_main_582: omit",
+          "copy ft_collection_main_h785: omit"
+        ]
+      },
+      {
+        "section_id": "collection.footer",
+        "route_id": "collection",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "page-faq.announcement",
+        "route_id": "page-faq",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "page-faq.header",
+        "route_id": "page-faq",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "page-faq.s0",
+        "route_id": "page-faq",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "page-faq.s1",
+        "route_id": "page-faq",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "page-faq.footer",
+        "route_id": "page-faq",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "policy-terms.announcement",
+        "route_id": "policy-terms",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "policy-terms.header",
+        "route_id": "policy-terms",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "policy-terms.s0",
+        "route_id": "policy-terms",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "policy-terms.s1",
+        "route_id": "policy-terms",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "policy-terms.footer",
+        "route_id": "policy-terms",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "article.announcement",
+        "route_id": "article",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "article.header",
+        "route_id": "article",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "article.s0",
+        "route_id": "article",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "article.s1",
+        "route_id": "article",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "article.s2",
+        "route_id": "article",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "article.s3",
+        "route_id": "article",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "article.footer",
+        "route_id": "article",
+        "ready": true,
+        "blockers": [],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s0",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s0.215a694d-fed6-490c-9ad7-df4f828e3557 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/215a694d-fed6-490c-9ad7-df4f828e3557?width=460: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s1",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s1.adc2be4a-7515-4935-8eba-0f6eebc9bdd5 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/adc2be4a-7515-4935-8eba-0f6eebc9bdd5?width=1800: the export could not download it (host blocked in the build environment).",
+          "asset lander.s1.adc2be4a-7515-4935-8eba-0f6eebc9bdd5-x needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/adc2be4a-7515-4935-8eba-0f6eebc9bdd5?width=1024: the export could not download it (host blocked in the build environment).",
+          "asset lander.s1.215a694d-fed6-490c-9ad7-df4f828e3557 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/215a694d-fed6-490c-9ad7-df4f828e3557?width=460: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": [
+          "copy ft_lander_s1_h866: omit"
+        ]
+      },
+      {
+        "section_id": "lander.s2",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s2.6d517e73-b58a-4aaf-a13f-db8e55fb01df needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/6d517e73-b58a-4aaf-a13f-db8e55fb01df: the export could not download it (host blocked in the build environment).",
+          "asset lander.s2.adc2be4a-7515-4935-8eba-0f6eebc9bdd5 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/adc2be4a-7515-4935-8eba-0f6eebc9bdd5?width=820: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s3",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s3.0c813290-ef20-4ba5-aff1-f92dc1e44a10 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/0c813290-ef20-4ba5-aff1-f92dc1e44a10?width=1800: the export could not download it (host blocked in the build environment).",
+          "asset lander.s3.39279355-93ee-4899-bdeb-ee8ce659ab45 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/39279355-93ee-4899-bdeb-ee8ce659ab45?width=1024: the export could not download it (host blocked in the build environment).",
+          "asset lander.s3.6d517e73-b58a-4aaf-a13f-db8e55fb01df needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/6d517e73-b58a-4aaf-a13f-db8e55fb01df: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s4",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s4.44cf4517-3767-4a0b-a299-8a7cd69ca514 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/44cf4517-3767-4a0b-a299-8a7cd69ca514?width=1800: the export could not download it (host blocked in the build environment).",
+          "asset lander.s4.39279355-93ee-4899-bdeb-ee8ce659ab45 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/39279355-93ee-4899-bdeb-ee8ce659ab45?width=1024: the export could not download it (host blocked in the build environment).",
+          "asset lander.s4.0c813290-ef20-4ba5-aff1-f92dc1e44a10 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/0c813290-ef20-4ba5-aff1-f92dc1e44a10?width=820: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s5",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s5.44cf4517-3767-4a0b-a299-8a7cd69ca514 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/44cf4517-3767-4a0b-a299-8a7cd69ca514?width=820: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s6",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s6.8123a267-73c7-41ec-86d7-f0c4f831cda9 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/8123a267-73c7-41ec-86d7-f0c4f831cda9?width=1800: the export could not download it (host blocked in the build environment).",
+          "asset lander.s6.39279355-93ee-4899-bdeb-ee8ce659ab45 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/39279355-93ee-4899-bdeb-ee8ce659ab45?width=1024: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s7",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s7.3a3d4846-90bf-4602-9fc2-9482ac586678 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3a3d4846-90bf-4602-9fc2-9482ac586678?width=1800: the export could not download it (host blocked in the build environment).",
+          "asset lander.s7.be382ee1-283a-4a2d-90ae-3c4370cfcec9 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/be382ee1-283a-4a2d-90ae-3c4370cfcec9?width=1024: the export could not download it (host blocked in the build environment).",
+          "asset lander.s7.8123a267-73c7-41ec-86d7-f0c4f831cda9 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/8123a267-73c7-41ec-86d7-f0c4f831cda9?width=820: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s8",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s8.a42aa7c8-a061-4010-9669-5abac190a9a7 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/a42aa7c8-a061-4010-9669-5abac190a9a7?width=1800: the export could not download it (host blocked in the build environment).",
+          "asset lander.s8.39279355-93ee-4899-bdeb-ee8ce659ab45 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/39279355-93ee-4899-bdeb-ee8ce659ab45?width=1024: the export could not download it (host blocked in the build environment).",
+          "asset lander.s8.3a3d4846-90bf-4602-9fc2-9482ac586678 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3a3d4846-90bf-4602-9fc2-9482ac586678?width=820: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s9",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s9.a42aa7c8-a061-4010-9669-5abac190a9a7 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/a42aa7c8-a061-4010-9669-5abac190a9a7?width=820: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s10",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s10.9be7e268-4413-428c-b92c-b660e1331473 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/9be7e268-4413-428c-b92c-b660e1331473?width=1800: the export could not download it (host blocked in the build environment).",
+          "asset lander.s10.39279355-93ee-4899-bdeb-ee8ce659ab45 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/39279355-93ee-4899-bdeb-ee8ce659ab45?width=1024: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s11",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s11.3a3d4846-90bf-4602-9fc2-9482ac586678 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3a3d4846-90bf-4602-9fc2-9482ac586678?width=1800: the export could not download it (host blocked in the build environment).",
+          "asset lander.s11.be382ee1-283a-4a2d-90ae-3c4370cfcec9 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/be382ee1-283a-4a2d-90ae-3c4370cfcec9?width=1024: the export could not download it (host blocked in the build environment).",
+          "asset lander.s11.9be7e268-4413-428c-b92c-b660e1331473 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/9be7e268-4413-428c-b92c-b660e1331473?width=820: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s12",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s12.e7af3cac-3a0f-4f3a-bee9-48a09b656a9a needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/e7af3cac-3a0f-4f3a-bee9-48a09b656a9a?width=100: the export could not download it (host blocked in the build environment).",
+          "asset lander.s12.3a3d4846-90bf-4602-9fc2-9482ac586678 needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/3a3d4846-90bf-4602-9fc2-9482ac586678?width=820: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      },
+      {
+        "section_id": "lander.s13",
+        "route_id": "lander",
+        "ready": false,
+        "blockers": [
+          "asset lander.s13.e7af3cac-3a0f-4f3a-bee9-48a09b656a9a needs a replacement: Source file for https://assets.replocdn.com/projects/15fb8e11-2001-4f35-9549-927069a2f114/e7af3cac-3a0f-4f3a-bee9-48a09b656a9a?width=100: the export could not download it (host blocked in the build environment)."
+        ],
+        "surface": []
+      }
+    ],
+    "excluded_sections": []
+  }
+}

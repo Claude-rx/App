@@ -1,0 +1,82 @@
+{
+  "built": 8,
+  "errors": 0,
+  "warnings": 0,
+  "skipped": 0,
+  "ms": 871,
+  "pages": [
+    {
+      "inputFile": "src/stick-funnel/10-reasons-foundation-stick.html",
+      "campaignSlug": "stick-funnel",
+      "url": "/stick-funnel/10-reasons-foundation-stick/",
+      "outputFile": "_site/stick-funnel/10-reasons-foundation-stick/index.html",
+      "status": "built",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "inputFile": "src/stick-funnel/foundation-stick-offer.html",
+      "campaignSlug": "stick-funnel",
+      "url": "/stick-funnel/foundation-stick-offer/",
+      "outputFile": "_site/stick-funnel/foundation-stick-offer/index.html",
+      "status": "built",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "inputFile": "src/stick-funnel/stick-checkout.html",
+      "campaignSlug": "stick-funnel",
+      "url": "/stick-funnel/stick-checkout/",
+      "outputFile": "_site/stick-funnel/stick-checkout/index.html",
+      "status": "built",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "inputFile": "src/stick-funnel/stick-special-1.html",
+      "campaignSlug": "stick-funnel",
+      "url": "/stick-funnel/stick-special-1/",
+      "outputFile": "_site/stick-funnel/stick-special-1/index.html",
+      "status": "built",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "inputFile": "src/stick-funnel/stick-special-2.html",
+      "campaignSlug": "stick-funnel",
+      "url": "/stick-funnel/stick-special-2/",
+      "outputFile": "_site/stick-funnel/stick-special-2/index.html",
+      "status": "built",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "inputFile": "src/stick-funnel/stick-special-3.html",
+      "campaignSlug": "stick-funnel",
+      "url": "/stick-funnel/stick-special-3/",
+      "outputFile": "_site/stick-funnel/stick-special-3/index.html",
+      "status": "built",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "inputFile": "src/stick-funnel/stick-special-4.html",
+      "campaignSlug": "stick-funnel",
+      "url": "/stick-funnel/stick-special-4/",
+      "outputFile": "_site/stick-funnel/stick-special-4/index.html",
+      "status": "built",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "inputFile": "src/stick-funnel/stick-thank-you.html",
+      "campaignSlug": "stick-funnel",
+      "url": "/stick-funnel/stick-thank-you/",
+      "outputFile": "_site/stick-funnel/stick-thank-you/index.html",
+      "status": "built",
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "assetWarnings": []
+}

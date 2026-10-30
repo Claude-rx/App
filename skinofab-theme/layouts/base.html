@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+
+<head>
+    {# 1. Metadata / SEO / GEO. Keep this plain and early. #}
+    <title>{% block title %}{{ store.get_meta_title }}{% if store.tagline %} - {{ store.tagline }}{% endif %}{% endblock %}</title>
+    <link rel="alternate" hreflang="{{ LANGUAGE_CODE }}" href="https://{{ request.get_host }}{{ request.path }}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="NOARCHIVE,NOCACHE" />
+
+    {% block site_index %}
+        {% if settings.site_index %}
+            <meta name="robots" content="noindex, nofollow">
+        {% endif %}
+    {% endblock site_index %}
+
+    {% block seo %}
+        {% seo %}
+    {% endblock seo %}
+
+    {% block favicon %}
+        {% if store.branding.icon %}
+            {% with image=store.branding.icon %}
+                {% image_thumbnail image "32x32" upscale=False crop="center" as thumb_store_icon %}
+                <link rel="shortcut icon" href="{{ thumb_store_icon.url }}" />
+            {% endwith %}
+        {% else %}
+            <link rel="icon" type="image/svg+xml" href="{{ 'sf/img/skinofab-favicon-816745.svg'|asset_url }}">
+            <link rel="icon" type="image/png" sizes="32x32" href="{{ 'sf/img/skinofab-favicon-32-a20259.png'|asset_url }}">
+            <link rel="apple-touch-icon" href="{{ 'sf/img/skinofab-favicon-180-15097e.png'|asset_url }}">
+        {% endif %}
+    {% endblock favicon %}
+
+    {# 2. Critical preloads. Page templates should only preload LCP assets here. #}
+    <link rel="preconnect" href="https://d1lrxs4saq89c.cloudfront.net">
+    <link rel="preconnect" href="https://cdn.29next.store">
+    <link rel="preconnect" href="https://cdn.29next.store" crossorigin>
+    {% block critical_preloads %}{% endblock critical_preloads %}
+
+    {# 3. CSS. Discover the theme stylesheet before optional font embeds. #}
+    {% block styles %}
+        {% block spark_css %}{% endblock spark_css %}
+        {% include 'partials/sf_asset_styles.html' %}
+
+        {% if settings.font_script %}
+            {{ settings.font_script|safe }}
+        {% endif %}
+
+        <style>
+            :root {
+                --primary-color: {{ store.branding.primary_color|default:"#1E293B" }};
+                --accent-color: {{ store.branding.accent_color|default:"#475569" }};
+                --primary-color-lighter: color-mix(in srgb, var(--primary-color), #fff 15%);
+                --primary-color-darker: color-mix(in srgb, var(--primary-color), #000 15%);
+                --accent-color-lighter: color-mix(in srgb, var(--accent-color), #fff 15%);
+                --accent-color-darker: color-mix(in srgb, var(--accent-color), #000 15%);
+                {% if settings.font_body %}
+                    --font-body: {{ settings.font_body|safe }};
+                {% endif %}
+                {% if settings.font_header %}
+                    --font-header: {{ settings.font_header|safe }};
+                {% endif %}
+                {% if settings.body_text_color %}
+                    --body-text-color: {{ settings.body_text_color }};
+                {% endif %}
+                {% if settings.body_header_color %}
+                    --body-header-color: {{ settings.body_header_color }};
+                {% endif %}
+                {% if settings.body_link_color %}
+                    --body-link-color: {{ settings.body_link_color }};
+                {% endif %}
+                {# Style tokens (spark#56): bridge properties read by @theme in css/input.css #}
+                {% if settings.body_bg_color %}
+                    --body-bg-color: {{ settings.body_bg_color }};
+                {% endif %}
+                {% if settings.border_color %}
+                    --border-color: {{ settings.border_color }};
+                {% endif %}
+                {% if settings.radius_control %}
+                    --control-radius: {{ settings.radius_control }};
+                {% endif %}
+                {% if settings.radius_card %}
+                    --card-radius: {{ settings.radius_card }};
+                {% endif %}
+                {% if settings.section_padding == "compact" %}
+                    --section-padding-y: 2rem;
+                {% elif settings.section_padding == "roomy" %}
+                    --section-padding-y: 5rem;
+                {% endif %}
+                {% if settings.content_gap == "tight" %}
+                    --content-gap: 1rem;
+                {% elif settings.content_gap == "loose" %}
+                    --content-gap: 2rem;
+                {% endif %}
+                {% if settings.heading_scale == "small" %}
+                    --heading-scale: 0.875;
+                {% elif settings.heading_scale == "large" %}
+                    --heading-scale: 1.125;
+                {% endif %}
+                {% if settings.body_size and settings.body_size != "16px" %}
+                    --body-size: {{ settings.body_size }};
+                {% endif %}
+                {% if settings.container_max_width %}
+                    --container-max: {{ settings.container_max_width }};
+                {% endif %}
+            }
+            {% if settings.font_body %}
+                body { font-family: var(--font-body); }
+            {% endif %}
+            {% if settings.font_header %}
+                h1, h2, h3, h4, h5, h6 { font-family: var(--font-header); }
+            {% endif %}
+            {% if settings.body_text_color %}
+                body { color: var(--body-text-color); }
+            {% endif %}
+            {% if settings.body_header_color %}
+                h1, h2, h3, h4, h5, h6 { color: var(--body-header-color); }
+            {% endif %}
+            {% if settings.body_link_color %}
+                a { color: var(--body-link-color); }
+                a:hover { opacity: 0.8; }
+            {% endif %}
+        </style>
+    {% endblock styles %}
+    {# Spark side cart in the design's look: black controls, design body font. #}
+    <style>:root{--primary-color:#000000;--primary-color-darker:#000000;--primary-color-lighter:#333333;--accent-color:#000000;--font-body:var(--FONT-STACK-BODY, 'Jost', sans-serif);}:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn, .sfb-btn--light){transition:background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .14s ease!important;-webkit-tap-highlight-color:transparent;touch-action:manipulation}:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn, .sfb-btn--light)::before{display:none!important}@media (hover:hover) and (pointer:fine){:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn):hover{background-color:#000!important;border-color:#000!important;color:#fff!important;transform:translateY(-1px);box-shadow:0 12px 24px -12px rgba(0,0,0,.6)}.sfb-btn--light:hover{background-color:#f4f2ee!important;transform:translateY(-1px);box-shadow:0 12px 24px -14px rgba(0,0,0,.4)}}:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn, .sfb-btn--light):active{transform:translateY(0) scale(.97)!important;box-shadow:0 2px 8px -4px rgba(0,0,0,.5)!important;transition-duration:.06s!important}:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn, .sfb-btn--light):focus-visible{outline:2px solid #151515!important;outline-offset:3px!important;box-shadow:0 0 0 3px #fff!important}:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn, .sfb-btn--light)[aria-busy="true"]{position:relative;pointer-events:none;color:transparent!important}:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn, .sfb-btn--light)[aria-busy="true"] *{visibility:hidden}:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn, .sfb-btn--light)[aria-busy="true"]::after{content:"";position:absolute;top:50%;left:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sf-btn-spin .7s linear infinite}.sfb-btn--light[aria-busy="true"]::after{border-color:rgba(21,21,21,.2);border-top-color:#151515}@keyframes sf-btn-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){:is(.product__submit__add, .btn--primary.btn--solid, .btn--dark, .input-group__btn, .fh-button, .sfps-btn, .sfb-btn:not(.sfb-btn--light), .sf-sticky__btn, .sfb-btn--light){transition:none!important;transform:none!important}}</style>
+    {# A policy page opened from a funnel's footer (?from=offer, the funnels' sf-footer.html) keeps the store's sale bar and menus out of it, set before the first paint (live review 7). Django comments are one line. #}
+    {# On such a page every link to another legal or contact page keeps ?from=offer, and any other link into the store is switched off (live review 9: one tap on a footer link opened the full store; a page's link to itself too). #}
+    <script>if (/[?&]from=offer(?:&|$)/.test(location.search)) { document.documentElement.classList.add('sf-from-offer'); document.addEventListener('DOMContentLoaded', function () { var keep = /^\/(?:[a-z]{2}\/)?(?:privacy-policy|terms-of-service|refund-policy|shipping-policy|cookie-policy|data-sharing-opt-out|contact|contact-information|postflows-track-your-order)\/?$/; document.querySelectorAll('a[href]').forEach(function (a) { var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (e) { return; } if (u.origin !== location.origin || a.getAttribute('href').charAt(0) === '#') return; if (keep.test(u.pathname)) { u.searchParams.set('from', 'offer'); a.setAttribute('href', u.pathname + u.search + u.hash); } else { a.removeAttribute('href'); a.setAttribute('aria-disabled', 'true'); a.classList.add('sf-off-link'); } }); }); }</script><style>.sf-from-offer{--announcement-height:0px!important}.sf-from-offer .announcement-bar-static,.sf-from-offer #SiteHeader .menu__items,.sf-from-offer #SiteHeader .menu__item--icons,.sf-from-offer #SiteHeader .mobile-menu,.sf-from-offer #SiteHeader .mobile-menu__button,.sf-from-offer #SiteFooter .sf__signup,.sf-from-offer #SiteFooter .sf__menu{display:none!important}.sf-from-offer #shopify-section-sf-more,.sf-from-offer .sf-more{display:none!important}.sf-from-offer #SiteFooter .sf__logo,.sf-from-offer #SiteHeader a[href="/"]{pointer-events:none;cursor:default}.sf-from-offer .sf-off-link{pointer-events:none;color:inherit;text-decoration:none}.sf-from-offer #SiteFooter .sf__policies a{display:inline-block;padding:12px 4px}</style>
+
+    {# 4. Priority JS. Keep this rare, tiny, and before-paint only. #}
+    {% block priority_scripts %}
+    {# Contrast auto-detection — must run before first paint to avoid flash #}
+    <script>
+    (function(){
+        var c = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+        if (c && c.charAt(0) === '#') {
+            var hex = c.replace('#','');
+            if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+            var r = parseInt(hex.substr(0,2),16)/255;
+            var g = parseInt(hex.substr(2,2),16)/255;
+            var b = parseInt(hex.substr(4,2),16)/255;
+            
+            r = r <= 0.03928 ? r/12.92 : Math.pow((r+0.055)/1.055, 2.4);
+            g = g <= 0.03928 ? g/12.92 : Math.pow((g+0.055)/1.055, 2.4);
+            b = b <= 0.03928 ? b/12.92 : Math.pow((b+0.055)/1.055, 2.4);
+            if (0.2126*r + 0.7152*g + 0.0722*b > 0.6) {
+                document.documentElement.setAttribute('data-light-primary','');
+            }
+        }
+    })();
+    </script>
+    {% endblock priority_scripts %}
+
+    {% block extrastyles %}{% endblock extrastyles %}
+
+    {% block custom_css %}
+        {% if settings.custom_css %}
+            <style>{{ settings.custom_css|safe }}</style>
+        {% endif %}
+    {% endblock custom_css %}
+    {% block extrahead %}{% endblock extrahead %}
+    {% url 'storefrontapi:graphql' as sf_graphql_url %}
+    <script>window.SFStore = { currency: "{{ request.CURRENCY_CODE|default:'USD'|escapejs }}", symbol: "{% filter escapejs %}{% currency_symbol request.CURRENCY_CODE|default:'USD' %}{% endfilter %}", graphqlUrl: "{{ sf_graphql_url|default:'/api/graphql/'|escapejs }}" };
+    window.SFProductJson = {"adaptive-foundation-stick":"{{ 'sf/data/product-adaptive-foundation-stick.json'|asset_url|escapejs }}","color-changing-foundation":"{{ 'sf/data/product-color-changing-foundation.json'|asset_url|escapejs }}","egf-nad-firming-serum":"{{ 'sf/data/product-egf-nad-firming-serum.json'|asset_url|escapejs }}","pdrn-plumping-balm":"{{ 'sf/data/product-pdrn-plumping-balm.json'|asset_url|escapejs }}","the-lymphatic-brush":"{{ 'sf/data/product-the-lymphatic-brush.json'|asset_url|escapejs }}"};
+    {# Design handle -> NEXT product pk, for the Shopify variant ids design scripts carry. Each page lists only the products it references (block sf_handle_pk): every entry is a settings product lookup per render. #}
+    window.SFHandlePk = { {% block sf_handle_pk %}{% endblock sf_handle_pk %} };
+    window.SFVariantHandle = {"15517563191626": "the-lymphatic-brush", "15517563191700": "pdrn-plumping-balm", "15517563191800": "egf-nad-firming-serum", "15517563191900": "adaptive-foundation-stick", "45097716285596": "color-changing-foundation", "61233683038538": "the-lymphatic-brush", "61233683038600": "pdrn-plumping-balm", "61233683038700": "egf-nad-firming-serum", "61233683038800": "adaptive-foundation-stick", "8462448984220": "color-changing-foundation"};
+    {# Theme settings > Subscription Offer: every add of this product (any variant, any button) is the plan below. #}
+    window.SFSubscriptionOnly = {% if settings.sf_subscription_product %}{ pks: [{% for sf_v in settings.sf_subscription_product.children.all %}"{{ sf_v.pk }}", {% endfor %}"{{ settings.sf_subscription_product.pk }}"], interval: "{{ settings.sf_subscription_interval|default:'month'|escapejs }}", intervalCount: "{{ settings.sf_subscription_interval_count|default:'1'|escapejs }}" }{% else %}null{% endif %};
+    {# Theme settings > Product Page: FrontrowMD listing for the Clinicians' Choice badge. #}
+    window.SFFrontrowId = "{{ settings.sf_frontrow_product_id|default:''|escapejs }}";
+    {# Theme settings > Subscription Offer: adds of this product that name no purchase type are the plan below. #}
+    window.SFDefaultPlan = {% if settings.sf_refill_default_product %}{ pks: [{% for sf_v in settings.sf_refill_default_product.children.all %}"{{ sf_v.pk }}", {% endfor %}"{{ settings.sf_refill_default_product.pk }}"], interval: "{{ settings.sf_subscription_interval|default:'month'|escapejs }}", intervalCount: "{{ settings.sf_subscription_interval_count|default:'1'|escapejs }}" }{% else %}null{% endif %};</script>
+    {# defer: runs before the design's deferred scripts (document order), after every inline script, never blocks paint #}
+    <script defer src="{{ 'js/skinofab-commerce.js'|asset_url }}"></script>
+    {% block sf_head %}{% endblock sf_head %}
+
+    {# Head app hook is for platform-critical head snippets only. Prefer footer hooks. #}
+    {% block head_app_hooks %}
+        {% app_hook 'global_header' %}
+    {% endblock head_app_hooks %}
+</head>
+
+<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+    {% block sf_lead %}{% endblock sf_lead %}
+    <a href="#MainContent" class="skip-to-content visually-hidden">{% t 'global.accessibility.skip_to_main_content' %}</a>
+
+    {% block layout %}
+        {% if not settings.account_only %}
+
+            {# Announcement bar — respects ab_placement setting #}
+            {% block announcement_bar %}
+                {% if settings.ab_text and settings.ab_placement != 'none' and settings.ab_placement != 'home' %}
+                    {% include "partials/announcement_bar.html" %}
+                {% endif %}
+            {% endblock announcement_bar %}
+
+            {# Header / Navigation #}
+            {% block nav_header %}
+                {% include 'partials/header.html' %}
+            {% endblock %}
+
+        {% endif %}
+
+        {# Main content #}
+        {% block content_wrapper %}
+            <main id="main-content" tabindex="-1" data-main>
+                {% block breadcrumbs %}{% endblock %}
+                <div class="container">
+                    {% include "partials/alert_messages.html" %}
+                </div>
+                {% block content %}{% endblock %}
+            </main>
+        {% endblock %}
+
+        {# Footer #}
+        {% if not settings.account_only %}
+            {% block footer %}
+                {% include "partials/footer.html" %}
+            {% endblock %}
+        {% endif %}
+
+    {% endblock %}
+
+    {# Modals #}
+    {% block modals %}{% endblock modals %}
+
+    {# Non-critical UI shells are parsed before their Web Components register. #}
+    {% block side_cart %}
+        {% include 'partials/side_cart.html' %}
+    {% endblock side_cart %}
+
+    {# Platform event trackers (GA4, GTM, Klaviyo, Taboola apps subscribe through these frames). Rendered by core_js in Intro Bootstrap; Spark dropped core_js and must render it itself. #}
+    {% block pixels %}
+        {% pixels %}
+    {% endblock pixels %}
+
+    {# Theme JS - dependency ordered, zero jQuery, zero Bootstrap. #}
+    {% block scripts %}
+        <script type="text/javascript" src="{{ 'js/spark-events.js'|asset_url }}"></script>
+        <script>
+        {% t 'store.catalogue.add_to_cart' as spark_i18n_add_to_cart %}
+        {% t 'store.catalogue.product_unavailable' as spark_i18n_unavailable %}
+        {% t 'global.confirm.delete' as spark_i18n_delete_confirm %}
+        {% t 'store.catalogue.subscription_frequency_error' as spark_i18n_subscription_frequency_error %}
+        {% t 'side_cart.default.item_removed_announcement' as spark_i18n_cart_item_removed %}
+        {% t 'side_cart.default.quantity_updated_announcement' as spark_i18n_cart_quantity_updated %}
+        window.SparkCartAssets = {
+            cart: "{{ 'js/spark-cart.js'|asset_url|escapejs }}",
+            cartRewards: "{{ 'js/spark-cart-rewards.js'|asset_url|escapejs }}",
+            cartRenderer: "{{ 'js/skinofab-cart-drawer.js'|asset_url|escapejs }}",
+            progressBar: "{{ 'js/components/spark-progress-bar.js'|asset_url|escapejs }}",
+            upsellItem: "{{ 'js/components/spark-upsell-item.js'|asset_url|escapejs }}",
+            cartDrawer: "{{ 'js/components/spark-cart-drawer.js'|asset_url|escapejs }}"
+        };
+        window.SparkI18n = {
+            addToCart: "{{ spark_i18n_add_to_cart|escapejs }}",
+            unavailable: "{{ spark_i18n_unavailable|escapejs }}",
+            deleteConfirm: "{{ spark_i18n_delete_confirm|escapejs }}",
+            subscriptionFrequencyError: "{{ spark_i18n_subscription_frequency_error|escapejs }}",
+            cartItemRemoved: "{{ spark_i18n_cart_item_removed|escapejs }}",
+            cartQuantityUpdated: "{{ spark_i18n_cart_quantity_updated|escapejs }}"
+        };
+        </script>
+        <script>
+        window.SFCart = {
+            shippingFree: {% if settings.sf_cart_free_shipping %}true{% else %}false{% endif %},
+            shippingNote: "{{ settings.sf_cart_shipping_note|default:''|escapejs }}",
+            guaranteeTitle: "{{ settings.sf_cart_guarantee_title|default:''|escapejs }}", guaranteeText: "{{ settings.sf_cart_guarantee_text|default:''|escapejs }}",
+            reviewText: "{{ settings.sf_cart_review_text|default:''|escapejs }}", reviewName: "{{ settings.sf_cart_review_name|default:''|escapejs }}",
+            reviewPk: "{% if settings.sf_cart_review_product %}{{ settings.sf_cart_review_product.pk }}{% endif %}",
+            upsellPks: [{% if settings.sf_cart_upsell_1 %}"{{ settings.sf_cart_upsell_1.pk }}", {% endif %}{% if settings.sf_cart_upsell_2 %}"{{ settings.sf_cart_upsell_2.pk }}", {% endif %}{% if settings.sf_cart_upsell_3 %}"{{ settings.sf_cart_upsell_3.pk }}"{% endif %}],
+            upsellTitle: "{{ settings.sf_cart_upsell_title|default:''|escapejs }}", upsellButton: "{{ settings.sf_cart_upsell_button|default:'Add'|escapejs }}",
+            upgrades: [{ from: "{{ settings.sf_cart_upgrade_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade_every|default:''|escapejs }}" },
+              { from: "{{ settings.sf_cart_upgrade2_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade2_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade2_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade2_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade2_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade2_every|default:''|escapejs }}" },
+              { from: "{{ settings.sf_cart_upgrade3_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade3_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade3_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade3_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade3_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade3_every|default:''|escapejs }}" },
+              { from: "{{ settings.sf_cart_upgrade4_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade4_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade4_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade4_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade4_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade4_every|default:''|escapejs }}" },
+              { from: "{{ settings.sf_cart_upgrade5_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade5_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade5_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade5_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade5_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade5_every|default:''|escapejs }}" },
+              { from: "{{ settings.sf_cart_upgrade6_from|default:''|escapejs }}", to: "{{ settings.sf_cart_upgrade6_to|default:''|escapejs }}",
+                title: "{{ settings.sf_cart_upgrade6_title|default:''|escapejs }}", text: "{{ settings.sf_cart_upgrade6_text|default:''|escapejs }}",
+                button: "{{ settings.sf_cart_upgrade6_button|default:'Upgrade'|escapejs }}", every: "{{ settings.sf_cart_upgrade6_every|default:''|escapejs }}" }],
+            payIcons: [{% if 'visa' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/visa.svg'|asset_url|escapejs }}", alt: "Visa" }, {% endif %}{% if 'mc' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/mc.svg'|asset_url|escapejs }}", alt: "Mastercard" }, {% endif %}{% if 'amex' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/amex.svg'|asset_url|escapejs }}", alt: "American Express" }, {% endif %}{% if 'discover' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/discover.svg'|asset_url|escapejs }}", alt: "Discover" }, {% endif %}{% if 'applepay' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/applepay.svg'|asset_url|escapejs }}", alt: "Apple Pay" }, {% endif %}{% if 'googlepay' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/googlepay.svg'|asset_url|escapejs }}", alt: "Google Pay" }, {% endif %}{% if 'ppal' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/ppal.svg'|asset_url|escapejs }}", alt: "PayPal" }, {% endif %}{% if 'klarna' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/klarna.svg'|asset_url|escapejs }}", alt: "Klarna" }, {% endif %}{% if 'diners' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/diners.svg'|asset_url|escapejs }}", alt: "Diners Club" }, {% endif %}{% if 'jcb' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/jcb.svg'|asset_url|escapejs }}", alt: "JCB" }, {% endif %}{% if 'maestro' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/maestro.svg'|asset_url|escapejs }}", alt: "Maestro" }, {% endif %}{% if 'dankort' in settings.sf_pay_icons %}{ src: "{{ 'img/pay/dankort.svg'|asset_url|escapejs }}", alt: "Dankort" }, {% endif %}],
+            checkoutText: "{{ settings.sf_cart_checkout_text|default:''|escapejs }}",
+            cartUrl: "/cart/", changeText: "{{ settings.sf_cart_change_text|default:'Change'|escapejs }}",
+            refillHandles: ["adaptive-peptide-foundation", "pdrn-plumping-balm", "egf-nad-firming-serum", "adaptive-foundation-stick"], onceText: "One-time purchase", giftIncludes: {"237": [169]},
+            secureText: "{{ settings.sf_cart_secure_text|default:''|escapejs }}",
+            couponToggle: "{{ settings.sf_cart_coupon_toggle|default:'Have a discount code?'|escapejs }}",
+            removeText: "{{ settings.sf_cart_remove_text|default:'Remove'|escapejs }}",
+            emptyTitle: "{{ settings.sf_cart_empty_title|default:''|escapejs }}",
+            emptyText: "{{ settings.sf_cart_empty_text|default:''|escapejs }}",
+            emptyImage: "{{ 'sf/img/skinofab-cart-bottle-69ea29.png'|asset_url|escapejs }}",
+            shopUrl: "{% if settings.sf_cart_empty_product %}{{ settings.sf_cart_empty_product.get_absolute_url|escapejs }}{% else %}{% url 'catalogue:index' %}{% endif %}",
+            shopText: "{% if settings.sf_cart_empty_cta %}{{ settings.sf_cart_empty_cta|escapejs }}{% elif settings.sf_cart_empty_product %}Shop {{ settings.sf_cart_empty_product.get_title|escapejs }}{% endif %}"
+        };
+        </script>
+        <script type="text/javascript" src="{{ 'js/spark-cart-loader.js'|asset_url }}"></script>
+        
+        {% if settings.enable_membership_pricing %}
+            {% url 'storefrontapi:graphql' as membership_graphql_url %}
+            <script>
+            {% t 'membership.price_label' as default_membership_label %}
+            {% t 'membership.applied_at_checkout' as default_membership_detail_text %}
+            window.SparkMembershipPricingConfig = {
+                enabled: true,
+                graphqlUrl: "{{ membership_graphql_url|default:'/api/graphql/'|escapejs }}",
+                discountPercent: "{{ settings.membership_discount_percent|default:"25"|escapejs }}",
+                statusMetadataKey: "{{ settings.membership_status_metadata_key|default:"member_status"|escapejs }}",
+                activeStatusValue: "{{ settings.membership_active_status_value|default:"active"|escapejs }}",
+                label: "{{ settings.membership_label|default:default_membership_label|escapejs }}",
+                detailText: "{{ settings.membership_detail_text|default:default_membership_detail_text|escapejs }}"
+            };
+            </script>
+            <script type="text/javascript" src="{{ 'js/spark-membership-pricing.js'|asset_url }}" defer></script>
+        {% endif %}
+    {% endblock %}
+
+    {% block component_scripts %}{% endblock component_scripts %}
+
+    {% block platform_compatibility %}
+        {# Platform compatibility — replaces jQuery-dependent core_js with vanilla JS #}
+        <script type="text/javascript" src="{{ 'js/spark-platform.js'|asset_url }}"></script>
+    {% endblock platform_compatibility %}
+
+    {% block preview_indicator %}
+        {% if request.COOKIES.preview_theme %}
+            <script type="text/javascript" src="{{ 'js/spark-preview.js'|asset_url }}"></script>
+        {% endif %}
+    {% endblock preview_indicator %}
+
+    {# Additional JS #}
+    {% block sf_tail %}{% endblock sf_tail %}
+    {% block extrascripts %}{% endblock %}
+
+    {% block delight_scripts %}
+    {# Delight: skeleton dismiss + keyboard nav #}
+    <script>
+    (function(){
+        
+        var skel = document.getElementById('product-skeleton');
+        if (skel) {
+            var grid = document.getElementById('product-grid');
+            if (grid && grid.children.length > 0) {
+                skel.style.display = 'none';
+            } else if (!grid) {
+                skel.style.display = 'none';
+            }
+        }
+
+        
+        document.querySelectorAll('.product-card').forEach(function(card) {
+            if (!card.getAttribute('tabindex')) card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
+
+    })();
+    </script>
+    {% endblock delight_scripts %}
+
+    {# Non-critical apps and tracking run after content and theme JS. #}
+    {% block footer_app_hooks %}
+        {% app_hook 'global_social_proof' %}
+        {% app_hook 'global_footer' %}
+    {% endblock footer_app_hooks %}
+    {% block tracking %}{% endblock tracking %}
+
+<script> (function(){var els=[].slice.call(document.querySelectorAll("[data-sf-bg]"));if(!els.length)return;function show(e){e.style.backgroundImage='url("'+e.getAttribute("data-sf-bg")+'")';e.removeAttribute("data-sf-bg")}if(!("IntersectionObserver"in window)){els.forEach(show);return}var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){io.unobserve(x.target);show(x.target)}})},{rootMargin:"1600px 2400px"});els.forEach(function(e){io.observe(e)})})();</script>
+<script> (function(){if(!document.querySelector("img[data-sf-src]"))return;function show(e){if(!e.hasAttribute("data-sf-src"))return;var p=e.parentNode;if(p&&p.tagName==="PICTURE")[].forEach.call(p.querySelectorAll("source[data-sf-srcset]"),function(x){x.setAttribute("srcset",x.getAttribute("data-sf-srcset"));x.removeAttribute("data-sf-srcset")});var s=e.getAttribute("data-sf-srcset");if(s)e.setAttribute("srcset",s);e.setAttribute("src",e.getAttribute("data-sf-src"));e.removeAttribute("data-sf-src");e.removeAttribute("data-sf-srcset")}function pending(){return[].slice.call(document.querySelectorAll("img[data-sf-src]"))}if(!("IntersectionObserver"in window)){window.addEventListener("load",function(){pending().forEach(show)});return}function group(e){return e.closest(".shopify-section,section")||e.parentNode}function watch(m){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){io.unobserve(x.target);[].forEach.call(x.target.querySelectorAll("img[data-sf-src]"),show)}})},{rootMargin:m});var seen=[];pending().forEach(function(e){var g=group(e);if(seen.indexOf(g)<0){seen.push(g);io.observe(g)}});return io}var early=null;document.addEventListener("DOMContentLoaded",function(){early=watch("600px")});function late(){if(early)early.disconnect();watch("1250px")}if(document.readyState==="complete")late();else window.addEventListener("load",late)})();</script>
+</body>
+</html>

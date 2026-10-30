@@ -1,0 +1,113 @@
+{# Spark Theme -- Cart Content (line items table) #}
+{% if cart_warnings %}
+    {% for warning in cart_warnings %}
+        <div class="bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800 mb-4">
+            {{ warning }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if upsell_messages %}
+    {% for upsell in upsell_messages %}
+        <div class="bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800 mb-4">
+            {% t "order.cart.upsell_message_detail" with message=upsell.message offer_name=upsell.offer.name %}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% include "partials/alert_messages.html" %}
+
+{% if not cart.is_empty %}
+    <form method="post" id="cart_formset">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        <div class="space-y-4">
+            {% for form in formset %}
+                {% with line=form.instance product=form.instance.product %}
+                {% purchase_info_for_line request line as session %}
+                <div class="flex gap-4 py-4 border-b border-slate-200">
+                    {{ form.id }}
+                    {# Product image #}
+                    {% with image=product.primary_image %}
+                        {% image_thumbnail image.original "240x240" crop="center" upscale=False as thumb %}
+                        <a href="{{ product.get_absolute_url }}" class="shrink-0">
+                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-20 h-20 object-cover" />
+                        </a>
+                    {% endwith %}
+
+                    {# Product info #}
+                    <div class="flex-1 min-w-0">
+                        <div class="text-sm font-medium text-slate-800">{{ line.description }}</div>
+                        <div class="text-sm text-slate-500 mt-1">
+                            {% if line.is_tax_known %}
+                                {{ line.unit_price_incl_tax|currency:line.price_currency }}
+                            {% else %}
+                                {{ line.unit_price_excl_tax|currency:line.price_currency }}
+                            {% endif %}
+                        </div>
+                        {% if line.discount_value %}
+                            <div class="text-xs text-green-600 mt-1">
+                                {% t "tables.content.discount" %}: -{{ line.discount_value|currency:line.price_currency }}
+                            </div>
+                        {% endif %}
+
+                        <div class="flex items-center gap-3 mt-3">
+                            {# Quantity #}
+                            <div class="flex items-center">
+                                {% include 'partials/form_field.html' with field=form.quantity nolabel=True %}
+                            </div>
+
+                            {# Subscription #}
+                            {% if form.subscription_range %}
+                                <div class="flex items-center">
+                                    {% if settings.sf_subscription_product and product.parent.pk == settings.sf_subscription_product.pk or settings.sf_subscription_product and product.pk == settings.sf_subscription_product.pk %}<input type="hidden" name="{{ form.subscription_range.html_name }}" value="{{ settings.sf_subscription_interval_count|default:'1' }}-{{ settings.sf_subscription_interval|default:'month' }}"><span class="text-xs text-slate-600">Automatic refill &middot; cancel any time</span>{% else %}{% include 'partials/form_field.html' with field=form.subscription_range nolabel=True %}<i hidden data-sf-sku="{{ product.sku }}"></i>{% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# Line total + remove #}
+                    <div class="flex flex-col items-end justify-between shrink-0">
+                        <span class="text-sm font-medium text-slate-800">
+                            {{ line.line_price_incl_tax_incl_discounts|currency:line.price_currency }}
+                        </span>
+                        <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="remove"
+                           class="remove-from-cart text-xs text-slate-400 hover:text-red-500 mt-2">
+                            {% t "tables.actions.remove" %}
+                            <span class="hidden">{{ form.DELETE }}</span>
+                        </a>
+                    </div>
+                </div>
+                {% endwith %}
+            {% endfor %}
+        </div>
+
+        {# Voucher + continue shopping #}
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 py-6">
+            {% if voucher_form %}
+                <form action="{% url 'cart:vouchers-add' %}" method="post" class="flex gap-2">
+                    {% csrf_token %}
+                    <input type="text" name="code" required maxlength="128"
+                           class="border border-slate-200 px-3 py-2 text-sm flex-1"
+                           placeholder="{% t 'order.cart.coupon_code' %}" />
+                    <button type="submit" class="btn btn-secondary text-sm">
+                        {% t "tables.actions.add_coupon" %}
+                    </button>
+                </form>
+            {% endif %}
+            <a href="{% url 'catalogue:index' %}" class="text-sm text-slate-500 hover:text-slate-800">
+                {% t "order.cart.continue_shopping" %}
+            </a>
+        </div>
+    </form>
+{% else %}
+    <div class="text-center py-16">
+        <svg class="mx-auto mb-4 text-slate-300" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+        </svg>
+        <p class="text-lg text-slate-600 font-medium mb-1">{% t "order.cart.cart_empty" %}</p>
+        <p class="text-sm text-slate-400 mb-4">{% t "order.cart.empty_hint" %}</p>
+        <a href="{% url 'catalogue:index' %}" class="btn btn-primary">{% t "order.cart.continue_shopping" %}</a>
+    </div>
+{% endif %}

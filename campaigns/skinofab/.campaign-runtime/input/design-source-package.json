@@ -1,0 +1,623 @@
+{
+  "contributions": [
+    {
+      "id": "html-funnel",
+      "kind": "html_funnel",
+      "mappings": [
+        {
+          "confidence": "high",
+          "coverage_role": "primary_design",
+          "id": "html-listicle-coverage",
+          "reference_refs": [],
+          "screenshot_refs": [
+            "source-listicle-desktop",
+            "source-listicle-mobile"
+          ],
+          "source_refs": [
+            "asset-checkouts-internal-preloads-js",
+            "asset-products-dream-skin-primer",
+            "source-listicle-html"
+          ],
+          "surface_id": "listicle"
+        },
+        {
+          "confidence": "high",
+          "coverage_role": "primary_design",
+          "id": "html-offer-coverage",
+          "reference_refs": [],
+          "screenshot_refs": [
+            "source-offer-desktop",
+            "source-offer-mobile"
+          ],
+          "source_refs": [
+            "source-offer-html"
+          ],
+          "surface_id": "offer"
+        }
+      ],
+      "presentation_intent": {
+        "summary": "Preserve the provided source HTML composition and presentation intent while CampaignSpec and Page Kit retain commerce/runtime authority."
+      },
+      "provenance": {
+        "adapter": "source-html-intake",
+        "asset_crawl_schema_version": "source-asset-crawl/v0",
+        "generator": "tools/funnel/design_source.py@1",
+        "generator_version": null,
+        "manifest_path": "../../design-source-apf/.campaigns-os/source-html-manifest.json",
+        "manifest_schema_version": "source-html-manifest/v0",
+        "manifest_sha256": "sha256:66e650456c127b6c5a206ce9c903973aef131577431c049d06e50bf0152ca561",
+        "producer": null,
+        "producer_material_fingerprint": null,
+        "source_root": "../../design-source-apf",
+        "source_type": "html_funnel"
+      },
+      "reference_refs": [],
+      "renderable": true,
+      "screenshot_refs": [
+        {
+          "availability": "available",
+          "browser": "playwright-chromium/1194",
+          "captured_at": "2026-10-27T09:41:00Z",
+          "device_profile": "desktop-1440x900",
+          "height": 8747,
+          "id": "source-listicle-desktop",
+          "kind": "source_screenshot",
+          "path": ".campaigns-os/screenshots/listicle-desktop.jpg",
+          "sha256": "sha256:3304239699a07e94dcb61602d64a2f7ea83a00c5d8cfe72d8ea17774d48a7b57",
+          "source_ref_id": "source-listicle-html",
+          "viewport": "desktop",
+          "width": 1440
+        },
+        {
+          "availability": "available",
+          "browser": "playwright-chromium/1194",
+          "captured_at": "2026-10-27T09:41:00Z",
+          "device_profile": "mobile-390x844",
+          "height": 12409,
+          "id": "source-listicle-mobile",
+          "kind": "source_screenshot",
+          "path": ".campaigns-os/screenshots/listicle-mobile.jpg",
+          "sha256": "sha256:9bd84d3db5da98df1193b8e6bfee02149b6f9133b34d0fd69394190e6cd81152",
+          "source_ref_id": "source-listicle-html",
+          "viewport": "mobile",
+          "width": 390
+        },
+        {
+          "availability": "available",
+          "browser": "playwright-chromium/1194",
+          "captured_at": "2026-10-28T08:45:00Z",
+          "device_profile": "desktop-1440x900",
+          "height": 12785,
+          "id": "source-offer-desktop",
+          "kind": "source_screenshot",
+          "path": ".campaigns-os/screenshots/offer-desktop.jpg",
+          "sha256": "sha256:227151ae395bcc5f32b24cfe1dff72742f8ebd77f36994eccceb554d4f089760",
+          "source_ref_id": "source-offer-html",
+          "viewport": "desktop",
+          "width": 1440
+        },
+        {
+          "availability": "available",
+          "browser": "playwright-chromium/1194",
+          "captured_at": "2026-10-28T08:45:00Z",
+          "device_profile": "mobile-390x844",
+          "height": 16716,
+          "id": "source-offer-mobile",
+          "kind": "source_screenshot",
+          "path": ".campaigns-os/screenshots/offer-mobile.jpg",
+          "sha256": "sha256:a63b02f8ac881c1ef5333a04c9b7f3f31ded07ce9d1f8f7f1c3aa767eead74ba",
+          "source_ref_id": "source-offer-html",
+          "viewport": "mobile",
+          "width": 390
+        }
+      ],
+      "source_refs": [
+        {
+          "id": "asset-checkouts-internal-preloads-js",
+          "kind": "asset",
+          "path": "checkouts/internal/preloads.js",
+          "role": "script"
+        },
+        {
+          "id": "asset-products-dream-skin-primer",
+          "kind": "asset",
+          "path": "products/dream-skin-primer",
+          "role": "asset"
+        },
+        {
+          "id": "source-html-manifest",
+          "kind": "manifest",
+          "path": "../../design-source-apf/.campaigns-os/source-html-manifest.json",
+          "role": "producer_manifest",
+          "sha256": "sha256:66e650456c127b6c5a206ce9c903973aef131577431c049d06e50bf0152ca561"
+        },
+        {
+          "id": "source-listicle-html",
+          "kind": "html_file",
+          "path": "facelove-listicle.html",
+          "role": "page",
+          "sha256": "sha256:2300c09ed1f5cf7ac38e16dc17f38db205aedeb955aa8af2ca976334714629ce"
+        },
+        {
+          "id": "source-offer-html",
+          "kind": "html_file",
+          "path": "apf-pdp.html",
+          "role": "page",
+          "sha256": "sha256:e3437dea668109c3fc0d67472383e6a88eda05956e93b683a9abaf74be299c11"
+        }
+      ],
+      "trust": "structured"
+    },
+    {
+      "id": "template-baseline",
+      "kind": "template_stock",
+      "mappings": [
+        {
+          "confidence": "high",
+          "coverage_role": "template_baseline",
+          "id": "template-checkout-coverage",
+          "reference_refs": [
+            "apollo-checkout-desktop",
+            "apollo-checkout-mobile"
+          ],
+          "screenshot_refs": [],
+          "source_refs": [
+            "template-reference-apollo-contract"
+          ],
+          "surface_id": "checkout",
+          "template_reference_id": "template-reference-apollo"
+        },
+        {
+          "confidence": "high",
+          "coverage_role": "template_baseline",
+          "id": "template-offer-1-coverage",
+          "reference_refs": [
+            "apollo-checkout-desktop",
+            "apollo-checkout-mobile"
+          ],
+          "screenshot_refs": [],
+          "source_refs": [
+            "template-reference-apollo-contract"
+          ],
+          "surface_id": "offer-1",
+          "template_reference_id": "template-reference-apollo"
+        },
+        {
+          "confidence": "high",
+          "coverage_role": "template_baseline",
+          "id": "template-offer-2-coverage",
+          "reference_refs": [
+            "apollo-checkout-desktop",
+            "apollo-checkout-mobile"
+          ],
+          "screenshot_refs": [],
+          "source_refs": [
+            "template-reference-apollo-contract"
+          ],
+          "surface_id": "offer-2",
+          "template_reference_id": "template-reference-apollo"
+        },
+        {
+          "confidence": "high",
+          "coverage_role": "template_baseline",
+          "id": "template-offer-2b-coverage",
+          "reference_refs": [
+            "apollo-checkout-desktop",
+            "apollo-checkout-mobile"
+          ],
+          "screenshot_refs": [],
+          "source_refs": [
+            "template-reference-apollo-contract"
+          ],
+          "surface_id": "offer-2b",
+          "template_reference_id": "template-reference-apollo"
+        },
+        {
+          "confidence": "high",
+          "coverage_role": "template_baseline",
+          "id": "template-brush-offer-coverage",
+          "reference_refs": [
+            "apollo-checkout-desktop",
+            "apollo-checkout-mobile"
+          ],
+          "screenshot_refs": [],
+          "source_refs": [
+            "template-reference-apollo-contract"
+          ],
+          "surface_id": "brush-offer",
+          "template_reference_id": "template-reference-apollo"
+        },
+        {
+          "confidence": "high",
+          "coverage_role": "template_baseline",
+          "id": "template-brush-offer-b-coverage",
+          "reference_refs": [
+            "apollo-checkout-desktop",
+            "apollo-checkout-mobile"
+          ],
+          "screenshot_refs": [],
+          "source_refs": [
+            "template-reference-apollo-contract"
+          ],
+          "surface_id": "brush-offer-b",
+          "template_reference_id": "template-reference-apollo"
+        },
+        {
+          "confidence": "high",
+          "coverage_role": "template_baseline",
+          "id": "template-thank-you-coverage",
+          "reference_refs": [
+            "apollo-checkout-desktop",
+            "apollo-checkout-mobile"
+          ],
+          "screenshot_refs": [],
+          "source_refs": [
+            "template-reference-apollo-contract"
+          ],
+          "surface_id": "thank-you",
+          "template_reference_id": "template-reference-apollo"
+        }
+      ],
+      "presentation_intent": {
+        "summary": "Use the apollo Template Reference only as the safe runtime baseline for explicitly template-backed pages."
+      },
+      "provenance": {
+        "adapter": "template-reference",
+        "asset_crawl_schema_version": null,
+        "generator": null,
+        "generator_version": "sdk-0.4.38-composable-upsells-2026-09-25",
+        "manifest_path": null,
+        "manifest_schema_version": null,
+        "manifest_sha256": null,
+        "producer": "Campaign Page Kit",
+        "producer_material_fingerprint": null,
+        "source_root": null,
+        "source_type": "template_stock"
+      },
+      "reference_refs": [
+        {
+          "availability": "available",
+          "browser": "chromium",
+          "captured_at": "2026-09-25T00:10:12.000Z",
+          "device_profile": "Desktop 1440",
+          "height": 1491,
+          "id": "apollo-checkout-desktop",
+          "kind": "template_reference_screenshot",
+          "sha256": "sha256:7595630f9e3dd4da09c395f7681c1ff546011141d3981412d5f76a1ffe2d5c90",
+          "source_ref_id": "template-reference-apollo-contract",
+          "url": "https://raw.githubusercontent.com/NextCommerceCo/campaign-cart-starter-templates/main/docs/template-references/apollo/checkout-desktop.png",
+          "viewport": "desktop",
+          "width": 1440
+        },
+        {
+          "availability": "available",
+          "browser": "chromium",
+          "captured_at": "2026-09-25T00:10:12.000Z",
+          "device_profile": "Mobile 390",
+          "height": 2648,
+          "id": "apollo-checkout-mobile",
+          "kind": "template_reference_screenshot",
+          "sha256": "sha256:1d797be266beefb10cf7ec4502d8f8c97286a0861b969695986ebfc1ac29ce63",
+          "source_ref_id": "template-reference-apollo-contract",
+          "url": "https://raw.githubusercontent.com/NextCommerceCo/campaign-cart-starter-templates/main/docs/template-references/apollo/checkout-mobile.png",
+          "viewport": "mobile",
+          "width": 390
+        }
+      ],
+      "renderable": true,
+      "screenshot_refs": [],
+      "source_refs": [
+        {
+          "id": "template-reference-apollo-contract",
+          "kind": "document",
+          "path": "contracts/commerce-surface-catalog.json",
+          "role": "template_reference_contract"
+        }
+      ],
+      "template_reference": {
+        "contract_path": "contracts/commerce-surface-catalog.json",
+        "family": "apollo",
+        "id": "template-reference-apollo",
+        "standard_viewport_refs": [
+          {
+            "availability": "available",
+            "browser": "chromium",
+            "captured_at": "2026-09-25T00:10:12.000Z",
+            "device_profile": "Desktop 1440",
+            "height": 1491,
+            "id": "apollo-checkout-desktop",
+            "kind": "template_reference_screenshot",
+            "sha256": "sha256:7595630f9e3dd4da09c395f7681c1ff546011141d3981412d5f76a1ffe2d5c90",
+            "source_ref_id": "template-reference-apollo-contract",
+            "url": "https://raw.githubusercontent.com/NextCommerceCo/campaign-cart-starter-templates/main/docs/template-references/apollo/checkout-desktop.png",
+            "viewport": "desktop",
+            "width": 1440
+          },
+          {
+            "availability": "available",
+            "browser": "chromium",
+            "captured_at": "2026-09-25T00:10:12.000Z",
+            "device_profile": "Mobile 390",
+            "height": 2648,
+            "id": "apollo-checkout-mobile",
+            "kind": "template_reference_screenshot",
+            "sha256": "sha256:1d797be266beefb10cf7ec4502d8f8c97286a0861b969695986ebfc1ac29ce63",
+            "source_ref_id": "template-reference-apollo-contract",
+            "url": "https://raw.githubusercontent.com/NextCommerceCo/campaign-cart-starter-templates/main/docs/template-references/apollo/checkout-mobile.png",
+            "viewport": "mobile",
+            "width": 390
+          }
+        ],
+        "version": "sdk-0.4.38-composable-upsells-2026-09-25"
+      },
+      "trust": "native"
+    }
+  ],
+  "divergences": [],
+  "generated_at": "2026-10-29T10:40:10.605Z",
+  "material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
+  "notes": [],
+  "package_id": "null:design-source",
+  "proposed_exceptions": [],
+  "readback": {
+    "blockers": [],
+    "gaps": [],
+    "handled": [
+      "brush-offer-b: template_baseline (high) via template-baseline",
+      "brush-offer: template_baseline (high) via template-baseline",
+      "checkout: template_baseline (high) via template-baseline",
+      "listicle: primary_design (high) via html-funnel",
+      "offer-1: template_baseline (high) via template-baseline",
+      "offer-2: template_baseline (high) via template-baseline",
+      "offer-2b: template_baseline (high) via template-baseline",
+      "offer: primary_design (high) via html-funnel",
+      "thank-you: template_baseline (high) via template-baseline"
+    ],
+    "included_sources": [
+      "html-funnel (html_funnel)",
+      "template-baseline (template_stock)"
+    ],
+    "next_actions": [
+      "Proceed to Build with this Design Source Package material fingerprint."
+    ],
+    "summary": "Design Source Package is ready; 2 contribution(s), 9 coverage mapping(s), 0 gap(s), 0 TODO(s), and 0 waiver(s).",
+    "todos": [],
+    "waivers": []
+  },
+  "readiness": {
+    "blocking_reasons": [],
+    "gap_count": 0,
+    "generated_at": "2026-10-29T10:40:10.605Z",
+    "status": "ready",
+    "todo_count": 0,
+    "waiver_count": 0
+  },
+  "schema_version": "campaign-design-source-package/v0",
+  "source_gaps": [],
+  "source_kind": "html_funnel",
+  "source_todos": [],
+  "surface_identity": [
+    {
+      "aliases": [
+        "apf-funnel"
+      ],
+      "id": "campaign",
+      "kind": "campaign",
+      "label": "Campaign",
+      "mappings": {
+        "campaign_slug": "apf-funnel"
+      }
+    },
+    {
+      "aliases": [
+        "listicle",
+        "Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation",
+        "presell",
+        "facelove-listicle.html",
+        "/apf-funnel/10-reasons-adaptive-foundation/",
+        "product",
+        "10-reasons-adaptive-foundation.html",
+        "src/apf-funnel/10-reasons-adaptive-foundation.html"
+      ],
+      "id": "listicle",
+      "kind": "page",
+      "label": "Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation",
+      "mappings": {
+        "campaign_spec_page_id": "listicle",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation",
+        "page_kit": {
+          "output_path": "src/apf-funnel/10-reasons-adaptive-foundation.html",
+          "page_type": "product",
+          "permalink_required": false,
+          "public_route": "/apf-funnel/10-reasons-adaptive-foundation/",
+          "spec_route": "10-reasons-adaptive-foundation/",
+          "target_path": "10-reasons-adaptive-foundation.html"
+        },
+        "producer_page_type": null,
+        "public_route": "/apf-funnel/10-reasons-adaptive-foundation/",
+        "source_page_id": "listicle",
+        "source_path": "facelove-listicle.html"
+      }
+    },
+    {
+      "aliases": [
+        "offer",
+        "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts",
+        "landing",
+        "apf-pdp.html",
+        "/apf-funnel/adaptive-foundation-offer/",
+        "product",
+        "adaptive-foundation-offer.html",
+        "src/apf-funnel/adaptive-foundation-offer.html"
+      ],
+      "id": "offer",
+      "kind": "page",
+      "label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts",
+      "mappings": {
+        "campaign_spec_page_id": "offer",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts",
+        "page_kit": {
+          "output_path": "src/apf-funnel/adaptive-foundation-offer.html",
+          "page_type": "product",
+          "permalink_required": false,
+          "public_route": "/apf-funnel/adaptive-foundation-offer/",
+          "spec_route": "adaptive-foundation-offer/",
+          "target_path": "adaptive-foundation-offer.html"
+        },
+        "producer_page_type": null,
+        "public_route": "/apf-funnel/adaptive-foundation-offer/",
+        "source_page_id": "offer",
+        "source_path": "apf-pdp.html"
+      }
+    },
+    {
+      "aliases": [
+        "checkout",
+        "Checkout",
+        "foundation-checkout/"
+      ],
+      "id": "checkout",
+      "kind": "page",
+      "label": "Checkout",
+      "mappings": {
+        "campaign_spec_page_id": "checkout",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Checkout",
+        "page_kit": null,
+        "producer_page_type": null,
+        "public_route": "foundation-checkout/",
+        "source_page_id": "checkout",
+        "source_path": null
+      }
+    },
+    {
+      "aliases": [
+        "offer-1",
+        "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
+        "upsell",
+        "foundation-offer-1/"
+      ],
+      "id": "offer-1",
+      "kind": "page",
+      "label": "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
+      "mappings": {
+        "campaign_spec_page_id": "offer-1",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
+        "page_kit": null,
+        "producer_page_type": null,
+        "public_route": "foundation-offer-1/",
+        "source_page_id": "offer-1",
+        "source_path": null
+      }
+    },
+    {
+      "aliases": [
+        "offer-2",
+        "Offer 2: one more bottle, 40% off",
+        "upsell",
+        "foundation-offer-2/"
+      ],
+      "id": "offer-2",
+      "kind": "page",
+      "label": "Offer 2: one more bottle, 40% off",
+      "mappings": {
+        "campaign_spec_page_id": "offer-2",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Offer 2: one more bottle, 40% off",
+        "page_kit": null,
+        "producer_page_type": null,
+        "public_route": "foundation-offer-2/",
+        "source_page_id": "offer-2",
+        "source_path": null
+      }
+    },
+    {
+      "aliases": [
+        "offer-2b",
+        "Offer 2 downsell: one more bottle, 50% off",
+        "downsell",
+        "foundation-offer-2b/"
+      ],
+      "id": "offer-2b",
+      "kind": "page",
+      "label": "Offer 2 downsell: one more bottle, 50% off",
+      "mappings": {
+        "campaign_spec_page_id": "offer-2b",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Offer 2 downsell: one more bottle, 50% off",
+        "page_kit": null,
+        "producer_page_type": null,
+        "public_route": "foundation-offer-2b/",
+        "source_page_id": "offer-2b",
+        "source_path": null
+      }
+    },
+    {
+      "aliases": [
+        "brush-offer",
+        "Offer 3: the Lymphatic Brush, 40% off",
+        "upsell",
+        "lymphatic-brush-offer/"
+      ],
+      "id": "brush-offer",
+      "kind": "page",
+      "label": "Offer 3: the Lymphatic Brush, 40% off",
+      "mappings": {
+        "campaign_spec_page_id": "brush-offer",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Offer 3: the Lymphatic Brush, 40% off",
+        "page_kit": null,
+        "producer_page_type": null,
+        "public_route": "lymphatic-brush-offer/",
+        "source_page_id": "brush-offer",
+        "source_path": null
+      }
+    },
+    {
+      "aliases": [
+        "brush-offer-b",
+        "Offer 3 downsell: the Lymphatic Brush, 60% off",
+        "downsell",
+        "lymphatic-brush-offer-b/"
+      ],
+      "id": "brush-offer-b",
+      "kind": "page",
+      "label": "Offer 3 downsell: the Lymphatic Brush, 60% off",
+      "mappings": {
+        "campaign_spec_page_id": "brush-offer-b",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Offer 3 downsell: the Lymphatic Brush, 60% off",
+        "page_kit": null,
+        "producer_page_type": null,
+        "public_route": "lymphatic-brush-offer-b/",
+        "source_page_id": "brush-offer-b",
+        "source_path": null
+      }
+    },
+    {
+      "aliases": [
+        "thank-you",
+        "Thank you",
+        "thankyou",
+        "foundation-thank-you/"
+      ],
+      "id": "thank-you",
+      "kind": "page",
+      "label": "Thank you",
+      "mappings": {
+        "campaign_spec_page_id": "thank-you",
+        "map_builder_custom_name": null,
+        "map_builder_label": "Thank you",
+        "page_kit": null,
+        "producer_page_type": null,
+        "public_route": "foundation-thank-you/",
+        "source_page_id": "thank-you",
+        "source_path": null
+      }
+    }
+  ],
+  "waivers": []
+}

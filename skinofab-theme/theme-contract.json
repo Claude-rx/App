@@ -1,0 +1,52 @@
+{
+  "contract_version": 1,
+  "description": "Platform integration points and runtime hooks Spark declares. Each requirement carries a scope: 'fleet' binds every Spark-derived store theme and is what the live check and the fleet sweep enforce; 'spark' binds Spark's own working copy only, because derived themes are forks that may carry the same hook in a different file or render the surface differently. A derived theme renders correctly without a fleet requirement and fails silently, so those are asserted rather than left to review.",
+  "requirements": [
+    {
+      "id": "pixels",
+      "scope": "fleet",
+      "file": "layouts/base.html",
+      "must_contain": "{% pixels %}",
+      "since": "1.3.0",
+      "why": "App event trackers (GA4, Google Tag Manager, Klaviyo, Taboola) subscribe through the iframes this tag renders. Without it the storefront renders correctly, apps stay installed and enabled, and no storefront event is ever emitted. Checkout is unaffected, which is what keeps the fault invisible.",
+      "verify_on_storefront": "document.getElementsByName('customer_event_iframe').length > 0",
+      "block": "pixels"
+    },
+    {
+      "id": "cart-badge",
+      "scope": "spark",
+      "file": "partials/header.html",
+      "must_contain": "id=\"cart-badge\"",
+      "since": "1.1.0",
+      "why": "theme.js and the cart drawer renderer resolve the header badge by this id to show the item count after every cart mutation. Without it the storefront renders, items are added, and the header never reflects the cart. Deleting the id passes every other gate and fails only in the browser.",
+      "verify_on_storefront": "document.getElementById('cart-badge') !== null"
+    },
+    {
+      "id": "mobile-nav-toggle",
+      "scope": "spark",
+      "file": "partials/header.html",
+      "must_contain": "data-toggle=\"mobile-nav\"",
+      "since": "1.0.0",
+      "why": "theme.js binds the mobile menu open/close, Escape handling, and focus trap to the element carrying this attribute. Without it the hamburger button renders and does nothing.",
+      "verify_on_storefront": "document.querySelector('[data-toggle=\"mobile-nav\"]') !== null"
+    },
+    {
+      "id": "mobile-nav",
+      "scope": "spark",
+      "file": "partials/mobile_menu.html",
+      "must_contain": "id=\"mobile-nav\"",
+      "since": "1.0.0",
+      "why": "theme.js looks up the mobile menu panel by this id to toggle it, trap focus inside it, and restore focus on close. Without it the toggle button has no target.",
+      "verify_on_storefront": "document.getElementById('mobile-nav') !== null"
+    },
+    {
+      "id": "cart-drawer",
+      "scope": "spark",
+      "file": "partials/side_cart.html",
+      "must_contain": "</spark-cart-drawer>",
+      "since": "1.1.1",
+      "why": "SparkCartLoader lazy-loads the drawer stack for this custom element and exposes window.SparkSideCart on it. Without it add-to-cart succeeds silently and no drawer ever opens.",
+      "verify_on_storefront": "document.querySelector('spark-cart-drawer') !== null"
+    }
+  ]
+}

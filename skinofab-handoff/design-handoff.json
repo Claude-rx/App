@@ -1,0 +1,71 @@
+{
+  "schema_version": "next-theme-dev/design-handoff/v1",
+  "generated_at": "2026-10-20T17:27:24Z",
+  "generator": "next-theme-dev design-handoff.py new",
+  "project": "skinofab",
+  "mode": "implementation-handoff",
+  "source": {
+    "kind": "live-site",
+    "urls": [
+      "https://smooche.com/",
+      "https://smooche.com/products/color-changing-foundation",
+      "https://smooche.com/collections/all",
+      "https://smooche.com/pages/faq",
+      "https://smooche.com/pages/terms-of-service",
+      "https://smooche.com/blogs/news/color-changing-foundation-does-it-actually-work-the-science-explained",
+      "https://smooche.com/pages/bestfoundation"
+    ],
+    "supplied_html": [
+      "skinofab-site/index.html",
+      "skinofab-site/products/color-changing-foundation.html",
+      "skinofab-site/collections/all.html",
+      "skinofab-site/pages/faq.html",
+      "skinofab-site/pages/terms-of-service.html",
+      "skinofab-site/blogs/news/color-changing-foundation-does-it-actually-work-the-science-explained.html",
+      "skinofab-site/pages/bestfoundation.html"
+    ],
+    "captured_on": "2026-10-20",
+    "rights": {
+      "owner": "SKINOFAB (operator states SKINOFAB owns or is licensed to reuse the smooche.com content)",
+      "reuse": "reuse-allowed",
+      "statement": "We own/licensed it",
+      "stated_by": "operator (zouhairkhatem@gmail.com), 2026-10-20 session answer"
+    }
+  },
+  "target": {
+    "store": "not-yet-provided",
+    "repo": "skinofab-theme",
+    "preview_url": "",
+    "theme_id": "",
+    "theme_family": "spark",
+    "runtime_contract": "web-components"
+  },
+  "gaps": [
+    {
+      "gap_id": "sf-lander-blocked-media",
+      "kind": "media",
+      "route_id": "lander",
+      "section_id": null,
+      "viewport": null,
+      "reason": "30 image(s) on page-builder pages are hosted on assets.replocdn.com / cdn.instant.so, which the export environment could not reach.",
+      "next_action": "Allow those hosts and re-run the export, or upload the original files; the theme references them by their original URLs until then.",
+      "blocks_build": false,
+      "excluded_by": ""
+    },
+    {
+      "gap_id": "sf-video-frame-text",
+      "kind": "claim",
+      "route_id": "home",
+      "section_id": null,
+      "viewport": null,
+      "reason": "Text and claims drawn inside UGC/review videos cannot be read by the capture script; no media-frame captures were taken.",
+      "next_action": "Review the videos for claims before publishing; the theme ships the videos unchanged.",
+      "blocks_build": false,
+      "excluded_by": ""
+    }
+  ],
+  "unresolved_questions": [
+    "Operator approval for the divergence-ledger entries (prices from NEXT, promotional copy needing Offers, social-proof claims).",
+    "NEXT store subdomain and Theme API key for upload."
+  ]
+}

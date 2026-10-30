@@ -1,0 +1,138 @@
+{
+  "bottle-korea": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/KoreanColorChangingFoundation-Productimages_1_cee537ea-54c2--1080w-lfe75ea.jpg",
+    "alt": "Adaptive Peptide Foundation",
+    "size": [
+      1080,
+      1080
+    ]
+  },
+  "hold-cheek": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/2_221c6006-6944-4b6f-a085-220e11ef092d-1080w-l8f277e.jpg",
+    "alt": "A silver-haired woman in her sixties holding the bottle by her cheek",
+    "size": [
+      1080,
+      1080
+    ]
+  },
+  "whats-inside": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/6_d0973846-a064-4cd2-9242-119e14c8d593-1080w-w164c09_GPAV8mc.png",
+    "alt": "The store's \"What's inside\" graphic: peptides + PDRN, hyaluronic acid + ceramide, fragrance-free",
+    "size": [
+      1080,
+      1080
+    ]
+  },
+  "the-science": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/7_ba7831f0-1546-4c35-a754-ebdaa7919e6e-1080w-w776d3d_mKFFIK1.png",
+    "alt": "The store's \"The Science\" graphic: micro-pigments that activate as you blend (its \"seamless, personalized match\" line is why the funnel does not use it)",
+    "size": [
+      1080,
+      1080
+    ]
+  },
+  "vs-others": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/8_87ca3242-b11c-40e2-beab-fb1aa34022a6-1080w-lc6a648.png",
+    "alt": "The store's \"skinofab vs. others\" comparison graphic (its \"Won't settle into lines\" row is an unhedged claim: not used in the funnel)",
+    "size": [
+      1080,
+      1080
+    ]
+  },
+  "hold-grey-hair": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/21_7a5d845a-8ab5-4163-b4ff-b8fd4b71f0c7-1350w-ld6800d.jpg",
+    "alt": "A woman in her fifties with short grey hair holding the bottle by her face",
+    "size": [
+      1350,
+      1350
+    ]
+  },
+  "dots-eyes-closed": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/22_ed20463f-1b63-4206-8734-81f1bfc33ec4-1350w-l2f70b5.jpg",
+    "alt": "A woman in her fifties, eyes closed, the foundation dotted white on her face, the bottle in her hand",
+    "size": [
+      1350,
+      1350
+    ]
+  },
+  "duo-women": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/25_2e1854df-8ab6-4f12-a311-cbfeb2c633c4-1350w-w4083fd.jpg",
+    "alt": "Two women in their fifties and sixties, cheek to cheek, with fresh, even skin",
+    "size": [
+      1350,
+      1350
+    ]
+  },
+  "problem": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/skinofab-problem-skin-after-45-5f167a.jpg",
+    "alt": "A woman in her late fifties looking at her skin",
+    "size": [
+      1000,
+      1250
+    ]
+  },
+  "solution-bottle": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/skinofab-solution-bottle-70bfc7.jpg",
+    "alt": "The Adaptive Peptide Foundation bottle",
+    "size": [
+      1000,
+      1250
+    ]
+  },
+  "buffing-brush": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/new_iamges_1200x1200-h712f9c-w48b492.jpg",
+    "alt": "How does it work?",
+    "size": [
+      1200,
+      1200
+    ]
+  },
+  "poster-navy": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/amber-t-foundation-review-poster-720w-956cc4.jpg",
+    "alt": "poster",
+    "size": [
+      720,
+      1280
+    ]
+  },
+  "poster-robe": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/skinofab-demo-poster-a2c27d.jpg",
+    "alt": "poster",
+    "size": [
+      720,
+      1280
+    ]
+  },
+  "poster-black": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/softer-lines-foundation-review-poster-720w-la7846f.jpg",
+    "alt": "poster",
+    "size": [
+      720,
+      1280
+    ]
+  },
+  "gift-blender": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/offer-gift-blender-49f452.jpg",
+    "alt": "",
+    "size": [
+      120,
+      120
+    ]
+  },
+  "gift-mystery": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/offer-gift-mystery-1f1618.jpg",
+    "alt": "",
+    "size": [
+      120,
+      120
+    ]
+  },
+  "gift-shipping": {
+    "url": "https://cdn.29next.store/media/skinofab/themes/34/assets/offer-gift-shipping-b7a5ff.jpg",
+    "alt": "",
+    "size": [
+      120,
+      120
+    ]
+  }
+}

@@ -1,0 +1,893 @@
+{
+  "schema_version": "campaign-runtime-build-context/v0",
+  "generated_at": "2026-10-29T10:40:10.616Z",
+  "source_adapter": "html_funnel",
+  "intake": {
+    "spec_source": "local",
+    "spec_path": "./campaign-spec.apf.json",
+    "map_id": null,
+    "proxy_base": null,
+    "saved_map_revision": null,
+    "source_root": "./design-source-apf",
+    "target_repo": ".",
+    "template_family": "apollo",
+    "brief_path": "./campaign-build-brief.apf.json",
+    "design_manifest_path": null,
+    "allow_uncertified_template": null,
+    "wrapper_policy": "preserve_document_wrappers",
+    "packet_path": "./campaign-runtime.build.json"
+  },
+  "status": "prepared",
+  "packet_path": "./campaign-runtime.build.json",
+  "report_path": ".campaign-runtime/assembly-report.json",
+  "design_source_package": {
+    "path": "input/design-source-package.json",
+    "schema_version": "campaign-design-source-package/v0",
+    "sha256": "sha256:b9ec091758602b2fbe0963c94cd09206816ba9e6319ce59a96bb2046c19b902d",
+    "material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7"
+  },
+  "spec": {
+    "path": "./campaign-spec.apf.json",
+    "hash": "df49043ca3ff8a7b48aa1032e60e3d84e4680b9a1a2066590152c6c244b84d96",
+    "material_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
+    "active_pages": [
+      {
+        "id": "listicle",
+        "type": "presell",
+        "label": "Listicle: 10 reasons women over 45 look fresher with this shade-adapting foundation",
+        "page_url": "10-reasons-adaptive-foundation/"
+      },
+      {
+        "id": "offer",
+        "type": "landing",
+        "label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts, refills at the same price",
+        "page_url": "adaptive-foundation-offer/"
+      },
+      {
+        "id": "checkout",
+        "type": "checkout",
+        "label": "Checkout",
+        "page_url": "foundation-checkout/"
+      },
+      {
+        "id": "offer-1",
+        "type": "upsell",
+        "label": "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
+        "page_url": "foundation-offer-1/"
+      },
+      {
+        "id": "offer-2",
+        "type": "upsell",
+        "label": "Offer 2: one more bottle, 40% off",
+        "page_url": "foundation-offer-2/"
+      },
+      {
+        "id": "offer-2b",
+        "type": "downsell",
+        "label": "Offer 2 downsell: one more bottle, 50% off",
+        "page_url": "foundation-offer-2b/"
+      },
+      {
+        "id": "brush-offer",
+        "type": "upsell",
+        "label": "Offer 3: the Lymphatic Brush, 40% off",
+        "page_url": "lymphatic-brush-offer/"
+      },
+      {
+        "id": "brush-offer-b",
+        "type": "downsell",
+        "label": "Offer 3 downsell: the Lymphatic Brush, 60% off",
+        "page_url": "lymphatic-brush-offer-b/"
+      },
+      {
+        "id": "thank-you",
+        "type": "thankyou",
+        "label": "Thank you",
+        "page_url": "foundation-thank-you/"
+      }
+    ]
+  },
+  "source": {
+    "root": "./design-source-apf",
+    "html_files": [
+      {
+        "path": "apf-pdp.html",
+        "name": "apf-pdp.html",
+        "basename": "apf-pdp",
+        "bytes": 511237,
+        "sha256": "e3437dea668109c3fc0d67472383e6a88eda05956e93b683a9abaf74be299c11"
+      },
+      {
+        "path": "facelove-listicle.html",
+        "name": "facelove-listicle.html",
+        "basename": "facelove-listicle",
+        "bytes": 601188,
+        "sha256": "2300c09ed1f5cf7ac38e16dc17f38db205aedeb955aa8af2ca976334714629ce"
+      }
+    ],
+    "manifest": {
+      "path": "./design-source-apf/.campaigns-os/source-html-manifest.json",
+      "schema_version": "source-html-manifest/v0",
+      "generator": "tools/funnel/design_source.py@1",
+      "generated_at": "2026-10-28T08:58:10Z",
+      "campaign_slug": "apf-funnel",
+      "page_count": 9,
+      "file_count": 0,
+      "producer_provenance": null
+    },
+    "manifest_warnings": [],
+    "ambiguous_candidates": [],
+    "manifest_draft": null,
+    "asset_crawl": {
+      "schema_version": "source-asset-crawl/v0",
+      "scanned_files": [
+        {
+          "path": "apf-pdp.html",
+          "kind": "html",
+          "bytes": 511237,
+          "sha256": "e3437dea668109c3fc0d67472383e6a88eda05956e93b683a9abaf74be299c11"
+        },
+        {
+          "path": "facelove-listicle.html",
+          "kind": "html",
+          "bytes": 601188,
+          "sha256": "2300c09ed1f5cf7ac38e16dc17f38db205aedeb955aa8af2ca976334714629ce"
+        }
+      ],
+      "references": [
+        {
+          "raw": "/checkouts/internal/preloads.js?locale=en-US&default_configuration_id=8831828310",
+          "normalized": "checkouts/internal/preloads.js",
+          "asset_kind": "script",
+          "root_relative": true,
+          "source_path": "checkouts/internal/preloads.js",
+          "source_exists": false,
+          "outside_source_root": false,
+          "source_root_fallback": false,
+          "pagekit_asset_path": "checkouts/internal/preloads.js",
+          "rewrite_required": true,
+          "rewrite_hint": "Rewrite source asset ref \"/checkouts/internal/preloads.js\" to the Page Kit campaign asset root, e.g. campaign_asset \"checkouts/internal/preloads.js\".",
+          "referenced_by": [
+            {
+              "path": "facelove-listicle.html",
+              "kind": "html",
+              "attribute": "src",
+              "page_ids": [
+                "listicle"
+              ]
+            }
+          ]
+        },
+        {
+          "raw": "/products/dream-skin-primer",
+          "normalized": "products/dream-skin-primer",
+          "asset_kind": "asset",
+          "root_relative": true,
+          "source_path": "products/dream-skin-primer",
+          "source_exists": false,
+          "outside_source_root": false,
+          "source_root_fallback": false,
+          "pagekit_asset_path": "products/dream-skin-primer",
+          "rewrite_required": true,
+          "rewrite_hint": "Rewrite source asset ref \"/products/dream-skin-primer\" to the Page Kit campaign asset root, e.g. campaign_asset \"products/dream-skin-primer\".",
+          "referenced_by": [
+            {
+              "path": "facelove-listicle.html",
+              "kind": "html",
+              "attribute": "href",
+              "page_ids": [
+                "listicle"
+              ]
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "scanned_file_count": 2,
+        "reference_count": 2,
+        "missing_count": 2,
+        "outside_source_root_count": 0,
+        "source_root_fallback_count": 0,
+        "rewrite_required_count": 2,
+        "root_assets_path_count": 0
+      },
+      "warnings": [
+        {
+          "code": "source_asset.missing_file",
+          "message": "2 local source asset reference(s) did not resolve to files under the source root.",
+          "sample": [
+            "/checkouts/internal/preloads.js?locale=en-US&default_configuration_id=8831828310",
+            "/products/dream-skin-primer"
+          ]
+        }
+      ]
+    }
+  },
+  "build_brief": {
+    "schema_version": "campaigns-os-build-brief/v1",
+    "mode": "guided_draft",
+    "status": "complete",
+    "input_path": "./campaign-build-brief.apf.json",
+    "normalized_path": ".campaign-runtime/input/campaign-build-brief.normalized.json",
+    "question_count": 0,
+    "gate_count": 1,
+    "questions": [],
+    "gates": [
+      {
+        "code": "build_brief.partial_scope_qa_policy",
+        "severity": "warning",
+        "field": "qa_policy.require_checkout_flow",
+        "message": "Brief requires checkout flow QA while some mapped pages are skipped; partial builds need explicit launch-readiness language."
+      }
+    ],
+    "material": {
+      "presentation": "sha256:fcf35c5c57083a5e3e90fd6cb751b5a738e434df34cb7cdcf965933dff270658",
+      "qa_policy": "sha256:4cd1f5da5642f23dd77ffb95a194cd5db258f3ed0a37310e10019e8486170f4c"
+    },
+    "input_sha256": "sha256:10e7ebb547568b6081e1cec469e66a3e17e5e1eeab0d4c81cf75f039607a8460"
+  },
+  "page_map": [
+    {
+      "page_id": "listicle",
+      "source_path": "facelove-listicle.html",
+      "skip_reason": null,
+      "output_path": "./src/apf-funnel/10-reasons-adaptive-foundation.html",
+      "page_kit": {
+        "target_path": "10-reasons-adaptive-foundation.html",
+        "output_path": "src/apf-funnel/10-reasons-adaptive-foundation.html",
+        "public_route": "/apf-funnel/10-reasons-adaptive-foundation/",
+        "spec_route": "10-reasons-adaptive-foundation/",
+        "page_type": "product",
+        "permalink_required": false,
+        "frontmatter": {
+          "page_type": "product",
+          "next_url": "/apf-funnel/adaptive-foundation-offer/"
+        }
+      }
+    },
+    {
+      "page_id": "offer",
+      "source_path": "apf-pdp.html",
+      "skip_reason": null,
+      "output_path": "./src/apf-funnel/adaptive-foundation-offer.html",
+      "page_kit": {
+        "target_path": "adaptive-foundation-offer.html",
+        "output_path": "src/apf-funnel/adaptive-foundation-offer.html",
+        "public_route": "/apf-funnel/adaptive-foundation-offer/",
+        "spec_route": "adaptive-foundation-offer/",
+        "page_type": "product",
+        "permalink_required": false,
+        "frontmatter": {
+          "page_type": "product",
+          "next_url": "/apf-funnel/foundation-checkout/"
+        }
+      }
+    },
+    {
+      "page_id": "checkout",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo checkout page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "offer-1",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "offer-2",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "offer-2b",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "brush-offer",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "brush-offer-b",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo upsell page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    },
+    {
+      "page_id": "thank-you",
+      "source_path": null,
+      "skip_reason": "template stock: Apollo receipt page, no bespoke design",
+      "output_path": null,
+      "page_kit": null
+    }
+  ],
+  "scaffold": {
+    "mode": "existing",
+    "required": false,
+    "target_repo": ".",
+    "output_dir": "./src/apf-funnel",
+    "handoff_skill": "next-campaigns-build",
+    "handoff_artifact": ".campaign-runtime/setup-handoff.json",
+    "reason": "Setup recorded by campaigns-os record setup at 2026-10-29T10:40:15.686Z; the campaign output directory exists."
+  },
+  "template": {
+    "family": "apollo",
+    "locked": true,
+    "lock": {
+      "locked": true,
+      "locked_by": "operator_flag",
+      "confidence": "high",
+      "evidence": [
+        "prepare-build --template-family"
+      ]
+    },
+    "candidates": [
+      {
+        "family": "apollo",
+        "source": "CampaignSpec preferred_template_family",
+        "confidence": "hint"
+      }
+    ]
+  },
+  "adapter_decisions": {
+    "raw_html_conversion_status": "pending",
+    "source_asset_strategy": "pagekit_campaign_asset_root",
+    "route_rewrite_policy": "campaignspec_routes_via_campaign_link",
+    "config_script_strategy": "campaign_asset",
+    "commerce_shell_adoption": "not_required",
+    "wrapper_policy": "preserve_document_wrappers",
+    "frontmatter_policy": "pagekit_yaml_frontmatter",
+    "script_style_reference_policy": "frontmatter_or_campaign_asset",
+    "cta_rewrite_policy": "campaignspec_routes_via_campaign_link",
+    "layout_choice": "campaign_layout",
+    "template_files_copied": {
+      "status": "pending",
+      "required_groups": [
+        "pages",
+        "_includes",
+        "_layouts",
+        "assets/css",
+        "assets/js",
+        "frontmatter_vocabulary"
+      ],
+      "groups": [],
+      "paths": []
+    }
+  },
+  "commerce_zone_findings": [],
+  "prompts_required": [],
+  "decisions": [
+    {
+      "id": "dec_page_map_listicle",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "mapped CampaignSpec page \"listicle\" to source file \"facelove-listicle.html\" via source-html manifest (matched by page_id)",
+      "confidence": "high",
+      "evidence": [
+        "source-html manifest entry matched page \"listicle\" by page_id; path=\"facelove-listicle.html\" from ./design-source-apf/.campaigns-os/source-html-manifest.json"
+      ]
+    },
+    {
+      "id": "dec_page_map_offer",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "mapped CampaignSpec page \"offer\" to source file \"apf-pdp.html\" via source-html manifest (matched by page_id)",
+      "confidence": "high",
+      "evidence": [
+        "source-html manifest entry matched page \"offer\" by page_id; path=\"apf-pdp.html\" from ./design-source-apf/.campaigns-os/source-html-manifest.json"
+      ]
+    },
+    {
+      "id": "dec_page_scope_checkout",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"checkout\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"checkout\" at ./design-source-apf/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_offer-1",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"offer-1\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"offer-1\" at ./design-source-apf/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_offer-2",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"offer-2\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"offer-2\" at ./design-source-apf/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_offer-2b",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"offer-2b\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"offer-2b\" at ./design-source-apf/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_brush-offer",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"brush-offer\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"brush-offer\" at ./design-source-apf/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_brush-offer-b",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"brush-offer-b\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"brush-offer-b\" at ./design-source-apf/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_scope_thank-you",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "recorded CampaignSpec page \"thank-you\" as template stock, declared out of source scope (explicit source-html manifest skip entry); keep the route unbuilt unless the operator opts in to materialising it from the locked apollo family's stock page; intake demands no design source for it",
+      "confidence": "high",
+      "template_stock": true,
+      "template_family": "apollo",
+      "evidence": [
+        "source-html manifest entry for \"thank-you\" at ./design-source-apf/.campaigns-os/source-html-manifest.json declares skip_reason without a path"
+      ]
+    },
+    {
+      "id": "dec_page_kit_target_listicle",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "projected CampaignSpec page \"listicle\" to Page Kit target \"10-reasons-adaptive-foundation.html\" with CPK page_type \"product\"",
+      "confidence": "high",
+      "evidence": [
+        "source path \"facelove-listicle.html\" remains producer provenance",
+        "target path \"src/apf-funnel/10-reasons-adaptive-foundation.html\" derives from CampaignSpec route \"10-reasons-adaptive-foundation/\" and public slug \"apf-funnel\""
+      ]
+    },
+    {
+      "id": "dec_page_kit_target_offer",
+      "stage": "prepare_build",
+      "decision_type": "deterministic_derivation",
+      "decision": "projected CampaignSpec page \"offer\" to Page Kit target \"adaptive-foundation-offer.html\" with CPK page_type \"product\"",
+      "confidence": "high",
+      "evidence": [
+        "source path \"apf-pdp.html\" remains producer provenance",
+        "target path \"src/apf-funnel/adaptive-foundation-offer.html\" derives from CampaignSpec route \"adaptive-foundation-offer/\" and public slug \"apf-funnel\""
+      ]
+    }
+  ],
+  "theme": {
+    "status": "ready_with_warnings",
+    "policy": "inspect_only",
+    "source_kind": "html_funnel",
+    "producer": {
+      "name": "figma-sections-export",
+      "version": "v0"
+    },
+    "source_files": [
+      {
+        "path": "design-source-apf/facelove-listicle.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "5aad57328b9a752ff0a9e79f7c2fb132bb212d3e2284cd529c409b45eecfb35e",
+        "token_count": 254,
+        "inline_block_index": 3,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/facelove-listicle.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "856256cd4e85cbbcf759846ece5bf89971164231ba90c34bad3f6cdc35c0c89c",
+        "token_count": 1,
+        "inline_block_index": 7,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/facelove-listicle.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "7eacedf38715178b56bfca5b91c747922a1784f9d4286e2637840261164b03e0",
+        "token_count": 1,
+        "inline_block_index": 7,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/facelove-listicle.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "fac29213e78d094f792f953226ee4c392dea3434b9296d6fe7d149df98fc1a2d",
+        "token_count": 3,
+        "inline_block_index": 11,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "eeb51143a2bdb8ad06c7382ef8bc6421401aab8a92c6a760933c273dffd5e1e6",
+        "token_count": 12,
+        "inline_block_index": 1,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "666670e5a35a9b3b0d11c97109ffc3fe67365babb7874d9ff2546748e212bdc8",
+        "token_count": 11,
+        "inline_block_index": 2,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "fe44db56a7e3db4ad0977af3eeaef4ddec069afea6db7fa7c6773c2ea9088bf2",
+        "token_count": 1,
+        "inline_block_index": 6,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "59aef77efc4b135bad5d95550d242c3d2e3d30c0ec16446f7117dd63caaa4b10",
+        "token_count": 1,
+        "inline_block_index": 6,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "cbbce1c9c699cb5386f4350289b2a759a24de540d84501c8877e12b3a7e4faac",
+        "token_count": 236,
+        "inline_block_index": 7,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "49dde75f92131db2288e3f644a2b3068ffcae67ff30debeb11fe9212fb7f82ea",
+        "token_count": 1,
+        "inline_block_index": 13,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "045e9bdf6d4184f5c74e8f7ba9e039e4082d7726cbe8ea72c9d26e90acef3da6",
+        "token_count": 1,
+        "inline_block_index": 14,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "58892a7220e180b16bcbad456a78e282a57cc5fa91856039b5a05964738ed901",
+        "token_count": 1,
+        "inline_block_index": 14,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "7d7b56f127765b50f4b3b0fd02e01f51afb3ede34e35f5cc4dad307edd286e99",
+        "token_count": 2,
+        "inline_block_index": 15,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "dbecc77a44b3cbaaa3b010256940766a8cdcbb748d72e43c7c35c89fd8d451cb",
+        "token_count": 2,
+        "inline_block_index": 15,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "0c53df6f3809f7a1182e9d1df49a01228ce5778e0ef059f77c83250bd7dfd6e4",
+        "token_count": 3,
+        "inline_block_index": 18,
+        "referenced_by": []
+      },
+      {
+        "path": "design-source-apf/apf-pdp.html",
+        "role": "page",
+        "source": "html_inline_root",
+        "hash": "0cbb981e93ebc58b90c1f93bab0f8d8b210d20118ad2c5262d7daca8d0f72ab8",
+        "token_count": 1,
+        "inline_block_index": 18,
+        "referenced_by": []
+      }
+    ],
+    "selected_source": {
+      "path": "design-source-apf/apf-pdp.html",
+      "role": "page",
+      "source": "html_inline_root",
+      "hash": "eeb51143a2bdb8ad06c7382ef8bc6421401aab8a92c6a760933c273dffd5e1e6",
+      "token_count": 12,
+      "inline_block_index": 1,
+      "referenced_by": []
+    },
+    "producer_defaults": {
+      "matched": false,
+      "producer": "figma-sections-export",
+      "version": "v0",
+      "matched_tokens": [],
+      "unresolved_tokens": [],
+      "present_core_tokens": [
+        "--brand-primary",
+        "--brand-accent"
+      ]
+    },
+    "confidence": "medium",
+    "generated": {
+      "css_path": ".campaign-runtime/theme/brand-theme.css",
+      "report_path": ".campaign-runtime/theme/theme-report.json",
+      "safety": {
+        "ok": true,
+        "errors": [],
+        "warnings": []
+      },
+      "stale": {
+        "stale": false,
+        "reasons": []
+      },
+      "can_generate": true,
+      "can_auto_generate": false,
+      "overwrite_requires_force": false
+    },
+    "mappings": [
+      {
+        "source": "--brand-primary",
+        "target": "--brand--color--primary",
+        "value": "#000000",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--brand-accent",
+        "target": "--brand--color--accent",
+        "value": "#f0f0f0",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--rating-star",
+        "target": "--brand--color--rating-star",
+        "value": "#f0f0f0",
+        "confidence": "high",
+        "derivation": null
+      },
+      {
+        "source": "--brand-primary",
+        "target": "--brand--color--primary-dark",
+        "value": "#000000",
+        "confidence": "medium",
+        "derivation": {
+          "method": "mix-black",
+          "amount": 0.18
+        }
+      },
+      {
+        "source": "--brand-primary",
+        "target": "--brand--color--primary-light",
+        "value": "#333333",
+        "confidence": "medium",
+        "derivation": {
+          "method": "mix-white",
+          "amount": 0.2
+        }
+      },
+      {
+        "source": "--brand-primary",
+        "target": "--brand--color--primary-lighter",
+        "value": "#dbdbdb",
+        "confidence": "medium",
+        "derivation": {
+          "method": "mix-white",
+          "amount": 0.86
+        }
+      },
+      {
+        "source": "--brand-accent",
+        "target": "--brand--color--cta-primary",
+        "value": "#f0f0f0",
+        "confidence": "medium",
+        "derivation": {
+          "method": "cta-fallback-from-brand-accent"
+        }
+      },
+      {
+        "source": "--brand--color--cta-primary",
+        "target": "--brand--color--cta-foreground",
+        "value": "#0a0a0a",
+        "confidence": "high",
+        "derivation": {
+          "method": "foreground-from-luminance",
+          "background": "--brand--color--cta-primary",
+          "background_value": "#f0f0f0",
+          "on": "dark",
+          "contrast": 17.37
+        }
+      },
+      {
+        "source": "--brand--color--cta-primary",
+        "target": "--brand--color--text-inverse",
+        "value": "#0a0a0a",
+        "confidence": "high",
+        "derivation": {
+          "method": "foreground-from-luminance",
+          "background": "--brand--color--cta-primary",
+          "background_value": "#f0f0f0",
+          "on": "dark",
+          "contrast": 17.37
+        }
+      },
+      {
+        "source": "--brand--color--primary",
+        "target": "--brand--color--primary-foreground",
+        "value": "#ffffff",
+        "confidence": "high",
+        "derivation": {
+          "method": "foreground-from-luminance",
+          "background": "--brand--color--primary",
+          "background_value": "#000000",
+          "on": "light",
+          "contrast": 21
+        }
+      },
+      {
+        "source": "--brand--color--accent",
+        "target": "--brand--color--accent-foreground",
+        "value": "#0a0a0a",
+        "confidence": "high",
+        "derivation": {
+          "method": "foreground-from-luminance",
+          "background": "--brand--color--accent",
+          "background_value": "#f0f0f0",
+          "on": "dark",
+          "contrast": 17.37
+        }
+      }
+    ],
+    "unmapped_defaults": [],
+    "warnings": [
+      {
+        "code": "theme.source_tokens.conflict",
+        "message": "Source token --brand-primary has conflicting values across source files.",
+        "detail": {
+          "token": "--brand-primary",
+          "entries": [
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+              "role": "page",
+              "value": "#ffffff"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+              "role": "page",
+              "value": "#000000"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+              "role": "page",
+              "value": "#000000"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+              "role": "page",
+              "value": "#ffffff"
+            }
+          ]
+        }
+      },
+      {
+        "code": "theme.source_tokens.conflict",
+        "message": "Source token --text-secondary has conflicting values across source files.",
+        "detail": {
+          "token": "--text-secondary",
+          "entries": [
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+              "role": "page",
+              "value": "#000000"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+              "role": "page",
+              "value": "#ffffff"
+            }
+          ]
+        }
+      },
+      {
+        "code": "theme.source_tokens.conflict",
+        "message": "Source token --brand-accent has conflicting values across source files.",
+        "detail": {
+          "token": "--brand-accent",
+          "entries": [
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/facelove-listicle.html",
+              "role": "page",
+              "value": "#b69fd1"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+              "role": "page",
+              "value": "#f0f0f0"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+              "role": "page",
+              "value": "#000000"
+            },
+            {
+              "path": "/home/user/App/campaigns/skinofab/design-source-apf/apf-pdp.html",
+              "role": "page",
+              "value": "#000000"
+            }
+          ]
+        }
+      },
+      {
+        "code": "theme.cta.fallback",
+        "message": "No explicit CTA token or button background was found; using --brand-accent as --brand--color--cta-primary. This may be a rating or decorative accent; confirm the CTA colour against the design."
+      }
+    ],
+    "wrote": {
+      "report": true,
+      "css": false
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% comment %} SKINOFAB: the campaign allows one domain (campaign.funnel_host, the Campaigns App's Allowed Domain): the
+     SDK's calls fail from any other host the store answers on (skinofab.29next.store, skinofab.com), so a visit there
+     goes to the same page on the funnel's host. Production builds only (local proof runs on localhost). {% endcomment %}
+  {% if environment != 'development' and campaign.funnel_host and campaign.funnel_host != "" %}<script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })({{ campaign.funnel_host | json }});</script>{% endif %}
+  <title>{{ title }}</title>
+  {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+  {% comment %} Funnel pages are for ad traffic: kept out of search, as the store's other landing pages. {% endcomment %}
+  <meta name="robots" content="noindex, nofollow">
+  {% campaign_include 'meta-social.html' %}
+
+  {% comment %} The SDK CDN and campaign API, the fonts, and the next page (a low-priority GET; no analytics run on it). {% endcomment %}
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://campaigns.apps.29next.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {% if next_url %}<link rel="prefetch" href="{{ next_url | campaign_link }}" as="document">{% endif %}
+  {% if preload_image %}<link rel="preload" as="image" href="{{ preload_image | campaign_asset }}" fetchpriority="high">{% endif %}
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ 'css/sf-funnel.css' | campaign_asset }}">
+  {% for style in styles %}<link rel="stylesheet" href="{{ style | campaign_asset }}">
+  {% endfor %}
+
+  {% comment %} The Campaign Cart stack, as on the checkout: config before the loader, then the page's meta tags. {% endcomment %}
+  <script src="{{ 'config.js' | campaign_asset }}"></script>
+  {% if meta_tags and meta_tags != empty %}{% for tag in meta_tags %}{% if tag[1] %}<meta name="{{ tag[0] }}" content="{{ tag[1] }}">
+  {% endif %}{% endfor %}{% else %}<meta name="next-funnel" content="{{ campaign.name }}">
+  <meta name="next-page-type" content="{{ page_type }}">{% endif %}
+  <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v{{ campaign.sdk_version }}/dist/loader.js" type="module"></script>
+
+  <link href="{{ 'images/favicon.png' | campaign_asset }}" rel="shortcut icon" type="image/png">
+  <link href="{{ 'images/webclip.png' | campaign_asset }}" rel="apple-touch-icon">
+  {% comment %} Global Privacy Control, or the opt-out on the privacy choices page (/data-sharing-opt-out/, linked from the footer; live review 11): such a browser gets no ad tracking, as the privacy policy promises (live review 10). The Axon base code below loads its scripts only while window.axon is undefined, so a no-op one stops it, and axon.adapter.js's calls go nowhere. {% endcomment %}
+  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
+  {% campaign_include 'analytics-head.html' %}
+</head>
+<body class="sf {{ body_class }}">
+  {% campaign_include 'analytics-body.html' %}
+  {{ content }}
+  <script src="{{ 'js/sf-funnel.js' | campaign_asset }}" defer></script>
+  {% for script in scripts %}<script src="{{ script | campaign_asset }}" defer></script>
+  {% endfor %}
+</body>
+</html>

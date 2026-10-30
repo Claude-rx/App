@@ -1,0 +1,22 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/ships-info.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-ships-info
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell offer (shipping reassurance row under the accept button)
+  next_params:
+    ships_info: object (frontmatter). icon (default images/usps.png), flag (default the US flag; "" for none),
+      text (HTML; default the USPS copy — the {flag} token places the flag image inline). Falls back to the
+      legacy upsell_offer.ships_info_text string. upsell_layout.show_ships_info: false removes the row.
+    {% campaign_include 'upsell/ships-info.html' ships_info=ships_info %}
+{%- endcomment -%}
+{%- unless layout.show_ships_info == false -%}
+{%- assign si_icon = ships_info.icon | default: 'images/usps.png' -%}
+{%- assign si_flag = ships_info.flag -%}{%- if si_flag == nil -%}{%- assign si_flag = 'images/united-states-flag-icon.webp' -%}{%- endif -%}
+{%- assign si_text = ships_info.text | default: offer.ships_info_text | default: 'All orders ship from the USA {flag} via USPS within 1 business day. A tracking number will be issued to your email.' -%}
+{%- if si_flag != '' -%}{%- capture si_flag_img -%}<img class="upsell-ships-info__flag" src="{{ si_flag | campaign_asset }}" alt="">{%- endcapture -%}{%- else -%}{%- assign si_flag_img = '' -%}{%- endif -%}
+<div class="upsell-ships-info">
+  {%- if si_icon != '' %}<img class="upsell-ships-info__icon" src="{{ si_icon | campaign_asset }}" alt="">{% endif %}
+  <p class="upsell-ships-info__text">{{ si_text | replace: '{flag}', si_flag_img }}</p>
+</div>
+{%- endunless -%}

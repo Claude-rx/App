@@ -1,0 +1,51 @@
+{# Spark Theme — Mobile navigation drawer. Included from partials/header.html. #}
+{# Toggled by [data-toggle="mobile-nav"]; closed by [data-close="mobile-nav"]. #}
+{# Keep storefront-specific additions in this partial so the header shell and #}
+{# mobile navigation hooks remain stable for derived themes.                 #}
+<div id="mobile-nav"
+     class="hidden md:hidden fixed inset-0 z-50"
+     role="dialog"
+     aria-modal="true"
+     aria-label="{% t 'navigation.menu.toggle' %}">
+    <div class="absolute inset-0 bg-black/30" data-close="mobile-nav"></div>
+    <div class="absolute left-0 top-0 bottom-0 w-72 bg-white overflow-y-auto"
+         data-mobile-nav-panel>
+        <div class="flex items-center justify-between p-4 border-b border-slate-200">
+            <span class="font-semibold text-slate-800">{{ store.name }}</span>
+            <button type="button"
+                    class="p-2 text-slate-600"
+                    data-close="mobile-nav"
+                    aria-label="{% t 'global.button.close' %}">
+                {% include 'partials/icons/close.html' %}
+            </button>
+        </div>
+        <ul class="py-4">
+            {% for item in settings.main_menu.items %}
+                <li>
+                    <a href="{{ item.url }}"
+                       class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 {% if item.current %}font-medium text-slate-900{% endif %}">
+                        {{ item.name }}
+                    </a>
+                    {% if item.level > 0 %}
+                        <ul class="pl-4">
+                            {% for child in item.items %}
+                                <li>
+                                    <a href="{{ child.url }}"
+                                       class="block px-4 py-2 text-sm text-slate-500 hover:text-slate-700">
+                                        {{ child.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            <li class="border-t border-slate-200 mt-2 pt-2">
+                <a href="{% url 'customer:summary' %}"
+                   class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50">
+                    {% t 'navigation.account.account' %}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

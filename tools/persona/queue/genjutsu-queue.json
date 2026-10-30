@@ -1,0 +1,110 @@
+{
+ "endpoint": "higgsfield/genjutsu/object-swap/v1.0",
+ "resolution": "720p",
+ "refs": [
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-01-front.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-09-pump-detail.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-02-left-three-quarter.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-03-right-three-quarter.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-07-top.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-10-label-detail.jpg",
+  "https://cdn.29next.store/media/skinofab/themes/34/assets/skf-sheet-06-rear.jpg"
+ ],
+ "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact SKINOFAB Adaptive Peptide Foundation bottle shown in the reference images, in every frame where it appears, from every angle the video shows. The bottle: one straight matte black cylinder of the same width from base to top, 103 mm tall and 32.5 mm wide (height to width 3.17 to 1), with a flat top (a flat dark grey disc inside a thin black rim, never a rounded dome), a matte black cap of the same width above a thin horizontal seam, and a recessed pump slot with a small white-and-steel nozzle ring on the front edge of the top. Front print in white: SKINOFAB set vertically in the serif wordmark, S at the top and B at the bottom, and under it only ADAPTIVE PEPTIDE FOUNDATION (two lines), PDRN and 30 mL / 1.01 fl oz, exactly as in the label close-up; no other text on the bottle; the rear and sides are plain matte black. Keep its real size fixed against her hands and face (about the length of her palm), never stretched, widened or shrunk. Change nothing else: every other object stays exactly as it is, in its own colours (makeup brushes, sponges, lip products, jewellery, clothes). Keep the woman, her face, skin, hair, hands, fingers, grip, gestures, makeup application, the room, lighting, camera motion and timing exactly the same. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic.",
+ "how_to_run": "HF_API_KEY_ID / HF_API_KEY_SECRET in the environment, then: python3 -I tools/persona/genjutsu_direct.py tools/persona/queue/genjutsu-queue.json skinofab-theme <work_dir> --go",
+ "not_swapped": {
+  "67378f79": "pink SMOOCHE serum (Reverse-time Peptide Serum), not the foundation",
+  "ce67af4f": "bag of lip products, not the foundation"
+ },
+ "jobs": [
+  {
+   "key": "gj-2ff54da7",
+   "video": "2ff54da7c0a546d9a1ac06160b9df70a-HD-1080p-2-5Mbps-97954776-f31cb3.mp4",
+   "prompt": "Replace only the pink foundation bottle (and its cap) in the video with the exact SKINOFAB Adaptive Peptide Foundation bottle shown in the reference images, in every frame where it appears, from every angle the video shows. The bottle: one straight matte black cylinder of the same width from base to top, 103 mm tall and 32.5 mm wide (height to width 3.17 to 1), with a flat top (a flat dark grey disc inside a thin black rim, never a rounded dome), a matte black cap of the same width above a thin horizontal seam, and a recessed pump slot with a small white-and-steel nozzle ring on the front edge of the top. Front print in white: SKINOFAB set vertically in the serif wordmark, S at the top and B at the bottom, and under it only ADAPTIVE PEPTIDE FOUNDATION (two lines), PDRN and 30 mL / 1.01 fl oz, exactly as in the label close-up; no other text on the bottle; the rear and sides are plain matte black. Keep its real size fixed against her hands and face (about the length of her palm), never stretched, widened or shrunk. Change nothing else: every other object stays exactly as it is, in its own colours (makeup brushes, sponges, lip products, jewellery, clothes). Keep the woman, her face, skin, hair, hands, fingers, grip, gestures, makeup application, the room, lighting, camera motion and timing exactly the same. Match the scene light, reflections, motion blur and finger occlusion so it looks filmed, super realistic. Also change the white on-screen text SMOOCHE to SKINOFAB in the same font, size and position."
+  },
+  {
+   "key": "gj-41b77ec4",
+   "video": "41b77ec426134227829d7762a7af3f49-HD-1080p-2-5Mbps-97901334-c97e00.mp4"
+  },
+  {
+   "key": "gj-43e0f648",
+   "video": "43e0f6484a4b45a08fed8078280871e7-HD-1080p-2-5Mbps-97900995-2974e9.mp4"
+  },
+  {
+   "key": "gj-88d49199",
+   "video": "88d49199f410441eb42151e8aa0d62ca-HD-1080p-2-5Mbps-97901333-174c63.mp4"
+  },
+  {
+   "key": "gj-b705ce67",
+   "video": "b705ce67f07b41119b80cf8e7765b43a-HD-1080p-2-5Mbps-97954777-9c3f53.mp4"
+  },
+  {
+   "key": "gj-de65acac",
+   "video": "de65acac52f6451f832b76762138f0d1-HD-720p-1-6Mbps-97954778-642859.mp4"
+  },
+  {
+   "key": "gj-f8efa52f",
+   "video": "f8efa52f3caa47c49dfcd5559dfac42f-HD-1080p-2-5Mbps-97954775-1016b6.mp4"
+  }
+ ],
+ "higgsfield_mcp": {
+  "note": "The Higgsfield connector route (generate_video, model hf_mult_replace_object, 720p), used because the studio route stops on its suspended Vercel Blob storage. Every video and part is already in Higgsfield storage (media ids below), so a run is a straight submit: one generate_video per part with role video_references for the part and image_references for the three refs, the job prompt (or the shared one), resolution 720p and declined_preset_id (the connector otherwise suggests an unrelated preset). Quotes from get_cost on 25 Oct 2026; the balance was 0.03 credits. When the parts are done, write {part name: result url} to a results.json and run genjutsu_direct.py ... --results results.json to join, re-lay the soundtrack and publish.",
+  "model": "hf_mult_replace_object",
+  "resolution": "720p",
+  "declined_preset_id": "24bae836-2c4a-48e0-89b6-49fcc0b21612",
+  "refs": {
+   "01-front": "c57860cd-20a4-438d-9d2b-8e29557ea0a4",
+   "03-three-quarter-right": "64537cda-17d4-473c-b8a0-035aff6947a6",
+   "09-pump-detail": "8fa58c4c-26ac-4b43-a609-b8472a5f9255"
+  },
+  "parts": {
+   "2ff54da7c0a546d9a1ac06160b9df70a-HD-1080p-2-5Mbps-97954776-f31cb3.mp4": {
+    "job": "gj-2ff54da7",
+    "media_id": "70829a96-89cf-457c-9fb8-22d4bd68a76a",
+    "credits": 77
+   },
+   "41b77ec426134227829d7762a7af3f49-HD-1080p-2-5Mbps-97901334-c97e00.mp4": {
+    "job": "gj-41b77ec4",
+    "media_id": "5b00e118-52e1-498a-beca-47e4508b5966",
+    "credits": 154
+   },
+   "gj-src-gj-43e0f648-p1.mp4": {
+    "job": "gj-43e0f648",
+    "media_id": "2df4e577-24db-4588-963f-3da9d4b80df5",
+    "credits": 147
+   },
+   "gj-src-gj-43e0f648-p2.mp4": {
+    "job": "gj-43e0f648",
+    "media_id": "fd009d58-da78-41ed-b739-1f5374420c05",
+    "credits": 147
+   },
+   "gj-src-gj-43e0f648-p3.mp4": {
+    "job": "gj-43e0f648",
+    "media_id": "8fc17aeb-777b-45d2-81a2-8e7ca012ad0b",
+    "credits": 147
+   },
+   "88d49199f410441eb42151e8aa0d62ca-HD-1080p-2-5Mbps-97901333-174c63.mp4": {
+    "job": "gj-88d49199",
+    "media_id": "9d87fe91-e556-412a-9922-8a2c0a381301",
+    "credits": 161
+   },
+   "b705ce67f07b41119b80cf8e7765b43a-HD-1080p-2-5Mbps-97954777-9c3f53.mp4": {
+    "job": "gj-b705ce67",
+    "media_id": "6cf48284-a8fd-4301-81d7-57a7675fa5d0",
+    "credits": 77
+   },
+   "de65acac52f6451f832b76762138f0d1-HD-720p-1-6Mbps-97954778-642859.mp4": {
+    "job": "gj-de65acac",
+    "media_id": "b6ef6dae-876b-4a2a-9748-d2da0b1042e4",
+    "credits": 63
+   },
+   "f8efa52f3caa47c49dfcd5559dfac42f-HD-1080p-2-5Mbps-97954775-1016b6.mp4": {
+    "job": "gj-f8efa52f",
+    "media_id": "3e5dd37e-b09f-4c68-8228-9d7f55fc5f69",
+    "credits": 84
+   }
+  },
+  "total_credits": 1057
+ },
+ "refs_note": "From the owner's product sheet (skinofab-product-sheet-text-and-size.pdf, 21 Oct 2026): front, both three-quarters, pump close-up, the label text at 4x, left profile, rear and top. Genjutsu needs source videos of at least 409,600 px per frame; all seven pass (606x1080, 576x720)."
+}

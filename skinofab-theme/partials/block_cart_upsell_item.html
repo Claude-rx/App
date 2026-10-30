@@ -1,0 +1,80 @@
+{% load theme_tags %}
+{% comment %}
+  Single upsell item row. Expects context: product, slot.
+  Renders as <spark-upsell-item> Web Component.
+{% endcomment %}
+
+{% if product %}
+<spark-upsell-item
+    data-upsell-slot="{{ slot }}"
+    data-product-id="{{ product.pk }}"
+    data-loading="false"
+    data-fallback-slots="{{ settings.upsell_fallback_slots|default:'1,2' }}"
+    style="display:none;padding:10px 0;border-bottom:1px solid #E2E8F0;"
+>
+    <div style="display:flex;align-items:center;gap:10px;">
+        {# Product image #}
+        {% with image=product.primary_image %}
+            {% if image %}
+                {% image_thumbnail image.original "120x120" crop="center" as thumb %}
+                <img src="{{ thumb.url }}" alt="{{ product.get_title }}"
+                     width="48" height="48" loading="lazy"
+                     style="width:48px;height:48px;object-fit:cover;border-radius:2px;flex-shrink:0;" />
+            {% endif %}
+        {% endwith %}
+
+        {# Product info #}
+        <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:500;color:#1E293B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                {{ product.title }}
+            </div>
+            {# Price #}
+            {% if product.children.all|length > 1 %}
+                {% for child in product.children.all %}
+                    {% purchase_info_for_product request child as child_session %}
+                    {% if forloop.first %}
+                        <span data-upsell-price style="font-size:13px;color:#475569;">
+                            {{ child_session.price.price|currency:child_session.price.currency }}
+                        </span>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% with child=product.children.first %}
+                    {% purchase_info_for_product request child as child_session %}
+                    {% if child_session.price.exists %}
+                        <span data-upsell-price style="font-size:13px;color:#475569;">
+                            {{ child_session.price.price|currency:child_session.price.currency }}
+                        </span>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+        </div>
+
+        {# Variant select + Add button #}
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+            {% if product.children.all|length > 1 %}
+                <select data-upsell-variant-select aria-label="{% t 'store.catalogue.select_variant' %}"
+                        style="font-size:12px;padding:4px 8px;border:1px solid #E2E8F0;color:#1E293B;max-width:100px;">
+                    {% for child in product.children.all %}
+                        {% purchase_info_for_product request child as child_session %}
+                        <option value="{{ child.pk }}"
+                                data-price="{{ child_session.price.price|default:'0' }}"
+                                data-price-retail="{{ child_session.price.price_retail|default:'0' }}"
+                                data-currency="{{ child_session.price.currency|default:'USD' }}">
+                            {{ child.get_title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                {% with child=product.children.first %}
+                    <input type="hidden" data-upsell-variant-select value="{{ child.pk }}">
+                {% endwith %}
+            {% endif %}
+            <button type="button" data-upsell-add-btn
+                    style="font-size:12px;font-weight:500;padding:6px 12px;background:var(--primary-color,#1E293B);color:#fff;border:none;border-radius:2px;cursor:pointer;white-space:nowrap;">
+                {% t "tables.actions.add" as add_text %}{{ add_text|default:"Add" }}
+            </button>
+        </div>
+    </div>
+</spark-upsell-item>
+{% endif %}

@@ -1,0 +1,115 @@
+{# Spark Theme -- Catalogue Filters #}
+{# Rendered twice on a category page: once in the desktop rail and once  #}
+{# inside the mobile filter drawer. Pass filter_form_id so the two       #}
+{# copies do not share an element id.                                    #}
+<form id="{{ filter_form_id|default:'productFilters' }}" method="get" novalidate>
+    <div class="flex flex-wrap gap-2 mb-4">
+        <div class="flex justify-between w-full items-center">
+            {# The drawer already has a heading, so it hides this one and keeps #}
+            {# the empty span so "Clear" stays on the right.                    #}
+            {% if hide_heading %}
+                <span></span>
+            {% else %}
+                <h5 class="text-sm font-semibold text-slate-800">{% t "store.catalogue.filters" %}</h5>
+            {% endif %}
+            {% if has_active_filter %}
+                <a class="text-xs text-slate-500 hover:text-slate-800" href="{{ request.path }}">
+                    {% t "store.catalogue.filter_clear" %}
+                </a>
+            {% endif %}
+        </div>
+        {% for filter in filters %}
+            {% if filter.type == 'price_range' and filter.active_values %}
+                <a class="inline-flex items-center gap-1 px-2 py-1 text-xs bg-slate-100 text-slate-600 hover:bg-slate-200" href="{{ filter.url_to_remove }}">
+                    {{ filter.min_value.value|default:0|currency:request.CURRENCY_CODE }} - {{ filter.max_value.value|default:filter.range_max|currency:request.CURRENCY_CODE }}
+                    <span aria-hidden="true">x</span>
+                </a>
+            {% else %}
+                {% for value in filter.active_values %}
+                    <a class="inline-flex items-center gap-1 px-2 py-1 text-xs bg-slate-100 text-slate-600 hover:bg-slate-200" href="{{ value.url_to_remove }}">
+                        {{ filter.label }}: {{ value.label }}
+                        <span aria-hidden="true">x</span>
+                    </a>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% for filter in filters %}
+        {% if filter.type == 'price_range' %}
+            <div class="mb-4">
+                <h5 class="text-sm font-semibold text-slate-800 mb-2">{{ filter.label }}</h5>
+                <div class="flex items-center gap-2">
+                    <input type="number" name="{{ filter.min_value.param_name }}"
+                           value="{{ filter.min_value.value|default:'' }}"
+                           class="w-full border border-slate-200 px-3 py-2 text-sm"
+                           min="0" max="{{ filter.range_max }}"
+                           placeholder="{{ filter.min_value.label }}" />
+                    <span class="text-slate-400">-</span>
+                    <input type="number" name="{{ filter.max_value.param_name }}"
+                           value="{{ filter.max_value.value|default:'' }}"
+                           class="w-full border border-slate-200 px-3 py-2 text-sm"
+                           min="0" max="{{ filter.range_max }}"
+                           placeholder="{{ filter.max_value.label }}" />
+                </div>
+            </div>
+        {% elif filter.type == 'boolean' %}
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-sm font-semibold text-slate-800">{{ filter.label }}</h5>
+                    {% if filter.active_values %}
+                        <a class="text-xs text-slate-500 hover:text-slate-800" href="{{ filter.url_to_remove }}">{% t "store.catalogue.filter_reset" %}</a>
+                    {% endif %}
+                </div>
+                <div class="space-y-1">
+                    <label class="flex items-center justify-between text-sm text-slate-600 cursor-pointer min-h-[44px]">
+                        <span class="flex items-center gap-2">
+                            <input name="{{ filter.true_value.param_name }}" type="checkbox"
+                                   value="{{ filter.true_value.value }}"
+                                   {% if filter.true_value.active %}checked{% endif %}
+                                   {% if filter.true_value.count == 0 %}disabled{% endif %}
+                                   class="accent-[var(--primary-color)]" />
+                            {{ filter.true_value.label }}
+                        </span>
+                        <span class="text-xs text-slate-400">{{ filter.true_value.count }}</span>
+                    </label>
+                    <label class="flex items-center justify-between text-sm text-slate-600 cursor-pointer min-h-[44px]">
+                        <span class="flex items-center gap-2">
+                            <input name="{{ filter.false_value.param_name }}" type="checkbox"
+                                   value="{{ filter.false_value.value }}"
+                                   {% if filter.false_value.active %}checked{% endif %}
+                                   {% if filter.false_value.count == 0 %}disabled{% endif %}
+                                   class="accent-[var(--primary-color)]" />
+                            {{ filter.false_value.label }}
+                        </span>
+                        <span class="text-xs text-slate-400">{{ filter.false_value.count }}</span>
+                    </label>
+                </div>
+            </div>
+        {% elif filter.type == 'list' %}
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-sm font-semibold text-slate-800">{{ filter.label }}</h5>
+                    {% if filter.active_values %}
+                        <a class="text-xs text-slate-500 hover:text-slate-800" href="{{ filter.url_to_remove }}">{% t "store.catalogue.filter_reset" %}</a>
+                    {% endif %}
+                </div>
+                <div class="space-y-1">
+                    {% for filter_value in filter.values %}
+                        <label class="flex items-center justify-between text-sm text-slate-600 cursor-pointer min-h-[44px]">
+                            <span class="flex items-center gap-2">
+                                <input name="{{ filter_value.param_name }}" type="checkbox"
+                                       value="{{ filter_value.value }}"
+                                       {% if filter_value.active %}checked{% endif %}
+                                       {% if filter_value.count == 0 %}disabled{% endif %}
+                                       class="accent-[var(--primary-color)]" />
+                                {{ filter_value.label }}
+                            </span>
+                            <span class="text-xs text-slate-400">{{ filter_value.count }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary w-full">{% t "store.catalogue.apply_filters" %}</button>
+</form>

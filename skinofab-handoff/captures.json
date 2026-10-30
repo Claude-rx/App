@@ -1,0 +1,2994 @@
+{
+  "schema_version": "next-theme-dev/handoff-captures/v1",
+  "captures": [
+    {
+      "capture_id": "home-desktop-static",
+      "route_id": "home",
+      "viewport": "desktop",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/index.html",
+      "viewport_width": 1440,
+      "viewport_height": 900,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 1440,
+      "document_height": 7914,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:39:31.799Z",
+      "html_sha256": "f8ff17d6c943f31f",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "timeout"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/home-desktop-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/home-desktop-static.json",
+      "boxes": {
+        "home.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 37
+        },
+        "home.header": {
+          "x": 0,
+          "y": 37,
+          "width": 1440,
+          "height": 48
+        },
+        "home.hero": {
+          "x": 0,
+          "y": 85,
+          "width": 1440,
+          "height": 524.39
+        },
+        "home.bestsellers": {
+          "x": 0,
+          "y": 609.39,
+          "width": 1440,
+          "height": 661.66
+        },
+        "home.bestsellers::heading": {
+          "x": 32,
+          "y": 657.39,
+          "width": 161.39,
+          "height": 43
+        },
+        "home.reviews": {
+          "x": 0,
+          "y": 1271.05,
+          "width": 1440,
+          "height": 667.92
+        },
+        "home.reviews::heading": {
+          "x": 32,
+          "y": 1347.05,
+          "width": 602,
+          "height": 86
+        },
+        "home.categories": {
+          "x": 0,
+          "y": 1938.97,
+          "width": 1440,
+          "height": 621
+        },
+        "home.categories::heading": {
+          "x": 32,
+          "y": 1986.97,
+          "width": 278.55,
+          "height": 43
+        },
+        "home.categories::cta": {
+          "x": 52,
+          "y": 2455.17,
+          "width": 152.41,
+          "height": 36.8
+        },
+        "home.foundation": {
+          "x": 0,
+          "y": 2559.97,
+          "width": 1440,
+          "height": 445
+        },
+        "home.foundation::heading": {
+          "x": 944,
+          "y": 2649.27,
+          "width": 432,
+          "height": 43
+        },
+        "home.foundation::cta": {
+          "x": 944,
+          "y": 2918.27,
+          "width": 179.45,
+          "height": 43.39
+        },
+        "home.bundles": {
+          "x": 0,
+          "y": 3004.97,
+          "width": 1440,
+          "height": 622.67
+        },
+        "home.bundles::heading": {
+          "x": 32,
+          "y": 3052.97,
+          "width": 225.33,
+          "height": 43
+        },
+        "home.serum": {
+          "x": 0,
+          "y": 3627.64,
+          "width": 1440,
+          "height": 519
+        },
+        "home.serum::heading": {
+          "x": 744,
+          "y": 3767.44,
+          "width": 664,
+          "height": 43
+        },
+        "home.serum::cta": {
+          "x": 744,
+          "y": 4025.44,
+          "width": 175.47,
+          "height": 43.39
+        },
+        "home.formulas": {
+          "x": 0,
+          "y": 4146.64,
+          "width": 1440,
+          "height": 525
+        },
+        "home.formulas::heading": {
+          "x": 707.2,
+          "y": 4210.64,
+          "width": 652.8,
+          "height": 43
+        },
+        "home.arrivals_desktop": {
+          "x": 0,
+          "y": 4671.64,
+          "width": 1440,
+          "height": 433
+        },
+        "home.arrivals_desktop::heading": {
+          "x": 80,
+          "y": 4769.75,
+          "width": 452,
+          "height": 86
+        },
+        "home.arrivals_desktop::cta": {
+          "x": 80,
+          "y": 5015.73,
+          "width": 152.41,
+          "height": 36.8
+        },
+        "home.experts": {
+          "x": 0,
+          "y": 5104.64,
+          "width": 1440,
+          "height": 583.5
+        },
+        "home.experts::heading": {
+          "x": 32,
+          "y": 5180.64,
+          "width": 666,
+          "height": 86
+        },
+        "home.essentials": {
+          "x": 0,
+          "y": 5688.14,
+          "width": 1440,
+          "height": 613
+        },
+        "home.essentials::heading": {
+          "x": 32,
+          "y": 5736.14,
+          "width": 146.2,
+          "height": 43
+        },
+        "home.celebration_desktop": {
+          "x": 0,
+          "y": 6301.14,
+          "width": 1440,
+          "height": 402
+        },
+        "home.celebration_desktop::heading": {
+          "x": 976,
+          "y": 6373.23,
+          "width": 400,
+          "height": 86
+        },
+        "home.celebration_desktop::cta": {
+          "x": 976,
+          "y": 6592.23,
+          "width": 154.41,
+          "height": 38.8
+        },
+        "home.social": {
+          "x": 0,
+          "y": 6703.14,
+          "width": 1440,
+          "height": 571
+        },
+        "home.social::heading": {
+          "x": 32,
+          "y": 6751.14,
+          "width": 507.48,
+          "height": 43
+        },
+        "home.footer": {
+          "x": 0,
+          "y": 7274.14,
+          "width": 1440,
+          "height": 640.31
+        },
+        "home.footer::heading": {
+          "x": 32,
+          "y": 7312.14,
+          "width": 436.91,
+          "height": 69
+        },
+        "home.footer::cta": {
+          "x": 1311.13,
+          "y": 7336.14,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 62 of 118 not loaded (lazy or blocked)",
+        "media metadata: 9 of 9 not loaded",
+        "target home.hero::heading: matched an element that is hidden at this viewport",
+        "target home.hero::cta: matched an element that is hidden at this viewport"
+      ]
+    },
+    {
+      "capture_id": "home-tablet-static",
+      "route_id": "home",
+      "viewport": "tablet",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/index.html",
+      "viewport_width": 768,
+      "viewport_height": 1024,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 768,
+      "document_height": 8381,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:39:53.915Z",
+      "html_sha256": "385f8dd6f141ad25",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "timeout"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/home-tablet-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/home-tablet-static.json",
+      "boxes": {
+        "home.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 37
+        },
+        "home.header": {
+          "x": 0,
+          "y": 37,
+          "width": 768,
+          "height": 48
+        },
+        "home.header::cta": {
+          "x": 40,
+          "y": 39,
+          "width": 44,
+          "height": 44
+        },
+        "home.hero": {
+          "x": 0,
+          "y": 85,
+          "width": 768,
+          "height": 524.39
+        },
+        "home.hero::heading": {
+          "x": 32,
+          "y": 220.61,
+          "width": 412,
+          "height": 134.38
+        },
+        "home.hero::cta": {
+          "x": 32,
+          "y": 441.77,
+          "width": 154.33,
+          "height": 36.8
+        },
+        "home.bestsellers": {
+          "x": 0,
+          "y": 609.39,
+          "width": 768,
+          "height": 731.66
+        },
+        "home.bestsellers::heading": {
+          "x": 32,
+          "y": 657.39,
+          "width": 161.39,
+          "height": 43
+        },
+        "home.reviews": {
+          "x": 0,
+          "y": 1341.05,
+          "width": 768,
+          "height": 667.92
+        },
+        "home.reviews::heading": {
+          "x": 32,
+          "y": 1417.05,
+          "width": 602,
+          "height": 86
+        },
+        "home.categories": {
+          "x": 0,
+          "y": 2008.97,
+          "width": 768,
+          "height": 621
+        },
+        "home.categories::heading": {
+          "x": 32,
+          "y": 2056.97,
+          "width": 278.55,
+          "height": 43
+        },
+        "home.categories::cta": {
+          "x": 52,
+          "y": 2525.17,
+          "width": 152.41,
+          "height": 36.8
+        },
+        "home.foundation": {
+          "x": 0,
+          "y": 2629.97,
+          "width": 768,
+          "height": 445
+        },
+        "home.foundation::heading": {
+          "x": 408.33,
+          "y": 2657.28,
+          "width": 295.67,
+          "height": 86
+        },
+        "home.foundation::cta": {
+          "x": 408.33,
+          "y": 3050.28,
+          "width": 179.45,
+          "height": 43.39
+        },
+        "home.bundles": {
+          "x": 0,
+          "y": 3074.97,
+          "width": 768,
+          "height": 489.83
+        },
+        "home.bundles::heading": {
+          "x": 32,
+          "y": 3122.97,
+          "width": 225.33,
+          "height": 43
+        },
+        "home.serum": {
+          "x": 0,
+          "y": 3564.8,
+          "width": 768,
+          "height": 519
+        },
+        "home.serum::heading": {
+          "x": 400,
+          "y": 3690.8,
+          "width": 336,
+          "height": 86
+        },
+        "home.serum::cta": {
+          "x": 400,
+          "y": 4099.8,
+          "width": 175.47,
+          "height": 43.39
+        },
+        "home.formulas": {
+          "x": 0,
+          "y": 4083.8,
+          "width": 768,
+          "height": 839
+        },
+        "home.formulas::heading": {
+          "x": 377.92,
+          "y": 4147.8,
+          "width": 310.08,
+          "height": 129
+        },
+        "home.arrivals_desktop": {
+          "x": 0,
+          "y": 4922.8,
+          "width": 768,
+          "height": 433
+        },
+        "home.arrivals_desktop::heading": {
+          "x": 80,
+          "y": 4968.22,
+          "width": 295.67,
+          "height": 129
+        },
+        "home.arrivals_desktop::cta": {
+          "x": 80,
+          "y": 5319.59,
+          "width": 152.41,
+          "height": 36.8
+        },
+        "home.experts": {
+          "x": 0,
+          "y": 5355.8,
+          "width": 768,
+          "height": 737.25
+        },
+        "home.experts::heading": {
+          "x": 32,
+          "y": 5431.8,
+          "width": 330,
+          "height": 129
+        },
+        "home.essentials": {
+          "x": 0,
+          "y": 6093.05,
+          "width": 768,
+          "height": 633
+        },
+        "home.essentials::heading": {
+          "x": 32,
+          "y": 6141.05,
+          "width": 146.2,
+          "height": 43
+        },
+        "home.celebration_desktop": {
+          "x": 0,
+          "y": 6726.05,
+          "width": 768,
+          "height": 402
+        },
+        "home.celebration_desktop::heading": {
+          "x": 408.33,
+          "y": 6763.14,
+          "width": 295.67,
+          "height": 129
+        },
+        "home.celebration_desktop::cta": {
+          "x": 408.33,
+          "y": 7052.14,
+          "width": 154.41,
+          "height": 38.8
+        },
+        "home.social": {
+          "x": 0,
+          "y": 7128.05,
+          "width": 768,
+          "height": 571
+        },
+        "home.social::heading": {
+          "x": 32,
+          "y": 7176.05,
+          "width": 507.48,
+          "height": 43
+        },
+        "home.footer": {
+          "x": 0,
+          "y": 7699.05,
+          "width": 768,
+          "height": 682.31
+        },
+        "home.footer::heading": {
+          "x": 32,
+          "y": 7737.05,
+          "width": 322,
+          "height": 69
+        },
+        "home.footer::cta": {
+          "x": 639.13,
+          "y": 7771.55,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 52 of 118 not loaded (lazy or blocked)",
+        "media metadata: 9 of 9 not loaded"
+      ]
+    },
+    {
+      "capture_id": "home-mobile-static",
+      "route_id": "home",
+      "viewport": "mobile",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/index.html",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 390,
+      "document_height": 12032,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:40:16.079Z",
+      "html_sha256": "d9346dbd8083ff7b",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "timeout"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/home-mobile-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/home-mobile-static.json",
+      "boxes": {
+        "home.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 35
+        },
+        "home.header": {
+          "x": 0,
+          "y": 35,
+          "width": 390,
+          "height": 56.86
+        },
+        "home.header::cta": {
+          "x": 8,
+          "y": 41.42,
+          "width": 44,
+          "height": 44
+        },
+        "home.hero": {
+          "x": 0,
+          "y": 91.86,
+          "width": 390,
+          "height": 891.19
+        },
+        "home.bestsellers": {
+          "x": 0,
+          "y": 983.05,
+          "width": 390,
+          "height": 745.66
+        },
+        "home.bestsellers::heading": {
+          "x": 16,
+          "y": 1031.05,
+          "width": 143.47,
+          "height": 38
+        },
+        "home.reviews": {
+          "x": 0,
+          "y": 1728.7,
+          "width": 390,
+          "height": 1093.67
+        },
+        "home.reviews::heading": {
+          "x": 16,
+          "y": 1804.7,
+          "width": 358,
+          "height": 152
+        },
+        "home.categories": {
+          "x": 0,
+          "y": 2822.38,
+          "width": 390,
+          "height": 1466
+        },
+        "home.categories::heading": {
+          "x": 16,
+          "y": 2870.38,
+          "width": 247.59,
+          "height": 38
+        },
+        "home.categories::cta": {
+          "x": 32,
+          "y": 3203.58,
+          "width": 152.41,
+          "height": 36.8
+        },
+        "home.foundation": {
+          "x": 0,
+          "y": 4288.38,
+          "width": 390,
+          "height": 850
+        },
+        "home.foundation::heading": {
+          "x": 32,
+          "y": 4382.38,
+          "width": 326,
+          "height": 76
+        },
+        "home.foundation::cta": {
+          "x": 32,
+          "y": 4702.38,
+          "width": 179.45,
+          "height": 43.39
+        },
+        "home.bundles": {
+          "x": 0,
+          "y": 5138.38,
+          "width": 390,
+          "height": 650.66
+        },
+        "home.bundles::heading": {
+          "x": 16,
+          "y": 5186.38,
+          "width": 200.3,
+          "height": 38
+        },
+        "home.serum": {
+          "x": 0,
+          "y": 5789.03,
+          "width": 390,
+          "height": 841
+        },
+        "home.serum::heading": {
+          "x": 16,
+          "y": 5863.03,
+          "width": 358,
+          "height": 76
+        },
+        "home.serum::cta": {
+          "x": 16,
+          "y": 6539.03,
+          "width": 175.47,
+          "height": 43
+        },
+        "home.formulas": {
+          "x": 0,
+          "y": 6630.03,
+          "width": 390,
+          "height": 1011.52
+        },
+        "home.formulas::heading": {
+          "x": 32,
+          "y": 6662.03,
+          "width": 326,
+          "height": 76
+        },
+        "home.arrivals_desktop": {
+          "x": 0,
+          "y": 7641.55,
+          "width": 390,
+          "height": 725
+        },
+        "home.arrivals_desktop::heading": {
+          "x": 32,
+          "y": 7727.55,
+          "width": 326,
+          "height": 114
+        },
+        "home.arrivals_desktop::cta": {
+          "x": 32,
+          "y": 8043.13,
+          "width": 152.41,
+          "height": 36.8
+        },
+        "home.experts": {
+          "x": 0,
+          "y": 8366.55,
+          "width": 390,
+          "height": 917
+        },
+        "home.experts::heading": {
+          "x": 16,
+          "y": 8414.55,
+          "width": 358,
+          "height": 114
+        },
+        "home.essentials": {
+          "x": 0,
+          "y": 9283.55,
+          "width": 390,
+          "height": 612.66
+        },
+        "home.essentials::heading": {
+          "x": 16,
+          "y": 9331.55,
+          "width": 129.95,
+          "height": 38
+        },
+        "home.celebration_desktop": {
+          "x": 0,
+          "y": 9896.2,
+          "width": 390,
+          "height": 619
+        },
+        "home.celebration_desktop::heading": {
+          "x": 32,
+          "y": 9936.2,
+          "width": 326,
+          "height": 114
+        },
+        "home.celebration_desktop::cta": {
+          "x": 117.8,
+          "y": 10178.2,
+          "width": 154.41,
+          "height": 38.8
+        },
+        "home.social": {
+          "x": 0,
+          "y": 10515.2,
+          "width": 390,
+          "height": 629.66
+        },
+        "home.social::heading": {
+          "x": 65,
+          "y": 10553.2,
+          "width": 260,
+          "height": 66
+        },
+        "home.footer": {
+          "x": 0,
+          "y": 11144.86,
+          "width": 390,
+          "height": 886.92
+        },
+        "home.footer::heading": {
+          "x": 16,
+          "y": 11172.86,
+          "width": 358,
+          "height": 59.78
+        },
+        "home.footer::cta": {
+          "x": 289.13,
+          "y": 11283.03,
+          "width": 84.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 57 of 118 not loaded (lazy or blocked)",
+        "media metadata: 9 of 9 not loaded",
+        "target home.hero::heading: matched an element that is hidden at this viewport",
+        "target home.hero::cta: matched an element that is hidden at this viewport"
+      ]
+    },
+    {
+      "capture_id": "pdp-desktop-static",
+      "route_id": "pdp",
+      "viewport": "desktop",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/products/color-changing-foundation.html",
+      "viewport_width": 1440,
+      "viewport_height": 900,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 1440,
+      "document_height": 6653,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:40:28.562Z",
+      "html_sha256": "f3a621677b4da373",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/pdp-desktop-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/pdp-desktop-static.json",
+      "boxes": {
+        "pdp.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 37
+        },
+        "pdp.header": {
+          "x": 0,
+          "y": 37,
+          "width": 1440,
+          "height": 60
+        },
+        "pdp.main": {
+          "x": 0,
+          "y": 97,
+          "width": 1440,
+          "height": 1031.94
+        },
+        "pdp.main::heading": {
+          "x": 882,
+          "y": 244.5,
+          "width": 498,
+          "height": 44
+        },
+        "pdp.main::cta": {
+          "x": 882,
+          "y": 447,
+          "width": 498,
+          "height": 45.58
+        },
+        "pdp.section_text_rlda4j": {
+          "x": 0,
+          "y": 1128.94,
+          "width": 1440,
+          "height": 105
+        },
+        "pdp.kopstorm_testomonials_9xvcek": {
+          "x": 0,
+          "y": 1233.94,
+          "width": 1440,
+          "height": 526.61
+        },
+        "pdp.section_image_with_text_xdx7dm": {
+          "x": 0,
+          "y": 1760.55,
+          "width": 1440,
+          "height": 675
+        },
+        "pdp.section_image_with_text_xdx7dm::heading": {
+          "x": 745,
+          "y": 1963.28,
+          "width": 635,
+          "height": 57.59
+        },
+        "pdp.section_image_with_text_cyzhwr": {
+          "x": 0,
+          "y": 2435.55,
+          "width": 1440,
+          "height": 695
+        },
+        "pdp.section_image_with_text_cyzhwr::heading": {
+          "x": 60,
+          "y": 2589.8,
+          "width": 635,
+          "height": 45
+        },
+        "pdp.kopstorm_results_nnthgp": {
+          "x": 0,
+          "y": 3130.55,
+          "width": 1440,
+          "height": 357.58
+        },
+        "pdp.kopstorm_results_nnthgp::heading": {
+          "x": 60,
+          "y": 3130.55,
+          "width": 1320,
+          "height": 45
+        },
+        "pdp.kopstorm_compare_lqnyxd": {
+          "x": 0,
+          "y": 3488.13,
+          "width": 1440,
+          "height": 581.25
+        },
+        "pdp.kopstorm_compare_lqnyxd::heading": {
+          "x": 60,
+          "y": 3538.13,
+          "width": 1320,
+          "height": 45
+        },
+        "pdp.kopstorm_ingredients_v2": {
+          "x": 0,
+          "y": 4069.38,
+          "width": 1440,
+          "height": 633.13
+        },
+        "pdp.kopstorm_ingredients_v2::heading": {
+          "x": 60,
+          "y": 4125.38,
+          "width": 1320,
+          "height": 41.75
+        },
+        "pdp.section_accordions_k6qprc": {
+          "x": 0,
+          "y": 4702.5,
+          "width": 1440,
+          "height": 429
+        },
+        "pdp.section_accordions_k6qprc::heading": {
+          "x": 60,
+          "y": 4742.5,
+          "width": 1320,
+          "height": 45
+        },
+        "pdp.kopstorm_why_gca7fq": {
+          "x": 0,
+          "y": 5131.5,
+          "width": 1440,
+          "height": 720
+        },
+        "pdp.kopstorm_why_gca7fq::heading": {
+          "x": 780,
+          "y": 5261.7,
+          "width": 540,
+          "height": 45
+        },
+        "pdp.kopstorm_why_gca7fq::cta": {
+          "x": 780,
+          "y": 5608.7,
+          "width": 180,
+          "height": 45.58
+        },
+        "pdp.17343673251239a5d7": {
+          "x": 0,
+          "y": 5851.5,
+          "width": 1440,
+          "height": 60
+        },
+        "pdp.footer": {
+          "x": 0,
+          "y": 5911.5,
+          "width": 1440,
+          "height": 741.69
+        },
+        "pdp.footer::heading": {
+          "x": 32,
+          "y": 5949.5,
+          "width": 436.91,
+          "height": 69
+        },
+        "pdp.footer::cta": {
+          "x": 1311.13,
+          "y": 5975,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 6 of 85 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "pdp-tablet-static",
+      "route_id": "pdp",
+      "viewport": "tablet",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/products/color-changing-foundation.html",
+      "viewport_width": 768,
+      "viewport_height": 1024,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 768,
+      "document_height": 6684,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:40:42.049Z",
+      "html_sha256": "9f0fa840f6d51ba9",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/pdp-tablet-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/pdp-tablet-static.json",
+      "boxes": {
+        "pdp.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 37
+        },
+        "pdp.header": {
+          "x": 0,
+          "y": 37,
+          "width": 768,
+          "height": 60
+        },
+        "pdp.header::cta": {
+          "x": 8,
+          "y": 45,
+          "width": 44,
+          "height": 44
+        },
+        "pdp.main": {
+          "x": 0,
+          "y": 97,
+          "width": 768,
+          "height": 1271.41
+        },
+        "pdp.main::heading": {
+          "x": 486.8,
+          "y": 241.09,
+          "width": 261.19,
+          "height": 88
+        },
+        "pdp.main::cta": {
+          "x": 486.8,
+          "y": 590.47,
+          "width": 261.19,
+          "height": 45.58
+        },
+        "pdp.section_text_rlda4j": {
+          "x": 0,
+          "y": 1368.41,
+          "width": 768,
+          "height": 93
+        },
+        "pdp.kopstorm_testomonials_9xvcek": {
+          "x": 0,
+          "y": 1461.41,
+          "width": 768,
+          "height": 526.61
+        },
+        "pdp.section_image_with_text_xdx7dm": {
+          "x": 0,
+          "y": 1988.02,
+          "width": 768,
+          "height": 481.28
+        },
+        "pdp.section_image_with_text_xdx7dm::heading": {
+          "x": 409,
+          "y": 2008.02,
+          "width": 339,
+          "height": 102.59
+        },
+        "pdp.section_image_with_text_cyzhwr": {
+          "x": 0,
+          "y": 2469.3,
+          "width": 768,
+          "height": 580.44
+        },
+        "pdp.section_image_with_text_cyzhwr::heading": {
+          "x": 20,
+          "y": 2489.3,
+          "width": 339,
+          "height": 45
+        },
+        "pdp.kopstorm_results_nnthgp": {
+          "x": 0,
+          "y": 3049.73,
+          "width": 768,
+          "height": 398.16
+        },
+        "pdp.kopstorm_results_nnthgp::heading": {
+          "x": 20,
+          "y": 3049.73,
+          "width": 728,
+          "height": 45
+        },
+        "pdp.kopstorm_compare_lqnyxd": {
+          "x": 0,
+          "y": 3447.89,
+          "width": 768,
+          "height": 581.25
+        },
+        "pdp.kopstorm_compare_lqnyxd::heading": {
+          "x": 20,
+          "y": 3497.89,
+          "width": 728,
+          "height": 45
+        },
+        "pdp.kopstorm_ingredients_v2": {
+          "x": 0,
+          "y": 4029.14,
+          "width": 768,
+          "height": 569.72
+        },
+        "pdp.kopstorm_ingredients_v2::heading": {
+          "x": 20,
+          "y": 4085.14,
+          "width": 728,
+          "height": 32.47
+        },
+        "pdp.section_accordions_k6qprc": {
+          "x": 0,
+          "y": 4598.86,
+          "width": 768,
+          "height": 461
+        },
+        "pdp.section_accordions_k6qprc::heading": {
+          "x": 20,
+          "y": 4630.86,
+          "width": 728,
+          "height": 45
+        },
+        "pdp.kopstorm_why_gca7fq": {
+          "x": 0,
+          "y": 5059.86,
+          "width": 768,
+          "height": 759.45
+        },
+        "pdp.kopstorm_why_gca7fq::heading": {
+          "x": 779.45,
+          "y": 5119.86,
+          "width": 166.08,
+          "height": 135
+        },
+        "pdp.kopstorm_why_gca7fq::cta": {
+          "x": 779.45,
+          "y": 5874,
+          "width": 137.88,
+          "height": 45.58
+        },
+        "pdp.17343673251239a5d7": {
+          "x": 0,
+          "y": 5819.31,
+          "width": 768,
+          "height": 48
+        },
+        "pdp.footer": {
+          "x": 0,
+          "y": 5867.31,
+          "width": 768,
+          "height": 816.88
+        },
+        "pdp.footer::heading": {
+          "x": 32,
+          "y": 5905.31,
+          "width": 322,
+          "height": 69
+        },
+        "pdp.footer::cta": {
+          "x": 639.13,
+          "y": 5942.81,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 18 of 85 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "pdp-mobile-static",
+      "route_id": "pdp",
+      "viewport": "mobile",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/products/color-changing-foundation.html",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 390,
+      "document_height": 7820,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:40:55.082Z",
+      "html_sha256": "3639c445e78c6ced",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/pdp-mobile-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/pdp-mobile-static.json",
+      "boxes": {
+        "pdp.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 35
+        },
+        "pdp.header": {
+          "x": 0,
+          "y": 35,
+          "width": 390,
+          "height": 60
+        },
+        "pdp.header::cta": {
+          "x": 8,
+          "y": 43,
+          "width": 44,
+          "height": 44
+        },
+        "pdp.main": {
+          "x": 0,
+          "y": 95,
+          "width": 390,
+          "height": 1531.23
+        },
+        "pdp.main::heading": {
+          "x": 20,
+          "y": 688.5,
+          "width": 350,
+          "height": 31
+        },
+        "pdp.main::cta": {
+          "x": 20,
+          "y": 906.5,
+          "width": 350,
+          "height": 50.58
+        },
+        "pdp.section_text_rlda4j": {
+          "x": 0,
+          "y": 1626.23,
+          "width": 390,
+          "height": 73.5
+        },
+        "pdp.kopstorm_testomonials_9xvcek": {
+          "x": 0,
+          "y": 1699.73,
+          "width": 390,
+          "height": 506.61
+        },
+        "pdp.section_image_with_text_xdx7dm": {
+          "x": 0,
+          "y": 2206.34,
+          "width": 390,
+          "height": 785.08
+        },
+        "pdp.section_image_with_text_xdx7dm::heading": {
+          "x": 20,
+          "y": 2604.34,
+          "width": 350,
+          "height": 38.39
+        },
+        "pdp.section_image_with_text_cyzhwr": {
+          "x": 0,
+          "y": 2991.42,
+          "width": 390,
+          "height": 841.88
+        },
+        "pdp.section_image_with_text_cyzhwr::heading": {
+          "x": 20,
+          "y": 3389.42,
+          "width": 350,
+          "height": 30
+        },
+        "pdp.kopstorm_results_nnthgp": {
+          "x": 0,
+          "y": 3833.3,
+          "width": 390,
+          "height": 360.66
+        },
+        "pdp.kopstorm_results_nnthgp::heading": {
+          "x": 20,
+          "y": 3833.3,
+          "width": 350,
+          "height": 37.5
+        },
+        "pdp.kopstorm_compare_lqnyxd": {
+          "x": 0,
+          "y": 4193.95,
+          "width": 390,
+          "height": 484
+        },
+        "pdp.kopstorm_compare_lqnyxd::heading": {
+          "x": 20,
+          "y": 4233.95,
+          "width": 350,
+          "height": 37.5
+        },
+        "pdp.kopstorm_ingredients_v2": {
+          "x": 0,
+          "y": 4677.95,
+          "width": 390,
+          "height": 625.31
+        },
+        "pdp.kopstorm_ingredients_v2::heading": {
+          "x": 20,
+          "y": 4725.95,
+          "width": 350,
+          "height": 64.94
+        },
+        "pdp.section_accordions_k6qprc": {
+          "x": 0,
+          "y": 5303.27,
+          "width": 390,
+          "height": 707
+        },
+        "pdp.section_accordions_k6qprc::heading": {
+          "x": 20,
+          "y": 5327.27,
+          "width": 350,
+          "height": 75
+        },
+        "pdp.kopstorm_why_gca7fq": {
+          "x": 0,
+          "y": 6010.27,
+          "width": 390,
+          "height": 886.23
+        },
+        "pdp.kopstorm_why_gca7fq::heading": {
+          "x": 44,
+          "y": 6320.27,
+          "width": 302,
+          "height": 75
+        },
+        "pdp.kopstorm_why_gca7fq::cta": {
+          "x": 44,
+          "y": 6753.92,
+          "width": 302,
+          "height": 45.58
+        },
+        "pdp.17343673251239a5d7": {
+          "x": 0,
+          "y": 6896.5,
+          "width": 390,
+          "height": 36
+        },
+        "pdp.footer": {
+          "x": 0,
+          "y": 6932.5,
+          "width": 390,
+          "height": 887.28
+        },
+        "pdp.footer::heading": {
+          "x": 16,
+          "y": 6960.5,
+          "width": 358,
+          "height": 59.78
+        },
+        "pdp.footer::cta": {
+          "x": 289.13,
+          "y": 7070.67,
+          "width": 84.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 28 of 85 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "collection-desktop-static",
+      "route_id": "collection",
+      "viewport": "desktop",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/collections/all.html",
+      "viewport_width": 1440,
+      "viewport_height": 900,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 1440,
+      "document_height": 4218,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:41:06.591Z",
+      "html_sha256": "9ffa12333edee89c",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/collection-desktop-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/collection-desktop-static.json",
+      "boxes": {
+        "collection.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 37
+        },
+        "collection.header": {
+          "x": 0,
+          "y": 37,
+          "width": 1440,
+          "height": 60
+        },
+        "collection.section_banner_image_mpxjcd": {
+          "x": 0,
+          "y": 97,
+          "width": 1440,
+          "height": 650
+        },
+        "collection.section_icons_row_cudwgr": {
+          "x": 0,
+          "y": 747,
+          "width": 1440,
+          "height": 76.66
+        },
+        "collection.section_icons_row_cudwgr::heading": {
+          "x": 212,
+          "y": 767,
+          "width": 134.98,
+          "height": 26.66
+        },
+        "collection.main": {
+          "x": 0,
+          "y": 823.66,
+          "width": 1440,
+          "height": 2653.13
+        },
+        "collection.main::cta": {
+          "x": 60,
+          "y": 1232.91,
+          "width": 12,
+          "height": 12
+        },
+        "collection.footer": {
+          "x": 0,
+          "y": 3476.78,
+          "width": 1440,
+          "height": 741.69
+        },
+        "collection.footer::heading": {
+          "x": 32,
+          "y": 3514.78,
+          "width": 436.91,
+          "height": 69
+        },
+        "collection.footer::cta": {
+          "x": 1311.13,
+          "y": 3540.28,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 10 of 62 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "collection-tablet-static",
+      "route_id": "collection",
+      "viewport": "tablet",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/collections/all.html",
+      "viewport_width": 768,
+      "viewport_height": 1024,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 768,
+      "document_height": 4433,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:41:18.595Z",
+      "html_sha256": "8ba69652df3c4ea4",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/collection-tablet-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/collection-tablet-static.json",
+      "boxes": {
+        "collection.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 37
+        },
+        "collection.header": {
+          "x": 0,
+          "y": 37,
+          "width": 768,
+          "height": 60
+        },
+        "collection.header::cta": {
+          "x": 8,
+          "y": 45,
+          "width": 44,
+          "height": 44
+        },
+        "collection.section_banner_image_mpxjcd": {
+          "x": 0,
+          "y": 97,
+          "width": 768,
+          "height": 650
+        },
+        "collection.section_icons_row_cudwgr": {
+          "x": 0,
+          "y": 747,
+          "width": 768,
+          "height": 66.66
+        },
+        "collection.section_icons_row_cudwgr::heading": {
+          "x": 73.33,
+          "y": 763,
+          "width": 134.98,
+          "height": 26.66
+        },
+        "collection.main": {
+          "x": 0,
+          "y": 813.66,
+          "width": 768,
+          "height": 2802.13
+        },
+        "collection.main::cta": {
+          "x": 20,
+          "y": 1137.23,
+          "width": 12,
+          "height": 12
+        },
+        "collection.footer": {
+          "x": 0,
+          "y": 3615.78,
+          "width": 768,
+          "height": 816.88
+        },
+        "collection.footer::heading": {
+          "x": 32,
+          "y": 3653.78,
+          "width": 322,
+          "height": 69
+        },
+        "collection.footer::cta": {
+          "x": 639.13,
+          "y": 3691.28,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 8 of 62 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "collection-mobile-static",
+      "route_id": "collection",
+      "viewport": "mobile",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/collections/all.html",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 390,
+      "document_height": 5188,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:41:30.373Z",
+      "html_sha256": "a5403166f3f9a2a2",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/collection-mobile-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/collection-mobile-static.json",
+      "boxes": {
+        "collection.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 35
+        },
+        "collection.header": {
+          "x": 0,
+          "y": 35,
+          "width": 390,
+          "height": 60
+        },
+        "collection.header::cta": {
+          "x": 8,
+          "y": 43,
+          "width": 44,
+          "height": 44
+        },
+        "collection.section_banner_image_mpxjcd": {
+          "x": 0,
+          "y": 95,
+          "width": 390,
+          "height": 437.75
+        },
+        "collection.section_icons_row_cudwgr": {
+          "x": 0,
+          "y": 532.75,
+          "width": 390,
+          "height": 87
+        },
+        "collection.section_icons_row_cudwgr::heading": {
+          "x": 159.61,
+          "y": 555.61,
+          "width": 107.77,
+          "height": 21.28
+        },
+        "collection.main": {
+          "x": 0,
+          "y": 619.75,
+          "width": 390,
+          "height": 3680.59
+        },
+        "collection.main::cta": {
+          "x": 20,
+          "y": 887,
+          "width": 15,
+          "height": 15
+        },
+        "collection.footer": {
+          "x": 0,
+          "y": 4300.34,
+          "width": 390,
+          "height": 887.28
+        },
+        "collection.footer::heading": {
+          "x": 16,
+          "y": 4328.34,
+          "width": 358,
+          "height": 59.78
+        },
+        "collection.footer::cta": {
+          "x": 289.13,
+          "y": 4438.52,
+          "width": 84.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 14 of 62 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "page-faq-desktop-static",
+      "route_id": "page-faq",
+      "viewport": "desktop",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/faq.html",
+      "viewport_width": 1440,
+      "viewport_height": 900,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 1440,
+      "document_height": 3069,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:41:41.399Z",
+      "html_sha256": "daf5ce48b402d4ec",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/page-faq-desktop-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/page-faq-desktop-static.json",
+      "boxes": {
+        "page-faq.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 37
+        },
+        "page-faq.header": {
+          "x": 0,
+          "y": 37,
+          "width": 1440,
+          "height": 60
+        },
+        "page-faq.s0": {
+          "x": 60,
+          "y": 157,
+          "width": 1320,
+          "height": 90.98
+        },
+        "page-faq.s1": {
+          "x": 60,
+          "y": 274.38,
+          "width": 1320,
+          "height": 1963.19
+        },
+        "page-faq.s1::heading": {
+          "x": 340,
+          "y": 313.56,
+          "width": 760,
+          "height": 34
+        },
+        "page-faq.footer": {
+          "x": 0,
+          "y": 2327.56,
+          "width": 1440,
+          "height": 741.69
+        },
+        "page-faq.footer::heading": {
+          "x": 32,
+          "y": 2365.56,
+          "width": 436.91,
+          "height": 69
+        },
+        "page-faq.footer::cta": {
+          "x": 1311.13,
+          "y": 2391.06,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "page-faq-tablet-static",
+      "route_id": "page-faq",
+      "viewport": "tablet",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/faq.html",
+      "viewport_width": 768,
+      "viewport_height": 1024,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 768,
+      "document_height": 3105,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:41:52.235Z",
+      "html_sha256": "d650a6960be7eb3f",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/page-faq-tablet-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/page-faq-tablet-static.json",
+      "boxes": {
+        "page-faq.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 37
+        },
+        "page-faq.header": {
+          "x": 0,
+          "y": 37,
+          "width": 768,
+          "height": 60
+        },
+        "page-faq.header::cta": {
+          "x": 8,
+          "y": 45,
+          "width": 44,
+          "height": 44
+        },
+        "page-faq.s0": {
+          "x": 20,
+          "y": 145,
+          "width": 728,
+          "height": 80
+        },
+        "page-faq.s1": {
+          "x": 20,
+          "y": 247,
+          "width": 728,
+          "height": 1963.19
+        },
+        "page-faq.s1::heading": {
+          "x": 40,
+          "y": 286.19,
+          "width": 688,
+          "height": 34
+        },
+        "page-faq.footer": {
+          "x": 0,
+          "y": 2288.19,
+          "width": 768,
+          "height": 816.88
+        },
+        "page-faq.footer::heading": {
+          "x": 32,
+          "y": 2326.19,
+          "width": 322,
+          "height": 69
+        },
+        "page-faq.footer::cta": {
+          "x": 639.13,
+          "y": 2363.69,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "page-faq-mobile-static",
+      "route_id": "page-faq",
+      "viewport": "mobile",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/faq.html",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 390,
+      "document_height": 3454,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:42:03.269Z",
+      "html_sha256": "acf93ca4a96808f9",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/page-faq-mobile-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/page-faq-mobile-static.json",
+      "boxes": {
+        "page-faq.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 35
+        },
+        "page-faq.header": {
+          "x": 0,
+          "y": 35,
+          "width": 390,
+          "height": 60
+        },
+        "page-faq.header::cta": {
+          "x": 8,
+          "y": 43,
+          "width": 44,
+          "height": 44
+        },
+        "page-faq.s0": {
+          "x": 20,
+          "y": 131,
+          "width": 350,
+          "height": 74.48
+        },
+        "page-faq.s1": {
+          "x": 20,
+          "y": 225.28,
+          "width": 350,
+          "height": 2275.19
+        },
+        "page-faq.s1::heading": {
+          "x": 40,
+          "y": 264.47,
+          "width": 310,
+          "height": 34
+        },
+        "page-faq.footer": {
+          "x": 0,
+          "y": 2566.47,
+          "width": 390,
+          "height": 887.28
+        },
+        "page-faq.footer::heading": {
+          "x": 16,
+          "y": 2594.47,
+          "width": 358,
+          "height": 59.78
+        },
+        "page-faq.footer::cta": {
+          "x": 289.13,
+          "y": 2704.64,
+          "width": 84.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "policy-terms-desktop-static",
+      "route_id": "policy-terms",
+      "viewport": "desktop",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/terms-of-service.html",
+      "viewport_width": 1440,
+      "viewport_height": 900,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 1440,
+      "document_height": 1131,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:42:13.761Z",
+      "html_sha256": "0a2cc28b39a4f7b1",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/policy-terms-desktop-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/policy-terms-desktop-static.json",
+      "boxes": {
+        "policy-terms.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 37
+        },
+        "policy-terms.header": {
+          "x": 0,
+          "y": 37,
+          "width": 1440,
+          "height": 60
+        },
+        "policy-terms.s0": {
+          "x": 60,
+          "y": 157,
+          "width": 1320,
+          "height": 90.98
+        },
+        "policy-terms.s1": {
+          "x": 60,
+          "y": 274.38,
+          "width": 1320,
+          "height": 25
+        },
+        "policy-terms.footer": {
+          "x": 0,
+          "y": 389.38,
+          "width": 1440,
+          "height": 741.69
+        },
+        "policy-terms.footer::heading": {
+          "x": 32,
+          "y": 427.38,
+          "width": 436.91,
+          "height": 69
+        },
+        "policy-terms.footer::cta": {
+          "x": 1311.13,
+          "y": 452.88,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "policy-terms-tablet-static",
+      "route_id": "policy-terms",
+      "viewport": "tablet",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/terms-of-service.html",
+      "viewport_width": 768,
+      "viewport_height": 1024,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 768,
+      "document_height": 1167,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:42:24.353Z",
+      "html_sha256": "b64eedd8e54bbd33",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/policy-terms-tablet-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/policy-terms-tablet-static.json",
+      "boxes": {
+        "policy-terms.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 37
+        },
+        "policy-terms.header": {
+          "x": 0,
+          "y": 37,
+          "width": 768,
+          "height": 60
+        },
+        "policy-terms.header::cta": {
+          "x": 8,
+          "y": 45,
+          "width": 44,
+          "height": 44
+        },
+        "policy-terms.s0": {
+          "x": 20,
+          "y": 145,
+          "width": 728,
+          "height": 80
+        },
+        "policy-terms.s1": {
+          "x": 20,
+          "y": 247,
+          "width": 728,
+          "height": 25
+        },
+        "policy-terms.footer": {
+          "x": 0,
+          "y": 350,
+          "width": 768,
+          "height": 816.88
+        },
+        "policy-terms.footer::heading": {
+          "x": 32,
+          "y": 388,
+          "width": 322,
+          "height": 69
+        },
+        "policy-terms.footer::cta": {
+          "x": 639.13,
+          "y": 425.5,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "policy-terms-mobile-static",
+      "route_id": "policy-terms",
+      "viewport": "mobile",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/terms-of-service.html",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 390,
+      "document_height": 1204,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:42:34.995Z",
+      "html_sha256": "1e9525643638f570",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/policy-terms-mobile-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/policy-terms-mobile-static.json",
+      "boxes": {
+        "policy-terms.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 35
+        },
+        "policy-terms.header": {
+          "x": 0,
+          "y": 35,
+          "width": 390,
+          "height": 60
+        },
+        "policy-terms.header::cta": {
+          "x": 8,
+          "y": 43,
+          "width": 44,
+          "height": 44
+        },
+        "policy-terms.s0": {
+          "x": 20,
+          "y": 131,
+          "width": 350,
+          "height": 74.48
+        },
+        "policy-terms.s1": {
+          "x": 20,
+          "y": 225.28,
+          "width": 350,
+          "height": 25
+        },
+        "policy-terms.footer": {
+          "x": 0,
+          "y": 316.28,
+          "width": 390,
+          "height": 887.28
+        },
+        "policy-terms.footer::heading": {
+          "x": 16,
+          "y": 344.28,
+          "width": 358,
+          "height": 59.78
+        },
+        "policy-terms.footer::cta": {
+          "x": 289.13,
+          "y": 454.45,
+          "width": 84.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "article-desktop-static",
+      "route_id": "article",
+      "viewport": "desktop",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/blogs/news/color-changing-foundation-does-it-actually-work-the-science-explained.html",
+      "viewport_width": 1440,
+      "viewport_height": 900,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 1440,
+      "document_height": 3624,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:42:45.979Z",
+      "html_sha256": "72cb577b762c4f4f",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/article-desktop-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/article-desktop-static.json",
+      "boxes": {
+        "article.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 37
+        },
+        "article.header": {
+          "x": 0,
+          "y": 37,
+          "width": 1440,
+          "height": 60
+        },
+        "article.s0": {
+          "x": 360,
+          "y": 157,
+          "width": 720,
+          "height": 309.34
+        },
+        "article.s0::heading": {
+          "x": 360,
+          "y": 157,
+          "width": 720,
+          "height": 197.95
+        },
+        "article.s1": {
+          "x": 360,
+          "y": 482.34,
+          "width": 720,
+          "height": 2235.78
+        },
+        "article.s1::heading": {
+          "x": 360,
+          "y": 659.34,
+          "width": 720,
+          "height": 90
+        },
+        "article.s2": {
+          "x": 360,
+          "y": 2748.13,
+          "width": 720,
+          "height": 25
+        },
+        "article.s3": {
+          "x": 360,
+          "y": 2803.13,
+          "width": 720,
+          "height": 19
+        },
+        "article.s3::cta": {
+          "x": 360,
+          "y": 2803.13,
+          "width": 87.88,
+          "height": 19
+        },
+        "article.footer": {
+          "x": 0,
+          "y": 2882.13,
+          "width": 1440,
+          "height": 741.69
+        },
+        "article.footer::heading": {
+          "x": 32,
+          "y": 2920.13,
+          "width": 436.91,
+          "height": 69
+        },
+        "article.footer::cta": {
+          "x": 1311.13,
+          "y": 2945.63,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "article-tablet-static",
+      "route_id": "article",
+      "viewport": "tablet",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/blogs/news/color-changing-foundation-does-it-actually-work-the-science-explained.html",
+      "viewport_width": 768,
+      "viewport_height": 1024,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 768,
+      "document_height": 3613,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:42:57.075Z",
+      "html_sha256": "3f7b04448e7a720e",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/article-tablet-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/article-tablet-static.json",
+      "boxes": {
+        "article.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 37
+        },
+        "article.header": {
+          "x": 0,
+          "y": 37,
+          "width": 768,
+          "height": 60
+        },
+        "article.header::cta": {
+          "x": 8,
+          "y": 45,
+          "width": 44,
+          "height": 44
+        },
+        "article.s0": {
+          "x": 20,
+          "y": 145,
+          "width": 728,
+          "height": 272
+        },
+        "article.s0::heading": {
+          "x": 20,
+          "y": 145,
+          "width": 728,
+          "height": 165
+        },
+        "article.s1": {
+          "x": 20,
+          "y": 433,
+          "width": 728,
+          "height": 2210.78
+        },
+        "article.s1::heading": {
+          "x": 20,
+          "y": 610,
+          "width": 728,
+          "height": 90
+        },
+        "article.s2": {
+          "x": 20,
+          "y": 2673.78,
+          "width": 728,
+          "height": 25
+        },
+        "article.s3": {
+          "x": 20,
+          "y": 2728.78,
+          "width": 728,
+          "height": 19
+        },
+        "article.s3::cta": {
+          "x": 20,
+          "y": 2728.78,
+          "width": 87.88,
+          "height": 19
+        },
+        "article.footer": {
+          "x": 0,
+          "y": 2795.78,
+          "width": 768,
+          "height": 816.88
+        },
+        "article.footer::heading": {
+          "x": 32,
+          "y": 2833.78,
+          "width": 322,
+          "height": 69
+        },
+        "article.footer::cta": {
+          "x": 639.13,
+          "y": 2871.28,
+          "width": 96.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "article-mobile-static",
+      "route_id": "article",
+      "viewport": "mobile",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/blogs/news/color-changing-foundation-does-it-actually-work-the-science-explained.html",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 390,
+      "document_height": 4850,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:43:08.468Z",
+      "html_sha256": "507bb267e00fa063",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "none"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/article-mobile-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/article-mobile-static.json",
+      "boxes": {
+        "article.announcement": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 35
+        },
+        "article.header": {
+          "x": 0,
+          "y": 35,
+          "width": 390,
+          "height": 60
+        },
+        "article.header::cta": {
+          "x": 8,
+          "y": 43,
+          "width": 44,
+          "height": 44
+        },
+        "article.s0": {
+          "x": 20,
+          "y": 131,
+          "width": 350,
+          "height": 322.22
+        },
+        "article.s0::heading": {
+          "x": 20,
+          "y": 131,
+          "width": 350,
+          "height": 247.42
+        },
+        "article.s1": {
+          "x": 20,
+          "y": 469.22,
+          "width": 350,
+          "height": 3328.78
+        },
+        "article.s1::heading": {
+          "x": 20,
+          "y": 765.22,
+          "width": 350,
+          "height": 112.5
+        },
+        "article.s2": {
+          "x": 20,
+          "y": 3828,
+          "width": 350,
+          "height": 50
+        },
+        "article.s3": {
+          "x": 20,
+          "y": 3908,
+          "width": 350,
+          "height": 19
+        },
+        "article.s3::cta": {
+          "x": 20,
+          "y": 3908,
+          "width": 87.88,
+          "height": 19
+        },
+        "article.footer": {
+          "x": 0,
+          "y": 3963,
+          "width": 390,
+          "height": 887.28
+        },
+        "article.footer::heading": {
+          "x": 16,
+          "y": 3991,
+          "width": 358,
+          "height": 59.78
+        },
+        "article.footer::cta": {
+          "x": 289.13,
+          "y": 4101.17,
+          "width": 84.88,
+          "height": 52
+        }
+      },
+      "gaps": [
+        "images: 2 of 8 not loaded (lazy or blocked)"
+      ]
+    },
+    {
+      "capture_id": "lander-desktop-static",
+      "route_id": "lander",
+      "viewport": "desktop",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/bestfoundation.html",
+      "viewport_width": 1440,
+      "viewport_height": 900,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 1440,
+      "document_height": 4198,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:43:27.597Z",
+      "html_sha256": "23a9298ac9266dd5",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "timeout"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/lander-desktop-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/lander-desktop-static.json",
+      "boxes": {
+        "lander.s0": {
+          "x": 0,
+          "y": 52,
+          "width": 1440,
+          "height": 35
+        },
+        "lander.s1": {
+          "x": 64,
+          "y": 87,
+          "width": 1312,
+          "height": 493
+        },
+        "lander.s1::heading": {
+          "x": 295,
+          "y": 169,
+          "width": 850,
+          "height": 100
+        },
+        "lander.s2": {
+          "x": 64,
+          "y": 580,
+          "width": 1312,
+          "height": 338
+        },
+        "lander.s2::heading": {
+          "x": 740,
+          "y": 640,
+          "width": 405,
+          "height": 70
+        },
+        "lander.s3": {
+          "x": 64,
+          "y": 918,
+          "width": 1312,
+          "height": 308
+        },
+        "lander.s4": {
+          "x": 64,
+          "y": 1226,
+          "width": 1312,
+          "height": 338
+        },
+        "lander.s4::heading": {
+          "x": 740,
+          "y": 1286,
+          "width": 405,
+          "height": 70
+        },
+        "lander.s5": {
+          "x": 64,
+          "y": 1564,
+          "width": 1312,
+          "height": 308
+        },
+        "lander.s5::heading": {
+          "x": 295,
+          "y": 1594,
+          "width": 405,
+          "height": 70
+        },
+        "lander.s6": {
+          "x": 64,
+          "y": 1872,
+          "width": 1312,
+          "height": 310
+        },
+        "lander.s6::heading": {
+          "x": 740,
+          "y": 1932,
+          "width": 405,
+          "height": 70
+        },
+        "lander.s7": {
+          "x": 64,
+          "y": 2182,
+          "width": 1312,
+          "height": 482
+        },
+        "lander.s8": {
+          "x": 64,
+          "y": 2664,
+          "width": 1312,
+          "height": 275
+        },
+        "lander.s8::heading": {
+          "x": 315,
+          "y": 2724,
+          "width": 405,
+          "height": 35
+        },
+        "lander.s9": {
+          "x": 64,
+          "y": 2939,
+          "width": 1312,
+          "height": 308
+        },
+        "lander.s9::heading": {
+          "x": 740,
+          "y": 2969,
+          "width": 405,
+          "height": 70
+        },
+        "lander.s10": {
+          "x": 64,
+          "y": 3247,
+          "width": 1312,
+          "height": 247
+        },
+        "lander.s10::heading": {
+          "x": 295,
+          "y": 3307,
+          "width": 405,
+          "height": 35
+        },
+        "lander.s11": {
+          "x": 64,
+          "y": 3524,
+          "width": 1312,
+          "height": 484
+        },
+        "lander.s12": {
+          "x": 0,
+          "y": 770,
+          "width": 1440,
+          "height": 130
+        }
+      },
+      "gaps": [
+        "images: 4 of 26 not loaded (lazy or blocked)",
+        "media metadata: 6 of 6 not loaded"
+      ]
+    },
+    {
+      "capture_id": "lander-tablet-static",
+      "route_id": "lander",
+      "viewport": "tablet",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/bestfoundation.html",
+      "viewport_width": 768,
+      "viewport_height": 1024,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 768,
+      "document_height": 4455,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:43:46.781Z",
+      "html_sha256": "44781a284c24bd01",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "timeout"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/lander-tablet-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/lander-tablet-static.json",
+      "boxes": {
+        "lander.s0": {
+          "x": 0,
+          "y": 56,
+          "width": 768,
+          "height": 35
+        },
+        "lander.s1": {
+          "x": 0,
+          "y": 91,
+          "width": 768,
+          "height": 569
+        },
+        "lander.s1::heading": {
+          "x": 40,
+          "y": 249,
+          "width": 688,
+          "height": 100
+        },
+        "lander.s2": {
+          "x": 0,
+          "y": 660,
+          "width": 768,
+          "height": 288
+        },
+        "lander.s2::heading": {
+          "x": 60,
+          "y": 720,
+          "width": 444.22,
+          "height": 35
+        },
+        "lander.s3": {
+          "x": 0,
+          "y": 948,
+          "width": 768,
+          "height": 397
+        },
+        "lander.s3::heading": {
+          "x": 60,
+          "y": 1008,
+          "width": 631.66,
+          "height": 35
+        },
+        "lander.s4": {
+          "x": 0,
+          "y": 1345,
+          "width": 768,
+          "height": 397
+        },
+        "lander.s4::heading": {
+          "x": 60,
+          "y": 1405,
+          "width": 445.14,
+          "height": 35
+        },
+        "lander.s5": {
+          "x": 0,
+          "y": 1742,
+          "width": 768,
+          "height": 288
+        },
+        "lander.s5::heading": {
+          "x": 60,
+          "y": 1802,
+          "width": 611.8,
+          "height": 35
+        },
+        "lander.s6": {
+          "x": 0,
+          "y": 2030,
+          "width": 768,
+          "height": 397
+        },
+        "lander.s6::heading": {
+          "x": 60,
+          "y": 2090,
+          "width": 567.38,
+          "height": 35
+        },
+        "lander.s7": {
+          "x": 0,
+          "y": 2427,
+          "width": 768,
+          "height": 458
+        },
+        "lander.s8": {
+          "x": 0,
+          "y": 2885,
+          "width": 768,
+          "height": 397
+        },
+        "lander.s8::heading": {
+          "x": 60,
+          "y": 2945,
+          "width": 392.28,
+          "height": 35
+        },
+        "lander.s9": {
+          "x": 0,
+          "y": 3282,
+          "width": 768,
+          "height": 288
+        },
+        "lander.s9::heading": {
+          "x": 60,
+          "y": 3342,
+          "width": 537.09,
+          "height": 35
+        },
+        "lander.s10": {
+          "x": 0,
+          "y": 3570,
+          "width": 768,
+          "height": 297
+        },
+        "lander.s10::heading": {
+          "x": 60,
+          "y": 3630,
+          "width": 230.98,
+          "height": 35
+        },
+        "lander.s11": {
+          "x": 0,
+          "y": 3867,
+          "width": 768,
+          "height": 458
+        },
+        "lander.s12": {
+          "x": 0,
+          "y": 894,
+          "width": 768,
+          "height": 130
+        }
+      },
+      "gaps": [
+        "images: 4 of 26 not loaded (lazy or blocked)",
+        "media metadata: 6 of 6 not loaded"
+      ]
+    },
+    {
+      "capture_id": "lander-mobile-static",
+      "route_id": "lander",
+      "viewport": "mobile",
+      "state": "static",
+      "state_detail": "",
+      "url": "http://localhost:8790/pages/bestfoundation.html",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "device_pixel_ratio": 1,
+      "scroll_x": 0,
+      "scroll_y": 0,
+      "document_width": 390,
+      "document_height": 4828,
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141 Safari/537.36",
+      "tool": "playwright-chromium-headless",
+      "captured_at": "2026-10-20T17:44:06.199Z",
+      "html_sha256": "49fad4ae4ffbe621",
+      "readiness": {
+        "fonts": "ready",
+        "images": "timeout",
+        "media_metadata": "timeout"
+      },
+      "motion": "paused",
+      "media_url": "",
+      "media_time_s": null,
+      "screenshot": "captures/lander-mobile-static.png",
+      "screenshot_kind": "full-page",
+      "raw_output": "captures/raw/lander-mobile-static.json",
+      "boxes": {
+        "lander.s0": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 52
+        },
+        "lander.s1": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 33
+        },
+        "lander.s2": {
+          "x": 0,
+          "y": 85,
+          "width": 390,
+          "height": 725
+        },
+        "lander.s2::heading": {
+          "x": 24,
+          "y": 155,
+          "width": 342,
+          "height": 152
+        },
+        "lander.s3": {
+          "x": 0,
+          "y": 810,
+          "width": 390,
+          "height": 422
+        },
+        "lander.s3::heading": {
+          "x": 24,
+          "y": 834,
+          "width": 342,
+          "height": 64
+        },
+        "lander.s4": {
+          "x": 0,
+          "y": 1232,
+          "width": 390,
+          "height": 352
+        },
+        "lander.s4::heading": {
+          "x": 24,
+          "y": 1256,
+          "width": 342,
+          "height": 64
+        },
+        "lander.s5": {
+          "x": 0,
+          "y": 1584,
+          "width": 390,
+          "height": 352
+        },
+        "lander.s5::heading": {
+          "x": 24,
+          "y": 1608,
+          "width": 342,
+          "height": 64
+        },
+        "lander.s6": {
+          "x": 0,
+          "y": 1936,
+          "width": 390,
+          "height": 422
+        },
+        "lander.s6::heading": {
+          "x": 24,
+          "y": 1960,
+          "width": 342,
+          "height": 64
+        },
+        "lander.s7": {
+          "x": 0,
+          "y": 2358,
+          "width": 390,
+          "height": 328
+        },
+        "lander.s7::heading": {
+          "x": 24,
+          "y": 2382,
+          "width": 342,
+          "height": 64
+        },
+        "lander.s8": {
+          "x": 0,
+          "y": 2686,
+          "width": 390,
+          "height": 466
+        },
+        "lander.s9": {
+          "x": 0,
+          "y": 3152,
+          "width": 390,
+          "height": 352
+        },
+        "lander.s9::heading": {
+          "x": 24,
+          "y": 3176,
+          "width": 342,
+          "height": 64
+        },
+        "lander.s10": {
+          "x": 0,
+          "y": 3504,
+          "width": 390,
+          "height": 452
+        },
+        "lander.s10::heading": {
+          "x": 24,
+          "y": 3528,
+          "width": 342,
+          "height": 64
+        },
+        "lander.s11": {
+          "x": 0,
+          "y": 3956,
+          "width": 390,
+          "height": 296
+        },
+        "lander.s11::heading": {
+          "x": 24,
+          "y": 3980,
+          "width": 342,
+          "height": 32
+        },
+        "lander.s12": {
+          "x": 0,
+          "y": 4252,
+          "width": 390,
+          "height": 466
+        },
+        "lander.s13": {
+          "x": 0,
+          "y": 734,
+          "width": 390,
+          "height": 110
+        }
+      },
+      "gaps": [
+        "images: 4 of 26 not loaded (lazy or blocked)",
+        "media metadata: 6 of 6 not loaded"
+      ]
+    }
+  ]
+}

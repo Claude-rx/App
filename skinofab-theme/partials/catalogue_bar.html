@@ -1,0 +1,13 @@
+{# Spark Theme -- Supplemental sticky mobile filter bar #}
+{# Mirrors the PDP sticky add-to-cart bar: fixed to the bottom, translated    #}
+{# out of view, slid in by spark-catalogue.js once the grid is scrolled into. #}
+{# Hidden from 1024px up, where the filter rail takes over.                   #}
+{% if filters %}
+<div id="catalogue-bar" class="catalogue-bar" aria-hidden="true" inert>
+    <div class="catalogue-bar-inner">
+        <div class="catalogue-bar-control">
+            {% include 'partials/catalogue_filter_button.html' with button_class='catalogue-bar-btn' %}
+        </div>
+    </div>
+</div>
+{% endif %}

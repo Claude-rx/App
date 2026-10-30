@@ -1,0 +1,969 @@
+{
+  "schema_version": "1.0",
+  "run_id": "MVQPUENZL4NF0H40Q0ONGN89V9",
+  "campaign_slug": "local-spec-1b7c62ea-589f-49eb-83f9-31869ed0c283",
+  "local_spec_id": "1b7c62ea-589f-49eb-83f9-31869ed0c283",
+  "public_route_slug": "stick-funnel",
+  "campaign_ref_id": 2211,
+  "spec_version": "5.0",
+  "spec_hash": "sha256:b705f5ea59706bd92682ab504e60d95b94309c8ff6ba95c99f37ee3896e40584",
+  "started_at": "2026-10-27T13:23:12.191Z",
+  "completed_at": "2026-10-27T13:23:50.965Z",
+  "generated_at": "2026-10-27T13:23:50.988Z",
+  "runtime": "campaigns-os-node-qa@1.60.0",
+  "disposition": "ready_with_exceptions",
+  "entry_urls": [],
+  "page_urls": [],
+  "tested_urls": [],
+  "assertions": [
+    {
+      "id": "page_kit.store_profile",
+      "family": "api-metadata",
+      "page": "campaign",
+      "status": "pass"
+    },
+    {
+      "id": "page_kit.sdk_version",
+      "family": "api-metadata",
+      "page": "campaign",
+      "status": "pass"
+    },
+    {
+      "id": "polish.hidden_eager_media",
+      "family": "polish_gate",
+      "page": "campaign",
+      "status": "pass"
+    },
+    {
+      "id": "polish.evidence_current",
+      "family": "polish_gate",
+      "page": "campaign",
+      "status": "pass"
+    },
+    {
+      "id": "theme_gate.applied",
+      "family": "theme_gate",
+      "page": "campaign",
+      "status": "pass"
+    },
+    {
+      "id": "template-brand-contract:apollo",
+      "family": "template_residue",
+      "page": "campaign",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:listicle",
+      "family": "api-metadata",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "http:listicle",
+      "family": "funnel-flow",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "meta:listicle:next-funnel",
+      "family": "meta-tags",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "meta:listicle:next-page-type",
+      "family": "meta-tags",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:listicle:next",
+      "family": "funnel-flow",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:offer",
+      "family": "api-metadata",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "http:offer",
+      "family": "funnel-flow",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "meta:offer:next-funnel",
+      "family": "meta-tags",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "meta:offer:next-page-type",
+      "family": "meta-tags",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:offer:next",
+      "family": "funnel-flow",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:checkout",
+      "family": "api-metadata",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "http:checkout",
+      "family": "funnel-flow",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "meta:checkout:next-funnel",
+      "family": "meta-tags",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "meta:checkout:next-page-type",
+      "family": "meta-tags",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "meta:checkout:next-success-url",
+      "family": "meta-tags",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:checkout:next",
+      "family": "funnel-flow",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:special-1",
+      "family": "api-metadata",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "http:special-1",
+      "family": "funnel-flow",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-1:next-funnel",
+      "family": "meta-tags",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-1:next-page-type",
+      "family": "meta-tags",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-1:next-upsell-accept-url",
+      "family": "meta-tags",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-1:next-upsell-decline-url",
+      "family": "meta-tags",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-1:next",
+      "family": "funnel-flow",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-1:accept",
+      "family": "funnel-flow",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-1:decline",
+      "family": "funnel-flow",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:special-2",
+      "family": "api-metadata",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "http:special-2",
+      "family": "funnel-flow",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-2:next-funnel",
+      "family": "meta-tags",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-2:next-page-type",
+      "family": "meta-tags",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-2:next-upsell-accept-url",
+      "family": "meta-tags",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-2:next-upsell-decline-url",
+      "family": "meta-tags",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-2:next",
+      "family": "funnel-flow",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-2:accept",
+      "family": "funnel-flow",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-2:decline",
+      "family": "funnel-flow",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:special-3",
+      "family": "api-metadata",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "http:special-3",
+      "family": "funnel-flow",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-3:next-funnel",
+      "family": "meta-tags",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-3:next-page-type",
+      "family": "meta-tags",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-3:next-upsell-accept-url",
+      "family": "meta-tags",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-3:next-upsell-decline-url",
+      "family": "meta-tags",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-3:next",
+      "family": "funnel-flow",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-3:accept",
+      "family": "funnel-flow",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-3:decline",
+      "family": "funnel-flow",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:special-4",
+      "family": "api-metadata",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "http:special-4",
+      "family": "funnel-flow",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-4:next-funnel",
+      "family": "meta-tags",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-4:next-page-type",
+      "family": "meta-tags",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-4:next-upsell-accept-url",
+      "family": "meta-tags",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "meta:special-4:next-upsell-decline-url",
+      "family": "meta-tags",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-4:next",
+      "family": "funnel-flow",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-4:accept",
+      "family": "funnel-flow",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "route-link:special-4:decline",
+      "family": "funnel-flow",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "page-binding:thank-you",
+      "family": "api-metadata",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "http:thank-you",
+      "family": "funnel-flow",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "meta:thank-you:next-funnel",
+      "family": "meta-tags",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "meta:thank-you:next-page-type",
+      "family": "meta-tags",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "live-campaign-refs",
+      "family": "api-metadata",
+      "page": "campaign",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:listicle",
+      "family": "browser-runtime",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "browser-primary-cta:listicle",
+      "family": "browser-runtime",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:listicle:placeholder-text",
+      "family": "template_residue",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:listicle:demo-asset",
+      "family": "template_residue",
+      "page": "listicle",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:offer",
+      "family": "browser-runtime",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "browser-primary-cta:offer",
+      "family": "browser-runtime",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:offer:placeholder-text",
+      "family": "template_residue",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:offer:demo-asset",
+      "family": "template_residue",
+      "page": "offer",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-primary-cta:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-payment-surface:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-payment-geometry:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-express-wallets:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-bundle-selector:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-commerce-structure:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-exit-intent-surface:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:checkout:style:checkout_submit_button",
+      "family": "template_residue",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:checkout:style:selected_bundle_card",
+      "family": "template_residue",
+      "page": "checkout",
+      "status": "skipped"
+    },
+    {
+      "id": "template-residue:checkout:style:announcement_bar",
+      "family": "template_residue",
+      "page": "checkout",
+      "status": "skipped"
+    },
+    {
+      "id": "template-residue:checkout:style:bump_outline",
+      "family": "template_residue",
+      "page": "checkout",
+      "status": "skipped"
+    },
+    {
+      "id": "template-residue:checkout:logo",
+      "family": "template_residue",
+      "page": "checkout",
+      "status": "skipped"
+    },
+    {
+      "id": "template-residue:checkout:placeholder-text",
+      "family": "template_residue",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:checkout:demo-asset",
+      "family": "template_residue",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "pricing.checkout_price_visible",
+      "family": "pricing",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-sdk-debugger:checkout",
+      "family": "browser-runtime",
+      "page": "checkout",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:special-1",
+      "family": "browser-runtime",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "browser-primary-cta:special-1",
+      "family": "browser-runtime",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "browser-upsell-control:special-1:accept",
+      "family": "browser-runtime",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "browser-upsell-control:special-1:decline",
+      "family": "browser-runtime",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-1:style:announcement_bar",
+      "family": "template_residue",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-1:style:upsell_accept_cta",
+      "family": "template_residue",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-1:logo",
+      "family": "template_residue",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-1:placeholder-text",
+      "family": "template_residue",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-1:demo-asset",
+      "family": "template_residue",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "pricing.upsell_price_visible:special-1",
+      "family": "pricing",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "browser-sdk-debugger:special-1",
+      "family": "browser-runtime",
+      "page": "special-1",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:special-2",
+      "family": "browser-runtime",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "browser-primary-cta:special-2",
+      "family": "browser-runtime",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "browser-upsell-control:special-2:accept",
+      "family": "browser-runtime",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "browser-upsell-control:special-2:decline",
+      "family": "browser-runtime",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-2:style:announcement_bar",
+      "family": "template_residue",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-2:style:upsell_accept_cta",
+      "family": "template_residue",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-2:logo",
+      "family": "template_residue",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-2:placeholder-text",
+      "family": "template_residue",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-2:demo-asset",
+      "family": "template_residue",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "pricing.upsell_price_visible:special-2",
+      "family": "pricing",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "browser-sdk-debugger:special-2",
+      "family": "browser-runtime",
+      "page": "special-2",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:special-3",
+      "family": "browser-runtime",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "browser-primary-cta:special-3",
+      "family": "browser-runtime",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "browser-upsell-control:special-3:accept",
+      "family": "browser-runtime",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "browser-upsell-control:special-3:decline",
+      "family": "browser-runtime",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-3:style:announcement_bar",
+      "family": "template_residue",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-3:style:upsell_accept_cta",
+      "family": "template_residue",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-3:logo",
+      "family": "template_residue",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-3:placeholder-text",
+      "family": "template_residue",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-3:demo-asset",
+      "family": "template_residue",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "pricing.upsell_price_visible:special-3",
+      "family": "pricing",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "browser-sdk-debugger:special-3",
+      "family": "browser-runtime",
+      "page": "special-3",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:special-4",
+      "family": "browser-runtime",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "browser-primary-cta:special-4",
+      "family": "browser-runtime",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "browser-upsell-control:special-4:accept",
+      "family": "browser-runtime",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "browser-upsell-control:special-4:decline",
+      "family": "browser-runtime",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-4:style:announcement_bar",
+      "family": "template_residue",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-4:style:upsell_accept_cta",
+      "family": "template_residue",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-4:logo",
+      "family": "template_residue",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-4:placeholder-text",
+      "family": "template_residue",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:special-4:demo-asset",
+      "family": "template_residue",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "pricing.upsell_price_visible:special-4",
+      "family": "pricing",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "browser-sdk-debugger:special-4",
+      "family": "browser-runtime",
+      "page": "special-4",
+      "status": "pass"
+    },
+    {
+      "id": "browser-load:thank-you",
+      "family": "browser-runtime",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:thank-you:logo",
+      "family": "template_residue",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:thank-you:placeholder-text",
+      "family": "template_residue",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "template-residue:thank-you:demo-asset",
+      "family": "template_residue",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "browser-sdk-debugger:thank-you",
+      "family": "browser-runtime",
+      "page": "thank-you",
+      "status": "pass"
+    },
+    {
+      "id": "qc.policy.presence:store_terms",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.availability:store_terms",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.presence:store_privacy",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.availability:store_privacy",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.presence:store_returns",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.availability:store_returns",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.presence:store_shipping",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.availability:store_shipping",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.presence:store_contact",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "qc.policy.availability:store_contact",
+      "family": "browser-runtime",
+      "page": "campaign",
+      "status": "pass",
+      "severity": "info"
+    },
+    {
+      "id": "browser-test-order:upsell-action-coverage",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "id": "qc.tracking.url:run:url",
+      "family": "browser-test-order",
+      "page": "run",
+      "status": "skipped",
+      "severity": "info"
+    },
+    {
+      "id": "qc.tracking.order:run:order",
+      "family": "browser-test-order",
+      "page": "run",
+      "status": "skipped",
+      "severity": "info"
+    },
+    {
+      "id": "qc.tracking.tag:run:tag",
+      "family": "browser-test-order",
+      "page": "run",
+      "status": "skipped",
+      "severity": "info"
+    }
+  ],
+  "test_orders": [],
+  "exceptions": [
+    {
+      "id": "browser-test-order:upsell-action-coverage",
+      "family": "browser-test-order",
+      "page": "checkout",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "pre_existing",
+      "cause_reason": "same_status_in_prior_run"
+    }
+  ],
+  "cause_summary": {
+    "schema_version": "campaigns-os-finding-cause/v0",
+    "surface": "qa",
+    "total": 1,
+    "counts": {
+      "caused_by_change": 0,
+      "pre_existing": 1,
+      "test_environment": 0,
+      "upstream_drift": 0,
+      "unknown": 0
+    },
+    "prior_run_id": "run_1793096559787_6f6967cd",
+    "prior_qa_attempt_run_id": "MVQMM9YEOU4PK5ILN2K9DSJV38",
+    "comparison": "prior_run"
+  }
+}

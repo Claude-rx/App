@@ -1,0 +1,142 @@
+{
+  "schema_version": "next-theme-dev/handoff-routes/v1",
+  "routes": [
+    {
+      "route_id": "home",
+      "source_url": "https://smooche.com/",
+      "storefront_path": "/",
+      "theme_template": "templates/index.html",
+      "section_order": [
+        "home.announcement",
+        "home.header",
+        "home.hero",
+        "home.bestsellers",
+        "home.reviews",
+        "home.categories",
+        "home.foundation",
+        "home.bundles",
+        "home.serum",
+        "home.formulas",
+        "home.arrivals_desktop",
+        "home.experts",
+        "home.essentials",
+        "home.celebration_desktop",
+        "home.social",
+        "home.footer"
+      ],
+      "status": "ready",
+      "notes": "Captured from the operator-supplied static export of this URL (served locally, all external network blocked)."
+    },
+    {
+      "route_id": "pdp",
+      "source_url": "https://smooche.com/products/color-changing-foundation",
+      "storefront_path": "/<product-slug>/ (NEXT product route; template key color-changing-foundation)",
+      "theme_template": "templates/catalogue/product.color-changing-foundation.html",
+      "section_order": [
+        "pdp.announcement",
+        "pdp.header",
+        "pdp.main",
+        "pdp.section_text_rlda4j",
+        "pdp.kopstorm_testomonials_9xvcek",
+        "pdp.section_image_with_text_xdx7dm",
+        "pdp.section_image_with_text_cyzhwr",
+        "pdp.kopstorm_results_nnthgp",
+        "pdp.kopstorm_compare_lqnyxd",
+        "pdp.kopstorm_ingredients_v2",
+        "pdp.section_accordions_k6qprc",
+        "pdp.kopstorm_why_gca7fq",
+        "pdp.17343673251239a5d7",
+        "pdp.footer"
+      ],
+      "status": "ready",
+      "notes": "Captured from the operator-supplied static export of this URL (served locally, all external network blocked)."
+    },
+    {
+      "route_id": "collection",
+      "source_url": "https://smooche.com/collections/all",
+      "storefront_path": "/catalogue/ and NEXT category routes",
+      "theme_template": "templates/catalogue/category.html",
+      "section_order": [
+        "collection.announcement",
+        "collection.header",
+        "collection.section_banner_image_mpxjcd",
+        "collection.section_icons_row_cudwgr",
+        "collection.main",
+        "collection.footer"
+      ],
+      "status": "ready",
+      "notes": "Captured from the operator-supplied static export of this URL (served locally, all external network blocked)."
+    },
+    {
+      "route_id": "page-faq",
+      "source_url": "https://smooche.com/pages/faq",
+      "storefront_path": "/<page-slug>/ (NEXT page, template key faq)",
+      "theme_template": "templates/pages/page.faq.html",
+      "section_order": [
+        "page-faq.announcement",
+        "page-faq.header",
+        "page-faq.s0",
+        "page-faq.s1",
+        "page-faq.footer"
+      ],
+      "status": "ready",
+      "notes": "Captured from the operator-supplied static export of this URL (served locally, all external network blocked)."
+    },
+    {
+      "route_id": "policy-terms",
+      "source_url": "https://smooche.com/pages/terms-of-service",
+      "storefront_path": "/<page-slug>/ (NEXT page, template key terms-of-service)",
+      "theme_template": "templates/pages/page.terms-of-service.html",
+      "section_order": [
+        "policy-terms.announcement",
+        "policy-terms.header",
+        "policy-terms.s0",
+        "policy-terms.s1",
+        "policy-terms.footer"
+      ],
+      "status": "ready",
+      "notes": "Captured from the operator-supplied static export of this URL (served locally, all external network blocked)."
+    },
+    {
+      "route_id": "article",
+      "source_url": "https://smooche.com/blogs/news/color-changing-foundation-does-it-actually-work-the-science-explained",
+      "storefront_path": "/blog/<post-slug>/",
+      "theme_template": "templates/blog/post.html",
+      "section_order": [
+        "article.announcement",
+        "article.header",
+        "article.s0",
+        "article.s1",
+        "article.s2",
+        "article.s3",
+        "article.footer"
+      ],
+      "status": "ready",
+      "notes": "Captured from the operator-supplied static export of this URL (served locally, all external network blocked)."
+    },
+    {
+      "route_id": "lander",
+      "source_url": "https://smooche.com/pages/bestfoundation",
+      "storefront_path": "/<page-slug>/ (NEXT page, template key bestfoundation)",
+      "theme_template": "templates/pages/page.bestfoundation.html",
+      "section_order": [
+        "lander.s0",
+        "lander.s1",
+        "lander.s2",
+        "lander.s3",
+        "lander.s4",
+        "lander.s5",
+        "lander.s6",
+        "lander.s7",
+        "lander.s8",
+        "lander.s9",
+        "lander.s10",
+        "lander.s11",
+        "lander.s12",
+        "lander.s13"
+      ],
+      "status": "ready",
+      "notes": "Captured from the operator-supplied static export of this URL (served locally, all external network blocked)."
+    }
+  ]
+}

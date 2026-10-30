@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+    <title>{% t "global.error.500" %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1E293B; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #fff; }
+        .c { text-align: center; padding: 2rem; }
+        h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; }
+        p { font-size: 0.875rem; color: #475569; margin-bottom: 2rem; }
+        a { display: inline-block; padding: 0.625rem 1.5rem; background: #1E293B; color: #fff; text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="c">
+        <h1>{% t "global.error.500_heading" %}</h1>
+        <p>{% t "global.error.500_message" %}</p>
+        <a href="/">{% t "navigation.main.home" %}</a>
+    </div>
+</body>
+</html>
