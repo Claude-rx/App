@@ -1,0 +1,42 @@
+name: Funnel
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *"   # daily live check (06:17 UTC)
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-check:
+    # The funnel sources must build and pass their own checks, including the AXON pixel guards.
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: AXON adapter unit tests
+        run: npm run test:axon
+      - name: Build the funnels (Campaign Page Kit)
+        working-directory: campaigns/skinofab
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+      - name: Funnel checks
+        run: |
+          python3 -I tools/funnel/check_funnel.py
+          python3 -I tools/funnel/apf/check_apf.py
+
+  live-axon:
+    # The live funnel pages still load the fixed AXON adapter (a theme regenerated from stale sources undoes it).
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Live AXON adapter on try.skinofab.com
+        run: tools/funnel/check_live_axon.sh

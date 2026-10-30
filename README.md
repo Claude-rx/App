@@ -1,5 +1,8 @@
 # App
 
+SKINOFAB on Next Commerce: the funnel sources and build (`campaigns/skinofab/`), the store theme (`skinofab-theme/`),
+tooling (`tools/`), and the agent setup. **Start with [docs/NEXT-COMMERCE-HANDOFF.md](docs/NEXT-COMMERCE-HANDOFF.md).**
+
 ## Next Commerce AI tooling
 
 This repo ships the [Next Commerce](https://nextcommerce.com) agent skills and MCP server

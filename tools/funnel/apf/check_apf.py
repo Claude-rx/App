@@ -653,8 +653,11 @@ if not re.search(r'\.sf-reason--wide \.sf-reason__media \{[^}]*position:\s*stati
 # the Axon adapter sends item_category_id only when it is a number: the SDK's item_category is the campaign's name,
 # and Axon rejects the whole event with HTTP 400 for a text id (live review 6, 29 Oct 2026)
 _ax = (SITE / 'js' / 'axon.adapter.js').read_text(encoding='utf-8')
-if 'out.item_category_id = it.item_category' in _ax or 'Number(it.item_category)' not in _ax:
-    fail('all pages', 'axon.adapter.js sends the text item_category as item_category_id (Axon answers 400 to view_item, begin_checkout and purchase)')
+if 'out.item_category_id = it.item_category;' in _ax or 'categoryId(it.item_category) || fallbackCategoryId' not in _ax:
+    fail('all pages', 'axon.adapter.js sends the text item_category as item_category_id (Axon answers 400 to view_item, begin_checkout and purchase), or leaves items without the numeric fallback AXON requires')
+# AXON requires user_data on purchase: the adapter maps the SDK's user_properties (customer_email/phone/id)
+if 'params.user_data = user' not in _ax or 'up.customer_email' not in _ax:
+    fail('all pages', 'axon.adapter.js does not send user_data on purchase (AXON flags it as required)')
 
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)

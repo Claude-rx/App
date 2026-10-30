@@ -1,6 +1,11 @@
 /* GENERATED from _shared/analytics/js/axon.adapter.js — edit the source and run `npm run sync:shared`. Do not edit this copy. */
 /* SKINOFAB LOCAL PATCH (29 Oct 2026): mapItems() sends item_category_id only when numeric (Axon answered 400 to the
-   SDK's text category). tools/funnel/apf/check_apf.py and tools/funnel/check_funnel.py fail a build without it. */
+   SDK's text category). tools/funnel/apf/check_apf.py and tools/funnel/check_funnel.py fail a build without it.
+   SKINOFAB LOCAL PATCH (29 Oct 2026): user_data (email/phone/user_id) is sent on checkout and purchase events from the
+   SDK's user_properties — AXON flags purchase without user_data as an error. Keep it when re-syncing.
+   SKINOFAB LOCAL PATCH (30 Oct 2026): AXON requires a numeric item_category_id on every item (Pixel Helper warns once
+   per item without it). Falls back to window.__axonItemCategoryId, else 2765 (Google product taxonomy: Health & Beauty >
+   Personal Care > Cosmetics > Makeup > Face Makeup > Foundations & Concealers). Keep it when re-syncing. */
 /**
  * axon.adapter.js — AppLovin Axon adapter for next-forwarder-core.js (Route C, no GTM).
  *
@@ -20,7 +25,10 @@
  *   - `purchase` REQUIRES currency, items, value, tax, shipping, transaction_id (SDK provides all;
  *     upsells carry tax:0/shipping:0).
  *   - Identifier is an EVENT KEY, not a pixel id.
- * Enhanced matching (`user_data` hashed email/phone) is NOT sent — see README (needs hashing+consent).
+ * Enhanced matching: `user_data` is sent on USER_DATA_EVENTS from the SDK's user_properties (customer_email,
+ * customer_phone, customer_id). AXON's pixel.js hashes email/phone in the browser before sending, so they are
+ * passed in plaintext: email trimmed + lowercased, phone as E.164 digits without '+', user_id only when >= 6 chars.
+ * Disable per campaign with window.__axonSendUserData = false.
  *
  * Debug: ?nfdebug=true or localhost, then window.NextForwarder.getStatus().
  */
@@ -58,6 +66,30 @@
     search:           ['search_term']
   };
 
+  // Events that carry user_data. AXON requires it on purchase; checkout events improve matching too.
+  var USER_DATA_EVENTS = { purchase: 1, begin_checkout: 1, add_payment_info: 1 };
+
+  function userData(evt) {
+    if (window.__axonSendUserData === false || window.__axonSendUserData === 'false') return undefined;
+    var up = (evt && evt.user_properties) || {};
+    var out = {};
+    var email = typeof up.customer_email === 'string' ? up.customer_email.trim().toLowerCase() : '';
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) out.email = email;
+    var phone = typeof up.customer_phone === 'string' ? up.customer_phone.replace(/[\s()-]/g, '') : '';
+    if (/^\+[1-9]\d{7,14}$/.test(phone)) out.phone = phone.slice(1);
+    var id = up.customer_id !== undefined && up.customer_id !== null ? String(up.customer_id) : '';
+    if (id.length >= 6) out.user_id = id;
+    return out.email || out.phone ? out : undefined;
+  }
+
+  // AXON item_category_id: an integer from Google's product taxonomy, required on every item.
+  var DEFAULT_ITEM_CATEGORY_ID = 2765; // Foundations & Concealers — both SKINOFAB funnels sell foundation
+  function categoryId(raw) {
+    var s = raw === undefined || raw === null ? '' : String(raw).trim();
+    return /^\d+$/.test(s) && Number(s) > 0 ? Number(s) : undefined;
+  }
+  var fallbackCategoryId = categoryId(window.__axonItemCategoryId) || DEFAULT_ITEM_CATEGORY_ID;
+
   // Map an SDK EcommerceItem to Axon's item object (mostly GA4-shaped; a couple of renames).
   function mapItems(items) {
     return (items || []).map(function (it) {
@@ -71,7 +103,8 @@
       // Axon: item_category_id is an integer id. The SDK's item_category is the campaign's name, which Axon rejects
       // with HTTP 400 for the whole event (view_item, begin_checkout, purchase: live review 6, 29 Oct 2026), so it is
       // sent only when it is a whole number. LOCAL PATCH over the generated copy: keep it when re-syncing.
-      if (it.item_category !== undefined && it.item_category !== null && /^\d+$/.test(String(it.item_category))) out.item_category_id = Number(it.item_category);
+      // Otherwise the store-wide fallback, so the required field is never missing.
+      out.item_category_id = categoryId(it.item_category) || fallbackCategoryId;
       if (it.item_image) out.image_url = it.item_image;               // Axon: image_url
       if (it.discount !== undefined && it.discount !== null && it.discount !== '') out.discount = it.discount;
       return out;
@@ -119,6 +152,10 @@
       if (name === 'search' && evt.search_term) params.search_term = evt.search_term;
 
       copy(ec, params, EXTRA[name] || []);
+      if (USER_DATA_EVENTS[name]) {
+        var user = userData(evt);
+        if (user) params.user_data = user;
+      }
       window.axon('track', name, params);
     }
   });
