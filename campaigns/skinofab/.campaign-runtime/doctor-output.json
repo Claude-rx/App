@@ -3561,7 +3561,7 @@
     "comparison": "prior_run"
   },
   "stale": true,
-  "stale_marked_by": "record build",
-  "stale_marked_at": "2026-10-30T14:10:10.557Z",
-  "stale_reason": "stages.assembly was recorded after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
+  "stale_marked_by": "record deploy",
+  "stale_marked_at": "2026-10-30T14:12:12.265Z",
+  "stale_reason": "stages.deploy was recorded after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
 }

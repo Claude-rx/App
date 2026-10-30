@@ -16,6 +16,8 @@ qa-output/
 .campaign-runtime/*.log
 .campaign-runtime/*.tmp
 .campaign-runtime/**/*.tmp
+# a running command's lock (input/.design-source-package.json.lock/): per-machine, held only while it runs
+.campaign-runtime/**/*.lock/
 
 # Page Kit: installed packages and the build (a static host builds _site/ itself with `npm run build:static`)
 node_modules/
