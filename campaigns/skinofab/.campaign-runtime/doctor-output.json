@@ -1,6 +1,6 @@
 {
   "schema_version": "campaigns-os-doctor-output/v0",
-  "generated_at": "2026-10-30T11:22:07.093Z",
+  "generated_at": "2026-10-30T12:23:30.257Z",
   "generated_by": "next",
   "ok": true,
   "status": "ready_with_warnings",
@@ -82,13 +82,13 @@
     "Mapped source pages pass the page-kit preparation check (document wrappers stripped, no leftover frontmatter, no source-file internal links)",
     "CampaignSpec package purchase availability has no unavailable package refs in active build data",
     "Built output root found at _site/apf-funnel/",
-    "Build output fingerprint matches stages.assembly.build_fingerprint (196 file(s) under _site/apf-funnel/)",
+    "Build output fingerprint matches stages.assembly.build_fingerprint (197 file(s) under _site/apf-funnel/)",
     "Built HTML structure and commerce refs checked in _site/apf-funnel/ for 9 page(s)",
     "Every bundle selector on 5 built post-purchase page(s) is scoped away from the live cart (5 selector(s) scanned)",
     "All 9 built page(s) agree on campaign identity (next-funnel \"SKINOFAB Adaptive Peptide Foundation\", API key consistent)",
     "SDK markup: 3 data-next-* name(s) not in the Campaign Cart 0.4.42 attribute index (advisory; the SDK does not read them): data-next-catalog-component, data-next-content, data-next-skeleton",
     "SDK markup checks passed on 9 built page(s)",
-    "All 12 campaign-owned script(s) loaded by built pages parse",
+    "All 13 campaign-owned script(s) loaded by built pages parse",
     "Built SDK meta tags checked in _site/apf-funnel/ for 9 page(s)",
     "Page Kit build summary verified for \"apf-funnel\": 9 page(s) built, no build errors, shape warnings or asset warnings",
     "Built routes match CampaignSpec page routes (9/9 verified)",
@@ -405,9 +405,9 @@
         "waiver": null,
         "status": "pass",
         "code": "built_output.script_syntax.pass",
-        "reason": "All 12 campaign-owned script(s) loaded by 9 built page(s) parse.",
+        "reason": "All 13 campaign-owned script(s) loaded by 9 built page(s) parse.",
         "findings": [],
-        "scripts_scanned": 12,
+        "scripts_scanned": 13,
         "scripts_unresolved": [],
         "scripts_outside_site": [],
         "warned": [],
@@ -437,7 +437,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 28546,
+          "bytes": 28588,
           "candidates": 0
         },
         "members": [],
@@ -449,7 +449,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -485,7 +485,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -509,7 +509,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 62618,
+          "bytes": 62901,
           "candidates": 26
         },
         "members": [],
@@ -521,7 +521,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -545,7 +545,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 17034,
+          "bytes": 17142,
           "candidates": 0
         },
         "members": [],
@@ -557,7 +557,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -593,7 +593,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -629,7 +629,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -653,7 +653,7 @@
           "shape_sha256": null,
           "known": false,
           "occurrences": [],
-          "bytes": 36789,
+          "bytes": 36969,
           "candidates": 10
         },
         "members": [],
@@ -665,7 +665,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -701,7 +701,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -737,7 +737,7 @@
             "sdk_pin_unverified"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.430Z",
+        "measured_at": "2026-10-30T12:23:29.744Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -764,7 +764,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -796,7 +796,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -828,7 +828,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -860,7 +860,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -894,7 +894,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -924,7 +924,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -951,7 +951,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -981,7 +981,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1011,7 +1011,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1041,7 +1041,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1071,7 +1071,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1098,7 +1098,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1130,7 +1130,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1162,7 +1162,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1194,7 +1194,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1228,7 +1228,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1258,7 +1258,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1285,7 +1285,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1315,7 +1315,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1345,7 +1345,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1375,7 +1375,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1402,7 +1402,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1434,7 +1434,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1466,7 +1466,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1498,7 +1498,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1532,7 +1532,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1562,7 +1562,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1589,7 +1589,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1619,7 +1619,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1649,7 +1649,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1679,7 +1679,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1706,7 +1706,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1738,7 +1738,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1770,7 +1770,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1802,7 +1802,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1836,7 +1836,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1866,7 +1866,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1893,7 +1893,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1923,7 +1923,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1953,7 +1953,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -1980,7 +1980,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2012,7 +2012,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2044,7 +2044,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2076,7 +2076,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2110,7 +2110,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2140,7 +2140,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2167,7 +2167,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2197,7 +2197,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2227,7 +2227,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2254,7 +2254,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2286,7 +2286,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2318,7 +2318,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2350,7 +2350,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2384,7 +2384,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2414,7 +2414,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2441,7 +2441,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2471,7 +2471,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2498,7 +2498,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2530,7 +2530,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2562,7 +2562,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2594,7 +2594,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2628,7 +2628,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2658,7 +2658,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2685,7 +2685,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2715,7 +2715,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2745,7 +2745,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2772,7 +2772,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2804,7 +2804,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2836,7 +2836,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2868,7 +2868,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2902,7 +2902,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2932,7 +2932,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2959,7 +2959,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -2989,7 +2989,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3019,7 +3019,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3046,7 +3046,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3078,7 +3078,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3110,7 +3110,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3142,7 +3142,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3176,7 +3176,7 @@
             "og_image_remote_not_fetched"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3206,7 +3206,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3233,7 +3233,7 @@
           "expected": 1,
           "limits": []
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       },
       {
@@ -3263,7 +3263,7 @@
             "development_render"
           ]
         },
-        "measured_at": "2026-10-30T11:22:06.587Z",
+        "measured_at": "2026-10-30T12:23:29.819Z",
         "producer": "campaigns-os doctor"
       }
     ],
@@ -3277,7 +3277,7 @@
       "reason": "Page-load evidence has no hidden eager media above 1,048,576 bytes.",
       "waivable": false,
       "subject": {
-        "build_fingerprint": "sha256:6759dde51c708cb14eeb70fce915d88a343ecefb926ad630437c2c86d6242706",
+        "build_fingerprint": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381",
         "campaign_slug": "apf-funnel",
         "route_scope": "selected",
         "routes": [
@@ -3292,7 +3292,7 @@
       "state": {
         "findings": []
       },
-      "state_fingerprint": "sha256:4287d6593f1b2a0651ace9d9c3508716dcdfd6dc5b7464f622e7b9a672ee38b7",
+      "state_fingerprint": "sha256:344db05cef9110b833c791f2b4e69e42c3b39dff979d645cfd217e730372d5f5",
       "findings": [],
       "waiver": null,
       "waiver_assessment": {
@@ -3457,10 +3457,10 @@
     "build_output_fingerprint": {
       "root": "_site/apf-funnel/",
       "algorithm": "sha256-manifest/v1",
-      "value": "sha256:6759dde51c708cb14eeb70fce915d88a343ecefb926ad630437c2c86d6242706",
-      "file_count": 196,
+      "value": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381",
+      "file_count": 197,
       "excluded": [],
-      "recorded": "sha256:6759dde51c708cb14eeb70fce915d88a343ecefb926ad630437c2c86d6242706",
+      "recorded": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381",
       "status": "pass"
     },
     "live_campaign_refs": {
@@ -3520,8 +3520,8 @@
       "status": "pass",
       "code": "polish.evidence_current",
       "reason": "Polish evidence is current, structured, and produced by next-campaigns-polish.",
-      "build_fingerprint": "sha256:6759dde51c708cb14eeb70fce915d88a343ecefb926ad630437c2c86d6242706",
-      "source_build_fingerprint": "sha256:6759dde51c708cb14eeb70fce915d88a343ecefb926ad630437c2c86d6242706",
+      "build_fingerprint": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381",
+      "source_build_fingerprint": "sha256:6323573ff9fe1a52964e97a01872c040b060a0cec1eb3060fb3a5979f8638381",
       "source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
       "current_source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
       "assembly_source_package_material_fingerprint": "sha256:1111c344b1ecfafb8da91c68bb839ae5b9875a2d16f039779a0f57ea4e9bbed7",
@@ -3559,9 +3559,5 @@
     },
     "prior_run_id": "run_1793270414928_af54ec6a",
     "comparison": "prior_run"
-  },
-  "stale": true,
-  "stale_marked_by": "page-kit parity",
-  "stale_marked_at": "2026-10-30T12:21:08.898Z",
-  "stale_reason": "Local proof production parity was recorded after this doctor snapshot. Re-run npx --no-install campaigns-os doctor (or next) for current state."
+  }
 }
