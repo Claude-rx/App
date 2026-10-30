@@ -230,6 +230,9 @@ if _axf.exists():
     # AXON requires user_data on purchase: the adapter maps the SDK's user_properties (customer_email/phone/id)
     if 'params.user_data = user' not in _ax or 'up.customer_email' not in _ax:
         fail('all pages', 'axon.adapter.js does not send user_data on purchase (AXON flags it as required)')
+    # AXON image_url must end in .png/.jpg/.jpeg; the SDK's .webp package thumbnails are mapped to the store JPGs
+    if 'IMAGE_BY_VARIANT' not in _ax or 'IMAGE_RE.test(' not in _ax:
+        fail('all pages', 'axon.adapter.js sends the SDK .webp image_url (AXON wants .png/.jpg/.jpeg)')
 
 if problems:
     print(f'check_funnel: {len(problems)} problem(s)'); print('\n'.join('  ' + x for x in problems)); sys.exit(1)

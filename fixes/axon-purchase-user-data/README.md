@@ -18,9 +18,16 @@ begin_checkout. AXON requires a numeric `item_category_id` on every item; the SD
 was being dropped. Every item now gets `window.__axonItemCategoryId`, falling back to **2765** (Google product taxonomy:
 Cosmetics > Makeup > Face Makeup > Foundations & Concealers). A numeric SDK category still wins.
 
+**Follow-up 2 (30 Oct 2026):** still one orange warning per item. Read from the AXON Pixel Helper 1.3.6 rules
+(`https://s.axon.ai/_assets/pixel-helper/structures.yaml` and the extension's image check): `image_url` must end in
+`.png/.jpg/.jpeg`, and the SDK sends `.webp` package thumbnails. Every store variant now maps to its product JPG on
+`cdn.29next.store` (`IMAGE_BY_VARIANT`, from the Admin API; add new variants there). Also: `item_brand` defaults to
+SKINOFAB, and `user_data` (email/phone/user_id: the only keys AXON's pixel accepts) rides on every ecommerce event once
+the shopper is known. Purchase: `user_data.email` required, `phone` and `user_id` recommended.
+
 **Files:** `sfa-axon-adapter-3194de.js` (patched) · `.orig.js` (live copy before the fix, for rollback) · `axon-adapter.test.mjs`
 
-**Test:** `npm run test:axon` → 10/10 pass on the patch; the original fails the 4 user_data tests.
+**Test:** `npm run test:axon` → 13/13 pass on the patch; the original fails the 4 user_data tests.
 
 **Deploy (single file, theme 34):**
 ```bash

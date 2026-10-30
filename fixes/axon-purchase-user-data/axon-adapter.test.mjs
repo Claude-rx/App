@@ -45,12 +45,13 @@ test('checkout events also carry user_data', () => {
   adapter.send('add_payment_info', ec, evt({ customer_email: 'x@y.com' }));
   assert.deepEqual(calls.map(c => c[2].user_data), [{ email: 'x@y.com' }, { email: 'x@y.com' }]);
 });
-test('browse events never carry user_data; page_view stays bare', () => {
+test('browse events carry user_data once the shopper is known; page_view stays bare', () => {
   const { calls, adapter } = load();
   adapter.send('view_item', ec, evt({ customer_email: 'x@y.com' }));
-  adapter.send('add_to_cart', ec, evt({ customer_email: 'x@y.com' }));
+  adapter.send('add_to_cart', ec, evt({}));
   adapter.send('page_view', {}, evt({ customer_email: 'x@y.com' }));
-  assert.equal(calls[0][2].user_data, undefined); assert.equal(calls[1][2].user_data, undefined);
+  assert.deepEqual(calls[0][2].user_data, { email: 'x@y.com' });
+  assert.equal('user_data' in calls[1][2], false);
   assert.deepEqual(calls[2], ['track', 'page_view']);
 });
 test('kill switch window.__axonSendUserData = false', () => {
@@ -79,4 +80,40 @@ test('numeric SDK category wins; configured fallback overrides default; junk con
   assert.equal(r.calls[0][2].items[0].item_category_id, 567);
   r = load({ __axonItemCategoryId: 'Skin Care' }); r.adapter.send('view_item', ec, evt({}));
   assert.equal(r.calls[0][2].items[0].item_category_id, 2765);
+});
+
+// AXON Pixel Helper 1.3.6 rules (https://s.axon.ai/_assets/pixel-helper/structures.yaml + its image_url check):
+// every AxonItem field below is Recommended (orange when missing or malformed); purchase also requires user_data.email.
+const ITEM_RECOMMENDED = ['item_variant_id', 'item_id', 'item_name', 'item_category_id', 'image_url', 'price', 'quantity'];
+const AXON_IMAGE_RE = /^https?:\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w-./?%&=]*)?\.(png|jpe?g)(?:[?#].*)?$/i;
+const itemWarnings = (it) => ITEM_RECOMMENDED.filter(k => it[k] === undefined || it[k] === null || it[k] === '')
+  .concat(it.image_url !== undefined && !AXON_IMAGE_RE.test(it.image_url) ? ['image_url format'] : [])
+  .concat(typeof it.item_category_id !== 'number' ? ['item_category_id type'] : []);
+// What the live SDK sent on 30 Oct 2026 (captured on try.skinofab.com): a .webp package thumbnail and no brand.
+const liveItem = { item_id: 'SKF-APF-3-GIFTS', item_name: 'Adaptive Peptide Foundation', price: 75, quantity: 1, item_variant_id: '268',
+  item_category: 'SKINOFAB Adaptive Peptide Foundation Funnel', item_image: 'https://d1w87fp8j98gad.cloudfront.net/media/thumbnails/269c586ec01f40a7b8849828c9a21cec.webp' };
+test('live items pass every AXON Pixel Helper item rule (no orange)', () => {
+  const { calls, adapter } = load();
+  const live = { currency: 'USD', value: 75, items: [liveItem], transaction_id: '101700', tax: 0, shipping: 0 };
+  for (const name of ['view_item', 'add_to_cart', 'begin_checkout', 'purchase']) adapter.send(name, live, evt({ customer_email: 'a@b.co' }));
+  for (const [, name, p] of calls) {
+    assert.deepEqual(itemWarnings(p.items[0]), [], name);
+    assert.equal(p.items[0].image_url, 'https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg');
+    assert.equal(p.items[0].item_brand, 'SKINOFAB');
+  }
+  assert.equal(calls[3][2].user_data.email, 'a@b.co');
+});
+test('a .jpg from the SDK is kept; unknown variant falls back to window.__axonItemImage or is left out', () => {
+  let r = load(); r.adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_image: 'https://x.example.com/p.jpg' }] }, evt({}));
+  assert.equal(r.calls[0][2].items[0].image_url, 'https://x.example.com/p.jpg');
+  r = load({ __axonItemImage: 'https://x.example.com/f.png' }); r.adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_variant_id: '99999' }] }, evt({}));
+  assert.equal(r.calls[0][2].items[0].image_url, 'https://x.example.com/f.png');
+  r = load(); r.adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_variant_id: '99999' }] }, evt({}));
+  assert.equal(r.calls[0][2].items[0].image_url, undefined);
+});
+test('every store variant maps to a .jpg/.png', () => {
+  for (const v of ['15', '103', '268', '269', '270', '301', '170', '171', '172', '271', '203', '204', '205', '207', '208', '209', '236', '237']) {
+    const { calls, adapter } = load(); adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_variant_id: v }] }, evt({}));
+    assert.match(calls[0][2].items[0].image_url, AXON_IMAGE_RE, v);
+  }
 });

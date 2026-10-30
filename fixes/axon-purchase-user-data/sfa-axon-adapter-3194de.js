@@ -5,7 +5,10 @@
    SDK's user_properties — AXON flags purchase without user_data as an error. Keep it when re-syncing.
    SKINOFAB LOCAL PATCH (30 Oct 2026): AXON requires a numeric item_category_id on every item (Pixel Helper warns once
    per item without it). Falls back to window.__axonItemCategoryId, else 2765 (Google product taxonomy: Health & Beauty >
-   Personal Care > Cosmetics > Makeup > Face Makeup > Foundations & Concealers). Keep it when re-syncing. */
+   Personal Care > Cosmetics > Makeup > Face Makeup > Foundations & Concealers). Keep it when re-syncing.
+   SKINOFAB LOCAL PATCH (30 Oct 2026): image_url must end in .png/.jpg/.jpeg (AXON Pixel Helper structures.yaml); the
+   SDK sends .webp thumbnails, so each variant maps to its store JPG. item_brand defaults to SKINOFAB, and user_data rides
+   on every ecommerce event once the shopper is known. Keep it when re-syncing. */
 /**
  * axon.adapter.js — AppLovin Axon adapter for next-forwarder-core.js (Route C, no GTM).
  *
@@ -66,8 +69,10 @@
     search:           ['search_term']
   };
 
-  // Events that carry user_data. AXON requires it on purchase; checkout events improve matching too.
-  var USER_DATA_EVENTS = { purchase: 1, begin_checkout: 1, add_payment_info: 1 };
+  // Events that carry user_data when the shopper is known (AXON: required on purchase, optional elsewhere). It is
+  // only ever the shopper's own email/phone/id, so it rides on every ecommerce event; page_view stays bare.
+  var USER_DATA_EVENTS = { purchase: 1, begin_checkout: 1, add_payment_info: 1, view_item: 1, add_to_cart: 1,
+    remove_from_cart: 1, view_cart: 1, subscribe: 1, login: 1, sign_up: 1, search: 1 };
 
   function userData(evt) {
     if (window.__axonSendUserData === false || window.__axonSendUserData === 'false') return undefined;
@@ -90,6 +95,38 @@
   }
   var fallbackCategoryId = categoryId(window.__axonItemCategoryId) || DEFAULT_ITEM_CATEGORY_ID;
 
+  // AXON image_url must be a .png/.jpg/.jpeg URL (Pixel Helper warns on anything else). The SDK's package images are
+  // .webp thumbnails, so each store variant maps to its product's JPG on the store CDN (Admin API, 30 Oct 2026).
+  var IMAGE_RE = /^https?:\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w-./?%&=]*)?\.(png|jpe?g)(?:[?#].*)?$/i;
+  var IMAGE_BY_VARIANT = {
+    "15":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "103":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "268":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "269":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "270":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "301":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "170":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
+    "171":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
+    "172":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
+    "271":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
+    "203":"https://cdn.29next.store/media/skinofab/images/products/2026/10/hero-f163d1.jpg",
+    "204":"https://cdn.29next.store/media/skinofab/images/products/2026/10/hero-f163d1.jpg",
+    "205":"https://cdn.29next.store/media/skinofab/images/products/2026/10/hero-f163d1.jpg",
+    "207":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-97ecd1.jpg",
+    "208":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-97ecd1.jpg",
+    "209":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-97ecd1.jpg",
+    "236":"https://cdn.29next.store/media/skinofab/images/products/2026/10/duo-ends-1743e5.jpg",
+    "237":"https://cdn.29next.store/media/skinofab/images/products/2026/10/duo-ends-1743e5.jpg"
+  };
+  function imageUrl(it) {
+    if (typeof it.item_image === 'string' && IMAGE_RE.test(it.item_image)) return it.item_image;
+    var mapped = it.item_variant_id !== undefined && it.item_variant_id !== null ? IMAGE_BY_VARIANT[String(it.item_variant_id)] : undefined;
+    if (mapped) return mapped;
+    var fallback = window.__axonItemImage;
+    return typeof fallback === 'string' && IMAGE_RE.test(fallback) ? fallback : undefined;
+  }
+  var DEFAULT_BRAND = 'SKINOFAB';
+
   // Map an SDK EcommerceItem to Axon's item object (mostly GA4-shaped; a couple of renames).
   function mapItems(items) {
     return (items || []).map(function (it) {
@@ -98,14 +135,15 @@
       if (it.item_name) out.item_name = it.item_name;
       if (it.price !== undefined && it.price !== null) out.price = it.price;
       if (it.quantity !== undefined && it.quantity !== null) out.quantity = it.quantity;
-      if (it.item_brand) out.item_brand = it.item_brand;
+      out.item_brand = it.item_brand || window.__axonItemBrand || DEFAULT_BRAND;
       if (it.item_variant_id) out.item_variant_id = it.item_variant_id;
       // Axon: item_category_id is an integer id. The SDK's item_category is the campaign's name, which Axon rejects
       // with HTTP 400 for the whole event (view_item, begin_checkout, purchase: live review 6, 29 Oct 2026), so it is
       // sent only when it is a whole number. LOCAL PATCH over the generated copy: keep it when re-syncing.
       // Otherwise the store-wide fallback, so the required field is never missing.
       out.item_category_id = categoryId(it.item_category) || fallbackCategoryId;
-      if (it.item_image) out.image_url = it.item_image;               // Axon: image_url
+      var img = imageUrl(it);
+      if (img) out.image_url = img;                                    // Axon: image_url (.png/.jpg/.jpeg only)
       if (it.discount !== undefined && it.discount !== null && it.discount !== '') out.discount = it.discount;
       return out;
     });

@@ -658,6 +658,9 @@ if 'out.item_category_id = it.item_category;' in _ax or 'categoryId(it.item_cate
 # AXON requires user_data on purchase: the adapter maps the SDK's user_properties (customer_email/phone/id)
 if 'params.user_data = user' not in _ax or 'up.customer_email' not in _ax:
     fail('all pages', 'axon.adapter.js does not send user_data on purchase (AXON flags it as required)')
+# AXON image_url must end in .png/.jpg/.jpeg; the SDK's .webp package thumbnails are mapped to the store JPGs
+if 'IMAGE_BY_VARIANT' not in _ax or 'IMAGE_RE.test(' not in _ax:
+    fail('all pages', 'axon.adapter.js sends the SDK .webp image_url (AXON wants .png/.jpg/.jpeg)')
 
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)
