@@ -220,3 +220,8 @@ html:not(.next-display-ready) .upsell-wrapper[data-next-await] [data-upsell-prox
 /* the thank-you page's policy links, the same six as every funnel footer: they wrap on a phone, each a 44 px target */
 .checkout-footer-links { flex-wrap: wrap; column-gap: 18px; row-gap: 0; }
 .checkout-footer-links .link { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* the no-order note keeps a side gutter on a phone (its border sat on both screen edges at 390, live review 13, F1) */
+@media (max-width: 600px) { .sf-no-order-note { margin-left: 16px; margin-right: 16px; } }
+/* a one-click add that failed (sf-offer-gate.js): said plainly at the top while the page moves on */
+.sf-add-failed { position: sticky; top: 0; z-index: 1000; margin: 0; padding: 14px 16px; background: #151515; color: #fff; font-size: 16px; line-height: 1.4; text-align: center; }

@@ -14,9 +14,10 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
               box; no post-purchase voucher code anywhere on the page; the exit pop applies the exit offer; the
               guarantee right above the order button, the three featured reviews after it (never between the address
               and the payment), 8+ review cards each with the buyer's photo, the reviews' rating and where they are from
-  sales page  each pack's price is its package's, its renewal the same price every 28 days a bottle, no crossed-out price
-              and no saving on a pack (the store's own refills are lower, live review 8), every checkout link names a
-              checkout card, no disclaimer or illustration line anywhere
+  sales page  each pack's price is its package's, its renewal the same price every 28 days a bottle, its crossed-out
+              price (if any) the 1-bottle price times its bottles and its price the 1-bottle price times the bottles she
+              pays for (the free-bottle claims are that arithmetic), every checkout link names a checkout card, no
+              disclaimer or illustration line anywhere
   offer 1     the supply cards: each card's package is the page's, its price the package's, its crossed-out price the
               store's one-time price for the same bottles (funnels/apf.py store_once), named, its per-bottle and per-day
               prices arithmetic; the cards sit in an upsell-context selector inside
@@ -53,8 +54,8 @@ PAGES = {p['id']: p for p in SPEC['funnels'][0]['pages']}
 OFFERS = {o['ref_id']: o for o in SPEC['offers']}
 ALL_PKGS = {p['ref_id']: p for pg in PAGES.values() for p in pg.get('packages', [])}
 SKUS = {p['product_sku'] for p in ALL_PKGS.values()}
-BRUSH_SKUS = {'SKF-APF-3-GIFTS', 'SKF-APF-6-BRUSH'}      # the packages that include the Lymphatic Brush
-GIFT_SKUS = {'SKF-APF-2-GIFTS', 'SKF-APF-3-GIFTS'}       # the packages with the Blender sponge and the mystery gift
+BRUSH_SKUS = {'SKF-APF-5-BRUSH', 'SKF-APF-6-BRUSH'}      # the packages that include the Lymphatic Brush
+GIFT_SKUS = {'SKF-APF-3-BLENDER'}                         # the package with the Blender sponge (no mystery gift since 30 Oct 2026)
 ONE_SKU = 'SKF-APF-1'                                    # one bottle: the price the supply cards' arithmetic starts from
 # what the pages may never say (the foundation's claims rules, docs/apf-funnel/persona.md; "made not to" / "designed not
 # to" keep "settle" hedged)
@@ -97,12 +98,11 @@ FORBIDDEN = [
     (r'\blowest price we will ever\b', 'a "lowest ever" price (the downsells go lower)'),
     (r'\blowest single-bottle price anywhere\b', 'a "lowest anywhere" price on offer 2 (its downsell goes lower)'),
     (r'\bsix for the price of three\b', '"six for the price of three" (no shown price backs it)'),
-    # live review 7, B1 (the owner, 29 Oct 2026, before the ads): the 3-bottle pack is "3 bottles for $75, $25 a bottle";
-    # "buy 2, get 1 free" beside the $57 2-bottle pack made the free bottle cost $18
-    (r'\bbuy\s+(?:2|two),?\s+get\s+(?:1|one)\b', '"buy 2, get 1 free" (the 2-bottle pack costs $57)'),
-    (r'\b(?:3rd|third)\s+(?:bottle\s+)?(?:is\s+)?free\b', '"the 3rd bottle free" (the 2-bottle pack costs $57)'),
-    (r'\bpay\s+for\s+(?:2|two)\b', '"pay for 2" (the 2-bottle pack costs $57)'),
-    (r'\+\s?1\s+free\b', '"+1 free" (the 2-bottle pack costs $57)'),
+    # the owner's offer of 30 Oct 2026: no mystery gift any more (the Blender with 3 bottles, the brush with 5); the
+    # free-bottle claims ("buy 2, get 1 free", "buy 3, get 2 free") are checked as arithmetic below, not forbidden
+    (r'\bmystery gift\b', 'a mystery gift (gone since 30 Oct 2026)'),
+    (r'\badd 1,? get 1 free\b', '"add 1, get 1 free" (two bottles for $39 when one is $33.97)'),
+    (r'\ban extra 10\s?%|\bEXTRA 10\s?%', '"an extra 10%" (live review 13, F3: say "10% off")'),
 ]
 # SPF may only be mentioned as what the foundation does not have, or as her own sunscreen under it
 SPF_OK = re.compile(r"(?:no|not an?|has no|without|doesn[’']t have|does it have|left)\s+SPF|SPF\s+out\b|SPF\?|"
@@ -118,7 +118,10 @@ PACK_BY_REF = {p['package']: p for p in F.PACKS}
 PENDING = os.environ.get('APF_RECURRING_PENDING') == '1'
 
 
-def renew(p): return f"Then ${p['price']:.0f} every {p['every']} days"          # "Then $57 every 56 days"
+def usd(v): return f'${v:.2f}'.replace('.00', '')                              # "$33.97", "$19"
+
+
+def renew(p): return f"Then {usd(p['price'])} every {p['every']} days"          # "Then $33.97 every 28 days"
 
 
 problems = []
@@ -170,8 +173,10 @@ def gifts_said(where, sku, t):
     """A package with gifts names them; one without names none."""
     t = t.lower()
     if sku in BRUSH_SKUS and 'lymphatic brush' not in t: fail(where, f'{sku}: the free Lymphatic Brush is not named')
-    if sku in GIFT_SKUS and ('blender sponge' not in t or 'mystery gift' not in t): fail(where, f'{sku}: the Blender sponge and mystery gift are not named')
-    if sku not in GIFT_SKUS | BRUSH_SKUS and re.search(r'\bfree [a-z]+ (?:brush|gift)', t): fail(where, f'{sku}: a gift named on a package without one')
+    if sku in GIFT_SKUS and 'blender sponge' not in t: fail(where, f'{sku}: the free Blender sponge is not named')
+    if sku in GIFT_SKUS and 'lymphatic brush' in t: fail(where, f'{sku}: the Lymphatic Brush named on the pack that comes with the Blender')
+    if sku in BRUSH_SKUS and 'blender' in t: fail(where, f'{sku}: the Blender named on a pack that comes with the brush')
+    if sku not in GIFT_SKUS | BRUSH_SKUS and re.search(r'\bfree [a-z]+ (?:brush|gift|sponge)', t): fail(where, f'{sku}: a gift named on a package without one')
 
 
 for bid, items, attrs, body in cards:
@@ -287,7 +292,13 @@ for m in re.finditer(r'<label class="sf-pack[^"]*" data-pack="([^"]+)" data-pric
     if not want or renewal != renew(want) or every != f"{want['every']} days": fail('offer', f'pack {pack}: renews "{renewal}" every "{every}", not "{renew(want) if want else "?"}"')
     card = pp[m.end():pp.find('</label>', m.end())]
     if renewal not in text(card): fail('offer', f'pack {pack}: its renewal is not on its card')
-    if re.search(r'<s>\$|SAVE \$', card.split('sf-gifts')[0]): fail('offer', f'pack {pack}: a crossed-out price or a saving (the store\'s own refills are lower)')
+    # the free bottles: the pack's price is the 1-bottle price times the bottles she pays for, its crossed-out price the
+    # 1-bottle price times the bottles she gets (the owner's offer of 30 Oct 2026), and nothing else is struck through
+    _struck = re.findall(r'<s>\$([\d.]+)</s>', card.split('sf-gifts')[0])
+    if want and abs(float(price) - F.UNIT * want['paid']) > 0.005: fail('offer', f'pack {pack}: ${price} is not {want["paid"]} x ${F.UNIT}')
+    if _struck != ([f"{F.UNIT * want['bottles']:.2f}"] if want and want.get('compare') else []): fail('offer', f'pack {pack}: crossed-out {_struck}, not {want["bottles"] if want else "?"} x ${F.UNIT}')
+    if want and want.get('compare') and abs(want['compare'] - F.UNIT * want['bottles']) > 0.005: fail('offer', f'pack {pack}: compare {want["compare"]} is not {want["bottles"]} x {F.UNIT}')
+    if 'SAVE $' in card: fail('offer', f'pack {pack}: a dollar saving on the card')
     gifts_said(f'offer pack {pack}', p['product_sku'], text(card))      # the pack's own card
 if seen != card_ids: fail('offer', f'packs {sorted(seen)} are not the checkout cards {sorted(card_ids)}')
 for pack in re.findall(r'class="sf-pack[^"]*" data-pack="([^"]+)"', pp):
@@ -323,7 +334,7 @@ for bid, items, attrs, body in cards1:
     mp = re.search(r'\$([\d.]+) a bottle', t)
     if not mp or abs(float(mp.group(1)) - price / bottles) > 0.005: fail('offer-1', f'card {bid}: per-bottle price is not {money(price)} / {bottles}')
     md = re.search(r'\$([\d.]+) a day', t)
-    if not md or abs(float(md.group(1)) - price / (bottles * 30)) > 0.006: fail('offer-1', f'card {bid}: per-day price is not {money(price)} over {bottles} months')
+    if not md or abs(float(md.group(1)) - price / (bottles * 28)) > 0.006: fail('offer-1', f'card {bid}: per-day price is not {money(price)} over {bottles} x 28 days (live review 13, F4)')
     if 'Charged once' not in t: fail('offer-1', f'card {bid}: not said to be charged once')
     gifts_said(f'offer-1 card {bid}', p['product_sku'], t)
     if 'data-sf-supply-card' not in attrs: fail('offer-1', f'card {bid}: not a supply card (js/sf-supply.js)')
@@ -553,8 +564,8 @@ for p in F.PAGES:
     if m: fail(p['id'], f'an unsourced ranking of complaints: "{m.group(0)}"')
 # F5: a renewing price always with its renewal
 for p in F.PAGES:
-    m = re.search(r'1 bottle for \$39(?!(?:\.00)?,? then \$39(?:\.00)? every 28 days)', text(html(p['id'])))
-    if m: fail(p['id'], 'the 1-bottle price without its renewal ("then $39 every 28 days")')
+    m = re.search(r'1 bottle for \$33\.97(?!,? then \$33\.97 every 28 days)', text(html(p['id'])))
+    if m: fail(p['id'], 'the 1-bottle price without its renewal ("then $33.97 every 28 days")')
 # F6: a featured quote carries no absolute claim about lines (the full review cards stay verbatim)
 _more = re.search(r'<ul class="sf-morequotes">(.*?)</ul>', _sp, re.S)
 for pid, chunk in (('offer', _more.group(1) if _more else ''), ('listicle', _lst)):
@@ -624,7 +635,10 @@ else:
     _picked = json.loads(unescape(_pk.group(1)))
     for bid, items, attrs, body in cards:
         ref = json.loads(items)[0]['packageId']
-        if ref in PACK_BY_REF and f"· ${PACK_BY_REF[ref]['price']:g}" not in _picked.get(bid, ''): fail('checkout', f'"Your pack" for {bid}: "{_picked.get(bid)}"')
+        if ref in PACK_BY_REF and not _picked.get(bid, '').startswith(f"{PACK_BY_REF[ref]['bottles']} bottle"): fail('checkout', f'"Your pack" for {bid}: "{_picked.get(bid)}"')
+    # its price is the SDK's cart total, so it follows the exit coupon (live review 13, F3: "$75" beside a $67 total)
+    _pl = co[_pk.start():co.find('</p>', _pk.start())]
+    if 'data-next-display="cart.total"' not in _pl or re.search(r'\$\d', ''.join(_picked.values())): fail('checkout', '"Your pack" states a fixed price, not the cart total')
 # F7: every store page stops the AppLovin pixel under GPC or the privacy choices opt-out, before the app's snippet
 _bl = (THEME / 'layouts' / 'base.html').read_text(encoding='utf-8')
 if not re.search(r'<meta charset="UTF-8" />\s*<script>\(function \(\) \{ var out = navigator\.globalPrivacyControl === true \|\| /\(\?:\^\|;\\s\*\)sf_optout=1/', _bl): fail('theme', 'the store pages load the AppLovin pixel under GPC or after the opt-out')
@@ -711,6 +725,46 @@ if not re.search(r'\.sf-reason--wide \.sf-reason__media \{[^}]*position:\s*stati
 _ax = (SITE / 'js' / 'axon.adapter.js').read_text(encoding='utf-8')
 if 'out.item_category_id = it.item_category' in _ax or 'Number(it.item_category)' not in _ax:
     fail('all pages', 'axon.adapter.js sends the text item_category as item_category_id (Axon answers 400 to view_item, begin_checkout and purchase)')
+
+# live review 13 --------------------------------------------------------------------------------------------------------
+_ogj = (SITE / 'js' / 'sf-offer-gate.js').read_text(encoding='utf-8')
+# F1: an order the SDK cannot load ("Error" in its fields) is the no-order page; "Error" is never her name; a failed add
+# says so and goes where a decline goes; the clock stops; the no-order note keeps a gutter on a phone
+if "if (can === 'error') { done = true; noOrder(); return; }" not in _ogj or 'failed(n)' not in _ogj: fail('offers', 'an order that fails to load is treated as a live one ("Just for you, Error")')
+if "window.next.on('upsell:error', addFailed)" not in _ogj or 'next-upsell-decline-url' not in _ogj.split('const addFailed')[1][:900]: fail('offers', 'a failed one-click add moves on as if it worked')
+if 'clearInterval(timer)' not in (SITE / 'js' / 'sf-offer-timer.js').read_text(encoding='utf-8'): fail('offers', 'the clock keeps running once the order turns out to be missing')
+if not re.search(r'@media \(max-width: 600px\) \{ \.sf-no-order-note \{ margin-left: 16px; margin-right: 16px; \} \}', _oc): fail('offers', 'the no-order note has no gutter on a phone')
+# F2: the phone sticky bar names the renewal amount
+if "price + ' today, then ' + price + ' every ' + every" not in _apfjs or 'today · then every' in _sp: fail('offer', 'the sticky bar states the renewal without its amount')
+# F3: the coupon is "10% off", never "an extra" (FORBIDDEN above), on the cards' badge too; "Your pack" follows the total (above)
+if 'EXTRA {discount.percentage}' in co: fail('checkout', 'the coupon badge says "EXTRA"')
+# F5: the hero rating says the 9,855 are the published reviews
+if '4.8 out of 5 from 9,855 published reviews at our earlier store' not in text(_sp): fail('offer', 'the hero rating does not say the 9,855 are the published reviews')
+# F6: the listicle's offer box and last button open the sales page at the packs, on the 5-bottle pack
+if _lst.count('adaptive-foundation-offer/?pack=apf-5#offer"') < 2: fail('listicle', 'the offer buttons land at the top of the sales page, not at the packs')
+# F7: the clips whose top-right holds the picture (the day's timeline, the dropper bottle) keep the pause button off it
+if _sp.count('data-sf-pause-corner="tl"') < 1 or _lst.count('data-sf-pause-corner="tl"') < 2 or "getAttribute('data-sf-pause-corner') === 'tl'" not in _apfjs: fail('listicle', 'the pause button covers the timeline or the dropper bottle')
+
+# the owner's offer of 30 Oct 2026 -----------------------------------------------------------------------------------------
+# the free-bottle claims are arithmetic: "buy 2, get 1 free" only beside a pack of 3 at 2 x the 1-bottle price, "buy 3,
+# get 2 free" only beside a pack of 5 at 3 x; the campaign's 1-bottle pack is the price they count against
+_unit = next((float(p_['price']) for p_ in pkgs.values() if p_['product_sku'] == ONE_SKU), None)
+if _unit is None or abs(_unit - F.UNIT) > 0.005: fail('campaign', f'the 1-bottle pack is {_unit}, the pages count the free bottles against ${F.UNIT}')
+for pk in F.PACKS:
+    live = pkgs.get(pk['package'])
+    if live and abs(float(live['price']) - F.UNIT * pk['paid']) > 0.005: fail('campaign', f'package {pk["package"]} costs ${live["price"]}, not {pk["paid"]} x ${F.UNIT}')
+for p in F.PAGES:
+    t = text(html(p['id']))
+    for m in re.finditer(r'\bbuy\s+(\d),?\s+get\s+(\d)\s+free', t, re.I):
+        paid, free = int(m.group(1)), int(m.group(2))
+        if not any(pk['bottles'] == paid + free and pk['paid'] == paid for pk in F.PACKS): fail(p['id'], f'"{m.group(0)}": no pack of {paid + free} at {paid} x ${F.UNIT}')
+# the exit pop's prices are the packs' with its 10% off, rounded down to the dollar as the campaign does
+_ex = OFFERS[PAGES['checkout']['exit_intent']['offer_ref_id']]
+for pk in F.PACKS:
+    _w = f"${int(pk['price'] * (100 - float(_ex['benefit']['value'])) / 100)} for {pk['bottles']}"
+    if _w not in unescape(co): fail('checkout', f'the exit pop does not say "{_w}"')        # (the pop lives in a <template>)
+# the 3-bottle pack comes with the Blender sponge, the 5-bottle pack with the Lymphatic Brush (the owner's words)
+if [pk['gifts'] for pk in F.PACKS] != [[], ['blender'], ['brush']]: fail('funnel', f'the packs\' gifts are {[pk["gifts"] for pk in F.PACKS]}')
 
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)

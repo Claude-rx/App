@@ -65,7 +65,10 @@
         if (!vb.width) return;
         b.style.bottom = 'auto'; b.style.right = 'auto';
         b.style.top = Math.round(vb.top - bb.top - box.clientTop + 8) + 'px';
-        b.style.left = Math.round(vb.right - bb.left - box.clientLeft - 44 - 8) + 'px';
+        // a clip whose top-right holds what it shows (the day's timeline, the dropper bottle) names its clear corner:
+        // data-sf-pause-corner="tl" (live review 13, F7)
+        var left = v.getAttribute('data-sf-pause-corner') === 'tl';
+        b.style.left = Math.round((left ? vb.left : vb.right - 44 - 16) - bb.left - box.clientLeft + 8) + 'px';
       };
       box.appendChild(b); draw(); place();
       v.addEventListener('loadedmetadata', place);
@@ -137,20 +140,20 @@
       });
       set('[data-sf-cta]', function (a) { a.href = a.href.replace(/forceBundleId=[^&#]*/, 'forceBundleId=' + id); });
       set('[data-sf-price]', function (e) { e.textContent = price; });
-      // what the chosen pack renews at (Automatic Refills): under the button, "$75 today, then $75 every 84 days, until you cancel"
+      // what the chosen pack renews at (Automatic Refills): under the button, "$101.91 today, then $101.91 every 140 days, until you cancel"
       set('[data-sf-renew-line] strong', function (e) { e.textContent = price + ' today'; });
       set('[data-sf-renew-text]', function (e) { e.textContent = renew.charAt(0).toLowerCase() + renew.slice(1); });
       set('[data-sf-label]', function (e) { e.textContent = card.getAttribute('data-label'); });
       set('[data-sf-btn-price]', function (e) { e.textContent = '| ' + price; });
       set('[data-sf-sticky-pack]', function (e) { e.textContent = card.getAttribute('data-short'); });
-      set('[data-sf-sticky-price]', function (e) { e.textContent = price + ' today · then every ' + every; });
+      set('[data-sf-sticky-price]', function (e) { e.textContent = price + ' today, then ' + price + ' every ' + every; });   // the amount too (live review 13, F2)
     };
     Array.prototype.forEach.call(pickers, function (p) {
       p.addEventListener('change', function (e) {
         var input = e.target; if (input && input.name === 'sf_pack') sync(input.value);
       });
     });
-    // the pack the URL names comes first (the listicle's offer is the 3-bottle pack: ?pack=apf-3), then the page's own
+    // the pack the URL names comes first (the listicle's offer is the 5-bottle pack: ?pack=apf-5), then the page's own
     var asked = (new URLSearchParams(location.search).get('pack') || '').replace(/[^a-z0-9-]/g, '');
     var wanted = asked && document.querySelector('.sf-pack input[name=sf_pack][value="' + asked + '"]');
     var first = wanted || document.querySelector('.sf-pack input[name=sf_pack]:checked') || document.querySelector('.sf-pack input[name=sf_pack]');
@@ -216,7 +219,7 @@
   }, true);
 })();
 
-// A link that lands on a section (the listicle's ?pack=apf-3#offer) stays on it while the page above settles: the
+// A link that lands on a section (the listicle's ?pack=apf-5#offer) stays on it while the page above settles: the
 // browser scrolls to the anchor before the photos and fonts above it are in, so the section slid ~840 px away and
 // jumped back about a second later (live review 5). Until she touches, scrolls or presses a key, every layout change
 // until 1.5 s after the page has loaded (6 s at most) puts the section back at the top, without an animation.

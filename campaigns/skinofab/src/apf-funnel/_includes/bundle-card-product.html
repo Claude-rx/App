@@ -9,13 +9,15 @@
   struck price, the savings line and the offer badge wait for the SDK (checkout-brand.css hides the badge until the SDK
   marks it next-discounts-has-items and the savings line while its amount is empty: a dash and an empty red pill showed
   for ~5 s, live review 1);
-  the coupon badge says "EXTRA 10% OFF" (a bare "+10%" read as a surcharge).
+  the coupon badge says "10% OFF" (a bare "+10%" read as a surcharge; "EXTRA" implied a discount the card did not show,
+  live review 13, F3); card_compare (a bundle's compare) is the crossed-out price of the free bottles, until the SDK strikes
+  a price of its own (checkout-brand.css hides it then).
 {%- endcomment -%}
 <div data-next-bundle-card data-next-bundle-id="{{ bundle_id }}"{% if shipping_id and shipping_id != "" %} data-next-shipping-id="{{ shipping_id }}"{% endif %}{% if bundle_vouchers and bundle_vouchers != "" %} data-next-bundle-vouchers="{{ bundle_vouchers }}"{% endif %} data-next-bundle-items='{{ items }}'{% if selected %} data-next-selected="true"{% endif %} role="button" class="bundle-card{% if selected %} next-selected{% endif %}">
   <div class="bundle-card__badges">
     {% if badge_text and badge_text != "" %}<div class="bundle-card__badge bundle-card__badge--{{ badge_tone | default: 'popular' }}">{{ badge_text }}</div>{% endif %}
     <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
-    <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>EXTRA {discount.percentage} OFF</span></template></div>
+    <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>{discount.percentage} OFF</span></template></div>
   </div>
   <div class="bundle-card__main" data-next-package-id="{{ package_id }}">
     <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
@@ -26,7 +28,7 @@
     </div>
     <div class="bundle-card__price">
       <div class="bundle-card__price-row">
-        <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
+        {% if card_compare and card_compare != "" %}<s class="sf-card-was">{{ card_compare }}</s>{% endif %}<span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
         <span data-next-bundle-display="price" class="bundle-card__price-total">{{ card_price | default: '--' }}</span>
       </div>
       <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>

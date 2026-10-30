@@ -25,8 +25,8 @@ meta_tags:
 # one with their photos, the packshots on natural shadows, the offer box rebuilt around a wordless flat lay and a
 # value stack. Every claim is the sales page's: adapts to your tone (never every tone), designed not to settle, no
 # SPF, no study, no doctor, no countdown.
-offer_bar: "3 BOTTLES FOR $75 + a FREE Lymphatic Brush · Free shipping"
-offer_bar_short: "3 bottles for $75"
+offer_bar: "BUY 3, GET 2 FREE + a FREE Lymphatic Brush · From $33.97 · Free shipping"
+offer_bar_short: "Buy 3, get 2 FREE"
 headline: "10 Reasons Why Women Over 45 Look Fresher With This ‘Shade-Adapting’ Foundation"
 subhead: "It goes on white and adapts to your skin tone as you blend, in a hydrating serum made for skin after 45: no shade to guess, a finish designed not to settle into lines, about a minute with your fingertips."
 intro:
@@ -143,20 +143,21 @@ mid_cta:
 # the lowest price, no value table; every button opens the sales page, where she reads the rest and picks her pack
 cta:
   eyebrow: "Your offer"
-  title: "3 bottles for $75 + a FREE Lymphatic Brush"
+  title: "Buy 3, get 2 FREE + a FREE Lymphatic Brush"
   points:
-    - "<strong>$25 a bottle</strong> in the 3-bottle pack"
-    - "<strong>FREE Lymphatic Brush</strong>, a Blender sponge and a mystery gift with your first order"
+    - "<strong>5 bottles for $101.91</strong>: you pay for 3, about five months"
+    - "<strong>FREE Lymphatic Brush</strong> with its case, with your first order"
+    - "<strong>Or buy 2, get 1 FREE:</strong> 3 bottles for $67.94 with a free Blender sponge"
     - "<strong>Free shipping</strong>, and refills at the same price you can skip or cancel any time"
     - "<strong>30-day money-back guarantee</strong>, even opened"
-  from: "$25"
+  from: "$20.38"
   from_unit: "a bottle"
-  from_note: "In the 3-bottle pack ($75, then $75 every 84 days). Or start with 1 bottle for $39, then $39 every 28 days."
+  from_note: "In the 5-bottle pack ($101.91, then $101.91 every 140 days). Or start with 1 bottle for $33.97, then $33.97 every 28 days."
   button: "SEE THE OFFER →"
   note: "FREE SHIPPING · SKIP OR CANCEL ANY TIME · 30-DAY MONEY-BACK GUARANTEE"
-  image_alt: "The Adaptive Peptide Foundation: three bottles with the free Lymphatic Brush and its case"
-  price: "From $25 a bottle in the 3-bottle pack ($75), or 1 bottle for $39. Each pack refills at the same price until you cancel (3 bottles every 84 days, 1 bottle every 28); one ready-made email cancels, no fees. The 3-bottle pack with the free brush is only in this launch."
-  text: "From $25 a bottle, with a FREE Lymphatic Brush, 2 free gifts and free shipping. Or 1 bottle for $39."
+  image_alt: "The Adaptive Peptide Foundation: five bottles with the free Lymphatic Brush and its case"
+  price: "From $20.38 a bottle in the 5-bottle pack ($101.91: buy 3, get 2 free), $22.65 in the 3-bottle pack ($67.94: buy 2, get 1 free), or 1 bottle for $33.97. Each pack refills at the same price until you cancel (5 bottles every 140 days, 3 every 84, 1 every 28); one ready-made email cancels, no fees. The free bottles and the free brush are only in this launch."
+  text: "Buy 3, get 2 FREE, with a FREE Lymphatic Brush and free shipping. Or 1 bottle for $33.97."
 reviews:
   excellent: "Rated"
   stars: "4.8 out of 5 · 9,855 reviews of this formula"
@@ -185,7 +186,7 @@ mission:
     - "That’s why we put a foundation that adapts to your tone into a skincare serum: one pump, your fingertips, about a minute. It won’t make you look 30, and we won’t pretend it will."
 closing: "No shade to guess, and 30 days to decide."
 ---
-{% assign offer_link = next_url | campaign_link %}
+{% assign offer_link = next_url | campaign_link %}{% assign pack_link = offer_link | append: '?pack=apf-5#offer' %}
 <header class="sf-bar">
   <div class="sf-bar__in">
     <img class="sf-bar__logo" src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="110" height="22">
@@ -221,7 +222,7 @@ closing: "No shade to guess, and 30 days to decide."
     </figure>
     {% elsif r.clip %}
     <figure class="sf-reason__media sf-reason__clip">
-      <video data-sf-lazy muted loop playsinline preload="none" data-sf-poster="{{ 'images/sf/' | append: r.clip | append: '-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="{{ r.alt }}">
+      <video data-sf-pause-corner="tl" data-sf-lazy muted loop playsinline preload="none" data-sf-poster="{{ 'images/sf/' | append: r.clip | append: '-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="{{ r.alt }}">
         <source src="{{ 'images/sf/' | append: r.clip | append: '.webm' | campaign_asset }}" type="video/webm">
         <source src="{{ 'images/sf/' | append: r.clip | append: '.mp4' | campaign_asset }}" type="video/mp4">
       </video>
@@ -229,7 +230,7 @@ closing: "No shade to guess, and 30 days to decide."
     </figure>
     {% elsif r.ingredients %}
     <figure class="sf-reason__media sf-reason__clip">
-      <video data-sf-lazy muted loop playsinline preload="none" data-sf-poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="A cream sits heavy on top of a skin cross-section, while a drop of the serum spreads into a thin, light layer on the other">
+      <video data-sf-pause-corner="tl" data-sf-lazy muted loop playsinline preload="none" data-sf-poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="A cream sits heavy on top of a skin cross-section, while a drop of the serum spreads into a thin, light layer on the other">
         <source src="{{ 'images/sf/science.webm' | campaign_asset }}" type="video/webm">
         <source src="{{ 'images/sf/science.mp4' | campaign_asset }}" type="video/mp4">
       </video>
@@ -291,7 +292,7 @@ closing: "No shade to guess, and 30 days to decide."
       <ul class="sf-cta__points">{% for t in cta.points %}<li>{{ t }}</li>{% endfor %}</ul>
       <p class="sf-cta__from"><span>From</span> <b>{{ cta.from }}</b> <span>{{ cta.from_unit }}</span></p>
       <p class="sf-cta__per">{{ cta.from_note }}</p>
-      <a class="sf-btn sf-btn--xl" href="{{ offer_link }}">{{ cta.button }}</a>
+      <a class="sf-btn sf-btn--xl" href="{{ pack_link }}">{{ cta.button }}</a>
       <p class="sf-cta__note">{{ cta.note }}</p>
       <div class="sf-guarantee" style="margin:14px 0 0;text-align:left"><span class="sf-guarantee__seal">30<br>DAYS</span><div><strong>30-day money-back guarantee</strong>Wear it in your own daylight for 30 days. Not your match? Email us for a full refund, even opened.</div></div>
     </div>
@@ -327,7 +328,7 @@ closing: "No shade to guess, and 30 days to decide."
 
   <section class="sf-closing">
     <h2>{{ closing }}</h2>
-    <a class="sf-btn sf-btn--xl" href="{{ offer_link }}">{{ cta.button }}</a>
+    <a class="sf-btn sf-btn--xl" href="{{ pack_link }}">{{ cta.button }}</a>
   </section>
 </main>
 {% campaign_include 'sf-footer.html' %}

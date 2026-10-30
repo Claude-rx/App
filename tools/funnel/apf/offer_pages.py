@@ -15,24 +15,26 @@ is set once per order and page, survives a reload, and at 0:00 the page declines
 the hero says under the clock). The foundation offers are short (she knows the product): the offer, three reasons, the
 closing card. Only the brush gets a product page, and its loop plays above the fold.
 
-- offer 1 (foundation-offer-1): the supply cards (_includes/sf-supply-cards.html): two bottles for the price of one
-  ("Add 1, get 1 FREE": $39 for two, one bottle being $39) and six bottles at $16.50 each with the Lymphatic Brush;
+- offer 1 (foundation-offer-1): the supply cards (_includes/sf-supply-cards.html): two bottles at $19.50 each ($39;
+  "Add 1, get 1 FREE" until 30 Oct 2026, when a bottle became $33.97 and two for $39 stopped being one free) and six
+  bottles at $16.50 each with the Lymphatic Brush;
   each card's crossed-out price is what the store charges for the same bottles bought once ($57 for two, $171 for six:
   funnels/apf.py store_once; live review 8, B1, against the $39-a-bottle arithmetic it replaced);
   each card is its own package at its own price, no voucher, and each card's Buy now is the offer's own add action
   (js/sf-supply.js selects the card first; the closing card's picture follows the selected card). Accept goes to the
   brush offer, decline to offer 2.
-- offer 2 / its downsell: one more bottle with APF40 (40% off, $23) or APF50 (50% off, $19): Apollo's single-offer
+- offer 2 / its downsell: one more bottle ($33.97, the checkout's own bottle) with APF40 (44% off, $19) or APF50 (55%
+  off, $15; the owner's offer of 30 Oct 2026 put the checkout's packs at $33.97 to $20.38 a bottle): Apollo's single-offer
   upsell with the voucher on a hidden selector (as the stick funnel's), three photos, the bullets, the terms, three
   reasons, the closing card.
 - offer 3 / its downsell: the Lymphatic Brush with BRUSH40 ($14) or BRUSH60 ($9): the offer with the brush's loop (its
   four sweeps and the case) playing in the media column, then the brush's short product page
   (_includes/sf-brush-pdp.html: the problem with an illustration of the look it is for, the solution, how to use it,
   versus stones and rollers, the box, the questions; the brush's own store copy: a light, dry massage for the look of
-  morning puffiness), the closing card. An order that already has a brush in it (the 3-bottle pack, the 6-bottle pack)
+  morning puffiness), the closing card. An order that already has a brush in it (the 5-bottle pack, the 6-bottle pack)
   skips both to the thank-you page (js/sf-offer-gate.js, data-sf-skip-skus).
 The percentages shown are the SDK's ({discount}), once per page: the campaign rounds a voucher's price down to the
-dollar, so 40% off $39 is $23 (41%) and 40% off $24.95 is $14 (44%); the page shows what she pays, never a rounder
+dollar, so 44% off $33.97 is $19 (the SDK shows 44%) and 40% off $24.95 is $14 (44%); the page shows what she pays, never a rounder
 number, and no fixed percentage beside the SDK's.
 """
 import json, os, sys
@@ -242,15 +244,17 @@ def supply_page(spec):
     by = {t['key']: t for t in tiers}
     for t in tiers: assert t['compare'] == F.store_once(t['bottles']), (t, F.store_once(t['bottles']))
     save = lambda t: f"{round((t['compare'] - t['price']) / t['compare'] * 100)}%"      # against the store's one-time price
+    # a bottle is 28 days, the refill rhythm the funnel states (one pump a day; live review 13, F4: it was 30)
+    per_day = lambda t: f"${t['price'] / t['bottles'] / 28:.2f} a day"
     cards = [
         {'id': 'supply-b1g1', 'items_json': json.dumps([{'packageId': two, 'quantity': 1}]), 'image': 'images/sf/pack-2.jpg',
          'alt': 'Two bottles of Adaptive Peptide Foundation', 'badge': 'Two months’ supply', 'save': save(by['b1g1']),
-         'name': '2 more bottles', 'deal': 'Add 1, get 1 FREE', 'gift': '',
-         'per_day': '$0.65 a day', 'per_bottle': '$19.50 a bottle · 2 bottles', 'price': '$39.00', 'compare': f"${by['b1g1']['compare']:.0f}", 'compare_note': 'Our store, bought once', 'selected': True, 'button': 'BUY NOW · $39'},
+         'name': '2 more bottles', 'deal': '$19.50 a bottle', 'gift': '',
+         'per_day': per_day(by['b1g1']), 'per_bottle': '$19.50 a bottle · 2 bottles', 'price': '$39.00', 'compare': f"${by['b1g1']['compare']:.0f}", 'compare_note': 'Our store, bought once', 'selected': True, 'button': 'BUY NOW · $39'},
         {'id': 'supply-b3g3', 'items_json': json.dumps([{'packageId': six, 'quantity': 1}]), 'image': 'images/sf/pack-6.jpg',
          'alt': 'Six bottles of Adaptive Peptide Foundation and the Lymphatic Brush', 'badge': 'Best value', 'save': save(by['b3g3']),
          'name': '6 more bottles', 'deal': '$16.50 a bottle', 'gift': 'FREE Lymphatic Brush + case ($24.95)',
-         'per_day': '$0.55 a day', 'per_bottle': '$16.50 a bottle · 6 bottles', 'price': '$99.00', 'compare': f"${by['b3g3']['compare']:.0f}", 'compare_note': 'Our store, bought once', 'selected': False, 'button': 'BUY NOW · $99'},
+         'per_day': per_day(by['b3g3']), 'per_bottle': '$16.50 a bottle · 6 bottles', 'price': '$99.00', 'compare': f"${by['b3g3']['compare']:.0f}", 'compare_note': 'Our store, bought once', 'selected': False, 'button': 'BUY NOW · $99'},
     ]
     supply = {'title': 'Choose your pack', 'lede': '$19.50 a bottle in the 2-pack, $16.50 in the 6-pack, charged once, shipped in the same box as the order you just placed.',
               'tiers': cards, 'guarantee': '30-day money-back guarantee on every bottle, even opened. You don’t send anything back.',
@@ -271,7 +275,7 @@ def supply_page(spec):
         '  fallback_price: "$39.00"', f'  fallback_compare: "${by["b1g1"]["compare"]:.2f}"',
         f'  cta_note: {q("Charged once to the payment you just used. This pack doesn’t renew, and it ships in the same box. " + GUARANTEE + " " + ALLERGY)}',
         'upsell_bundle_tiers:',
-        f'  - {{ id: "supply-b1g1", items_json: {q(cards[0]["items_json"])}, vouchers_json: "[]", label: "2 bottles", hint: "Add 1, get 1 free", selected: true }}',
+        f'  - {{ id: "supply-b1g1", items_json: {q(cards[0]["items_json"])}, vouchers_json: "[]", label: "2 bottles", hint: "$19.50 a bottle", selected: true }}',
         f'  - {{ id: "supply-b3g3", items_json: {q(cards[1]["items_json"])}, vouchers_json: "[]", label: "6 bottles", hint: "$16.50 a bottle" }}',
         'upsell_layout:', '  style: card', '  boxed: true', '  media: image', '  show_payment_logos: false',
         'upsell_body:', '  - type: features', '    title: "Why women stock up"', '    text: "Because the shade that finally works is the one you don’t want to run out of."', '    items:',
@@ -300,7 +304,7 @@ OFFERS = {
     'offer-2': {
         'announcement': 'Offer 2 of 3<span data-sf-placed> · Your order is placed</span>', 'seconds': TIMER, 'eyebrow': 'Just for you, with this order',
         'hero_title': 'One more bottle, {discount} off, just for you',
-        'hero_text': 'One for your vanity, one for your bag: {price} instead of $39, charged once, in the same box as your order.',
+        'hero_text': 'One for your vanity, one for your bag: {price} instead of $33.97, charged once, in the same box as your order.',
         'pretitle': 'Not in our store at this price',
         'title': 'One more Adaptive Peptide Foundation',
         'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Keep one at home and one in your bag', 'A bottle lasts about a month', 'Bought once: it doesn’t renew', 'Ships with your order, in the same box'],
@@ -309,7 +313,7 @@ OFFERS = {
         'features_title': 'Why women keep a second bottle',
         'features_text': 'The one you keep at home stays at home. The one in your bag saves the afternoon.',
         'features': [('For touch-ups on the go', 'One pump in your bag: a thin layer over the nose and chin and it looks fresh again.'),
-                     ('Less than one bottle in our store', 'One is $47 there, bought once, and $39 at the sales page price. Here, {price}, charged once.'),
+                     ('Less than one bottle in our store', 'One is $47 there, bought once, and $33.97 at the sales page price. Here, {price}, charged once.'),
                      ('30 days to love it', 'Or email us within 30 days of delivery for a full refund, even opened.')],
         'closing': 'Add one more bottle for {price} today?',
         'allergy': ALLERGY, 'note': ALLERGY,
@@ -317,7 +321,7 @@ OFFERS = {
     'offer-2b': {
         'announcement': 'Offer 2 of 3 · One more chance', 'seconds': TIMER_LAST, 'eyebrow': 'One more chance',
         'hero_title': 'Last chance: one more bottle, {discount} off',
-        'hero_text': '{price} instead of $39 for one more bottle, charged once, in the same box as your order. After this page the price is gone.',
+        'hero_text': '{price} instead of $33.97 for one more bottle, charged once, in the same box as your order. After this page the price is gone.',
         'pretitle': 'Last chance',
         'title': 'One more Adaptive Peptide Foundation',
         'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Charged once: it doesn’t renew', 'A bottle lasts about a month', 'Ships with your order, in the same box'],
@@ -325,7 +329,7 @@ OFFERS = {
         'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, continue',
         'features_title': 'Why we make this offer',
         'features_text': 'A second bottle in the same box costs us little to ship, and it keeps you from running out of the shade that finally works.',
-        'features': [('{discount} off, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of the sales page price of $39 ($47 bought once in our store).'),
+        'features': [('{discount} off, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of the sales page price of $33.97 ($47 bought once in our store).'),
                      ('Charged once', 'To the payment you just used. This bottle doesn’t renew, and nothing else is charged.'),
                      ('The same guarantee', '30 days from delivery, a full refund even opened, on this bottle too.')],
         'closing': 'Add one more bottle for {price} today?',
@@ -341,7 +345,7 @@ OFFERS = {
         'images': BRUSH_IMAGES,
         'accept': 'Yes, add the brush for', 'decline': 'No thanks, continue',
         'closing': 'Add the Lymphatic Brush for {price} today?',
-        'brush_pdp': True, 'skip_skus': 'SKF-APF-3-GIFTS,SKF-APF-6-BRUSH',
+        'brush_pdp': True, 'skip_skus': 'SKF-APF-5-BRUSH,SKF-APF-6-BRUSH',
     },
     'brush-offer-b': {
         'announcement': 'Offer 3 of 3 · Last chance', 'seconds': TIMER_LAST, 'eyebrow': 'Last chance',
@@ -353,7 +357,7 @@ OFFERS = {
         'images': BRUSH_IMAGES,
         'accept': 'Yes, add the brush for', 'decline': 'No thanks, show my order',
         'closing': 'Add the Lymphatic Brush for {price} today?',
-        'brush_pdp': True, 'skip_skus': 'SKF-APF-3-GIFTS,SKF-APF-6-BRUSH',
+        'brush_pdp': True, 'skip_skus': 'SKF-APF-5-BRUSH,SKF-APF-6-BRUSH',
     },
 }
 

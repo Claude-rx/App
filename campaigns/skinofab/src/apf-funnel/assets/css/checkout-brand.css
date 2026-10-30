@@ -300,3 +300,9 @@ html:not(.next-display-ready) [data-next-await]::after { left: -55% !important; 
 .sf-co-picked { display: none; margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; background: var(--brand--color--primary-lighter, #f4f1ec); font-size: 16px; line-height: 1.4; color: #151515; }
 .sf-co-picked strong { font-weight: 600; }
 @media (max-width: 767px) { .sf-co-picked { display: block; } }
+
+/* the free bottles' crossed-out price on a pack card (bundle-card-product.html, card_compare): it steps aside once the SDK
+   strikes a price of its own (the exit coupon), so a card never shows two crossed-out prices */
+.bundle-card .sf-card-was { color: var(--brand--color--text-muted); font-size: var(--font-size--base); font-weight: 700; text-decoration: line-through; }
+/* (its own class: the rule above that hides .bundle-card__price-reg without an SDK discount must not hide it) */
+.bundle-card:not(:has(.bundle-card__savings[style*="display: none"])):has([data-next-bundle-display="originalPrice"]:not(:empty)) .sf-card-was { display: none; }

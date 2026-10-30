@@ -46,7 +46,10 @@
     // the SDK's skip navigates; if it has not within 3 s (not loaded, or an error), go the same way ourselves
     setTimeout(function () { var d = decline(); if (d) location.replace(d + location.search); }, skip && window.next ? 3000 : 0);
   };
+  var timer = 0;
   var tick = function () {
+    // an order that failed to load after all (sf-offer-gate.js adds sf-no-order): the clock stops and moves nothing
+    if (document.documentElement.classList.contains('sf-no-order')) { clearInterval(timer); return; }
     var s = Math.max(0, Math.round((deadline - Date.now()) / 1000));
     var m = Math.floor(s / 60), r = s % 60;
     var text = (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
@@ -54,6 +57,6 @@
     box.classList.toggle('is-ending', s <= 60);
     if (s <= 0) leave();
   };
+  timer = setInterval(tick, 1000);
   tick();
-  setInterval(tick, 1000);
 })();

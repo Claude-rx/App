@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVUQOBA9OCL81F25ASP0KPVNU5",
+  "run_id": "MVUU1Z93L03H490AGOR0VGCE8U",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2221,
   "spec_version": "5.0",
-  "spec_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
-  "started_at": "2026-10-30T08:57:32.193Z",
-  "completed_at": "2026-10-30T08:58:14.686Z",
-  "generated_at": "2026-10-30T08:58:14.717Z",
+  "spec_hash": "sha256:300fe88a12ac9bd73afd5801d6a1afe6ae832e9cb4ca07580123b6151b5b01bd",
+  "started_at": "2026-10-30T10:32:08.631Z",
+  "completed_at": "2026-10-30T10:32:53.248Z",
+  "generated_at": "2026-10-30T10:32:53.280Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -441,6 +441,15 @@
       "family": "meta-tags",
       "page": "thank-you",
       "status": "pass"
+    },
+    {
+      "id": "spec.campaign_drift",
+      "family": "api-metadata",
+      "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "live-campaign-refs",
@@ -1061,6 +1070,15 @@
   "test_orders": [],
   "exceptions": [
     {
+      "id": "spec.campaign_drift",
+      "family": "api-metadata",
+      "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
       "id": "browser-primary-cta:checkout",
       "family": "browser-runtime",
       "page": "checkout",
@@ -1127,9 +1145,9 @@
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "qa",
-    "total": 7,
+    "total": 8,
     "counts": {
-      "caused_by_change": 4,
+      "caused_by_change": 5,
       "pre_existing": 3,
       "test_environment": 0,
       "upstream_drift": 0,

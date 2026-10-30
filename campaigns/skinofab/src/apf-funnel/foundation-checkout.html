@@ -8,8 +8,9 @@ meta_tags:
   next-funnel: "SKINOFAB Adaptive Peptide Foundation"
   next-page-type: "checkout"
   next-success-url: "/apf-funnel/foundation-offer-1/"
-# Apollo's single-step checkout (the flagship family) with the funnel's three packs, campaign packages 1, 2 and 3
-# (tools/funnel/funnels/apf.py: campaign 2221, packages 1, 2 and 3) in the sales page's order, the 3-bottle pack preselected as there
+# Apollo's single-step checkout (the flagship family) with the funnel's three packs, campaign packages 1, 8 and 9
+# (tools/funnel/funnels/apf.py: campaign 2221; the owner's offer of 30 Oct 2026: 1 bottle $33.97, buy 2 get 1 free with a
+# Blender sponge, buy 3 get 2 free with the Lymphatic Brush) in the sales page's order, the 5-bottle pack preselected as there
 # (a link without forceBundleId, or with a wrong one, lands on the pack the sales page shows first; live review 9). The form comes first (v2: she chose the foundation on the
 # sales page, so the page asks for her pack, her details, her address and her payment straight away; the pack cards
 # are in the page from the first paint, no await skeleton, with the campaign's own names and prices); the trust sits
@@ -17,7 +18,7 @@ meta_tags:
 # button, four badges under it, three buyers' reviews (green stars, their own photos) right after it on a phone, and the
 # proof column (ratings by stars, ten reviews, the guarantee card, the questions) beside the form on a computer:
 # _includes/sf-checkout-trust.html. Every pack has Automatic Refills at the same price (the owner, 29 Oct 2026: 1 bottle
-# every 28 days, 2 every 56, 3 every 84; the gifts with the first order only), said on each card, by the express buttons
+# every 28 days, 3 every 84, 5 every 140; the gift with the first order only), said on each card, by the express buttons
 # and by the order button, which also asks for her agreement to them. The exit pop applies APF10 (offer 6, 10% off the foundation packs), on a phone too (a scroll up
 # toward the address bar). No coupon box: the post-purchase vouchers must not be usable here.
 cart_summary_variant: "02"
@@ -42,9 +43,9 @@ address_form:
   gated: true
 promo_banner:
   emoji: "🎁"
-  highlight: "FREE Lymphatic Brush"
-  lead: "with"
-  strong: "3 bottles"
+  highlight: "Buy 3, get 2 FREE"
+  lead: "+ a"
+  strong: "FREE Lymphatic Brush"
   trail: "· Free shipping · 30-day money-back guarantee"
 trust:
   rating:
@@ -58,7 +59,7 @@ trust:
     - q: "What if it isn’t my shade?"
       a: "It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
     - q: "Is this a subscription?"
-      a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($39), 2 bottles every 56 days ($57), 3 bottles every 84 days ($75). We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only."
+      a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($67.94), 5 bottles every 140 days ($101.91). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only."
     - q: "When does it ship?"
       a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days. This offer ships to US addresses only."
     - q: "Are these reviews of this formula?"
@@ -137,9 +138,11 @@ scripts:
   - js/sf-failsafe.js
   - js/payment-logos.js
 packages:
-  main_package: 3
+  main_package: 9
 shipping_methods:
   standard: 1
+# the crossed-out price (compare) is this checkout's own 1-bottle price times the bottles: the free bottles, nothing else;
+# it steps aside once the SDK shows a struck price of its own (the exit coupon)
 bundles:
   - id: "apf-1"
     package_id: 1
@@ -147,57 +150,60 @@ bundles:
     shipping_method: "standard"
     image: "images/sf/pack-1.jpg"
     name: "Adaptive Peptide Foundation - 1 bottle"
-    price: "$39.00"
-    subtitle_text: "Then $39 every 28 days. Free shipping"
-  - id: "apf-2"
-    package_id: 2
+    price: "$33.97"
+    subtitle_text: "Then $33.97 every 28 days. Free shipping"
+  - id: "apf-3"
+    package_id: 8
     quantity: 1
     shipping_method: "standard"
-    image: "images/sf/pack-2.jpg"
-    name: "Adaptive Peptide Foundation - 2 bottles + free gifts"
-    price: "$57.00"
-    subtitle_text: "Then $57 every 56 days. Free shipping. A free Blender sponge and a free mystery gift with your first order"
-    badge_text: "2 months’ supply"
+    image: "images/sf/pack-3b.jpg"
+    name: "Adaptive Peptide Foundation - 3 bottles + free Blender"
+    price: "$67.94"
+    compare: "$101.91"
+    subtitle_text: "Buy 2, get 1 free: you pay for 2. Then $67.94 every 84 days, $22.65 a bottle. Free shipping. A free Blender sponge with your first order"
+    badge_text: "Buy 2, get 1 FREE"
     badge_pill_class: "os-card__label--pill-secondary"
-  - id: "apf-3"
-    package_id: 3
+  - id: "apf-5"
+    package_id: 9
     quantity: 1
     shipping_method: "standard"
     selected: true
-    image: "images/sf/pack-3.jpg"
-    name: "Adaptive Peptide Foundation - 3 bottles + free gifts + free Lymphatic Brush"
-    price: "$75.00"
-    subtitle_text: "Then $75 every 84 days, $25 a bottle. Free shipping. A free Lymphatic Brush, a free Blender sponge and a free mystery gift with your first order"
-    badge_text: "Best value"
+    image: "images/sf/pack-5.jpg"
+    name: "Adaptive Peptide Foundation - 5 bottles + free Lymphatic Brush"
+    price: "$101.91"
+    compare: "$169.85"
+    subtitle_text: "Buy 3, get 2 free: you pay for 3. Then $101.91 every 140 days, $20.38 a bottle. Free shipping. A free Lymphatic Brush with your first order"
+    badge_text: "Buy 3, get 2 FREE"
     badge_pill_class: "os-card__label--pill-primary"
 # what she pays today (the SDK's cart total, after any exit coupon) and what renews, by the express buttons (they place
 # the order too) and by the button; sf-checkout.js keeps the pack's line in step with the chosen card
 pay_terms:
-  apf-2: "$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)"
-  apf-3: "$75.00 every 84 days for 3 bottles (your free Lymphatic Brush, Blender sponge and mystery gift come with this first order)"
-  apf-1: "$39.00 every 28 days for 1 bottle"
+  apf-3: "$67.94 every 84 days for 3 bottles (your free Blender sponge comes with this first order)"
+  apf-5: "$101.91 every 140 days for 5 bottles (your free Lymphatic Brush comes with this first order)"
+  apf-1: "$33.97 every 28 days for 1 bottle"
 # what renews, per pack, in the row under the order button (the owner, 30 Oct 2026: the subscription is the default, no
 # consent box, and just "Refill reminder · Cancel any time · Renews at …" under the button); sf-checkout.js follows the card
 # the pack she came with, in one line at the top of Step 1 on a phone, where the chosen card is below the first screen
-# (live review 12: the first screen showed the $39 and $57 cards after a "$75" button); sf-checkout.js follows the card
+# (live review 12); its price is the SDK's cart total, so it follows the exit coupon too (live review 13, F3)
 picked:
-  apf-1: "1 bottle · $39"
-  apf-2: "2 bottles + free gifts · $57"
-  apf-3: "3 bottles + free gifts + free Lymphatic Brush · $75"
+  apf-1: "1 bottle"
+  apf-3: "3 bottles (buy 2, get 1 free) + free Blender sponge"
+  apf-5: "5 bottles (buy 3, get 2 free) + free Lymphatic Brush"
 renew_short:
-  apf-1: "$39 every 28 days"
-  apf-2: "$57 every 56 days"
-  apf-3: "$75 every 84 days"
+  apf-1: "$33.97 every 28 days"
+  apf-3: "$67.94 every 84 days"
+  apf-5: "$101.91 every 140 days"
 refill_terms: "Your pack ships again at the same price until you cancel. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
-# the exit pop: the bottle (the pack she picked may not be the 3-pack), one offer said once, the saving applied at the button
+# the exit pop: the bottle (the pack she picked may not be the 5-pack), one offer said once, the saving applied at the button;
+# "10% off", not "an extra 10%" (live review 13, F3)
 exit_intent:
   coupon_code: "APF10"
   popup_image: "images/sf/bottle.jpg"
   headline: "Wait!"
   subheadline: "One more reason to order today."
-  offer_title: "An extra <strong>10% off</strong> your pack"
+  offer_title: "<strong>10% off</strong> your pack"
   offer_label: "Applied to your order right away"
-  offer_detail: "It comes off the foundation pack in today’s order, rounded down to the dollar: $67 for 3 bottles, $51 for 2, $35 for 1. The gifts and free shipping stay; refills are at the pack’s own price."
+  offer_detail: "It comes off the foundation pack in today’s order, rounded down to the dollar: $91 for 5 bottles, $61 for 3, $30 for 1. The free bottles, the gift and free shipping stay; refills are at the pack’s own price."
   cta_label: "Apply it to my order"
 ---
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
@@ -221,7 +227,7 @@ exit_intent:
                           <div class="form-section grid-row-gap2 form-section--first">
                             <h2 class="form-section__title">Step 1: Choose your pack</h2>
                             {% assign sel1 = bundles | where: "selected", true | first %}
-                            <p class="sf-co-picked" data-sf-picked='{{ picked | json }}' aria-live="polite">Your pack: <strong data-sf-picked-text>{{ picked[sel1.id] }}</strong></p>
+                            <p class="sf-co-picked" data-sf-picked='{{ picked | json }}' aria-live="polite">Your pack: <strong data-sf-picked-text>{{ picked[sel1.id] }}</strong><span data-next-show="cart.hasItems"> · <span data-next-display="cart.total">{{ sel1.price }}</span></span></p>
                             {% campaign_include 'bundle-selector.html' selector_id='main' card_style=bundle_card_style packages=packages shipping_methods=shipping_methods bundles=bundles await=false %}
                           </div>
                           <div data-next-component="shipping-form" class="form-sections">

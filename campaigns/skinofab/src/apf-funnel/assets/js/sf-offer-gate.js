@@ -30,6 +30,29 @@
     if (on) e.setAttribute('data-sf-locked', ''); else e.removeAttribute('data-sf-locked');
   });
   if (document.documentElement.classList.contains('sf-no-order')) lock(true);
+  // an order reference the SDK cannot load (a stale link, a typo, an API error): the SDK writes "Error" into every order
+  // field; the page is then the no-order page, note, locked accepts and no clock (live review 13, F1: "Just for you,
+  // Error", a running clock and live buttons that moved her on as if she had bought)
+  const noOrder = () => {
+    document.documentElement.classList.add('sf-no-order');
+    lock(true); noteOff();
+    document.querySelectorAll('[data-sf-name]').forEach((e) => { e.textContent = ''; });
+  };
+  const failed = (t) => /^(error|loading\.\.\.)$/i.test((t || '').trim());
+  // a one-click add the SDK could not make (an API error, a declined charge): the SDK goes on to the accept page a second
+  // later as if it worked; she is told it was not added and goes where a decline goes, with her order reference
+  const addFailed = () => {
+    if (document.querySelector('[data-sf-add-failed]')) return;
+    const n = document.createElement('p');
+    n.className = 'sf-add-failed'; n.setAttribute('role', 'alert'); n.setAttribute('data-sf-add-failed', '');
+    n.textContent = 'We couldn’t add this to your order, so it isn’t on it. Your order is unchanged. Taking you on…';
+    document.body.insertBefore(n, document.body.firstChild);
+    const d = document.querySelector('meta[name="next-upsell-decline-url"]');
+    if (d) { document.documentElement.classList.add('sf-skipping'); location.replace(d.getAttribute('content') + location.search); }
+  };
+  const onError = () => { try { window.next.on('upsell:error', addFailed); } catch (e) {} };
+  if (window.next && window.next.on) onError();
+  else { document.addEventListener('next:initialized', onError, { once: true }); window.addEventListener('next:initialized', onError, { once: true }); }
   const gate = document.querySelector('[data-sf-offer-gate]');
   if (!gate) return;
   const ok = gate.querySelector('[data-sf-upsell-ok]');
@@ -41,7 +64,8 @@
   const check = () => {
     if (done) return;
     const can = (ok.textContent || '').trim().toLowerCase();
-    if (!can) return;                                     // the order is not loaded yet
+    if (!can || can === 'loading...') return;             // the order is not loaded yet
+    if (can === 'error') { done = true; noOrder(); return; }   // it could not be loaded: no order on this page
     noteOff();
     if (document.documentElement.classList.contains('sf-no-order')) {
       document.documentElement.classList.remove('sf-no-order');   // an order after all (the page's no-order note goes)
@@ -72,7 +96,7 @@
   const first = gate.querySelector('[data-sf-first-name]');
   const name = () => {
     const n = (first && first.textContent || '').trim();
-    if (n) document.querySelectorAll('[data-sf-name]').forEach((e) => { e.textContent = ', ' + n; });
+    if (n && !failed(n)) document.querySelectorAll('[data-sf-name]').forEach((e) => { e.textContent = ', ' + n; });
   };
   if (first) { new MutationObserver(name).observe(first, { childList: true, characterData: true, subtree: true }); name(); }
 })();

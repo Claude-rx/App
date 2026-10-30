@@ -68,7 +68,7 @@
     {% assign badge_tone = 'popular' -%}
     {% if b.badge_pill_class contains 'secondary' %}{% assign badge_tone = 'deal' %}{% endif -%}
     {% capture card_subtitle %}{% if b.subtitle_text %}{{ b.subtitle_text }}{% endif %}{% if b.shipping_label %}{% if b.subtitle_text %} {% endif %}{{ b.shipping_label }}{% endif %}{% endcapture -%}
-    {% campaign_include 'bundle-card.html' card_style=card_style bundle_id=b.id items=card_items package_id=card_package_id shipping_id=card_shipping_id bundle_vouchers=card_vouchers selected=b.selected title_prefix=b.title_prefix subtitle=card_subtitle subtitle_text=b.subtitle_text shipping_label=b.shipping_label badge_text=b.badge_text badge_tone=badge_tone badge_pill_class=b.badge_pill_class total_tone_class=b.total_tone_class card_image=b.image card_name=b.name card_price=b.price %}
+    {% campaign_include 'bundle-card.html' card_style=card_style bundle_id=b.id items=card_items package_id=card_package_id shipping_id=card_shipping_id bundle_vouchers=card_vouchers selected=b.selected title_prefix=b.title_prefix subtitle=card_subtitle subtitle_text=b.subtitle_text shipping_label=b.shipping_label badge_text=b.badge_text badge_tone=badge_tone badge_pill_class=b.badge_pill_class total_tone_class=b.total_tone_class card_image=b.image card_name=b.name card_price=b.price card_compare=b.compare %}
     {% endfor -%}
     {% else -%}
     {%- comment -%} Default: canonical 3-tier (1x/2x/3x) of packages.main_package (fallback 1). {%- endcomment -%}

@@ -66,13 +66,14 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    problem processing your order" (30 Oct 2026, transaction 166, $75, response 3002, no order created). A real card
    is charged for real: order **101614** ($39, 29 Oct, the owner's own card) is a paid live order to refund and
    cancel if it was a test.
-2. **The gifts.** The 2- and 3-bottle packs promise a SKINOFAB Blender brush and a mystery gift; the 3-bottle pack and
-   offer 1's 6-bottle pack a Lymphatic Brush with its travel case. Fulfilment must pack them: the campaign's packages
-   name them in their titles (the store sees "2 bottles + free gifts"), nothing else tells the warehouse.
-3. **"While our launch stock of brushes lasts."** The sales page's scarcity section says the brush ships with the
-   3-bottle pack while launch stock lasts, after which the pack ships with the Blender brush and mystery gift only.
-   When that happens, rename package 8 and change the pack copy (`adaptive-foundation-offer.html` packs / value /
-   scarcity, `foundation-checkout.html` bundles, `funnels/apf.py` PACKS, `check_apf.py` BRUSH_SKUS) in one pass.
+2. **The gifts (since 30 Oct 2026).** The 3-bottle pack (buy 2, get 1 free) comes with the SKINOFAB Blender sponge,
+   the 5-bottle pack (buy 3, get 2 free) and offer 1's 6-bottle pack with the Lymphatic Brush and its travel case; there
+   is no mystery gift any more. Fulfilment must pack them: the packages name them in their titles ("3 bottles + free
+   Blender", "5 bottles + free Lymphatic Brush"), nothing else tells the warehouse.
+3. **"While our launch stock lasts."** The sales page says the brush comes with the 5-bottle pack while launch stock
+   lasts, and that the pack shows without it, here and at the checkout, before she orders, once it runs out. When that
+   happens, change the 5-pack's package and copy (`adaptive-foundation-offer.html` packs / value / scarcity,
+   `foundation-checkout.html` bundles, `funnels/apf.py` PACKS, `check_apf.py` BRUSH_SKUS) in one pass.
 4. **Store prices quoted.** The pages say the store sells one bottle for $47 and the 2-pack for $57 without the brush,
    and the brush for $24.95 (the 3-pack of brushes at $16.63 each). If a store price changes, change `why_now` on the
    sales page and the offers' store comparisons in `tools/funnel/apf/offer_pages.py`, and rebuild.
@@ -84,21 +85,22 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    count is higher than the order count.
 6. **Shipping promise.** The pages promise "ships within 1 business day, free and tracked: 2–4 business days in the US,
    6–9 to Europe, 8–12 elsewhere" (the store's shipping policy). Keep the policy and the pages in step.
-7. **The mystery gift** is "a mystery gift from our line". Decide what ships (a deluxe sample of the balm or the serum
-   fits). Neither it nor the Blender sponge shows a dollar value since live review 10: the store sells neither, so a
-   crossed-out "$15" or "$9" had no price behind it. To show a value again, sell the item in the store at that price
-   first, then add it back to the pack cards and the value stack (the total adds up by itself in `check_apf.py`).
+7. **The Blender sponge's value.** It shows no dollar value (live review 10): the store does not sell it, so a
+   crossed-out "$9" had no price behind it. To show one, sell it in the store at that price first, then add it to the
+   pack card and the value stack (the total adds up by itself in `check_apf.py`). (The mystery gift is gone since the
+   owner's offer of 30 Oct 2026.)
 8. **Refills (since 29 Oct 2026).** (a) Fulfilment: a refill of packages 2 and 3 is **the bottles only**, never the
    gifts; the package titles still say "+ free gifts", so tell the warehouse. (b) The pages promise "we email you
    before every refill" and offer a ready-made cancel email ("Cancel my refills": a `mailto:` with the subject
    "Cancel my Automatic Refills" and the body filled in) that stops a refill when sent a day before it: make sure the
    store's subscription reminder emails are on, and that every such email is cancelled the same day, no questions
    asked (California's auto-renewal law expects cancelling to be as easy as signing up; a cancel page in the store
-   would be better still if NEXT offers one). (c) Klarna, Afterpay, Affirm
-   and Link may not allow a later charge; check with NEXT whether a refill on those is charged or fails, and turn them
-   off on campaign 2221 if it fails. (d) **Pricing:** the store's own refills ($37 for 1 bottle, $47 for 2) are lower
-   than the funnel's ($39, $57): a buyer who compares pays less in the store. Match them (or keep them apart on
-   purpose), then change `funnels/apf.py` PACKS and the campaign together.
+   would be better still if NEXT offers one). (c) **Klarna and Link with refills (live review 13 raised it again):**
+   the offer gate skips the one-click offers for an order whose payment method "can't be charged again", and every
+   checkout pack now renews. Check with NEXT whether a refill on a Klarna or Link order is charged or fails; if it
+   fails, turn Klarna and Link off on campaign 2221 (and Affirm and Afterpay, which the pages do not show). (d)
+   **Pricing:** since 30 Oct 2026 the funnel's refills ($33.97 for 1 bottle, $67.94 for 3, $101.91 for 5) are below the
+   store's own ($37 for 1, $47 for 2); the gap that made the funnel the dearer place is gone.
 9. **The store's sitemap** (`/sitemap-pages.xml`) lists the funnel's pages. They are `noindex` now (the checkout, the
    offers and the thank-you page since live review 8), but the platform builds the sitemap from published pages and
    the API cannot leave them out: remove them in the dashboard if it offers that.
@@ -209,34 +211,40 @@ not load the app's code, so nothing is counted twice.
 ## Commerce (Campaigns App campaign 2221)
 
 The checkout's three packs have **Automatic Refills at the same price** (the owner, 29 Oct 2026: "make sure all is
-subscription"): 1 bottle every 28 days, 2 every 56, 3 every 84, until she cancels by email. The free gifts come with
-the first order only; **every refill is the bottles alone**. The offers stay one-time: offers 2 and 2b sell package 7,
-a one-time bottle of its own, so accepting an add-on never starts a second subscription. The values below are the
-campaign's; `campaign_spec.py` reads them live (`FUNNEL=apf`) into `campaign-spec.apf.json` and the pages are checked
-against them on every build (`check_apf.py` fails if a pack's renewal on any page differs from the campaign's, or if
-an offer's package recurs). The refs are campaign 2221's (`funnels/apf.py` PACKAGE and VOUCHER).
+subscription"), and since **30 Oct 2026** the owner's more aggressive offer: "start at 33.97 only, with buy 2 get 1 free
+and buy 3 get 2 free", the Blender with the 3 bottles, the Lymphatic Brush with the 5, no mystery gift. 1 bottle every 28
+days, 3 every 84, 5 every 140 (28 days a bottle), until she cancels by email. The free gift comes with the first order
+only; **every refill is the bottles alone**, the free bottles included (each refill is the same pack at the same price).
+The offers stay one-time: offers 2 and 2b sell package 7, a one-time bottle of its own, so accepting an add-on never
+starts a second subscription. The values below are the campaign's; `campaign_spec.py` reads them live (`FUNNEL=apf`)
+into `campaign-spec.apf.json` and the pages are checked against them on every build (`check_apf.py` fails if a pack's
+renewal on any page differs from the campaign's, if a free-bottle claim is not the arithmetic, or if an offer's package
+recurs). The refs are campaign 2221's (`funnels/apf.py` PACKAGE and VOUCHER). The change went through the
+next-campaigns-create update path (7 requests, no deletion, approved by the owner on 30 Oct 2026); the two store
+variants it needed were made by `commerce.py --variants-only` (334, 335).
 
 | Package ref | SKU | Sells | Price | Renews | Crossed-out price |
 |---:|---|---|---:|---|---:|
-| 1 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $39.00 | $39.00 every 28 days | none |
-| 2 | SKF-APF-2-GIFTS | 2 bottles + free Blender sponge + free mystery gift (gifts in the first box) | $57.00 | $57.00 every 56 days | none |
-| 3 | SKF-APF-3-GIFTS | 3 bottles + both gifts + free Lymphatic Brush (gifts in the first box) | $75.00 | $75.00 every 84 days | none |
-| 4 | SKF-APF-2 | 2 bottles (offer 1: "Add 1, get 1 FREE") | $39.00 | once | $57 (the store, bought once) |
+| 1 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $33.97 | $33.97 every 28 days | none |
+| 8 | SKF-APF-3-BLENDER | 3 bottles, buy 2 get 1 free, + free Blender sponge (in the first box) | $67.94 | $67.94 every 84 days | $101.91 (3 × $33.97) |
+| 9 | SKF-APF-5-BRUSH | 5 bottles, buy 3 get 2 free, + free Lymphatic Brush (in the first box) | $101.91 | $101.91 every 140 days | $169.85 (5 × $33.97) |
+| 4 | SKF-APF-2 | 2 bottles (offer 1: $19.50 a bottle) | $39.00 | once | $57 (the store, bought once) |
 | 5 | SKF-APF-6-BRUSH | 6 bottles + free Lymphatic Brush (offer 1: $16.50 a bottle) | $99.00 | once | $171 (3 × the store's $57) |
 | 6 | SKF-LYB-1T | The Lymphatic Brush + free travel case | $24.95 | once | — |
-| 7 | SKF-APF-1-ADD | 1 bottle, the add-on of offers 2 and 2b (variant 301) | $39.00 | once | $39 (the sales page price) |
+| 7 | SKF-APF-1-ADD | 1 bottle, the add-on of offers 2 and 2b (variant 301) | $33.97 | once | $33.97 (the sales page price) |
+| 2, 3 | SKF-APF-2-GIFTS, SKF-APF-3-GIFTS | the packs before 30 Oct 2026 ($57, $75), kept for the orders that name them | — | — | on no page |
 
-No crossed-out price and no saving on the checkout's packs (live review 8, B1): the store's own refills are $37 for
-1 bottle and $47 for 2 (one-time $47 and $57), below the funnel's $39 and $57, so a saving against the store's $47
-would not be true. The pages compare within the funnel only ($25 a bottle in the 3-pack against $39 for one and
-$28.50 in the 2-pack); offer 1 compares with what the store charges for the same bottles bought once
-(`funnels/apf.py` `store_once`).
+The free-bottle claims are exact against the funnel's own 1-bottle price: 3 bottles for 2 × $33.97, 5 for 3 × $33.97;
+the crossed-out prices are that price times the bottles she gets. Offer 1's 2-bottle card said "Add 1, get 1 FREE"
+until then; at $39 for two against $33.97 for one it no longer was, so it says "$19.50 a bottle". Campaigns OS QA warns
+`spec.campaign_drift` for packages 2 and 3 (in the campaign, on no page); deleting them clears it (an owner call: the
+update path deletes only with `--allow-delete` and a fresh approval).
 
 | Offer ref | Code | Package | Off | Lands at (rounded down to the dollar) |
 |---:|---|---:|---:|---|
-| 1 | APF10 | 1, 2, 3 | 10% | the checkout's exit pop: $35 / $51 / $67 today (refills at the pack's own price) |
-| 2 | APF40 | 7 | 40% | $23.00 (shown as 41% off) |
-| 3 | APF50 | 7 | 50% | $19.00 (51% off) |
+| 1 | APF10 | 1, 8, 9 | 10% | the checkout's exit pop: $30 / $61 / $91 today (refills at the pack's own price) |
+| 2 | APF40 | 7 | 44% | $19.00 ("One more bottle at $19") |
+| 3 | APF50 | 7 | 55% | $15.00 ("One more bottle at $15") |
 | 4 | BRUSH40 | 6 | 40% | $14.00 (44% off) |
 | 5 | BRUSH60 | 6 | 60% | $9.00 (64% off) |
 
@@ -746,6 +754,33 @@ tab order (`sf-offer-gate.js`, lifted if the SDK loads an order after all), Spac
 and the clock, its "offer ends" line and "Confirming your order…" are gone. QA after it: ready_with_exceptions,
 154 pass, 0 fail; the three new manual reviews are `browser-primary-cta` = `cta_disabled` on offers 1, 2 and the
 brush offer, the intended no-order state.
+
+**Live review 13 (30 Oct 2026), "ship": 0 blockers, 0 major, 7 minor, all fixed in the next build:** an offer opened
+with an order reference the SDK cannot load greeted her "Just for you, Error" with live buttons and a running clock, and
+a failed one-click add went on to the accept page as if it worked (F1): `sf-offer-gate.js` now treats an order that
+reads "Error" as no order (the note, locked accepts, no clock: `sf-offer-timer.js` stops), never writes "Error" as her
+name, and on the SDK's `upsell:error` says "We couldn't add this to your order, so it isn't on it. Your order is
+unchanged." and goes where a decline goes; the no-order note keeps a 16 px gutter on a phone. The phone sticky bar now
+says "$X today, then $X every N days" (F2). After the exit coupon the "Your pack" line follows the cart total, and the
+pop and the cards' badge say "10% off", not "an extra 10%" (F3). Offer 1's per-day prices are over 28 days, the refill
+rhythm, not 30 (F4). The hero rating says "9,855 published reviews" (F5; the earlier store's export is the owner's proof
+to keep). The listicle's offer box and last button open the sales page at the packs (`?pack=apf-5#offer`, F6). The two
+clips whose top-right holds what they show (the day's timeline, the dropper bottle) put the pause button top-left
+(`data-sf-pause-corner="tl"`, F7). Its "could not verify" raised Klarna and Link with refills: Before launch 8 (c).
+
+**The owner's offer of 30 Oct 2026:** "better offer, more aggressive, start at 33.97 only, with buy 2 get 1 free and buy
+3 get 2 free", then "remove mystery gift, just blender or brush: blender in buy 2 get 1 free and the brush in buy 3 get 2
+free". The packs are 1 bottle $33.97, 3 bottles $67.94 with the Blender sponge, 5 bottles $101.91 with the Lymphatic
+Brush (packages 1, 8, 9; renewals every 28, 84, 140 days), the 5-bottle pack preselected everywhere; the add-on bottle is
+$33.97, offer 2 $19 and its downsell $15 (vouchers 44% and 55%), so each post-purchase offer stays below the checkout's
+lowest price a bottle ($20.38); offer 1 and the brush offers keep their prices. New pack images (`images.py`: pack-3b
+with a drawn Blender sponge, the store having no photo of it; pack-5; offer-5 under a "BUY 3, GET 2 FREE" ribbon with a
+"$20.38 a bottle" tag; the listicle's flat lay with five bottles). The campaign was changed and the pages pushed three
+minutes apart (the build ran first against a simulated read of the changed campaign, then again on the live read); every
+price re-verified through the Cart API ($33.97, $67.94, $101.91; $39, $99, $19, $15, $14, $9). `check_apf.py` holds the
+free-bottle claims to their arithmetic, the crossed-out prices to the 1-bottle price, the gifts to their packs and the
+exit pop's amounts to the campaign's rounding. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, with a
+new `spec.campaign_drift` warning for the retired packages 2 and 3.
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
