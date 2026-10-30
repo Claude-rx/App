@@ -397,6 +397,20 @@ After a campaign change, run `FUNNEL=apf python3 -I tools/funnel/campaign_spec.p
 checks take their numbers from the spec. The theme serves this funnel's assets from `assets/sfa/` (the stick's from
 `assets/sfc/`); the hosting notes in `docs/stick-funnel.md` (30-minute page cache, `?preview_theme=34`) apply.
 
+### Static hosting (the funnels' own repo, since 30 Oct 2026)
+
+The owner chose to host the funnels on a static host instead of the store theme. `campaigns/skinofab` is published,
+with its history, to **`Claude-rx/skinofab-funnels`** by `bash tools/funnel/publish_funnels.sh` (git subtree split;
+it refuses uncommitted changes in the folder). The host builds it with `npm run build:static`
+(`campaigns/skinofab/scripts/build-static.mjs`: Campaign Page Kit into `_site/`, the `/`, `/apf` and `/stick`
+redirects, security headers) and serves `/apf-funnel/<page>/` and `/stick-funnel/<page>/`; `netlify.toml` and
+`vercel.json` carry the settings, the folder's `README.md` the one-time setup. **`FUNNEL_HOST`** in the host's
+environment is the domain the pages send visitors to (the layouts' host redirect, which reads `funnel_host`; the
+static build overrides `_data/campaigns.json`'s try.skinofab.com for its own build only). The domain must be on the
+Allowed Domains of campaigns 2221 and 2211. A clean clone of the split installs (`npm ci --omit=dev`, 51 packages),
+builds 17 pages, and all 780 local references in `_site` resolve; the SDK checkout ran from it on localhost (30 Oct).
+Until the ads move to the new domain, the store-hosted copy on try.skinofab.com stays as it is (the deploy above).
+
 ### Checks
 
 - `python3 -I tools/funnel/apf/check_apf.py` (offline, every build): every page built with its SDK meta tags and
