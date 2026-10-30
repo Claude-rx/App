@@ -3,7 +3,9 @@
     part='top'       one rating line above the pack cards: green boxed stars (a review site's look, no site named),
                      the figure said to be this foundation's, from our earlier store
     part='inline'    the guarantee in one line, right above the order button
-    part='badges'    four badges right under the order button: the guarantee, free shipping, skip or cancel, secure
+    part='subscription'  right under the order button (the owner's design, 30 Oct 2026): "Love it or your money back",
+                     then Refill reminder · Cancel any time · Renews at <the chosen pack's price and days> (sel, renew_short;
+                     sf-checkout.js keeps the amount on the chosen card)
     part='featured'  three reviews after the order button, on a phone and tablet (there the proof column comes
                      right after, so no link to it: the wall then shows the other seven, checkout-brand.css hides
                      its first three below 1200 px)
@@ -11,7 +13,7 @@
                      buyer asks before paying; after the form in the page (keyboard and screen-reader order), shown on
                      the left on a computer (checkout-brand.css)
   From the page's frontmatter: trust { rating { average, count, total, rows[] [stars, count, shown], of },
-  points[] { icon, title, text }, faq[] { q, a }, allergy }, reviews[] { body, author, photo, rating, verified },
+  faq[] { q, a }, allergy }, reviews[] { body, author, photo, rating, verified },
   reviews_note and guarantee { badge, title, text, line, ticks[] }. Every figure and review is this foundation's, from
   the earlier store, and says so (check_apf); the reviews have no titles (the buyers wrote none).
 {%- endcomment -%}
@@ -21,12 +23,15 @@
   <p class="sf-co-rating"><span class="sf-co-tp sf-co-tp--plain" role="img" aria-label="Rated {{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
   {% campaign_include 'sf-frontrow.html' count=frontrow_clinicians %}
 </div>
-{%- elsif part == 'badges' -%}
-<ul class="sf-co-badges" aria-label="What every order gets">
-  {%- for p in trust.points %}
-  <li>{% campaign_include 'sf-checkout-icon.html' icon=p.icon %}<strong>{{ p.title }}</strong></li>
-  {%- endfor %}
-</ul>
+{%- elsif part == 'subscription' -%}
+<div class="sf-sub" data-sf-sub data-sf-renew-short='{{ renew_short | json }}'>
+  <p class="sf-sub__head">{% campaign_include 'sf-checkout-icon.html' icon='seal' %}<strong>Love it or your money back</strong></p>
+  <ul class="sf-sub__row">
+    <li>{% campaign_include 'sf-checkout-icon.html' icon='bell' %}<span>Refill reminder</span></li>
+    <li>{% campaign_include 'sf-checkout-icon.html' icon='cancel' %}<span>Cancel any time</span></li>
+    <li>{% campaign_include 'sf-checkout-icon.html' icon='repeat' %}<span>Renews at <span data-sf-renew-short-text>{{ renew_short[sel.id] }}</span></span></li>
+  </ul>
+</div>
 {%- elsif part == 'featured' -%}
 <div class="sf-co-featured hide-tablet-up" id="sf-co-featured">
   <p class="sf-co-featured__title">From buyers of this foundation</p>

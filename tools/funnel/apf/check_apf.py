@@ -10,7 +10,7 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
   checkout    one card per checkout package, one selected, each card says what it refills at (its price, every 28 days a
               bottle: funnels/apf.py PACKS, and the campaign's own interval once the package recurs) and names its gifts, and
               shows its name and price before the SDK answers; the pay line by the buttons gives every card's renewal,
-              "until you cancel", and the order button asks her to agree to the refills; no coupon
+              "until you cancel" in the refill terms, "Renews at" under the order button; no coupon
               box; no post-purchase voucher code anywhere on the page; the exit pop applies the exit offer; the
               guarantee right above the order button, the three featured reviews after it (never between the address
               and the payment), 8+ review cards each with the buyer's photo, the reviews' rating and where they are from
@@ -195,7 +195,7 @@ pay = co.find('Step 4: Payment')
 if btn < 0 or pay < 0 or btn < pay: fail('checkout', 'no order button after the payment step')
 elif any(m in co[pay:btn] for m in ('data-sf-summary-box', 'data-sf-guarantee-inline', 'id="refill-terms"')):
     fail('checkout', 'something stands between the payment options and the order button')
-if g < 0 or g < btn: fail('checkout', 'no guarantee line under the order button')
+if g < 0 or g < btn: fail('checkout', 'no guarantee line under the order button (the terms of "Love it or your money back")')
 cards_r = re.findall(r'<article class="sf-co-review">(.*?)</article>', co, re.S)
 if len(cards_r) < 8: fail('checkout', f'{len(cards_r)} review cards, not at least 8')
 if any('<img ' not in c for c in cards_r): fail('checkout', 'a review card without its buyer\'s photo')
@@ -208,9 +208,9 @@ if 'sf-co-review' in co[s3:s4]: fail('checkout', 'a review between the address a
 for bid, items, attrs, body in cards:
     if '>Package<' in body or 'bundle-card__price-total">--<' in body: fail('checkout', f'card {bid} has no name or price before the SDK answers')
 if 'data-sf-gift-line' not in html('thank-you'): fail('thank-you', 'no gift line for js/sf-receipt.js to fill')
-# the pay line by the express buttons and the order button: every card, bought once, with its gifts
+# the pay line in the refill terms by the summary: every card, what renews, with its gifts said once
 m = re.search(r"data-sf-pay-terms='([^']+)'", co)
-if not m: fail('checkout', 'no pay line by the express buttons')
+if not m: fail('checkout', 'no pay line in the refill terms')
 else:
     terms = json.loads(unescape(m.group(1)))
     if set(terms) != {c[0] for c in cards}: fail('checkout', f'pay line names {sorted(terms)}, the cards are {sorted(c[0] for c in cards)}')
@@ -220,28 +220,30 @@ else:
         if ref in PACK_BY_REF:
             p = PACK_BY_REF[ref]; want = f"${p['price']:.2f} every {p['every']} days for {p['bottles']} bottle"
             if not terms.get(bid, '').startswith(want): fail('checkout', f'pay line {bid}: "{terms.get(bid)}", not "{want}…"')
-    if co.count('data-sf-pay-terms=') < 2: fail('checkout', 'the pay line is not both above the express buttons and by the order button')
 if 'until you cancel' not in text(co): fail('checkout', '"until you cancel" missing from the pay line')
-# the refills have their own consent (live review 11: it rode on the order button and the ToS sentence): an unticked box,
-# above the express buttons, its amount the chosen pack's; the ToS sentence carries the ToS and the privacy policy only
+# the subscription is the default with no consent box (the owner, 30 Oct 2026): what renews is on each pack card ("Then
+# $X every N days") and, right under the order button, the owner's row: "Love it or your money back", Refill reminder,
+# Cancel any time, "Renews at" the chosen pack's price and days (the amounts per pack checked against the packs)
 _pay = co[co.find('Step 4: Payment'):]
-_cb = re.search(r'<input type="checkbox" id="sf-refill-consent" data-sf-refill-consent[^>]*>', _pay)
-if not _cb or re.search(r'\schecked\b', _cb.group(0)): fail('checkout', 'no unticked Automatic Refills consent box in the payment step')
-elif not 0 <= _pay.find('data-sf-refill-consent') < _pay.find('data-next-express-checkout="container"'): fail('checkout', 'the refills consent box is not above the express buttons')
-if 'I agree to Automatic Refills' not in text(_pay): fail('checkout', 'the consent box does not say "I agree to Automatic Refills"')
+if 'data-sf-refill-consent' in co: fail('checkout', 'a consent box (the owner wants the subscription by default, no box)')
+_btn, _sub = _pay.find('class="submit-button"'), _pay.find('data-sf-sub ')
+if not 0 <= _btn < _sub or re.search(r'<button|<a ', _pay[_pay.find('</button>', _btn) + 9:_sub]):
+    fail('checkout', 'the "Renews at" row is not right under the order button')
+_subt = text(_pay[_sub:_pay.find('</ul>', _sub)]) if _sub >= 0 else ''
+for need in ('Love it or your money back', 'Refill reminder', 'Cancel any time', 'Renews at $'):
+    if need not in _subt: fail('checkout', f'the row under the order button does not say "{need}"')
 _rs = re.search(r"data-sf-renew-short='([^']+)'", co)
-if not _rs: fail('checkout', 'the consent box has no per-pack renewal amounts')
+if not _rs: fail('checkout', 'the row under the order button has no per-pack renewal amounts')
 else:
     _short = json.loads(unescape(_rs.group(1)))
     for bid, items, attrs, body in cards:
         ref = json.loads(items)[0]['packageId']
         if ref in PACK_BY_REF:
             p_ = PACK_BY_REF[ref]
-            if _short.get(bid) != f"${p_['price']:.2f} every {p_['every']} days": fail('checkout', f'consent amount for {bid}: "{_short.get(bid)}"')
-if re.search(r'By placing your order you agree to Automatic Refills', text(co)): fail('checkout', 'the ToS sentence still carries the consent to the refills')
+            if _short.get(bid) != f"${p_['price']:g} every {p_['every']} days": fail('checkout', f'"Renews at" for {bid}: "{_short.get(bid)}"')
+            if f"Then ${p_['price']:g} every {p_['every']} days" not in text(body): fail('checkout', f'the {bid} card does not say what renews ("Then ${p_["price"]:g} every {p_["every"]} days")')
 _scj = (SITE / 'js' / 'sf-checkout.js').read_text(encoding='utf-8')
-for need in ("document.addEventListener('click', hold, true)", "document.addEventListener('submit', hold, true)", 'express.inert = !ok'):
-    if need not in _scj: fail('checkout', f'sf-checkout.js does not hold the payment until the box is ticked ({need})')
+if '[data-sf-renew-short-text]' not in _scj: fail('checkout', 'the "Renews at" amount does not follow the chosen pack')
 if 'id="refill-terms"' not in co or 'To skip or cancel' not in text(co): fail('checkout', 'no refill terms (how to skip or cancel) by the order button')
 # the summary's renewal line is the SDK's ({item.frequency}); an inline display:none on it kept it hidden (29 Oct 2026)
 _freq = re.search(r'<span data-next-show="item.isRecurring"([^>]*)>([^<]*)</span>', co)

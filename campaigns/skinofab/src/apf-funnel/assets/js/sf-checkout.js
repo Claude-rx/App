@@ -120,44 +120,6 @@ window.addEventListener('next:initialized', function () {
   sync();
 })();
 
-// The separate consent to the Automatic Refills (live review 11: consent rode on the order button and the ToS sentence).
-// Until the box is ticked, nothing pays: the express buttons (PayPal draws its own frames, which take clicks the page can't
-// see) are dimmed, inert and covered by a button that explains; the order button and the form's submit are held in the
-// capture phase, before the SDK's own handlers. Either way the box is brought into view, focused and the reason shown.
-(function initRefillConsent() {
-  const box = document.querySelector('[data-sf-refill-consent]');
-  if (!box) return;
-  const wrap = box.closest('[data-sf-consent]');
-  const err = document.getElementById('sf-consent-err');
-  const gate = document.querySelector('[data-sf-consent-gate]');
-  const express = gate && gate.querySelector('[data-next-express-checkout="container"]');
-  const cover = gate && gate.querySelector('[data-sf-consent-cover]');
-  const sync = () => {
-    const ok = box.checked;
-    if (gate) gate.classList.toggle('sf-consent-off', !ok);
-    if (express) express.inert = !ok;
-    if (cover) cover.hidden = ok;
-    if (ok) { wrap.classList.remove('sf-consent--error'); err.hidden = true; err.removeAttribute('role'); }
-  };
-  const ask = () => {
-    wrap.classList.add('sf-consent--error');
-    err.hidden = false; err.setAttribute('role', 'alert');
-    wrap.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    box.focus({ preventScroll: true });
-  };
-  box.addEventListener('change', sync);
-  if (cover) cover.addEventListener('click', ask);
-  const hold = (e) => {
-    if (box.checked) return;
-    const btn = e.type === 'submit' ? e.target : e.target.closest && e.target.closest('.submit-section__button .submit-button, #combo_form button[type="submit"]');
-    if (!btn) return;
-    e.preventDefault(); e.stopImmediatePropagation(); ask();
-  };
-  document.addEventListener('click', hold, true);
-  document.addEventListener('submit', hold, true);
-  sync();
-})();
-
 // The pack cards from the keyboard: the SDK's cards are div[role=button] it binds a click to, so Tab reaches them,
 // Enter or Space picks one, and aria-pressed says which is chosen (checkout review 2).
 (function initCardKeys() {

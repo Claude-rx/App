@@ -53,11 +53,6 @@ trust:
     total: 9855
     rows: [["5", 7719, "7,719"], ["4", 2132, "2,132"], ["3", 0, "0"], ["2", 1, "1"], ["1", 3, "3"]]
     of: "of this foundation, at our earlier store"
-  points:
-    - { icon: shield, title: "30-day money-back guarantee", text: "Not your match? A full refund, even opened. You don’t send it back." }
-    - { icon: truck, title: "Free tracked shipping", text: "Your order ships in 1 business day." }
-    - { icon: mail, title: "Skip or cancel any time", text: "Refills at the same price. We email you before each one; one ready-made email cancels, no fees." }
-    - { icon: lock, title: "Secure checkout", text: "Your card number goes straight to our payment processor, encrypted." }
   allergy: "Contains salmon-derived PDRN: not for anyone with a fish allergy."
   faq:
     - q: "What if it isn’t my shade?"
@@ -181,12 +176,12 @@ pay_terms:
   apf-2: "$57.00 every 56 days for 2 bottles (your free Blender sponge and mystery gift come with this first order)"
   apf-3: "$75.00 every 84 days for 3 bottles (your free Lymphatic Brush, Blender sponge and mystery gift come with this first order)"
   apf-1: "$39.00 every 28 days for 1 bottle"
-# the separate consent to the refills (live review 11: it rode on the order button and the ToS sentence): an unticked box
-# above the express buttons, its amount following the chosen pack; sf-checkout.js holds every way to pay until it is ticked
+# what renews, per pack, in the row under the order button (the owner, 30 Oct 2026: the subscription is the default, no
+# consent box, and just "Refill reminder · Cancel any time · Renews at …" under the button); sf-checkout.js follows the card
 renew_short:
-  apf-1: "$39.00 every 28 days"
-  apf-2: "$57.00 every 56 days"
-  apf-3: "$75.00 every 84 days"
+  apf-1: "$39 every 28 days"
+  apf-2: "$57 every 56 days"
+  apf-3: "$75 every 84 days"
 refill_terms: "Your pack ships again at the same price until you cancel. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
 # the exit pop: the bottle (the pack she picked may not be the 3-pack), one offer said once, the saving applied at the button
 exit_intent:
@@ -232,21 +227,13 @@ exit_intent:
                             </div>
                             {% assign sel = bundles | where: "selected", true | first %}
                             {% capture pay_text %}<strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">{{ sel.price }}</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ {% for b in bundles %}{% unless forloop.first %},{% endunless %}"{{ b.id }}":"{{ b.price }}"{% endfor %} }'>{{ sel.price }}</span> today</strong>, then <span data-sf-renew>{{ pay_terms[sel.id] }}</span>, until you cancel.{% endcapture %}
-                            <p class="sf-pay-terms" data-sf-pay-terms='{{ pay_terms | json }}'>{{ pay_text }}</p>
-                            <div class="sf-consent" data-sf-consent data-sf-renew-short='{{ renew_short | json }}'>
-                              <label class="sf-consent__box" for="sf-refill-consent"><input type="checkbox" id="sf-refill-consent" data-sf-refill-consent aria-describedby="sf-consent-err"><span>I agree to <strong>Automatic Refills</strong>: my pack ships again and I’m charged <strong data-sf-renew-short-text>{{ renew_short[sel.id] }}</strong> until I cancel. I can cancel any time by email or phone.</span></label>
-                              <p class="sf-consent__err" id="sf-consent-err" hidden>Please tick the box to agree to the Automatic Refills before you pay.</p>
-                            </div>
-                            <div class="sf-consent-gate sf-consent-off" data-sf-consent-gate>
-                              {% campaign_include 'express-checkout.html' show_title=false %}
-                              <button type="button" class="sf-consent-cover" data-sf-consent-cover aria-label="PayPal, Apple Pay and the other express buttons: tick the Automatic Refills box above first"></button>
-                            </div>
+                            {% campaign_include 'express-checkout.html' show_title=false %}
                             {% campaign_include 'payment-methods.html' %}
                             {% comment %} the order button straight after the payment options (the owner, 29 Oct 2026): the pay line above the
                                express buttons already says what is charged and what renews; the guarantee, the refill terms and the summary follow it {% endcomment %}
                             {% capture disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of Service</a> and our <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
-                            {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · SKIP OR CANCEL ANY TIME' disclaimer=disclaimer %}
-                            {% campaign_include 'sf-checkout-trust.html' part='badges' %}
+                            {% campaign_include 'submit-block.html' cta_text='COMPLETE MY ORDER →' subtext='FREE SHIPPING · SECURE CHECKOUT' disclaimer=disclaimer %}
+                            {% campaign_include 'sf-checkout-trust.html' part='subscription' sel=sel renew_short=renew_short %}
                           </div>
                           {% campaign_include 'sf-checkout-trust.html' part='inline' %}
                           <div class="form-section form-section--last">
