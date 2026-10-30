@@ -230,7 +230,7 @@ def pack_cards():
     show at 64 px): 1 bottle; 3 with the free Blender sponge (pack-3b) and 5 with the free Lymphatic Brush and its case
     (pack-5), the owner's offer of 30 Oct 2026; the offers' 2 and 6 (the 6 with the brush); the gifts in front of
     the bottles, never in front of a label. And the sales page's 5-pack (offer-5) on a warm sweep under a "BUY 3, GET 2
-    FREE" ribbon (true: 5 bottles for 3 x the 1-bottle price) with three true badges: the free brush, formulated in
+    FREE" ribbon (true: 5 bottles for less than 3 x the 1-bottle price) with three true badges: the free brush, formulated in
     Korea (a laurel, no clinical claim: there is no clinical study), the 30-day guarantee seal."""
     bot = cutout(bottle(1254))
     card_im = Image.open(BRUSH / 'card.jpg').convert('RGB')
@@ -261,7 +261,7 @@ def pack_cards():
         save(scene(n, wb, 900, 'white'), name, size=700)
     save(scene(3, False, 900, 'white', with_sponge=True), 'pack-3b', size=700)
     # the sales page's 5-pack: a "BUY 3, GET 2 FREE" ribbon over its three badges, the scene a little smaller under them,
-    # and a "$20.38 a bottle" tag beside the back right bottle's cap (never on a label)
+    # and a "$19.99 a bottle" tag beside the back right bottle's cap (never on a label)
     k, A, s3 = 0.86, 1050, 1080 / 900
     items = [(bot, 355, 618, 420), (bot, 545, 618, 420), (bot, 260, 668, 445), (bot, 450, 684, 460), (bot, 640, 668, 445),
              (brush, 250, 878, 135), (case, 650, 884, 165)]
@@ -288,7 +288,7 @@ def pack_cards():
     d.text((540, 256), 'in Korea', font=P.serif(29, 'Bold'), fill=INK, anchor='ms')
     seal = Image.open(OUT / 'guarantee-seal.png').convert('RGBA'); seal.thumbnail((184, 184), Image.LANCZOS)
     im.paste(seal, (1080 - 58 - seal.width, 236 - seal.height // 2), seal)
-    T = 150                                                                       # the $20.38 a bottle tag
+    T = 150                                                                       # the $19.99 a bottle tag
     tag = Image.new('L', (4 * T, 4 * T), 0); ImageDraw.Draw(tag).ellipse((0, 0, 4 * T - 1, 4 * T - 1), fill=255)
     tag = tag.resize((T, T), Image.LANCZOS)
     tx, ty = 880, 420
@@ -297,7 +297,7 @@ def pack_cards():
     im.paste(Image.new('RGB', (T, T), GOLD), (tx - T // 2, ty - T // 2), tag)
     d = ImageDraw.Draw(im)
     d.ellipse((tx - T // 2 + 8, ty - T // 2 + 8, tx + T // 2 - 8, ty + T // 2 - 8), outline=INK, width=2)
-    d.text((tx, ty + 2), '$20.38', font=P.sans(36, 'Bold'), fill=INK, anchor='ms')
+    d.text((tx, ty + 2), '$19.99', font=P.sans(36, 'Bold'), fill=INK, anchor='ms')
     d.text((tx, ty + 30), 'A BOTTLE', font=P.sans(17, 'Bold'), fill=INK, anchor='ms')
     save(im, 'offer-5', size=1080)
     save(ground(bottle(1080)), 'bottle', size=1080)

@@ -292,10 +292,10 @@ for m in re.finditer(r'<label class="sf-pack[^"]*" data-pack="([^"]+)" data-pric
     if not want or renewal != renew(want) or every != f"{want['every']} days": fail('offer', f'pack {pack}: renews "{renewal}" every "{every}", not "{renew(want) if want else "?"}"')
     card = pp[m.end():pp.find('</label>', m.end())]
     if renewal not in text(card): fail('offer', f'pack {pack}: its renewal is not on its card')
-    # the free bottles: the pack's price is the 1-bottle price times the bottles she pays for, its crossed-out price the
+    # the free bottles: the pack's price is at most the 1-bottle price times the bottles she pays for, its crossed-out price the
     # 1-bottle price times the bottles she gets (the owner's offer of 30 Oct 2026), and nothing else is struck through
     _struck = re.findall(r'<s>\$([\d.]+)</s>', card.split('sf-gifts')[0])
-    if want and abs(float(price) - F.UNIT * want['paid']) > 0.005: fail('offer', f'pack {pack}: ${price} is not {want["paid"]} x ${F.UNIT}')
+    if want and float(price) > F.UNIT * want['paid'] + 0.005: fail('offer', f'pack {pack}: ${price} is more than {want["paid"]} x ${F.UNIT} (the free bottles would not be free)')
     if _struck != ([f"{F.UNIT * want['bottles']:.2f}"] if want and want.get('compare') else []): fail('offer', f'pack {pack}: crossed-out {_struck}, not {want["bottles"] if want else "?"} x ${F.UNIT}')
     if want and want.get('compare') and abs(want['compare'] - F.UNIT * want['bottles']) > 0.005: fail('offer', f'pack {pack}: compare {want["compare"]} is not {want["bottles"]} x {F.UNIT}')
     if 'SAVE $' in card: fail('offer', f'pack {pack}: a dollar saving on the card')
@@ -746,13 +746,14 @@ if _lst.count('adaptive-foundation-offer/?pack=apf-5#offer"') < 2: fail('listicl
 if _sp.count('data-sf-pause-corner="tl"') < 1 or _lst.count('data-sf-pause-corner="tl"') < 2 or "getAttribute('data-sf-pause-corner') === 'tl'" not in _apfjs: fail('listicle', 'the pause button covers the timeline or the dropper bottle')
 
 # the owner's offer of 30 Oct 2026 -----------------------------------------------------------------------------------------
-# the free-bottle claims are arithmetic: "buy 2, get 1 free" only beside a pack of 3 at 2 x the 1-bottle price, "buy 3,
-# get 2 free" only beside a pack of 5 at 3 x; the campaign's 1-bottle pack is the price they count against
+# the free-bottle claims are arithmetic: "buy 2, get 1 free" only beside a pack of 3 at no more than 2 x the 1-bottle
+# price, "buy 3, get 2 free" only beside a pack of 5 at no more than 3 x (the owner's $66.97 and $99.97 are a little
+# under); the campaign's 1-bottle pack is the price they count against
 _unit = next((float(p_['price']) for p_ in pkgs.values() if p_['product_sku'] == ONE_SKU), None)
 if _unit is None or abs(_unit - F.UNIT) > 0.005: fail('campaign', f'the 1-bottle pack is {_unit}, the pages count the free bottles against ${F.UNIT}')
 for pk in F.PACKS:
     live = pkgs.get(pk['package'])
-    if live and abs(float(live['price']) - F.UNIT * pk['paid']) > 0.005: fail('campaign', f'package {pk["package"]} costs ${live["price"]}, not {pk["paid"]} x ${F.UNIT}')
+    if live and float(live['price']) > F.UNIT * pk['paid'] + 0.005: fail('campaign', f'package {pk["package"]} costs ${live["price"]}, more than {pk["paid"]} x ${F.UNIT}')
 for p in F.PAGES:
     t = text(html(p['id']))
     for m in re.finditer(r'\bbuy\s+(\d),?\s+get\s+(\d)\s+free', t, re.I):

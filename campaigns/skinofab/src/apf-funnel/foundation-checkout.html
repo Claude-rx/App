@@ -59,7 +59,7 @@ trust:
     - q: "What if it isn’t my shade?"
       a: "It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
     - q: "Is this a subscription?"
-      a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($67.94), 5 bottles every 140 days ($101.91). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only."
+      a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only."
     - q: "When does it ship?"
       a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days. This offer ships to US addresses only."
     - q: "Are these reviews of this formula?"
@@ -141,7 +141,8 @@ packages:
   main_package: 9
 shipping_methods:
   standard: 1
-# the crossed-out price (compare) is this checkout's own 1-bottle price times the bottles: the free bottles, nothing else;
+# the crossed-out price (compare) is this checkout's own 1-bottle price times the bottles: the free bottles (each pack costs a
+# little less than the bottles it charges for: $66.97 and $99.97, the owner, 30 Oct 2026);
 # it steps aside once the SDK shows a struck price of its own (the exit coupon)
 bundles:
   - id: "apf-1"
@@ -158,9 +159,9 @@ bundles:
     shipping_method: "standard"
     image: "images/sf/pack-3b.jpg"
     name: "Adaptive Peptide Foundation - 3 bottles + free Blender"
-    price: "$67.94"
+    price: "$66.97"
     compare: "$101.91"
-    subtitle_text: "Buy 2, get 1 free: you pay for 2. Then $67.94 every 84 days, $22.65 a bottle. Free shipping. A free Blender sponge with your first order"
+    subtitle_text: "Buy 2, get 1 free: 3 bottles for less than 2 cost. Then $66.97 every 84 days, $22.32 a bottle. Free shipping. A free Blender sponge with your first order"
     badge_text: "Buy 2, get 1 FREE"
     badge_pill_class: "os-card__label--pill-secondary"
   - id: "apf-5"
@@ -170,16 +171,16 @@ bundles:
     selected: true
     image: "images/sf/pack-5.jpg"
     name: "Adaptive Peptide Foundation - 5 bottles + free Lymphatic Brush"
-    price: "$101.91"
+    price: "$99.97"
     compare: "$169.85"
-    subtitle_text: "Buy 3, get 2 free: you pay for 3. Then $101.91 every 140 days, $20.38 a bottle. Free shipping. A free Lymphatic Brush with your first order"
+    subtitle_text: "Buy 3, get 2 free: 5 bottles for less than 3 cost. Then $99.97 every 140 days, $19.99 a bottle. Free shipping. A free Lymphatic Brush with your first order"
     badge_text: "Buy 3, get 2 FREE"
     badge_pill_class: "os-card__label--pill-primary"
 # what she pays today (the SDK's cart total, after any exit coupon) and what renews, by the express buttons (they place
 # the order too) and by the button; sf-checkout.js keeps the pack's line in step with the chosen card
 pay_terms:
-  apf-3: "$67.94 every 84 days for 3 bottles (your free Blender sponge comes with this first order)"
-  apf-5: "$101.91 every 140 days for 5 bottles (your free Lymphatic Brush comes with this first order)"
+  apf-3: "$66.97 every 84 days for 3 bottles (your free Blender sponge comes with this first order)"
+  apf-5: "$99.97 every 140 days for 5 bottles (your free Lymphatic Brush comes with this first order)"
   apf-1: "$33.97 every 28 days for 1 bottle"
 # what renews, per pack, in the row under the order button (the owner, 30 Oct 2026: the subscription is the default, no
 # consent box, and just "Refill reminder · Cancel any time · Renews at …" under the button); sf-checkout.js follows the card
@@ -191,8 +192,8 @@ picked:
   apf-5: "5 bottles (buy 3, get 2 free) + free Lymphatic Brush"
 renew_short:
   apf-1: "$33.97 every 28 days"
-  apf-3: "$67.94 every 84 days"
-  apf-5: "$101.91 every 140 days"
+  apf-3: "$66.97 every 84 days"
+  apf-5: "$99.97 every 140 days"
 refill_terms: "Your pack ships again at the same price until you cancel. We email you before every refill. To skip or cancel, send our ready-made email (<a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only. Every pack has the same 30-day money-back guarantee. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
 # the exit pop: the bottle (the pack she picked may not be the 5-pack), one offer said once, the saving applied at the button;
 # "10% off", not "an extra 10%" (live review 13, F3)
@@ -203,7 +204,7 @@ exit_intent:
   subheadline: "One more reason to order today."
   offer_title: "<strong>10% off</strong> your pack"
   offer_label: "Applied to your order right away"
-  offer_detail: "It comes off the foundation pack in today’s order, rounded down to the dollar: $91 for 5 bottles, $61 for 3, $30 for 1. The free bottles, the gift and free shipping stay; refills are at the pack’s own price."
+  offer_detail: "It comes off the foundation pack in today’s order, rounded down to the dollar: $89 for 5 bottles, $60 for 3, $30 for 1. The free bottles, the gift and free shipping stay; refills are at the pack’s own price."
   cta_label: "Apply it to my order"
 ---
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>

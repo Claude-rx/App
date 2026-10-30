@@ -76,13 +76,13 @@ After 45 your tone shifts and your skin gets drier. The shade that matched at 40
 
 ### Choose your pack
 
-<strong>Buy 3, get 2 FREE</strong>: 5 bottles for $101.91, $20.38 a bottle, with the free Lymphatic Brush. Every pack ships free and refills at the same price until you cancel.
+<strong>Buy 3, get 2 FREE</strong>: 5 bottles for $99.97, $19.99 a bottle, with the free Lymphatic Brush. Every pack ships free and refills at the same price until you cancel.
 
 [OFFER: 1 bottle | $33.97 | | About a month of daily use · then $33.97 every 28 days, until you cancel · free shipping | ]
 
-[OFFER: 3 bottles | $67.94 | | Pay for 2 · about three months · $22.65 a bottle · then $67.94 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
+[OFFER: 3 bottles | $66.97 | | Less than 2 bottles cost · about three months · $22.32 a bottle · then $66.97 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
 
-[OFFER: 5 bottles | $101.91 | | Pay for 3 · about five months · $20.38 a bottle · then $101.91 every 140 days, until you cancel · free shipping · first order: FREE Lymphatic Brush + case | Buy 3, get 2 FREE · Best value]
+[OFFER: 5 bottles | $99.97 | | Less than 3 bottles cost · about five months · $19.99 a bottle · then $99.97 every 140 days, until you cancel · free shipping · first order: FREE Lymphatic Brush + case | Buy 3, get 2 FREE · Best value]
 
 [CTA: GET MY FOUNDATION | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-2]
 
@@ -320,11 +320,11 @@ We can promise this because of what 9,855 reviews say about it. Read them above,
 
 | **Total value of your first order** | **$194.80** |
 
-| **Your price today** | **$101.91** |
+| **Your price today** | **$99.97** |
 
 **Why these packs are only here:** our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch. There is no countdown on this page, and no pack costs more than it says here.
 
-[OFFER: 3 bottles | $67.94 | | Pay for 2 · about three months · $22.65 a bottle · then $67.94 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
+[OFFER: 3 bottles | $66.97 | | Less than 2 bottles cost · about three months · $22.32 a bottle · then $66.97 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
 
 [CTA: GET MY FOUNDATION | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-3]
 
@@ -404,7 +404,7 @@ No. We left SPF out on purpose so the formula can stay a light, hydrating serum.
 
 **Q: Is this a subscription?**
 
-Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($67.94), 5 bottles every 140 days ($101.91). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
+Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
 
 **Q: How long does a bottle last?**
 

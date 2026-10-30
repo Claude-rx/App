@@ -99,7 +99,7 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    the offer gate skips the one-click offers for an order whose payment method "can't be charged again", and every
    checkout pack now renews. Check with NEXT whether a refill on a Klarna or Link order is charged or fails; if it
    fails, turn Klarna and Link off on campaign 2221 (and Affirm and Afterpay, which the pages do not show). (d)
-   **Pricing:** since 30 Oct 2026 the funnel's refills ($33.97 for 1 bottle, $67.94 for 3, $101.91 for 5) are below the
+   **Pricing:** since 30 Oct 2026 the funnel's refills ($33.97 for 1 bottle, $66.97 for 3, $99.97 for 5) are below the
    store's own ($37 for 1, $47 for 2); the gap that made the funnel the dearer place is gone.
 9. **The store's sitemap** (`/sitemap-pages.xml`) lists the funnel's pages. They are `noindex` now (the checkout, the
    offers and the thank-you page since live review 8), but the platform builds the sitemap from published pages and
@@ -226,23 +226,25 @@ variants it needed were made by `commerce.py --variants-only` (334, 335).
 | Package ref | SKU | Sells | Price | Renews | Crossed-out price |
 |---:|---|---|---:|---|---:|
 | 1 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $33.97 | $33.97 every 28 days | none |
-| 8 | SKF-APF-3-BLENDER | 3 bottles, buy 2 get 1 free, + free Blender sponge (in the first box) | $67.94 | $67.94 every 84 days | $101.91 (3 × $33.97) |
-| 9 | SKF-APF-5-BRUSH | 5 bottles, buy 3 get 2 free, + free Lymphatic Brush (in the first box) | $101.91 | $101.91 every 140 days | $169.85 (5 × $33.97) |
+| 8 | SKF-APF-3-BLENDER | 3 bottles, buy 2 get 1 free, + free Blender sponge (in the first box) | $66.97 | $66.97 every 84 days | $101.91 (3 × $33.97) |
+| 9 | SKF-APF-5-BRUSH | 5 bottles, buy 3 get 2 free, + free Lymphatic Brush (in the first box) | $99.97 | $99.97 every 140 days | $169.85 (5 × $33.97) |
 | 4 | SKF-APF-2 | 2 bottles (offer 1: $19.50 a bottle) | $39.00 | once | $57 (the store, bought once) |
 | 5 | SKF-APF-6-BRUSH | 6 bottles + free Lymphatic Brush (offer 1: $16.50 a bottle) | $99.00 | once | $171 (3 × the store's $57) |
 | 6 | SKF-LYB-1T | The Lymphatic Brush + free travel case | $24.95 | once | — |
 | 7 | SKF-APF-1-ADD | 1 bottle, the add-on of offers 2 and 2b (variant 301) | $33.97 | once | $33.97 (the sales page price) |
 | 2, 3 | SKF-APF-2-GIFTS, SKF-APF-3-GIFTS | the packs before 30 Oct 2026 ($57, $75), kept for the orders that name them | — | — | on no page |
 
-The free-bottle claims are exact against the funnel's own 1-bottle price: 3 bottles for 2 × $33.97, 5 for 3 × $33.97;
-the crossed-out prices are that price times the bottles she gets. Offer 1's 2-bottle card said "Add 1, get 1 FREE"
+The free-bottle claims hold against the funnel's own 1-bottle price: 3 bottles for less than 2 × $33.97, 5 for less
+than 3 × $33.97 (the owner's .97 prices of 30 Oct 2026, $66.97 and $99.97: $22.32 and $19.99 a bottle; the exact 2× and 3×,
+$67.94 and $101.91, were live from 10:08 to 11:07 UTC that day); the crossed-out prices are that price times the bottles
+she gets. Offer 1's 2-bottle card said "Add 1, get 1 FREE"
 until then; at $39 for two against $33.97 for one it no longer was, so it says "$19.50 a bottle". Campaigns OS QA warns
 `spec.campaign_drift` for packages 2 and 3 (in the campaign, on no page); deleting them clears it (an owner call: the
 update path deletes only with `--allow-delete` and a fresh approval).
 
 | Offer ref | Code | Package | Off | Lands at (rounded down to the dollar) |
 |---:|---|---:|---:|---|
-| 1 | APF10 | 1, 8, 9 | 10% | the checkout's exit pop: $30 / $61 / $91 today (refills at the pack's own price) |
+| 1 | APF10 | 1, 8, 9 | 10% | the checkout's exit pop: $30 / $60 / $89 today (refills at the pack's own price) |
 | 2 | APF40 | 7 | 44% | $19.00 ("One more bottle at $19") |
 | 3 | APF50 | 7 | 55% | $15.00 ("One more bottle at $15") |
 | 4 | BRUSH40 | 6 | 40% | $14.00 (44% off) |
@@ -781,6 +783,14 @@ price re-verified through the Cart API ($33.97, $67.94, $101.91; $39, $99, $19, 
 free-bottle claims to their arithmetic, the crossed-out prices to the 1-bottle price, the gifts to their packs and the
 exit pop's amounts to the campaign's rounding. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, with a
 new `spec.campaign_drift` warning for the retired packages 2 and 3.
+
+**The owner's .97 prices (30 Oct 2026, 11:07 UTC):** "better psychology price": the owner offered $33.97 / $67.97 /
+$99.97 "or a better one"; $67.97 would have made the free bottle cost 3¢, so the owner chose $33.97 / $66.97 / $99.97:
+every price ends in .97, the 5-bottle pack is under $100 at $19.99 a bottle, and each pack costs a little less than the
+bottles it charges for, so both free-bottle claims stay true (`check_apf.py` now holds a pack to at most the 1-bottle
+price times the bottles she pays for). Two package price changes through the update path (packages 8 and 9, refills at
+the same prices), the exit pop's amounts $89 / $60 / $30, the value stack's "Your price today" $99.97 against $194.80,
+the offer-5 tag "$19.99 a bottle"; every price re-verified through the Cart API.
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page

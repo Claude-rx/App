@@ -49,8 +49,8 @@ VARIANTS = {
         # campaign takes one package per variant
         {'sku': 'SKF-APF-1-ADD', 'value': '1 bottle (add-on)', 'price': '39.00', 'retail': '47.00'},
         # the 30 Oct 2026 offer (the owner): Buy 2 Get 1 Free with the Blender, Buy 3 Get 2 Free with the Lymphatic Brush
-        {'sku': 'SKF-APF-3-BLENDER', 'value': '3 bottles + free Blender', 'price': '67.94', 'retail': '141.00'},
-        {'sku': 'SKF-APF-5-BRUSH', 'value': '5 bottles + free Lymphatic Brush', 'price': '101.91', 'retail': '235.00'},
+        {'sku': 'SKF-APF-3-BLENDER', 'value': '3 bottles + free Blender', 'price': '66.97', 'retail': '141.00'},
+        {'sku': 'SKF-APF-5-BRUSH', 'value': '5 bottles + free Lymphatic Brush', 'price': '99.97', 'retail': '235.00'},
     ],
     BRUSH: [
         {'sku': 'SKF-LYB-1T', 'value': '1 brush + free travel case', 'price': '24.95', 'retail': '24.95'},
@@ -59,8 +59,8 @@ VARIANTS = {
 # the packages: key -> (product, variant sku, campaign price); the name is the product's (the API appends the variant)
 PACKAGES = [
     ('apf-1', FOUNDATION, 'SKF-APF-1', '33.97'),
-    ('apf-3-blender', FOUNDATION, 'SKF-APF-3-BLENDER', '67.94'),       # Buy 2 Get 1 Free: 2 x $33.97
-    ('apf-5-brush', FOUNDATION, 'SKF-APF-5-BRUSH', '101.91'),          # Buy 3 Get 2 Free: 3 x $33.97
+    ('apf-3-blender', FOUNDATION, 'SKF-APF-3-BLENDER', '66.97'),       # Buy 2 Get 1 Free: under 2 x $33.97
+    ('apf-5-brush', FOUNDATION, 'SKF-APF-5-BRUSH', '99.97'),           # Buy 3 Get 2 Free: under 3 x $33.97, $19.99 a bottle
     ('apf-2', FOUNDATION, 'SKF-APF-2', '39.00'),
     ('apf-6-brush', FOUNDATION, 'SKF-APF-6-BRUSH', '99.00'),
     ('brush-1', BRUSH, 'SKF-LYB-1T', '24.95'),

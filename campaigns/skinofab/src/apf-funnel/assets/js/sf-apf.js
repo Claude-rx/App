@@ -140,7 +140,7 @@
       });
       set('[data-sf-cta]', function (a) { a.href = a.href.replace(/forceBundleId=[^&#]*/, 'forceBundleId=' + id); });
       set('[data-sf-price]', function (e) { e.textContent = price; });
-      // what the chosen pack renews at (Automatic Refills): under the button, "$101.91 today, then $101.91 every 140 days, until you cancel"
+      // what the chosen pack renews at (Automatic Refills): under the button, "$99.97 today, then $99.97 every 140 days, until you cancel"
       set('[data-sf-renew-line] strong', function (e) { e.textContent = price + ' today'; });
       set('[data-sf-renew-text]', function (e) { e.textContent = renew.charAt(0).toLowerCase() + renew.slice(1); });
       set('[data-sf-label]', function (e) { e.textContent = card.getAttribute('data-label'); });

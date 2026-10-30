@@ -24,7 +24,7 @@ closing card. Only the brush gets a product page, and its loop plays above the f
   (js/sf-supply.js selects the card first; the closing card's picture follows the selected card). Accept goes to the
   brush offer, decline to offer 2.
 - offer 2 / its downsell: one more bottle ($33.97, the checkout's own bottle) with APF40 (44% off, $19) or APF50 (55%
-  off, $15; the owner's offer of 30 Oct 2026 put the checkout's packs at $33.97 to $20.38 a bottle): Apollo's single-offer
+  off, $15; the owner's offer of 30 Oct 2026 put the checkout's packs at $33.97 to $19.99 a bottle): Apollo's single-offer
   upsell with the voucher on a hidden selector (as the stick funnel's), three photos, the bullets, the terms, three
   reasons, the closing card.
 - offer 3 / its downsell: the Lymphatic Brush with BRUSH40 ($14) or BRUSH60 ($9): the offer with the brush's loop (its
