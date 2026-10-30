@@ -666,9 +666,14 @@ def dtl_literal(value):
     value = re.sub(r'\s+', ' ', value or '').strip().replace('\\', '').replace('"', "'")
     return '{%% firstof "%s" %%}' % value if value else ''
 
+PRIVACY_CHOICES = (re.compile(r'(<a href="/cookie-policy/">Cookie policy</a>)(</nav>)'), r'\1<a href="/data-sharing-opt-out/">Your privacy choices</a>\2')
+
 def write(rel, text):
     p = OUT / rel
     p.parent.mkdir(parents=True, exist_ok=True)
+    # every copy of the store's policy links gets "Your privacy choices" (live review 12: the track-your-order page
+    # carries its own copy of the footer from the export, without the link the main footer has)
+    text = PRIVACY_CHOICES[0].sub(PRIVACY_CHOICES[1], text)
     p.write_text(text, 'utf-8')
     LOG['templates'].append(rel)
 
@@ -1079,6 +1084,15 @@ write('partials/sf_asset_styles.html',
 product_json = ','.join('"%s":"{{ \'sf/data/product-%s.json\'|asset_url|escapejs }}"' % (h, h) for h in sorted(PRODUCT_JSON))
 base = (SPARK / 'layouts' / 'base.html').read_text()
 # No dangling " - " when the store has no tagline; the store icon from Settings > Branding wins over the theme's.
+# Global Privacy Control, or the opt-out on /data-sharing-opt-out/ (a cookie for every skinofab.com host, or this
+# browser's storage): no AppLovin pixel on any store page, as the privacy policy promises (live review 12: the store's
+# AppLovin app loaded it on the policy pages, the opt-out page itself included). The app's Axon snippet, at the end of
+# <head>, loads only while window.axon is undefined, so a no-op one set first stops it; the funnels' layouts do the same.
+base = must_replace(base, '    <meta charset="UTF-8" />\n',
+    '    <meta charset="UTF-8" />\n'
+    "    <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\\s*)sf_optout=1/.test(document.cookie);"
+    " try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {}"
+    " if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>\n", 'privacy gate')
 base = must_replace(base, '{% block title %}{{ store.get_meta_title }} - {{ store.tagline }}{% endblock %}',
                     '{% block title %}{{ store.get_meta_title }}{% if store.tagline %} - {{ store.tagline }}{% endif %}{% endblock %}', 'title')
 base = must_replace(base, """                <link rel="shortcut icon" href="{{ thumb_store_icon.url }}" />

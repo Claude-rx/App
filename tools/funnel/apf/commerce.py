@@ -63,13 +63,15 @@ PACKAGES = [
     ('brush-1', BRUSH, 'SKF-LYB-1T', '24.95'),
     ('apf-1-add', FOUNDATION, 'SKF-APF-1-ADD', '39.00'),
 ]
-# the vouchers: code -> (name as the order summary shows it, % off, package keys)
+# the vouchers: code -> (name as the order summary, the receipt and the order emails show it, % off, package keys). The
+# offers' names say the price she pays, not the voucher's percentage: rounded down to the dollar, 40% off $39 is $23,
+# which the page rightly calls 41% off, and a receipt line "40% off" contradicted it (live review 12)
 OFFERS = [
     ('APF10', '10% off your foundation today', '10.00', ['apf-1', 'apf-2-gifts', 'apf-3-gifts']),
-    ('APF40', '40% off one more bottle', '40.00', ['apf-1-add']),
-    ('APF50', '50% off one more bottle', '50.00', ['apf-1-add']),
-    ('BRUSH40', '40% off the Lymphatic Brush', '40.00', ['brush-1']),
-    ('BRUSH60', '60% off the Lymphatic Brush', '60.00', ['brush-1']),
+    ('APF40', 'One more bottle at $23', '40.00', ['apf-1-add']),
+    ('APF50', 'One more bottle at $19', '50.00', ['apf-1-add']),
+    ('BRUSH40', 'Lymphatic Brush at $14', '40.00', ['brush-1']),
+    ('BRUSH60', 'Lymphatic Brush at $9', '60.00', ['brush-1']),
 ]
 
 

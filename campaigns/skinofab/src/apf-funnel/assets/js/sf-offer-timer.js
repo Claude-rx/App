@@ -9,6 +9,8 @@
   'use strict';
   var box = document.querySelector('[data-sf-timer]');
   if (!box) return;
+  // no order on this page (opened from history or a shared link): no clock, nothing to move on to (live review 12)
+  if (document.documentElement.classList.contains('sf-no-order')) return;
   var secs = parseInt(box.getAttribute('data-sf-timer'), 10) || 600;
   var ref = '';
   try { ref = new URLSearchParams(location.search).get('ref_id') || ''; } catch (e) {}

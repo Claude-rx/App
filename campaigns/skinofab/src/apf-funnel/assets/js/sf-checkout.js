@@ -114,6 +114,11 @@ window.addEventListener('next:initialized', function () {
     try { short = JSON.parse(box ? box.getAttribute('data-sf-renew-short') : '{}'); } catch (e) { short = {}; }
     const s = on && short[on.getAttribute('data-next-bundle-id')];
     if (s) document.querySelectorAll('[data-sf-renew-short-text]').forEach((el) => { el.textContent = s; });
+    const pk = document.querySelector('[data-sf-picked]');
+    let picked = {};
+    try { picked = JSON.parse(pk ? pk.getAttribute('data-sf-picked') : '{}'); } catch (e) { picked = {}; }
+    const pt = on && picked[on.getAttribute('data-next-bundle-id')];
+    if (pt) document.querySelectorAll('[data-sf-picked-text]').forEach((el) => { el.textContent = pt; });
   };
   const watch = new MutationObserver(sync);
   cards.forEach((c) => watch.observe(c, { attributes: true, attributeFilter: ['class'] }));

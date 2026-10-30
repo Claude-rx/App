@@ -101,7 +101,7 @@ reviews:
     photo: "images/sf/review-rachel.jpg"
     rating: 4
     verified: "Verified buyer, from our earlier store"
-  - body: "First time trying & I absolutely love it. It blends into my skin perfectly leaving no trace of white just a blooming tone to my mature skin. Im so happy I bought it"
+  - body: "First time trying & I absolutely love it. … leaving no trace of white just a blooming tone to my mature skin. Im so happy I bought it"
     author: "Mary D."
     photo: "images/sf/review-mary.jpg"
     rating: 5
@@ -178,6 +178,12 @@ pay_terms:
   apf-1: "$39.00 every 28 days for 1 bottle"
 # what renews, per pack, in the row under the order button (the owner, 30 Oct 2026: the subscription is the default, no
 # consent box, and just "Refill reminder · Cancel any time · Renews at …" under the button); sf-checkout.js follows the card
+# the pack she came with, in one line at the top of Step 1 on a phone, where the chosen card is below the first screen
+# (live review 12: the first screen showed the $39 and $57 cards after a "$75" button); sf-checkout.js follows the card
+picked:
+  apf-1: "1 bottle · $39"
+  apf-2: "2 bottles + free gifts · $57"
+  apf-3: "3 bottles + free gifts + free Lymphatic Brush · $75"
 renew_short:
   apf-1: "$39 every 28 days"
   apf-2: "$57 every 56 days"
@@ -214,6 +220,8 @@ exit_intent:
                         <div class="form-sections">
                           <div class="form-section grid-row-gap2 form-section--first">
                             <h2 class="form-section__title">Step 1: Choose your pack</h2>
+                            {% assign sel1 = bundles | where: "selected", true | first %}
+                            <p class="sf-co-picked" data-sf-picked='{{ picked | json }}' aria-live="polite">Your pack: <strong data-sf-picked-text>{{ picked[sel1.id] }}</strong></p>
                             {% campaign_include 'bundle-selector.html' selector_id='main' card_style=bundle_card_style packages=packages shipping_methods=shipping_methods bundles=bundles await=false %}
                           </div>
                           <div data-next-component="shipping-form" class="form-sections">

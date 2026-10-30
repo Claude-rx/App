@@ -296,3 +296,7 @@ html:not(.next-display-ready) [data-next-await]::after { left: -55% !important; 
 
 /* a renewing pack's first-order gifts, under its name (js/sf-checkout.js, js/sf-receipt.js; live review 10) */
 .sf-first-order { margin-top: 2px; font-size: 13px; line-height: 1.35; color: #4f4f4f; }
+/* the pack she came with, at the top of Step 1 on a phone, where its card is below the first screen (live review 12) */
+.sf-co-picked { display: none; margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; background: var(--brand--color--primary-lighter, #f4f1ec); font-size: 16px; line-height: 1.4; color: #151515; }
+.sf-co-picked strong { font-weight: 600; }
+@media (max-width: 767px) { .sf-co-picked { display: block; } }

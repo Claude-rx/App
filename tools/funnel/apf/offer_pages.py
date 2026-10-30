@@ -163,14 +163,17 @@ GATE = """{% comment %} the order's facts js/sf-offer-gate.js reads (in the page
 """
 
 
-def hero(eyebrow, title, text, seconds, pid, cta=None, cta_text=None, cta_card=None, cta_jump=None, cta_jump_text=None, decline=None):
+def hero(eyebrow, title, text, seconds, pid, cta=None, cta_text=None, cta_card=None, cta_jump=None, cta_jump_text=None, decline=None, cta_once=None):
     """The offer's hero. cta 'accept': the offer's own accept button right under the clock (a proxy of the one SDK action,
     as the closing card's), so it is on her first screen (live review 6: it sat two screens down on every offer);
-    cta '#id' with cta_text: a jump to the page's choices instead (offer 1, two cards to pick from)."""
+    cta '#id' with cta_text: a jump to the page's choices instead (offer 1, two cards to pick from). cta_once: the line
+    under a supply button saying it is charged once and does not renew, as every other offer's first button says (live
+    review 12: offer 1's "same payment" right after a subscription could read as adding bottles to her refills)."""
     return ['uh:', f'  eyebrow: {q(eyebrow)}', f'  title: {q(title)}', f'  text: {q(text)}', f'  seconds: {seconds}', f'  expires: {q(expires(pid))}',
             *([f'  expiry_url: {q(expiry_url(pid))}'] if expiry_url(pid) else []),
             *([f'  cta: {q(cta)}'] if cta else []), *([f'  cta_text: {q(cta_text)}'] if cta_text else []),
             *([f'  cta_card: {q(cta_card)}', f'  cta_jump: {q(cta_jump)}', f'  cta_jump_text: {q(cta_jump_text)}'] if cta_card else []),
+            *([f'  cta_once: {q(cta_once)}'] if cta_once else []),
             *([f'  decline: {q(decline)}'] if decline else [])]
 
 
@@ -259,6 +262,7 @@ def supply_page(spec):
         *hero('A one-time offer', 'Just for you, right now: more bottles from $16.50 each',
               'Add bottles to the order you just placed: one tap, same box, same payment. These two packs exist on this page only.', TIMER, pid,
               cta='supply', cta_text='YES, ADD 2 BOTTLES · $39', cta_card='supply-b1g1', cta_jump='#sf-supply-title', cta_jump_text='Or see the 6-bottle pack ↓',
+              cta_once='$39 today, charged once to the payment you just used. This pack doesn’t renew, and it ships in the same box.',
               decline=supply['decline']),
         f'supply: {q(supply)}',
         # the closing card prices the selected card (bundle.supply.*) and proxies its add / skip

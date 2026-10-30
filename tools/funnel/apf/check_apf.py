@@ -601,6 +601,54 @@ if "closest('a[role=\"button\"]')" not in _apfjs: fail('offers', 'Space does not
 # no claim of what other buyers also use (it was not measured)
 if re.search(r'Women who love the foundation also use', text(_ty)): fail('thank-you', 'an unmeasured claim of what other buyers also use')
 
+# live review 12 --------------------------------------------------------------------------------------------------------
+_o1 = html('offer-1') if 'offer-1' in F.BY_ID else ''
+# F2: offer 1's supply button says it is charged once and does not renew, like every other offer's first button
+_hero1 = re.search(r'<section class="sf-uh".*?</section>', _o1, re.S)
+if _o1 and (not _hero1 or 'charged once' not in text(_hero1.group(0)) or 'doesn’t renew' not in text(_hero1.group(0))): fail('offer-1', 'the hero\'s button does not say it is charged once and does not renew')
+# F3: the vouchers' names (the order summary, the receipt, the emails) say the price, not a percentage the page contradicts
+sys.path.insert(0, str(ROOT / 'tools' / 'funnel' / 'apf'))
+import commerce as _C
+for code, name, pct, keys in _C.OFFERS:
+    if code != 'APF10' and '%' in name: fail('campaign', f'voucher {code} is named "{name}": a percentage the offer page states differently')
+# F4, F5: no "first on our list" without the INCI, no "into the skin" anywhere on a page (reviews included)
+for p in F.PAGES:
+    tx = text(html(p['id']))
+    for rx, what in ((r'[Ff]irst on our list', 'a primacy claim for an ingredient ("first on our list")'), (r'\binto (?:my|your|her|the) skin\b', 'an "into the skin" phrase')):
+        m = re.search(rx, tx)
+        if m: fail(p['id'], f'{what}: "…{tx[max(0, m.start() - 40):m.end() + 30]}…"')
+# F6: on a phone the checkout says which pack she came with at the top of Step 1, from the cards' own names
+_pk = re.search(r"data-sf-picked='([^']+)'", co)
+if not _pk: fail('checkout', 'no "Your pack" line at the top of Step 1')
+else:
+    _picked = json.loads(unescape(_pk.group(1)))
+    for bid, items, attrs, body in cards:
+        ref = json.loads(items)[0]['packageId']
+        if ref in PACK_BY_REF and f"· ${PACK_BY_REF[ref]['price']:g}" not in _picked.get(bid, ''): fail('checkout', f'"Your pack" for {bid}: "{_picked.get(bid)}"')
+# F7: every store page stops the AppLovin pixel under GPC or the privacy choices opt-out, before the app's snippet
+_bl = (THEME / 'layouts' / 'base.html').read_text(encoding='utf-8')
+if not re.search(r'<meta charset="UTF-8" />\s*<script>\(function \(\) \{ var out = navigator\.globalPrivacyControl === true \|\| /\(\?:\^\|;\\s\*\)sf_optout=1/', _bl): fail('theme', 'the store pages load the AppLovin pixel under GPC or after the opt-out')
+_track = THEME / 'partials' / 'sf_pages' / 'postflows-track-your-order' / 'content.html'
+if _track.is_file() and 'Cookie policy</a></nav>' in _track.read_text(encoding='utf-8'): fail('theme', 'a copy of the store footer without "Your privacy choices"')
+# F8: an offer opened with no order shows the note alone (no offer, no clock); the thank-you page one notice
+if '.sf-no-order #sf-main { display: none !important; }' not in _oc: fail('offers', 'an offer with no order still shows its buttons and its clock')
+if "if (document.documentElement.classList.contains('sf-no-order')) return;" not in (SITE / 'js' / 'sf-offer-timer.js').read_text(encoding='utf-8'): fail('offers', 'the clock runs and moves on with no order')
+if _ty.count('data-sf-no-order') != 1: fail('thank-you', f'{_ty.count("data-sf-no-order")} "no order" notices, not one')
+# F9: a phone's sales hero is the 5:4 WebP it is shown as
+_wm = SITE / 'images' / 'sf' / 'wow-m.webp'
+if not _wm.is_file() or _wm.stat().st_size > 60000 or 'type="image/webp"' not in _sp: fail('offer', 'the phone hero is not the light 5:4 WebP')
+# F10: a buyer's photo smaller than its card shows at its own size
+for m in re.finditer(r'<article class="sf-review[^"]*"><img src="[^"]*?/(review-[a-z]+)[^"]*?\.jpg"([^>]*)>', _sp):
+    f_ = SITE / 'images' / 'sf' / f'{m.group(1)}.jpg'
+    if f_.is_file():
+        w_ = _Img.open(f_).size[0]
+        if w_ < 324 and f'max-width:{w_}px' not in m.group(2): fail('offer', f'{m.group(1)} ({w_} px) is blown up to the card')
+# F11: one set of policy links everywhere (the thank-you page's too), and the description says which packs have gifts
+for need in ('Refund policy', 'Shipping policy', 'Your privacy choices', 'Contact'):
+    if need not in text(_ty[_ty.find('checkout-footer-links'):]): fail('thank-you', f'the footer has no "{need}" link')
+if 'Return policy' in text(_ty): fail('thank-you', '"Return policy" where every other page says "Refund policy"')
+if re.search(r'1, 2 or 3 bottles with free gifts', _sp): fail('offer', 'the description promises gifts with 1 bottle')
+
 # reviews: every quote the pages put a buyer's name to is her own words from the imported reviews (SF_REVIEWS, the store
 # build's reviews/reviews.json), and a shortened one says so with "…" (live review 9: Sharon E.'s review was cut where it
 # says the shade did not suit her daughter's very pale skin, under "none is edited")

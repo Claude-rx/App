@@ -372,7 +372,7 @@ def home_sections(pdp):
   <div>
     <span class="apf-eyebrow">Made for skin after 45</span>
     <h1>Stop guessing your shade after 45.</h1>
-    <p class="apf-lede">The {PRODUCT} goes on white and turns into your skin as you blend. A hydrating serum foundation with
+    <p class="apf-lede">The {PRODUCT} goes on white and shifts to your skin tone as you blend. A hydrating serum foundation with
     PDRN and peptides that evens out sun spots and redness, without settling into your lines.</p>
     {_checks(['One adaptive shade: it does the matching for you', 'Satin serum finish that won\'t crease or cake', 'Fragrance-free, made for thinner, drier skin'])}
     <a class="apf-btn" href="{pdp}">Get yours &middot; {ONCE}</a>
@@ -636,8 +636,8 @@ BUYBOX = [
     ('>Lisa<', '>Made for skin after 45<'),
     ('>Bestseller<', '>New<'),
     ('>Sale<', '>Launch offer<'),
-    ('Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn\'t dry you out or settle into your lines.',
-     'Your skin changed after 45, so your old shade looks wrong and settles into your lines. This one goes on white and turns into your skin tone as you blend. A hydrating serum base with PDRN and peptides evens out sun spots and redness and blurs the look of fine lines, without drying you out.'),
+    ('Stop guessing your shade after 45. It goes on white and shifts to your skin tone as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn\'t dry you out or settle into your lines.',
+     'Your skin changed after 45, so your old shade looks wrong and settles into your lines. This one goes on white and shifts to your skin tone as you blend. A hydrating serum base with PDRN and peptides evens out sun spots and redness and blurs the look of fine lines, without drying you out.'),
     ('>30-day money-back guarantee<', '>Love it or your money back<'),
     ('Find your flawless shade with zero risk. Our Color Changing Foundation comes with a complete satisfaction promise: if your shade isn\'t spot-on, we\'ll make it right with a full refund—no questions asked.',
      'Wear it in your own daylight for 30 days. If you don\'t love it, email us and we\'ll refund you.'),
@@ -676,7 +676,7 @@ ROOT_CAUSES = [
      'opposite of what drier, more sensitive skin needs.'),
 ]
 SOLUTION_FIXES = [
-    ('Guessing your shade', 'One adaptive shade. It goes on white and turns into your skin tone as you blend.'),
+    ('Guessing your shade', 'One adaptive shade. It goes on white and shifts to your skin tone as you blend.'),
     ('Dry patches and cracking', 'A hydrating serum base with two forms of hyaluronic acid, ceramide NP and squalane.'),
     ('Settling into lines', 'Soft-focus powders blur the look of lines and pores instead of filling them with pigment.'),
     ('Makeup that does nothing for your skin', 'Skincare in every layer: Matrixyl 3000 peptides, PDRN and niacinamide.'),

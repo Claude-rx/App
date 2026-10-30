@@ -1,12 +1,12 @@
 ---
 title: "Adaptive Peptide Foundation | Even, fresh skin in about a minute, no shade to guess | SKINOFAB"
-description: "One adaptive shade in a hydrating serum base with PDRN and peptides, made for skin after 45. 1, 2 or 3 bottles with free gifts, free shipping, 30-day money-back guarantee."
+description: "One adaptive shade in a hydrating serum base with PDRN and peptides, made for skin after 45. Free gifts with 2 or 3 bottles, free shipping, 30-day money-back guarantee."
 page_layout: base-sf.html
 page_type: product
 next_url: foundation-checkout.html
 body_class: "sf-product sf-apf"
 preload_image: "images/sf/wow.jpg"
-preload_image_mobile: "images/sf/wow-m.jpg"   # the phone's copy (images.py), live review 9
+preload_image_mobile: "images/sf/wow-m.webp"   # the phone's copy, 5:4 WebP (images.py), live reviews 9 and 12
 styles:
   - css/sf-apf.css
 meta_tags:
@@ -31,7 +31,7 @@ frontrow_clinicians: "700+"
 hero:
   eyebrow: "For skin after 45"
   headline: "Even, fresh skin in about a minute. <em>No shade to guess.</em>"
-  sub: "The foundation that goes on white and turns into your skin tone, in a hydrating serum made for skin after 45."
+  sub: "The foundation that goes on white and shifts to your own skin tone, in a hydrating serum made for skin after 45."
   bullets:
     - "<strong>One adaptive shade.</strong> It blends into your tone, not a chart."
     - "<strong>Designed not to settle</strong> into fine lines."
@@ -180,7 +180,7 @@ ingredients:
   title: "Skincare in every layer you wear"
   lede: "The ingredients of the creams you would buy separately, in a foundation. It evens the look of your skin while you wear it; it treats nothing."
   items:
-    - { name: "PDRN", role: "Sodium DNA from salmon, the K-beauty favorite for skin after 45. First on our list of actives.", icon: "dna" }
+    - { name: "PDRN", role: "Sodium DNA from salmon, the K-beauty favorite for skin after 45, and the name on the bottle.", icon: "dna" }
     - { name: "Matrixyl 3000", role: "Peptides used in expression-line creams.", icon: "chain" }
     - { name: "A beech-sugar active", role: "Hydroxypropyl tetrahydropyrantriol, from beech-wood sugar: a staple of skincare for thinner, drier skin.", icon: "tree" }
     - { name: "Niacinamide", role: "For the look of uneven tone.", icon: "spark" }
@@ -314,9 +314,9 @@ reviews:
   - { name: "Hope H., 74", photo: "images/sf/review-hope.jpg", stars: 5, text: "I’ve ordered two other foundations that are clear and change to your natural face color. However, they turn orange as the day goes along. This by far is THE best!!! I am 74, soon to be 75, and appreciate this foundation doesn’t love my wrinkles." }
   - { name: "Tina C.", photo: "images/sf/review-tina.jpg", stars: 5, text: "I applied this foundation at 6:30AM, and looked exactly the same when I removed it at 9PM. …" }
   - { name: "Gillian S., 65", photo: "images/sf/review-gillian.jpg", stars: 5, text: "I’m 65 and my skin has been the bane of my life! … blurs imperfections and cover redness, and it looks like skin, not something put on top! That’s why I ordered more" }
-  - { name: "Susan B., 70", photo: "images/sf/review-susan.jpg", stars: 5, text: "Lovely smooth finish and colour is great on my 70 year old skin" }
+  - { name: "Susan B., 70", photo: "images/sf/review-susan.jpg", photo_w: 230, stars: 5, text: "Lovely smooth finish and colour is great on my 70 year old skin" }
   - { name: "Rachel H.", photo: "images/sf/review-rachel.jpg", stars: 4, text: "Easy to blend , natural everyday foundation. Aging skin so hard to find something that doesn’t sink into the wrinkles…very happy" }
-  - { name: "Michele W.", photo: "images/sf/review-michele.jpg", stars: 5, text: "…This is by far the lightest feeling, no cakey look, full coverage I’ve had… Very pleased I purchased this and bought 2!! I’ll be using this one from now on. …" }
+  - { name: "Michele W.", photo: "images/sf/review-michele.jpg", photo_w: 300, stars: 5, text: "…This is by far the lightest feeling, no cakey look, full coverage I’ve had… Very pleased I purchased this and bought 2!! I’ll be using this one from now on. …" }
   - { name: "Sharon E., 54", photo: "images/sf/review-sharon.jpg", stars: 4, text: "It is a lovely product, the colour change is impressive. I was expecting a bit more coverage - but you can add more. It doesn’t appear to settle into my 54 year old lines & wrinkles like other products, which is a huge bonus. I’ve recently learned to stop using face powder, so that helps to stop the settling as well. My 19 year old tried it too, she is very pale skinned - with red acne - and it struggled to get to the right shade for her (not a surprise really). …" }
   - { name: "Judith L.", photo: "images/sf/review-judith.jpg", stars: 5, text: "This make up does what it says, colour matches to my skin tone, doesn’t oxidise as the day goes on, feels light and moisturising, being older it it doesn’t settle in any lines. It blends nicely with the brush or the blender. I frequently get told how nice my skin looks. …" }
 ratings:
@@ -377,7 +377,7 @@ closing:
   {% comment %} 1-2: the hero: the big promise, its benefits as bullets, the wow still {% endcomment %}
   <section class="sf-hero2 sf-hero2--v2" id="s01-hero">
     <figure class="sf-hero2__media sf-hero2__media--tall">
-      <picture><source media="(max-width: 599px)" srcset="{{ 'images/sf/wow-m.jpg' | campaign_asset }}" width="760" height="950"><img src="{{ hero.image | campaign_asset }}" alt="{{ hero.image_alt }}" width="1080" height="1350" fetchpriority="high" decoding="async"></picture>
+      <picture><source media="(max-width: 599px)" type="image/webp" srcset="{{ 'images/sf/wow-m.webp' | campaign_asset }}" width="760" height="608"><img src="{{ hero.image | campaign_asset }}" alt="{{ hero.image_alt }}" width="1080" height="1350" fetchpriority="high" decoding="async"></picture>
       <span class="sf-hero2__tag">Goes on white → your tone</span>
     </figure>
     <div class="sf-hero2__copy">
@@ -619,7 +619,7 @@ closing:
       </ul>
       <div class="sf-photowall" aria-label="Buyers’ own photos">{% for w in reviews_section.wall %}<img src="{{ 'images/sf/review-' | append: w | append: '.jpg' | campaign_asset }}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async">{% endfor %}</div>
       <div class="sf-reviews__grid">
-        {% for t in reviews %}<article class="sf-review{% if t.stars == 4 %} sf-review--four{% endif %}"><img src="{{ t.photo | campaign_asset }}" alt="{{ t.name }}, her own photo" loading="lazy" decoding="async" width="375" height="375"><h3>{{ t.name }}</h3><p class="sf-tp__stars sf-tp__stars--sm" aria-label="{{ t.stars }} out of 5 stars"><i></i><i></i><i></i><i></i><i{% if t.stars == 4 %} class="off"{% endif %}></i></p><p class="sf-review__text">“{{ t.text }}”</p><p class="sf-review__who">✓ Verified buyer · from our earlier store</p></article>
+        {% for t in reviews %}<article class="sf-review{% if t.stars == 4 %} sf-review--four{% endif %}"><img src="{{ t.photo | campaign_asset }}" alt="{{ t.name }}, her own photo" loading="lazy" decoding="async" width="{{ t.photo_w | default: 375 }}" height="{{ t.photo_w | default: 375 }}"{% if t.photo_w %} style="max-width:{{ t.photo_w }}px"{% endif %}><h3>{{ t.name }}</h3><p class="sf-tp__stars sf-tp__stars--sm" aria-label="{{ t.stars }} out of 5 stars"><i></i><i></i><i></i><i></i><i{% if t.stars == 4 %} class="off"{% endif %}></i></p><p class="sf-review__text">“{{ t.text }}”</p><p class="sf-review__who">✓ Verified buyer · from our earlier store</p></article>
         {% endfor %}
       </div>
       <ul class="sf-morequotes">{% for m in reviews_section.more %}<li>“{{ m.text }}” <cite>— {{ m.by }}, verified buyer, from our earlier store</cite></li>{% endfor %}</ul>

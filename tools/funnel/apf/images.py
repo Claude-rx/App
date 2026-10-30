@@ -924,7 +924,12 @@ def copies(video=True):
     # textures (the same ingredients, the same photos)
     wow = ImageOps.fit(soften_seam(Image.open(GEN / 'wow-split.png')), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35))
     save(wow, 'wow', size=1350)
-    save(wow, 'wow-m', size=950)        # a phone's copy (760 x 950, enough for 390 px at 2x): the sales page's LCP on a slow line, live review 9
+    # a phone's copy: the sales page's LCP on a slow line (live review 9). Cut to the 5:4 a phone shows (sf-apf.css,
+    # object-position 50% 32%) and WebP, not the whole 4:5 JPEG: 115 KB for a 358 x 286 box was 2.8 to 3.2 s on slow
+    # 4G (live review 12). 760 px wide is enough for 390 px at 2x; a browser without WebP takes the desktop JPEG.
+    for old in OUT.glob('wow-m.*'): old.unlink()
+    ImageOps.fit(wow, (760, 608), Image.LANCZOS, centering=(0.5, 0.32)).save(OUT / 'wow-m.webp', quality=78, method=6)
+    print('wow-m', (760, 608), 'webp')
     for n in ('problem-mirror', 'problem-orange'):
         im = Image.open(GEN / f'{n}.png').convert('RGB')
         if n == 'problem-mirror': im = soften_patch(im, (0.19, 0.27, 0.47, 0.49))   # her cheek's pigment read as a bruise at page size (live review 3)

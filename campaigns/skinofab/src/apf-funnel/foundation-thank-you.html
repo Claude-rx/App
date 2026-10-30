@@ -40,7 +40,6 @@ scripts:
   - js/sf-failsafe.js
 ---
 <div hidden data-sf-renewals='{{ renewals | json }}' data-sf-gift-map='{{ gifts | json }}' data-sf-pack-images='{ {% for p in pack_images %}"{{ p[0] }}":"{{ p[1] | campaign_asset }}"{% unless forloop.last %},{% endunless %}{% endfor %} }'></div>
-<p class="sf-failsafe" role="status" hidden data-sf-no-order>We couldn’t find an order to show here. If you just ordered, your confirmation email has your order details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Your order summary didn’t load, but your order is placed: your confirmation email has the details. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
 <div class="page-wrapper">
 
@@ -193,7 +192,10 @@ scripts:
                   </div>
                   <div class="checkout-footer-links">
                     <a href="{{ campaign.store_returns }}" target="_blank" class="link">
-                      <div>Return policy</div>
+                      <div>Refund policy</div>
+                    </a>
+                    <a href="{{ campaign.store_shipping }}" target="_blank" class="link">
+                      <div>Shipping policy</div>
                     </a>
                     <a href="{{ campaign.store_privacy }}" target="_blank" class="link">
                       <div>Privacy policy</div>
@@ -203,6 +205,9 @@ scripts:
                     </a>
                     <a href="{{ campaign.store_terms }}" target="_blank" class="link">
                       <div>Terms of service</div>
+                    </a>
+                    <a href="{{ campaign.store_contact }}" target="_blank" class="link">
+                      <div>Contact</div>
                     </a>
                   </div>
                 </div>
