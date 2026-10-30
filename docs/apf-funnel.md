@@ -855,7 +855,7 @@ the listicle and the checkout called the reviews "word for word" beside quotes s
 none is reworded and that "…" marks where a long one is shortened, as the sales page did. F3: on the policy pages opened
 from the funnel (`?from=offer`), the policy links are 44 px (they were 43), the email and phone links 44 px through inline
 padding that does not move the text around them (they were 24), and the opt-out button 44 px (`build_theme.py`). Each
-has a gate in `check_apf.py`.
+has a gate in `check_apf.py`. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, the same exceptions.
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
