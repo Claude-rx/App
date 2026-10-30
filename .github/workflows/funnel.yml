@@ -20,6 +20,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Python packages the funnel checks use
+        run: python3 -m pip install --quiet pillow pyyaml
       - name: AXON adapter unit tests
         run: npm run test:axon
       - name: Build the funnels (Campaign Page Kit)
