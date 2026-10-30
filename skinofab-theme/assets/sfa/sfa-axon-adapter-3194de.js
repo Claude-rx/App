@@ -8,7 +8,10 @@
    Personal Care > Cosmetics > Makeup > Face Makeup > Foundations & Concealers). Keep it when re-syncing.
    SKINOFAB LOCAL PATCH (30 Oct 2026): image_url must end in .png/.jpg/.jpeg (AXON Pixel Helper structures.yaml); the
    SDK sends .webp thumbnails, so each variant maps to its store JPG. item_brand defaults to SKINOFAB, and user_data rides
-   on every ecommerce event once the shopper is known. Keep it when re-syncing. */
+   on every ecommerce event once the shopper is known. Keep it when re-syncing.
+   SKINOFAB LOCAL PATCH (30 Oct 2026): payment_type is mapped to AXON's enum (credit_card / redeemable / deferred /
+   payment_on_delivery / wallet / other); the SDK sends labels like "Credit Card". Items without item_variant_id (an
+   upsell the SDK builds from the package) get it, and their image, from the SKU. Keep it when re-syncing. */
 /**
  * axon.adapter.js — AppLovin Axon adapter for next-forwarder-core.js (Route C, no GTM).
  *
@@ -120,12 +123,55 @@
   };
   function imageUrl(it) {
     if (typeof it.item_image === 'string' && IMAGE_RE.test(it.item_image)) return it.item_image;
-    var mapped = it.item_variant_id !== undefined && it.item_variant_id !== null ? IMAGE_BY_VARIANT[String(it.item_variant_id)] : undefined;
+    var v = variantId(it);
+    var mapped = v ? IMAGE_BY_VARIANT[v] : undefined;
     if (mapped) return mapped;
     var fallback = window.__axonItemImage;
     return typeof fallback === 'string' && IMAGE_RE.test(fallback) ? fallback : undefined;
   }
+  // An upsell item the SDK builds from the package carries the SKU as item_id but no item_variant_id.
+  var VARIANT_BY_SKU = {
+    "SKF-APF-1":"15",
+    "SKF-APF-2-GIFTS":"103",
+    "SKF-APF-3-GIFTS":"268",
+    "SKF-APF-2":"269",
+    "SKF-APF-6-BRUSH":"270",
+    "SKF-APF-1-ADD":"301",
+    "SKF-LYB-1":"170",
+    "SKF-LYB-2":"171",
+    "SKF-LYB-3":"172",
+    "SKF-LYB-1T":"271",
+    "SKF-PDB-1":"203",
+    "SKF-PDB-2":"204",
+    "SKF-PDB-3":"205",
+    "SKF-ENS-1":"207",
+    "SKF-ENS-2":"208",
+    "SKF-ENS-3":"209",
+    "SKF-AFS-1":"236",
+    "SKF-AFS-2":"237"
+  };
+  function variantId(it) {
+    if (it.item_variant_id !== undefined && it.item_variant_id !== null && it.item_variant_id !== '') return String(it.item_variant_id);
+    return it.item_id !== undefined && it.item_id !== null ? VARIANT_BY_SKU[String(it.item_id)] : undefined;
+  }
   var DEFAULT_BRAND = 'SKINOFAB';
+
+  // AXON payment_type is an enum; the SDK sends display labels (paymentMethodLabel: "Credit Card", "Apple Pay", ...).
+  var PAYMENT_TYPES = { credit_card: 1, redeemable: 1, deferred: 1, payment_on_delivery: 1, wallet: 1, other: 1 };
+  var PAYMENT_TYPE_BY_KEY = {
+    creditcard: 'credit_card', card: 'credit_card', cardtoken: 'credit_card', savedcard: 'credit_card', debitcard: 'credit_card',
+    applepay: 'wallet', googlepay: 'wallet', paypal: 'wallet', shoppay: 'wallet', link: 'wallet', swish: 'wallet', twint: 'wallet',
+    venmo: 'wallet', amazonpay: 'wallet', cashapp: 'wallet',
+    klarna: 'deferred', affirm: 'deferred', afterpay: 'deferred', clearpay: 'deferred', sezzle: 'deferred', zip: 'deferred',
+    giftcard: 'redeemable', voucher: 'redeemable', storecredit: 'redeemable',
+    cashondelivery: 'payment_on_delivery', cod: 'payment_on_delivery'
+  };
+  function paymentType(raw) {
+    if (raw === undefined || raw === null || raw === '') return undefined;
+    var s = String(raw).trim();
+    if (PAYMENT_TYPES[s]) return s;
+    return PAYMENT_TYPE_BY_KEY[s.toLowerCase().replace(/[^a-z]/g, '')] || 'other';
+  }
 
   // Map an SDK EcommerceItem to Axon's item object (mostly GA4-shaped; a couple of renames).
   function mapItems(items) {
@@ -136,7 +182,8 @@
       if (it.price !== undefined && it.price !== null) out.price = it.price;
       if (it.quantity !== undefined && it.quantity !== null) out.quantity = it.quantity;
       out.item_brand = it.item_brand || window.__axonItemBrand || DEFAULT_BRAND;
-      if (it.item_variant_id) out.item_variant_id = it.item_variant_id;
+      var vid = variantId(it);
+      if (vid) out.item_variant_id = vid;
       // Axon: item_category_id is an integer id. The SDK's item_category is the campaign's name, which Axon rejects
       // with HTTP 400 for the whole event (view_item, begin_checkout, purchase: live review 6, 29 Oct 2026), so it is
       // sent only when it is a whole number. LOCAL PATCH over the generated copy: keep it when re-syncing.
@@ -190,6 +237,7 @@
       if (name === 'search' && evt.search_term) params.search_term = evt.search_term;
 
       copy(ec, params, EXTRA[name] || []);
+      if (params.payment_type !== undefined) params.payment_type = paymentType(params.payment_type);
       if (USER_DATA_EVENTS[name]) {
         var user = userData(evt);
         if (user) params.user_data = user;

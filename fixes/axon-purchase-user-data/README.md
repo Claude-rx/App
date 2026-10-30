@@ -25,9 +25,17 @@ Cosmetics > Makeup > Face Makeup > Foundations & Concealers). A numeric SDK cate
 SKINOFAB, and `user_data` (email/phone/user_id: the only keys AXON's pixel accepts) rides on every ecommerce event once
 the shopper is known. Purchase: `user_data.email` required, `phone` and `user_id` recommended.
 
+**Follow-up 3 (30 Oct 2026):** `add_payment_info` was orange: `payment_type` must be one of AXON's enum values
+(`credit_card`, `redeemable`, `deferred`, `payment_on_delivery`, `wallet`, `other`) and the SDK sends labels such as
+"Credit Card". All 17 SDK labels are mapped (cards → credit_card; Apple/Google Pay, PayPal, Shop Pay, Link → wallet;
+Klarna/Affirm → deferred; bank redirects → other). Upsell items the SDK builds from the package (SKU, no variant) now get
+`item_variant_id` and the JPG from `VARIANT_BY_SKU`. `fixtures/` holds AXON's own Pixel Helper rules; the test replays
+the whole funnel (view_item → add_to_cart → begin_checkout → add_payment_info → purchase → upsell purchase) through them
+and expects no errors and no warnings.
+
 **Files:** `sfa-axon-adapter-3194de.js` (patched) · `.orig.js` (live copy before the fix, for rollback) · `axon-adapter.test.mjs`
 
-**Test:** `npm run test:axon` → 13/13 pass on the patch; the original fails the 4 user_data tests.
+**Test:** `npm run test:axon` → 16/16 pass on the patch; the original fails the 4 user_data tests.
 
 **Deploy (single file, theme 34):**
 ```bash

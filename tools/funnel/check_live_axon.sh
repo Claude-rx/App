@@ -16,6 +16,7 @@ for p in "${PAGES[@]}"; do
   grep -q 'params.user_data = user' <<<"$js" || missing+=("user_data on purchase")
   grep -q 'categoryId(it.item_category) || fallbackCategoryId' <<<"$js" || missing+=("numeric item_category_id")
   grep -q 'IMAGE_BY_VARIANT' <<<"$js" || missing+=(".jpg image_url")
+  grep -q 'params.payment_type = paymentType(' <<<"$js" || missing+=("payment_type enum")
   if [ ${#missing[@]} -gt 0 ]; then joined=$(printf '%s, ' "${missing[@]}"); echo "FAIL $p: adapter lacks ${joined%, } — ${url##*/}"; bad=1
   else echo "ok   $p"; fi
 done

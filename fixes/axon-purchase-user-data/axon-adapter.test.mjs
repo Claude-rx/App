@@ -117,3 +117,76 @@ test('every store variant maps to a .jpg/.png', () => {
     assert.match(calls[0][2].items[0].image_url, AXON_IMAGE_RE, v);
   }
 });
+
+// ---- Full replay against AXON Pixel Helper 1.3.6's own rules (fixtures/ are its structures.yaml and category ids) ----
+const here = new URL('.', import.meta.url);
+const SCHEMA = JSON.parse(fs.readFileSync(new URL('fixtures/axon-structures.json', here), 'utf8')).events;
+const CATEGORY_IDS = new Set(JSON.parse(fs.readFileSync(new URL('fixtures/axon-category-ids.json', here), 'utf8')).ids);
+const REQUIRED = 0, RECOMMENDED = 1;
+// Mirrors the extension's validator: missing Required = error, missing Recommended = warning; then per struct type.
+function validate(struct, value, path = '', out = { errors: [], warnings: [] }) {
+  for (const [key, rule] of Object.entries(struct || {})) {
+    const v = value ? value[key] : undefined, p = path + key;
+    if (v === undefined || v === null) {
+      if (rule.requirement === REQUIRED) out.errors.push(p + ' missing');
+      else if (rule.requirement === RECOMMENDED) out.warnings.push(p + ' missing');
+      continue;
+    }
+    const s = rule.struct;
+    if (Array.isArray(s)) { (Array.isArray(v) ? v : []).forEach((el, i) => validate(s[0], el, `${p}[${i}].`, out)); continue; }
+    if (s && typeof s === 'object') { validate(s, v, p + '.', out); continue; }
+    if (s === 'image_url') { if (typeof v !== 'string') out.errors.push(p + ' not a string'); else if (!AXON_IMAGE_RE.test(v)) out.warnings.push(p + ' not .png/.jpg/.jpeg'); }
+    else if (s === 'enum') { if (!(typeof v === 'string' && rule.enum.includes(v))) out.warnings.push(`${p} "${v}" not in ${rule.enum.join('/')}`); }
+    else if (s === 'product_category_id') { if (isNaN(Number(v))) out.errors.push(p + ' not a number'); else if (!CATEGORY_IDS.has(Number(v))) out.warnings.push(p + ' unknown category'); }
+    else if (s === 'string') { if (typeof v !== 'string' && isNaN(Number(v))) out.errors.push(p + ' not a string'); }
+    else if (s === 'number') { if (Array.isArray(v) || isNaN(Number(v))) out.errors.push(p + ' not a number'); }
+  }
+  return out;
+}
+// The SDK's events as it builds them (campaign-cart 0.4.43): catalog items carry the variant and a .webp thumbnail;
+// dl_purchase takes the buyer from order.user; an upsell built from the package has the SKU and no variant or image.
+const buyer = { visitor_type: 'guest', customer_email: 'Buyer@Example.com', customer_phone: '+18123158899', customer_id: '1234567' };
+const catalogItem = { ...liveItem };
+const upsellItem = { item_id: 'SKF-LYB-1', item_name: 'The Lymphatic Brush', item_brand: 'The Lymphatic Brush',
+  item_category: 'SKINOFAB Adaptive Peptide Foundation Funnel', item_variant: '', price: 19, quantity: 1, currency: 'USD' };
+const FLOW = [
+  ['view_item', { currency: 'USD', value: 75, items: [catalogItem] }, {}],
+  ['add_to_cart', { currency: 'USD', value: 75, items: [catalogItem] }, {}],
+  ['begin_checkout', { currency: 'USD', value: 75, items: [catalogItem] }, {}],
+  ['add_payment_info', { currency: 'USD', value: 75, items: [catalogItem], payment_type: 'Credit Card' }, buyer],
+  ['purchase', { currency: 'USD', value: 75, items: [catalogItem], transaction_id: '101700', tax: 0, shipping: 0 }, buyer],
+  ['purchase', { currency: 'USD', value: 19, items: [upsellItem], transaction_id: '101700-US1', tax: 0, shipping: 0, affiliation: 'Upsell' }, buyer]
+];
+test('whole funnel passes AXON Pixel Helper: no errors, no warnings (all green)', () => {
+  const { calls, adapter } = load();
+  for (const [name, ecom, up] of FLOW) adapter.send(name, ecom, evt(up));
+  calls.forEach(([, name, params], i) => {
+    const r = validate(SCHEMA[name], params);
+    assert.deepEqual(r, { errors: [], warnings: [] }, `${FLOW[i][0]} #${i}: ${JSON.stringify(r)}`);
+  });
+  const [, , purchase] = calls[4];
+  assert.deepEqual(purchase.user_data, { email: 'buyer@example.com', phone: '18123158899', user_id: '1234567' });
+  const [, , upsell] = calls[5];
+  assert.equal(upsell.items[0].item_variant_id, '170');
+  assert.equal(upsell.items[0].image_url, 'https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg');
+  assert.equal(upsell.transaction_id, '101700-US1');
+});
+test('the validator reproduces the warnings seen in Pixel Helper on the earlier adapters', () => {
+  const raw = (ecom) => ({ ...ecom, items: ecom.items.map(({ item_image, item_category, ...it }) => ({ ...it, image_url: item_image })) });
+  const r1 = validate(SCHEMA.add_payment_info, { ...raw(FLOW[3][1]) });
+  assert.ok(r1.warnings.some(w => w.includes('payment_type "Credit Card"')), JSON.stringify(r1));
+  assert.ok(r1.warnings.some(w => w.includes('image_url not .png/.jpg/.jpeg')));
+  const r2 = validate(SCHEMA.purchase, raw(FLOW[4][1]));
+  assert.ok(r2.errors.includes('user_data missing'), JSON.stringify(r2));
+});
+test('payment_type maps every SDK label to the AXON enum', () => {
+  const cases = { 'Credit Card': 'credit_card', 'Saved Card': 'credit_card', 'Apple Pay': 'wallet', 'Google Pay': 'wallet',
+    PayPal: 'wallet', 'Shop Pay': 'wallet', Link: 'wallet', Swish: 'wallet', Twint: 'wallet', Klarna: 'deferred', Affirm: 'deferred',
+    iDEAL: 'other', 'SEPA Direct Debit': 'other', Sofort: 'other', Giropay: 'other', Bancontact: 'other', External: 'other',
+    credit_card: 'credit_card', 'Gift Card': 'redeemable', 'Cash on Delivery': 'payment_on_delivery' };
+  for (const [label, want] of Object.entries(cases)) {
+    const { calls, adapter } = load();
+    adapter.send('add_payment_info', { currency: 'USD', value: 1, payment_type: label }, evt({}));
+    assert.equal(calls[0][2].payment_type, want, label);
+  }
+});
