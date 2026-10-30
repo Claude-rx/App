@@ -16,3 +16,7 @@ qa-output/
 .campaign-runtime/*.log
 .campaign-runtime/*.tmp
 .campaign-runtime/**/*.tmp
+
+# Page Kit: installed packages and the build (a static host builds _site/ itself with `npm run build:static`)
+node_modules/
+_site/
