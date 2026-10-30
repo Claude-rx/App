@@ -840,7 +840,7 @@ for p in F.PAGES:
     if re.search(r'word for word', t, re.I): fail(p['id'], '"word for word" beside quotes shortened with "…"')
     if re.search(r'reworded', t, re.I) and 'marks where a long one is shortened' not in t: fail(p['id'], '"none reworded" without what "…" marks')
 for rule in ('.sf-from-offer #SiteFooter .sf__policies a{display:inline-flex;align-items:center;min-height:44px;',
-             '.sf-from-offer a[href^=\\"mailto:\\"],.sf-from-offer a[href^=\\"tel:\\"]{padding-top:10px;padding-bottom:10px}',
+             '.sf-from-offer a[href^=\\"mailto:\\"],.sf-from-offer a[href^=\\"tel:\\"]{padding-top:12px;padding-bottom:12px}',
              '.sf-from-offer [data-sf-optout-btn]{min-height:44px}'):
     if rule.replace('\\"', '"') not in _base: fail('funnel', f'policy pages from the funnel: missing {rule[:60]}')
 # one "From" price a bottle: the lowest a bottle of any pack ($19.99), never the 1-bottle price, which is the highest
