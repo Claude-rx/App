@@ -243,5 +243,6 @@ document.addEventListener('keydown', function (e) {
   if (e.key !== ' ' && e.key !== 'Spacebar') return;
   var a = e.target && e.target.closest && e.target.closest('a[role="button"]');
   if (!a) return;
-  e.preventDefault(); a.click();
+  e.preventDefault();
+  if (a.getAttribute('aria-disabled') !== 'true') a.click();
 });

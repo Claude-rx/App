@@ -88,7 +88,7 @@ body.sf { margin: 0; background: var(--paper); color: var(--text); font: 400 17p
 .sf-reviews__lead { color: var(--soft); }
 .sf-reviews__grid { display: grid; gap: 16px; margin: 20px 0 14px; text-align: left; }
 .sf-review { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; background: #fbfaf8; }
-.sf-review img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
+.sf-review img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 10px; margin: 0 auto 12px; }   /* a photo smaller than the card shows at its own size (photo_w), not blown up (live review 12) */
 .sf-review h3 { font-size: 18px; text-align: center; }
 .sf-review__stars { text-align: center; margin: 2px 0 8px !important; }
 .sf-review__text { font-size: 15px; line-height: 1.55; color: var(--text); }

@@ -21,6 +21,15 @@
   document.addEventListener('next:initialized', noteOff);
   window.addEventListener('next:initialized', noteOff);
   setTimeout(noteOff, 8000);
+  // no order on this page (the inline script in the page sets sf-no-order): the accept controls are greyed by
+  // sf-offers.css and say so here, out of the tab order; they come back if the SDK loads an order after all
+  const ACCEPT = '[data-next-upsell-action="add"], [data-next-upsell-action="accept"], [data-upsell-proxy="add"], [data-sf-supply-hero]';
+  const lock = (on) => document.querySelectorAll(ACCEPT).forEach((e) => {
+    if (on) { e.setAttribute('aria-disabled', 'true'); e.setAttribute('tabindex', '-1'); }
+    else if (e.hasAttribute('data-sf-locked')) { e.removeAttribute('aria-disabled'); e.removeAttribute('tabindex'); }
+    if (on) e.setAttribute('data-sf-locked', ''); else e.removeAttribute('data-sf-locked');
+  });
+  if (document.documentElement.classList.contains('sf-no-order')) lock(true);
   const gate = document.querySelector('[data-sf-offer-gate]');
   if (!gate) return;
   const ok = gate.querySelector('[data-sf-upsell-ok]');
@@ -34,7 +43,10 @@
     const can = (ok.textContent || '').trim().toLowerCase();
     if (!can) return;                                     // the order is not loaded yet
     noteOff();
-    document.documentElement.classList.remove('sf-no-order');   // an order after all (the page's no-order note goes)
+    if (document.documentElement.classList.contains('sf-no-order')) {
+      document.documentElement.classList.remove('sf-no-order');   // an order after all (the page's no-order note goes)
+      lock(false);
+    }
     // (the SDK writes the flag as "Yes" / "No")
     if ((can === 'no' || can === 'false') && thankYou) { done = true; hide(); location.replace(thankYou + location.search); return; }
     if (skipSkus.length) {

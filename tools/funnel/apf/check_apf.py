@@ -630,8 +630,16 @@ _bl = (THEME / 'layouts' / 'base.html').read_text(encoding='utf-8')
 if not re.search(r'<meta charset="UTF-8" />\s*<script>\(function \(\) \{ var out = navigator\.globalPrivacyControl === true \|\| /\(\?:\^\|;\\s\*\)sf_optout=1/', _bl): fail('theme', 'the store pages load the AppLovin pixel under GPC or after the opt-out')
 _track = THEME / 'partials' / 'sf_pages' / 'postflows-track-your-order' / 'content.html'
 if _track.is_file() and 'Cookie policy</a></nav>' in _track.read_text(encoding='utf-8'): fail('theme', 'a copy of the store footer without "Your privacy choices"')
-# F8: an offer opened with no order shows the note alone (no offer, no clock); the thank-you page one notice
-if '.sf-no-order #sf-main { display: none !important; }' not in _oc: fail('offers', 'an offer with no order still shows its buttons and its clock')
+# F8: an offer opened with no order shows the note above the offer (its prices stay, Campaigns OS QA reads them), every
+# accept greyed the same way, inert and aria-disabled, and no clock; the thank-you page one notice
+if '.sf-no-order #sf-main' in _oc: fail('offers', 'with no order the offer is hidden: its price and accept must stay visible (Campaigns OS QA)')
+for _sel in ('[data-next-upsell-action="add"]', '[data-upsell-proxy="add"]', '[data-sf-supply-hero]'):
+    if f'.sf-no-order {_sel}' not in _oc: fail('offers', f'with no order, {_sel} is not greyed')
+if 'pointer-events: none !important; opacity: .45 !important; animation: none !important' not in _oc: fail('offers', 'with no order, an accept can still look live')
+if '.sf-no-order [data-sf-timer], .sf-no-order .sf-uh__expires, .sf-no-order [data-sf-await-note] { display: none !important; }' not in _oc: fail('offers', 'with no order, the clock or its lines still show')
+_og = (SITE / 'js' / 'sf-offer-gate.js').read_text(encoding='utf-8')
+if "e.setAttribute('aria-disabled', 'true')" not in _og or 'lock(false)' not in _og: fail('offers', 'with no order, the accepts are not aria-disabled (or stay so when an order loads)')
+if "a.getAttribute('aria-disabled') !== 'true'" not in (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8'): fail('offers', 'Space still presses a disabled accept')
 if "if (document.documentElement.classList.contains('sf-no-order')) return;" not in (SITE / 'js' / 'sf-offer-timer.js').read_text(encoding='utf-8'): fail('offers', 'the clock runs and moves on with no order')
 if _ty.count('data-sf-no-order') != 1: fail('thank-you', f'{_ty.count("data-sf-no-order")} "no order" notices, not one')
 # F9: a phone's sales hero is the 5:4 WebP it is shown as

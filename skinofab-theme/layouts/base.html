@@ -6,6 +6,7 @@
     <title>{% block title %}{{ store.get_meta_title }}{% if store.tagline %} - {{ store.tagline }}{% endif %}{% endblock %}</title>
     <link rel="alternate" hreflang="{{ LANGUAGE_CODE }}" href="https://{{ request.get_host }}{{ request.path }}" />
     <meta charset="UTF-8" />
+    <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="NOARCHIVE,NOCACHE" />
 
