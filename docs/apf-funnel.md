@@ -846,6 +846,17 @@ checkout without its renewal within the next sentence, an unhedged soft-focus cl
 colour, the listicle's WebP hero and no eager image, and the note's styles. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, the same
 exceptions as after review 14.
 
+**Live review 16 (30 Oct 2026), ship: 0 blockers, 0 major, 3 minor, all fixed in the next build.** (Its run was cut by a
+container restart and resumed from its own transcript.) F1: the thank-you page opened with a reference the SDK cannot
+load showed "Thank you, Error!" and "Total Error $0.00" under "Your order is confirmed" for about 5 s before its 8-second
+no-order note; `sf-receipt.js` now shows the note as soon as the SDK writes "Error" for the order number or the name, as
+the offers do, keeps the 8 s timer for an order that never answers, and no longer reads "Error" as an order number. F2:
+the listicle and the checkout called the reviews "word for word" beside quotes shortened with "…"; every page now says
+none is reworded and that "…" marks where a long one is shortened, as the sales page did. F3: on the policy pages opened
+from the funnel (`?from=offer`), the policy links are 44 px (they were 43), the email and phone links 44 px through inline
+padding that does not move the text around them (they were 24), and the opt-out button 44 px (`build_theme.py`). Each
+has a gate in `check_apf.py`.
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the

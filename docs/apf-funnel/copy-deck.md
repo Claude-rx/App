@@ -338,7 +338,7 @@ The free Lymphatic Brush is a launch gift: it comes with the 5-bottle pack while
 
 ### Women over 45, in their own words
 
-**4.8 out of 5 · 9,855 reviews** — The published reviews of this formula from our earlier store, word for word, with the buyers’ own photos. Two of the nine are four stars, as 2,132 of the reviews are.
+**4.8 out of 5 · 9,855 reviews** — The published reviews of this formula from our earlier store, in the buyers’ own words and photos. Two of the nine are four stars, as 2,132 of the reviews are.
 
 [REVIEW: Lora Z., 65 | Verified buyer, from our earlier store | 5 | | I’m 65 and my skin has uneven color. This product has evened out those places. Also, it’s the perfect color match—never too light or orange! I’m very pleased! | images/sf/review-lora.jpg | yes]
 

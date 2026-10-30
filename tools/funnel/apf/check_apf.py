@@ -829,6 +829,20 @@ _lh = html('listicle')
 if 'hero-m.webp' not in _lh or 'type="image/webp"' not in _lh or 'loading="eager"' in _lh: fail('listicle', 'the phone hero is not WebP, or an image below it loads eagerly')
 if '.sf-no-order-note a[href^="tel:"] { white-space: nowrap; }' not in _oc or 'padding: 12px 22px; line-height: 1.3;' not in _oc:
     fail('offer-1', 'the no-order note breaks its phone number or squeezes its button')
+# live review 16: F1 the thank-you page shows its no-order note as soon as the SDK writes "Error" for the order, not after
+# 8 s of "Thank you, Error!"; F2 shortened quotes are never "word for word", and a page that says none is reworded says
+# what "…" marks; F3 every tap target on a policy page opened from the funnel is 44 px
+_rj = (SITE / 'js' / 'sf-receipt.js').read_text(encoding='utf-8')
+if "/^\\s*error\\s*$/i.test(el.textContent)" not in _rj or 'setTimeout(show, 8000)' not in _rj or "!/^error$/i.test(num.textContent.trim())" not in _rj:
+    fail('thank-you', 'the receipt waits 8 s with "Error" on show before its no-order note')
+for p in F.PAGES:
+    t = text(html(p['id']))
+    if re.search(r'word for word', t, re.I): fail(p['id'], '"word for word" beside quotes shortened with "…"')
+    if re.search(r'reworded', t, re.I) and 'marks where a long one is shortened' not in t: fail(p['id'], '"none reworded" without what "…" marks')
+for rule in ('.sf-from-offer #SiteFooter .sf__policies a{display:inline-flex;align-items:center;min-height:44px;',
+             '.sf-from-offer a[href^=\\"mailto:\\"],.sf-from-offer a[href^=\\"tel:\\"]{padding-top:10px;padding-bottom:10px}',
+             '.sf-from-offer [data-sf-optout-btn]{min-height:44px}'):
+    if rule.replace('\\"', '"') not in _base: fail('funnel', f'policy pages from the funnel: missing {rule[:60]}')
 # one "From" price a bottle: the lowest a bottle of any pack ($19.99), never the 1-bottle price, which is the highest
 # (live review 14, F3: "From $33.97" in the top bar over "From $20.38 a bottle" in the offer box); "Packs from" names
 # the entry pack and is the only other "from" price. The pages before the order only: an offer's own one-time

@@ -14,7 +14,8 @@
   const join = (xs) => xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1];
   const fill = () => {
     const num = document.querySelector('[data-next-display="order.number"]');
-    if (num && num.textContent.trim()) document.documentElement.classList.remove('sf-no-order');   // an order after all
+    // an order after all; the SDK writes "Error" when the order cannot be loaded, which is not one (live review 16)
+    if (num && num.textContent.trim() && !/^error$/i.test(num.textContent.trim())) document.documentElement.classList.remove('sf-no-order');
     const skus = [];
     document.querySelectorAll('.sf-line-renew[data-sf-sku]').forEach((el) => {
       const sku = el.getAttribute('data-sf-sku'); skus.push(sku);
@@ -50,8 +51,9 @@
 })();
 
 // Opened without an order (no or a wrong ref_id in the address), the receipt would show "Thank you," and empty rows:
-// after 8 s with no order line, say so at the top; if the order comes in later (a slow connection), take it down again
-// (funnel review 2).
+// say so at the top as soon as the SDK writes "Error" for the order (a reference it cannot load: "Thank you, Error!" and
+// "Total Error $0.00" under "Your order is confirmed" for 5 s, live review 16, F1), as the offers do, or after 8 s with
+// no order line at all; if the order comes in later (a slow connection), take it down again (funnel review 2).
 (function () {
   const note = document.querySelector('[data-sf-no-order]');
   if (!note) return;
@@ -59,8 +61,12 @@
   // (live review 7: "Your order is confirmed" and a $0.00 desktop summary stayed under the note)
   const head = () => document.querySelectorAll('.receipt_head, .receipt_section, .order-summary-mobile, .summary-desktop');
   const hasOrder = () => !!document.querySelector('[data-order-line-id]');   // (the loading skeleton is .cart-item too)
-  setTimeout(() => {
-    if (hasOrder()) return;
+  const failed = () => Array.prototype.some.call(document.querySelectorAll('[data-next-display="order.number"], [data-next-display="order.customer.firstName"]'),
+    (el) => /^\s*error\s*$/i.test(el.textContent));
+  let shown = false;
+  const show = () => {
+    if (shown || hasOrder()) return;
+    shown = true;
     note.hidden = false;
     const wrap = document.querySelector('.main-wrapper') || document.body;
     wrap.insertBefore(note, wrap.firstChild);
@@ -69,7 +75,11 @@
       if (!hasOrder()) return;
       note.hidden = true; head().forEach((el) => { el.hidden = false; }); obs.disconnect();
     }).observe(document.body, { childList: true, subtree: true });
-  }, 8000);
+  };
+  setTimeout(show, 8000);
+  const watch = new MutationObserver(() => { if (failed()) { watch.disconnect(); show(); } });
+  watch.observe(document.body, { childList: true, subtree: true, characterData: true });
+  if (failed()) show();
 })();
 
 // The range under the order: the EGF serum's card goes for an order shipping to Europe (EU, EEA, UK, Switzerland: its EGF

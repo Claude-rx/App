@@ -1157,7 +1157,11 @@ base = base.replace("{% endblock styles %}",
     ".sf-from-offer #shopify-section-sf-more,.sf-from-offer .sf-more{display:none!important}"
     ".sf-from-offer #SiteFooter .sf__logo,.sf-from-offer #SiteHeader a[href=\"/\"]{pointer-events:none;cursor:default}"
     ".sf-from-offer .sf-off-link{pointer-events:none;color:inherit;text-decoration:none}"
-    ".sf-from-offer #SiteFooter .sf__policies a{display:inline-block;padding:12px 4px}</style>", 1)
+    # (live review 16, F3: the policy links were 43 px, the email and phone links 24 px, the opt-out button 43.6 px; an
+    # inline link's vertical padding grows its tap box without moving the lines around it)
+    ".sf-from-offer #SiteFooter .sf__policies a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}"
+    ".sf-from-offer a[href^=\"mailto:\"],.sf-from-offer a[href^=\"tel:\"]{padding-top:10px;padding-bottom:10px}"
+    ".sf-from-offer [data-sf-optout-btn]{min-height:44px}</style>", 1)
 base = base.replace("{% block extrahead %}{% endblock extrahead %}",
     "{% block extrahead %}{% endblock extrahead %}\n"
     "    {% url 'storefrontapi:graphql' as sf_graphql_url %}\n"
