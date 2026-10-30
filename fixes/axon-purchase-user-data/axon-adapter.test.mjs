@@ -22,7 +22,7 @@ test('purchase carries user_data (the AppLovin error)', () => {
   assert.deepEqual(p.user_data, { email: 'jane.doe@example.com', phone: '18123158899', user_id: '1234567' });
   // Everything that already passed stays identical.
   assert.equal(p.transaction_id, '101614'); assert.equal(p.tax, 0); assert.equal(p.shipping, 0); assert.equal(p.value, 39);
-  assert.equal(p.items[0].item_id, 'SKF-APF-1'); assert.equal(p.items[0].item_category_id, undefined);
+  assert.equal(p.items[0].item_id, 'SKF-APF-1'); assert.equal(p.items[0].item_category_id, 2765);
 });
 test('short user ids and non-E.164 phones are left out', () => {
   const { calls, adapter } = load();
@@ -64,4 +64,19 @@ test('missing user_properties does not throw', () => {
   const { calls, adapter } = load();
   adapter.send('purchase', ec, { event: 'dl_purchase' }); adapter.send('purchase', ec, undefined);
   assert.equal(calls.length, 2);
+});
+
+test('every item gets a numeric item_category_id (Pixel Helper item warning)', () => {
+  const { calls, adapter } = load();
+  const two = { ...ec, items: [ec.items[0], { ...ec.items[0], item_id: 'SKF-APF-2', item_category: undefined }] };
+  for (const name of ['view_item', 'add_to_cart', 'begin_checkout', 'purchase']) adapter.send(name, two, evt({}));
+  for (const c of calls) assert.deepEqual(c[2].items.map(i => i.item_category_id), [2765, 2765]);
+});
+test('numeric SDK category wins; configured fallback overrides default; junk config ignored', () => {
+  let r = load(); r.adapter.send('view_item', { ...ec, items: [{ ...ec.items[0], item_category: '473' }] }, evt({}));
+  assert.equal(r.calls[0][2].items[0].item_category_id, 473);
+  r = load({ __axonItemCategoryId: '567' }); r.adapter.send('view_item', ec, evt({}));
+  assert.equal(r.calls[0][2].items[0].item_category_id, 567);
+  r = load({ __axonItemCategoryId: 'Skin Care' }); r.adapter.send('view_item', ec, evt({}));
+  assert.equal(r.calls[0][2].items[0].item_category_id, 2765);
 });

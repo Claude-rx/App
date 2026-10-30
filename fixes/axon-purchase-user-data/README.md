@@ -13,9 +13,14 @@ The Campaign Cart SDK (0.4.43) already puts the buyer on every checkout/purchase
 - `phone`: E.164 digits without `+`; `user_id`: only when ≥ 6 chars
 - browse events and `page_view` unchanged; kill switch `window.__axonSendUserData = false`
 
+**Follow-up (30 Oct 2026):** Pixel Helper still showed an orange warning per item on view_item / add_to_cart /
+begin_checkout. AXON requires a numeric `item_category_id` on every item; the SDK's category is the campaign name, which
+was being dropped. Every item now gets `window.__axonItemCategoryId`, falling back to **2765** (Google product taxonomy:
+Cosmetics > Makeup > Face Makeup > Foundations & Concealers). A numeric SDK category still wins.
+
 **Files:** `sfa-axon-adapter-3194de.js` (patched) · `.orig.js` (live copy before the fix, for rollback) · `axon-adapter.test.mjs`
 
-**Test:** `npm run test:axon` → 8/8 pass on the patch; the original fails the 4 user_data tests.
+**Test:** `npm run test:axon` → 10/10 pass on the patch; the original fails the 4 user_data tests.
 
 **Deploy (single file, theme 34):**
 ```bash
