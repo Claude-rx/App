@@ -817,7 +817,11 @@ def hero_collage():
     im = Image.new('RGB', (side * 2 + 4, side), PAPER)
     for i, p in enumerate(sq): im.paste(p, (i * (side + 4), 0))
     save(im, 'hero', size=1688)
-    save(ImageOps.fit(Image.open(PDP / 'hold-cheek.jpg').convert('RGB'), (1080, 1080), Image.LANCZOS, centering=(0.5, 0.5)), 'hero-m', size=760)   # phones only: 760 px is 390 at 2x (live review 9)
+    # phones only: 760 px is 390 at 2x (live review 9); WebP, the page's largest paint on a slow line (the 72 KB JPEG was
+    # 3.4 s on slow 4G, live review 15, F6); a browser without WebP takes the desktop JPEG
+    for old in OUT.glob('hero-m.*'): old.unlink()
+    ImageOps.fit(Image.open(PDP / 'hold-cheek.jpg').convert('RGB'), (760, 760), Image.LANCZOS, centering=(0.5, 0.5)).save(OUT / 'hero-m.webp', quality=78, method=6)
+    print('hero-m', (760, 760), 'webp')
 
 
 def offer_card():

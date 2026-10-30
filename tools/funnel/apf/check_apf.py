@@ -802,6 +802,33 @@ for _pid in ('checkout', 'thank-you'):
 # F8: at 768 to 1023 px the header is the logo over one row of the three badges, the promo bar balanced
 if '.checkout-header--apollo .checkout-header__badges { flex-wrap: nowrap;' not in _occss or 'text-wrap: balance' not in _occss:
     fail('checkout', 'the tablet header still wraps its badges and promo bar')
+# live review 15: F1 "less than N cost" names its basis, N single bottles at the 1-bottle price, which the pack beats (3 bottles
+# cost $66.97 on the same page, so "5 for less than 3 cost" was false); F2 no pack length in months (the refills are in
+# days: 140 days is not "about five months"); F3 every pack price before the cards carries its renewal; F4 a finish
+# claim about lines is hedged
+for p in F.PAGES:
+    t = text(html(p['id']))
+    for m in re.finditer(r'less than (\d+) (?:bottles )?cost', t): fail(p['id'], f'"{m.group(0)}": less than what? (name the single bottles)')
+    for m in re.finditer(r'less than (\d+) single bottles \((\$[\d.]+)\)', t):
+        if m.group(2) != usd(int(m.group(1)) * F.UNIT): fail(p['id'], f'"{m.group(0)}": {m.group(1)} single bottles are {usd(int(m.group(1)) * F.UNIT)}')
+    for m in re.finditer(r'\babout (?:a|one|two|three|four|five|six) months?\b|months?[’\'] supply|lasts? about a month|next \w+ months', t, re.I):
+        fail(p['id'], f'"{m.group(0)}": a supply in months, while the refills are in days (weeks)')
+    for m in re.finditer(r'[^.!?]*soft-focus[^.!?]*lines[^.!?]*', t):
+        if 'designed not to' not in m.group(0): fail(p['id'], f'an unhedged finish claim about lines: "{m.group(0).strip()[:90]}"')
+for q in ('listicle', 'offer', 'checkout'):
+    t = text(html(q))
+    for m in re.finditer(r'(\d) bottles? (?:for )?\$(\d+\.\d\d)', t):
+        pk = next((pk for pk in F.PACKS if f"{pk['price']:.2f}" == m.group(2) and pk['bottles'] == int(m.group(1))), None)
+        if pk and f"every {pk['every']} days" not in t[m.end(): m.end() + 160]:
+            fail(q, f'"{m.group(0)}" without its renewal ("every {pk["every"]} days") right after it')
+# F5 placeholders at 4.5:1 or better; F6 the listicle's phone hero is WebP and nothing below it loads eagerly; F7 the
+# no-order note's button grows with its words and its phone number never breaks
+if '[data-next-checkout="form"] input::placeholder, [data-next-checkout="form"] textarea::placeholder { color: #666; opacity: 1; }' not in _occss:
+    fail('checkout', 'placeholders at the default grey (3.95:1)')
+_lh = html('listicle')
+if 'hero-m.webp' not in _lh or 'type="image/webp"' not in _lh or 'loading="eager"' in _lh: fail('listicle', 'the phone hero is not WebP, or an image below it loads eagerly')
+if '.sf-no-order-note a[href^="tel:"] { white-space: nowrap; }' not in _oc or 'padding: 12px 22px; line-height: 1.3;' not in _oc:
+    fail('offer-1', 'the no-order note breaks its phone number or squeezes its button')
 # one "From" price a bottle: the lowest a bottle of any pack ($19.99), never the 1-bottle price, which is the highest
 # (live review 14, F3: "From $33.97" in the top bar over "From $20.38 a bottle" in the offer box); "Packs from" names
 # the entry pack and is the only other "from" price. The pages before the order only: an offer's own one-time

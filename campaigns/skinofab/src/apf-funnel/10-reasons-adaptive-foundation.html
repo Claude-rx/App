@@ -6,7 +6,7 @@ page_type: product
 next_url: adaptive-foundation-offer.html
 body_class: "sf-listicle sf-apf"
 preload_image: "images/sf/hero.jpg"
-preload_image_mobile: "images/sf/hero-m.jpg"   # a phone shows one woman, square (the three-panel strip was 140 px tall, live review 5)
+preload_image_mobile: "images/sf/hero-m.webp"   # a phone shows one woman, square (live review 5), as WebP (images.py; live review 15, F6)
 styles:
   - css/sf-apf.css
 og_image: ""
@@ -83,7 +83,7 @@ reasons:
       - "Primer, foundation, concealer, powder, contour: five products just to look like yourself, in a mirror you can’t see well enough to blend in."
       - "Here it is one step. One pump, five dots (they look white), then blend outward with your fingertips or a brush until the white has turned into your tone. Tap a little more over a spot or redness, and you’re done."
     bullets:
-      - "<strong>One pump</strong> is a full face; a bottle lasts about a month"
+      - "<strong>One pump</strong> is a full face; a bottle lasts about four weeks"
       - "<strong>Fingertips or a brush,</strong> about a minute"
       - "<strong>The airless pump</strong> keeps the serum fresh to the last drop"
   - title: "Made Not to Turn Orange by the Afternoon"
@@ -145,9 +145,9 @@ cta:
   eyebrow: "Your offer"
   title: "Buy 3, get 2 FREE + a FREE Lymphatic Brush"
   points:
-    - "<strong>5 bottles for $99.97</strong>: less than 3 bottles cost, about five months"
+    - "<strong>5 bottles for $99.97</strong>, refilled every 140 days: less than 3 single bottles ($101.91)"
     - "<strong>FREE Lymphatic Brush</strong> with its case, with your first order"
-    - "<strong>Or buy 2, get 1 FREE:</strong> 3 bottles for $66.97 with a free Blender sponge"
+    - "<strong>Or buy 2, get 1 FREE:</strong> 3 bottles for $66.97, then $66.97 every 84 days, with a free Blender sponge"
     - "<strong>Free shipping</strong>, and refills at the same price you can skip or cancel any time"
     - "<strong>30-day money-back guarantee</strong>, even opened"
   from: "$19.99"
@@ -182,7 +182,7 @@ ratings:
 mission:
   title: "Made for the mornings you want to look like yourself, just fresher"
   paras:
-    - "We make SKINOFAB for skin after 45. The women we talk to don’t want more makeup: they want the foundation they already wear to stop turning orange, stop settling into lines and stop drying them out."
+    - "We make SKINOFAB for skin after 45. The women we talk to don’t want more makeup: they want a foundation that doesn’t turn orange, is designed not to settle into lines, and keeps dry skin comfortable."
     - "That’s why we put a foundation that adapts to your tone into a skincare serum: one pump, your fingertips, about a minute. It won’t make you look 30, and we won’t pretend it will."
 closing: "No shade to guess, and 30 days to decide."
 ---
@@ -197,7 +197,7 @@ closing: "No shade to guess, and 30 days to decide."
 
 <main class="sf-article">
   <figure class="sf-hero">
-    <picture><source media="(max-width: 599px)" srcset="{{ 'images/sf/hero-m.jpg' | campaign_asset }}" width="760" height="760"><img src="{{ 'images/sf/hero.jpg' | campaign_asset }}" alt="{{ hero_alt }}" width="1688" height="844" fetchpriority="high"></picture>
+    <picture><source media="(max-width: 599px)" type="image/webp" srcset="{{ 'images/sf/hero-m.webp' | campaign_asset }}" width="760" height="760"><img src="{{ 'images/sf/hero.jpg' | campaign_asset }}" alt="{{ hero_alt }}" width="1688" height="844" fetchpriority="high"></picture>
   </figure>
   <h1 class="sf-h1">{{ headline }}</h1>
   <p class="sf-sub">{{ subhead }}</p>
@@ -238,7 +238,7 @@ closing: "No shade to guess, and 30 days to decide."
     </figure>
     {% else %}
     <figure class="sf-reason__media">
-      <img src="{{ r.image | campaign_asset }}" alt="{{ r.alt }}" loading="{% if forloop.index > 1 %}lazy{% else %}eager{% endif %}" decoding="async" width="1080" height="{{ r.image_h | default: 1080 }}">
+      <img src="{{ r.image | campaign_asset }}" alt="{{ r.alt }}" loading="lazy" fetchpriority="low" decoding="async" width="1080" height="{{ r.image_h | default: 1080 }}">
       {% if r.caption %}<figcaption class="sf-reason__cap">{{ r.caption }}</figcaption>{% endif %}
     </figure>
     {% endif %}

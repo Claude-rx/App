@@ -63,11 +63,11 @@ VOUCHER = {'APF10': 1, 'APF40': 2, 'APF50': 3, 'BRUSH40': 4, 'BRUSH60': 5}
 UNIT = 33.97                       # one bottle with refills, the price every free-bottle claim is counted against
 PACKS = [
     {'key': 'apf-1', 'bundle': 'apf-1', 'package': 1, 'bottles': 1, 'paid': 1, 'price': 33.97, 'every': 28, 'gifts': [],
-     'name': '1 bottle', 'supply': 'About a month'},
+     'name': '1 bottle', 'supply': 'About four weeks'},
     {'key': 'apf-3-blender', 'bundle': 'apf-3', 'package': 8, 'bottles': 3, 'paid': 2, 'price': 66.97, 'compare': 101.91, 'every': 84,
-     'gifts': ['blender'], 'name': '3 bottles', 'supply': 'About three months', 'tab': 'Buy 2, get 1 FREE'},
+     'gifts': ['blender'], 'name': '3 bottles', 'supply': 'About 12 weeks', 'tab': 'Buy 2, get 1 FREE'},
     {'key': 'apf-5-brush', 'bundle': 'apf-5', 'package': 9, 'bottles': 5, 'paid': 3, 'price': 99.97, 'compare': 169.85, 'every': 140,
-     'gifts': ['brush'], 'name': '5 bottles', 'supply': 'About five months', 'selected': True, 'tab': 'Buy 3, get 2 FREE · Best value'},
+     'gifts': ['brush'], 'name': '5 bottles', 'supply': 'About 20 weeks', 'selected': True, 'tab': 'Buy 3, get 2 FREE · Best value'},
 ]
 GIFTS = {'blender': ('SKINOFAB Blender sponge', None), 'brush': ('The Lymphatic Brush', 24.95)}
 
@@ -76,7 +76,7 @@ GIFTS = {'blender': ('SKINOFAB Blender sponge', None), 'brush': ('The Lymphatic 
 # the same bottles, store_once; offers 2 and 3: the package's own price)
 OFFER_PAGES = {
     'offer-1': {'id': 'offer-1', 'tiers': [
-        {'key': 'b1g1', 'package': 'apf-2', 'ref': 4, 'bottles': 2, 'price': 39.00, 'compare': 57.00, 'badge': 'Two months’ supply'},
+        {'key': 'b1g1', 'package': 'apf-2', 'ref': 4, 'bottles': 2, 'price': 39.00, 'compare': 57.00, 'badge': '8 weeks’ supply'},
         {'key': 'b3g3', 'package': 'apf-6-brush', 'ref': 5, 'bottles': 6, 'price': 99.00, 'compare': 171.00, 'badge': 'Best value', 'gift': 'brush'}]},
     'offer-2': {'id': 'offer-2', 'tiers': [{'key': 'one', 'package': 'apf-1-add', 'ref': 7, 'bottles': 1, 'voucher': 'APF40', 'price': 19.00, 'compare': 33.97}]},
     'offer-2b': {'id': 'offer-2b', 'tiers': [{'key': 'one', 'package': 'apf-1-add', 'ref': 7, 'bottles': 1, 'voucher': 'APF50', 'price': 15.00, 'compare': 33.97}]},

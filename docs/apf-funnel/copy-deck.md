@@ -48,7 +48,7 @@ The foundation that goes on white and shifts to your own skin tone, in a hydrati
 
 [CTA: CHOOSE MY PACK ↓ | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-2]
 
-*1 bottle $33.97 · Or buy 2, get 1 FREE ($22.32 a bottle) with a free Blender sponge · Free shipping · Pay with card, PayPal, Apple Pay, Klarna or Link*
+*1 bottle $33.97, then $33.97 every 28 days · Or buy 2, get 1 FREE: 3 bottles $66.97 ($22.32 a bottle), then $66.97 every 84 days, with a free Blender sponge · Free shipping · Pay with card, PayPal, Apple Pay, Klarna or Link*
 
 ## 03 · Summary
 
@@ -76,13 +76,13 @@ After 45 your tone shifts and your skin gets drier. The shade that matched at 40
 
 ### Choose your pack
 
-<strong>Buy 3, get 2 FREE</strong>: 5 bottles for $99.97, $19.99 a bottle, with the free Lymphatic Brush. Every pack ships free and refills at the same price until you cancel.
+<strong>Buy 3, get 2 FREE</strong>: 5 bottles for $99.97, then $99.97 every 140 days ($19.99 a bottle), with the free Lymphatic Brush. Every pack ships free and refills at the same price until you cancel.
 
-[OFFER: 1 bottle | $33.97 | | About a month of daily use · then $33.97 every 28 days, until you cancel · free shipping | ]
+[OFFER: 1 bottle | $33.97 | | About four weeks of daily use · then $33.97 every 28 days, until you cancel · free shipping | ]
 
-[OFFER: 3 bottles | $66.97 | | Less than 2 bottles cost · about three months · $22.32 a bottle · then $66.97 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
+[OFFER: 3 bottles | $66.97 | | Less than 2 single bottles ($67.94) · about 12 weeks · $22.32 a bottle · then $66.97 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
 
-[OFFER: 5 bottles | $99.97 | | Less than 3 bottles cost · about five months · $19.99 a bottle · then $99.97 every 140 days, until you cancel · free shipping · first order: FREE Lymphatic Brush + case | Buy 3, get 2 FREE · Best value]
+[OFFER: 5 bottles | $99.97 | | Less than 3 single bottles ($101.91) · about 20 weeks · $19.99 a bottle · then $99.97 every 140 days, until you cancel · free shipping · first order: FREE Lymphatic Brush + case | Buy 3, get 2 FREE · Best value]
 
 [CTA: GET MY FOUNDATION | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-2]
 
@@ -194,7 +194,7 @@ A serum base with two forms of hyaluronic acid, ceramide NP, squalane and panthe
 
 > “Settles into my wrinkles.”
 
-A satin finish and soft-focus powders that blur the look of lines instead of filling them with pigment.
+A satin finish and soft-focus powders, designed not to settle into lines: they blur their look instead of filling them with pigment.
 
 > “Stings my sensitive skin.”
 
@@ -282,7 +282,7 @@ White on, then your tone: two short clips of how it goes on. Tap one to watch it
 
 - **Day 1** The daylight test: look in the car mirror at noon. That’s the one that counts.
 
-- **Week 1** You stop thinking about your shade. Most women use one pump; a bottle lasts about a month.
+- **Week 1** You stop thinking about your shade. Most women use one pump; a bottle lasts about four weeks.
 
 - **Day 30** Love it, or email us for a full refund. Even opened.
 
@@ -310,7 +310,7 @@ We can promise this because of what 9,855 reviews say about it. Read them above,
 
 |---|---|
 
-| 5 bottles of Adaptive Peptide Foundation (about five months), at $33.97 each | $169.85 |
+| 5 bottles of Adaptive Peptide Foundation (about 20 weeks), at $33.97 each | $169.85 |
 
 | The Lymphatic Brush with its travel case | $24.95 |
 
@@ -324,7 +324,7 @@ We can promise this because of what 9,855 reviews say about it. Read them above,
 
 **Why these packs are only here:** our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch. There is no countdown on this page, and no pack costs more than it says here.
 
-[OFFER: 3 bottles | $66.97 | | Less than 2 bottles cost · about three months · $22.32 a bottle · then $66.97 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
+[OFFER: 3 bottles | $66.97 | | Less than 2 single bottles ($67.94) · about 12 weeks · $22.32 a bottle · then $66.97 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
 
 [CTA: GET MY FOUNDATION | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-3]
 
@@ -408,7 +408,7 @@ Yes, with Automatic Refills you control. You pay today’s price now. Your pack 
 
 **Q: How long does a bottle last?**
 
-About a month of daily use with one pump a day. The 3-bottle pack is about three months, the 5-bottle pack about five.
+About four weeks of daily use with one pump a day, which is why a single bottle refills every 28 days. The 3-bottle pack is about 12 weeks (refilled every 84 days), the 5-bottle pack about 20 weeks (every 140 days).
 
 **Q: When will it arrive?**
 

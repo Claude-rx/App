@@ -829,6 +829,22 @@ exceptions as before (`spec.campaign_drift` for the retired packages 2 and 3; th
 manual reviews, the offers' buttons greyed with no order by design; the second privacy-worded link; upsell action
 coverage; offer 1's price-claim warning).
 
+**Live review 15 (30 Oct 2026), fix first: 0 blockers, 1 major, 6 minor, all fixed in the next build.** F1 (major):
+"3 bottles for less than 2 cost" and "5 bottles for less than 3 cost" were true only against single bottles at $33.97,
+while the same pages sell 3 bottles for $66.97 and offer 1 quotes the store's 2 bottles at $47 or $57; every one now
+names its basis, "less than 2 single bottles ($67.94)" and "less than 3 single bottles ($101.91)". The packs' lengths are
+in weeks, the refills' own unit: 4, 12 and 20 weeks for refills every 28, 84 and 140 days ("about five months" was
+two weeks longer than the 140 days), and the offers' "two months' supply" is "8 weeks' supply" (F2). Every pack price
+before the cards carries its renewal: the listicle's 3-bottle line, the sales hero note and the offer section's lead
+(F3). The sales page's complaint card and the listicle's mission say "designed not to settle into lines" (F4). The
+checkout's placeholders, the only words in an empty field, are #666 (5.7:1) instead of the browser's grey (3.95:1) (F5).
+The listicle's phone hero is a 30 KB WebP (the 72 KB JPEG was the largest paint) and the first reason's photo loads
+lazily: its largest paint on slow 4G at 390 went from 3.4 s to 2.1 s (F6). The no-order note's phone number no longer
+breaks, its button grows with its words and its heading is balanced (F7). `check_apf.py` gates each: "less than N cost"
+without its basis and a basis that is not N x $33.97, a supply in months, a pack price on the listicle, sales page or
+checkout without its renewal within the next sentence, an unhedged soft-focus claim about lines, the placeholder
+colour, the listicle's WebP hero and no eager image, and the note's styles.
+
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
 cache was still serving the previous template; the preview cookie is the theme as pushed): the v2 checkout with the

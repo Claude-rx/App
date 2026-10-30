@@ -236,6 +236,9 @@ body {
   .promo-banner--apollo .promo-banner__text { font-size: 12.5px; line-height: 1.35; }
 }
 
+/* placeholders, the only words in an empty field, at 5.7:1 on white (#666; the default grey was 3.95:1, live review 15, F5) */
+[data-next-checkout="form"] input::placeholder, [data-next-checkout="form"] textarea::placeholder { color: #666; opacity: 1; }
+
 /* a tablet (768 to 1023 px): the logo over one row of the three badges, and the promo bar's lines balanced (the bar left
    "GUARANTEE" alone on its second line and the badges put "SKIP OR CANCEL ANY TIME" alone under the other two, live review
    14, F8) */

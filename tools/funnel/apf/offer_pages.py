@@ -265,7 +265,7 @@ def supply_page(spec):
     per_day = lambda t: f"${t['price'] / t['bottles'] / 28:.2f} a day"
     cards = [
         {'id': 'supply-b1g1', 'items_json': json.dumps([{'packageId': two, 'quantity': 1}]), 'image': 'images/sf/pack-2.jpg',
-         'alt': 'Two bottles of Adaptive Peptide Foundation', 'badge': 'Two months’ supply', 'save': save(by['b1g1']),
+         'alt': 'Two bottles of Adaptive Peptide Foundation', 'badge': '8 weeks’ supply', 'save': save(by['b1g1']),
          'name': '2 more bottles', 'deal': '$19.50 a bottle', 'gift': '',
          'per_day': per_day(by['b1g1']), 'per_bottle': '$19.50 a bottle · 2 bottles', 'price': '$39.00', 'compare': f"${by['b1g1']['compare']:.0f}", 'compare_note': 'Our store, bought once', 'selected': True, 'button': 'BUY NOW · $39'},
         {'id': 'supply-b3g3', 'items_json': json.dumps([{'packageId': six, 'quantity': 1}]), 'image': 'images/sf/pack-6.jpg',
@@ -276,7 +276,7 @@ def supply_page(spec):
     supply = {'title': 'Choose your pack', 'lede': '$19.50 a bottle in the 2-pack, $16.50 in the 6-pack, charged once, shipped in the same box as the order you just placed.',
               'tiers': cards, 'guarantee': '30-day money-back guarantee on every bottle, even opened. You don’t send anything back.',
               'charged': 'Charged once to the payment you just used. This pack doesn’t renew.', 'decline': 'No thanks, continue'}
-    features = [('A bottle lasts about a month', 'One pump a day. Two more bottles cover the next two months; six cover the next six months of photos, calls and lunches.'),
+    features = [('A bottle lasts about four weeks', 'One pump a day. Two more bottles cover the next eight weeks; six cover the next 24 weeks of photos, calls and lunches.'),
                 ('One at home, one in your bag', 'The one on your vanity stays there. The one in your bag saves the afternoon.'),
                 ('These prices are only here', 'In our store two bottles are $57 bought once, or $47 with refills, and three 2-packs bought once are $171. Here a bottle works out at $19.50 in the 2-pack or $16.50 in the 6-pack, charged once, in the same box as your order.')]
     fm = head(pid, 'Stock up on the Adaptive Peptide Foundation', 'Offer 1 of 3<span data-sf-placed> · Your order is placed</span>', extra_scripts=['js/sf-supply.js']) + [
@@ -324,7 +324,7 @@ OFFERS = {
         'hero_text': 'One for your vanity, one for your bag: {price} instead of $33.97, charged once, in the same box as your order.',
         'pretitle': 'Not in our store at this price',
         'title': 'One more Adaptive Peptide Foundation',
-        'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Keep one at home and one in your bag', 'A bottle lasts about a month', 'Bought once: it doesn’t renew', 'Ships with your order, in the same box'],
+        'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Keep one at home and one in your bag', 'A bottle lasts about four weeks', 'Bought once: it doesn’t renew', 'Ships with your order, in the same box'],
         'images': FOUNDATION_IMAGES, 'closing_image': 'bottle',
         'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, continue',
         'features_title': 'Why women keep a second bottle',
@@ -341,7 +341,7 @@ OFFERS = {
         'hero_text': '{price} instead of $33.97 for one more bottle, charged once, in the same box as your order. After this page the price is gone.',
         'pretitle': 'Last chance',
         'title': 'One more Adaptive Peptide Foundation',
-        'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Charged once: it doesn’t renew', 'A bottle lasts about a month', 'Ships with your order, in the same box'],
+        'bullets': ['The same foundation: goes on white, adapts to your tone as you blend', 'Charged once: it doesn’t renew', 'A bottle lasts about four weeks', 'Ships with your order, in the same box'],
         'images': FOUNDATION_IMAGES, 'closing_image': 'bottle',
         'accept': 'Yes, add one more bottle for', 'decline': 'No thanks, continue',
         'features_title': 'Why we make this offer',
