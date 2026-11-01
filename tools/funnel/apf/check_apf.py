@@ -843,6 +843,13 @@ for rule in ('.sf-from-offer #SiteFooter .sf__policies a{display:inline-flex;ali
              '.sf-from-offer a[href^=\\"mailto:\\"],.sf-from-offer a[href^=\\"tel:\\"]{padding-top:12px;padding-bottom:12px}',
              '.sf-from-offer [data-sf-optout-btn]{min-height:44px}'):
     if rule.replace('\\"', '"') not in _base: fail('funnel', f'policy pages from the funnel: missing {rule[:60]}')
+# a page names only payment methods the campaign offers (the owner turned Klarna and Link off on 1 Nov 2026: every
+# pack renews); the spec's list is the live campaign's
+_pay = {m['code'] for m in SPEC['campaign'].get('available_payment_methods', [])}
+for p in F.PAGES:
+    t = text(html(p['id']))
+    for name, code in (('Klarna', 'klarna'), ('Link', 'link'), ('Affirm', 'affirm'), ('Afterpay', 'afterpay'), ('Apple Pay', 'apple_pay'), ('PayPal', 'paypal')):
+        if re.search(r'\bpay with\b[^.]*\b' + name + r'\b', t, re.I) and code not in _pay: fail(p['id'], f'"pay with … {name}": the campaign does not offer it')
 # one "From" price a bottle: the lowest a bottle of any pack ($19.99), never the 1-bottle price, which is the highest
 # (live review 14, F3: "From $33.97" in the top bar over "From $20.38 a bottle" in the offer box); "Packs from" names
 # the entry pack and is the only other "from" price. The pages before the order only: an offer's own one-time

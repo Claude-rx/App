@@ -48,7 +48,7 @@ The foundation that goes on white and shifts to your own skin tone, in a hydrati
 
 [CTA: CHOOSE MY PACK ↓ | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-2]
 
-*1 bottle $33.97, then $33.97 every 28 days · Or buy 2, get 1 FREE: 3 bottles $66.97 ($22.32 a bottle), then $66.97 every 84 days, with a free Blender sponge · Free shipping · Pay with card, PayPal, Apple Pay, Klarna or Link*
+*1 bottle $33.97, then $33.97 every 28 days · Or buy 2, get 1 FREE: 3 bottles $66.97 ($22.32 a bottle), then $66.97 every 84 days, with a free Blender sponge · Free shipping · Pay with card, PayPal or Apple Pay*
 
 ## 03 · Summary
 
@@ -420,7 +420,7 @@ Wear it in your own daylight for up to 30 days from delivery. If you don’t lov
 
 **Q: Is my payment secure?**
 
-Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal, Apple Pay, Klarna or Link.
+Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal or Apple Pay.
 
 ## 20 · Highlight Customer Service Options
 

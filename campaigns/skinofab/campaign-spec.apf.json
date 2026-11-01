@@ -31,14 +31,6 @@
         "label": "Bankcard"
       },
       {
-        "code": "klarna",
-        "label": "Klarna"
-      },
-      {
-        "code": "link",
-        "label": "Link"
-      },
-      {
         "code": "paypal",
         "label": "PayPal"
       }

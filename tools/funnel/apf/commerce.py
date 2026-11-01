@@ -65,9 +65,8 @@ PACKAGES = [
     ('apf-6-brush', FOUNDATION, 'SKF-APF-6-BRUSH', '99.00'),
     ('brush-1', BRUSH, 'SKF-LYB-1T', '24.95'),
     ('apf-1-add', FOUNDATION, 'SKF-APF-1-ADD', '33.97'),
-    # the packs before 30 Oct 2026, kept in the campaign (earlier orders and test subscriptions name them), on no page
-    ('apf-2-gifts', FOUNDATION, 'SKF-APF-2-GIFTS', '57.00'),
-    ('apf-3-gifts', FOUNDATION, 'SKF-APF-3-GIFTS', '75.00'),
+    # the packs before 30 Oct 2026 ($57 and $75, packages 2 and 3) were deleted on 1 Nov 2026 with the owner's approval,
+    # after checking that no subscription renews on them; their variants stay in the catalogue for the earlier orders
 ]
 # the vouchers: code -> (name as the order summary, the receipt and the order emails show it, % off, package keys). The
 # offers' names say the price she pays, not the voucher's percentage: rounded down to the dollar, 40% off $39 is $23,

@@ -51,7 +51,7 @@ def store_once(bottles):
 # the store's own $47 is the honest one
 
 # the campaign's packages (the plan's keys, tools/funnel/apf/commerce.py): key -> ref
-PACKAGE = {'apf-1': 1, 'apf-2-gifts': 2, 'apf-3-gifts': 3, 'apf-2': 4, 'apf-6-brush': 5, 'brush-1': 6, 'apf-1-add': 7,
+PACKAGE = {'apf-1': 1, 'apf-2': 4, 'apf-6-brush': 5, 'brush-1': 6, 'apf-1-add': 7,
            'apf-3-blender': 8, 'apf-5-brush': 9}
 # the vouchers: code -> offer ref
 VOUCHER = {'APF10': 1, 'APF40': 2, 'APF50': 3, 'BRUSH40': 4, 'BRUSH60': 5}
