@@ -39,9 +39,14 @@ to campaign 2221 on 1 Nov (variant 335, SKF-APF-5-BRUSH) that the variant map di
 `window.__axonItemImage` → store default, and an unmapped SKU stands in for `item_variant_id`. A new bundle can no
 longer turn the event orange. `tools/funnel/axon_live_replay.cjs` is the browser replay used to check this.
 
+**Follow-up 5 (2 Nov 2026):** first live order through the fixed funnel (#101763, $33.97) showed purchase orange on
+`user_data`: email and phone were sent, but `user_id` (recommended) was missing because the store's customer ids are 3
+digits and AXON wants 6+. `user_id` is now `'sf-' + cyrb53(normalised email)` (14 hex), identical on every event and
+visit for the same shopper; a 6+ char customer id is used only when there is no email.
+
 **Files:** `sfa-axon-adapter-3194de.js` (patched) · `.orig.js` (live copy before the fix, for rollback) · `axon-adapter.test.mjs`
 
-**Test:** `npm run test:axon` → 17/17 pass on the patch; the original fails the 4 user_data tests.
+**Test:** `npm run test:axon` → 18/18 pass on the patch; the original fails the 4 user_data tests.
 
 **Deploy (single file, theme 34):**
 ```bash

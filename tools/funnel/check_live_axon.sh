@@ -14,6 +14,7 @@ for p in "${PAGES[@]}"; do
   js=$(curl -fsSL -m 30 "$url") || { echo "FAIL $p: adapter did not load ($url)"; bad=1; continue; }
   missing=()
   grep -q 'params.user_data = user' <<<"$js" || missing+=("user_data on purchase")
+  grep -q "'sf-' + hash53(" <<<"$js" || missing+=("user_id from email")
   grep -q 'categoryId(it.item_category) || fallbackCategoryId' <<<"$js" || missing+=("numeric item_category_id")
   grep -q 'IMAGE_BY_SKU_FAMILY' <<<"$js" || missing+=(".jpg image_url for every item")
   grep -q 'params.payment_type = paymentType(' <<<"$js" || missing+=("payment_type enum")

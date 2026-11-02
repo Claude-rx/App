@@ -656,7 +656,7 @@ _ax = (SITE / 'js' / 'axon.adapter.js').read_text(encoding='utf-8')
 if 'out.item_category_id = it.item_category;' in _ax or 'categoryId(it.item_category) || fallbackCategoryId' not in _ax:
     fail('all pages', 'axon.adapter.js sends the text item_category as item_category_id (Axon answers 400 to view_item, begin_checkout and purchase), or leaves items without the numeric fallback AXON requires')
 # AXON requires user_data on purchase: the adapter maps the SDK's user_properties (customer_email/phone/id)
-if 'params.user_data = user' not in _ax or 'up.customer_email' not in _ax:
+if 'params.user_data = user' not in _ax or 'up.customer_email' not in _ax or "'sf-' + hash53(" not in _ax:
     fail('all pages', 'axon.adapter.js does not send user_data on purchase (AXON flags it as required)')
 # AXON image_url must end in .png/.jpg/.jpeg; the SDK's .webp package thumbnails are mapped to the store JPGs
 if 'IMAGE_BY_VARIANT' not in _ax or 'IMAGE_RE.test(' not in _ax or 'IMAGE_BY_SKU_FAMILY' not in _ax:

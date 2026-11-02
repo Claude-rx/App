@@ -10,7 +10,8 @@
    SDK sends .webp thumbnails, so each variant maps to its store JPG. item_brand defaults to SKINOFAB, and user_data rides
    on every ecommerce event once the shopper is known. Keep it when re-syncing.
    SKINOFAB LOCAL PATCH (30 Oct 2026): payment_type is mapped to AXON's enum (credit_card / redeemable / deferred /
-   payment_on_delivery / wallet / other); the SDK sends labels like "Credit Card". Items without item_variant_id (an
+   payment_on_delivery / wallet / other); the SDK sends labels like "Credit Card". user_id is 'sf-' + a hash of the email
+   (store customer ids are 3 digits; AXON wants 6+). Items without item_variant_id (an
    upsell the SDK builds from the package) get it, and their image, from the SKU. Keep it when re-syncing. */
 /**
  * axon.adapter.js — AppLovin Axon adapter for next-forwarder-core.js (Route C, no GTM).
@@ -77,6 +78,20 @@
   var USER_DATA_EVENTS = { purchase: 1, begin_checkout: 1, add_payment_info: 1, view_item: 1, add_to_cart: 1,
     remove_from_cart: 1, view_cart: 1, subscribe: 1, login: 1, sign_up: 1, search: 1 };
 
+  // cyrb53: a fast, stable 53-bit string hash, as 14 hex characters. Not reversible to the email in practice.
+  function hash53(str) {
+    var h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+    for (var i = 0; i < str.length; i++) {
+      var ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    var n = 4294967296 * (2097151 & h2) + (h1 >>> 0);
+    return ('00000000000000' + n.toString(16)).slice(-14);
+  }
+
   function userData(evt) {
     if (window.__axonSendUserData === false || window.__axonSendUserData === 'false') return undefined;
     var up = (evt && evt.user_properties) || {};
@@ -85,8 +100,12 @@
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) out.email = email;
     var phone = typeof up.customer_phone === 'string' ? up.customer_phone.replace(/[\s()-]/g, '') : '';
     if (/^\+[1-9]\d{7,14}$/.test(phone)) out.phone = phone.slice(1);
+    // user_id: AXON wants a stable id of at least six characters (Pixel Helper marks it recommended on purchase). The
+    // store's customer ids are short (3 digits), so it is derived from the email the same way on every event and
+    // every visit: 'sf-' + a 53-bit hash of the normalised email. Without an email, a long-enough customer id is used.
     var id = up.customer_id !== undefined && up.customer_id !== null ? String(up.customer_id) : '';
-    if (id.length >= 6) out.user_id = id;
+    if (out.email) out.user_id = 'sf-' + hash53(out.email);
+    else if (id.length >= 6) out.user_id = id;
     return out.email || out.phone ? out : undefined;
   }
 

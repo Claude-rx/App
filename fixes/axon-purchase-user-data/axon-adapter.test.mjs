@@ -19,20 +19,22 @@ test('purchase carries user_data (the AppLovin error)', () => {
   adapter.send('purchase', ec, evt({ visitor_type: 'logged_in', customer_email: '  Jane.Doe@Example.COM ', customer_phone: '+18123158899', customer_id: '1234567' }));
   const [, name, p] = calls[0];
   assert.equal(name, 'purchase');
-  assert.deepEqual(p.user_data, { email: 'jane.doe@example.com', phone: '18123158899', user_id: '1234567' });
+  assert.deepEqual(p.user_data, { email: 'jane.doe@example.com', phone: '18123158899', user_id: p.user_data.user_id });
+  assert.match(p.user_data.user_id, /^sf-[0-9a-f]{14}$/);
   // Everything that already passed stays identical.
   assert.equal(p.transaction_id, '101614'); assert.equal(p.tax, 0); assert.equal(p.shipping, 0); assert.equal(p.value, 39);
   assert.equal(p.items[0].item_id, 'SKF-APF-1'); assert.equal(p.items[0].item_category_id, 2765);
 });
-test('short user ids and non-E.164 phones are left out', () => {
+test('non-E.164 phones are left out; a short store id gives way to the email-derived user_id', () => {
   const { calls, adapter } = load();
   adapter.send('purchase', ec, evt({ customer_email: 'a@b.co', customer_phone: '812-315-8899', customer_id: '5' }));
-  assert.deepEqual(calls[0][2].user_data, { email: 'a@b.co' });
+  assert.deepEqual(Object.keys(calls[0][2].user_data), ['email', 'user_id']);
+  assert.match(calls[0][2].user_data.user_id, /^sf-[0-9a-f]{14}$/);
 });
 test('phone alone is enough', () => {
   const { calls, adapter } = load();
   adapter.send('purchase', ec, evt({ customer_phone: '+447700900123' }));
-  assert.deepEqual(calls[0][2].user_data, { phone: '447700900123' });
+  assert.deepEqual(calls[0][2].user_data, { phone: '447700900123' });  // no email: no derived id
 });
 test('no identity -> no user_data key, event still sent', () => {
   const { calls, adapter } = load();
@@ -43,14 +45,15 @@ test('checkout events also carry user_data', () => {
   const { calls, adapter } = load();
   adapter.send('begin_checkout', ec, evt({ customer_email: 'x@y.com' }));
   adapter.send('add_payment_info', ec, evt({ customer_email: 'x@y.com' }));
-  assert.deepEqual(calls.map(c => c[2].user_data), [{ email: 'x@y.com' }, { email: 'x@y.com' }]);
+  assert.deepEqual(calls.map(c => c[2].user_data.email), ['x@y.com', 'x@y.com']);
+  assert.equal(calls[0][2].user_data.user_id, calls[1][2].user_data.user_id);
 });
 test('browse events carry user_data once the shopper is known; page_view stays bare', () => {
   const { calls, adapter } = load();
   adapter.send('view_item', ec, evt({ customer_email: 'x@y.com' }));
   adapter.send('add_to_cart', ec, evt({}));
   adapter.send('page_view', {}, evt({ customer_email: 'x@y.com' }));
-  assert.deepEqual(calls[0][2].user_data, { email: 'x@y.com' });
+  assert.equal(calls[0][2].user_data.email, 'x@y.com');
   assert.equal('user_data' in calls[1][2], false);
   assert.deepEqual(calls[2], ['track', 'page_view']);
 });
@@ -165,7 +168,8 @@ test('whole funnel passes AXON Pixel Helper: no errors, no warnings (all green)'
     assert.deepEqual(r, { errors: [], warnings: [] }, `${FLOW[i][0]} #${i}: ${JSON.stringify(r)}`);
   });
   const [, , purchase] = calls[4];
-  assert.deepEqual(purchase.user_data, { email: 'buyer@example.com', phone: '18123158899', user_id: '1234567' });
+  assert.deepEqual(Object.keys(purchase.user_data), ['email', 'phone', 'user_id']);
+  assert.equal(purchase.user_data.email, 'buyer@example.com');
   const [, , upsell] = calls[5];
   assert.equal(upsell.items[0].item_variant_id, '170');
   assert.equal(upsell.items[0].image_url, 'https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg');
@@ -205,4 +209,19 @@ test('a bundle added after the map was built still gets an image (live 2 Nov 202
     assert.equal(item.image_url.split('/').pop(), want, it.item_id);
     assert.deepEqual(validate(SCHEMA.view_item, calls[0][2]), { errors: [], warnings: [] }, it.item_id);
   }
+});
+
+test('live order #101763 (2 Nov 2026): 3-digit customer id still gives a 6+ char user_id, purchase all green', () => {
+  const { calls, adapter } = load();
+  const order = { currency: 'USD', value: 33.97, transaction_id: '101763', tax: 0, shipping: 0,
+    items: [{ item_id: 'SKF-APF-1', item_name: 'Adaptive Peptide Foundation - 1 bottle', price: 33.97, quantity: 1, item_variant_id: '15',
+      item_brand: 'SKINOFAB Adaptive Peptide Foundation Funnel', item_category: 'SKINOFAB Adaptive Peptide Foundation Funnel',
+      item_image: 'https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg' }] };
+  adapter.send('purchase', order, evt({ visitor_type: 'logged_in', customer_email: 'Shopper@Example.com', customer_phone: '+15125550100', customer_id: '417' }));
+  const p = calls[0][2];
+  assert.deepEqual(validate(SCHEMA.purchase, p), { errors: [], warnings: [] });
+  assert.ok(p.user_data.user_id.length >= 6);
+  // the same shopper gets the same id on every event and visit
+  adapter.send('view_item', order, evt({ customer_email: ' shopper@example.COM ' }));
+  assert.equal(calls[1][2].user_data.user_id, p.user_data.user_id);
 });
