@@ -43,6 +43,23 @@ Campaigns can be driven 100% by API once products exist (Shopify sync, or create
 Payment gateways, users and general settings still need **Dashboard → Settings**
 ([general settings & branding](https://docs.nextcommerce.com/docs/start-here/get-started/general-settings-and-branding)).
 
+## Clipcat — AI TikTok selling videos
+
+Skill: **`.claude/skills/clipcat/`** ([clipcat.ai](https://clipcat.ai), CLI v1.0.49). Ask in plain language, e.g.
+*"Make a 15s UGC video from these product photos"*, *"Replicate this viral TikTok with our serum"*,
+*"Find top-selling skincare videos this week"*, or invoke it directly with `/clipcat`.
+
+```bash
+npm run clipcat:setup    # installs the CLI to ~/.local/bin + saves the key from $CLIPCAT_API_KEY (idempotent)
+npm run clipcat:check    # exit 0 = CLI installed and API key configured
+npm run clipcat:update   # re-download the latest binary
+```
+
+- **API key:** add `CLIPCAT_API_KEY` as an **environment secret** (claude.ai → Code → environment settings).
+  Get one at https://clipcat.ai/workspace?modal=settings&tab=apikeys. Never commit it.
+- **Cloud sessions:** add `bash scripts/clipcat-setup.sh` to the environment's **setup script** so every session starts ready.
+- Generation spends Clipcat credits — check cost first with `clipcat quote` / `clipcat models`.
+
 ### Agent docs
 
 - https://campaigns.nextcommerce.com/ — campaign build guide (point your agent here)
