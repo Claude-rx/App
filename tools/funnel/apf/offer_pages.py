@@ -167,7 +167,9 @@ def head(pid, title, n_text, extra_scripts=(), extra_styles=()):
         'scripts:', '  - js/swiper-bundle.min.js', '  - js/upsells.js', '  - js/payment-logos.js', '  - js/sf-failsafe.js', '  - js/sf-offer-gate.js', '  - js/sf-offer-timer.js', '  - js/sf-apf.js', *[f'  - {s}' for s in extra_scripts],
         f'announcement_text: {q(n_text)}',
         'announcement_variant: dark',
-        'payment_flags:', '  show_affirm: false', '  show_afterpay: false',      # the campaign offers neither (the logos row reads the campaign; this keeps the fallback honest)
+        # no Affirm, Afterpay, Klarna or Link logo: every foundation pack renews (the owner, 1 Nov 2026); the platform kept
+        # Link enabled on the campaign, so the logo row leaves it out itself (live review 17)
+        'payment_flags:', '  show_affirm: false', '  show_afterpay: false', '  show_klarna: false', '  show_link: false',
         f'thank_you_url: {q(F.route("thank-you"))}',
         f'offer_url: {q(F.route("offer"))}',
     ]
@@ -212,7 +214,7 @@ def single_page(pid, spec, o):
     fm = head(pid, o['title'], o['announcement']) + [
         *([f'skip_skus: {q(o["skip_skus"])}'] if o.get('skip_skus') else []),
         *hero(o['eyebrow'], o['hero_title'], o['hero_text'], o['seconds'], pid, cta='accept', decline=o['decline']),
-        'upsell_layout:', '  style: card', '  boxed: true', f'  media: {"video" if brush else "carousel"}', '  media_position: right', f'  media_align: {"top" if brush else "center"}',   # the brush loop level with its text (a blank band sat above it at 1440, live review 4)
+        'upsell_layout:', '  style: card', '  boxed: true', f'  media: {"video" if brush else "carousel"}', '  media_position: right', '  media_align: top',   # the brush loop level with its text (a blank band sat above it at 1440, live review 4)
         '  show_bullets: true', '  show_ships_info: true', '  show_payment_logos: false', '  decline_position: below',   # no logo strip: the charge goes to the payment she just used
         *(['media_video:', *[f'  {k}: {q(v) if isinstance(v, str) else ("[" + ", ".join(q(x) for x in v) + "]") if isinstance(v, list) else str(v).lower()}' for k, v in BRUSH_VIDEO.items()]] if brush else []),
         'upsell_offer:', '  type: single', '  pricing_mode: discounted', f'  package_id: {tier["ref"]}',

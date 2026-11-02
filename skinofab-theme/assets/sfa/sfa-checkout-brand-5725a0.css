@@ -155,7 +155,7 @@
 .sf-co-ratings__rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
 .sf-co-ratings__rows li { display: grid; grid-template-columns: 34px 1fr 52px; gap: 10px; align-items: center; margin: 0; font-size: 14px; }
 .sf-co-ratings__rows i { display: block; height: 8px; border-radius: 4px; background: #dcdce6; overflow: hidden; }
-.sf-co-ratings__rows b { display: block; height: 100%; background: var(--brand--color--rating-star); }
+.sf-co-ratings__rows b { display: block; height: 100%; min-width: 3px; background: var(--brand--color--rating-star); }
 /* each bar in its row's Trustpilot colour */
 .sf-co-ratings__rows [data-s="4"] b { background: #73cf11; } .sf-co-ratings__rows [data-s="3"] b { background: #ffce00; }
 .sf-co-ratings__rows [data-s="2"] b { background: #ff8622; } .sf-co-ratings__rows [data-s="1"] b { background: #ff3722; }
@@ -200,7 +200,8 @@ label:has(> .checkbox__label), label:has(.checkbox__label) { min-height: 44px; d
   .sf-co-reviews .sf-co-review:nth-child(-n+3) { display: none; }
 }
 /* 44 px targets: the footer's legal links and every email link (20-24 px tall, live review 1) */
-.footer_legal-link, .footer_link-wrapper a { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 6px; }
+.footer_legal-link, .footer_link-wrapper a { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 6px; white-space: nowrap; }   /* no "Shipping / Policy" over two lines (live review 17) */
+.footer_link-wrapper { flex-wrap: wrap; }
 .footer_copy-info { align-items: center; }   /* the copyright beside the taller links, not above them (live review 3) */
 a[href^="mailto:"]:not(.sf-btn):not(.btn), .submit-section__disclaimer a, a.link { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 0; margin: -12px 0; }   /* a.link: the receipt's policy and Contact Us links too */   /* 44 px targets without a taller line box */
 /* a tablet: the columns no wider than a comfortable line of text */

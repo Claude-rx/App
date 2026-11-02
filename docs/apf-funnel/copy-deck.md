@@ -88,7 +88,7 @@ After 45 your tone shifts and your skin gets drier. The shade that matched at 40
 
 [TRUST: Free shipping; Ships in 1 business day; Secure checkout; 30-day money-back guarantee]
 
-Automatic Refills: your pack ships again at the same price until you cancel, 1 bottle every 28 days, 3 bottles every 84 days, 5 bottles every 140 days. The free bottles come in every refill: each one is the same pack at the same price. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
+Automatic Refills: your pack ships again at the same price until you cancel, 1 bottle every 28 days, 3 bottles every 84 days, 5 bottles every 140 days. The free bottles come in every refill: each one is the same pack at the same price. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
 
 ## 06 · State the Problem Clearly
 
@@ -194,7 +194,7 @@ A serum base with two forms of hyaluronic acid, ceramide NP, squalane and panthe
 
 > “Settles into my wrinkles.”
 
-A satin finish and soft-focus powders, designed not to settle into lines: they blur their look instead of filling them with pigment.
+A satin finish and soft-focus powders, designed not to settle into lines: the powders are made to blur their look rather than fill them with pigment.
 
 > “Stings my sensitive skin.”
 
@@ -332,7 +332,7 @@ We can promise this because of what 9,855 reviews say about it. Read them above,
 
 ### What is limited
 
-The free Lymphatic Brush is a launch gift: it comes with the 5-bottle pack while our launch stock lasts. When it runs out, the pack shows without it here and at the checkout, before you order. The foundation is formulated in Korea and made in batches, and a pack that sells out shows as sold out at the checkout rather than shipping late.
+The free Lymphatic Brush is a launch gift: it comes with the 5-bottle pack while our launch stock lasts. When it runs out, we change this page and the checkout before we take another order for that pack, so you see it before you order. The foundation is formulated in Korea and made in batches: if a pack runs out, we take it off the page rather than ship it late.
 
 ## 18 · Incorporate Customer Reviews with Images
 
@@ -380,7 +380,7 @@ It goes on white and its pigments shift toward your own tone as you blend, so th
 
 **Q: Will it settle into my fine lines like the others?**
 
-It is designed not to: the base is a satin serum, not a matte formula, and soft-focus powders blur the look of lines instead of filling them with pigment. Use one thin layer and skip powder on dry areas. Women in their 50s, 60s and 70s describe it that way in the reviews above.
+It is designed not to: the base is a satin serum, not a matte formula, and soft-focus powders are made to blur the look of lines rather than fill them with pigment. Use one thin layer and skip powder on dry areas. Women in their 50s, 60s and 70s describe it that way in the reviews above.
 
 **Q: My skin is very dry. Will it look patchy?**
 
@@ -404,7 +404,7 @@ No. We left SPF out on purpose so the formula can stay a light, hydrating serum.
 
 **Q: Is this a subscription?**
 
-Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send our ready-made email (<a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a>: it opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
+Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
 
 **Q: How long does a bottle last?**
 

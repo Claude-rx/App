@@ -918,3 +918,17 @@ http://127.0.0.1:<port>` serving `_site` (QA resolves the funnel under `/apf-fun
 The project holds one Build Packet at a time (`campaign-runtime.build.json` and `.campaign-runtime/` are written per
 `start`): the stick funnel's run is kept under `campaigns/skinofab/runs/stick-funnel/`; to run its lifecycle again,
 `start` it from its own spec, source and brief as `docs/stick-funnel.md` describes.
+
+**Live review 17 (2 Nov 2026), fixed the same day:** F1 (blocker) Link still showed at the checkout: the 1 Nov change
+removed Klarna and Link from campaign 2221 but the platform kept Link, so the checkout (`payment_methods` and
+`payment_flags` in `foundation-checkout.html`) and the offers (`offer_pages.py`) now leave out Link and Klarna
+themselves, radio and logo; F3 listicle reason 6 no longer asks "why wear a foundation that only sits on your skin?";
+F4 "to skip or cancel" now has two ready-made emails, "Skip my next refill" and "Cancel my refills"; F5 the launch
+stock box says what the team does (the page and checkout change before another order for the pack; a pack that runs
+out comes off the page), not that the checkout does it by itself (stock is untracked); F6 the settling answer is
+hedged to its end ("the powders are made to blur their look rather than fill them with pigment"); F7 the checkout's
+footer has Contact and its links no longer wrap, its 1- and 2-star bars show, and the offers' photo sits at the top
+of its panel from 992 px. Each has a gate in `check_apf.py`. Verified live at 390/768/1024/1440. **Open for the
+owner:** F2, the "how it goes on" clips and the four step photos are AI-made (the store labels the same footage
+"Illustrative videos made with AI models"); the funnel shows them as the product's demonstration with no label, by the
+owner's no-disclaimer decision. And Link on campaign 2221 itself (a second update, or the dashboard).

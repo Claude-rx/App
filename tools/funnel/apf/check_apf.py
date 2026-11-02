@@ -850,6 +850,23 @@ for p in F.PAGES:
     t = text(html(p['id']))
     for name, code in (('Klarna', 'klarna'), ('Link', 'link'), ('Affirm', 'affirm'), ('Afterpay', 'afterpay'), ('Apple Pay', 'apple_pay'), ('PayPal', 'paypal')):
         if re.search(r'\bpay with\b[^.]*\b' + name + r'\b', t, re.I) and code not in _pay: fail(p['id'], f'"pay with … {name}": the campaign does not offer it')
+# live review 17. F1: no Link or Klarna on any page, radio or logo (the owner turned both off on 1 Nov 2026; the platform
+# kept Link on campaign 2221, so the pages leave it out themselves). F3: nothing that implies it goes into the skin.
+# F4: "skip or cancel" offers a ready-made email for each. F5: no promise the platform does by itself what only a person
+# does (stock is untracked). F6: the settling answer hedged to its end. F7: the checkout's footer has Contact.
+for p in F.PAGES:
+    _h = html(p['id']); _t = text(_h)
+    for _code in ('link', 'klarna'):
+        if f'data-next-payment-method="{_code}"' in _h: fail(p['id'], f'a {_code} payment option (the owner turned it off)')
+        for _m in re.finditer(r'<img[^>]*data-payment-logo="' + _code + r'"[^>]*>', _h):
+            if 'data-payment-force="hide"' not in _m.group(0): fail(p['id'], f'a {_code} logo that can show')
+    if re.search(r'only sits? on (your |the )?skin', _t, re.I): fail(p['id'], '"only sits on your skin": implies it goes into the skin')
+    if 'to skip or cancel, send' in _t.lower() and ('subject=Skip%20my%20next%20refill' not in _h or 'subject=Cancel%20my%20Automatic%20Refills' not in _h):
+        fail(p['id'], '"skip or cancel" without a ready-made email for each')
+    if re.search(r'shows as sold out|shows without it here and at the checkout', _t, re.I): fail(p['id'], 'a sold-out promise the untracked stock cannot keep by itself')
+    if re.search(r'(?<!made to )blur[^.]{0,40}\binstead of filling', _t, re.I): fail(p['id'], 'unhedged: "blur … instead of filling" (made to blur … rather than fill)')
+if 'store_contact' not in (ROOT / 'campaigns/skinofab/src/apf-funnel/_includes/footer.html').read_text() or '>Contact</a>' not in html('checkout'):
+    fail('checkout', 'no Contact link in the footer')
 # one "From" price a bottle: the lowest a bottle of any pack ($19.99), never the 1-bottle price, which is the highest
 # (live review 14, F3: "From $33.97" in the top bar over "From $20.38 a bottle" in the offer box); "Packs from" names
 # the entry pack and is the only other "from" price. The pages before the order only: an offer's own one-time
