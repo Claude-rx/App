@@ -570,3 +570,9 @@ body:has([data-sf-sticky]) .sf-footer { padding-bottom: 150px; }
 
 /* the listicle's clips play by themselves, looping like a GIF (the owner, 2 Nov 2026): their line at the card's foot */
 .sf-vcard__chip--gif { position: absolute; left: 12px; bottom: 12px; right: 12px; width: max-content; max-width: calc(100% - 24px); z-index: 2; pointer-events: none; }
+
+/* the proof row's looping clip (the owner, 2 Nov 2026): it fills its picture box, a face in the frame; its pause button
+   (sf-apf.js) small enough for the box */
+.sf-proof__vis--video { position: relative; padding: 0; background: #111; }
+.sf-proof__vis--video video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.sf-proof__vis--video .sf-vpause { transform: scale(.82); transform-origin: top right; }

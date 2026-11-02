@@ -69,7 +69,7 @@ REVIEW_PHOTOS = {
 REVIEW_TRIM = {'susan': (0.15, 0.85, 0.30), 'virginia': (0.02, 0.92)}
 PDP_PHOTOS = {'g-hold': 'hold-cheek', 'g-dots': 'dots-eyes-closed', 'g-grey': 'hold-grey-hair',
               'g-inside': 'whats-inside', 'g-brush': 'buffing-brush',      # g-brush: offers 2 and 2b's gallery
-              'g-bottle': 'bottle-korea', 'problem': 'problem', 'solution': 'solution-bottle',
+              'problem': 'problem', 'solution': 'solution-bottle',
               'gift-blender': 'gift-blender', 'gift-mystery': 'gift-mystery', 'gift-shipping': 'gift-shipping'}
 # the demo clips (brand/videos/gj-<key>*.mp4): women 45+ with the real bottle; poster from the live page or a frame
 # (no demo-navy any more: its speaker is an AI model talking as a buyer, "I'll be buying this on repeat", which the
@@ -922,9 +922,11 @@ def drop_flag_caption(im):
 def copies(video=True):
     for name, src in PDP_PHOTOS.items():
         im = Image.open(PDP / f'{src}.jpg')
-        if name == 'g-bottle': im = drop_flag_caption(im)
         save(im, name, size=1080 if not name.startswith('gift') else 240)
     save(Image.open(APF / 'composites' / 'two-bottles.jpg'), 'two-bottles', size=1080)
+    # "Formulated by a K-beauty lab": the white studio packshot with its natural shadow and the flag alone
+    # (product_photos.studio_packshot; the store's old Korea shot had a grey box of a shadow, the owner, 2 Nov 2026)
+    save(Image.open(APF / 'packshot-studio-flag.jpg'), 'g-bottle', size=1080)
     # the brush: its page's images, in-hand and problem photos, the before/after it already shows (its own illustration
     # label is on the image) and the stick funnel's loop of it
     # (only the ones the brush page shows: its how-to infographic repeated the page's four steps, live review 5, and the

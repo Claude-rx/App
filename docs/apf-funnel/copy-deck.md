@@ -240,9 +240,9 @@ PDRN, peptides, niacinamide, hyaluronic acid
 
 A full refund, even opened. Nothing to send back.
 
-#### What we don’t claim
+#### See it go on
 
-No clinical study, no medical claim: it’s a foundation, not a treatment.
+One pump, buffed in: about a minute, no shade to guess.
 
 > “…it looks like skin, not something put on top! That’s why I ordered more” — Gillian S., 65
 

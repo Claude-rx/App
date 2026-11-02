@@ -942,4 +942,8 @@ note under the button are gone (the pack cards and the checkout state each pack'
 The listicle's two "how it goes on" clips play by themselves, silent and looping like a GIF, while on screen
 (`sf-vrow.html gif=true`), as its other loops do; each keeps a pause button, and under reduced motion they wait for a
 tap. The sales page's clip cards still play on a tap.
+Same day: the sales page's "Formulated by a K-beauty lab" picture is the white studio packshot with its natural shadow
+and the flag alone (`product_photos.studio_packshot(1080, 'packshot-studio-flag.jpg', caption=False)`, saved as
+`g-bottle` by `images.py`), in place of the store's old Korea shot and its grey box of a shadow; the proof row's
+"What we don't claim" card is a looping clip instead ("See it go on", `demo-black`, silent, with its pause button).
 

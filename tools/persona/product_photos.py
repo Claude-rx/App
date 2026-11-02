@@ -131,16 +131,16 @@ def icon(d, kind, cx, cy, r=24):
 BADGE_LINES = label_composite.ORIGIN_LINES
 
 
-def korea_badge(im, cx=948, cy=148):
+def korea_badge(im, cx=948, cy=148, caption=True):
     """The gallery's origin badge: the flag circle (cut from the foundation's hero photo) and "Formulated in Korea /
-    Advanced formula" under it."""
+    Advanced formula" under it (caption=False: the flag alone, where the page says it in text beside the picture)."""
     flag = Image.open(HERE / 'assets' / 'korea-badge.png').convert('RGBA')
     shadow = Image.new('L', im.size, 0)
     ImageDraw.Draw(shadow).ellipse((cx - 72, cy - 68, cx + 72, cy + 78), fill=55)
     im.paste((0, 0, 0), mask=shadow.filter(ImageFilter.GaussianBlur(9)))
     im.paste(flag, (cx - flag.width // 2, cy - flag.height // 2), flag)
     d = ImageDraw.Draw(im)
-    for k, line in enumerate(BADGE_LINES):
+    for k, line in enumerate(BADGE_LINES if caption else ()):
         d.text((cx, cy + 108 + k * 29), line, font=sans(23, 'Regular'), fill=INK, anchor='ms')
 
 
@@ -628,7 +628,7 @@ NEXT_BOLD = {'01-front.png': lambda a: label_fix.bold_line(a, (585, 1049, 668, 1
              '03-three-quarter-right.png': lambda a: label_fix.bold_line(a, (466, 1038, 566, 1072), '', 14)}
 
 
-def studio_packshot(size=1600, out_name='packshot-studio.jpg'):
+def studio_packshot(size=1600, out_name='packshot-studio.jpg', caption=True):
     """The foundation's first gallery slide, a packshot in the other products' style (the owner, 2 Nov 2026: "the same
     style of the other products, white bg and natural soft shadow"): the product sheet's front render (01-front.png,
     its print relabelled and correct, PDRN included) cut from its grey backdrop and set on pure white at the serum's
@@ -740,7 +740,7 @@ def studio_packshot(size=1600, out_name='packshot-studio.jpg'):
 
     # the origin badge, drawn on the gallery's own 1080 frame and brought to this size
     lay = Image.new('RGBA', (1080, 1080), (0, 0, 0, 0))
-    korea_badge(lay, 948, 148)
+    korea_badge(lay, 948, 148, caption=caption)
     lay = lay.resize((S, S), Image.LANCZOS)
     im.paste(lay, (0, 0), lay)
     im.save(FOUNDATION / out_name, quality=92, optimize=True, progressive=True)
@@ -753,6 +753,10 @@ def foundation():
     the brand's rule for any claim about lines). The other bottle is a blank,
     generic one (source/others.jpg): the old board's showed another brand's name."""
     studio_packshot()
+    # the funnel's sales page "Formulated by a K-beauty lab" picture: the same packshot, the flag alone (the pill beside
+    # it says "Formulated in Korea"; the caption was 6 px text on a phone, live review 11; the owner, 2 Nov 2026: the
+    # old store shot's grey box of a shadow replaced by this natural one)
+    studio_packshot(1080, 'packshot-studio-flag.jpg', caption=False)
     vs_others(FOUNDATION, '01-front', 'others', 'A basic foundation', [('One shade that', False), ('adapts to', False), ('your skin', True)],
               ['Adapts to\nskin tone', 'Hydrating\nserum base', 'Designed not\nto settle', 'Fragrance-free'],
               others_thresh=246, others_h=210)
