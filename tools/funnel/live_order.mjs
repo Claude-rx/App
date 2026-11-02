@@ -35,7 +35,7 @@ const [host, out] = process.argv.slice(2);
 const opt = (name, dflt) => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : dflt; };
 const FUNNELS = {
   stick: { listicle: '10-reasons-foundation-stick', sales: 'foundation-stick-offer', checkout: 'stick-checkout', pack: 'stick-2', first: 'stick-special-1', thankYou: 'stick-thank-you' },
-  apf: { listicle: '10-reasons-adaptive-foundation', sales: 'adaptive-foundation-offer', checkout: 'foundation-checkout', pack: 'apf-2', first: 'foundation-offer-1', thankYou: 'foundation-thank-you' },
+  apf: { listicle: '10-reasons-adaptive-foundation', sales: 'adaptive-foundation-offer', checkout: 'foundation-checkout', pack: 'apf-3', first: 'foundation-offer-1', thankYou: 'foundation-thank-you' },
 };
 const FN = FUNNELS[process.env.FUNNEL || 'stick'];
 const path = opt('--path', 'decline').split(',');

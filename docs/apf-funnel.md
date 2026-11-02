@@ -59,7 +59,13 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    on try.skinofab.com, `qa-live@skinofab.test`) and the AppLovin walks of 29 Oct: **101586, 101588, 101594**
    (101588 carries a doubled $150 line from the cart bug fixed that morning, see "AppLovin Axon"). The storefront's
    AppLovin proof is **101593** (`qa-live@example.com`, store checkout), and it started test subscription **100**:
-   cancel both. The stick funnel's are listed in `docs/stick-funnel.md`.
+   cancel both.
+   The pre-ads proof of 2 Nov 2026 is **101764** (`qa-live@skinofab.test`, flagged as a test): the 5-bottle pack
+   ($99.97) from the listicle's link and the sales page's button, offers 1 and 2 declined, the downsell's bottle ($15,
+   one-time) accepted, the brush offer passed on by its own rule (the pack has the brush), $114.97; it started test
+   subscription **134** (every 140 days): cancel both. Every AppLovin event fired (page_view, view_item, add_to_cart,
+   begin_checkout, add_payment_info, purchase $99.97, the downsell's purchase $15); the passed-on brush page also
+   sends a `view_item` before it moves on. The stick funnel's are listed in `docs/stick-funnel.md`.
    **To place a test order yourself,** use NEXT's test card **6011 1111 1111 1117**, CVV 123, any future expiry: it
    skips the gateway, charges nothing and flags the order as a test. Stripe's own test card (4242 4242 4242 4242)
    does not work here: the store's Stripe gateway is live, so Stripe refuses it and the checkout shows "There was a
