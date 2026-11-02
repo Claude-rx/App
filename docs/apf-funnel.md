@@ -9,7 +9,7 @@ A one-time-purchase funnel for the Adaptive Peptide Foundation (the liquid found
 | Page | Live URL | What it does |
 |---|---|---|
 | Listicle (entry) | https://try.skinofab.com/10-reasons-adaptive-foundation/ | "10 Reasons Why Women Over 45 Look Fresher With This 'Shade-Adapting' Foundation": the Facelove listicle's structure, this foundation's reasons, photos and reviews |
-| Sales page | https://try.skinofab.com/adaptive-foundation-offer/ | v2 (28 Oct 2026): hero promise ("Even, fresh skin in about a minute. No shade to guess.") with bullets and the wow image; the problem with emotional images; the root cause with an animated skin diagram; the root solution with the science loop; one pump instead of four products; the comparison table; feature badges; the ingredients; "Formulated in Korea" with the doctor image captioned as an illustration; the one-shade objection graphic; before/afters; proof; demo clips; green-star reviews; FAQ; the offer with the value stack, honest urgency and the pack chooser (`docs/apf-funnel/copy-deck.md`) |
+| Sales page | https://try.skinofab.com/adaptive-foundation-offer/ | v2 (28 Oct 2026): hero promise (since 2 Nov 2026, the owner's: "Over 45? Get your skin back in 60 seconds. Your shade, the instant you blend.", the button after the bullets and "From $19.99 a bottle" under it) with bullets and the wow image; the problem with emotional images; the root cause with an animated skin diagram; the root solution with the science loop; one pump instead of four products; the comparison table; feature badges; the ingredients; "Formulated in Korea" with the doctor image captioned as an illustration; the one-shade objection graphic; before/afters; proof; demo clips; green-star reviews; FAQ; the offer with the value stack, honest urgency and the pack chooser (`docs/apf-funnel/copy-deck.md`) |
 | Checkout | https://try.skinofab.com/foundation-checkout/ | v2: the form first (packs with their names and prices from the first paint, details, address, payment), the guarantee line and one-time terms by the order button, four badges under it, three green-star reviews after it on a phone, the proof column beside it on a computer; express PayPal / Apple Pay, Klarna, Link; exit pop APF10 (on a phone too) |
 | Offer 1 | https://try.skinofab.com/foundation-offer-1/ | "just for you, right now" with the honest 10-minute clock: supply cards, 2 bottles for $39 ("Add 1, get 1 FREE") or 6 for $99 ($16.50 a bottle) with a free Lymphatic Brush |
 | Offer 2 | https://try.skinofab.com/foundation-offer-2/ | one more bottle, 40% off ($23), 10-minute clock |
@@ -932,3 +932,14 @@ of its panel from 992 px. Each has a gate in `check_apf.py`. Verified live at 39
 owner:** F2, the "how it goes on" clips and the four step photos are AI-made (the store labels the same footage
 "Illustrative videos made with AI models"); the funnel shows them as the product's demonstration with no label, by the
 owner's no-disclaimer decision. And Link on campaign 2221 itself (a second update, or the dashboard).
+
+**The owner's hero and loops (2 Nov 2026):** the sales page's hero is now "Over 45? Get your skin back in 60 seconds.
+*Your shade, the instant you blend.*" with the sub "Dot it on white, blend, and watch it turn into your own tone:
+even, fresh, rested-looking skin before your coffee cools. No shade to guess, designed not to settle into lines.",
+written with the copywriting skill from the persona's own words; the button ("YES, GET MY SKIN BACK ↓") comes after
+the promise and the five bullets on every width, with "From $19.99 a bottle" large under it; the deal box and the price
+note under the button are gone (the pack cards and the checkout state each pack's renewal). The page title follows.
+The listicle's two "how it goes on" clips play by themselves, silent and looping like a GIF, while on screen
+(`sf-vrow.html gif=true`), as its other loops do; each keeps a pause button, and under reduced motion they wait for a
+tap. The sales page's clip cards still play on a tap.
+

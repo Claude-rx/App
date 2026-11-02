@@ -1,5 +1,5 @@
 ---
-title: "Adaptive Peptide Foundation | Even, fresh skin in about a minute, no shade to guess | SKINOFAB"
+title: "Adaptive Peptide Foundation | Over 45? Get your skin back in 60 seconds | SKINOFAB"
 description: "One adaptive shade in a hydrating serum base with PDRN and peptides, made for skin after 45. From $19.99 a bottle: buy 3, get 2 free with the Lymphatic Brush, or buy 2, get 1 free with a Blender sponge. Free shipping, 30-day money-back guarantee."
 page_layout: base-sf.html
 page_type: product
@@ -29,9 +29,10 @@ offer_bar_short: "Buy 3, get 2 FREE"
 # the FrontrowMD "Clinicians' Choice" badge under the hero (_includes/sf-frontrow.html): a floor of the live count
 frontrow_clinicians: "700+"
 hero:
-  eyebrow: "For skin after 45"
-  headline: "Even, fresh skin in about a minute. <em>No shade to guess.</em>"
-  sub: "The foundation that goes on white and shifts to your own skin tone, in a hydrating serum made for skin after 45."
+  # the owner's promise (2 Nov 2026): direct and emotional, the instant result first; the sub keeps it to how skin looks
+  eyebrow: "Adaptive Peptide Foundation · made for skin over 45"
+  headline: "Over 45? Get your skin back in 60 seconds. <em>Your shade, the instant you blend.</em>"
+  sub: "Dot it on white, blend, and watch it turn into your own tone: even, fresh, rested-looking skin before your coffee cools. No shade to guess, designed not to settle into lines."
   bullets:
     - "<strong>One adaptive shade.</strong> It blends into your tone, not a chart."
     - "<strong>Designed not to settle</strong> into fine lines."
@@ -39,12 +40,15 @@ hero:
     - "<strong>PDRN and peptides</strong> in every layer you wear."
     - "<strong>30-day money-back guarantee,</strong> even opened."
   trust: ["4.8 out of 5 from 9,855 published reviews at our earlier store", "Formulated in Korea", "Free shipping · skip or cancel refills any time"]
-  button: "CHOOSE MY PACK ↓"
+  button: "YES, GET MY SKIN BACK ↓"
+  # the lowest price a bottle, big, right under the button (the owner, 2 Nov 2026: "always show the low price"); the packs
+  # and their renewals are stated on the pack cards below and at the checkout
+  price: "From <strong>$19.99</strong> a bottle"
   # the owner's offer of 30 Oct 2026: 1 bottle $33.97; buy 2, get 1 free (3 bottles for 2 x $33.97, with a Blender
   # sponge); buy 3, get 2 free (5 bottles for 3 x $33.97, with the Lymphatic Brush). Both free-bottle claims are exact
   # against this page's own 1-bottle price, so they are true (live review 7, B1, was about a 2-pack that made them untrue)
-  deal: "<strong>Buy 3, get 2 FREE</strong> · $19.99 a bottle, with a free Lymphatic Brush"
-  note: "1 bottle $33.97, then $33.97 every 28 days · Or buy 2, get 1 FREE: 3 bottles $66.97 ($22.32 a bottle), then $66.97 every 84 days, with a free Blender sponge · Free shipping · Pay with card, PayPal or Apple Pay"
+  # the deal box and the price note under the button are gone (the owner, 2 Nov 2026: the hero is the promise, the
+  # benefits, the button and the low price)
   image: "images/sf/wow.jpg"
   image_alt: "A woman in her late fifties: white foundation dots on one side of her face, the other side blended into her own tone"
   video_label: "A woman in her late fifties with the foundation on white dots on one side of her face and blended into her tone on the other"
@@ -388,11 +392,12 @@ closing:
       <ul class="sf-hero2__bullets">{% for b in hero.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
       {% if hero.deal %}<p class="sf-hero2__deal">{{ hero.deal }}</p>{% endif %}
       <a class="sf-btn sf-btn--xl" href="#offer" data-sf-sticky-anchor>{{ hero.button }}</a>
+      {% if hero.price %}<p class="sf-hero2__price">{{ hero.price }}</p>{% endif %}
       <ul class="sf-trustline">
         <li>🇰🇷 {{ hero.trust[1] }}</li>
         <li>✓ {{ hero.trust[2] }}</li>
       </ul>
-      <p class="sf-hero2__note">{{ hero.note }}</p>
+      {% if hero.note %}<p class="sf-hero2__note">{{ hero.note }}</p>{% endif %}
       {% campaign_include 'sf-frontrow.html' count=frontrow_clinicians %}
     </div>
   </section>

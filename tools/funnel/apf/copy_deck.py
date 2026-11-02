@@ -63,7 +63,7 @@ def deck(fm):
     sec('01 · Hero Image or GIF',
         '[IMAGE: images/sf/hero.jpg — the hero collage: women over 45 with the real bottle, one with the foundation dotted white on her cheek before it blends, the SKINOFAB wordmark]',
         f"[VIDEO: images/sf/howto.mp4 (poster images/sf/howto-poster.jpg) — {hero['video_label']}]")
-    sec('02 · Headline', f"### {md(hero['headline'])}", hero['sub'], f"[TRUST: {'; '.join(hero['trust'])}]", cta(hero['button']), f"*{hero['note']}*")
+    sec('02 · Headline', f"### {md(hero['headline'])}", hero['sub'], f"[TRUST: {'; '.join(hero['trust'])}]", cta(hero['button']), f"*{hero.get('note') or hero.get('price', '')}*")
     sec('03 · Summary', fm['summary'])
     sec('04 · Key Benefits with Guarantee', '### Why women over 45 keep this one', *[f'- {md(b)}' for b in fm['benefits']],
         f"[GUARANTEE: {g['title']} — {md(g['short'])}]")
