@@ -284,3 +284,24 @@ body.sf { margin: 0; background: var(--paper); color: var(--text); font: 400 17p
   .sf-cta__copy { order: 0; }
 }
 .sf-reason:has(.sf-video-row) .sf-reason__media { position: static; }   /* (a sticky photo would slide over the video row) */
+
+/* every rating in Trustpilot's look and colours, exact (the owner, 2 Nov 2026): a white star in a square box, the lit
+   boxes in the rating's colour (5 #00b67a, 4 #73cf11, 3 #ffce00, 2 #ff8622, 1 #ff3722: sf-stars.html marks them .t4 to
+   .t1), the unlit #dcdce6, each rating bar in its row's colour; no review site's name or logo */
+:root { --sf-star: #00b67a; --sf-star-off: #dcdce6; }
+.sf-tp__stars { display: inline-flex; gap: 3px; vertical-align: middle; flex: none; }
+.sf-tp__stars i { --tp: var(--sf-star); width: 22px; height: 22px; background: var(--tp); display: grid; place-items: center; font-style: normal; }
+.sf-tp__stars i::before { content: '★'; color: #fff; font-size: 15px; line-height: 1; }
+.sf-tp__stars i.t4 { --tp: #73cf11; } .sf-tp__stars i.t3 { --tp: #ffce00; } .sf-tp__stars i.t2 { --tp: #ff8622; } .sf-tp__stars i.t1 { --tp: #ff3722; }
+.sf-tp__stars i.off { background: var(--sf-star-off); }
+.sf-tp__stars i.part { background: linear-gradient(90deg, var(--tp) 0 var(--p, 80%), var(--sf-star-off) var(--p, 80%)); }
+.sf-tp__stars--sm { display: flex; justify-content: center; margin: 2px 0 8px !important; }
+.sf-tp__stars--sm i { width: 20px; height: 20px; }
+.sf-tp__stars--sm i::before { font-size: 14px; }
+.sf-tp__stars--lg { display: flex; justify-content: center; margin: 8px 0 !important; }
+.sf-tp__stars--lg i { width: 30px; height: 30px; }
+.sf-tp__stars--lg i::before { font-size: 21px; }
+.sf-ratings__rows i { background: var(--sf-star-off); }
+.sf-ratings__rows b { background: var(--sf-star); }
+.sf-ratings__rows [data-s="4"] b { background: #73cf11; } .sf-ratings__rows [data-s="3"] b { background: #ffce00; }
+.sf-ratings__rows [data-s="2"] b { background: #ff8622; } .sf-ratings__rows [data-s="1"] b { background: #ff3722; }

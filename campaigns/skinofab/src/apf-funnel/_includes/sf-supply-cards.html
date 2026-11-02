@@ -28,7 +28,7 @@
           <p class="sf-supply__deal">{{ t.deal }}</p>
           {%- if t.gift and t.gift != '' %}<p class="sf-supply__gift">+ {{ t.gift }}</p>{% endif %}
           <p class="sf-supply__perday">{{ t.per_day }}<small>{{ t.per_bottle }}</small></p>
-          <p class="sf-supply__stars"><span class="sf-co-tp sf-co-tp--sm" role="img" aria-label="4.8 out of 5">{% campaign_include 'sf-stars.html' n=5 %}</span> 4.8 · 9,855 reviews, earlier store</p>
+          <p class="sf-supply__stars"><span class="sf-co-tp sf-co-tp--sm" role="img" aria-label="4.8 out of 5">{% campaign_include 'sf-stars.html' n=4.8 %}</span> 4.8 · 9,855 reviews, earlier store</p>
           <p class="sf-supply__price"><s>{{ t.compare }}</s> <strong><span data-next-bundle-display="price">{{ t.price }}</span></strong></p>
           {%- if t.compare_note %}<p class="sf-supply__was">{{ t.compare_note }}: {{ t.compare }}</p>{% endif %}
           <button type="button" class="button cc-xl sf-supply__buy" data-next-upsell-action="add" data-sf-supply-buy>{{ t.button }}</button>

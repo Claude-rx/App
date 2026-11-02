@@ -154,6 +154,7 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    block, inherited from the original store: keep it only with the survey's source in hand, otherwise remove it.
 17. **Kept on purpose (the owner's decisions):** the black, centred stars on the sales hero and the checkout's top
    rating (live review 11 suggested left-aligning the hero's row).
+   Every other rating is Trustpilot's boxes in Trustpilot's exact colours since 2 Nov 2026 (`docs/reviews.md`).
 
 ## AppLovin Axon
 
@@ -710,8 +711,8 @@ broken image or overflow; `r7-fixes.mjs` in the session's scratchpad checks each
 - **Store claims** (M1, M2): the sales page's why-now line says only what is true of the store (no 3-bottle pack, no
   pack with the Lymphatic Brush, one bottle $47 bought once); the brush offer quotes "$24.95 in our store" instead of
   "Not sold in our store"; offer 1 says "These prices are only here" with the store's own prices beside them.
-- **Rating badges** (M4): no Trustpilot green or "Excellent" label; the stars are the brand's black (`--sf-star`) and
-  the label reads "Rated". The 2-bottle packs say "2 months' supply", not "Most popular" (minor 12).
+- **Rating badges** (M4, superseded on 29 Oct and 2 Nov 2026 by the owner: Trustpilot's boxes and exact colours,
+  `docs/reviews.md`): no review site's name or logo; the label reads "Rated". The 2-bottle packs say "2 months' supply", not "Most popular" (minor 12).
 - **Offer 1's hero** (minor 2) is its accept button ("YES, ADD 2 BOTTLES · $39", which presses the 2-bottle card's
   own buy button, `sf-supply.js`), with a link down to the 6-bottle pack; it sits inside the first screen at 375x667.
 - **Checkout** (minors 3, 15): the exit pop needs a flick in the top 60 % of the screen with no field focused or

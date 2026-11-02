@@ -1101,6 +1101,12 @@ def home_original():
     home = DST / 'index.html'
     t = home.read_text(encoding='utf-8', errors='surrogateescape')
     done = {}
+    # the hero's rating (the design's five black stars, "9,800+ verified reviews") in Trustpilot's boxes, lit to the
+    # imported reviews' 4.8 (the owner, 2 Nov 2026)
+    t, k = re.subn(r'<div class="fh-rating"><img alt="" height="18" src="[^"]+" width="89"/>',
+                   lambda m: ('<div class="fh-rating"><style>' + SHELF_TP_CSS + '.fh-rating .sf-tp-mini i{width:18px;height:18px}</style>'
+                              + shelf_tp(4.8)), t, count=1)
+    done['hero stars'] = k
     def style(sec, css):
         return re.subn(r'</style>', css + '</style>', sec, count=1)
     def section(key):
@@ -1348,8 +1354,13 @@ def home_original():
         sec, k = style(t[a:b], (
             '@media(min-width:750px) and (max-width:1023px){.fh-shelf .fh-product{flex-basis:calc((100% - 2*var(--fh-gap,16px))/2.6)}}'
             '.fh-badges{flex-wrap:wrap;justify-content:flex-end;left:12px;right:12px;top:12px;gap:6px}.fh-badges>span{white-space:nowrap}'
-            '.fh-product-rating{min-width:0;overflow:hidden}.fh-product-rating>span:last-child{overflow:hidden;text-overflow:ellipsis}'))
-        t = t[:a] + sec + t[b:]; done['shelf tablets'] = k
+            '.fh-product-rating{min-width:0;overflow:hidden}.fh-product-rating>span:last-child{overflow:hidden;text-overflow:ellipsis}'
+            + SHELF_TP_CSS))
+        # the cards' star picture (the design's five black stars) as Trustpilot's boxes, lit to the card's own rating
+        sec2 = re.sub(r'<div class="fh-product-rating"><img alt="" height="16" src="[^"]+" width="80"/><span>([\d.]+) ',
+                      lambda m: f'<div class="fh-product-rating">{shelf_tp(float(m.group(1)))}<span>{m.group(1)} ', t[a:b])
+        k = k and sec2 != t[a:b]
+        t = t[:a] + sec2 + t[b:]; done['shelf tablets'] = k
     # ---- "Firmer-looking skin" (the serum's story): two columns from 750 px, the card fixed at 519 px; at tablet
     # widths its copy wraps taller than that and the button was cut off at the card's foot: the card grows with it
     a, b = section('__serum')
@@ -2236,6 +2247,27 @@ def gift_includes():
 
 STAR = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
         '<path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
+# every rating on the store in Trustpilot's look and colours, exact (the owner, 2 Nov 2026): a white star in a square
+# box, the lit boxes in the rating's colour (5 #00b67a, 4 #73cf11, 3 #ffce00, 2 #ff8622, 1 #ff3722; apf_copy.TP_COLORS),
+# the unlit #dcdce6; a fraction lights part of a box; no review site's name or logo
+TP_RATING_CSS = ('.sf-rating{display:inline-flex;align-items:center;gap:10px;color:#151515;font-size:17px;line-height:1}'
+                 '.sf-rating__stars{display:inline-flex;gap:3px;--tp:#00b67a}'
+                 '.sf-rating__stars.sf-tp-t4{--tp:#73cf11}.sf-rating__stars.sf-tp-t3{--tp:#ffce00}'
+                 '.sf-rating__stars.sf-tp-t2{--tp:#ff8622}.sf-rating__stars.sf-tp-t1{--tp:#ff3722}'
+                 '.sf-star{position:relative;display:inline-block;flex:none;width:22px;height:22px;color:#fff;'
+                 'background:linear-gradient(90deg,var(--tp) var(--f),#dcdce6 var(--f))}'
+                 '.sf-star svg{position:absolute;width:72%;height:72%;left:14%;top:14%}'
+                 # the PDP's testimonial cards (five-star quotes): the design's five outline stars as the same boxes
+                 '.skinofab-testimonials__stars{gap:2px!important}'
+                 '.skinofab-testimonials__stars svg{box-sizing:border-box;width:18px!important;height:18px!important;'
+                 'padding:3px;background:#00b67a;color:#fff;fill:#fff}'
+                 '.skinofab-testimonials__stars svg path{fill:#fff!important;stroke:none!important}')
+
+
+def tp_tier_class(v):
+    t = apf_copy.tp_tier(v)
+    return f' sf-tp-t{t}' if t < 5 else ''
+
 
 def rating_block(t, real=None):
     """The design's Loox rating badge renders nothing without Loox (a Shopify app): the same stars, color and text
@@ -2250,19 +2282,13 @@ def rating_block(t, real=None):
     if real:
         rating = round(float(real['average']), 1)
         text = f"{rating:g}/5 ({int(real['count']):,} reviews)"
-    color = attr('data-color-star') or '#000000'
-    stars = ''
-    for i in range(5):
-        fill = max(0.0, min(1.0, round((rating - i) * 2) / 2))   # half stars, as Loox draws them
-        stars += (f'<span class="sf-star" style="--f:{int(fill * 100)}%">{STAR}{STAR}</span>')
-    block = (f'<span class="sf-rating" style="--sf-star:{html.escape(color)}">'
-             f'<span class="sf-rating__stars" role="img" aria-label="Rated {rating:g} out of 5">{stars}</span>'
+    # each box lit to the rating's own share (4.8: the fifth 80 %, as the wall and the strip below)
+    stars = ''.join(f'<span class="sf-star" style="--f:{round(max(0.0, min(1.0, rating - i)) * 100)}%">{STAR}</span>'
+                    for i in range(5))
+    block = (f'<span class="sf-rating">'
+             f'<span class="sf-rating__stars{tp_tier_class(rating)}" role="img" aria-label="Rated {rating:g} out of 5">{stars}</span>'
              f'<span class="sf-rating__text">{html.escape(text)}</span></span>'
-             '<style>.sf-rating{display:inline-flex;align-items:center;gap:10px;color:#151515;font-size:17px;line-height:1}'
-             '.sf-rating__stars{display:inline-flex;gap:2px}'
-             '.sf-star{position:relative;display:inline-block;width:20px;height:20px;color:#d8d8d8}'
-             '.sf-star svg{position:absolute;left:0;top:0}'
-             '.sf-star svg+svg{color:var(--sf-star);clip-path:inset(0 calc(100% - var(--f)) 0 0)}</style>')
+             f'<style>{TP_RATING_CSS}</style>')
     t = t.replace(tag, block, 1)
     # the badge scrolls to the reviews
     t = re.sub(r'<a aria-label="Scroll to reviews">', '<a aria-label="Scroll to reviews" href="#sf-reviews" style="text-decoration:none">', t, count=1)
@@ -2388,17 +2414,13 @@ def brush_rating(imported=None, of=None):
     # until the script ran, it pushed the title down when it appeared (review 7)
     avg0 = s0 / n0 if n0 else 0
     fill = lambda i: round(max(0, min(1, avg0 - i)) * 100) if n0 else 100     # 4.8: the fifth star 80 % (stick review 9)
-    stars = ''.join(f'<span class="sf-star" style="--f:{fill(i):g}%">{STAR}{STAR}</span>' for i in range(5))
+    stars = ''.join(f'<span class="sf-star" style="--f:{fill(i):g}%">{STAR}</span>' for i in range(5))
     text0 = f'{avg0:.1f}/5 · {n0:,} review{"" if n0 == 1 else "s"}' + (f' {of}' if of else '') if n0 else ''
     return (f'<a class="sfb-rating" href="#sf-review-wall" data-sfb-rating{"" if n0 else " hidden"} style="text-decoration:none">'
-            f'<span class="sf-rating" style="--sf-star:#000000"><span class="sf-rating__stars" role="img"'
+            f'<span class="sf-rating"><span class="sf-rating__stars{tp_tier_class(avg0) if n0 else ""}" role="img"'
             f'{f" aria-label=\"Rated {avg0:.1f} out of 5\"" if n0 else ""}>{stars}</span>'
             f'<span class="sf-rating__text">{html.escape(text0)}</span></span></a>'
-            '<style>.sfb-rating[hidden]{display:none}.sf-rating{display:inline-flex;align-items:center;gap:10px;color:#151515;font-size:17px;line-height:1}'
-            '.sf-rating__stars{display:inline-flex;gap:2px}'
-            '.sf-star{position:relative;display:inline-block;width:20px;height:20px;color:#d8d8d8}'
-            '.sf-star svg{position:absolute;left:0;top:0}'
-            '.sf-star svg+svg{color:var(--sf-star);clip-path:inset(0 calc(100% - var(--f)) 0 0)}'
+            f'<style>.sfb-rating[hidden]{{display:none}}{TP_RATING_CSS}'
             # a phone: the count under the stars, on its own line, sat on the title (their lines overlapped by 8 px,
             # stick review 8); here, in the buy box, so it holds from the first paint
             '@media(max-width:599px){.sfb-rating .sf-rating__text{line-height:1.3}.sfb-rating{margin-bottom:10px!important}}</style>'
@@ -2413,7 +2435,9 @@ def brush_rating(imported=None, of=None):
             'var avg = sum / n;'
             'Array.prototype.forEach.call(badge.querySelectorAll(".sf-star"), function (s, i) {'
             's.style.setProperty("--f", Math.round(Math.max(0, Math.min(1, avg - i)) * 100) + "%"); });'   # 4.8: 80 % (stick review 10)
-            'badge.querySelector(".sf-rating__stars").setAttribute("aria-label", "Rated " + avg.toFixed(1) + " out of 5");'
+            'var st = badge.querySelector(".sf-rating__stars"), t = avg >= 4.3 ? 5 : avg >= 3.8 ? 4 : avg >= 2.8 ? 3 : avg >= 1.8 ? 2 : 1;'
+            'st.className = "sf-rating__stars" + (t < 5 ? " sf-tp-t" + t : "");'   # Trustpilot's colour for the new average
+            'st.setAttribute("aria-label", "Rated " + avg.toFixed(1) + " out of 5");'
             'badge.querySelector(".sf-rating__text").textContent = avg.toFixed(1) + "/5 \\u00b7 " + n.toLocaleString("en-US") + " review" + (n === 1 ? "" : "s")'
             + (f' + {json.dumps(" " + of)}' if of else '') + ';'
             'badge.hidden = false; }'
@@ -2558,19 +2582,14 @@ def product_page(base, P, final, found=None):
     app = prod.select_one('.product__block.standard__app')
     borrow = getattr(P, 'BORROW_REVIEWS', None) if not stats and found else None
     app.clear(); app.append(frag(brush_rating(found['summary'], of=borrow['badge']) if borrow else brush_rating(stats)))
-    # P.REVIEW_STARS: the page's stars as colored boxes, in the buy box's rating as in the review strip and wall
-    # (their --sf-tp, apf_copy)
+    # the stars are Trustpilot's boxes on every page now (TP_RATING_CSS, the owner, 2 Nov 2026); P.REVIEW_STARS
+    # still colours the wall's "Verified buyer" tick (--sf-tp, apf_copy)
     if getattr(P, 'REVIEW_STARS', None):
-        app.insert(0, frag(f'<style>:root{{--sf-tp:{P.REVIEW_STARS}}}'
-                        '.sfb-rating .sf-rating__stars{gap:3px}'
-                        '.sfb-rating .sf-star{width:22px;height:22px;color:#fff;'
-                        'background:linear-gradient(90deg,var(--sf-tp) var(--f),#dcdce6 var(--f))}'
-                        '.sfb-rating .sf-star svg{width:72%;height:72%;left:14%;top:14%}'
-                        '.sfb-rating .sf-star svg+svg{display:none}'
-                        # on a phone the stars on one line, the words under them, not wrapped beside them (stick
-                        # review 4); here, beside the rating, so it holds from the first paint (in the page's last
-                        # style block it moved the title down once loaded)
-                        '@media (max-width:599px){.sfb-rating .sf-rating{flex-wrap:wrap;row-gap:4px}.sfb-rating .sf-rating__text{flex-basis:100%}}</style>'))
+        app.insert(0, frag(f'<style>:root{{--sf-tp:{P.REVIEW_STARS}}}</style>'))
+    # on a phone the stars on one line, the words under them, not wrapped beside them (stick review 4); here, beside
+    # the rating, so it holds from the first paint (in the page's last style block it moved the title down once loaded)
+    app.insert(0, frag('<style>@media (max-width:599px){.sfb-rating .sf-rating{flex-wrap:wrap;row-gap:4px}'
+                       '.sfb-rating .sf-rating__text{flex-basis:100%}}</style>'))
     # the foundation's FrontrowMD listing (P.FRONTROW_NOTE: the owner's same-product word): a box under the
     # add-to-cart button (added there, below), the line naming whose listing it is first, then the sticker
     # (on the stick's own photo it read as the stick's listing and hid its white tip, stick review 2; under the title
@@ -2759,6 +2778,16 @@ SHIELD = ('<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fi
           'stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6z"/>'
           '<path d="M8.5 12l2.5 2.5 4.5-5"/></svg>')
 
+SHELF_TP_CSS = ('.sf-tp-mini{display:inline-flex;flex:none;gap:2px;--tp:#00b67a}.sf-tp-mini.sf-tp-t4{--tp:#73cf11}'
+                '.sf-tp-mini.sf-tp-t3{--tp:#ffce00}.sf-tp-mini.sf-tp-t2{--tp:#ff8622}.sf-tp-mini.sf-tp-t1{--tp:#ff3722}'
+                '.sf-tp-mini i{display:inline-grid;place-items:center;width:16px;height:16px;color:#fff;'
+                'background:linear-gradient(90deg,var(--tp) var(--f),#dcdce6 var(--f))}.sf-tp-mini svg{width:72%;height:72%}')
+
+def shelf_tp(v):
+    """A shelf card's stars: five 16 px Trustpilot boxes lit to the rating's own share (SHELF_TP_CSS)."""
+    return (f'<span class="sf-tp-mini{tp_tier_class(v)}" aria-hidden="true">'
+            + ''.join(f'<i style="--f:{round(max(0.0, min(1.0, v - i)) * 100)}%">{STAR}</i>' for i in range(5)) + '</span>')
+
 def shelf_rating(P, home):
     """The rating row every shelf card has, in the same place as the foundation's: P's stars and count once it has
     real reviews (<work_dir>/<P.REVIEWS_DIR>/reviews.json, imported from its review app), else what is true today:
@@ -2766,9 +2795,7 @@ def shelf_rating(P, home):
     data = WORK / P.REVIEWS_DIR / 'reviews.json'
     summary = json.loads(data.read_text()).get('summary') if data.exists() else None
     if summary and int(summary.get('count') or 0):
-        stars = re.search(r'<div class="fh-product-rating"><img alt="" height="16" src="([^"]+)"', home)
-        img = f'<img alt="" height="16" src="{stars.group(1)}" width="80"/>' if stars else ''
-        return (f'<div class="fh-product-rating">{img}<span>{float(summary["average"]):.1f} '
+        return (f'<div class="fh-product-rating">{shelf_tp(float(summary["average"]))}<span>{float(summary["average"]):.1f} '
                 f'({int(summary["count"]):,} review{"s" if int(summary["count"]) != 1 else ""})</span></div>')
     # short enough for a quarter of a 1024 px row (the longer "30-day money-back guarantee" ended in an ellipsis)
     return f'<div class="fh-product-rating">{SHIELD}<span>New · 30-day guarantee</span></div>'
@@ -3028,7 +3055,7 @@ STICKY_CSS = """
 .sf-sticky__txt{flex:1;min-width:0;line-height:1.3;color:#151515}
 .sf-sticky__txt b{display:block;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sf-sticky__txt span{font-size:13.5px;color:#3b3b3b}
-.sf-sticky__txt i{font-style:normal;color:#151515;letter-spacing:1px}
+.sf-sticky__txt i{display:inline-grid;place-items:center;width:15px;height:15px;margin:0 1px 0 2px;vertical-align:-2px;background:#00b67a;color:#fff;font-style:normal;font-size:11px;line-height:1}
 .sf-sticky__btn{flex:none;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;border-radius:999px;background:#151515;
  color:#fff!important;text-decoration:none!important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 @media (max-width:599px){.sf-sticky__txt b{font-size:14px}.sf-sticky__btn{padding:13px 18px;font-size:12px}}

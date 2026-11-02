@@ -629,13 +629,12 @@ NEXT_BOLD = {'01-front.png': lambda a: label_fix.bold_line(a, (585, 1049, 668, 1
 
 
 def studio_packshot(size=1600, out_name='packshot-studio.jpg'):
-    """The foundation's first gallery slide, a studio packshot (the owner, 2 Nov 2026: "better shadow, more real,
-    realistic studio image"): the product sheet's front render (01-front.png, its print relabelled and correct, PDRN
-    included) cut from its grey backdrop and set on a seamless off-white sweep, lit from the upper left. The shadows
-    are built as a studio's fall: a near-black contact line where the base meets the floor, a soft occlusion pool
-    around it, and the bottle's own silhouette cast back and to the right along the floor, sharp at the base and
-    softer and lighter with distance. The origin badge as on the other slides, at the same place for the frame.
-    Writes <FOUNDATION>/<out_name> (size x size)."""
+    """The foundation's first gallery slide, a packshot in the other products' style (the owner, 2 Nov 2026: "the same
+    style of the other products, white bg and natural soft shadow"): the product sheet's front render (01-front.png,
+    its print relabelled and correct, PDRN included) cut from its grey backdrop and set on pure white at the serum's
+    scale and baseline, with the serum slide's soft shadow: a dark contact crease, a short pool under the base and a
+    soft fall to the back right, all a neutral grey, white again 30 px (at 1024) under the base. The origin badge as on
+    the other slides, at the same place for the frame. Writes <FOUNDATION>/<out_name> (size x size)."""
     from scipy import ndimage
     src = np.asarray(Image.open(FOUNDATION / '01-front.png').convert('RGB')).astype(np.float32)
     H0, W0 = src.shape[:2]
@@ -687,78 +686,57 @@ def studio_packshot(size=1600, out_name='packshot-studio.jpg'):
     bottle = np.dstack([fg, alpha * 255])[y0:base + 1, x0:x1]
     bw, bh = bottle.shape[1], bottle.shape[0]
 
-    # the sweep: a warm off-white, the wall a touch darker at the top, the floor lightest toward the camera, no seam
+    # the frame as the other products' first slides (the serum's, the balm's, the stick's, the brush's): pure white
+    # (255 to the corners), the bottle 87.6 % of the height, centred, its base at 92.6 % (the owner, 2 Nov 2026:
+    # "the same style of the other products, white bg and natural soft shadow")
     S = size
     yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
-    t = np.clip((yy / S - 0.18) / 0.82, 0, 1) ** 0.85
-    wall, floor = np.array([238, 236, 233], np.float32), np.array([252, 251, 249], np.float32)
-    bg = wall * (1 - t[..., None]) + floor * t[..., None]
-    glow = np.exp(-(((xx - S * 0.42) / (S * 0.55)) ** 2 + ((yy - S * 0.40) / (S * 0.50)) ** 2))   # the key's spill, upper left
-    bg += glow[..., None] * np.array([7, 7, 6], np.float32)
-    vign = np.hypot((xx - S / 2) / S, (yy - S * 0.55) / S)
-    bg *= (1 - 0.06 * np.clip(vign / 0.7, 0, 1) ** 2)[..., None]
-
-    # the bottle in the frame: 68 % of the height, centred, its base at 86 %
-    k = (S * 0.68) / bh
+    bg = np.full((S, S, 3), 255.0, np.float32)
+    k = (S * 0.876) / bh
     bim = Image.fromarray(bottle.clip(0, 255).astype(np.uint8), 'RGBA').resize((round(bw * k), round(bh * k)), Image.LANCZOS)
     w, h = bim.size
-    cx, by = S // 2, int(S * 0.86)
+    cx, by = S // 2, int(S * 0.926)
     left, top = cx - w // 2, by - h
     m = np.zeros((S, S), np.float32); m[top:top + h, left:left + w] = np.asarray(bim)[..., 3] / 255.0
 
-    # the base, as the camera sees it: an ellipse's front arc (the lowest edge of the silhouette in each column)
+    # the base as the camera sees it: the lowest edge of the silhouette in each column (an ellipse's front arc)
     cols = np.nonzero(m.max(0) > 0.5)[0]
     yb = np.array([np.nonzero(m[:, x] > 0.5)[0].max() for x in cols])
-    rim = by - yb.min()                                                         # how far the arc rises at the sides
     depth = max(6, 2 * (yb.max() - yb[[0, -1]].mean()))                        # the base ellipse's height on screen
     ey = yb.max() - depth / 2                                                   # its centre line
+
+    # the shadow, measured off the serum's slide (at 1024: 172 at the contact, 229 six px under, white 30 px down; a
+    # soft fall to the back right, ~216 beside the bottle, gone 80 px out): three soft layers, a neutral grey
+    def ell(cx_, cy_, rx, ry, blur):
+        im_ = Image.new('L', (S, S), 0)
+        ImageDraw.Draw(im_).ellipse((cx_ - rx, cy_ - ry, cx_ + rx, cy_ + ry), fill=255)
+        return ndimage.gaussian_filter(np.asarray(im_, np.float32) / 255, blur)
+    u = S / 1024.0
     shade = np.zeros((S, S), np.float32)
-    # 1. contact: a near-black crease along the arc where the bottle sits on the paper, fading at the sides
+    # 1. contact: a dark crease along the front arc where the bottle meets the floor, fading at the sides
     cont = np.zeros((S, S), np.float32)
     span = (cols - cols[0]) / max(1, cols[-1] - cols[0])
-    for x, y, f in zip(cols, yb, np.sin(np.pi * span) ** 0.5):
-        cont[y - 1:y + 4, x] = f
-    shade = np.maximum(shade, np.clip(ndimage.gaussian_filter(cont, (0.0016 * S, 0.004 * S)) * 1.6, 0, 1) * 0.78)
-    # 2. occlusion: the paper under and round the base darkened where the bottle hides the sky (tight, then a wide pool)
-    for wk, hk, op, blur in ((0.56, 0.62, 0.50, 0.010), (0.82, 1.3, 0.24, 0.030)):
-        occ = np.zeros((S, S), np.float32)
-        ImageDraw.Draw(im_ := Image.new('L', (S, S), 0)).ellipse(
-            (cx + 0.05 * w - wk * w, ey - hk * depth / 2, cx + 0.05 * w + wk * w, ey + hk * depth / 2), fill=255)
-        occ = ndimage.gaussian_filter(np.asarray(im_, np.float32) / 255, blur * S)
-        shade = 1 - (1 - shade) * (1 - occ * op)
-    # 3. the cast shadow: the silhouette laid back on the floor (flipped up from the base, foreshortened to 20 %),
-    #    falling to the right of the key; sharp and dark at the base, softer and fainter with distance
-    sil = m[top:by + 1, left:left + w][::-1]                                    # base row first
-    fl_h = max(2, int(h * 0.20))
-    flat = np.asarray(Image.fromarray((sil * 255).astype(np.uint8)).resize((w, fl_h), Image.LANCZOS), np.float32) / 255
-    cast = np.zeros((S, S), np.float32)
-    lean = 2.9                                                                  # px to the right per px back
-    for r in range(fl_h):
-        y = int(ey) - r
-        dx = int(r * lean)
-        x0c, x1c = left + dx, min(S, left + dx + w)
-        if y < 0 or x0c >= S: break
-        cast[y, x0c:x1c] = np.maximum(cast[y, x0c:x1c], flat[r, :x1c - x0c])
-    reach = fl_h * np.hypot(1, lean)
-    dist = np.clip(np.hypot(xx - (cx + 0.3 * w), (yy - ey) * lean) / reach, 0, 1)   # 0 at the base, 1 at the far end
-    soft = [ndimage.gaussian_filter(cast, sg) for sg in (0.003 * S, 0.010 * S, 0.024 * S, 0.042 * S)]
-    wts = np.stack([np.clip(1 - np.abs(dist * 3 - i), 0, 1) for i in range(4)])
-    wts /= wts.sum(0, keepdims=True) + 1e-6
-    cast_s = sum(wt * sb for wt, sb in zip(wts, soft)) * 0.46 * (1 - dist) ** 1.15
-    shade = 1 - (1 - shade) * (1 - cast_s)
-    shade *= np.exp(-np.clip(yy - (by + 0.012 * S), 0, None) / (0.018 * S))      # nothing falls toward the camera
-    tint = np.array([0.32, 0.30, 0.28], np.float32)                             # a warm grey shadow, not a black stain
-    scene = bg * (1 - shade[..., None]) + bg * tint * shade[..., None]
+    for x, y, f in zip(cols, yb, np.sin(np.pi * span) ** 0.6):
+        cont[y - 1:y + 3, x] = f
+    shade = np.maximum(shade, np.clip(ndimage.gaussian_filter(cont, (1.4 * u, 3.0 * u)) * 1.5, 0, 1) * 0.31)
+    # 2. the pool under the base: the floor the bottle hides from the light, just wider than the base, short
+    pool = ell(cx + 0.03 * w, ey + 0.30 * depth, 0.47 * w, 0.5 * depth + 6 * u, 5.0 * u)
+    shade = 1 - (1 - shade) * (1 - pool * 0.17)
+    # 3. the soft fall to the back right (the key light high at the front left): a low band from the bottle's right
+    #    side out along the floor, darkest by the bottle, faint 80 px (at 1024) out, lying behind the base line
+    #    (a thin band, about 25 px tall at 1024 whatever the base's width, centred 12 px above the base's lowest point)
+    fall = ell(cx + 0.25 * w + 30 * u, yb.max() - 12 * u, 0.25 * w + 52 * u, 6 * u, 6.5 * u)
+    fade = np.clip(1 - (xx - (cx + 0.45 * w)) / (0.05 * w + 80 * u), 0, 1) ** 1.2
+    shade = 1 - (1 - shade) * (1 - fall * fade * 0.19)
+    shade *= np.exp(-np.clip(yy - (yb.max() + 4 * u), 0, None) / (9.0 * u))   # gone 30 px (at 1024) under the base
+    scene = bg * (1 - shade[..., None])
 
-    # the bottle over it, its edge lit by the backdrop a little (a 1-px wrap, so it sits in the light, not on it)
+    # the bottle over it
     bf = np.asarray(bim, np.float32)
     al = bf[..., 3:4] / 255
     region = scene[top:top + h, left:left + w]
     region[:] = region * (1 - al) + bf[..., :3] * al
-    wrap = np.clip(al[..., 0] - ndimage.binary_erosion(al[..., 0] > 0.5, iterations=2), 0, 1)[..., None] * 0.18
-    region[:] = region * (1 - wrap) + bg[top:top + h, left:left + w] * wrap
-    scene += np.random.default_rng(7).normal(0, 0.9, scene.shape)               # a photograph's grain, no banding
-    im = Image.fromarray(np.clip(scene, 0, 255).astype(np.uint8), 'RGB')
+    im = Image.fromarray(np.clip(np.rint(scene), 0, 255).astype(np.uint8), 'RGB')
 
     # the origin badge, drawn on the gallery's own 1080 frame and brought to this size
     lay = Image.new('RGBA', (1080, 1080), (0, 0, 0, 0))

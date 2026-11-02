@@ -862,6 +862,27 @@ for k, (t, d) in ((k, v) for k, v in F.TITLES.items() if k in ('listicle', 'offe
     for m in re.finditer(r'(\w+\s+)?\bfrom\s+(\$\d+(?:\.\d\d)?)', f'{t} {d}', re.I):
         if (m.group(1) or '').strip().lower() != 'packs' and m.group(2) != _low: fail(k, f'store page meta "{m.group(0).strip()}": the lowest a bottle is {_low}')
 
+CSS_FILES = ('sf-apf.css', 'checkout-brand.css')
+# every rating in Trustpilot's look and colours, exact (the owner, 2 Nov 2026): white stars in square boxes, lit in the
+# rating's colour (sf-stars.html: 4.3 and up #00b67a, 3.8 .t4 #73cf11, 2.8 .t3 #ffce00, 1.8 .t2 #ff8622, else .t1
+# #ff3722), unlit #dcdce6, each rating bar in its row's colour; no text star rows (gold, grey or black) and no half box
+# drawn by hand
+_TP = ('#00b67a', '#73cf11', '#ffce00', '#ff8622', '#ff3722', '#dcdce6')
+for _cf in CSS_FILES:
+    _c = (SITE / 'css' / _cf).read_text(encoding='utf-8').lower()
+    for _col in _TP:
+        if _col not in _c: fail('all pages', f'{_cf}: Trustpilot colour {_col} missing')
+    for _old in ('#cfd0d6', '#d9d3ca', '#e8a33d;          /* gold'):
+        if _old in _c and _cf != 'sf-funnel.css': fail('all pages', f'{_cf}: an old star colour {_old}')
+for p in F.PAGES:
+    _h = html(p['id'])
+    if re.search(r'★\s*★', _h): fail(p['id'], 'a row of text stars, not Trustpilot boxes')
+    if 'class="half"' in _h: fail(p['id'], 'a half star drawn by hand (sf-stars.html lights the share)')
+    for m in re.finditer(r'aria-label="4 out of 5 stars">(.*?)</(?:p|span)>', _h):
+        if m.group(1).count('class="t4"') != 4: fail(p['id'], 'a 4-star review not in four light-green boxes (#73cf11)')
+    for m in re.finditer(r'<li data-s="(\d)">', _h): pass
+    if re.search(r'<li><span>\d ★</span>', _h): fail(p['id'], 'a rating bar without its row (data-s): it would not take its colour')
+
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)
 print(f'check_apf: {len(F.PAGES)} pages ok')

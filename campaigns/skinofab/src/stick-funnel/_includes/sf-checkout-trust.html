@@ -15,7 +15,7 @@
 {%- endcomment -%}
 {%- if part == 'top' -%}
 <div class="sf-co-top">
-  <p class="sf-co-rating"><span class="sf-co-stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
+  <p class="sf-co-rating"><span class="sf-co-tp" role="img" aria-label="Rated 4.8 out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span> <span><strong>{{ trust.rating.average }} out of 5</strong> from <span class="hide-tablet-down">{{ trust.rating.count }} reviews</span><a class="hide-tablet-up" href="#sf-co-featured">{{ trust.rating.count }} reviews</a> {{ trust.rating.of }}</span></p>
   <ul class="sf-co-points">
     {%- for p in trust.points %}
     <li>{% campaign_include 'sf-checkout-icon.html' icon=p.icon %}<div><strong>{{ p.title }}</strong><span>{{ p.text }}</span></div></li>
@@ -42,12 +42,12 @@
     <h2>{{ trust.rating.count }} reviews of our liquid foundation</h2>
     <div class="sf-co-ratings__score">
       <strong>{{ trust.rating.average }}</strong>
-      <span class="sf-co-stars" role="img" aria-label="{{ trust.rating.average }} out of 5">★★★★★</span>
+      <span class="sf-co-tp" role="img" aria-label="{{ trust.rating.average }} out of 5">{% campaign_include 'sf-stars.html' n=trust.rating.average %}</span>
       <span>out of 5</span>
     </div>
     <ul class="sf-co-ratings__rows" aria-label="Reviews of our liquid foundation, by stars">
       {%- for row in trust.rating.rows %}{% assign pct = row[1] | times: 100.0 | divided_by: trust.rating.total %}
-      <li><span>{{ row[0] }} ★</span><i>{% if row[1] > 0 %}<b style="width:{{ pct | round: 2 }}%"></b>{% endif %}</i><span>{{ row[2] | default: row[1] }}</span></li>
+      <li data-s="{{ row[0] }}"><span>{{ row[0] }} ★</span><i>{% if row[1] > 0 %}<b style="width:{{ pct | round: 2 }}%"></b>{% endif %}</i><span>{{ row[2] | default: row[1] }}</span></li>
       {%- endfor %}
     </ul>
     <p class="sf-co-ratings__of">{{ reviews_note }}</p>

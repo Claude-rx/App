@@ -976,16 +976,19 @@ REVIEW_WALL_CSS = r"""
 .sfr-avg{display:grid;gap:8px}
 .sfr-avg p{margin:0;font-size:15px;color:#3b3b3b}
 .sfr-avg p b{color:#191919}
-.sfr-tp{display:inline-flex;gap:3px;vertical-align:middle}
-.sfr-tp i{display:inline-grid;place-items:center;width:var(--s,20px);height:var(--s,20px);background:linear-gradient(90deg,var(--sf-tp,#151515) var(--f),#dcdce6 var(--f))}
+/* Trustpilot's colours, exact: the lit boxes by the rating (5 #00b67a, 4 #73cf11, 3 #ffce00, 2 #ff8622, 1 #ff3722), the empty ones #dcdce6, a white star; no review site's name or logo (the owner, 2 Nov 2026) */
+.sfr-tp{display:inline-flex;gap:3px;vertical-align:middle;--tp:#00b67a}
+.sfr-tp--t4{--tp:#73cf11}.sfr-tp--t3{--tp:#ffce00}.sfr-tp--t2{--tp:#ff8622}.sfr-tp--t1{--tp:#ff3722}
+.sfr-tp i{display:inline-grid;place-items:center;width:var(--s,20px);height:var(--s,20px);background:linear-gradient(90deg,var(--tp) var(--f),#dcdce6 var(--f))}
 .sfr-tp i svg{width:72%;height:72%;color:#fff}
 .sfr-tp--lg{--s:34px;gap:4px}
 .sfr-dist{list-style:none !important;margin:20px 0 0 !important;padding:0 !important;display:grid;gap:8px}
 .sfr-dist li{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:52px 1fr 56px;gap:10px;align-items:center;font-size:14px;cursor:pointer}
 .sfr-dist li:before{content:none !important}
 .sfr-dist li[aria-pressed="true"]{font-weight:700}
-.sfr-dist span{height:9px;border-radius:2px;background:#e5e5dd;overflow:hidden}
-.sfr-dist span em{display:block;height:100%;background:var(--sf-tp,#151515)}
+.sfr-dist span{height:9px;border-radius:2px;background:#dcdce6;overflow:hidden}
+.sfr-dist span em{display:block;height:100%;background:#00b67a}
+.sfr-dist li[data-sfr-filter="4"] em{background:#73cf11}.sfr-dist li[data-sfr-filter="3"] em{background:#ffce00}.sfr-dist li[data-sfr-filter="2"] em{background:#ff8622}.sfr-dist li[data-sfr-filter="1"] em{background:#ff3722}
 .sfr-dist small{color:#6a6a6a;text-align:right;font-size:14px}
 .sfr-note{margin:16px 0 0;font-size:14px;line-height:1.45;color:#6a6a6a}
 .sfr-write{display:inline-flex;margin-top:20px;padding:13px 26px;border-radius:999px;border:1.5px solid #191919;color:#191919 !important;text-decoration:none !important;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
@@ -1034,7 +1037,9 @@ REVIEW_WALL_JS = r"""
   try { photoBase = JSON.parse((root.querySelector('[data-sf-review-photos]') || {}).textContent || '{}'); } catch (e) {}
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function stars(v, big) {
-    var h = '<span class="sfr-tp' + (big ? ' sfr-tp--lg' : '') + '" role="img" aria-label="Rated ' + v + ' out of 5">';
+    // the colour by the rating, as Trustpilot's (4.3 and up green, 3.8 light green, 2.8 yellow, 1.8 orange, red)
+    var t = v >= 4.3 ? 5 : v >= 3.8 ? 4 : v >= 2.8 ? 3 : v >= 1.8 ? 2 : 1;
+    var h = '<span class="sfr-tp' + (big ? ' sfr-tp--lg' : '') + (t < 5 ? ' sfr-tp--t' + t : '') + '" role="img" aria-label="Rated ' + v + ' out of 5">';
     for (var i = 0; i < 5; i++) { var f = Math.max(0, Math.min(1, v - i)); h += '<i style="--f:' + Math.round(f * 100) + '%">' + STAR + '</i>'; }
     return h + '</span>';
   }
@@ -1256,8 +1261,9 @@ REVIEW_STRIP_CSS = r"""
 @media (min-width:1100px){.sfrs-card{flex-basis:calc((100% - 28px) / 3)}.sfrs-track:not(.sfrs-end){-webkit-mask-image:none;mask-image:none}}
 .sfrs-card small{margin-top:auto;font-size:13px;color:#6a6a6a}
 .sfrs-card small b{color:#191919}
-.sfrs .sfr-tp{display:inline-flex;gap:3px}
-.sfrs .sfr-tp i{display:inline-grid;place-items:center;width:var(--s,18px);height:var(--s,18px);background:linear-gradient(90deg,var(--sf-tp,#151515) var(--f),#dcdce6 var(--f))}
+.sfrs .sfr-tp{display:inline-flex;gap:3px;--tp:#00b67a}
+.sfrs .sfr-tp--t4{--tp:#73cf11}.sfrs .sfr-tp--t3{--tp:#ffce00}.sfrs .sfr-tp--t2{--tp:#ff8622}.sfrs .sfr-tp--t1{--tp:#ff3722}
+.sfrs .sfr-tp i{display:inline-grid;place-items:center;width:var(--s,18px);height:var(--s,18px);background:linear-gradient(90deg,var(--tp) var(--f),#dcdce6 var(--f))}
 .sfrs .sfr-tp i svg{width:72%;height:72%;color:#fff}
 .sfrs .sfr-tp--lg{--s:30px;gap:4px}
 @media (max-width:989px){.sfrs-wrap{grid-template-columns:1fr;gap:18px}.sfrs-card{flex-basis:78%}}
@@ -1267,11 +1273,22 @@ _TP_STAR = ('<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path
             'd="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>')
 
 
+TP_COLORS = {5: '#00b67a', 4: '#73cf11', 3: '#ffce00', 2: '#ff8622', 1: '#ff3722'}   # Trustpilot's, exact
+TP_EMPTY = '#dcdce6'
+
+
+def tp_tier(v):
+    """Trustpilot's colour step for a rating: 4.3 and up the green, 3.8 the light green, 2.8 yellow, 1.8 orange, red."""
+    return 5 if v >= 4.3 else 4 if v >= 3.8 else 3 if v >= 2.8 else 2 if v >= 1.8 else 1
+
+
 def tp_stars(v, big=False):
     # each star filled to the rating's own share: 4.8 fills the fifth to 80 % (rounded to halves, five full stars
     # showed for 4.8, stick review 9)
     out = ''.join(f'<i style="--f:{round(max(0, min(1, v - i)) * 100)}%">{_TP_STAR}</i>' for i in range(5))
-    return f'<span class="sfr-tp{" sfr-tp--lg" if big else ""}" role="img" aria-label="Rated {v:g} out of 5">{out}</span>'
+    t = tp_tier(v)
+    return (f'<span class="sfr-tp{" sfr-tp--lg" if big else ""}{f" sfr-tp--t{t}" if t < 5 else ""}" role="img" '
+            f'aria-label="Rated {v:g} out of 5">{out}</span>')
 
 
 def review_strip_html(average, count, picks, href='#sf-review-wall', of=None, buyer='Verified buyer'):

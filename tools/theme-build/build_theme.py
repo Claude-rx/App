@@ -781,12 +781,60 @@ if home_parts['description']:
 # dispatches on page.slug itself: each design page's blocks live in partials/sf_pages/<slug>/, and every
 # page.<slug>.html just extends page.html, so selecting the template in the dashboard renders the same thing.
 PAGE_PARTS = {}
+# The store's other pages (the quiz, the advertorials, the VIP and tracking pages) drew their ratings their own way:
+# gold or black text stars, outline svg stars, a percent-masked star row. Every rating in Trustpilot's look and
+# colours, exact (the owner, 2 Nov 2026): white stars in square boxes, lit in the rating's colour (4.3 and up #00b67a,
+# 3.8 #73cf11, 2.8 #ffce00, 1.8 #ff8622, below #ff3722), unlit #dcdce6; no review site's name or logo.
+TPX_TIERS = ((4.3, '#00b67a'), (3.8, '#73cf11'), (2.8, '#ffce00'), (1.8, '#ff8622'), (0, '#ff3722'))
+TPX_CSS = ('<style>.sf-tpx{display:inline-flex;gap:2px;vertical-align:middle;color:#fff}'
+           '.sf-tpx i{display:inline-grid;place-items:center;width:1.3em;height:1.3em;font-style:normal;font-size:inherit;'
+           'line-height:1;color:#fff;background:linear-gradient(90deg,var(--tp,#00b67a) var(--f,100%),#dcdce6 var(--f,100%))}'
+           '.sf-tpx i::before{content:"\\2605";font-size:.82em}'
+           # the design's own svg star rows: each star a box
+           '.sbs__stars svg,.sbl__stars svg,.sb-buybox__stars svg{box-sizing:border-box;padding:2px;background:#00b67a;color:#fff!important;fill:#fff!important}'
+           '.sbs__stars svg path,.sbl__stars svg path,.sb-buybox__stars svg path{fill:#fff!important;stroke:none!important}</style>')
+
+def tp_color(v):
+    return next(c for t, c in TPX_TIERS if v >= t)
+
+def tpx(v, label=True):
+    """Five Trustpilot boxes for a rating v, each lit to v's own share."""
+    boxes = ''.join(f'<i style="--f:{round(max(0.0, min(1.0, v - k)) * 100)}%"></i>' for k in range(5))
+    aria = f' role="img" aria-label="{v:g} out of 5 stars"' if label else ' aria-hidden="true"'
+    return f'<span class="sf-tpx"{aria} style="--tp:{tp_color(v)}">{boxes}</span>'
+
+def tp_legacy(body):
+    """A design page's ratings as Trustpilot boxes (TPX_CSS): text star runs (★★★★★, ★★★★☆), and the percent-masked
+    product__rating rows (their aria-label carries the rating)."""
+    n0 = body
+    # text runs between tags: "★★★★★" or "★★★★☆" (lit, then unlit)
+    body = re.sub(r'(?<=>)(\s*)(★{1,5})(☆{0,4})(?=[\s<(])',
+                  lambda m: m.group(1) + tpx(float(len(m.group(2)))) if len(m.group(2)) + len(m.group(3)) == 5 else m.group(0), body)
+    # a product__rating div: its star span (two nested layers) replaced by the boxes for its aria-label's rating
+    out, pos = [], 0
+    for m in re.finditer(r'<div aria-label="([\d.]+) out of 5(?:\.0)? stars" class="product__rating"[^>]*>', body):
+        a = body.find('<span aria-hidden="true" class="rating__star"', m.end())
+        if a < 0 or a > m.end() + 40: continue
+        depth, k = 0, a
+        while True:
+            o, c = body.find('<span', k), body.find('</span>', k)
+            if c < 0: break
+            if 0 <= o < c: depth += 1; k = o + 5
+            else:
+                depth -= 1; k = c + 7
+                if depth == 0: break
+        out.append(body[pos:a]); out.append(tpx(float(m.group(1)), label=False)); pos = k
+    body = ''.join(out) + body[pos:]
+    if body != n0 or any(c in body for c in ('sbs__stars', 'sbl__stars', 'sb-buybox__stars')):
+        body = TPX_CSS + body
+    return body
+
 def page_partials(page, slug):
     parts = decompose(page)
     slots = Slots()
     blocks = {'head': slots.render(frag_html(parts['head'], page, slots)),
               'lead': slots.render(frag_html(parts['lead'], page, slots)),
-              'content': main_html(parts, page, slots),
+              'content': tp_legacy(main_html(parts, page, slots)),
               'tail': slots.render(frag_html(parts['tail'], page, slots))}
     for name, body in blocks.items():
         write(f'partials/sf_pages/{slug}/{name}.html', body + '\n')
@@ -1277,7 +1325,13 @@ SPARK_FIXES = ('<style>#main-content .grid-cols-1{grid-template-columns:repeat(1
                '#main-content form input:focus,#main-content form select:focus,#main-content form textarea:focus{border-color:#151515 !important;outline:none}'
                # the design's buttons are black with white text: Spark's secondary hover (slate-50) left the label white on
                # white (the cart's ADD COUPON, review 5)
-               '#main-content .btn-secondary:hover,#main-content .btn-secondary:focus-visible{background:#333 !important;border-color:#333 !important;color:#fff !important}</style>')
+               '#main-content .btn-secondary:hover,#main-content .btn-secondary:focus-visible{background:#333 !important;border-color:#333 !important;color:#fff !important}'
+               # ratings in Trustpilot's look and colours, exact (the owner, 2 Nov 2026): a white star in a square box,
+               # lit in the rating's colour (5 #00b67a, 4 #73cf11, 3 #ffce00, 2 #ff8622, 1 #ff3722), unlit #dcdce6
+               '.sf-tp-row{display:inline-flex;gap:3px;--tp:#00b67a}.sf-tp-row.sf-tp-t4{--tp:#73cf11}.sf-tp-row.sf-tp-t3{--tp:#ffce00}'
+               '.sf-tp-row.sf-tp-t2{--tp:#ff8622}.sf-tp-row.sf-tp-t1{--tp:#ff3722}'
+               '.sf-tp-row span{display:inline-grid;place-items:center;width:22px;height:22px;background:#dcdce6;color:#fff;font-size:15px;line-height:1}'
+               '.sf-tp-row span.on{background:var(--tp)}.sf-tp-row--sm span{width:18px;height:18px;font-size:12px}</style>')
 
 for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'templates/500.html',
           *[str(p.relative_to(OUT)) for p in (OUT / 'templates').rglob('*.html') if p.parts[-2] in ('reviews', 'support')]]:
@@ -1301,17 +1355,40 @@ for t in ['templates/cart.html', 'templates/403.html', 'templates/404.html', 'te
 
 # Review form: the score was a plain select of "---------", 0, 1 ... 5 (a 0-star review was one choice): five stars
 # to click instead (1-5, required; radio inputs, so it works without script and by keyboard)
+TP_PICK = ((1, '#ff3722'), (2, '#ff8622'), (3, '#ffce00'), (4, '#73cf11'), (5, '#00b67a'))   # Trustpilot's, exact
 SCORE_FIELD = "{% include 'partials/form_field.html' with field=form.score %}"
 SCORE_STARS = ('<fieldset class="sf-score"><legend class="block text-sm font-medium text-slate-700 mb-1">{{ form.score.label }} '
                '<span class="text-red-500">*</span></legend><div class="sf-stars">'
                '{% for v in "54321" %}<input type="radio" id="sf-score-{{ v }}" name="{{ form.score.html_name }}" value="{{ v }}" required'
                '{% if form.score.value == v %} checked{% endif %}><label for="sf-score-{{ v }}" title="{{ v }} of 5 stars">&#9733;</label>{% endfor %}</div>'
                '{% for error in form.score.errors %}<p class="text-xs text-red-500 mt-1">{{ error }}</p>{% endfor %}</fieldset>'
-               '<style>.sf-score{border:0;margin:0;padding:0}.sf-stars{display:inline-flex;flex-direction:row-reverse;gap:6px}'
+               '<style>.sf-score{border:0;margin:0;padding:0}.sf-stars{display:inline-flex;flex-direction:row-reverse;gap:5px}'
                '.sf-stars input{position:absolute;opacity:0;width:1px;height:1px}'
-               '.sf-stars label{font-size:34px;line-height:1;color:#d6d6d6;cursor:pointer}'
-               '.sf-stars input:checked~label,.sf-stars label:hover,.sf-stars label:hover~label{color:#151515}'
-               '.sf-stars input:focus-visible+label{outline:2px solid #151515;outline-offset:2px;border-radius:4px}</style>')
+               # Trustpilot's picker: grey boxes with a white star; the score and those under it lit in its colour
+               '.sf-stars label{display:grid;place-items:center;width:40px;height:40px;font-size:26px;line-height:1;color:#fff;background:#dcdce6;cursor:pointer;transition:background .12s}'
+               # (specificity in step: the chosen score's colour, grey again while the pointer is over the row, then the
+               # hovered score's colour, the hovered box included)
+               + ''.join(f'.sf-stars input[value="{v}"]:checked~label{{background:{c}}}' for v, c in TP_PICK)
+               + '.sf-stars:hover input:checked~label,.sf-stars:hover label{background:#dcdce6}'
+               + ''.join(f'.sf-stars:hover label[for=sf-score-{v}]:hover,.sf-stars:hover label[for=sf-score-{v}]:hover~label{{background:{c}}}' for v, c in TP_PICK)
+               + '.sf-stars input:focus-visible+label{outline:2px solid #151515;outline-offset:2px}</style>')
+# the rows of stars on the review pages (a product's average, each review's score): Spark's amber text stars become
+# Trustpilot's boxes (.sf-tp-row in SPARK_FIXES), in the colour for the rating (4.3 and up green, 3.8 light green, 2.8
+# yellow, 1.8 orange, red), as on the product pages
+SPARK_STARS = re.compile(r'<div class="flex text-amber-400( text-sm)?">\s*\{% for i in \'12345\' %\}\s*'
+                         r'\{% if forloop\.counter <= ([\w.]+) %\}\s*<span>&#9733;</span>\s*\{% else %\}\s*'
+                         r'<span class="text-slate-300">&#9733;</span>\s*\{% endif %\}\s*\{% endfor %\}\s*</div>')
+def tp_row(m):
+    v, sm = m.group(2), ' sf-tp-row--sm' if m.group(1) else ''
+    return (f'<div class="sf-tp-row{sm}{{% if {v} < 1.8 %}} sf-tp-t1{{% elif {v} < 2.8 %}} sf-tp-t2{{% elif {v} < 3.8 %}} sf-tp-t3'
+            f'{{% elif {v} < 4.3 %}} sf-tp-t4{{% endif %}}" role="img" aria-label="Rated {{{{ {v} }}}} out of 5">'
+            f'{{% for i in \'12345\' %}}<span aria-hidden="true"{{% if forloop.counter <= {v} %}} class="on"{{% endif %}}>&#9733;</span>'
+            '{% endfor %}</div>')
+for p_rev in sorted((OUT / 'templates' / 'reviews').glob('*.html')):
+    s_rev = p_rev.read_text(); n_rev = len(SPARK_STARS.findall(s_rev))
+    if '&#9733;' in s_rev.replace(SCORE_STARS, '') and not n_rev and p_rev.name != 'form.html':
+        sys.exit(f'{p_rev}: star row not in the expected shape (Spark changed it?)')
+    p_rev.write_text(SPARK_STARS.sub(tp_row, s_rev))
 p_form = OUT / 'templates' / 'reviews' / 'form.html'
 if p_form.exists():
     s = p_form.read_text()
