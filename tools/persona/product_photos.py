@@ -639,6 +639,22 @@ def studio_packshot(size=1600, out_name='packshot-studio.jpg'):
     from scipy import ndimage
     src = np.asarray(Image.open(FOUNDATION / '01-front.png').convert('RGB')).astype(np.float32)
     H0, W0 = src.shape[:2]
+    # the PDRN line at twice its size, centred where it was: at its own 15 px of 1254 it is 3 px tall on a phone's
+    # gallery and read "PORN" (live review 4; the funnel's pack shots do the same, images.py bottle()). It stays in
+    # the black between FOUNDATION (ends at y 1013) and the volume line (starts at 1116)
+    fx0, fy0, fx1, fy1 = 588, 1049, 666, 1072
+    G = src.mean(2)
+    blk = np.median(np.concatenate([G[1036:1044, fx0:fx1], G[1080:1092, fx0:fx1]]), axis=0)          # its black, per column
+    blk3 = np.median(np.concatenate([src[1036:1044, fx0:fx1], src[1080:1092, fx0:fx1]]), axis=0)
+    pa = np.clip((G[fy0:fy1, fx0:fx1] - blk[None]) / (238.0 - blk[None]), 0, 1)
+    src[fy0:fy1, fx0:fx1] = blk3[None]                                         # the small line out
+    h_, w_ = pa.shape
+    big = np.asarray(Image.fromarray((pa * 255).astype(np.uint8), 'L').resize((w_ * 2, h_ * 2), Image.LANCZOS), np.float32) / 255
+    cy, cxp = (fy0 + fy1) / 2, (fx0 + fx1) / 2
+    y0p, x0p = round(cy - h_), round(cxp - w_)
+    reg = src[y0p:y0p + 2 * h_, x0p:x0p + 2 * w_]
+    assert float(reg.mean()) < 70, '01-front.png changed: the PDRN line would not land on the black label'
+    src[y0p:y0p + 2 * h_, x0p:x0p + 2 * w_] = reg * (1 - big[..., None]) + 238.0 * big[..., None]
     L = src.mean(2)
     # the bottle: dark body (its white print filled in), cut at its base line (the render's own floor below goes)
     body = ndimage.binary_fill_holes(L < 120)
