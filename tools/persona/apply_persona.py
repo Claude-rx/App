@@ -624,7 +624,7 @@ def honest_images(summary):
 
 # the foundation's photos on one pure white, like the other products' (white_bg.py): by file-name prefix, how
 WHITE = [
-    ('KoreanColorChangingFoundation-Productimages_1_', 'flood'),     # the packshot on a grey sweep: its floor shadow kept
+    ('KoreanColorChangingFoundation-Productimages_1_', 'studio'),    # the packshot: the studio shot from product_photos.py
     ('2_221c6006', 'matte'), ('21_7a5d845a', 'matte'), ('22_ed20463f', 'matte'),   # the 45+ women with the bottle,
     ('24_e2816f7f', 'matte'), ('25_2e1854df', 'matte'), ('HIDDEN_1', 'matte'),      # silver hair on a grey wall
     ('ColorChangingFoundation-Productimagesphotos_4_35e0c406', 'light'),            # "Loved by", on off-white
@@ -659,7 +659,7 @@ def white_backdrops():
     its own pixels (each width is a separate file), saved under a new content-hashed name, every reference rewritten. The black "vs. others" board
     becomes brand/adaptive-peptide-foundation/vs-others.jpg (product_photos.py foundation). Results are cached by
     the input's hash in <work_dir>/white-cache. Returns the number of files replaced."""
-    from PIL import Image
+    from PIL import Image, ImageOps
     img_dir, cache = DST / 'assets' / 'img', WORK / 'white-cache'
     cache.mkdir(exist_ok=True)
     texts = {p: p.read_text(encoding='utf-8', errors='surrogateescape') for p in DST.rglob('*')
@@ -672,9 +672,13 @@ def white_backdrops():
     cards = {n for art in re.findall(r'<article class="fh-product">(.*?)</article>', home, re.S)
              for n in re.findall(r'assets/img/([^" ,]+\.(?:jpg|jpeg|png|webp))', art)}
     board = BRAND / 'adaptive-peptide-foundation' / 'vs-others.jpg'
+    # the first slide (and every copy of it): the studio packshot (product_photos.py foundation, the owner, 2 Nov 2026:
+    # "better shadow, more real, realistic studio image"), its own light sweep and shadows, cropped to each copy's frame
+    studio = BRAND / 'adaptive-peptide-foundation' / 'packshot-studio.jpg'
     make = {'flood': white_bg.flood, 'matte': white_bg.matte, 'light': white_bg.light, 'ink': ink_panel,
             'card': lambda im: white_bg.matte(im, flat=True),
-            'board': lambda im: Image.open(board).convert('RGB').resize(im.size, Image.LANCZOS)}
+            'board': lambda im: Image.open(board).convert('RGB').resize(im.size, Image.LANCZOS),
+            'studio': lambda im: ImageOps.fit(Image.open(studio).convert('RGB'), im.size, Image.LANCZOS)}
     import inspect
     salt = hashlib.md5(Path(white_bg.__file__).read_bytes() + inspect.getsource(ink_panel).encode()).digest()  # code changes: recompute
     renames = {}
@@ -687,7 +691,7 @@ def white_backdrops():
             import numpy as np
             level = white_bg.backdrop_level(np.asarray(Image.open(src).convert('RGB')).astype(np.float32))
             if level is not None and level >= 254: continue          # already white (the second products' cards)
-        key = cache / f"{hashlib.md5(salt + data + mode.encode() + (board.read_bytes() if mode == 'board' else b'')).hexdigest()}{src.suffix}"
+        key = cache / f"{hashlib.md5(salt + data + mode.encode() + (board.read_bytes() if mode == 'board' else studio.read_bytes() if mode == 'studio' else b'')).hexdigest()}{src.suffix}"
         if not key.exists():
             im = Image.open(src)
             out = make[mode](im.convert('RGB'))

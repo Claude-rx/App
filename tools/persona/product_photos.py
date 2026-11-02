@@ -628,12 +628,139 @@ NEXT_BOLD = {'01-front.png': lambda a: label_fix.bold_line(a, (585, 1049, 668, 1
              '03-three-quarter-right.png': lambda a: label_fix.bold_line(a, (466, 1038, 566, 1072), '', 14)}
 
 
+def studio_packshot(size=1600, out_name='packshot-studio.jpg'):
+    """The foundation's first gallery slide, a studio packshot (the owner, 2 Nov 2026: "better shadow, more real,
+    realistic studio image"): the product sheet's front render (01-front.png, its print relabelled and correct, PDRN
+    included) cut from its grey backdrop and set on a seamless off-white sweep, lit from the upper left. The shadows
+    are built as a studio's fall: a near-black contact line where the base meets the floor, a soft occlusion pool
+    around it, and the bottle's own silhouette cast back and to the right along the floor, sharp at the base and
+    softer and lighter with distance. The origin badge as on the other slides, at the same place for the frame.
+    Writes <FOUNDATION>/<out_name> (size x size)."""
+    from scipy import ndimage
+    src = np.asarray(Image.open(FOUNDATION / '01-front.png').convert('RGB')).astype(np.float32)
+    H0, W0 = src.shape[:2]
+    L = src.mean(2)
+    # the bottle: dark body (its white print filled in), cut at its base line (the render's own floor below goes)
+    body = ndimage.binary_fill_holes(L < 120)
+    lab, n = ndimage.label(body); body = lab == (np.argmax(np.bincount(lab.ravel())[1:]) + 1)
+    ys, xs = np.nonzero(body)
+    base = int(ys.max()); body[base + 1:] = False
+    # the backdrop behind it, a smooth plate (a cubic surface fitted outside the bottle), to unmix the soft edge
+    far = ~ndimage.binary_dilation(body, iterations=14)
+    yy, xx = np.mgrid[0:H0, 0:W0].astype(np.float32)
+    u, v = xx / W0, yy / H0
+    terms = [np.ones_like(u), u, v, u * u, u * v, v * v, u ** 3, u * u * v, u * v * v, v ** 3]
+    A = np.stack([t[far] for t in terms], 1)
+    plate = np.zeros_like(src)
+    for c in range(3):
+        coef, *_ = np.linalg.lstsq(A, src[..., c][far], rcond=None)
+        plate[..., c] = sum(k * t for k, t in zip(coef, terms))
+    core = ndimage.binary_erosion(body, iterations=2)
+    band = ndimage.binary_dilation(body, iterations=3) & ~core
+    band[base + 1:] = False
+    ink = 22.0                                                                 # the bottle's black at its edge
+    pl = plate.mean(2)
+    alpha = np.where(core, 1.0, 0.0)
+    alpha[band] = np.clip((pl[band] - L[band]) / np.maximum(pl[band] - ink, 1), 0, 1)
+    alpha = ndimage.gaussian_filter(alpha, 0.6) * (ndimage.binary_dilation(body, iterations=3))
+    alpha[core] = 1.0
+    fg = src.copy()                                                            # the edge's own colour, the plate unmixed out
+    a3 = np.clip(alpha, 0.2, 1)[..., None]
+    fg[band] = np.clip((src[band] - (1 - a3[band]) * plate[band]) / a3[band], 0, 255)
+    x0, x1, y0 = xs.min() - 4, xs.max() + 5, ys.min() - 4
+    bottle = np.dstack([fg, alpha * 255])[y0:base + 1, x0:x1]
+    bw, bh = bottle.shape[1], bottle.shape[0]
+
+    # the sweep: a warm off-white, the wall a touch darker at the top, the floor lightest toward the camera, no seam
+    S = size
+    yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
+    t = np.clip((yy / S - 0.18) / 0.82, 0, 1) ** 0.85
+    wall, floor = np.array([238, 236, 233], np.float32), np.array([252, 251, 249], np.float32)
+    bg = wall * (1 - t[..., None]) + floor * t[..., None]
+    glow = np.exp(-(((xx - S * 0.42) / (S * 0.55)) ** 2 + ((yy - S * 0.40) / (S * 0.50)) ** 2))   # the key's spill, upper left
+    bg += glow[..., None] * np.array([7, 7, 6], np.float32)
+    vign = np.hypot((xx - S / 2) / S, (yy - S * 0.55) / S)
+    bg *= (1 - 0.06 * np.clip(vign / 0.7, 0, 1) ** 2)[..., None]
+
+    # the bottle in the frame: 68 % of the height, centred, its base at 86 %
+    k = (S * 0.68) / bh
+    bim = Image.fromarray(bottle.clip(0, 255).astype(np.uint8), 'RGBA').resize((round(bw * k), round(bh * k)), Image.LANCZOS)
+    w, h = bim.size
+    cx, by = S // 2, int(S * 0.86)
+    left, top = cx - w // 2, by - h
+    m = np.zeros((S, S), np.float32); m[top:top + h, left:left + w] = np.asarray(bim)[..., 3] / 255.0
+
+    # the base, as the camera sees it: an ellipse's front arc (the lowest edge of the silhouette in each column)
+    cols = np.nonzero(m.max(0) > 0.5)[0]
+    yb = np.array([np.nonzero(m[:, x] > 0.5)[0].max() for x in cols])
+    rim = by - yb.min()                                                         # how far the arc rises at the sides
+    depth = max(6, 2 * (yb.max() - yb[[0, -1]].mean()))                        # the base ellipse's height on screen
+    ey = yb.max() - depth / 2                                                   # its centre line
+    shade = np.zeros((S, S), np.float32)
+    # 1. contact: a near-black crease along the arc where the bottle sits on the paper, fading at the sides
+    cont = np.zeros((S, S), np.float32)
+    span = (cols - cols[0]) / max(1, cols[-1] - cols[0])
+    for x, y, f in zip(cols, yb, np.sin(np.pi * span) ** 0.5):
+        cont[y - 1:y + 4, x] = f
+    shade = np.maximum(shade, np.clip(ndimage.gaussian_filter(cont, (0.0016 * S, 0.004 * S)) * 1.6, 0, 1) * 0.78)
+    # 2. occlusion: the paper under and round the base darkened where the bottle hides the sky (tight, then a wide pool)
+    for wk, hk, op, blur in ((0.56, 0.62, 0.50, 0.010), (0.82, 1.3, 0.24, 0.030)):
+        occ = np.zeros((S, S), np.float32)
+        ImageDraw.Draw(im_ := Image.new('L', (S, S), 0)).ellipse(
+            (cx + 0.05 * w - wk * w, ey - hk * depth / 2, cx + 0.05 * w + wk * w, ey + hk * depth / 2), fill=255)
+        occ = ndimage.gaussian_filter(np.asarray(im_, np.float32) / 255, blur * S)
+        shade = 1 - (1 - shade) * (1 - occ * op)
+    # 3. the cast shadow: the silhouette laid back on the floor (flipped up from the base, foreshortened to 20 %),
+    #    falling to the right of the key; sharp and dark at the base, softer and fainter with distance
+    sil = m[top:by + 1, left:left + w][::-1]                                    # base row first
+    fl_h = max(2, int(h * 0.20))
+    flat = np.asarray(Image.fromarray((sil * 255).astype(np.uint8)).resize((w, fl_h), Image.LANCZOS), np.float32) / 255
+    cast = np.zeros((S, S), np.float32)
+    lean = 2.9                                                                  # px to the right per px back
+    for r in range(fl_h):
+        y = int(ey) - r
+        dx = int(r * lean)
+        x0c, x1c = left + dx, min(S, left + dx + w)
+        if y < 0 or x0c >= S: break
+        cast[y, x0c:x1c] = np.maximum(cast[y, x0c:x1c], flat[r, :x1c - x0c])
+    reach = fl_h * np.hypot(1, lean)
+    dist = np.clip(np.hypot(xx - (cx + 0.3 * w), (yy - ey) * lean) / reach, 0, 1)   # 0 at the base, 1 at the far end
+    soft = [ndimage.gaussian_filter(cast, sg) for sg in (0.003 * S, 0.010 * S, 0.024 * S, 0.042 * S)]
+    wts = np.stack([np.clip(1 - np.abs(dist * 3 - i), 0, 1) for i in range(4)])
+    wts /= wts.sum(0, keepdims=True) + 1e-6
+    cast_s = sum(wt * sb for wt, sb in zip(wts, soft)) * 0.46 * (1 - dist) ** 1.15
+    shade = 1 - (1 - shade) * (1 - cast_s)
+    shade *= np.exp(-np.clip(yy - (by + 0.012 * S), 0, None) / (0.018 * S))      # nothing falls toward the camera
+    tint = np.array([0.32, 0.30, 0.28], np.float32)                             # a warm grey shadow, not a black stain
+    scene = bg * (1 - shade[..., None]) + bg * tint * shade[..., None]
+
+    # the bottle over it, its edge lit by the backdrop a little (a 1-px wrap, so it sits in the light, not on it)
+    bf = np.asarray(bim, np.float32)
+    al = bf[..., 3:4] / 255
+    region = scene[top:top + h, left:left + w]
+    region[:] = region * (1 - al) + bf[..., :3] * al
+    wrap = np.clip(al[..., 0] - ndimage.binary_erosion(al[..., 0] > 0.5, iterations=2), 0, 1)[..., None] * 0.18
+    region[:] = region * (1 - wrap) + bg[top:top + h, left:left + w] * wrap
+    scene += np.random.default_rng(7).normal(0, 0.9, scene.shape)               # a photograph's grain, no banding
+    im = Image.fromarray(np.clip(scene, 0, 255).astype(np.uint8), 'RGB')
+
+    # the origin badge, drawn on the gallery's own 1080 frame and brought to this size
+    lay = Image.new('RGBA', (1080, 1080), (0, 0, 0, 0))
+    korea_badge(lay, 948, 148)
+    lay = lay.resize((S, S), Image.LANCZOS)
+    im.paste(lay, (0, 0), lay)
+    im.save(FOUNDATION / out_name, quality=92, optimize=True, progressive=True)
+    return im
+
+
 def foundation():
-    """The foundation gallery's "skinofab vs. others" was white on black: the same board on white, as the other
-    products' (its three rows, with the other gallery panel's "won't settle into lines"). The other bottle is a blank,
+    """The foundation gallery's first slide, the studio packshot (studio_packshot()), and its "skinofab vs. others",
+    white on black before: the same board on white, as the other products' (its rows hedged: "designed not to settle",
+    the brand's rule for any claim about lines). The other bottle is a blank,
     generic one (source/others.jpg): the old board's showed another brand's name."""
+    studio_packshot()
     vs_others(FOUNDATION, '01-front', 'others', 'A basic foundation', [('One shade that', False), ('adapts to', False), ('your skin', True)],
-              ['Adapts to\nskin tone', 'Hydrating\nserum base', 'Won’t settle\ninto lines', 'Fragrance-free'],
+              ['Adapts to\nskin tone', 'Hydrating\nserum base', 'Designed not\nto settle', 'Fragrance-free'],
               others_thresh=246, others_h=210)
     # the NEXT product's gallery (cart and checkout thumbnails, in this order) on the same white: next/<name>.jpg
     out = FOUNDATION / 'next'; out.mkdir(exist_ok=True)
