@@ -5,7 +5,7 @@
 # Usage: tools/funnel/check_live_axon.sh [base-url]        (default https://try.skinofab.com)
 set -uo pipefail
 BASE="${1:-https://try.skinofab.com}"
-PAGES=(adaptive-foundation-offer foundation-checkout foundation-thank-you foundation-stick-offer stick-checkout stick-thank-you)
+PAGES=(adaptive-foundation-offer foundation-checkout foundation-offer-1 foundation-offer-2 foundation-offer-2b lymphatic-brush-offer foundation-thank-you foundation-stick-offer stick-checkout stick-special-1 stick-special-2 stick-special-3 stick-special-4 stick-thank-you)
 bad=0
 for p in "${PAGES[@]}"; do
   html=$(curl -fsSL -m 30 "$BASE/$p/?axon_guard=$RANDOM") || { echo "FAIL $p: page did not load"; bad=1; continue; }
