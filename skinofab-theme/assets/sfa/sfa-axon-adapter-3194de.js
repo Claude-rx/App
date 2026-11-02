@@ -104,14 +104,9 @@
   var IMAGE_BY_VARIANT = {
     "15":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
     "103":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
-    "268":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
-    "269":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
-    "270":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
-    "301":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
     "170":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
     "171":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
     "172":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
-    "271":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
     "203":"https://cdn.29next.store/media/skinofab/images/products/2026/10/hero-f163d1.jpg",
     "204":"https://cdn.29next.store/media/skinofab/images/products/2026/10/hero-f163d1.jpg",
     "205":"https://cdn.29next.store/media/skinofab/images/products/2026/10/hero-f163d1.jpg",
@@ -119,40 +114,64 @@
     "208":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-97ecd1.jpg",
     "209":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-97ecd1.jpg",
     "236":"https://cdn.29next.store/media/skinofab/images/products/2026/10/duo-ends-1743e5.jpg",
-    "237":"https://cdn.29next.store/media/skinofab/images/products/2026/10/duo-ends-1743e5.jpg"
+    "237":"https://cdn.29next.store/media/skinofab/images/products/2026/10/duo-ends-1743e5.jpg",
+    "268":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "269":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "270":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "271":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
+    "301":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "334":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "335":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg"
   };
+  // A bundle added after this map was built (a new variant) still gets its product's JPG through the SKU family
+  // (SKF-APF-5-BRUSH -> SKF-APF), then the configured or store default image, so image_url is never left out.
+  var IMAGE_BY_SKU_FAMILY = {
+    "SKF-AFS":"https://cdn.29next.store/media/skinofab/images/products/2026/10/duo-ends-1743e5.jpg",
+    "SKF-APF":"https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg",
+    "SKF-ENS":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-97ecd1.jpg",
+    "SKF-LYB":"https://cdn.29next.store/media/skinofab/images/products/2026/10/card-642f9f.jpg",
+    "SKF-PDB":"https://cdn.29next.store/media/skinofab/images/products/2026/10/hero-f163d1.jpg"
+  };
+  var DEFAULT_IMAGE = IMAGE_BY_SKU_FAMILY['SKF-APF'];
   function imageUrl(it) {
     if (typeof it.item_image === 'string' && IMAGE_RE.test(it.item_image)) return it.item_image;
     var v = variantId(it);
     var mapped = v ? IMAGE_BY_VARIANT[v] : undefined;
     if (mapped) return mapped;
+    var sku = it.item_id !== undefined && it.item_id !== null ? String(it.item_id) : '';
+    var family = IMAGE_BY_SKU_FAMILY[sku.split('-').slice(0, 2).join('-')];
+    if (family) return family;
     var fallback = window.__axonItemImage;
-    return typeof fallback === 'string' && IMAGE_RE.test(fallback) ? fallback : undefined;
+    return typeof fallback === 'string' && IMAGE_RE.test(fallback) ? fallback : DEFAULT_IMAGE;
   }
   // An upsell item the SDK builds from the package carries the SKU as item_id but no item_variant_id.
   var VARIANT_BY_SKU = {
+    "SKF-AFS-1":"236",
+    "SKF-AFS-2":"237",
     "SKF-APF-1":"15",
-    "SKF-APF-2-GIFTS":"103",
-    "SKF-APF-3-GIFTS":"268",
     "SKF-APF-2":"269",
-    "SKF-APF-6-BRUSH":"270",
-    "SKF-APF-1-ADD":"301",
-    "SKF-LYB-1":"170",
-    "SKF-LYB-2":"171",
-    "SKF-LYB-3":"172",
-    "SKF-LYB-1T":"271",
-    "SKF-PDB-1":"203",
-    "SKF-PDB-2":"204",
-    "SKF-PDB-3":"205",
     "SKF-ENS-1":"207",
     "SKF-ENS-2":"208",
     "SKF-ENS-3":"209",
-    "SKF-AFS-1":"236",
-    "SKF-AFS-2":"237"
+    "SKF-LYB-1":"170",
+    "SKF-LYB-2":"171",
+    "SKF-LYB-3":"172",
+    "SKF-PDB-1":"203",
+    "SKF-PDB-2":"204",
+    "SKF-PDB-3":"205",
+    "SKF-LYB-1T":"271",
+    "SKF-APF-1-ADD":"301",
+    "SKF-APF-2-GIFTS":"103",
+    "SKF-APF-3-GIFTS":"268",
+    "SKF-APF-5-BRUSH":"335",
+    "SKF-APF-6-BRUSH":"270",
+    "SKF-APF-3-BLENDER":"334"
   };
   function variantId(it) {
     if (it.item_variant_id !== undefined && it.item_variant_id !== null && it.item_variant_id !== '') return String(it.item_variant_id);
-    return it.item_id !== undefined && it.item_id !== null ? VARIANT_BY_SKU[String(it.item_id)] : undefined;
+    if (it.item_id === undefined || it.item_id === null || it.item_id === '') return undefined;
+    // A SKU names exactly one variant, so an unmapped one stands in for the variant id rather than leaving it out.
+    return VARIANT_BY_SKU[String(it.item_id)] || String(it.item_id);
   }
   var DEFAULT_BRAND = 'SKINOFAB';
 

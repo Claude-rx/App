@@ -33,9 +33,15 @@ Klarna/Affirm → deferred; bank redirects → other). Upsell items the SDK buil
 the whole funnel (view_item → add_to_cart → begin_checkout → add_payment_info → purchase → upsell purchase) through them
 and expects no errors and no warnings.
 
+**Follow-up 4 (2 Nov 2026):** a live replay showed the APF funnel orange again: `image_url missing` on a bundle added
+to campaign 2221 on 1 Nov (variant 335, SKF-APF-5-BRUSH) that the variant map did not have. The maps are refreshed
+(334, 335) and the lookup no longer depends on them being complete: variant → SKU family (SKF-APF-*, SKF-AFS-*, …) →
+`window.__axonItemImage` → store default, and an unmapped SKU stands in for `item_variant_id`. A new bundle can no
+longer turn the event orange. `tools/funnel/axon_live_replay.cjs` is the browser replay used to check this.
+
 **Files:** `sfa-axon-adapter-3194de.js` (patched) · `.orig.js` (live copy before the fix, for rollback) · `axon-adapter.test.mjs`
 
-**Test:** `npm run test:axon` → 16/16 pass on the patch; the original fails the 4 user_data tests.
+**Test:** `npm run test:axon` → 17/17 pass on the patch; the original fails the 4 user_data tests.
 
 **Deploy (single file, theme 34):**
 ```bash

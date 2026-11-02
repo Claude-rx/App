@@ -659,7 +659,7 @@ if 'out.item_category_id = it.item_category;' in _ax or 'categoryId(it.item_cate
 if 'params.user_data = user' not in _ax or 'up.customer_email' not in _ax:
     fail('all pages', 'axon.adapter.js does not send user_data on purchase (AXON flags it as required)')
 # AXON image_url must end in .png/.jpg/.jpeg; the SDK's .webp package thumbnails are mapped to the store JPGs
-if 'IMAGE_BY_VARIANT' not in _ax or 'IMAGE_RE.test(' not in _ax:
+if 'IMAGE_BY_VARIANT' not in _ax or 'IMAGE_RE.test(' not in _ax or 'IMAGE_BY_SKU_FAMILY' not in _ax:
     fail('all pages', 'axon.adapter.js sends the SDK .webp image_url (AXON wants .png/.jpg/.jpeg)')
 # AXON payment_type is an enum (credit_card, wallet, deferred, ...); the SDK sends labels like "Credit Card"
 if 'params.payment_type = paymentType(' not in _ax or 'VARIANT_BY_SKU' not in _ax:

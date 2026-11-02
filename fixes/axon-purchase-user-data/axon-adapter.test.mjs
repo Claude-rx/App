@@ -103,16 +103,16 @@ test('live items pass every AXON Pixel Helper item rule (no orange)', () => {
   }
   assert.equal(calls[3][2].user_data.email, 'a@b.co');
 });
-test('a .jpg from the SDK is kept; unknown variant falls back to window.__axonItemImage or is left out', () => {
+test('a .jpg from the SDK is kept; unknown variant falls back to window.__axonItemImage, then the store default', () => {
   let r = load(); r.adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_image: 'https://x.example.com/p.jpg' }] }, evt({}));
   assert.equal(r.calls[0][2].items[0].image_url, 'https://x.example.com/p.jpg');
-  r = load({ __axonItemImage: 'https://x.example.com/f.png' }); r.adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_variant_id: '99999' }] }, evt({}));
+  r = load({ __axonItemImage: 'https://x.example.com/f.png' }); r.adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_id: 'ZZZ-1', item_variant_id: '99999' }] }, evt({}));
   assert.equal(r.calls[0][2].items[0].image_url, 'https://x.example.com/f.png');
-  r = load(); r.adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_variant_id: '99999' }] }, evt({}));
-  assert.equal(r.calls[0][2].items[0].image_url, undefined);
+  r = load(); r.adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_id: 'ZZZ-1', item_variant_id: '99999' }] }, evt({}));
+  assert.equal(r.calls[0][2].items[0].image_url, 'https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg');
 });
 test('every store variant maps to a .jpg/.png', () => {
-  for (const v of ['15', '103', '268', '269', '270', '301', '170', '171', '172', '271', '203', '204', '205', '207', '208', '209', '236', '237']) {
+  for (const v of ['15', '103', '268', '269', '270', '301', '170', '171', '172', '271', '203', '204', '205', '207', '208', '209', '236', '237', '334', '335']) {
     const { calls, adapter } = load(); adapter.send('view_item', { ...ec, items: [{ ...liveItem, item_variant_id: v }] }, evt({}));
     assert.match(calls[0][2].items[0].image_url, AXON_IMAGE_RE, v);
   }
@@ -188,5 +188,21 @@ test('payment_type maps every SDK label to the AXON enum', () => {
     const { calls, adapter } = load();
     adapter.send('add_payment_info', { currency: 'USD', value: 1, payment_type: label }, evt({}));
     assert.equal(calls[0][2].payment_type, want, label);
+  }
+});
+
+test('a bundle added after the map was built still gets an image (live 2 Nov 2026: SKF-APF-5-BRUSH, variant 335)', () => {
+  const cases = [
+    [{ item_id: 'SKF-APF-5-BRUSH', item_variant_id: '335' }, '01-front-a241ad.jpg'],   // mapped since the refresh
+    [{ item_id: 'SKF-APF-9-FUTURE', item_variant_id: '999' }, '01-front-a241ad.jpg'],  // unknown variant: SKU family
+    [{ item_id: 'SKF-AFS-4', item_variant_id: '998' }, 'duo-ends-1743e5.jpg'],
+    [{ item_id: 'SKF-LYB-9', item_variant_id: undefined }, 'card-642f9f.jpg']
+  ];
+  for (const [it, want] of cases) {
+    const { calls, adapter } = load();
+    adapter.send('view_item', { ...ec, items: [{ ...liveItem, ...it, item_image: 'https://x.example.com/t.webp' }] }, evt({}));
+    const item = calls[0][2].items[0];
+    assert.equal(item.image_url.split('/').pop(), want, it.item_id);
+    assert.deepEqual(validate(SCHEMA.view_item, calls[0][2]), { errors: [], warnings: [] }, it.item_id);
   }
 });
