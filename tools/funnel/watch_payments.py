@@ -49,14 +49,18 @@ def main(argv):
     tx0, order0 = latest()
     last_tx, last_order = arg('--since-tx', tx0), arg('--since-order', order0)
     print(f'watching: after transaction #{last_tx}, order #{last_order}', flush=True)
+    failures = 0
     while True:
         try:
             for t in sorted((t for t in get('/transactions/?page_size=20') if t['id'] > last_tx), key=lambda t: t['id']):
                 print(tx_line(t), flush=True); last_tx = t['id']
             for o in sorted((o for o in get('/orders/?page_size=20') if int(o['number']) > last_order), key=lambda o: int(o['number'])):
                 print(order_line(get(f"/orders/{o['number']}/")), flush=True); last_order = int(o['number'])
-        except Exception as e:  # one failed poll must not end the watch
-            print(f'poll error: {type(e).__name__}', flush=True)
+            failures = 0
+        except Exception as e:  # a failed poll must not end the watch; report only a sustained outage
+            failures += 1
+            if failures == 3:
+                print(f'store API unreachable for 3 polls in a row ({type(e).__name__}); still retrying', flush=True)
         if '--once' in argv:
             return
         time.sleep(arg('--interval', 20))
