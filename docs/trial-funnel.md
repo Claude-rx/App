@@ -180,6 +180,22 @@ item_variant_id, image_url (.png, .jpg or .jpeg) and an integer item_category_id
 - **Proven live.** view_item, add_to_cart and begin_checkout on the trial and APF funnels carry all seven fields, and
   AppLovin answers 200. A purchase payload run through the adapter does too.
 
+
+**Payment methods (4 Nov 2026).** The owner set campaigns 2221 and 2251 to Affirm, Afterpay, Apple Pay, card, Link and
+PayPal. Both checkouts now show:
+- card, Affirm and Link as radios;
+- PayPal and Apple Pay as the express buttons (Apple Pay shows on Apple devices).
+
+Proven live on the trial checkout (1 bottle and 5 bottles) and the APF checkout: each radio opens its panel, and
+Affirm and Link send her to their secure page on "Complete My Order".
+
+Two limits:
+- **Afterpay cannot show.** The Campaign Cart SDK (0.4.43, its latest) has no Afterpay method, so it is left off the
+  page.
+- **Affirm and subscription renewals.** Affirm is a one-time financing method: Stripe says buy now, pay later does
+  not support subscriptions. A refill on an Affirm order may not charge. Confirm with NEXT; if it does not, keep
+  Affirm for one-time carts only.
+
 ## Owner items
 
 - Cancel test order **101882** and the monthly subscription it started (Adaptive Peptide Foundation, $39.97/mo).

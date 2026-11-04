@@ -31,6 +31,10 @@
         "label": "Bankcard"
       },
       {
+        "code": "link",
+        "label": "Link"
+      },
+      {
         "code": "paypal",
         "label": "PayPal"
       }
