@@ -124,23 +124,29 @@ AppLovin answered **200 to every event**, at 390, 768, 1024 and 1440 px:
 |---|---|
 | Product page | page_view 200, view_item 200 ($19.97), add_to_cart 200 (on START MY TRIAL) |
 | Checkout | page_view 200, view_item 200, begin_checkout 200 ($19.97) |
-| First offer page | purchase: the funnel's Route C, the same code that proved purchases on the APF funnel (101594) |
+| Offer 1 | page_view 200, purchase 200 ($19.97, transaction 101882) |
+| Brush offer | page_view 200, view_item 200, purchase 200 ($39, `…-US1`: offer 1 accepted) |
+| Brush last chance, thank-you | page_view 200, view_item 200 |
 
-Two notes on the product page:
-- The store's AppLovin app loads the pixel with the same event key, but sends page_view and view_item only on its own
-  templates (product, home), not on a store page. So the trial page sends them itself.
-- The public page cache (30 minutes) served the version without page_view for its first half hour.
+**Test order 101882** (4 Nov 2026, the owner's go-ahead, NEXT's test card, no charge) proved the purchase. The run went
+through the product page, START MY TRIAL and the checkout at $19.97, accepted offer 1 (2 bottles, $39), declined
+the brush offers, and reached the thank-you page:
+- Total $58.97. The trial bottle reads "Then $39.97 every month", and the 2 bottles read "One-time purchase".
+- AppLovin received 31 posts and answered **200 to every one**.
+- Every check in `tracking.json` passed: init and page_view on every page, view_item, add_to_cart, begin_checkout,
+  purchase, upsell purchase, value/currency/id on each purchase, and every post accepted.
 
-**The purchase on this funnel is not yet proven.** It needs one test order through the funnel (NEXT's test card, no
-charge). The session's permission system held that order for the owner's go-ahead:
+The run:
 
-    FUNNEL=trial node tools/funnel/live_order.mjs https://try.skinofab.com <out> --entry '?debugger=true&nfdebug=true' --track --path accept
+    FUNNEL=trial node tools/funnel/live_order.mjs https://try.skinofab.com <out> --entry '?debugger=true&nfdebug=true' --track --path accept --cookie preview_theme=34
 
-The run writes `tracking.json`. Its `checks` include `purchase`, `upsell_purchase` and `applovin_accepted_every_post`
-(every AppLovin post answered 2xx). Cancel the test order and its subscription afterwards.
+Funnel test orders are reported to AppLovin as purchases (the adapter has no test-order filter).
+
+The store's AppLovin app loads the pixel with the same event key, but sends page_view and view_item only on its own
+templates (product, home), not on a store page. So the trial page sends them itself. The public page cache (30
+minutes) served the version without page_view for its first half hour.
 
 ## Owner items
 
-- Approve the one test order above, so the purchase event is proven green. Then cancel that order and its
-  subscription.
+- Cancel test order **101882** and the monthly subscription it started (Adaptive Peptide Foundation, $39.97/mo).
 - The Clinicians' Choice badge on the checkout is the APF checkout's (task 157 still applies).
