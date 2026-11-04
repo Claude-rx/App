@@ -83,9 +83,12 @@ def spec(c):
         if routing: page['resolved_routing'] = routing
         if pg['type'] == 'checkout':
             page['packages'] = [package(r, default_selected=r == pg['default_package']) for r in pg['packages']]
-            page['exit_intent'] = {'enabled': True, 'offer_ref_id': pg['exit_offer'], 'offer_code': offers[pg['exit_offer']]['code'],
-                                   'notes': F.EXIT_NOTE}
-            page['offers'] = [{'ref_id': pg['exit_offer']}]
+            if pg.get('exit_offer'):
+                page['exit_intent'] = {'enabled': True, 'offer_ref_id': pg['exit_offer'], 'offer_code': offers[pg['exit_offer']]['code'],
+                                       'notes': F.EXIT_NOTE}
+                page['offers'] = [{'ref_id': pg['exit_offer']}]
+            if pg.get('voucher_offer'):       # a code the checkout applies itself (the trial's FLASH50), no coupon box
+                page['offers'] = [{'ref_id': pg['voucher_offer']}]
         if pg['type'] in ('upsell', 'downsell'):
             refs, offer_refs = F.page_packages(pg)
             page['packages'] = [package(r, is_upsell=True, default_selected=i == 0) for i, r in enumerate(refs)]
@@ -93,6 +96,7 @@ def spec(c):
         if pg['type'] in ('presell', 'landing'):
             # the product page links each pack to the checkout (?forceBundleId=); neither page writes the cart
             page['packages'] = [package(r) for r in BY_CHECKOUT['packages']]
+            if pg.get('native'): page['sdk_hints']['rendered_by'] = 'theme'      # not a Page Kit page (no SDK on it)
         pages.append(page)
 
     return {

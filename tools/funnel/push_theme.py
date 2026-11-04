@@ -61,11 +61,15 @@ def new_refs(todo):
     file the page would point at nothing (the serum's two regenerated gallery images, live review 14, F9). Only new
     names: re-sending one the store already has would drop its stored copy under the cached pages."""
     out = set()
+    # a name any committed theme file already references is on the store already: a new page that reuses the store's
+    # pictures (the flash trial's copy of the foundation page, 4 Nov 2026) must not re-send them all
+    known = set(IGNORED_REF.findall(subprocess.run(['git', 'grep', '-h', '-o', '-I', '-E', r'sf/(img|media|fonts)/[A-Za-z0-9_.@%-]+', 'HEAD', '--', 'skinofab-theme'],
+                                                   cwd=ROOT, capture_output=True, text=True, errors='ignore').stdout))
     for rel in todo:
         if not rel.endswith(('.html', '.json', '.css', '.js')): continue
         now = set(IGNORED_REF.findall((THEME / rel).read_text(encoding='utf-8', errors='ignore')))
         head = subprocess.run(['git', 'show', f'HEAD:skinofab-theme/{rel}'], cwd=ROOT, capture_output=True, text=True, errors='ignore')
-        was = set(IGNORED_REF.findall(head.stdout)) if head.returncode == 0 else set()
+        was = (set(IGNORED_REF.findall(head.stdout)) if head.returncode == 0 else set()) | known
         out |= {f'assets/{n}' for n in now - was if (THEME / 'assets' / n).is_file()}
     return sorted(out)
 

@@ -1,0 +1,21 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/announcement.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-announcement
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell page (top announcement bar)
+  next_params:
+    announcement_text: string (HTML allowed). Renders nothing when absent or "".
+    announcement_variant: primary (default — brand primary block, white uppercase text) | danger (red-tinted
+      attention bar, e.g. "do not hit the back button") | success (green-tinted) | dark (black block, white text)
+      | light (surface block, dark text).
+    {% campaign_include 'upsell/announcement.html' announcement_text=announcement_text announcement_variant=announcement_variant %}
+{%- endcomment -%}
+{%- if announcement_text and announcement_text != "" -%}
+{%- assign ann_variant = announcement_variant | default: 'primary' -%}
+<div class="announcement{% unless ann_variant == 'primary' %} cc-{{ ann_variant }}{% endunless %}">
+  <div class="announcement__block">
+    <div class="announcement__text"><strong>{{ announcement_text }}</strong></div>
+  </div>
+</div>
+{%- endif -%}

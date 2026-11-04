@@ -138,13 +138,16 @@ def template(html, assets, pages):
 def main(site, theme):
     site, theme = Path(site), Path(theme)
     pages = {p['file'] for p in F.PAGES}
+    # a page the theme renders natively (the trial funnel's product page, written by tools/funnel/trial/pdp_copy.py) is
+    # linked to like the others but not built by Page Kit
+    built_pages = {p['file'] for p in F.PAGES if not p.get('native')}
     shutil.rmtree(theme / 'assets' / ASSET_DIR, ignore_errors=True)
     assets = Assets(site, theme)
     tdir = theme / 'templates' / 'pages'
     for old in tdir.glob('page.*.html'):                     # earlier runs' pages that are no longer in the funnel
-        if old.read_text(errors='ignore').startswith(MARK) and old.name[5:-5] not in pages: old.unlink()
+        if old.read_text(errors='ignore').startswith(MARK) and old.name[5:-5] not in built_pages: old.unlink()
     vendors = tracking(site)
-    for f in sorted(pages):
+    for f in sorted(built_pages):
         built = site / f / 'index.html'
         if not built.is_file(): raise SystemExit(f'not built: {built}')
         html = built.read_text(encoding='utf-8')
@@ -153,7 +156,7 @@ def main(site, theme):
         check_template(tpl, f, vendors)
         (tdir / f'page.{f}.html').write_text(tpl, encoding='utf-8')
     size = sum(p.stat().st_size for p in (theme / 'assets' / ASSET_DIR).iterdir())
-    print(f'funnel: {len(pages)} templates, {len(assets.names)} assets ({size / 1e6:.1f} MB) in assets/{ASSET_DIR}/')
+    print(f'funnel: {len(built_pages)} templates, {len(assets.names)} assets ({size / 1e6:.1f} MB) in assets/{ASSET_DIR}/')
     if vendors:
         js = sorted(n for r, n in assets.names.items() if r.startswith('js/') and (r.endswith(CORE) or r.endswith('.adapter.js')))
         print(f'  tracking on every page: {", ".join(sorted(vendors))}; scripts {", ".join(js)}')

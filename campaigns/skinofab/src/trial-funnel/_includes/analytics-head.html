@@ -1,0 +1,277 @@
+{%- comment -%} GENERATED from _shared/analytics/_includes/analytics-head.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  Analytics loaders (head). Included by base.html, base-presell.html and base-landing.html
+  so the three layouts never drift. Bootstraps GTM + Meta Pixel + RudderStack + (Route C) GA4 + AppLovin Axon + Taboola + Triple Whale + TikTok +
+  Northbeam + Snapchat + Pinterest — the Campaign Cart SDK (config.js analytics providers) sends PageView + ecommerce events,
+  so there is intentionally no manual fbq('track','PageView') here (it would double-fire, #79).
+  Gated on a non-empty id (`!= ""`, LiquidJS treats "" as truthy) and non-development builds.
+  Set gtm_id / fb_pixel_id / rudderstack_write_key + rudderstack_dataplane_url / ga4_id /
+  axon_event_key / taboola_account_id / triplewhale_name / tiktok_pixel_id / northbeam_client_id /
+  snap_pixel_id / pinterest_tag_id to "" in campaigns.json to omit. See
+  docs/campaign-page-kit-template-context.md.
+
+  RudderStack is an SDK-provider vendor (like GTM/Meta), NOT a Route C forwarder adapter — no
+  rudderstack.adapter.js. This partial only injects the RudderStack JS SDK loader: the Campaign
+  Cart SDK's rudderstack provider is a pure event forwarder whose adapter stays disabled unless
+  the page includes the snippet itself. Two-part pattern, same as GTM/Meta: set BOTH campaigns.json
+  keys here AND analytics.providers.rudderstack.enabled: true in config.js, or no events flow.
+
+  GA4, Axon, Taboola, Triple Whale and TikTok (apollo) are Route C, code-controlled direct integrations
+  (no GTM container): a per-vendor bootstrap here + the shared next-forwarder-core.js loaded once + one
+  adapter per vendor (ga4/axon/taboola/triplewhale/tiktok.adapter.js) mapping the SDK's dl_* stream to
+  each vendor. Upsells: GA4/Taboola/Triple Whale send a distinct upsell event (Approach C, clean count);
+  Axon and TikTok send `purchase` with a distinct id (Approach B — count inflates, keeps upsell revenue
+  in ad-network optimization). page_view: GA4/Axon forward it from dl_user_data; Taboola/Triple Whale/
+  TikTok base pixels fire their own, so those adapters skip dl_user_data. Identity/PII (raw email/phone)
+  via the core's onContact hook is OFF by default — opt in per vendor (triplewhale_contact_enabled →
+  TW Contact; northbeam_identity_enabled → Northbeam.identify; tiktok_advanced_matching_enabled →
+  ttq.identify; snap_/pinterest_ likewise). The accepts_marketing gate is PER ADAPTER: ad-platform
+  advanced matching (TikTok/Snap/Pinterest) fires only on prospect-cart creation and only when the
+  newsletter box is ticked; attribution vendors (Northbeam, Triple Whale) fire regardless of that box —
+  it is the newsletter opt-in, not a precondition of identity — and also on valid email/phone field
+  entry, so a backend order (Shopify Connector on Shop Sync) can be joined to the session. Rationale in
+  next-forwarder-core.js.
+  Source of truth: analytics-tracking-docs/examples/.
+{%- endcomment -%}
+{% unless environment == "development" %}
+{% if campaign.gtm_id and campaign.gtm_id != "" %}
+{% comment %} Google Tag Manager {% endcomment %}
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','{{ campaign.gtm_id }}');
+</script>
+{% endif %}
+{% if campaign.fb_pixel_id and campaign.fb_pixel_id != "" %}
+{% comment %} Meta Pixel Code {% endcomment %}
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '{{ campaign.fb_pixel_id }}');
+  // PageView and ecommerce events are sent by the Campaign Cart SDK when
+  // analytics.providers.facebook.enabled is true in config.js. Do not add
+  // a manual fbq('track', 'PageView') here — it double-fires the PageView.
+</script>
+{% endif %}
+{% if campaign.rudderstack_write_key and campaign.rudderstack_write_key != "" and campaign.rudderstack_dataplane_url and campaign.rudderstack_dataplane_url != "" %}
+{% comment %} RudderStack JS SDK (official v3 snippet, SnippetVersion 3.2.0) — loader only. Page/ecommerce
+     events are sent by the Campaign Cart SDK when analytics.providers.rudderstack.enabled is true
+     in config.js (its adapter needs this snippet on the page or it stays disabled). Do not add a
+     manual rudderanalytics.page() here — it would double-fire, same rationale as Meta Pixel above. {% endcomment %}
+<script type="text/javascript">
+  !function(){"use strict";window.RudderSnippetVersion="3.2.0";var e="rudderanalytics";window[e]||(window[e]=[])
+  ;var rudderanalytics=window[e];if(Array.isArray(rudderanalytics)){
+  if(true===rudderanalytics.snippetExecuted&&window.console&&console.error){
+  console.error("RudderStack JavaScript SDK snippet included more than once.")}else{rudderanalytics.snippetExecuted=true,
+  window.rudderAnalyticsBuildType="legacy";var sdkBaseUrl="https://cdn.rudderlabs.com";var sdkVersion="v3"
+  ;var sdkFileName="rsa.min.js";var scriptLoadingMode="async"
+  ;var r=["setDefaultInstanceKey","load","ready","page","track","identify","alias","group","reset","setAnonymousId","startSession","endSession","consent","addCustomIntegration"]
+  ;for(var n=0;n<r.length;n++){var t=r[n];rudderanalytics[t]=function(r){return function(){var n
+  ;Array.isArray(window[e])?rudderanalytics.push([r].concat(Array.prototype.slice.call(arguments))):null===(n=window[e][r])||void 0===n||n.apply(window[e],arguments)
+  }}(t)}try{
+  new Function('class Test{field=()=>{};test({prop=[]}={}){return prop?(prop?.property??[...prop]):import("");}}'),
+  window.rudderAnalyticsBuildType="modern"}catch(i){}var d=document.head||document.getElementsByTagName("head")[0]
+  ;var o=document.body||document.getElementsByTagName("body")[0];window.rudderAnalyticsAddScript=function(e,r,n){
+  var t=document.createElement("script");t.src=e,t.setAttribute("data-loader","RS_JS_SDK"),r&&n&&t.setAttribute(r,n),
+  "async"===scriptLoadingMode?t.async=true:"defer"===scriptLoadingMode&&(t.defer=true),
+  d?d.insertBefore(t,d.firstChild):o.insertBefore(t,o.firstChild)},window.rudderAnalyticsMount=function(){!function(){
+  if("undefined"==typeof globalThis){var e;var r=function getGlobal(){
+  return"undefined"!=typeof self?self:"undefined"!=typeof window?window:null}();r&&Object.defineProperty(r,"globalThis",{
+  value:r,configurable:true})}
+  }(),window.rudderAnalyticsAddScript("".concat(sdkBaseUrl,"/").concat(sdkVersion,"/").concat(window.rudderAnalyticsBuildType,"/").concat(sdkFileName),"data-rsa-write-key","{{ campaign.rudderstack_write_key }}")
+  },
+  "undefined"==typeof Promise||"undefined"==typeof globalThis?window.rudderAnalyticsAddScript("https://polyfill-fastly.io/v3/polyfill.min.js?version=3.111.0&features=Symbol%2CPromise&callback=rudderAnalyticsMount"):window.rudderAnalyticsMount()
+  ;var loadOptions={};rudderanalytics.load("{{ campaign.rudderstack_write_key }}","{{ campaign.rudderstack_dataplane_url }}",loadOptions)}}}();
+</script>
+{% endif %}
+{% if campaign.ga4_id and campaign.ga4_id != "" %}
+{% comment %} Google Analytics 4 (gtag.js) — Route C direct integration, no GTM container. {% endcomment %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ campaign.ga4_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  // send_page_view:false — the SDK owns page_view: ga4.adapter.js forwards it from dl_user_data
+  // (fired every page + on SPA nav). gtag's default (true) would double-count landings.
+  gtag('config', '{{ campaign.ga4_id }}', { send_page_view: false });
+  // Expose the id so ga4.adapter.js knows GA4 is active on this page.
+  window.__ga4MeasurementId = '{{ campaign.ga4_id }}';
+  // Optional per-campaign event toggles (comma-separated dl_* or GA4 names). allowed_events: ""=default
+  // main set, "all"=every mapped event, or a subset; blocked_events removes from whatever's allowed.
+  window.__ga4AllowedEvents = '{{ campaign.ga4_allowed_events }}';
+  window.__ga4BlockedEvents = '{{ campaign.ga4_blocked_events }}';
+</script>
+{% endif %}
+{% if campaign.axon_event_key and campaign.axon_event_key != "" %}
+{% comment %} AppLovin Axon Pixel — Route C direct integration, no GTM container. Identifier is an EVENT KEY.
+     Upsells map to `purchase` (Approach B: count inflates — brief the media buyer). {% endcomment %}
+<script>
+  var AXON_EVENT_KEY = "{{ campaign.axon_event_key }}";
+  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
+  axon("init");
+  // Exposed for axon.adapter.js: confirms Axon is active + supplies per-campaign event toggles.
+  // allowed_events: ""=default main set, "all"=every mapped event, or a subset; blocked removes from allowed.
+  window.__axonEventKey = AXON_EVENT_KEY;
+  window.__axonAllowedEvents = "{{ campaign.axon_allowed_events }}";
+  window.__axonBlockedEvents = "{{ campaign.axon_blocked_events }}";
+</script>
+{% endif %}
+{% if campaign.taboola_account_id and campaign.taboola_account_id != "" %}
+{% comment %} Taboola Pixel — Route C direct integration, no GTM container. Numeric account id. The base pixel
+     below already fires page_view, so taboola.adapter.js does NOT map dl_user_data (no double-count).
+     Supports custom events → upsells are a distinct `upsell_purchase` (Approach C, clean count). {% endcomment %}
+<script type="text/javascript">
+  window._tfa = window._tfa || [];
+  window._tfa.push({ notify: 'event', name: 'page_view', id: {{ campaign.taboola_account_id }} });
+  !function (t, f, a, x) {
+    if (!document.getElementById(x)) {
+      t.async = 1; t.src = a; t.id = x; f.parentNode.insertBefore(t, f);
+    }
+  }(document.createElement('script'),
+    document.getElementsByTagName('script')[0],
+    '//cdn.taboola.com/libtrc/unip/{{ campaign.taboola_account_id }}/tfa.js',
+    'tb_tfa_script');
+  // Exposed for taboola.adapter.js. NUMERIC (not quoted) so the adapter's `id` matches the base pixel.
+  window.__taboolaAccountId = {{ campaign.taboola_account_id }};
+  window.__taboolaAllowedEvents = '{{ campaign.taboola_allowed_events }}';
+  window.__taboolaBlockedEvents = '{{ campaign.taboola_blocked_events }}';
+</script>
+{% endif %}
+{% if campaign.triplewhale_name and campaign.triplewhale_name != "" %}
+{% comment %} Triple Whale (Triple Pixel, headless) — Route C direct integration, no GTM. The headless base
+     snippet below IS the pageload signal (TW has no page_view), so triplewhale.adapter.js does NOT map
+     dl_user_data. Purchase is a function call; upsells → custom `UpsellPurchase` (Approach C).
+     Contact (identity) sends RAW email/phone — OFF unless triplewhale_contact_enabled is set. When on it
+     fires on field entry + prospect cart and is NOT gated on accepts_marketing (attribution vendor — see
+     the adapter header). CSP: pixel uses eval() + api/conf.config-security.com. {% endcomment %}
+<link rel='preconnect dns-prefetch' href='https://api.config-security.com/' crossorigin />
+<link rel='preconnect dns-prefetch' href='https://conf.config-security.com/' crossorigin />
+<script>
+/* >> TriplePixel :: start*/
+window.TriplePixelData={TripleName:"{{ campaign.triplewhale_name }}",ver:"2.17",plat:"{{ campaign.triplewhale_platform | default: 'custom-msp' }}",isHeadless:true},function(W,H,A,L,E,_,B,N){function O(U,T,P,H,R){void 0===R&&(R=!1),H=new XMLHttpRequest,P?(H.open("POST",U,!0),H.setRequestHeader("Content-Type","text/plain")):H.open("GET",U,!0),H.send(JSON.stringify(P||{})),H.onreadystatechange=function(){4===H.readyState&&200===H.status?(R=H.responseText,U.includes("/first")?eval(R):P||(N[B]=R)):(299<H.status||H.status<200)&&T&&!R&&(R=!0,O(U,T-1,P))}}if(N=window,!N[H+"sn"]){N[H+"sn"]=1,L=function(){return Date.now().toString(36)+"_"+Math.random().toString(36)};try{A.setItem(H,1+(0|A.getItem(H)||0)),(E=JSON.parse(A.getItem(H+"U")||"[]")).push({u:location.href,r:document.referrer,t:Date.now(),id:L()}),A.setItem(H+"U",JSON.stringify(E))}catch(e){}var i,m,p;A.getItem('"!nC`')||(_=A,A=N,A[H]||(E=A[H]=function(t,e,a){return void 0===a&&(a=[]),"State"==t?E.s:(W=L(),(E._q=E._q||[]).push([W,t,e].concat(a)),W)},E.s="Installed",E._q=[],E.ch=W,B="configSecurityConfModel",N[B]=1,O("https://conf.config-security.com/model",5),i=L(),m=A[atob("c2NyZWVu")],_.setItem("di_pmt_wt",i),p={id:i,action:"profile",avatar:_.getItem("auth-security_rand_salt_"),time:m[atob("d2lkdGg=")]+":"+m[atob("aGVpZ2h0")],host:A.TriplePixelData.TripleName,plat:A.TriplePixelData.plat,url:window.location.href.slice(0,500),ref:document.referrer,ver:A.TriplePixelData.ver},O("https://api.config-security.com/event",5,p),O("https://api.config-security.com/first?host={{ campaign.triplewhale_name }}&plat={{ campaign.triplewhale_platform | default: 'custom-msp' }}",5)))}}("","TriplePixel",localStorage);
+/* << TriplePixel :: end*/
+  // Exposed for triplewhale.adapter.js.
+  window.__triplewhaleName = '{{ campaign.triplewhale_name }}';
+  // Contact (identity) sends RAW email/phone — OFF unless explicitly enabled AND consent handled. See README.
+  window.__triplewhaleContact = '{{ campaign.triplewhale_contact_enabled }}';
+  window.__triplewhaleAllowedEvents = '{{ campaign.triplewhale_allowed_events }}';
+  window.__triplewhaleBlockedEvents = '{{ campaign.triplewhale_blocked_events }}';
+</script>
+{% endif %}
+{% if campaign.tiktok_pixel_id and campaign.tiktok_pixel_id != "" %}
+{% comment %} TikTok Pixel — Route C direct integration, no GTM container. Base ttq.page() owns the pageview, so
+     tiktok.adapter.js does NOT map dl_user_data. Upsells → `Purchase` with a distinct event_id
+     (Approach B — count inflates; keeps upsell revenue in TikTok's Purchase/ROAS optimization).
+     Advanced Matching (ttq.identify raw email/phone) is OFF unless tiktok_advanced_matching_enabled is
+     set (core onContact hook, prospect-cart only, gated on accepts_marketing — marketing use). {% endcomment %}
+<script>
+!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=r+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+  ttq.load('{{ campaign.tiktok_pixel_id }}');
+  ttq.page();
+}(window, document, 'ttq');
+  // Exposed for tiktok.adapter.js. The base pixel above already fires page_view via ttq.page() — the
+  // adapter does NOT map dl_user_data (avoids a double page_view).
+  window.__tiktokPixelId = '{{ campaign.tiktok_pixel_id }}';
+  // Advanced Matching (ttq.identify with RAW email/phone) — OFF unless enabled AND consent handled.
+  window.__tiktokAdvancedMatching = '{{ campaign.tiktok_advanced_matching_enabled }}';
+  window.__tiktokAllowedEvents = '{{ campaign.tiktok_allowed_events }}';
+  window.__tiktokBlockedEvents = '{{ campaign.tiktok_blocked_events }}';
+</script>
+{% endif %}
+{% if campaign.northbeam_client_id and campaign.northbeam_client_id != "" %}
+{% comment %} Northbeam (attribution) — Route C direct integration, no GTM container. Base pixel auto-fires the
+     pageview (trackPageViewInitial), so northbeam.adapter.js does NOT map dl_user_data. Purchase + upsell
+     only (Northbeam is purchase/pageview attribution, not funnel events); upsells → another purchase with
+     a distinct {orderId}-US{n} id (Approach B — count inflates). Identity (Northbeam.identify email) is
+     OFF unless northbeam_identity_enabled is set; when on it fires on every valid checkout email entry +
+     prospect cart and is NOT gated on accepts_marketing (attribution). Shop Sync stores: block
+     dl_purchase, dl_upsell_purchase via northbeam_blocked_events and rely on identity — the Shopify
+     Connector order is the order of record (see the adapter header / README). {% endcomment %}
+<script>(function(){var e;(n=e=e||{}).A="identify",n.B="trackPageView",n.C="fireEmailCaptureEvent",n.D="fireCustomGoal",n.E="firePurchaseEvent",n.F="trackPageViewInitial",n.G="fireSlimPurchaseEvent",n.H="identifyCustomerId";var n="//j.northbeam.io/ota-sp/{{ campaign.northbeam_client_id }}.js";function r(n){for(var t=[],e=1;e<arguments.length;e++)t[e-1]=arguments[e];i.push({fnName:n,args:t})}var t,i=[],a=((t={})[e.F]=function(n){r(e.F,n)},(a={_q:i})[e.A]=function(n,t){return r(e.A,n,t)},a[e.B]=function(n){return r(e.B,n)},a[e.C]=function(n,t){return r(e.C,n,t)},a[e.D]=function(n,t){return r(e.D,n,t)},a[e.E]=function(n){return r(e.E,n)},a[e.G]=function(n){return r(e.G,n)},a[e.H]=function(n,t){return r(e.H,n,t)},Object.assign(function(n){for(var t=[],e=1;e<arguments.length;e++)t.push(arguments[e]);return r.apply(null,[n].concat(t))},a));window.Northbeam=a,(a=document.createElement("script")).async=!0,a.src=n,document.head.appendChild(a),t.trackPageViewInitial(window.location.href);})()</script>
+<script>
+  // Exposed for northbeam.adapter.js. Base pixel above already fires the pageview (trackPageViewInitial).
+  window.__northbeamClientId = '{{ campaign.northbeam_client_id }}';
+  // Identity (Northbeam.identify with RAW email) — OFF unless enabled AND consent handled.
+  window.__northbeamIdentity = '{{ campaign.northbeam_identity_enabled }}';
+  window.__northbeamAllowedEvents = '{{ campaign.northbeam_allowed_events }}';
+  window.__northbeamBlockedEvents = '{{ campaign.northbeam_blocked_events }}';
+</script>
+{% endif %}
+{% if campaign.snap_pixel_id and campaign.snap_pixel_id != "" %}
+{% comment %} Snap Pixel — Route C direct integration, no GTM container. Base snaptr('track','PAGE_VIEW') owns the
+     pageview, so snapchat.adapter.js does NOT map dl_user_data. Events are UPPERCASE; purchase value
+     field is `price` (not value). Upsells → PURCHASE with a distinct {orderId}-US{n} transaction_id
+     (Approach B — count inflates; keeps upsell revenue in Snap's PURCHASE optimization). Advanced Matching
+     (user_email in init) OFF unless snap_advanced_matching_enabled is set (core onContact, prospect-cart
+     only, gated on accepts_marketing — marketing use). {% endcomment %}
+<script type="text/javascript">
+(function (e, t, n) {
+  if (e.snaptr) return; var a = e.snaptr = function () { a.handleRequest ? a.handleRequest.apply(a, arguments) : a.queue.push(arguments); };
+  a.queue = []; var s = 'script'; var r = t.createElement(s); r.async = !0; r.src = n;
+  var u = t.getElementsByTagName(s)[0]; u.parentNode.insertBefore(r, u);
+})(window, document, 'https://sc-static.net/scevent.min.js');
+  snaptr('init', '{{ campaign.snap_pixel_id }}');
+  snaptr('track', 'PAGE_VIEW');
+  // Exposed for snapchat.adapter.js. The base above already fires PAGE_VIEW — the adapter does NOT map
+  // dl_user_data (avoids a double pageview).
+  window.__snapPixelId = '{{ campaign.snap_pixel_id }}';
+  // Advanced Matching (user_email/user_phone_number in init) — OFF unless enabled AND consent handled.
+  window.__snapAdvancedMatching = '{{ campaign.snap_advanced_matching_enabled }}';
+  window.__snapAllowedEvents = '{{ campaign.snap_allowed_events }}';
+  window.__snapBlockedEvents = '{{ campaign.snap_blocked_events }}';
+</script>
+{% comment %} End Snap Pixel Code {% endcomment %}
+{% endif %}
+{% if campaign.pinterest_tag_id and campaign.pinterest_tag_id != "" %}
+{% comment %} Pinterest Tag — Route C direct integration, no GTM container. Base pintrk('page') owns the pageview,
+     so pinterest.adapter.js does NOT map dl_user_data. Lowercase conversion events (addtocart / checkout
+     / signup / lead / search — no product-view/begin_checkout/add_payment_info standard event). Upsells →
+     `checkout` with a distinct {orderId}-US{n} event_id (Approach B — count inflates). Enhanced Match (em)
+     OFF unless pinterest_enhanced_match_enabled is set (core onContact hook, prospect-cart only, gated on
+     accepts_marketing — marketing use; Pinterest hashes em itself). {% endcomment %}
+<script>
+!function (e) {
+  if (!window.pintrk) {
+    window.pintrk = function () { window.pintrk.queue.push(Array.prototype.slice.call(arguments)); };
+    var n = window.pintrk; n.queue = []; n.version = "3.0";
+    var t = document.createElement("script"); t.async = !0; t.src = e;
+    var r = document.getElementsByTagName("script")[0]; r.parentNode.insertBefore(t, r);
+  }
+}("https://s.pinimg.com/ct/core.js");
+  pintrk('load', '{{ campaign.pinterest_tag_id }}');
+  pintrk('page');
+  // Exposed for pinterest.adapter.js. The base above already fires the pageview via pintrk('page') —
+  // the adapter does NOT map dl_user_data (avoids a double pageview).
+  window.__pinterestTagId = '{{ campaign.pinterest_tag_id }}';
+  // Enhanced Match (em in load) — OFF unless enabled AND consent handled.
+  window.__pinterestEnhancedMatch = '{{ campaign.pinterest_enhanced_match_enabled }}';
+  window.__pinterestAllowedEvents = '{{ campaign.pinterest_allowed_events }}';
+  window.__pinterestBlockedEvents = '{{ campaign.pinterest_blocked_events }}';
+</script>
+{% comment %} End Pinterest Tag {% endcomment %}
+{% endif %}
+{%- capture _analytics_on -%}{{ campaign.ga4_id }}{{ campaign.axon_event_key }}{{ campaign.taboola_account_id }}{{ campaign.triplewhale_name }}{{ campaign.tiktok_pixel_id }}{{ campaign.northbeam_client_id }}{{ campaign.snap_pixel_id }}{{ campaign.pinterest_tag_id }}{%- endcapture -%}
+{% if _analytics_on != "" %}
+{% comment %} Route C forwarder: shared core once, then each active vendor adapter. Plain (non-deferred) so the
+     transformFn hook registers before the SDK module inits and fires events. On every page (this partial
+     is in all 3 layouts) so redirect-queued dl_purchase / dl_upsell_purchase are caught on the receipt. {% endcomment %}
+<script src="{{ 'js/next-forwarder-core.js' | campaign_asset }}"></script>
+{% if campaign.ga4_id and campaign.ga4_id != "" %}<script src="{{ 'js/ga4.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% if campaign.axon_event_key and campaign.axon_event_key != "" %}<script src="{{ 'js/axon.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% if campaign.taboola_account_id and campaign.taboola_account_id != "" %}<script src="{{ 'js/taboola.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% if campaign.triplewhale_name and campaign.triplewhale_name != "" %}<script src="{{ 'js/triplewhale.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% if campaign.tiktok_pixel_id and campaign.tiktok_pixel_id != "" %}<script src="{{ 'js/tiktok.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% if campaign.northbeam_client_id and campaign.northbeam_client_id != "" %}<script src="{{ 'js/northbeam.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% if campaign.snap_pixel_id and campaign.snap_pixel_id != "" %}<script src="{{ 'js/snapchat.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% if campaign.pinterest_tag_id and campaign.pinterest_tag_id != "" %}<script src="{{ 'js/pinterest.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% endif %}
+{% endunless %}

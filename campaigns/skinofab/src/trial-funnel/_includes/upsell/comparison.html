@@ -1,0 +1,54 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/comparison.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-comparison
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell page (with vs. without comparison cards)
+  next_params:
+    section: { title, text, recommended_label, with { title, subtitle, items[] }, without { title, subtitle, items[] } }.
+{%- endcomment -%}
+{%- if section.with and section.with.items.size > 0 -%}
+<section class="section cc-sm color-surface">
+  <div class="container">
+    <div class="heading-box text-center max-width-large align-center">
+      <h2 class="display-md">{{ section.title | default: 'With vs. without' }}</h2>
+      {%- if section.text %}<p class="text-lg">{{ section.text }}</p>{% endif %}
+    </div>
+    <div class="grid-2col-standard margin-32">
+      <div class="upsell-container upsell-container--box upsell-container--stack">
+        {%- if section.recommended_label %}<span class="badge cc-inline cc-float text-sm tw-700">{{ section.recommended_label }}</span>{% endif %}
+        <div class="announcement__block cc-padded flex-col color-white text-center">
+          <p class="display-sm">{{ section.with.title | default: 'With It' }}</p>
+          {%- if section.with.subtitle %}<p class="text-lg tw-500">{{ section.with.subtitle }}</p>{% endif %}
+        </div>
+        <div class="upsell-offer__card">
+          <ul role="list" class="list-container cc-lg">
+            {%- for item in section.with.items %}
+            <li class="list__item">
+              <div class="list-icon cc-success"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="currentColor" opacity=".18"/><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M7 12.5l3.2 3.2L17 9"/></svg></div>
+              <div class="text-base">{{ item }}</div>
+            </li>
+            {%- endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="upsell-container upsell-container--box upsell-container--destructive upsell-container--stack">
+        <div class="upsell-offer__card cc-center cc-divider cc-padded">
+          <p class="display-sm color-destructive">{{ section.without.title | default: 'Without It' }}</p>
+          {%- if section.without.subtitle %}<p class="text-lg tw-500">{{ section.without.subtitle }}</p>{% endif %}
+        </div>
+        <div class="upsell-offer__card">
+          <ul role="list" class="list-container cc-lg">
+            {%- for item in section.without.items %}
+            <li class="list__item">
+              <div class="list-icon cc-destructive"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="currentColor" opacity=".18"/><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M8.5 8.5l7 7m0-7l-7 7"/></svg></div>
+              <div class="text-base">{{ item }}</div>
+            </li>
+            {%- endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}

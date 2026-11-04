@@ -1,6 +1,10 @@
 """The Adaptive Peptide Foundation funnel's five offer pages, as Campaign Page Kit pages, from one place.
 
-usage: python3 -I tools/funnel/apf/offer_pages.py
+usage: [FUNNEL=trial] python3 -I tools/funnel/apf/offer_pages.py
+
+FUNNEL=trial writes the flash trial funnel's five offer pages (campaigns/skinofab/src/trial-funnel/trial-*.html) from
+the same code, on campaign 2251's packages and codes (funnels/trial.py); its buyer never saw a $33.97 sales page, so
+the one-bottle offers are anchored on what she has seen (her $39.97 a month, the store's $47 bought once): TRIAL_COPY.
 
 Writes campaigns/skinofab/src/apf-funnel/{foundation-offer-1,foundation-offer-2,foundation-offer-2b,lymphatic-brush-offer,
 lymphatic-brush-offer-b}.html (generated: edit this file, then run it). The packages, vouchers and routes come from
@@ -40,7 +44,7 @@ number, and no fixed percentage beside the SDK's.
 import json, os, sys
 from pathlib import Path
 
-os.environ['FUNNEL'] = 'apf'
+os.environ['FUNNEL'] = os.environ.get('FUNNEL') if os.environ.get('FUNNEL') in ('apf', 'trial') else 'apf'
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import funnel as F
@@ -219,7 +223,7 @@ def single_page(pid, spec, o):
         *(['media_video:', *[f'  {k}: {q(v) if isinstance(v, str) else ("[" + ", ".join(q(x) for x in v) + "]") if isinstance(v, list) else str(v).lower()}' for k, v in BRUSH_VIDEO.items()]] if brush else []),
         'upsell_offer:', '  type: single', '  pricing_mode: discounted', f'  package_id: {tier["ref"]}',
         f'  voucher: {q(tier["voucher"])}', f'  selector_id: {q(pid)}', '  show_rating: false',
-        f'  pretitle: {q(o["pretitle"])}', f'  title: {q(o["title"])}', f'  retail_label: {q("Sales page price" if str(tier["package"]).startswith("apf") else "Regular price")}',   # one bottle's $39 is the sales page's price; the store's is $47 (live review 5)
+        f'  pretitle: {q(o["pretitle"])}', f'  title: {q(o["title"])}', f'  retail_label: {q(RETAIL_APF if str(tier["package"]).startswith("apf") else "Regular price")}',   # one bottle's $39 is the sales page's price; the store's is $47 (live review 5)
         '  price_label: "Today, on this page"', '  retail_shipping: ""', '  offer_shipping: "FREE SHIPPING · CHARGED ONCE"', f'  accept_text: {q(o["accept"])}', '  accept_show_price: true',
         f'  cta_note: {q(terms)}', f'  decline_text: {q(o["decline"])}', f'  closing_title: {q(o["closing"])}',
         f'  image: {q("images/sf/" + o["images"][0][0] + ".jpg")}',
@@ -379,6 +383,26 @@ OFFERS = {
         'brush_pdp': True, 'skip_skus': 'SKF-APF-5-BRUSH,SKF-APF-6-BRUSH',
     },
 }
+
+
+# the one-bottle offers' struck price is the add-on bottle's own price, $33.97: the APF sales page's price for a bottle;
+# the trial's buyer pays $39.97 a month for hers and never saw $33.97, so there it is only "Bottle price" and the copy
+# compares with the prices she has seen
+RETAIL_APF = 'Sales page price' if F.FUNNEL == 'apf' else 'Bottle price'
+TRIAL_COPY = {
+    'offer-2': {
+        'hero_text': 'One for your vanity, one for your bag: {price} for one more bottle, charged once, in the same box as your order.',
+        'features': [('For touch-ups on the go', 'One pump in your bag: a thin layer over the nose and chin and it looks fresh again.'),
+                     ('Less than half your monthly price', 'Your bottle refills at $39.97 a month, and one is $47 bought once in our store. Here one more is {price}, charged once.'),
+                     ('30 days to love it', 'Or email us within 30 days of delivery for a full refund, even opened.')]},
+    'offer-2b': {
+        'hero_text': '{price} for one more bottle, charged once, in the same box as your order. After this page the price is gone.',
+        'features': [('{discount} off, same bottle', 'The same 30 mL airless pump, the same serum, {price} instead of $33.97 ($39.97 a month on your refills, $47 bought once in our store).'),
+                     ('Charged once', 'To the payment you just used. This bottle doesn’t renew, and nothing else is charged.'),
+                     ('The same guarantee', '30 days from delivery, a full refund even opened, on this bottle too.')]},
+}
+if F.FUNNEL == 'trial':
+    for _pid, _o in TRIAL_COPY.items(): OFFERS[_pid].update(_o)
 
 
 if __name__ == '__main__':

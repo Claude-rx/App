@@ -1,0 +1,46 @@
+{% comment %}
+  next_component: payment-method-presentation
+  next_version: 1.0.0
+  next_sdk_min: 0.4.18
+  next_purpose: Express-checkout button bar (PayPal / Apple Pay / Google Pay / Klarna / Link, SDK 0.4.35+ for Link). Skips the credit card form entirely. Sub-surface of payment-method-presentation; included alongside payment-methods.html.
+  next_params:
+    show_title:   bool, default true. Set to false to hide the "Express Checkout" heading.
+  next_sdk_owns:
+    - data-next-express-checkout (values: container, paypal, apple_pay, google_pay, shop_pay, link — underscore spellings canonical per SDK 0.4.35; legacy apple-pay/google-pay still accepted)
+    - data-next-component (express-error, express-error-text)
+  next_theming:
+    classes_designer_owns: [.exp-checkout, .express-checkout__title, .express-checkout__buttons, .next-toast-handler]
+    css_vars_designer_owns: []
+  next_dont_touch:
+    - Each express button is a SDK-mounted iframe; do not wrap in extra elements that change layout box model
+    - Express method visibility is gated by paymentConfig.expressCheckout in nextConfig (methodOrder) AND the campaign's available express methods — flag mismatches
+    - Link also ships as a radio in payment-methods.html (rendered by default) — a page keeping both surfaces shows Link twice; pass show_link=false there when offering Link express
+  next_gotchas:
+    - Stacked layout (this) vs inline (express-checkout-inline.html) — pick one per page; do not mix
+    - "Or" divider between express bar and credit form is purely visual; SDK behavior identical
+  next_variants:
+    - stacked (this; full-width button stack)
+    - inline (express-checkout-inline.html; compact horizontal bar)
+  next_related:
+    - express-checkout-inline.html (compact variant)
+    - payment-methods.html (the sibling credit card form)
+{% endcomment %}
+<div data-next-catalog-component="express-checkout" data-next-express-checkout="container" class="exp-checkout">
+  {% if show_title != false %}
+  <div class="express-checkout__title">Express Checkout</div>
+  {% endif %}
+  <div data-next-component="express-error" class="next-toast-handler">
+    <div class="tip1_bar is-warning">
+      <div data-next-component="express-error-text" class="text-sm">Error message</div>
+    </div>
+  </div>
+  {% comment %} Buttons are injected by campaign-cart ExpressCheckoutContainerEnhancer {% endcomment %}
+  <div data-next-express-checkout="buttons" class="express-checkout__buttons"></div>
+  {% if show_divider != false %}
+  <div class="divider-section">
+    <div class="divider-section__line-v2"></div>
+    <div class="divider-section__text-v2">OR</div>
+    <div class="divider-section__line-v2"></div>
+  </div>
+  {% endif %}
+</div>

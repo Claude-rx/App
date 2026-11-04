@@ -1,0 +1,187 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/offer.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-offer
+  next_version: 1
+  next_sdk_owns: upsell offer wrapper, bundle selector / cards / quantity, upsell add/skip actions, price display
+  next_sdk_surface: upsell offer (layout shell — dispatches every inner piece)
+  next_params:
+    upsell_offer.type: tier-cards | tier-pills | stepper | single | mv — the frontmatter switch every page
+      sets (mv needs the MV family assets: upsells-mv.js + upsell_mv_tiers). The include arg offer_type=
+      overrides it (used by the deprecated shims); default "stepper".
+    upsell_offer: object. package_id, selector_id, display selector ids, voucher (single), stepper bounds,
+      pricing_mode, and copy: pretitle, title, rating_text, show_rating, heading_prices, quantity_label,
+      accept_text, accept_show_price, cta_note, ships_info_text, social_proof, decline_text,
+      retail_label, retail_shipping, price_label, offer_shipping.
+    upsell_bundle_tiers / upsell_mv_tiers: arrays — see upsell/offer-selector.html / upsell/offer-controls.html.
+    upsell_layout: object. style card (default) | box — box is the upsell-single look: bordered
+      upsell-container--box in a surface-colour section (no overlap), image left, centered copy, inline
+      prices, no bullets / ships-info / visible decline (the decline lives in upsell-closing-cta, which proxies
+      to a hidden in-offer skip unless show_decline is true). boxed (default true), media carousel|image|grid|video|none (default carousel — the swiper area; video reads media_video),
+      media_position right|left (default right = content left, media right on desktop),
+      decline_position below (default — centered under the whole offer) | column (inside the content column,
+      after the CTA / guarantees, so decline sits with the accept button),
+      media_align center (default) | top | sticky (sticky = stays in view while long copy scrolls; needs
+      boxed: false, the shadowed container clips it), show_bullets,
+      show_ships_info, show_payment_logos.
+    offer_bullets: array of strings or { text }. Default demo bullets render when absent.
+    upsell_video: object. src, poster, title, autoplay (default true → muted), loop, controls (default true).
+      Its own include (upsell/video.html), rendered under the heading whenever set.
+    upsell_guarantees: array. { variant stacked|row, icon lock|shield, image, title, text }.
+    swiper_slides / swiper_thumbs: arrays for media carousel; media_images: array for media grid.
+  next_dont_touch: data-next-upsell, data-next-await, data-next-package-id, data-next-bundle-selector-id,
+    data-next-bundle-*, data-next-quantity-*, data-next-display, data-next-format
+
+  Composition (every piece is its own partial — swap or drop by frontmatter, never by editing markup):
+    display-only selector (outside offer)   → tier-cards / tier-pills / mv: bundle.upsell-bundle-1x.* for the hero;
+                                               single + voucher: hidden linked selector
+    [data-next-upsell="offer"]
+      upsell/offer-selector.html            → hidden state-machine selector (pills / stepper / mv) — MUST be the
+                                               first [data-next-bundle-selector] inside the offer: UpsellEnhancer
+                                               resolves the bundle to add from it (not data-next-upsell-action-for)
+      content column
+        upsell/offer-heading.html           → pretitle · title · rating · optional inline price strip
+        upsell/video.html                   → optional, whenever upsell_video is set
+        upsell/offer-bullets.html           → feature bullets
+        upsell/offer-controls.html          → the ONLY piece that differs per offer type
+        upsell/offer-prices.html            → pricing_mode-driven price rows
+        upsell/cta.html                     → accept · note · upsell/ships-info.html · payment-logos.html (shared with checkout)
+        upsell/guarantees.html              → optional guarantee cards
+      media column                          → upsell/offer-media.html (carousel / image / grid / video[media_video] — the swiper area)
+      upsell/decline.html                   → skip link
+
+  A tier-swap / stepper offer renders no bundle slots, so per-line properties are not possible here;
+  use offer_type mv (slot picker) for that — see CLAUDE.md "Line-item properties".
+{% endcomment %}
+{%- campaign_include 'upsell/offer-context.html' offer_type=offer_type -%}
+{%- if layout.style == 'box' -%}
+<div data-next-catalog-component="upsell-offer" data-upsell-offer-type="{{ upsell_type }}" data-upsell-style="box">
+  <section class="section cc-sm cc-top-0 color-surface upsell-box--flat">
+    <div class="container cc-medium">
+      {%- if upsell_type == 'single' and offer.voucher -%}
+      <div data-next-bundle-selector data-next-upsell-context data-next-selector-id="{{ selector_id }}" class="hide">
+        <div role="button"
+             data-next-bundle-card
+             data-next-bundle-id="{{ selector_id }}-card"
+             data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":1}]'
+             data-next-bundle-vouchers='["{{ offer.voucher }}"]'
+             data-next-selected="true"
+             class="os-card next-selected"></div>
+      </div>
+      {%- elsif upsell_type == 'tier-cards' or upsell_type == 'tier-pills' or upsell_type == 'mv' -%}
+      <div data-next-bundle-selector data-next-upsell-context data-next-selector-id="{{ display_selector_id }}" style="display:none">
+        <div role="button" data-next-bundle-card data-next-bundle-id="{{ display_bundle_id }}"
+             {%- if upsell_type == 'mv' %} data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":{{ display_quantity }},"configurable":true}]'{% else %} data-next-bundle-items='{{ display_items_json }}'{% endif %}
+             data-next-bundle-vouchers='{{ display_vouchers_json }}' data-next-selected="true" class="os-card next-selected"></div>
+      </div>
+      {%- endif %}
+      <div class="upsell-container upsell-container--box margin-32" data-next-upsell="offer" data-next-await=""{% if upsell_type == 'single' %} data-next-package-id="{{ package_id }}"{% if offer.voucher %} data-next-bundle-selector-id="{{ selector_id }}"{% endif %}{% endif %}>
+        {%- campaign_include 'upsell/offer-selector.html' -%}
+        <div class="upsell-offer__card">
+          <div class="grid-full flex-col flex-horizontal-lg-up gap-xl">
+            {%- unless media == 'none' -%}
+            <div class="upsell-offer__image-column cc-{{ layout.media_width | default: 'medium' }} align-self-center">
+              {%- campaign_include 'upsell/offer-media.html' -%}
+            </div>
+            {%- endunless -%}
+            <div class="upsell-content__column cc-fluid flex-col gap-md">
+              {%- campaign_include 'upsell/offer-heading.html' heading_style='box' -%}
+              {%- campaign_include 'upsell/video.html' upsell_video=upsell_video -%}
+              {%- if layout.show_bullets -%}{%- campaign_include 'upsell/offer-bullets.html' -%}{%- endif -%}
+              {%- if upsell_type == 'single' -%}
+              {%- campaign_include 'upsell/offer-prices.html' price_layout='inline' -%}
+              {%- campaign_include 'upsell/offer-controls.html' -%}
+              {%- else -%}
+              {%- campaign_include 'upsell/offer-controls.html' -%}
+              {%- campaign_include 'upsell/offer-prices.html' price_layout='inline' -%}
+              {%- endif -%}
+              {%- campaign_include 'upsell/cta.html' cta_style='box' -%}
+              {%- campaign_include 'upsell/guarantees.html' upsell_guarantees=upsell_guarantees -%}
+              {%- comment -%} Always in the offer: the closing card's decline proxies to this skip, so with
+                show_decline off it is rendered hidden rather than left out. {%- endcomment -%}
+              {%- if layout.show_decline -%}{%- campaign_include 'upsell/decline.html' show_icon=false -%}{%- else -%}{%- campaign_include 'upsell/decline.html' show_icon=false hidden=true -%}{%- endif -%}
+            </div>
+          </div>
+          {%- if offer.details_hint %}
+          <p class="text-xl text-center grid-full margin-12">{% campaign_include 'upsell/copy.html' text=offer.details_hint %}</p>
+          {%- endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{%- else -%}
+<div data-next-catalog-component="upsell-offer" data-upsell-offer-type="{{ upsell_type }}">
+  <section class="section upsell-box{% unless boxed %} cc-plain{% endunless %}">
+    <div class="container">
+      {%- if upsell_type == 'tier-cards' or upsell_type == 'tier-pills' or upsell_type == 'mv' -%}
+      {% comment %}
+        Display-only selector — OUTSIDE [data-next-upsell="offer"] on purpose. It pins bundle.upsell-bundle-1x.*
+        (hero price / max-discount %) to the 1× tier. If it lived inside the offer it would be the first in-offer
+        selector and accept would always add 1×, ignoring the tier / qty UI.
+      {% endcomment %}
+      <div data-next-bundle-selector data-next-upsell-context data-next-selector-id="{{ display_selector_id }}" style="display:none">
+        <div role="button"
+             data-next-bundle-card
+             data-next-bundle-id="{{ display_bundle_id }}"
+             {%- if upsell_type == 'mv' %}
+             data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":{{ display_quantity }},"configurable":true}]'
+             {%- else %}
+             data-next-bundle-items='{{ display_items_json }}'
+             {%- endif %}
+             data-next-bundle-vouchers='{{ display_vouchers_json }}'
+             data-next-selected="true"
+             class="os-card next-selected"></div>
+      </div>
+      {%- elsif upsell_type == 'single' and offer.voucher -%}
+      {% comment %}
+        Single offer + voucher: hidden pre-selected bundle selector linked from the offer wrapper via
+        data-next-bundle-selector-id. Voucher merges into calculateBundlePrice at init and rides the accept
+        POST; prices then read bundle.<selector_id>.* instead of package.*.
+      {% endcomment %}
+      <div data-next-bundle-selector data-next-upsell-context data-next-selector-id="{{ selector_id }}" class="hide">
+        <div role="button"
+             data-next-bundle-card
+             data-next-bundle-id="{{ selector_id }}-card"
+             data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":1}]'
+             data-next-bundle-vouchers='["{{ offer.voucher }}"]'
+             data-next-selected="true"
+             class="os-card next-selected"></div>
+      </div>
+      {%- endif %}
+
+      <div class="upsell-wrapper" data-next-upsell="offer" data-next-await=""{% if upsell_type == 'single' %} data-next-package-id="{{ package_id }}"{% if offer.voucher %} data-next-bundle-selector-id="{{ selector_id }}"{% endif %}{% endif %}>
+        {%- campaign_include 'upsell/offer-selector.html' -%}
+
+        <div class="upsell-container{% unless boxed %} cc-plain{% endunless %}">
+          <div class="grid-full flex-col flex-horizontal-lg-up{% if media_position == 'left' %} cc-media-left{% endif %}{% if media_align == 'top' %} cc-media-top{% elsif media_align == 'sticky' %} cc-media-sticky{% endif %}">
+            <div class="upsell-content__column">
+              <div class="upsell-offer__card">
+                {%- campaign_include 'upsell/offer-heading.html' -%}
+                {%- campaign_include 'upsell/video.html' upsell_video=upsell_video -%}
+                {%- campaign_include 'upsell/offer-bullets.html' -%}
+                <div class="checkout-button-wrapper">
+                  {%- campaign_include 'upsell/offer-controls.html' -%}
+                  {%- campaign_include 'upsell/offer-prices.html' -%}
+                  {%- campaign_include 'upsell/cta.html' -%}
+                  {%- campaign_include 'upsell/guarantees.html' upsell_guarantees=upsell_guarantees -%}
+                  {%- if layout.decline_position == 'column' -%}{%- campaign_include 'upsell/decline.html' -%}{%- endif -%}
+                </div>
+              </div>
+            </div>
+            {%- unless media == 'none' -%}
+            <div class="upsell-offer__image-column">
+              {%- campaign_include 'upsell/offer-media.html' -%}
+              {%- unless layout.show_payment_logos == false -%}
+              {% campaign_include 'payment-logos.html' wrapper_class="hide-tablet-down" %}
+              {%- endunless -%}
+            </div>
+            {%- endunless -%}
+          </div>
+        </div>
+
+        {%- unless layout.decline_position == 'column' -%}{%- campaign_include 'upsell/decline.html' -%}{%- endunless -%}
+      </div>
+    </div>
+  </section>
+</div>
+{%- endif -%}

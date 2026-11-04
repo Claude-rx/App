@@ -1,0 +1,27 @@
+{%- comment -%}
+  bundle-card.html — bundle card STYLE DISPATCHER.
+  bundle-selector.html sets the per-tier args + a card_style, then includes this;
+  it routes to the matching interchangeable card style. The style partials read
+  the args from the include scope (campaign_include pushes args onto the context
+  stack, so this nested include inherits them).
+
+  card_style: 'product' (default, rows) | 'classic' (Olympus os-card)
+            | 'tiles' (tile grid — vertical tiles desktop, horizontal mobile)
+
+  Shared card arg contract (set by bundle-selector.html for every style):
+    bundle_id      string  — data-next-bundle-id (stable)
+    items          string  — data-next-bundle-items JSON
+    package_id     number  — data-next-package-id (resolves package.* display)
+    shipping_id    string  — optional data-next-shipping-id
+    bundle_vouchers string — optional data-next-bundle-vouchers (comma list; e.g. a free-shipping coupon)
+    selected       bool    — initial selected tier
+    title_prefix   string  — e.g. "2x "
+    subtitle       string  — product: combined subtitle line under the title
+    subtitle_text  string  — classic: raw subtitle override
+    shipping_label string  — classic: shipping callout appended to subtitle
+    badge_text     string  — tier badge text (e.g. "Most Popular")
+    badge_tone     string  — product tier color: popular | deal
+    badge_pill_class string — classic tier pill class (os-card__label--pill-*)
+    total_tone_class string — classic total tone class
+{%- endcomment -%}
+{% if card_style == 'classic' %}{% campaign_include 'bundle-card-classic.html' %}{% elsif card_style == 'tiles' %}{% campaign_include 'bundle-card-tiles.html' %}{% else %}{% campaign_include 'bundle-card-product.html' %}{% endif %}

@@ -1,0 +1,71 @@
+{%- comment -%}
+  SKINOFAB: the brush offer's short product page under the offer (the loop above the fold shows the brush at work): the
+  problem (morning puffiness, with an illustration of the look it is for), the solution, how to use it (said once: the
+  four sweeps), how it compares with stones and rollers, what is in the box and the questions, in the brush's own store
+  copy (tools/persona/brush_copy.py: a light, dry massage for the look of morning puffiness; it does not drain, sculpt
+  or lift, and says so). Reads the page's frontmatter (brush), written by tools/funnel/apf/offer_pages.py.
+{%- endcomment -%}
+{%- if brush -%}
+<div class="sf-bp">
+  <section class="sf-bp__sec" aria-labelledby="sf-bp-problem">
+    <div class="sf-bp__two">
+      <figure class="sf-bp__fig"><img src="{{ brush.problem.image | campaign_asset }}" alt="{{ brush.problem.alt }}" width="1080" height="1080" loading="lazy" decoding="async">{% if brush.problem.caption %}<figcaption>{{ brush.problem.caption }}</figcaption>{% endif %}</figure>
+      <div>
+        <span class="sf-bp__eyebrow">{{ brush.problem.eyebrow }}</span>
+        <h2 class="display-md" id="sf-bp-problem">{{ brush.problem.title }}</h2>
+        <p class="text-lg">{{ brush.problem.lede }}</p>
+        <ul class="sf-bp__pains">{% for p in brush.problem.pains %}<li>{{ p }}</li>{% endfor %}</ul>
+        <p class="text-lg"><strong>{{ brush.problem.close }}</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sf-bp__sec" aria-labelledby="sf-bp-solution">
+    <div class="sf-bp__two">
+      <div>
+        <span class="sf-bp__eyebrow">{{ brush.solution.eyebrow }}</span>
+        <h2 class="display-md" id="sf-bp-solution">{{ brush.solution.title }}</h2>
+        <p class="text-lg">{{ brush.solution.lede }}</p>
+        <ul class="sf-bp__fixes">{% for f in brush.solution.fixes %}<li><strong>{{ f.title }}</strong> {{ f.text }}</li>{% endfor %}</ul>
+      </div>
+      <img src="{{ brush.solution.image | campaign_asset }}" alt="{{ brush.solution.alt }}" width="1080" height="1080" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <section class="sf-bp__sec" aria-labelledby="sf-bp-use">
+    {% comment %} no picture beside the steps: the how-to infographic said the same four sweeps again, at 8 px on a phone (live review 5) {% endcomment %}
+    <div class="{% if brush.use.image %}sf-bp__two{% else %}sf-bp__one{% endif %}">
+      {% if brush.use.image %}<img src="{{ brush.use.image | campaign_asset }}" alt="{{ brush.use.alt }}" width="1080" height="1080" loading="lazy" decoding="async">{% endif %}
+      <div>
+        <span class="sf-bp__eyebrow">{{ brush.use.eyebrow }}</span>
+        <h2 class="display-md" id="sf-bp-use">{{ brush.use.title }}</h2>
+        <p class="text-lg">{{ brush.use.lede }}</p>
+        <ol class="sf-bp__steps">{% for s in brush.use.steps %}<li><strong>{{ s.title }}</strong>{{ s.text }}</li>{% endfor %}</ol>
+        <p class="text-base" style="margin-top:10px">{{ brush.use.note }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sf-bp__sec" aria-labelledby="sf-bp-compare">
+    <h2 class="display-md text-center" id="sf-bp-compare">{{ brush.compare.title }}</h2>
+    <p class="text-lg text-center">{{ brush.compare.lede }}</p>
+    <div style="overflow-x:auto;margin-top:12px">
+      <table class="sf-bp__table">
+        <thead><tr><th scope="col"><span class="sf-sr">What it does</span></th><th scope="col">The Lymphatic Brush</th><th scope="col">{{ brush.compare.others }}</th></tr></thead>
+        <tbody>{% for r in brush.compare.rows %}<tr><th scope="row">{{ r }}</th><td><span class="sf-bp__yes" aria-label="Yes">✓</span></td><td><span class="sf-bp__no" aria-label="No">✕</span></td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sf-bp__sec" aria-labelledby="sf-bp-box">
+    <h2 class="display-md text-center" id="sf-bp-box">{{ brush.box.title }}</h2>
+    <p class="text-lg text-center">{{ brush.box.lede }}</p>
+    <div class="sf-bp__box" style="margin-top:14px">{% for c in brush.box.cards %}<figure><img src="{{ c.image | campaign_asset }}" alt="{{ c.alt }}" width="1080" height="810" loading="lazy" decoding="async"><figcaption><strong>{{ c.title }}</strong>{{ c.text }}</figcaption></figure>{% endfor %}</div>
+  </section>
+
+  <section class="sf-bp__sec" aria-labelledby="sf-bp-faq">
+    <h2 class="display-md text-center" id="sf-bp-faq">{{ brush.faq.title }}</h2>
+    <div class="sf-bp__faq" style="margin-top:12px">{% for f in brush.faq.items %}<details{% if forloop.first %} open{% endif %}><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>{% endfor %}</div>
+  </section>
+</div>
+{%- endif -%}
