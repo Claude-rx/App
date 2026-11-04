@@ -112,7 +112,7 @@
 
 
     
-<script>(function () { var K = 'sf_trial_end', end = 0; try { end = parseInt(localStorage.getItem(K), 10) || 0; } catch (e) {} if (!end) { var d = new Date(); d.setHours(24, 0, 0, 0); end = d.getTime(); try { localStorage.setItem(K, String(end)); } catch (e) {} } window.sfTrialEnd = end; var over = Date.now() >= end; if (over) document.documentElement.classList.add('sf-trial-over'); try { var q = new URLSearchParams(location.search), want = over ? 'trial-regular' : 'trial'; if ((q.get('forceBundleId') || '').split(':').pop() !== want) { q.set('forceBundleId', want); history.replaceState(history.state, '', location.pathname + '?' + q.toString() + location.hash); } } catch (e) {} })();</script>
+<script>(function () { var K = 'sf_trial_end', end = 0; try { end = parseInt(localStorage.getItem(K), 10) || 0; } catch (e) {} if (!end) { var d = new Date(); d.setHours(24, 0, 0, 0); end = d.getTime(); try { localStorage.setItem(K, String(end)); } catch (e) {} } window.sfTrialEnd = end; var over = Date.now() >= end; if (over) document.documentElement.classList.add('sf-trial-over'); try { var q = new URLSearchParams(location.search), have = (q.get('forceBundleId') || '').split(':').pop(), want = over ? 'trial-regular' : 'trial'; if (/^trial-[35]$/.test(have)) want = have; if (have !== want) { q.set('forceBundleId', want); history.replaceState(history.state, '', location.pathname + '?' + q.toString() + location.hash); } } catch (e) {} })();</script>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
 <div class="page-wrapper">
   <main class="main-wrapper">
@@ -169,9 +169,9 @@
                       <div class="form-content">
                         <div class="form-sections">
                           <div class="form-section grid-row-gap2 form-section--first">
-                            <h2 class="form-section__title"><span data-sf-trial-live>Step 1: Your flash trial</span><span data-sf-trial-over>Step 1: Your foundation</span></h2>
+                            <h2 class="form-section__title">Step 1: Choose your plan</h2>
                             
-                            <p class="sf-co-picked" data-sf-picked='{"trial":"1 bottle, flash trial (50% off your first month)","trial-regular":"1 bottle"}' aria-live="polite">Your order: <strong data-sf-picked-text>1 bottle, flash trial (50% off your first month)</strong><span data-next-show="cart.hasItems"> · <span data-next-display="cart.total">$19.97</span></span></p>
+                            <p class="sf-co-picked" data-sf-picked='{"trial":"1 bottle, flash trial (50% off your first month)","trial-regular":"1 bottle","trial-3":"3 bottles (buy 2, get 1 free) + free Blender sponge","trial-5":"5 bottles (buy 3, get 2 free) + free Lymphatic Brush"}' aria-live="polite">Your order: <strong data-sf-picked-text>1 bottle, flash trial (50% off your first month)</strong><span data-next-show="cart.hasItems"> · <span data-next-display="cart.total">$19.97</span></span></p>
                             
 <div data-next-catalog-component="bundle-selector" data-component="bundle-selector" data-next-bundle-selector data-next-selector-id="main" data-next-selection-mode="swap" data-next-include-shipping="true" class="os-option">
   <div class="bundle-cards">
@@ -216,6 +216,54 @@
       <div class="bundle-card__price-row">
         <span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
         <span data-next-bundle-display="price" class="bundle-card__price-total">$39.97</span>
+      </div>
+      <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>
+    </div>
+  </div>
+</div>
+
+
+    <div data-next-bundle-card data-next-bundle-id="trial-3" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":6,"quantity":1}]' role="button" class="bundle-card">
+  <div class="bundle-card__badges">
+    <div class="bundle-card__badge bundle-card__badge--deal">Buy 2, get 1 FREE</div>
+    <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
+    <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>{discount.percentage} OFF</span></template></div>
+  </div>
+  <div class="bundle-card__main" data-next-package-id="6">
+    <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
+    <img src="{% endverbatim %}{{ 'sft/sft-pack-3b-a0f57f.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image">
+    <div class="bundle-card__copy">
+      <div class="bundle-card__title"><span data-next-display="package.name">Adaptive Peptide Foundation - 3 bottles + free Blender</span></div>
+      
+    </div>
+    <div class="bundle-card__price">
+      <div class="bundle-card__price-row">
+        <s class="sf-card-was">$119.91</s><span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
+        <span data-next-bundle-display="price" class="bundle-card__price-total">$66.97</span>
+      </div>
+      <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>
+    </div>
+  </div>
+</div>
+
+
+    <div data-next-bundle-card data-next-bundle-id="trial-5" data-next-shipping-id="1" data-next-bundle-items='[{"packageId":7,"quantity":1}]' role="button" class="bundle-card">
+  <div class="bundle-card__badges">
+    <div class="bundle-card__badge bundle-card__badge--popular">Buy 3, get 2 FREE</div>
+    <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="bundle-card__badge bundle-card__badge--save"><template><span>{discount.percentage} OFF</span></template></div>
+    <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="bundle-card__badge bundle-card__badge--save" style="display:none"><template><span>{discount.percentage} OFF</span></template></div>
+  </div>
+  <div class="bundle-card__main" data-next-package-id="7">
+    <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
+    <img src="{% endverbatim %}{{ 'sft/sft-pack-5-830dc4.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image">
+    <div class="bundle-card__copy">
+      <div class="bundle-card__title"><span data-next-display="package.name">Adaptive Peptide Foundation - 5 bottles + free Lymphatic Brush</span></div>
+      
+    </div>
+    <div class="bundle-card__price">
+      <div class="bundle-card__price-row">
+        <s class="sf-card-was">$199.85</s><span data-next-bundle-display="originalPrice" class="bundle-card__price-reg"></span>
+        <span data-next-bundle-display="price" class="bundle-card__price-total">$99.97</span>
       </div>
       <div data-next-bundle-display="hasDiscount" class="bundle-card__savings">Instant savings: <span data-next-bundle-display="discountAmount"></span></div>
     </div>
@@ -428,7 +476,7 @@
     </button></div>
 </div>
 
-                            <div class="sf-sub" data-sf-sub data-sf-renew-short='{"trial":"$39.97/mo","trial-regular":"$39.97/mo"}'>
+                            <div class="sf-sub" data-sf-sub data-sf-renew-short='{"trial":"$39.97/mo","trial-regular":"$39.97/mo","trial-3":"$66.97 every 3 months","trial-5":"$99.97 every 5 months"}'>
   <p class="sf-sub__head"><svg class="sf-co-icon" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path fill="#151515" stroke="none" d="M12 1.8l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8L22.2 12l-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.2l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.8 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z"/><path stroke="#fff" stroke-width="2" d="M8.2 12.3l2.5 2.5 5-5.2"/></svg>
 <strong>Love it or your money back</strong></p>
   <ul class="sf-sub__row">
@@ -449,7 +497,7 @@
                             <div class="cart-box cart-box--card" data-sf-summary-box>
                               
                               
-                              <div class="sf-co-sumfb" aria-hidden="true" data-sf-sumfb='{ "trial":{"name":"Adaptive Peptide Foundation - 1 bottle","price":"$19.97","image":"{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}"},"trial-regular":{"name":"Adaptive Peptide Foundation - 1 bottle","price":"$39.97","image":"{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}"} }'>
+                              <div class="sf-co-sumfb" aria-hidden="true" data-sf-sumfb='{ "trial":{"name":"Adaptive Peptide Foundation - 1 bottle","price":"$19.97","image":"{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}"},"trial-regular":{"name":"Adaptive Peptide Foundation - 1 bottle","price":"$39.97","image":"{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}"},"trial-3":{"name":"Adaptive Peptide Foundation - 3 bottles + free Blender","price":"$66.97","image":"{% endverbatim %}{{ 'sft/sft-pack-3b-a0f57f.jpg'|asset_url }}{% verbatim %}"},"trial-5":{"name":"Adaptive Peptide Foundation - 5 bottles + free Lymphatic Brush","price":"$99.97","image":"{% endverbatim %}{{ 'sft/sft-pack-5-830dc4.jpg'|asset_url }}{% verbatim %}"} }'>
                                 <p class="sf-co-sumfb__title">Order summary</p>
                                 <div class="sf-co-sumfb__line"><img src="{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}" alt="" width="56" height="56" data-sf-sumfb-img><span data-sf-sumfb-name>Adaptive Peptide Foundation - 1 bottle</span><strong data-sf-sumfb-price>$19.97</strong></div>
                                 <div class="sf-co-sumfb__row"><span>Shipping</span><span>Free</span></div>
@@ -623,7 +671,7 @@
 
                             </div>
                           </div>
-                          <div class="sf-refill-terms" id="refill-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{"trial":"$39.97 every month for 1 bottle","trial-regular":"$39.97 every month for 1 bottle"}'><strong>Automatic Refills.</strong> <strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$19.97</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "trial":"$19.97","trial-regular":"$39.97" }'>$19.97</span> today</strong>, then <span data-sf-renew>$39.97 every month for 1 bottle</span>, until you cancel.</p><p>Your bottle ships again every month at $39.97, the “Renews at” amount under the order button, until you cancel. The flash trial’s 50% is for your first bottle only. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The same 30-day money-back guarantee covers your first bottle. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p></div>
+                          <div class="sf-refill-terms" id="refill-terms"><p class="sf-pay-terms sf-pay-terms--plain" data-sf-pay-terms='{"trial":"$39.97 every month for 1 bottle","trial-regular":"$39.97 every month for 1 bottle","trial-3":"$66.97 every 3 months for 3 bottles (your free Blender sponge comes with this first order)","trial-5":"$99.97 every 5 months for 5 bottles (your free Lymphatic Brush comes with this first order)"}'><strong>Automatic Refills.</strong> <strong><span data-next-show="cart.hasItems"><span data-next-display="cart.total">$19.97</span></span><span data-next-hide="cart.hasItems" style="display:none" data-sf-pay-fallback data-sf-prices='{ "trial":"$19.97","trial-regular":"$39.97","trial-3":"$66.97","trial-5":"$99.97" }'>$19.97</span> today</strong>, then <span data-sf-renew>$39.97 every month for 1 bottle</span>, until you cancel.</p><p>Your pack ships again at its own price, the “Renews at” amount under the order button, until you cancel: 1 bottle $39.97 every month, 3 bottles $66.97 every 3 months, 5 bottles $99.97 every 5 months. The flash trial’s 50% is for your first bottle only. The free gifts come with your first order; refills are the bottles only. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The same 30-day money-back guarantee covers every pack. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p></div>
                         </div>
                       </div>
                     </form>
@@ -809,8 +857,8 @@
   <div class="sf-co-card sf-co-faq">
     <h2>Before you order</h2>
     <details open><summary>What if it isn’t my shade?</summary><p>It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href="mailto:info@skinofab.com">info@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back.</p></details>
-    <details><summary>Is this a subscription?</summary><p>Yes, with Automatic Refills you control. With the flash trial you pay $19.97 today for your first bottle (50% off). Then a bottle ships every month at $39.97 until you cancel. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees.</p></details>
-    <details><summary>When does the trial price end?</summary><p>The flash trial price is for today: it ends at midnight, your time. After that the foundation is $39.97 a month from the first bottle. Your first bottle is still covered by our 30-day money-back guarantee.</p></details>
+    <details><summary>Is this a subscription?</summary><p>Yes, with Automatic Refills you control. With the flash trial you pay $19.97 today for your first bottle (50% off), then a bottle ships every month at $39.97. Or take a pack: 3 bottles (buy 2, get 1 free, with a free Blender sponge) at $66.97 every 3 months, or 5 bottles (buy 3, get 2 free, with a free Lymphatic Brush) at $99.97 every 5 months. Your pack ships again at its own price until you cancel; the free gifts come with your first order only. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees.</p></details>
+    <details><summary>When does the trial price end?</summary><p>The flash trial price of the 1-bottle plan is for today: it ends at midnight, your time. After that the 1-bottle plan is $39.97 a month from the first bottle. The 3- and 5-bottle packs keep their prices. Every pack is covered by our 30-day money-back guarantee.</p></details>
     <details><summary>When does it ship?</summary><p>Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days. This offer ships to US addresses only.</p></details>
     <details><summary>Are these reviews of this formula?</summary><p>Yes. They are the published reviews of this formula from our earlier store, imported in October 2026, none reworded (“…” marks where a long one is shortened), with the buyers’ own photos.</p></details>
     <details><summary>Is my payment secure?</summary><p>Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal or Apple Pay.</p></details>
@@ -846,7 +894,7 @@
 </div>
 
     
-    <script defer src="{% endverbatim %}{{ 'sft/sft-sf-trial-372d2b.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sft/sft-sf-trial-6b440c.js'|asset_url }}{% verbatim %}"></script>
     
     <script defer src="{% endverbatim %}{{ 'sft/sft-checkout-3fa1e4.js'|asset_url }}{% verbatim %}"></script>
     
