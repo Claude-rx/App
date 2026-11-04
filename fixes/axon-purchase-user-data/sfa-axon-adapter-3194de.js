@@ -116,6 +116,13 @@
     return /^\d+$/.test(s) && Number(s) > 0 ? Number(s) : undefined;
   }
   var fallbackCategoryId = categoryId(window.__axonItemCategoryId) || DEFAULT_ITEM_CATEGORY_ID;
+  // Products that are not foundation get their own Google category, by SKU family (4 Nov 2026, from the other funnel
+  // session's catalogue): the Lymphatic Brush is 543597 Health & Beauty > ... > Massagers > Manual Massage Tools.
+  var CATEGORY_BY_SKU_FAMILY = { 'SKF-LYB': 543597 };
+  function familyCategory(it) {
+    var sku = it.item_id !== undefined && it.item_id !== null ? String(it.item_id) : '';
+    return CATEGORY_BY_SKU_FAMILY[sku.split('-').slice(0, 2).join('-')];
+  }
 
   // AXON image_url must be a .png/.jpg/.jpeg URL (Pixel Helper warns on anything else). The SDK's package images are
   // .webp thumbnails, so each store variant maps to its product's JPG on the store CDN (Admin API, 30 Oct 2026).
@@ -226,7 +233,7 @@
       // with HTTP 400 for the whole event (view_item, begin_checkout, purchase: live review 6, 29 Oct 2026), so it is
       // sent only when it is a whole number. LOCAL PATCH over the generated copy: keep it when re-syncing.
       // Otherwise the store-wide fallback, so the required field is never missing.
-      out.item_category_id = categoryId(it.item_category) || fallbackCategoryId;
+      out.item_category_id = categoryId(it.item_category) || familyCategory(it) || fallbackCategoryId;
       var img = imageUrl(it);
       if (img) out.image_url = img;                                    // Axon: image_url (.png/.jpg/.jpeg only)
       if (it.discount !== undefined && it.discount !== null && it.discount !== '') out.discount = it.discount;

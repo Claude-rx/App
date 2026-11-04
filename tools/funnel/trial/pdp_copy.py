@@ -91,7 +91,6 @@ BOX_CSS = ('<style>.sft-box{margin:6px 0 16px;color:#151515}'
            '.sft-plan__price{flex:none;margin:0!important;text-align:right;white-space:nowrap;line-height:1.05}'
            '.sft-plan__price strong{display:block;font-size:28px;font-weight:800;color:#151515}'
            '.sft-plan__price s{display:block;margin-top:3px;font-size:16px;color:#4a4a4a}'
-           '.sft-note{margin:14px 0 0!important;text-align:center;font-size:15px;color:#151515!important}'
            '.sft-cta{display:flex!important;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;margin:14px 0 0;border:2px solid #000;border-radius:14px!important;'
            'background:#151515!important;color:#fff!important;box-shadow:4px 4px 0 #000;font-size:19px;font-weight:800;letter-spacing:.04em;text-decoration:none!important;text-transform:uppercase}'
            '.sft-cta:hover{background:#333!important}'
@@ -116,18 +115,18 @@ def trust_row(src):
 
 def plans():
     """The plan cards: the flash trial bottle, then the packs (funnels/trial.py PACKS). Each card carries what the page
-    shows and sends when it is chosen: the checkout link (before and after her midnight), the note under the cards, the
+    shows and sends when it is chosen: the checkout link (before and after her midnight), the
     "Renews at" amount, the button's words and the price AppLovin's add_to_cart reports."""
     out = [{'id': 'trial', 'name': '1 bottle', 'live_tag': '⚡ Flash trial · 50% off', 'today': TODAY, 'compare': REGULAR, 'over_today': REGULAR,
             'href': f'{CHECKOUT}?forceBundleId=trial', 'href_over': f'{CHECKOUT}?forceBundleId=trial-regular',
-            'note': '1 bottle · delivered monthly', 'renew': f'{REGULAR}/mo', 'cta': 'Start my trial', 'cta_over': 'Start my refills',
-            'value': T['today'], 'value_over': T['regular'], 'item': (str(T['package']), T['name'])}]
+            'renew': f'{REGULAR}/mo', 'cta': 'Start my trial', 'cta_over': 'Start my refills',
+            'value': T['today'], 'value_over': T['regular'], 'item': (T['sku'], T['name'], T['variant'])}]
     for k in F.PACKS:
         price = f"${k['price']:.2f}"
         out.append({'id': k['bundle'], 'name': f"{k['bottles']} bottles + {k['gift'].replace('FREE ', 'free ')}", 'tag': k['tab'], 'today': price,
                     'compare': f"${k['compare']:.2f}", 'href': f"{CHECKOUT}?forceBundleId={k['bundle']}",
-                    'note': f"{k['bottles']} bottles · delivered every {k['months']} months", 'renew': f"{price} / {k['months']} mo",
-                    'cta': f"Get my {k['bottles']} bottles", 'value': k['price'], 'item': (str(k['package']), f"Adaptive Peptide Foundation - {k['bottles']} bottles")})
+                    'renew': f"{price} / {k['months']} mo",
+                    'cta': f"Get my {k['bottles']} bottles", 'value': k['price'], 'item': (k['sku'], f"Adaptive Peptide Foundation - {k['bottles']} bottles", k['variant'])})
     return out
 
 
@@ -136,10 +135,9 @@ def box(src):
     cards = []
     for n, c in enumerate(plans()):
         on = n == 0
-        attrs = (f' data-sft-plan="{c["id"]}" data-href="{c["href"]}" data-href-over="{c.get("href_over", c["href"])}" data-note="{c["note"]}"'
+        attrs = (f' data-sft-plan="{c["id"]}" data-href="{c["href"]}" data-href-over="{c.get("href_over", c["href"])}"'
                  f' data-renew="{c["renew"]}" data-cta="{c["cta"]}" data-cta-over="{c.get("cta_over", c["cta"])}" data-value="{c["value"]}"'
-                 f' data-value-over="{c.get("value_over", c["value"])}" data-item-id="{c["item"][0]}" data-item-name="{c["item"][1]}"'
-                 f' data-item-sku="{F.AXON_ITEMS[int(c["item"][0])][0]}" data-item-variant="{F.AXON_ITEMS[int(c["item"][0])][1]}"')
+                 f' data-value-over="{c.get("value_over", c["value"])}" data-item-id="{c["item"][0]}" data-item-name="{c["item"][1]}" data-item-variant="{c["item"][2]}"')
         tag = (f'<p class="sft-plan__tag sft-plan__tag--hot" data-sf-trial-live>{c["live_tag"]}</p>' if c.get('live_tag')
                else f'<p class="sft-plan__tag">{c["tag"]}</p>')
         price = (f'<p class="sft-plan__price" data-sf-trial-live><strong>{c["today"]}</strong><s>{c["compare"]}</s></p>'
@@ -154,7 +152,6 @@ def box(src):
         '<p class="sft-flash__title">⚡ Flash trial offer · Limited time, today only</p>'
         '<p class="sft-flash__clock">Ends at midnight: <strong data-sf-trial-clock="">today</strong></p></div>'
         '<div class="sft-plans" role="radiogroup" aria-label="Choose your plan">' + ''.join(cards) + '</div>'
-        f'<p class="sft-note" data-sft-note="">{first["note"]}</p>'
         f'<a class="sft-cta" data-sft-cta="" href="{first["href"]}"><span data-sft-cta-text="">{first["cta"]}</span>' + arrow + '</a>'
         + trust_row(src) +
         '</div>')
@@ -171,7 +168,6 @@ TAIL = ('<script>(function () {'
         # the button, the note and "Renews at" follow the chosen plan (and the clock, for the trial bottle)
         ' var paint = function () { var c = chosen(); if (!c) return;'
         ' document.querySelectorAll("[data-sft-cta]").forEach(function (a) { a.setAttribute("href", get(c, "href")); var t = a.querySelector("[data-sft-cta-text]"); if (t) t.textContent = get(c, "cta"); });'
-        ' document.querySelectorAll("[data-sft-note]").forEach(function (e) { e.textContent = get(c, "note"); });'
         ' document.querySelectorAll("[data-sft-renew]").forEach(function (e) { e.textContent = get(c, "renew"); }); };'
         ' var pick = function (c) { plans.forEach(function (p) { var on = p === c; p.classList.toggle("is-on", on); p.setAttribute("aria-checked", on ? "true" : "false"); p.tabIndex = on ? 0 : -1; }); paint(); };'
         ' plans.forEach(function (p, i) { p.addEventListener("click", function () { pick(p); });'
@@ -183,11 +179,7 @@ TAIL = ('<script>(function () {'
         ' if (!left) { h.classList.add("sf-trial-over"); paint(); clearInterval(t); } };'
         ' var t = end && !over() ? setInterval(tick, 1000) : 0; if (t) tick(); paint();'
         # AppLovin: page_view and view_item (the trial bottle) on load, add_to_cart with the chosen plan on the button
-        # each item as the funnel's AXON adapter sends it at the checkout (SKU, store variant, Google category, store JPG):
-        # AXON Pixel Helper wants item_variant_id, item_category_id and a .png/.jpg image_url on every item
-        ' var payload = function (c) { var v = parseFloat(get(c, "value")); return { currency: "USD", value: v, items: [{ item_id: c.getAttribute("data-item-sku"),'
-        ' item_name: c.getAttribute("data-item-name"), item_brand: "SKINOFAB", item_variant_id: c.getAttribute("data-item-variant"),'
-        ' item_category_id: ' + str(T['category_id']) + ', image_url: "' + T['image'] + '", price: v, quantity: 1 }] }; };'
+        ' var payload = function (c) { var v = parseFloat(get(c, "value")); return { currency: "USD", value: v, items: [{ item_id: c.getAttribute("data-item-id"), item_name: c.getAttribute("data-item-name"), item_brand: "SKINOFAB", item_variant_id: c.getAttribute("data-item-variant"), item_category_id: ' + str(F.AXON_CATEGORY) + ', image_url: "' + F.AXON_IMAGE + '", price: v, quantity: 1 }] }; };'
         ' var send = function (name, c, done) { var n = 0; (function go() { if (typeof window.axon === "function") { try { if (name === "page_view") window.axon("track", "page_view"); else window.axon("track", name, payload(c)); } catch (e) {} if (done) setTimeout(done, 350); return; }'
         ' if (n++ < 40) setTimeout(go, 250); else if (done) done(); })(); };'
         ' window.sfTrialTrack = send;'
@@ -231,9 +223,9 @@ def build(src):
     # the price under the title
     s = sub1(r'<s class="product__price--compare">\{% include \'partials/sf_price.html\' with p=product retail=1 %\}</s><span class="product__price--regular product__price--sale">\{% include \'partials/sf_price.html\' with p=product %\}</span>',
              '<s class="product__price--compare" data-sf-trial-live>' + REGULAR + '</s><span class="product__price--regular product__price--sale"><span data-sf-trial-live>' + TODAY +
-             ' <small style="font-size:.62em;font-weight:500">first month</small></span><span data-sf-trial-over>' + REGULAR + '<small style="font-size:.62em;font-weight:500">/mo</small></span></span>', s)
+             '</span><span data-sf-trial-over>' + REGULAR + '<small style="font-size:.62em;font-weight:500">/mo</small></span></span>', s)
     # the sticky bar
-    s = sub1(r'<span>From \$37 · Free shipping ', '<span><span data-sf-trial-live>' + TODAY + ' first month</span><span data-sf-trial-over>' + REGULAR + '/mo</span> · Free shipping ', s)
+    s = sub1(r'<span>From \$37 · Free shipping ', '<span><span data-sf-trial-live>' + TODAY + '</span><span data-sf-trial-over>' + REGULAR + '/mo</span> · Free shipping ', s)
     s = sub1(r'<a class="sf-sticky__btn" href="#apf-buy" tabindex="-1">Choose your pack<span class="sf-sticky__from">\s?· From \$37</span></a>',
              '<a class="sf-sticky__btn" href="#apf-buy" tabindex="-1"><span data-sf-trial-live>Start my trial</span><span data-sf-trial-over>Start my refills</span>'
              '<span class="sf-sticky__from"><span data-sf-trial-live>\u00a0· ' + TODAY + '</span><span data-sf-trial-over>\u00a0· ' + REGULAR + '/mo</span></span></a>', s)
@@ -265,7 +257,7 @@ def check(out):
     if bad: raise SystemExit(f'pdp_copy: store residue in the trial page: {bad}')
     for need in ('id="apf-buy"', 'Flash trial offer · Limited time, today only', f'Renews at <b data-sft-renew="">{REGULAR}/mo</b>', 'Love it or your money back',
                  'Buy 2, get 1 FREE', 'Buy 3, get 2 FREE', '?forceBundleId=trial-3"', '?forceBundleId=trial-5"',
-                 'Refill reminder', 'Cancel any time', f'{CHECKOUT}?forceBundleId=trial"', 'forceBundleId=trial-regular', '$66.97', '$99.97', TODAY, '"page_view"', '"view_item"', '"add_to_cart"'):
+                 'Refill reminder', 'Cancel any time', f'{CHECKOUT}?forceBundleId=trial"', 'forceBundleId=trial-regular', '$66.97', '$99.97', TODAY, '"page_view"', '"view_item"', '"add_to_cart"', 'item_variant_id', 'item_category_id: 2765', 'image_url: "https://'):
         if need not in out: raise SystemExit(f'pdp_copy: missing in the trial page: {need}')
     # every block that names the product is inside the setting's with
     for m in re.finditer(r'\{% block (\w+) %\}(.*?)\{% endblock(?: \1)? %\}', out, re.S):

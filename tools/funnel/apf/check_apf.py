@@ -734,7 +734,7 @@ if not re.search(r'\.sf-reason--wide \.sf-reason__media \{[^}]*position:\s*stati
 # the Axon adapter sends item_category_id only when it is a number: the SDK's item_category is the campaign's name,
 # and Axon rejects the whole event with HTTP 400 for a text id (live review 6, 29 Oct 2026)
 _ax = (SITE / 'js' / 'axon.adapter.js').read_text(encoding='utf-8')
-if 'out.item_category_id = it.item_category;' in _ax or 'categoryId(it.item_category) || fallbackCategoryId' not in _ax:
+if 'out.item_category_id = it.item_category;' in _ax or 'categoryId(it.item_category) || familyCategory(it) || fallbackCategoryId' not in _ax:
     fail('all pages', 'axon.adapter.js sends the text item_category as item_category_id (Axon answers 400 to view_item, begin_checkout and purchase), or leaves items without the numeric fallback AXON requires')
 # AXON requires user_data on purchase: the adapter maps the SDK's user_properties (customer_email/phone/id)
 if 'params.user_data = user' not in _ax or 'up.customer_email' not in _ax or "'sf-' + hash53(" not in _ax:
@@ -865,7 +865,7 @@ for p in F.PAGES:
 # does (stock is untracked). F6: the settling answer hedged to its end. F7: the checkout's footer has Contact.
 for p in F.PAGES:
     _h = html(p['id']); _t = text(_h)
-    for _code in ('link', 'klarna'):
+    for _code in ('link', 'klarna', 'affirm', 'afterpay'):   # only methods that can charge a refill (the owner, 4 Nov 2026)
         if f'data-next-payment-method="{_code}"' in _h: fail(p['id'], f'a {_code} payment option (the owner turned it off)')
         for _m in re.finditer(r'<img[^>]*data-payment-logo="' + _code + r'"[^>]*>', _h):
             if 'data-payment-force="hide"' not in _m.group(0): fail(p['id'], f'a {_code} logo that can show')

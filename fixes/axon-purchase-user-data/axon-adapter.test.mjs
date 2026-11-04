@@ -225,3 +225,11 @@ test('live order #101763 (2 Nov 2026): 3-digit customer id still gives a 6+ char
   adapter.send('view_item', order, evt({ customer_email: ' shopper@example.COM ' }));
   assert.equal(calls[1][2].user_data.user_id, p.user_data.user_id);
 });
+
+test('the Lymphatic Brush gets its own Google category (543597 Manual Massage Tools), foundation stays 2765', () => {
+  const { calls, adapter } = load();
+  adapter.send('purchase', { ...ec, items: [{ item_id: 'SKF-LYB-1T', item_name: 'The Lymphatic Brush', price: 14, quantity: 1, item_category: 'Funnel name' },
+    { ...liveItem }] }, evt({ customer_email: 'a@b.co' }));
+  assert.deepEqual(calls[0][2].items.map(i => i.item_category_id), [543597, 2765]);
+  assert.deepEqual(validate(SCHEMA.purchase, calls[0][2]).warnings.filter(w => w.includes('category')), []);
+});

@@ -13,7 +13,7 @@ pop without its template: the trial's checkout has none). --check only reports w
 import shutil, sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 APF = ROOT / 'campaigns' / 'skinofab' / 'src' / 'apf-funnel'
 TRIAL = ROOT / 'campaigns' / 'skinofab' / 'src' / 'trial-funnel'
 OWN = {'assets/config.js', 'assets/js/sf-trial.js', 'assets/css/sf-trial.css'}
@@ -32,6 +32,7 @@ def wanted(rel, data):
 
 
 def main(check):
+    if not (APF / 'assets').is_dir() or not (TRIAL / 'assets').is_dir(): raise SystemExit(f'sync_from_apf: no funnel source at {APF} or {TRIAL}')
     changed = []
     for src in sorted(APF.rglob('*')):
         rel = src.relative_to(APF).as_posix()

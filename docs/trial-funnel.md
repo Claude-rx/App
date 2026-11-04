@@ -81,13 +81,11 @@ packs. The box now has, in order:
    - **1 bottle**, pill "⚡ Flash trial · 50% off": **$19.97** ~~$39.97~~. It is selected by default.
    - **3 bottles + free Blender sponge**, pill "Buy 2, get 1 FREE": **$66.97** ~~$119.91~~.
    - **5 bottles + free Lymphatic Brush**, pill "Buy 3, get 2 FREE": **$99.97** ~~$199.85~~.
-3. The note under the cards, which follows the chosen plan: "1 bottle · delivered monthly", "3 bottles · delivered
-   every 3 months" or "5 bottles · delivered every 5 months".
-4. The button, which follows the chosen plan:
+3. The button (the line under the cards went on 4 Nov: "Renews at" already says it), which follows the chosen plan:
    - START MY TRIAL → goes to `?forceBundleId=trial` (or `trial-regular` after midnight);
    - GET MY 3 BOTTLES → goes to `trial-3`;
    - GET MY 5 BOTTLES → goes to `trial-5`.
-5. "Love it or your money back", then Refill reminder · Cancel any time · Renews at $39.97/mo, $66.97 / 3 mo or
+4. "Love it or your money back", then Refill reminder · Cancel any time · Renews at $39.97/mo, $66.97 / 3 mo or
    $99.97 / 5 mo, following the chosen plan.
 
 After midnight, only the 1-bottle card changes (to $39.97/mo, with no pill); the packs keep their prices. The checkout
@@ -95,7 +93,7 @@ shows the same three plans under "Step 1: Choose your plan", with the card the b
 clock turns only the trial card into the regular one, so a pack she chose stays chosen.
 
 Proven live on 4 Nov 2026 at 390 and 1440 px:
-- each plan's button, note and "Renews at" amount follow the plan she picks;
+- each plan's button and "Renews at" amount follow the plan she picks;
 - the 5-bottle plan lands on the checkout at $99.97 ("Refills: Every 5 months", the brush on a first-order line);
 - picking 3 bottles at the checkout gives $66.97 every 3 months, and the trial gives $19.97, then $39.97/mo;
 - AppLovin answered 200 to page_view, view_item, add_to_cart and begin_checkout.
@@ -166,6 +164,33 @@ Funnel test orders are reported to AppLovin as purchases (the adapter has no tes
 The store's AppLovin app loads the pixel with the same event key, but sends page_view and view_item only on its own
 templates (product, home), not on a store page. So the trial page sends them itself. The public page cache (30
 minutes) served the version without page_view for its first half hour.
+
+
+**Item fields (4 Nov 2026, the owner's Pixel Helper screenshot).** AppLovin's Pixel Helper flagged 3 issues on each
+item of View Item and Add to Cart. Axon requires seven fields on every item: item_id, item_name, price, quantity,
+item_variant_id, image_url (.png, .jpg or .jpeg) and an integer item_category_id (a Google product category).
+- **The cause.** The trial page sent no variant, image or category. The SDK sends the campaign's `.webp` thumbnail as
+  the image and the campaign's name as the category, which the adapter dropped.
+- **The fix on the trial page.** Its own events now send all seven fields: the SKU as item_id, variants 15, 334 and
+  335, the product's store photo, and category 2765.
+- **The fix in the adapter.** `js/axon.adapter.js` (shared by all three funnels: a LOCAL PATCH, keep it when
+  re-syncing) fills the category and a .jpg photo by SKU:
+  - 2765 Foundations & Concealers, with the foundation's or the stick's photo;
+  - 543597 Manual Massage Tools for the brush, with its photo.
+- **Proven live.** view_item, add_to_cart and begin_checkout on the trial and APF funnels carry all seven fields, and
+  AppLovin answers 200. A purchase payload run through the adapter does too.
+
+
+**Payment methods (4 Nov 2026).** Only methods that can charge a refill are offered: card, plus PayPal and Apple Pay
+as the express buttons (Apple Pay shows on Apple devices). The owner briefly added Affirm, Afterpay and Link to
+campaigns 2221 and 2251, then asked for "just the one supporting subscription". So both campaigns were set back to
+apple_pay, bankcard and paypal through the create skill's update path (one approved PATCH each), and both checkouts
+show only those.
+- **Why not the others.** Pay-later methods do not renew subscriptions, and Link was already off for that reason on
+  1 Nov. Afterpay is not in the Campaign Cart SDK at all.
+- **Proven live.** The trial checkout (1 and 5 bottles) and the APF checkout show only the card form, PayPal and
+  Apple Pay, with no errors.
+- **The gates.** check_apf and check_trial fail on any Affirm, Afterpay, Klarna or Link radio or showing logo.
 
 ## Owner items
 

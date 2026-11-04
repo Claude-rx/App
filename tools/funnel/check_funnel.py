@@ -225,7 +225,7 @@ if not re.search(r'<meta name="next-analytics-view-item" content="\d+">', html('
 _axf = SITE / 'js' / 'axon.adapter.js'
 if _axf.exists():
     _ax = _axf.read_text(encoding='utf-8')
-    if 'out.item_category_id = it.item_category;' in _ax or 'categoryId(it.item_category) || fallbackCategoryId' not in _ax:
+    if 'out.item_category_id = it.item_category;' in _ax or 'categoryId(it.item_category) || familyCategory(it) || fallbackCategoryId' not in _ax:
         fail('all pages', 'axon.adapter.js sends the text item_category as item_category_id (Axon answers 400), or leaves items without the numeric fallback AXON requires')
     # AXON requires user_data on purchase: the adapter maps the SDK's user_properties (customer_email/phone/id)
     if 'params.user_data = user' not in _ax or 'up.customer_email' not in _ax or "'sf-' + hash53(" not in _ax:

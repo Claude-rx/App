@@ -12,7 +12,7 @@ bad=0
 pdp=$(curl -fsSL -m 30 "$BASE/adaptive-foundation-trial/?axon_guard=$RANDOM") || { echo "FAIL adaptive-foundation-trial: page did not load"; bad=1; }
 if [ -n "${pdp:-}" ]; then
   if grep -qE 'item_variant_id: c\.getAttribute\("data-item-variant"\), item_category_id: [0-9]+, image_url: "https://[^"]+\.(png|jpe?g)"' <<<"$pdp" \
-     && grep -qE 'data-item-sku="SKF-[A-Z0-9-]+" data-item-variant="[0-9]+"' <<<"$pdp"; then echo "ok   adaptive-foundation-trial"
+     && grep -qE 'data-item-id="SKF-[A-Z0-9-]+"[^>]*data-item-variant="[0-9]+"' <<<"$pdp"; then echo "ok   adaptive-foundation-trial"
   else echo "FAIL adaptive-foundation-trial: product page item lacks variant, category or .jpg image"; bad=1; fi
 fi
 for p in "${PAGES[@]}"; do
@@ -23,7 +23,7 @@ for p in "${PAGES[@]}"; do
   missing=()
   grep -q 'params.user_data = user' <<<"$js" || missing+=("user_data on purchase")
   grep -q "'sf-' + hash53(" <<<"$js" || missing+=("user_id from email")
-  grep -q 'categoryId(it.item_category) || fallbackCategoryId' <<<"$js" || missing+=("numeric item_category_id")
+  grep -q 'categoryId(it.item_category) || familyCategory(it) || fallbackCategoryId' <<<"$js" || missing+=("numeric item_category_id")
   grep -q 'IMAGE_BY_SKU_FAMILY' <<<"$js" || missing+=(".jpg image_url for every item")
   grep -q 'params.payment_type = paymentType(' <<<"$js" || missing+=("payment_type enum")
   if [ ${#missing[@]} -gt 0 ]; then joined=$(printf '%s, ' "${missing[@]}"); echo "FAIL $p: adapter lacks ${joined%, } — ${url##*/}"; bad=1

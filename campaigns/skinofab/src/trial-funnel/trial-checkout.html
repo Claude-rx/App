@@ -18,8 +18,9 @@ meta_tags:
 # the APF checkout's: the rating, the guarantee line, "Love it or your money back" with Refill reminder · Cancel any
 # time · Renews at $39.97/mo under the order button (the owner's screenshot), the reviews and the questions.
 cart_summary_variant: "02"
-# no Link and no Klarna (the owner, 1 Nov 2026: every pack renews). The platform kept Link enabled on campaign 2221
-# when the 1 Nov change removed it (Klarna went), so the page leaves both out itself, the radio and the logo (live review 17)
+# only the payment methods that can charge a refill (the owner, 4 Nov 2026: "just keep the one supporting subscription";
+# every pack renews): card, with PayPal and Apple Pay as the express buttons. No Affirm, Afterpay, Link or Klarna, radio
+# or logo (pay-later and Link payments are not set up for renewals).
 payment_flags:
   show_affirm: false
   show_afterpay: false
@@ -47,9 +48,8 @@ address_form:
 # the flash trial bar (sf-trial-bar in the page, not the promo banner: its words follow her clock, js/sf-trial.js)
 trial:
   title: "⚡ Flash trial offer · Limited time, today only"
-  live: "<strong>50% off your first month:</strong> $19.97 today, then $39.97/mo. Cancel any time."
-  over: "<strong>The flash trial has ended.</strong> The Adaptive Peptide Foundation is $39.97/mo. Cancel any time."
-  ends: "Your trial price ends in"
+  over: "<strong>The flash trial has ended.</strong>"
+  ends: "Ends at midnight:"
 trust:
   rating:
     average: "4.8"
@@ -202,7 +202,7 @@ pay_terms:
 # what renews, in the row under the order button (the owner's screenshot: "Love it or your money back", then Refill
 # reminder · Cancel any time · Renews at …); the pack she gets, in one line at the top of Step 1
 picked:
-  trial: "1 bottle, flash trial (50% off your first month)"
+  trial: "1 bottle, flash trial"
   trial-regular: "1 bottle"
   trial-3: "3 bottles (buy 2, get 1 free) + free Blender sponge"
   trial-5: "5 bottles (buy 3, get 2 free) + free Lymphatic Brush"
@@ -222,7 +222,7 @@ refill_terms: "Your pack ships again at its own price, the “Renews at” amoun
   <main class="main-wrapper">
     <div class="sf-trial-bar" data-sf-trial-bar role="region" aria-label="Flash trial offer">
       <p class="sf-trial-bar__title" data-sf-trial-live>{{ trial.title }}</p>
-      <p class="sf-trial-bar__text" data-sf-trial-live>{{ trial.live }} <span class="sf-trial-bar__clock">{{ trial.ends }} <strong data-sf-trial-clock>today</strong></span></p>
+      <p class="sf-trial-bar__text" data-sf-trial-live><span class="sf-trial-bar__clock">{{ trial.ends }} <strong data-sf-trial-clock>today</strong></span></p>
       <p class="sf-trial-bar__text" data-sf-trial-over>{{ trial.over }}</p>
     </div>
     {% campaign_include 'checkout-header.html' %}

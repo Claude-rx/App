@@ -50,9 +50,17 @@ carries the same adapter, and its product page (a store page, `tools/funnel/tria
 (SKF-APF-1, variant 15, category 2765, store JPG) instead of `item_id: "1"`. `check_trial.py` fails a build that loses
 any of it; the live guard covers its 8 pages.
 
+**Follow-up 7 (4 Nov 2026): two sessions, one funnel.** The other funnel session (`claude/brave-bohr-31qzeq`) wrote its
+own item fix (38a1878: variant, .jpg image, Google category by SKU, the brush as 543597) and redeployed all three funnels
+with it, dropping user_data (purchase goes red: AXON requires it), user_id and the payment_type enum. Merged here: the
+adapter keeps every fix plus that branch's brush category (`CATEGORY_BY_SKU_FAMILY`), built through its deploy_theme.py
+(content-hashed names: `sf{a,c,t}-axon-adapter-523362.js`) and pushed (3 adapters + 24 pages, only the script name
+changed). The trial page is that branch's (per-plan SKU, variant, category, JPG). **Until that branch merges this one,
+its next deploy will undo this again.**
+
 **Files:** `sfa-axon-adapter-3194de.js` (patched) · `.orig.js` (live copy before the fix, for rollback) · `axon-adapter.test.mjs`
 
-**Test:** `npm run test:axon` → 18/18 pass on the patch; the original fails the 4 user_data tests.
+**Test:** `npm run test:axon` → 19/19 pass on the patch; the original fails the 4 user_data tests.
 
 **Deploy (single file, theme 34):**
 ```bash

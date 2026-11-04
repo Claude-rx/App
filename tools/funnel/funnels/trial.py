@@ -54,27 +54,23 @@ VOUCHER = {'FLASH50': 1, 'APFT40': 2, 'APFT50': 3, 'BRUSHT40': 4, 'BRUSHT60': 5}
 
 # the trial: one bottle every month; today's price with the code, the price without it (the regular price, and every
 # refill's), what the code takes off
-TRIAL = {'package': 1,
-         # the store variant the trial package ships (campaign 2251 package 1 = SKF-APF-1, variant 15), as AppLovin's items carry it
-         'variant_id': '15', 'category_id': 2765,
-         'image': 'https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg',
-         'voucher': 'FLASH50', 'today': 19.97, 'regular': 39.97, 'off': 50, 'every': 'month',
-         'name': 'Adaptive Peptide Foundation - 1 bottle', 'sku': 'SKF-APF-1'}
+TRIAL = {'package': 1, 'voucher': 'FLASH50', 'today': 19.97, 'regular': 39.97, 'off': 50, 'every': 'month',
+         'name': 'Adaptive Peptide Foundation - 1 bottle', 'sku': 'SKF-APF-1', 'variant': 15}
+# what AppLovin's item object needs beyond the price (Axon: item_variant_id, image_url as .png/.jpg, an integer Google
+# product category): the product's own store photo and Foundations & Concealers
+AXON_IMAGE = 'https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg'
+AXON_CATEGORY = 2765
 UNIT = TRIAL['regular']
 
 # the packs beside the trial (the owner, 4 Nov 2026: "put the offer also of buy 2 get 1 free and buy 3 get 2 free", at
 # the APF funnel's prices; packages 6 and 7, added that day through the create skill's update path): the checkout card
 # id, the package, the bottles, what she pays today and at every refill, how many months apart, the crossed-out price
 # (the bottles at the trial's $39.97 a bottle: the free bottles) and the gift in the first box
-# AppLovin AXON items for the product page's plans, by campaign 2251 package ref: the store SKU and variant (the campaign's
-# own read, 4 Nov 2026), so view_item/add_to_cart carry the item the funnel's AXON adapter sends at the checkout
-AXON_ITEMS = {1: ('SKF-APF-1', '15'), 6: ('SKF-APF-3-BLENDER', '334'), 7: ('SKF-APF-5-BRUSH', '335')}
-
 PACKS = [
     {'bundle': 'trial-3', 'package': 6, 'bottles': 3, 'paid': 2, 'price': 66.97, 'months': 3, 'compare': 119.91,
-     'tab': 'Buy 2, get 1 FREE', 'gift': 'FREE Blender sponge', 'sku': 'SKF-APF-3-BLENDER'},
+     'tab': 'Buy 2, get 1 FREE', 'gift': 'FREE Blender sponge', 'sku': 'SKF-APF-3-BLENDER', 'variant': 334},
     {'bundle': 'trial-5', 'package': 7, 'bottles': 5, 'paid': 3, 'price': 99.97, 'months': 5, 'compare': 199.85,
-     'tab': 'Buy 3, get 2 FREE', 'gift': 'FREE Lymphatic Brush', 'sku': 'SKF-APF-5-BRUSH'},
+     'tab': 'Buy 3, get 2 FREE', 'gift': 'FREE Lymphatic Brush', 'sku': 'SKF-APF-5-BRUSH', 'variant': 335},
 ]
 
 # the offer pages: as APF's, on this campaign's packages and codes
@@ -107,8 +103,8 @@ PAGES = [
 ]
 
 TITLES = {
-    'offer': ('Adaptive Peptide Foundation: flash trial, 50% off your first month',
-              'Try the Adaptive Peptide Foundation for $19.97 your first month (50% off), then $39.97 a month. Cancel any time. Today only.'),
+    'offer': ('Adaptive Peptide Foundation: flash trial offer',
+              'The Adaptive Peptide Foundation flash trial: $19.97 today, then $39.97 a month. Cancel any time.'),
     'checkout': ('Secure checkout', 'Checkout for the Adaptive Peptide Foundation flash trial.'),
     'offer-1': ('Special offer', 'A one-time offer for your order.'),
     'offer-2': ('Special offer', 'A one-time offer for your order.'),

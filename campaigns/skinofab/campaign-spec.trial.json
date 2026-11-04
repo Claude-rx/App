@@ -545,7 +545,7 @@
   "offers": [
     {
       "ref_id": 1,
-      "name": "Flash trial: 50% off your first month",
+      "name": "Flash trial",
       "type": "voucher",
       "code": "FLASH50",
       "condition": {

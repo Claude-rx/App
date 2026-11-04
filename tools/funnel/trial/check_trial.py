@@ -88,7 +88,11 @@ def check_checkout(theme):
     ok(i_clock > i_sdk > 0 or i_clock > 0, 'checkout: no clock')
     ok('data-template="exit-intent"' not in h, 'checkout: an exit pop is in the page')
     ok('data-next-coupon' not in h, 'checkout: a coupon box is in the page')
-    ok(not re.search(r'value="(?:link|klarna)"', h), 'checkout: a Link or Klarna radio is in the page')
+    # only methods that can charge a refill (the owner, 4 Nov 2026: "just keep the one supporting subscription")
+    for code in ('affirm', 'afterpay', 'klarna', 'link'):
+        ok(f'data-next-payment-method="{code}"' not in h, f'checkout: a {code} radio (it cannot charge a refill)')
+        for m in re.finditer(r'<img[^>]*data-payment-logo="' + code + r'"[^>]*>', h):
+            ok('data-payment-force="hide"' in m.group(0), f'checkout: a {code} logo that can show')
     ok('<meta name="next-success-url" content="/trial-offer-1/">' in h, 'checkout: next-success-url is not /trial-offer-1/')
     t = text(h)
     for need in ('Flash trial offer · Limited time, today only', 'Love it or your money back', 'Renews at $39.97/mo', f'{REGULAR} every month', 'Step 1: Choose your plan',
@@ -156,10 +160,13 @@ def check_axon(theme):
     purchase with an email-derived user_id, numeric item_category_id, .jpg/.png image_url for every item, payment_type
     enum, upsell variant from the SKU), and the product page's own view_item/add_to_cart item is complete."""
     marks = {"'sf-' + hash53(": 'user_id from the email', 'params.user_data = user': 'user_data on purchase',
-             'categoryId(it.item_category) || fallbackCategoryId': 'numeric item_category_id',
+             'categoryId(it.item_category) || familyCategory(it) || fallbackCategoryId': 'numeric item_category_id',
              'IMAGE_BY_SKU_FAMILY': '.jpg image_url for every item', 'params.payment_type = paymentType(': 'payment_type enum',
              'VARIANT_BY_SKU': 'upsell variant from the SKU'}
-    for path in (SRC / 'assets' / 'js' / 'axon.adapter.js', theme / 'assets' / 'sft' / 'sft-axon-adapter-3194de.js'):
+    # the theme copy is named by its content hash (deploy_theme.py), so take whichever one the theme holds
+    copies = sorted((theme / 'assets' / 'sft').glob('sft-axon-adapter-*.js'))
+    ok(len(copies) == 1, f'axon: expected one sft-axon-adapter-*.js in the theme, found {[c.name for c in copies]}')
+    for path in (SRC / 'assets' / 'js' / 'axon.adapter.js', *copies):
         js = path.read_text(encoding='utf-8') if path.is_file() else ''
         ok(js, f'axon: no adapter at {path.relative_to(ROOT) if path.is_relative_to(ROOT) else path}')
         for mark, what in marks.items():
@@ -167,15 +174,15 @@ def check_axon(theme):
     pdp = tpl(theme, 'offer')
     spec_skus = {p['ref_id']: p.get('product_sku') for f in json.loads((PROJECT / 'campaign-spec.trial.json').read_text())['funnels']
                  for page in f.get('pages', []) for p in page.get('packages', [])}
-    plans = re.findall(r'data-sft-plan="([^"]+)"[^>]*?data-item-id="(\d+)"[^>]*?data-item-sku="([^"]*)" data-item-variant="([^"]*)"', pdp)
+    plans = re.findall(r'data-sft-plan="([^"]+)"[^>]*?data-item-id="([^"]*)"[^>]*?data-item-variant="([^"]*)"', pdp)
     ok(plans, 'axon: the product page plans carry no AppLovin SKU/variant')
-    for plan, ref, sku, variant in plans:
-        ok(sku and sku == spec_skus.get(int(ref)), f'axon: plan {plan} (package {ref}) sends SKU {sku!r}, the campaign says {spec_skus.get(int(ref))!r}')
+    for plan, sku, variant in plans:
+        ok(sku in set(spec_skus.values()), f'axon: plan {plan} sends item_id {sku!r}, not a SKU of campaign 2251 ({sorted(v for v in spec_skus.values() if v)})')
         ok(variant.isdigit(), f'axon: plan {plan} has no store variant id')
     m = re.search(r'var payload = function \(c\) \{(.*?)\}\] \}; \};', pdp)
     ok(m, 'axon: the product page has no AppLovin payload')
     if m:
-        for field in ('item_id: c.getAttribute("data-item-sku")', 'item_variant_id: c.getAttribute("data-item-variant")', 'item_category_id: '):
+        for field in ('item_id: c.getAttribute("data-item-id")', 'item_variant_id: c.getAttribute("data-item-variant")', 'item_category_id: '):
             ok(field in m.group(1), f'axon: the product page item lacks {field.split(":")[0]}')
         ok(re.search(r'image_url: "https://[^"]+\.(png|jpe?g)"', m.group(1)), 'axon: the product page image_url is missing or not .png/.jpg')
 
