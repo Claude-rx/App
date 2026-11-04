@@ -15,24 +15,12 @@
     "payment_env_key": "5WMJ53MV2D8MH9X9S955PQ0T95",
     "available_payment_methods": [
       {
-        "code": "affirm",
-        "label": "Affirm"
-      },
-      {
-        "code": "afterpay",
-        "label": "Afterpay"
-      },
-      {
         "code": "apple_pay",
         "label": "Apple Pay"
       },
       {
         "code": "bankcard",
         "label": "Bankcard"
-      },
-      {
-        "code": "link",
-        "label": "Link"
       },
       {
         "code": "paypal",

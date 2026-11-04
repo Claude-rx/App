@@ -88,8 +88,11 @@ def check_checkout(theme):
     ok(i_clock > i_sdk > 0 or i_clock > 0, 'checkout: no clock')
     ok('data-template="exit-intent"' not in h, 'checkout: an exit pop is in the page')
     ok('data-next-coupon' not in h, 'checkout: a coupon box is in the page')
-    ok(not re.search(r'data-next-payment-method="klarna"', h), 'checkout: a Klarna radio is in the page (the campaign has no Klarna)')
-    ok('data-next-payment-method="affirm"' in h and 'data-next-payment-method="link"' in h, 'checkout: the Affirm and Link radios the campaign offers are not in the page')
+    # only methods that can charge a refill (the owner, 4 Nov 2026: "just keep the one supporting subscription")
+    for code in ('affirm', 'afterpay', 'klarna', 'link'):
+        ok(f'data-next-payment-method="{code}"' not in h, f'checkout: a {code} radio (it cannot charge a refill)')
+        for m in re.finditer(r'<img[^>]*data-payment-logo="' + code + r'"[^>]*>', h):
+            ok('data-payment-force="hide"' in m.group(0), f'checkout: a {code} logo that can show')
     ok('<meta name="next-success-url" content="/trial-offer-1/">' in h, 'checkout: next-success-url is not /trial-offer-1/')
     t = text(h)
     for need in ('Flash trial offer · Limited time, today only', 'Love it or your money back', 'Renews at $39.97/mo', f'{REGULAR} every month', 'Step 1: Choose your plan',

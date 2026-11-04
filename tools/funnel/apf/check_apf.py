@@ -856,7 +856,7 @@ for p in F.PAGES:
 # does (stock is untracked). F6: the settling answer hedged to its end. F7: the checkout's footer has Contact.
 for p in F.PAGES:
     _h = html(p['id']); _t = text(_h)
-    for _code in ('klarna',):          # Link came back on 4 Nov 2026 (the owner, campaigns 2221 and 2251); Klarna is not offered
+    for _code in ('link', 'klarna', 'affirm', 'afterpay'):   # only methods that can charge a refill (the owner, 4 Nov 2026)
         if f'data-next-payment-method="{_code}"' in _h: fail(p['id'], f'a {_code} payment option (the owner turned it off)')
         for _m in re.finditer(r'<img[^>]*data-payment-logo="' + _code + r'"[^>]*>', _h):
             if 'data-payment-force="hide"' not in _m.group(0): fail(p['id'], f'a {_code} logo that can show')

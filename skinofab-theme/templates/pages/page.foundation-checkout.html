@@ -412,77 +412,11 @@
   
   
   
-  <div data-next-payment-method="affirm" class="payment-method">
-    <div class="payment-method__header">
-      <label for="combo_mode_affirm" combo_mode="affirm" class="payment-method__label">
-        <input type="radio" name="payment_method" id="combo_mode_affirm" data-name="Combo Mode" class="payment-method__input" value="affirm">
-        <div class="payment-method__title">Affirm - Flexible Payments</div>
-        <div class="payment-method__icons">
-          <img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-affirm-logo-264821.svg'|asset_url }}{% verbatim %}" alt="" class="payment-method__icon--affirm-logo">
-        </div>
-      </label>
-    </div>
-    <div data-next-payment-form="affirm" os-checkout-element="credit-form" class="payment-method__form payment-method__form--collapsed">
-      <div class="payment-method__content">
-        <div data-next-component="affirm-error" class="next-toast-handler">
-          <div class="tip1_bar is-warning">
-            <div data-next-component="affirm-error-text" class="text-sm">Error message</div>
-          </div>
-        </div>
-        <div class="payment-method__info">
-          <div class="payment-method__info-image">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-252.3 356.1 163 80.9" preserveAspectRatio="xMidYMid meet" width="100%" height="100%" class="zjrzY">
-              <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M-108.9 404.1v30c0 1.1-.9 2-2 2H-231c-1.1 0-2-.9-2-2v-75c0-1.1.9-2 2-2h120.1c1.1 0 2 .9 2 2v37m-124.1-29h124.1"></path>
-              <circle cx="-227.8" cy="361.9" r="1.8" fill="currentColor"></circle>
-              <circle cx="-222.2" cy="361.9" r="1.8" fill="currentColor"></circle>
-              <circle cx="-216.6" cy="361.9" r="1.8" fill="currentColor"></circle>
-              <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M-128.7 400.1H-92m-3.6-4.1 4 4.1-4 4.1"></path>
-            </svg>
-          </div>
-          <p class="payment-method__info-title">
-            After clicking "Complete My Order", you'll be taken to a secure page to finish paying with Affirm.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
   
   
   
-  <div data-next-payment-method="link" class="payment-method">
-    <div class="payment-method__header">
-      <label for="combo_mode_link" combo_mode="link" class="payment-method__label">
-        <input type="radio" name="payment_method" id="combo_mode_link" data-name="Combo Mode" class="payment-method__input" value="link">
-        <div class="payment-method__title">Link</div>
-        <div class="payment-method__icons">
-          <img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-link-logo-b8bc37.svg'|asset_url }}{% verbatim %}" alt="" class="payment-method__icon--link-logo">
-        </div>
-      </label>
-    </div>
-    <div data-next-payment-form="link" os-checkout-element="credit-form" class="payment-method__form payment-method__form--collapsed">
-      <div class="payment-method__content">
-        <div data-next-component="link-error" class="next-toast-handler">
-          <div class="tip1_bar is-warning">
-            <div data-next-component="link-error-text" class="text-sm">Error message</div>
-          </div>
-        </div>
-        <div class="payment-method__info">
-          <div class="payment-method__info-image">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-252.3 356.1 163 80.9" preserveAspectRatio="xMidYMid meet" width="100%" height="100%" class="zjrzY">
-              <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M-108.9 404.1v30c0 1.1-.9 2-2 2H-231c-1.1 0-2-.9-2-2v-75c0-1.1.9-2 2-2h120.1c1.1 0 2 .9 2 2v37m-124.1-29h124.1"></path>
-              <circle cx="-227.8" cy="361.9" r="1.8" fill="currentColor"></circle>
-              <circle cx="-222.2" cy="361.9" r="1.8" fill="currentColor"></circle>
-              <circle cx="-216.6" cy="361.9" r="1.8" fill="currentColor"></circle>
-              <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M-128.7 400.1H-92m-3.6-4.1 4 4.1-4 4.1"></path>
-            </svg>
-          </div>
-          <p class="payment-method__info-title">
-            After clicking "Complete My Order", you'll be taken to a secure page to finish paying with Link.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+  
+  
   
   
 
@@ -721,7 +655,7 @@
                     <div class="payment-img-wrapper ">
   <div class="trust-badge invert"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-icons8-lock-24-1icons8-lock-24-7e2024.png'|asset_url }}{% verbatim %}" alt="" class="trust-badge__icon">
     <div class="badge-text-black">100% Encrypted &amp; Secure Checkout</div>
-  </div><div class="payment-logos" data-payment-logos aria-label="Accepted payment methods"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-visa-89d56c.svg'|asset_url }}{% verbatim %}" alt="Visa" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="visa" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-master-465bcf.svg'|asset_url }}{% verbatim %}" alt="Mastercard" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="mastercard" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-amex-d638f4.svg'|asset_url }}{% verbatim %}" alt="American Express" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="american_express" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-discover-c1e4c3.svg'|asset_url }}{% verbatim %}" alt="Discover" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="discover" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-diners-club-6d75f2.svg'|asset_url }}{% verbatim %}" alt="Diners Club" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="diners_club" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-jcb-768f2b.svg'|asset_url }}{% verbatim %}" alt="JCB" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="jcb" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-maestro-7caa38.svg'|asset_url }}{% verbatim %}" alt="Maestro" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="maestro" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-dankort-15b780.svg'|asset_url }}{% verbatim %}" alt="Dankort" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="dankort" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-paypal-logo-812a71.svg'|asset_url }}{% verbatim %}" alt="PayPal" class="payment-logos__item" data-payment-logo="paypal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-apple-pay-logo-d7b774.svg'|asset_url }}{% verbatim %}" alt="Apple Pay" class="payment-logos__item" data-payment-logo="apple_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-google-pay-logo-4a1dc6.svg'|asset_url }}{% verbatim %}" alt="Google Pay" class="payment-logos__item" data-payment-logo="google_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-klarna-logo-625918.svg'|asset_url }}{% verbatim %}" alt="Klarna" class="payment-logos__item" data-payment-logo="klarna" data-payment-force="hide" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-affirm-logo-264821.svg'|asset_url }}{% verbatim %}" alt="Affirm" class="payment-logos__item" data-payment-logo="affirm" data-payment-force="show"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-link-logo-b8bc37.svg'|asset_url }}{% verbatim %}" alt="Link" class="payment-logos__item" data-payment-logo="link" data-payment-force="show"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-shop-pay-logo-df9c3b.svg'|asset_url }}{% verbatim %}" alt="Shop Pay" class="payment-logos__item" data-payment-logo="shop_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-twint-logo-271738.svg'|asset_url }}{% verbatim %}" alt="TWINT" class="payment-logos__item" data-payment-logo="twint" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-bancontact-logo-9a7e81.svg'|asset_url }}{% verbatim %}" alt="Bancontact" class="payment-logos__item" data-payment-logo="bancontact" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-ideal-logo-8b639e.svg'|asset_url }}{% verbatim %}" alt="iDEAL" class="payment-logos__item" data-payment-logo="ideal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-sepa-logo-b17ddc.svg'|asset_url }}{% verbatim %}" alt="SEPA Direct Debit" class="payment-logos__item" data-payment-logo="sepa_debit" hidden>
+  </div><div class="payment-logos" data-payment-logos aria-label="Accepted payment methods"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-visa-89d56c.svg'|asset_url }}{% verbatim %}" alt="Visa" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="visa" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-master-465bcf.svg'|asset_url }}{% verbatim %}" alt="Mastercard" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="mastercard" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-amex-d638f4.svg'|asset_url }}{% verbatim %}" alt="American Express" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="american_express" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-discover-c1e4c3.svg'|asset_url }}{% verbatim %}" alt="Discover" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="discover" data-card-default="true"><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-diners-club-6d75f2.svg'|asset_url }}{% verbatim %}" alt="Diners Club" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="diners_club" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-jcb-768f2b.svg'|asset_url }}{% verbatim %}" alt="JCB" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="jcb" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-maestro-7caa38.svg'|asset_url }}{% verbatim %}" alt="Maestro" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="maestro" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-cc-dankort-15b780.svg'|asset_url }}{% verbatim %}" alt="Dankort" class="payment-logos__item" data-payment-logo="bankcard" data-card-brand="dankort" data-card-default="false" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-paypal-logo-812a71.svg'|asset_url }}{% verbatim %}" alt="PayPal" class="payment-logos__item" data-payment-logo="paypal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-apple-pay-logo-d7b774.svg'|asset_url }}{% verbatim %}" alt="Apple Pay" class="payment-logos__item" data-payment-logo="apple_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-google-pay-logo-4a1dc6.svg'|asset_url }}{% verbatim %}" alt="Google Pay" class="payment-logos__item" data-payment-logo="google_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-klarna-logo-625918.svg'|asset_url }}{% verbatim %}" alt="Klarna" class="payment-logos__item" data-payment-logo="klarna" data-payment-force="hide" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-affirm-logo-264821.svg'|asset_url }}{% verbatim %}" alt="Affirm" class="payment-logos__item" data-payment-logo="affirm" data-payment-force="hide" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-link-logo-b8bc37.svg'|asset_url }}{% verbatim %}" alt="Link" class="payment-logos__item" data-payment-logo="link" data-payment-force="hide" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-shop-pay-logo-df9c3b.svg'|asset_url }}{% verbatim %}" alt="Shop Pay" class="payment-logos__item" data-payment-logo="shop_pay" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-twint-logo-271738.svg'|asset_url }}{% verbatim %}" alt="TWINT" class="payment-logos__item" data-payment-logo="twint" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-bancontact-logo-9a7e81.svg'|asset_url }}{% verbatim %}" alt="Bancontact" class="payment-logos__item" data-payment-logo="bancontact" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-ideal-logo-8b639e.svg'|asset_url }}{% verbatim %}" alt="iDEAL" class="payment-logos__item" data-payment-logo="ideal" hidden><img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-sepa-logo-b17ddc.svg'|asset_url }}{% verbatim %}" alt="SEPA Direct Debit" class="payment-logos__item" data-payment-logo="sepa_debit" hidden>
   </div></div>
 
                   </div>
@@ -901,7 +835,7 @@
     <details><summary>Is this a subscription?</summary><p>Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the pack’s own price until you cancel, even if a code took money off today: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gifts come with your first order; refills are the bottles only.</p></details>
     <details><summary>When does it ship?</summary><p>Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days. This offer ships to US addresses only.</p></details>
     <details><summary>Are these reviews of this formula?</summary><p>Yes. They are the published reviews of this formula from our earlier store, imported in October 2026, none reworded (“…” marks where a long one is shortened), with the buyers’ own photos.</p></details>
-    <details><summary>Is my payment secure?</summary><p>Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal, Apple Pay, Affirm or Link.</p></details>
+    <details><summary>Is my payment secure?</summary><p>Yes. Your card number goes straight to our payment processor in encrypted fields, so we never see it. You can also pay with PayPal or Apple Pay.</p></details>
     <details><summary>Anything I should know before I order?</summary><p>The formula contains salmon-derived PDRN, so it is not for anyone with a fish allergy. If your skin is very reactive, try it on your jawline first. Key ingredients: Sodium Hyaluronate, Sodium Hyaluronate Crosspolymer, Ceramide NP, Squalane, Panthenol, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Sodium DNA (PDRN, from salmon), Hydroxypropyl Tetrahydropyrantriol, Niacinamide, Adenosine, Silica, Boron Nitride, Mica, Iron Oxides. Fragrance-free. The full ingredient list is printed on the box. To check it before you order, email <a href="mailto:info@skinofab.com?subject=Full%20ingredient%20list%2C%20Adaptive%20Peptide%20Foundation">info@skinofab.com</a> and we’ll send it to you.</p></details>
     <p class="sf-co-faq__contact">Still unsure? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>: a person replies within one business day.</p>
   </div><a class="sf-co-back hide-tablet-up" href="#sf-co-pay">Back to my order</a>

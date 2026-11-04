@@ -181,20 +181,16 @@ item_variant_id, image_url (.png, .jpg or .jpeg) and an integer item_category_id
   AppLovin answers 200. A purchase payload run through the adapter does too.
 
 
-**Payment methods (4 Nov 2026).** The owner set campaigns 2221 and 2251 to Affirm, Afterpay, Apple Pay, card, Link and
-PayPal. Both checkouts now show:
-- card, Affirm and Link as radios;
-- PayPal and Apple Pay as the express buttons (Apple Pay shows on Apple devices).
-
-Proven live on the trial checkout (1 bottle and 5 bottles) and the APF checkout: each radio opens its panel, and
-Affirm and Link send her to their secure page on "Complete My Order".
-
-Two limits:
-- **Afterpay cannot show.** The Campaign Cart SDK (0.4.43, its latest) has no Afterpay method, so it is left off the
-  page.
-- **Affirm and subscription renewals.** Affirm is a one-time financing method: Stripe says buy now, pay later does
-  not support subscriptions. A refill on an Affirm order may not charge. Confirm with NEXT; if it does not, keep
-  Affirm for one-time carts only.
+**Payment methods (4 Nov 2026).** Only methods that can charge a refill are offered: card, plus PayPal and Apple Pay
+as the express buttons (Apple Pay shows on Apple devices). The owner briefly added Affirm, Afterpay and Link to
+campaigns 2221 and 2251, then asked for "just the one supporting subscription". So both campaigns were set back to
+apple_pay, bankcard and paypal through the create skill's update path (one approved PATCH each), and both checkouts
+show only those.
+- **Why not the others.** Pay-later methods do not renew subscriptions, and Link was already off for that reason on
+  1 Nov. Afterpay is not in the Campaign Cart SDK at all.
+- **Proven live.** The trial checkout (1 and 5 bottles) and the APF checkout show only the card form, PayPal and
+  Apple Pay, with no errors.
+- **The gates.** check_apf and check_trial fail on any Affirm, Afterpay, Klarna or Link radio or showing logo.
 
 ## Owner items
 
