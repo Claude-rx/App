@@ -99,8 +99,8 @@ PAGES = [
 ]
 
 TITLES = {
-    'offer': ('Adaptive Peptide Foundation: flash trial, 50% off your first month',
-              'Try the Adaptive Peptide Foundation for $19.97 your first month (50% off), then $39.97 a month. Cancel any time. Today only.'),
+    'offer': ('Adaptive Peptide Foundation: flash trial offer',
+              'The Adaptive Peptide Foundation flash trial: $19.97 today, then $39.97 a month. Cancel any time.'),
     'checkout': ('Secure checkout', 'Checkout for the Adaptive Peptide Foundation flash trial.'),
     'offer-1': ('Special offer', 'A one-time offer for your order.'),
     'offer-2': ('Special offer', 'A one-time offer for your order.'),

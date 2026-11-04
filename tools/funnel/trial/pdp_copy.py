@@ -226,9 +226,9 @@ def build(src):
     # the price under the title
     s = sub1(r'<s class="product__price--compare">\{% include \'partials/sf_price.html\' with p=product retail=1 %\}</s><span class="product__price--regular product__price--sale">\{% include \'partials/sf_price.html\' with p=product %\}</span>',
              '<s class="product__price--compare" data-sf-trial-live>' + REGULAR + '</s><span class="product__price--regular product__price--sale"><span data-sf-trial-live>' + TODAY +
-             ' <small style="font-size:.62em;font-weight:500">first month</small></span><span data-sf-trial-over>' + REGULAR + '<small style="font-size:.62em;font-weight:500">/mo</small></span></span>', s)
+             '</span><span data-sf-trial-over>' + REGULAR + '<small style="font-size:.62em;font-weight:500">/mo</small></span></span>', s)
     # the sticky bar
-    s = sub1(r'<span>From \$37 · Free shipping ', '<span><span data-sf-trial-live>' + TODAY + ' first month</span><span data-sf-trial-over>' + REGULAR + '/mo</span> · Free shipping ', s)
+    s = sub1(r'<span>From \$37 · Free shipping ', '<span><span data-sf-trial-live>' + TODAY + '</span><span data-sf-trial-over>' + REGULAR + '/mo</span> · Free shipping ', s)
     s = sub1(r'<a class="sf-sticky__btn" href="#apf-buy" tabindex="-1">Choose your pack<span class="sf-sticky__from">\s?· From \$37</span></a>',
              '<a class="sf-sticky__btn" href="#apf-buy" tabindex="-1"><span data-sf-trial-live>Start my trial</span><span data-sf-trial-over>Start my refills</span>'
              '<span class="sf-sticky__from"><span data-sf-trial-live>\u00a0· ' + TODAY + '</span><span data-sf-trial-over>\u00a0· ' + REGULAR + '/mo</span></span></a>', s)
