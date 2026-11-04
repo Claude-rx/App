@@ -1,0 +1,38 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/guarantees.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-guarantees
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell offer (trust / guarantee cards under the CTA — also usable standalone)
+  next_params:
+    upsell_guarantees: array. Each { variant stacked|row (default row), icon lock|shield (inline SVG),
+      image (asset path — wins over icon), title, text }.
+      stacked → centered icon · bold title · text  (e.g. "100% Secure & Safe Checkout")
+      row     → badge left · "<strong>title:</strong> text" right  (e.g. 30-day money-back guarantee)
+  Renders nothing when the array is absent or empty.
+    {% campaign_include 'upsell/guarantees.html' upsell_guarantees=upsell_guarantees %}
+{%- endcomment -%}
+{%- if upsell_guarantees and upsell_guarantees.size > 0 -%}
+<div class="upsell-guarantees">
+  {%- for g in upsell_guarantees %}
+  {%- assign g_variant = g.variant | default: 'row' %}
+  <div class="upsell-guarantee upsell-guarantee--{{ g_variant }}">
+    {%- if g.image %}
+    <img loading="lazy" src="{{ g.image | campaign_asset }}" alt="" class="upsell-guarantee__badge">
+    {%- elsif g.icon == 'shield' %}
+    <div class="upsell-guarantee__icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+    {%- elsif g.icon %}
+    <div class="upsell-guarantee__icon"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zm-7-2a2 2 0 1 1 4 0v2h-4V6zm3 9.7V17a1 1 0 0 1-2 0v-1.3a1.5 1.5 0 1 1 2 0z"/></svg></div>
+    {%- endif %}
+    <div class="upsell-guarantee__content">
+      {%- if g_variant == 'row' %}
+      <p class="upsell-guarantee__text">{% if g.title %}<strong>{{ g.title }}</strong> {% endif %}{% campaign_include 'upsell/copy.html' text=g.text %}</p>
+      {%- else %}
+      {%- if g.title %}<p class="upsell-guarantee__title">{{ g.title }}</p>{% endif %}
+      {%- if g.text %}<p class="upsell-guarantee__text">{% campaign_include 'upsell/copy.html' text=g.text %}</p>{% endif %}
+      {%- endif %}
+    </div>
+  </div>
+  {%- endfor %}
+</div>
+{%- endif -%}

@@ -9,7 +9,7 @@ A one-time-purchase funnel for the Adaptive Peptide Foundation (the liquid found
 | Page | Live URL | What it does |
 |---|---|---|
 | Listicle (entry) | https://try.skinofab.com/10-reasons-adaptive-foundation/ | "10 Reasons Why Women Over 45 Look Fresher With This 'Shade-Adapting' Foundation": the Facelove listicle's structure, this foundation's reasons, photos and reviews |
-| Sales page | https://try.skinofab.com/adaptive-foundation-offer/ | v2 (28 Oct 2026): hero promise ("Even, fresh skin in about a minute. No shade to guess.") with bullets and the wow image; the problem with emotional images; the root cause with an animated skin diagram; the root solution with the science loop; one pump instead of four products; the comparison table; feature badges; the ingredients; "Formulated in Korea" with the doctor image captioned as an illustration; the one-shade objection graphic; before/afters; proof; demo clips; green-star reviews; FAQ; the offer with the value stack, honest urgency and the pack chooser (`docs/apf-funnel/copy-deck.md`) |
+| Sales page | https://try.skinofab.com/adaptive-foundation-offer/ | v2 (28 Oct 2026): hero promise (since 2 Nov 2026, the owner's: "Over 45? Get your skin back in 60 seconds. Your shade, the instant you blend.", the button after the bullets and "From $19.99 a bottle" under it) with bullets and the wow image; the problem with emotional images; the root cause with an animated skin diagram; the root solution with the science loop; one pump instead of four products; the comparison table; feature badges; the ingredients; "Formulated in Korea" with the doctor image captioned as an illustration; the one-shade objection graphic; before/afters; proof; demo clips; green-star reviews; FAQ; the offer with the value stack, honest urgency and the pack chooser (`docs/apf-funnel/copy-deck.md`) |
 | Checkout | https://try.skinofab.com/foundation-checkout/ | v2: the form first (packs with their names and prices from the first paint, details, address, payment), the guarantee line and one-time terms by the order button, four badges under it, three green-star reviews after it on a phone, the proof column beside it on a computer; express PayPal / Apple Pay, Klarna, Link; exit pop APF10 (on a phone too) |
 | Offer 1 | https://try.skinofab.com/foundation-offer-1/ | "just for you, right now" with the honest 10-minute clock: supply cards, 2 bottles for $39 ("Add 1, get 1 FREE") or 6 for $99 ($16.50 a bottle) with a free Lymphatic Brush |
 | Offer 2 | https://try.skinofab.com/foundation-offer-2/ | one more bottle, 40% off ($23), 10-minute clock |
@@ -59,14 +59,27 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    on try.skinofab.com, `qa-live@skinofab.test`) and the AppLovin walks of 29 Oct: **101586, 101588, 101594**
    (101588 carries a doubled $150 line from the cart bug fixed that morning, see "AppLovin Axon"). The storefront's
    AppLovin proof is **101593** (`qa-live@example.com`, store checkout), and it started test subscription **100**:
-   cancel both. The stick funnel's are listed in `docs/stick-funnel.md`.
-2. **The gifts.** The 2- and 3-bottle packs promise a SKINOFAB Blender brush and a mystery gift; the 3-bottle pack and
-   offer 1's 6-bottle pack a Lymphatic Brush with its travel case. Fulfilment must pack them: the campaign's packages
-   name them in their titles (the store sees "2 bottles + free gifts"), nothing else tells the warehouse.
-3. **"While our launch stock of brushes lasts."** The sales page's scarcity section says the brush ships with the
-   3-bottle pack while launch stock lasts, after which the pack ships with the Blender brush and mystery gift only.
-   When that happens, rename package 8 and change the pack copy (`adaptive-foundation-offer.html` packs / value /
-   scarcity, `foundation-checkout.html` bundles, `funnels/apf.py` PACKS, `check_apf.py` BRUSH_SKUS) in one pass.
+   cancel both.
+   The pre-ads proof of 2 Nov 2026 is **101764** (`qa-live@skinofab.test`, flagged as a test): the 5-bottle pack
+   ($99.97) from the listicle's link and the sales page's button, offers 1 and 2 declined, the downsell's bottle ($15,
+   one-time) accepted, the brush offer passed on by its own rule (the pack has the brush), $114.97; it started test
+   subscription **134** (every 140 days): cancel both. Every AppLovin event fired (page_view, view_item, add_to_cart,
+   begin_checkout, add_payment_info, purchase $99.97, the downsell's purchase $15); the passed-on brush page also
+   sends a `view_item` before it moves on. The stick funnel's are listed in `docs/stick-funnel.md`.
+   **To place a test order yourself,** use NEXT's test card **6011 1111 1111 1117**, CVV 123, any future expiry: it
+   skips the gateway, charges nothing and flags the order as a test. Stripe's own test card (4242 4242 4242 4242)
+   does not work here: the store's Stripe gateway is live, so Stripe refuses it and the checkout shows "There was a
+   problem processing your order" (30 Oct 2026, transaction 166, $75, response 3002, no order created). A real card
+   is charged for real: order **101614** ($39, 29 Oct, the owner's own card) is a paid live order to refund and
+   cancel if it was a test.
+2. **The gifts (since 30 Oct 2026).** The 3-bottle pack (buy 2, get 1 free) comes with the SKINOFAB Blender sponge,
+   the 5-bottle pack (buy 3, get 2 free) and offer 1's 6-bottle pack with the Lymphatic Brush and its travel case; there
+   is no mystery gift any more. Fulfilment must pack them: the packages name them in their titles ("3 bottles + free
+   Blender", "5 bottles + free Lymphatic Brush"), nothing else tells the warehouse.
+3. **"While our launch stock lasts."** The sales page says the brush comes with the 5-bottle pack while launch stock
+   lasts, and that the pack shows without it, here and at the checkout, before she orders, once it runs out. When that
+   happens, change the 5-pack's package and copy (`adaptive-foundation-offer.html` packs / value / scarcity,
+   `foundation-checkout.html` bundles, `funnels/apf.py` PACKS, `check_apf.py` BRUSH_SKUS) in one pass.
 4. **Store prices quoted.** The pages say the store sells one bottle for $47 and the 2-pack for $57 without the brush,
    and the brush for $24.95 (the 3-pack of brushes at $16.63 each). If a store price changes, change `why_now` on the
    sales page and the offers' store comparisons in `tools/funnel/apf/offer_pages.py`, and rebuild.
@@ -78,21 +91,22 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    count is higher than the order count.
 6. **Shipping promise.** The pages promise "ships within 1 business day, free and tracked: 2–4 business days in the US,
    6–9 to Europe, 8–12 elsewhere" (the store's shipping policy). Keep the policy and the pages in step.
-7. **The mystery gift** is "a mystery gift from our line". Decide what ships (a deluxe sample of the balm or the serum
-   fits). Neither it nor the Blender sponge shows a dollar value since live review 10: the store sells neither, so a
-   crossed-out "$15" or "$9" had no price behind it. To show a value again, sell the item in the store at that price
-   first, then add it back to the pack cards and the value stack (the total adds up by itself in `check_apf.py`).
+7. **The Blender sponge's value.** It shows no dollar value (live review 10): the store does not sell it, so a
+   crossed-out "$9" had no price behind it. To show one, sell it in the store at that price first, then add it to the
+   pack card and the value stack (the total adds up by itself in `check_apf.py`). (The mystery gift is gone since the
+   owner's offer of 30 Oct 2026.)
 8. **Refills (since 29 Oct 2026).** (a) Fulfilment: a refill of packages 2 and 3 is **the bottles only**, never the
    gifts; the package titles still say "+ free gifts", so tell the warehouse. (b) The pages promise "we email you
    before every refill" and offer a ready-made cancel email ("Cancel my refills": a `mailto:` with the subject
    "Cancel my Automatic Refills" and the body filled in) that stops a refill when sent a day before it: make sure the
    store's subscription reminder emails are on, and that every such email is cancelled the same day, no questions
    asked (California's auto-renewal law expects cancelling to be as easy as signing up; a cancel page in the store
-   would be better still if NEXT offers one). (c) Klarna, Afterpay, Affirm
-   and Link may not allow a later charge; check with NEXT whether a refill on those is charged or fails, and turn them
-   off on campaign 2221 if it fails. (d) **Pricing:** the store's own refills ($37 for 1 bottle, $47 for 2) are lower
-   than the funnel's ($39, $57): a buyer who compares pays less in the store. Match them (or keep them apart on
-   purpose), then change `funnels/apf.py` PACKS and the campaign together.
+   would be better still if NEXT offers one). (c) **Klarna and Link with refills (live review 13 raised it again):**
+   the offer gate skips the one-click offers for an order whose payment method "can't be charged again", and every
+   checkout pack now renews. Check with NEXT whether a refill on a Klarna or Link order is charged or fails; if it
+   fails, turn Klarna and Link off on campaign 2221 (and Affirm and Afterpay, which the pages do not show). (d)
+   **Pricing:** since 30 Oct 2026 the funnel's refills ($33.97 for 1 bottle, $66.97 for 3, $99.97 for 5) are below the
+   store's own ($37 for 1, $47 for 2); the gap that made the funnel the dearer place is gone.
 9. **The store's sitemap** (`/sitemap-pages.xml`) lists the funnel's pages. They are `noindex` now (the checkout, the
    offers and the thank-you page since live review 8), but the platform builds the sitemap from published pages and
    the API cannot leave them out: remove them in the dashboard if it offers that.
@@ -108,8 +122,10 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    policy still lists times for Europe, the UK, Canada, Australia and New Zealand (the store's own checkout). To sell
    the funnel abroad, add the countries (and currencies) to campaign 2221 and bring back the times in the FAQs.
 12. **Privacy and ad tracking.** The privacy policy promises to honour Global Privacy Control. The funnels' pages do
-   (no AppLovin pixel loads when the browser sends it); the **store's own AppLovin app** (storefront events) is not
-   theme code: check with AppLovin or NEXT that it honours GPC, or turn it off for GPC visitors. The policy now names
+   (no AppLovin pixel loads when the browser sends it), and since live review 12 every store page does too: the store's
+   own AppLovin app loads its Axon snippet only while `window.axon` is undefined, and the theme's base layout now sets a
+   no-op one first under GPC or the privacy choices opt-out (`tools/theme-build/build_theme.py`). If AppLovin changes
+   its snippet, check again. The policy now names
    AppLovin (Axon) in its advertising section (a `tools/persona/company.py` rule).
 13. **Pack names on renewals.** The order lines take the store variants' names: "2 bottles + free gifts" (variant 103,
    the store's own) and "3 bottles + free gifts + free Lymphatic Brush" (268). The funnel's checkout and thank-you
@@ -128,15 +144,23 @@ offer accepted ($14) and the accept-accept path ($57 + $39 + $14 = $110).
    and California's auto-renewal law (amended by AB 2863, in force since July 2025) asks for express affirmative
    consent to the renewal terms and a record of it; a box is the usual way to show both, and the platform does not
    record on the order that the buyer saw the terms. The PayPal and Apple Pay buttons sit below the pack cards (which
-   state the renewal) but above the row under the order button.
+   state the renewal) but above the row under the order button. Live review 12 rated that a major finding (a wallet
+   buyer passes no renewal wording in view); the owner chose to keep the layout as it is (30 Oct 2026).
 16. **"Your privacy choices."** Every funnel page's footer and the store's footer link `/data-sharing-opt-out/`. Its
    "Opt out on this browser" button sets `sf_optout=1` (a cookie for every skinofab.com host, and the browser's
    storage), and the funnels' pages then load no AppLovin pixel, as with Global Privacy Control. Its "Opt out my
    account" link is a ready-made email to info@skinofab.com: act on each one (the CCPA allows 15 business days) and
    keep a list. The store's own AppLovin app does not read the flag (item 12). The export's own form was a Shopify
    privacy app's empty container, which never worked on NEXT; `tools/persona/company.py` replaces it.
+18. **The store's product page** (skinofab.com/catalogue/adaptive-peptide-foundation_14/), where the funnel's price
+   references and cross-sells lead: its theme copy no longer says "turns into your skin" or an unhedged "won't settle"
+   (live review 12, `tools/persona/apf_copy.py` and `ccf_copy.py`), but two things live in the store's product data,
+   which the tools do not change: the product's meta description ("Goes on white, turns into your skin … won't settle
+   into lines": edit it in the dashboard) and the "12-week customer survey, women 35–65: 83% reduced fine lines, 87% …"
+   block, inherited from the original store: keep it only with the survey's source in hand, otherwise remove it.
 17. **Kept on purpose (the owner's decisions):** the black, centred stars on the sales hero and the checkout's top
    rating (live review 11 suggested left-aligning the hero's row).
+   Every other rating is Trustpilot's boxes in Trustpilot's exact colours since 2 Nov 2026 (`docs/reviews.md`).
 
 ## AppLovin Axon
 
@@ -194,34 +218,42 @@ not load the app's code, so nothing is counted twice.
 ## Commerce (Campaigns App campaign 2221)
 
 The checkout's three packs have **Automatic Refills at the same price** (the owner, 29 Oct 2026: "make sure all is
-subscription"): 1 bottle every 28 days, 2 every 56, 3 every 84, until she cancels by email. The free gifts come with
-the first order only; **every refill is the bottles alone**. The offers stay one-time: offers 2 and 2b sell package 7,
-a one-time bottle of its own, so accepting an add-on never starts a second subscription. The values below are the
-campaign's; `campaign_spec.py` reads them live (`FUNNEL=apf`) into `campaign-spec.apf.json` and the pages are checked
-against them on every build (`check_apf.py` fails if a pack's renewal on any page differs from the campaign's, or if
-an offer's package recurs). The refs are campaign 2221's (`funnels/apf.py` PACKAGE and VOUCHER).
+subscription"), and since **30 Oct 2026** the owner's more aggressive offer: "start at 33.97 only, with buy 2 get 1 free
+and buy 3 get 2 free", the Blender with the 3 bottles, the Lymphatic Brush with the 5, no mystery gift. 1 bottle every 28
+days, 3 every 84, 5 every 140 (28 days a bottle), until she cancels by email. The free gift comes with the first order
+only; **every refill is the bottles alone**, the free bottles included (each refill is the same pack at the same price).
+The offers stay one-time: offers 2 and 2b sell package 7, a one-time bottle of its own, so accepting an add-on never
+starts a second subscription. The values below are the campaign's; `campaign_spec.py` reads them live (`FUNNEL=apf`)
+into `campaign-spec.apf.json` and the pages are checked against them on every build (`check_apf.py` fails if a pack's
+renewal on any page differs from the campaign's, if a free-bottle claim is not the arithmetic, or if an offer's package
+recurs). The refs are campaign 2221's (`funnels/apf.py` PACKAGE and VOUCHER). The change went through the
+next-campaigns-create update path (7 requests, no deletion, approved by the owner on 30 Oct 2026); the two store
+variants it needed were made by `commerce.py --variants-only` (334, 335).
 
 | Package ref | SKU | Sells | Price | Renews | Crossed-out price |
 |---:|---|---|---:|---|---:|
-| 1 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $39.00 | $39.00 every 28 days | none |
-| 2 | SKF-APF-2-GIFTS | 2 bottles + free Blender sponge + free mystery gift (gifts in the first box) | $57.00 | $57.00 every 56 days | none |
-| 3 | SKF-APF-3-GIFTS | 3 bottles + both gifts + free Lymphatic Brush (gifts in the first box) | $75.00 | $75.00 every 84 days | none |
-| 4 | SKF-APF-2 | 2 bottles (offer 1: "Add 1, get 1 FREE") | $39.00 | once | $57 (the store, bought once) |
+| 1 | SKF-APF-1 | Adaptive Peptide Foundation, 1 bottle | $33.97 | $33.97 every 28 days | none |
+| 8 | SKF-APF-3-BLENDER | 3 bottles, buy 2 get 1 free, + free Blender sponge (in the first box) | $66.97 | $66.97 every 84 days | $101.91 (3 × $33.97) |
+| 9 | SKF-APF-5-BRUSH | 5 bottles, buy 3 get 2 free, + free Lymphatic Brush (in the first box) | $99.97 | $99.97 every 140 days | $169.85 (5 × $33.97) |
+| 4 | SKF-APF-2 | 2 bottles (offer 1: $19.50 a bottle) | $39.00 | once | $57 (the store, bought once) |
 | 5 | SKF-APF-6-BRUSH | 6 bottles + free Lymphatic Brush (offer 1: $16.50 a bottle) | $99.00 | once | $171 (3 × the store's $57) |
 | 6 | SKF-LYB-1T | The Lymphatic Brush + free travel case | $24.95 | once | — |
-| 7 | SKF-APF-1-ADD | 1 bottle, the add-on of offers 2 and 2b (variant 301) | $39.00 | once | $39 (the sales page price) |
+| 7 | SKF-APF-1-ADD | 1 bottle, the add-on of offers 2 and 2b (variant 301) | $33.97 | once | $33.97 (the sales page price) |
+| 2, 3 | SKF-APF-2-GIFTS, SKF-APF-3-GIFTS | the packs before 30 Oct 2026 ($57, $75), kept for the orders that name them | — | — | on no page |
 
-No crossed-out price and no saving on the checkout's packs (live review 8, B1): the store's own refills are $37 for
-1 bottle and $47 for 2 (one-time $47 and $57), below the funnel's $39 and $57, so a saving against the store's $47
-would not be true. The pages compare within the funnel only ($25 a bottle in the 3-pack against $39 for one and
-$28.50 in the 2-pack); offer 1 compares with what the store charges for the same bottles bought once
-(`funnels/apf.py` `store_once`).
+The free-bottle claims hold against the funnel's own 1-bottle price: 3 bottles for less than 2 × $33.97, 5 for less
+than 3 × $33.97 (the owner's .97 prices of 30 Oct 2026, $66.97 and $99.97: $22.32 and $19.99 a bottle; the exact 2× and 3×,
+$67.94 and $101.91, were live from 10:08 to 11:07 UTC that day); the crossed-out prices are that price times the bottles
+she gets. Offer 1's 2-bottle card said "Add 1, get 1 FREE"
+until then; at $39 for two against $33.97 for one it no longer was, so it says "$19.50 a bottle". Campaigns OS QA warns
+`spec.campaign_drift` for packages 2 and 3 (in the campaign, on no page); deleting them clears it (an owner call: the
+update path deletes only with `--allow-delete` and a fresh approval).
 
 | Offer ref | Code | Package | Off | Lands at (rounded down to the dollar) |
 |---:|---|---:|---:|---|
-| 1 | APF10 | 1, 2, 3 | 10% | the checkout's exit pop: $35 / $51 / $67 today (refills at the pack's own price) |
-| 2 | APF40 | 7 | 40% | $23.00 (shown as 41% off) |
-| 3 | APF50 | 7 | 50% | $19.00 (51% off) |
+| 1 | APF10 | 1, 8, 9 | 10% | the checkout's exit pop: $30 / $60 / $89 today (refills at the pack's own price) |
+| 2 | APF40 | 7 | 44% | $19.00 ("One more bottle at $19") |
+| 3 | APF50 | 7 | 55% | $15.00 ("One more bottle at $15") |
 | 4 | BRUSH40 | 6 | 40% | $14.00 (44% off) |
 | 5 | BRUSH60 | 6 | 60% | $9.00 (64% off) |
 
@@ -390,12 +422,32 @@ them). It pushes a file only when its bytes differ from the last push, by `tools
 (committed; outside the theme folder, which a build regenerates): the store stores every uploaded asset as a new copy and drops the old one, even an
 unchanged file, and a page it has cached (30 minutes) then points at a dead URL; on 29 Oct a second push re-sent the
 sales hero's mobile picture unchanged and public visitors saw a broken hero for 16 minutes (live review 10). Never push
-a hashed asset by hand. The kit has no remove command, so a hashed asset that a rebuild retired stays on the store
+a hashed asset by hand. The store's generated binaries (`assets/sf/img`, `media`, `fonts`) are not in git; `push_theme.py`
+sends one only when a changed file newly references it (against git HEAD), ahead of that file. The kit has no remove command, so a hashed asset that a rebuild retired stays on the store
 theme unreferenced, which keeps cached pages working. For new pages, `FUNNEL=apf python3 -I tools/funnel/store_pages.py`.
 After a push, `python3 -I tools/funnel/check_live_assets.py` requests every asset the public pages reference.
+**A price change** reaches the checkout at once (the SDK reads the campaign live) but the pages only when the store's
+cache expires, up to 30 minutes after the push: in that window a visitor can see the old price on the page and the new
+one at the checkout (live review 14, F1). So change prices when traffic is low, push the pages first when the new price
+is higher than the old one, check the public pages with no cookie at +30 minutes (`check_live_assets.py`, then the
+pages' prices), and start a review only after that.
 After a campaign change, run `FUNNEL=apf python3 -I tools/funnel/campaign_spec.py` first: the offer pages and the
 checks take their numbers from the spec. The theme serves this funnel's assets from `assets/sfa/` (the stick's from
 `assets/sfc/`); the hosting notes in `docs/stick-funnel.md` (30-minute page cache, `?preview_theme=34`) apply.
+
+### Static hosting (the funnels' own repo, since 30 Oct 2026)
+
+The owner chose to host the funnels on a static host instead of the store theme. `campaigns/skinofab` is published,
+with its history, to **`Claude-rx/skinofab-funnels`** by `bash tools/funnel/publish_funnels.sh` (git subtree split;
+it refuses uncommitted changes in the folder). The host builds it with `npm run build:static`
+(`campaigns/skinofab/scripts/build-static.mjs`: Campaign Page Kit into `_site/`, the `/`, `/apf` and `/stick`
+redirects, security headers) and serves `/apf-funnel/<page>/` and `/stick-funnel/<page>/`; `netlify.toml` and
+`vercel.json` carry the settings, the folder's `README.md` the one-time setup. **`FUNNEL_HOST`** in the host's
+environment is the domain the pages send visitors to (the layouts' host redirect, which reads `funnel_host`; the
+static build overrides `_data/campaigns.json`'s try.skinofab.com for its own build only). The domain must be on the
+Allowed Domains of campaigns 2221 and 2211. A clean clone of the split installs (`npm ci --omit=dev`, 51 packages),
+builds 17 pages, and all 780 local references in `_site` resolve; the SDK checkout ran from it on localhost (30 Oct).
+Until the ads move to the new domain, the store-hosted copy on try.skinofab.com stays as it is (the deploy above).
 
 ### Checks
 
@@ -665,8 +717,8 @@ broken image or overflow; `r7-fixes.mjs` in the session's scratchpad checks each
 - **Store claims** (M1, M2): the sales page's why-now line says only what is true of the store (no 3-bottle pack, no
   pack with the Lymphatic Brush, one bottle $47 bought once); the brush offer quotes "$24.95 in our store" instead of
   "Not sold in our store"; offer 1 says "These prices are only here" with the store's own prices beside them.
-- **Rating badges** (M4): no Trustpilot green or "Excellent" label; the stars are the brand's black (`--sf-star`) and
-  the label reads "Rated". The 2-bottle packs say "2 months' supply", not "Most popular" (minor 12).
+- **Rating badges** (M4, superseded on 29 Oct and 2 Nov 2026 by the owner: Trustpilot's boxes and exact colours,
+  `docs/reviews.md`): no review site's name or logo; the label reads "Rated". The 2-bottle packs say "2 months' supply", not "Most popular" (minor 12).
 - **Offer 1's hero** (minor 2) is its accept button ("YES, ADD 2 BOTTLES · $39", which presses the 2-bottle card's
   own buy button, `sf-supply.js`), with a link down to the 6-bottle pack; it sits inside the first screen at 375x667.
 - **Checkout** (minors 3, 15): the exit pop needs a flick in the top 60 % of the screen with no field focused or
@@ -707,6 +759,110 @@ broken image or overflow; `r7-fixes.mjs` in the session's scratchpad checks each
 **Live review 10 (29 Oct 2026), fixed in the next build:** the talking clip in the "See it on women like you" row (F1, the blocker: an AI model speaking as a buyer, "I'll be buying this on repeat", the clip the store labels as made with AI models) is out of both pages and out of `images.py`; the row is "See how it blends", two silent clips of how it goes on; listicle reasons 5 and 6 at 768 px and up had their headings under their video (F2: the pause button's `position: relative` with the sticky rule's `top: 76px`; `top: auto` now); the Blender sponge and mystery gift lost their "$9"/"$15" (F3, total $99.95: the foundation and the brush, both store prices); "This offer ships to US addresses only" where the pages promised Europe, the UK, Canada, Australia and New Zealand (F4, Before launch 11); no AppLovin pixel when the browser sends Global Privacy Control, and AppLovin named in the privacy policy (F5, Before launch 12); a renewing pack named by its bottles in the checkout summary and on the receipt, its gifts on a "With this first order only" line (F6, Before launch 13); `tools/funnel/push_theme.py` pushes only changed bytes, so a push never re-sends an unchanged asset that cached pages still use (F7); Michele W.'s rosacea and "no burning", Gillian S.'s "calming" and Tina C.'s "doesn't settle to lines at all" out of the featured quotes (F8; Tina's full words stay on the listicle's reason 2, beside "designed not to settle"); "Made to keep its tone from morning to evening" for "8 AM to 6 PM, one application" (F9); no pulse under reduced motion (F10); the pause button at the video's own corner, off its caption (F11); "No thanks, continue" right under the hero's accept on every offer (F12); posters and loop data down the page wait until a video is about a screen away, and the offers, checkout and thank-you page load their fonts with `display=optional` (F13: the brush offer's 0.11 layout shift was the font arriving); an offer or the thank-you page opened without an order says "We can't find an order on this page" instead of "Your order is placed/confirmed", and the starter's demo customer (Taylor, Jordan Chen, Ottawa) is gone from the receipt fields (F14); one cancel deadline (at least a day before a refill, the refund policy too), one reply time (one business day, the contact page too) and "reviews of this formula" as the store says (F15); no Pro-Xylane, L'Oréal's trade name (F16, Before launch 14).
 
 **Live review 11 (29 Oct 2026), fixed in the next build:** the sales page's before/after cards carried three buyers' names, ages, photos and reviews under the owner's photos of other women (F1, the blocker: an implied endorsement); the cards now carry only what changes on that skin, and the listicle's before/after is captioned "Our own before and after" so Virginia Z.'s quote under it is not read as the woman shown; the checkout's exit pop at 768 to 991 px is one column sized to the SDK's box (its 90vw cap cut the price line and the close button at 768 to 880), and a tap outside the pop closes it (the SDK's overlay was made inert with the page) (F2); the refills had their own unticked consent box (F3); on 30 Oct the owner chose the subscription by default instead, with the renewal on the pack cards and in a row right under the order button ("Refill reminder · Cancel any time · Renews at $75 every 84 days", under "Love it or your money back", in place of the four boxed badges), and the ToS sentence carries the ToS and the privacy policy only (Before launch 15); no ranking of complaints ("the most common", "the complaint we hear most") (F4); "Or start with 1 bottle for $39, then $39 every 28 days" (F5); Maria R.'s and Dotty H.'s featured lines about lines and wrinkles swapped for their own or Kathryn S.'s words about texture and colour, Tina C.'s trimmed on the listicle (F6; the full review cards stay verbatim); the pause button on its video's own top-right corner, wherever the video sits in its card (F7); the "With this first order only" line on its own row under the summary line's name (F8); the shade picture's words at 38 px of 1080 or more (12.6 px at a phone's width) and the Korea bottle without its 6 px caption (the pill beside it says it) (F10); with no order, the no-order card alone, not the failsafe banner as well (F11); the policy flow hides the store's "You might like these too" (F12); "Your privacy choices" in every footer, its page with a working opt-out that the funnels' pixel gate reads like GPC (F13, Before launch 16); Swiper 11.2.10 self-hosted (checked against jsDelivr's published SHA-256; its source-map line removed) instead of `swiper@11` from a CDN on the offer pages (F14); offer actions have `role="button"` and answer Space, the checkout, offers and thank-you page have a `<main>`, and "Cancel my refills" is a 44 px target (F15); the thank-you page's cross-sell says "More from SKINOFAB, at the store", not what other buyers "also use" (unmeasured). F9 (centred hero stars) is the owner's decision (Before launch 17). Every one has a gate in `check_apf.py`. Campaigns OS QA after it: ready_with_exceptions, 157 pass; one new manual review, `qc.policy.presence:store_privacy` ("possible policy link mismatch": the configured privacy policy link is on all nine pages, and the second privacy-worded link, "Your privacy choices", points to the opt-out page on purpose), beside the earlier primary-CTA, upsell-action-coverage and offer-1 price-claim rows.
+
+**Live review 12 (30 Oct 2026), fixed in the next build:** fix first, 0 blockers, 1 major, 10 minor. F1 (major: the PayPal and Apple Pay buttons a screen away from any renewal wording) is kept as it is, the owner's decision (Before launch 15). Fixed: offer 1's hero button now says "$39 today, charged once to the payment you just used. This pack doesn't renew…" (F2); the post-purchase vouchers are named by their price ("One more bottle at $23", "Lymphatic Brush at $14"…), not a percentage the page states differently (F3, campaign 2221 patched by `commerce.py`, every price re-verified through the Cart API); "first on our list of actives" is gone (F4); Mary D.'s quote trimmed at "blends into my skin", and the sales hero's "turns into your skin tone" is "shifts to your own skin tone" (F5); on a phone the checkout says "Your pack: 3 bottles … · $75" at the top of Step 1 (F6); every store page, the privacy choices page included, loads no AppLovin pixel under GPC or after the opt-out (F7); an offer opened without an order shows only the note (no offer, no clock, the clock moves nothing), and the thank-you page one notice (F8); the phone hero is a 5:4 WebP of 38 KB instead of a 115 KB JPEG (F9); the two small buyer photos show at their own size (F10); the thank-you footer has the same six links as every page, the track-your-order page's copy of the store footer has "Your privacy choices", and the description says the gifts come with 2 or 3 bottles (F11). The store product page's own copy was corrected too; its meta description and survey block are owner items (Before launch 18). Every fix has a gate in `check_apf.py`. **F8 follow-up (30 Oct):** hiding the whole offer with no order failed
+Campaigns OS QA (10 fails: `browser-primary-cta` and `pricing.upsell_price_visible` on all five offers, which QA opens
+without an order), so the no-order view takes the reviewer's other option: the note sits above the offer, which keeps
+its product and prices; every accept (the SDK's, the proxies, offer 1's hero button) is greyed the same way
+(opacity .45, no pulse, no pointer events, `!important` over the buttons' own rules), `aria-disabled` and out of the
+tab order (`sf-offer-gate.js`, lifted if the SDK loads an order after all), Space no longer presses a disabled one,
+and the clock, its "offer ends" line and "Confirming your order…" are gone. QA after it: ready_with_exceptions,
+154 pass, 0 fail; the three new manual reviews are `browser-primary-cta` = `cta_disabled` on offers 1, 2 and the
+brush offer, the intended no-order state.
+
+**Live review 13 (30 Oct 2026), "ship": 0 blockers, 0 major, 7 minor, all fixed in the next build:** an offer opened
+with an order reference the SDK cannot load greeted her "Just for you, Error" with live buttons and a running clock, and
+a failed one-click add went on to the accept page as if it worked (F1): `sf-offer-gate.js` now treats an order that
+reads "Error" as no order (the note, locked accepts, no clock: `sf-offer-timer.js` stops), never writes "Error" as her
+name, and on the SDK's `upsell:error` says "We couldn't add this to your order, so it isn't on it. Your order is
+unchanged." and goes where a decline goes; the no-order note keeps a 16 px gutter on a phone. The phone sticky bar now
+says "$X today, then $X every N days" (F2). After the exit coupon the "Your pack" line follows the cart total, and the
+pop and the cards' badge say "10% off", not "an extra 10%" (F3). Offer 1's per-day prices are over 28 days, the refill
+rhythm, not 30 (F4). The hero rating says "9,855 published reviews" (F5; the earlier store's export is the owner's proof
+to keep). The listicle's offer box and last button open the sales page at the packs (`?pack=apf-5#offer`, F6). The two
+clips whose top-right holds what they show (the day's timeline, the dropper bottle) put the pause button top-left
+(`data-sf-pause-corner="tl"`, F7). Its "could not verify" raised Klarna and Link with refills: Before launch 8 (c).
+
+**The owner's offer of 30 Oct 2026:** "better offer, more aggressive, start at 33.97 only, with buy 2 get 1 free and buy
+3 get 2 free", then "remove mystery gift, just blender or brush: blender in buy 2 get 1 free and the brush in buy 3 get 2
+free". The packs are 1 bottle $33.97, 3 bottles $67.94 with the Blender sponge, 5 bottles $101.91 with the Lymphatic
+Brush (packages 1, 8, 9; renewals every 28, 84, 140 days), the 5-bottle pack preselected everywhere; the add-on bottle is
+$33.97, offer 2 $19 and its downsell $15 (vouchers 44% and 55%), so each post-purchase offer stays below the checkout's
+lowest price a bottle ($20.38); offer 1 and the brush offers keep their prices. New pack images (`images.py`: pack-3b
+with a drawn Blender sponge, the store having no photo of it; pack-5; offer-5 under a "BUY 3, GET 2 FREE" ribbon with a
+"$20.38 a bottle" tag; the listicle's flat lay with five bottles). The campaign was changed and the pages pushed three
+minutes apart (the build ran first against a simulated read of the changed campaign, then again on the live read); every
+price re-verified through the Cart API ($33.97, $67.94, $101.91; $39, $99, $19, $15, $14, $9). `check_apf.py` holds the
+free-bottle claims to their arithmetic, the crossed-out prices to the 1-bottle price, the gifts to their packs and the
+exit pop's amounts to the campaign's rounding. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, with a
+new `spec.campaign_drift` warning for the retired packages 2 and 3.
+
+**The owner's .97 prices (30 Oct 2026, 11:07 UTC):** "better psychology price": the owner offered $33.97 / $67.97 /
+$99.97 "or a better one"; $67.97 would have made the free bottle cost 3¢, so the owner chose $33.97 / $66.97 / $99.97:
+every price ends in .97, the 5-bottle pack is under $100 at $19.99 a bottle, and each pack costs a little less than the
+bottles it charges for, so both free-bottle claims stay true (`check_apf.py` now holds a pack to at most the 1-bottle
+price times the bottles she pays for). Two package price changes through the update path (packages 8 and 9, refills at
+the same prices), the exit pop's amounts $89 / $60 / $30, the value stack's "Your price today" $99.97 against $194.80,
+the offer-5 tag "$19.99 a bottle"; every price re-verified through the Cart API.
+
+**Live review 14 (30 Oct 2026), fix first: 1 blocker, 1 major, 7 minor.** F1 (the blocker: the checkout charged $66.97
+and $99.97 while the pages said $67.94 and $101.91) was the store's 30-minute page cache, not a defect: the review began
+at 11:06, a minute before the .97 push, and the public pages showed the new prices from 11:39 (see "A price change"
+under Rebuild and deploy). Fixed in the next build: at 0:00 offer 1's clock goes past offers 2 and 2b to the brush offer,
+so waiting it out never reaches a cheaper bottle (F2: `offer_pages.skip_to` skips every page down the decline path that
+sells the same product for less a bottle than the page's dearest, and the copy says the one-bottle and last-chance prices
+go too); one "From" price, the lowest a bottle ($19.99), in the top bars, the meta descriptions and the store page titles,
+and "1 bottle $33.97" in the hero note (F3); Judith L.'s and Rachel H.'s reviews cut at "doesn't settle in any lines" and
+"doesn't sink into the wrinkles", as Tina C.'s already was (F4); the checkout's refill paragraph, its FAQ and the
+thank-you page say refills are at the pack's own price, the "Renews at" amount, even when a code took money off today
+(F5); muted text at #5c5c5c (6.3:1 on white) where next-core's #969696 was 2.95:1, the cards' crossed-out prices
+included (F6); the clip cards keep a visible, focusable pause button that reads "Pause: …" while a clip plays and pauses
+it on Enter or Space, the per-review stars are `role="img"`, the skin diagram's name is on its svg, and the order-summary
+toggles on the checkout and the thank-you page are buttons whose `aria-controls` names their panel (F7: the SDK 0.4.43
+accordion sets `aria-controls` to the accordion's name but the panel's id to `<name>-content`; `sf-accordion-aria.js`
+points it back at the panel each time the SDK writes it, and the toggle carries the name as its id, so the panel's
+`aria-labelledby` resolves to it); at 768 to 1023 px the checkout header is the logo over one row of its three badges,
+and below 1024 px the promo bar is two lines, the shipping and guarantee on the second without a leading "·" (F8); the store's EGF + NAD+ serum, which
+the thank-you page links to, "dries down in about a minute" where it "sank in", in its copy and its two text images
+(`product_photos.py serum`), and the first funnel's serum offer the same (F9). Each has a gate in `check_apf.py` (one
+"From" price; no unhedged "doesn't settle/sink"; no "at the same price" on the checkout or the thank-you page; the clock's
+target from the same rule as the page's). The copy deck's offer line is now built from `funnels/apf.py`, so it no longer
+describes the retired packs. Two deploy fixes came out of the build: `push_theme.py` now also pushes the git-ignored store
+binaries (`assets/sf/img`, `media`, `fonts`) that a changed file newly references, before the file (the serum's two
+regenerated gallery images would otherwise have been missing on the store), and never one the store already has;
+and `images.py` keeps a clip's WebM when its MP4 comes out byte-identical (x264 is deterministic, VP9 with `row-mt`
+is not), so a rebuild no longer renames four unchanged clips. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, the same
+exceptions as before (`spec.campaign_drift` for the retired packages 2 and 3; the offers' and checkout's primary-CTA
+manual reviews, the offers' buttons greyed with no order by design; the second privacy-worded link; upsell action
+coverage; offer 1's price-claim warning).
+
+**Live review 15 (30 Oct 2026), fix first: 0 blockers, 1 major, 6 minor, all fixed in the next build.** F1 (major):
+"3 bottles for less than 2 cost" and "5 bottles for less than 3 cost" were true only against single bottles at $33.97,
+while the same pages sell 3 bottles for $66.97 and offer 1 quotes the store's 2 bottles at $47 or $57; every one now
+names its basis, "less than 2 single bottles ($67.94)" and "less than 3 single bottles ($101.91)". The packs' lengths are
+in weeks, the refills' own unit: 4, 12 and 20 weeks for refills every 28, 84 and 140 days ("about five months" was
+two weeks longer than the 140 days), and the offers' "two months' supply" is "8 weeks' supply" (F2). Every pack price
+before the cards carries its renewal: the listicle's 3-bottle line, the sales hero note and the offer section's lead
+(F3). The sales page's complaint card and the listicle's mission say "designed not to settle into lines" (F4). The
+checkout's placeholders, the only words in an empty field, are #666 (5.7:1) instead of the browser's grey (3.95:1) (F5).
+The listicle's phone hero is a 30 KB WebP (the 72 KB JPEG was the largest paint) and the first reason's photo loads
+lazily: its largest paint on slow 4G at 390 went from 3.4 s to 2.1 s (F6). The no-order note's phone number no longer
+breaks, its button grows with its words and its heading is balanced (F7). `check_apf.py` gates each: "less than N cost"
+without its basis and a basis that is not N x $33.97, a supply in months, a pack price on the listicle, sales page or
+checkout without its renewal within the next sentence, an unhedged soft-focus claim about lines, the placeholder
+colour, the listicle's WebP hero and no eager image, and the note's styles. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, the same
+exceptions as after review 14.
+
+**Live review 16 (30 Oct 2026), ship: 0 blockers, 0 major, 3 minor, all fixed in the next build.** (Its run was cut by a
+container restart and resumed from its own transcript.) F1: the thank-you page opened with a reference the SDK cannot
+load showed "Thank you, Error!" and "Total Error $0.00" under "Your order is confirmed" for about 5 s before its 8-second
+no-order note; `sf-receipt.js` now shows the note as soon as the SDK writes "Error" for the order number or the name, as
+the offers do, keeps the 8 s timer for an order that never answers, and no longer reads "Error" as an order number. F2:
+the listicle and the checkout called the reviews "word for word" beside quotes shortened with "…"; every page now says
+none is reworded and that "…" marks where a long one is shortened, as the sales page did. F3: on the policy pages opened
+from the funnel (`?from=offer`), the policy links are 44 px (they were 43), the email and phone links 44 px through inline
+padding that does not move the text around them (they were 24), and the opt-out button 44 px (`build_theme.py`). Each
+has a gate in `check_apf.py`. Campaigns OS QA after it: ready_with_exceptions, 154 pass, 0 fail, the same exceptions.
 
 **Live proof on try.skinofab.com (28 Oct 2026, after review 2's fixes were pushed):** order **101565** on campaign
 2221, placed by `live_order.mjs` with `--path decline,accept,decline --cookie preview_theme=34` (the store's page
@@ -762,3 +918,32 @@ http://127.0.0.1:<port>` serving `_site` (QA resolves the funnel under `/apf-fun
 The project holds one Build Packet at a time (`campaign-runtime.build.json` and `.campaign-runtime/` are written per
 `start`): the stick funnel's run is kept under `campaigns/skinofab/runs/stick-funnel/`; to run its lifecycle again,
 `start` it from its own spec, source and brief as `docs/stick-funnel.md` describes.
+
+**Live review 17 (2 Nov 2026), fixed the same day:** F1 (blocker) Link still showed at the checkout: the 1 Nov change
+removed Klarna and Link from campaign 2221 but the platform kept Link, so the checkout (`payment_methods` and
+`payment_flags` in `foundation-checkout.html`) and the offers (`offer_pages.py`) now leave out Link and Klarna
+themselves, radio and logo; F3 listicle reason 6 no longer asks "why wear a foundation that only sits on your skin?";
+F4 "to skip or cancel" now has two ready-made emails, "Skip my next refill" and "Cancel my refills"; F5 the launch
+stock box says what the team does (the page and checkout change before another order for the pack; a pack that runs
+out comes off the page), not that the checkout does it by itself (stock is untracked); F6 the settling answer is
+hedged to its end ("the powders are made to blur their look rather than fill them with pigment"); F7 the checkout's
+footer has Contact and its links no longer wrap, its 1- and 2-star bars show, and the offers' photo sits at the top
+of its panel from 992 px. Each has a gate in `check_apf.py`. Verified live at 390/768/1024/1440. **Open for the
+owner:** F2, the "how it goes on" clips and the four step photos are AI-made (the store labels the same footage
+"Illustrative videos made with AI models"); the funnel shows them as the product's demonstration with no label, by the
+owner's no-disclaimer decision. And Link on campaign 2221 itself (a second update, or the dashboard).
+
+**The owner's hero and loops (2 Nov 2026):** the sales page's hero is now "Over 45? Get your skin back in 60 seconds.
+*Your shade, the instant you blend.*" with the sub "Dot it on white, blend, and watch it turn into your own tone:
+even, fresh, rested-looking skin before your coffee cools. No shade to guess, designed not to settle into lines.",
+written with the copywriting skill from the persona's own words; the button ("YES, GET MY SKIN BACK ↓") comes after
+the promise and the five bullets on every width, with "From $19.99 a bottle" large under it; the deal box and the price
+note under the button are gone (the pack cards and the checkout state each pack's renewal). The page title follows.
+The listicle's two "how it goes on" clips play by themselves, silent and looping like a GIF, while on screen
+(`sf-vrow.html gif=true`), as its other loops do; each keeps a pause button, and under reduced motion they wait for a
+tap. The sales page's clip cards still play on a tap.
+Same day: the sales page's "Formulated by a K-beauty lab" picture is the white studio packshot with its natural shadow
+and the flag alone (`product_photos.studio_packshot(1080, 'packshot-studio-flag.jpg', caption=False)`, saved as
+`g-bottle` by `images.py`), in place of the store's old Korea shot and its grey box of a shadow; the proof row's
+"What we don't claim" card is a looping clip instead ("See it go on", `demo-black`, silent, with its pause button).
+

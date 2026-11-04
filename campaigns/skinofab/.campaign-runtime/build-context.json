@@ -28,8 +28,8 @@
   },
   "spec": {
     "path": "./campaign-spec.apf.json",
-    "hash": "df49043ca3ff8a7b48aa1032e60e3d84e4680b9a1a2066590152c6c244b84d96",
-    "material_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
+    "hash": "bfb2da5b8ea073394297c38678110d8d42650e2d6acc7777bf7fad99581545b5",
+    "material_hash": "sha256:1809d43366d5eca98db323ce5730627190f1e17c85cf15883e9388c78dd010fc",
     "active_pages": [
       {
         "id": "listicle",
@@ -40,7 +40,7 @@
       {
         "id": "offer",
         "type": "landing",
-        "label": "Sales page: the 20-section long page, 1 / 2 / 3 bottles with gifts, refills at the same price",
+        "label": "Sales page: the 20-section long page, 1 bottle, buy 2 get 1 free, buy 3 get 2 free, refills at the same price",
         "page_url": "adaptive-foundation-offer/"
       },
       {
@@ -52,19 +52,19 @@
       {
         "id": "offer-1",
         "type": "upsell",
-        "label": "Offer 1: stock up (add 1 get 1 free; buy 3 get 3 free + the brush)",
+        "label": "Offer 1: stock up (2 bottles at $19.50 each; 6 at $16.50 each + the brush)",
         "page_url": "foundation-offer-1/"
       },
       {
         "id": "offer-2",
         "type": "upsell",
-        "label": "Offer 2: one more bottle, 40% off",
+        "label": "Offer 2: one more bottle, $19",
         "page_url": "foundation-offer-2/"
       },
       {
         "id": "offer-2b",
         "type": "downsell",
-        "label": "Offer 2 downsell: one more bottle, 50% off",
+        "label": "Offer 2 downsell: one more bottle, $15",
         "page_url": "foundation-offer-2b/"
       },
       {

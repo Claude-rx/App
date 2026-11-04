@@ -31,11 +31,17 @@ python3 -I tools/funnel/copy_includes.py && python3 -I tools/funnel/upsell_pages
 python3 -I tools/funnel/funnel_images.py "$W" > /dev/null
 python3 -I tools/funnel/apf/images.py "$W" > /dev/null
 python3 -I tools/funnel/apf/offer_pages.py > /dev/null && python3 -I tools/funnel/apf/copy_deck.py > /dev/null
+# the flash trial (docs/trial-funnel.md): its shared parts from the APF funnel's, its five offer pages from the same code
+python3 -I tools/funnel/trial/sync_from_apf.py && FUNNEL=trial python3 -I tools/funnel/apf/offer_pages.py > /dev/null
 (cd campaigns/skinofab && { [ -d node_modules ] || npm ci --no-audit --no-fund > /dev/null; } && npx --no-install campaign-build > /dev/null 2>&1)
 python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/stick-funnel skinofab-theme
 python3 -I tools/funnel/check_funnel.py skinofab-theme      # prices, renewal terms, refs, routes, claims
 FUNNEL=apf python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/apf-funnel skinofab-theme
 SF_REVIEWS="$W/reviews/reviews.json" python3 -I tools/funnel/apf/check_apf.py skinofab-theme     # prices, refill and one-time terms, refs, routes, claims, quotes
+# the flash trial: its product page from the store's foundation page just built, its Page Kit pages, its gate
+python3 -I tools/funnel/trial/pdp_copy.py skinofab-theme
+FUNNEL=trial python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/trial-funnel skinofab-theme
+python3 -I tools/funnel/trial/check_trial.py skinofab-theme      # trial prices and card codes, offer refs and routes, no APF or store residue
 
 cd skinofab-theme
 python3 scripts/check-dtl.py --require

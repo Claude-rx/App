@@ -40,7 +40,7 @@
     - submit-block (acts on the totals shown here)
 {% endcomment %}
 <div data-next-catalog-component="order-summary" data-initial-state="open" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary__accordion">
-  <div data-next-accordion-trigger="order-summary" class="order-summary__accordion-trigger">
+  <div data-next-accordion-trigger="order-summary" id="order-summary" role="button" class="order-summary__accordion-trigger">
     <div class="order-summary__accordion-inner">
       <div class="order-summary__accordion-head">
         <div data-next-accordion-text="order-summary" class="summary-toggle__text">Order Summary</div>
@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-  <div data-next-accordion-panel="order-summary" class="order-summary__accordion-panel">
+  <div data-next-accordion-panel="order-summary" id="order-summary-content" class="order-summary__accordion-panel">
     <div class="order-summary--accordion">
 
         <div data-next-cart-summary class="order-summary__content">

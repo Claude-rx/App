@@ -1,0 +1,53 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm ci --omit=dev --no-audit --no-fund",
+  "buildCommand": "npm run build:static",
+  "outputDirectory": "_site",
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/apf-funnel/10-reasons-adaptive-foundation/",
+      "permanent": false
+    },
+    {
+      "source": "/apf",
+      "destination": "/apf-funnel/10-reasons-adaptive-foundation/",
+      "permanent": false
+    },
+    {
+      "source": "/stick",
+      "destination": "/stick-funnel/10-reasons-foundation-stick/",
+      "permanent": false
+    },
+    {
+      "source": "/apf/",
+      "destination": "/apf-funnel/10-reasons-adaptive-foundation/",
+      "permanent": false
+    },
+    {
+      "source": "/stick/",
+      "destination": "/stick-funnel/10-reasons-foundation-stick/",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    }
+  ]
+}

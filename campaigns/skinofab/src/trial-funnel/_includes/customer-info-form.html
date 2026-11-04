@@ -1,0 +1,63 @@
+{% comment %}
+  next_component: customer-info-form
+  next_version: 1.1.0
+  next_sdk_min: 0.4.18
+  next_purpose: Customer identity fields collected at checkout (first/last name, email, optional phone). Email is the dedup key for analytics.
+  next_params:
+    section_title:    string, default "Step 2: Customer Information". Heading shown above the fields.
+    is_first:         bool, default true. Adds form-section--first modifier (removes top border).
+    show_phone:       bool, default true. Renders phone input row.
+    label_style:      string, default "inset". "floating" | "static" — adds cc-labels-floating / cc-labels-static to the section so the hand-written fields match the SDK address blocks' label_style. Also read from page frontmatter `address_form.label_style` (include arg wins), so one frontmatter knob styles the whole checkout form.
+    phone_required:   bool, default false. Adds native `required` + `data-next-required="true"` to phone input. SDK reads these to gate submit on a non-empty, valid phone number.
+  next_sdk_owns:
+    - data-next-checkout-field (values: email, fname, lname, phone)
+  next_theming:
+    classes_designer_owns: [.form-section, .form-section--first, .form-section__title, .form-grid, .form-grid__row, .form-group, .form-input, .label-checkout, .input-flds]
+    css_vars_designer_owns: []
+  next_dont_touch:
+    - Field name attributes (shipping_fname, shipping_lname, email, phone) and data-next-checkout-field values are SDK-recognized; do not rename
+    - autocomplete tokens (given-name, family-name, email, tel-full) drive browser autofill; preserve
+  next_gotchas:
+    - Core fields (fname, lname, email) are always required by CheckoutValidator via data-next-checkout-field — no extra attribute needed
+    - Division of labor vs the SDK address block (data-next-address in shipping-address-form): the block skips any field already declared here, so fname/lname/phone being hand-written in this partial is a LAYOUT CHOICE (keeps them in the Customer Information step) — delete them here and the shipping block builds them itself (name after country, phone last, country-ordered). Email (and accepts_marketing) are the exception: the SDK never builds them, the page always writes email itself.
+    - os-checkout-validate="required" is legacy and ignored by the SDK — do not use
+    - Phone required status is controlled by native `required` + `data-next-required="true"` on the input; form uses noValidate so native required alone does not gate submit — SDK reads it
+    - Email field is the dedup key for analytics; preserve its data-next-checkout-field="email" exactly
+    - Field name `shipping_fname` / `shipping_lname` is intentional even though they are customer-identity fields; SDK aliases these to fname/lname via data-next-checkout-field
+    - data-next-component="shipping-form" wrapper SHOULD live in the page (around customer-info-form + shipping-address-form), not in this partial
+    - Prospect cart trigger mode (phoneEntry, emailAndPhone, etc.) goes on the form element itself as data-trigger-on — NOT a child div; there is no data-next-prospect-cart scanned attribute
+  next_variants:
+    - stacked (default; first/last name on one row, email and phone stacked)
+    - email-only (set show_phone=false; relies on later phone collection if needed)
+  next_related:
+    - shipping-address-form (paired inside SDK shipping-form wrapper)
+{% endcomment %}
+{% assign sec_title = section_title | default: 'Step 2: Customer Information' -%}
+{% if is_first == nil %}{% assign is_first = true %}{% endif -%}
+{% if show_phone == nil %}{% assign show_phone = true %}{% endif -%}
+{% assign cif_label_style = label_style | default: address_form.label_style -%}
+<div data-next-catalog-component="customer-info-form" class="form-section{% if is_first %} form-section--first{% endif %}{% if cif_label_style == 'floating' %} cc-labels-floating{% elsif cif_label_style == 'static' %} cc-labels-static{% endif %}">
+  <h2 class="form-section__title">{{ sec_title }}</h2>
+  <div class="form-grid">
+    <div data-next-component="shipping-field-row" class="form-grid__row">
+      <div class="form-group">
+        <div class="form-input"><label for="shipping_fname" class="label-checkout">First Name</label><input autocomplete="given-name" placeholder="First Name*" maxlength="256" name="shipping_fname" data-name="Shipping First Name" type="text" id="shipping_fname" data-next-checkout-field="fname" class="input-flds"></div>
+      </div>
+      <div class="form-group">
+        <div class="form-input"><label for="shipping_lname" class="label-checkout">Last Name</label><input autocomplete="family-name" placeholder="Last Name*" maxlength="256" name="shipping_lname" data-name="Shipping Last Name" type="text" id="shipping_lname" data-next-checkout-field="lname" class="input-flds"></div>
+      </div>
+    </div>
+    <div class="form-grid__row">
+      <div class="form-group">
+        <div class="form-input"><label for="email" class="label-checkout">Email</label><input autocomplete="email" name="email" data-name="Email" type="email" id="email" placeholder="Email*" data-next-checkout-field="email" class="input-flds"></div>
+      </div>
+    </div>
+    {% if show_phone -%}
+    <div data-next-component="shipping-field-row" class="form-grid__row">
+      <div class="form-group">
+        <div class="form-input"><label for="phone" class="label-checkout">Phone</label><input autocomplete="tel"{% if phone_required == true or phone_required == 'true' %} required data-next-required="true"{% endif %} name="phone" data-name="Phone" type="tel" id="phone" placeholder="Phone (optional)" data-next-checkout-field="phone" class="input-flds"></div>
+      </div>
+    </div>
+    {%- endif %}
+  </div>
+</div>

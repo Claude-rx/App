@@ -82,3 +82,35 @@ imported: every one predates the product and the store, and none is a verified b
 
 The imported reviews ship as one small data script that loads only when a shopper scrolls near the wall, so
 hundreds of reviews cost nothing on page load.
+
+## Trustpilot's look and colours, everywhere (the owner, 2 Nov 2026)
+
+"Keep all the reviews Trustpilot style with exact Trustpilot colors." Every rating on the store and on both funnels
+is a row of white stars in square boxes, lit in Trustpilot's colour for the rating, with no review site's name or logo
+(the reviews still say they are ours, "from our earlier store"):
+
+| Rating | Lit boxes | Rule |
+|---|---|---|
+| 5, or an average of 4.3 and up | `#00B67A` | `apf_copy.tp_tier()`, `sf-stars.html` (no class) |
+| 4, or 3.8 to 4.2 | `#73CF11` | `.sfr-tp--t4` / `.sf-tp-t4` / `i.t4` |
+| 3, or 2.8 to 3.7 | `#FFCE00` | `t3` |
+| 2, or 1.8 to 2.7 | `#FF8622` | `t2` |
+| 1 | `#FF3722` | `t1` |
+| unlit | `#DCDCE6` | the empty boxes, the rating bars' track |
+
+A fraction lights part of a box (4.8: four boxes and 80 % of the fifth). The 5-to-1 rating bars take their row's
+colour. Where each lives:
+
+- **Store** (`tools/persona/apf_copy.py`, `apply_persona.py`, `tools/theme-build/build_theme.py`,
+  `static/skinofab-cart-drawer.js`): the review wall and its cards, the review strip, the title rating
+  (`rating_block`), the buy box's rating (`brush_rating`, recoloured when NEXT's own reviews move the average), the
+  testimonial carousel, the sticky bar's star, the shelf cards and the homepage hero (`shelf_tp`), NEXT's review pages
+  and the write-a-review picker (grey boxes; the chosen score and those under it lit in its colour), the cart drawer's
+  quote, and the store's other pages (`tp_legacy()`: the quiz, the advertorials, the VIP and tracking pages).
+- **Funnels** (`campaigns/skinofab/src/*/_includes/sf-stars.html`, `sf-apf.css`, `sf-funnel.css`,
+  `checkout-brand.css`): every star row through `sf-stars.html` (a 4-star review: four `#73CF11` boxes and an empty
+  one); the stick funnel's gold text stars are gone. **Kept by the owner's earlier decision:** the APF sales page's
+  hero rating and its checkout's top rating stay plain black, centred stars (29 Oct 2026).
+- **Gates:** `check_apf.py` and `check_funnel.py` fail a funnel CSS without the six colours or with the old greys, a
+  row of text stars, a hand-drawn half star, a 4-star review not in four light-green boxes, or a rating bar without its
+  row (`data-s`).

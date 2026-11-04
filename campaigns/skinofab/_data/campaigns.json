@@ -42,5 +42,27 @@
     "funnel_host": "https://try.skinofab.com",
     "store_phone": "+1 (563) 239-5520",
     "store_phone_tel": "tel:+15632395520"
+  },
+  "trial-funnel": {
+    "name": "SKINOFAB Adaptive Peptide Foundation Flash Trial",
+    "description": "The Adaptive Peptide Foundation flash trial: $19.97 your first month (50% off), then $39.97 a month, cancel any time. Goes on white and adapts to your skin tone as you blend. Made for skin after 45.",
+    "entry_url": "trial-checkout",
+    "sdk_version": "0.4.43",
+    "store_name": "SKINOFAB",
+    "store_url": "https://try.skinofab.com",
+    "store_terms": "https://try.skinofab.com/terms-of-service/?from=offer",
+    "store_privacy": "https://try.skinofab.com/privacy-policy/?from=offer",
+    "store_contact": "https://try.skinofab.com/contact/?from=offer",
+    "store_returns": "https://try.skinofab.com/refund-policy/?from=offer",
+    "store_shipping": "https://try.skinofab.com/shipping-policy/?from=offer",
+    "store_privacy_choices": "https://try.skinofab.com/data-sharing-opt-out/?from=offer",
+    "store_email": "info@skinofab.com",
+    "gtm_id": "",
+    "fb_pixel_id": "",
+    "axon_event_key": "a156ae42-0799-457e-b1a2-0d43c77eda18",
+    "og_image": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg",
+    "funnel_host": "https://try.skinofab.com",
+    "store_phone": "+1 (563) 239-5520",
+    "store_phone_tel": "tel:+15632395520"
   }
 }

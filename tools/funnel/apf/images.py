@@ -69,7 +69,7 @@ REVIEW_PHOTOS = {
 REVIEW_TRIM = {'susan': (0.15, 0.85, 0.30), 'virginia': (0.02, 0.92)}
 PDP_PHOTOS = {'g-hold': 'hold-cheek', 'g-dots': 'dots-eyes-closed', 'g-grey': 'hold-grey-hair',
               'g-inside': 'whats-inside', 'g-brush': 'buffing-brush',      # g-brush: offers 2 and 2b's gallery
-              'g-bottle': 'bottle-korea', 'problem': 'problem', 'solution': 'solution-bottle',
+              'problem': 'problem', 'solution': 'solution-bottle',
               'gift-blender': 'gift-blender', 'gift-mystery': 'gift-mystery', 'gift-shipping': 'gift-shipping'}
 # the demo clips (brand/videos/gj-<key>*.mp4): women 45+ with the real bottle; poster from the live page or a frame
 # (no demo-navy any more: its speaker is an AI model talking as a buyer, "I'll be buying this on repeat", which the
@@ -198,21 +198,55 @@ def laurel(im, cx, cy, r, color, K=4):
     im.paste(Image.new('RGB', lay.size, color), (int(cx - W / 2), int(cy - W / 2)), lay)
 
 
+def blender_sponge(h=900):
+    """The SKINOFAB Blender sponge as an object on the table (RGBA, h px tall): the black teardrop of the store's gift icon
+    (gift-blender.jpg; there is no photo of it), standing on its round end, lit from the upper left like the bottles, with
+    a fine pore grain. Drawn at 4x and brought down, so its edge is smooth."""
+    K, R = 4, h * 0.30
+    W, H = int(R * 2.2) * K, h * K
+    cx, cy = W / 2, H - R * K * 1.02
+    pts = []
+    for i in range(720):
+        t = 2 * np.pi * i / 720
+        up = max(0.0, -np.cos(t))                                   # the upper half narrows to a soft point
+        pts.append((cx + R * K * np.sin(t) * (1 - 0.30 * up ** 1.4), cy + R * K * np.cos(t) * (1 if np.cos(t) > 0 else 2.05)))
+    mask = Image.new('L', (W, H), 0); ImageDraw.Draw(mask).polygon(pts, fill=255)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    hx, hy = cx - R * K * 0.38, cy - R * K * 0.55                     # the light, upper left
+    light = np.exp(-(((xx - hx) / (R * K * 0.75)) ** 2 + ((yy - hy) / (R * K * 1.25)) ** 2))
+    shade = np.clip((xx - cx) / (R * K), -1, 1)                       # darker toward the right
+    rng = np.random.default_rng(7)
+    grain = Image.fromarray((rng.normal(0, 1, (H // 2, W // 2)) * 40 + 128).clip(0, 255).astype(np.uint8)).resize((W, H), Image.BILINEAR)
+    grain = (np.asarray(grain.filter(ImageFilter.GaussianBlur(1.2)), np.float32) - 128) / 128
+    v = 34 + 46 * light - 12 * shade + 5 * grain
+    rgb = np.stack([v, v * 0.97, v * 0.99], -1).clip(0, 255).astype(np.uint8)
+    im = Image.fromarray(rgb, 'RGB').convert('RGBA'); im.putalpha(mask)
+    im = im.resize((W // K, H // K), Image.LANCZOS)
+    return im.crop(im.getbbox())
+
+
 def pack_cards():
     """The packs as products on a table: the checkout cards' and the offers' pack images on white (no words: they
-    show at 64 px), 1, 2, 3 and 6 bottles, the 3 and the 6 with the free brush and its case beside them (never in
-    front of a bottle's label); and the sales page's 3-pack (offer-3) on a warm sweep with three true badges: the
-    free brush and gifts, formulated in Korea (a laurel, no clinical claim: there is no clinical study), the 30-day
-    guarantee seal."""
+    show at 64 px): 1 bottle; 3 with the free Blender sponge (pack-3b) and 5 with the free Lymphatic Brush and its case
+    (pack-5), the owner's offer of 30 Oct 2026; the offers' 2 and 6 (the 6 with the brush); the gifts in front of
+    the bottles, never in front of a label. And the sales page's 5-pack (offer-5) on a warm sweep under a "BUY 3, GET 2
+    FREE" ribbon (true: 5 bottles for less than 3 x the 1-bottle price) with three true badges: the free brush, formulated in
+    Korea (a laurel, no clinical claim: there is no clinical study), the 30-day guarantee seal."""
     bot = cutout(bottle(1254))
     card_im = Image.open(BRUSH / 'card.jpg').convert('RGB')
     brush = cutout(card_im.crop((250, 180, 830, 515)), dark=None, fill=False)    # the brush: its comb's gaps stay open
     case = cutout(card_im.crop((250, 515, 830, 905)), dark=None)                  # its case, the SKINOFAB print kept
 
-    def scene(n, with_brush, size, bg):
+    sponge = blender_sponge()
+
+    def scene(n, with_brush, size, bg, with_sponge=False):
         s = size / 900
         items = []
         if n == 1: items = [(bot, 450, 800, 700)]
+        elif n == 3 and with_sponge:                                              # three bottles, the sponge in front, left
+            items = [(bot, 360, 700, 500), (bot, 690, 700, 500), (bot, 525, 726, 535), (sponge, 170, 872, 205)]
+        elif n == 5:                                                              # five: two behind, three in front
+            items = [(bot, 355, 618, 420), (bot, 545, 618, 420), (bot, 260, 668, 445), (bot, 450, 684, 460), (bot, 640, 668, 445)]
         elif n == 2: items = [(bot, 360, 790, 640), (bot, 545, 812, 660)]
         elif n == 3:
             items = [(bot, 270, 670, 470), (bot, 630, 670, 470), (bot, 450, 695, 500)] if with_brush else \
@@ -223,13 +257,14 @@ def pack_cards():
             items += [(brush, 250, 878, 135), (case, 650, 884, 165)]
         return stage(size, [(o, x * s, y * s, h * s) for o, x, y, h in items], bg)
 
-    for n, wb, name in ((1, False, 'pack-1'), (2, False, 'pack-2'), (3, True, 'pack-3'), (6, True, 'pack-6')):
+    for n, wb, name in ((1, False, 'pack-1'), (2, False, 'pack-2'), (5, True, 'pack-5'), (6, True, 'pack-6')):
         save(scene(n, wb, 900, 'white'), name, size=700)
-    # the sales page's 3-pack: a "3 bottles for $75" ribbon over its three badges, the scene a little smaller under them,
-    # and a "$25 a bottle" tag beside the third bottle's cap (never on a label). (It said "buy 2, get 1 free" until the
-    # owner chose, 29 Oct 2026, to drop that claim: the $57 2-bottle pack beside it made it untrue, live review 7.)
+    save(scene(3, False, 900, 'white', with_sponge=True), 'pack-3b', size=700)
+    # the sales page's 5-pack: a "BUY 3, GET 2 FREE" ribbon over its three badges, the scene a little smaller under them,
+    # and a "$19.99 a bottle" tag beside the back right bottle's cap (never on a label)
     k, A, s3 = 0.86, 1050, 1080 / 900
-    items = [(bot, 270, 670, 470), (bot, 630, 670, 470), (bot, 450, 695, 500), (brush, 250, 878, 135), (case, 650, 884, 165)]
+    items = [(bot, 355, 618, 420), (bot, 545, 618, 420), (bot, 260, 668, 445), (bot, 450, 684, 460), (bot, 640, 668, 445),
+             (brush, 250, 878, 135), (case, 650, 884, 165)]
     im = stage(1080, [(o, 540 + (x * s3 - 540) * k, A - (A - y * s3) * k, h * s3 * k) for o, x, y, h in items], 'warm')
     d = ImageDraw.Draw(im)
     GOLD = (222, 190, 128)
@@ -238,7 +273,7 @@ def pack_cards():
     d.polygon([(x1 + 34, y0 + 10), (x1 - 6, y0 + 10), (x1 - 6, y1 + 10), (x1 + 34, y1 + 10), (x1 + 34 - notch, (y0 + y1) / 2 + 10)], fill=(150, 124, 74))
     d.rounded_rectangle((x0, y0, x1, y1), radius=6, fill=INK)
     d.line((x0 + 14, y0 + 9, x1 - 14, y0 + 9), fill=GOLD, width=2); d.line((x0 + 14, y1 - 9, x1 - 14, y1 - 9), fill=GOLD, width=2)
-    f = P.sans(58, 'Bold'); a, b = '3 BOTTLES FOR ', '$75'
+    f = P.sans(58, 'Bold'); a, b = 'BUY 3, GET ', '2 FREE'
     wa, wb = d.textlength(a, font=f), d.textlength(b, font=f)
     tx = (x0 + x1) / 2 - (wa + wb) / 2
     d.text((tx, (y0 + y1) / 2 + 2), a, font=f, fill=PAPER, anchor='lm'); d.text((tx + wa, (y0 + y1) / 2 + 2), b, font=f, fill=GOLD, anchor='lm')
@@ -248,23 +283,23 @@ def pack_cards():
     d.text((cx, cy - 30), 'FREE', font=P.sans(34, 'Bold'), fill=GOLD, anchor='ms')
     d.text((cx, cy + 2), 'Lymphatic', font=P.sans(22, 'SemiBold'), fill=PAPER, anchor='ms')
     d.text((cx, cy + 28), 'Brush', font=P.sans(22, 'SemiBold'), fill=PAPER, anchor='ms')
-    d.text((cx, cy + 56), '+ 2 gifts', font=P.sans(19, 'Medium'), fill=GOLD, anchor='ms')
     laurel(im, 540, 228, 104, INK)                                                # formulated in Korea, in a laurel
     d.text((540, 222), 'Formulated', font=P.serif(29, 'Bold'), fill=INK, anchor='ms')
     d.text((540, 256), 'in Korea', font=P.serif(29, 'Bold'), fill=INK, anchor='ms')
     seal = Image.open(OUT / 'guarantee-seal.png').convert('RGBA'); seal.thumbnail((184, 184), Image.LANCZOS)
     im.paste(seal, (1080 - 58 - seal.width, 236 - seal.height // 2), seal)
-    tag = Image.new('L', (4 * 120, 4 * 120), 0); ImageDraw.Draw(tag).ellipse((0, 0, 479, 479), fill=255)   # the $25 a bottle tag
-    tag = tag.resize((120, 120), Image.LANCZOS)
-    tx, ty = 852, 430
-    sh = Image.new('L', im.size, 0); sh.paste(tag, (tx - 60 + 4, ty - 60 + 6)); sh = sh.filter(ImageFilter.GaussianBlur(6))
+    T = 150                                                                       # the $19.99 a bottle tag
+    tag = Image.new('L', (4 * T, 4 * T), 0); ImageDraw.Draw(tag).ellipse((0, 0, 4 * T - 1, 4 * T - 1), fill=255)
+    tag = tag.resize((T, T), Image.LANCZOS)
+    tx, ty = 880, 420
+    sh = Image.new('L', im.size, 0); sh.paste(tag, (tx - T // 2 + 4, ty - T // 2 + 6)); sh = sh.filter(ImageFilter.GaussianBlur(6))
     im.paste(Image.new('RGB', im.size, (90, 72, 50)), (0, 0), sh.point(lambda v: v * 0.45))
-    im.paste(Image.new('RGB', (120, 120), GOLD), (tx - 60, ty - 60), tag)
+    im.paste(Image.new('RGB', (T, T), GOLD), (tx - T // 2, ty - T // 2), tag)
     d = ImageDraw.Draw(im)
-    d.ellipse((tx - 52, ty - 52, tx + 52, ty + 52), outline=INK, width=2)
-    d.text((tx, ty - 2), '$25', font=P.sans(38, 'Bold'), fill=INK, anchor='ms')
-    d.text((tx, ty + 24), 'A BOTTLE', font=P.sans(17, 'Bold'), fill=INK, anchor='ms')
-    save(im, 'offer-3', size=1080)
+    d.ellipse((tx - T // 2 + 8, ty - T // 2 + 8, tx + T // 2 - 8, ty + T // 2 - 8), outline=INK, width=2)
+    d.text((tx, ty + 2), '$19.99', font=P.sans(36, 'Bold'), fill=INK, anchor='ms')
+    d.text((tx, ty + 30), 'A BOTTLE', font=P.sans(17, 'Bold'), fill=INK, anchor='ms')
+    save(im, 'offer-5', size=1080)
     save(ground(bottle(1080)), 'bottle', size=1080)
 
 
@@ -383,12 +418,24 @@ def one_shade():
     save(im, 'one-shade', size=H)
 
 
+def _pair(key, encs, cmd):
+    """Encodes <key>.mp4, then <key>.webm (encs: the mp4's args first; cmd(ext, args, out) gives ffmpeg's argv). x264
+    gives the same bytes for the same input, VP9 with row-mt does not: when the new mp4 is the one already on disk and
+    the webm exists, the webm is kept, so a rebuild does not give an unchanged clip a new hashed name and a push does not
+    re-send it (the review 14 build re-encoded four unchanged clips)."""
+    mp4, webm = OUT / f'{key}.mp4', OUT / f'{key}.webm'
+    old = mp4.read_bytes() if mp4.exists() else None
+    for ext, args in encs:
+        if ext == 'webm' and old is not None and webm.exists() and mp4.read_bytes() == old: continue
+        subprocess.run(cmd(ext, args, OUT / f'{key}.{ext}'), check=True)
+
+
 def _encode(frames, key, fps=25):
     """frames (a folder of f0001.png…) as <key>.mp4 (H.264) and <key>.webm (VP9), silent, and the last frame as
     the poster."""
-    for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
-                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '32', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):   # yuv420p: an RGB VP9 painted blank in some captures (live review 2)
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(fps), '-i', str(frames / 'f%04d.png'), '-an', *args, str(OUT / f'{key}.{ext}')], check=True)
+    _pair(key, (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                ('webm', ['-c:v', 'libvpx-vp9', '-crf', '32', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])),   # yuv420p: an RGB VP9 painted blank in some captures (live review 2)
+          lambda ext, args, out: ['ffmpeg', '-v', 'error', '-y', '-framerate', str(fps), '-i', str(frames / 'f%04d.png'), '-an', *args, str(out)])
 
 
 def _frames_dir(key):
@@ -709,10 +756,10 @@ def howto_loop(encode=True):
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(t0 + 2.8), '-i', str(src), '-frames:v', '1', '-vf', vf, str(tmp)], check=True)
     save(Image.open(tmp), 'howto-poster', size=758)
     if not encode: return
-    for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '29',   # about 400 kB for the 11 s
-                      '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
-                      ('webm', ['-c:v', 'libvpx-vp9', '-crf', '40', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(t0), '-t', str(dur), '-i', str(src), '-vf', vf, '-an', *args, str(OUT / f'howto.{ext}')], check=True)
+    _pair('howto', (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '29',   # about 400 kB for the 11 s
+                             '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                    ('webm', ['-c:v', 'libvpx-vp9', '-crf', '40', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])),
+          lambda ext, args, out: ['ffmpeg', '-v', 'error', '-y', '-ss', str(t0), '-t', str(dur), '-i', str(src), '-vf', vf, '-an', *args, str(out)])
 
 def portrait(src, out, size=1080, crop=None, centering=(0.5, 0.3)):
     """A persona photo on its own, square: the stand-in for a reason whose before/after is not made yet. crop: (left,
@@ -770,19 +817,24 @@ def hero_collage():
     im = Image.new('RGB', (side * 2 + 4, side), PAPER)
     for i, p in enumerate(sq): im.paste(p, (i * (side + 4), 0))
     save(im, 'hero', size=1688)
-    save(ImageOps.fit(Image.open(PDP / 'hold-cheek.jpg').convert('RGB'), (1080, 1080), Image.LANCZOS, centering=(0.5, 0.5)), 'hero-m', size=760)   # phones only: 760 px is 390 at 2x (live review 9)
+    # phones only: 760 px is 390 at 2x (live review 9); WebP, the page's largest paint on a slow line (the 72 KB JPEG was
+    # 3.4 s on slow 4G, live review 15, F6); a browser without WebP takes the desktop JPEG
+    for old in OUT.glob('hero-m.*'): old.unlink()
+    ImageOps.fit(Image.open(PDP / 'hold-cheek.jpg').convert('RGB'), (760, 760), Image.LANCZOS, centering=(0.5, 0.5)).save(OUT / 'hero-m.webp', quality=78, method=6)
+    print('hero-m', (760, 760), 'webp')
 
 
 def offer_card():
-    """The listicle's offer image, v3 (live review 6: the gift tiles overlapped the third bottle and the 120 px sponge
-    tile was soft): the three bottles on a warm sweep with the Lymphatic Brush's case and the brush in front, each on
-    its own shadow (stage()), no words (the page's sf-cta box lists the pack and its gifts)."""
+    """The listicle's offer image, v4: the 5-bottle pack (the owner's offer of 30 Oct 2026, buy 3, get 2 free) on a warm
+    sweep with the Lymphatic Brush's case and the brush in front, each on its own shadow (stage()), no words (the
+    page's sf-cta box lists the pack and its gift)."""
     bot = cutout(bottle(1254))
     card_im = Image.open(BRUSH / 'card.jpg').convert('RGB')
     brush = cutout(card_im.crop((250, 180, 830, 515)), dark=None, fill=False)
     case = cutout(card_im.crop((250, 515, 830, 905)), dark=None)
     s = 1080 / 900
-    items = [(bot, 300, 600, 470), (bot, 600, 600, 470), (bot, 450, 628, 505), (case, 245, 838, 170), (brush, 660, 832, 140)]
+    items = [(bot, 355, 560, 400), (bot, 545, 560, 400), (bot, 260, 610, 425), (bot, 450, 626, 440), (bot, 640, 610, 425),
+             (case, 245, 838, 170), (brush, 660, 832, 140)]
     save(stage(1080, [(o, x * s, y * s, h * s) for o, x, y, h in items], 'warm'), 'offer')
 
 def reviews(work):
@@ -870,9 +922,11 @@ def drop_flag_caption(im):
 def copies(video=True):
     for name, src in PDP_PHOTOS.items():
         im = Image.open(PDP / f'{src}.jpg')
-        if name == 'g-bottle': im = drop_flag_caption(im)
         save(im, name, size=1080 if not name.startswith('gift') else 240)
     save(Image.open(APF / 'composites' / 'two-bottles.jpg'), 'two-bottles', size=1080)
+    # "Formulated by a K-beauty lab": the white studio packshot with its natural shadow and the flag alone
+    # (product_photos.studio_packshot; the store's old Korea shot had a grey box of a shadow, the owner, 2 Nov 2026)
+    save(Image.open(APF / 'packshot-studio-flag.jpg'), 'g-bottle', size=1080)
     # the brush: its page's images, in-hand and problem photos, the before/after it already shows (its own illustration
     # label is on the image) and the stick funnel's loop of it
     # (only the ones the brush page shows: its how-to infographic repeated the page's four steps, live review 5, and the
@@ -905,9 +959,9 @@ def copies(video=True):
     save(poster, 'brush-how-poster', size=poster.width)
     if video:
         box = f"drawbox=x={pill['x']}:y={pill['y']}:w={pill['w']}:h={pill['h']}:color=white@1:t=fill"
-        for ext, args in (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
-                          ('webm', ['-c:v', 'libvpx-vp9', '-crf', '30', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])):
-            subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(src_dir / f'up2-how.{ext}'), '-vf', box, '-an', *args, str(OUT / f'brush-how.{ext}')], check=True)
+        _pair('brush-how', (('mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart']),
+                            ('webm', ['-c:v', 'libvpx-vp9', '-crf', '30', '-b:v', '0', '-row-mt', '1', '-pix_fmt', 'yuv420p'])),
+              lambda ext, args, out: ['ffmpeg', '-v', 'error', '-y', '-i', str(src_dir / f'up2-how.{ext}'), '-vf', box, '-an', *args, str(out)])
     # the store's how-it-works loop (white dots, blended, one shade) and its poster: no pill, the label's PDRN line
     howto_loop(encode=video)
     shutil.copyfile(ROOT / 'campaigns' / 'skinofab' / 'src' / 'stick-funnel' / 'assets' / 'images' / 'sf' / 'guarantee.jpg', OUT / 'guarantee.jpg')
@@ -924,7 +978,12 @@ def copies(video=True):
     # textures (the same ingredients, the same photos)
     wow = ImageOps.fit(soften_seam(Image.open(GEN / 'wow-split.png')), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35))
     save(wow, 'wow', size=1350)
-    save(wow, 'wow-m', size=950)        # a phone's copy (760 x 950, enough for 390 px at 2x): the sales page's LCP on a slow line, live review 9
+    # a phone's copy: the sales page's LCP on a slow line (live review 9). Cut to the 5:4 a phone shows (sf-apf.css,
+    # object-position 50% 32%) and WebP, not the whole 4:5 JPEG: 115 KB for a 358 x 286 box was 2.8 to 3.2 s on slow
+    # 4G (live review 12). 760 px wide is enough for 390 px at 2x; a browser without WebP takes the desktop JPEG.
+    for old in OUT.glob('wow-m.*'): old.unlink()
+    ImageOps.fit(wow, (760, 608), Image.LANCZOS, centering=(0.5, 0.32)).save(OUT / 'wow-m.webp', quality=78, method=6)
+    print('wow-m', (760, 608), 'webp')
     for n in ('problem-mirror', 'problem-orange'):
         im = Image.open(GEN / f'{n}.png').convert('RGB')
         if n == 'problem-mirror': im = soften_patch(im, (0.19, 0.27, 0.47, 0.49))   # her cheek's pigment read as a bruise at page size (live review 3)

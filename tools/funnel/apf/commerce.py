@@ -48,6 +48,9 @@ VARIANTS = {
         # offers 2 and 2b's one more bottle, bought once: the main 1-bottle pack (variant 15) is a subscription now, and a
         # campaign takes one package per variant
         {'sku': 'SKF-APF-1-ADD', 'value': '1 bottle (add-on)', 'price': '39.00', 'retail': '47.00'},
+        # the 30 Oct 2026 offer (the owner): Buy 2 Get 1 Free with the Blender, Buy 3 Get 2 Free with the Lymphatic Brush
+        {'sku': 'SKF-APF-3-BLENDER', 'value': '3 bottles + free Blender', 'price': '66.97', 'retail': '141.00'},
+        {'sku': 'SKF-APF-5-BRUSH', 'value': '5 bottles + free Lymphatic Brush', 'price': '99.97', 'retail': '235.00'},
     ],
     BRUSH: [
         {'sku': 'SKF-LYB-1T', 'value': '1 brush + free travel case', 'price': '24.95', 'retail': '24.95'},
@@ -55,21 +58,26 @@ VARIANTS = {
 }
 # the packages: key -> (product, variant sku, campaign price); the name is the product's (the API appends the variant)
 PACKAGES = [
-    ('apf-1', FOUNDATION, 'SKF-APF-1', '39.00'),
-    ('apf-2-gifts', FOUNDATION, 'SKF-APF-2-GIFTS', '57.00'),
-    ('apf-3-gifts', FOUNDATION, 'SKF-APF-3-GIFTS', '75.00'),
+    ('apf-1', FOUNDATION, 'SKF-APF-1', '33.97'),
+    ('apf-3-blender', FOUNDATION, 'SKF-APF-3-BLENDER', '66.97'),       # Buy 2 Get 1 Free: under 2 x $33.97
+    ('apf-5-brush', FOUNDATION, 'SKF-APF-5-BRUSH', '99.97'),           # Buy 3 Get 2 Free: under 3 x $33.97, $19.99 a bottle
     ('apf-2', FOUNDATION, 'SKF-APF-2', '39.00'),
     ('apf-6-brush', FOUNDATION, 'SKF-APF-6-BRUSH', '99.00'),
     ('brush-1', BRUSH, 'SKF-LYB-1T', '24.95'),
-    ('apf-1-add', FOUNDATION, 'SKF-APF-1-ADD', '39.00'),
+    ('apf-1-add', FOUNDATION, 'SKF-APF-1-ADD', '33.97'),
+    # the packs before 30 Oct 2026 ($57 and $75, packages 2 and 3) were deleted on 1 Nov 2026 with the owner's approval,
+    # after checking that no subscription renews on them; their variants stay in the catalogue for the earlier orders
 ]
-# the vouchers: code -> (name as the order summary shows it, % off, package keys)
+# the vouchers: code -> (name as the order summary, the receipt and the order emails show it, % off, package keys). The
+# offers' names say the price she pays, not the voucher's percentage: rounded down to the dollar, 40% off $39 is $23,
+# which the page rightly calls 41% off, and a receipt line "40% off" contradicted it (live review 12)
 OFFERS = [
-    ('APF10', '10% off your foundation today', '10.00', ['apf-1', 'apf-2-gifts', 'apf-3-gifts']),
-    ('APF40', '40% off one more bottle', '40.00', ['apf-1-add']),
-    ('APF50', '50% off one more bottle', '50.00', ['apf-1-add']),
-    ('BRUSH40', '40% off the Lymphatic Brush', '40.00', ['brush-1']),
-    ('BRUSH60', '60% off the Lymphatic Brush', '60.00', ['brush-1']),
+    ('APF10', '10% off your foundation today', '10.00', ['apf-1', 'apf-3-blender', 'apf-5-brush']),
+    # the add-on bottle is $33.97 since 30 Oct 2026, the checkout's own bottle: 44% off rounds down to $19, 55% to $15
+    ('APF40', 'One more bottle at $19', '44.00', ['apf-1-add']),
+    ('APF50', 'One more bottle at $15', '55.00', ['apf-1-add']),
+    ('BRUSH40', 'Lymphatic Brush at $14', '40.00', ['brush-1']),
+    ('BRUSH60', 'Lymphatic Brush at $9', '60.00', ['brush-1']),
 ]
 
 

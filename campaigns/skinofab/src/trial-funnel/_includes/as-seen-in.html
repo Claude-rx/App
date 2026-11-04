@@ -1,0 +1,28 @@
+{%- comment -%}
+  as-seen-in.html — "AS SEEN IN" press-logo strip + divider.
+  Adapted from the landing media-1 section into apollo's next-core styling.
+  Data: as_seen_in { heading, logos[] (each { src, alt }) }.
+  Args:
+    scroll  — when true, render the logos as an auto-scrolling marquee
+              (used on mobile, mirrors media-1). Otherwise a static row.
+    {% campaign_include 'as-seen-in.html' as_seen_in=as_seen_in %}
+    {% campaign_include 'as-seen-in.html' as_seen_in=as_seen_in scroll=true %}
+{%- endcomment -%}
+<section class="as-seen-in{% if scroll %} as-seen-in--scroll{% endif %}">
+  <div class="as-seen-in__head">
+    <h2 class="as-seen-in__heading">{{ as_seen_in.heading }}</h2>
+    {% if scroll -%}
+    <div class="as-seen-in__viewport">
+      <div class="as-seen-in__track">
+        {% for logo in as_seen_in.logos %}<img src="{{ logo.src | campaign_asset }}" alt="{{ logo.alt }}" class="as-seen-in__logo" loading="lazy">{% endfor %}
+        {% for logo in as_seen_in.logos %}<img src="{{ logo.src | campaign_asset }}" alt="" aria-hidden="true" class="as-seen-in__logo" loading="lazy">{% endfor %}
+      </div>
+    </div>
+    {%- else -%}
+    <div class="as-seen-in__logos">
+      {% for logo in as_seen_in.logos %}<img src="{{ logo.src | campaign_asset }}" alt="{{ logo.alt }}" class="as-seen-in__logo" loading="lazy">{% endfor %}
+    </div>
+    {%- endif %}
+  </div>
+  <div class="as-seen-in__divider" aria-hidden="true"></div>
+</section>

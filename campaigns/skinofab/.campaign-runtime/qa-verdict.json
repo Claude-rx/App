@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "MVTVALBQ9H8DKIOJP6PAH2MN4T",
+  "run_id": "MVV6ALQ09MTDOVF09BDER286QA",
   "campaign_slug": "local-spec-7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "local_spec_id": "7c1f4a0e-5b2d-4e8f-9a63-2d9f0c8b1e47",
   "public_route_slug": "apf-funnel",
   "campaign_ref_id": 2221,
   "spec_version": "5.0",
-  "spec_hash": "sha256:5eea4f0ac39519e34f70ecc45d3dbce1254107f6c56b19202d0256ef567ab262",
-  "started_at": "2026-10-29T18:19:03.926Z",
-  "completed_at": "2026-10-29T18:19:54.452Z",
-  "generated_at": "2026-10-29T18:19:54.483Z",
+  "spec_hash": "sha256:1809d43366d5eca98db323ce5730627190f1e17c85cf15883e9388c78dd010fc",
+  "started_at": "2026-10-30T16:14:46.392Z",
+  "completed_at": "2026-10-30T16:15:34.019Z",
+  "generated_at": "2026-10-30T16:15:34.071Z",
   "runtime": "campaigns-os-node-qa@1.60.0",
   "disposition": "ready_with_exceptions",
   "entry_urls": [],
@@ -443,6 +443,15 @@
       "status": "pass"
     },
     {
+      "id": "spec.campaign_drift",
+      "family": "api-metadata",
+      "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
       "id": "live-campaign-refs",
       "family": "api-metadata",
       "page": "campaign",
@@ -611,7 +620,10 @@
       "id": "browser-primary-cta:offer-1",
       "family": "browser-runtime",
       "page": "offer-1",
-      "status": "pass"
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "browser-upsell-control:offer-1:accept",
@@ -677,7 +689,10 @@
       "id": "browser-primary-cta:offer-2",
       "family": "browser-runtime",
       "page": "offer-2",
-      "status": "pass"
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "browser-upsell-control:offer-2:accept",
@@ -797,7 +812,10 @@
       "id": "browser-primary-cta:brush-offer",
       "family": "browser-runtime",
       "page": "brush-offer",
-      "status": "pass"
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "browser-upsell-control:brush-offer:accept",
@@ -1052,6 +1070,15 @@
   "test_orders": [],
   "exceptions": [
     {
+      "id": "spec.campaign_drift",
+      "family": "api-metadata",
+      "page": "campaign",
+      "status": "warn",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
       "id": "browser-primary-cta:checkout",
       "family": "browser-runtime",
       "page": "checkout",
@@ -1059,6 +1086,33 @@
       "severity": "warn",
       "cause": "pre_existing",
       "cause_reason": "same_status_in_prior_run"
+    },
+    {
+      "id": "browser-primary-cta:offer-1",
+      "family": "browser-runtime",
+      "page": "offer-1",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "id": "browser-primary-cta:offer-2",
+      "family": "browser-runtime",
+      "page": "offer-2",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
+    },
+    {
+      "id": "browser-primary-cta:brush-offer",
+      "family": "browser-runtime",
+      "page": "brush-offer",
+      "status": "manual_review",
+      "severity": "warn",
+      "cause": "caused_by_change",
+      "cause_reason": "new_since_prior_run"
     },
     {
       "id": "qc.policy.presence:store_privacy",
@@ -1091,9 +1145,9 @@
   "cause_summary": {
     "schema_version": "campaigns-os-finding-cause/v0",
     "surface": "qa",
-    "total": 4,
+    "total": 8,
     "counts": {
-      "caused_by_change": 1,
+      "caused_by_change": 5,
       "pre_existing": 3,
       "test_environment": 0,
       "upstream_drift": 0,

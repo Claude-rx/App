@@ -25,7 +25,9 @@ function validate(struct, value, path = '', out = { errors: [], warnings: [] }) 
 (async () => {
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   let bad = 0;
-  for (const [label, start] of [['APF', 'adaptive-foundation-offer'], ['STICK', 'foundation-stick-offer']]) {
+  const FUNNELS = [['APF', 'adaptive-foundation-offer'], ['STICK', 'foundation-stick-offer'], ['TRIAL', 'adaptive-foundation-trial']]
+    .filter(([label]) => !process.env.ONLY || process.env.ONLY.split(',').includes(label));
+  for (const [label, start] of FUNNELS) {
     const page = await (await browser.newContext({ userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36' })).newPage();
     await page.addInitScript(() => {
       window.__ax = []; let real;

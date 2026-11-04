@@ -16,7 +16,7 @@
   --brand--color--cta-primary: #151515;
   --brand--color--accent: #151515;
   --brand--color--complementary-1: #faf8f5;
-  --brand--color--rating-star: #e8a33d;          /* gold, as the listicle's (green boxes read as a review site's) */
+  --brand--color--rating-star: #00b67a;          /* Trustpilot's green, exact, as every rating on the store and both funnels (the owner, 2 Nov 2026); no review site's name or logo */
   --brand--color--pill-primary: #151515;
   --brand--color--pill-primary-surface: #f1ede7;
   --brand--color--pill-secondary: #151515;
@@ -124,7 +124,7 @@ s.sf-reserved__amount { font-weight: 600; color: #6b6b6b; text-decoration-thickn
 .sf-co-left { gap: 20px; }
 .sf-co-proof { display: grid; gap: 16px; align-content: start; }
 .sf-co-stars { margin: 0; color: var(--brand--color--rating-star); letter-spacing: 2px; }
-.sf-co-stars__off { color: #d9d3ca; }
+.sf-co-stars__off { color: #dcdce6; }
 .sf-co-top { margin: 0 0 22px; }
 .sf-co-rating { margin: 0 0 14px; font-size: 16px; line-height: 1.45; color: #151515; }
 .sf-co-rating .sf-co-stars { font-size: 18px; }
@@ -170,8 +170,20 @@ s.sf-reserved__amount { font-weight: 600; color: #6b6b6b; text-decoration-thickn
 .sf-co-ratings__score span:last-child { font-size: 14px; color: #3b3b3b; }
 .sf-co-ratings__rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
 .sf-co-ratings__rows li { display: grid; grid-template-columns: 34px 1fr 52px; gap: 10px; align-items: center; margin: 0; font-size: 14px; }
-.sf-co-ratings__rows i { display: block; height: 8px; border-radius: 4px; background: #e2ddd5; overflow: hidden; }
+.sf-co-ratings__rows i { display: block; height: 8px; border-radius: 4px; background: #dcdce6; overflow: hidden; }
 .sf-co-ratings__rows b { display: block; height: 100%; background: var(--brand--color--rating-star); }
+.sf-co-ratings__rows [data-s="4"] b { background: #73cf11; } .sf-co-ratings__rows [data-s="3"] b { background: #ffce00; }
+.sf-co-ratings__rows [data-s="2"] b { background: #ff8622; } .sf-co-ratings__rows [data-s="1"] b { background: #ff3722; }
+/* the boxed stars (sf-stars.html), Trustpilot's: lit in the rating's colour, unlit #dcdce6, a white star */
+.sf-co-tp { display: inline-flex; gap: 3px; margin: 0; vertical-align: middle; }
+.sf-co-tp i { --tp: var(--brand--color--rating-star); width: 22px; height: 22px; background: var(--tp); display: grid; place-items: center; font-style: normal; }
+.sf-co-tp i::before { content: '★'; color: #fff; font-size: 15px; line-height: 1; }
+.sf-co-tp i.t4 { --tp: #73cf11; } .sf-co-tp i.t3 { --tp: #ffce00; } .sf-co-tp i.t2 { --tp: #ff8622; } .sf-co-tp i.t1 { --tp: #ff3722; }
+.sf-co-tp i.off { background: #dcdce6; }
+.sf-co-tp i.part { background: linear-gradient(90deg, var(--tp) 0 var(--p, 80%), #dcdce6 var(--p, 80%)); }
+.sf-co-tp--sm i { width: 18px; height: 18px; }
+.sf-co-tp--sm i::before { font-size: 12px; }
+.sf-co-review .sf-co-tp { margin: 4px 0 0; }
 .sf-co-ratings__rows li span:last-child { text-align: right; color: #4a4a4a; }
 .sf-co-ratings__of { grid-column: 1 / -1; margin: 6px 0 0; font-size: 14px; line-height: 1.45; color: #4a4a4a; }
 .sf-co-reviews { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }

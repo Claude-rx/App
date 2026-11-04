@@ -39,3 +39,10 @@ Where it runs:
 pip install rembg                    # once; the ISNet model (~180 MB) downloads on first use
 python3 -I tools/persona/white_bg.py <in> <out> [light|flood|matte]
 ```
+
+**The foundation's first slide (2 Nov 2026).** The owner asked for it "the same style of the other products, white
+bg and natural soft shadow": `product_photos.studio_packshot()` sets the product sheet's front render (PDRN line at
+twice its size) on pure white at the serum slide's scale and baseline (87.6 % of the height, the base at 92.6 %), with
+the serum's soft shadow measured off its slide: a dark contact crease, a short pool under the base, a low soft fall to
+the back right, a neutral grey, white again 30 px (at 1024) under the base. `apply_persona.white_backdrops` puts it in
+place of every copy of the old packshot (`KoreanColorChangingFoundation-Productimages_1_`, mode `studio`).

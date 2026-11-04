@@ -1,0 +1,15 @@
+{%- comment -%}
+  guarantee.html — money-back guarantee block (tinted-card layout).
+  Reuses the base .guarantee-section; the --apollo modifier adds the tinted
+  block background + bold header / body layout. Frontmatter-driven so the
+  desktop (under reviews) and mobile (below CTA) instances share one source.
+  Data: guarantee { badge, title, text }.
+    {% campaign_include 'guarantee.html' guarantee=guarantee %}
+{%- endcomment -%}
+<div class="guarantee-section guarantee-section--apollo">
+  <img loading="lazy" src="{{ guarantee.badge | campaign_asset }}" alt="" class="guarantee-badge">
+  <div class="guarantee-section__content">
+    <p class="guarantee-section__title">{{ guarantee.title }}</p>
+    <p class="guarantee-section__text">{{ guarantee.text }}</p>
+  </div>
+</div>

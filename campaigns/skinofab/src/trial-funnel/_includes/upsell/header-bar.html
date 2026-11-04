@@ -1,0 +1,57 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/header-bar.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-header-bar
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell page (top bar — same pattern as checkout-header)
+  next_params:
+    variant: include arg > header_bar frontmatter > "steps".
+      steps → logo left, Checkout › Upgrades › Summary stepper right (default).
+      logo  → centered logo only.
+    logo: asset path override (default images/next-dark.svg).
+    {% campaign_include 'upsell/header-bar.html' variant='logo' %}
+{%- endcomment -%}
+{%- assign hb_variant = variant | default: header_bar | default: 'steps' -%}
+{%- assign hb_logo = logo | default: 'images/next-dark.svg' -%}
+<section class="upsell-header-bar{% if hb_variant == 'logo' %} upsell-header-bar--logo{% endif %}">
+  <div class="container">
+    <div class="upsell-header-bar__wrapper">
+      <div class="upsell-header-bar__left">
+        <div class="upsell-header-bar__logo"><img src="{{ hb_logo | campaign_asset }}" loading="eager" alt="{{ campaign.store_name }}" class="brand-logo"></div>
+      </div>
+      {%- unless hb_variant == 'logo' %}
+      <div class="upsell-header-bar__right">
+        <div class="upsell-header-bar__steps">
+          <div class="upsell-header-bar__stepper">
+            <div class="upsell-header-bar__step">
+              <div class="upsell-header-bar__step-content">
+                <div class="upsell-header-bar__step-label">Checkout</div>
+              </div>
+            </div>
+            <div class="upsell-header-bar__step">
+              <div class="upsell-header-bar__step-content">
+                <div class="upsell-header-bar__step-label"> &#8250; </div>
+              </div>
+            </div>
+            <div class="upsell-header-bar__step upsell-header-bar__step--active">
+              <div class="upsell-header-bar__step-content">
+                <div class="upsell-header-bar__step-label">Upgrades</div>
+              </div>
+            </div>
+            <div class="upsell-header-bar__step">
+              <div class="upsell-header-bar__step-content">
+                <div class="upsell-header-bar__step-label"> &#8250; </div>
+              </div>
+            </div>
+            <div class="upsell-header-bar__step">
+              <div class="upsell-header-bar__step-content">
+                <div class="upsell-header-bar__step-label">Summary</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%- endunless %}
+    </div>
+  </div>
+</section>

@@ -131,16 +131,16 @@ def icon(d, kind, cx, cy, r=24):
 BADGE_LINES = label_composite.ORIGIN_LINES
 
 
-def korea_badge(im, cx=948, cy=148):
+def korea_badge(im, cx=948, cy=148, caption=True):
     """The gallery's origin badge: the flag circle (cut from the foundation's hero photo) and "Formulated in Korea /
-    Advanced formula" under it."""
+    Advanced formula" under it (caption=False: the flag alone, where the page says it in text beside the picture)."""
     flag = Image.open(HERE / 'assets' / 'korea-badge.png').convert('RGBA')
     shadow = Image.new('L', im.size, 0)
     ImageDraw.Draw(shadow).ellipse((cx - 72, cy - 68, cx + 72, cy + 78), fill=55)
     im.paste((0, 0, 0), mask=shadow.filter(ImageFilter.GaussianBlur(9)))
     im.paste(flag, (cx - flag.width // 2, cy - flag.height // 2), flag)
     d = ImageDraw.Draw(im)
-    for k, line in enumerate(BADGE_LINES):
+    for k, line in enumerate(BADGE_LINES if caption else ()):
         d.text((cx, cy + 108 + k * 29), line, font=sans(23, 'Regular'), fill=INK, anchor='ms')
 
 
@@ -600,11 +600,11 @@ def serum():
     results_grid(P, ['ba-jaw', 'ba-cheeks', 'ba-neck', 'ba-glow'], ('Firmer, smoother,', 'brighter-looking.'))
     whats_inside(P, 'swatch', [('EGF', 'sh-Oligopeptide-1, for renewed-looking skin'), ('NAD+', 'For skin that looks tired and dull'),
                                ('Collagen', 'For firmer-feeling, plumper-looking skin')], size=610)
-    science(P, 'science', ('EGF, NAD+ and collagen in a light serum that sinks in.',
+    science(P, 'science', ('EGF, NAD+ and collagen in a light serum that dries down fast.',
                            'Two drops, face and neck: skin looks smoother, firmer',
                            'and more radiant with daily use.'))
     vs_others(P, 'tall', 'others', 'A basic serum', [('Why one serum', False), ('does the work', False), ('of three', True)],
-              ['EGF + NAD+ + collagen\nin one bottle', 'Made for skin after 45', 'Light, sinks in\nin a minute', 'Face and neck'],
+              ['EGF + NAD+ + collagen\nin one bottle', 'Made for skin after 45', 'Light, dries down\nin a minute', 'Face and neck'],
               others_thresh=246, others_h=230)
     for n in ('drop', 'hold-black', 'friends', 'apply-neck', 'trio'):
         plain(P, n)
@@ -628,12 +628,137 @@ NEXT_BOLD = {'01-front.png': lambda a: label_fix.bold_line(a, (585, 1049, 668, 1
              '03-three-quarter-right.png': lambda a: label_fix.bold_line(a, (466, 1038, 566, 1072), '', 14)}
 
 
+def studio_packshot(size=1600, out_name='packshot-studio.jpg', caption=True):
+    """The foundation's first gallery slide, a packshot in the other products' style (the owner, 2 Nov 2026: "the same
+    style of the other products, white bg and natural soft shadow"): the product sheet's front render (01-front.png,
+    its print relabelled and correct, PDRN included) cut from its grey backdrop and set on pure white at the serum's
+    scale and baseline, with the serum slide's soft shadow: a dark contact crease, a short pool under the base and a
+    soft fall to the back right, all a neutral grey, white again 30 px (at 1024) under the base. The origin badge as on
+    the other slides, at the same place for the frame. Writes <FOUNDATION>/<out_name> (size x size)."""
+    from scipy import ndimage
+    src = np.asarray(Image.open(FOUNDATION / '01-front.png').convert('RGB')).astype(np.float32)
+    H0, W0 = src.shape[:2]
+    # the PDRN line at twice its size, centred where it was: at its own 15 px of 1254 it is 3 px tall on a phone's
+    # gallery and read "PORN" (live review 4; the funnel's pack shots do the same, images.py bottle()). It stays in
+    # the black between FOUNDATION (ends at y 1013) and the volume line (starts at 1116)
+    fx0, fy0, fx1, fy1 = 588, 1049, 666, 1072
+    G = src.mean(2)
+    blk = np.median(np.concatenate([G[1036:1044, fx0:fx1], G[1080:1092, fx0:fx1]]), axis=0)          # its black, per column
+    blk3 = np.median(np.concatenate([src[1036:1044, fx0:fx1], src[1080:1092, fx0:fx1]]), axis=0)
+    pa = np.clip((G[fy0:fy1, fx0:fx1] - blk[None]) / (238.0 - blk[None]), 0, 1)
+    src[fy0:fy1, fx0:fx1] = blk3[None]                                         # the small line out
+    h_, w_ = pa.shape
+    big = np.asarray(Image.fromarray((pa * 255).astype(np.uint8), 'L').resize((w_ * 2, h_ * 2), Image.LANCZOS), np.float32) / 255
+    cy, cxp = (fy0 + fy1) / 2, (fx0 + fx1) / 2
+    y0p, x0p = round(cy - h_), round(cxp - w_)
+    reg = src[y0p:y0p + 2 * h_, x0p:x0p + 2 * w_]
+    assert float(reg.mean()) < 70, '01-front.png changed: the PDRN line would not land on the black label'
+    src[y0p:y0p + 2 * h_, x0p:x0p + 2 * w_] = reg * (1 - big[..., None]) + 238.0 * big[..., None]
+    L = src.mean(2)
+    # the bottle: dark body (its white print filled in), cut at its base line (the render's own floor below goes)
+    body = ndimage.binary_fill_holes(L < 120)
+    lab, n = ndimage.label(body); body = lab == (np.argmax(np.bincount(lab.ravel())[1:]) + 1)
+    ys, xs = np.nonzero(body)
+    base = int(ys.max()); body[base + 1:] = False
+    # the backdrop behind it, a smooth plate (a cubic surface fitted outside the bottle), to unmix the soft edge
+    far = ~ndimage.binary_dilation(body, iterations=14)
+    yy, xx = np.mgrid[0:H0, 0:W0].astype(np.float32)
+    u, v = xx / W0, yy / H0
+    terms = [np.ones_like(u), u, v, u * u, u * v, v * v, u ** 3, u * u * v, u * v * v, v ** 3]
+    A = np.stack([t[far] for t in terms], 1)
+    plate = np.zeros_like(src)
+    for c in range(3):
+        coef, *_ = np.linalg.lstsq(A, src[..., c][far], rcond=None)
+        plate[..., c] = sum(k * t for k, t in zip(coef, terms))
+    core = ndimage.binary_erosion(body, iterations=2)
+    band = ndimage.binary_dilation(body, iterations=3) & ~core
+    band[base + 1:] = False
+    ink = 22.0                                                                 # the bottle's black at its edge
+    pl = plate.mean(2)
+    alpha = np.where(core, 1.0, 0.0)
+    alpha[band] = np.clip((pl[band] - L[band]) / np.maximum(pl[band] - ink, 1), 0, 1)
+    alpha = ndimage.gaussian_filter(alpha, 0.6) * (ndimage.binary_dilation(body, iterations=3))
+    alpha[core] = 1.0
+    fg = src.copy()                                                            # the edge's own colour, the plate unmixed out
+    a3 = np.clip(alpha, 0.2, 1)[..., None]
+    fg[band] = np.clip((src[band] - (1 - a3[band]) * plate[band]) / a3[band], 0, 255)
+    x0, x1, y0 = xs.min() - 4, xs.max() + 5, ys.min() - 4
+    bottle = np.dstack([fg, alpha * 255])[y0:base + 1, x0:x1]
+    bw, bh = bottle.shape[1], bottle.shape[0]
+
+    # the frame as the other products' first slides (the serum's, the balm's, the stick's, the brush's): pure white
+    # (255 to the corners), the bottle 87.6 % of the height, centred, its base at 92.6 % (the owner, 2 Nov 2026:
+    # "the same style of the other products, white bg and natural soft shadow")
+    S = size
+    yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
+    bg = np.full((S, S, 3), 255.0, np.float32)
+    k = (S * 0.876) / bh
+    bim = Image.fromarray(bottle.clip(0, 255).astype(np.uint8), 'RGBA').resize((round(bw * k), round(bh * k)), Image.LANCZOS)
+    w, h = bim.size
+    cx, by = S // 2, int(S * 0.926)
+    left, top = cx - w // 2, by - h
+    m = np.zeros((S, S), np.float32); m[top:top + h, left:left + w] = np.asarray(bim)[..., 3] / 255.0
+
+    # the base as the camera sees it: the lowest edge of the silhouette in each column (an ellipse's front arc)
+    cols = np.nonzero(m.max(0) > 0.5)[0]
+    yb = np.array([np.nonzero(m[:, x] > 0.5)[0].max() for x in cols])
+    depth = max(6, 2 * (yb.max() - yb[[0, -1]].mean()))                        # the base ellipse's height on screen
+    ey = yb.max() - depth / 2                                                   # its centre line
+
+    # the shadow, measured off the serum's slide (at 1024: 172 at the contact, 229 six px under, white 30 px down; a
+    # soft fall to the back right, ~216 beside the bottle, gone 80 px out): three soft layers, a neutral grey
+    def ell(cx_, cy_, rx, ry, blur):
+        im_ = Image.new('L', (S, S), 0)
+        ImageDraw.Draw(im_).ellipse((cx_ - rx, cy_ - ry, cx_ + rx, cy_ + ry), fill=255)
+        return ndimage.gaussian_filter(np.asarray(im_, np.float32) / 255, blur)
+    u = S / 1024.0
+    shade = np.zeros((S, S), np.float32)
+    # 1. contact: a dark crease along the front arc where the bottle meets the floor, fading at the sides
+    cont = np.zeros((S, S), np.float32)
+    span = (cols - cols[0]) / max(1, cols[-1] - cols[0])
+    for x, y, f in zip(cols, yb, np.sin(np.pi * span) ** 0.6):
+        cont[y - 1:y + 3, x] = f
+    shade = np.maximum(shade, np.clip(ndimage.gaussian_filter(cont, (1.4 * u, 3.0 * u)) * 1.5, 0, 1) * 0.31)
+    # 2. the pool under the base: the floor the bottle hides from the light, just wider than the base, short
+    pool = ell(cx + 0.03 * w, ey + 0.30 * depth, 0.47 * w, 0.5 * depth + 6 * u, 5.0 * u)
+    shade = 1 - (1 - shade) * (1 - pool * 0.17)
+    # 3. the soft fall to the back right (the key light high at the front left): a low band from the bottle's right
+    #    side out along the floor, darkest by the bottle, faint 80 px (at 1024) out, lying behind the base line
+    #    (a thin band, about 25 px tall at 1024 whatever the base's width, centred 12 px above the base's lowest point)
+    fall = ell(cx + 0.25 * w + 30 * u, yb.max() - 12 * u, 0.25 * w + 52 * u, 6 * u, 6.5 * u)
+    fade = np.clip(1 - (xx - (cx + 0.45 * w)) / (0.05 * w + 80 * u), 0, 1) ** 1.2
+    shade = 1 - (1 - shade) * (1 - fall * fade * 0.19)
+    shade *= np.exp(-np.clip(yy - (yb.max() + 4 * u), 0, None) / (9.0 * u))   # gone 30 px (at 1024) under the base
+    scene = bg * (1 - shade[..., None])
+
+    # the bottle over it
+    bf = np.asarray(bim, np.float32)
+    al = bf[..., 3:4] / 255
+    region = scene[top:top + h, left:left + w]
+    region[:] = region * (1 - al) + bf[..., :3] * al
+    im = Image.fromarray(np.clip(np.rint(scene), 0, 255).astype(np.uint8), 'RGB')
+
+    # the origin badge, drawn on the gallery's own 1080 frame and brought to this size
+    lay = Image.new('RGBA', (1080, 1080), (0, 0, 0, 0))
+    korea_badge(lay, 948, 148, caption=caption)
+    lay = lay.resize((S, S), Image.LANCZOS)
+    im.paste(lay, (0, 0), lay)
+    im.save(FOUNDATION / out_name, quality=92, optimize=True, progressive=True)
+    return im
+
+
 def foundation():
-    """The foundation gallery's "skinofab vs. others" was white on black: the same board on white, as the other
-    products' (its three rows, with the other gallery panel's "won't settle into lines"). The other bottle is a blank,
+    """The foundation gallery's first slide, the studio packshot (studio_packshot()), and its "skinofab vs. others",
+    white on black before: the same board on white, as the other products' (its rows hedged: "designed not to settle",
+    the brand's rule for any claim about lines). The other bottle is a blank,
     generic one (source/others.jpg): the old board's showed another brand's name."""
+    studio_packshot()
+    # the funnel's sales page "Formulated by a K-beauty lab" picture: the same packshot, the flag alone (the pill beside
+    # it says "Formulated in Korea"; the caption was 6 px text on a phone, live review 11; the owner, 2 Nov 2026: the
+    # old store shot's grey box of a shadow replaced by this natural one)
+    studio_packshot(1080, 'packshot-studio-flag.jpg', caption=False)
     vs_others(FOUNDATION, '01-front', 'others', 'A basic foundation', [('One shade that', False), ('adapts to', False), ('your skin', True)],
-              ['Adapts to\nskin tone', 'Hydrating\nserum base', 'Won’t settle\ninto lines', 'Fragrance-free'],
+              ['Adapts to\nskin tone', 'Hydrating\nserum base', 'Designed not\nto settle', 'Fragrance-free'],
               others_thresh=246, others_h=210)
     # the NEXT product's gallery (cart and checkout thumbnails, in this order) on the same white: next/<name>.jpg
     out = FOUNDATION / 'next'; out.mkdir(exist_ok=True)

@@ -313,7 +313,7 @@
             return p.pk === about || (p.parent && p.parent.pk === about);
         });
         if (cfg.reviewText && reviewed) {
-            html += '<figure class="sf-review"><div class="sf-stars" aria-label="5 out of 5 stars">' + ICON.star + ICON.star + ICON.star + ICON.star + ICON.star + '</div>' +
+            html += '<figure class="sf-review"><div class="sf-stars" role="img" aria-label="5 out of 5 stars">' + ICON.star + ICON.star + ICON.star + ICON.star + ICON.star + '</div>' +
                 '<blockquote>&ldquo;' + escapeHtml(cfg.reviewText) + '&rdquo;</blockquote>' +
                 (cfg.reviewName ? '<figcaption>' + escapeHtml(cfg.reviewName) + '</figcaption>' : '') + '</figure>';
         }
@@ -512,7 +512,9 @@
         '.sf-trust-row p { margin: 0; font-size: 13px; line-height: 1.4; color: #3b3b3b; display: flex; flex-direction: column; gap: 2px; }',
         '.sf-trust-row strong { color: #151515; font-size: 14px; font-weight: 600; }',
         '.sf-review { margin: 0; padding-top: 12px; border-top: 1px solid #e3dfd8; }',
-        '.sf-stars { display: flex; gap: 2px; color: #151515; margin-bottom: 6px; }',
+        /* the five-star quote in Trustpilot's look and colours, exact (the owner, 2 Nov 2026): white stars in green boxes */
+        '.sf-stars { display: flex; gap: 2px; margin-bottom: 6px; }',
+        '.sf-stars svg { box-sizing: border-box; width: 18px; height: 18px; padding: 3px; background: #00b67a; color: #fff; }',
         '.sf-review blockquote { margin: 0; font-size: 13px; line-height: 1.45; color: #2b2b2b; font-style: italic; }',
         '.sf-review figcaption { margin-top: 6px; font-size: 12px; color: #6a6a6a; }',
         /* discount code */

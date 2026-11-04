@@ -1,0 +1,9 @@
+# Netlify: connect this repo, nothing else to set here. In Site configuration > Environment variables add
+# FUNNEL_HOST (e.g. https://go.skinofab.com, the domain on the Campaigns App campaigns' Allowed Domains).
+[build]
+  command = "npm run build:static"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--omit=dev"   # the build needs next-campaign-page-kit only, not the Campaigns OS QA toolkit

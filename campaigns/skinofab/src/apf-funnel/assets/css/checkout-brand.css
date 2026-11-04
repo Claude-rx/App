@@ -10,6 +10,9 @@
   --brand--color--surface: #f6f2ec;
   --brand--color--foreground: #151515;
   --brand--color--border: #e6e2dc;
+  /* muted text at 4.5:1 or better on white and on #faf8f5 (next-core's #969696 is 2.95:1: the pack cards' crossed-out
+     prices failed, live review 14, F6) */
+  --brand--color--text-muted: #5c5c5c;
   --brand--color--primary: #151515;
   --brand--color--primary-dark: #151515;
   --brand--color--primary-light: #f1ede7;
@@ -113,9 +116,12 @@
 .sf-co-proof { display: grid; gap: 16px; align-content: start; }
 /* the boxed stars, in the brand ink */
 .sf-co-tp { display: inline-flex; gap: 3px; margin: 0; vertical-align: middle; }
-.sf-co-tp i { width: 22px; height: 22px; background: var(--brand--color--rating-star); border-radius: 3px; display: grid; place-items: center; font-style: normal; }
+/* Trustpilot's colours, exact (the owner, 2 Nov 2026): the lit boxes in the rating's colour (sf-stars.html marks a 4 to 1
+   rating .t4 to .t1: #73cf11, #ffce00, #ff8622, #ff3722; 5 and 4.3 up stay #00b67a), the unlit #dcdce6, a white star */
+.sf-co-tp i { --tp: var(--brand--color--rating-star); width: 22px; height: 22px; background: var(--tp); border-radius: 0; display: grid; place-items: center; font-style: normal; }
+.sf-co-tp i.t4 { --tp: #73cf11; } .sf-co-tp i.t3 { --tp: #ffce00; } .sf-co-tp i.t2 { --tp: #ff8622; } .sf-co-tp i.t1 { --tp: #ff3722; }
 .sf-co-tp i::before { content: '★'; color: #fff; font-size: 15px; line-height: 1; }
-.sf-co-tp i.off { background: #cfd0d6; }
+.sf-co-tp i.off { background: #dcdce6; }   /* Trustpilot's unlit box */
 .sf-co-tp--sm i { width: 18px; height: 18px; }
 .sf-co-tp--sm i::before { font-size: 12px; }
 .sf-co-top { margin: 0 0 16px; }
@@ -148,8 +154,11 @@
 .sf-co-ratings__score span:last-child { font-size: 14px; color: #3b3b3b; }
 .sf-co-ratings__rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
 .sf-co-ratings__rows li { display: grid; grid-template-columns: 34px 1fr 52px; gap: 10px; align-items: center; margin: 0; font-size: 14px; }
-.sf-co-ratings__rows i { display: block; height: 8px; border-radius: 4px; background: #e2ddd5; overflow: hidden; }
-.sf-co-ratings__rows b { display: block; height: 100%; background: var(--brand--color--rating-star); }
+.sf-co-ratings__rows i { display: block; height: 8px; border-radius: 4px; background: #dcdce6; overflow: hidden; }
+.sf-co-ratings__rows b { display: block; height: 100%; min-width: 3px; background: var(--brand--color--rating-star); }
+/* each bar in its row's Trustpilot colour */
+.sf-co-ratings__rows [data-s="4"] b { background: #73cf11; } .sf-co-ratings__rows [data-s="3"] b { background: #ffce00; }
+.sf-co-ratings__rows [data-s="2"] b { background: #ff8622; } .sf-co-ratings__rows [data-s="1"] b { background: #ff3722; }
 .sf-co-ratings__rows li span:last-child { text-align: right; color: #4a4a4a; }
 .sf-co-ratings__of { grid-column: 1 / -1; margin: 6px 0 0; font-size: 14px; line-height: 1.45; color: #4a4a4a; }
 /* the review wall flows in two columns (a grid row stretched every card to its tallest neighbour, live review 3) */
@@ -191,7 +200,8 @@ label:has(> .checkbox__label), label:has(.checkbox__label) { min-height: 44px; d
   .sf-co-reviews .sf-co-review:nth-child(-n+3) { display: none; }
 }
 /* 44 px targets: the footer's legal links and every email link (20-24 px tall, live review 1) */
-.footer_legal-link, .footer_link-wrapper a { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 6px; }
+.footer_legal-link, .footer_link-wrapper a { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 6px; white-space: nowrap; }   /* no "Shipping / Policy" over two lines (live review 17) */
+.footer_link-wrapper { flex-wrap: wrap; }
 .footer_copy-info { align-items: center; }   /* the copyright beside the taller links, not above them (live review 3) */
 a[href^="mailto:"]:not(.sf-btn):not(.btn), .submit-section__disclaimer a, a.link { display: inline-block; box-sizing: border-box; min-height: 44px; padding: 12px 0; margin: -12px 0; }   /* a.link: the receipt's policy and Contact Us links too */   /* 44 px targets without a taller line box */
 /* a tablet: the columns no wider than a comfortable line of text */
@@ -204,7 +214,7 @@ body {
   --_text---font-family--heading: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
-.sf-co-tp i.part { background: linear-gradient(90deg, var(--brand--color--rating-star) 0 var(--p, 80%), #cfd0d6 var(--p, 80%)); }
+.sf-co-tp i.part { background: linear-gradient(90deg, var(--tp) 0 var(--p, 80%), #dcdce6 var(--p, 80%)); }
 
 /* before the SDK has the campaign (3-5 s on a slow connection): no empty red pill, no "Instant savings:" with nothing
    after it, and the order summary's lines hidden behind one short line instead of an empty frame (live review 1) */
@@ -231,6 +241,24 @@ body {
   .checkout-header--apollo .checkout-header__trust, .checkout-header--apollo .checkout-header__divider { display: none; }
   .checkout-header--apollo .checkout-header__inner { justify-content: center; padding: 10px 0; }
   .promo-banner--apollo .promo-banner__text { font-size: 12.5px; line-height: 1.35; }
+}
+
+/* placeholders, the only words in an empty field, at 5.7:1 on white (#666; the default grey was 3.95:1, live review 15, F5) */
+[data-next-checkout="form"] input::placeholder, [data-next-checkout="form"] textarea::placeholder { color: #666; opacity: 1; }
+
+/* a tablet (768 to 1023 px): the logo over one row of the three badges, and the promo bar's lines balanced (the bar left
+   "GUARANTEE" alone on its second line and the badges put "SKIP OR CANCEL ANY TIME" alone under the other two, live review
+   14, F8) */
+.promo-banner--apollo .promo-banner__text { text-wrap: balance; }
+/* below 1024 px the bar is two lines: the trail on its own line, without the separator that began it ("· FREE SHIPPING…") */
+@media (max-width: 1023px) {
+  .promo-banner--apollo .promo-banner__sep { display: none; }
+  .promo-banner--apollo .promo-banner__trail { display: block; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .checkout-header--apollo .checkout-header__inner { flex-flow: column; gap: 6px; }
+  .checkout-header--apollo .checkout-header__divider { display: none; }
+  .checkout-header--apollo .checkout-header__badges { flex-wrap: nowrap; gap: 14px; }
 }
 
 /* before the SDK answers, the billing block is empty: its heading stays hidden with it (an empty "Billing Address" showed under the
@@ -296,3 +324,14 @@ html:not(.next-display-ready) [data-next-await]::after { left: -55% !important; 
 
 /* a renewing pack's first-order gifts, under its name (js/sf-checkout.js, js/sf-receipt.js; live review 10) */
 .sf-first-order { margin-top: 2px; font-size: 13px; line-height: 1.35; color: #4f4f4f; }
+/* the pack she came with, at the top of Step 1 on a phone, where its card is below the first screen (live review 12) */
+.sf-co-picked { display: none; margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; background: var(--brand--color--primary-lighter, #f4f1ec); font-size: 16px; line-height: 1.4; color: #151515; }
+.sf-co-picked strong { font-weight: 600; }
+@media (max-width: 767px) { .sf-co-picked { display: block; } }
+
+/* the free bottles' crossed-out price on a pack card (bundle-card-product.html, card_compare): it steps aside once the SDK
+   strikes a price of its own (the exit coupon), so a card never shows two crossed-out prices */
+.bundle-card .sf-card-was, .bundle-card .bundle-card__price-reg { color: #5c5c5c; }
+.bundle-card .sf-card-was { color: #5c5c5c; font-size: var(--font-size--base); font-weight: 700; text-decoration: line-through; }
+/* (its own class: the rule above that hides .bundle-card__price-reg without an SDK discount must not hide it) */
+.bundle-card:not(:has(.bundle-card__savings[style*="display: none"])):has([data-next-bundle-display="originalPrice"]:not(:empty)) .sf-card-was { display: none; }

@@ -36,6 +36,7 @@ jobs:
         run: |
           python3 -I tools/funnel/check_funnel.py
           python3 -I tools/funnel/apf/check_apf.py
+          python3 -I tools/funnel/trial/check_trial.py
 
   live-axon:
     # The live funnel pages still load the fixed AXON adapter (a theme regenerated from stale sources undoes it).

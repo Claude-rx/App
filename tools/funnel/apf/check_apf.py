@@ -14,9 +14,10 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
               box; no post-purchase voucher code anywhere on the page; the exit pop applies the exit offer; the
               guarantee right above the order button, the three featured reviews after it (never between the address
               and the payment), 8+ review cards each with the buyer's photo, the reviews' rating and where they are from
-  sales page  each pack's price is its package's, its renewal the same price every 28 days a bottle, no crossed-out price
-              and no saving on a pack (the store's own refills are lower, live review 8), every checkout link names a
-              checkout card, no disclaimer or illustration line anywhere
+  sales page  each pack's price is its package's, its renewal the same price every 28 days a bottle, its crossed-out
+              price (if any) the 1-bottle price times its bottles and its price the 1-bottle price times the bottles she
+              pays for (the free-bottle claims are that arithmetic), every checkout link names a checkout card, no
+              disclaimer or illustration line anywhere
   offer 1     the supply cards: each card's package is the page's, its price the package's, its crossed-out price the
               store's one-time price for the same bottles (funnels/apf.py store_once), named, its per-bottle and per-day
               prices arithmetic; the cards sit in an upsell-context selector inside
@@ -53,8 +54,8 @@ PAGES = {p['id']: p for p in SPEC['funnels'][0]['pages']}
 OFFERS = {o['ref_id']: o for o in SPEC['offers']}
 ALL_PKGS = {p['ref_id']: p for pg in PAGES.values() for p in pg.get('packages', [])}
 SKUS = {p['product_sku'] for p in ALL_PKGS.values()}
-BRUSH_SKUS = {'SKF-APF-3-GIFTS', 'SKF-APF-6-BRUSH'}      # the packages that include the Lymphatic Brush
-GIFT_SKUS = {'SKF-APF-2-GIFTS', 'SKF-APF-3-GIFTS'}       # the packages with the Blender sponge and the mystery gift
+BRUSH_SKUS = {'SKF-APF-5-BRUSH', 'SKF-APF-6-BRUSH'}      # the packages that include the Lymphatic Brush
+GIFT_SKUS = {'SKF-APF-3-BLENDER'}                         # the package with the Blender sponge (no mystery gift since 30 Oct 2026)
 ONE_SKU = 'SKF-APF-1'                                    # one bottle: the price the supply cards' arithmetic starts from
 # what the pages may never say (the foundation's claims rules, docs/apf-funnel/persona.md; "made not to" / "designed not
 # to" keep "settle" hedged)
@@ -69,6 +70,7 @@ FORBIDDEN = [
     (r'\bclinically\s+(?:proven|tested|shown)', 'a clinical claim'),
     (r'\b\d{1,3}\s?%\s+of\s+(?:women|users|customers|testers)', 'study percentage'),
     (r"\b(?:won['’]t|will not|never)\s+settle", 'unhedged "won\'t settle"'),
+    (r"\b(?:doesn['’]t|does not|didn['’]t)\s+(?:cake or )?(?:settle|sink)\b", 'unhedged "doesn\'t settle/sink" (live review 14, F4: two reviews kept it)'),
     (r'\bonly\s+\d+\s+(?:left|pieces|in stock)', 'scarcity count'),
     (r"order isn[’']t complete", '"your order isn\'t complete" after the order is placed'),
     (r"\bdon[’']t close this page\b", 'pressure: "don\'t close this page"'),
@@ -97,12 +99,11 @@ FORBIDDEN = [
     (r'\blowest price we will ever\b', 'a "lowest ever" price (the downsells go lower)'),
     (r'\blowest single-bottle price anywhere\b', 'a "lowest anywhere" price on offer 2 (its downsell goes lower)'),
     (r'\bsix for the price of three\b', '"six for the price of three" (no shown price backs it)'),
-    # live review 7, B1 (the owner, 29 Oct 2026, before the ads): the 3-bottle pack is "3 bottles for $75, $25 a bottle";
-    # "buy 2, get 1 free" beside the $57 2-bottle pack made the free bottle cost $18
-    (r'\bbuy\s+(?:2|two),?\s+get\s+(?:1|one)\b', '"buy 2, get 1 free" (the 2-bottle pack costs $57)'),
-    (r'\b(?:3rd|third)\s+(?:bottle\s+)?(?:is\s+)?free\b', '"the 3rd bottle free" (the 2-bottle pack costs $57)'),
-    (r'\bpay\s+for\s+(?:2|two)\b', '"pay for 2" (the 2-bottle pack costs $57)'),
-    (r'\+\s?1\s+free\b', '"+1 free" (the 2-bottle pack costs $57)'),
+    # the owner's offer of 30 Oct 2026: no mystery gift any more (the Blender with 3 bottles, the brush with 5); the
+    # free-bottle claims ("buy 2, get 1 free", "buy 3, get 2 free") are checked as arithmetic below, not forbidden
+    (r'\bmystery gift\b', 'a mystery gift (gone since 30 Oct 2026)'),
+    (r'\badd 1,? get 1 free\b', '"add 1, get 1 free" (two bottles for $39 when one is $33.97)'),
+    (r'\ban extra 10\s?%|\bEXTRA 10\s?%', '"an extra 10%" (live review 13, F3: say "10% off")'),
 ]
 # SPF may only be mentioned as what the foundation does not have, or as her own sunscreen under it
 SPF_OK = re.compile(r"(?:no|not an?|has no|without|doesn[’']t have|does it have|left)\s+SPF|SPF\s+out\b|SPF\?|"
@@ -118,7 +119,10 @@ PACK_BY_REF = {p['package']: p for p in F.PACKS}
 PENDING = os.environ.get('APF_RECURRING_PENDING') == '1'
 
 
-def renew(p): return f"Then ${p['price']:.0f} every {p['every']} days"          # "Then $57 every 56 days"
+def usd(v): return f'${v:.2f}'.replace('.00', '')                              # "$33.97", "$19"
+
+
+def renew(p): return f"Then {usd(p['price'])} every {p['every']} days"          # "Then $33.97 every 28 days"
 
 
 problems = []
@@ -170,8 +174,10 @@ def gifts_said(where, sku, t):
     """A package with gifts names them; one without names none."""
     t = t.lower()
     if sku in BRUSH_SKUS and 'lymphatic brush' not in t: fail(where, f'{sku}: the free Lymphatic Brush is not named')
-    if sku in GIFT_SKUS and ('blender sponge' not in t or 'mystery gift' not in t): fail(where, f'{sku}: the Blender sponge and mystery gift are not named')
-    if sku not in GIFT_SKUS | BRUSH_SKUS and re.search(r'\bfree [a-z]+ (?:brush|gift)', t): fail(where, f'{sku}: a gift named on a package without one')
+    if sku in GIFT_SKUS and 'blender sponge' not in t: fail(where, f'{sku}: the free Blender sponge is not named')
+    if sku in GIFT_SKUS and 'lymphatic brush' in t: fail(where, f'{sku}: the Lymphatic Brush named on the pack that comes with the Blender')
+    if sku in BRUSH_SKUS and 'blender' in t: fail(where, f'{sku}: the Blender named on a pack that comes with the brush')
+    if sku not in GIFT_SKUS | BRUSH_SKUS and re.search(r'\bfree [a-z]+ (?:brush|gift|sponge)', t): fail(where, f'{sku}: a gift named on a package without one')
 
 
 for bid, items, attrs, body in cards:
@@ -287,7 +293,13 @@ for m in re.finditer(r'<label class="sf-pack[^"]*" data-pack="([^"]+)" data-pric
     if not want or renewal != renew(want) or every != f"{want['every']} days": fail('offer', f'pack {pack}: renews "{renewal}" every "{every}", not "{renew(want) if want else "?"}"')
     card = pp[m.end():pp.find('</label>', m.end())]
     if renewal not in text(card): fail('offer', f'pack {pack}: its renewal is not on its card')
-    if re.search(r'<s>\$|SAVE \$', card.split('sf-gifts')[0]): fail('offer', f'pack {pack}: a crossed-out price or a saving (the store\'s own refills are lower)')
+    # the free bottles: the pack's price is at most the 1-bottle price times the bottles she pays for, its crossed-out price the
+    # 1-bottle price times the bottles she gets (the owner's offer of 30 Oct 2026), and nothing else is struck through
+    _struck = re.findall(r'<s>\$([\d.]+)</s>', card.split('sf-gifts')[0])
+    if want and float(price) > F.UNIT * want['paid'] + 0.005: fail('offer', f'pack {pack}: ${price} is more than {want["paid"]} x ${F.UNIT} (the free bottles would not be free)')
+    if _struck != ([f"{F.UNIT * want['bottles']:.2f}"] if want and want.get('compare') else []): fail('offer', f'pack {pack}: crossed-out {_struck}, not {want["bottles"] if want else "?"} x ${F.UNIT}')
+    if want and want.get('compare') and abs(want['compare'] - F.UNIT * want['bottles']) > 0.005: fail('offer', f'pack {pack}: compare {want["compare"]} is not {want["bottles"]} x {F.UNIT}')
+    if 'SAVE $' in card: fail('offer', f'pack {pack}: a dollar saving on the card')
     gifts_said(f'offer pack {pack}', p['product_sku'], text(card))      # the pack's own card
 if seen != card_ids: fail('offer', f'packs {sorted(seen)} are not the checkout cards {sorted(card_ids)}')
 for pack in re.findall(r'class="sf-pack[^"]*" data-pack="([^"]+)"', pp):
@@ -323,7 +335,7 @@ for bid, items, attrs, body in cards1:
     mp = re.search(r'\$([\d.]+) a bottle', t)
     if not mp or abs(float(mp.group(1)) - price / bottles) > 0.005: fail('offer-1', f'card {bid}: per-bottle price is not {money(price)} / {bottles}')
     md = re.search(r'\$([\d.]+) a day', t)
-    if not md or abs(float(md.group(1)) - price / (bottles * 30)) > 0.006: fail('offer-1', f'card {bid}: per-day price is not {money(price)} over {bottles} months')
+    if not md or abs(float(md.group(1)) - price / (bottles * 28)) > 0.006: fail('offer-1', f'card {bid}: per-day price is not {money(price)} over {bottles} x 28 days (live review 13, F4)')
     if 'Charged once' not in t: fail('offer-1', f'card {bid}: not said to be charged once')
     gifts_said(f'offer-1 card {bid}', p['product_sku'], t)
     if 'data-sf-supply-card' not in attrs: fail('offer-1', f'card {bid}: not a supply card (js/sf-supply.js)')
@@ -438,10 +450,20 @@ for p in F.PAGES:
         if re.search(r'doctor|derm', src, re.I): fail(p['id'], f'a clinician image: {src}')
 # a countdown that ends on the same item cheaper is a pressure trick: at 0:00 an offer whose decline is its downsell
 # goes past the downsell (data-sf-timer-to), and the page says the last-chance price goes too (F1)
+def _skip_to(pid):
+    # the same rule as offer_pages.skip_to: past every page down the decline path selling the same product cheaper a
+    # bottle than this page's dearest (live review 14, F2: offer 1's clock led to offer 2's cheaper bottle)
+    units = lambda q: [t['price'] / t.get('bottles', 1) for t in F.OFFER_PAGES[q]['tiers']]
+    prod = lambda q: 'brush' if F.OFFER_PAGES[q]['tiers'][0]['package'].startswith('brush') else 'foundation'
+    top, nxt, skipped = max(units(pid)), F.BY_ID[pid]['decline'], False
+    while nxt in F.OFFER_PAGES and prod(nxt) == prod(pid) and min(units(nxt)) < top: nxt, skipped = F.BY_ID[nxt]['decline'], True
+    return nxt if skipped else None
+
+
 for p in F.PAGES:
     if p['sdk'] != 'upsell' or 'data-sf-timer=' not in html(p['id']): continue
-    h, nxt = html(p['id']), F.BY_ID[F.BY_ID[p['id']]['decline']]
-    want = F.route(nxt['decline']) if nxt.get('type') == 'downsell' else ''
+    h = html(p['id'])
+    want = F.route(_skip_to(p['id'])) if _skip_to(p['id']) else ''
     m = re.search(r'data-sf-timer-to="([^"]*)"', h)
     if (m.group(1) if m else '') != want: fail(p['id'], f'at 0:00 the page goes to {m.group(1) if m else "where a decline goes"}, not {want or "where a decline goes"}')
     if want and 'last-chance price' not in text(h): fail(p['id'], 'the countdown does not say the last-chance price goes with it')
@@ -553,8 +575,8 @@ for p in F.PAGES:
     if m: fail(p['id'], f'an unsourced ranking of complaints: "{m.group(0)}"')
 # F5: a renewing price always with its renewal
 for p in F.PAGES:
-    m = re.search(r'1 bottle for \$39(?!(?:\.00)?,? then \$39(?:\.00)? every 28 days)', text(html(p['id'])))
-    if m: fail(p['id'], 'the 1-bottle price without its renewal ("then $39 every 28 days")')
+    m = re.search(r'1 bottle for \$33\.97(?!,? then \$33\.97 every 28 days)', text(html(p['id'])))
+    if m: fail(p['id'], 'the 1-bottle price without its renewal ("then $33.97 every 28 days")')
 # F6: a featured quote carries no absolute claim about lines (the full review cards stay verbatim)
 _more = re.search(r'<ul class="sf-morequotes">(.*?)</ul>', _sp, re.S)
 for pid, chunk in (('offer', _more.group(1) if _more else ''), ('listicle', _lst)):
@@ -600,6 +622,65 @@ if not re.search(r'\.sf-once a \{[^}]*min-height: 44px', (SITE / 'css' / 'sf-apf
 if "closest('a[role=\"button\"]')" not in _apfjs: fail('offers', 'Space does not press an offer action')
 # no claim of what other buyers also use (it was not measured)
 if re.search(r'Women who love the foundation also use', text(_ty)): fail('thank-you', 'an unmeasured claim of what other buyers also use')
+
+# live review 12 --------------------------------------------------------------------------------------------------------
+_o1 = html('offer-1') if 'offer-1' in F.BY_ID else ''
+# F2: offer 1's supply button says it is charged once and does not renew, like every other offer's first button
+_hero1 = re.search(r'<section class="sf-uh".*?</section>', _o1, re.S)
+if _o1 and (not _hero1 or 'charged once' not in text(_hero1.group(0)) or 'doesn’t renew' not in text(_hero1.group(0))): fail('offer-1', 'the hero\'s button does not say it is charged once and does not renew')
+# F3: the vouchers' names (the order summary, the receipt, the emails) say the price, not a percentage the page contradicts
+sys.path.insert(0, str(ROOT / 'tools' / 'funnel' / 'apf'))
+import commerce as _C
+for code, name, pct, keys in _C.OFFERS:
+    if code != 'APF10' and '%' in name: fail('campaign', f'voucher {code} is named "{name}": a percentage the offer page states differently')
+# F4, F5: no "first on our list" without the INCI, no "into the skin" anywhere on a page (reviews included)
+for p in F.PAGES:
+    tx = text(html(p['id']))
+    for rx, what in ((r'[Ff]irst on our list', 'a primacy claim for an ingredient ("first on our list")'), (r'\binto (?:my|your|her|the) skin\b', 'an "into the skin" phrase')):
+        m = re.search(rx, tx)
+        if m: fail(p['id'], f'{what}: "…{tx[max(0, m.start() - 40):m.end() + 30]}…"')
+# F6: on a phone the checkout says which pack she came with at the top of Step 1, from the cards' own names
+_pk = re.search(r"data-sf-picked='([^']+)'", co)
+if not _pk: fail('checkout', 'no "Your pack" line at the top of Step 1')
+else:
+    _picked = json.loads(unescape(_pk.group(1)))
+    for bid, items, attrs, body in cards:
+        ref = json.loads(items)[0]['packageId']
+        if ref in PACK_BY_REF and not _picked.get(bid, '').startswith(f"{PACK_BY_REF[ref]['bottles']} bottle"): fail('checkout', f'"Your pack" for {bid}: "{_picked.get(bid)}"')
+    # its price is the SDK's cart total, so it follows the exit coupon (live review 13, F3: "$75" beside a $67 total)
+    _pl = co[_pk.start():co.find('</p>', _pk.start())]
+    if 'data-next-display="cart.total"' not in _pl or re.search(r'\$\d', ''.join(_picked.values())): fail('checkout', '"Your pack" states a fixed price, not the cart total')
+# F7: every store page stops the AppLovin pixel under GPC or the privacy choices opt-out, before the app's snippet
+_bl = (THEME / 'layouts' / 'base.html').read_text(encoding='utf-8')
+if not re.search(r'<meta charset="UTF-8" />\s*<script>\(function \(\) \{ var out = navigator\.globalPrivacyControl === true \|\| /\(\?:\^\|;\\s\*\)sf_optout=1/', _bl): fail('theme', 'the store pages load the AppLovin pixel under GPC or after the opt-out')
+_track = THEME / 'partials' / 'sf_pages' / 'postflows-track-your-order' / 'content.html'
+if _track.is_file() and 'Cookie policy</a></nav>' in _track.read_text(encoding='utf-8'): fail('theme', 'a copy of the store footer without "Your privacy choices"')
+# F8: an offer opened with no order shows the note above the offer (its prices stay, Campaigns OS QA reads them), every
+# accept greyed the same way, inert and aria-disabled, and no clock; the thank-you page one notice
+if '.sf-no-order #sf-main' in _oc: fail('offers', 'with no order the offer is hidden: its price and accept must stay visible (Campaigns OS QA)')
+for _sel in ('[data-next-upsell-action="add"]', '[data-upsell-proxy="add"]', '[data-sf-supply-hero]'):
+    if f'.sf-no-order {_sel}' not in _oc: fail('offers', f'with no order, {_sel} is not greyed')
+if 'pointer-events: none !important; opacity: .45 !important; animation: none !important' not in _oc: fail('offers', 'with no order, an accept can still look live')
+if '.sf-no-order [data-sf-timer], .sf-no-order .sf-uh__expires, .sf-no-order [data-sf-await-note] { display: none !important; }' not in _oc: fail('offers', 'with no order, the clock or its lines still show')
+_og = (SITE / 'js' / 'sf-offer-gate.js').read_text(encoding='utf-8')
+if "e.setAttribute('aria-disabled', 'true')" not in _og or 'lock(false)' not in _og: fail('offers', 'with no order, the accepts are not aria-disabled (or stay so when an order loads)')
+if "a.getAttribute('aria-disabled') !== 'true'" not in (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8'): fail('offers', 'Space still presses a disabled accept')
+if "if (document.documentElement.classList.contains('sf-no-order')) return;" not in (SITE / 'js' / 'sf-offer-timer.js').read_text(encoding='utf-8'): fail('offers', 'the clock runs and moves on with no order')
+if _ty.count('data-sf-no-order') != 1: fail('thank-you', f'{_ty.count("data-sf-no-order")} "no order" notices, not one')
+# F9: a phone's sales hero is the 5:4 WebP it is shown as
+_wm = SITE / 'images' / 'sf' / 'wow-m.webp'
+if not _wm.is_file() or _wm.stat().st_size > 60000 or 'type="image/webp"' not in _sp: fail('offer', 'the phone hero is not the light 5:4 WebP')
+# F10: a buyer's photo smaller than its card shows at its own size
+for m in re.finditer(r'<article class="sf-review[^"]*"><img src="[^"]*?/(review-[a-z]+)[^"]*?\.jpg"([^>]*)>', _sp):
+    f_ = SITE / 'images' / 'sf' / f'{m.group(1)}.jpg'
+    if f_.is_file():
+        w_ = _Img.open(f_).size[0]
+        if w_ < 324 and f'max-width:{w_}px' not in m.group(2): fail('offer', f'{m.group(1)} ({w_} px) is blown up to the card')
+# F11: one set of policy links everywhere (the thank-you page's too), and the description says which packs have gifts
+for need in ('Refund policy', 'Shipping policy', 'Your privacy choices', 'Contact'):
+    if need not in text(_ty[_ty.find('checkout-footer-links'):]): fail('thank-you', f'the footer has no "{need}" link')
+if 'Return policy' in text(_ty): fail('thank-you', '"Return policy" where every other page says "Refund policy"')
+if re.search(r'1, 2 or 3 bottles with free gifts', _sp): fail('offer', 'the description promises gifts with 1 bottle')
 
 # reviews: every quote the pages put a buyer's name to is her own words from the imported reviews (SF_REVIEWS, the store
 # build's reviews/reviews.json), and a shortened one says so with "…" (live review 9: Sharon E.'s review was cut where it
@@ -664,6 +745,169 @@ if 'IMAGE_BY_VARIANT' not in _ax or 'IMAGE_RE.test(' not in _ax or 'IMAGE_BY_SKU
 # AXON payment_type is an enum (credit_card, wallet, deferred, ...); the SDK sends labels like "Credit Card"
 if 'params.payment_type = paymentType(' not in _ax or 'VARIANT_BY_SKU' not in _ax:
     fail('all pages', 'axon.adapter.js sends the SDK payment_type label (AXON wants its enum) or drops the upsell variant')
+
+# live review 13 --------------------------------------------------------------------------------------------------------
+_ogj = (SITE / 'js' / 'sf-offer-gate.js').read_text(encoding='utf-8')
+# F1: an order the SDK cannot load ("Error" in its fields) is the no-order page; "Error" is never her name; a failed add
+# says so and goes where a decline goes; the clock stops; the no-order note keeps a gutter on a phone
+if "if (can === 'error') { done = true; noOrder(); return; }" not in _ogj or 'failed(n)' not in _ogj: fail('offers', 'an order that fails to load is treated as a live one ("Just for you, Error")')
+if "window.next.on('upsell:error', addFailed)" not in _ogj or 'next-upsell-decline-url' not in _ogj.split('const addFailed')[1][:900]: fail('offers', 'a failed one-click add moves on as if it worked')
+if 'clearInterval(timer)' not in (SITE / 'js' / 'sf-offer-timer.js').read_text(encoding='utf-8'): fail('offers', 'the clock keeps running once the order turns out to be missing')
+if not re.search(r'@media \(max-width: 600px\) \{ \.sf-no-order-note \{ margin-left: 16px; margin-right: 16px; \} \}', _oc): fail('offers', 'the no-order note has no gutter on a phone')
+# F2: the phone sticky bar names the renewal amount
+if "price + ' today, then ' + price + ' every ' + every" not in _apfjs or 'today · then every' in _sp: fail('offer', 'the sticky bar states the renewal without its amount')
+# F3: the coupon is "10% off", never "an extra" (FORBIDDEN above), on the cards' badge too; "Your pack" follows the total (above)
+if 'EXTRA {discount.percentage}' in co: fail('checkout', 'the coupon badge says "EXTRA"')
+# F5: the hero rating says the 9,855 are the published reviews
+if '4.8 out of 5 from 9,855 published reviews at our earlier store' not in text(_sp): fail('offer', 'the hero rating does not say the 9,855 are the published reviews')
+# F6: the listicle's offer box and last button open the sales page at the packs, on the 5-bottle pack
+if _lst.count('adaptive-foundation-offer/?pack=apf-5#offer"') < 2: fail('listicle', 'the offer buttons land at the top of the sales page, not at the packs')
+# F7: the clips whose top-right holds the picture (the day's timeline, the dropper bottle) keep the pause button off it
+if _sp.count('data-sf-pause-corner="tl"') < 1 or _lst.count('data-sf-pause-corner="tl"') < 2 or "getAttribute('data-sf-pause-corner') === 'tl'" not in _apfjs: fail('listicle', 'the pause button covers the timeline or the dropper bottle')
+
+# the owner's offer of 30 Oct 2026 -----------------------------------------------------------------------------------------
+# the free-bottle claims are arithmetic: "buy 2, get 1 free" only beside a pack of 3 at no more than 2 x the 1-bottle
+# price, "buy 3, get 2 free" only beside a pack of 5 at no more than 3 x (the owner's $66.97 and $99.97 are a little
+# under); the campaign's 1-bottle pack is the price they count against
+_unit = next((float(p_['price']) for p_ in pkgs.values() if p_['product_sku'] == ONE_SKU), None)
+if _unit is None or abs(_unit - F.UNIT) > 0.005: fail('campaign', f'the 1-bottle pack is {_unit}, the pages count the free bottles against ${F.UNIT}')
+for pk in F.PACKS:
+    live = pkgs.get(pk['package'])
+    if live and float(live['price']) > F.UNIT * pk['paid'] + 0.005: fail('campaign', f'package {pk["package"]} costs ${live["price"]}, more than {pk["paid"]} x ${F.UNIT}')
+for p in F.PAGES:
+    t = text(html(p['id']))
+    for m in re.finditer(r'\bbuy\s+(\d),?\s+get\s+(\d)\s+free', t, re.I):
+        paid, free = int(m.group(1)), int(m.group(2))
+        if not any(pk['bottles'] == paid + free and pk['paid'] == paid for pk in F.PACKS): fail(p['id'], f'"{m.group(0)}": no pack of {paid + free} at {paid} x ${F.UNIT}')
+# the exit pop's prices are the packs' with its 10% off, rounded down to the dollar as the campaign does
+_ex = OFFERS[PAGES['checkout']['exit_intent']['offer_ref_id']]
+for pk in F.PACKS:
+    _w = f"${int(pk['price'] * (100 - float(_ex['benefit']['value'])) / 100)} for {pk['bottles']}"
+    if _w not in unescape(co): fail('checkout', f'the exit pop does not say "{_w}"')        # (the pop lives in a <template>)
+# the 3-bottle pack comes with the Blender sponge, the 5-bottle pack with the Lymphatic Brush (the owner's words)
+if [pk['gifts'] for pk in F.PACKS] != [[], ['blender'], ['brush']]: fail('funnel', f'the packs\' gifts are {[pk["gifts"] for pk in F.PACKS]}')
+# the checkout: refills are at the pack's own price, never "the same price", which reads as today's once the exit code
+# has taken 10% off (live review 14, F5)
+for _pid in ('checkout', 'thank-you'):
+    if re.search(r'at the same price', text(html(_pid)), re.I): fail(_pid, 'refills "at the same price": with the exit code today\'s price differs')
+# live review 14, F6: muted text, the cards' crossed-out prices with it, at 4.5:1 or better (next-core's #969696 is 2.95:1)
+if '--brand--color--text-muted: #5c5c5c;' not in _occss: fail('checkout', 'muted text is not #5c5c5c (the crossed-out card prices failed contrast)')
+# F7: a playing silent clip keeps a visible pause button that Enter or Space stops; every star row that has a name is an
+# image; the skin diagram's name is on its svg; the summary toggle is a button over the panel its aria-controls names
+if "if (!sound && card.classList.contains('is-playing')) { v.pause(); return; }" not in _apfjs or "'Pause: ' : 'Play: '" not in _apfjs:
+    fail('listicle', 'a playing clip card has no pause button for the keyboard')
+if '.sf-vcard.is-playing:not([data-sf-vcard-sound]) .sf-vcard__play { opacity: 1; pointer-events: auto;' not in (SITE / 'css' / 'sf-apf.css').read_text(encoding='utf-8'):
+    fail('listicle', 'the playing clip card hides its button')
+for p in F.PAGES:
+    for m in re.finditer(r'<(?:p|div|span)\b[^>]*\baria-label="[^"]*out of 5 stars"[^>]*>', html(p['id'])):
+        if 'role="img"' not in m.group(0): fail(p['id'], f'a star row with a name but no role="img": {m.group(0)[:80]}')
+    for m in re.finditer(r'<svg\b[^>]*\brole="img"[^>]*>', html(p['id'])):
+        if 'aria-label=' not in m.group(0) and 'aria-hidden="true"' not in m.group(0): fail(p['id'], f'an svg image without a name: {m.group(0)[:80]}')
+for _pid in ('checkout', 'thank-you'):
+    _h = html(_pid)
+    if not re.search(r'data-next-accordion-trigger="order-summary"[^>]*role="button"', _h) or 'id="order-summary-content"' not in _h \
+            or 'sf-accordion-aria.js' not in _h:
+        fail(_pid, 'the order-summary toggle is not a button whose aria-controls names its panel (the SDK names it "order-summary-content")')
+# F8: at 768 to 1023 px the header is the logo over one row of the three badges, the promo bar balanced
+if '.checkout-header--apollo .checkout-header__badges { flex-wrap: nowrap;' not in _occss or 'text-wrap: balance' not in _occss:
+    fail('checkout', 'the tablet header still wraps its badges and promo bar')
+# live review 15: F1 "less than N cost" names its basis, N single bottles at the 1-bottle price, which the pack beats (3 bottles
+# cost $66.97 on the same page, so "5 for less than 3 cost" was false); F2 no pack length in months (the refills are in
+# days: 140 days is not "about five months"); F3 every pack price before the cards carries its renewal; F4 a finish
+# claim about lines is hedged
+for p in F.PAGES:
+    t = text(html(p['id']))
+    for m in re.finditer(r'less than (\d+) (?:bottles )?cost', t): fail(p['id'], f'"{m.group(0)}": less than what? (name the single bottles)')
+    for m in re.finditer(r'less than (\d+) single bottles \((\$[\d.]+)\)', t):
+        if m.group(2) != usd(int(m.group(1)) * F.UNIT): fail(p['id'], f'"{m.group(0)}": {m.group(1)} single bottles are {usd(int(m.group(1)) * F.UNIT)}')
+    for m in re.finditer(r'\babout (?:a|one|two|three|four|five|six) months?\b|months?[’\'] supply|lasts? about a month|next \w+ months', t, re.I):
+        fail(p['id'], f'"{m.group(0)}": a supply in months, while the refills are in days (weeks)')
+    for m in re.finditer(r'[^.!?]*soft-focus[^.!?]*lines[^.!?]*', t):
+        if 'designed not to' not in m.group(0): fail(p['id'], f'an unhedged finish claim about lines: "{m.group(0).strip()[:90]}"')
+for q in ('listicle', 'offer', 'checkout'):
+    t = text(html(q))
+    for m in re.finditer(r'(\d) bottles? (?:for )?\$(\d+\.\d\d)', t):
+        pk = next((pk for pk in F.PACKS if f"{pk['price']:.2f}" == m.group(2) and pk['bottles'] == int(m.group(1))), None)
+        if pk and f"every {pk['every']} days" not in t[m.end(): m.end() + 160]:
+            fail(q, f'"{m.group(0)}" without its renewal ("every {pk["every"]} days") right after it')
+# F5 placeholders at 4.5:1 or better; F6 the listicle's phone hero is WebP and nothing below it loads eagerly; F7 the
+# no-order note's button grows with its words and its phone number never breaks
+if '[data-next-checkout="form"] input::placeholder, [data-next-checkout="form"] textarea::placeholder { color: #666; opacity: 1; }' not in _occss:
+    fail('checkout', 'placeholders at the default grey (3.95:1)')
+_lh = html('listicle')
+if 'hero-m.webp' not in _lh or 'type="image/webp"' not in _lh or 'loading="eager"' in _lh: fail('listicle', 'the phone hero is not WebP, or an image below it loads eagerly')
+if '.sf-no-order-note a[href^="tel:"] { white-space: nowrap; }' not in _oc or 'padding: 12px 22px; line-height: 1.3;' not in _oc:
+    fail('offer-1', 'the no-order note breaks its phone number or squeezes its button')
+# live review 16: F1 the thank-you page shows its no-order note as soon as the SDK writes "Error" for the order, not after
+# 8 s of "Thank you, Error!"; F2 shortened quotes are never "word for word", and a page that says none is reworded says
+# what "…" marks; F3 every tap target on a policy page opened from the funnel is 44 px
+_rj = (SITE / 'js' / 'sf-receipt.js').read_text(encoding='utf-8')
+if "/^\\s*error\\s*$/i.test(el.textContent)" not in _rj or 'setTimeout(show, 8000)' not in _rj or "!/^error$/i.test(num.textContent.trim())" not in _rj:
+    fail('thank-you', 'the receipt waits 8 s with "Error" on show before its no-order note')
+for p in F.PAGES:
+    t = text(html(p['id']))
+    if re.search(r'word for word', t, re.I): fail(p['id'], '"word for word" beside quotes shortened with "…"')
+    if re.search(r'reworded', t, re.I) and 'marks where a long one is shortened' not in t: fail(p['id'], '"none reworded" without what "…" marks')
+for rule in ('.sf-from-offer #SiteFooter .sf__policies a{display:inline-flex;align-items:center;min-height:44px;',
+             '.sf-from-offer a[href^=\\"mailto:\\"],.sf-from-offer a[href^=\\"tel:\\"]{padding-top:12px;padding-bottom:12px}',
+             '.sf-from-offer [data-sf-optout-btn]{min-height:44px}'):
+    if rule.replace('\\"', '"') not in _base: fail('funnel', f'policy pages from the funnel: missing {rule[:60]}')
+# a page names only payment methods the campaign offers (the owner turned Klarna and Link off on 1 Nov 2026: every
+# pack renews); the spec's list is the live campaign's
+_pay = {m['code'] for m in SPEC['campaign'].get('available_payment_methods', [])}
+for p in F.PAGES:
+    t = text(html(p['id']))
+    for name, code in (('Klarna', 'klarna'), ('Link', 'link'), ('Affirm', 'affirm'), ('Afterpay', 'afterpay'), ('Apple Pay', 'apple_pay'), ('PayPal', 'paypal')):
+        if re.search(r'\bpay with\b[^.]*\b' + name + r'\b', t, re.I) and code not in _pay: fail(p['id'], f'"pay with … {name}": the campaign does not offer it')
+# live review 17. F1: no Link or Klarna on any page, radio or logo (the owner turned both off on 1 Nov 2026; the platform
+# kept Link on campaign 2221, so the pages leave it out themselves). F3: nothing that implies it goes into the skin.
+# F4: "skip or cancel" offers a ready-made email for each. F5: no promise the platform does by itself what only a person
+# does (stock is untracked). F6: the settling answer hedged to its end. F7: the checkout's footer has Contact.
+for p in F.PAGES:
+    _h = html(p['id']); _t = text(_h)
+    for _code in ('link', 'klarna'):
+        if f'data-next-payment-method="{_code}"' in _h: fail(p['id'], f'a {_code} payment option (the owner turned it off)')
+        for _m in re.finditer(r'<img[^>]*data-payment-logo="' + _code + r'"[^>]*>', _h):
+            if 'data-payment-force="hide"' not in _m.group(0): fail(p['id'], f'a {_code} logo that can show')
+    if re.search(r'only sits? on (your |the )?skin', _t, re.I): fail(p['id'], '"only sits on your skin": implies it goes into the skin')
+    if 'to skip or cancel, send' in _t.lower() and ('subject=Skip%20my%20next%20refill' not in _h or 'subject=Cancel%20my%20Automatic%20Refills' not in _h):
+        fail(p['id'], '"skip or cancel" without a ready-made email for each')
+    if re.search(r'shows as sold out|shows without it here and at the checkout', _t, re.I): fail(p['id'], 'a sold-out promise the untracked stock cannot keep by itself')
+    if re.search(r'(?<!made to )blur[^.]{0,40}\binstead of filling', _t, re.I): fail(p['id'], 'unhedged: "blur … instead of filling" (made to blur … rather than fill)')
+if 'store_contact' not in (ROOT / 'campaigns/skinofab/src/apf-funnel/_includes/footer.html').read_text() or '>Contact</a>' not in html('checkout'):
+    fail('checkout', 'no Contact link in the footer')
+# one "From" price a bottle: the lowest a bottle of any pack ($19.99), never the 1-bottle price, which is the highest
+# (live review 14, F3: "From $33.97" in the top bar over "From $20.38 a bottle" in the offer box); "Packs from" names
+# the entry pack and is the only other "from" price. The pages before the order only: an offer's own one-time
+# pack has its own lowest price a bottle (offer 1's 6 bottles at $16.50)
+_low = usd(int(min(pk['price'] / pk['bottles'] for pk in F.PACKS) * 100) / 100)
+for p in [F.BY_ID[q] for q in ('listicle', 'offer', 'checkout')]:
+    for m in re.finditer(r'(\w+\s+)?\bfrom\s+(\$\d+(?:\.\d\d)?)', unescape(html(p['id'])), re.I):
+        if (m.group(1) or '').strip().lower() != 'packs' and m.group(2) != _low: fail(p['id'], f'"{m.group(0).strip()}": the lowest a bottle is {_low}')
+for k, (t, d) in ((k, v) for k, v in F.TITLES.items() if k in ('listicle', 'offer', 'checkout')):
+    for m in re.finditer(r'(\w+\s+)?\bfrom\s+(\$\d+(?:\.\d\d)?)', f'{t} {d}', re.I):
+        if (m.group(1) or '').strip().lower() != 'packs' and m.group(2) != _low: fail(k, f'store page meta "{m.group(0).strip()}": the lowest a bottle is {_low}')
+
+CSS_FILES = ('sf-apf.css', 'checkout-brand.css')
+# every rating in Trustpilot's look and colours, exact (the owner, 2 Nov 2026): white stars in square boxes, lit in the
+# rating's colour (sf-stars.html: 4.3 and up #00b67a, 3.8 .t4 #73cf11, 2.8 .t3 #ffce00, 1.8 .t2 #ff8622, else .t1
+# #ff3722), unlit #dcdce6, each rating bar in its row's colour; no text star rows (gold, grey or black) and no half box
+# drawn by hand
+_TP = ('#00b67a', '#73cf11', '#ffce00', '#ff8622', '#ff3722', '#dcdce6')
+for _cf in CSS_FILES:
+    _c = (SITE / 'css' / _cf).read_text(encoding='utf-8').lower()
+    for _col in _TP:
+        if _col not in _c: fail('all pages', f'{_cf}: Trustpilot colour {_col} missing')
+    for _old in ('#cfd0d6', '#d9d3ca', '#e8a33d;          /* gold'):
+        if _old in _c and _cf != 'sf-funnel.css': fail('all pages', f'{_cf}: an old star colour {_old}')
+for p in F.PAGES:
+    _h = html(p['id'])
+    if re.search(r'★\s*★', _h): fail(p['id'], 'a row of text stars, not Trustpilot boxes')
+    if 'class="half"' in _h: fail(p['id'], 'a half star drawn by hand (sf-stars.html lights the share)')
+    for m in re.finditer(r'aria-label="4 out of 5 stars">(.*?)</(?:p|span)>', _h):
+        if m.group(1).count('class="t4"') != 4: fail(p['id'], 'a 4-star review not in four light-green boxes (#73cf11)')
+    for m in re.finditer(r'<li data-s="(\d)">', _h): pass
+    if re.search(r'<li><span>\d ★</span>', _h): fail(p['id'], 'a rating bar without its row (data-s): it would not take its colour')
 
 if problems:
     print('\n'.join(problems)); print(f'check_apf: {len(problems)} problems'); sys.exit(1)

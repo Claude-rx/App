@@ -115,7 +115,7 @@ GLOBAL = [
     (", lasts all day (up to 16 hours), and hydrates skin while protecting it with SPF 15. The Changing Foundation is hypoallergenic, vegan, and waterproof.",
      ", stays comfortable through a full day, and hydrates with hyaluronic acid, ceramide NP and squalane. It's fragrance-free and made for skin after 45."),
     ("Meet the foundation that takes the guesswork out of beauty. Our color-changing formula adjusts seamlessly to fair to medium skin tones, giving you a radiant, natural finish that looks like your skin, only better. It blurs imperfections, softens fine lines, and neutralizes redness in seconds, all while protecting with SPF 15. One shade, endless confidence. Just apply, blend, and watch the transformation.",
-     "Your skin changed after 45: a few sun spots, some redness, a tone that isn't what it was. This foundation goes on white and turns into your skin tone as you blend. A satin serum finish evens out spots and redness and blurs the look of fine lines without sitting in them. No shade guessing, no mask, about a minute with your fingertips."),
+     "Your skin changed after 45: a few sun spots, some redness, a tone that isn't what it was. This foundation goes on white and shifts to your skin tone as you blend. A satin serum finish evens out spots and redness and blurs the look of fine lines without sitting in them. No shade guessing, no mask, about a minute with your fingertips."),
     ("With SPF 15", "Fragrance-free"),
     ("SPF protection", "Hydrating, fragrance-free formula"),
     ("— Sun damage accelerates skin aging, so a built-in SPF is a bonus, not a gimmick.",
@@ -171,7 +171,7 @@ PAGE = {
          'PDRN, peptides, EGF, NAD+ and collagen, each named on its box, never hidden in a complex.'),
         # meta description + og:description (the theme uses it while Settings > SEO has no store description)
         ("Cosmetics made to glow, feel skinofab.",
-         "Adaptive Peptide Foundation: the color-adapting serum foundation made for skin after 45. Goes on white, turns into your skin tone. Free shipping, 30-day money-back guarantee."),
+         "Adaptive Peptide Foundation: the color-adapting serum foundation made for skin after 45. Goes on white, shifts to your skin tone. Free shipping, 30-day money-back guarantee."),
         # the hero and "One shade that finds yours" keep the export's own words (the homepage is its original
         # design), with one claim made accurate: it softens the look of lines as it blends, not "in seconds"
         ("blurring blemishes, redness, and fine lines in seconds.", "softening the look of blemishes, redness and fine lines as you blend."),
@@ -294,9 +294,9 @@ PAGE = {
         (r'RE:alt="Mica"', 'alt="Fragrance-free"'),
         (r'RE:(<h3[^>]*>)\s*Mica\s*(</h3>\s*<p[^>]*>)\s*Natural\ mineral\ pigments\ for\ a\ soft,\ healthy\ glow\.\s*(?=</p>)', r'\g<1>Fragrance-free\g<2>No fragrance, propylene glycol, drying alcohol or parabens, so thinner skin doesn’t sting'),
         ("The viral skin tone adapting foundation", ORIGIN),
-        ("Hides imperfections", "Won't settle into lines"),
+        ("Hides imperfections", "Designed not to settle into lines"),
         ("Say goodbye to shade-matching struggles. This color-changing foundation adapts flawlessly to your unique skin tone, blurring blemishes, redness, and fine lines in seconds.",
-         "Stop guessing your shade after 45. It goes on white and turns into your skin as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines."),
+         "Stop guessing your shade after 45. It goes on white and shifts to your skin tone as you blend, evening out spots and redness and softening the look of fine lines in about a minute. A hydrating serum base with peptides and PDRN means it doesn't dry you out or settle into your lines."),
         ("Try it worry-free. If our skin-adapting foundation doesn't blend seamlessly with your tone, you'll get your money back*",
          "Wear it in your own daylight for 30 days. If you don't love it, we'll refund you."),     # (the export's * had no footnote)
         ("One shade, verified range", "One adaptive shade"),
@@ -317,7 +317,7 @@ PAGE = {
          "Dot one pump on your forehead, cheeks, nose and chin. It looks white. That's the point."),
         ("Step 3: Customize Your Coverage", "Step 3: Blend and watch it change"),
         ("Want more coverage in specific areas? Layer a second application on any spots that need extra attention—blemishes, redness, or discoloration—and blend seamlessly into your base.",
-         "Blend outward with your fingertips or a brush. In about a minute the white turns into your skin tone, with a satin finish that doesn't need good eyesight or a magnifying mirror to get right."),
+         "Blend outward with your fingertips or a brush. In about a minute the white shifts to your skin tone, with a satin finish that doesn't need good eyesight or a magnifying mirror to get right."),
         ("Step 4: Lock It In", "Step 4: Add a second layer only where you want it"),
         ("Brighten under-eyes with your favorite concealer, then lightly dust translucent powder across your T-zone (forehead, nose, and chin) to control shine and keep your look fresh all day.",
          "Tap a little more over sun spots or redness. Skip the powder on dry areas so lines stay soft."),

@@ -44,6 +44,12 @@ longer turn the event orange. `tools/funnel/axon_live_replay.cjs` is the browser
 digits and AXON wants 6+. `user_id` is now `'sf-' + cyrb53(normalised email)` (14 hex), identical on every event and
 visit for the same shopper; a 6+ char customer id is used only when there is no email.
 
+**Follow-up 6 (4 Nov 2026): the flash trial funnel** (campaign 2251, `src/trial-funnel`, theme `assets/sft/`), built
+in another session from sources without these fixes, shipped the original adapter (orange on every event). It now
+carries the same adapter, and its product page (a store page, `tools/funnel/trial/pdp_copy.py`) sends a complete item
+(SKF-APF-1, variant 15, category 2765, store JPG) instead of `item_id: "1"`. `check_trial.py` fails a build that loses
+any of it; the live guard covers its 8 pages.
+
 **Files:** `sfa-axon-adapter-3194de.js` (patched) · `.orig.js` (live copy before the fix, for rollback) · `axon-adapter.test.mjs`
 
 **Test:** `npm run test:axon` → 18/18 pass on the patch; the original fails the 4 user_data tests.

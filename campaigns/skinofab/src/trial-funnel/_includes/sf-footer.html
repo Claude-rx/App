@@ -1,0 +1,14 @@
+{% comment %} The funnel's footer: who sells it, the store's policies, the legal line (no disclosure paragraph: the owner's instruction, 28 Oct 2026). {% endcomment %}
+<footer class="sf-footer">
+  <img src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="120" height="24" loading="lazy">
+  <nav class="sf-footer__links" aria-label="Store policies">
+    <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy policy</a>
+    <a href="{{ campaign.store_privacy_choices }}" target="_blank" rel="noopener">Your privacy choices</a>
+    <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms of service</a>
+    <a href="{{ campaign.store_returns }}" target="_blank" rel="noopener">Refund policy</a>
+    <a href="{{ campaign.store_shipping }}" target="_blank" rel="noopener">Shipping policy</a>
+    <a href="{{ campaign.store_contact }}" target="_blank" rel="noopener">Contact</a>
+  </nav>
+  <p>Questions? <a href="mailto:{{ campaign.store_email }}">{{ campaign.store_email }}</a> or <a href="{{ campaign.store_phone_tel }}">{{ campaign.store_phone }}</a> · a person replies within one business day.</p>
+  <p class="sf-footer__small">© {{ 'now' | date: '%Y' }} Synderra Inc. SKINOFAB is a brand of Synderra Inc., 2525 Arapahoe Ave, Ste E4 Unit 1280, Boulder, CO 80302, USA.</p>
+</footer>

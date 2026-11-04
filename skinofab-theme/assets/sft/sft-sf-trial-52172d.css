@@ -1,0 +1,18 @@
+/* The flash trial (trial-checkout): the bar at the top and the one visible card. html.sf-trial-over (set before the first
+   paint by the page's inline script, after her midnight) shows the regular price and card instead of the trial's. */
+.sf-trial-bar { background: #111; color: #fff; text-align: center; padding: 10px 16px 11px; }
+.sf-trial-bar__title { margin: 0 0 2px; font-weight: 800; font-size: 15px; letter-spacing: .01em; text-transform: uppercase; color: #ffd84d; }
+.sf-trial-bar__text { margin: 0; font-size: 14px; line-height: 1.45; text-wrap: balance; }
+.sf-trial-bar__text strong { font-weight: 700; }
+.sf-trial-bar__clock { display: inline-block; margin-left: 4px; white-space: nowrap; }
+.sf-trial-bar__clock strong { font-variant-numeric: tabular-nums; background: #ffd84d; color: #111; border-radius: 4px; padding: 1px 6px; margin-left: 2px; }
+@media (max-width: 479px) {
+  .sf-trial-bar__title { font-size: 13px; }
+  .sf-trial-bar__text { font-size: 12.5px; }
+  .sf-trial-bar__clock { display: block; margin: 4px 0 0; }
+}
+html:not(.sf-trial-over) [data-sf-trial-over],
+.sf-trial-over [data-sf-trial-live] { display: none !important; }
+html:not(.sf-trial-over) [data-next-bundle-card][data-next-bundle-id="trial-regular"],
+.sf-trial-over [data-next-bundle-card][data-next-bundle-id="trial"] { display: none !important; }
+.sf-trial-over .sf-trial-bar { background: #2b2b2b; }

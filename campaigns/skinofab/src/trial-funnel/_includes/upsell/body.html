@@ -1,0 +1,26 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/body.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-body
+  next_version: 1
+  next_sdk_owns: nothing (sections may carry data-next-display spans written in frontmatter copy)
+  next_sdk_surface: upsell page (long-form body between the offer and the secondary offer)
+  next_params:
+    upsell_body: array of sections, rendered in order. Each { type, ... }:
+      reviews    → upsell/reviews.html     { rating_text, title, items[] { title, body, author, avatar, verified } }
+      features   → upsell/features.html    { title, text, items[] { title, text } }
+      comparison → upsell/comparison.html  { title, text, recommended_label, with { title, subtitle, items[] }, without {...} }
+      steps      → upsell/steps.html       { title, text, steps[] { title, text } }
+    Each section partial can also be included directly with section=<object>.
+  Renders nothing without upsell_body.
+    {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
+{%- endcomment -%}
+{%- if upsell_body and upsell_body.size > 0 -%}
+{%- for section in upsell_body -%}
+{%- case section.type -%}
+{%- when 'reviews' -%}{% campaign_include 'upsell/reviews.html' section=section %}
+{%- when 'features' -%}{% campaign_include 'upsell/features.html' section=section %}
+{%- when 'comparison' -%}{% campaign_include 'upsell/comparison.html' section=section %}
+{%- when 'steps' -%}{% campaign_include 'upsell/steps.html' section=section %}
+{%- endcase -%}
+{%- endfor -%}
+{%- endif -%}

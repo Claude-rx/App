@@ -170,8 +170,10 @@ PREFIXES = {p for p in PREFIXES if len(p) >= 3}
 # State classes libraries toggle with computed names (Swiper, Flickity, PhotoSwipe, the theme's drawers).
 # classes/ids that only exist at runtime: slider and animation libraries, state classes, and the FrontrowMD widget's
 # iframes (its own script adds them to <body>)
+# and the ratings' Trustpilot colour steps, which the review wall's and the buy box's scripts add for a rating under
+# 4.3 (" sfr-tp--t" + t, " sf-tp-t" + t)
 SAFE_PREFIXES = ('swiper-', 'flickity-', 'pswp', 'is-', 'has-', 'js-', 'no-js', 'aos', 'animate', 'fade', 'slide',
-                 'frontrow', 'iframe')
+                 'frontrow', 'iframe', 'sfr-tp--t', 'sf-tp-t')
 
 def used(token):
     if token in TOKENS or token.startswith(SAFE_PREFIXES): return True

@@ -173,10 +173,10 @@ OFFERS = {
         'decline': 'No thanks, I don’t want the serum',
         'features_title': 'What’s in the serum',
         # (the serum page's texture line without its SPF: the funnel names SPF only to say the stick has none, check_funnel)
-        'features_text': 'Water-based and light: it sinks in within a minute and sits well under moisturiser and makeup.',
+        'features_text': 'Water-based and light: it dries down in about a minute and sits well under moisturiser and makeup.',
         'features': [(n, text) for n, _, text in SEC.INGREDIENTS[:3]],
         'how': {'eyebrow': 'How to use it', 'title': 'Two drops for your face, two for your neck',
-                'text': 'Morning and night, on clean skin. It sinks in within a minute.',
+                'text': 'Morning and night, on clean skin. It dries down in about a minute.',
                 'steps': steps(('Two drops for your face', 'After cleansing your face and neck.'),
                                ('Press them in', 'With your fingertips, no rubbing.'),
                                ('Two more, down your neck', 'Swept down from under the jaw.'),

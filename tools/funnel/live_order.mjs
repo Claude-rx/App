@@ -4,7 +4,8 @@
 //
 // usage: [FUNNEL=stick|apf] node tools/funnel/live_order.mjs <host> <out-dir> [--path accept,decline,...] [--pack <card>]
 //        [--tier <bundle id>] [--resume <ref_id> [--start <page file>]]
-//   FUNNEL   which funnel's pages (tools/funnel/funnels/<name>.py): stick (default) or apf
+//   FUNNEL   which funnel's pages (tools/funnel/funnels/<name>.py): stick (default), apf or trial (the flash trial: its
+//            entry is the product page, there is no listicle)
 //   <host>   https://try.skinofab.com (the funnel's host: the domain the campaign allows), or a local build under its
 //            Page Kit slug, http://127.0.0.1:8090/apf-funnel (localhost is always allowed by the campaign)
 //   --path   what to do on the offer pages, in the order they come. Accept and decline route differently (apf: offer 1
@@ -35,7 +36,9 @@ const [host, out] = process.argv.slice(2);
 const opt = (name, dflt) => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : dflt; };
 const FUNNELS = {
   stick: { listicle: '10-reasons-foundation-stick', sales: 'foundation-stick-offer', checkout: 'stick-checkout', pack: 'stick-2', first: 'stick-special-1', thankYou: 'stick-thank-you' },
-  apf: { listicle: '10-reasons-adaptive-foundation', sales: 'adaptive-foundation-offer', checkout: 'foundation-checkout', pack: 'apf-2', first: 'foundation-offer-1', thankYou: 'foundation-thank-you' },
+  apf: { listicle: '10-reasons-adaptive-foundation', sales: 'adaptive-foundation-offer', checkout: 'foundation-checkout', pack: 'apf-3', first: 'foundation-offer-1', thankYou: 'foundation-thank-you' },
+  // the flash trial: no listicle, the entry is the product page (the store's foundation page with the trial box)
+  trial: { listicle: null, sales: 'adaptive-foundation-trial', checkout: 'trial-checkout', pack: 'trial', first: 'trial-offer-1', thankYou: 'trial-thank-you' },
 };
 const FN = FUNNELS[process.env.FUNNEL || 'stick'];
 const path = opt('--path', 'decline').split(',');
@@ -61,7 +64,7 @@ if (cookies) await ctx.addCookies(cookies.split(';').filter(Boolean).map((kv) =>
 // is recorded and still reaches AppLovin unchanged (property reads and writes, e.g. pixel.js's performOperation, pass
 // straight through to the real function); the log lives in sessionStorage, which every funnel page on the host shares
 const AXON_HOSTS = /axon\.ai|albss\.com|applovin\.com/;
-const tracked = { requests: [], failed: [], forwarder: [] };
+const tracked = { requests: [], failed: [], forwarder: [], responses: [] };
 if (track) {
   await ctx.addInitScript(() => {
     const KEY = '__lo_axon_calls';
@@ -74,6 +77,8 @@ if (track) {
         return Reflect.apply(t, self, args); } }) : v; } });
   });
   ctx.on('request', (r) => { if (AXON_HOSTS.test(r.url())) tracked.requests.push({ from: (() => { try { return new URL(r.frame().url()).pathname; } catch (e) { return ''; } })(), method: r.method(), url: r.url().slice(0, 160), body: (r.postData() || '').slice(0, 300) }); });
+  // AppLovin's answer to each event post (an event it accepts answers 2xx: what its dashboard shows green)
+  ctx.on('response', (r) => { if (AXON_HOSTS.test(r.url()) && r.request().method() === 'POST') tracked.responses.push({ url: r.url().slice(0, 100), status: r.status(), body: (r.request().postData() || '').slice(0, 400) }); });
   ctx.on('requestfailed', (r) => { if (AXON_HOSTS.test(r.url())) tracked.failed.push({ url: r.url().slice(0, 160), error: r.failure()?.errorText }); });
 }
 const page = await ctx.newPage();
@@ -127,10 +132,11 @@ const trackingReport = async () => {
     purchase: purchases.some((e) => e.transaction_id && !/-US\d+$/.test(String(e.transaction_id))),
     upsell_purchase: purchases.some((e) => /-US1$/.test(String(e.transaction_id || ''))),
     every_purchase_has_value_currency_id: purchases.every((e) => e.value !== undefined && e.currency && e.transaction_id),
+    applovin_accepted_every_post: tracked.responses.length > 0 && tracked.responses.every((r) => r.status >= 200 && r.status < 300),
   };
   return { pages, events, checks, init_calls: calls.filter((c) => c.args[0] === 'init').length,
     requests: tracked.requests.length, request_hosts: [...new Set(tracked.requests.map((r) => new URL(r.url).host))],
-    failed_requests: tracked.failed, forwarder_log: tracked.forwarder.slice(0, 80), raw: tracked.requests.slice(0, 60) };
+    failed_requests: tracked.failed, applovin_posts: tracked.responses, forwarder_log: tracked.forwarder.slice(0, 80), raw: tracked.requests.slice(0, 60) };
 };
 
 let result = { funnel: process.env.FUNNEL || 'stick', host, pack, path, entry };
@@ -138,13 +144,14 @@ try {
   if (!resume) {
   if (entry) {
     // as a shopper arrives: the listicle, its offer link, the sales page, its checkout button
-    await step('listicle', async () => {
+    if (FN.listicle) await step('listicle', async () => {
       await page.goto(`${host}/${FN.listicle}/${entry}`, { waitUntil: 'load', timeout: 60000 });
       await page.waitForTimeout(3000);
       const cta = page.locator(`a[href*="/${FN.sales}/"]:visible`).first();
       await cta.click({ timeout: 15000 });
       await arrive(FN.sales);
     });
+    else await page.goto(`${host}/${FN.sales}/${entry}`, { waitUntil: 'load', timeout: 60000 });
     await step('sales-page', async () => {
       await page.waitForTimeout(3000);
       const buy = page.locator(`#offer a[href*="/${FN.checkout}/"]:visible, a[href*="/${FN.checkout}/"]:visible`).first();

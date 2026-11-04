@@ -3,15 +3,23 @@
   and a play button; a tap plays the clip where it stands (the one with a voice with its controls and sound, the
   others silent, a second tap pauses). Swiped on a phone, four across from 900 px. js/sf-apf.js plays them.
     items: [{ key, chip, caption, sound }]   key: images/sf/<key>.mp4/.webm/-poster.jpg
+    gif:   true plays each silent clip by itself, looping like a GIF, while it is on the screen (the listicle, the owner,
+           2 Nov 2026): no tap, its line on it, and the loops' own pause button (sf-apf.js, data-sf-lazy); not under
+           reduced motion, where it waits for a tap with its controls
 {%- endcomment -%}
 <div class="sf-vrow" role="list">
   {%- for d in items %}
-  <figure class="sf-vcard" role="listitem" data-sf-vcard{% if d.sound %} data-sf-vcard-sound{% endif %}>
-    <video preload="none" playsinline{% unless d.sound %} muted loop{% endunless %} data-sf-poster="{{ 'images/sf/' | append: d.key | append: '-poster.jpg' | campaign_asset }}" width="540" height="960" aria-label="{{ d.caption }}">
+  {%- assign as_gif = false -%}{%- if gif and d.sound != true -%}{%- assign as_gif = true -%}{%- endif %}
+  <figure class="sf-vcard{% if as_gif %} sf-vcard--gif{% endif %}" role="listitem"{% unless as_gif %} data-sf-vcard{% endunless %}{% if d.sound %} data-sf-vcard-sound{% endif %}>
+    <video preload="none" playsinline{% unless d.sound %} muted loop{% endunless %}{% if as_gif %} data-sf-lazy{% endif %} data-sf-poster="{{ 'images/sf/' | append: d.key | append: '-poster.jpg' | campaign_asset }}" width="540" height="960" aria-label="{{ d.caption }}">
       <source src="{{ 'images/sf/' | append: d.key | append: '.webm' | campaign_asset }}" type="video/webm">
       <source src="{{ 'images/sf/' | append: d.key | append: '.mp4' | campaign_asset }}" type="video/mp4">
     </video>
+    {%- if as_gif %}
+    <span class="sf-vcard__chip sf-vcard__chip--gif" aria-hidden="true">{{ d.chip }}</span>
+    {%- else %}
     <button type="button" class="sf-vcard__play" aria-label="Play: {{ d.caption }}"><span class="sf-vcard__chip">{{ d.chip }}</span><span class="sf-vcard__btn" aria-hidden="true"></span></button>
+    {%- endif %}
   </figure>
   {%- endfor %}
 </div>

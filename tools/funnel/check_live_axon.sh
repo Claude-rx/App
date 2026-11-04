@@ -5,8 +5,15 @@
 # Usage: tools/funnel/check_live_axon.sh [base-url]        (default https://try.skinofab.com)
 set -uo pipefail
 BASE="${1:-https://try.skinofab.com}"
-PAGES=(adaptive-foundation-offer foundation-checkout foundation-offer-1 foundation-offer-2 foundation-offer-2b lymphatic-brush-offer foundation-thank-you foundation-stick-offer stick-checkout stick-special-1 stick-special-2 stick-special-3 stick-special-4 stick-thank-you)
+PAGES=(adaptive-foundation-offer foundation-checkout foundation-offer-1 foundation-offer-2 foundation-offer-2b lymphatic-brush-offer foundation-thank-you foundation-stick-offer stick-checkout stick-special-1 stick-special-2 stick-special-3 stick-special-4 stick-thank-you
+       trial-checkout trial-offer-1 trial-offer-2 trial-offer-2b trial-brush-offer trial-brush-offer-b trial-thank-you)
 bad=0
+# The flash trial's product page is a store page: its own script sends view_item/add_to_cart with a full item.
+pdp=$(curl -fsSL -m 30 "$BASE/adaptive-foundation-trial/?axon_guard=$RANDOM") || { echo "FAIL adaptive-foundation-trial: page did not load"; bad=1; }
+if [ -n "${pdp:-}" ]; then
+  if grep -qE 'item_variant_id: "[0-9]+", item_category_id: [0-9]+, image_url: "https://[^"]+\.(png|jpe?g)"' <<<"$pdp"; then echo "ok   adaptive-foundation-trial"
+  else echo "FAIL adaptive-foundation-trial: product page item lacks variant, category or .jpg image"; bad=1; fi
+fi
 for p in "${PAGES[@]}"; do
   html=$(curl -fsSL -m 30 "$BASE/$p/?axon_guard=$RANDOM") || { echo "FAIL $p: page did not load"; bad=1; continue; }
   url=$(grep -oE 'https://[^"]+-axon-adapter-[^"]+' <<<"$html" | head -1)
