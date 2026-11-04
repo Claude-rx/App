@@ -10,7 +10,7 @@ clock ends at her midnight.
 | Step | Page | What it sells |
 |---|---|---|
 | Product page | `/adaptive-foundation-trial/` | The store's foundation page, copied, with the flash trial box |
-| Checkout | `/trial-checkout/` | 1 bottle: $19.97 today with FLASH50, then $39.97 every month |
+| Checkout | `/trial-checkout/` | 1 bottle: $19.97 today with FLASH50, then $39.97 every month; or 3 bottles $66.97 every 3 months, or 5 bottles $99.97 every 5 months |
 | Offer 1 | `/trial-offer-1/` | 2 more bottles $39, or 6 + the Lymphatic Brush $99 (one-time) |
 | Offer 2 / 2b | `/trial-offer-2/`, `/trial-offer-2b/` | One more bottle $19 / last chance $15 (one-time) |
 | Offer 3 / 3b | `/trial-brush-offer/`, `/trial-brush-offer-b/` | The Lymphatic Brush $14 / last chance $9 (one-time) |
@@ -30,6 +30,13 @@ directory `next-campaigns-create-runs/skinofab-apf-trial/` is git-ignored becaus
 | 3 | 2 bottles (SKF-APF-2) | $39 one-time |
 | 4 | 6 bottles + free Lymphatic Brush (SKF-APF-6-BRUSH) | $99 one-time |
 | 5 | Lymphatic Brush + travel case (SKF-LYB-1T) | $24.95 one-time |
+| 6 | 3 bottles + free Blender (SKF-APF-3-BLENDER): buy 2, get 1 free | $66.97, refills every 3 months at $66.97 |
+| 7 | 5 bottles + free Lymphatic Brush (SKF-APF-5-BRUSH): buy 3, get 2 free | $99.97, refills every 5 months at $99.97 |
+
+The owner added packages 6 and 7 on 4 Nov 2026 ("put the offer also of buy 2 get 1 free and buy 3 get 2 free"). They
+went in through the create skill's update path (two POSTs, approved), at the APF funnel's prices; the Cart API prices
+them at $66.97 and $99.97. Their crossed-out prices are the bottles at $39.97 each ($119.91, $199.85). The gifts come
+with the first order; refills are the bottles only.
 
 Each offer is a code, and each code's price is checked through the Cart API:
 
@@ -65,19 +72,33 @@ The deadline is midnight, her local time, of the day she first saw the offer. It
 This was proven on a local build on 4 Nov. Before midnight: $19.97, with "Flash trial: 50% off your first month
 −$20.00" in the summary. After midnight: $39.97, with no code.
 
-## The product page box (the owner's reference, image 2)
+## The product page box
 
-The box has, in order:
+The owner's reference was image 2, and on 4 Nov the owner removed the "+" lines from the plan card and asked for the
+packs. The box now has, in order:
 1. The title and clock: "⚡ Flash trial offer · Limited time, today only" and "Ends at midnight: HH:MM:SS".
-2. One selected plan card: the radio, "1 bottle", **$19.97** with ~~$39.97~~, then three lines: "+ 50% off your first
-   month", "+ Then $39.97/mo, cancel any time" and "+ Free shipping".
-3. "1 bottle · delivered monthly".
-4. The button **START MY TRIAL →**.
-5. "Love it or your money back", then three icons: Refill reminder · Cancel any time · Renews at $39.97/mo.
+2. Three selectable plan cards, styled as in image 2 (radio, name, price with the crossed-out price, one pill):
+   - **1 bottle**, pill "⚡ Flash trial · 50% off": **$19.97** ~~$39.97~~. It is selected by default.
+   - **3 bottles + free Blender sponge**, pill "Buy 2, get 1 FREE": **$66.97** ~~$119.91~~.
+   - **5 bottles + free Lymphatic Brush**, pill "Buy 3, get 2 FREE": **$99.97** ~~$199.85~~.
+3. The note under the cards, which follows the chosen plan: "1 bottle · delivered monthly", "3 bottles · delivered
+   every 3 months" or "5 bottles · delivered every 5 months".
+4. The button, which follows the chosen plan:
+   - START MY TRIAL → goes to `?forceBundleId=trial` (or `trial-regular` after midnight);
+   - GET MY 3 BOTTLES → goes to `trial-3`;
+   - GET MY 5 BOTTLES → goes to `trial-5`.
+5. "Love it or your money back", then Refill reminder · Cancel any time · Renews at $39.97/mo, $66.97 / 3 mo or
+   $99.97 / 5 mo, following the chosen plan.
 
-Nothing else sits in the box. The owner removed the card subtitle at the checkout ("no need of this", 4 Nov), so the
-checkout card shows only the bottle, its price and the SDK's savings line. The checkout keeps the full refill terms
-by the order button.
+After midnight, only the 1-bottle card changes (to $39.97/mo, with no pill); the packs keep their prices. The checkout
+shows the same three plans under "Step 1: Choose your plan", with the card the button named already selected. The
+clock turns only the trial card into the regular one, so a pack she chose stays chosen.
+
+Proven live on 4 Nov 2026 at 390 and 1440 px:
+- each plan's button, note and "Renews at" amount follow the plan she picks;
+- the 5-bottle plan lands on the checkout at $99.97 ("Refills: Every 5 months", the brush on a first-order line);
+- picking 3 bottles at the checkout gives $66.97 every 3 months, and the trial gives $19.97, then $39.97/mo;
+- AppLovin answered 200 to page_view, view_item, add_to_cart and begin_checkout.
 
 ## How it is built
 

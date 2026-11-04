@@ -11,7 +11,8 @@ bad=0
 # The flash trial's product page is a store page: its own script sends view_item/add_to_cart with a full item.
 pdp=$(curl -fsSL -m 30 "$BASE/adaptive-foundation-trial/?axon_guard=$RANDOM") || { echo "FAIL adaptive-foundation-trial: page did not load"; bad=1; }
 if [ -n "${pdp:-}" ]; then
-  if grep -qE 'item_variant_id: "[0-9]+", item_category_id: [0-9]+, image_url: "https://[^"]+\.(png|jpe?g)"' <<<"$pdp"; then echo "ok   adaptive-foundation-trial"
+  if grep -qE 'item_variant_id: c\.getAttribute\("data-item-variant"\), item_category_id: [0-9]+, image_url: "https://[^"]+\.(png|jpe?g)"' <<<"$pdp" \
+     && grep -qE 'data-item-sku="SKF-[A-Z0-9-]+" data-item-variant="[0-9]+"' <<<"$pdp"; then echo "ok   adaptive-foundation-trial"
   else echo "FAIL adaptive-foundation-trial: product page item lacks variant, category or .jpg image"; bad=1; fi
 fi
 for p in "${PAGES[@]}"; do

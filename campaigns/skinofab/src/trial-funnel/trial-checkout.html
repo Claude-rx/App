@@ -9,8 +9,8 @@ meta_tags:
   next-page-type: "checkout"
   next-success-url: "/trial-funnel/trial-offer-1/"
 # The flash trial's checkout (campaign 2251, tools/funnel/funnels/trial.py), a copy of the APF funnel's (the owner, 4 Nov 2026:
-# "a custom checkout ... like the other campaign"): Apollo's single-step checkout with one pack, the trial bottle (package
-# 1: $39.97 every month). While her flash trial clock runs (js/sf-trial.js: midnight, her time, from her first visit,
+# "a custom checkout ... like the other campaign"): Apollo's single-step checkout with the trial bottle (package 1: $39.97
+# every month) and, the same day, the two packs (buy 2 get 1 free, packages 6; buy 3 get 2 free, package 7). While her flash trial clock runs (js/sf-trial.js: midnight, her time, from her first visit,
 # shared with the product page), the card "trial" carries FLASH50 (offer 1, 50% off, the campaign's .97 rounding):
 # $19.97 today, then $39.97 every month. After midnight the page switches to the card "trial-regular" before the SDK
 # reads the URL (?forceBundleId), which carries no code: $39.97 today and every month, and the trial words go. No coupon
@@ -62,9 +62,9 @@ trust:
     - q: "What if it isn’t my shade?"
       a: "It goes on white and adapts to your skin tone as you blend. If it still isn’t your match, email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> within 30 days of delivery and we’ll refund you in full, even opened. You don’t have to send it back."
     - q: "Is this a subscription?"
-      a: "Yes, with Automatic Refills you control. With the flash trial you pay $19.97 today for your first bottle (50% off). Then a bottle ships every month at $39.97 until you cancel. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees."
+      a: "Yes, with Automatic Refills you control. With the flash trial you pay $19.97 today for your first bottle (50% off), then a bottle ships every month at $39.97. Or take a pack: 3 bottles (buy 2, get 1 free, with a free Blender sponge) at $66.97 every 3 months, or 5 bottles (buy 3, get 2 free, with a free Lymphatic Brush) at $99.97 every 5 months. Your pack ships again at its own price until you cancel; the free gifts come with your first order only. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees."
     - q: "When does the trial price end?"
-      a: "The flash trial price is for today: it ends at midnight, your time. After that the foundation is $39.97 a month from the first bottle. Your first bottle is still covered by our 30-day money-back guarantee."
+      a: "The flash trial price of the 1-bottle plan is for today: it ends at midnight, your time. After that the 1-bottle plan is $39.97 a month from the first bottle. The 3- and 5-bottle packs keep their prices. Every pack is covered by our 30-day money-back guarantee."
     - q: "When does it ship?"
       a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days. This offer ships to US addresses only."
     - q: "Are these reviews of this formula?"
@@ -148,9 +148,10 @@ packages:
   main_package: 1
 shipping_methods:
   standard: 1
-# the two cards of the one trial bottle: "trial" with FLASH50 while her clock runs, "trial-regular" without a code after it
-# (only one shows: html.sf-trial-over, set by js/sf-trial.js before the first paint); the crossed-out $39.97 is the
-# bottle's own price, every month's after the first, until the SDK strikes its own
+# the cards: the trial bottle, "trial" with FLASH50 while her clock runs and "trial-regular" without a code after it (only one
+# of the two shows: html.sf-trial-over, set before the first paint), then the two packs (the owner, 4 Nov 2026: buy 2 get
+# 1 free, buy 3 get 2 free, at the APF funnel's prices: packages 6 and 7). The crossed-out price is the bottles at the
+# trial's $39.97 a bottle (the free bottles), until the SDK strikes its own.
 bundles:
   - id: "trial"
     package_id: 1
@@ -171,25 +172,51 @@ bundles:
     image: "images/sf/pack-1.jpg"
     name: "Adaptive Peptide Foundation - 1 bottle"
     price: "$39.97"
+  - id: "trial-3"
+    package_id: 6
+    quantity: 1
+    shipping_method: "standard"
+    image: "images/sf/pack-3b.jpg"
+    name: "Adaptive Peptide Foundation - 3 bottles + free Blender"
+    price: "$66.97"
+    compare: "$119.91"
+    badge_text: "Buy 2, get 1 FREE"
+    badge_pill_class: "os-card__label--pill-secondary"
+  - id: "trial-5"
+    package_id: 7
+    quantity: 1
+    shipping_method: "standard"
+    image: "images/sf/pack-5.jpg"
+    name: "Adaptive Peptide Foundation - 5 bottles + free Lymphatic Brush"
+    price: "$99.97"
+    compare: "$199.85"
+    badge_text: "Buy 3, get 2 FREE"
+    badge_pill_class: "os-card__label--pill-primary"
 # what she pays today (the SDK's cart total, after any exit coupon) and what renews, by the express buttons (they place
 # the order too) and by the button; sf-checkout.js keeps the pack's line in step with the chosen card
 pay_terms:
   trial: "$39.97 every month for 1 bottle"
   trial-regular: "$39.97 every month for 1 bottle"
+  trial-3: "$66.97 every 3 months for 3 bottles (your free Blender sponge comes with this first order)"
+  trial-5: "$99.97 every 5 months for 5 bottles (your free Lymphatic Brush comes with this first order)"
 # what renews, in the row under the order button (the owner's screenshot: "Love it or your money back", then Refill
-# reminder · Cancel any time · Renews at …/mo); the bottle she gets, in one line at the top of Step 1
+# reminder · Cancel any time · Renews at …); the pack she gets, in one line at the top of Step 1
 picked:
   trial: "1 bottle, flash trial (50% off your first month)"
   trial-regular: "1 bottle"
+  trial-3: "3 bottles (buy 2, get 1 free) + free Blender sponge"
+  trial-5: "5 bottles (buy 3, get 2 free) + free Lymphatic Brush"
 renew_short:
   trial: "$39.97/mo"
   trial-regular: "$39.97/mo"
-refill_terms: "Your bottle ships again every month at $39.97, the “Renews at” amount under the order button, until you cancel. The flash trial’s 50% is for your first bottle only. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The same 30-day money-back guarantee covers your first bottle. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
+  trial-3: "$66.97 every 3 months"
+  trial-5: "$99.97 every 5 months"
+refill_terms: "Your pack ships again at its own price, the “Renews at” amount under the order button, until you cancel: 1 bottle $39.97 every month, 3 bottles $66.97 every 3 months, 5 bottles $99.97 every 5 months. The flash trial’s 50% is for your first bottle only. The free gifts come with your first order; refills are the bottles only. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The same 30-day money-back guarantee covers every pack. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
 ---
 {% comment %} the flash trial's deadline, before the first paint and before the SDK reads the URL (js/sf-trial.js ticks it):
    midnight, her time, of the day she first saw the offer (sf_trial_end, shared with the product page); after it the
    regular card (no code) and the regular words; the card the URL names follows the clock either way {% endcomment %}
-<script>(function () { var K = 'sf_trial_end', end = 0; try { end = parseInt(localStorage.getItem(K), 10) || 0; } catch (e) {} if (!end) { var d = new Date(); d.setHours(24, 0, 0, 0); end = d.getTime(); try { localStorage.setItem(K, String(end)); } catch (e) {} } window.sfTrialEnd = end; var over = Date.now() >= end; if (over) document.documentElement.classList.add('sf-trial-over'); try { var q = new URLSearchParams(location.search), want = over ? 'trial-regular' : 'trial'; if ((q.get('forceBundleId') || '').split(':').pop() !== want) { q.set('forceBundleId', want); history.replaceState(history.state, '', location.pathname + '?' + q.toString() + location.hash); } } catch (e) {} })();</script>
+<script>(function () { var K = 'sf_trial_end', end = 0; try { end = parseInt(localStorage.getItem(K), 10) || 0; } catch (e) {} if (!end) { var d = new Date(); d.setHours(24, 0, 0, 0); end = d.getTime(); try { localStorage.setItem(K, String(end)); } catch (e) {} } window.sfTrialEnd = end; var over = Date.now() >= end; if (over) document.documentElement.classList.add('sf-trial-over'); try { var q = new URLSearchParams(location.search), have = (q.get('forceBundleId') || '').split(':').pop(), want = over ? 'trial-regular' : 'trial'; if (/^trial-[35]$/.test(have)) want = have; if (have !== want) { q.set('forceBundleId', want); history.replaceState(history.state, '', location.pathname + '?' + q.toString() + location.hash); } } catch (e) {} })();</script>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
 <div class="page-wrapper">
   <main class="main-wrapper">
@@ -213,7 +240,7 @@ refill_terms: "Your bottle ships again every month at $39.97, the “Renews at�
                       <div class="form-content">
                         <div class="form-sections">
                           <div class="form-section grid-row-gap2 form-section--first">
-                            <h2 class="form-section__title"><span data-sf-trial-live>Step 1: Your flash trial</span><span data-sf-trial-over>Step 1: Your foundation</span></h2>
+                            <h2 class="form-section__title">Step 1: Choose your plan</h2>
                             {% assign sel1 = bundles | where: "selected", true | first %}
                             <p class="sf-co-picked" data-sf-picked='{{ picked | json }}' aria-live="polite">Your order: <strong data-sf-picked-text>{{ picked[sel1.id] }}</strong><span data-next-show="cart.hasItems"> · <span data-next-display="cart.total">{{ sel1.price }}</span></span></p>
                             {% campaign_include 'bundle-selector.html' selector_id='main' card_style=bundle_card_style packages=packages shipping_methods=shipping_methods bundles=bundles await=false %}

@@ -13,8 +13,9 @@
   var over = function () {
     document.documentElement.classList.add('sf-trial-over');
     var pick = function () {
+      var trial = document.querySelector('[data-next-bundle-card][data-next-bundle-id="trial"]');
       var reg = document.querySelector('[data-next-bundle-card][data-next-bundle-id="trial-regular"]');
-      if (reg && !reg.classList.contains('next-selected')) reg.click();
+      if (trial && reg && trial.classList.contains('next-selected')) reg.click();   // a pack she chose stays chosen
     };
     pick();
     window.addEventListener('next:initialized', pick);

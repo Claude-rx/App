@@ -76,23 +76,27 @@ BOX_CSS = ('<style>.sft-box{margin:6px 0 16px;color:#151515}'
            '.sft-flash__title{margin:0!important;font-size:15px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:#d92d20!important;line-height:1.3}'
            '.sft-flash__clock{margin:4px 0 0!important;font-size:14px;color:#151515!important}'
            '.sft-flash__clock strong{display:inline-block;font-variant-numeric:tabular-nums;background:#151515;color:#fff;border-radius:6px;padding:2px 8px;margin-left:4px;font-weight:700}'
-           '.sft-plan{border:2px solid #151515;border-radius:16px;background:#f4f1ec;padding:18px 20px}'
-           '.sft-plan__head{display:flex;align-items:center;gap:12px}'
-           '.sft-radio{flex:none;width:24px;height:24px;border:2px solid #151515;border-radius:50%;display:grid;place-items:center}'
-           '.sft-radio:after{content:"";width:12px;height:12px;border-radius:50%;background:#151515}'
-           '.sft-plan__name{flex:1;margin:0!important;font-size:21px;font-weight:700;line-height:1.2;color:#151515!important}'
-           '.sft-plan__price{flex:none;margin:0!important;white-space:nowrap;line-height:1}'
-           '.sft-plan__price strong{font-size:32px;font-weight:800;color:#151515}'
-           '.sft-plan__price s{margin-left:8px;font-size:19px;color:#4a4a4a}'
-           '.sft-plan__list{list-style:none!important;margin:10px 0 0 36px!important;padding:0!important}'
-           '.sft-plan__list li{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.6;color:#151515}'
-           '.sft-plan__list li:before{content:none!important}'
+           '.sft-plans{display:grid;gap:10px}'
+           '.sft-plan{display:flex;align-items:center;gap:12px;border:1.5px solid #d6d6d6;border-radius:16px;background:#fff;padding:15px 18px;cursor:pointer;transition:border-color .15s,background .15s}'
+           '.sft-plan:hover{border-color:#8a8a8a}'
+           '.sft-plan.is-on{border:2px solid #151515;background:#f4f1ec;padding:14.5px 17.5px}'
+           '.sft-plan:focus-visible{outline:3px solid #151515;outline-offset:2px}'
+           '.sft-radio{flex:none;width:24px;height:24px;border:2px solid #8a8a8a;border-radius:50%;display:grid;place-items:center}'
+           '.sft-plan.is-on .sft-radio{border-color:#151515}'
+           '.sft-plan.is-on .sft-radio:after{content:"";width:12px;height:12px;border-radius:50%;background:#151515}'
+           '.sft-plan__main{flex:1;min-width:0}'
+           '.sft-plan__name{margin:0!important;font-size:19px;font-weight:700;line-height:1.2;color:#151515!important}'
+           '.sft-plan__tag{display:inline-block;margin:6px 0 0!important;background:#151515;color:#fff!important;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;border-radius:999px;padding:3px 10px;line-height:1.3}'
+           '.sft-plan__tag--hot{background:#d92d20}'
+           '.sft-plan__price{flex:none;margin:0!important;text-align:right;white-space:nowrap;line-height:1.05}'
+           '.sft-plan__price strong{display:block;font-size:28px;font-weight:800;color:#151515}'
+           '.sft-plan__price s{display:block;margin-top:3px;font-size:16px;color:#4a4a4a}'
            '.sft-note{margin:14px 0 0!important;text-align:center;font-size:15px;color:#151515!important}'
            '.sft-cta{display:flex!important;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;margin:14px 0 0;border:2px solid #000;border-radius:14px!important;'
            'background:#151515!important;color:#fff!important;box-shadow:4px 4px 0 #000;font-size:19px;font-weight:800;letter-spacing:.04em;text-decoration:none!important;text-transform:uppercase}'
            '.sft-cta:hover{background:#333!important}'
            '.sft-box .apf-trust{margin-top:20px}'
-           '@media (max-width:479px){.sft-plan{padding:16px}.sft-plan__name{font-size:19px}.sft-plan__price strong{font-size:28px}.sft-plan__price s{font-size:17px}.sft-plan__list li{font-size:15px}.sft-cta{font-size:17px}}'
+           '@media (max-width:479px){.sft-plan{padding:13px 14px;gap:10px}.sft-plan.is-on{padding:12.5px 13.5px}.sft-plan__name{font-size:17px}.sft-plan__tag{font-size:11px;padding:3px 8px}.sft-plan__price strong{font-size:24px}.sft-plan__price s{font-size:14px}.sft-cta{font-size:17px}}'
            '</style>')
 
 TRUST_SVG_SEAL = ('<svg aria-hidden="true" focusable="false" height="24" viewbox="0 0 24 24" width="24"><path d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z" fill="currentColor"></path><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>')
@@ -105,30 +109,53 @@ def trust_row(src):
     style = re.search(r'<style>\.apf-trust\{.*?</style>', src[st:], re.S).group(0)
     row = re.search(r'<ul class="apf-trust__row" data-sf-trust-row="refill">.*?</ul>', src[st:], re.S).group(0)
     row = re.sub(r'<span>Renews at <b data-sf-renew="">.*?</b> <span style="white-space:nowrap">every <span data-sf-renew-every="">28</span> days</span></span>',
-                 f'<span>Renews at <b>{REGULAR}/mo</b></span>', row, flags=re.S)
-    assert f'Renews at <b>{REGULAR}/mo</b>' in row, 'the refill row changed in the store page: update trust_row()'
+                 f'<span>Renews at <b data-sft-renew="">{REGULAR}/mo</b></span>', row, flags=re.S)
+    assert f'Renews at <b data-sft-renew="">{REGULAR}/mo</b>' in row, 'the refill row changed in the store page: update trust_row()'
     return (style + '<div class="apf-trust"><p class="apf-trust__head">' + TRUST_SVG_SEAL + '<span>Love it or your money back</span></p>' + row + '</div>')
+
+
+def plans():
+    """The plan cards: the flash trial bottle, then the packs (funnels/trial.py PACKS). Each card carries what the page
+    shows and sends when it is chosen: the checkout link (before and after her midnight), the note under the cards, the
+    "Renews at" amount, the button's words and the price AppLovin's add_to_cart reports."""
+    out = [{'id': 'trial', 'name': '1 bottle', 'live_tag': '⚡ Flash trial · 50% off', 'today': TODAY, 'compare': REGULAR, 'over_today': REGULAR,
+            'href': f'{CHECKOUT}?forceBundleId=trial', 'href_over': f'{CHECKOUT}?forceBundleId=trial-regular',
+            'note': '1 bottle · delivered monthly', 'renew': f'{REGULAR}/mo', 'cta': 'Start my trial', 'cta_over': 'Start my refills',
+            'value': T['today'], 'value_over': T['regular'], 'item': (str(T['package']), T['name'])}]
+    for k in F.PACKS:
+        price = f"${k['price']:.2f}"
+        out.append({'id': k['bundle'], 'name': f"{k['bottles']} bottles + {k['gift'].replace('FREE ', 'free ')}", 'tag': k['tab'], 'today': price,
+                    'compare': f"${k['compare']:.2f}", 'href': f"{CHECKOUT}?forceBundleId={k['bundle']}",
+                    'note': f"{k['bottles']} bottles · delivered every {k['months']} months", 'renew': f"{price} / {k['months']} mo",
+                    'cta': f"Get my {k['bottles']} bottles", 'value': k['price'], 'item': (str(k['package']), f"Adaptive Peptide Foundation - {k['bottles']} bottles")})
+    return out
 
 
 def box(src):
     arrow = '<span aria-hidden="true">→</span>'
+    cards = []
+    for n, c in enumerate(plans()):
+        on = n == 0
+        attrs = (f' data-sft-plan="{c["id"]}" data-href="{c["href"]}" data-href-over="{c.get("href_over", c["href"])}" data-note="{c["note"]}"'
+                 f' data-renew="{c["renew"]}" data-cta="{c["cta"]}" data-cta-over="{c.get("cta_over", c["cta"])}" data-value="{c["value"]}"'
+                 f' data-value-over="{c.get("value_over", c["value"])}" data-item-id="{c["item"][0]}" data-item-name="{c["item"][1]}"'
+                 f' data-item-sku="{F.AXON_ITEMS[int(c["item"][0])][0]}" data-item-variant="{F.AXON_ITEMS[int(c["item"][0])][1]}"')
+        tag = (f'<p class="sft-plan__tag sft-plan__tag--hot" data-sf-trial-live>{c["live_tag"]}</p>' if c.get('live_tag')
+               else f'<p class="sft-plan__tag">{c["tag"]}</p>')
+        price = (f'<p class="sft-plan__price" data-sf-trial-live><strong>{c["today"]}</strong><s>{c["compare"]}</s></p>'
+                 f'<p class="sft-plan__price" data-sf-trial-over><strong>{c["over_today"]}</strong></p>' if c.get('over_today')
+                 else f'<p class="sft-plan__price"><strong>{c["today"]}</strong><s>{c["compare"]}</s></p>')
+        cards.append(f'<div class="sft-plan{" is-on" if on else ""}" role="radio" aria-checked="{"true" if on else "false"}" tabindex="{0 if on else -1}"{attrs}>'
+                     f'<span class="sft-radio" aria-hidden="true"></span><div class="sft-plan__main"><p class="sft-plan__name">{c["name"]}</p>{tag}</div>{price}</div>')
+    first = plans()[0]
     return (
         '<div class="product__block sft-box" id="apf-buy" data-sft-box="" style="--PBB:10px;">' + BOX_CSS +
         '<div class="sft-flash" data-sf-trial-live>'
         '<p class="sft-flash__title">⚡ Flash trial offer · Limited time, today only</p>'
         '<p class="sft-flash__clock">Ends at midnight: <strong data-sf-trial-clock="">today</strong></p></div>'
-        '<div class="sft-plan" role="group" aria-label="Your plan: 1 bottle, delivered monthly">'
-        '<div class="sft-plan__head"><span class="sft-radio" aria-hidden="true"></span><p class="sft-plan__name">1 bottle</p>'
-        '<p class="sft-plan__price" data-sf-trial-live><strong>' + TODAY + '</strong><s>' + REGULAR + '</s></p>'
-        '<p class="sft-plan__price" data-sf-trial-over><strong>' + REGULAR + '</strong></p></div>'
-        '<ul class="sft-plan__list">'
-        '<li data-sf-trial-live>+ 50% off your first month</li>'
-        '<li data-sf-trial-live>+ Then ' + REGULAR + '/mo, cancel any time</li>'
-        '<li data-sf-trial-over>+ ' + REGULAR + '/mo, cancel any time</li>'
-        '<li>+ Free shipping</li></ul></div>'
-        '<p class="sft-note">1 bottle · delivered monthly</p>'
-        '<a class="sft-cta" data-sft-cta="" href="' + CHECKOUT + '?forceBundleId=trial" data-sft-href-over="' + CHECKOUT + '?forceBundleId=trial-regular">'
-        '<span data-sf-trial-live>Start my trial</span><span data-sf-trial-over>Start my refills</span>' + arrow + '</a>'
+        '<div class="sft-plans" role="radiogroup" aria-label="Choose your plan">' + ''.join(cards) + '</div>'
+        f'<p class="sft-note" data-sft-note="">{first["note"]}</p>'
+        f'<a class="sft-cta" data-sft-cta="" href="{first["href"]}"><span data-sft-cta-text="">{first["cta"]}</span>' + arrow + '</a>'
         + trust_row(src) +
         '</div>')
 
@@ -138,26 +165,38 @@ def box(src):
 TAIL = ('<script>(function () {'
         ' var end = window.sfTrialEnd || 0, h = document.documentElement, pad = function (n) { return (n < 10 ? "0" : "") + n; };'
         ' var over = function () { return h.classList.contains("sf-trial-over"); };'
-        ' var hrefs = function () { document.querySelectorAll("[data-sft-cta]").forEach(function (a) { var o = a.getAttribute("data-sft-href-over"); if (over() && o) a.setAttribute("href", o); }); };'
+        ' var plans = [].slice.call(document.querySelectorAll("[data-sft-plan]"));'
+        ' var chosen = function () { return document.querySelector("[data-sft-plan].is-on") || plans[0]; };'
+        ' var get = function (c, k) { return c ? (over() && c.getAttribute("data-" + k + "-over")) || c.getAttribute("data-" + k) : ""; };'
+        # the button, the note and "Renews at" follow the chosen plan (and the clock, for the trial bottle)
+        ' var paint = function () { var c = chosen(); if (!c) return;'
+        ' document.querySelectorAll("[data-sft-cta]").forEach(function (a) { a.setAttribute("href", get(c, "href")); var t = a.querySelector("[data-sft-cta-text]"); if (t) t.textContent = get(c, "cta"); });'
+        ' document.querySelectorAll("[data-sft-note]").forEach(function (e) { e.textContent = get(c, "note"); });'
+        ' document.querySelectorAll("[data-sft-renew]").forEach(function (e) { e.textContent = get(c, "renew"); }); };'
+        ' var pick = function (c) { plans.forEach(function (p) { var on = p === c; p.classList.toggle("is-on", on); p.setAttribute("aria-checked", on ? "true" : "false"); p.tabIndex = on ? 0 : -1; }); paint(); };'
+        ' plans.forEach(function (p, i) { p.addEventListener("click", function () { pick(p); });'
+        ' p.addEventListener("keydown", function (e) { var k = e.key, n = null; if (k === " " || k === "Enter") { e.preventDefault(); pick(p); return; }'
+        ' if (k === "ArrowDown" || k === "ArrowRight") n = plans[(i + 1) % plans.length]; if (k === "ArrowUp" || k === "ArrowLeft") n = plans[(i + plans.length - 1) % plans.length];'
+        ' if (n) { e.preventDefault(); pick(n); n.focus(); } }); });'
         ' var tick = function () { var left = Math.max(0, Math.floor((end - Date.now()) / 1000)), hh = Math.floor(left / 3600), mm = Math.floor((left % 3600) / 60), ss = left % 60;'
         ' document.querySelectorAll("[data-sf-trial-clock]").forEach(function (c) { c.textContent = pad(hh) + ":" + pad(mm) + ":" + pad(ss); });'
-        ' if (!left) { h.classList.add("sf-trial-over"); hrefs(); clearInterval(t); } };'
-        ' var t = end && !over() ? setInterval(tick, 1000) : 0; if (t) tick(); hrefs();'
-        ' var price = function () { return over() ? ' + str(T['regular']) + ' : ' + str(T['today']) + '; };'
-        # the item as the funnel's AXON adapter sends it at the checkout (SKU, store variant, Google category, store JPG):
+        ' if (!left) { h.classList.add("sf-trial-over"); paint(); clearInterval(t); } };'
+        ' var t = end && !over() ? setInterval(tick, 1000) : 0; if (t) tick(); paint();'
+        # AppLovin: page_view and view_item (the trial bottle) on load, add_to_cart with the chosen plan on the button
+        # each item as the funnel's AXON adapter sends it at the checkout (SKU, store variant, Google category, store JPG):
         # AXON Pixel Helper wants item_variant_id, item_category_id and a .png/.jpg image_url on every item
-        ' var item = function () { return { item_id: "' + T['sku'] + '", item_name: "' + T['name'] + '", item_brand: "SKINOFAB",'
-        ' item_variant_id: "' + T['variant_id'] + '", item_category_id: ' + str(T['category_id']) + ', image_url: "' + T['image'] + '",'
-        ' price: price(), quantity: 1 }; };'
-        ' var send = function (name, done) { var n = 0; (function go() { if (typeof window.axon === "function") { try { if (name === "page_view") window.axon("track", "page_view"); else window.axon("track", name, { currency: "USD", value: price(), items: [item()] }); } catch (e) {} if (done) setTimeout(done, 350); return; }'
+        ' var payload = function (c) { var v = parseFloat(get(c, "value")); return { currency: "USD", value: v, items: [{ item_id: c.getAttribute("data-item-sku"),'
+        ' item_name: c.getAttribute("data-item-name"), item_brand: "SKINOFAB", item_variant_id: c.getAttribute("data-item-variant"),'
+        ' item_category_id: ' + str(T['category_id']) + ', image_url: "' + T['image'] + '", price: v, quantity: 1 }] }; };'
+        ' var send = function (name, c, done) { var n = 0; (function go() { if (typeof window.axon === "function") { try { if (name === "page_view") window.axon("track", "page_view"); else window.axon("track", name, payload(c)); } catch (e) {} if (done) setTimeout(done, 350); return; }'
         ' if (n++ < 40) setTimeout(go, 250); else if (done) done(); })(); };'
         ' window.sfTrialTrack = send;'
-        ' var first = function () { send("page_view"); send("view_item"); };'
+        ' var first = function () { send("page_view"); send("view_item", plans[0]); };'
         ' if (document.readyState === "complete") first(); else window.addEventListener("load", first);'
         ' document.addEventListener("click", function (e) { var a = e.target && e.target.closest ? e.target.closest("a[data-sft-cta]") : null;'
         ' if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;'
-        ' e.preventDefault(); hrefs(); var href = a.href, gone = false, go = function () { if (!gone) { gone = true; location.href = href; } };'
-        ' setTimeout(go, 1200); send("add_to_cart", go); }, true);'
+        ' e.preventDefault(); paint(); var href = a.href, gone = false, go = function () { if (!gone) { gone = true; location.href = href; } };'
+        ' setTimeout(go, 1200); send("add_to_cart", chosen(), go); }, true);'
         '})();</script>')
 
 
@@ -205,7 +244,7 @@ def build(src):
     assert n >= 3, n
     # the FAQ answers that quote the store's packs
     s = sub1(r'Your pack ships again every 28 days at the refill price: \$37 for 1 bottle, \$47 for 2 bottles\. We email you before every refill\. To skip or cancel, just email info@skinofab\.com: no minimum, no fees\.',
-             'Your bottle ships again every month at ' + REGULAR + '. With the flash trial your first bottle is ' + TODAY + ' (50% off). We email you before every refill. To skip or cancel, just email info@skinofab.com: no minimum, no fees.', s)
+             'Your plan ships again at its own price until you cancel: 1 bottle ' + REGULAR + ' every month (with the flash trial your first bottle is ' + TODAY + ', 50% off), 3 bottles $66.97 every 3 months, 5 bottles $99.97 every 5 months. The free gifts come with your first order; refills are the bottles only. We email you before every refill. To skip or cancel, just email info@skinofab.com: no minimum, no fees.', s)
     s = sub1(r'Can I buy just once\?', 'Can I cancel after the first bottle?', s)
     s = sub1(r'Yes\. In your bag, tap Change under the bottle, then on the cart page set it to One-time purchase before checkout: \$47 for 1 bottle or \$57 for 2 bottles, with no refills\.',
              'Yes. Email info@skinofab.com at least a day before your next refill and it won’t ship. No minimum, no fees, and your first bottle keeps its 30-day money-back guarantee.', s)
@@ -224,8 +263,9 @@ def check(out):
     bad = [p for p in (r'\$37\b', r'\$47\b', r'\$57\b', r'\$59\b', r'\$118\b', r'From \$', 'Add to Cart', 'Choose your pack', 'every 28 days',
                        r"\{% url 'cart:add'", 'data-product-form', 'data-sf-offer-picker', 'One-time purchase') if re.search(p, text)]
     if bad: raise SystemExit(f'pdp_copy: store residue in the trial page: {bad}')
-    for need in ('id="apf-buy"', 'Flash trial offer · Limited time, today only', f'Renews at <b>{REGULAR}/mo</b>', 'Love it or your money back',
-                 'Refill reminder', 'Cancel any time', f'{CHECKOUT}?forceBundleId=trial"', 'forceBundleId=trial-regular', TODAY, '"page_view"', '"view_item"', '"add_to_cart"'):
+    for need in ('id="apf-buy"', 'Flash trial offer · Limited time, today only', f'Renews at <b data-sft-renew="">{REGULAR}/mo</b>', 'Love it or your money back',
+                 'Buy 2, get 1 FREE', 'Buy 3, get 2 FREE', '?forceBundleId=trial-3"', '?forceBundleId=trial-5"',
+                 'Refill reminder', 'Cancel any time', f'{CHECKOUT}?forceBundleId=trial"', 'forceBundleId=trial-regular', '$66.97', '$99.97', TODAY, '"page_view"', '"view_item"', '"add_to_cart"'):
         if need not in out: raise SystemExit(f'pdp_copy: missing in the trial page: {need}')
     # every block that names the product is inside the setting's with
     for m in re.finditer(r'\{% block (\w+) %\}(.*?)\{% endblock(?: \1)? %\}', out, re.S):

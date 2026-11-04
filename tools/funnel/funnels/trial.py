@@ -13,7 +13,9 @@ time, from her first visit; after it the page shows the regular $39.97 a month a
 The commerce is campaign 2251 "SKINOFAB Adaptive Peptide Foundation Flash Trial", created on 4 Nov 2026 with the
 next-campaigns-create skill (next-campaigns-create-runs/skinofab-apf-trial/, gitignored: its manifest holds the
 campaign key). Package 1 is one bottle at $39.97 refilling every month at $39.97; FLASH50 (offer 1, 50% off, the
-campaign's .97 rounding) makes the first order $19.97, and a code never reaches a refill. The offers are bought once and
+campaign's .97 rounding) makes the first order $19.97, and a code never reaches a refill. Packages 6 and 7 are the
+packs beside it (4 Nov 2026): 3 bottles + a free Blender at $66.97 every 3 months (buy 2, get 1 free) and 5 bottles
++ a free Lymphatic Brush at $99.97 every 5 months (buy 3, get 2 free), the APF funnel's prices. The offers are bought once and
 are APF's at the same prices (packages 2 to 5, codes APFT40, APFT50, BRUSHT40, BRUSHT60). The campaign's Allowed Domains
 (try.skinofab.com) are a dashboard setting the API cannot write.
 
@@ -46,7 +48,7 @@ def store_once(bottles):
 
 
 # the campaign's packages (the plan's keys): key -> ref
-PACKAGE = {'trial': 1, 'apf-1-add': 2, 'apf-2': 3, 'apf-6-brush': 4, 'brush-1': 5}
+PACKAGE = {'trial': 1, 'apf-1-add': 2, 'apf-2': 3, 'apf-6-brush': 4, 'brush-1': 5, 'apf-3-blender': 6, 'apf-5-brush': 7}
 # the vouchers: code -> offer ref
 VOUCHER = {'FLASH50': 1, 'APFT40': 2, 'APFT50': 3, 'BRUSHT40': 4, 'BRUSHT60': 5}
 
@@ -59,6 +61,21 @@ TRIAL = {'package': 1,
          'voucher': 'FLASH50', 'today': 19.97, 'regular': 39.97, 'off': 50, 'every': 'month',
          'name': 'Adaptive Peptide Foundation - 1 bottle', 'sku': 'SKF-APF-1'}
 UNIT = TRIAL['regular']
+
+# the packs beside the trial (the owner, 4 Nov 2026: "put the offer also of buy 2 get 1 free and buy 3 get 2 free", at
+# the APF funnel's prices; packages 6 and 7, added that day through the create skill's update path): the checkout card
+# id, the package, the bottles, what she pays today and at every refill, how many months apart, the crossed-out price
+# (the bottles at the trial's $39.97 a bottle: the free bottles) and the gift in the first box
+# AppLovin AXON items for the product page's plans, by campaign 2251 package ref: the store SKU and variant (the campaign's
+# own read, 4 Nov 2026), so view_item/add_to_cart carry the item the funnel's AXON adapter sends at the checkout
+AXON_ITEMS = {1: ('SKF-APF-1', '15'), 6: ('SKF-APF-3-BLENDER', '334'), 7: ('SKF-APF-5-BRUSH', '335')}
+
+PACKS = [
+    {'bundle': 'trial-3', 'package': 6, 'bottles': 3, 'paid': 2, 'price': 66.97, 'months': 3, 'compare': 119.91,
+     'tab': 'Buy 2, get 1 FREE', 'gift': 'FREE Blender sponge', 'sku': 'SKF-APF-3-BLENDER'},
+    {'bundle': 'trial-5', 'package': 7, 'bottles': 5, 'paid': 3, 'price': 99.97, 'months': 5, 'compare': 199.85,
+     'tab': 'Buy 3, get 2 FREE', 'gift': 'FREE Lymphatic Brush', 'sku': 'SKF-APF-5-BRUSH'},
+]
 
 # the offer pages: as APF's, on this campaign's packages and codes
 OFFER_PAGES = {
@@ -74,7 +91,7 @@ OFFER_PAGES = {
 PAGES = [
     {'id': 'offer', 'file': 'adaptive-foundation-trial', 'type': 'landing', 'sdk': 'product', 'entry': True, 'native': True,
      'next': 'checkout', 'label': 'Product page: the store’s foundation page with the flash trial ($19.97 the first month, then $39.97 a month)'},
-    {'id': 'checkout', 'file': 'trial-checkout', 'type': 'checkout', 'sdk': 'checkout', 'packages': [1],
+    {'id': 'checkout', 'file': 'trial-checkout', 'type': 'checkout', 'sdk': 'checkout', 'packages': [1, 6, 7],
      'default_package': 1, 'voucher_offer': 1, 'success': 'offer-1', 'label': 'Checkout: the flash trial'},
     {'id': 'offer-1', 'file': 'trial-offer-1', 'type': 'upsell', 'sdk': 'upsell', 'packages': [3, 4], 'offers': [],
      'accept': 'brush-offer', 'decline': 'offer-2', 'label': 'Offer 1: stock up (2 bottles at $19.50 each; 6 at $16.50 each + the brush)'},
