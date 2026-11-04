@@ -1,7 +1,7 @@
 # Meta Ads Media Buying SOP
 
-**Source:** *The Facebook Ads Blueprint* course: every video transcript, summary doc, PDF and live-call recording in the shared course folder (75 core lesson files, 17 live-call transcripts). See [sources.md](sources.md).
-**Owner:** Head of Media Buying · **Applies to:** every Meta ad account we manage · **Version:** 1.0 (2026-11-04)
+**Source:** *The Facebook Ads Blueprint* course: every video transcript, summary doc, PDF and live-call recording in the shared course folder (75 core lesson files, 17 live-call transcripts, plus the linked tracker, profit and ad-builder sheets and the brief template). See [sources.md](sources.md).
+**Owner:** Head of Media Buying · **Applies to:** every Meta ad account we manage · **Version:** 1.1 (2026-11-04). For v1.1 every one of those files was read first-hand, and the two videos without transcripts (Image Ads Templates, Multi Advertiser Ads) were watched frame by frame. v1.1 changes are in §13 (#19 onward).
 
 This SOP is the operating rulebook. Each rule cites the lesson it comes from, in brackets, e.g. **[Pausing Ads]**. The numbers live in one place, [`tools/fb-blueprint/rules.py`](../../tools/fb-blueprint/rules.py), and the four Claude skills apply them: `fb-launch`, `fb-test`, `fb-optimize`, `fb-scale`. If you change a number, change it there; never in a skill.
 
@@ -95,6 +95,15 @@ Check: 100 orders × $80, 40% COGS, $1,000 fixed → $3,800 ad budget → **2.11
 3. Put **90% of spend on the hero and 10% on tests**. Test other products as a **new pack in the prospecting CBO** and let CBO decide. If a test product beats the hero, you may have a new hero.
 4. Never "advertise everything". Unproven products muddy the pixel.
 5. Fix the product and offer before tuning ads, in this order: **product → offer → landing page**. **[Live: Product First]**
+6. Many products at very different prices ($90 to $1,000): one prospecting campaign on **max value**, never one campaign per product. Break catalog ads out by price tier or category so each can be read on its own. **[Live: Product First]**
+
+### 3.5 Month pacing [Setup: Ads Tracking Template (tracker tab)]
+```
+Daily spend to hit goal   = (Spend target − Spend month-to-date) ÷ Days remaining
+Daily revenue to hit goal = (Revenue target − Revenue month-to-date) ÷ Days remaining
+ROAS to hit goal          = Revenue remaining ÷ Spend remaining
+```
+Read it every Monday next to the King Goal. If the ROAS needed is above the King Goal, the spend target is the number that gives, never the goal. Engine: `pacing`.
 
 ---
 
@@ -119,6 +128,8 @@ Check: 100 orders × $80, 40% COGS, $1,000 fixed → $3,800 ad budget → **2.11
 4. Repeat for ATC and Initiate Checkout against Shopify. The funnel must make sense; fewer ICs than purchases is a red flag.
 5. On any failure: hire a real developer, not a Fiverr reinstall. Run the pixel and CAPI together; don't rely on third-party attribution. **[Live: Funnel Analysis]**
 - Watch out: an automated UTM change (e.g. a HubSpot integration) can reset every post ID and all learning. **[Live: Funnel Analysis]**
+- Ads Manager showing fewer purchases than the store is normal (not every sale comes from ads). **Events Manager** showing fewer purchases than the store is a real tracking fault: fix it first. **[Live Q&A 8/24]**
+- Protect the pixel: share it with a second Business Manager and keep a second admin person on every ad account. **[Live: Scaling, Pixels, Dropship]**
 - Engine: `pixel_check`.
 
 ### 4.3 Advertiser settings and audiences [Advertiser Settings]
@@ -135,9 +146,19 @@ Check: 100 orders × $80, 40% COGS, $1,000 fixed → $3,800 ad budget → **2.11
    - ATC 90d
    - IC 90d
    - IG/FB engagers 14–30d (only if you have a following)
-6. **Klaviyo pairing:** for every pixel audience, add the matching Klaviyo list (named `ads_[event] [days]`) in the same ad set. Expect a 5–15% match lift. **[Audience Enhancement (via Klaviyo)]**
+6. **Klaviyo pairing:** for every pixel audience, add the matching Klaviyo segment in the same ad set, with "use as suggestion" off. Expect a 5–15% match lift. **[Audience Enhancement (via Klaviyo)]**
+   - Segments: *Added to Cart at least once in the last 90 days*, *Checkout Started in the last 90 days*, *Active on Site at least once in the last 90 days*, plus customers/purchasers.
+   - Name each one `ads_[event] [days]`. In Meta, create the Klaviyo list first, then type a new audience name so the sync appears. **[Live: Scaling, Pixels, Dropship]**
 7. Ignore the opportunity score; Meta says it doesn't affect delivery. **[Live: Scaling, Pixels, Dropship]**
 - Engine: `preflight` blocks a launch until every item above is confirmed.
+
+### 4.4 Overspend refunds [Start Here: Meta Refunds For Overspending]
+Meta sometimes overspends budgets or ignores caps. Claim the money back:
+1. **Evidence first:** screenshots of the set budget vs actual spend; ad account ID, campaign names, transaction/payment ID.
+2. **Eligibility:** refunds or credits come only for Meta glitches, outages or verified bugs, not for our own budget mistakes.
+3. Contact the rep, or support (faster on mobile). Describe the overspend and cap breach plainly, then choose *Claim refund for ad spend* → the ad account → *Other ad issue*.
+4. Attach the Meta Status page and the budget-vs-spend evidence, and list every affected account ID.
+5. Stay polite (the agent may not know about the outage), give a realistic loss estimate when asked, and follow up until the ticket closes. Persistence wins.
 
 ---
 
@@ -146,7 +167,7 @@ Check: 100 orders × $80, 40% COGS, $1,000 fixed → $3,800 ad budget → **2.11
 ### 5.1 Pick the phase
 | Phase | When | Build |
 |---|---|---|
-| **M0: First $100/day** | New account, or prospecting under ~$250/day | One `Prospecting_CBO`, `Broad_Pack_1`. **No ad set minimums, no scale, no retargeting**, and retention only at a tiny budget. ONE suggested interest only if lifetime spend is under $1,000 or broad has failed. Goal: reach **$250–500/day** quickly. Expect to lose 10–20% at first; break-even is a win. Don't judge after 2 days. **[First $100 Setup]** |
+| **M0: First $100/day** | New account, or prospecting under ~$250/day | One `Prospecting_CBO`, `Broad_Pack_1`. **No scale, no retargeting**, minimums optional (§5.4), and retention only at a tiny budget. ONE suggested interest only if lifetime spend is under $1,000 or broad has failed. 5–6 creatives can share one pack; never test different interests on different creatives at the same time. **Pausing in M0 is simple: once a week, on a fixed day, pause creatives with low spend AND low conversion value** (the 13-question tree is for M4). Goal: reach **$250–500/day** quickly; if you are near break-even at $30/day, go to $100/day so data arrives fast enough to decide. Expect to lose 10–20% at first; break-even is a win. Don't judge after 2 days. **[First $100 Setup] [Live: Scaling, Pixels, Dropship]** |
 | **M4 core** | Above that | **Prospecting CBO + Retention.** Add Retargeting, Catalog and Scale only when a trigger below fires. **[M4 Structure Overview] [NEW: Current Structure] [Live Q&A 8/31]** |
 
 ### 5.2 Prospecting CBO: campaign and ad set [M4 Prospecting]
@@ -166,13 +187,13 @@ Check: 100 orders × $80, 40% COGS, $1,000 fixed → $3,800 ad budget → **2.11
 ### 5.4 New packs and minimum budgets [M4 Prospecting] [M4 Overview] [Live: AOV, Optimization Q&A, 9/9]
 1. Every new creative round = **duplicate the pack setup** into a new ad set with identical settings.
 2. **Pack 1 never gets a minimum.**
-3. Packs 2+: ad set spending limit **minimum = 1× target CPA**, for **7 days only**, then remove it.
+3. Packs 2+: ad set spending limit **minimum = 1× target CPA**, for **7 days only**, then remove it no matter what. The one exception: it is crushing above target while still only spending at the minimum. The minimum doesn't depend on how many ads are in the pack. At $1,000/day+ with only ~1 new pack a week, a firmer minimum of up to **2× target CPA** is fine, still inside the 20% pool. **[Live: Optimization Q&A, Q&A 8/31, Retargeting Q&A]**
 4. **All live minimums combined must stay ≤20% of the campaign budget.** Example: $1,000/day allows $200 in minimums in total. $50 CPA on a $100 budget means $20, not $50.
-5. **No minimums while prospecting is under ~$250/day** (M0). From $250 to $1,000/day they are optional and the buyer decides. From $1,000/day they are standard. **[First $100 Setup] [Live Q&A, Zombie Q&A]** (see §13).
+5. **No minimums under $100/day.** From $100 to $1,000/day they are optional and the buyer decides (a $20 minimum at $100/day is fine, but not required). From $1,000/day they are standard. **[First $100 Setup] [Live Q&A 8/31, Zombie Q&A, Scaling Q&A]** (see §13 #1).
 6. Minimums go only on new **broad** packs, never on interest packs.
-7. **Read the signal on day 7:** an ad spending *above* its minimum is a winner that can run alone; one stuck *at* the minimum will die when you remove it.
+7. **Read the signal on day 7:** an ad spending *above* its minimum is a winner that can run alone; one stuck *at* the minimum will die when you remove it. Minimums push spend artificially, so the account can dip a little during those 7 days. That is the price of giving new creative a fair shot under Andromeda: winners reach their plateau weeks sooner. Engine: `minimum_signal`.
 8. Never run an ABO "test campaign" that feeds a CBO. It becomes a permanent cost center. **[Live: Product First]**
-- Engine: `pack_minimum`.
+- Engine: `pack_minimum` (pass `interest_pack` / `one_pack_per_week`).
 
 ### 5.5 Interest packs [M4 Prospecting] [Interests] [Graduation System] [Horizontal Scaling]
 1. Inside the prospecting CBO, create `interest_[interest]_winners`: *Further limit the reach* → detailed targeting → **one** interest.
@@ -193,10 +214,15 @@ Check: 100 orders × $80, 40% COGS, $1,000 fixed → $3,800 ad budget → **2.11
 
 ### 5.7 Retargeting (optional, about 50% of brands) [M4 Retargeting] [NEW: Current Structure] [Live: Product First]
 **Trigger:** in *Breakdown → Audience segments* on prospecting:
-- Engaged spend **too high**: above ~25%, high frequency, or a big drop from reported to incremental.
-- Or engaged spend **too low**: under ~10%, and the exclusions check out.
 
-20% is a soft flag, ~25% is normal, and high-ticket offers run higher. Mid-40s to 50% is where to worry.
+| Engaged share of prospecting spend | Read | Action |
+|---|---|---|
+| under 10% | starved | Check segments and exclusions. Validate with a $5/day retargeting campaign on the same lists. Break out only if truly starved. |
+| 10–25% | healthy (20–25% still fine) | Keep retargeting merged. |
+| 25–45% | watch | Meta spends on engaged people first, and the share rises whenever budget is cut. More creative won't fix it; more spend will. At small budgets a breakout saves only a few dollars. |
+| 45%+ | act | Break out Retargeting and exclude it from Prospecting, or raise spend. |
+
+High-ticket offers run higher. Also weigh frequency and the drop from reported to incremental ROAS. **[Live: Scaling Q&A, Q&A 8/3, 8/31]**
 
 Build:
 1. Campaign: Sales, CBO, with a budget starting below the current engaged spend (example: $3k/month engaged → ~$70/day).
@@ -205,18 +231,20 @@ Build:
    - `ATC/IC 90d` (non-purchasers)
    - optional `Engagers 14–30d` for big followings (exclude visitors, ATC and IC; cap it with a max if it hogs spend)
 3. Then exclude all of these audiences from prospecting.
-4. Inject new objection-handling ads and prospecting winners into the existing retargeting ad sets. Don't create new retargeting ad sets. **[Live: Retargeting Q&A]**
+4. Inject new objection-handling ads and prospecting winners into the existing retargeting ad sets. Don't create new retargeting ad sets. Raise the retargeting budget only when it is well above goal and 7-day frequency is not near 15–20. **[Live: Retargeting Q&A]**
 - Engine: `engaged_share_check`.
 
 ### 5.8 Catalog retargeting (add-on) [Catalog Retargeting Retention] [Live Q&A 8/3, 8/31]
 1. Duplicate Retargeting → Advantage+ catalog ads → Shopify catalog → CBO **$5–10/day** ($10–20 for separate engaged and existing catalog campaigns).
 2. One ad set, `ATC + visit_14 days`: a catalog audience of people who viewed or added to cart in 14 days. **Exclude purchased 14d at the ad set level.**
-3. Catalog ads in prospecting tend to spend on the engaged audience. Check the breakdown, and break catalog out only if it hogs spend.
-4. Multi-advertiser ads are OK here (retargeting/catalog), **never** in prospecting. **[Multi Advertiser Ads]**
+3. Catalog ads in prospecting tend to spend on the engaged audience. Check the breakdown: if the catalog pack already favors engaged, leave it. If it spends mostly on New or hogs the CBO, make the prospecting catalog pack New-only and run a separate one-ad-set retargeting catalog campaign, monitored closely. **[Live: Optimization Q&A, Q&A 8/31]**
+4. Multi-advertiser ads are OK here (retargeting/catalog), **never** in prospecting. The toggle is at the **ad** level (Ad setup → Format, under *Show more settings*), so check every prospecting ad. **[Multi Advertiser Ads, video]**
+5. Big catalog and Retention not working: relaunch Retention as catalog ads. Only the copy differs from the retargeting catalog; cross-sell there. **[Live: Retargeting Q&A]**
 
 ### 5.9 Scale campaign (highly optional) [M4 Scale] [Graduation] [Live Q&A 8/24, 8/31]
 - First choice: just raise the prospecting budget (§9.1).
-- Use Scale only for **1–3 home runs**: ads already in the top 10% of spend and above target on incremental. You should be able to name every ad in it.
+- Use Scale only for **1–3 home runs** (5 at most): ads already in the top 10% of spend and above target on incremental. You should be able to name every ad in it.
+- One proven ad keeps losing spend to new packs that then flop: set a minimum of about 50% on the winner's ad set, or give that ad its own campaign and let new packs test beside it. Then iterate it hard. **[Live: Product First]**
 - Campaign `scale`, CBO, no ad set limits, all placements. Exclude everything targeted elsewhere. **Duplicate** the winners into it; the originals stay live.
 - If an ad dominates prospecting **and misses KPI**: set a **max %** on its pack (e.g. 80% → 60%, or about 50%) instead of killing it, and evaluate over 2 weeks. **[M4 Scale] [Live: Optimization Q&A]**
 
@@ -270,11 +298,13 @@ Proven-concept share: 13% at $10k/mo · 53% at $100k/mo · 80% (cap) at ≥$200k
 7. Friday is the first pass; the following Monday you brief winners. After a few cycles, there are new ads ready every Monday.
 
 ### 6.4 Ad builder and briefs [Ad Building] [Creative Briefing Template] [How To Create Avatars] [Avatar Ad Examples]
-- **Ad builder columns:** Avatar → Product → Template → Core concept ("Template + product + avatar sentence") → Call-outs (mechanism / education / offer) → Iterations → status toggles.
+- **Ad builder columns** (from the course sheet): Core Concept (Template + Avatar + Outcome) · Template or Inspo · Avatar Wants/Needs (Outcomes/Purpose) · Call-outs (Mechanisms / Education / Offer) · Iterations (specific ad details) · Iteration/New · Format · Status · Drive link · Brief link. Fill order: avatar → product → core concept. Green row = validated concept.
+- **Template library:** the course's static-template decks name each template with a "why it works" line, e.g. *Native Catch* (looks like an organic post), *Us vs. Them Throwdown* (instant contrast; Us = mechanism, Them = the gap) and a Reddit-thread native. Re-check the decks every few weeks; ugly-ad formats that stopped working get removed. **[Image Ads Templates, video] [Ad Building]**
 - **Avatar build:** fill the brand guidelines doc in 15–20 minutes (links, key messages, starting avatar, main desire, education, mechanisms, 3 competitors, banned claims). Then run the mega prompt in Claude with deep research to get 20 problems, solution angles and 5 avatars. Treat the avatars as starting points.
-- **UGC brief, two parts:**
-  - Internal: concept, template links, avatar wants/needs, the call-outs to cover.
-  - Creator-facing: ~3 hooks, key call-outs (scripted or loose), shot list.
+- **UGC brief, two parts** (course template fields):
+  - Header: priority · deadline · formats/sizes.
+  - Internal: core concept · template(s) or inspo · avatar wants/needs · call-outs (features, problem → solution, offer) · iterations.
+  - Share with the creator: **3 hooks** · important call-outs (must be captured) · additional shot list (images and video). One good brief yields 20–30 assets.
   - Don't over-brief. Ask for a second format and 3 hooks per package. **[Live: Hotline]**
 - **Pre-ship check:** can you say who the ad is for in one sentence? Does the first line or frame signal that person?
 - Creators: Meta Creator Marketplace (email AND DM), Billo, Instagram organic. When a creator works, spend heavily on them.
@@ -334,10 +364,12 @@ Default = **do not pause**. Uneven spend is a feature: a few ads should take mos
 | 13 | Spent ≥ **3× target CPA** and still ≥50% off KPI? | Yes → **PAUSE** |
 
 - Window **7–14 days** minimum. Turn off **ads, not packs**; kill a pack only if it goes 0-for-5 or it's a sale pack. **[Live Q&A 8/24]**
+- Q12 nuance: an ad that has sat within 50% of KPI for a long while (2+ windows) can be considered for a pause. **[Pausing Ads]**
+- Q13 with the account at goal: a pack taking ~50%+ of spend gets a **max of ~50%** and a 2-week read instead of a pause. A smaller ad far over CPA (e.g. $135 vs $40) stays on while the account hits goal; pause it if the account falls below goal. **[Live: Optimization Q&A, Scaling Q&A]**
 - **Never kill a high spender while the account is at target.** Killing it gives a 3–7 day spike and then a slump; "deleting negative ads is usually a race to zero". Check its cost per ATC/IC and incremental ROAS. If it truly lags, cap its pack instead. **[Live: Optimization Q&A, 8/24, Ads That Scale]**
 - Ads spending under ~$50/month are funnel support. Don't kill them for noisy ROAS. **[Ads That Scale]**
 - Cost per ATC is the early proxy: benchmark it per campaign over 30+ days (example: $20 cost per ATC ≈ 2.0 ROAS; $10 per ATC ≈ $30 per purchase).
-- Engine: `pause_decision` (returns KEEP / WAIT / PAUSE / CAP_ADSET / FIX_TRACKING plus the question number).
+- Engine: `pause_decision` (returns KEEP / WAIT / PAUSE / CAP_ADSET / FIX_TRACKING plus the question number; pass `account_at_goal` and the ad's `adset_spend_share`).
 
 ### 7.4 Graduation [Graduation System]
 1. Prospecting campaign → Compare attributions → **Incremental**.
@@ -372,7 +404,8 @@ Use it **only** if you launch dozens of new creatives or products every week (30
 5. Never put sale or time-sensitive ads in it.
 6. Budget ≈ **1× target CPA per day**. It usually runs about 20% under budget; zero spend is a feature. **Never raise the bid above break-even.**
 7. If a zombie ad spends well above target, relaunch it in prospecting.
-8. Never "test" caps against highest volume with the same creative: caps always look more efficient and lose on volume.
+8. Feeding it: an ad eating ~90% of its pack while missing target moves to the zombie so the other ads get a turn. A dead concept (all ads at $2–3/day after the minimum): move one ad, pause the rest. Use the post ID so comments and likes carry over. **[Live Q&A 9/9]** Engine: `zombie_check`.
+9. Never "test" caps against highest volume with the same creative: caps always look more efficient and lose on volume.
 
 ---
 
@@ -407,7 +440,9 @@ Frequency = impressions ÷ reach.
 4. Then check **where spend moved**: ad-level spend share period over period, then the age, gender, placement and country breakdowns, one by one. Budget a 45–60 minute session.
 5. Steer spend back with **value rules** (start around 25–30%, 30–50% is the sweet spot, above 50% is unstable; value rules don't reset learning), or with a **max %** on the ad set that grabbed spend.
 - Benchmarks: roughly 50% drop-off at each step after ATC (100 ATC → 50 IC → 25 purchases). Site CVR is typically 1–2% (about 1.2–1.5% at a $70 AOV). Cost per ATC rising 3–15% when spend doubles is normal; doubling is a concern.
-- Engine: `drop_diagnosis`.
+- A sudden overnight drop at ~$100/day is almost always a spend shift between ads. Compare every metric before and after. **[Live: Product First]**
+- A pack with good CTR, ATC and IC but zero sales broke at purchase: remake the ad with a clearer CTA and offer (hook → offer → body) before calling the concept dead. **[Live Q&A 8/17]**
+- Engines: `drop_diagnosis`, `funnel_health` (per-step rates, site CVR), `scale_funnel_check`.
 
 ### 8.4 Audience-segment split (weekly) [Advertiser Settings] [NEW: Current Structure] [Vertical Scaling]
 Breakdown → Audience segments on prospecting: spend, revenue, ROAS and frequency for New / Engaged / Existing. Most spend must go to **New**. Use it for the Retargeting and Retention triggers (§5.6–5.7) and before every scale move (§9.1). Engine: `engaged_share_check`.
@@ -416,7 +451,7 @@ Breakdown → Audience segments on prospecting: spend, revenue, ROAS and frequen
 - **Placements** (account level, last 14 days, sorted by spend): the top 6 must be **FB/IG Feed, Stories, Reels**. A core placement at about 1% of spend is a red flag, usually because it has no creative for it.
   - Fix in this order: (1) make the creative, e.g. 9:16 video; (2) ONE new ad set with the weak placements excluded, with a min of 1× CPA for at least 1 week if needed; (3) value rules by placement; (4) last resort, remove the placement everywhere.
   - Never edit placements on a live ad set.
-- **Geo:** with one country running, add a new country as a **new pack of winners only** in the prospecting CBO. Run ≥7 days without a minimum, then 7 days with **min = average CPA**. Remove outlier countries from the ad set's targeting; the course example cut one at ~2× the account CPP. Never split a working multi-country campaign into one campaign per country; use value rules instead (+25% for a strong country). **[Live Q&A 8/24]**
+- **Geo:** with one country running, add a new country as a **new pack of winners only** in the prospecting CBO. Run ≥7 days without a minimum, then 7 days with **min = average CPA**. Remove outlier countries from the ad set's targeting; the course example cut one at ~2× the account CPP. Never split a working multi-country campaign into one campaign per country; use value rules instead (+25% for a strong country). **[Live Q&A 8/24]** Rebuilding a messy multi-country account: keep the countries that drove ~80% of revenue, relaunch smaller, add the rest back later; only target languages your ads are in and places you can ship to. **[Live Q&A 8/31, Retargeting Q&A]** Engine: `pareto_cut`.
 - **Value rules** (Advertiser settings → Value rules → rule set; apply in the ad set): start with **a decrease of 25% or less** on a weak segment found in breakdowns. Never act on a gap of 5–10%. Perceived ROAS = revenue × (1 + adj) ÷ spend. "An elimination game, not an increasing game." Engines: `placement_check`, `geo_check`, `value_rule_effect`.
 
 ### 8.6 Learning phase [Understanding the Learning Phase] [Dictionary] [Live Q&A 8/3, 8/17]
@@ -464,14 +499,17 @@ Move sizes:
 | Default | **+10–30%**, scaled to how far above goal you are | every **48–72 h** |
 | Multi-thousand $/day | **+10–15%** | 48–72 h |
 | Around $100/day | bigger steps, up to **+50%** (100 → 150 → 225) | 48–72 h |
+| Far above goal (e.g. 14d 7.5 / 7d 5.8 vs 3.5 target) | **+20–30%** on every 3-day window above target; **+30–50%** for a short spell to catch up | each 3-day window |
 | **Smashing** (≥ 2× target on 7d and 3d) | **double**, if the delta check passes: current daily revenue ÷ new spend ≥ target, even if the new money converts nothing | faster |
 
 - **Below target: hold** and fix creative; the twin engine never stops. Near target (e.g. 1.03): reach target before scaling. If ROAS slides during steady increases, stop increasing and let it settle.
 - After a move, expect **frequency, CPM and CPC up and ROAS down** for a while. New money reaches colder people. If cost per ATC is flat, **hold the line**; don't panic-cut.
 - Monitor the full funnel, incremental ROAS by segment period over period, and **blended MER**.
 - Retargeting and retention are not scaled this way; they are managed by frequency.
-- Recovering a previous spend level (e.g. back from $20k/day): doubling 500 → 1,000 → 2,000 → 3,000 is fine, then $1k steps. Judge it on incremental.
-- Engine: `vertical_scale`.
+- Recovering a previous spend level (e.g. back from $20k/day): doubling 500 → 1,000 → 2,000 → 3,000 is fine, then $1k steps. Judge it on incremental. With less spend than before, make fewer concepts and raise their quality until spend is back at $5–10k/day. **[Live Q&A 8/31]**
+- After each move, read cost per ATC/IC: +3–15% is normal, doubling means stop (engine: `scale_funnel_check`). Top 5–10 creatives taking 60–70% of spend is expected; iterate those.
+- One ad carrying the account and above target: just raise the budget. No scale campaign, no breakout. **[Live Q&A 8/31]**
+- Engine: `vertical_scale` (pass `prior_proven_daily` + `incremental_kpi_7d` for the relaunch path).
 
 ### 9.2 Horizontal scaling [Horizontal Scaling]
 - **Internal (always):** iterate winning angles, expand winning avatars into new problems, add interest packs. All inside the prospecting CBO.
@@ -485,7 +523,7 @@ Raise spend **only when above goal**, and keep creative output **always on**, at
 
 ### 9.4 Cost controls [Cost Controls] [Live: Scaling Q&A]
 - Only at **~$50–100k+/month**. Below that, use Highest volume. Bid caps only for very advanced operators. Target ROAS is acceptable.
-- Cost cap = **real target CPA** (don't game it). Size the budget so actual spend averages **~80%** of it.
+- Cost cap = **real target CPA** (don't game it). Size the budget so actual spend averages **~80%** of it. 80% means it is working: don't tweak it to force spend. Over 90–95% means the cap is too loose (raise budget). Around 30% every day means re-check AOV, LTV and the true target before touching the cap. **[Live: Scaling, Pixels, Dropship]**
 
 | Cap hit? | Budget fully spent? | Action |
 |---|---|---|
@@ -494,7 +532,7 @@ Raise spend **only when above goal**, and keep creative output **always on**, at
 | No | Yes | Question whether caps fit at all. Iterate existing creative. The cap never goes above target CPA. |
 | No | No | "Double bad": probably stop using caps. Make new creative. |
 
-- Engine: `cost_cap_action`.
+- Engine: `cost_cap_action` (pass `budget_utilisation`).
 
 ### 9.5 Sales and BFCM [How To Run A Sale] [Horizontal Scaling] [Live: Ads That Scale, 8/31, 9/9]
 1. **Every limited-time sale (3/5/7/14-day, and Black Friday) runs in ONE separate campaign** with its own sale-period budget. Never put sale ads into the evergreen CBO.
@@ -513,7 +551,11 @@ Raise spend **only when above goal**, and keep creative output **always on**, at
 - Destination: your own landing page (default for high ticket). Instant forms are discouraged because they can't track downstream events. Call ads need instant pickup; schedule them with a lifetime-budget campaign that stops 30 minutes before phones close. Ungated VSLs beat gated ones, and live webinars beat evergreen.
 - Retargeting = leads/applications not yet converted. High-ticket monthly-recurring businesses exclude all customers everywhere.
 - No scale campaign at $200–300/day or less. Local: radius targeting, max conversions, location call-outs in creative, bid caps only at $30–50k+.
-- KPI = **cost per qualified lead** and downstream outcomes, not CPL.
+- KPI = **cost per qualified lead** and downstream outcomes, not CPL. Local CPLs are naturally higher than national ones; compare qualified rates, not raw CPL.
+- **Work the target backwards:** target cost per call/lead/trial = value per sale × the share that closes. Example: a $100 job with 10% of calls closing = $10 per call to break even; $100 per paid subscriber with 10% of trials converting = $10 per trial. Engine: `reverse_target`.
+- **Conversion locations, ranked** for high ticket: Website (applications, VSL → calendar, quizzes) → Messaging (needs instant human replies) → Call ads (highest intent, needs pickup by the 2nd ring) → Instant forms (avoid, except webinar invites). Instant forms can only optimize for the form fill itself. **[High Ticket] [Low Ticket] [Live Q&A 9/9]**
+- Qualify inside the booking flow: the lead thinks they are booking, qualifying questions decide whether the calendar shows. Expect to disqualify a large share (the course examples run 90–95%), and never send DQs to Meta. Start on *qualified application*; move to *booked call* once volume allows. **[Live Q&A 9/9, 8/3]**
+- Lead-gen agencies need access to the client's closed-sale data (sign an NDA if needed) and a CRM → Meta sync for closed-won. **[Live: Optimization Q&A]**
 
 ---
 
@@ -533,7 +575,7 @@ Raise spend **only when above goal**, and keep creative output **always on**, at
 - [ ] 4–8 ads, one concept/avatar group. 1:1 + 9:16. 2–5 unique primary texts and headlines. ≥4 site links. UTMs in URL parameters.
 - [ ] Enhancements: nothing that modifies the media
 - [ ] Exclusions: purchasers 180d + all-time (plus retargeting audiences if Retargeting is broken out)
-- [ ] Minimum: none for pack 1 or under $250/day; otherwise 1× CPA within the 20% pool, and the removal date (day 7) is on the calendar
+- [ ] Minimum: none for pack 1, interest packs, or under $100/day; optional $100–1,000; otherwise 1× CPA within the 20% pool, and the removal date (day 7) is on the calendar
 - [ ] Draft reviewed and **approved by a human** before publishing
 
 **Daily (≤15 min)**
@@ -551,7 +593,7 @@ Raise spend **only when above goal**, and keep creative output **always on**, at
 
 | # | Topic | What the sources say | SOP rule |
 |---|---|---|---|
-| 1 | Minimums at low budgets | M0 video: no spend limits "until ~$1,000/day". M4 video computes a $20 min on a $100 budget. Live calls: "at $100/day you don't need minimums", "$150/day don't set minimums yet". | **None under $250/day, optional $250–1,000, standard from $1,000.** The $250 boundary is a team default. |
+| 1 | Minimums at low budgets | M0 video: no spend limits "until ~$1,000/day". M4 video computes a $20 min on a $100 budget. Live calls disagree: "$20 minimum at $100/day: yes" (8/31), a $170/day account with minimums is fine if they total ≤20% (Optimization Q&A), but also "you don't need minimums yet at $100/day" (Scaling Q&A) and "$150/day don't set minimums yet" (Zombie Q&A). | **v1.1: none under $100/day, optional $100–1,000 (buyer's call), standard from $1,000.** v1.0 used a $250 boundary; first-hand reading of the 8/31 and Optimization calls moved it. |
 | 2 | Retargeting threshold | M4 summary: 20%+ engaged is a red flag. NEW video: ~25% normal. Live calls: 10–20%, 20–25% healthy, worry at the mid-40s. | Soft flag above 25% or below 10%. Decide on frequency and incremental drop-off too. |
 | 3 | Retargeting/Scale necessity | M4 videos list Retargeting as optional (~50% of brands). Live calls: "retargeting is now optional", "don't need a winners campaign as much". | Core = Prospecting + Retention. |
 | 4 | Budget step size | Vertical (NEW): 10–30% / 48–72 h, 10–15% at large spend, +50% around $100/day, double when smashing. Learning Phase: 50% is OK when well above. Product First call: 20–30% (30–50%) after 3 days above, but "≤10% at $100/day". | Vertical Scaling (NEW video) wins. "Large spend" = **≥ $2,000/day** and "small" = **≤ $200/day** are team defaults. |
@@ -569,6 +611,13 @@ Raise spend **only when above goal**, and keep creative output **always on**, at
 | 16 | Advantage+ exclusions | Dictionary is unclear whether exclusions are hard under A+. | Always set them. (Meta's API treats custom-audience exclusions as hard controls.) |
 | 17 | Sale timeline | No source gives pre/post-sale day counts. The BFCM calendar training was announced but isn't in the folder. | Gap. Add it when the training is recorded. |
 | 18 | Learning-phase exit | Learning Phase video: "~25 purchases"; live: "50 is not real". | Don't manage to it. |
+| 19 | Pausing a top spender that misses KPI | Pausing Ads Q13: ≥3× CPA and 50%+ off KPI → pause. Live calls: never pause a high spender while the account is at goal; cap its pack at ~50% and read for 2 weeks; keep a $135-CPA ad while the account hits a $40 goal. | Q13 pauses **unless the account is at goal**: then cap a ≥50% pack, keep smaller "assisting" ads. |
+| 20 | Step size at ~$100/day | Vertical Scaling: up to +50%. Product First call (garbled): "at $100/day don't move more than 10%" next to "we're not trying to get from 100 to 110". | Keep the Vertical Scaling video (up to +50%). Flagged as unclear. |
+| 21 | Creative volume at very high spend | Calculator: 1 ad/week per $10k/month. Live: a $2–3M/month account makes 100–150 a week (calculator says 200–300); "40 a week per $10k" at $400k/month. | Calculator stays the rule; quality first; big accounts are mostly iterations. |
+| 22 | Scale campaign size | Horizontal Scaling video: 3–5 ads. NEW Structure: 1–3. | **1–3 default, 5 max.** |
+| 23 | Multi-advertiser toggle level | Summary docs were unclear (ad set vs ad). | **Ad level** (seen on screen in the video). |
+| 24 | Engaged-share bands | M4 summary 20% flag; NEW video ~25% normal; live calls: 10% bare minimum, 10–20% usual, 20–25% healthy, 35% at $150/day "not worth breaking out", mid-40s act. | Bands: <10 starved · 10–25 healthy · 25–45 watch · 45+ act (engine `engaged_share_check`). |
+| 25 | Retention catalog vs ad mix | M4 Retention: winners + catalog + offers. Retargeting Q&A: big-catalog brands with dead Retention should rebuild it as catalog ads. | Default mix; switch to catalog when Retention stalls and the catalog is large. |
 
 **Course refresh:** the live calls announce a re-record of the Blueprint for late September / early October 2026. When new videos land, re-run the extraction and update this log.
 

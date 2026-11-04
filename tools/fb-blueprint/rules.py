@@ -25,11 +25,17 @@ RULES: dict = {
         "pack_min_cpa_multiple": 1.0,
         "pack_min_budget_cap_pct": 0.20,
         "pack_min_days": 7,
+        # Launching only ~1 pack a week at a standard budget: the minimum may go
+        # above 1x CPA (Q&A 8/31: CPA $25 -> "$50-100, I lean to $50"), still
+        # inside the 20% cap. Never put a minimum on an interest pack (Product
+        # First call) or on an ad set already taking ~50% (M4 Scale).
+        "pack_min_boost_cpa_multiple": 2.0,
         # Ad set minimums by prospecting daily budget (SOP 13 decision #1):
-        # none below $250 (team default; live calls say no at $100 and $150),
-        # optional $250-1,000 (M4 Prospecting shows the 20%-cap math at $100),
-        # standard from $1,000 (First $100 Setup: "until ... a thousand bucks a day").
-        "min_spend_limits_from_daily_budget": 250,
+        # none below $100; optional $100-1,000 (live calls: "$20/day minimum at
+        # $100/day -> yes and yes" (Q&A 8/31) but also "you don't really need
+        # minimums quite yet at $100/day" (Scaling/Pixels Q&A); M4 Prospecting
+        # shows the 20%-cap math at $100); standard from $1,000 (First $100 Setup).
+        "min_spend_limits_from_daily_budget": 100,
         "min_spend_limits_standard_from_daily_budget": 1000,
         # Ads per pack: 4-8 sweet spot, 2 acceptable, up to 12 if all strong.
         # Sources: # Of Ads To Launch, M4 Structure Overview, Funnel Analysis call.
@@ -97,6 +103,17 @@ RULES: dict = {
         "breakout_max_age_days": 30,
         "breakout_min_spend_share": 0.10,
         "breakout_windows": [7, 14, 30],
+        # Minimum-spend signal (Q&A 8/31, Product First, Retargeting calls): a
+        # pack that spends ABOVE its minimum is carrying itself; one that sits AT
+        # the minimum will fall away when it is removed. "At" = within 10%
+        # (team default; the course draws it as "right at the line").
+        "minimum_stuck_band": 0.10,
+        # Zombie duds: ad sets drawing $2-3/day after minimums end (Q&A 9/9).
+        "zombie_dud_daily_spend_max": 3.0,
+        # A hog ad set missing target while the campaign is at goal: cap it at
+        # ~50% max, never pause it, and judge over ~2 weeks (Optimization Q&A).
+        "hog_cap_pct": 0.50,
+        "hog_judge_days": 14,
         # Shotgun & Sniper kill switches (high creative volume brands only).
         "shotgun_gauntlet_days": 7,
         "shotgun_scale_step_min": 0.25,
@@ -143,11 +160,34 @@ RULES: dict = {
         # Cost caps only at ~$50k-100k+/month. Source: Cost Controls.
         "cost_cap_min_monthly_spend": 50000,
         "cost_cap_budget_utilisation": 0.80,
+        # Spending ~80% of budget = ideal; >90-95% = cap too loose; ~30% every
+        # day = re-check AOV/LTV/cap (Scaling/Pixels Q&A).
+        "cost_cap_too_loose": 0.90,
+        "cost_cap_starved": 0.30,
         "cost_cap_step": 1.0,
-        # Retargeting split check: engaged share 20% soft flag, ~25% can be
-        # normal (NEW Current Structure wins over M4 Retargeting summary).
+        # Engaged share of prospecting spend (live calls): 10% bare minimum,
+        # 10-20% usual, 20-25% still healthy (Q&A 8/3), mid-40s+ = act
+        # (Q&A 8/31: 35% of $150/day "not worth breaking out"). The share moves
+        # opposite to budget changes; more spend (not more creative) lowers it.
+        "engaged_share_floor": 0.10,
         "engaged_share_soft_flag": 0.20,
         "engaged_share_normal_upper": 0.25,
+        "engaged_share_act": 0.45,
+        # Funnel: expect ~50% drop per step (ATC -> IC -> purchase), i.e.
+        # 100 purchases ~ 200 IC ~ 400 ATC (Q&A 8/24). Flag a step converting
+        # under 35% (team default boundary).
+        "funnel_step_expected": 0.50,
+        "funnel_step_flag": 0.35,
+        # On-site conversion rate ~1.2-1.5% at a ~$70 AOV (Retargeting call).
+        "site_cvr_benchmark": [0.012, 0.015],
+        # Scale check: after a budget jump, cost per ATC/IC up 3-15% is normal;
+        # "if I double spend and my cost per ATC doubles, I'm very concerned"
+        # (Q&A 8/31). Concern boundary +50% is a team default.
+        "scale_cost_rise_normal": 0.15,
+        "scale_cost_rise_concern": 0.50,
+        # Geo/product 80/20: keep what drove 80% of revenue, cut the long tail
+        # (Q&A 8/31 geo, Products lesson).
+        "pareto_keep_share": 0.80,
         # Free-shipping threshold should qualify ~75% of orders. Source: AOV call.
         "free_shipping_qualify_share": 0.75,
     },
@@ -165,6 +205,11 @@ RULES: dict = {
         "smashing_multiple": 2.0,
         # Stability: look 14 -> 7 -> 3 -> 1 days; never decide off yesterday.
         "stability_windows": [14, 7, 3, 1],
+        # Relaunch to a previously proven spend (Q&A 8/31: $500 back to a former
+        # $20k/day): doubling is fine while under the old level, judged on
+        # INCREMENTAL attribution; past ~$3k/day add about $1k per move.
+        "relaunch_double_until_daily": 3000,
+        "relaunch_step_after_daily": 1000,
         # Horizontal: not at ~$100/day; careful at $1,000/day. Source: Horizontal Scaling.
         "horizontal_not_ready_daily": 100,
         "horizontal_careful_daily": 1000,

@@ -1,12 +1,12 @@
 # Media buying: Meta ads system
 
-The team's Meta ads operating system, built from *The Facebook Ads Blueprint* course (all 75 lesson files + 17 live-call transcripts).
+The team's Meta ads operating system, built from *The Facebook Ads Blueprint* course (all 75 lesson files + 17 live-call transcripts, each read first-hand, plus the linked sheets and brief template; the two videos without transcripts were watched frame by frame).
 
 | File | What it is |
 |---|---|
 | [SOP.md](SOP.md) | **The rulebook.** Economics, account setup, M4 structure, creative system, testing, optimization, scaling, lead gen, checklists, and a decisions log for every conflict between lessons. |
 | [sources.md](sources.md) | Every course file used, linked to the Drive folder, by module. |
-| [`tools/fb-blueprint/`](../../tools/fb-blueprint/) | Decision engine: `rules.py` (every threshold, cited), `engine.py` (25 decision functions), `blueprint.py` (CLI), `test_engine.py` (45 tests built on the course's worked examples). |
+| [`tools/fb-blueprint/`](../../tools/fb-blueprint/) | Decision engine: `rules.py` (every threshold, cited), `engine.py` (32 decision functions), `blueprint.py` (CLI), `test_engine.py` (60 tests built on the course's worked examples and live-call cases). |
 | [`.claude/skills/fb-*`](../../.claude/skills/) | Claude skills that run the SOP through the Meta Ads MCP: **fb-launch**, **fb-test**, **fb-optimize**, **fb-scale**. |
 
 ## Use it

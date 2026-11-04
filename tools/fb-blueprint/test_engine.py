@@ -48,12 +48,38 @@ class Launch(unittest.TestCase):
         r = E.pack_minimum(100, 1000, 5, other_active_minimums=200)
         self.assertEqual(r["daily_minimum"], 0)
 
-    def test_no_minimums_on_small_budgets(self):
-        # First $100 Setup / Zombie Q&A ($150/day: "don't set minimums yet").
-        self.assertEqual(E.pack_minimum(30, 150, 3)["status"], "none")
-        mid = E.pack_minimum(50, 500, 2)  # $250-1,000: optional, capped at 20% = $100
+    def test_minimums_by_budget_band(self):
+        # Below $100/day: none. $100-1,000: optional (Q&A 8/31 "$20 minimum at $100/day: yes";
+        # Zombie / Scaling-Pixels Q&As "not needed yet") -> buyer's call. $1,000+: standard.
+        self.assertEqual(E.pack_minimum(20, 60, 2)["status"], "none")
+        small = E.pack_minimum(20, 100, 2)
+        self.assertEqual((small["daily_minimum"], small["optional"]), (20, True))
+        r150 = E.pack_minimum(30, 150, 3)  # 20% of $150 = $30
+        self.assertEqual((r150["daily_minimum"], r150["optional"]), (30, True))
+        mid = E.pack_minimum(50, 500, 2)  # capped at 20% = $100
         self.assertEqual((mid["daily_minimum"], mid["optional"]), (50, True))
         self.assertFalse(E.pack_minimum(50, 2000, 2)["optional"])
+
+    def test_minimum_20pct_example_170(self):
+        # Optimization Q&A: $170/day with three $20 minimums = 35% -> over the 20% cap ($34 total).
+        r = E.pack_minimum(20, 170, 4, other_active_minimums=40)
+        self.assertEqual(r["daily_minimum"], 0)
+        self.assertEqual(r["status"], "none")
+
+    def test_minimum_interest_pack_and_boost(self):
+        self.assertEqual(E.pack_minimum(25, 1000, 3, interest_pack=True)["daily_minimum"], 0)
+        # Q&A 8/31: CPA $25, one pack a week -> "$50-100, lean $50".
+        self.assertEqual(E.pack_minimum(25, 1000, 3, one_pack_per_week=True)["daily_minimum"], 50)
+        # Boost never applies under the standard band, and never beats the 20% cap.
+        self.assertEqual(E.pack_minimum(25, 500, 3, one_pack_per_week=True)["daily_minimum"], 25)
+        self.assertEqual(E.pack_minimum(150, 1000, 3, one_pack_per_week=True)["daily_minimum"], 200)
+
+    def test_minimum_signal(self):
+        self.assertEqual(E.minimum_signal(120, 50, 7)["action"], "REMOVE_MINIMUM")
+        self.assertIn("ABOVE", E.minimum_signal(120, 50, 7)["signal"])
+        self.assertIn("AT_MINIMUM", E.minimum_signal(52, 50, 4)["signal"])
+        self.assertEqual(E.minimum_signal(52, 50, 4)["action"], "WAIT")
+        self.assertEqual(E.minimum_signal(50, 50, 8, above_target=True)["action"], "KEEP_MINIMUM")
 
     def test_retention_cap(self):
         self.assertTrue(E.retention_budget(1000, 100)["ok"])
@@ -107,6 +133,20 @@ class Test(unittest.TestCase):
     def test_far_off_but_under_3x_waits(self):
         r = E.pause_decision({"spend": 120, "purchases": 1, "kpi_actual": 0.6}, self.CTX)
         self.assertEqual(r["action"], "WAIT")
+
+    def test_q12_long_run_note(self):
+        r = E.pause_decision({"spend": 400, "purchases": 4, "kpi_actual": 1.2}, {**self.CTX, "window_days": 21})
+        self.assertEqual(r["action"], "KEEP")
+        self.assertTrue(any("can be considered" in x for x in r["why"]))
+
+    def test_account_at_goal_caps_hog_instead_of_pausing(self):
+        # Optimization Q&A: ad set takes 70% of spend, misses target, campaign at goal -> max 50%, judge 2 weeks.
+        ctx = {**self.CTX, "account_at_goal": True}
+        r = E.pause_decision({"spend": 160, "purchases": 1, "kpi_actual": 0.6, "adset_spend_share": 0.7}, ctx)
+        self.assertEqual((r["action"], r["question"]), ("CAP_ADSET", 13))
+        # Scaling/Pixels Q&A: a $135-CPA ad vs $40 target -> keep while the account hits goal.
+        k = E.pause_decision({"spend": 160, "purchases": 1, "kpi_actual": 0.6, "adset_spend_share": 0.1}, ctx)
+        self.assertEqual(k["action"], "KEEP")
 
     def test_viral_caps_instead_of_pausing(self):
         r = E.pause_decision({"spend": 900, "purchases": 1, "kpi_actual": 0.5, "viral": True}, self.CTX)
@@ -188,7 +228,49 @@ class Optimize(unittest.TestCase):
         # NEW Current Structure example: $91k new, $26k engaged, $6k existing, existing freq 64.
         r = E.engaged_share_check(91_000, 26_000, 6_000, existing_freq_7d=64)
         self.assertAlmostEqual(r["shares"]["engaged"], 0.211, places=3)
+        self.assertEqual(r["status"], "HEALTHY")
         self.assertTrue(any("Retention" in x for x in r["recommendations"]))
+        # Q&A 8/31: 35% of $150/day -> watch, a breakout is not worth it at this budget.
+        w = E.engaged_share_check(97.5, 52.5, 0, daily_budget=150)
+        self.assertEqual(w["status"], "WATCH")
+        self.assertTrue(any("not worth" in x for x in w["recommendations"]))
+        self.assertEqual(E.engaged_share_check(50, 50, 0)["status"], "ACT")
+        self.assertEqual(E.engaged_share_check(95, 4, 1)["status"], "STARVED")
+
+    def test_cost_cap_utilisation(self):
+        # Scaling/Pixels Q&A: ~80% of budget spent = ideal; >90% = cap too loose; ~30% = re-check inputs.
+        self.assertEqual(E.cost_cap_action(True, False, 50, 50, 60_000, budget_utilisation=0.8)["action"], "WORKING")
+        self.assertEqual(E.cost_cap_action(True, False, 50, 50, 60_000, budget_utilisation=0.95)["action"], "RAISE_BUDGET")
+        self.assertEqual(E.cost_cap_action(True, False, 50, 50, 60_000, budget_utilisation=0.3)["action"], "RECHECK_INPUTS")
+
+    def test_funnel_health(self):
+        ok = E.funnel_health(400, 200, 100)
+        self.assertEqual(ok["leaking_steps"], [])
+        # Scaling/Pixels Q&A: 46 ATC -> 8 IC -> 2 purchases after a collection was removed.
+        bad = E.funnel_health(46, 8, 2, sessions=500, aov=70)
+        self.assertIn("atc_to_ic", bad["leaking_steps"])
+        # Retargeting call: 0.7% site CVR at $70 AOV is too low.
+        self.assertTrue(any("Site CVR" in x for x in E.funnel_health(100, 50, 7, sessions=1000, aov=70)["why"]))
+
+    def test_scale_funnel_check(self):
+        self.assertEqual(E.scale_funnel_check({"cost_per_atc": 10}, {"cost_per_atc": 11})["verdict"], "NORMAL")
+        self.assertEqual(E.scale_funnel_check({"cost_per_atc": 10}, {"cost_per_atc": 13})["verdict"], "WATCH")
+        self.assertEqual(E.scale_funnel_check({"cost_per_atc": 10}, {"cost_per_atc": 20})["verdict"], "CONCERN")
+
+    def test_pareto_cut(self):
+        r = E.pareto_cut({"UK": 60, "IE": 15, "SE": 10, "NO": 5, "DK": 5, "FI": 5})
+        self.assertEqual(r["keep"], ["UK", "IE", "SE"])
+        self.assertIn("FI", r["cut"])
+
+    def test_zombie_check(self):
+        r = E.zombie_check([
+            {"name": "p3", "avg_daily_spend_7d": 2.5},
+            {"name": "p4", "avg_daily_spend_7d": 2.0, "minimum_active": True},
+            {"name": "p5", "avg_daily_spend_7d": 80, "top_ad_spend_share": 0.9, "top_ad_hits_kpi": False},
+            {"name": "p6", "avg_daily_spend_7d": 80, "top_ad_spend_share": 0.9, "top_ad_hits_kpi": True},
+        ])
+        self.assertEqual(r["dud_adsets"], ["p3"])
+        self.assertEqual(r["move_top_ad_from"], ["p5"])
 
     def test_placement_and_geo(self):
         spend = {"facebook_feed": 40, "instagram_feed": 20, "facebook_stories": 10, "instagram_stories": 10,
@@ -247,6 +329,23 @@ class Scale(unittest.TestCase):
                               "new_incremental_kpi": 1.64})
         self.assertAlmostEqual(r["step_pct"], 0.10)
 
+    def test_relaunch_doubles_on_incremental(self):
+        # Q&A 8/31: relaunch at $500 after running $20k/day; double while judged on incremental.
+        base = {**self.BASE, "daily_budget": 500, "kpi_by_window": {"14": 2.8, "7": 2.9, "3": 2.9, "1": 2.6},
+                "prior_proven_daily": 20_000}
+        r = E.vertical_scale({**base, "incremental_kpi_7d": 2.6})
+        self.assertEqual((r["action"], r["new_daily_budget"]), ("DOUBLE", 1000))
+        big = E.vertical_scale({**base, "daily_budget": 3000, "incremental_kpi_7d": 2.6})
+        self.assertEqual((big["action"], big["new_daily_budget"]), ("INCREASE", 4000))
+        slow = E.vertical_scale({**base, "incremental_kpi_7d": 2.0})
+        self.assertEqual(slow["action"], "INCREASE")
+        self.assertLess(slow["new_daily_budget"], 1000)
+
+    def test_new_segment_push_note(self):
+        r = E.vertical_scale({**self.BASE, "kpi_by_window": {"14": 2.8, "7": 2.9, "3": 2.9, "1": 2.4},
+                              "new_incremental_kpi": 2.6})
+        self.assertTrue(any("push" in x for x in r["why"]))
+
     def test_horizontal(self):
         self.assertFalse(E.horizontal_readiness(100, "sale")["allowed"])
         self.assertFalse(E.horizontal_readiness(3000, "more spend")["allowed"])
@@ -274,6 +373,28 @@ class Profit(unittest.TestCase):
 
     def test_target_roas(self):
         self.assertEqual(E.target_roas(2.0)["target_roas"], 2.2)
+
+    def test_course_profit_sheet(self):
+        # Setup: Profit Tracking sheet, opened first-hand: 100 orders x $75, 35% COGS, $0 fixed.
+        be = E.profit_model(100, 75, 0.35, 0)
+        self.assertEqual((be["breakeven_roas_blended"], be["breakeven_cpa"], be["ad_spend_pct_of_revenue"]), (1.54, 48.75, 0.65))
+        tk = E.profit_model(100, 75, 0.35, 0, take_pct=0.10)
+        self.assertEqual((tk["breakeven_roas_blended"], tk["breakeven_cpa"], tk["ad_spend_budget"], tk["profit"]),
+                         (1.82, 41.25, 4125, 750))
+        big = E.profit_model(1000, 125, 0.33, 10_000, take_pct=0.30)
+        self.assertEqual((big["breakeven_roas_blended"], big["breakeven_cpa"], big["profit"]), (3.45, 36.25, 37_500))
+
+    def test_pacing(self):
+        r = E.pacing(30_000, 12_000, 90_000, 30_000, 15)
+        self.assertEqual(r["daily_spend_to_hit_goal"], 1200)
+        self.assertEqual(r["daily_revenue_to_hit_goal"], 4000)
+        self.assertEqual(r["roas_to_hit_goal"], 3.33)
+
+    def test_reverse_target(self):
+        # Product First call: $100 job, 10% of calls close -> $10 per call.
+        self.assertEqual(E.reverse_target(100, 0.10, "call")["target_cost_per_call"], 10)
+        # Q&A 8/31: $100 per paid sub, 10% of trials convert -> $10 per trial.
+        self.assertEqual(E.reverse_target(100, 0.10, "trial")["target_cost_per_trial"], 10)
 
 
 class Cli(unittest.TestCase):

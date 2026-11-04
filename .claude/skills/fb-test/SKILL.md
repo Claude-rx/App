@@ -23,6 +23,10 @@ echo '<json>' | python3 tools/fb-blueprint/blueprint.py <command>
 
 King Goal (type and target), target CPA, and average daily spend of the prospecting CBO. If unknown, ask, or read the account brief that `fb-launch` wrote.
 
+## Step 0.5: M0 accounts (prospecting under ~$250/day)
+
+Skip the 13-question tree. On a fixed weekly day, propose pausing creatives with **low spend AND low conversion value**, nothing else (SOP §5.1). At ~$100/day an ad far over CPA is cut only if the account is below goal and its cost per ATC/IC is also poor.
+
 ## Step 1: Window
 
 `judgment_window {avg_daily_spend}` → 7 or 14 days. Only judge ads with at least that much data. Always pull **14d, 7d, 3d and yesterday** and read them in that order.
@@ -42,8 +46,10 @@ For each ad with enough data, run:
 ```json
 pause_decision {"ad": {"spend":..,"purchases":..,"atc":..,"ic":..,"cost_per_ic":..,"kpi_actual":..,
                         "viral": <CPM/CTR wildly off the account average>, "wrong_demographic": <from breakdown>},
+                        "adset_spend_share": <share of campaign spend its pack takes>},
                 "ctx": {"kpi_type":"roas|cpa","kpi_target":..,"target_cpa":..,"avg_cost_per_ic":..,
-                        "post_event": <post-sale/holiday?>, "pixel_ok": <last gut check>, "window_days":..}}
+                        "post_event": <post-sale/holiday?>, "pixel_ok": <last gut check>, "window_days":..,
+                        "account_at_goal": <campaign at or above the King Goal on the window?>}}
 ```
 
 - `viral`: CPM, CTR or CPC wildly different from the account (course example: account 1.3% CTR / $5.81 CPM; ad ~5% CTR / ~$1 CPM).
@@ -56,10 +62,15 @@ Map the results:
 - `KEEP` / `WAIT` → no action; say when to re-check.
 - `FIX_TRACKING` → stop and hand off to the `fb-launch` pixel check.
 
-**Overrides from the course, applied after the tree:**
-- An ad that takes a large share of spend while the account hits target → **don't pause** even if the tree says PAUSE. Check its cost per ATC/IC and incremental ROAS. If it truly lags, cap the pack at about 50% and evaluate over 2 weeks.
+**Course rules the engine already applies** (via `account_at_goal` / `adset_spend_share`): with the account at goal, a pack taking ~50%+ of spend gets a max of ~50% and a 2-week read instead of a pause, and smaller off-KPI ads stay on as assisting ads. Pausing a top spender gives a 3–7 day spike, then a slump below target.
+
+**Still check by hand:**
 - Ads spending under ~$50/month are funnel support. Don't kill them for noisy ROAS.
-- Packs whose minimum just ended: spending **above** the minimum = winner. Stuck **at** the minimum = it will die. Propose dud ads stuck at $2–3/day for the zombie campaign if one exists (SOP §7.7).
+- Before killing an ad on third-party ROAS, read incremental: "deleting negative ads is usually a race to zero".
+- Packs whose minimum is ending: `minimum_signal {avg_daily_spend, daily_minimum, days_live, above_target}`. Spending **above** the minimum = winner; stuck **at** it = it will fade.
+- Zombie feed (if the account runs one): `zombie_check {adsets:[{name, avg_daily_spend_7d, minimum_active, top_ad_spend_share, top_ad_hits_kpi}]}`. Duds at ≤$3/day → move one ad (via post ID) and pause the rest; a ~90% hog that misses target → move that ad so the others get a turn (SOP §7.7).
+- A proven winner that keeps losing spend to new packs: propose a ~50% minimum on its ad set or its own campaign (SOP §5.9).
+- Good CTR/ATC/IC but zero purchases: the break is at purchase. Brief a version with a clearer CTA/offer before calling the concept dead.
 
 ## Step 4: Graduation (weekly, SOP §7.4)
 
@@ -84,6 +95,7 @@ breakout_winners {"windows": {"7": {"account_spend":..,"account_roas":..,"ads":[
 Output one short message: the date, then per winner: name, top spend share, ROAS, and an Ads Manager link. If there are none, say "No new breakout winners today." Then draft an **iteration brief** for each winner (SOP §6.7):
 - same concept and hook, plus new hooks, voiceovers, statics, landing pages, splices
 - 1–6 iterations, changing one layer at a time
+- Iterations are the high-hit-rate, low-upside shots (stability); new concepts are low-hit-rate, high-upside (growth). Brief both every cycle. Keep a true winner's concept going ("almost never" stop) unless its power is its comments/social proof.
 
 ## Step 6: Shotgun & Sniper (only if the account runs it, SOP §7.6)
 
@@ -92,7 +104,7 @@ Output one short message: the date, then per winner: name, top spend share, ROAS
 3. Never automate the kill switches with Meta rules.
 4. Survivors after 7 days: propose ABO→CBO, or +25%/day while the targets hold.
 
-Before anything else, check the precondition: dozens of new creatives or products every week. If it isn't met, recommend the core CBO packs instead.
+Before anything else, check the precondition: dozens of new creatives or products every week. If it isn't met, recommend the core CBO packs instead. "If you're debating it, don't": the course has 45 videos on M4 and one on Shotgun. Never set up an ABO test campaign that feeds the CBO either; it is a permanent 20% cost center (SOP §5.4).
 
 ## Output: test report
 

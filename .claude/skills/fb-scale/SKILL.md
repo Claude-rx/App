@@ -1,6 +1,6 @@
 ---
 name: fb-scale
-description: Scale Meta ad accounts exactly per the media-buying SOP (The Facebook Ads Blueprint). Vertical scaling of the prospecting CBO with the 5 checks (King Goal, above target on 14/7/3-day windows, New audience segment, incremental attribution, stability) and the move sizes (10-30% every 48-72h, 10-15% at large spend, bigger near $100/day, double when smashing ≥2x with the delta check); twin engine (creative always on); horizontal scaling only for sales, margin tiers or a 1-3 ad scale campaign; cost controls only at $50k+/month; sale-period scaling. Proposes budget moves for approval. Use when: "scale", "increase budget", "can I spend more", "we're above target", "double the budget", "should I make a scale campaign", "horizontal scaling", "cost cap", "scale for Black Friday".
+description: Scale Meta ad accounts exactly per the media-buying SOP (The Facebook Ads Blueprint). Vertical scaling of the prospecting CBO with the 5 checks (King Goal, above target on 14/7/3-day windows, New audience segment, incremental attribution, stability) and the move sizes (10-30% every 48-72h, 10-15% at large spend, bigger near $100/day, double when smashing ≥2x with the delta check, doubling back to a previously proven spend on incremental), post-move funnel cost check; twin engine (creative always on); horizontal scaling only for sales, margin tiers or a 1-3 ad scale campaign; cost controls only at $50k+/month; sale-period scaling. Proposes budget moves for approval. Use when: "scale", "increase budget", "can I spend more", "we're above target", "double the budget", "should I make a scale campaign", "horizontal scaling", "cost cap", "scale for Black Friday".
 ---
 
 # fb-scale: scale per the SOP
@@ -32,7 +32,9 @@ echo '<json>' | python3 tools/fb-blueprint/blueprint.py <command>
 ```json
 vertical_scale {"ctx": {"kpi_type":"roas|cpa","kpi_target":..,"daily_budget":..,"hours_since_last_change":..,
                         "kpi_by_window":{"14":..,"7":..,"3":..,"1":..},
-                        "new_incremental_kpi":..,"revenue_7d_daily_avg":..}}
+                        "new_incremental_kpi":..,"revenue_7d_daily_avg":..,
+                        "prior_proven_daily": <spend level sustained before a pause, if any>,
+                        "incremental_kpi_7d": <7-day incremental KPI, for the relaunch path>}}
 ```
 
 - `INCREASE`: propose `new_daily_budget`. Remind the buyer what to expect: frequency, CPM and CPC up, ROAS down short-term. Hold if cost per ATC stays flat.
@@ -40,7 +42,11 @@ vertical_scale {"ctx": {"kpi_type":"roas|cpa","kpi_target":..,"daily_budget":..,
 - `WAIT`: inside 48–72 h. State the next check time.
 - `HOLD`: below target or unstable. Do not raise. Hand creative work to `fb-test` (iterations of winners); twin engine.
 
-If ROAS has slid during steady weekly increases, propose pausing the increases and letting it settle. If the account is recovering a previous spend level, doubling steps (500 → 1,000 → 2,000 → 3,000) are allowed, judged on incremental (SOP §9.1).
+If ROAS has slid during steady weekly increases, propose pausing the increases and letting it settle. If the account is recovering a previous spend level, pass `prior_proven_daily` and `incremental_kpi_7d`: the engine doubles (500 → 1,000 → 2,000 → 3,000) and then adds $1k per move while incremental holds (SOP §9.1).
+
+After every move, compare cost per ATC/IC before and after with `scale_funnel_check {prev, curr}`: `NORMAL` (+3–15%) keep going, `WATCH` hold, `CONCERN` (~doubling) stop and step back. ROAS usually dips after an increase because new spend reaches people with a longer path to purchase; the roller coaster settles within days. Don't panic-cut.
+
+One ad carrying the account and above target? Just raise the budget. No scale campaign, no breakout.
 
 ## Step 3: Twin engine check (SOP §9.3)
 
@@ -50,12 +56,14 @@ Always pair the budget decision with the creative plan: `ads_per_week {monthly_s
 
 `horizontal_readiness {daily_spend, reason}`, where reason is `sale`, `margin_tier` or `scale_campaign`.
 - **Internal horizontal is always allowed:** iterate winning angles, expand winning avatars, add interest packs (hand off to `fb-launch`).
-- **Scale campaign:** only for 1–3 home runs that are top-10% spenders and above target on incremental (`graduation` in `fb-test`). Duplicates only; the originals stay. CBO, no ad set limits, exclude everything targeted elsewhere.
+- **Scale campaign:** only for 1–3 home runs (5 at most) that are top-10% spenders and above target on incremental (`graduation` in `fb-test`). Duplicates only; the originals stay. CBO, no ad set limits, exclude everything targeted elsewhere. Mostly unnecessary now: scale inside the core prospecting CBO first.
+- **Never a second ad account for the same funnel** (it over-counts). At ~$400k+/month, a warmed backup account capped at ~1% of spend is fine.
+- At very high creative volume (100+ ad sets) it is normal to split into a few M4 prospecting campaigns by avatar.
 - **Dominant ad below KPI:** propose a max % on its pack (e.g. 80% → 60%), not a scale campaign.
 
 ## Step 5: Cost controls (SOP §9.4)
 
-Only when monthly spend is at least ~$50k. Use cost cap = **real** target CPA, with the budget sized so spend averages about 80% of it. Then decide with `cost_cap_action`. Bid caps are for very advanced operators only.
+Only when monthly spend is at least ~$50k. Use cost cap = **real** target CPA, with the budget sized so spend averages about 80% of it. Then decide with `cost_cap_action` (pass `budget_utilisation`): ~80% = working, >90% = the cap is loose so raise budget, ~30% = re-check AOV/LTV/target. Bid caps are for very advanced operators only (and the zombie campaign).
 
 ## Step 6: Sale scaling (SOP §9.5)
 

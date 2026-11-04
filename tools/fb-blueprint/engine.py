@@ -56,7 +56,8 @@ def _interp(x: float, anchors: list, cap: float) -> float:
 
 
 def pack_minimum(target_cpa: float, campaign_daily_budget: float, pack_number: int,
-                 other_active_minimums: float = 0.0) -> dict:
+                 other_active_minimums: float = 0.0, interest_pack: bool = False,
+                 one_pack_per_week: bool = False) -> dict:
     """SOP 5.4: ad set daily minimum for a new prospecting pack.
 
     min = 1x target CPA, but all live minimums together <= 20% of the campaign
@@ -68,14 +69,21 @@ def pack_minimum(target_cpa: float, campaign_daily_budget: float, pack_number: i
     if pack_number <= 1:
         return {"rule": "SOP 5.4", "status": "none", "daily_minimum": 0,
                 "why": ["Pack 1 never gets an ad set minimum."]}
+    if interest_pack:
+        return {"rule": "SOP 5.4", "status": "none", "daily_minimum": 0,
+                "why": ["Interest packs hold already-proven winners: no minimum (Product First call). "
+                        "Minimums are only for newly launched broad packs."]}
     if campaign_daily_budget < threshold:
         return {"rule": "SOP 5.4", "status": "none", "daily_minimum": 0,
                 "why": [f"Prospecting budget ${campaign_daily_budget:,.0f}/day is below ${threshold:,}/day: "
                         "no ad set spending limits yet (First $100 Setup / live calls). Let CBO distribute."]}
     pool = L["pack_min_budget_cap_pct"] * campaign_daily_budget - other_active_minimums
-    wanted = L["pack_min_cpa_multiple"] * target_cpa
+    standard = campaign_daily_budget >= L["min_spend_limits_standard_from_daily_budget"]
+    mult = L["pack_min_boost_cpa_multiple"] if (one_pack_per_week and standard) else L["pack_min_cpa_multiple"]
+    wanted = mult * target_cpa
     amount = max(0.0, min(wanted, pool))
-    why.append(f"wanted 1x target CPA = ${wanted:,.2f}")
+    why.append(f"wanted {mult:g}x target CPA = ${wanted:,.2f}"
+               + (" (only ~1 pack a week at a standard budget, so a firmer minimum is allowed)" if mult > 1 else ""))
     why.append(f"20% cap = ${L['pack_min_budget_cap_pct'] * campaign_daily_budget:,.2f}, "
                f"already used by other live minimums ${other_active_minimums:,.2f} -> room ${max(pool, 0):,.2f}")
     status = "set" if amount >= wanted else ("reduced" if amount > 0 else "none")
@@ -85,8 +93,34 @@ def pack_minimum(target_cpa: float, campaign_daily_budget: float, pack_number: i
     if optional and amount > 0:
         why.append(f"Budget under ${L['min_spend_limits_standard_from_daily_budget']:,}/day: the minimum is OPTIONAL "
                    "(buyer's call). Skip it if CBO is already giving new packs spend.")
+    why.append("Remove after 7 days no matter what, unless it is crushing above target while still only "
+               "spending at the minimum.")
     return {"rule": "SOP 5.4", "status": status, "optional": optional and amount > 0,
             "daily_minimum": round(amount, 2), "remove_after_days": L["pack_min_days"], "why": why}
+
+
+def minimum_signal(avg_daily_spend: float, daily_minimum: float, days_live: int,
+                   above_target: bool | None = None) -> dict:
+    """SOP 5.4 / 7.2: read a pack's minimum-spend behaviour before the minimum comes off.
+
+    Spending clearly ABOVE the minimum = CBO wants it on its own (winner signal).
+    Sitting AT the minimum = it will fall away once the minimum is removed.
+    """
+    T, L = _r("test"), _r("launch")
+    band = T["minimum_stuck_band"]
+    ratio = avg_daily_spend / daily_minimum if daily_minimum else 0
+    stuck = ratio <= 1 + band
+    remove = days_live >= L["pack_min_days"]
+    if stuck and remove and above_target:
+        action, why = "KEEP_MINIMUM", ("Still only spending at the minimum but above target: the one case where the "
+                                       "minimum can stay a little longer.")
+    elif remove:
+        action, why = "REMOVE_MINIMUM", f"{days_live} days live: remove the minimum (7 days max)."
+    else:
+        action, why = "WAIT", f"Day {days_live} of {L['pack_min_days']}: leave the minimum on."
+    signal = "AT_MINIMUM (expect it to fade once removed)" if stuck else "ABOVE_MINIMUM (carrying itself: positive signal)"
+    return {"rule": "SOP 5.4", "action": action, "signal": signal, "spend_vs_minimum": round(ratio, 2),
+            "why": [f"Average ${avg_daily_spend:,.2f}/day vs minimum ${daily_minimum:,.2f}/day ({ratio:.2f}x).", why]}
 
 
 def retention_budget(prospecting_daily: float, retention_daily: float) -> dict:
@@ -150,7 +184,9 @@ def pause_decision(ad: dict, ctx: dict) -> dict:
     ad:  spend, purchases, atc, ic, cost_per_ic, kpi_actual (on the judging
          attribution), days_live, plus optional flags viral, wrong_demographic.
     ctx: kpi_type ('roas'|'cpa'), kpi_target, target_cpa, avg_cost_per_ic,
-         post_event (bool), pixel_ok (bool), window_days.
+         post_event (bool), pixel_ok (bool), window_days,
+         account_at_goal (bool, optional: the campaign/account is hitting the King Goal).
+    ad may also carry adset_spend_share (share of campaign spend its ad set takes).
     Returns action KEEP | WAIT | PAUSE | CAP_ADSET | FIX_TRACKING.
     """
     T = _r("test")
@@ -183,9 +219,22 @@ def pause_decision(ad: dict, ctx: dict) -> dict:
             return out("KEEP", 7, [f"0 purchases but cost per IC ${cpic:,.2f} <= average ${avg:,.2f}: leading indicator, the ad 'has legs'."])
         return out("PAUSE", 11, [f"Spent ${spend:,.2f} (>= 2x target CPA) with 0 purchases and no healthy mid-funnel signal."])
     if actual is not None and _within_kpi(kt, target, actual, T["pause_kpi_tolerance"]):
-        return out("KEEP", 12, [f"Within 50% of KPI ({kt} {actual} vs {target}): generally not worth pausing yet; re-check next cycle."])
+        why12 = [f"Within 50% of KPI ({kt} {actual} vs {target}): generally not worth pausing yet; re-check next cycle."]
+        if window >= 2 * T["pause_window_min_days"]:
+            why12.append("It has sat at this level for a while: pausing can be considered (Pausing Ads, Q12).")
+        return out("KEEP", 12, why12)
     under = T["pause_underperformer_cpa_multiple"] * cpa
     if spend >= under:
+        if ctx.get("account_at_goal"):
+            share = ad.get("adset_spend_share", 0) or 0
+            if share >= T["hog_cap_pct"]:
+                return out("CAP_ADSET", 13, [
+                    f"Off KPI, but the campaign is at goal and this ad set takes {share:.0%} of spend. Do NOT pause "
+                    f"(pausing a top spender spikes results for 3-7 days, then drains the funnel below target). "
+                    f"Set a MAX of {T['hog_cap_pct']:.0%} on the ad set and judge over {T['hog_judge_days']} days."])
+            return out("KEEP", 13, [
+                f"Off KPI ({kt} {actual} vs {target}) after ${spend:,.2f}, but the account is at goal: likely an "
+                "assisting ad. Keep it; pause only if the account itself falls below goal (check its cost per ATC/IC first)."])
         return out("PAUSE", 13, [f"Spent ${spend:,.2f} >= 3x target CPA (${under:,.2f}) and still 50%+ off KPI ({kt} {actual} vs {target})."])
     return out("WAIT", 13, [f"50%+ off KPI but only ${spend:,.2f} spent (< 3x target CPA ${under:,.2f}). Let it reach the gate."])
 
@@ -261,6 +310,28 @@ def shotgun_kill(adset: dict, targets: dict, days_live: int) -> dict:
     if days_live >= _r("test")["shotgun_gauntlet_days"]:
         return {"action": "SCALE", "why": ["Survived the 7-day gauntlet: switch campaign ABO->CBO, or +25%/day while targets hold."]}
     return {"action": "KEEP", "why": ["Inside kill switches; keep checking daily."]}
+
+
+def zombie_check(adsets: list) -> dict:
+    """SOP 7.7: pick ad sets / ads for the zombie (bid-cap) campaign.
+
+    adsets: [{name, avg_daily_spend_7d, minimum_active (bool), top_ad_spend_share,
+              top_ad_hits_kpi (bool)}]. Moving an ad resets its learning; that reset is the point.
+    """
+    T = _r("test")
+    duds, move_top_ad = [], []
+    for a in adsets:
+        if a.get("minimum_active"):
+            continue
+        if a.get("avg_daily_spend_7d", 0) <= T["zombie_dud_daily_spend_max"]:
+            duds.append(a["name"])
+        elif (a.get("top_ad_spend_share", 0) >= 0.9) and a.get("top_ad_hits_kpi") is False:
+            move_top_ad.append(a["name"])
+    return {"rule": "SOP 7.7", "dud_adsets": duds, "move_top_ad_from": move_top_ad,
+            "why": [f"Duds = ad sets drawing <= ${T['zombie_dud_daily_spend_max']:.0f}/day after minimums end: move one ad "
+                    "(via post ID) to the zombie campaign and pause the rest of the ad set.",
+                    "An ad eating ~90% of its ad set while missing target: move that ad to the zombie so the other ads get a turn.",
+                    "Never move ads between live ad sets otherwise: it loses learnings."]}
 
 
 # ======================================================================
@@ -401,12 +472,28 @@ def drop_diagnosis(prev: dict, curr: dict) -> dict:
 
 
 def cost_cap_action(tcpa_hit: bool, budget_fully_spent: bool, current_cap: float, target_cpa: float,
-                    monthly_spend: float) -> dict:
-    """SOP 9.4: cost-cap decision matrix."""
+                    monthly_spend: float, budget_utilisation: float | None = None) -> dict:
+    """SOP 9.4: cost-cap decision matrix.
+
+    budget_utilisation (optional, 0-1): share of the daily budget the capped
+    campaign actually spends. ~80% is the healthy target.
+    """
     O = _r("optimize")
     if monthly_spend < O["cost_cap_min_monthly_spend"]:
         return {"rule": "SOP 9.4", "action": "DONT_USE_CAPS",
                 "why": [f"${monthly_spend:,.0f}/mo is below ~${O['cost_cap_min_monthly_spend']:,}/mo: cost caps are very unlikely to work. Use Highest volume."]}
+    if budget_utilisation is not None and tcpa_hit:
+        u = budget_utilisation
+        if u >= O["cost_cap_too_loose"]:
+            budget_fully_spent = True
+        elif O["cost_cap_starved"] < u < O["cost_cap_too_loose"]:
+            return {"rule": "SOP 9.4", "action": "WORKING", "new_cap": current_cap,
+                    "why": [f"Spending {u:.0%} of budget while hitting the cap: around 80% is exactly where a cost cap should sit. "
+                            "It is protecting you; do not tweak it to force spend."]}
+        else:
+            return {"rule": "SOP 9.4", "action": "RECHECK_INPUTS", "new_cap": current_cap,
+                    "why": [f"Spending only {u:.0%} of budget day after day: check whether AOV, LTV or the real target CPA changed "
+                            "before touching the cap; otherwise make creative."]}
     if tcpa_hit and budget_fully_spent:
         return {"rule": "SOP 9.4", "action": "RAISE_BUDGET", "new_cap": current_cap,
                 "why": ["Cap hit and budget fully spent: raise budget (keep cap) until it no longer spends in full. Optionally lower cap $1-2, never $10."]}
@@ -424,22 +511,99 @@ def cost_cap_action(tcpa_hit: bool, budget_fully_spent: bool, current_cap: float
 
 
 def engaged_share_check(new_spend: float, engaged_spend: float, existing_spend: float,
-                        existing_freq_7d: float | None = None) -> dict:
-    """SOP 5.7 / 8.4: should Retargeting or Retention be broken out?"""
+                        existing_freq_7d: float | None = None, daily_budget: float | None = None) -> dict:
+    """SOP 5.7 / 8.4: should Retargeting or Retention be broken out?
+
+    Bands (live calls): <10% starved, 10-25% healthy, 25-45% watch, 45%+ act.
+    """
     O = _r("optimize")
     total = new_spend + engaged_spend + existing_spend or 1
     eng = engaged_spend / total
     recs = []
-    if eng > O["engaged_share_normal_upper"]:
-        recs.append(f"Engaged {eng:.0%} of prospecting spend (>25%): consider breaking out Retargeting and excluding those audiences from Prospecting.")
-    elif eng < 0.10:
-        recs.append(f"Engaged only {eng:.0%}: check exclusions; if truly starved, break out Retargeting and force budget.")
+    if eng >= O["engaged_share_act"]:
+        status = "ACT"
+        recs.append(f"Engaged {eng:.0%} of prospecting spend (mid-40s or more): break out Retargeting and exclude those "
+                    "audiences from Prospecting, or raise budget so Meta has to reach new people.")
+    elif eng > O["engaged_share_normal_upper"]:
+        status = "WATCH"
+        recs.append(f"Engaged {eng:.0%} (>25%): watch it. Meta spends on engaged first, and the share rises when budget is cut. "
+                    "Adding creative will not fix it; more spend will.")
+        if daily_budget is not None and daily_budget < 500:
+            recs.append(f"At ${daily_budget:,.0f}/day a breakout saves only a few dollars: usually not worth it yet.")
+    elif eng < O["engaged_share_floor"]:
+        status = "STARVED"
+        recs.append(f"Engaged only {eng:.0%} (<10% bare minimum): check the advertiser-settings segments and exclusions; "
+                    "validate with a $5/day retargeting campaign on the same lists. If truly starved, break out Retargeting.")
     else:
-        recs.append(f"Engaged {eng:.0%}: within the normal range; keep retargeting merged in Prospecting.")
-    if existing_freq_7d is not None and existing_freq_7d > _r("optimize")["frequency"]["existing"]["7"][1]:
+        status = "HEALTHY"
+        recs.append(f"Engaged {eng:.0%}: within the normal 10-25% range; keep retargeting merged in Prospecting.")
+    if existing_freq_7d is not None and existing_freq_7d > O["frequency"]["existing"]["7"][1]:
         recs.append(f"Existing-customer 7d frequency {existing_freq_7d} > 4: break out / tighten Retention.")
-    return {"rule": "SOP 5.7", "shares": {"new": round(new_spend / total, 3), "engaged": round(eng, 3),
-                                          "existing": round(existing_spend / total, 3)}, "recommendations": recs}
+    return {"rule": "SOP 5.7", "status": status,
+            "shares": {"new": round(new_spend / total, 3), "engaged": round(eng, 3),
+                       "existing": round(existing_spend / total, 3)}, "recommendations": recs}
+
+
+def funnel_health(atc: float, ic: float, purchases: float, sessions: float | None = None,
+                  aov: float | None = None) -> dict:
+    """SOP 8.3: where does the funnel leak? Expect ~50% drop per step."""
+    O = _r("optimize")
+    steps = {"atc_to_ic": ic / atc if atc else None, "ic_to_purchase": purchases / ic if ic else None}
+    flags = [k for k, v in steps.items() if v is not None and v < O["funnel_step_flag"]]
+    why = [f"ATC->IC {steps['atc_to_ic']:.0%}" if steps["atc_to_ic"] is not None else "ATC->IC n/a",
+           f"IC->purchase {steps['ic_to_purchase']:.0%}" if steps["ic_to_purchase"] is not None else "IC->purchase n/a",
+           "Expect roughly 50% per step (100 purchases ~ 200 IC ~ 400 ATC; use unique ATC for multi-item carts)."]
+    out = {"rule": "SOP 8.3", "step_rates": {k: (round(v, 3) if v is not None else None) for k, v in steps.items()},
+           "leaking_steps": flags, "why": why}
+    if sessions:
+        cvr = purchases / sessions
+        out["site_cvr"] = round(cvr, 4)
+        lo, hi = O["site_cvr_benchmark"]
+        if aov is not None and aov <= 150 and cvr < lo:
+            out["why"].append(f"Site CVR {cvr:.2%} is under ~{lo:.1%}-{hi:.1%} for a ~${aov:,.0f} AOV: the site/offer is part of the problem.")
+    if "ic_to_purchase" in flags:
+        out["why"].append("Break at purchase: remake the ad with a clearer CTA/offer and check checkout, price and shipping before judging the concept.")
+    if "atc_to_ic" in flags:
+        out["why"].append("Break at checkout start: check cart, shipping reveal and site changes (e.g. a removed collection).")
+    return out
+
+
+def scale_funnel_check(prev: dict, curr: dict) -> dict:
+    """SOP 9.1: after a budget jump, are the early funnel costs holding?
+
+    prev/curr: {cost_per_atc, cost_per_ic}. +3-15% is normal; ~doubling = stop.
+    """
+    O = _r("optimize")
+    res, worst = {}, 0.0
+    for k in ("cost_per_atc", "cost_per_ic"):
+        if prev.get(k) and curr.get(k):
+            ch = curr[k] / prev[k] - 1
+            res[k] = round(ch, 3)
+            worst = max(worst, ch)
+    if worst >= O["scale_cost_rise_concern"]:
+        verdict, why = "CONCERN", "Early funnel costs jumped sharply after the increase: stop raising and hold/step back."
+    elif worst > O["scale_cost_rise_normal"]:
+        verdict, why = "WATCH", "Costs up more than the normal 3-15%: hold the budget and give conversions time to catch up."
+    else:
+        verdict, why = "NORMAL", "Within the normal 3-15% wobble: conversion rate lags, keep going."
+    return {"rule": "SOP 9.1", "verdict": verdict, "changes": res, "why": [why,
+            "Judge scale moves on incremental attribution; new spend reaches people with a longer path to purchase."]}
+
+
+def pareto_cut(revenue_by_item: dict, keep_share: float | None = None) -> dict:
+    """SOP 8.5 / 3.4: keep the items (countries, products, categories) that make ~80% of revenue."""
+    share = keep_share if keep_share is not None else _r("optimize")["pareto_keep_share"]
+    total = sum(revenue_by_item.values()) or 1
+    keep, run = [], 0.0
+    for k, v in sorted(revenue_by_item.items(), key=lambda kv: kv[1], reverse=True):
+        if run / total >= share:
+            break
+        keep.append(k)
+        run += v
+    cut = [k for k in revenue_by_item if k not in keep]
+    return {"rule": "SOP 8.5", "keep": keep, "cut": cut, "kept_share": round(run / total, 3),
+            "why": [f"{len(keep)} of {len(revenue_by_item)} items drive {run / total:.0%} of revenue: focus there, relaunch smaller, "
+                    "and add the rest back once those are clear."]}
 
 
 def placement_check(spend_by_placement: dict) -> dict:
@@ -500,7 +664,9 @@ def vertical_scale(ctx: dict) -> dict:
     ctx: kpi_type, kpi_target, daily_budget, hours_since_last_change,
          kpi_by_window {"14":x, "7":x, "3":x, "1":x} (King Goal metric, multi-day),
          new_incremental_kpi (optional; New-segment incremental ROAS/CPA),
-         revenue_7d_daily_avg (optional; for the smashing delta check).
+         revenue_7d_daily_avg (optional; for the smashing delta check),
+         prior_proven_daily (optional; a spend level this account sustained before a pause/rebuild),
+         incremental_kpi_7d (optional; 7-day incremental-attribution KPI, required for the relaunch path).
     """
     S = _r("scale")
     kt, target, budget = ctx["kpi_type"], ctx["kpi_target"], ctx["daily_budget"]
@@ -520,6 +686,25 @@ def vertical_scale(ctx: dict) -> dict:
     if not better(w.get("3")):
         return {"rule": "SOP 9.1", "action": "HOLD", "new_daily_budget": budget,
                 "why": ["14d and 7d above target but last 3 days are not: wait for stability. Never decide off yesterday."]}
+
+    prior, inc7 = ctx.get("prior_proven_daily"), ctx.get("incremental_kpi_7d")
+    if prior and budget < prior:
+        if inc7 is None:
+            why.append("Relaunching toward a proven spend: pull incremental attribution before using the faster path.")
+        elif better(inc7):
+            if budget < S["relaunch_double_until_daily"]:
+                new = min(2 * budget, prior)
+                label = "doubling"
+            else:
+                new = min(budget + S["relaunch_step_after_daily"], prior)
+                label = f"+${S['relaunch_step_after_daily']:,}"
+            return {"rule": "SOP 9.1", "action": "DOUBLE" if label == "doubling" else "INCREASE",
+                    "new_daily_budget": round(new, 2),
+                    "why": [f"Relaunching toward a previously proven ${prior:,.0f}/day with incremental {inc7} at or above target: "
+                            f"{label} is allowed. Judge only on incremental attribution and watch cost per ATC/IC "
+                            "(+3-15% normal, doubling = stop)."]}
+        else:
+            why.append(f"Incremental {inc7} is below target: no fast relaunch path; normal steps only.")
 
     smashing = ratio(w["7"]) >= S["smashing_multiple"] and ratio(w["3"]) >= S["smashing_multiple"]
     if smashing and kt == "roas" and ctx.get("revenue_7d_daily_avg"):
@@ -547,6 +732,8 @@ def vertical_scale(ctx: dict) -> dict:
     if inc is not None and not better(inc):
         step = lo
         why.append(f"New-segment incremental {inc} is below target: allowed, but use the smallest step and expect about that return.")
+    elif inc is not None:
+        why.append(f"New-segment incremental {inc} is at or above target: push with confidence.")
     new = budget * (1 + step)
     why.insert(0, f"Above target on 14/7/3-day windows (7d {w['7']} vs {target}). Step {step:.0%} "
                   f"(band {lo:.0%}-{hi:.0%} for ${budget:,.0f}/day, scaled by how far above goal).")
@@ -602,3 +789,32 @@ def target_roas(breakeven_roas: float, take_home: float | None = None) -> dict:
     t = take_home if take_home is not None else _r("profit")["target_over_breakeven_default"]
     return {"rule": "SOP 3.3", "target_roas": round(breakeven_roas * (1 + t), 2),
             "why": [f"Break-even {breakeven_roas} + {t:.0%} take-home. 10-20% over break-even is a healthy spot."]}
+
+
+
+def pacing(spend_target: float, spend_mtd: float, revenue_target: float, revenue_mtd: float,
+           days_remaining: int) -> dict:
+    """SOP 3.5: month pacing (Ads Tracking Template, tracker tab)."""
+    d = max(days_remaining, 1)
+    spend_left, rev_left = spend_target - spend_mtd, revenue_target - revenue_mtd
+    roas_needed = rev_left / spend_left if spend_left > 0 else None
+    return {"rule": "SOP 3.5",
+            "daily_spend_to_hit_goal": round(spend_left / d, 2),
+            "daily_revenue_to_hit_goal": round(rev_left / d, 2),
+            "roas_to_hit_goal": round(roas_needed, 2) if roas_needed is not None else None,
+            "why": [f"(${spend_target:,.0f} - ${spend_mtd:,.0f}) / {d} days = ${spend_left / d:,.2f}/day to spend.",
+                    f"(${revenue_target:,.0f} - ${revenue_mtd:,.0f}) / {d} days = ${rev_left / d:,.2f}/day of revenue.",
+                    "ROAS to hit goal = revenue remaining / spend remaining."
+                    + (" Spend target already reached." if spend_left <= 0 else "")]}
+
+
+def reverse_target(value_per_sale: float, conversion_rate: float, label: str = "lead") -> dict:
+    """SOP 10 / 3.3: work a target backwards (cost per call, lead, trial).
+
+    Target cost per <label> = value per sale x the share of <label>s that become a sale.
+    Use contribution after delivery costs as value_per_sale to break even.
+    """
+    t = value_per_sale * conversion_rate
+    return {"rule": "SOP 10", f"target_cost_per_{label}": round(t, 2),
+            "why": [f"${value_per_sale:,.2f} per sale x {conversion_rate:.0%} of {label}s closing = ${t:,.2f} per {label} to break even.",
+                    "Compare against cost per QUALIFIED " + label + ", never raw volume; national vs local CPL is not comparable."]}
