@@ -246,7 +246,7 @@ refill_terms: "Your pack ships again at its own price, the “Renews at” amoun
                             {% campaign_include 'bundle-selector.html' selector_id='main' card_style=bundle_card_style packages=packages shipping_methods=shipping_methods bundles=bundles await=false %}
                           </div>
                           <div data-next-component="shipping-form" class="form-sections">
-                            {% campaign_include 'customer-info-form.html' section_title='Step 2: Your details' %}
+                            {% campaign_include 'customer-info-form.html' section_title='Step 2: Your details' phone_required=true %}
                             {% campaign_include 'shipping-address-form.html' section_title='Step 3: Shipping address' %}
                           </div>
                           <div class="form-section form-section--last">

@@ -186,9 +186,16 @@ def check_axon(theme):
             ok(field in m.group(1), f'axon: the product page item lacks {field.split(":")[0]}')
         ok(re.search(r'image_url: "https://[^"]+\.(png|jpe?g)"', m.group(1)), 'axon: the product page image_url is missing or not .png/.jpg')
 
+
+def check_phone():
+    """AXON marks user_data.phone recommended on purchase: the trial checkout asks for it, so every purchase can be green."""
+    co = PROJECT / '_site' / F.SLUG / 'trial-checkout' / 'index.html'
+    ph = re.search(r'<input[^>]*name="phone"[^>]*>', co.read_text(encoding='utf-8')) if co.is_file() else None
+    ok(ph and 'required' in ph.group(0), 'checkout: the phone field is optional (AXON purchase user_data.phone goes orange): phone_required=true')
+
 if __name__ == '__main__':
     theme = Path(next((a for a in sys.argv[1:] if not a.startswith('--')), ROOT / 'skinofab-theme'))
-    check_spec(); check_pdp(theme); check_checkout(theme); check_offers(theme); check_thank_you(theme); check_axon(theme)
+    check_spec(); check_pdp(theme); check_checkout(theme); check_offers(theme); check_thank_you(theme); check_axon(theme); check_phone()
     key = check_key()
     if '--live' in sys.argv and key: check_live(key)
     if fails:

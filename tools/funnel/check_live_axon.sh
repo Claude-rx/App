@@ -26,6 +26,8 @@ for p in "${PAGES[@]}"; do
   grep -q 'categoryId(it.item_category) || familyCategory(it) || fallbackCategoryId' <<<"$js" || missing+=("numeric item_category_id")
   grep -q 'IMAGE_BY_SKU_FAMILY' <<<"$js" || missing+=(".jpg image_url for every item")
   grep -q 'params.payment_type = paymentType(' <<<"$js" || missing+=("payment_type enum")
+  # purchase user_data.phone is recommended by AXON: the checkouts ask for it
+  if [[ $p == *checkout ]] && ! grep -oE '<input[^>]*name="phone"[^>]*>' <<<"$html" | grep -q 'required'; then missing+=("required phone field"); fi
   if [ ${#missing[@]} -gt 0 ]; then joined=$(printf '%s, ' "${missing[@]}"); echo "FAIL $p: adapter lacks ${joined%, } — ${url##*/}"; bad=1
   else echo "ok   $p"; fi
 done

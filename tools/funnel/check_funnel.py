@@ -258,6 +258,12 @@ for p in F.PAGES:
     for m in re.finditer(r'<li data-s="(\d)">', _h): pass
     if re.search(r'<li><span>\d ★</span>', _h): fail(p['id'], 'a rating bar without its row (data-s): it would not take its colour')
 
+# AXON marks user_data.phone recommended on purchase: the checkout asks for it, so every purchase can be green
+for _co in sorted(SITE.glob('*checkout*/index.html')):
+    _ph = re.search(r'<input[^>]*name="phone"[^>]*>', _co.read_text(encoding='utf-8'))
+    if not _ph or 'required' not in _ph.group(0):
+        fail('checkout', 'the phone field is optional (AXON purchase user_data.phone goes orange): include customer-info-form.html with phone_required=true')
+
 if problems:
     print(f'check_funnel: {len(problems)} problem(s)'); print('\n'.join('  ' + x for x in problems)); sys.exit(1)
 print(f'check_funnel: {len(F.PAGES)} pages, {len(cards)} checkout packs, 4 offers, theme templates and claims OK')
