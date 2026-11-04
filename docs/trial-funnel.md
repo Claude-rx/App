@@ -165,6 +165,21 @@ The store's AppLovin app loads the pixel with the same event key, but sends page
 templates (product, home), not on a store page. So the trial page sends them itself. The public page cache (30
 minutes) served the version without page_view for its first half hour.
 
+
+**Item fields (4 Nov 2026, the owner's Pixel Helper screenshot).** AppLovin's Pixel Helper flagged 3 issues on each
+item of View Item and Add to Cart. Axon requires seven fields on every item: item_id, item_name, price, quantity,
+item_variant_id, image_url (.png, .jpg or .jpeg) and an integer item_category_id (a Google product category).
+- **The cause.** The trial page sent no variant, image or category. The SDK sends the campaign's `.webp` thumbnail as
+  the image and the campaign's name as the category, which the adapter dropped.
+- **The fix on the trial page.** Its own events now send all seven fields: the SKU as item_id, variants 15, 334 and
+  335, the product's store photo, and category 2765.
+- **The fix in the adapter.** `js/axon.adapter.js` (shared by all three funnels: a LOCAL PATCH, keep it when
+  re-syncing) fills the category and a .jpg photo by SKU:
+  - 2765 Foundations & Concealers, with the foundation's or the stick's photo;
+  - 543597 Manual Massage Tools for the brush, with its photo.
+- **Proven live.** view_item, add_to_cart and begin_checkout on the trial and APF funnels carry all seven fields, and
+  AppLovin answers 200. A purchase payload run through the adapter does too.
+
 ## Owner items
 
 - Cancel test order **101882** and the monthly subscription it started (Adaptive Peptide Foundation, $39.97/mo).

@@ -58,21 +58,38 @@
     search:           ['search_term']
   };
 
+  // LOCAL PATCH over the generated copy (keep it when re-syncing), 4 Nov 2026, AppLovin's Pixel Helper: Axon requires
+  // item_variant_id, image_url (.png, .jpg or .jpeg) and an integer item_category_id (a Google product category) on every
+  // item. The SDK's image is the campaign's .webp thumbnail and its item_category is the campaign's name, so both come
+  // from SKINOFAB's catalogue here, by SKU: 2765 Foundations & Concealers, 543597 Manual Massage Tools (the brush), each
+  // product's own photo from the store.
+  var MEDIA = 'https://cdn.29next.store/media/skinofab/images/products/2026/10/';
+  var CATALOG = [
+    { sku: /^SKF-LYB/, category: 543597, image: MEDIA + 'card-642f9f.jpg' },
+    { sku: /^SKF-AFS/, category: 2765, image: MEDIA + 'duo-ends-1743e5.jpg' },
+    { sku: /./, category: 2765, image: MEDIA + '01-front-a241ad.jpg' }
+  ];
+  function catalog(it) {
+    var key = String(it.item_sku || it.item_id || '');
+    for (var i = 0; i < CATALOG.length; i++) if (CATALOG[i].sku.test(key)) return CATALOG[i];
+    return CATALOG[CATALOG.length - 1];
+  }
+
   // Map an SDK EcommerceItem to Axon's item object (mostly GA4-shaped; a couple of renames).
   function mapItems(items) {
     return (items || []).map(function (it) {
-      var out = {};
+      var out = {}, cat = catalog(it);
       if (it.item_id !== undefined && it.item_id !== null && it.item_id !== '') out.item_id = it.item_id;
       if (it.item_name) out.item_name = it.item_name;
       if (it.price !== undefined && it.price !== null) out.price = it.price;
       if (it.quantity !== undefined && it.quantity !== null) out.quantity = it.quantity;
       if (it.item_brand) out.item_brand = it.item_brand;
-      if (it.item_variant_id) out.item_variant_id = it.item_variant_id;
+      out.item_variant_id = String(it.item_variant_id || it.item_id || '');
       // Axon: item_category_id is an integer id. The SDK's item_category is the campaign's name, which Axon rejects
-      // with HTTP 400 for the whole event (view_item, begin_checkout, purchase: live review 6, 29 Oct 2026), so it is
-      // sent only when it is a whole number. LOCAL PATCH over the generated copy: keep it when re-syncing.
-      if (it.item_category !== undefined && it.item_category !== null && /^\d+$/.test(String(it.item_category))) out.item_category_id = Number(it.item_category);
-      if (it.item_image) out.image_url = it.item_image;               // Axon: image_url
+      // with HTTP 400 for the whole event (view_item, begin_checkout, purchase: live review 6, 29 Oct 2026): a whole
+      // number is kept, anything else gets the product's Google category.
+      out.item_category_id = (it.item_category !== undefined && it.item_category !== null && /^\d+$/.test(String(it.item_category))) ? Number(it.item_category) : cat.category;
+      out.image_url = it.item_image && /\.(png|jpe?g)(\?|$)/i.test(String(it.item_image)) ? it.item_image : cat.image;   // Axon: image_url
       if (it.discount !== undefined && it.discount !== null && it.discount !== '') out.discount = it.discount;
       return out;
     });

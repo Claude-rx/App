@@ -120,13 +120,13 @@ def plans():
     out = [{'id': 'trial', 'name': '1 bottle', 'live_tag': '⚡ Flash trial · 50% off', 'today': TODAY, 'compare': REGULAR, 'over_today': REGULAR,
             'href': f'{CHECKOUT}?forceBundleId=trial', 'href_over': f'{CHECKOUT}?forceBundleId=trial-regular',
             'renew': f'{REGULAR}/mo', 'cta': 'Start my trial', 'cta_over': 'Start my refills',
-            'value': T['today'], 'value_over': T['regular'], 'item': (str(T['package']), T['name'])}]
+            'value': T['today'], 'value_over': T['regular'], 'item': (T['sku'], T['name'], T['variant'])}]
     for k in F.PACKS:
         price = f"${k['price']:.2f}"
         out.append({'id': k['bundle'], 'name': f"{k['bottles']} bottles + {k['gift'].replace('FREE ', 'free ')}", 'tag': k['tab'], 'today': price,
                     'compare': f"${k['compare']:.2f}", 'href': f"{CHECKOUT}?forceBundleId={k['bundle']}",
                     'renew': f"{price} / {k['months']} mo",
-                    'cta': f"Get my {k['bottles']} bottles", 'value': k['price'], 'item': (str(k['package']), f"Adaptive Peptide Foundation - {k['bottles']} bottles")})
+                    'cta': f"Get my {k['bottles']} bottles", 'value': k['price'], 'item': (k['sku'], f"Adaptive Peptide Foundation - {k['bottles']} bottles", k['variant'])})
     return out
 
 
@@ -137,7 +137,7 @@ def box(src):
         on = n == 0
         attrs = (f' data-sft-plan="{c["id"]}" data-href="{c["href"]}" data-href-over="{c.get("href_over", c["href"])}"'
                  f' data-renew="{c["renew"]}" data-cta="{c["cta"]}" data-cta-over="{c.get("cta_over", c["cta"])}" data-value="{c["value"]}"'
-                 f' data-value-over="{c.get("value_over", c["value"])}" data-item-id="{c["item"][0]}" data-item-name="{c["item"][1]}"')
+                 f' data-value-over="{c.get("value_over", c["value"])}" data-item-id="{c["item"][0]}" data-item-name="{c["item"][1]}" data-item-variant="{c["item"][2]}"')
         tag = (f'<p class="sft-plan__tag sft-plan__tag--hot" data-sf-trial-live>{c["live_tag"]}</p>' if c.get('live_tag')
                else f'<p class="sft-plan__tag">{c["tag"]}</p>')
         price = (f'<p class="sft-plan__price" data-sf-trial-live><strong>{c["today"]}</strong><s>{c["compare"]}</s></p>'
@@ -179,7 +179,7 @@ TAIL = ('<script>(function () {'
         ' if (!left) { h.classList.add("sf-trial-over"); paint(); clearInterval(t); } };'
         ' var t = end && !over() ? setInterval(tick, 1000) : 0; if (t) tick(); paint();'
         # AppLovin: page_view and view_item (the trial bottle) on load, add_to_cart with the chosen plan on the button
-        ' var payload = function (c) { var v = parseFloat(get(c, "value")); return { currency: "USD", value: v, items: [{ item_id: c.getAttribute("data-item-id"), item_name: c.getAttribute("data-item-name"), item_brand: "SKINOFAB", price: v, quantity: 1 }] }; };'
+        ' var payload = function (c) { var v = parseFloat(get(c, "value")); return { currency: "USD", value: v, items: [{ item_id: c.getAttribute("data-item-id"), item_name: c.getAttribute("data-item-name"), item_brand: "SKINOFAB", item_variant_id: c.getAttribute("data-item-variant"), item_category_id: ' + str(F.AXON_CATEGORY) + ', image_url: "' + F.AXON_IMAGE + '", price: v, quantity: 1 }] }; };'
         ' var send = function (name, c, done) { var n = 0; (function go() { if (typeof window.axon === "function") { try { if (name === "page_view") window.axon("track", "page_view"); else window.axon("track", name, payload(c)); } catch (e) {} if (done) setTimeout(done, 350); return; }'
         ' if (n++ < 40) setTimeout(go, 250); else if (done) done(); })(); };'
         ' window.sfTrialTrack = send;'
@@ -257,7 +257,7 @@ def check(out):
     if bad: raise SystemExit(f'pdp_copy: store residue in the trial page: {bad}')
     for need in ('id="apf-buy"', 'Flash trial offer · Limited time, today only', f'Renews at <b data-sft-renew="">{REGULAR}/mo</b>', 'Love it or your money back',
                  'Buy 2, get 1 FREE', 'Buy 3, get 2 FREE', '?forceBundleId=trial-3"', '?forceBundleId=trial-5"',
-                 'Refill reminder', 'Cancel any time', f'{CHECKOUT}?forceBundleId=trial"', 'forceBundleId=trial-regular', '$66.97', '$99.97', TODAY, '"page_view"', '"view_item"', '"add_to_cart"'):
+                 'Refill reminder', 'Cancel any time', f'{CHECKOUT}?forceBundleId=trial"', 'forceBundleId=trial-regular', '$66.97', '$99.97', TODAY, '"page_view"', '"view_item"', '"add_to_cart"', 'item_variant_id', 'item_category_id: 2765', 'image_url: "https://'):
         if need not in out: raise SystemExit(f'pdp_copy: missing in the trial page: {need}')
     # every block that names the product is inside the setting's with
     for m in re.finditer(r'\{% block (\w+) %\}(.*?)\{% endblock(?: \1)? %\}', out, re.S):
