@@ -81,13 +81,11 @@ packs. The box now has, in order:
    - **1 bottle**, pill "⚡ Flash trial · 50% off": **$19.97** ~~$39.97~~. It is selected by default.
    - **3 bottles + free Blender sponge**, pill "Buy 2, get 1 FREE": **$66.97** ~~$119.91~~.
    - **5 bottles + free Lymphatic Brush**, pill "Buy 3, get 2 FREE": **$99.97** ~~$199.85~~.
-3. The note under the cards, which follows the chosen plan: "1 bottle · delivered monthly", "3 bottles · delivered
-   every 3 months" or "5 bottles · delivered every 5 months".
-4. The button, which follows the chosen plan:
+3. The button (the line under the cards went on 4 Nov: "Renews at" already says it), which follows the chosen plan:
    - START MY TRIAL → goes to `?forceBundleId=trial` (or `trial-regular` after midnight);
    - GET MY 3 BOTTLES → goes to `trial-3`;
    - GET MY 5 BOTTLES → goes to `trial-5`.
-5. "Love it or your money back", then Refill reminder · Cancel any time · Renews at $39.97/mo, $66.97 / 3 mo or
+4. "Love it or your money back", then Refill reminder · Cancel any time · Renews at $39.97/mo, $66.97 / 3 mo or
    $99.97 / 5 mo, following the chosen plan.
 
 After midnight, only the 1-bottle card changes (to $39.97/mo, with no pill); the packs keep their prices. The checkout
@@ -95,7 +93,7 @@ shows the same three plans under "Step 1: Choose your plan", with the card the b
 clock turns only the trial card into the regular one, so a pack she chose stays chosen.
 
 Proven live on 4 Nov 2026 at 390 and 1440 px:
-- each plan's button, note and "Renews at" amount follow the plan she picks;
+- each plan's button and "Renews at" amount follow the plan she picks;
 - the 5-bottle plan lands on the checkout at $99.97 ("Refills: Every 5 months", the brush on a first-order line);
 - picking 3 bottles at the checkout gives $66.97 every 3 months, and the trial gives $19.97, then $39.97/mo;
 - AppLovin answered 200 to page_view, view_item, add_to_cart and begin_checkout.

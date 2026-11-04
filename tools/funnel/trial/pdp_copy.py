@@ -91,7 +91,6 @@ BOX_CSS = ('<style>.sft-box{margin:6px 0 16px;color:#151515}'
            '.sft-plan__price{flex:none;margin:0!important;text-align:right;white-space:nowrap;line-height:1.05}'
            '.sft-plan__price strong{display:block;font-size:28px;font-weight:800;color:#151515}'
            '.sft-plan__price s{display:block;margin-top:3px;font-size:16px;color:#4a4a4a}'
-           '.sft-note{margin:14px 0 0!important;text-align:center;font-size:15px;color:#151515!important}'
            '.sft-cta{display:flex!important;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;margin:14px 0 0;border:2px solid #000;border-radius:14px!important;'
            'background:#151515!important;color:#fff!important;box-shadow:4px 4px 0 #000;font-size:19px;font-weight:800;letter-spacing:.04em;text-decoration:none!important;text-transform:uppercase}'
            '.sft-cta:hover{background:#333!important}'
@@ -116,17 +115,17 @@ def trust_row(src):
 
 def plans():
     """The plan cards: the flash trial bottle, then the packs (funnels/trial.py PACKS). Each card carries what the page
-    shows and sends when it is chosen: the checkout link (before and after her midnight), the note under the cards, the
+    shows and sends when it is chosen: the checkout link (before and after her midnight), the
     "Renews at" amount, the button's words and the price AppLovin's add_to_cart reports."""
     out = [{'id': 'trial', 'name': '1 bottle', 'live_tag': '⚡ Flash trial · 50% off', 'today': TODAY, 'compare': REGULAR, 'over_today': REGULAR,
             'href': f'{CHECKOUT}?forceBundleId=trial', 'href_over': f'{CHECKOUT}?forceBundleId=trial-regular',
-            'note': '1 bottle · delivered monthly', 'renew': f'{REGULAR}/mo', 'cta': 'Start my trial', 'cta_over': 'Start my refills',
+            'renew': f'{REGULAR}/mo', 'cta': 'Start my trial', 'cta_over': 'Start my refills',
             'value': T['today'], 'value_over': T['regular'], 'item': (str(T['package']), T['name'])}]
     for k in F.PACKS:
         price = f"${k['price']:.2f}"
         out.append({'id': k['bundle'], 'name': f"{k['bottles']} bottles + {k['gift'].replace('FREE ', 'free ')}", 'tag': k['tab'], 'today': price,
                     'compare': f"${k['compare']:.2f}", 'href': f"{CHECKOUT}?forceBundleId={k['bundle']}",
-                    'note': f"{k['bottles']} bottles · delivered every {k['months']} months", 'renew': f"{price} / {k['months']} mo",
+                    'renew': f"{price} / {k['months']} mo",
                     'cta': f"Get my {k['bottles']} bottles", 'value': k['price'], 'item': (str(k['package']), f"Adaptive Peptide Foundation - {k['bottles']} bottles")})
     return out
 
@@ -136,7 +135,7 @@ def box(src):
     cards = []
     for n, c in enumerate(plans()):
         on = n == 0
-        attrs = (f' data-sft-plan="{c["id"]}" data-href="{c["href"]}" data-href-over="{c.get("href_over", c["href"])}" data-note="{c["note"]}"'
+        attrs = (f' data-sft-plan="{c["id"]}" data-href="{c["href"]}" data-href-over="{c.get("href_over", c["href"])}"'
                  f' data-renew="{c["renew"]}" data-cta="{c["cta"]}" data-cta-over="{c.get("cta_over", c["cta"])}" data-value="{c["value"]}"'
                  f' data-value-over="{c.get("value_over", c["value"])}" data-item-id="{c["item"][0]}" data-item-name="{c["item"][1]}"')
         tag = (f'<p class="sft-plan__tag sft-plan__tag--hot" data-sf-trial-live>{c["live_tag"]}</p>' if c.get('live_tag')
@@ -153,7 +152,6 @@ def box(src):
         '<p class="sft-flash__title">⚡ Flash trial offer · Limited time, today only</p>'
         '<p class="sft-flash__clock">Ends at midnight: <strong data-sf-trial-clock="">today</strong></p></div>'
         '<div class="sft-plans" role="radiogroup" aria-label="Choose your plan">' + ''.join(cards) + '</div>'
-        f'<p class="sft-note" data-sft-note="">{first["note"]}</p>'
         f'<a class="sft-cta" data-sft-cta="" href="{first["href"]}"><span data-sft-cta-text="">{first["cta"]}</span>' + arrow + '</a>'
         + trust_row(src) +
         '</div>')
@@ -170,7 +168,6 @@ TAIL = ('<script>(function () {'
         # the button, the note and "Renews at" follow the chosen plan (and the clock, for the trial bottle)
         ' var paint = function () { var c = chosen(); if (!c) return;'
         ' document.querySelectorAll("[data-sft-cta]").forEach(function (a) { a.setAttribute("href", get(c, "href")); var t = a.querySelector("[data-sft-cta-text]"); if (t) t.textContent = get(c, "cta"); });'
-        ' document.querySelectorAll("[data-sft-note]").forEach(function (e) { e.textContent = get(c, "note"); });'
         ' document.querySelectorAll("[data-sft-renew]").forEach(function (e) { e.textContent = get(c, "renew"); }); };'
         ' var pick = function (c) { plans.forEach(function (p) { var on = p === c; p.classList.toggle("is-on", on); p.setAttribute("aria-checked", on ? "true" : "false"); p.tabIndex = on ? 0 : -1; }); paint(); };'
         ' plans.forEach(function (p, i) { p.addEventListener("click", function () { pick(p); });'
