@@ -231,4 +231,5 @@ listicle now show this funnel's three plans with the same Black Friday clock (`S
 ## Owner items
 
 - Cancel test order **101882** and the monthly subscription it started (Adaptive Peptide Foundation, $39.97/mo).
+- Cancel test orders **101982**, **101985** and **101986** (5 Nov 2026, the sales page's AppLovin proof; NEXT's test card) and the subscriptions they started.
 - The Clinicians' Choice badge on the checkout is the APF checkout's (task 157 still applies).

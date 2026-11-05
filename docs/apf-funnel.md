@@ -392,6 +392,20 @@ weak connection would be.
     lazy-loaded photo of 300 px or more gets WebP copies at 480, 800 and its own width (up to 1080), offered through
     `srcset`, with the JPEG/PNG kept as `src`. Encodings are cached in `.work/media-cache`. At 800 px the copies weigh
     1.1 MB against 3.7 MB for the originals.
+- **AppLovin, proven live on 5 Nov 2026.** Three test orders used NEXT's test card through the real path: the sales page,
+  the plan card, the trial checkout, then the offers. The runner was `FUNNEL=bf node tools/funnel/live_order.mjs ... --entry
+  --pack ... --track`.
+
+  | Order | Plan | Offers | Purchases sent to AppLovin |
+  |---|---|---|---|
+  | #101982 | 1 bottle, $19.97 | offer 1 accepted (2 bottles), brush accepted | $19.97, $39, $14 |
+  | #101985 | 3 bottles, $66.97 | offer 1 and offer 2 declined; offer 2b downsell, brush declined, brush downsell accepted | $66.97, $15, $9 |
+  | #101986 | 5 bottles, $99.97 | offer 1 declined, offer 2 accepted; the brush offers skip it (the pack has the brush) | $99.97, $19 |
+
+  All 98 AppLovin posts answered 200. Every page sent page_view; the sales page sent view_item and add_to_cart; the
+  checkout sent begin_checkout and add_payment_info. Every item of every event carried AppLovin's seven fields: id, name,
+  price, quantity, variant id, a .jpg image and an integer category. The runner now fails if one does not. **Cancel the
+  three orders and the subscriptions they started.**
 - **What the store host still costs.** try.skinofab.com is served by the store. The NEXT platform injects an 81 KB New
   Relic script at the top of every page, which the theme cannot remove, and the server answers in about 0.6 s. Hosting
   the funnel on a static CDN would remove both (see "Static hosting" below: the repo is ready). That needs the owner to
