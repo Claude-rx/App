@@ -352,9 +352,11 @@ offers and campaign 2221 are unchanged; they simply get no traffic from the sale
   only with its certificate in hand.
 - **Ingredient photos** (the owner, 5 Nov 2026: "show the ingredient better using real image"). The eight ingredient
   cards ("Skincare in every layer you wear") each have a photo now: PDRN, Matrixyl 3000, the beech-sugar active,
-  niacinamide, adenosine, hyaluronic acid, ceramide NP, squalane and panthenol. They are still lifes on one warm
-  travertine set, generated with Nano Banana 2 on Kie at 2K, with no text or labels in them. They are saved at 800 px as
-  `images/sf/ingr-*.jpg`, 51–86 KB each, lazy-loaded. The grid is two cards a row on a phone and four on a laptop. The
+  niacinamide, adenosine, hyaluronic acid, ceramide NP, squalane and panthenol. They are still lifes on one bright white
+  lab bench with lab glassware behind (the owner asked for "more white lab"). They were generated with Nano Banana 2 on
+  Kie at 2K, with no text or labels in them. The lab versions are edits of the first stone-set shots, so each
+  ingredient keeps its look. They are saved at 800 px as
+  `images/sf/ingr-*.jpg`, 27–58 KB each, lazy-loaded. The grid is two cards a row on a phone and four on a laptop. The
   listicle keeps its own white-background ingredient photos, so the two pages still share no image.
 - **To end it early or go back.** Set `BLACK_FRIDAY = None` in `funnels/apf.py` and put the APF packs (git history,
   before 5 Nov 2026) back on the sales page. To move the date, change `SALE_END` in `funnels/trial.py`, the trial
