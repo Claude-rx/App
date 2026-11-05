@@ -47,9 +47,9 @@ address_form:
   gated: true
 # the flash trial bar (sf-trial-bar in the page, not the promo banner: its words follow her clock, js/sf-trial.js)
 trial:
-  title: "⚡ Black Friday Flash Sale · Limited time, today only"
+  title: "⚡ Black Friday Flash Sale · Limited time, ends Mon, Nov 30"
   over: "<strong>The Black Friday flash sale has ended.</strong>"
-  ends: "Ends at midnight:"
+  ends: "Ends in"
 trust:
   rating:
     average: "4.8"
@@ -64,7 +64,7 @@ trust:
     - q: "Is this a subscription?"
       a: "Yes, with Automatic Refills you control. With the flash trial you pay $19.97 today for your first bottle (50% off), then a bottle ships every month at $39.97. Or take a pack: 3 bottles (buy 2, get 1 free, with a free Blender sponge) at $66.97 every 3 months, or 5 bottles (buy 3, get 2 free, with a free Lymphatic Brush) at $99.97 every 5 months. Your pack ships again at its own price until you cancel; the free gifts come with your first order only. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees."
     - q: "When does the trial price end?"
-      a: "The flash trial price of the 1-bottle plan is for today: it ends at midnight, your time. After that the 1-bottle plan is $39.97 a month from the first bottle. The 3- and 5-bottle packs keep their prices. Every pack is covered by our 30-day money-back guarantee."
+      a: "The Black Friday price of the 1-bottle plan, $19.97 for your first bottle, ends on Monday, November 30, at midnight your time. After that the 1-bottle plan is $39.97 a month from the first bottle. The 3- and 5-bottle packs keep their prices. Every pack is covered by our 30-day money-back guarantee."
     - q: "When does it ship?"
       a: "Your order ships in 1 business day, with tracking, and shipping is free: 2–4 business days. This offer ships to US addresses only."
     - q: "Are these reviews of this formula?"
@@ -213,10 +213,10 @@ renew_short:
   trial-5: "$99.97 every 5 months"
 refill_terms: "Your pack ships again at its own price, the “Renews at” amount under the order button, until you cancel: 1 bottle $39.97 every month, 3 bottles $66.97 every 3 months, 5 bottles $99.97 every 5 months. The flash trial’s 50% is for your first bottle only. The free gifts come with your first order; refills are the bottles only. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The same 30-day money-back guarantee covers every pack. Contains salmon-derived PDRN: not for anyone with a fish allergy. Questions? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> or call <a href=\"tel:+15632395520\">+1 (563) 239-5520</a>: a person replies within one business day."
 ---
-{% comment %} the flash trial's deadline, before the first paint and before the SDK reads the URL (js/sf-trial.js ticks it):
-   midnight, her time, of the day she first saw the offer (sf_trial_end, shared with the product page); after it the
+{% comment %} the Black Friday sale's end, before the first paint and before the SDK reads the URL (js/sf-trial.js ticks it):
+   midnight at the end of Monday, Nov 30 2026, her time (funnels/trial.py SALE_END, the product page's too); after it the
    regular card (no code) and the regular words; the card the URL names follows the clock either way {% endcomment %}
-<script>(function () { var K = 'sf_trial_end', end = 0; try { end = parseInt(localStorage.getItem(K), 10) || 0; } catch (e) {} if (!end) { var d = new Date(); d.setHours(24, 0, 0, 0); end = d.getTime(); try { localStorage.setItem(K, String(end)); } catch (e) {} } window.sfTrialEnd = end; var over = Date.now() >= end; if (over) document.documentElement.classList.add('sf-trial-over'); try { var q = new URLSearchParams(location.search), have = (q.get('forceBundleId') || '').split(':').pop(), want = over ? 'trial-regular' : 'trial'; if (/^trial-[35]$/.test(have)) want = have; if (have !== want) { q.set('forceBundleId', want); history.replaceState(history.state, '', location.pathname + '?' + q.toString() + location.hash); } } catch (e) {} })();</script>
+<script>(function () { var end = new Date(2026, 10, 30, 24, 0, 0, 0).getTime(); window.sfTrialEnd = end; var over = Date.now() >= end; if (over) document.documentElement.classList.add('sf-trial-over'); try { var q = new URLSearchParams(location.search), have = (q.get('forceBundleId') || '').split(':').pop(), want = over ? 'trial-regular' : 'trial'; if (/^trial-[35]$/.test(have)) want = have; if (have !== want) { q.set('forceBundleId', want); history.replaceState(history.state, '', location.pathname + '?' + q.toString() + location.hash); } } catch (e) {} })();</script>
 <p class="sf-failsafe" role="alert" hidden data-sf-failsafe>Checkout didn’t load. Please refresh the page in a moment. Nothing has been charged. Questions? Email <a href="mailto:info@skinofab.com">info@skinofab.com</a> or call <a href="tel:+15632395520">+1 (563) 239-5520</a>.</p>
 <div class="page-wrapper">
   <main class="main-wrapper">

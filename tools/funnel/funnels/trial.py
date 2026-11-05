@@ -62,6 +62,13 @@ AXON_IMAGE = 'https://cdn.29next.store/media/skinofab/images/products/2026/10/01
 AXON_CATEGORY = 2765
 UNIT = TRIAL['regular']
 
+# the Black Friday flash sale's end (the owner, 5 Nov 2026: "get back the price of 19.97 with black friday offer trial and
+# keep it"): one date for every visitor, midnight at the end of Cyber Monday in her own time zone; until then the trial
+# bottle is $19.97 with FLASH50, after it the page and the checkout turn to the regular $39.97 by themselves. It replaces
+# the per-visitor clock (midnight of her first visit), which had taken the price away from a returning visitor.
+SALE_END = (2026, 11, 30)          # year, month, day: the sale runs through this day
+SALE_END_LABEL = 'Mon, Nov 30'
+
 # the packs beside the trial (the owner, 4 Nov 2026: "put the offer also of buy 2 get 1 free and buy 3 get 2 free", at
 # the APF funnel's prices; packages 6 and 7, added that day through the create skill's update path): the checkout card
 # id, the package, the bottles, what she pays today and at every refill, how many months apart, the crossed-out price

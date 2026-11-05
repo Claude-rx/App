@@ -206,6 +206,20 @@ clock are unchanged; they are now named the Black Friday flash sale:
 bar and banner go at her midnight. To end the sale, put the flash trial words back in `pdp_copy.py` (BF_*) and in
 `trial-checkout.html` (trial.title, badge_text).
 
+
+**The sale keeps the $19.97 until Nov 30 (5 Nov 2026, the owner: "get back the price of 19.97 with black friday offer
+trial and keep it").** The per-visitor clock (midnight of her first visit, in localStorage) had taken the price away
+from returning visitors. It is replaced by one end date for everyone, `SALE_END` in `funnels/trial.py`: midnight at the
+end of Monday, Nov 30 2026 (Cyber Monday), in each visitor's own time zone.
+- **What changed.** The product page and the checkout read the same date. The old `sf_trial_end` value is ignored, and
+  the clock shows the days left ("25d 17:49:33"). The wording is "Limited time · Ends Mon, Nov 30" and the checkout FAQ
+  names the date. A clock that restarts every midnight would be fake urgency; this one ends when it says.
+- **After the end.** The page and checkout turn to the regular $39.97/mo by themselves.
+- **To extend or end the sale.** Change `SALE_END` and `SALE_END_LABEL` in `funnels/trial.py`, and the end in
+  `trial-checkout.html`'s first script; check_trial fails if those two disagree.
+- **Proven live.** A returning visitor whose old deadline had passed, and a new visitor, both see $19.97 on the page
+  and at the checkout.
+
 ## Owner items
 
 - Cancel test order **101882** and the monthly subscription it started (Adaptive Peptide Foundation, $39.97/mo).
