@@ -23,7 +23,9 @@ ROOT = HERE.parents[2]
 PAGE = ROOT / 'campaigns' / 'skinofab' / 'src' / F.SLUG / (F.BY_ID['offer']['file'] + '.html')
 OUT = ROOT / 'docs' / 'apf-funnel' / 'copy-deck.md'
 HOST = F.FUNNEL_HOST
-CHECKOUT = HOST + F.route('checkout', served=True)
+# Black Friday (funnels/apf.py BLACK_FRIDAY): the sales page's buttons open the trial funnel's checkout on its cards
+CHECKOUT = HOST + (F.BLACK_FRIDAY['checkout'].rstrip('/') + '/' if getattr(F, 'BLACK_FRIDAY', None) else F.route('checkout', served=True))
+THREE = next(p['id'] for p in F.BLACK_FRIDAY['packs'] if p['bottles'] == 3) if getattr(F, 'BLACK_FRIDAY', None) else 'apf-3'
 SALES = HOST + F.route('offer', served=True)
 VALIDATOR = Path('/root/.claude/skills/synced/ed788572-c450-4483-91f6-5cfc39c30887_bfd58911-f832-4256-b134-0fe0d46ca616/long-sales-page/scripts/validate_copy.py')
 ORIGIN = 'Verified buyer, from our earlier store'
@@ -37,13 +39,15 @@ def frontmatter(path):
 def md(s):
     """The page's inline HTML as markdown."""
     s = str(s)
+    s = re.sub(r'<span data-sf-trial-over>.*?</span>', '', s)        # the deck is the sale's page: not its after-the-end words
     s = re.sub(r'<strong>(.*?)</strong>', r'**\1**', s)
     s = re.sub(r'<em>(.*?)</em>', r'*\1*', s)
     s = re.sub(r'<a href="([^"]+)">(.*?)</a>', r'[\2](\1)', s)
     return unescape(re.sub(r'<[^>]+>', '', s)).strip()
 
 
-def cta(label, pack='apf-2'):
+def cta(label, pack=None):
+    pack = pack or THREE
     return f'[CTA: {md(label).replace("→", "").strip()} | {CHECKOUT}?forceBundleId={pack}]'
 
 
@@ -99,7 +103,7 @@ def deck(fm):
         f"[GUARANTEE: {g['title']} — 30 days from delivery, a full refund even opened, nothing to send back]")
     sec('16 · Highlight an Irresistible Offer with Urgency', f"### {v['title']}", '| What you get | Value |', '|---|---|',
         *[f"| {x['item']} | {x['value']} |" for x in v['stack']], f"| **{v['total']['item']}** | **{v['total']['value']}** |",
-        f"| **{v['today']['item']}** | **{v['today']['value']}** |", md(v['why_now']), offer_token(packs['apf-3']), cta(o['button'], 'apf-3'))
+        f"| **{v['today']['item']}** | **{v['today']['value']}** |", md(v['why_now']), offer_token(packs[THREE]), cta(o['button'], THREE))
     sec('17 · Emphasize Scarcity', f"### {fm['scarcity']['title']}", fm['scarcity']['text'])
     sec('18 · Incorporate Customer Reviews with Images', f"### {rs['title']}", f"**{rs['stars']}** — {rs['lede']}",
         *[f"[REVIEW: {x['name']} | {ORIGIN} | {x['stars']} | | {x['text']} | {x['photo']} | yes]" for x in fm['reviews']],
@@ -133,10 +137,10 @@ def offer_architecture():
 def write(fm):
     front = {
         'brand': 'SKINOFAB', 'product': 'Adaptive Peptide Foundation', 'language': 'en', 'direction': 'ltr', 'currency': 'USD',
-        'primary_color': '"#151515"', 'accent_color': '"#e8a33d"', 'cta_url': f'{CHECKOUT}?forceBundleId=apf-3', 'cta_label': 'GET MY FOUNDATION',
+        'primary_color': '"#151515"', 'accent_color': '"#e8a33d"', 'cta_url': f'{CHECKOUT}?forceBundleId={THREE}', 'cta_label': 'GET MY FOUNDATION',
         'font_heading': 'Playfair Display', 'font_body': 'Montserrat', 'support_email': F.EMAIL, 'company': 'SKINOFAB',
         'shipping_url': f'{HOST}/shipping-policy/', 'refund_url': f'{HOST}/refund-policy/', 'privacy_url': f'{HOST}/privacy-policy/',
-        'terms_url': f'{HOST}/terms-of-service/', 'contact_url': f'{HOST}/contact/', 'announcement': fm['offer_bar'],
+        'terms_url': f'{HOST}/terms-of-service/', 'contact_url': f'{HOST}/contact/', 'announcement': md(fm['offer_bar']),
         'disclaimer': 'Cosmetic claims only: the foundation evens the look of skin tone and keeps dry skin comfortable; it treats nothing and has no SPF. Individual results vary. Contains salmon-derived PDRN: not for anyone with a fish allergy. The before/after images are AI illustrations of what a thin layer of foundation does to the look of skin tone, not customer photos.',
     }
     out = ['---', *[f'{k}: {v}' for k, v in front.items()], '---', '',

@@ -23,9 +23,10 @@ meta_tags:
 # photos. The copy deck (docs/apf-funnel/copy-deck.md) is still generated from these keys by
 # tools/funnel/apf/copy_deck.py; tools/funnel/apf/check_apf.py holds every price here to the live campaign and
 # every claim to the rules: adapts to your tone (never every tone), designed not to settle, no SPF, no study, no
-# doctor, no countdown, every AI portrait labelled.
-offer_bar: "BUY 3, GET 2 FREE + a FREE Lymphatic Brush · From $19.99 a bottle · Free shipping · 30-day money-back guarantee"
-offer_bar_short: "Buy 3, get 2 FREE"
+# doctor, no countdown but the Black Friday sale's (one fixed end for everyone, the trial funnel's SALE_END, after
+# which the page shows the regular price by itself), every AI portrait labelled.
+offer_bar: "<span data-sf-trial-live>⚡ <strong>BLACK FRIDAY FLASH SALE</strong><span class=\"sf-bar__mid\"> · Your first bottle $19.97, then $39.97 a month</span> · Ends in <b class=\"sf-bf-clock\" data-sf-bf-clock>Mon, Nov 30</b></span><span data-sf-trial-over>BUY 3, GET 2 FREE + a FREE Lymphatic Brush · From $19.99 a bottle · Free shipping · 30-day money-back guarantee</span>"
+offer_bar_short: "<span class=\"sf-bar__bf\" data-sf-trial-live><strong>⚡ BLACK FRIDAY</strong> <b class=\"sf-bf-clock\" data-sf-bf-clock>Nov 30</b></span><span data-sf-trial-over>Buy 3, get 2 FREE</span>"
 # the FrontrowMD "Clinicians' Choice" badge under the hero (_includes/sf-frontrow.html): a floor of the live count
 frontrow_clinicians: "700+"
 hero:
@@ -43,7 +44,7 @@ hero:
   button: "YES, GET MY SKIN BACK ↓"
   # the lowest price a bottle, big, right under the button (the owner, 2 Nov 2026: "always show the low price"); the packs
   # and their renewals are stated on the pack cards below and at the checkout
-  price: "From <strong>$19.99</strong> a bottle"
+  price: "<span data-sf-trial-live>⚡ Black Friday: your first bottle <strong>$19.97</strong>, then $39.97 a month</span><span data-sf-trial-over>From <strong>$19.99</strong> a bottle</span>"
   # the owner's offer of 30 Oct 2026: 1 bottle $33.97; buy 2, get 1 free (3 bottles for 2 x $33.97, with a Blender
   # sponge); buy 3, get 2 free (5 bottles for 3 x $33.97, with the Lymphatic Brush). Both free-bottle claims are exact
   # against this page's own 1-bottle price, so they are true (live review 7, B1, was about a 2-pack that made them untrue)
@@ -64,54 +65,73 @@ guarantee:
   title: "30-day money-back guarantee"
   short: "Wear it in your own daylight for 30 days. Not your match? Email us for a full refund, even opened. You don’t send it back."
   long: "Try it on your skin, in your bathroom light and in daylight, for 30 days from delivery. If you don’t love how it looks, email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a> and we refund you in full, even if the bottle is open and half used. You don’t have to send anything back."
-# the packs (the owner, 30 Oct 2026: "start at 33.97 only, with buy 2 get 1 free and buy 3 get 2 free"; the Blender with
-# the 3 bottles, the Lymphatic Brush with the 5, no mystery gift): campaign packages 1, 8 and 9, with Automatic Refills at
-# the same price (1 bottle every 28 days, 3 every 84, 5 every 140: 28 days a bottle); the gift with the first order only;
-# free shipping. The crossed-out prices are this page's own 1-bottle price times the bottles (3 x $33.97, 5 x $33.97): the
-# free bottles; each pack costs a little less than the bottles it charges for (the owner, 30 Oct 2026: $66.97 and $99.97,
-# .97 endings and $19.99 a bottle). Each pack says what it renews at (renew) beside its price.
+# the packs, Black Friday (the owner, 5 Nov 2026: "make the same offer here for black friday"): the flash trial funnel's
+# three plans (funnels/apf.py BLACK_FRIDAY, from funnels/trial.py), each opening the trial funnel's checkout on its card:
+# 1 bottle $19.97 the first month with FLASH50 (50% off) until the sale ends, then $39.97 every month (after the end the card
+# shows $39.97 and opens the checkout on trial-regular); 3 bottles $66.97 every 3 months with a Blender sponge; 5 bottles
+# $99.97 every 5 months with the Lymphatic Brush. The crossed-out prices and the free-bottle claims count against the
+# 1-bottle plan's $39.97. package is the APF campaign's package with the same SKU, only for the view_item this page's SDK
+# reports (the 5-bottle pack: 9); axon is what AppLovin's add_to_cart reports when a checkout button is pressed.
+# the Black Friday flash sale: the banner over the packs and the bar above the page count down to its end
+# (_includes/sf-bf.html, js/sf-apf.js); every button opens the trial funnel's checkout
+bf:
+  checkout: "/trial-checkout/"
+  title: "⚡ Black Friday Flash Sale"
+  ends: "Limited time · Ends Mon, Nov 30 ·"
 offer:
   title: "Choose your pack"
-  lead: "<strong>Buy 3, get 2 FREE</strong>: 5 bottles for $99.97, then $99.97 every 140 days ($19.99 a bottle), with the free Lymphatic Brush. Every pack ships free and refills at the same price until you cancel."
+  lead: "<span data-sf-trial-live><strong>Black Friday:</strong> your first bottle for $19.97 (50% off), then $39.97 every month. </span><strong>Buy 3, get 2 FREE</strong>: 5 bottles for $99.97, then $99.97 every 5 months ($19.99 a bottle), with the free Lymphatic Brush. Every plan ships free and refills at its own price until you cancel."
   button: "GET MY FOUNDATION"
   trust: ["Free shipping", "Ships in 1 business day", "Secure checkout", "30-day money-back guarantee"]
-  once: "Automatic Refills: your pack ships again at the same price until you cancel, 1 bottle every 28 days, 3 bottles every 84 days, 5 bottles every 140 days. The free bottles come in every refill: each one is the same pack at the same price. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only."
+  once: "Automatic Refills: your plan ships again until you cancel, 1 bottle at $39.97 every month<span data-sf-trial-live> (the Black Friday $19.97 is for your first bottle)</span>, 3 bottles at $66.97 every 3 months, 5 bottles at $99.97 every 5 months. The free bottles come in every refill. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only."
 packs:
-  - id: "apf-1"
+  - id: "trial"
+    alias: "apf-1"
+    bundle_over: "trial-regular"
     package: 1
     name: "1 bottle"
-    short: "1 bottle"
+    short: "1 bottle · Black Friday"
     supply: "About four weeks of daily use"
-    price: "$33.97"
-    every: "28 days"
-    renew: "Then $33.97 every 28 days"
-    label: "1 bottle, free shipping"
-  - id: "apf-3"
+    price: "$19.97"
+    price_over: "$39.97"
+    compare: "$39.97"
+    every: "month"
+    renew: "Then $39.97 every month"
+    renew_price: "$39.97"
+    tab: "Black Friday · 50% off"
+    tab_live: true
+    label: "1 bottle, Black Friday flash sale, free shipping"
+    axon: { sku: "SKF-APF-1", variant: "15", name: "Adaptive Peptide Foundation - 1 bottle", value: "19.97", value_over: "39.97" }
+  - id: "trial-3"
+    alias: "apf-3"
     package: 8
     name: "3 bottles"
     short: "3 bottles · buy 2, get 1 free"
-    supply: "Less than 2 single bottles ($67.94) · about 12 weeks · $22.32 a bottle"
+    supply: "Less than 2 single bottles ($79.94) · about 12 weeks · $22.32 a bottle"
     price: "$66.97"
-    compare: "$101.91"
-    every: "84 days"
-    renew: "Then $66.97 every 84 days"
+    compare: "$119.91"
+    every: "3 months"
+    renew: "Then $66.97 every 3 months"
     tab: "Buy 2, get 1 FREE"
     label: "3 bottles (buy 2, get 1 free) with a free Blender sponge, free shipping"
+    axon: { sku: "SKF-APF-3-BLENDER", variant: "334", name: "Adaptive Peptide Foundation - 3 bottles", value: "66.97" }
     gifts:
       - { image: "images/sf/gift-blender.jpg", name: "FREE SKINOFAB Blender sponge" }
-  - id: "apf-5"
+  - id: "trial-5"
+    alias: "apf-5"
     package: 9
     name: "5 bottles"
     short: "5 bottles · buy 3, get 2 free"
-    supply: "Less than 3 single bottles ($101.91) · about 20 weeks · $19.99 a bottle"
+    supply: "Less than 3 single bottles ($119.91) · about 20 weeks · $19.99 a bottle"
     price: "$99.97"
-    compare: "$169.85"
-    every: "140 days"
-    renew: "Then $99.97 every 140 days"
+    compare: "$199.85"
+    every: "5 months"
+    renew: "Then $99.97 every 5 months"
     tab: "Buy 3, get 2 FREE · Best value"
     deal: true
     selected: true
     label: "5 bottles (buy 3, get 2 free) with a free Lymphatic Brush, free shipping"
+    axon: { sku: "SKF-APF-5-BRUSH", variant: "335", name: "Adaptive Peptide Foundation - 5 bottles", value: "99.97" }
     gifts:
       - { image: "images/sf/brush-card.jpg", name: "FREE Lymphatic Brush + case", value: "$24.95" }
 problem:
@@ -283,20 +303,20 @@ guarantee_section:
     - "Not your match? Email <a href=\"mailto:info@skinofab.com\">info@skinofab.com</a>. A person replies within one business day and refunds you in full."
     - "Even opened. Even half used. You don’t send anything back."
   why: "We can promise this because of what 9,855 reviews say about it. Read them above, then decide in your own light."
-# the value stack: the bottles at this page's own 1-bottle price ($33.97, which the free bottles are counted against) and
+# the value stack: the bottles at the 1-bottle plan's regular price ($39.97, which the free bottles are counted against) and
 # the brush at the store's $24.95; free shipping and the guarantee as included, no dollar value (live review 10, F3)
 value:
   eyebrow: "Your offer"
   title: "Buy 3, get 2 FREE, and the brush free too"
   stack:
-    - { item: "5 bottles of Adaptive Peptide Foundation (about 20 weeks), at $33.97 each", value: "$169.85" }
+    - { item: "5 bottles of Adaptive Peptide Foundation (about 20 weeks), at $39.97 each", value: "$199.85" }
     - { item: "The Lymphatic Brush with its travel case", value: "$24.95" }
     - { item: "Free shipping, tracked", value: "included" }
     - { item: "30-day money-back guarantee", value: "included" }
-  total: { item: "Total value of your first order", value: "$194.80" }
+  total: { item: "Total value of your first order", value: "$224.80" }
   today: { item: "Your price today", value: "$99.97" }
-  math: "You get 5 bottles for less than 3 single bottles ($101.91): $19.99 a bottle, against $33.97 for one. The brush comes free with your first order; each refill after it is the 5 bottles at $99.97, every 140 days, until you cancel. Prefer fewer? Buy 2, get 1 free: 3 bottles for $66.97 ($22.32 a bottle), then $66.97 every 84 days, with a free Blender sponge."
-  why_now: "<strong>Why these packs are only here:</strong> our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch. There is no countdown on this page, and no pack costs more than it says here."
+  math: "You get 5 bottles for less than 3 single bottles ($119.91): $19.99 a bottle, against $39.97 for one. The brush comes free with your first order; each refill after it is the 5 bottles at $99.97, every 5 months, until you cancel. Prefer fewer? Buy 2, get 1 free: 3 bottles for $66.97 ($22.32 a bottle), then $66.97 every 3 months, with a free Blender sponge. Or just try one: <span data-sf-trial-live>Black Friday, 1 bottle for $19.97, then $39.97 every month.</span><span data-sf-trial-over>1 bottle for $39.97, then $39.97 every month.</span>"
+  why_now: "<span data-sf-trial-live><strong>Why now:</strong> it’s our Black Friday flash sale. Your first bottle is $19.97, 50% off, until Monday, November 30 at midnight your time; after that the 1-bottle plan is $39.97 a month from the first bottle. </span><strong>Why these packs are only here:</strong> our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch, and no pack costs more than it says here."
 scarcity:
   title: "What is limited"
   text: "The free Lymphatic Brush is a launch gift: it comes with the 5-bottle pack while our launch stock lasts. When it runs out, we change this page and the checkout before we take another order for that pack, so you see it before you order. The foundation is formulated in Korea and made in batches: if a pack runs out, we take it off the page rather than ship it late."
@@ -345,9 +365,11 @@ faq:
   - q: "Does it have SPF?"
     a: "No. We left SPF out on purpose so the formula can stay a light, hydrating serum. Apply your daily sunscreen first; the foundation is made to layer on top without pilling."
   - q: "Is this a subscription?"
-    a: "Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only."
+    a: "Yes, with Automatic Refills you control. You pay today’s price now. Your plan then ships again until you cancel: 1 bottle at $39.97 every month<span data-sf-trial-live> (the Black Friday $19.97 is for your first bottle only)</span>, 3 bottles at $66.97 every 3 months, 5 bottles at $99.97 every 5 months. The free bottles come in every refill. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href=\"mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.\">Skip my next refill</a> or <a href=\"mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.\">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only."
   - q: "How long does a bottle last?"
-    a: "About four weeks of daily use with one pump a day, which is why a single bottle refills every 28 days. The 3-bottle pack is about 12 weeks (refilled every 84 days), the 5-bottle pack about 20 weeks (every 140 days)."
+    a: "About four weeks of daily use with one pump a day, which is why a single bottle refills every month. The 3-bottle pack is about 12 weeks (refilled every 3 months), the 5-bottle pack about 20 weeks (every 5 months)."
+  - q: "When does the Black Friday price end?"
+    a: "The Black Friday price of the 1-bottle plan, $19.97 for your first bottle (50% off), ends on Monday, November 30, at midnight your time. After that the 1-bottle plan is $39.97 a month from the first bottle. The 3- and 5-bottle packs keep their prices."
   - q: "When will it arrive?"
     a: "Your order ships within 1 business day, free and tracked, and arrives in 2–4 business days. This offer ships to US addresses only."
   - q: "How does the guarantee work?"
@@ -369,7 +391,7 @@ closing:
   text: "Pick your pack, wear it in your own daylight, and decide in 30 days."
 ---
 {% for p in packs %}{% if p.selected %}{% assign sel = p %}{% endif %}{% endfor %}
-{% assign checkout_link = next_url | campaign_link %}
+{% if bf %}{% assign checkout_link = bf.checkout %}{% campaign_include 'sf-bf.html' %}{% else %}{% assign checkout_link = next_url | campaign_link %}{% endif %}
 <header class="sf-bar">
   <div class="sf-bar__in">
     <img class="sf-bar__logo" src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="110" height="22">
@@ -680,20 +702,21 @@ closing:
         <div class="sf-limited"><strong>{{ scarcity.title }}.</strong> {{ scarcity.text }}</div>
       </div>
       <div class="sf-offerbox" id="s05-offer">
+        {% if bf %}<div class="sf-bf-flash" data-sf-trial-live><p class="sf-bf-flash__title">{{ bf.title }}</p><p class="sf-bf-flash__clock">{{ bf.ends }} <strong data-sf-bf-clock>soon</strong></p></div>{% endif %}
         <h2>{{ offer.title }}</h2>
         <p class="sf-offerbox__lead">{{ offer.lead }}</p>
         <p class="sf-rating"><span class="sf-tp__stars sf-tp__stars--xs" aria-hidden="true">{% campaign_include 'sf-stars.html' n=4.8 %}</span><span>4.8 out of 5 in <a href="#reviews">9,855 reviews</a> from our earlier store</span></p>
         <fieldset class="sf-packs" data-sf-packs>
           <legend>Your pack</legend>
           {% for p in packs %}
-          <label class="sf-pack{% if p.selected %} is-on{% endif %}" data-pack="{{ p.id }}" data-price="{{ p.price }}" data-every="{{ p.every }}" data-renew="{{ p.renew }}" data-label="{{ p.label }}" data-short="{{ p.short }}" data-package="{{ p.package }}">
-            {% if p.tab %}<em class="sf-pack__tab{% if p.deal %} sf-pack__tab--deal{% endif %}">{{ p.tab }}</em>{% endif %}
+          <label class="sf-pack{% if p.selected %} is-on{% endif %}" data-pack="{{ p.id }}" data-price="{{ p.price }}" data-every="{{ p.every }}" data-renew="{{ p.renew }}" data-label="{{ p.label }}" data-short="{{ p.short }}" data-package="{{ p.package }}"{% if p.alias %} data-alias="{{ p.alias }}"{% endif %}{% if p.price_over %} data-price-over="{{ p.price_over }}"{% endif %}{% if p.bundle_over %} data-bundle-over="{{ p.bundle_over }}"{% endif %}{% if p.renew_price %} data-renew-price="{{ p.renew_price }}"{% endif %}{% if p.axon %} data-axon-sku="{{ p.axon.sku }}" data-axon-variant="{{ p.axon.variant }}" data-axon-name="{{ p.axon.name }}" data-axon-value="{{ p.axon.value }}" data-axon-value-over="{{ p.axon.value_over | default: p.axon.value }}"{% endif %}>
+            {% if p.tab %}<em class="sf-pack__tab{% if p.deal %} sf-pack__tab--deal{% endif %}{% if p.tab_live %} sf-pack__tab--bf{% endif %}"{% if p.tab_live %} data-sf-trial-live{% endif %}>{{ p.tab }}</em>{% endif %}
             <input type="radio" name="sf_pack" value="{{ p.id }}"{% if p.selected %} checked{% endif %}>
             <span class="sf-pack__row">
               <span class="sf-pack__dot" aria-hidden="true"></span>
               <span class="sf-pack__main"><span class="sf-pack__name">{{ p.name }}</span>
                 <span class="sf-pack__note">{{ p.supply }}</span><span class="sf-pack__renew">{{ p.renew }}</span></span>
-              <span class="sf-pack__price">{% if p.compare %}<s>{{ p.compare }}</s>{% endif %}<b>{{ p.price }}</b><small>today</small></span>
+              <span class="sf-pack__price">{% if p.price_over %}<span class="sf-pack__live" data-sf-trial-live><s>{{ p.compare }}</s><b>{{ p.price }}</b></span><span class="sf-pack__live" data-sf-trial-over><b>{{ p.price_over }}</b></span>{% else %}{% if p.compare %}<s>{{ p.compare }}</s>{% endif %}<b>{{ p.price }}</b>{% endif %}<small>today</small></span>
             </span>
             {% if p.gifts %}<ul class="sf-gifts">
               {% for g in p.gifts %}<li><img src="{{ g.image | campaign_asset }}" alt="" width="34" height="34" loading="lazy"><span>+ {{ g.name }}</span>{% if g.value %}<s>{{ g.value }}</s>{% endif %}<b>FREE</b></li>{% endfor %}
@@ -737,7 +760,7 @@ closing:
 </main>
 
 <div class="sf-sticky" data-sf-sticky>
-  <div class="sf-sticky__txt"><b data-sf-sticky-pack>{{ sel.short }}</b><span data-sf-sticky-price>{{ sel.price }} today, then {{ sel.price }} every {{ sel.every }}</span></div>
+  <div class="sf-sticky__txt"><b data-sf-sticky-pack>{{ sel.short }}</b><span data-sf-sticky-price>{{ sel.price }} today, then {{ sel.renew_price | default: sel.price }} every {{ sel.every }}</span></div>
   <a class="sf-btn" href="{{ checkout_link }}?forceBundleId={{ sel.id }}" data-sf-cta>CHECKOUT</a>
 </div>
 {% campaign_include 'sf-footer.html' %}

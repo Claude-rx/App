@@ -130,20 +130,26 @@
     }, { passive: true });
   }
 
-  // the pack choice: every picker on the page (the offer near the top and the one at the end) shows the same pack
+  // the pack choice: every picker on the page (the offer near the top and the one at the end) shows the same pack.
+  // Black Friday (_includes/sf-bf.html): while html.sf-trial-over is off a card shows its sale price (data-price); after
+  // the sale's end its regular one (data-price-over) and its buttons open the checkout on its regular card
+  // (data-bundle-over); a refill's amount is data-renew-price when it differs from today's
   var pickers = document.querySelectorAll('[data-sf-packs]');
+  var sync = function () {};
   if (pickers.length) {
     var set = function (sel, fn) { Array.prototype.forEach.call(document.querySelectorAll(sel), fn); };
-    var sync = function (id) {
+    sync = function (id) {
       var card = document.querySelector('.sf-pack[data-pack="' + id + '"]');
       if (!card) return;
-      var price = card.getAttribute('data-price'), every = card.getAttribute('data-every'), renew = card.getAttribute('data-renew') || '';
+      var over = document.documentElement.classList.contains('sf-trial-over');
+      var price = (over && card.getAttribute('data-price-over')) || card.getAttribute('data-price'), every = card.getAttribute('data-every'), renew = card.getAttribute('data-renew') || '';
+      var renewPrice = card.getAttribute('data-renew-price') || price, bundle = (over && card.getAttribute('data-bundle-over')) || id;
       Array.prototype.forEach.call(document.querySelectorAll('.sf-pack'), function (c) {
         var on = c.getAttribute('data-pack') === id;
         c.classList.toggle('is-on', on);
         var input = c.querySelector('input'); if (input) input.checked = on;
       });
-      set('[data-sf-cta]', function (a) { a.href = a.href.replace(/forceBundleId=[^&#]*/, 'forceBundleId=' + id); });
+      set('[data-sf-cta]', function (a) { a.href = a.href.replace(/forceBundleId=[^&#]*/, 'forceBundleId=' + bundle); });
       set('[data-sf-price]', function (e) { e.textContent = price; });
       // what the chosen pack renews at (Automatic Refills): under the button, "$99.97 today, then $99.97 every 140 days, until you cancel"
       set('[data-sf-renew-line] strong', function (e) { e.textContent = price + ' today'; });
@@ -151,18 +157,44 @@
       set('[data-sf-label]', function (e) { e.textContent = card.getAttribute('data-label'); });
       set('[data-sf-btn-price]', function (e) { e.textContent = '| ' + price; });
       set('[data-sf-sticky-pack]', function (e) { e.textContent = card.getAttribute('data-short'); });
-      set('[data-sf-sticky-price]', function (e) { e.textContent = price + ' today, then ' + price + ' every ' + every; });   // the amount too (live review 13, F2)
+      set('[data-sf-sticky-price]', function (e) { e.textContent = price + ' today, then ' + renewPrice + ' every ' + every; });   // the amount too (live review 13, F2)
     };
     Array.prototype.forEach.call(pickers, function (p) {
       p.addEventListener('change', function (e) {
         var input = e.target; if (input && input.name === 'sf_pack') sync(input.value);
       });
     });
-    // the pack the URL names comes first (the listicle's offer is the 5-bottle pack: ?pack=apf-5), then the page's own
+    // the pack the URL names comes first (the listicle's offer is the 5-bottle pack: ?pack=trial-5), then the page's own;
+    // a card answers to its old name too (data-alias: ?pack=apf-5 from a link made before Black Friday)
     var asked = (new URLSearchParams(location.search).get('pack') || '').replace(/[^a-z0-9-]/g, '');
+    var aka = asked && document.querySelector('.sf-pack[data-alias="' + asked + '"]');
+    if (aka) asked = aka.getAttribute('data-pack');
     var wanted = asked && document.querySelector('.sf-pack input[name=sf_pack][value="' + asked + '"]');
     var first = wanted || document.querySelector('.sf-pack input[name=sf_pack]:checked') || document.querySelector('.sf-pack input[name=sf_pack]');
     if (first) sync(first.value);
+  }
+
+  // the Black Friday clocks ([data-sf-bf-clock]: the bar above the page, the banner over the packs) count down to the
+  // sale's one end (window.sfTrialEnd, _includes/sf-bf.html); at the end the page turns to the regular prices where she
+  // is, and the chosen pack's buttons with it
+  var clocks = document.querySelectorAll('[data-sf-bf-clock]');
+  if (clocks.length && window.sfTrialEnd) {
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var tick = function () {
+      var left = Math.max(0, Math.floor((window.sfTrialEnd - Date.now()) / 1000));
+      if (!left) {
+        document.documentElement.classList.add('sf-trial-over');
+        var on = document.querySelector('.sf-pack input[name=sf_pack]:checked');
+        if (on) sync(on.value);
+        return false;
+      }
+      var h = Math.floor(left / 3600), m = Math.floor((left % 3600) / 60), sec = left % 60, d = Math.floor(h / 24);
+      h = h % 24;
+      var txt = (d ? d + 'd ' : '') + pad(h) + ':' + pad(m) + ':' + pad(sec);
+      Array.prototype.forEach.call(clocks, function (c) { c.textContent = txt; c.setAttribute('aria-label', (d ? d + ' days ' : '') + h + ' hours ' + m + ' minutes'); });
+      return true;
+    };
+    if (tick()) { var clockTimer = setInterval(function () { if (!tick()) clearInterval(clockTimer); }, 1000); }
   }
 
   // the sticky bar on phones: on once the buy button has scrolled above the viewport, off again when it is back below
@@ -198,19 +230,35 @@
 // page would be bought twice. The link wins whenever the event cannot go first: the SDK not ready, a click that opens
 // a new tab, an error, or 1.2 s.
 (function () {
+  // Axon's item category and photo for the Black Friday cards (funnels/trial.py AXON_CATEGORY, AXON_IMAGE)
+  var AXON_CATEGORY = 2765, AXON_IMAGE = 'https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg';
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[data-sf-cta]') : null;
     if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var sdk = window.next;
-    if (!sdk || typeof sdk.trackAddToCart !== 'function') return;
     var m = /forceBundleId=([^&#]+)/.exec(a.href);
-    var card = m && document.querySelector('.sf-pack[data-pack="' + m[1] + '"]');
+    var card = m && (document.querySelector('.sf-pack[data-pack="' + m[1] + '"]') || document.querySelector('.sf-pack[data-bundle-over="' + m[1] + '"]'));
     var pkg = card ? parseInt(card.getAttribute('data-package'), 10) : NaN;
     if (!pkg) return;
     e.preventDefault();
     var href = a.href, gone = false;
     var go = function () { if (!gone) { gone = true; window.location.href = href; } };
     setTimeout(go, 1200);
+    // Black Friday: the card's own item, the seven fields AppLovin's Axon asks for (as the trial funnel's product page
+    // sends them), then the link; the trial funnel's checkout sends begin_checkout and purchase with its own SDK
+    if (card.hasAttribute('data-axon-sku')) {
+      if (window.__axonEventKey && typeof window.axon === 'function') {
+        var v = parseFloat((document.documentElement.classList.contains('sf-trial-over') && card.getAttribute('data-axon-value-over')) || card.getAttribute('data-axon-value'));
+        try {
+          window.axon('track', 'add_to_cart', { currency: 'USD', value: v, items: [{ item_id: card.getAttribute('data-axon-sku'),
+            item_name: card.getAttribute('data-axon-name'), item_brand: 'SKINOFAB', item_variant_id: card.getAttribute('data-axon-variant'),
+            item_category_id: AXON_CATEGORY, image_url: AXON_IMAGE, price: v, quantity: 1 }] });
+        } catch (err) {}
+        setTimeout(go, 350);
+      } else go();
+      return;
+    }
+    if (!sdk || typeof sdk.trackAddToCart !== 'function') { go(); return; }
     var from = (window.NextDataLayer || []).length;
     Promise.resolve(sdk.trackAddToCart(pkg, 1))
       .then(function () {

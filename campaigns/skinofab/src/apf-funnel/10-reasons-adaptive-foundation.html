@@ -24,9 +24,9 @@ meta_tags:
 # goes-on-white loop on reason 1, the all-day loop on reason 5, the serum loop on reason 6), the ingredients one by
 # one with their photos, the packshots on natural shadows, the offer box rebuilt around a wordless flat lay and a
 # value stack. Every claim is the sales page's: adapts to your tone (never every tone), designed not to settle, no
-# SPF, no study, no doctor, no countdown.
-offer_bar: "BUY 3, GET 2 FREE + a FREE Lymphatic Brush · From $19.99 a bottle · Free shipping"
-offer_bar_short: "Buy 3, get 2 FREE"
+# SPF, no study, no doctor, no countdown but the Black Friday sale's (the sales page's, one fixed end for everyone).
+offer_bar: "<span data-sf-trial-live>⚡ <strong>BLACK FRIDAY FLASH SALE</strong><span class=\"sf-bar__mid\"> · Your first bottle $19.97, then $39.97 a month</span> · Ends in <b class=\"sf-bf-clock\" data-sf-bf-clock>Mon, Nov 30</b></span><span data-sf-trial-over>BUY 3, GET 2 FREE + a FREE Lymphatic Brush · From $19.99 a bottle · Free shipping</span>"
+offer_bar_short: "<span class=\"sf-bar__bf\" data-sf-trial-live><strong>⚡ BLACK FRIDAY</strong> <b class=\"sf-bf-clock\" data-sf-bf-clock>Nov 30</b></span><span data-sf-trial-over>Buy 3, get 2 FREE</span>"
 headline: "10 Reasons Why Women Over 45 Look Fresher With This ‘Shade-Adapting’ Foundation"
 subhead: "It goes on white and adapts to your skin tone as you blend, in a hydrating serum made for skin after 45: no shade to guess, a finish designed not to settle into lines, about a minute with your fingertips."
 intro:
@@ -145,19 +145,20 @@ cta:
   eyebrow: "Your offer"
   title: "Buy 3, get 2 FREE + a FREE Lymphatic Brush"
   points:
-    - "<strong>5 bottles for $99.97</strong>, refilled every 140 days: less than 3 single bottles ($101.91)"
+    - "<span data-sf-trial-live><strong>Black Friday:</strong> your first bottle for $19.97 (50% off), then $39.97 every month</span><span data-sf-trial-over><strong>Or 1 bottle</strong> for $39.97, then $39.97 every month</span>"
+    - "<strong>5 bottles for $99.97</strong>, refilled every 5 months: less than 3 single bottles ($119.91)"
     - "<strong>FREE Lymphatic Brush</strong> with its case, with your first order"
-    - "<strong>Or buy 2, get 1 FREE:</strong> 3 bottles for $66.97, then $66.97 every 84 days, with a free Blender sponge"
-    - "<strong>Free shipping</strong>, and refills at the same price you can skip or cancel any time"
+    - "<strong>Or buy 2, get 1 FREE:</strong> 3 bottles for $66.97, then $66.97 every 3 months, with a free Blender sponge"
+    - "<strong>Free shipping</strong>, and refills you can skip or cancel any time"
     - "<strong>30-day money-back guarantee</strong>, even opened"
   from: "$19.99"
   from_unit: "a bottle"
-  from_note: "In the 5-bottle pack ($99.97, then $99.97 every 140 days). Or start with 1 bottle for $33.97, then $33.97 every 28 days."
+  from_note: "In the 5-bottle pack ($99.97, then $99.97 every 5 months). <span data-sf-trial-live>Or start with Black Friday’s 1 bottle for $19.97, then $39.97 every month.</span><span data-sf-trial-over>Or start with 1 bottle for $39.97, then $39.97 every month.</span>"
   button: "SEE THE OFFER →"
   note: "FREE SHIPPING · SKIP OR CANCEL ANY TIME · 30-DAY MONEY-BACK GUARANTEE"
   image_alt: "The Adaptive Peptide Foundation: five bottles with the free Lymphatic Brush and its case"
-  price: "From $19.99 a bottle in the 5-bottle pack ($99.97: buy 3, get 2 free), $22.32 in the 3-bottle pack ($66.97: buy 2, get 1 free), or 1 bottle for $33.97. Each pack refills at the same price until you cancel (5 bottles every 140 days, 3 every 84, 1 every 28); one ready-made email cancels, no fees. The free bottles and the free brush are only in this launch."
-  text: "Buy 3, get 2 FREE, with a FREE Lymphatic Brush and free shipping. Or 1 bottle for $33.97."
+  price: "From $19.99 a bottle in the 5-bottle pack ($99.97: buy 3, get 2 free), $22.32 in the 3-bottle pack ($66.97: buy 2, get 1 free), or 1 bottle <span data-sf-trial-live>for $19.97 on Black Friday, then $39.97 every month</span><span data-sf-trial-over>for $39.97, then $39.97 every month</span>. Each pack refills at its own price until you cancel (5 bottles every 5 months, 3 every 3 months, 1 every month); one ready-made email cancels, no fees. The free bottles and the free brush are only in this launch."
+  text: "Buy 3, get 2 FREE, with a FREE Lymphatic Brush and free shipping. <span data-sf-trial-live>Or Black Friday’s first bottle for $19.97, then $39.97 every month.</span><span data-sf-trial-over>Or 1 bottle for $39.97, then $39.97 every month.</span>"
 reviews:
   excellent: "Rated"
   stars: "4.8 out of 5 · 9,855 reviews of this formula"
@@ -186,7 +187,7 @@ mission:
     - "That’s why we put a foundation that adapts to your tone into a skincare serum: one pump, your fingertips, about a minute. It won’t make you look 30, and we won’t pretend it will."
 closing: "No shade to guess, and 30 days to decide."
 ---
-{% assign offer_link = next_url | campaign_link %}{% assign pack_link = offer_link | append: '?pack=apf-5#offer' %}
+{% assign offer_link = next_url | campaign_link %}{% assign pack_link = offer_link | append: '?pack=trial-5#offer' %}{% campaign_include 'sf-bf.html' %}
 <header class="sf-bar">
   <div class="sf-bar__in">
     <img class="sf-bar__logo" src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="110" height="22">

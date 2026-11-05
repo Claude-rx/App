@@ -1,0 +1,7 @@
+{% comment %} The Black Friday flash sale on the listicle and the sales page (tools/funnel/funnels/apf.py BLACK_FRIDAY: the trial
+   funnel's offer, its checkout and its end, funnels/trial.py SALE_END). One end for every visitor, midnight at the end of
+   Monday, Nov 30 2026 in her own time zone, read before the first paint: after it html.sf-trial-over shows the regular
+   prices ([data-sf-trial-over]) in place of the sale's ([data-sf-trial-live]), and the 1-bottle plan opens the checkout on
+   its regular card. js/sf-apf.js ticks the clocks ([data-sf-bf-clock]) and turns the page over at the end while she is on
+   it. check_apf.py holds the date to SALE_END. {% endcomment %}
+<script>(function () { var end = new Date(2026, 10, 30, 24, 0, 0, 0).getTime(); window.sfTrialEnd = end; if (Date.now() >= end) document.documentElement.classList.add('sf-trial-over'); })();</script>

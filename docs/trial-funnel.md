@@ -220,6 +220,14 @@ end of Monday, Nov 30 2026 (Cyber Monday), in each visitor's own time zone.
 - **Proven live.** A returning visitor whose old deadline had passed, and a new visitor, both see $19.97 on the page
   and at the checkout.
 
+## The APF sales page sells this offer too (since 5 Nov 2026)
+
+The owner asked for "the same offer" on https://try.skinofab.com/adaptive-foundation-offer/. That sales page and its
+listicle now show this funnel's three plans with the same Black Friday clock (`SALE_END`), and every button opens
+`/trial-checkout/` on the chosen card. So this funnel's checkout, offers and thank-you page take that traffic too. Moving
+`SALE_END` also means changing `src/apf-funnel/_includes/sf-bf.html`; check_apf fails until it matches. Details are in
+`docs/apf-funnel.md`, "Black Friday on the sales page".
+
 ## Owner items
 
 - Cancel test order **101882** and the monthly subscription it started (Adaptive Peptide Foundation, $39.97/mo).

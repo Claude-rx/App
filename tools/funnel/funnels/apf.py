@@ -105,6 +105,26 @@ PAGES = [
     {'id': 'thank-you', 'file': 'foundation-thank-you', 'type': 'thankyou', 'sdk': 'receipt', 'label': 'Thank you'},
 ]
 
+# Black Friday (the owner, 5 Nov 2026: "make the same offer here for black friday"): the sales page sells the flash
+# trial funnel's offer (funnels/trial.py: 1 bottle $19.97 the first month, 50% off, then $39.97 a month; 3 bottles $66.97
+# every 3 months; 5 bottles $99.97 every 5 months) and its buttons open the trial funnel's checkout (campaign 2251), so
+# the checkout, the offers and the thank-you page after it are that funnel's. Its free-bottle and "single bottles" claims
+# count against the trial's $39.97. The sale ends with the trial funnel's SALE_END (the page turns the 1-bottle plan to
+# $39.97 by itself). Set BLACK_FRIDAY = None, and put the APF packs back on the sales page, to sell the APF funnel's own
+# packs again; the APF checkout and offers are unchanged meanwhile.
+from funnels import trial as _TRIAL
+BLACK_FRIDAY = {
+    'checkout': '/trial-checkout/', 'unit': _TRIAL.TRIAL['regular'], 'today': _TRIAL.TRIAL['today'], 'off': _TRIAL.TRIAL['off'],
+    'packs': [{'id': 'trial', 'bundle_over': 'trial-regular', 'bottles': 1, 'paid': 1, 'price': _TRIAL.TRIAL['today'],
+               'price_over': _TRIAL.TRIAL['regular'], 'renew_price': _TRIAL.TRIAL['regular'], 'every': 'month',
+               'compare': _TRIAL.TRIAL['regular'], 'sku': _TRIAL.TRIAL['sku'], 'variant': _TRIAL.TRIAL['variant'], 'package': _TRIAL.TRIAL['package']}]
+             + [{'id': k['bundle'], 'bottles': k['bottles'], 'paid': k['paid'], 'price': k['price'], 'renew_price': k['price'],
+                 'every': f"{k['months']} months", 'compare': k['compare'], 'sku': k['sku'], 'variant': k['variant'], 'package': k['package']}
+                for k in _TRIAL.PACKS],
+    'end': _TRIAL.SALE_END, 'end_label': _TRIAL.SALE_END_LABEL, 'trial_slug': _TRIAL.SLUG,
+    'axon_category': _TRIAL.AXON_CATEGORY, 'axon_image': _TRIAL.AXON_IMAGE,
+}
+
 # the store pages' titles and descriptions (store_pages.py)
 TITLES = {
     'listicle': ('10 Reasons Why Women Over 45 Look Fresher With This Shade-Adapting Foundation',

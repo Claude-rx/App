@@ -576,3 +576,25 @@ body:has([data-sf-sticky]) .sf-footer { padding-bottom: 150px; }
 .sf-proof__vis--video { position: relative; padding: 0; background: #111; }
 .sf-proof__vis--video video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
 .sf-proof__vis--video .sf-vpause { transform: scale(.82); transform-origin: top right; }
+
+/* Black Friday (the owner, 5 Nov 2026; _includes/sf-bf.html): the sale's words while it runs ([data-sf-trial-live]), the
+   regular ones after its end ([data-sf-trial-over]); the black banner over the packs, as on the trial funnel's product
+   page, its clock on yellow; the 1-bottle card's black tab; the bar's clock */
+html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial-over] { display: none !important; }
+.sf-pack__live { display: contents; }
+.sf-bf-flash { margin: 0 0 14px; padding: 12px 14px; border-radius: 14px; background: #000; color: #fff; text-align: center; }
+.sf-bf-flash__title { margin: 0; color: #fff; font-size: 20px; font-weight: 800; letter-spacing: .06em; line-height: 1.15; text-transform: uppercase; }
+.sf-bf-flash__clock { margin: 6px 0 0; color: #fff; font-size: 13.5px; }
+.sf-bf-flash__clock strong, .sf-bf-clock { display: inline-block; margin-left: 4px; padding: 2px 8px; border-radius: 6px; background: #ffd84d; color: #000;
+  font-variant-numeric: tabular-nums; font-weight: 800; }
+.sf-bf-clock { margin-left: 2px; padding: 1px 6px; border-radius: 5px; white-space: nowrap; }
+/* the bar: the sale's name in white on the black bar; on a phone the name over its clock, so the button stays in view;
+   between 900 and 1099 px the long line without its middle part, on one line */
+.sf-bar strong { color: #fff; font-weight: 800; letter-spacing: .04em; }
+.sf-bar__bf { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 8px; line-height: 1.2; white-space: normal; }
+.sf-bar__short .sf-bar__bf { white-space: normal; }
+@media (max-width: 420px) { .sf-bar__short .sf-bar__bf { flex-direction: column; gap: 3px; } .sf-bar__bf strong { white-space: nowrap; } }
+@media (min-width: 900px) and (max-width: 1099px) { .sf-bar__mid { display: none; } }
+.sf-pack__tab--bf { background: #000; color: #fff; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sf-hero2__price [data-sf-trial-live] { display: inline-block; padding: 6px 12px; border-radius: 10px; background: #000; color: #fff; }
+.sf-hero2__price [data-sf-trial-live] strong { color: #ffd84d; }

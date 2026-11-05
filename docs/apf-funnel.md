@@ -291,6 +291,44 @@ the value stack ($189.95 of value for $75, and why the price is only here), what
 review wall with the buyers' own photos and nine reviews (two of them four stars), eleven questions, how to reach us,
 and the packs again. A sticky bar on phones follows the chosen pack.
 
+### Black Friday on the sales page (since 5 Nov 2026)
+
+The owner, 5 Nov 2026: "make the same offer here for black friday". Until the sale ends, the sales page and the listicle
+sell the flash trial funnel's offer, and every checkout button opens **the trial funnel's checkout**
+(`/trial-checkout/`, campaign 2251). The offers and thank-you page after it are that funnel's too. The APF checkout,
+offers and campaign 2221 are unchanged; they simply get no traffic from the sales page while the sale runs.
+
+| Card | Today | Then | Opens |
+|---|---|---|---|
+| 1 bottle, "Black Friday · 50% off" | $19.97 (FLASH50) | $39.97 every month | `?forceBundleId=trial` |
+| 3 bottles + Blender, "Buy 2, get 1 FREE" | $66.97 | $66.97 every 3 months | `?forceBundleId=trial-3` |
+| 5 bottles + Lymphatic Brush, "Buy 3, get 2 FREE · Best value" (selected) | $99.97 | $99.97 every 5 months | `?forceBundleId=trial-5` |
+
+- **Where it lives.** `funnels/apf.py` `BLACK_FRIDAY` (built from `funnels/trial.py`: the trial, its packs, `SALE_END`),
+  the sales page's `bf` block and `packs`, and `_includes/sf-bf.html` (the end, read before the first paint, on both
+  pages).
+- **The urgency is honest.** One fixed end for everyone: midnight at the end of Mon, Nov 30, in her own time zone, the
+  trial funnel's. The bar above both pages and the black banner over the packs count down to it ("25d 17:00:44").
+- **After the end.** The page turns over by itself (`html.sf-trial-over`): the 1-bottle card shows $39.97 and opens the
+  checkout on `trial-regular`. The bar and hero go back to "Buy 3, get 2 FREE · From $19.99 a bottle". If the end passes
+  while she is on the page, the clock turns it over where she is.
+- **The arithmetic counts against $39.97.** The free-bottle claims, the crossed-out prices ($119.91, $199.85) and "less
+  than N single bottles" all use the trial's 1-bottle price. The value stack is $224.80 of value for $99.97.
+- **Old links still work.** `?pack=apf-1`, `apf-3` and `apf-5` select the matching Black Friday card (`data-alias`).
+  The listicle's buttons now link to `?pack=trial-5#offer`.
+- **AppLovin.** view_item still comes from the page's SDK (package 9: the 5-bottle pack, same SKU and price as trial-5).
+  A checkout button sends add_to_cart itself, with the seven item fields (SKU, variant 15/334/335, category 2765, the
+  product's .jpg). It does not use the APF campaign's package, which would report $33.97 for the 1-bottle card. The trial
+  checkout then sends begin_checkout and purchase with its own SDK. Proven live on 5 Nov: every AppLovin post 200, and
+  the trial checkout opened on the right card at $99.97, $19.97 (FLASH50 applied) and $66.97.
+- **Gates.** `check_apf.py` has a Black Friday mode. Each card must be a card of the trial checkout selling the same SKU
+  at campaign 2251's price, with its renewal, crossed-out price and free bottles against $39.97. Every button must open
+  the trial checkout. The clock's end must equal `SALE_END`, read before the bar is drawn. Every "$19.97" must have its
+  $39.97 beside it.
+- **To end it early or go back.** Set `BLACK_FRIDAY = None` in `funnels/apf.py` and put the APF packs (git history,
+  before 5 Nov 2026) back on the sales page. To move the date, change `SALE_END` in `funnels/trial.py`, the trial
+  checkout's first script and `_includes/sf-bf.html`. The gates fail until all three agree.
+
 ### The checkout
 
 v2 (the owner's brief: "simplify, give directly the shipping info and the payment, with some badges and

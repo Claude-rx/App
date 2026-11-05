@@ -17,7 +17,9 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
   sales page  each pack's price is its package's, its renewal the same price every 28 days a bottle, its crossed-out
               price (if any) the 1-bottle price times its bottles and its price the 1-bottle price times the bottles she
               pays for (the free-bottle claims are that arithmetic), every checkout link names a checkout card, no
-              disclaimer or illustration line anywhere
+              disclaimer or illustration line anywhere. Black Friday (funnels/apf.py BLACK_FRIDAY): the packs are the trial
+              funnel's plans, held to its checkout's cards and campaign (campaign-spec.trial.json), their crossed-out
+              prices and free bottles to its $39.97, the sale's clock to its SALE_END, and every button opens its checkout
   offer 1     the supply cards: each card's package is the page's, its price the package's, its crossed-out price the
               store's one-time price for the same bottles (funnels/apf.py store_once), named, its per-bottle and per-day
               prices arithmetic; the cards sit in an upsell-context selector inside
@@ -33,7 +35,8 @@ FUNNEL=apf), the built pages (campaigns/skinofab/_site/apf-funnel/) and the them
   host        each page sends other hosts to the funnel's; its policy links are on it
   theme       a template per page, marked GENERATED for this funnel, no Page Kit route left, every asset it names on disk
   claims      none of the claims the brand may not make; no renewal wording on an offer page; no countdown but the offers' own honest one
-              (js/sf-offer-timer.js: it declines the offer at 0:00 and says so); no disclaimer or illustration line (the owner's instruction); the
+              (js/sf-offer-timer.js: it declines the offer at 0:00 and says so) and the Black Friday sale's (one fixed end
+              for everyone, after which the pages show the regular price by themselves); no disclaimer or illustration line (the owner's instruction); the
               reviews say where they are from; SPF is only ever mentioned as absent
 """
 import json, os, re, sys
@@ -116,6 +119,19 @@ ONE_TIME_ONLY = [
 ]
 OFFER_IDS = set(F.OFFER_PAGES)
 PACK_BY_REF = {p['package']: p for p in F.PACKS}
+# Black Friday (funnels/apf.py BLACK_FRIDAY, the owner, 5 Nov 2026): the listicle and the sales page sell the flash trial
+# funnel's plans and count their free bottles against its 1-bottle price ($39.97); the APF checkout and offers keep theirs
+BF = getattr(F, 'BLACK_FRIDAY', None)
+FRONT = ('listicle', 'offer')
+
+
+def unit_on(pid): return BF['unit'] if BF and pid in FRONT else F.UNIT
+
+
+def packs_on(pid):
+    """The packs a page sells, each with its refill interval in words ("every 5 months", "every 140 days")."""
+    if BF and pid in FRONT: return BF['packs']
+    return [dict(pk, every=f"{pk['every']} days") for pk in F.PACKS]
 PENDING = os.environ.get('APF_RECURRING_PENDING') == '1'
 
 
@@ -279,33 +295,95 @@ if _said:
 
 # sales page --------------------------------------------------------------------------------------------------------
 pp = html('offer')
-card_ids = {c[0] for c in cards}
-by_pkg = {int(json.loads(c[1])[0]['packageId']): c[0] for c in cards}
-seen = set()
-for m in re.finditer(r'<label class="sf-pack[^"]*" data-pack="([^"]+)" data-price="\$([\d.]+)" data-every="([^"]+)" '
-                     r'data-renew="([^"]+)" data-label="[^"]*" data-short="(\d+) bottles?[^"]*" data-package="(\d+)">', pp):
-    pack, price, every, renewal, bottles, package = m.groups()
-    seen.add(pack)
-    if by_pkg.get(int(package)) != pack: fail('offer', f'pack {pack} names package {package}; the checkout card for it is {by_pkg.get(int(package))}'); continue
-    p = pkgs[int(package)]
-    if float(price) != float(p['price']): fail('offer', f'pack {pack}: {price}, campaign {money(p["price"])}')
-    want = PACK_BY_REF.get(int(package))
-    if not want or renewal != renew(want) or every != f"{want['every']} days": fail('offer', f'pack {pack}: renews "{renewal}" every "{every}", not "{renew(want) if want else "?"}"')
-    card = pp[m.end():pp.find('</label>', m.end())]
-    if renewal not in text(card): fail('offer', f'pack {pack}: its renewal is not on its card')
-    # the free bottles: the pack's price is at most the 1-bottle price times the bottles she pays for, its crossed-out price the
-    # 1-bottle price times the bottles she gets (the owner's offer of 30 Oct 2026), and nothing else is struck through
-    _struck = re.findall(r'<s>\$([\d.]+)</s>', card.split('sf-gifts')[0])
-    if want and float(price) > F.UNIT * want['paid'] + 0.005: fail('offer', f'pack {pack}: ${price} is more than {want["paid"]} x ${F.UNIT} (the free bottles would not be free)')
-    if _struck != ([f"{F.UNIT * want['bottles']:.2f}"] if want and want.get('compare') else []): fail('offer', f'pack {pack}: crossed-out {_struck}, not {want["bottles"] if want else "?"} x ${F.UNIT}')
-    if want and want.get('compare') and abs(want['compare'] - F.UNIT * want['bottles']) > 0.005: fail('offer', f'pack {pack}: compare {want["compare"]} is not {want["bottles"]} x {F.UNIT}')
-    if 'SAVE $' in card: fail('offer', f'pack {pack}: a dollar saving on the card')
-    gifts_said(f'offer pack {pack}', p['product_sku'], text(card))      # the pack's own card
-if seen != card_ids: fail('offer', f'packs {sorted(seen)} are not the checkout cards {sorted(card_ids)}')
-for pack in re.findall(r'class="sf-pack[^"]*" data-pack="([^"]+)"', pp):
-    if pack not in card_ids: fail('offer', f'pack {pack} is no checkout card')
-for b in re.findall(r'forceBundleId=([a-z0-9-]+)', pp):
-    if b not in card_ids: fail('offer', f'checkout link to a card that does not exist: {b}')
+if BF:
+    # the trial funnel's plans: each card is a card of the trial checkout, selling the same SKU at the campaign's price
+    # (the 1-bottle card's sale price is its FLASH50 price, its regular price the campaign's, with its regular card after
+    # the end); its renewal, crossed-out price and free bottles count against the trial's $39.97; its data-package is the
+    # APF campaign's package of the same SKU (the view_item this page's SDK reports); its AppLovin item is the trial's
+    _tco = (PROJECT / '_site' / BF['trial_slug'] / 'trial-checkout' / 'index.html').read_text(encoding='utf-8')
+    tcard = {c[0]: int(json.loads(c[1])[0]['packageId']) for c in re.findall(r"<div data-next-bundle-card data-next-bundle-id=\"([^\"]+)\"[^>]*?data-next-bundle-items='([^']+)'", _tco)}
+    _tspec = json.loads((PROJECT / 'campaign-spec.trial.json').read_text())
+    tpkgs = {p_['ref_id']: p_ for pg in _tspec['funnels'][0]['pages'] for p_ in pg.get('packages', [])}
+    _seen = []
+    for m in re.finditer(r'<label class="sf-pack[^"]*" data-pack="([^"]+)" data-price="\$([\d.]+)" data-every="([^"]+)" '
+                         r'data-renew="([^"]+)" data-label="[^"]*" data-short="(\d+) bottles?[^"]*" data-package="(\d+)"([^>]*)>', pp):
+        pack, price, every, renewal, bottles, package, rest = m.groups()
+        _seen.append(pack)
+        want = next((k for k in BF['packs'] if k['id'] == pack), None)
+        if not want: fail('offer', f'pack {pack} is not a Black Friday plan'); continue
+        if pack not in tcard: fail('offer', f'pack {pack} is no card of the trial checkout'); continue
+        tp = tpkgs.get(tcard[pack])
+        if not tp or tp['product_sku'] != want['sku'] or tcard[pack] != want['package']: fail('offer', f'pack {pack}: the trial checkout card sells package {tcard[pack]}, not {want["package"]} ({want["sku"]})'); continue
+        if int(bottles) != want['bottles']: fail('offer', f'pack {pack}: {bottles} bottles, the plan has {want["bottles"]}')
+        if abs(float(price) - want['price']) > 0.005: fail('offer', f'pack {pack}: ${price}, the plan is ${want["price"]:.2f}')
+        if want.get('price_over'):
+            if abs(float(tp['price']) - want['price_over']) > 0.005: fail('offer', f'pack {pack}: after the sale ${want["price_over"]:.2f}, the campaign {money(tp["price"])}')
+            if f'data-price-over="${want["price_over"]:.2f}"' not in rest: fail('offer', f'pack {pack}: no regular price for after the sale')
+            if f'data-bundle-over="{want["bundle_over"]}"' not in rest or tcard.get(want['bundle_over']) != tcard[pack]: fail('offer', f'pack {pack}: after the sale its buttons do not open {want["bundle_over"]}')
+        elif abs(float(tp['price']) - want['price']) > 0.005: fail('offer', f'pack {pack}: ${price}, the campaign {money(tp["price"])}')
+        _r = f"Then ${want['renew_price']:.2f} every {want['every']}"
+        if renewal != _r or every != want['every']: fail('offer', f'pack {pack}: renews "{renewal}" every "{every}", not "{_r}"')
+        if abs(float(tp['price']) - want['renew_price']) > 0.005: fail('offer', f'pack {pack}: renews at ${want["renew_price"]:.2f}, the campaign charges {money(tp["price"])}')
+        card = pp[m.end():pp.find('</label>', m.end())]
+        if renewal not in text(card): fail('offer', f'pack {pack}: its renewal is not on its card')
+        _struck = re.findall(r'<s>\$([\d.]+)</s>', card.split('sf-gifts')[0])
+        if _struck != [f"{BF['unit'] * want['bottles']:.2f}"]: fail('offer', f'pack {pack}: crossed-out {_struck}, not {want["bottles"]} x ${BF["unit"]}')
+        if want['price'] > BF['unit'] * want['paid'] + 0.005: fail('offer', f'pack {pack}: ${want["price"]} is more than {want["paid"]} x ${BF["unit"]} (the free bottles would not be free)')
+        if abs(want['compare'] - BF['unit'] * want['bottles']) > 0.005: fail('offer', f'pack {pack}: compare {want["compare"]} is not {want["bottles"]} x {BF["unit"]}')
+        _ap = pkgs.get(int(package))
+        if not _ap or _ap['product_sku'] != want['sku']: fail('offer', f'pack {pack}: data-package {package} is not the APF package of {want["sku"]} (its view_item would name another product)')
+        for _k, _v in (('sku', want['sku']), ('variant', str(want['variant'])), ('value', f"{want['price']:.2f}"), ('value-over', f"{want.get('price_over', want['price']):.2f}")):
+            if f'data-axon-{_k}="{_v}"' not in rest: fail('offer', f'pack {pack}: AppLovin\'s add_to_cart {_k} is not {_v}')
+        if 'SAVE $' in card: fail('offer', f'pack {pack}: a dollar saving on the card')
+        gifts_said(f'offer pack {pack}', want['sku'], text(card))
+    if _seen != [k['id'] for k in BF['packs']]: fail('offer', f'packs {_seen}, funnels/apf.py BLACK_FRIDAY has {[k["id"] for k in BF["packs"]]}')
+    for _href in re.findall(r'href="([^"]*forceBundleId=[^"]*)"', pp):
+        _b = re.search(r'forceBundleId=([a-z0-9-]+)', _href).group(1)
+        if not _href.startswith(BF['checkout'] + '?') or _b not in tcard: fail('offer', f'a checkout button that is not the trial checkout\'s card: {_href}')
+    # the sale's clock: one end for everyone (the trial funnel's SALE_END), read before the first paint on both pages, the
+    # page turned over at the end, the regular words shown then
+    _end = f"new Date({BF['end'][0]}, {BF['end'][1] - 1}, {BF['end'][2]}, 24, 0, 0, 0)"
+    for _pid in FRONT:
+        _h = html(_pid)
+        if _end not in _h or "classList.add('sf-trial-over')" not in _h: fail(_pid, f'the Black Friday end is not {_end} (funnels/trial.py SALE_END) before the first paint')
+        if _h.find(_end) > _h.find('class="sf-bar"'): fail(_pid, 'the Black Friday end is read after the bar is drawn')
+        if 'data-sf-bf-clock' not in _h or BF['end_label'] not in text(_h): fail(_pid, f'no Black Friday clock or "{BF["end_label"]}"')
+        for _m in re.finditer(r'\$19\.97', text(_h)):
+            if '$39.97' not in text(_h)[max(0, _m.start() - 80):_m.end() + 170]: fail(_pid, f'"$19.97" without the $39.97 it renews at beside it: "…{text(_h)[max(0, _m.start() - 40):_m.end() + 60]}…"')
+    _bfcss = (SITE / 'css' / 'sf-apf.css').read_text(encoding='utf-8')
+    if 'html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial-over] { display: none !important; }' not in _bfcss: fail('offer', 'the sale\'s and the regular words are both shown')
+    _bfjs = (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8')
+    if "getAttribute('data-bundle-over')" not in _bfjs or "classList.add('sf-trial-over')" not in _bfjs or "window.axon('track', 'add_to_cart'" not in _bfjs:
+        fail('offer', 'sf-apf.js does not turn the page over at the end, or does not report a Black Friday plan to AppLovin')
+else:
+    pp = html('offer')
+    card_ids = {c[0] for c in cards}
+    by_pkg = {int(json.loads(c[1])[0]['packageId']): c[0] for c in cards}
+    seen = set()
+    for m in re.finditer(r'<label class="sf-pack[^"]*" data-pack="([^"]+)" data-price="\$([\d.]+)" data-every="([^"]+)" '
+                         r'data-renew="([^"]+)" data-label="[^"]*" data-short="(\d+) bottles?[^"]*" data-package="(\d+)">', pp):
+        pack, price, every, renewal, bottles, package = m.groups()
+        seen.add(pack)
+        if by_pkg.get(int(package)) != pack: fail('offer', f'pack {pack} names package {package}; the checkout card for it is {by_pkg.get(int(package))}'); continue
+        p = pkgs[int(package)]
+        if float(price) != float(p['price']): fail('offer', f'pack {pack}: {price}, campaign {money(p["price"])}')
+        want = PACK_BY_REF.get(int(package))
+        if not want or renewal != renew(want) or every != f"{want['every']} days": fail('offer', f'pack {pack}: renews "{renewal}" every "{every}", not "{renew(want) if want else "?"}"')
+        card = pp[m.end():pp.find('</label>', m.end())]
+        if renewal not in text(card): fail('offer', f'pack {pack}: its renewal is not on its card')
+        # the free bottles: the pack's price is at most the 1-bottle price times the bottles she pays for, its crossed-out price the
+        # 1-bottle price times the bottles she gets (the owner's offer of 30 Oct 2026), and nothing else is struck through
+        _struck = re.findall(r'<s>\$([\d.]+)</s>', card.split('sf-gifts')[0])
+        if want and float(price) > F.UNIT * want['paid'] + 0.005: fail('offer', f'pack {pack}: ${price} is more than {want["paid"]} x ${F.UNIT} (the free bottles would not be free)')
+        if _struck != ([f"{F.UNIT * want['bottles']:.2f}"] if want and want.get('compare') else []): fail('offer', f'pack {pack}: crossed-out {_struck}, not {want["bottles"] if want else "?"} x ${F.UNIT}')
+        if want and want.get('compare') and abs(want['compare'] - F.UNIT * want['bottles']) > 0.005: fail('offer', f'pack {pack}: compare {want["compare"]} is not {want["bottles"]} x {F.UNIT}')
+        if 'SAVE $' in card: fail('offer', f'pack {pack}: a dollar saving on the card')
+        gifts_said(f'offer pack {pack}', p['product_sku'], text(card))      # the pack's own card
+    if seen != card_ids: fail('offer', f'packs {sorted(seen)} are not the checkout cards {sorted(card_ids)}')
+    for pack in re.findall(r'class="sf-pack[^"]*" data-pack="([^"]+)"', pp):
+        if pack not in card_ids: fail('offer', f'pack {pack} is no checkout card')
+    for b in re.findall(r'forceBundleId=([a-z0-9-]+)', pp):
+        if b not in card_ids: fail('offer', f'checkout link to a card that does not exist: {b}')
 
 # offer 1: the supply cards -----------------------------------------------------------------------------------------
 h1, pg1 = html('offer-1'), PAGES['offer-1']
@@ -482,10 +560,11 @@ for p in F.PAGES:
 # the checkout shows the packs in the sales page's order and opens on the sales page's pack, with or without
 # forceBundleId (F18)
 _sales_order = re.findall(r'class="sf-pack[^"]*" data-pack="([^"]+)"', html('offer'))
-if [c[0] for c in cards] != _sales_order: fail('checkout', f'packs in the order {[c[0] for c in cards]}, the sales page has {_sales_order}')
-_sel = [c[0] for c in cards if 'data-next-selected="true"' in c[2]]
 _on_pack = re.search(r'<label class="sf-pack is-on"[^>]*data-pack="([^"]+)"', html('offer'))
-if _on_pack and _sel != [_on_pack.group(1)]: fail('checkout', f'opens on {_sel}, the sales page on {_on_pack.group(1)}')
+if not BF:      # (Black Friday: the sales page opens the trial funnel's checkout, every button on a named card)
+    if [c[0] for c in cards] != _sales_order: fail('checkout', f'packs in the order {[c[0] for c in cards]}, the sales page has {_sales_order}')
+    _sel = [c[0] for c in cards if 'data-next-selected="true"' in c[2]]
+    if _on_pack and _sel != [_on_pack.group(1)]: fail('checkout', f'opens on {_sel}, the sales page on {_on_pack.group(1)}')
 # the ingredients before she pays: the key list on the sales page and the checkout, and the full list on request (F16)
 for pid in ('offer', 'checkout'):
     t = text(html(pid))
@@ -746,13 +825,13 @@ if "window.next.on('upsell:error', addFailed)" not in _ogj or 'next-upsell-decli
 if 'clearInterval(timer)' not in (SITE / 'js' / 'sf-offer-timer.js').read_text(encoding='utf-8'): fail('offers', 'the clock keeps running once the order turns out to be missing')
 if not re.search(r'@media \(max-width: 600px\) \{ \.sf-no-order-note \{ margin-left: 16px; margin-right: 16px; \} \}', _oc): fail('offers', 'the no-order note has no gutter on a phone')
 # F2: the phone sticky bar names the renewal amount
-if "price + ' today, then ' + price + ' every ' + every" not in _apfjs or 'today · then every' in _sp: fail('offer', 'the sticky bar states the renewal without its amount')
+if "price + ' today, then ' + renewPrice + ' every ' + every" not in _apfjs or 'today · then every' in _sp: fail('offer', 'the sticky bar states the renewal without its amount')
 # F3: the coupon is "10% off", never "an extra" (FORBIDDEN above), on the cards' badge too; "Your pack" follows the total (above)
 if 'EXTRA {discount.percentage}' in co: fail('checkout', 'the coupon badge says "EXTRA"')
 # F5: the hero rating says the 9,855 are the published reviews
 if '4.8 out of 5 from 9,855 published reviews at our earlier store' not in text(_sp): fail('offer', 'the hero rating does not say the 9,855 are the published reviews')
 # F6: the listicle's offer box and last button open the sales page at the packs, on the 5-bottle pack
-if _lst.count('adaptive-foundation-offer/?pack=apf-5#offer"') < 2: fail('listicle', 'the offer buttons land at the top of the sales page, not at the packs')
+if _lst.count(f'adaptive-foundation-offer/?pack={_on_pack.group(1) if _on_pack else "apf-5"}#offer"') < 2: fail('listicle', 'the offer buttons land at the top of the sales page, not at the packs')
 # F7: the clips whose top-right holds the picture (the day's timeline, the dropper bottle) keep the pause button off it
 if _sp.count('data-sf-pause-corner="tl"') < 1 or _lst.count('data-sf-pause-corner="tl"') < 2 or "getAttribute('data-sf-pause-corner') === 'tl'" not in _apfjs: fail('listicle', 'the pause button covers the timeline or the dropper bottle')
 
@@ -810,7 +889,7 @@ for p in F.PAGES:
     t = text(html(p['id']))
     for m in re.finditer(r'less than (\d+) (?:bottles )?cost', t): fail(p['id'], f'"{m.group(0)}": less than what? (name the single bottles)')
     for m in re.finditer(r'less than (\d+) single bottles \((\$[\d.]+)\)', t):
-        if m.group(2) != usd(int(m.group(1)) * F.UNIT): fail(p['id'], f'"{m.group(0)}": {m.group(1)} single bottles are {usd(int(m.group(1)) * F.UNIT)}')
+        if m.group(2) != usd(int(m.group(1)) * unit_on(p['id'])): fail(p['id'], f'"{m.group(0)}": {m.group(1)} single bottles are {usd(int(m.group(1)) * unit_on(p["id"]))}')
     for m in re.finditer(r'\babout (?:a|one|two|three|four|five|six) months?\b|months?[’\'] supply|lasts? about a month|next \w+ months', t, re.I):
         fail(p['id'], f'"{m.group(0)}": a supply in months, while the refills are in days (weeks)')
     for m in re.finditer(r'[^.!?]*soft-focus[^.!?]*lines[^.!?]*', t):
@@ -818,9 +897,9 @@ for p in F.PAGES:
 for q in ('listicle', 'offer', 'checkout'):
     t = text(html(q))
     for m in re.finditer(r'(\d) bottles? (?:for )?\$(\d+\.\d\d)', t):
-        pk = next((pk for pk in F.PACKS if f"{pk['price']:.2f}" == m.group(2) and pk['bottles'] == int(m.group(1))), None)
-        if pk and f"every {pk['every']} days" not in t[m.end(): m.end() + 160]:
-            fail(q, f'"{m.group(0)}" without its renewal ("every {pk["every"]} days") right after it')
+        pk = next((pk for pk in packs_on(q) if f"{pk['price']:.2f}" == m.group(2) and pk['bottles'] == int(m.group(1))), None)
+        if pk and f"every {pk['every']}" not in t[m.end(): m.end() + 160]:
+            fail(q, f'"{m.group(0)}" without its renewal ("every {pk["every"]}") right after it')
 # F5 placeholders at 4.5:1 or better; F6 the listicle's phone hero is WebP and nothing below it loads eagerly; F7 the
 # no-order note's button grows with its words and its phone number never breaks
 if '[data-next-checkout="form"] input::placeholder, [data-next-checkout="form"] textarea::placeholder { color: #666; opacity: 1; }' not in _occss:

@@ -6,7 +6,7 @@ direction: ltr
 currency: USD
 primary_color: "#151515"
 accent_color: "#e8a33d"
-cta_url: https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-3
+cta_url: https://try.skinofab.com/trial-checkout/?forceBundleId=trial-3
 cta_label: GET MY FOUNDATION
 font_heading: Playfair Display
 font_body: Montserrat
@@ -17,7 +17,7 @@ refund_url: https://try.skinofab.com/refund-policy/
 privacy_url: https://try.skinofab.com/privacy-policy/
 terms_url: https://try.skinofab.com/terms-of-service/
 contact_url: https://try.skinofab.com/contact/
-announcement: BUY 3, GET 2 FREE + a FREE Lymphatic Brush · From $19.99 a bottle · Free shipping · 30-day money-back guarantee
+announcement: ⚡ **BLACK FRIDAY FLASH SALE** · Your first bottle $19.97, then $39.97 a month · Ends in Mon, Nov 30
 disclaimer: Cosmetic claims only: the foundation evens the look of skin tone and keeps dry skin comfortable; it treats nothing and has no SPF. Individual results vary. Contains salmon-derived PDRN: not for anyone with a fish allergy. The before/after images are AI illustrations of what a thin layer of foundation does to the look of skin tone, not customer photos.
 ---
 
@@ -46,9 +46,9 @@ Dot it on white, blend, and watch it turn into your own tone: even, fresh, reste
 
 [TRUST: 4.8 out of 5 from 9,855 published reviews at our earlier store; Formulated in Korea; Free shipping · skip or cancel refills any time]
 
-[CTA: YES, GET MY SKIN BACK ↓ | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-2]
+[CTA: YES, GET MY SKIN BACK ↓ | https://try.skinofab.com/trial-checkout/?forceBundleId=trial-3]
 
-*From <strong>$19.99</strong> a bottle*
+*<span data-sf-trial-live>⚡ Black Friday: your first bottle <strong>$19.97</strong>, then $39.97 a month</span><span data-sf-trial-over>From <strong>$19.99</strong> a bottle</span>*
 
 ## 03 · Summary
 
@@ -76,19 +76,19 @@ After 45 your tone shifts and your skin gets drier. The shade that matched at 40
 
 ### Choose your pack
 
-<strong>Buy 3, get 2 FREE</strong>: 5 bottles for $99.97, then $99.97 every 140 days ($19.99 a bottle), with the free Lymphatic Brush. Every pack ships free and refills at the same price until you cancel.
+<span data-sf-trial-live><strong>Black Friday:</strong> your first bottle for $19.97 (50% off), then $39.97 every month. </span><strong>Buy 3, get 2 FREE</strong>: 5 bottles for $99.97, then $99.97 every 5 months ($19.99 a bottle), with the free Lymphatic Brush. Every plan ships free and refills at its own price until you cancel.
 
-[OFFER: 1 bottle | $33.97 | | About four weeks of daily use · then $33.97 every 28 days, until you cancel · free shipping | ]
+[OFFER: 1 bottle | $19.97 | | About four weeks of daily use · then $39.97 every month, until you cancel · free shipping | Black Friday · 50% off]
 
-[OFFER: 3 bottles | $66.97 | | Less than 2 single bottles ($67.94) · about 12 weeks · $22.32 a bottle · then $66.97 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
+[OFFER: 3 bottles | $66.97 | | Less than 2 single bottles ($79.94) · about 12 weeks · $22.32 a bottle · then $66.97 every 3 months, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
 
-[OFFER: 5 bottles | $99.97 | | Less than 3 single bottles ($101.91) · about 20 weeks · $19.99 a bottle · then $99.97 every 140 days, until you cancel · free shipping · first order: FREE Lymphatic Brush + case | Buy 3, get 2 FREE · Best value]
+[OFFER: 5 bottles | $99.97 | | Less than 3 single bottles ($119.91) · about 20 weeks · $19.99 a bottle · then $99.97 every 5 months, until you cancel · free shipping · first order: FREE Lymphatic Brush + case | Buy 3, get 2 FREE · Best value]
 
-[CTA: GET MY FOUNDATION | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-2]
+[CTA: GET MY FOUNDATION | https://try.skinofab.com/trial-checkout/?forceBundleId=trial-3]
 
 [TRUST: Free shipping; Ships in 1 business day; Secure checkout; 30-day money-back guarantee]
 
-Automatic Refills: your pack ships again at the same price until you cancel, 1 bottle every 28 days, 3 bottles every 84 days, 5 bottles every 140 days. The free bottles come in every refill: each one is the same pack at the same price. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
+Automatic Refills: your plan ships again until you cancel, 1 bottle at $39.97 every month<span data-sf-trial-live> (the Black Friday $19.97 is for your first bottle)</span>, 3 bottles at $66.97 every 3 months, 5 bottles at $99.97 every 5 months. The free bottles come in every refill. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
 
 ## 06 · State the Problem Clearly
 
@@ -256,7 +256,7 @@ One pump, buffed in: about a minute, no shade to guess.
 
 One pump, one minute, fingertips. You look in the mirror and **your skin looks like yours again**: even, fresh, with a finish designed not to settle into your lines. At lunch it’s still there. In Saturday’s photo you’re in the front row, **and they just see you, rested.**
 
-[CTA: CHOOSE MY PACK | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-2]
+[CTA: CHOOSE MY PACK | https://try.skinofab.com/trial-checkout/?forceBundleId=trial-3]
 
 ## 14 · Usage Instructions
 
@@ -310,7 +310,7 @@ We can promise this because of what 9,855 reviews say about it. Read them above,
 
 |---|---|
 
-| 5 bottles of Adaptive Peptide Foundation (about 20 weeks), at $33.97 each | $169.85 |
+| 5 bottles of Adaptive Peptide Foundation (about 20 weeks), at $39.97 each | $199.85 |
 
 | The Lymphatic Brush with its travel case | $24.95 |
 
@@ -318,15 +318,15 @@ We can promise this because of what 9,855 reviews say about it. Read them above,
 
 | 30-day money-back guarantee | included |
 
-| **Total value of your first order** | **$194.80** |
+| **Total value of your first order** | **$224.80** |
 
 | **Your price today** | **$99.97** |
 
-**Why these packs are only here:** our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch. There is no countdown on this page, and no pack costs more than it says here.
+**Why now:** it’s our Black Friday flash sale. Your first bottle is $19.97, 50% off, until Monday, November 30 at midnight your time; after that the 1-bottle plan is $39.97 a month from the first bottle. **Why these packs are only here:** our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch, and no pack costs more than it says here.
 
-[OFFER: 3 bottles | $66.97 | | Less than 2 single bottles ($67.94) · about 12 weeks · $22.32 a bottle · then $66.97 every 84 days, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
+[OFFER: 3 bottles | $66.97 | | Less than 2 single bottles ($79.94) · about 12 weeks · $22.32 a bottle · then $66.97 every 3 months, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
 
-[CTA: GET MY FOUNDATION | https://try.skinofab.com/foundation-checkout/?forceBundleId=apf-3]
+[CTA: GET MY FOUNDATION | https://try.skinofab.com/trial-checkout/?forceBundleId=trial-3]
 
 ## 17 · Emphasize Scarcity
 
@@ -404,11 +404,15 @@ No. We left SPF out on purpose so the formula can stay a light, hydrating serum.
 
 **Q: Is this a subscription?**
 
-Yes, with Automatic Refills you control. You pay today’s price now. Your pack then ships again at the same price until you cancel: 1 bottle every 28 days ($33.97), 3 bottles every 84 days ($66.97), 5 bottles every 140 days ($99.97). The free bottles come in every refill. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
+Yes, with Automatic Refills you control. You pay today’s price now. Your plan then ships again until you cancel: 1 bottle at $39.97 every month<span data-sf-trial-live> (the Black Friday $19.97 is for your first bottle only)</span>, 3 bottles at $66.97 every 3 months, 5 bottles at $99.97 every 5 months. The free bottles come in every refill. We email you before every refill. To skip or cancel, send one of our ready-made emails: <a href="mailto:info@skinofab.com?subject=Skip%20my%20next%20refill&amp;body=Please%20skip%20the%20next%20Automatic%20Refill%20on%20my%20Adaptive%20Peptide%20Foundation%20order%20and%20keep%20the%20ones%20after%20it.%20I%20ordered%20with%20this%20email%20address.">Skip my next refill</a> or <a href="mailto:info@skinofab.com?subject=Cancel%20my%20Automatic%20Refills&amp;body=Please%20cancel%20the%20Automatic%20Refills%20on%20my%20Adaptive%20Peptide%20Foundation%20order.%20I%20ordered%20with%20this%20email%20address.">Cancel my refills</a> (each opens your email, ready to send). Sent at least a day before a refill, it stops that refill. No call, no form, no fees. The free gift comes with your first order; refills are the bottles only.
 
 **Q: How long does a bottle last?**
 
-About four weeks of daily use with one pump a day, which is why a single bottle refills every 28 days. The 3-bottle pack is about 12 weeks (refilled every 84 days), the 5-bottle pack about 20 weeks (every 140 days).
+About four weeks of daily use with one pump a day, which is why a single bottle refills every month. The 3-bottle pack is about 12 weeks (refilled every 3 months), the 5-bottle pack about 20 weeks (every 5 months).
+
+**Q: When does the Black Friday price end?**
+
+The Black Friday price of the 1-bottle plan, $19.97 for your first bottle (50% off), ends on Monday, November 30, at midnight your time. After that the 1-bottle plan is $39.97 a month from the first bottle. The 3- and 5-bottle packs keep their prices.
 
 **Q: When will it arrive?**
 
