@@ -414,6 +414,36 @@ weak connection would be.
   the funnel on a static CDN would remove both (see "Static hosting" below: the repo is ready). That needs the owner to
   connect the host and point a domain at it.
 
+### Reading order (5 Nov 2026)
+
+The owner asked for a page that says in three seconds what we sell and how, then reads top to bottom without
+jumping. The sections are the same content, rearranged; nothing new is claimed.
+
+| # | Part | Section id |
+|---|---|---|
+| 1 | Above the fold: the hero photo with the bottle and its name on it, the promise, four benefits, the Black Friday price, the button, the guarantee (seal + "even opened"), free shipping, Korea, the Clinicians' Choice badge | `s01-hero` |
+| 2 | Review cards with the buyers' photos, side by side (swipe on a phone) | `s02-reviews` |
+| 3 | The problem (her day, in photos) | `s06-problem` |
+| 4 | The root cause (skin after 45, the diagram) | `s07-mechanism` |
+| 5 | The solution and how it works | `s08-solution` |
+| 6 | Why it works: the ingredients, with their photos | `s10-why` |
+| 7 | One pump instead of five products | `s09-ease` |
+| 8 | Before and after; one shade on fair to deep skin | `s11-before-after`, `s11-shade` |
+| 9 | Who makes it (Korea lab, "Model portrayal."), the credentials | `s10-korea`, `s10-credentials` |
+| 10 | The comparison | `s09-compare` |
+| 11 | Reviews with photos (Trustpilot style) | `s18-reviews` |
+| 12 | How to use it | `s14-usage` |
+| 13 | FAQ | `s19-faq` |
+| 14 | The offer, then "Why this price, and why now" (Black Friday, the end date with the live clock, packs only on this page), then what is limited | `s16-value` |
+| 15 | The guarantee beside a woman of the persona's age, with a button; then how to reach us | `s15-guarantee`, `s20-service` |
+
+- Backgrounds alternate white and cream from the problem down, so no two neighbours share one.
+- Left out of the page (still in the front matter, for the copy deck): the summary strip, the badge row, the separate
+  promise section, the proof cards and the benefits list (the hero has them).
+- Phones: the review cards are photo and name side by side with the words under them (the section went from 6,600 px
+  to about 4,000); the hero's order is the benefits, the price, the button, the trust line, the badge.
+- The "why now" points use `data-sf-trial-live`: after the sale ends they hide with the rest of the Black Friday copy.
+
 ### The checkout
 
 v2 (the owner's brief: "simplify, give directly the shipping info and the payment, with some badges and

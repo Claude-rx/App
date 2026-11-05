@@ -103,7 +103,7 @@ def deck(fm):
         f"[GUARANTEE: {g['title']} — 30 days from delivery, a full refund even opened, nothing to send back]")
     sec('16 · Highlight an Irresistible Offer with Urgency', f"### {v['title']}", '| What you get | Value |', '|---|---|',
         *[f"| {x['item']} | {x['value']} |" for x in v['stack']], f"| **{v['total']['item']}** | **{v['total']['value']}** |",
-        f"| **{v['today']['item']}** | **{v['today']['value']}** |", md(v['why_now']), offer_token(packs[THREE]), cta(o['button'], THREE))
+        f"| **{v['today']['item']}** | **{v['today']['value']}** |", f"#### {v['why_title']}", *[f"- **{w['lead']}** {md(w['text'])}" for w in v['why_now']], offer_token(packs[THREE]), cta(o['button'], THREE))
     sec('17 · Emphasize Scarcity', f"### {fm['scarcity']['title']}", fm['scarcity']['text'])
     sec('18 · Incorporate Customer Reviews with Images', f"### {rs['title']}", f"**{rs['stars']}** — {rs['lede']}",
         *[f"[REVIEW: {x['name']} | {ORIGIN} | {x['stars']} | | {x['text']} | {x['photo']} | yes]" for x in fm['reviews']],

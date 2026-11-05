@@ -322,7 +322,13 @@ We can promise this because of what 9,855 reviews say about it. Read them above,
 
 | **Your price today** | **$99.97** |
 
-**Why now:** it’s our Black Friday flash sale. Your first bottle is $19.97, 50% off, until Monday, November 30 at midnight your time; after that the 1-bottle plan is $39.97 a month from the first bottle. **Why these packs are only here:** our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch, and no pack costs more than it says here.
+#### Why this price, and why now
+
+- **It’s our Black Friday flash sale.** Your first bottle is $19.97, 50% off; after it, the 1-bottle plan is $39.97 a month.
+
+- **It ends Monday, November 30, at midnight your time.** After that, the 1-bottle plan is $39.97 a month from the first bottle.
+
+- **These packs are only on this page.** Our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch, and no pack costs more than it says here.
 
 [OFFER: 3 bottles | $66.97 | | Less than 2 single bottles ($79.94) · about 12 weeks · $22.32 a bottle · then $66.97 every 3 months, until you cancel · free shipping · first order: FREE SKINOFAB Blender sponge | Buy 2, get 1 FREE]
 

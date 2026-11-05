@@ -44,9 +44,10 @@ hero:
     - "<strong>Designed not to settle</strong> into fine lines."
     - "<strong>A serum base</strong> that keeps dry skin comfortable."
     - "<strong>PDRN and peptides</strong> in every layer you wear."
-    - "<strong>30-day money-back guarantee,</strong> even opened."
   trust: ["4.8 out of 5 from 9,855 published reviews at our earlier store", "Formulated in Korea", "Free shipping · skip or cancel refills any time"]
   button: "YES, GET MY SKIN BACK ↓"
+  # the offer's guarantee, under the button (the owner, 5 Nov 2026: above the fold, the offer and the guarantee)
+  guarantee: "30-day money-back guarantee, even opened"
   # the lowest price a bottle, big, right under the button (the owner, 2 Nov 2026: "always show the low price"); the packs
   # and their renewals are stated on the pack cards below and at the checkout
   price: "<span data-sf-trial-live>⚡ Black Friday: your first bottle <strong>$19.97</strong>, then $39.97 a month</span><span data-sf-trial-over>From <strong>$19.99</strong> a bottle</span>"
@@ -344,7 +345,13 @@ value:
   total: { item: "Total value of your first order", value: "$224.80" }
   today: { item: "Your price today", value: "$99.97" }
   math: "You get 5 bottles for less than 3 single bottles ($119.91): $19.99 a bottle, against $39.97 for one. The brush comes free with your first order; each refill after it is the 5 bottles at $99.97, every 5 months, until you cancel. Prefer fewer? Buy 2, get 1 free: 3 bottles for $66.97 ($22.32 a bottle), then $66.97 every 3 months, with a free Blender sponge. Or just try one: <span data-sf-trial-live>Black Friday, 1 bottle for $19.97, then $39.97 every month.</span><span data-sf-trial-over>1 bottle for $39.97, then $39.97 every month.</span>"
-  why_now: "<span data-sf-trial-live><strong>Why now:</strong> it’s our Black Friday flash sale. Your first bottle is $19.97, 50% off, until Monday, November 30 at midnight your time; after that the 1-bottle plan is $39.97 a month from the first bottle. </span><strong>Why these packs are only here:</strong> our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch, and no pack costs more than it says here."
+  # why the offer, in three short points (the owner, 5 Nov 2026: why we have the offer, then the limited time); the
+  # Black Friday points show only while the sale runs (live), the clock counts down to its real end
+  why_title: "Why this price, and why now"
+  why_now:
+    - { live: true, icon: "⚡", lead: "It’s our Black Friday flash sale.", text: "Your first bottle is $19.97, 50% off; after it, the 1-bottle plan is $39.97 a month." }
+    - { live: true, icon: "⏰", lead: "It ends Monday, November 30, at midnight your time.", text: "After that, the 1-bottle plan is $39.97 a month from the first bottle.", clock: true }
+    - { icon: "📦", lead: "These packs are only on this page.", text: "Our store sells 1 or 2 bottles, with no free bottle and no Lymphatic Brush. Buy 2, get 1 free and buy 3, get 2 free are made for this launch, and no pack costs more than it says here." }
 scarcity:
   title: "What is limited"
   text: "The free Lymphatic Brush is a launch gift: it comes with the 5-bottle pack while our launch stock lasts. When it runs out, we change this page and the checkout before we take another order for that pack, so you see it before you order. The foundation is formulated in Korea and made in batches: if a pack runs out, we take it off the page rather than ship it late."
@@ -429,37 +436,41 @@ closing:
 </header>
 
 <main class="sf-pdp">
-  {% comment %} 1-2: the hero: the big promise, its benefits as bullets, the wow still {% endcomment %}
+  {% comment %} ABOVE THE FOLD (the owner, 5 Nov 2026: in 3 seconds she knows what we sell and how): the hero photo, the big
+     promise, the key benefits, the offer with its guarantee, the Clinicians' Choice; then the review cards {% endcomment %}
   <section class="sf-hero2 sf-hero2--v2" id="s01-hero">
     <figure class="sf-hero2__media sf-hero2__media--tall">
       <picture><source media="(max-width: 599px)" type="image/webp" srcset="{{ 'images/sf/wow-m.webp' | campaign_asset }}" width="760" height="608"><img src="{{ hero.image | campaign_asset }}" alt="{{ hero.image_alt }}" width="1080" height="1350" fetchpriority="high" decoding="async"></picture>
       <span class="sf-hero2__tag">Goes on white → your tone</span>
+      <span class="sf-hero2__pack"><picture><source type="image/webp" srcset="{{ 'images/sf/hero-bottle.webp' | campaign_asset }}"><img src="{{ 'images/sf/hero-bottle.jpg' | campaign_asset }}" alt="The Adaptive Peptide Foundation bottle" width="131" height="360" decoding="async"></picture><span><b>Adaptive Peptide Foundation</b><small>30 mL · one adaptive shade</small></span></span>
     </figure>
     <div class="sf-hero2__copy">
       <span class="sf-hero2__eyebrow">{{ hero.eyebrow }}</span>
       <h1 id="s02-headline">{{ hero.headline }}</h1>
       <p class="sf-hero2__rating"><span class="sf-tp__stars sf-tp__stars--plain" aria-hidden="true">{% campaign_include 'sf-stars.html' n=4.8 %}</span> <a href="#s18-reviews">{{ hero.trust[0] }}</a></p>
-      <p class="sf-hero2__sub">{{ hero.sub }}</p>
       <ul class="sf-hero2__bullets">{% for b in hero.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
       {% if hero.deal %}<p class="sf-hero2__deal">{{ hero.deal }}</p>{% endif %}
-      <a class="sf-btn sf-btn--xl" href="#offer" data-sf-sticky-anchor>{{ hero.button }}</a>
       {% if hero.price %}<p class="sf-hero2__price">{{ hero.price }}</p>{% endif %}
-      <ul class="sf-trustline">
-        <li>🇰🇷 {{ hero.trust[1] }}</li>
+      <a class="sf-btn sf-btn--xl" href="#offer" data-sf-sticky-anchor>{{ hero.button }}</a>
+      <ul class="sf-trustline sf-trustline--offer">
+        <li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z" fill="currentColor"/><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>{{ hero.guarantee }}</li>
         <li>✓ {{ hero.trust[2] }}</li>
+        <li>🇰🇷 {{ hero.trust[1] }}</li>
       </ul>
       {% if hero.note %}<p class="sf-hero2__note">{{ hero.note }}</p>{% endif %}
       {% campaign_include 'sf-frontrow.html' count=frontrow_clinicians %}
     </div>
   </section>
-
-  {% comment %} 3: the summary, one breath {% endcomment %}
-  <section class="sf-sec" id="s03-summary" style="padding:10px 0 26px">
-    <div class="sf-sec__in"><p class="sf-summary">{{ summary }}</p></div>
+  {% comment %} the review cards under the hero: the published reviews with the buyers' photos, side by side (swipe on a
+     phone); the full reviews further down {% endcomment %}
+  <section class="sf-revstrip" id="s02-reviews" aria-label="Reviews from our earlier store">
+    <div class="sf-sec__in">
+      <p class="sf-revstrip__head"><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="{{ ratings.average }} out of 5 stars">{% campaign_include 'sf-stars.html' n=ratings.average %}</span> <strong>{{ ratings.average }} out of 5</strong> from {{ ratings.count }} published reviews at our earlier store · <a href="#s18-reviews">Read them</a></p>
+      <ul class="sf-revstrip__list">{% for r in reviews %}<li class="sf-revcard"><img src="{{ r.photo | campaign_asset }}" alt="{{ r.name }}’s photo with her review" width="400" height="400" loading="lazy" decoding="async"><div class="sf-revcard__body"><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="{{ r.stars }} out of 5 stars">{% campaign_include 'sf-stars.html' n=r.stars %}</span><p>“{{ r.text | truncate: 125, "…" }}”</p><b>{{ r.name }}</b><small>Verified buyer, earlier store</small></div></li>{% endfor %}</ul>
+    </div>
   </section>
-
-  {% comment %} 6: the problem, right after the hero: her mornings, in photos {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s06-problem">
+{% comment %} 6: the problem, right after the hero: her mornings, in photos {% endcomment %}
+  <section class="sf-sec" id="s06-problem">
     <div class="sf-sec__in">
       <p class="sf-eyebrow" style="text-align:center">{{ problem.eyebrow }}</p>
       <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ problem.title }}</h2>
@@ -473,9 +484,8 @@ closing:
       </div>
     </div>
   </section>
-
-  {% comment %} 7: the root of the problem, with the animated diagram {% endcomment %}
-  <section class="sf-sec" id="s07-mechanism">
+{% comment %} 7: the root of the problem, with the animated diagram {% endcomment %}
+  <section class="sf-sec sf-sec--cream" id="s07-mechanism">
     <div class="sf-mechanism">
       <p class="sf-eyebrow">{{ mechanism.eyebrow }}</p>
       <h2 class="sf-h2 sf-h2--big">{{ mechanism.title }}</h2>
@@ -510,9 +520,8 @@ closing:
       <p class="sf-mechanism__end"><strong>{{ mechanism.end }}</strong></p>
     </div>
   </section>
-
-  {% comment %} 8: the root solution and its mechanism: the serum loop beside its four parts {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s08-solution">
+{% comment %} 8: the root solution and its mechanism: the serum loop beside its four parts {% endcomment %}
+  <section class="sf-sec" id="s08-solution">
     <div class="sf-sec__in sf-two sf-two--top">
       <figure class="sf-science">
         <video data-sf-pause-corner="tl" data-sf-lazy muted loop playsinline preload="none" data-sf-poster="{{ 'images/sf/science-poster.jpg' | campaign_asset }}" width="1080" height="720" aria-label="A cream sits heavy on top of a skin cross-section, while a drop of the serum spreads into a thin, light layer on the other">
@@ -531,8 +540,18 @@ closing:
       </div>
     </div>
   </section>
-
-  {% comment %} 9a: how easy it is next to the old routine {% endcomment %}
+{% comment %} 10: the skincare inside: PDRN and the rest, one by one; the complaints we answered {% endcomment %}
+  <section class="sf-sec sf-sec--cream" id="s10-why">
+    <div class="sf-sec__in">
+      <p class="sf-eyebrow" style="text-align:center">{{ ingredients.eyebrow }}</p>
+      <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ ingredients.title }}</h2>
+      <p style="text-align:center;max-width:680px;margin:0 auto 18px">{{ ingredients.lede }}</p>
+      <ul class="sf-ing{% if ingredients.items[0].image %} sf-ing--photos{% endif %}">{% for i in ingredients.items %}<li>{% if i.image %}<img src="{{ i.image | campaign_asset }}" alt="{{ i.alt }}" width="800" height="800" loading="lazy" decoding="async">{% else %}{% campaign_include 'sf-icon.html' name=i.icon %}{% endif %}<div><strong>{{ i.name }}</strong><span>{{ i.role }}</span></div></li>{% endfor %}</ul>
+      <h3 class="sf-h3" style="text-align:center;margin-top:28px">{{ why.title }}</h3>
+      <div class="sf-fixgrid">{% for f in why.fixes %}<div class="sf-fix"><div style="display:block"><q>{{ f.quote }}</q>{% if f.source != "" %}<br><small>{{ f.source }}</small>{% endif %}</div><div>{{ f.fix }}</div></div>{% endfor %}</div>
+    </div>
+  </section>
+{% comment %} 9a: how easy it is next to the old routine {% endcomment %}
   <section class="sf-sec" id="s09-ease">
     <p class="sf-eyebrow" style="text-align:center">{{ ease.eyebrow }}</p>
     <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ ease.title }}</h2>
@@ -551,28 +570,19 @@ closing:
       </div>
     </div>
   </section>
-
-  {% comment %} 9b: why the others fell short (the table stacks on a phone) {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s09-compare">
-    <div class="sf-sec__in">
-      <h2 class="sf-h2" style="text-align:center">{{ compare.title }}</h2>
-      <p style="text-align:center;max-width:680px;margin:0 auto 18px">{{ compare.lede }}</p>
-      <table class="sf-cmp">
-        <thead><tr><th scope="col" class="sf-cmp__what">{{ compare.what }}</th><th scope="col" class="sf-cmp__us"><img src="{{ 'images/sf/cmp-ours.jpg' | campaign_asset }}" alt="{{ compare.us_alt }}" width="119" height="330" loading="lazy" decoding="async"><span>SKINOFAB</span>{{ compare.us }}</th><th scope="col" class="sf-cmp__them"><img src="{{ 'images/sf/cmp-theirs.jpg' | campaign_asset }}" alt="" width="300" height="330" loading="lazy" decoding="async"><span>&nbsp;</span>{{ compare.them }}</th></tr></thead>
-        <tbody>{% for r in compare.rows %}<tr><th scope="row">{{ r.label }}</th><td class="sf-cmp__us"><span class="sf-cmp__v"><i class="sf-cmp__ic sf-cmp__ic--yes" aria-hidden="true"></i><span><span class="sr-only">Yes: </span>{{ r.us }}</span></span></td><td class="sf-cmp__them"><span class="sf-cmp__v"><i class="sf-cmp__ic sf-cmp__ic--{{ r.mark }}" aria-hidden="true"></i><span><span class="sr-only">{% if r.mark == "no" %}No: {% else %}It varies: {% endif %}</span>{{ r.them }}</span></span></td></tr>{% endfor %}</tbody>
-      </table>
+{% comment %} 11b: before and after, and the life around it {% endcomment %}
+  <section class="sf-sec sf-sec--cream" id="s11-before-after">
+    <p class="sf-eyebrow" style="text-align:center">{{ before_after.eyebrow }}</p>
+    <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ before_after.title }}</h2>
+    <p style="text-align:center;max-width:720px;margin:0 auto 18px">{{ before_after.lede }}</p>
+    <div class="sf-ba-grid {% if before_after.items.size > 1 %}sf-ba-grid--row{% else %}sf-ba-grid--one{% endif %}">{% for b in before_after.items %}<figure class="sf-ba-card"><img src="{{ b.image | campaign_asset }}" alt="{{ b.alt }}" width="1080" height="{{ b.height | default: 1080 }}" loading="lazy" decoding="async"><figcaption>{{ b.caption }}</figcaption>{% if b.review %}<blockquote class="sf-ba-review"><p class="sf-ba-review__topic">{{ b.review.topic }}</p><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="5 out of 5 stars"><i></i><i></i><i></i><i></i><i></i></span><p class="sf-ba-review__text">“{{ b.review.text }}”</p><footer><img src="{{ b.review.photo | campaign_asset }}" alt="" width="36" height="36" loading="lazy" decoding="async"><cite><b>{{ b.review.name }}</b>verified buyer, from our earlier store</cite></footer></blockquote>{% endif %}</figure>{% endfor %}</div>
+    <div class="sf-lifegrid">
+      <div class="sf-life"><h3>Before this foundation</h3><ul>{% for l in before_after.before %}<li>{{ l }}</li>{% endfor %}</ul></div>
+      <div class="sf-life sf-life--after"><h3>After it</h3><ul>{% for l in before_after.after %}<li>{{ l }}</li>{% endfor %}</ul></div>
     </div>
   </section>
-
-  {% comment %} 9c: the feature marks {% endcomment %}
-  <section class="sf-sec" id="s09-badges" style="padding:26px 0">
-    <ul class="sf-badges" aria-label="What the foundation is made with and without">
-      {% for b in badges %}<li>{% campaign_include 'sf-icon.html' name=b.icon %}<span>{{ b.text }}</span></li>{% endfor %}
-    </ul>
-  </section>
-
-  {% comment %} 11a: the shade question, answered in one picture {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s11-shade">
+{% comment %} 11a: the shade question, answered in one picture {% endcomment %}
+  <section class="sf-sec" id="s11-shade">
     <div class="sf-sec__in sf-two sf-two--top">
       <img src="{{ one_shade.image | campaign_asset }}" alt="{{ one_shade.image_alt }}" width="1080" height="1260" loading="lazy" decoding="async" class="sf-round sf-shade__img">
       <div>
@@ -583,21 +593,8 @@ closing:
       </div>
     </div>
   </section>
-
-  {% comment %} 10: the skincare inside: PDRN and the rest, one by one; the complaints we answered {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s10-why">
-    <div class="sf-sec__in">
-      <p class="sf-eyebrow" style="text-align:center">{{ ingredients.eyebrow }}</p>
-      <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ ingredients.title }}</h2>
-      <p style="text-align:center;max-width:680px;margin:0 auto 18px">{{ ingredients.lede }}</p>
-      <ul class="sf-ing{% if ingredients.items[0].image %} sf-ing--photos{% endif %}">{% for i in ingredients.items %}<li>{% if i.image %}<img src="{{ i.image | campaign_asset }}" alt="{{ i.alt }}" width="800" height="800" loading="lazy" decoding="async">{% else %}{% campaign_include 'sf-icon.html' name=i.icon %}{% endif %}<div><strong>{{ i.name }}</strong><span>{{ i.role }}</span></div></li>{% endfor %}</ul>
-      <h3 class="sf-h3" style="text-align:center;margin-top:28px">{{ why.title }}</h3>
-      <div class="sf-fixgrid">{% for f in why.fixes %}<div class="sf-fix"><div style="display:block"><q>{{ f.quote }}</q>{% if f.source != "" %}<br><small>{{ f.source }}</small>{% endif %}</div><div>{{ f.fix }}</div></div>{% endfor %}</div>
-    </div>
-  </section>
-
-  {% comment %} 10b: the doctor section: formulated in Korea, the store's photo of a model in a lab coat (labelled), the facts {% endcomment %}
-  <section class="sf-sec" id="s10-korea">
+{% comment %} 10b: the doctor section: formulated in Korea, the store's photo of a model in a lab coat (labelled), the facts {% endcomment %}
+  <section class="sf-sec sf-sec--cream" id="s10-korea">
     <div class="sf-korea">
       <figure class="sf-korea__fig sf-korea__fig--note">
         <img src="{{ korea.image | campaign_asset }}" alt="{{ korea.image_alt }}" width="1000" height="1250" loading="lazy" decoding="async">
@@ -614,9 +611,8 @@ closing:
       </div>
     </div>
   </section>
-
-  {% comment %} 10c: the certification section: the credentials that are real and can be checked {% endcomment %}
-  {% if credentials %}<section class="sf-sec sf-sec--cream" id="s10-credentials">
+{% comment %} 10c: the certification section: the credentials that are real and can be checked {% endcomment %}
+  {% if credentials %}<section class="sf-sec" id="s10-credentials">
     <div class="sf-sec__in">
       <p class="sf-eyebrow" style="text-align:center">{{ credentials.eyebrow }}</p>
       <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ credentials.title }}</h2>
@@ -632,57 +628,19 @@ closing:
       </ul>
     </div>
   </section>{% endif %}
-
-  {% comment %} 11b: before and after, and the life around it {% endcomment %}
-  <section class="sf-sec" id="s11-before-after">
-    <p class="sf-eyebrow" style="text-align:center">{{ before_after.eyebrow }}</p>
-    <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ before_after.title }}</h2>
-    <p style="text-align:center;max-width:720px;margin:0 auto 18px">{{ before_after.lede }}</p>
-    <div class="sf-ba-grid {% if before_after.items.size > 1 %}sf-ba-grid--row{% else %}sf-ba-grid--one{% endif %}">{% for b in before_after.items %}<figure class="sf-ba-card"><img src="{{ b.image | campaign_asset }}" alt="{{ b.alt }}" width="1080" height="{{ b.height | default: 1080 }}" loading="lazy" decoding="async"><figcaption>{{ b.caption }}</figcaption>{% if b.review %}<blockquote class="sf-ba-review"><p class="sf-ba-review__topic">{{ b.review.topic }}</p><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="5 out of 5 stars"><i></i><i></i><i></i><i></i><i></i></span><p class="sf-ba-review__text">“{{ b.review.text }}”</p><footer><img src="{{ b.review.photo | campaign_asset }}" alt="" width="36" height="36" loading="lazy" decoding="async"><cite><b>{{ b.review.name }}</b>verified buyer, from our earlier store</cite></footer></blockquote>{% endif %}</figure>{% endfor %}</div>
-    <div class="sf-lifegrid">
-      <div class="sf-life"><h3>Before this foundation</h3><ul>{% for l in before_after.before %}<li>{{ l }}</li>{% endfor %}</ul></div>
-      <div class="sf-life sf-life--after"><h3>After it</h3><ul>{% for l in before_after.after %}<li>{{ l }}</li>{% endfor %}</ul></div>
-    </div>
-  </section>
-
-  {% comment %} 13: the dream outcome: the mirror tomorrow, the photo on Saturday {% endcomment %}
-  <section class="sf-sec" id="s13-promise" style="padding-top:0">
-    <div class="sf-promise sf-two">
-      <img src="{{ 'images/sf/promise.jpg' | campaign_asset }}" alt="A woman in her sixties with silver hair in warm morning light, her skin fresh and even" width="1080" height="1080" loading="lazy" decoding="async">
-      <div>
-        <p class="sf-eyebrow">{{ promise.eyebrow }}</p>
-        <h2 class="sf-h2 sf-h2--big">{{ promise.title }}</h2>
-        <p>{{ promise.text }}</p>
-        <a class="sf-btn" href="#offer">{{ promise.button }}</a>
-      </div>
-    </div>
-  </section>
-
-  {% comment %} 12: proof {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s12-proof">
+{% comment %} 9b: why the others fell short (the table stacks on a phone) {% endcomment %}
+  <section class="sf-sec sf-sec--cream" id="s09-compare">
     <div class="sf-sec__in">
-      <p class="sf-eyebrow" style="text-align:center">{{ proof.eyebrow }}</p>
-      <h2 class="sf-h2" style="text-align:center">{{ proof.title }}</h2>
-      <div class="sf-proof sf-proof--four">{% for c in proof.cards %}<div class="sf-proof__card"><div class="sf-proof__vis sf-proof__vis--{{ c.kind }}">{% case c.kind %}{% when 'stars' %}<b>{{ ratings.average }}</b><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="{{ ratings.average }} out of 5 stars">{% campaign_include 'sf-stars.html' n=ratings.average %}</span>{% when 'image' %}<img src="{{ c.image | campaign_asset }}" alt="{{ c.alt }}" width="{{ c.w }}" height="{{ c.h }}" loading="lazy" decoding="async">{% when 'video' %}<video data-sf-lazy muted loop playsinline preload="none" data-sf-poster="{{ 'images/sf/' | append: c.clip | append: '-poster.jpg' | campaign_asset }}" width="{{ c.w }}" height="{{ c.h }}" aria-label="{{ c.alt }}"><source src="{{ 'images/sf/' | append: c.clip | append: '.webm' | campaign_asset }}" type="video/webm"><source src="{{ 'images/sf/' | append: c.clip | append: '.mp4' | campaign_asset }}" type="video/mp4"></video>{% else %}<span class="sf-proof__icon">{% campaign_include 'sf-icon.html' name=c.icon %}</span>{% endcase %}</div><strong>{{ c.title }}</strong><p>{{ c.text }}</p></div>{% endfor %}</div>
-      <div class="sf-proof sf-proof--quotes">{% for q in proof.quotes %}<blockquote class="sf-proof__quote"><span class="sf-tp__stars sf-tp__stars--xs" role="img" aria-label="5 out of 5 stars"><i></i><i></i><i></i><i></i><i></i></span><p>“{{ q.text }}”</p><footer><img src="{{ q.photo | campaign_asset }}" alt="" width="36" height="36" loading="lazy" decoding="async"><cite><b>{{ q.by }}</b>verified buyer, from our earlier store</cite></footer></blockquote>{% endfor %}</div>
+      <h2 class="sf-h2" style="text-align:center">{{ compare.title }}</h2>
+      <p style="text-align:center;max-width:680px;margin:0 auto 18px">{{ compare.lede }}</p>
+      <table class="sf-cmp">
+        <thead><tr><th scope="col" class="sf-cmp__what">{{ compare.what }}</th><th scope="col" class="sf-cmp__us"><img src="{{ 'images/sf/cmp-ours.jpg' | campaign_asset }}" alt="{{ compare.us_alt }}" width="119" height="330" loading="lazy" decoding="async"><span>SKINOFAB</span>{{ compare.us }}</th><th scope="col" class="sf-cmp__them"><img src="{{ 'images/sf/cmp-theirs.jpg' | campaign_asset }}" alt="" width="300" height="330" loading="lazy" decoding="async"><span>&nbsp;</span>{{ compare.them }}</th></tr></thead>
+        <tbody>{% for r in compare.rows %}<tr><th scope="row">{{ r.label }}</th><td class="sf-cmp__us"><span class="sf-cmp__v"><i class="sf-cmp__ic sf-cmp__ic--yes" aria-hidden="true"></i><span><span class="sr-only">Yes: </span>{{ r.us }}</span></span></td><td class="sf-cmp__them"><span class="sf-cmp__v"><i class="sf-cmp__ic sf-cmp__ic--{{ r.mark }}" aria-hidden="true"></i><span><span class="sr-only">{% if r.mark == "no" %}No: {% else %}It varies: {% endif %}</span>{{ r.them }}</span></span></td></tr>{% endfor %}</tbody>
+      </table>
     </div>
   </section>
-
-  {% comment %} 14: how to use it, and the clips of women using it {% endcomment %}
-  <section class="sf-sec" id="s14-usage">
-    <div class="sf-sec__in">
-      <p class="sf-eyebrow" style="text-align:center">{{ usage.eyebrow }}</p>
-      <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ usage.title }}</h2>
-      <ol class="sf-steps sf-steps--grid sf-steps--pics">{% for s in usage.steps %}<li>{% if s.image %}<img src="{{ 'images/sf/' | append: s.image | append: '.jpg' | campaign_asset }}" alt="{{ s.alt }}" width="600" height="600" loading="lazy" decoding="async">{% endif %}<strong>{{ s.title }}</strong>{{ s.text }}</li>{% endfor %}</ol>
-      <h3 class="sf-h3 sf-vrow__title">{{ usage.demos_title }}</h3>
-      <p class="sf-vrow__lede">{{ usage.demos_lede }}</p>
-      {% campaign_include 'sf-vrow.html' items=usage.demos %}
-      <ul class="sf-timeline">{% for t in usage.timeline %}<li><b>{{ t.when }}</b><span>{{ t.text }}</span></li>{% endfor %}</ul>
-    </div>
-  </section>
-
-  {% comment %} 18: the reviews, green-star style, with the buyers' photos {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s18-reviews">
+{% comment %} 18: the reviews, green-star style, with the buyers' photos {% endcomment %}
+  <section class="sf-sec" id="s18-reviews">
     <div class="sf-reviews sf-reviews--green sf-sec__in" id="reviews" style="padding:0">
       <div class="sf-tp">
         <span class="sf-tp__word">{{ reviews_section.excellent }}</span>
@@ -703,8 +661,19 @@ closing:
       <p class="sf-reviews__note">{{ reviews_section.note }}</p>
     </div>
   </section>
-
-  {% comment %} 19: questions {% endcomment %}
+{% comment %} 14: how to use it, and the clips of women using it {% endcomment %}
+  <section class="sf-sec sf-sec--cream" id="s14-usage">
+    <div class="sf-sec__in">
+      <p class="sf-eyebrow" style="text-align:center">{{ usage.eyebrow }}</p>
+      <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ usage.title }}</h2>
+      <ol class="sf-steps sf-steps--grid sf-steps--pics">{% for s in usage.steps %}<li>{% if s.image %}<img src="{{ 'images/sf/' | append: s.image | append: '.jpg' | campaign_asset }}" alt="{{ s.alt }}" width="600" height="600" loading="lazy" decoding="async">{% endif %}<strong>{{ s.title }}</strong>{{ s.text }}</li>{% endfor %}</ol>
+      <h3 class="sf-h3 sf-vrow__title">{{ usage.demos_title }}</h3>
+      <p class="sf-vrow__lede">{{ usage.demos_lede }}</p>
+      {% campaign_include 'sf-vrow.html' items=usage.demos %}
+      <ul class="sf-timeline">{% for t in usage.timeline %}<li><b>{{ t.when }}</b><span>{{ t.text }}</span></li>{% endfor %}</ul>
+    </div>
+  </section>
+{% comment %} 19: questions {% endcomment %}
   <section class="sf-sec" id="s19-faq">
     <div class="sf-sec__in" style="max-width:760px">
       <h2 class="sf-h2 sf-h2--big" style="text-align:center">Questions women ask before they order</h2>
@@ -713,28 +682,7 @@ closing:
       </div>
     </div>
   </section>
-
-  {% comment %} 4 + 15: the benefits in one glance, the guarantee large {% endcomment %}
-  <section class="sf-sec sf-sec--cream" id="s04-benefits">
-    <div class="sf-sec__in">
-      <h2 class="sf-h2 sf-h2--big" style="text-align:center">What it does for skin after 45</h2>
-      <ul class="sf-benefits">{% for b in benefits %}<li>{{ b }}</li>{% endfor %}</ul>
-    </div>
-  </section>
-  <section class="sf-sec" id="s15-guarantee">
-    <div class="sf-promisebox">
-      <img src="{{ 'images/sf/guarantee.jpg' | campaign_asset }}" alt="SKINOFAB’s 30-day money-back guarantee seal" width="160" height="160" loading="lazy" decoding="async">
-      <div>
-        <p class="sf-eyebrow">{{ guarantee_section.eyebrow }}</p>
-        <h2>{{ guarantee_section.title }}</h2>
-        <p>{{ guarantee_section.text }}</p>
-        <ol>{% for t in guarantee_section.terms %}<li>{{ t }}</li>{% endfor %}</ol>
-        <p style="margin-top:10px"><strong>{{ guarantee_section.why }}</strong></p>
-      </div>
-    </div>
-  </section>
-
-  {% comment %} 5 + 16 + 17: the offer: the packs, what the 3-pack is worth, what is limited {% endcomment %}
+{% comment %} 5 + 16 + 17: the offer: the packs, what the 3-pack is worth, what is limited {% endcomment %}
   <section class="sf-sec sf-sec--cream" id="s16-value">
     <div class="sf-sec__in sf-two sf-two--top" id="offer">
       <div>
@@ -747,8 +695,11 @@ closing:
           <li class="sf-stack__today"><span>{{ value.today.item }}</span><span>{{ value.today.value }}</span></li>
         </ul>
         {% if value.math %}<p class="sf-value__math">{{ value.math }}</p>{% endif %}
-        <p class="sf-why-now">{{ value.why_now }}</p>
-        <div class="sf-limited"><strong>{{ scarcity.title }}.</strong> {{ scarcity.text }}</div>
+        <div class="sf-whybox">
+          <p class="sf-whybox__title">{{ value.why_title }}</p>
+          <ul>{% for w in value.why_now %}<li{% if w.live %} data-sf-trial-live{% endif %}><span class="sf-whybox__ic" aria-hidden="true">{{ w.icon }}</span><span><strong>{{ w.lead }}</strong> {{ w.text }}{% if w.clock and bf %} <span class="sf-whybox__clock">Time left: <b data-sf-bf-clock>soon</b></span>{% endif %}</span></li>{% endfor %}</ul>
+        </div>
+        <div class="sf-limited"><strong>{{ scarcity.title }}</strong> {{ scarcity.text }}</div>
       </div>
       <div class="sf-offerbox" id="s05-offer">
         {% if bf %}<div class="sf-bf-flash" data-sf-trial-live><p class="sf-bf-flash__title">{{ bf.title }}</p><p class="sf-bf-flash__clock">{{ bf.ends }} <strong data-sf-bf-clock>soon</strong></p></div>{% endif %}
@@ -792,9 +743,25 @@ closing:
       </div>
     </div>
   </section>
-
-  {% comment %} 20: how to reach us {% endcomment %}
-  <section class="sf-sec" id="s20-service">
+  {% comment %} GUARANTEES AND TRUST: the 30-Day Daylight Promise beside a woman of the persona's age, then how to reach us {% endcomment %}
+  <section class="sf-sec" id="s15-guarantee">
+    <div class="sf-guarantee2">
+      <img class="sf-guarantee2__photo" src="{{ 'images/sf/promise.jpg' | campaign_asset }}" alt="A woman in her sixties with silver hair in warm morning light, her skin fresh and even" width="1080" height="1080" loading="lazy" decoding="async">
+    <div class="sf-promisebox">
+      <img src="{{ 'images/sf/guarantee.jpg' | campaign_asset }}" alt="SKINOFAB’s 30-day money-back guarantee seal" width="160" height="160" loading="lazy" decoding="async">
+      <div>
+        <p class="sf-eyebrow">{{ guarantee_section.eyebrow }}</p>
+        <h2>{{ guarantee_section.title }}</h2>
+        <p>{{ guarantee_section.text }}</p>
+        <ol>{% for t in guarantee_section.terms %}<li>{{ t }}</li>{% endfor %}</ol>
+        <p style="margin-top:10px"><strong>{{ guarantee_section.why }}</strong></p>
+        <a class="sf-btn" href="#offer">TRY IT RISK-FREE</a>
+      </div>
+    </div>
+    </div>
+  </section>
+{% comment %} 20: how to reach us {% endcomment %}
+  <section class="sf-sec sf-sec--cream" id="s20-service">
     <div class="sf-sec__in sf-two">
       <div>
         <p class="sf-eyebrow">{{ service.eyebrow }}</p>

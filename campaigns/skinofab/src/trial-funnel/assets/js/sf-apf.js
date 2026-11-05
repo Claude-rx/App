@@ -38,8 +38,15 @@
   }
   // a pause button on every loop that plays by itself (motion longer than 5 s must be stoppable, WCAG 2.2.2; live review
   // 8): a loop she paused stays paused when it scrolls back into view (sfHeld)
+  // Set up once the page has loaded and the phone is idle (speed pass, 5 Nov 2026): placing each button measures its
+  // video, which made the browser lay out the whole long page before its first paint (178 ms on a slowed phone); the
+  // loops play only when scrolled to, long after.
   var loops = document.querySelectorAll('video[data-sf-lazy], video[data-upsell-video][loop]');
-  if (loops.length && !still) {
+  var afterLoad = function (fn) {
+    var go = function () { if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1500 }); else setTimeout(fn, 200); };
+    if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
+  };
+  if (loops.length && !still) afterLoad(function () {
     var css = document.createElement('style');
     css.textContent = '.sf-vpause{position:absolute;right:10px;bottom:10px;z-index:3;width:44px;height:44px;padding:0;border:0;border-radius:50%;'
       + 'background:rgba(21,21,21,.72);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}'
@@ -74,7 +81,7 @@
       v.addEventListener('loadedmetadata', place);
       if ('ResizeObserver' in window) { var ro = new ResizeObserver(place); ro.observe(box); ro.observe(v); } else window.addEventListener('resize', place);
     });
-  }
+  });
 
   // a clip with a voice: loads its first seconds when it comes near, plays on her tap
   Array.prototype.forEach.call(document.querySelectorAll('video[data-sf-sound]'), function (v) {
