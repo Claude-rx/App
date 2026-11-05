@@ -1,5 +1,5 @@
-"""Phones get small WebP copies of the funnel's large photos (speed pass, 5 Nov 2026: AppLovin counted far more outbound
-clicks than visitors; the pages were too heavy on a phone's connection).
+"""Phones get small WebP copies of the funnel's large photos, and the ad landing pages their stylesheets inline (speed
+pass, 5 Nov 2026: AppLovin counted far more outbound clicks than visitors; the pages were too slow on a phone).
 
 usage: python3 -I tools/funnel/optimize_media.py <built Page Kit site dir> [...]      e.g. campaigns/skinofab/_site/apf-funnel
 
@@ -11,6 +11,11 @@ screen, and the original file stays the src (a browser without WebP keeps it). A
 loading="lazy") is left as it is: the hero has its own phone copy and preload. The copies are made only when missing or
 older than their source (encoded once per source file, cached in .work/media-cache by its hash), so a rebuild writes
 the same bytes and the theme push sends nothing new.
+
+The ad landing pages (base-sf.html: <body class="sf ...">, the sales page and the listicle) get their own stylesheets
+inline: on the store their CSS comes from the store's CDN, another host, and the first paint waited for that connection
+(about 0.45 s on slow 4G). Each <link rel="stylesheet"> to the funnel's own css/ becomes a <style> with the same rules,
+its url()s made absolute (/<slug>/fonts/..., which deploy_theme.py then points at the theme's assets).
 """
 import hashlib, re, shutil, sys
 from pathlib import Path
@@ -45,10 +50,35 @@ def copies(site, rel):
         return out
 
 
+LINK = re.compile(r'<link rel="stylesheet" href="/([\w-]+)/(css/[\w.-]+\.css)">')
+CSS_URL = re.compile(r'url\(\s*([\'"]?)([^\'")]+)\1\s*\)')
+
+
+def inline_css(site, html_text):
+    """A landing page's own stylesheets as <style> blocks (only on base-sf.html pages)."""
+    if '<body class="sf ' not in html_text: return html_text, 0
+    n = 0
+    def sub(m):
+        nonlocal n
+        slug, rel = m.group(1), m.group(2)
+        if slug != site.name or not (site / rel).is_file(): return m.group(0)
+        css = (site / rel).read_text(encoding='utf-8')
+        def absolute(u):
+            q, url = u.group(1), u.group(2)
+            if url.startswith(('data:', 'http:', 'https:', '//', '#', '/')): return u.group(0)
+            path = ((site / rel).parent / url).resolve().relative_to(site.resolve()).as_posix()
+            return f'url({q}/{slug}/{path}{q})'
+        css = CSS_URL.sub(absolute, css)
+        if '</style' in css: return m.group(0)
+        n += 1
+        return f'<style data-sf-inline="{rel}">{css}</style>'
+    return LINK.sub(sub, html_text), n
+
+
 def run(site):
     site = Path(site).resolve()
     slug = site.name
-    pages = changed = made = 0
+    pages = changed = made = inlined = 0
     for html in site.rglob('index.html'):
         text = html.read_text(encoding='utf-8')
         def sub(m):
@@ -64,9 +94,10 @@ def run(site):
             srcset = ', '.join(f'/{slug}/{p} {w}w' for p, w in cs)
             return tag[:-1].rstrip('/').rstrip() + f' srcset="{srcset}" sizes="{SIZES}">'
         new = IMG.sub(sub, text)
+        new, k = inline_css(site, new); inlined += k
         if new != text:
             html.write_text(new, encoding='utf-8'); pages += 1
-    print(f'optimize_media: {slug}: {changed} photos on {pages} pages get WebP copies ({made} files)')
+    print(f'optimize_media: {slug}: {changed} photos on {pages} pages get WebP copies ({made} files); {inlined} stylesheets inlined')
 
 
 if __name__ == '__main__':

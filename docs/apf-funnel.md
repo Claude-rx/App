@@ -388,6 +388,9 @@ weak connection would be.
   - **One campaign, end to end.** The Black Friday sales page's SDK runs on campaign 2251 (`sdk_config: config-trial.js`),
     the campaign of its checkout, offers and thank-you page. It prefetches `/trial-checkout/` (`prefetch_url`); it used to
     prefetch the APF checkout it no longer links to.
+  - **The landing pages' CSS is inline.** On the sales page and listicle, `optimize_media.py` turns the two stylesheet links
+    into `<style>` blocks, with their url()s made absolute so the deploy points them at the theme's assets. The first paint
+    no longer waits for a connection to the store's CDN, about 0.45 s on slow 4G.
   - **Smaller photos on phones.** `tools/funnel/optimize_media.py` runs on the Page Kit build, before the deploy. Every
     lazy-loaded photo of 300 px or more gets WebP copies at 480, 800 and its own width (up to 1080), offered through
     `srcset`, with the JPEG/PNG kept as `src`. Encodings are cached in `.work/media-cache`. At 800 px the copies weigh
