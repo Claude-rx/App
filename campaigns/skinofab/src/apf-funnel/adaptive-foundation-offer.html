@@ -254,14 +254,15 @@ korea:
   image: "images/sf/korea-lab.jpg"
   image_alt: "A model in a lab coat holding the Adaptive Peptide Foundation"
   image_note: "Model portrayal."
-# the certification section: only what is real and can be checked: the FrontrowMD listing (the live count, read by
-# check_apf.py), where it is formulated, what the formula leaves out (the label), the guarantee and the payment
-# the badge strip under the hero, where a press bar usually sits (the owner, 5 Nov 2026): real badges, no magazine logos
 # the owner's own clips (Skinofab-S24, 5 Nov 2026), as a carousel at the top of the reviews: set when they arrive, made with
 # tools/funnel/apf/add_clips.py (images/sf/ugc-<n>.*)
 # video_carousel: { title: "...", lede: "...", items: [{ key: "ugc-1", chip: "...", caption: "...", sound: true }] }
-badge_strip:
-  label: "What stands behind every bottle"
+# the logo row under the hero (_includes/sf-badges.html) is off (the owner, 5 Nov 2026: "remove the badge, I will give
+# you the other later"); set badge_strip again to show it
+# badge_strip:
+#   label: "What stands behind every bottle"
+# the certification section: only what is real and can be checked: the FrontrowMD listing (the live count, read by
+# check_apf.py), where it is formulated, what the formula leaves out (the label), the guarantee and the payment
 credentials:
   eyebrow: "Checked, listed, guaranteed"
   title: "The credentials behind the bottle"
