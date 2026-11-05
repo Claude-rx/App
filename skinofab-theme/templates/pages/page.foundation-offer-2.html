@@ -28,6 +28,19 @@
     <meta name="robots" content="noindex, nofollow">
   
   <script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })("https://try.skinofab.com");</script>
+    
+<script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; return; }
+    // AppLovin's event hosts warmed up while pixel.js downloads (only for a visitor who has not opted out)
+    ['https://b.applovin.com', 'https://res4.applovin.com'].forEach(function (h) { var l = document.createElement('link'); l.rel = 'preconnect'; l.href = h; document.head.appendChild(l); }); })();
+  var AXON_EVENT_KEY = "a156ae42-0799-457e-b1a2-0d43c77eda18";
+  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.fetchPriority="high",i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
+  axon("init");
+  axon("track", "page_view");
+  window.__axonEventKey = AXON_EVENT_KEY;
+  window.__axonAllowedEvents = "";
+  window.__axonBlockedEvents = "";
+</script>
+
 
     
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -58,24 +71,11 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
     
-  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
   
 
 
 
 
-
-
-<script>
-  var AXON_EVENT_KEY = "a156ae42-0799-457e-b1a2-0d43c77eda18";
-  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
-  axon("init");
-  // Exposed for axon.adapter.js: confirms Axon is active + supplies per-campaign event toggles.
-  // allowed_events: ""=default main set, "all"=every mapped event, or a subset; blocked removes from allowed.
-  window.__axonEventKey = AXON_EVENT_KEY;
-  window.__axonAllowedEvents = "";
-  window.__axonBlockedEvents = "";
-</script>
 
 
 
@@ -86,7 +86,7 @@
 
 <script src="{% endverbatim %}{{ 'sfa/sfa-next-forwarder-core-fc21de.js'|asset_url }}{% verbatim %}"></script>
 
-<script src="{% endverbatim %}{{ 'sfa/sfa-axon-adapter-a2a38c.js'|asset_url }}{% verbatim %}"></script>
+<script src="{% endverbatim %}{{ 'sfa/sfa-axon-adapter-8f4739.js'|asset_url }}{% verbatim %}"></script>
 
 
 
@@ -101,7 +101,7 @@
     
     <link href="{% endverbatim %}{{ 'sfa/sfa-swiper-bundle-min-d34353.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-5725a0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sfa/sfa-checkout-brand-6e0d2f.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
     <link href="{% endverbatim %}{{ 'sfa/sfa-sf-offers-f9e30c.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
@@ -285,13 +285,13 @@
           
           <div class="swiper-slide">
             <div class="swiper-slide_inner">
-              <div class="swiper-slide_image-wrap is-square"><img loading="lazy" decoding="async" width="1080" height="1080" src="{% endverbatim %}{{ 'sfa/sfa-bottle-2e6ade.jpg'|asset_url }}{% verbatim %}" alt="The Adaptive Peptide Foundation bottle" class="cover"></div>
+              <div class="swiper-slide_image-wrap is-square"><img loading="lazy" decoding="async" width="1080" height="1080" src="{% endverbatim %}{{ 'sfa/sfa-bottle-2e6ade.jpg'|asset_url }}{% verbatim %}" alt="The Adaptive Peptide Foundation bottle" class="cover" srcset="{% endverbatim %}{{ 'sfa/sfa-bottle-w480-ba3221.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sfa/sfa-bottle-w800-54a988.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sfa/sfa-bottle-w1080-1294df.webp'|asset_url }}{% verbatim %} 1080w" sizes="(max-width: 599px) 92vw, 540px"></div>
             </div>
           </div>
           
           <div class="swiper-slide">
             <div class="swiper-slide_inner">
-              <div class="swiper-slide_image-wrap is-square"><img loading="lazy" decoding="async" width="1080" height="1080" src="{% endverbatim %}{{ 'sfa/sfa-g-brush-fea299.jpg'|asset_url }}{% verbatim %}" alt="A woman in her fifties buffing the foundation into her cheek with a brush" class="cover"></div>
+              <div class="swiper-slide_image-wrap is-square"><img loading="lazy" decoding="async" width="1080" height="1080" src="{% endverbatim %}{{ 'sfa/sfa-g-brush-fea299.jpg'|asset_url }}{% verbatim %}" alt="A woman in her fifties buffing the foundation into her cheek with a brush" class="cover" srcset="{% endverbatim %}{{ 'sfa/sfa-g-brush-w480-be17b2.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sfa/sfa-g-brush-w800-072f4f.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sfa/sfa-g-brush-w1080-0ebb9c.webp'|asset_url }}{% verbatim %} 1080w" sizes="(max-width: 599px) 92vw, 540px"></div>
             </div>
           </div>
           
@@ -383,7 +383,7 @@
       <div class="upsell-offer__card">
         <div class="grid-full flex-col flex-horizontal-lg-up gap-xl">
           <div class="upsell-offer__image-column cc-narrow align-self-center">
-            <img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-bottle-2e6ade.jpg'|asset_url }}{% verbatim %}" alt="" class="width-full">
+            <img loading="lazy" src="{% endverbatim %}{{ 'sfa/sfa-bottle-2e6ade.jpg'|asset_url }}{% verbatim %}" alt="" class="width-full" srcset="{% endverbatim %}{{ 'sfa/sfa-bottle-w480-ba3221.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sfa/sfa-bottle-w800-54a988.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sfa/sfa-bottle-w1080-1294df.webp'|asset_url }}{% verbatim %} 1080w" sizes="(max-width: 599px) 92vw, 540px">
           </div>
           <div class="upsell-content__column cc-fluid flex-col gap-lg">
             <h2 class="display-md">Add one more bottle for <span data-next-display="bundle.offer-2.price" data-next-format="currency">$19.00</span> today?</h2><div class="prices-text-wrapper cc-start" data-pricing-mode="discounted">
@@ -438,7 +438,7 @@
     
     <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-offer-timer-5eb630.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-3585c8.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-eb89c3.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

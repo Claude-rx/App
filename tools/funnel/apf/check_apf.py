@@ -535,7 +535,8 @@ for p in F.PAGES:
     h = html(p['id'])
     for m_img in re.finditer(r'<img[^>]*\balt="([^"]*)"', h):
         a = m_img.group(1)
-        if a.startswith('A model in a lab coat') and 'Model portrayal.' in h[m_img.end():m_img.end() + 300] \
+        _tag_end = h.find('>', m_img.end())
+        if a.startswith('A model in a lab coat') and 'Model portrayal.' in h[_tag_end:_tag_end + 300] \
                 and not re.search(r'\bclinic\b|\bdoctor|dermatologist|physician|\bnurse\b|scientist', a, re.I): continue
         if re.search(r'white[- ]coat|lab coat|\bclinic\b|\bdoctor|dermatologist|physician|\bnurse\b', a, re.I): fail(p['id'], f'an image of a clinician: alt "{a[:80]}"')
     for src in re.findall(r'<(?:img|source|video)[^>]*\b(?:src|srcset|poster)="([^"]+)"', h):

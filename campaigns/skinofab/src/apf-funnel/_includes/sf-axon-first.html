@@ -1,0 +1,21 @@
+{%- comment -%} SKINOFAB speed pass (5 Nov 2026: AppLovin counted many more outbound clicks than visitors: the pixel came
+  late). The AppLovin Axon base code is the first thing in the head (its two scripts fetched at high priority, ahead of the
+  page's photos), before any stylesheet or script, and sends page_view at
+  once: the browser starts pixel.js while the page is still downloading, and the visit is counted even if she leaves in
+  the first seconds. It used to sit after the fonts, two stylesheets and config.js, and page_view waited for the
+  Campaign Cart SDK (its dl_user_data, about 4 s on a slow phone); axon.adapter.js no longer maps dl_user_data, so there
+  is one page_view per page. Global Privacy Control or the privacy-choices opt-out (/data-sharing-opt-out/): a no-op
+  window.axon, so the base code loads nothing and every call goes nowhere (live review 10, 11). {%- endcomment -%}
+{%- if campaign.axon_event_key and campaign.axon_event_key != "" %}
+<script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; return; }
+    // AppLovin's event hosts warmed up while pixel.js downloads (only for a visitor who has not opted out)
+    ['https://b.applovin.com', 'https://res4.applovin.com'].forEach(function (h) { var l = document.createElement('link'); l.rel = 'preconnect'; l.href = h; document.head.appendChild(l); }); })();
+  var AXON_EVENT_KEY = "{{ campaign.axon_event_key }}";
+  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.fetchPriority="high",i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
+  axon("init");
+  axon("track", "page_view");
+  window.__axonEventKey = AXON_EVENT_KEY;
+  window.__axonAllowedEvents = "{{ campaign.axon_allowed_events }}";
+  window.__axonBlockedEvents = "{{ campaign.axon_blocked_events }}";
+</script>
+{%- endif %}

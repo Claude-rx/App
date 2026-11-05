@@ -34,6 +34,7 @@ python3 -I tools/funnel/apf/offer_pages.py > /dev/null && python3 -I tools/funne
 # the flash trial (docs/trial-funnel.md): its shared parts from the APF funnel's, its five offer pages from the same code
 python3 -I tools/funnel/trial/sync_from_apf.py && FUNNEL=trial python3 -I tools/funnel/apf/offer_pages.py > /dev/null
 (cd campaigns/skinofab && { [ -d node_modules ] || npm ci --no-audit --no-fund > /dev/null; } && npx --no-install campaign-build > /dev/null 2>&1)
+python3 -I tools/funnel/optimize_media.py campaigns/skinofab/_site/apf-funnel campaigns/skinofab/_site/trial-funnel   # phones get WebP copies of the large photos
 python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/stick-funnel skinofab-theme
 python3 -I tools/funnel/check_funnel.py skinofab-theme      # prices, renewal terms, refs, routes, claims
 FUNNEL=apf python3 -I tools/funnel/deploy_theme.py campaigns/skinofab/_site/apf-funnel skinofab-theme

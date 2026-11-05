@@ -1,3 +1,11 @@
+/* the funnel's own fonts (Jost, Playfair Display: latin, from Google Fonts, OFL), served with the page from the store's
+   CDN: the Google Fonts stylesheet was a render-blocking request to two more hosts on every page (speed pass, 5 Nov 2026) */
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('../fonts/jost-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 600 700; font-display: swap; src: url('../fonts/playfair-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Playfair Display'; font-style: italic; font-weight: 600; font-display: swap; src: url('../fonts/playfair-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 /* SKINOFAB funnel: the listicle and the product page (the checkout, offers and thank-you page use next-core.css with
    checkout-brand.css). The store's look: Jost, Playfair Display for the product's name, ink on white, black buttons. */
 :root {

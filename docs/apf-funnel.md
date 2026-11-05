@@ -362,6 +362,41 @@ offers and campaign 2221 are unchanged; they simply get no traffic from the sale
   before 5 Nov 2026) back on the sales page. To move the date, change `SALE_END` in `funnels/trial.py`, the trial
   checkout's first script and `_includes/sf-bf.html`. The gates fail until all three agree.
 
+### Speed and AppLovin tracking pass (5 Nov 2026)
+
+The owner reported that AppLovin showed many outbound clicks but few visitors: visitors were lost while the page loaded.
+The measurements used an iPhone profile with slow 4G (1.6 Mbps, 150 ms) and the CPU slowed 4×, as a cheap phone on a
+weak connection would be.
+
+- **Before.** On the live page, AppLovin's own `land` event left at 4.8 s. `page_view` waited for the Campaign Cart SDK,
+  whose 42 scripts from jsdelivr finished loading at about 8.7 s. A visitor who left before that was never counted as a
+  visit. The pixel's base code sat after the Google Fonts stylesheet, two stylesheets and a synchronous `config.js`, and
+  ran only after all of them had arrived.
+- **What changed:**
+  - **The pixel comes first.** `_includes/sf-axon-first.html` is the first thing in both layouts' head, after the host
+    redirect. It holds the Global Privacy Control / opt-out gate, the AppLovin base code (its two scripts fetched at high
+    priority) and `axon("track", "page_view")` at once. AppLovin's event hosts are preconnected only for a visitor who
+    has not opted out. `axon.adapter.js` no longer maps `dl_user_data`, so there is one page_view per page.
+  - **No render-blocking fonts.** Jost and Playfair Display (latin, OFL) are served from the store's CDN, which sends
+    `Access-Control-Allow-Origin: *`. They live in `assets/fonts/`, with the Jost file preloaded. The Google Fonts
+    stylesheet is gone from the sales page and listicle, and so is the `@import` from `checkout-brand.css`.
+  - **The SDK loads after the page** on the sales page and listicle (`base-sf.html`). Nothing there needs it to show or to
+    sell: the buttons are links, and the AppLovin events are the page's own. `config.js`, the forwarder and the adapter are
+    deferred there. The checkout and offer pages keep the SDK and the forwarder as they were.
+  - **Ad parameters ride along.** `sf-apf.js` copies the landing URL's parameters (`utm_*`, click ids) onto every link to
+    another funnel page. The SDK's UTM transfer may now come after the visitor's tap.
+  - **One campaign, end to end.** The Black Friday sales page's SDK runs on campaign 2251 (`sdk_config: config-trial.js`),
+    the campaign of its checkout, offers and thank-you page. It prefetches `/trial-checkout/` (`prefetch_url`); it used to
+    prefetch the APF checkout it no longer links to.
+  - **Smaller photos on phones.** `tools/funnel/optimize_media.py` runs on the Page Kit build, before the deploy. Every
+    lazy-loaded photo of 300 px or more gets WebP copies at 480, 800 and its own width (up to 1080), offered through
+    `srcset`, with the JPEG/PNG kept as `src`. Encodings are cached in `.work/media-cache`. At 800 px the copies weigh
+    1.1 MB against 3.7 MB for the originals.
+- **What the store host still costs.** try.skinofab.com is served by the store. The NEXT platform injects an 81 KB New
+  Relic script at the top of every page, which the theme cannot remove, and the server answers in about 0.6 s. Hosting
+  the funnel on a static CDN would remove both (see "Static hosting" below: the repo is ready). That needs the owner to
+  connect the host and point a domain at it.
+
 ### The checkout
 
 v2 (the owner's brief: "simplify, give directly the shipping info and the payment, with some badges and

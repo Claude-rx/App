@@ -309,3 +309,23 @@ document.addEventListener('keydown', function (e) {
   e.preventDefault();
   if (a.getAttribute('aria-disabled') !== 'true') a.click();
 });
+
+// The ad's parameters ride along (speed pass, 5 Nov 2026): the SDK now loads after the page, so its UTM transfer may come
+// after her tap; every link to another funnel page (a root-relative link, not an anchor) carries the landing URL's
+// parameters (utm_*, click ids) that it does not set itself; ?pack= stays on this page. (Links on this host only; the pack
+// picker writes its buttons' href as absolute URLs, so the host is compared, not the href's first character.)
+(function () {
+  var q = new URLSearchParams(location.search);
+  q.delete('pack');
+  if (!Array.from(q.keys()).length) return;
+  Array.prototype.forEach.call(document.querySelectorAll('a[href]'), function (a) {
+    try {
+      var raw = a.getAttribute('href');
+      if (!raw || raw.charAt(0) === '#' || /^(mailto|tel|javascript):/i.test(raw)) return;
+      var u = new URL(raw, location.href);
+      if (u.origin !== location.origin || u.pathname === location.pathname) return;
+      q.forEach(function (v, k) { if (!u.searchParams.has(k)) u.searchParams.set(k, v); });
+      a.setAttribute('href', u.pathname + u.search + u.hash);
+    } catch (e) {}
+  });
+})();

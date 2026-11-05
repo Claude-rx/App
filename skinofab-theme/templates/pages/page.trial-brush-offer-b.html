@@ -28,6 +28,19 @@
     <meta name="robots" content="noindex, nofollow">
   
   <script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })("https://try.skinofab.com");</script>
+    
+<script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; return; }
+    // AppLovin's event hosts warmed up while pixel.js downloads (only for a visitor who has not opted out)
+    ['https://b.applovin.com', 'https://res4.applovin.com'].forEach(function (h) { var l = document.createElement('link'); l.rel = 'preconnect'; l.href = h; document.head.appendChild(l); }); })();
+  var AXON_EVENT_KEY = "a156ae42-0799-457e-b1a2-0d43c77eda18";
+  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.fetchPriority="high",i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
+  axon("init");
+  axon("track", "page_view");
+  window.__axonEventKey = AXON_EVENT_KEY;
+  window.__axonAllowedEvents = "";
+  window.__axonBlockedEvents = "";
+</script>
+
 
     
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -58,24 +71,11 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
     
-  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
   
 
 
 
 
-
-
-<script>
-  var AXON_EVENT_KEY = "a156ae42-0799-457e-b1a2-0d43c77eda18";
-  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
-  axon("init");
-  // Exposed for axon.adapter.js: confirms Axon is active + supplies per-campaign event toggles.
-  // allowed_events: ""=default main set, "all"=every mapped event, or a subset; blocked removes from allowed.
-  window.__axonEventKey = AXON_EVENT_KEY;
-  window.__axonAllowedEvents = "";
-  window.__axonBlockedEvents = "";
-</script>
 
 
 
@@ -86,7 +86,7 @@
 
 <script src="{% endverbatim %}{{ 'sft/sft-next-forwarder-core-fc21de.js'|asset_url }}{% verbatim %}"></script>
 
-<script src="{% endverbatim %}{{ 'sft/sft-axon-adapter-a2a38c.js'|asset_url }}{% verbatim %}"></script>
+<script src="{% endverbatim %}{{ 'sft/sft-axon-adapter-8f4739.js'|asset_url }}{% verbatim %}"></script>
 
 
 
@@ -101,7 +101,7 @@
     
     <link href="{% endverbatim %}{{ 'sft/sft-swiper-bundle-min-d34353.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sft/sft-checkout-brand-5725a0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sft/sft-checkout-brand-9ce508.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
     <link href="{% endverbatim %}{{ 'sft/sft-sf-offers-f9e30c.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
@@ -281,7 +281,7 @@
     <div class="sf-bp">
   <section class="sf-bp__sec" aria-labelledby="sf-bp-problem">
     <div class="sf-bp__two">
-      <figure class="sf-bp__fig"><img src="{% endverbatim %}{{ 'sft/sft-brush-problem-609808.jpg'|asset_url }}{% verbatim %}" alt="A woman in her fifties at her bathroom mirror first thing in the morning, puffy under the eyes, a hand on her jaw" width="1080" height="1080" loading="lazy" decoding="async"><figcaption></figcaption></figure>
+      <figure class="sf-bp__fig"><img src="{% endverbatim %}{{ 'sft/sft-brush-problem-609808.jpg'|asset_url }}{% verbatim %}" alt="A woman in her fifties at her bathroom mirror first thing in the morning, puffy under the eyes, a hand on her jaw" width="1080" height="1080" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sft/sft-brush-problem-w480-0d6592.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-brush-problem-w800-1e095c.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sft/sft-brush-problem-w1024-1100b3.webp'|asset_url }}{% verbatim %} 1024w" sizes="(max-width: 599px) 92vw, 540px"><figcaption></figcaption></figure>
       <div>
         <span class="sf-bp__eyebrow">The problem</span>
         <h2 class="display-md" id="sf-bp-problem">You wake up looking more tired than you are</h2>
@@ -300,7 +300,7 @@
         <p class="text-lg">The Lymphatic Brush is a facial massage brush: it gives your face the light, slow massage an aesthetician would, in 3 minutes, on dry skin.</p>
         <ul class="sf-bp__fixes"><li><strong>No oils or serums to glide.</strong> Works on dry skin: nothing to wash off, and your foundation goes straight on after.</li><li><strong>No pressing.</strong> Hundreds of soft tips bend instead of pressing: no red marks, no drag on thinner skin.</li><li><strong>No tutorial.</strong> Four sweeps: neck, jaw, under the eyes, neck again.</li><li><strong>No tool rolling around the counter.</strong> A protective travel case comes with every brush.</li></ul>
       </div>
-      <img src="{% endverbatim %}{{ 'sft/sft-brush-in-hand-7aa7f6.jpg'|asset_url }}{% verbatim %}" alt="The Lymphatic Brush in a hand: hundreds of ultra-soft tips on a curved head" width="1080" height="1080" loading="lazy" decoding="async">
+      <img src="{% endverbatim %}{{ 'sft/sft-brush-in-hand-7aa7f6.jpg'|asset_url }}{% verbatim %}" alt="The Lymphatic Brush in a hand: hundreds of ultra-soft tips on a curved head" width="1080" height="1080" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sft/sft-brush-in-hand-w480-1c8178.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-brush-in-hand-w800-eebb51.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sft/sft-brush-in-hand-w1080-0c917f.webp'|asset_url }}{% verbatim %} 1080w" sizes="(max-width: 599px) 92vw, 540px">
     </div>
   </section>
 
@@ -332,7 +332,7 @@
   <section class="sf-bp__sec" aria-labelledby="sf-bp-box">
     <h2 class="display-md text-center" id="sf-bp-box">What you get, and where it works</h2>
     <p class="text-lg text-center">The Lymphatic Brush is made for one thing: a light, quick massage for the look of morning puffiness.</p>
-    <div class="sf-bp__box" style="margin-top:14px"><figure><img src="{% endverbatim %}{{ 'sft/sft-brush-compare-ours-741f0d.jpg'|asset_url }}{% verbatim %}" alt="The brush’s raised, soft tufts" width="1080" height="810" loading="lazy" decoding="async"><figcaption><strong>Ultra-soft bristles</strong>Vegan fibers that bend instead of pressing.</figcaption></figure><figure><img src="{% endverbatim %}{{ 'sft/sft-brush-head-f6c42c.jpg'|asset_url }}{% verbatim %}" alt="The brush’s curved head and raised tufts" width="1080" height="810" loading="lazy" decoding="async"><figcaption><strong>A curved head</strong>Follows the cheek, the jaw and the neck in one sweep.</figcaption></figure><figure><img src="{% endverbatim %}{{ 'sft/sft-brush-how-1-c5ca5c.jpg'|asset_url }}{% verbatim %}" alt="Where morning puffiness shows: under the eyes and along the jaw" width="1080" height="810" loading="lazy" decoding="async"><figcaption><strong>Eyes, cheeks and jaw</strong>Where morning puffiness shows first.</figcaption></figure><figure><img src="{% endverbatim %}{{ 'sft/sft-brush-card-9a17d3.jpg'|asset_url }}{% verbatim %}" alt="The brush above its protective travel case" width="1080" height="810" loading="lazy" decoding="async"><figcaption><strong>A protective case</strong>Keeps the bristles clean between uses, and travels.</figcaption></figure></div>
+    <div class="sf-bp__box" style="margin-top:14px"><figure><img src="{% endverbatim %}{{ 'sft/sft-brush-compare-ours-741f0d.jpg'|asset_url }}{% verbatim %}" alt="The brush’s raised, soft tufts" width="1080" height="810" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sft/sft-brush-compare-ours-w480-452930.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-brush-compare-ours-w800-98149c.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sft/sft-brush-compare-ours-w1000-24aad0.webp'|asset_url }}{% verbatim %} 1000w" sizes="(max-width: 599px) 92vw, 540px"><figcaption><strong>Ultra-soft bristles</strong>Vegan fibers that bend instead of pressing.</figcaption></figure><figure><img src="{% endverbatim %}{{ 'sft/sft-brush-head-f6c42c.jpg'|asset_url }}{% verbatim %}" alt="The brush’s curved head and raised tufts" width="1080" height="810" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sft/sft-brush-head-w480-25add4.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-brush-head-w800-bd63ce.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sft/sft-brush-head-w1080-56c245.webp'|asset_url }}{% verbatim %} 1080w" sizes="(max-width: 599px) 92vw, 540px"><figcaption><strong>A curved head</strong>Follows the cheek, the jaw and the neck in one sweep.</figcaption></figure><figure><img src="{% endverbatim %}{{ 'sft/sft-brush-how-1-c5ca5c.jpg'|asset_url }}{% verbatim %}" alt="Where morning puffiness shows: under the eyes and along the jaw" width="1080" height="810" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sft/sft-brush-how-1-w480-0d6167.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-brush-how-1-w800-8631f3.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sft/sft-brush-how-1-w1080-955e7d.webp'|asset_url }}{% verbatim %} 1080w" sizes="(max-width: 599px) 92vw, 540px"><figcaption><strong>Eyes, cheeks and jaw</strong>Where morning puffiness shows first.</figcaption></figure><figure><img src="{% endverbatim %}{{ 'sft/sft-brush-card-9a17d3.jpg'|asset_url }}{% verbatim %}" alt="The brush above its protective travel case" width="1080" height="810" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sft/sft-brush-card-w480-89be27.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-brush-card-w800-e85234.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sft/sft-brush-card-w1080-eac7e4.webp'|asset_url }}{% verbatim %} 1080w" sizes="(max-width: 599px) 92vw, 540px"><figcaption><strong>A protective case</strong>Keeps the bristles clean between uses, and travels.</figcaption></figure></div>
   </section>
 
   <section class="sf-bp__sec" aria-labelledby="sf-bp-faq">
@@ -347,7 +347,7 @@
       <div class="upsell-offer__card">
         <div class="grid-full flex-col flex-horizontal-lg-up gap-xl">
           <div class="upsell-offer__image-column cc-narrow align-self-center">
-            <img loading="lazy" src="{% endverbatim %}{{ 'sft/sft-brush-in-hand-7aa7f6.jpg'|asset_url }}{% verbatim %}" alt="" class="width-full">
+            <img loading="lazy" src="{% endverbatim %}{{ 'sft/sft-brush-in-hand-7aa7f6.jpg'|asset_url }}{% verbatim %}" alt="" class="width-full" srcset="{% endverbatim %}{{ 'sft/sft-brush-in-hand-w480-1c8178.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-brush-in-hand-w800-eebb51.webp'|asset_url }}{% verbatim %} 800w, {% endverbatim %}{{ 'sft/sft-brush-in-hand-w1080-0c917f.webp'|asset_url }}{% verbatim %} 1080w" sizes="(max-width: 599px) 92vw, 540px">
           </div>
           <div class="upsell-content__column cc-fluid flex-col gap-lg">
             <h2 class="display-md">Add the Lymphatic Brush for <span data-next-display="bundle.brush-offer-b.price" data-next-format="currency">$9.00</span> today?</h2><div class="prices-text-wrapper cc-start" data-pricing-mode="discounted">
@@ -402,7 +402,7 @@
     
     <script defer src="{% endverbatim %}{{ 'sft/sft-sf-offer-timer-5eb630.js'|asset_url }}{% verbatim %}"></script>
     
-    <script defer src="{% endverbatim %}{{ 'sft/sft-sf-apf-3585c8.js'|asset_url }}{% verbatim %}"></script>
+    <script defer src="{% endverbatim %}{{ 'sft/sft-sf-apf-eb89c3.js'|asset_url }}{% verbatim %}"></script>
     
   </body>
 </html>

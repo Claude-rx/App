@@ -28,6 +28,19 @@
     <meta name="robots" content="noindex, nofollow">
   
   <script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })("https://try.skinofab.com");</script>
+    
+<script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; return; }
+    // AppLovin's event hosts warmed up while pixel.js downloads (only for a visitor who has not opted out)
+    ['https://b.applovin.com', 'https://res4.applovin.com'].forEach(function (h) { var l = document.createElement('link'); l.rel = 'preconnect'; l.href = h; document.head.appendChild(l); }); })();
+  var AXON_EVENT_KEY = "a156ae42-0799-457e-b1a2-0d43c77eda18";
+  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.fetchPriority="high",i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
+  axon("init");
+  axon("track", "page_view");
+  window.__axonEventKey = AXON_EVENT_KEY;
+  window.__axonAllowedEvents = "";
+  window.__axonBlockedEvents = "";
+</script>
+
 
     
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -56,24 +69,11 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.43/dist/loader.js" type="module"></script>
 
     
-  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
   
 
 
 
 
-
-
-<script>
-  var AXON_EVENT_KEY = "a156ae42-0799-457e-b1a2-0d43c77eda18";
-  !function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey=AXON_EVENT_KEY;for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);
-  axon("init");
-  // Exposed for axon.adapter.js: confirms Axon is active + supplies per-campaign event toggles.
-  // allowed_events: ""=default main set, "all"=every mapped event, or a subset; blocked removes from allowed.
-  window.__axonEventKey = AXON_EVENT_KEY;
-  window.__axonAllowedEvents = "";
-  window.__axonBlockedEvents = "";
-</script>
 
 
 
@@ -84,7 +84,7 @@
 
 <script src="{% endverbatim %}{{ 'sft/sft-next-forwarder-core-fc21de.js'|asset_url }}{% verbatim %}"></script>
 
-<script src="{% endverbatim %}{{ 'sft/sft-axon-adapter-a2a38c.js'|asset_url }}{% verbatim %}"></script>
+<script src="{% endverbatim %}{{ 'sft/sft-axon-adapter-8f4739.js'|asset_url }}{% verbatim %}"></script>
 
 
 
@@ -97,7 +97,7 @@
 
     <link href="{% endverbatim %}{{ 'sft/sft-next-core-e875b0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
-    <link href="{% endverbatim %}{{ 'sft/sft-checkout-brand-5725a0.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
+    <link href="{% endverbatim %}{{ 'sft/sft-checkout-brand-9ce508.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
     <link href="{% endverbatim %}{{ 'sft/sft-sf-trial-76ca84.css'|asset_url }}{% verbatim %}" rel="stylesheet" type="text/css">
     
@@ -183,7 +183,7 @@
   </div>
   <div class="bundle-card__main" data-next-package-id="1">
     <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
-    <img src="{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image">
+    <img src="{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image" srcset="{% endverbatim %}{{ 'sft/sft-pack-1-w480-fad0eb.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-pack-1-w700-6d129d.webp'|asset_url }}{% verbatim %} 700w" sizes="(max-width: 599px) 92vw, 540px">
     <div class="bundle-card__copy">
       <div class="bundle-card__title"><span data-next-display="package.name">Adaptive Peptide Foundation - 1 bottle</span></div>
       
@@ -207,7 +207,7 @@
   </div>
   <div class="bundle-card__main" data-next-package-id="1">
     <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
-    <img src="{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image">
+    <img src="{% endverbatim %}{{ 'sft/sft-pack-1-ed4825.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image" srcset="{% endverbatim %}{{ 'sft/sft-pack-1-w480-fad0eb.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-pack-1-w700-6d129d.webp'|asset_url }}{% verbatim %} 700w" sizes="(max-width: 599px) 92vw, 540px">
     <div class="bundle-card__copy">
       <div class="bundle-card__title"><span data-next-display="package.name">Adaptive Peptide Foundation - 1 bottle</span></div>
       
@@ -231,7 +231,7 @@
   </div>
   <div class="bundle-card__main" data-next-package-id="6">
     <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
-    <img src="{% endverbatim %}{{ 'sft/sft-pack-3b-a0f57f.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image">
+    <img src="{% endverbatim %}{{ 'sft/sft-pack-3b-a0f57f.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image" srcset="{% endverbatim %}{{ 'sft/sft-pack-3b-w480-12ca06.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-pack-3b-w700-7e88cf.webp'|asset_url }}{% verbatim %} 700w" sizes="(max-width: 599px) 92vw, 540px">
     <div class="bundle-card__copy">
       <div class="bundle-card__title"><span data-next-display="package.name">Adaptive Peptide Foundation - 3 bottles + free Blender</span></div>
       
@@ -255,7 +255,7 @@
   </div>
   <div class="bundle-card__main" data-next-package-id="7">
     <div class="os-card__radio" aria-hidden="true"><div class="radio-inner"></div></div>
-    <img src="{% endverbatim %}{{ 'sft/sft-pack-5-830dc4.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image">
+    <img src="{% endverbatim %}{{ 'sft/sft-pack-5-830dc4.jpg'|asset_url }}{% verbatim %}" loading="lazy" alt="" class="bundle-card__image" srcset="{% endverbatim %}{{ 'sft/sft-pack-5-w480-20c4e6.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sft/sft-pack-5-w700-12d81c.webp'|asset_url }}{% verbatim %} 700w" sizes="(max-width: 599px) 92vw, 540px">
     <div class="bundle-card__copy">
       <div class="bundle-card__title"><span data-next-display="package.name">Adaptive Peptide Foundation - 5 bottles + free Lymphatic Brush</span></div>
       

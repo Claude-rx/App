@@ -14,6 +14,7 @@
      SDK's calls fail from any other host the store answers on (skinofab.29next.store, skinofab.com), so a visit there
      goes to the same page on the funnel's host. Production builds only (local proof runs on localhost). {% endcomment %}
   {% if environment != 'development' and campaign.funnel_host and campaign.funnel_host != "" %}<script>(function (h) { try { var u = new URL(h); if (location.hostname !== u.hostname && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) location.replace(u.origin + location.pathname + location.search + location.hash); } catch (e) {} })({{ campaign.funnel_host | json }});</script>{% endif %}
+    {% campaign_include 'sf-axon-first.html' %}
 
     {% comment %} Resource hints: SDK CDN + campaign API + next-page prefetch (accept + decline paths on upsells;
          on a checkout step or select page, the next step rather than next_url, which is where a completed order goes).
@@ -48,8 +49,7 @@
     {% comment %} Campaign Cart SDK {% endcomment %}
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v{{ campaign.sdk_version }}/dist/loader.js" type="module"></script>
 
-    {% comment %} Global Privacy Control, or the opt-out on the privacy choices page (/data-sharing-opt-out/, linked from the footer; live review 11): such a browser gets no ad tracking, as the privacy policy promises (live review 10). The Axon base code below loads its scripts only while window.axon is undefined, so a no-op one stops it, and axon.adapter.js's calls go nowhere. {% endcomment %}
-  <script>(function () { var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(document.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {} if (out) { window.axon = function () {}; window.__sfGPC = true; } })();</script>
+    {% comment %} (Global Privacy Control: _includes/sf-axon-first.html, with the pixel) {% endcomment %}
   {% campaign_include 'analytics-head.html' %}
 
     <link href="{{ 'css/next-core.css' | campaign_asset }}" rel="stylesheet" type="text/css">

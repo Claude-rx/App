@@ -39,6 +39,9 @@ const FUNNELS = {
   apf: { listicle: '10-reasons-adaptive-foundation', sales: 'adaptive-foundation-offer', checkout: 'foundation-checkout', pack: 'apf-3', first: 'foundation-offer-1', thankYou: 'foundation-thank-you' },
   // the flash trial: no listicle, the entry is the product page (the store's foundation page with the trial box)
   trial: { listicle: null, sales: 'adaptive-foundation-trial', checkout: 'trial-checkout', pack: 'trial', first: 'trial-offer-1', thankYou: 'trial-thank-you' },
+  // Black Friday (5 Nov 2026): the ads' sales page sells the flash trial funnel's plans into its checkout and offers
+  // (funnels/apf.py BLACK_FRIDAY); with --entry and --pack the walk picks that plan's card on the sales page first
+  bf: { listicle: null, sales: 'adaptive-foundation-offer', checkout: 'trial-checkout', pack: 'trial', first: 'trial-offer-1', thankYou: 'trial-thank-you' },
 };
 const FN = FUNNELS[process.env.FUNNEL || 'stick'];
 const path = opt('--path', 'decline').split(',');
@@ -124,6 +127,13 @@ const trackingReport = async () => {
   });
   const pages = [...new Set(log.map((l) => { try { return fileOf(l.url); } catch (e) { return ''; } }).filter(Boolean))];
   const purchases = events.filter((e) => e.event === 'purchase');
+  const itemProblems = [];
+  calls.filter((c) => c.args[0] === 'track' && c.args[2] && c.args[2].items).forEach((c) => (c.args[2].items || []).forEach((it) => {
+    const miss = ['item_id', 'item_name', 'price', 'quantity', 'item_variant_id', 'image_url', 'item_category_id'].filter((k) => it[k] === undefined || it[k] === null || it[k] === '');
+    if (!/\.(png|jpe?g)(\?|$)/i.test(String(it.image_url || ''))) miss.push('image_url not png/jpg');
+    if (!Number.isInteger(it.item_category_id)) miss.push('item_category_id not an integer');
+    if (miss.length) itemProblems.push(`${c.page} ${c.args[1]} ${it.item_name || it.item_id}: ${miss.join(', ')}`);
+  }));
   const has = (n) => events.some((e) => e.event === n);
   const checks = {
     init_on_every_page: pages.every((pg) => calls.some((c) => c.args[0] === 'init' && c.page.includes(`/${pg}/`))),
@@ -132,9 +142,11 @@ const trackingReport = async () => {
     purchase: purchases.some((e) => e.transaction_id && !/-US\d+$/.test(String(e.transaction_id))),
     upsell_purchase: purchases.some((e) => /-US1$/.test(String(e.transaction_id || ''))),
     every_purchase_has_value_currency_id: purchases.every((e) => e.value !== undefined && e.currency && e.transaction_id),
+    // AppLovin's seven item fields on every item of every ecommerce event (its Pixel Helper flags any item without them)
+    every_item_complete: itemProblems.length === 0,
     applovin_accepted_every_post: tracked.responses.length > 0 && tracked.responses.every((r) => r.status >= 200 && r.status < 300),
   };
-  return { pages, events, checks, init_calls: calls.filter((c) => c.args[0] === 'init').length,
+  return { pages, events, checks, item_problems: itemProblems, init_calls: calls.filter((c) => c.args[0] === 'init').length,
     requests: tracked.requests.length, request_hosts: [...new Set(tracked.requests.map((r) => new URL(r.url).host))],
     failed_requests: tracked.failed, applovin_posts: tracked.responses, forwarder_log: tracked.forwarder.slice(0, 80), raw: tracked.requests.slice(0, 60) };
 };
@@ -154,6 +166,9 @@ try {
     else await page.goto(`${host}/${FN.sales}/${entry}`, { waitUntil: 'load', timeout: 60000 });
     await step('sales-page', async () => {
       await page.waitForTimeout(3000);
+      // the plan asked for (--pack), picked on the page's own plan cards, as a shopper does
+      const card = page.locator(`.sf-pack[data-pack="${pack}"]`).first();
+      if (process.argv.includes('--pack') && await card.count()) { await card.scrollIntoViewIfNeeded(); await card.click(); await page.waitForTimeout(400); }
       const buy = page.locator(`#offer a[href*="/${FN.checkout}/"]:visible, a[href*="/${FN.checkout}/"]:visible`).first();
       await buy.scrollIntoViewIfNeeded();
       await buy.click({ timeout: 15000 });

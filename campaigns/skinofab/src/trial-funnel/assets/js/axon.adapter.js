@@ -35,7 +35,9 @@
   // dl_* event -> Axon standard event name. Axon events are GA4-shaped.
   // Intentionally NOT mapped (no Axon equivalent): dl_view_item_list, dl_select_item, dl_add_shipping_info.
   var MAP = {
-    dl_user_data:            'page_view',       // SDK's real pageview signal (see core); sent bare
+    // LOCAL PATCH (speed pass, 5 Nov 2026): no dl_user_data -> page_view. The head's base code sends page_view the
+    // moment the page starts (_includes/sf-axon-first.html); the SDK's dl_user_data came seconds later, after visitors
+    // who had already left (one page_view per page either way)
     dl_view_item:            'view_item',
     dl_add_to_cart:          'add_to_cart',
     dl_remove_from_cart:     'remove_from_cart',
