@@ -6,8 +6,11 @@
     gif:   true plays each silent clip by itself, looping like a GIF, while it is on the screen (the listicle, the owner,
            2 Nov 2026): no tap, its line on it, and the loops' own pause button (sf-apf.js, data-sf-lazy); not under
            reduced motion, where it waits for a tap with its controls
+    carousel: true for four or more clips (the owner's video carousel, 5 Nov 2026): one row that scrolls on every
+           screen, with previous and next arrows from 900 px (a phone swipes it)
 {%- endcomment -%}
-<div class="sf-vrow" role="list">
+{%- if carousel %}<div class="sf-vcar"><button type="button" class="sf-vcar__arrow sf-vcar__arrow--prev" data-sf-vcar="-1" aria-label="Previous videos"></button>{% endif %}
+<div class="sf-vrow{% if carousel %} sf-vrow--carousel{% endif %}" role="list">
   {%- for d in items %}
   {%- assign as_gif = false -%}{%- if gif and d.sound != true -%}{%- assign as_gif = true -%}{%- endif %}
   <figure class="sf-vcard{% if as_gif %} sf-vcard--gif{% endif %}" role="listitem"{% unless as_gif %} data-sf-vcard{% endunless %}{% if d.sound %} data-sf-vcard-sound{% endif %}>
@@ -23,3 +26,4 @@
   </figure>
   {%- endfor %}
 </div>
+{%- if carousel %}<button type="button" class="sf-vcar__arrow sf-vcar__arrow--next" data-sf-vcar="1" aria-label="Next videos"></button></div>{% endif %}

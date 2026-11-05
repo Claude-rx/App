@@ -96,6 +96,20 @@
     }
   });
 
+  // the video carousel's arrows (from 900 px): a card's width a tap, each arrow hidden at its end of the row
+  document.querySelectorAll('.sf-vcar').forEach(function (car) {
+    var row = car.querySelector('.sf-vrow'), prev = car.querySelector('[data-sf-vcar="-1"]'), next = car.querySelector('[data-sf-vcar="1"]');
+    if (!row || !prev || !next) return;
+    function ends() { prev.disabled = row.scrollLeft < 8; next.disabled = row.scrollLeft + row.clientWidth > row.scrollWidth - 8; }
+    [prev, next].forEach(function (b) {
+      b.addEventListener('click', function () {
+        var card = row.querySelector('.sf-vcard');
+        row.scrollBy({ left: (+b.getAttribute('data-sf-vcar')) * ((card ? card.offsetWidth : 250) + 12), behavior: 'smooth' });
+      });
+    });
+    row.addEventListener('scroll', function () { window.requestAnimationFrame(ends); }, { passive: true });
+    ends();
+  });
   // the clip cards (_includes/sf-vrow.html): a tap plays the clip where it stands, one at a time; the one with a voice
   // gets its controls and sound, a silent one pauses on a second tap; any pauses once it is scrolled off the screen
   var cards = document.querySelectorAll('[data-sf-vcard]');

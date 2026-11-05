@@ -1064,6 +1064,53 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
   .sf-reviews--green .sf-review__text { margin: 12px 0 8px !important; }
   .sf-reviews--green .sf-review__who { text-align: left; }
 }
+
+/* the badge strip under the hero (in a press bar's place; real badges only): glides past on a phone, one row from 900 px */
+.sf-bstrip { margin: 4px 0 0; padding: 14px 0 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #fff; }
+.sf-bstrip__label { margin: 0 0 10px !important; text-align: center; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+.sf-bstrip__viewport { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+.sf-bstrip__track { display: flex; width: max-content; animation: sf-bstrip 32s linear infinite; }
+.sf-bstrip__set { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0 30px 0 0; list-style: none; }
+.sf-bstrip__item { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; color: var(--ink); line-height: 1.2; white-space: nowrap; }
+.sf-bstrip__item b { display: block; font-size: 13.5px; font-weight: 700; letter-spacing: .02em; }
+.sf-bstrip__item small { display: block; margin-top: 2px; font-size: 11.5px; color: var(--soft); }
+.sf-bstrip .sf-bstrip__img { width: auto; max-width: none; height: 40px; margin: 0; border-radius: 0; }
+.sf-bstrip .sf-bstrip__seal { width: 40px; max-width: none; height: 40px; margin: 0; }
+.sf-bstrip__mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--cream); color: var(--ink); }
+@keyframes sf-bstrip { to { transform: translateX(-50%); } }
+@media (min-width: 900px) {
+  .sf-bstrip__viewport { -webkit-mask-image: none; mask-image: none; }
+  .sf-bstrip__track { width: auto; justify-content: center; animation: none; }
+  .sf-bstrip__set { flex-wrap: wrap; justify-content: center; gap: 18px 40px; padding: 0; }
+  .sf-bstrip__set--copy { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sf-bstrip__track { animation: none; }
+  .sf-bstrip__viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .sf-bstrip__set--copy { display: none; }
+}
+/* the review cards under the hero: small stars that fit beside the photo (they ran past the card's edge on a desktop) */
+.sf-revstrip .sf-revcard__body { min-width: 0; }
+.sf-revstrip .sf-revcard .sf-tp__stars { display: inline-flex; gap: 2px; }
+.sf-revstrip .sf-revcard .sf-tp__stars i { width: 18px; height: 18px; }
+.sf-revstrip .sf-revcard .sf-tp__stars i::before { font-size: 13px; }
+
+/* the video carousel (the owner's clips, 5 Nov 2026): one row that scrolls on every screen; arrows from 900 px */
+.sf-vcar { position: relative; }
+.sf-vrow--carousel { grid-auto-columns: 62%; }
+@media (min-width: 600px) { .sf-vrow--carousel { grid-auto-columns: calc((100% - 36px) / 3.4); overflow-x: auto; margin: 0 -16px; padding: 0 16px 6px; justify-content: start; } }
+@media (min-width: 900px) { .sf-vrow--carousel { grid-auto-columns: 250px; margin: 0; padding: 0 0 6px; scroll-padding: 0; } }
+.sf-vcar__arrow { display: none; }
+@media (min-width: 900px) {
+  .sf-vcar__arrow { display: block; position: absolute; top: 50%; z-index: 2; width: 46px; height: 46px; margin-top: -26px; border: 0; border-radius: 50%; cursor: pointer;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.5 5.5 8 12l6.5 6.5' fill='none' stroke='%23151515' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 22px no-repeat;
+    box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+  .sf-vcar__arrow--prev { left: -22px; }
+  .sf-vcar__arrow--next { right: -22px; transform: scaleX(-1); }
+  .sf-vcar__arrow[disabled] { opacity: 0; pointer-events: none; }
+  .sf-vcar__arrow:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+}
+.sf-vcar-wrap { margin: 6px 0 26px; }
 </style>
   
 
@@ -1149,6 +1196,24 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
 </div></div>
     </div>
   </section>
+  <section class="sf-bstrip" aria-label="What stands behind every bottle">
+  <p class="sf-bstrip__label">What stands behind every bottle</p>
+  <div class="sf-bstrip__viewport">
+    <div class="sf-bstrip__track">
+      <ul class="sf-bstrip__set"><li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-clinicians-choice-19eb18.jpg'|asset_url }}{% verbatim %}" alt="Clinicians’ Choice" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span><b>700+ clinicians</b><small>on FrontrowMD</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span><span><b>K-beauty</b><small>Formulated in Korea</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></span><span><b>Fragrance-free</b><small>No parabens</small></span></li>
+<li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-seal-72bd51.png'|asset_url }}{% verbatim %}" alt="" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"><span><b>30-day guarantee</b><small>Money back, even opened</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>Secure checkout</b><small>Card, PayPal or Apple Pay</small></span></li></ul>
+      <ul class="sf-bstrip__set sf-bstrip__set--copy" aria-hidden="true"><li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-clinicians-choice-19eb18.jpg'|asset_url }}{% verbatim %}" alt="" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span><b>700+ clinicians</b><small>on FrontrowMD</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span><span><b>K-beauty</b><small>Formulated in Korea</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></span><span><b>Fragrance-free</b><small>No parabens</small></span></li>
+<li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-seal-72bd51.png'|asset_url }}{% verbatim %}" alt="" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"><span><b>30-day guarantee</b><small>Money back, even opened</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>Secure checkout</b><small>Card, PayPal or Apple Pay</small></span></li></ul>
+    </div>
+  </div>
+</section>
+
   
   <section class="sf-revstrip" id="s02-reviews" aria-label="Reviews from our earlier store">
     <div class="sf-sec__in">
@@ -1366,6 +1431,7 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
         <li data-s="2"><span>2 ★</span><i><b style="width:0%"></b></i><span>1</span></li>
         <li data-s="1"><span>1 ★</span><i><b style="width:0%"></b></i><span>3</span></li>
       </ul>
+      
       <div class="sf-photowall" aria-label="Buyers’ own photos"><img src="{% endverbatim %}{{ 'sfa/sfa-review-lora-868ad7.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-hope-693cf4.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-tina-094905.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-gillian-426815.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-darla-32c4ae.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-diane-a9cacd.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-mary-95e087.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-vicki-58b855.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-judith-bd0852.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-susan-e58d22.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-dotty-2eedbc.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-patricia-37a615.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-rachel-a1280e.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-melissa-4ce485.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-barbara-5659dc.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"><img src="{% endverbatim %}{{ 'sfa/sfa-review-sharyl-107f29.jpg'|asset_url }}{% verbatim %}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async"></div>
       <div class="sf-reviews__grid">
         <article class="sf-review"><img src="{% endverbatim %}{{ 'sfa/sfa-review-lora-868ad7.jpg'|asset_url }}{% verbatim %}" alt="Lora Z., 65, her own photo" loading="lazy" decoding="async" width="375" height="375" srcset="{% endverbatim %}{{ 'sfa/sfa-review-lora-w375-e05c25.webp'|asset_url }}{% verbatim %} 375w" sizes="(max-width: 599px) 92vw, 540px"><h3>Lora Z., 65</h3><p class="sf-tp__stars sf-tp__stars--sm" role="img" aria-label="5 out of 5 stars"><i></i><i></i><i></i><i></i><i></i>
@@ -1400,7 +1466,8 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
       <ol class="sf-steps sf-steps--grid sf-steps--pics"><li><img src="{% endverbatim %}{{ 'sfa/sfa-step-1-b6322a.jpg'|asset_url }}{% verbatim %}" alt="A woman in her fifties, bare skin, before she starts" width="600" height="600" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sfa/sfa-step-1-w480-c1499e.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sfa/sfa-step-1-w600-9fde79.webp'|asset_url }}{% verbatim %} 600w" sizes="(max-width: 599px) 92vw, 540px"><strong>Moisturizer and sunscreen first</strong>Your usual moisturizer, then your daily sunscreen. No primer needed.</li><li><img src="{% endverbatim %}{{ 'sfa/sfa-step-2-941c31.jpg'|asset_url }}{% verbatim %}" alt="The same woman with white dots of the foundation on her forehead, cheeks, nose and chin" width="600" height="600" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sfa/sfa-step-2-w480-7760c2.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sfa/sfa-step-2-w600-206996.webp'|asset_url }}{% verbatim %} 600w" sizes="(max-width: 599px) 92vw, 540px"><strong>One pump, five dots</strong>Forehead, cheeks, nose, chin. It looks white. That’s the point.</li><li><img src="{% endverbatim %}{{ 'sfa/sfa-step-3-bd6fa2.jpg'|asset_url }}{% verbatim %}" alt="A woman in her fifties buffing the foundation into her cheek with a brush" width="600" height="600" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sfa/sfa-step-3-w480-e35b39.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sfa/sfa-step-3-w600-172587.webp'|asset_url }}{% verbatim %} 600w" sizes="(max-width: 599px) 92vw, 540px"><strong>Blend and watch</strong>Fingertips or a brush, outward. The white shifts toward your tone in about a minute.</li><li><img src="{% endverbatim %}{{ 'sfa/sfa-step-4-8b798c.jpg'|asset_url }}{% verbatim %}" alt="A woman in her fifties tapping a little more onto her chin with a brush" width="600" height="600" loading="lazy" decoding="async" srcset="{% endverbatim %}{{ 'sfa/sfa-step-4-w480-2ab91e.webp'|asset_url }}{% verbatim %} 480w, {% endverbatim %}{{ 'sfa/sfa-step-4-w600-438064.webp'|asset_url }}{% verbatim %} 600w" sizes="(max-width: 599px) 92vw, 540px"><strong>Tap more where you want it</strong>A second thin layer on a spot or redness. Skip powder on dry areas so lines stay soft.</li></ol>
       <h3 class="sf-h3 sf-vrow__title">See how it blends</h3>
       <p class="sf-vrow__lede">White on, then your tone: two short clips of how it goes on. Tap one to watch it.</p>
-      <div class="sf-vrow" role="list">
+      
+<div class="sf-vrow" role="list">
   <figure class="sf-vcard" role="listitem" data-sf-vcard>
     <video preload="none" playsinline muted loop data-sf-poster="{% endverbatim %}{{ 'sfa/sfa-demo-silver-poster-535af7.jpg'|asset_url }}{% verbatim %}" width="540" height="960" aria-label="Blended in with the fingertips">
       <source src="{% endverbatim %}{{ 'sfa/sfa-demo-silver-dbd18a.webm'|asset_url }}{% verbatim %}" type="video/webm">
@@ -1579,7 +1646,7 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
 </footer>
 
 
-  <script src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-5379e8.js'|asset_url }}{% verbatim %}" defer></script>
+  <script src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-bd32a7.js'|asset_url }}{% verbatim %}" defer></script>
   
 </body>
 </html>

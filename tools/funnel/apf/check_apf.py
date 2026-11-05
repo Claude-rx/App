@@ -293,6 +293,25 @@ if _said:
     except Exception as e:
         print(f'check_apf: FrontrowMD not reachable ({type(e).__name__}); the badge count was not checked')
 
+# press logos (the owner, 5 Nov 2026, chose a strip of real badges over magazine and beauty-site logos): SKINOFAB has no
+# press feature yet, and an outlet's logo without one is a false endorsement. An outlet goes on a page only once it is in
+# PRESS_FEATURES with the article's URL, and then only as a link to that article
+PRESS_FEATURES = {}     # e.g. {'Allure': 'https://www.allure.com/story/...'}
+_OUTLETS = r"vogue|allure|\belle\b|cosmopolitan|harper[’']?s bazaar|byrdie|refinery ?29|glamour|instyle|marie claire|oprah|forbes|buzzfeed|good housekeeping|women[’']?s health|people magazine|\bnbc\b|\bcbs\b|\babc news\b|fox news|new york times|nytimes|wall street journal|today show|shape magazine|prevention magazine|real simple|\bself magazine"
+for p in F.PAGES:
+    h = html(p['id'])
+    if re.search(r'\b(?:as seen (?:in|on)|as featured (?:in|on)|featured (?:in|on))\b', text(h), re.I) and not PRESS_FEATURES:
+        fail(p['id'], 'an "as seen in" / "featured in" line, and SKINOFAB has no press feature on file (PRESS_FEATURES)')
+    for m_img in re.finditer(r'<img[^>]*>', h):
+        tag = m_img.group(0)
+        hit = re.search(_OUTLETS, ' '.join(re.findall(r'\b(?:alt|src|title)="([^"]*)"', tag)), re.I)
+        if not hit: continue
+        name = next((k for k in PRESS_FEATURES if k.lower() in tag.lower()), None)
+        a_open = h.rfind('<a ', 0, m_img.start()); a_close = h.rfind('</a>', 0, m_img.start())
+        href = re.search(r'href="([^"]+)"', h[a_open:m_img.start()]) if a_open > a_close else None
+        if not name or not href or href.group(1) != PRESS_FEATURES[name]:
+            fail(p['id'], f'a press logo ({hit.group(0)}) without a real feature linked to its article')
+
 # sales page --------------------------------------------------------------------------------------------------------
 pp = html('offer')
 if BF:

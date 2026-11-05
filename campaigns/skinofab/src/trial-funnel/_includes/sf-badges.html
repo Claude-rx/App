@@ -1,0 +1,24 @@
+{%- comment -%}
+  SKINOFAB: the badge strip under the hero, where an "As featured in" press bar usually sits (the owner, 5 Nov 2026).
+  Real badges only. The owner chose this strip over magazine and beauty-site logos, because SKINOFAB has no press
+  feature yet: a publication's logo goes on the page only for an outlet that really covered SKINOFAB, linked to that
+  article (check_apf.py fails a press logo without one).
+    label: the line over the badges     count: the FrontrowMD floor ("700+"; check_apf.py checks it against FrontrowMD)
+  A phone sees the badges glide past (a still, swipeable row under reduced motion); from 900 px they sit in one row.
+{%- endcomment -%}
+{%- capture sf_badge_set -%}
+<li class="sf-bstrip__item"><img src="{{ 'images/sf/clinicians-choice.jpg' | campaign_asset }}" alt="Clinicians’ Choice" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span><b>{{ count }} clinicians</b><small>on FrontrowMD</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span><span><b>K-beauty</b><small>Formulated in Korea</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></span><span><b>Fragrance-free</b><small>No parabens</small></span></li>
+<li class="sf-bstrip__item"><img src="{{ 'images/sf/guarantee-seal.png' | campaign_asset }}" alt="" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"><span><b>30-day guarantee</b><small>Money back, even opened</small></span></li>
+<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>Secure checkout</b><small>Card, PayPal or Apple Pay</small></span></li>
+{%- endcapture -%}
+<section class="sf-bstrip" aria-label="{{ label }}">
+  <p class="sf-bstrip__label">{{ label }}</p>
+  <div class="sf-bstrip__viewport">
+    <div class="sf-bstrip__track">
+      <ul class="sf-bstrip__set">{{ sf_badge_set }}</ul>
+      <ul class="sf-bstrip__set sf-bstrip__set--copy" aria-hidden="true">{{ sf_badge_set | replace: 'alt="Clinicians’ Choice"', 'alt=""' }}</ul>
+    </div>
+  </div>
+</section>

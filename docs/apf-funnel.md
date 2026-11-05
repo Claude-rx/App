@@ -422,6 +422,7 @@ jumping. The sections are the same content, rearranged; nothing new is claimed.
 | # | Part | Section id |
 |---|---|---|
 | 1 | Above the fold: the hero photo with the bottle and its name on it, the promise, four benefits, the Black Friday price, the button, the guarantee (seal + "even opened"), free shipping, Korea, the Clinicians' Choice badge | `s01-hero` |
+| 1b | The badge strip, where a press bar usually sits: Clinicians' Choice (700+ on FrontrowMD), K-beauty (formulated in Korea), fragrance-free, 30-day guarantee, secure checkout. It moves across the screen on a phone and sits in one row from 900 px | `_includes/sf-badges.html` |
 | 2 | Review cards with the buyers' photos, side by side (swipe on a phone) | `s02-reviews` |
 | 3 | The problem (her day, in photos) | `s06-problem` |
 | 4 | The root cause (skin after 45, the diagram) | `s07-mechanism` |
@@ -443,6 +444,14 @@ jumping. The sections are the same content, rearranged; nothing new is claimed.
 - Phones: the review cards are photo and name side by side with the words under them (the section went from 6,600 px
   to about 4,000); the hero's order is the benefits, the price, the button, the trust line, the badge.
 - The "why now" points use `data-sf-trial-live`: after the sale ends they hide with the rest of the Black Friday copy.
+- **No magazine or beauty-site logos.** SKINOFAB has no press feature yet, and the owner chose the real-badge strip
+  instead (5 Nov 2026). `check_apf.py` fails any page with an "as seen in / featured in" line or an outlet's logo
+  (Vogue, Allure, Elle, Cosmopolitan…) unless the outlet is in its `PRESS_FEATURES` with the article's URL and the logo
+  links to that article. When a real feature runs, add it there and the logo can go in the strip.
+- **The video carousel** (the owner's own clips, the Skinofab-S24 folder): `tools/funnel/apf/add_clips.py clip1 clip2 …`
+  makes each one 540 × 960, MP4 + WebM + a poster, into `images/sf/ugc-<n>.*`; list them under `video_carousel` in the
+  sales page's front matter and they show at the top of the reviews, swiped on a phone and with arrows from 900 px
+  (`sf-vrow.html` with `carousel=true`). Nothing shows until that list is set.
 
 ### The checkout
 

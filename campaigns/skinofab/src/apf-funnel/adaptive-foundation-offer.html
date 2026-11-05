@@ -256,6 +256,12 @@ korea:
   image_note: "Model portrayal."
 # the certification section: only what is real and can be checked: the FrontrowMD listing (the live count, read by
 # check_apf.py), where it is formulated, what the formula leaves out (the label), the guarantee and the payment
+# the badge strip under the hero, where a press bar usually sits (the owner, 5 Nov 2026): real badges, no magazine logos
+# the owner's own clips (Skinofab-S24, 5 Nov 2026), as a carousel at the top of the reviews: set when they arrive, made with
+# tools/funnel/apf/add_clips.py (images/sf/ugc-<n>.*)
+# video_carousel: { title: "...", lede: "...", items: [{ key: "ugc-1", chip: "...", caption: "...", sound: true }] }
+badge_strip:
+  label: "What stands behind every bottle"
 credentials:
   eyebrow: "Checked, listed, guaranteed"
   title: "The credentials behind the bottle"
@@ -461,6 +467,7 @@ closing:
       {% campaign_include 'sf-frontrow.html' count=frontrow_clinicians %}
     </div>
   </section>
+  {% if badge_strip %}{% campaign_include 'sf-badges.html' label=badge_strip.label count=frontrow_clinicians %}{% endif %}
   {% comment %} the review cards under the hero: the published reviews with the buyers' photos, side by side (swipe on a
      phone); the full reviews further down {% endcomment %}
   <section class="sf-revstrip" id="s02-reviews" aria-label="Reviews from our earlier store">
@@ -652,6 +659,11 @@ closing:
       <ul class="sf-ratings__rows sf-ratings__rows--inline" aria-label="Reviews of the Adaptive Peptide Foundation, by stars">{% for row in ratings.rows %}{% assign pct = row[1] | times: 100.0 | divided_by: ratings.total %}
         <li data-s="{{ row[0] }}"><span>{{ row[0] }} ★</span><i><b style="width:{{ pct | round: 1 }}%{% if row[1] == 0 %};min-width:0{% endif %}"></b></i><span>{{ row[1] }}</span></li>{% endfor %}
       </ul>
+      {% if video_carousel %}<div class="sf-vcar-wrap">
+        <h3 class="sf-h3 sf-vrow__title" style="text-align:center">{{ video_carousel.title }}</h3>
+        {% if video_carousel.lede %}<p class="sf-vrow__lede" style="text-align:center">{{ video_carousel.lede }}</p>{% endif %}
+        {% campaign_include 'sf-vrow.html' items=video_carousel.items carousel=true %}
+      </div>{% endif %}
       <div class="sf-photowall" aria-label="Buyers’ own photos">{% for w in reviews_section.wall %}<img src="{{ 'images/sf/review-' | append: w | append: '.jpg' | campaign_asset }}" alt="A buyer’s own photo" width="150" height="150" loading="lazy" decoding="async">{% endfor %}</div>
       <div class="sf-reviews__grid">
         {% for t in reviews %}<article class="sf-review{% if t.stars == 4 %} sf-review--four{% endif %}"><img src="{{ t.photo | campaign_asset }}" alt="{{ t.name }}, her own photo" loading="lazy" decoding="async" width="{{ t.photo_w | default: 375 }}" height="{{ t.photo_w | default: 375 }}"{% if t.photo_w %} style="max-width:{{ t.photo_w }}px"{% endif %}><h3>{{ t.name }}</h3><p class="sf-tp__stars sf-tp__stars--sm" role="img" aria-label="{{ t.stars }} out of 5 stars">{% campaign_include 'sf-stars.html' n=t.stars %}</p><p class="sf-review__text">“{{ t.text }}”</p><p class="sf-review__who">✓ Verified buyer · from our earlier store</p></article>
