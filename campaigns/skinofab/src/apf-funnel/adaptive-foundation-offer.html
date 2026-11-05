@@ -212,15 +212,18 @@ ingredients:
   eyebrow: "Skincare inside"
   title: "Skincare in every layer you wear"
   lede: "The ingredients of the creams you would buy separately, in a foundation. It evens the look of your skin while you wear it; it treats nothing."
+  # a photo per ingredient (the owner, 5 Nov 2026: "show the ingredient better using real image"): still lifes generated
+  # with Nano Banana 2 (Kie) at 2K on one warm travertine set, in a style of their own (the listicle's ingredient photos
+  # are white-background textures, and the two pages share no image)
   items:
-    - { name: "PDRN", role: "Sodium DNA from salmon, the K-beauty favorite for skin after 45, and the name on the bottle.", icon: "dna" }
-    - { name: "Matrixyl 3000", role: "Peptides used in expression-line creams.", icon: "chain" }
-    - { name: "A beech-sugar active", role: "Hydroxypropyl tetrahydropyrantriol, from beech-wood sugar: a staple of skincare for thinner, drier skin.", icon: "tree" }
-    - { name: "Niacinamide", role: "For the look of uneven tone.", icon: "spark" }
-    - { name: "Adenosine", role: "A classic of Korean skincare for the look of lines.", icon: "wave" }
-    - { name: "Hyaluronic acid, two forms", role: "Holds water at the surface, so skin feels comfortable, not tight.", icon: "drop" }
-    - { name: "Ceramide NP", role: "The skin’s own barrier lipid, for dry skin.", icon: "shield" }
-    - { name: "Squalane and panthenol", role: "Light moisture that doesn’t sit greasy.", icon: "leaf" }
+    - { image: "images/sf/ingr-pdrn.jpg", alt: "A glass dish of soft pink serum gel with a clear glass DNA helix rising from it", name: "PDRN", role: "Sodium DNA from salmon, the K-beauty favorite for skin after 45, and the name on the bottle.", icon: "dna" }
+    - { image: "images/sf/ingr-peptides.jpg", alt: "A chain of clear and amber glass beads beside a pool of clear serum and a glass dropper", name: "Matrixyl 3000", role: "Peptides used in expression-line creams.", icon: "chain" }
+    - { image: "images/sf/ingr-beech.jpg", alt: "Beech leaves, a slice of beech wood and a dish of fine white sugar crystals", name: "A beech-sugar active", role: "Hydroxypropyl tetrahydropyrantriol, from beech-wood sugar: a staple of skincare for thinner, drier skin.", icon: "tree" }
+    - { image: "images/sf/ingr-niacinamide.jpg", alt: "A glass dish of fine white niacinamide powder with a glass spatula", name: "Niacinamide", role: "For the look of uneven tone.", icon: "spark" }
+    - { image: "images/sf/ingr-adenosine.jpg", alt: "A swirl of clear silky gel with soft rippled waves", name: "Adenosine", role: "A classic of Korean skincare for the look of lines.", icon: "wave" }
+    - { image: "images/sf/ingr-ha.jpg", alt: "A plump dome of clear hydrating gel with dewy droplets", name: "Hyaluronic acid, two forms", role: "Holds water at the surface, so skin feels comfortable, not tight.", icon: "drop" }
+    - { image: "images/sf/ingr-ceramide.jpg", alt: "A swirl of rich white cream beside small translucent tiles laid like bricks", name: "Ceramide NP", role: "The skin’s own barrier lipid, for dry skin.", icon: "shield" }
+    - { image: "images/sf/ingr-squalane.jpg", alt: "Golden oil drops falling from a glass pipette into clear gel", name: "Squalane and panthenol", role: "Light moisture that doesn’t sit greasy.", icon: "leaf" }
 why:
   eyebrow: "Built from the complaints"
   title: "We read what women over 45 wrote about color-changing foundations. Then we answered each complaint."
@@ -583,7 +586,7 @@ closing:
       <p class="sf-eyebrow" style="text-align:center">{{ ingredients.eyebrow }}</p>
       <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ ingredients.title }}</h2>
       <p style="text-align:center;max-width:680px;margin:0 auto 18px">{{ ingredients.lede }}</p>
-      <ul class="sf-ing">{% for i in ingredients.items %}<li>{% campaign_include 'sf-icon.html' name=i.icon %}<div><strong>{{ i.name }}</strong><span>{{ i.role }}</span></div></li>{% endfor %}</ul>
+      <ul class="sf-ing{% if ingredients.items[0].image %} sf-ing--photos{% endif %}">{% for i in ingredients.items %}<li>{% if i.image %}<img src="{{ i.image | campaign_asset }}" alt="{{ i.alt }}" width="800" height="800" loading="lazy" decoding="async">{% else %}{% campaign_include 'sf-icon.html' name=i.icon %}{% endif %}<div><strong>{{ i.name }}</strong><span>{{ i.role }}</span></div></li>{% endfor %}</ul>
       <h3 class="sf-h3" style="text-align:center;margin-top:28px">{{ why.title }}</h3>
       <div class="sf-fixgrid">{% for f in why.fixes %}<div class="sf-fix"><div style="display:block"><q>{{ f.quote }}</q>{% if f.source != "" %}<br><small>{{ f.source }}</small>{% endif %}</div><div>{{ f.fix }}</div></div>{% endfor %}</div>
     </div>

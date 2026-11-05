@@ -641,3 +641,14 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
 @media (min-width: 1024px) { .sf-creds { grid-template-columns: repeat(3, 1fr); } .sf-cred--frontrow { grid-column: auto; } .sf-cred { grid-template-columns: 1fr; text-align: center; justify-items: center; }
   .sf-cred__badge { width: 150px; } .sf-creds li:nth-child(4), .sf-creds li:nth-child(5) { grid-column: span 1; } }
 @media (min-width: 1024px) { .sf-creds { grid-template-columns: repeat(6, 1fr); } .sf-cred { grid-column: span 2; } .sf-creds li:nth-child(4) { grid-column: 2 / span 2; } .sf-creds li:nth-child(5) { grid-column: 4 / span 2; } }
+
+/* the ingredients with their photos (the owner, 5 Nov 2026): two cards a row on a phone, four on a laptop; the photo on
+   top, square, the name and what it is for under it */
+.sf-ing--photos { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; }
+.sf-ing--photos li { display: flex; flex-direction: column; gap: 0; padding: 0; overflow: hidden; border-radius: 16px; }
+.sf-ing--photos img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
+.sf-ing--photos li > div { padding: 12px 14px 16px; }
+.sf-ing--photos strong { font-size: 16px; line-height: 1.25; margin: 0 0 4px; }
+.sf-ing--photos span { display: block; font-size: 14px; line-height: 1.45; }
+@media (min-width: 900px) { .sf-ing--photos { grid-template-columns: repeat(4, 1fr) !important; gap: 16px; } .sf-ing--photos li > div { padding: 14px 16px 18px; } .sf-ing--photos strong { font-size: 17px; } }
+@media (max-width: 380px) { .sf-ing--photos li > div { padding: 10px 11px 14px; } .sf-ing--photos strong { font-size: 15px; } .sf-ing--photos span { font-size: 13px; } }
