@@ -1065,30 +1065,37 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
   .sf-reviews--green .sf-review__who { text-align: left; }
 }
 
-/* the badge strip under the hero (in a press bar's place; real badges only): glides past on a phone, one row from 900 px */
-.sf-bstrip { margin: 4px 0 0; padding: 14px 0 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #fff; }
-.sf-bstrip__label { margin: 0 0 10px !important; text-align: center; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
-.sf-bstrip__viewport { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
-.sf-bstrip__track { display: flex; width: max-content; animation: sf-bstrip 32s linear infinite; }
-.sf-bstrip__set { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0 30px 0 0; list-style: none; }
-.sf-bstrip__item { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; color: var(--ink); line-height: 1.2; white-space: nowrap; }
-.sf-bstrip__item b { display: block; font-size: 13.5px; font-weight: 700; letter-spacing: .02em; }
-.sf-bstrip__item small { display: block; margin-top: 2px; font-size: 11.5px; color: var(--soft); }
-.sf-bstrip .sf-bstrip__img { width: auto; max-width: none; height: 40px; margin: 0; border-radius: 0; }
-.sf-bstrip .sf-bstrip__seal { width: 40px; max-width: none; height: 40px; margin: 0; }
-.sf-bstrip__mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--cream); color: var(--ink); }
+/* the logo row under the hero, in a press bar's style (the owner's reference, 5 Nov 2026): a centred label between two
+   rules, one row of monochrome marks; true badges only (sf-badges.html). Glides past on a phone, one row from 900 px */
+.sf-bstrip { margin: 6px 0 0; padding: 22px 0 24px; background: #faf6f1; color: #2b1d17; }
+.sf-bstrip__label { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 0 16px 16px !important; font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: inherit; text-align: center; }
+.sf-bstrip__label::before, .sf-bstrip__label::after { content: ""; flex: 0 1 70px; height: 1px; background: currentColor; opacity: .35; }
+.sf-bstrip__viewport { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.sf-bstrip__track { display: flex; width: max-content; background: #faf6f1; animation: sf-bstrip 34s linear infinite; }   /* its own background: the masked row is drawn on its own, and the badge's white melts into this cream */
+.sf-bstrip__set { display: flex; align-items: center; gap: 34px; margin: 0; padding: 0 34px 0 0; list-style: none; }
+.sf-bstrip__item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 4px; color: inherit; }
+.sf-stamp { display: block; width: 76px; height: 76px; color: inherit; overflow: visible; }
+.sf-stamp__t { font: 700 10.5px/1 "Jost", system-ui, sans-serif; letter-spacing: 1.6px; fill: currentColor; }
+.sf-bstrip .sf-bstrip__img { width: auto; max-width: none; height: 62px; margin: 0; border-radius: 0; mix-blend-mode: multiply; }
+.sf-bstrip__cap { font-size: 11px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; }
+.sf-bstrip .sf-bstrip__seal { width: 78px; max-width: none; height: 78px; margin: 0; }
 @keyframes sf-bstrip { to { transform: translateX(-50%); } }
 @media (min-width: 900px) {
+  .sf-bstrip { padding: 30px 0 32px; }
+  .sf-bstrip__label { margin-bottom: 22px !important; font-size: 13px; }
+  .sf-bstrip__label::before, .sf-bstrip__label::after { flex-basis: 90px; }
   .sf-bstrip__viewport { -webkit-mask-image: none; mask-image: none; }
   .sf-bstrip__track { width: auto; justify-content: center; animation: none; }
-  .sf-bstrip__set { flex-wrap: wrap; justify-content: center; gap: 18px 40px; padding: 0; }
+  .sf-bstrip__set { flex-wrap: wrap; justify-content: center; gap: 22px 46px; padding: 0 16px; }
   .sf-bstrip__set--copy { display: none; }
+  .sf-stamp { width: 84px; height: 84px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sf-bstrip__track { animation: none; }
   .sf-bstrip__viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
   .sf-bstrip__set--copy { display: none; }
 }
+
 /* the review cards under the hero: small stars that fit beside the photo (they ran past the card's edge on a desktop) */
 .sf-revstrip .sf-revcard__body { min-width: 0; }
 .sf-revstrip .sf-revcard .sf-tp__stars { display: inline-flex; gap: 2px; }
@@ -1197,19 +1204,93 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
     </div>
   </section>
   <section class="sf-bstrip" aria-label="What stands behind every bottle">
-  <p class="sf-bstrip__label">What stands behind every bottle</p>
+  <p class="sf-bstrip__label"><span>What stands behind every bottle</span></p>
   <div class="sf-bstrip__viewport">
     <div class="sf-bstrip__track">
-      <ul class="sf-bstrip__set"><li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-clinicians-choice-19eb18.jpg'|asset_url }}{% verbatim %}" alt="Clinicians’ Choice" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span><b>700+ clinicians</b><small>on FrontrowMD</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span><span><b>K-beauty</b><small>Formulated in Korea</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></span><span><b>Fragrance-free</b><small>No parabens</small></span></li>
-<li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-seal-72bd51.png'|asset_url }}{% verbatim %}" alt="" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"><span><b>30-day guarantee</b><small>Money back, even opened</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>Secure checkout</b><small>Card, PayPal or Apple Pay</small></span></li></ul>
-      <ul class="sf-bstrip__set sf-bstrip__set--copy" aria-hidden="true"><li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-clinicians-choice-19eb18.jpg'|asset_url }}{% verbatim %}" alt="" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span><b>700+ clinicians</b><small>on FrontrowMD</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span><span><b>K-beauty</b><small>Formulated in Korea</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></span><span><b>Fragrance-free</b><small>No parabens</small></span></li>
-<li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-seal-72bd51.png'|asset_url }}{% verbatim %}" alt="" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"><span><b>30-day guarantee</b><small>Money back, even opened</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>Secure checkout</b><small>Card, PayPal or Apple Pay</small></span></li></ul>
+      <ul class="sf-bstrip__set"><li class="sf-bstrip__item sf-bstrip__item--clin"><img src="{% endverbatim %}{{ 'sfa/sfa-clinicians-choice-19eb18.jpg'|asset_url }}{% verbatim %}" alt="Clinicians’ Choice" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span class="sf-bstrip__cap">700+ clinicians on FrontrowMD</span></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="Fragrance-free">
+  <defs><path id="sfArcT-fragrance" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcB-fragrance" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcT-fragrance" startOffset="50%" text-anchor="middle">FRAGRANCE</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcB-fragrance" startOffset="50%" text-anchor="middle">FREE</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z" transform="scale(.95)"/><path d="M2 21c0-3 1.9-5.4 5.1-6" transform="scale(.95)"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="Paraben-free">
+  <defs><path id="sfArcT-paraben" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcB-paraben" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcT-paraben" startOffset="50%" text-anchor="middle">PARABEN</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcB-paraben" startOffset="50%" text-anchor="middle">FREE</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6M10 2v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 8V2"/><path d="M7 15h10"/><path d="M2 2l20 20" stroke-width="1.5"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="No drying alcohol">
+  <defs><path id="sfArcT-alcohol" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcB-alcohol" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcT-alcohol" startOffset="50%" text-anchor="middle">NO DRYING</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcB-alcohol" startOffset="50%" text-anchor="middle">ALCOHOL</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5C9 7 6.5 10 6.5 14a5.5 5.5 0 0 0 11 0c0-4-2.5-7-5.5-11.5Z"/><path d="M3 3l18 18" stroke-width="1.5"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="Formulated in Korea">
+  <defs><path id="sfArcT-korea" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcB-korea" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcT-korea" startOffset="50%" text-anchor="middle">FORMULATED</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcB-korea" startOffset="50%" text-anchor="middle">IN KOREA</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12a4.5 4.5 0 0 0 9 0a4.5 4.5 0 0 1 9 0"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="PDRN and peptides in every layer">
+  <defs><path id="sfArcT-pdrn" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcB-pdrn" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcT-pdrn" startOffset="50%" text-anchor="middle">PDRN · PEPTIDES</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcB-pdrn" startOffset="50%" text-anchor="middle">EVERY LAYER</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2c0 6 10 6 10 12s-10 6-10 8"/><path d="M17 2c0 6-10 6-10 12s10 6 10 8"/><path d="M8.5 6h7M8 18h8M9.5 10h5"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-seal-72bd51.png'|asset_url }}{% verbatim %}" alt="30-day money-back guarantee" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"></li></ul>
+      <ul class="sf-bstrip__set sf-bstrip__set--copy" aria-hidden="true"><li class="sf-bstrip__item sf-bstrip__item--clin"><img src="{% endverbatim %}{{ 'sfa/sfa-clinicians-choice-19eb18.jpg'|asset_url }}{% verbatim %}" alt="" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span class="sf-bstrip__cap">700+ clinicians on FrontrowMD</span></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="Fragrance-free">
+  <defs><path id="sfArcCopyT-fragrance" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcCopyB-fragrance" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyT-fragrance" startOffset="50%" text-anchor="middle">FRAGRANCE</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyB-fragrance" startOffset="50%" text-anchor="middle">FREE</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z" transform="scale(.95)"/><path d="M2 21c0-3 1.9-5.4 5.1-6" transform="scale(.95)"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="Paraben-free">
+  <defs><path id="sfArcCopyT-paraben" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcCopyB-paraben" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyT-paraben" startOffset="50%" text-anchor="middle">PARABEN</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyB-paraben" startOffset="50%" text-anchor="middle">FREE</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6M10 2v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 8V2"/><path d="M7 15h10"/><path d="M2 2l20 20" stroke-width="1.5"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="No drying alcohol">
+  <defs><path id="sfArcCopyT-alcohol" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcCopyB-alcohol" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyT-alcohol" startOffset="50%" text-anchor="middle">NO DRYING</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyB-alcohol" startOffset="50%" text-anchor="middle">ALCOHOL</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5C9 7 6.5 10 6.5 14a5.5 5.5 0 0 0 11 0c0-4-2.5-7-5.5-11.5Z"/><path d="M3 3l18 18" stroke-width="1.5"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="Formulated in Korea">
+  <defs><path id="sfArcCopyT-korea" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcCopyB-korea" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyT-korea" startOffset="50%" text-anchor="middle">FORMULATED</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyB-korea" startOffset="50%" text-anchor="middle">IN KOREA</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12a4.5 4.5 0 0 0 9 0a4.5 4.5 0 0 1 9 0"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="PDRN and peptides in every layer">
+  <defs><path id="sfArcCopyT-pdrn" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcCopyB-pdrn" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyT-pdrn" startOffset="50%" text-anchor="middle">PDRN · PEPTIDES</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcCopyB-pdrn" startOffset="50%" text-anchor="middle">EVERY LAYER</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2c0 6 10 6 10 12s-10 6-10 8"/><path d="M17 2c0 6-10 6-10 12s10 6 10 8"/><path d="M8.5 6h7M8 18h8M9.5 10h5"/></g>
+</svg></li>
+<li class="sf-bstrip__item"><img src="{% endverbatim %}{{ 'sfa/sfa-guarantee-seal-72bd51.png'|asset_url }}{% verbatim %}" alt="" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"></li></ul>
     </div>
   </div>
 </section>

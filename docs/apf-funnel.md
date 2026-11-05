@@ -422,7 +422,7 @@ jumping. The sections are the same content, rearranged; nothing new is claimed.
 | # | Part | Section id |
 |---|---|---|
 | 1 | Above the fold: the hero photo with the bottle and its name on it, the promise, four benefits, the Black Friday price, the button, the guarantee (seal + "even opened"), free shipping, Korea, the Clinicians' Choice badge | `s01-hero` |
-| 1b | The badge strip, where a press bar usually sits: Clinicians' Choice (700+ on FrontrowMD), K-beauty (formulated in Korea), fragrance-free, 30-day guarantee, secure checkout. It moves across the screen on a phone and sits in one row from 900 px | `_includes/sf-badges.html` |
+| 1b | The logo row, styled like an "As featured in" press bar (the owner's reference): a centred label between two rules, then monochrome marks. Round cosmetic stamps for what the label says (fragrance-free, paraben-free, no drying alcohol, formulated in Korea, PDRN and peptides), the Clinicians' Choice badge (700+ on FrontrowMD) and the 30-day guarantee seal. No vegan, cruelty-free or dermatologist-tested stamp: none is documented, and the salmon-derived PDRN means it is not vegan | `_includes/sf-badges.html` |
 | 2 | Review cards with the buyers' photos, side by side (swipe on a phone) | `s02-reviews` |
 | 3 | The problem (her day, in photos) | `s06-problem` |
 | 4 | The root cause (skin after 45, the diagram) | `s07-mechanism` |

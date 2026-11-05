@@ -710,30 +710,37 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
   .sf-reviews--green .sf-review__who { text-align: left; }
 }
 
-/* the badge strip under the hero (in a press bar's place; real badges only): glides past on a phone, one row from 900 px */
-.sf-bstrip { margin: 4px 0 0; padding: 14px 0 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #fff; }
-.sf-bstrip__label { margin: 0 0 10px !important; text-align: center; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
-.sf-bstrip__viewport { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
-.sf-bstrip__track { display: flex; width: max-content; animation: sf-bstrip 32s linear infinite; }
-.sf-bstrip__set { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0 30px 0 0; list-style: none; }
-.sf-bstrip__item { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; color: var(--ink); line-height: 1.2; white-space: nowrap; }
-.sf-bstrip__item b { display: block; font-size: 13.5px; font-weight: 700; letter-spacing: .02em; }
-.sf-bstrip__item small { display: block; margin-top: 2px; font-size: 11.5px; color: var(--soft); }
-.sf-bstrip .sf-bstrip__img { width: auto; max-width: none; height: 40px; margin: 0; border-radius: 0; }
-.sf-bstrip .sf-bstrip__seal { width: 40px; max-width: none; height: 40px; margin: 0; }
-.sf-bstrip__mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--cream); color: var(--ink); }
+/* the logo row under the hero, in a press bar's style (the owner's reference, 5 Nov 2026): a centred label between two
+   rules, one row of monochrome marks; true badges only (sf-badges.html). Glides past on a phone, one row from 900 px */
+.sf-bstrip { margin: 6px 0 0; padding: 22px 0 24px; background: #faf6f1; color: #2b1d17; }
+.sf-bstrip__label { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 0 16px 16px !important; font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: inherit; text-align: center; }
+.sf-bstrip__label::before, .sf-bstrip__label::after { content: ""; flex: 0 1 70px; height: 1px; background: currentColor; opacity: .35; }
+.sf-bstrip__viewport { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.sf-bstrip__track { display: flex; width: max-content; background: #faf6f1; animation: sf-bstrip 34s linear infinite; }   /* its own background: the masked row is drawn on its own, and the badge's white melts into this cream */
+.sf-bstrip__set { display: flex; align-items: center; gap: 34px; margin: 0; padding: 0 34px 0 0; list-style: none; }
+.sf-bstrip__item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 4px; color: inherit; }
+.sf-stamp { display: block; width: 76px; height: 76px; color: inherit; overflow: visible; }
+.sf-stamp__t { font: 700 10.5px/1 "Jost", system-ui, sans-serif; letter-spacing: 1.6px; fill: currentColor; }
+.sf-bstrip .sf-bstrip__img { width: auto; max-width: none; height: 62px; margin: 0; border-radius: 0; mix-blend-mode: multiply; }
+.sf-bstrip__cap { font-size: 11px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; }
+.sf-bstrip .sf-bstrip__seal { width: 78px; max-width: none; height: 78px; margin: 0; }
 @keyframes sf-bstrip { to { transform: translateX(-50%); } }
 @media (min-width: 900px) {
+  .sf-bstrip { padding: 30px 0 32px; }
+  .sf-bstrip__label { margin-bottom: 22px !important; font-size: 13px; }
+  .sf-bstrip__label::before, .sf-bstrip__label::after { flex-basis: 90px; }
   .sf-bstrip__viewport { -webkit-mask-image: none; mask-image: none; }
   .sf-bstrip__track { width: auto; justify-content: center; animation: none; }
-  .sf-bstrip__set { flex-wrap: wrap; justify-content: center; gap: 18px 40px; padding: 0; }
+  .sf-bstrip__set { flex-wrap: wrap; justify-content: center; gap: 22px 46px; padding: 0 16px; }
   .sf-bstrip__set--copy { display: none; }
+  .sf-stamp { width: 84px; height: 84px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sf-bstrip__track { animation: none; }
   .sf-bstrip__viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
   .sf-bstrip__set--copy { display: none; }
 }
+
 /* the review cards under the hero: small stars that fit beside the photo (they ran past the card's edge on a desktop) */
 .sf-revstrip .sf-revcard__body { min-width: 0; }
 .sf-revstrip .sf-revcard .sf-tp__stars { display: inline-flex; gap: 2px; }

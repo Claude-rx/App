@@ -1,24 +1,43 @@
 {%- comment -%}
-  SKINOFAB: the badge strip under the hero, where an "As featured in" press bar usually sits (the owner, 5 Nov 2026).
-  Real badges only. The owner chose this strip over magazine and beauty-site logos, because SKINOFAB has no press
-  feature yet: a publication's logo goes on the page only for an outlet that really covered SKINOFAB, linked to that
-  article (check_apf.py fails a press logo without one).
-    label: the line over the badges     count: the FrontrowMD floor ("700+"; check_apf.py checks it against FrontrowMD)
-  A phone sees the badges glide past (a still, swipeable row under reduced motion); from 900 px they sit in one row.
+  SKINOFAB: the logo row under the hero, in the style of an "As featured in" press bar (the owner's reference, 5 Nov
+  2026): a centred label between two rules, then one row of monochrome marks. The marks are true of this product: round
+  cosmetic stamps for what the label says (fragrance-free, no parabens, no drying alcohol, formulated in Korea, PDRN
+  and peptides), the FrontrowMD Clinicians' Choice badge and the 30-day guarantee seal. No magazine, TV or beauty-site
+  logo: SKINOFAB has no press feature yet, and check_apf.py fails a press logo that does not link to a real article
+  about SKINOFAB. No vegan, cruelty-free or dermatologist-tested stamp either: none is documented (the formula has
+  salmon-derived PDRN, so it is not vegan).
+    label: the line over the marks     count: the FrontrowMD floor ("700+"; check_apf.py checks it against FrontrowMD)
+  A phone sees the marks glide past (a still, swipeable row under reduced motion); from 900 px they sit in one row.
 {%- endcomment -%}
+{%- assign stamps = "fragrance|FRAGRANCE|FREE|Fragrance-free,paraben|PARABEN|FREE|Paraben-free,alcohol|NO DRYING|ALCOHOL|No drying alcohol,korea|FORMULATED|IN KOREA|Formulated in Korea,pdrn|PDRN · PEPTIDES|EVERY LAYER|PDRN and peptides in every layer" | split: "," -%}
 {%- capture sf_badge_set -%}
-<li class="sf-bstrip__item"><img src="{{ 'images/sf/clinicians-choice.jpg' | campaign_asset }}" alt="Clinicians’ Choice" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span><b>{{ count }} clinicians</b><small>on FrontrowMD</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span><span><b>K-beauty</b><small>Formulated in Korea</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></span><span><b>Fragrance-free</b><small>No parabens</small></span></li>
-<li class="sf-bstrip__item"><img src="{{ 'images/sf/guarantee-seal.png' | campaign_asset }}" alt="" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"><span><b>30-day guarantee</b><small>Money back, even opened</small></span></li>
-<li class="sf-bstrip__item"><span class="sf-bstrip__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>Secure checkout</b><small>Card, PayPal or Apple Pay</small></span></li>
+<li class="sf-bstrip__item sf-bstrip__item--clin"><img src="{{ 'images/sf/clinicians-choice.jpg' | campaign_asset }}" alt="Clinicians’ Choice" width="170" height="84" loading="lazy" decoding="async" class="sf-bstrip__img"><span class="sf-bstrip__cap">{{ count }} clinicians on FrontrowMD</span></li>
+{%- for st in stamps -%}{%- assign s = st | split: "|" %}
+<li class="sf-bstrip__item"><svg class="sf-stamp" viewBox="0 0 100 100" role="img" aria-label="{{ s[3] }}">
+  <defs><path id="sfArcT-{{ s[0] }}" d="M 14,50 A 36,36 0 0 1 86,50"/><path id="sfArcB-{{ s[0] }}" d="M 9,50 A 41,41 0 0 0 91,50"/></defs>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text class="sf-stamp__t"><textPath href="#sfArcT-{{ s[0] }}" startOffset="50%" text-anchor="middle">{{ s[1] }}</textPath></text>
+  <text class="sf-stamp__t"><textPath href="#sfArcB-{{ s[0] }}" startOffset="50%" text-anchor="middle">{{ s[2] }}</textPath></text>
+  <g transform="translate(38 38)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  {%- case s[0] -%}
+  {%- when 'fragrance' -%}<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z" transform="scale(.95)"/><path d="M2 21c0-3 1.9-5.4 5.1-6" transform="scale(.95)"/>
+  {%- when 'paraben' -%}<path d="M9 2h6M10 2v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 8V2"/><path d="M7 15h10"/><path d="M2 2l20 20" stroke-width="1.5"/>
+  {%- when 'alcohol' -%}<path d="M12 2.5C9 7 6.5 10 6.5 14a5.5 5.5 0 0 0 11 0c0-4-2.5-7-5.5-11.5Z"/><path d="M3 3l18 18" stroke-width="1.5"/>
+  {%- when 'korea' -%}<circle cx="12" cy="12" r="9"/><path d="M3 12a4.5 4.5 0 0 0 9 0a4.5 4.5 0 0 1 9 0"/>
+  {%- when 'pdrn' -%}<path d="M7 2c0 6 10 6 10 12s-10 6-10 8"/><path d="M17 2c0 6-10 6-10 12s10 6 10 8"/><path d="M8.5 6h7M8 18h8M9.5 10h5"/>
+  {%- endcase -%}
+  </g>
+</svg></li>
+{%- endfor %}
+<li class="sf-bstrip__item"><img src="{{ 'images/sf/guarantee-seal.png' | campaign_asset }}" alt="30-day money-back guarantee" width="84" height="84" loading="lazy" decoding="async" class="sf-bstrip__seal"></li>
 {%- endcapture -%}
 <section class="sf-bstrip" aria-label="{{ label }}">
-  <p class="sf-bstrip__label">{{ label }}</p>
+  <p class="sf-bstrip__label"><span>{{ label }}</span></p>
   <div class="sf-bstrip__viewport">
     <div class="sf-bstrip__track">
       <ul class="sf-bstrip__set">{{ sf_badge_set }}</ul>
-      <ul class="sf-bstrip__set sf-bstrip__set--copy" aria-hidden="true">{{ sf_badge_set | replace: 'alt="Clinicians’ Choice"', 'alt=""' }}</ul>
+      <ul class="sf-bstrip__set sf-bstrip__set--copy" aria-hidden="true">{{ sf_badge_set | replace: 'id="sfArc', 'id="sfArcCopy' | replace: 'href="#sfArc', 'href="#sfArcCopy' | replace: 'alt="Clinicians’ Choice"', 'alt=""' | replace: 'alt="30-day money-back guarantee"', 'alt=""' }}</ul>
     </div>
   </div>
 </section>
