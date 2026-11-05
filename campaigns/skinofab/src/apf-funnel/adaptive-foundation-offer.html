@@ -57,7 +57,8 @@ hero:
   # the deal box and the price note under the button are gone (the owner, 2 Nov 2026: the hero is the promise, the
   # benefits, the button and the low price)
   image: "images/sf/wow.jpg"
-  image_alt: "A woman in her late fifties: white foundation dots on one side of her face, the other side blended into her own tone"
+  # the owner's brief (5 Nov 2026): the product in her hand, in use on her face, the face glowing, the buyer persona
+  image_alt: "A woman in her late fifties with even, glowing skin, holding the SKINOFAB Adaptive Peptide Foundation beside her face and blending a white dot of it into her cheek"
   video_label: "A woman in her late fifties with the foundation on white dots on one side of her face and blended into her tone on the other"
 summary: "After 45 your tone shifts and your skin gets drier. The shade that matched at 40 looks wrong, and ordinary foundation settles into every line. This one goes on white, adapts to your tone as you blend, and keeps dry skin comfortable while you wear it."
 benefits:
@@ -449,7 +450,6 @@ closing:
     <figure class="sf-hero2__media sf-hero2__media--tall">
       <picture><source media="(max-width: 599px)" type="image/webp" srcset="{{ 'images/sf/wow-m.webp' | campaign_asset }}" width="760" height="608"><img src="{{ hero.image | campaign_asset }}" alt="{{ hero.image_alt }}" width="1080" height="1350" fetchpriority="high" decoding="async"></picture>
       <span class="sf-hero2__tag">Goes on white → your tone</span>
-      <span class="sf-hero2__pack"><picture><source type="image/webp" srcset="{{ 'images/sf/hero-bottle.webp' | campaign_asset }}"><img src="{{ 'images/sf/hero-bottle.jpg' | campaign_asset }}" alt="The Adaptive Peptide Foundation bottle" width="131" height="360" decoding="async"></picture><span><b>Adaptive Peptide Foundation</b><small>30 mL · one adaptive shade</small></span></span>
     </figure>
     <div class="sf-hero2__copy">
       <span class="sf-hero2__eyebrow">{{ hero.eyebrow }}</span>

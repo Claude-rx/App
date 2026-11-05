@@ -976,14 +976,7 @@ def copies(video=True):
     # v2 (28 Oct 2026): the generated sources in gen/ (the science cross-section with the real bottle, the split-face
     # "wow" portrait, two problem photos), the store's Korean formulator portrait, the stick funnel's ingredient
     # textures (the same ingredients, the same photos)
-    wow = ImageOps.fit(soften_seam(Image.open(GEN / 'wow-split.png')), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.35))
-    save(wow, 'wow', size=1350)
-    # a phone's copy: the sales page's LCP on a slow line (live review 9). Cut to the 5:4 a phone shows (sf-apf.css,
-    # object-position 50% 32%) and WebP, not the whole 4:5 JPEG: 115 KB for a 358 x 286 box was 2.8 to 3.2 s on slow
-    # 4G (live review 12). 760 px wide is enough for 390 px at 2x; a browser without WebP takes the desktop JPEG.
-    for old in OUT.glob('wow-m.*'): old.unlink()
-    ImageOps.fit(wow, (760, 608), Image.LANCZOS, centering=(0.5, 0.32)).save(OUT / 'wow-m.webp', quality=78, method=6)
-    print('wow-m', (760, 608), 'webp')
+    hero()
     for n in ('problem-mirror', 'problem-orange'):
         im = Image.open(GEN / f'{n}.png').convert('RGB')
         if n == 'problem-mirror': im = soften_patch(im, (0.19, 0.27, 0.47, 0.49))   # her cheek's pigment read as a bruise at page size (live review 3)
@@ -997,7 +990,24 @@ def copies(video=True):
     for n in ('pdrn', 'peptides', 'ha', 'ceramides', 'squalane', 'niacinamide'): shutil.copyfile(stick / f'ing-{n}.jpg', OUT / f'ing-{n}.jpg')
 
 
+def hero():
+    """The sales page's hero (wow.jpg, and the phone's 5:4 wow-m.webp): since 5 Nov 2026 the owner's brief, the persona
+    (late fifties, silver-blonde) holding the real bottle beside her face and blending a white dot of it into her
+    cheek, her skin even and glowing (gen/hero-hold.jpg, Nano Banana 2 from the old hero and the bottle packshot;
+    gen/README.md has the prompt). It was the split-face portrait (gen/wow-split.png) before."""
+    wow = ImageOps.fit(Image.open(GEN / 'hero-hold.jpg').convert('RGB'), (1080, 1350), Image.LANCZOS, centering=(0.5, 0.4))
+    save(wow, 'wow', size=1350)
+    # a phone's copy: the sales page's LCP on a slow line (live review 9). Cut to the 5:4 a phone shows (sf-apf.css,
+    # object-position 50% 32%) and WebP, not the whole 4:5 JPEG: 115 KB for a 358 x 286 box was 2.8 to 3.2 s on slow
+    # 4G (live review 12). 760 px wide is enough for 390 px at 2x; a browser without WebP takes the desktop JPEG. Cut
+    # a little lower than the face alone, so the bottle in her hand is whole on a phone too.
+    for old in OUT.glob('wow-m.*'): old.unlink()
+    ImageOps.fit(wow, (760, 608), Image.LANCZOS, centering=(0.5, 0.42)).save(OUT / 'wow-m.webp', quality=76, method=6)
+    print('wow-m', (760, 608), 'webp', (OUT / 'wow-m.webp').stat().st_size, 'bytes')
+
+
 if __name__ == '__main__':
+    if '--only-hero' in sys.argv: hero(); sys.exit()      # just the hero (python3 -I tools/funnel/apf/images.py --only-hero)
     work = next((a for a in sys.argv[1:] if not a.startswith('--')), None)
     for old in OUT.glob('*.jpg'): old.unlink()
     pack_cards()

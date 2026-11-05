@@ -44,7 +44,7 @@
 
   
   <link rel="prefetch" href="/trial-checkout/" as="document">
-  <link rel="preload" as="image" href="{% endverbatim %}{{ 'sfa/sfa-wow-m-162410.webp'|asset_url }}{% verbatim %}" media="(max-width: 599px)" fetchpriority="high"><link rel="preload" as="image" href="{% endverbatim %}{{ 'sfa/sfa-wow-448847.jpg'|asset_url }}{% verbatim %}" media="(min-width: 600px)" fetchpriority="high">
+  <link rel="preload" as="image" href="{% endverbatim %}{{ 'sfa/sfa-wow-m-20b789.webp'|asset_url }}{% verbatim %}" media="(max-width: 599px)" fetchpriority="high"><link rel="preload" as="image" href="{% endverbatim %}{{ 'sfa/sfa-wow-c4e82e.jpg'|asset_url }}{% verbatim %}" media="(min-width: 600px)" fetchpriority="high">
   <link rel="preload" href="{% endverbatim %}{{ 'sfa/sfa-jost-latin-d3fc5b.woff2'|asset_url }}{% verbatim %}" as="font" type="font/woff2" crossorigin>
   <style data-sf-inline="css/sf-funnel.css">/* the funnel's own fonts (Jost, Playfair Display: latin, from Google Fonts, OFL), served with the page from the store's
    CDN: the Google Fonts stylesheet was a render-blocking request to two more hosts on every page (speed pass, 5 Nov 2026) */
@@ -1032,16 +1032,6 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
 .sf-guarantee2__photo { width: 100%; max-width: 520px; justify-self: center; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; }
 @media (min-width: 900px) { .sf-guarantee2 { grid-template-columns: 0.9fr 1.1fr; gap: 32px; } }
 
-/* the hero's bottle on the photo: in 3 seconds she sees what we sell (the owner, 5 Nov 2026) */
-.sf-hero2__pack { position: absolute; left: 12px; bottom: 12px; display: flex; align-items: center; gap: 8px; max-width: 230px; padding: 6px 12px 6px 6px; border-radius: 12px; background: rgba(255,255,255,.95); box-shadow: 0 6px 18px rgba(0,0,0,.14); color: var(--ink); line-height: 1.25; }
-.sf-hero2__media .sf-hero2__pack img { width: auto; height: 74px; aspect-ratio: auto; object-fit: contain; border-radius: 6px; background: #fff; }
-.sf-hero2__pack b { display: block; font-size: 13px; font-weight: 700; }
-.sf-hero2__pack small { display: block; margin-top: 2px; font-size: 11.5px; color: var(--soft); }
-@media (max-width: 599px) {
-  .sf-hero2__pack { left: 10px; bottom: 10px; padding: 4px 10px 4px 4px; }
-  .sf-hero2__media .sf-hero2__pack img { height: 56px; }
-}
-
 /* why this price, and why now: three short points with the clock (it was one paragraph) */
 .sf-whybox { margin: 16px 0 14px; padding: 16px 16px 6px; border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1.5px var(--ink); }
 .sf-whybox__title { margin: 0 0 10px !important; font-size: 19px; font-weight: 700; line-height: 1.25; color: var(--ink); }
@@ -1178,9 +1168,8 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
   
   <section class="sf-hero2 sf-hero2--v2" id="s01-hero">
     <figure class="sf-hero2__media sf-hero2__media--tall">
-      <picture><source media="(max-width: 599px)" type="image/webp" srcset="{% endverbatim %}{{ 'sfa/sfa-wow-m-162410.webp'|asset_url }}{% verbatim %}" width="760" height="608"><img src="{% endverbatim %}{{ 'sfa/sfa-wow-448847.jpg'|asset_url }}{% verbatim %}" alt="A woman in her late fifties: white foundation dots on one side of her face, the other side blended into her own tone" width="1080" height="1350" fetchpriority="high" decoding="async"></picture>
+      <picture><source media="(max-width: 599px)" type="image/webp" srcset="{% endverbatim %}{{ 'sfa/sfa-wow-m-20b789.webp'|asset_url }}{% verbatim %}" width="760" height="608"><img src="{% endverbatim %}{{ 'sfa/sfa-wow-c4e82e.jpg'|asset_url }}{% verbatim %}" alt="A woman in her late fifties with even, glowing skin, holding the SKINOFAB Adaptive Peptide Foundation beside her face and blending a white dot of it into her cheek" width="1080" height="1350" fetchpriority="high" decoding="async"></picture>
       <span class="sf-hero2__tag">Goes on white → your tone</span>
-      <span class="sf-hero2__pack"><picture><source type="image/webp" srcset="{% endverbatim %}{{ 'sfa/sfa-hero-bottle-3b0e8e.webp'|asset_url }}{% verbatim %}"><img src="{% endverbatim %}{{ 'sfa/sfa-hero-bottle-91acd7.jpg'|asset_url }}{% verbatim %}" alt="The Adaptive Peptide Foundation bottle" width="131" height="360" decoding="async"></picture><span><b>Adaptive Peptide Foundation</b><small>30 mL · one adaptive shade</small></span></span>
     </figure>
     <div class="sf-hero2__copy">
       <span class="sf-hero2__eyebrow">Adaptive Peptide Foundation · made for skin over 45</span>
