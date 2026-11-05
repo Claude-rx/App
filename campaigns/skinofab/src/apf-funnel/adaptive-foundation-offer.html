@@ -12,7 +12,9 @@ styles:
 meta_tags:
   next-funnel: "SKINOFAB Adaptive Peptide Foundation"
   next-page-type: "product"
-  next-analytics-view-item: "9"   # the SDK’s dl_view_item for the pack the page opens on, the 5-bottle buy-3-get-2-free (campaign package 9): view_item for the ad pixels
+  # (no next-analytics-view-item while the Black Friday plans are on the page: the APF campaign's package 1 is $33.97, not
+  # the trial's $19.97, so js/sf-apf.js sends AppLovin's view_item itself for the plan the page opens on, data-axon-*;
+  # with the APF packs back, put back next-analytics-view-item: "<the selected pack's package>")
 # The sales page, v2 (28 Oct 2026, the owner's order): the hero with the big promise, its benefits as bullets and the
 # "wow" still; the problem right after it, with emotional photos; the root of the problem with an animated diagram;
 # the solution as the root solution with its mechanism (the serum loop drawn from the generated cross-section); the
@@ -71,7 +73,9 @@ guarantee:
 # shows $39.97 and opens the checkout on trial-regular); 3 bottles $66.97 every 3 months with a Blender sponge; 5 bottles
 # $99.97 every 5 months with the Lymphatic Brush. The crossed-out prices and the free-bottle claims count against the
 # 1-bottle plan's $39.97. package is the APF campaign's package with the same SKU, only for the view_item this page's SDK
-# reports (the 5-bottle pack: 9); axon is what AppLovin's add_to_cart reports when a checkout button is pressed.
+# reported before Black Friday; axon is the item AppLovin's view_item (the plan the page opens on) and add_to_cart (a
+# checkout button) report. The page opens on the $19.97 trial (the owner, 5 Nov 2026: "make the offer of 19.97 trial as
+# first one"); renew_short is the "Renews at" amount of the trust row under the button.
 # the Black Friday flash sale: the banner over the packs and the bar above the page count down to its end
 # (_includes/sf-bf.html, js/sf-apf.js); every button opens the trial funnel's checkout
 bf:
@@ -98,8 +102,10 @@ packs:
     every: "month"
     renew: "Then $39.97 every month"
     renew_price: "$39.97"
+    renew_short: "$39.97/mo"
     tab: "Black Friday · 50% off"
     tab_live: true
+    selected: true
     label: "1 bottle, Black Friday flash sale, free shipping"
     axon: { sku: "SKF-APF-1", variant: "15", name: "Adaptive Peptide Foundation - 1 bottle", value: "19.97", value_over: "39.97" }
   - id: "trial-3"
@@ -112,6 +118,7 @@ packs:
     compare: "$119.91"
     every: "3 months"
     renew: "Then $66.97 every 3 months"
+    renew_short: "$66.97 / 3 mo"
     tab: "Buy 2, get 1 FREE"
     label: "3 bottles (buy 2, get 1 free) with a free Blender sponge, free shipping"
     axon: { sku: "SKF-APF-3-BLENDER", variant: "334", name: "Adaptive Peptide Foundation - 3 bottles", value: "66.97" }
@@ -127,9 +134,9 @@ packs:
     compare: "$199.85"
     every: "5 months"
     renew: "Then $99.97 every 5 months"
+    renew_short: "$99.97 / 5 mo"
     tab: "Buy 3, get 2 FREE · Best value"
     deal: true
-    selected: true
     label: "5 bottles (buy 3, get 2 free) with a free Lymphatic Brush, free shipping"
     axon: { sku: "SKF-APF-5-BRUSH", variant: "335", name: "Adaptive Peptide Foundation - 5 bottles", value: "99.97" }
     gifts:
@@ -223,19 +230,33 @@ why:
     - { quote: "It dried out my skin.", source: "another we hear often", fix: "A serum base with two forms of hyaluronic acid, ceramide NP, squalane and panthenol." }
     - { quote: "Settles into my wrinkles.", source: "", fix: "A satin finish and soft-focus powders, designed not to settle into lines: the powders are made to blur their look rather than fill them with pigment." }
     - { quote: "Stings my sensitive skin.", source: "", fix: "Fragrance-free, made without propylene glycol, drying alcohol or parabens." }
+# the doctor section (the owner, 5 Nov 2026: "add also the doctor and certification sections"): the store's foundation
+# page's "Formulated in Korea" section, its photo and words: a model in a lab coat with the bottle, labelled "Model
+# portrayal." on the photo as on the store (a person in a lab coat with no label reads as a real scientist's
+# endorsement; live review 9, F2, took an unlabelled one off this page). No doctor, clinic or endorsement is claimed.
 korea:
   eyebrow: "Where it comes from"
-  title: "Formulated by a K-beauty lab"
-  bullets:
-    - "Made for thinner, drier skin after 45"
-    - "Fragrance-free: no parabens, no drying alcohol, no propylene glycol"
-    - "The full ingredient list is printed on the box, in English"
+  title: "Made where makeup <span class=\"sf-mark\">starts as skincare</span>"
+  lede: "Korean beauty treats foundation as the last step of your skincare, not a mask over it. The Adaptive Peptide Foundation is formulated in Korea on a serum base, so the shade that adapts to you sits on top of actives your skin can use all day."
+  rows:
+    - { title: "A serum base", text: "Hyaluronic acid, ceramide NP, squalane and panthenol keep dry, mature skin comfortable." }
+    - { title: "K-beauty actives", text: "PDRN, Matrixyl 3000 peptides and niacinamide, each named on the ingredient list." }
+    - { title: "One adaptive shade", text: "It goes on white and shifts to your tone as you blend." }
   badge: ["Formulated", "in Korea"]
-  # the bottle with the Korean flag and "Formulated in Korea" (the store's own pack shot): no person. The white-coat
-  # "clinic" portrait it replaces was generated, so it read as an invented clinician endorsement (live review 9, F2)
-  image: "images/sf/g-bottle.jpg"
-  image_square: true
-  image_alt: "The black Adaptive Peptide Foundation bottle beside the Korean flag"
+  image: "images/sf/korea-lab.jpg"
+  image_alt: "A model in a lab coat holding the Adaptive Peptide Foundation"
+  image_note: "Model portrayal."
+# the certification section: only what is real and can be checked: the FrontrowMD listing (the live count, read by
+# check_apf.py), where it is formulated, what the formula leaves out (the label), the guarantee and the payment
+credentials:
+  eyebrow: "Checked, listed, guaranteed"
+  title: "The credentials behind the bottle"
+  items:
+    - { kind: "frontrow", title: "Clinicians’ Choice on FrontrowMD", text: "clinicians share this foundation on FrontrowMD without compensation." }
+    - { kind: "korea", title: "Formulated in Korea", text: "Made by a K-beauty lab for thinner, drier skin after 45." }
+    - { kind: "clean", title: "A clean label", text: "Fragrance-free, with no parabens, no drying alcohol and no propylene glycol. The full ingredient list is on the box." }
+    - { kind: "seal", title: "30-day money-back guarantee", text: "A full refund, even opened. Nothing to send back." }
+    - { kind: "lock", title: "Secure checkout", text: "Your card goes straight to our payment processor in encrypted fields. Or pay with PayPal or Apple Pay." }
 one_shade:
   eyebrow: "The shade question"
   title: "“How do I pick my shade?” You don’t."
@@ -568,21 +589,42 @@ closing:
     </div>
   </section>
 
-  {% comment %} 10b: formulated in Korea: the bottle with the flag, and the facts {% endcomment %}
+  {% comment %} 10b: the doctor section: formulated in Korea, the store's photo of a model in a lab coat (labelled), the facts {% endcomment %}
   <section class="sf-sec" id="s10-korea">
     <div class="sf-korea">
-      <figure class="sf-korea__fig{% if korea.image_square %} sf-korea__fig--square{% endif %}">
-        <img src="{{ korea.image | campaign_asset }}" alt="{{ korea.image_alt }}" width="1080" height="{% if korea.image_square %}1080{% else %}1350{% endif %}" loading="lazy" decoding="async">
+      <figure class="sf-korea__fig sf-korea__fig--note">
+        <img src="{{ korea.image | campaign_asset }}" alt="{{ korea.image_alt }}" width="1000" height="1250" loading="lazy" decoding="async">
+        {% if korea.image_note %}<small class="sf-korea__note">{{ korea.image_note }}</small>{% endif %}
       </figure>
       <div class="sf-korea__copy">
         <p class="sf-korea__pill">{{ korea.badge[0] }} {{ korea.badge[1] }}</p>
         <p class="sf-eyebrow">{{ korea.eyebrow }}</p>
         <h2 class="sf-h2 sf-h2--big">{{ korea.title }}</h2>
-        <ul class="sf-ticks sf-ticks--big">{% for b in korea.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
+        {% if korea.lede %}<p class="sf-korea__lede">{{ korea.lede }}</p>{% endif %}
+        {% if korea.rows %}<ol class="sf-kb-rows">{% for r in korea.rows %}<li><b>{{ forloop.index }}</b><div><strong>{{ r.title }}</strong><span>{{ r.text }}</span></div></li>{% endfor %}</ol>{% endif %}
+        {% if korea.bullets %}<ul class="sf-ticks sf-ticks--big">{% for b in korea.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
         <a class="sf-btn" href="#offer">CHOOSE MY PACK</a>
       </div>
     </div>
   </section>
+
+  {% comment %} 10c: the certification section: the credentials that are real and can be checked {% endcomment %}
+  {% if credentials %}<section class="sf-sec sf-sec--cream" id="s10-credentials">
+    <div class="sf-sec__in">
+      <p class="sf-eyebrow" style="text-align:center">{{ credentials.eyebrow }}</p>
+      <h2 class="sf-h2 sf-h2--big" style="text-align:center">{{ credentials.title }}</h2>
+      <ul class="sf-creds">
+        {% for c in credentials.items %}<li class="sf-cred sf-cred--{{ c.kind }}">
+          {% if c.kind == 'frontrow' %}<img src="{{ 'images/sf/clinicians-choice.jpg' | campaign_asset }}" alt="Clinicians’ Choice" width="170" height="84" loading="lazy" decoding="async" class="sf-cred__badge">
+          {% elsif c.kind == 'seal' %}<img src="{{ 'images/sf/guarantee-seal.png' | campaign_asset }}" alt="" width="84" height="84" loading="lazy" decoding="async" class="sf-cred__seal">
+          {% elsif c.kind == 'korea' %}<span class="sf-cred__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span>
+          {% elsif c.kind == 'clean' %}<span class="sf-cred__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></span>
+          {% else %}<span class="sf-cred__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>{% endif %}
+          <div><strong>{{ c.title }}</strong><span>{% if c.kind == 'frontrow' %}<b>{{ frontrow_clinicians }}</b> {% endif %}{{ c.text }}</span></div>
+        </li>{% endfor %}
+      </ul>
+    </div>
+  </section>{% endif %}
 
   {% comment %} 11b: before and after, and the life around it {% endcomment %}
   <section class="sf-sec" id="s11-before-after">
@@ -709,7 +751,7 @@ closing:
         <fieldset class="sf-packs" data-sf-packs>
           <legend>Your pack</legend>
           {% for p in packs %}
-          <label class="sf-pack{% if p.selected %} is-on{% endif %}" data-pack="{{ p.id }}" data-price="{{ p.price }}" data-every="{{ p.every }}" data-renew="{{ p.renew }}" data-label="{{ p.label }}" data-short="{{ p.short }}" data-package="{{ p.package }}"{% if p.alias %} data-alias="{{ p.alias }}"{% endif %}{% if p.price_over %} data-price-over="{{ p.price_over }}"{% endif %}{% if p.bundle_over %} data-bundle-over="{{ p.bundle_over }}"{% endif %}{% if p.renew_price %} data-renew-price="{{ p.renew_price }}"{% endif %}{% if p.axon %} data-axon-sku="{{ p.axon.sku }}" data-axon-variant="{{ p.axon.variant }}" data-axon-name="{{ p.axon.name }}" data-axon-value="{{ p.axon.value }}" data-axon-value-over="{{ p.axon.value_over | default: p.axon.value }}"{% endif %}>
+          <label class="sf-pack{% if p.selected %} is-on{% endif %}" data-pack="{{ p.id }}" data-price="{{ p.price }}" data-every="{{ p.every }}" data-renew="{{ p.renew }}" data-label="{{ p.label }}" data-short="{{ p.short }}" data-package="{{ p.package }}"{% if p.alias %} data-alias="{{ p.alias }}"{% endif %}{% if p.price_over %} data-price-over="{{ p.price_over }}"{% endif %}{% if p.bundle_over %} data-bundle-over="{{ p.bundle_over }}"{% endif %}{% if p.renew_price %} data-renew-price="{{ p.renew_price }}"{% endif %}{% if p.renew_short %} data-renew-short="{{ p.renew_short }}"{% endif %}{% if p.axon %} data-axon-sku="{{ p.axon.sku }}" data-axon-variant="{{ p.axon.variant }}" data-axon-name="{{ p.axon.name }}" data-axon-value="{{ p.axon.value }}" data-axon-value-over="{{ p.axon.value_over | default: p.axon.value }}"{% endif %}>
             {% if p.tab %}<em class="sf-pack__tab{% if p.deal %} sf-pack__tab--deal{% endif %}{% if p.tab_live %} sf-pack__tab--bf{% endif %}"{% if p.tab_live %} data-sf-trial-live{% endif %}>{{ p.tab }}</em>{% endif %}
             <input type="radio" name="sf_pack" value="{{ p.id }}"{% if p.selected %} checked{% endif %}>
             <span class="sf-pack__row">
@@ -727,7 +769,15 @@ closing:
           {% endfor %}
         </fieldset>
         <a class="sf-btn sf-buy__btn" href="{{ checkout_link }}?forceBundleId={{ sel.id }}" data-sf-cta>{{ offer.button }} <span data-sf-btn-price>| {{ sel.price }}</span></a>
-        <ul class="sf-offerbox__trust">{% for t in offer.trust %}<li>{{ t }}</li>{% endfor %}</ul>
+        {% if bf %}<div class="sf-trust2">
+          <p class="sf-trust2__head"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24"><path d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z" fill="currentColor"/><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg><span>Love it or your money back</span></p>
+          <ul class="sf-trust2__row">
+            <li><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span>Refill reminder</span></li>
+            <li><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/><path d="M12 8.3l3.3 1.9v3.7L12 15.8l-3.3-1.9v-3.7z"/><path d="M8.7 10.2 12 12l3.3-1.8M12 12v3.8"/></svg><span>Cancel any time</span></li>
+            <li><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><span>Renews at <b data-sf-renew-short>{{ sel.renew_short }}</b></span></li>
+          </ul>
+          <p class="sf-trust2__ship"><span class="sf-trust2__free"><i aria-hidden="true"></i>Free shipping on every order</span><span class="sf-trust2__fast"><span aria-hidden="true">📦</span> Ships in 1 business day, tracked</span></p>
+        </div>{% else %}<ul class="sf-offerbox__trust">{% for t in offer.trust %}<li>{{ t }}</li>{% endfor %}</ul>{% endif %}
         <p class="sf-renew-line" data-sf-renew-line><strong>{{ sel.price }} today</strong>, <span data-sf-renew-text>{{ sel.renew | downcase }}</span>, until you cancel.</p>
         <p class="sf-once">{{ offer.once }}</p>
         <p class="sf-fine" style="text-align:center">Contains salmon-derived PDRN: not for anyone with a fish allergy.</p>

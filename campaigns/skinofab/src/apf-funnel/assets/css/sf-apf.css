@@ -598,3 +598,46 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
 .sf-pack__tab--bf { background: #000; color: #fff; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 .sf-hero2__price [data-sf-trial-live] { display: inline-block; padding: 6px 12px; border-radius: 10px; background: #000; color: #fff; }
 .sf-hero2__price [data-sf-trial-live] strong { color: #ffd84d; }
+
+/* the trust block under the order button, once (the owner, 5 Nov 2026: the trial funnel's product page row): the seal
+   and "Love it or your money back", the refill row (what the chosen plan renews at), the shipping line */
+.sf-trust2 { margin: 16px 0 0; text-align: center; color: var(--ink); }
+.sf-trust2__head { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 0 14px !important; font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.sf-trust2__head svg { flex: none; color: var(--ink); }
+.sf-trust2__row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.sf-trust2__row li { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 14px; line-height: 1.3; color: #2b2b2b; }
+.sf-trust2__row li::before { content: none; }
+.sf-trust2__row svg { width: 26px; height: 26px; color: var(--ink); }
+.sf-trust2__row b { font-weight: 700; color: var(--ink); white-space: nowrap; }
+.sf-trust2__ship { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 22px; margin: 16px 0 0 !important; font-size: 14.5px; }
+.sf-trust2__free { display: inline-flex; align-items: center; gap: 8px; color: #16a34a; font-weight: 500; }
+.sf-trust2__free i { width: 9px; height: 9px; border-radius: 50%; background: #16a34a; box-shadow: 0 0 0 0 rgba(22,163,74,.45); animation: sf-pulse 2s infinite; }
+.sf-trust2__fast { font-weight: 700; color: var(--ink); }
+@keyframes sf-pulse { 0% { box-shadow: 0 0 0 0 rgba(22,163,74,.45); } 70% { box-shadow: 0 0 0 7px rgba(22,163,74,0); } 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); } }
+@media (prefers-reduced-motion: reduce) { .sf-trust2__free i { animation: none; } }
+@media (max-width: 420px) { .sf-trust2__row li { font-size: 13px; } .sf-trust2__ship { font-size: 13.5px; } }
+
+/* the doctor section: the store's lab photo with its label, the three numbered facts */
+.sf-korea__fig--note { position: relative; }
+.sf-korea__fig--note img { aspect-ratio: 4 / 5; }
+.sf-korea__note { position: absolute; right: 12px; bottom: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.85); font-size: 12px; color: #3b3b3b; }
+.sf-korea__lede { font-size: 17px; line-height: 1.55; margin: 0 0 6px; }
+.sf-kb-rows { list-style: none; margin: 18px 0 22px; padding: 0; display: grid; gap: 12px; }
+.sf-kb-rows li { margin: 0; padding: 14px 16px; border: 1px solid #e6e6e6; border-radius: 14px; background: #fff; display: grid; grid-template-columns: 34px 1fr; gap: 14px; align-items: start; }
+.sf-kb-rows b { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 13px; }
+.sf-kb-rows strong { display: block; font-size: 16px; line-height: 1.3; margin: 0 0 3px; }
+.sf-kb-rows span { display: block; font-size: 15px; line-height: 1.5; color: #3b3b3b; }
+
+/* the certification section: five real credentials, one card each */
+.sf-creds { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
+.sf-cred { margin: 0; padding: 18px; border: 1px solid #e6e2dc; border-radius: 16px; background: #fff; display: grid; grid-template-columns: 92px 1fr; gap: 16px; align-items: center; }
+.sf-cred::before { content: none; }
+.sf-cred strong { display: block; font-size: 17px; line-height: 1.3; margin: 0 0 4px; color: var(--ink); }
+.sf-cred div > span { display: block; font-size: 15px; line-height: 1.5; color: #3b3b3b; }
+.sf-cred__badge { width: 92px; height: auto; }
+.sf-cred__seal { width: 72px; height: 72px; justify-self: center; }
+.sf-cred .sf-cred__icon { display: grid; place-items: center; justify-self: center; width: 64px; height: 64px; border-radius: 50%; background: var(--cream); color: var(--ink); font-size: 30px; line-height: 1; }
+@media (min-width: 768px) { .sf-creds { grid-template-columns: repeat(2, 1fr); } .sf-cred--frontrow { grid-column: 1 / -1; } }
+@media (min-width: 1024px) { .sf-creds { grid-template-columns: repeat(3, 1fr); } .sf-cred--frontrow { grid-column: auto; } .sf-cred { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+  .sf-cred__badge { width: 150px; } .sf-creds li:nth-child(4), .sf-creds li:nth-child(5) { grid-column: span 1; } }
+@media (min-width: 1024px) { .sf-creds { grid-template-columns: repeat(6, 1fr); } .sf-cred { grid-column: span 2; } .sf-creds li:nth-child(4) { grid-column: 2 / span 2; } .sf-creds li:nth-child(5) { grid-column: 4 / span 2; } }

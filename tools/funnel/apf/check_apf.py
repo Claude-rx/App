@@ -279,7 +279,7 @@ _said = {}
 for pid in ('offer', 'checkout'):
     m = re.search(r'<strong>(\d+)\+? clinicians</strong> share this on <em>FrontrowMD</em> without compensation\.', html(pid))
     if not m: fail(pid, 'no FrontrowMD "Clinicians\' Choice" badge with its count')
-    else: _said[pid] = int(m.group(1))
+    else: _said[pid] = max(int(x) for x in re.findall(r'(\d+)\+? clinicians', text(html(pid))))     # every count on the page
 if _said:
     import urllib.request
     try:
@@ -350,10 +350,19 @@ if BF:
         if 'data-sf-bf-clock' not in _h or BF['end_label'] not in text(_h): fail(_pid, f'no Black Friday clock or "{BF["end_label"]}"')
         for _m in re.finditer(r'\$19\.97', text(_h)):
             if '$39.97' not in text(_h)[max(0, _m.start() - 80):_m.end() + 170]: fail(_pid, f'"$19.97" without the $39.97 it renews at beside it: "…{text(_h)[max(0, _m.start() - 40):_m.end() + 60]}…"')
+    # the trust block under the button (the owner, 5 Nov 2026), once: its "Renews at" is the opening plan's, each card's
+    # short renewal its own price and interval
+    if pp.count('class="sf-trust2"') != 1 or 'Love it or your money back' not in pp or 'Free shipping on every order' not in pp: fail('offer', 'the trust block under the button is missing or there twice')
+    for _m in re.finditer(r'data-pack="([^"]+)"[^>]*data-renew-price="\$([\d.]+)" data-renew-short="([^"]+)"', pp):
+        _k = next((k for k in BF['packs'] if k['id'] == _m.group(1)), None)
+        _want = (f"${_k['renew_price']:.2f}/mo" if _k['every'] == 'month' else f"${_k['renew_price']:.2f} / {_k['every'].split()[0]} mo") if _k else None
+        if _m.group(3) != _want: fail('offer', f'pack {_m.group(1)}: "Renews at {_m.group(3)}", not {_want}')
+    _ono = re.search(r'<label class="sf-pack is-on"[^>]*data-renew-short="([^"]+)"', pp)
+    if not _ono or f'Renews at <b data-sf-renew-short>{_ono.group(1)}</b>' not in pp: fail('offer', 'the trust row does not renew at the plan the page opens on')
     _bfcss = (SITE / 'css' / 'sf-apf.css').read_text(encoding='utf-8')
     if 'html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial-over] { display: none !important; }' not in _bfcss: fail('offer', 'the sale\'s and the regular words are both shown')
     _bfjs = (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8')
-    if "getAttribute('data-bundle-over')" not in _bfjs or "classList.add('sf-trial-over')" not in _bfjs or "window.axon('track', 'add_to_cart'" not in _bfjs:
+    if "getAttribute('data-bundle-over')" not in _bfjs or "classList.add('sf-trial-over')" not in _bfjs or "axonItem('add_to_cart', card)" not in _bfjs or "window.axon('track', name," not in _bfjs:
         fail('offer', 'sf-apf.js does not turn the page over at the end, or does not report a Black Friday plan to AppLovin')
 else:
     pp = html('offer')
@@ -519,10 +528,15 @@ for p in F.PAGES:
 
 # live review 9 ---------------------------------------------------------------------------------------------------------
 # no clinician in the pictures: a generated white-coat "clinic" portrait read as an invented medical endorsement (F2;
-# the FrontrowMD "Clinicians’ Choice" badge is a real listing, the owner's)
+# the FrontrowMD "Clinicians’ Choice" badge is a real listing, the owner's). The owner's doctor section (5 Nov 2026, the
+# store's own "Formulated in Korea" photo) is a model in a lab coat: allowed only as "A model in a lab coat…", with
+# "Model portrayal." on the photo, and never beside a word that makes her a doctor or an endorsement
 for p in F.PAGES:
     h = html(p['id'])
-    for a in re.findall(r'<img[^>]*\balt="([^"]*)"', h):
+    for m_img in re.finditer(r'<img[^>]*\balt="([^"]*)"', h):
+        a = m_img.group(1)
+        if a.startswith('A model in a lab coat') and 'Model portrayal.' in h[m_img.end():m_img.end() + 300] \
+                and not re.search(r'\bclinic\b|\bdoctor|dermatologist|physician|\bnurse\b|scientist', a, re.I): continue
         if re.search(r'white[- ]coat|lab coat|\bclinic\b|\bdoctor|dermatologist|physician|\bnurse\b', a, re.I): fail(p['id'], f'an image of a clinician: alt "{a[:80]}"')
     for src in re.findall(r'<(?:img|source|video)[^>]*\b(?:src|srcset|poster)="([^"]+)"', h):
         if re.search(r'doctor|derm', src, re.I): fail(p['id'], f'a clinician image: {src}')
@@ -800,10 +814,16 @@ else:
 _js = (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8')
 if re.search(r'\.(?:addItem|clearCart|swapPackage)\(', _js): fail('offer', 'sf-apf.js changes the cart (next.addItem/clearCart): the checkout would sell the pack twice')
 if 'trackAddToCart(' not in _js: fail('offer', 'sf-apf.js does not report the checkout button as an add_to_cart')
-if not re.search(r'<meta name="next-analytics-view-item" content="\d+">', html('offer')): fail('offer', 'no next-analytics-view-item tag (no view_item for the ad pixels)')
 _vi = re.search(r'<meta name="next-analytics-view-item" content="(\d+)">', html('offer'))
 _on = re.search(r'<label class="sf-pack is-on"[^>]*data-package="(\d+)"', html('offer'))
-if _vi and _on and _vi.group(1) != _on.group(1): fail('offer', f'view_item reports package {_vi.group(1)}, the page opens on package {_on.group(1)} (live 29 Oct: $57 reported for the $75 pack)')
+if BF:
+    # the Black Friday plans are the trial campaign's: the APF package the SDK would report is the wrong price ($33.97 for
+    # the $19.97 trial), so the page sends view_item itself, for the plan it opens on (its data-axon-* item)
+    if _vi: fail('offer', 'a next-analytics-view-item tag beside the Black Friday plans (it reports the APF package\'s price)')
+    if "axonItem('view_item', openedCard)" not in _js or not re.search(r'<label class="sf-pack is-on"[^>]*data-axon-sku="', html('offer')): fail('offer', 'no view_item for the plan the page opens on')
+else:
+    if not _vi: fail('offer', 'no next-analytics-view-item tag (no view_item for the ad pixels)')
+    if _vi and _on and _vi.group(1) != _on.group(1): fail('offer', f'view_item reports package {_vi.group(1)}, the page opens on package {_on.group(1)} (live 29 Oct: $57 reported for the $75 pack)')
 
 # a reason's photo or loop sticks beside its text only where the two stand side by side: a one-column (wide) reason's
 # media must scroll with the page, or the text under it slides beneath the stuck video (the owner, 29 Oct 2026)
@@ -831,7 +851,7 @@ if 'EXTRA {discount.percentage}' in co: fail('checkout', 'the coupon badge says 
 # F5: the hero rating says the 9,855 are the published reviews
 if '4.8 out of 5 from 9,855 published reviews at our earlier store' not in text(_sp): fail('offer', 'the hero rating does not say the 9,855 are the published reviews')
 # F6: the listicle's offer box and last button open the sales page at the packs, on the 5-bottle pack
-if _lst.count(f'adaptive-foundation-offer/?pack={_on_pack.group(1) if _on_pack else "apf-5"}#offer"') < 2: fail('listicle', 'the offer buttons land at the top of the sales page, not at the packs')
+if sum(_lst.count(f'adaptive-foundation-offer/?pack={_k}#offer"') for _k in _sales_order) < 2: fail('listicle', 'the offer buttons land at the top of the sales page, not at the packs')
 # F7: the clips whose top-right holds the picture (the day's timeline, the dropper bottle) keep the pause button off it
 if _sp.count('data-sf-pause-corner="tl"') < 1 or _lst.count('data-sf-pause-corner="tl"') < 2 or "getAttribute('data-sf-pause-corner') === 'tl'" not in _apfjs: fail('listicle', 'the pause button covers the timeline or the dropper bottle')
 

@@ -300,9 +300,9 @@ offers and campaign 2221 are unchanged; they simply get no traffic from the sale
 
 | Card | Today | Then | Opens |
 |---|---|---|---|
-| 1 bottle, "Black Friday · 50% off" | $19.97 (FLASH50) | $39.97 every month | `?forceBundleId=trial` |
+| 1 bottle, "Black Friday · 50% off" (selected, since 5 Nov) | $19.97 (FLASH50) | $39.97 every month | `?forceBundleId=trial` |
 | 3 bottles + Blender, "Buy 2, get 1 FREE" | $66.97 | $66.97 every 3 months | `?forceBundleId=trial-3` |
-| 5 bottles + Lymphatic Brush, "Buy 3, get 2 FREE · Best value" (selected) | $99.97 | $99.97 every 5 months | `?forceBundleId=trial-5` |
+| 5 bottles + Lymphatic Brush, "Buy 3, get 2 FREE · Best value" | $99.97 | $99.97 every 5 months | `?forceBundleId=trial-5` |
 
 - **Where it lives.** `funnels/apf.py` `BLACK_FRIDAY` (built from `funnels/trial.py`: the trial, its packs, `SALE_END`),
   the sales page's `bf` block and `packs`, and `_includes/sf-bf.html` (the end, read before the first paint, on both
@@ -325,6 +325,31 @@ offers and campaign 2221 are unchanged; they simply get no traffic from the sale
   at campaign 2251's price, with its renewal, crossed-out price and free bottles against $39.97. Every button must open
   the trial checkout. The clock's end must equal `SALE_END`, read before the bar is drawn. Every "$19.97" must have its
   $39.97 beside it.
+- **The page opens on the $19.97 trial** (the owner, 5 Nov 2026: "make the offer of 19.97 trial as first one"). The
+  listicle's buttons still open the 5-bottle pack (`?pack=trial-5`), to match its "Buy 3, get 2 FREE" box. With the
+  trial selected, the `next-analytics-view-item` tag is gone, because it would report the APF package at $33.97.
+  sf-apf.js sends view_item itself for the opening plan (SKU, variant, $19.97). Proven live: view_item, add_to_cart and
+  begin_checkout all report $19.97, and every AppLovin post answered 200.
+- **The trust block under the button, once** (the owner's screenshot of the trial page). It has "Love it or your money
+  back", then Refill reminder · Cancel any time · Renews at **$39.97/mo**. That amount follows the chosen plan ("$66.97 / 3
+  mo", "$99.97 / 5 mo"). Under it is a green "Free shipping on every order" line and "📦 Ships in 1 business day,
+  tracked". It replaces the old four-item ✓ list, so nothing is said twice.
+- **The doctor section** (the owner, 5 Nov 2026: "add also the doctor and certification sections"). This is the store
+  page's "Formulated in Korea · Made where makeup starts as skincare" section, with the same photo (`images/sf/korea-lab.jpg`,
+  a model in a lab coat holding the bottle), the same words and the three numbered facts. The photo carries **"Model
+  portrayal."**, as on the store. An unlabelled lab-coat portrait reads as a real scientist's endorsement, and review 9
+  removed one for that reason. check_apf allows a lab-coat image only with that label, and only with an alt starting "A
+  model in a lab coat" that names no doctor or clinic.
+- **The certification section** ("The credentials behind the bottle", `credentials` in the frontmatter). It shows only
+  credentials that are real and can be checked:
+  - Clinicians' Choice on FrontrowMD. The count is the badge's floor, and check_apf reads FrontrowMD's live count.
+  - Formulated in Korea.
+  - The clean label: fragrance-free, no parabens, no drying alcohol, no propylene glycol.
+  - The 30-day guarantee.
+  - Secure checkout.
+
+  No certificate the brand does not hold is named: no "dermatologist recommended", no GMP, cruelty-free or FDA. Add one
+  only with its certificate in hand.
 - **To end it early or go back.** Set `BLACK_FRIDAY = None` in `funnels/apf.py` and put the APF packs (git history,
   before 5 Nov 2026) back on the sales page. To move the date, change `SALE_END` in `funnels/trial.py`, the trial
   checkout's first script and `_includes/sf-bf.html`. The gates fail until all three agree.

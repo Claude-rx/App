@@ -155,6 +155,7 @@
       set('[data-sf-renew-line] strong', function (e) { e.textContent = price + ' today'; });
       set('[data-sf-renew-text]', function (e) { e.textContent = renew.charAt(0).toLowerCase() + renew.slice(1); });
       set('[data-sf-label]', function (e) { e.textContent = card.getAttribute('data-label'); });
+      if (card.hasAttribute('data-renew-short')) set('[data-sf-renew-short]', function (e) { e.textContent = card.getAttribute('data-renew-short'); });
       set('[data-sf-btn-price]', function (e) { e.textContent = '| ' + price; });
       set('[data-sf-sticky-pack]', function (e) { e.textContent = card.getAttribute('data-short'); });
       set('[data-sf-sticky-price]', function (e) { e.textContent = price + ' today, then ' + renewPrice + ' every ' + every; });   // the amount too (live review 13, F2)
@@ -232,6 +233,20 @@
 (function () {
   // Axon's item category and photo for the Black Friday cards (funnels/trial.py AXON_CATEGORY, AXON_IMAGE)
   var AXON_CATEGORY = 2765, AXON_IMAGE = 'https://cdn.29next.store/media/skinofab/images/products/2026/10/01-front-a241ad.jpg';
+  var axonItem = function (name, card) {
+    if (!window.__axonEventKey || typeof window.axon !== 'function') return false;
+    var v = parseFloat((document.documentElement.classList.contains('sf-trial-over') && card.getAttribute('data-axon-value-over')) || card.getAttribute('data-axon-value'));
+    try {
+      window.axon('track', name, { currency: 'USD', value: v, items: [{ item_id: card.getAttribute('data-axon-sku'),
+        item_name: card.getAttribute('data-axon-name'), item_brand: 'SKINOFAB', item_variant_id: card.getAttribute('data-axon-variant'),
+        item_category_id: AXON_CATEGORY, image_url: AXON_IMAGE, price: v, quantity: 1 }] });
+    } catch (err) {}
+    return true;
+  };
+  // view_item: the plan the page opens on (the SDK's next-analytics-view-item tag would name the APF campaign's package)
+  var opened = document.querySelector('.sf-pack input[name=sf_pack]:checked');
+  var openedCard = opened && opened.closest('.sf-pack');
+  if (openedCard && openedCard.hasAttribute('data-axon-sku')) axonItem('view_item', openedCard);
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[data-sf-cta]') : null;
     if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -247,15 +262,7 @@
     // Black Friday: the card's own item, the seven fields AppLovin's Axon asks for (as the trial funnel's product page
     // sends them), then the link; the trial funnel's checkout sends begin_checkout and purchase with its own SDK
     if (card.hasAttribute('data-axon-sku')) {
-      if (window.__axonEventKey && typeof window.axon === 'function') {
-        var v = parseFloat((document.documentElement.classList.contains('sf-trial-over') && card.getAttribute('data-axon-value-over')) || card.getAttribute('data-axon-value'));
-        try {
-          window.axon('track', 'add_to_cart', { currency: 'USD', value: v, items: [{ item_id: card.getAttribute('data-axon-sku'),
-            item_name: card.getAttribute('data-axon-name'), item_brand: 'SKINOFAB', item_variant_id: card.getAttribute('data-axon-variant'),
-            item_category_id: AXON_CATEGORY, image_url: AXON_IMAGE, price: v, quantity: 1 }] });
-        } catch (err) {}
-        setTimeout(go, 350);
-      } else go();
+      if (axonItem('add_to_cart', card)) setTimeout(go, 350); else go();
       return;
     }
     if (!sdk || typeof sdk.trackAddToCart !== 'function') { go(); return; }
