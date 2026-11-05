@@ -192,6 +192,20 @@ show only those.
   Apple Pay, with no errors.
 - **The gates.** check_apf and check_trial fail on any Affirm, Afterpay, Klarna or Link radio or showing logo.
 
+
+**Black Friday flash sale (5 Nov 2026, the owner: "add the black friday flash sales now").** The offer and the midnight
+clock are unchanged; they are now named the Black Friday flash sale:
+- **Top bar.** A black bar at the very top of the product page, above the store's header (the sf_lead block):
+  "BLACK FRIDAY FLASH SALE · Up to 50% off · Ends in HH:MM:SS · Shop now".
+- **The box.** Its title is a black banner, "⚡ BLACK FRIDAY FLASH SALE · Limited time, today only · Ends at
+  midnight", and the 1-bottle pill reads "Black Friday · 50% off".
+- **The checkout.** The bar reads "⚡ Black Friday Flash Sale · Limited time, today only", the trial card's badge
+  reads "⚡ Black Friday", and the page title names the sale.
+
+"Up to 50%" is the trial bottle's 50% and the 5-bottle pack's $99.97 against $199.85. Like the old trial words, the
+bar and banner go at her midnight. To end the sale, put the flash trial words back in `pdp_copy.py` (BF_*) and in
+`trial-checkout.html` (trial.title, badge_text).
+
 ## Owner items
 
 - Cancel test order **101882** and the monthly subscription it started (Adaptive Peptide Foundation, $39.97/mo).

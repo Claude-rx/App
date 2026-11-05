@@ -72,10 +72,10 @@ HEAD = ('<script>(function () { var K = "sf_trial_end", end = 0; try { end = par
 # (the radio, the plan, the price and the crossed-out price, "+" lines under it), one line under the card, the big
 # button, then "Love it or your money back" and the three icons; the trial's title and clock above the card
 BOX_CSS = ('<style>.sft-box{margin:6px 0 16px;color:#151515}'
-           '.sft-flash{text-align:center;margin:0 0 12px}'
-           '.sft-flash__title{margin:0!important;font-size:15px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:#d92d20!important;line-height:1.3}'
-           '.sft-flash__clock{margin:4px 0 0!important;font-size:14px;color:#151515!important}'
-           '.sft-flash__clock strong{display:inline-block;font-variant-numeric:tabular-nums;background:#151515;color:#fff;border-radius:6px;padding:2px 8px;margin-left:4px;font-weight:700}'
+           '.sft-flash{text-align:center;margin:0 0 12px;background:#000;border-radius:14px;padding:12px 14px}'
+           '.sft-flash__title{margin:0!important;font-size:20px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#fff!important;line-height:1.15}'
+           '.sft-flash__clock{margin:6px 0 0!important;font-size:13.5px;color:#fff!important}'
+           '.sft-flash__clock strong{display:inline-block;font-variant-numeric:tabular-nums;background:#ffd84d;color:#000;border-radius:6px;padding:2px 8px;margin-left:4px;font-weight:800}'
            '.sft-plans{display:grid;gap:10px}'
            '.sft-plan{display:flex;align-items:center;gap:12px;border:1.5px solid #d6d6d6;border-radius:16px;background:#fff;padding:15px 18px;cursor:pointer;transition:border-color .15s,background .15s}'
            '.sft-plan:hover{border-color:#8a8a8a}'
@@ -98,6 +98,20 @@ BOX_CSS = ('<style>.sft-box{margin:6px 0 16px;color:#151515}'
            '@media (max-width:479px){.sft-plan{padding:13px 14px;gap:10px}.sft-plan.is-on{padding:12.5px 13.5px}.sft-plan__name{font-size:17px}.sft-plan__tag{font-size:11px;padding:3px 8px}.sft-plan__price strong{font-size:24px}.sft-plan__price s{font-size:14px}.sft-cta{font-size:17px}}'
            '</style>')
 
+# Black Friday (the owner, 5 Nov 2026: "add the black friday flash sales now"): the same offer and the same clock, named
+# the Black Friday flash sale, with a bar at the very top of the page (the store's sf_lead block, above its header);
+# it shows while her clock runs (up to 50% off: the trial bottle's 50%, the 5-bottle pack's $99.97 against $199.85)
+BF_TITLE = '⚡ Black Friday Flash Sale'
+BF_CSS = ('<style>.sft-bf{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 12px;background:#000;color:#fff;'
+          'padding:9px 14px;text-align:center;font-size:13.5px;line-height:1.3;letter-spacing:.02em}'
+          '.sft-bf strong{font-weight:900;letter-spacing:.08em;text-transform:uppercase}'
+          '.sft-bf b{display:inline-block;font-variant-numeric:tabular-nums;background:#ffd84d;color:#000;border-radius:5px;padding:1px 7px;font-weight:800}'
+          '.sft-bf a{color:#fff;text-decoration:underline;font-weight:700}'
+          '@media (max-width:479px){.sft-bf{font-size:12.5px;padding:8px 10px}}</style>')
+BF_BAR = ('<div class="sft-bf" data-sf-trial-live role="region" aria-label="Black Friday flash sale">'
+          '<strong>Black Friday Flash Sale</strong><span>Up to 50% off · Ends in <b data-sf-trial-clock="">today</b></span>'
+          '<a href="#apf-buy">Shop now</a></div>')
+
 TRUST_SVG_SEAL = ('<svg aria-hidden="true" focusable="false" height="24" viewbox="0 0 24 24" width="24"><path d="M12 1.6l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.5-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.4l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.6 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z" fill="currentColor"></path><path d="M7.9 12.3l2.7 2.7 5.5-5.7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>')
 
 
@@ -117,7 +131,7 @@ def plans():
     """The plan cards: the flash trial bottle, then the packs (funnels/trial.py PACKS). Each card carries what the page
     shows and sends when it is chosen: the checkout link (before and after her midnight), the
     "Renews at" amount, the button's words and the price AppLovin's add_to_cart reports."""
-    out = [{'id': 'trial', 'name': '1 bottle', 'live_tag': '⚡ Flash trial · 50% off', 'today': TODAY, 'compare': REGULAR, 'over_today': REGULAR,
+    out = [{'id': 'trial', 'name': '1 bottle', 'live_tag': 'Black Friday · 50% off', 'today': TODAY, 'compare': REGULAR, 'over_today': REGULAR,
             'href': f'{CHECKOUT}?forceBundleId=trial', 'href_over': f'{CHECKOUT}?forceBundleId=trial-regular',
             'renew': f'{REGULAR}/mo', 'cta': 'Start my trial', 'cta_over': 'Start my refills',
             'value': T['today'], 'value_over': T['regular'], 'item': (T['sku'], T['name'], T['variant'])}]
@@ -149,8 +163,8 @@ def box(src):
     return (
         '<div class="product__block sft-box" id="apf-buy" data-sft-box="" style="--PBB:10px;">' + BOX_CSS +
         '<div class="sft-flash" data-sf-trial-live>'
-        '<p class="sft-flash__title">⚡ Flash trial offer · Limited time, today only</p>'
-        '<p class="sft-flash__clock">Ends at midnight: <strong data-sf-trial-clock="">today</strong></p></div>'
+        '<p class="sft-flash__title">' + BF_TITLE + '</p>'
+        '<p class="sft-flash__clock">Limited time, today only · Ends at midnight <strong data-sf-trial-clock="">today</strong></p></div>'
         '<div class="sft-plans" role="radiogroup" aria-label="Choose your plan">' + ''.join(cards) + '</div>'
         f'<a class="sft-cta" data-sft-cta="" href="{first["href"]}"><span data-sft-cta-text="">{first["cta"]}</span>' + arrow + '</a>'
         + trust_row(src) +
@@ -241,7 +255,8 @@ def build(src):
     s = sub1(r'Yes\. In your bag, tap Change under the bottle, then on the cart page set it to One-time purchase before checkout: \$47 for 1 bottle or \$57 for 2 bottles, with no refills\.',
              'Yes. Email info@skinofab.com at least a day before your next refill and it won’t ship. No minimum, no fees, and your first bottle keeps its 30-day money-back guarantee.', s)
     # the page's head (the clock and the look) and tail (the clock's tick, AppLovin)
-    s = sub1(r'\{% block sf_head %\}', '{% block sf_head %}' + HEAD, s)
+    s = sub1(r'\{% block sf_head %\}', '{% block sf_head %}' + HEAD + BF_CSS, s)
+    s = sub1(r'\{% endblock sf_lead %\}', BF_BAR + '{% endblock sf_lead %}', s)
     s = sub1(r'\{% endblock sf_tail %\}', TAIL + '\n{% endblock sf_tail %}', s)
     # every block that reads the product, inside the setting's with
     for name in ('content_wrapper', 'sf_tail'):
@@ -255,7 +270,7 @@ def check(out):
     bad = [p for p in (r'\$37\b', r'\$47\b', r'\$57\b', r'\$59\b', r'\$118\b', r'From \$', 'Add to Cart', 'Choose your pack', 'every 28 days',
                        r"\{% url 'cart:add'", 'data-product-form', 'data-sf-offer-picker', 'One-time purchase') if re.search(p, text)]
     if bad: raise SystemExit(f'pdp_copy: store residue in the trial page: {bad}')
-    for need in ('id="apf-buy"', 'Flash trial offer · Limited time, today only', f'Renews at <b data-sft-renew="">{REGULAR}/mo</b>', 'Love it or your money back',
+    for need in ('id="apf-buy"', 'Black Friday Flash Sale', 'Limited time, today only', 'class="sft-bf"', f'Renews at <b data-sft-renew="">{REGULAR}/mo</b>', 'Love it or your money back',
                  'Buy 2, get 1 FREE', 'Buy 3, get 2 FREE', '?forceBundleId=trial-3"', '?forceBundleId=trial-5"',
                  'Refill reminder', 'Cancel any time', f'{CHECKOUT}?forceBundleId=trial"', 'forceBundleId=trial-regular', '$66.97', '$99.97', TODAY, '"page_view"', '"view_item"', '"add_to_cart"', 'item_variant_id', 'item_category_id: 2765', 'image_url: "https://'):
         if need not in out: raise SystemExit(f'pdp_copy: missing in the trial page: {need}')
