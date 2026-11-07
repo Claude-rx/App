@@ -1,13 +1,17 @@
 {
   "name": "claude-rx",
-  "owner": { "name": "Claude-rx" },
-  "metadata": { "description": "Plugins for the Mediclab and SKINOFAB stores" },
+  "owner": {
+    "name": "Claude-rx"
+  },
+  "metadata": {
+    "description": "Plugins for the Mediclab and SKINOFAB stores"
+  },
   "plugins": [
     {
       "name": "supliful-mediclab",
       "source": "./plugins/supliful-mediclab",
       "description": "Supliful private label for the Mediclab Shopify store: label artwork, product sync, order and tracking bridge.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "commerce"
     }
   ]

@@ -19,7 +19,7 @@ import { forwardShopifyOrder, syncShipments } from "./lib/bridge.mjs";
 import { localStatus, isSellable } from "./lib/mapping.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-export const SERVER_INFO = { name: "supliful-mediclab", version: "0.1.0" };
+export const SERVER_INFO = { name: "supliful-mediclab", version: "0.2.0" };
 const PROTOCOL_VERSIONS = ["2025-06-18", "2025-03-26", "2024-11-05"];
 
 export const HOME_DIR = () => process.env.SUPLIFUL_HOME || join(homedir(), ".supliful-mediclab");

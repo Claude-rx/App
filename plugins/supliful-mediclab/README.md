@@ -3,6 +3,7 @@
 Private-label supplements from Supliful, sold on the Mediclab Shopify store.
 
 **Ask Claude things like:**
+- "Use the browser to connect Supliful" (uses Claude in Chrome in your signed-in Chrome; you paste the key yourself)
 - "Is Supliful connected?"
 - "Push our Supliful products to Shopify" (shows the plan first, applies only when you say so)
 - "Send order 6123456789 to Supliful" / "Where is that order?" / "Cancel it"
@@ -50,6 +51,7 @@ Without it, the plugin writes print-ready HTML files that you save as PDFs from 
 |---|---|
 | Skill `supliful-shopify` | Product sync, orders, tracking, troubleshooting |
 | Skill `supliful-labels` | Label design workflow and pre-print checks |
+| Skill `supliful-connect` | Browser-guided connection setup in your own Chrome (Claude in Chrome) |
 | Skill `supliful-api` | Supliful's official API reference (MIT, from github.com/Supliful/agent-skills) |
 | MCP server `supliful` | 15 local tools; no dependencies to install; talks only to Supliful and your Shopify store |
 

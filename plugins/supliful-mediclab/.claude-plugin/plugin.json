@@ -1,6 +1,6 @@
 {
   "name": "supliful-mediclab",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Supliful private label for the Mediclab Shopify store: design supplement label artwork, sync Supliful products to Shopify, send paid orders to Supliful and push tracking back.",
   "author": {
     "name": "Mediclab"
@@ -8,5 +8,12 @@
   "homepage": "https://github.com/Claude-rx/App/blob/main/docs/supliful-integration.md",
   "repository": "https://github.com/Claude-rx/App",
   "license": "UNLICENSED",
-  "keywords": ["supliful", "shopify", "private-label", "supplements", "labels", "fulfillment"]
+  "keywords": [
+    "supliful",
+    "shopify",
+    "private-label",
+    "supplements",
+    "labels",
+    "fulfillment"
+  ]
 }
