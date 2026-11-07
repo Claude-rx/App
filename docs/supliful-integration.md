@@ -136,16 +136,39 @@ its Supplement Facts panel and barcode. `index.html` is the contact sheet and `r
    Use a fold-out (booklet) label or an outer carton, or take the larger size Supliful offers.
 5. Claims are structure/function claims with the FDA disclaimer. Have them reviewed before printing.
 
+## Claude Cowork plugin
+
+`plugins/supliful-mediclab/` packages this integration for Cowork (and Claude Code):
+
+- **Skills:** `supliful-shopify` (sync, orders, tracking), `supliful-labels` (label design and pre-print
+  checks), `supliful-api` (Supliful's official reference).
+- **MCP server** (`server/mcp.mjs`, stdio, no dependencies, Node 20+): `supliful_setup`, `supliful_doctor`,
+  `supliful_list_products`, `supliful_get_product`, `supliful_sync_products`, `supliful_push_order`,
+  `supliful_get_order`, `supliful_cancel_order`, `supliful_sync_shipments`, `supliful_reconcile`,
+  `supliful_send_test_webhook`, `supliful_rehearse`, `supliful_label_specs`, `supliful_refresh_label_copy`,
+  `supliful_render_labels`.
+- **Credentials** live in `~/.supliful-mediclab/.env` (mode 600), created by `supliful_setup` and filled in
+  by the user. They never pass through the chat, and edits take effect without restarting. Order state and label
+  settings are kept in the same folder, so they survive plugin updates.
+
+```bash
+npm run plugin:build    # refresh plugins/supliful-mediclab/server from tools/supliful, write dist/supliful-mediclab.plugin
+npm run plugin:check    # CI: fails if the committed plugin lags its sources
+```
+
+Install: upload `dist/supliful-mediclab.plugin` in Cowork, or add the `Claude-rx/App` marketplace
+(`.claude-plugin/marketplace.json`).
+
 ## Tests
 
 ```bash
 npm run test:supliful
 ```
 
-37 tests, also run in CI. They cover the client (auth, retry policy, pagination, idempotency and
+43 tests, also run in CI. They cover the client (auth, retry policy, pagination, idempotency and
 conflict adoption, problem parsing, a key-free log), signatures (checked against Supliful's
 reference signer), product planning and sync, order forwarding, partial shipments into fulfillments,
-event handling, the HTTP receiver, and label extraction and rendering. They run against in-memory fakes
+event handling, the HTTP receiver, label extraction and rendering, and the MCP server (protocol, every tool path, private settings file, and the packaged plugin started on its own). They run against in-memory fakes
 of both APIs (`tools/supliful/test/fakes.mjs`); nothing touches the network.
 
 ## Updating the Supliful skill

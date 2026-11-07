@@ -8,6 +8,9 @@ tooling (`tools/`), and the agent setup. **Start with [docs/NEXT-COMMERCE-HANDOF
 Label artwork, Supliful → Shopify product sync, and the order and tracking bridge live in `tools/supliful/`.
 Guide: **[docs/supliful-integration.md](docs/supliful-integration.md)**. Skills: `supliful-shopify` and `supliful-api`
 (Supliful's official skill). Run `npm run supliful -- doctor` first and `npm run test:supliful` before any push.
+**Claude Cowork:** the same tools ship as the `supliful-mediclab` plugin (`plugins/supliful-mediclab/`: 3 skills + a
+zero-dependency MCP server with 15 tools). `npm run plugin:build` writes `dist/supliful-mediclab.plugin` to upload in
+Cowork; Claude Code can install it with `/plugin install supliful-mediclab --marketplace Claude-rx/App`.
 
 ## Next Commerce AI tooling
 

@@ -29,6 +29,8 @@ jobs:
         run: npm run test:axon
       - name: Supliful bridge and label tests
         run: npm run test:supliful
+      - name: Cowork plugin is in sync with its sources
+        run: npm run plugin:check
       - name: Build the funnels (Campaign Page Kit)
         working-directory: campaigns/skinofab
         run: |

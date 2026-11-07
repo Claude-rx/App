@@ -34,3 +34,6 @@ cowork-skills/
 !.env.example
 .supliful-state/
 tools/supliful/labels/out/
+
+# packaged plugins (npm run plugin:build)
+dist/

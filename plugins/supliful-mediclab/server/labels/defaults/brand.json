@@ -1,0 +1,42 @@
+{
+  "name": "MEDICLAB",
+  "site": "mediclab.us",
+  "email": "hello@mediclab.us",
+  "distributor": "Distributed by Mediclab",
+  "distributorAddress": "",
+  "statementOfIdentity": "Dietary Supplement",
+  "disclaimer": "*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.",
+  "colors": {
+    "ink": "#0E2235",
+    "paper": "#FFFFFF",
+    "muted": "#5B6B7B",
+    "rule": "#D7DEE5",
+    "band": "#0E2235"
+  },
+  "fonts": {
+    "display": "'Inter Display', 'Inter', Arial, sans-serif",
+    "text": "'Inter', Arial, sans-serif"
+  },
+  "accents": {
+    "metabolic": "#1F8A70",
+    "longevity": "#6A4FB3",
+    "sleep": "#3D5A99",
+    "energy": "#D9822B",
+    "liver": "#7A9A3A",
+    "bone": "#C9A227",
+    "beauty": "#C25B7A",
+    "women": "#B5507F",
+    "lymph": "#2E9BB0",
+    "circulation": "#A3263A",
+    "minerals": "#2F7F6F",
+    "joint": "#D9962B",
+    "gut": "#4C8C4A",
+    "muscle": "#2B5EA7",
+    "hydration": "#1E9BD7",
+    "stress": "#7B6A4E",
+    "focus": "#8A6D3B",
+    "greens": "#3E8E41",
+    "omega": "#1F6F8B",
+    "cellular": "#1D4ED8"
+  }
+}

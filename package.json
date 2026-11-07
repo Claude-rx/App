@@ -11,7 +11,10 @@
     "supliful:server": "node tools/supliful/server.mjs",
     "supliful:labels": "node tools/supliful/cli.mjs labels --out brand/mediclab-labels",
     "supliful:skill:update": "scripts/update-supliful-skill.sh",
-    "test:supliful": "node --test tools/supliful/test/*.test.mjs"
+    "test:supliful": "node --test tools/supliful/test/*.test.mjs",
+    "plugin:build": "node scripts/build-cowork-plugin.mjs",
+    "plugin:check": "node scripts/build-cowork-plugin.mjs --check",
+    "supliful:mcp": "node tools/supliful/mcp.mjs"
   },
   "repository": {
     "type": "git",
