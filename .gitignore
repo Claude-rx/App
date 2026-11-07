@@ -28,3 +28,9 @@ campaigns/skinofab/_site/
 node_modules/
 .DS_Store
 cowork-skills/
+
+# Supliful bridge: secrets, runtime state, render scratch (print files are kept in brand/mediclab-labels/)
+.env.*
+!.env.example
+.supliful-state/
+tools/supliful/labels/out/

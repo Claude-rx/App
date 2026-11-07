@@ -1,0 +1,418 @@
+{
+ "generatedAt": "2026-11-07T05:41:01.876Z",
+ "labels": [
+  {
+   "sku": "JTP32GLP1",
+   "name": "GLP-1 Nutrient Support",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "JTP32GLP1-print.pdf",
+   "proof": "JTP32GLP1-proof.jpg",
+   "infoTextPt": 7.03,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "JTP4BERB",
+   "name": "Berberine",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "JTP4BERB-print.pdf",
+   "proof": "JTP4BERB-proof.jpg",
+   "infoTextPt": 6.46,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "JTP4NADP",
+   "name": "NAD+ Advanced",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "JTP4NADP-print.pdf",
+   "proof": "JTP4NADP-proof.jpg",
+   "infoTextPt": 7.4,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "JTP55NMNC",
+   "name": "NMN",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "JTP55NMNC-print.pdf",
+   "proof": "JTP55NMNC-proof.jpg",
+   "infoTextPt": 7.4,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-CRE-GUM",
+   "name": "Creatine Gummies",
+   "container": "gummy-bottle",
+   "size": "8 x 3.25 in + 0.125 in bleed",
+   "pdf": "MLX-CRE-GUM-print.pdf",
+   "proof": "MLX-CRE-GUM-proof.jpg",
+   "infoTextPt": 8.05,
+   "issues": [
+    "net quantity \"120 Gummies\" is inferred - confirm on the Supliful product",
+    "gummy-bottle size 8x3.25 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-MAG-GLY",
+   "name": "Magnesium Glycinate",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-MAG-GLY-print.pdf",
+   "proof": "MLX-MAG-GLY-proof.jpg",
+   "infoTextPt": 6.65,
+   "issues": [
+    "net quantity \"90 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-SHIL-VIT",
+   "name": "Shilajit Vitality",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-SHIL-VIT-print.pdf",
+   "proof": "MLX-SHIL-VIT-proof.jpg",
+   "infoTextPt": 6.46,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-LIV-SUP",
+   "name": "Liver Support",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-LIV-SUP-print.pdf",
+   "proof": "MLX-LIV-SUP-proof.jpg",
+   "infoTextPt": 6.28,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-D3K2",
+   "name": "D3 + K2",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-D3K2-print.pdf",
+   "proof": "MLX-D3K2-proof.jpg",
+   "infoTextPt": 6.46,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-HSN-GUM",
+   "name": "Hair, Skin & Nails",
+   "container": "gummy-bottle",
+   "size": "8 x 3.25 in + 0.125 in bleed",
+   "pdf": "MLX-HSN-GUM-print.pdf",
+   "proof": "MLX-HSN-GUM-proof.jpg",
+   "infoTextPt": 7.11,
+   "issues": [
+    "net quantity \"60 Gummies\" is inferred - confirm on the Supliful product",
+    "gummy-bottle size 8x3.25 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-FEM-GUM",
+   "name": "Feminine Balance",
+   "container": "gummy-bottle",
+   "size": "8 x 3.25 in + 0.125 in bleed",
+   "pdf": "MLX-FEM-GUM-print.pdf",
+   "proof": "MLX-FEM-GUM-proof.jpg",
+   "infoTextPt": 7.67,
+   "issues": [
+    "net quantity \"60 Gummies\" is inferred - confirm on the Supliful product",
+    "gummy-bottle size 8x3.25 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-LYM-DRP",
+   "name": "Lymphatic Support",
+   "container": "dropper",
+   "size": "5 x 2 in + 0.0625 in bleed",
+   "pdf": "MLX-LYM-DRP-print.pdf",
+   "proof": "MLX-LYM-DRP-proof.jpg",
+   "infoTextPt": 4.62,
+   "issues": [
+    "net quantity \"2 fl oz (60 mL)\" is inferred - confirm on the Supliful product",
+    "dropper size 5x2 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)",
+    "info text is 4.6 pt (under 6 pt): use a larger label, a fold-out label or an outer carton"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-BEET",
+   "name": "Organic Beetroot",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-BEET-print.pdf",
+   "proof": "MLX-BEET-proof.jpg",
+   "infoTextPt": 7.03,
+   "issues": [
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-SEAM",
+   "name": "Sea Moss Complex",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-SEAM-print.pdf",
+   "proof": "MLX-SEAM-proof.jpg",
+   "infoTextPt": 7.4,
+   "issues": [
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-TURM",
+   "name": "Turmeric Joint Complex",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-TURM-print.pdf",
+   "proof": "MLX-TURM-proof.jpg",
+   "infoTextPt": 7.03,
+   "issues": [
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-WOVI",
+   "name": "Women's Vitality",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-WOVI-print.pdf",
+   "proof": "MLX-WOVI-proof.jpg",
+   "infoTextPt": 7.03,
+   "issues": [
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-COLO",
+   "name": "Colostrum",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-COLO-print.pdf",
+   "proof": "MLX-COLO-proof.jpg",
+   "infoTextPt": 7.4,
+   "issues": [
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-CREA",
+   "name": "Creatine Monohydrate",
+   "container": "pouch",
+   "size": "5.5 x 7.5 in + 0.125 in bleed",
+   "pdf": "MLX-CREA-print.pdf",
+   "proof": "MLX-CREA-proof.jpg",
+   "infoTextPt": 13.48,
+   "issues": [
+    "pouch size 5.5x7.5 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-COLL",
+   "name": "Collagen Peptides",
+   "container": "pouch",
+   "size": "5.5 x 7.5 in + 0.125 in bleed",
+   "pdf": "MLX-COLL-print.pdf",
+   "proof": "MLX-COLL-proof.jpg",
+   "infoTextPt": 13.86,
+   "issues": [
+    "net quantity \"28 Servings\" is inferred - confirm on the Supliful product",
+    "pouch size 5.5x7.5 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-WHEY",
+   "name": "Whey Protein Isolate",
+   "container": "pouch",
+   "size": "5.5 x 7.5 in + 0.125 in bleed",
+   "pdf": "MLX-WHEY-print.pdf",
+   "proof": "MLX-WHEY-proof.jpg",
+   "infoTextPt": 13.48,
+   "issues": [
+    "net quantity \"30 Servings\" is inferred - confirm on the Supliful product",
+    "pouch size 5.5x7.5 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-ELEC",
+   "name": "Electrolyte Hydration",
+   "container": "pouch",
+   "size": "5.5 x 7.5 in + 0.125 in bleed",
+   "pdf": "MLX-ELEC-print.pdf",
+   "proof": "MLX-ELEC-proof.jpg",
+   "infoTextPt": 13.86,
+   "issues": [
+    "pouch size 5.5x7.5 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-PROB",
+   "name": "Probiotic 40 Billion",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-PROB-print.pdf",
+   "proof": "MLX-PROB-proof.jpg",
+   "infoTextPt": 6.84,
+   "issues": [
+    "net quantity \"30 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-ASHW",
+   "name": "Ashwagandha",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-ASHW-print.pdf",
+   "proof": "MLX-ASHW-proof.jpg",
+   "infoTextPt": 6.84,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-LION",
+   "name": "Lion's Mane",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-LION-print.pdf",
+   "proof": "MLX-LION-proof.jpg",
+   "infoTextPt": 6.84,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-MORI",
+   "name": "Moringa",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-MORI-print.pdf",
+   "proof": "MLX-MORI-proof.jpg",
+   "infoTextPt": 6.84,
+   "issues": [
+    "net quantity \"60 Capsules\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-VTD3",
+   "name": "Vitamin D3",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-VTD3-print.pdf",
+   "proof": "MLX-VTD3-proof.jpg",
+   "infoTextPt": 6.46,
+   "issues": [
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-OMG3",
+   "name": "Omega-3",
+   "container": "bottle",
+   "size": "7.5 x 3 in + 0.125 in bleed",
+   "pdf": "MLX-OMG3-print.pdf",
+   "proof": "MLX-OMG3-proof.jpg",
+   "infoTextPt": 6.46,
+   "issues": [
+    "net quantity \"60 Softgels\" is inferred - confirm on the Supliful product",
+    "bottle size 7.5x3 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)"
+   ],
+   "droppedCautions": []
+  },
+  {
+   "sku": "MLX-METB",
+   "name": "Methylene Blue",
+   "container": "dropper",
+   "size": "5 x 2 in + 0.0625 in bleed",
+   "pdf": "MLX-METB-print.pdf",
+   "proof": "MLX-METB-proof.jpg",
+   "infoTextPt": 4.43,
+   "issues": [
+    "dropper size 5x2 in is provisional - set it from Supliful's label editor",
+    "brand.json distributorAddress is empty (name and place of business)",
+    "info text is 4.4 pt (under 6 pt): use a larger label, a fold-out label or an outer carton"
+   ],
+   "droppedCautions": []
+  }
+ ]
+}

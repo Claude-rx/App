@@ -3,6 +3,12 @@
 SKINOFAB on Next Commerce: the funnel sources and build (`campaigns/skinofab/`), the store theme (`skinofab-theme/`),
 tooling (`tools/`), and the agent setup. **Start with [docs/NEXT-COMMERCE-HANDOFF.md](docs/NEXT-COMMERCE-HANDOFF.md).**
 
+## Supliful private label → Shopify (Mediclab)
+
+Label artwork, Supliful → Shopify product sync, and the order and tracking bridge live in `tools/supliful/`.
+Guide: **[docs/supliful-integration.md](docs/supliful-integration.md)**. Skills: `supliful-shopify` and `supliful-api`
+(Supliful's official skill). Run `npm run supliful -- doctor` first and `npm run test:supliful` before any push.
+
 ## Next Commerce AI tooling
 
 This repo ships the [Next Commerce](https://nextcommerce.com) agent skills and MCP server
