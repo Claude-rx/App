@@ -100,6 +100,19 @@
       if (keep.external_id && id.external_id) window.ttq.identify({ external_id: keep.external_id });
     }).catch(function () {});
   }
+  // TikTok's email rules (its pixel labelled a typed Gmail address "invalid: address_format" and suggested the hash of
+  // the address without its dots, 9 Nov 2026): trimmed, lowercased, and for gmail.com / googlemail.com no dots and no
+  // "+tag" in the name part; a placeholder ("null", "undefined", example.com) or a malformed address is not sent at all
+  function normEmail(v) {
+    var e = String(v || '').trim().toLowerCase();
+    var at = e.lastIndexOf('@');
+    if (at < 1 || at === e.length - 1) return '';
+    var local = e.slice(0, at), dom = e.slice(at + 1);
+    if (!/^[^\s@]+$/.test(local) || !/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(dom)) return '';
+    if (/^(null|undefined|none|test)$/.test(local) || /(^|\.)example\.(com|org|net)$/.test(dom)) return '';
+    if (dom === 'gmail.com' || dom === 'googlemail.com') local = local.split('+')[0].replace(/\./g, '');
+    return local ? local + '@' + dom : '';
+  }
   function e164(p) {
     var d = String(p || '').replace(/[^\d+]/g, '');
     if (!d) return '';
@@ -111,7 +124,7 @@
   function identify(u) {
     if (!window.ttq || !window.ttq.identify) return;
     u = u || {};
-    var email = String(u.customer_email || u.email || '').trim().toLowerCase();
+    var email = normEmail(u.customer_email || u.email);
     var phone = e164(u.customer_phone || u.phone);
     if (!email && !phone) {                       // this event knows no buyer: the one kept from earlier in the visit
       var kept = saved();

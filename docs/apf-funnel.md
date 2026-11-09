@@ -433,6 +433,12 @@ The owner's TikTok pixel `DBKNTF3C77U4J2JQS370` is on every page of the three fu
   calls `ttq.identify`. The pixel SHA-256-hashes email, phone, names and ZIP before they leave the browser; the
   `external_id` (customer id, else the email) is hashed by the adapter first, since the pixel sends that field as
   given. It is not held behind the newsletter box (the owner's instruction).
+- **Email normalization (9 Nov 2026).** Events Manager flagged "Email address is invalid in your event data" on
+  AddPaymentInfo and Purchase. The pixel's own diagnostic (`signal_diagnostic_labels.raw_email`) said
+  `invalid: address_format` for a Gmail address with dots and suggested the hash of the address without them. The
+  adapter's `normEmail` now sends every email trimmed and lowercased, a gmail.com / googlemail.com address without
+  dots or a `+tag` in its name part, and nothing for a placeholder (`null`, `undefined`, example.com) or a malformed
+  address. Checked live: the label is `valid` and the hash sent is the one TikTok suggested.
 - **Privacy.** Global Privacy Control or the privacy-choices opt-out (`sf_optout`) and there is no `ttq` at all: no
   script, no request (checked live: 0 requests to TikTok). The privacy policy already names TikTok Inc. and its pixel.
 - **Speed.** TikTok's main script is 90–130 KB. On the listicle and the sales page it loads after the hero has

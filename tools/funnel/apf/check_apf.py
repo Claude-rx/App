@@ -665,7 +665,7 @@ if _tt:
             if p['id'] not in FRONT and late: fail(p['id'], 'TikTok waits for the first screen on a page that can redirect (a purchase could be lost)')
     _ttj = (SITE / 'js' / 'tiktok.adapter.js').read_text(encoding='utf-8')
     # (the kept identity: test order 102182's offer Purchase went without the buyer's email before it)
-    for need in ('reg.contactRequiresMarketingConsent = false', 'reg.contactOnFieldEntry = true', 'identify(evt && evt.user_properties)', "content_type: 'product', brand:", "AM_KEY = 'sf_ttq_am'", 'identify(null);'):
+    for need in ('reg.contactRequiresMarketingConsent = false', 'reg.contactOnFieldEntry = true', 'identify(evt && evt.user_properties)', "content_type: 'product', brand:", "AM_KEY = 'sf_ttq_am'", 'identify(null);', 'var email = normEmail(u.customer_email || u.email);', "local = local.split('+')[0].replace(/\\./g, '')"):
         if need not in _ttj: fail('all pages', f'tiktok.adapter.js lacks the SKINOFAB patch: {need}')
     if _camp.get('tiktok_advanced_matching_enabled') != 'true': fail('all pages', 'TikTok advanced matching is off (the owner asked for the buyer\'s data)')
     _m = re.search(r'<script type="application/json" id="sf-ttq-items">(.*?)</script>', html('listicle'), re.S)
