@@ -20,7 +20,7 @@
 //   --entry <query>  start on the funnel's first page (the listicle) with this query (e.g. '?debugger=true&nfdebug=true')
 //            and click through as a shopper does: the listicle's offer link, then the sales page's checkout button (the
 //            pack is whatever that button carries). Without it the walk opens the checkout directly.
-//   --track  record the AppLovin Axon tracking: every axon(...) call on every page (a transparent Proxy on window.axon,
+//   --track  record the AppLovin Axon tracking and TikTok's pixel posts (event, item, value, buyer fields, TikTok's answer): every axon(...) call on every page (a transparent Proxy on window.axon,
 //            kept in sessionStorage across the funnel's pages), every request to AppLovin's hosts, the forwarder's
 //            debug lines; writes tracking.json and a per-page summary of the events. NB: the SDK's ?ignore=true turns
 //            its analytics off for the whole session (no dl_* event, so nothing reaches Axon): leave it out to test.
@@ -67,7 +67,9 @@ if (cookies) await ctx.addCookies(cookies.split(';').filter(Boolean).map((kv) =>
 // is recorded and still reaches AppLovin unchanged (property reads and writes, e.g. pixel.js's performOperation, pass
 // straight through to the real function); the log lives in sessionStorage, which every funnel page on the host shares
 const AXON_HOSTS = /axon\.ai|albss\.com|applovin\.com/;
-const tracked = { requests: [], failed: [], forwarder: [], responses: [] };
+const tracked = { requests: [], failed: [], forwarder: [], responses: [], tiktok: [] };
+// TikTok (9 Nov 2026): each pixel post, its event, item, value, currency, the buyer fields it carried, and TikTok's answer
+const TT_EVENTS = /analytics\.tiktok\.com\/api\/v2\/pixel(\?|$)/;
 if (track) {
   await ctx.addInitScript(() => {
     const KEY = '__lo_axon_calls';
@@ -83,6 +85,16 @@ if (track) {
   // AppLovin's answer to each event post (an event it accepts answers 2xx: what its dashboard shows green)
   ctx.on('response', (r) => { if (AXON_HOSTS.test(r.url()) && r.request().method() === 'POST') tracked.responses.push({ url: r.url().slice(0, 100), status: r.status(), body: (r.request().postData() || '').slice(0, 400) }); });
   ctx.on('requestfailed', (r) => { if (AXON_HOSTS.test(r.url())) tracked.failed.push({ url: r.url().slice(0, 160), error: r.failure()?.errorText }); });
+  ctx.on('response', async (r) => {
+    if (!TT_EVENTS.test(r.url()) || r.request().method() !== 'POST') return;
+    let j = null; try { j = JSON.parse(r.request().postData() || ''); } catch (e) {}
+    if (!j || !j.event) return;
+    const pr = j.properties || {}, u = (j.context && j.context.user) || {};
+    tracked.tiktok.push({ page: (() => { try { return new URL(r.frame().url()).pathname.split('/').filter(Boolean).pop() || '/'; } catch (e) { return ''; } })(),
+      event: j.event, event_id: j.event_id || '', status: r.status(), pixel: (j.context && j.context.pixel && j.context.pixel.code) || '',
+      value: pr.value, currency: pr.currency, contents: (pr.contents || []).map((c) => `${c.quantity}x ${c.content_id} @${c.price}`).join(', '),
+      user: Object.keys(u).filter((k) => k !== 'anonymous_id').map((k) => k + (/^[0-9a-f]{64}$/.test(String(u[k])) ? '(sha256)' : '')) });
+  });
 }
 const page = await ctx.newPage();
 const errors = [];
@@ -146,9 +158,20 @@ const trackingReport = async () => {
     every_item_complete: itemProblems.length === 0,
     applovin_accepted_every_post: tracked.responses.length > 0 && tracked.responses.every((r) => r.status >= 200 && r.status < 300),
   };
+  if (tracked.tiktok.length) {
+    const tp = tracked.tiktok.filter((e) => e.event === 'Purchase');
+    // the buyer's hashed email on every purchase (the run types no phone: the field is optional)
+    const full = (e) => e.value > 0 && e.currency === 'USD' && e.contents && e.user.includes('email(sha256)');
+    Object.assign(checks, {
+      tiktok_accepted_every_post: tracked.tiktok.every((e) => e.status >= 200 && e.status < 300),
+      tiktok_initiate_checkout: tracked.tiktok.some((e) => e.event === 'InitiateCheckout' && e.value > 0),
+      tiktok_purchase: tp.some((e) => e.event_id && !/-US\d+$/.test(e.event_id) && full(e)),
+      tiktok_upsell_purchase: tp.some((e) => /-US1$/.test(e.event_id) && full(e)),
+    });
+  }
   return { pages, events, checks, item_problems: itemProblems, init_calls: calls.filter((c) => c.args[0] === 'init').length,
     requests: tracked.requests.length, request_hosts: [...new Set(tracked.requests.map((r) => new URL(r.url).host))],
-    failed_requests: tracked.failed, applovin_posts: tracked.responses, forwarder_log: tracked.forwarder.slice(0, 80), raw: tracked.requests.slice(0, 60) };
+    failed_requests: tracked.failed, applovin_posts: tracked.responses, tiktok_posts: tracked.tiktok, forwarder_log: tracked.forwarder.slice(0, 80), raw: tracked.requests.slice(0, 60) };
 };
 
 let result = { funnel: process.env.FUNNEL || 'stick', host, pack, path, entry };
@@ -288,7 +311,8 @@ result.console_errors = errors.slice(0, 10);
 if (track) {
   const t = await trackingReport();
   fs.writeFileSync(`${out}/tracking.json`, JSON.stringify(t, null, 2));
-  result.tracking = { checks: t.checks, events: t.events.map((e) => [e.page, e.event, e.value, e.currency, e.transaction_id].filter((x) => x !== undefined).join(' | ')) };
+  result.tracking = { checks: t.checks, events: t.events.map((e) => [e.page, e.event, e.value, e.currency, e.transaction_id].filter((x) => x !== undefined).join(' | ')),
+    tiktok: t.tiktok_posts.filter((e) => !/Pageview|LandingPageView|EngagedSession|EnrichAM/.test(e.event)).map((e) => [e.page, e.event, 'HTTP ' + e.status, e.value, e.currency, e.event_id, e.contents, e.user.join(' ')].filter((x) => x !== undefined && x !== '').join(' | ')) };
 }
 fs.writeFileSync(`${out}/order.json`, JSON.stringify(result, null, 2));
 console.log(JSON.stringify(result, null, 2));

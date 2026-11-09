@@ -77,6 +77,29 @@
   // first offer page is matched too. ttq.identify takes them plain and the pixel SHA-256-hashes them before they leave
   // the browser. Sent once per page per identity.
   var lastId = '';
+  // The identity is kept for the rest of the visit (sessionStorage sf_ttq_am, as SHA-256 hashes; city, state and country
+  // as TikTok takes them): the SDK stops carrying the buyer's details after the order, so without it the offer pages'
+  // Purchase went with no email (live test order 102182, 9 Nov 2026). Every page re-identifies from it first.
+  var AM_KEY = 'sf_ttq_am', HASHED = ['email', 'phone_number', 'first_name', 'last_name', 'zip_code', 'external_id'];
+  function saved() { try { return JSON.parse(window.sessionStorage.getItem(AM_KEY) || 'null'); } catch (e) { return null; } }
+  function sha(v) {
+    return window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(v)).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+  function remember(id) {
+    if (!(window.crypto && window.crypto.subtle && window.TextEncoder)) return;
+    var keep = saved() || {}, jobs = [];
+    Object.keys(id).forEach(function (k) {
+      if (HASHED.indexOf(k) < 0) { keep[k] = id[k]; return; }
+      jobs.push(sha(id[k]).then(function (h) { keep[k] = h; }));
+    });
+    Promise.all(jobs).then(function () {
+      try { window.sessionStorage.setItem(AM_KEY, JSON.stringify(keep)); } catch (e) {}
+      // external_id goes only hashed (the pixel sends that field as given)
+      if (keep.external_id && id.external_id) window.ttq.identify({ external_id: keep.external_id });
+    }).catch(function () {});
+  }
   function e164(p) {
     var d = String(p || '').replace(/[^\d+]/g, '');
     if (!d) return '';
@@ -86,10 +109,15 @@
     return '+' + d;
   }
   function identify(u) {
-    if (!u || !window.ttq || !window.ttq.identify) return;
+    if (!window.ttq || !window.ttq.identify) return;
+    u = u || {};
     var email = String(u.customer_email || u.email || '').trim().toLowerCase();
     var phone = e164(u.customer_phone || u.phone);
-    if (!email && !phone) return;
+    if (!email && !phone) {                       // this event knows no buyer: the one kept from earlier in the visit
+      var kept = saved();
+      if (kept && (kept.email || kept.phone_number) && lastId !== 'kept') { lastId = 'kept'; window.ttq.identify(kept); }
+      return;
+    }
     var id = {};
     if (email) id.email = email;
     if (phone) id.phone_number = phone;
@@ -99,15 +127,11 @@
     var key = JSON.stringify(id);
     if (key === lastId) return;
     lastId = key;
-    window.ttq.identify(id);
-    // external_id (the customer id, else the email): the pixel sends it as given, so it is hashed here first
+    window.ttq.identify(id);                      // the pixel hashes these before they leave the browser
     var ext = String(u.customer_id || email || '').trim().toLowerCase();
-    if (ext && window.crypto && window.crypto.subtle && window.TextEncoder) {
-      window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(ext)).then(function (buf) {
-        var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
-        window.ttq.identify({ external_id: hex });
-      }).catch(function () {});
-    }
+    var all = {}; Object.keys(id).forEach(function (k) { all[k] = id[k]; });
+    if (ext) all.external_id = ext;
+    remember(all);
   }
 
   // Toggles (comma-separated dl_* or TikTok names).
@@ -155,5 +179,6 @@
     reg.onContact = function (c) { identify({ email: c.email, phone: c.phone }); };
   }
 
+  if (ADV_MATCHING && window.__tiktokPixelId) identify(null);
   window.NextForwarder.register(reg);
 })();

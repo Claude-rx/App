@@ -440,9 +440,14 @@ The owner's TikTok pixel `DBKNTF3C77U4J2JQS370` is on every page of the three fu
   leaves the page waits for it (at most 1.2 s). On the checkout, offer and thank-you pages it loads at once, so a
   purchase is never lost to a redirect. Live on slow 4G after the change: sales page LCP 2.0–2.4 s, AppLovin
   page_view 2.1–2.2 s (unchanged).
-- **Proof (9 Nov 2026, store preview).** Every event above answered HTTP 200 for the pixel; the purchase and offer
-  purchase mapping was checked through the same code path with a simulated order and TikTok's requests stopped
-  (value, currency, items and the hashed buyer data all present). No live order was placed.
+- **Proof (9 Nov 2026).** Every event above answered HTTP 200 for the pixel. Live test order **#102182** (the owner's
+  approval; `FUNNEL=bf node tools/funnel/live_order.mjs … --pack trial --path accept,decline,decline --track`, which
+  now records TikTok's posts too): Purchase $19.97 USD, 1x SKF-APF-1, event_id 102182, with the hashed email, name,
+  ZIP and external_id, city, state and country; the accepted offer's Purchase $39 USD, 1x SKF-APF-2,
+  event_id `{ref}-US1`; all HTTP 200. That offer Purchase went without the buyer's email (the SDK stops carrying her
+  details after the order), so the adapter now keeps the identity for the visit as SHA-256 hashes (sessionStorage
+  `sf_ttq_am`) and every page re-identifies from it first; checked live: the next page's events carry the hashed email
+  and external_id. **Cancel order #102182 and its subscription.**
 - **Server side (Events API).** Not set up: the funnel pages are static pages on the store, with no server of ours
   to hold the access token, and the token is never put in a page or in git. Every pixel event carries an event_id,
   so a server-side feed added later (a relay on NEXT's order webhook) deduplicates against the pixel.
