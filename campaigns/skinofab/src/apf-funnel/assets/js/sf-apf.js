@@ -245,6 +245,62 @@
   }
 })();
 
+// TikTok on the landing pages (the owner, 9 Nov 2026): the listicle and the sales page have no SDK events of their own,
+// so their product events go to TikTok here, each with its item (SKU, name, price, quantity, brand), value and currency
+// and an event_id. The pixel's main script comes after the first screen (_includes/analytics-head.html); until then
+// ttq queues the calls. A tap that leaves the page waits for it to be in (at most the 1.2 s the buttons already allow),
+// so the AddToCart or ClickButton is sent before the next page. Nothing when she has opted out (no __tiktokPixelId).
+window.__sfTtq = (function () {
+  var on = function () { return !!(window.__tiktokPixelId && window.ttq && window.ttq.track); };
+  var loaded = function () {
+    try { return performance.getEntriesByType('resource').some(function (r) { return /analytics\.tiktok\.com\/i18n\/pixel\/static\/main/.test(r.name) && r.responseEnd > 0; }); }
+    catch (e) { return true; }
+  };
+  var over = function () { return document.documentElement.classList.contains('sf-trial-over'); };
+  var track = function (name, it) {
+    if (!on() || !it || !it.sku) return false;
+    var v = parseFloat((over() && it.value_over) || it.value);
+    try {
+      window.ttq.track(name, { content_type: 'product', currency: 'USD', value: v,
+        contents: [{ content_id: it.sku, content_name: it.name, content_type: 'product', content_category: 'Foundation',
+          brand: 'SKINOFAB', price: v, quantity: 1 }] },
+        { event_id: 'sf-' + name.toLowerCase() + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8) });
+    } catch (e) { return false; }
+    return true;
+  };
+  // the item a sales page card describes (its data-axon-* attributes, the same the AppLovin events read)
+  var card = function (el) {
+    return el && { sku: el.getAttribute('data-axon-sku'), name: el.getAttribute('data-axon-name'),
+      value: el.getAttribute('data-axon-value'), value_over: el.getAttribute('data-axon-value-over') };
+  };
+  // go once the pixel's main script is in (and a moment for its request), or at once if it is
+  var then = function (go) {
+    if (!on() || loaded()) { setTimeout(go, 350); return; }
+    (function wait(n) { if (loaded()) setTimeout(go, 350); else if (n > 0) setTimeout(function () { wait(n - 1); }, 50); else go(); })(20);
+  };
+  return { on: on, track: track, card: card, then: then };
+})();
+
+// The listicle (sf-ttq-items, its front matter's ttq_items): ViewContent for the pack its buttons lead to, ClickButton
+// for the pack of the link she taps (?pack=trial-5, else the 1-bottle plan the sales page opens on)
+(function () {
+  var data = document.getElementById('sf-ttq-items'), items;
+  if (!data) return;
+  try { items = JSON.parse(data.textContent); } catch (e) { return; }
+  window.__sfTtq.track('ViewContent', items['trial-5'] || items.trial);
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href*="adaptive-foundation-offer"]') : null;
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+    var m = /[?&]pack=([\w-]+)/.exec(a.href);
+    if (!window.__sfTtq.track('ClickButton', items[m && m[1]] || items.trial)) return;
+    e.preventDefault();
+    var href = a.href, gone = false;
+    var go = function () { if (!gone) { gone = true; window.location.href = href; } };
+    setTimeout(go, 1200);
+    window.__sfTtq.then(go);
+  }, true);
+})();
+
 // The checkout buttons ([data-sf-cta]): the pack they name is reported as an add to cart first (next.trackAddToCart: the
 // SDK's own tracking call, which pushes its dl_add_to_cart, the add_to_cart the ad pixels read, and leaves the cart
 // alone), then the link is followed and the checkout builds the cart from the pack its forceBundleId names. Never a
@@ -268,6 +324,7 @@
   var opened = document.querySelector('.sf-pack input[name=sf_pack]:checked');
   var openedCard = opened && opened.closest('.sf-pack');
   if (openedCard && openedCard.hasAttribute('data-axon-sku')) axonItem('view_item', openedCard);
+  if (openedCard && openedCard.hasAttribute('data-axon-sku')) window.__sfTtq.track('ViewContent', window.__sfTtq.card(openedCard));
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[data-sf-cta]') : null;
     if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -283,7 +340,9 @@
     // Black Friday: the card's own item, the seven fields AppLovin's Axon asks for (as the trial funnel's product page
     // sends them), then the link; the trial funnel's checkout sends begin_checkout and purchase with its own SDK
     if (card.hasAttribute('data-axon-sku')) {
-      if (axonItem('add_to_cart', card)) setTimeout(go, 350); else go();
+      var sentAxon = axonItem('add_to_cart', card);
+      if (window.__sfTtq.track('AddToCart', window.__sfTtq.card(card))) window.__sfTtq.then(go);   // TikTok's in by then
+      else if (sentAxon) setTimeout(go, 350); else go();
       return;
     }
     if (!sdk || typeof sdk.trackAddToCart !== 'function') { go(); return; }

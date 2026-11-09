@@ -1,4 +1,4 @@
-/* GENERATED from _shared/analytics/js/tiktok.adapter.js — edit the source and run `npm run sync:shared`. Do not edit this copy. */
+/* GENERATED from _shared/analytics/js/tiktok.adapter.js, with SKINOFAB LOCAL PATCHes (9 Nov 2026: identity on every event, typed contents, field-entry contact). */
 /**
  * tiktok.adapter.js — TikTok Pixel adapter for next-forwarder-core.js (Route C, no GTM).
  *
@@ -56,17 +56,58 @@
   function str(v) { return (v === undefined || v === null) ? v : String(v); }
 
   // SDK items -> TikTok `contents` objects.
+  // LOCAL PATCH (SKINOFAB, 9 Nov 2026): every content carries content_type and the brand, and price and quantity go
+  // as numbers (TikTok reads a string price as no price).
+  function num(v) { var n = parseFloat(v); return isNaN(n) ? undefined : n; }
   function mapContents(items) {
     return (items || []).map(function (it) {
-      var c = {};
+      var c = { content_type: 'product', brand: it.item_brand || 'SKINOFAB' };
       if (it.item_id !== undefined && it.item_id !== null && it.item_id !== '') c.content_id = str(it.item_id);
       if (it.item_name) c.content_name = it.item_name;
       if (it.item_category) c.content_category = it.item_category;
-      if (it.item_brand) c.brand = it.item_brand;
-      if (it.price !== undefined && it.price !== null) c.price = it.price;
-      if (it.quantity !== undefined && it.quantity !== null) c.quantity = it.quantity;
+      if (num(it.price) !== undefined) c.price = num(it.price);
+      c.quantity = num(it.quantity) || 1;
       return c;
     });
+  }
+
+  // LOCAL PATCH (SKINOFAB, 9 Nov 2026: "send all user data"): the buyer's identity on every event that knows it. The
+  // SDK puts user_properties (the checkout's email, phone, name, city, state, ZIP, country, customer id) on each dl_*
+  // event, on the checkout and after it (the offers, the thank-you page), so the Purchase a redirect leaves on the
+  // first offer page is matched too. ttq.identify takes them plain and the pixel SHA-256-hashes them before they leave
+  // the browser. Sent once per page per identity.
+  var lastId = '';
+  function e164(p) {
+    var d = String(p || '').replace(/[^\d+]/g, '');
+    if (!d) return '';
+    if (d.charAt(0) === '+') return d;
+    if (d.length === 10) return '+1' + d;
+    if (d.length === 11 && d.charAt(0) === '1') return '+' + d;
+    return '+' + d;
+  }
+  function identify(u) {
+    if (!u || !window.ttq || !window.ttq.identify) return;
+    var email = String(u.customer_email || u.email || '').trim().toLowerCase();
+    var phone = e164(u.customer_phone || u.phone);
+    if (!email && !phone) return;
+    var id = {};
+    if (email) id.email = email;
+    if (phone) id.phone_number = phone;
+    var more = { first_name: u.customer_first_name, last_name: u.customer_last_name, city: u.customer_city,
+      state: u.customer_province_code || u.customer_province, country: u.customer_country, zip_code: u.customer_zip };
+    Object.keys(more).forEach(function (k) { var v = more[k]; if (v) id[k] = String(v).trim().toLowerCase(); });
+    var key = JSON.stringify(id);
+    if (key === lastId) return;
+    lastId = key;
+    window.ttq.identify(id);
+    // external_id (the customer id, else the email): the pixel sends it as given, so it is hashed here first
+    var ext = String(u.customer_id || email || '').trim().toLowerCase();
+    if (ext && window.crypto && window.crypto.subtle && window.TextEncoder) {
+      window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(ext)).then(function (buf) {
+        var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+        window.ttq.identify({ external_id: hex });
+      }).catch(function () {});
+    }
   }
 
   // Toggles (comma-separated dl_* or TikTok names).
@@ -88,9 +129,9 @@
     allowedEvents: allowed,
     blockedEvents: blocked,
     send: function (name, ec, evt) {
-      var props = { content_type: 'product' };
-      if (ec.currency) props.currency = ec.currency;
-      if (ec.value !== undefined && ec.value !== null) props.value = ec.value; // incremental for upsell
+      if (ADV_MATCHING) identify(evt && evt.user_properties);
+      var props = { content_type: 'product', currency: ec.currency || 'USD' };
+      if (num(ec.value) !== undefined) props.value = num(ec.value); // incremental for upsell
       var contents = mapContents(ec.items);
       if (contents.length) props.contents = contents;
       if (name === 'Purchase' && ec.coupon) props.query = ec.coupon;
@@ -104,13 +145,14 @@
   // Advanced Matching (opt-in): fire ttq.identify on the core's onContact (prospect-cart source, default
   // accepts_marketing gate — see header).
   // TikTok links the browser via its cookie, so subsequent Purchase attributes to the matched identity.
+  // LOCAL PATCH (SKINOFAB, 9 Nov 2026): the owner's instruction is to send the buyer's data, so the contact is taken as
+  // soon as a valid email or phone is in the checkout's fields (contactOnFieldEntry) and is not held behind the
+  // newsletter box (contactRequiresMarketingConsent false). Global Privacy Control and the privacy-choices opt-out
+  // still stop all of it: the base code defines no pixel then and this adapter stays inactive.
   if (ADV_MATCHING) {
-    reg.onContact = function (c) {
-      var id = {};
-      if (c.email) id.email = c.email;
-      if (c.phone) id.phone_number = c.phone;
-      if (id.email || id.phone_number) window.ttq.identify(id);
-    };
+    reg.contactRequiresMarketingConsent = false;
+    reg.contactOnFieldEntry = true;
+    reg.onContact = function (c) { identify({ email: c.email, phone: c.phone }); };
   }
 
   window.NextForwarder.register(reg);

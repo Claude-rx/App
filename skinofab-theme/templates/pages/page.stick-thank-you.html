@@ -75,6 +75,26 @@
 
 
 
+<script>
+!function (w, d, t) {
+  var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(d.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {}
+  if (out) return;
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+  ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+    var go=function(){if(go.done)return;go.done=1;var o=d.createElement("script");o.type="text/javascript",o.async=!0,o.src=r+"?sdkid="+e+"&lib="+t;var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+    go();
+  };
+  ttq.load('DBKNTF3C77U4J2JQS370');
+  ttq.page();
+  // for tiktok.adapter.js (set only when she has not opted out) and the landing pages' own events (sf-apf.js)
+  w.__tiktokPixelId = 'DBKNTF3C77U4J2JQS370';
+  w.__tiktokAdvancedMatching = 'true';
+  w.__tiktokAllowedEvents = '';
+  w.__tiktokBlockedEvents = '';
+}(window, document, 'ttq');
+</script>
+
+
 
 
 
@@ -83,7 +103,7 @@
 <script src="{% endverbatim %}{{ 'sfc/sfc-axon-adapter-a2a38c.js'|asset_url }}{% verbatim %}"></script>
 
 
-
+<script src="{% endverbatim %}{{ 'sfc/sfc-tiktok-adapter-fab516.js'|asset_url }}{% verbatim %}"></script>
 
 
 

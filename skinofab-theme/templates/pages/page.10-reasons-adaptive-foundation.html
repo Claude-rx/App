@@ -1130,6 +1130,28 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
 
 
 
+<script>
+!function (w, d, t) {
+  var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(d.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {}
+  if (out) return;
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+  ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+    var go=function(){if(go.done)return;go.done=1;var o=d.createElement("script");o.type="text/javascript",o.async=!0,o.src=r+"?sdkid="+e+"&lib="+t;var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+    try { new PerformanceObserver(function () { setTimeout(go, 50); }).observe({ type: "largest-contentful-paint", buffered: true }); } catch (x) {}
+    ["pointerdown", "scroll", "keydown", "touchstart"].forEach(function (v) { w.addEventListener(v, go, { once: true, passive: true }); });
+    w.addEventListener("load", go); setTimeout(go, 3000);
+  };
+  ttq.load('DBKNTF3C77U4J2JQS370');
+  ttq.page();
+  // for tiktok.adapter.js (set only when she has not opted out) and the landing pages' own events (sf-apf.js)
+  w.__tiktokPixelId = 'DBKNTF3C77U4J2JQS370';
+  w.__tiktokAdvancedMatching = 'true';
+  w.__tiktokAllowedEvents = '';
+  w.__tiktokBlockedEvents = '';
+}(window, document, 'ttq');
+</script>
+
+
 
 
 
@@ -1138,7 +1160,7 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
 <script src="{% endverbatim %}{{ 'sfa/sfa-axon-adapter-8f4739.js'|asset_url }}{% verbatim %}" defer></script>
 
 
-
+<script src="{% endverbatim %}{{ 'sfa/sfa-tiktok-adapter-fab516.js'|asset_url }}{% verbatim %}" defer></script>
 
 
 
@@ -1155,6 +1177,7 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
   
 <script>(function () { var end = new Date(2026, 10, 30, 24, 0, 0, 0).getTime(); window.sfTrialEnd = end; if (Date.now() >= end) document.documentElement.classList.add('sf-trial-over'); })();</script>
 
+<script type="application/json" id="sf-ttq-items">{"trial":{"sku":"SKF-APF-1","name":"Adaptive Peptide Foundation - 1 bottle","value":"19.97","value_over":"39.97"},"trial-5":{"sku":"SKF-APF-5-BRUSH","name":"Adaptive Peptide Foundation - 5 bottles","value":"99.97"}}</script>
 <header class="sf-bar">
   <div class="sf-bar__in">
     <img class="sf-bar__logo" src="{% endverbatim %}{{ 'sfa/sfa-skinofab-wordmark-d7216f.svg'|asset_url }}{% verbatim %}" alt="SKINOFAB" width="110" height="22">
@@ -1530,7 +1553,7 @@ html.sf-trial-over [data-sf-trial-live], html:not(.sf-trial-over) [data-sf-trial
 </footer>
 
 
-  <script src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-bd32a7.js'|asset_url }}{% verbatim %}" defer></script>
+  <script src="{% endverbatim %}{{ 'sfa/sfa-sf-apf-935f45.js'|asset_url }}{% verbatim %}" defer></script>
   
 </body>
 </html>

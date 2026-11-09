@@ -645,6 +645,41 @@ for p in F.PAGES:
 for p in F.PAGES:
     h = html(p['id']); g, a = h.find('navigator.globalPrivacyControl'), h.find('s.axon.ai')
     if a >= 0 and not 0 <= g < a: fail(p['id'], 'the Axon pixel loads without the Global Privacy Control gate before it')
+# TikTok (the owner, 9 Nov 2026: the TikTok pixel on every funnel page, the buyer's data, every item's value and
+# currency). Every page loads it only after the GPC / privacy-choices check in its own script; the landing pages load
+# its 90-130 KB main script after the first screen; the listicle's items are the sales page's cards; the adapter
+# identifies the buyer on every event and takes the checkout's fields as she types them
+import json as _json
+_camp = _json.loads((PROJECT / '_data' / 'campaigns.json').read_text(encoding='utf-8'))[F.SLUG]
+_tt = _camp.get('tiktok_pixel_id', '')
+if _tt:
+    for p in F.PAGES:
+        h = html(p['id']); i = h.find('analytics.tiktok.com/i18n/pixel')
+        if i < 0 or f"ttq.load('{_tt}')" not in h: fail(p['id'], 'no TikTok pixel')
+        else:
+            st = h.rfind('<script', 0, i); seg, blk = h[st:i], h[st:h.find('</script>', i)]
+            if not ('navigator.globalPrivacyControl' in seg and 'sf_optout' in seg and 'if (out) return;' in seg):
+                fail(p['id'], 'the TikTok pixel loads without the GPC / privacy-choices check before it')
+            late = 'largest-contentful-paint' in blk
+            if p['id'] in FRONT and not late: fail(p['id'], "TikTok's main script loads with the first screen (it waits for the hero on a landing page)")
+            if p['id'] not in FRONT and late: fail(p['id'], 'TikTok waits for the first screen on a page that can redirect (a purchase could be lost)')
+    _ttj = (SITE / 'js' / 'tiktok.adapter.js').read_text(encoding='utf-8')
+    for need in ('reg.contactRequiresMarketingConsent = false', 'reg.contactOnFieldEntry = true', 'identify(evt && evt.user_properties)', "content_type: 'product', brand:"):
+        if need not in _ttj: fail('all pages', f'tiktok.adapter.js lacks the SKINOFAB patch: {need}')
+    if _camp.get('tiktok_advanced_matching_enabled') != 'true': fail('all pages', 'TikTok advanced matching is off (the owner asked for the buyer\'s data)')
+    _m = re.search(r'<script type="application/json" id="sf-ttq-items">(.*?)</script>', html('listicle'), re.S)
+    if not _m: fail('listicle', 'no TikTok item data (ViewContent and ClickButton would carry no item, value or currency)')
+    else:
+        _items = _json.loads(_m.group(1)); _spx = html('offer')
+        for k, it in _items.items():
+            c = re.search(r'<label class="sf-pack[^"]*" data-pack="' + re.escape(k) + r'"[^>]*>', _spx)
+            if not c: fail('listicle', f'TikTok item {k} is not a sales page card'); continue
+            for attr, key in (('data-axon-sku', 'sku'), ('data-axon-name', 'name'), ('data-axon-value', 'value')):
+                a = re.search(attr + r'="([^"]*)"', c.group(0))
+                if not a or a.group(1) != str(it.get(key)): fail('listicle', f'TikTok item {k} {key} {it.get(key)!r} differs from the sales page card ({a.group(1) if a else None!r})')
+    _sfjs = (SITE / 'js' / 'sf-apf.js').read_text(encoding='utf-8')
+    if "window.__sfTtq.track('ViewContent', window.__sfTtq.card(openedCard))" not in _sfjs or "window.__sfTtq.track('AddToCart', window.__sfTtq.card(card))" not in _sfjs:
+        fail('offer', 'the sales page does not send TikTok its ViewContent and AddToCart')
 _priv = THEME / 'partials' / 'sf_pages' / 'privacy-policy' / 'content.html'
 if _priv.is_file() and 'AppLovin Corporation' not in _priv.read_text(encoding='utf-8'): fail('theme', 'the privacy policy does not name AppLovin, the ad pixel on every page')
 # F6: a renewing pack is named by its bottles on the checkout and the receipt, its gifts on a first-order line

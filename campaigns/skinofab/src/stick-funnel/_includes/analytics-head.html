@@ -167,24 +167,40 @@ window.TriplePixelData={TripleName:"{{ campaign.triplewhale_name }}",ver:"2.17",
 </script>
 {% endif %}
 {% if campaign.tiktok_pixel_id and campaign.tiktok_pixel_id != "" %}
-{% comment %} TikTok Pixel — Route C direct integration, no GTM container. Base ttq.page() owns the pageview, so
-     tiktok.adapter.js does NOT map dl_user_data. Upsells → `Purchase` with a distinct event_id
-     (Approach B — count inflates; keeps upsell revenue in TikTok's Purchase/ROAS optimization).
-     Advanced Matching (ttq.identify raw email/phone) is OFF unless tiktok_advanced_matching_enabled is
-     set (core onContact hook, prospect-cart only, gated on accepts_marketing — marketing use). {% endcomment %}
+{% comment %} LOCAL PATCH (SKINOFAB, 9 Nov 2026: the owner's TikTok pixel on every funnel page, with the customer's data
+     and every item's value and currency). Route C, no GTM. Before anything of TikTok's: Global Privacy Control or the
+     privacy-choices opt-out (sf_optout, /data-sharing-opt-out/) and there is no ttq at all, no script, no event (the
+     adapter is inactive without window.__tiktokPixelId). The base ttq.page() owns the pageview (the adapter does not
+     map dl_user_data). TikTok's main script is about 90-130 KB: on the ad landing pages (base-sf.html, defer_forwarder)
+     it loads once the hero has painted, or at her first scroll or tap, or the load event, or 3 s, whichever is first,
+     so it never competes with the first screen; the stub queues ttq.page() and every event until then. On the
+     checkout, offer and thank-you pages it loads at once, so a purchase is never lost to a redirect. Advanced matching
+     is on (tiktok_advanced_matching_enabled): the adapter identifies the buyer from the checkout's fields and from the
+     SDK's user_properties on every event (email, phone, name, city, state, ZIP, country, customer id); the pixel
+     hashes them (SHA-256) before they leave the browser. {% endcomment %}
 <script>
 !function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=r+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+  var out = navigator.globalPrivacyControl === true || /(?:^|;\s*)sf_optout=1/.test(d.cookie); try { out = out || localStorage.getItem('sf_optout') === '1'; } catch (e) {}
+  if (out) return;
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+  ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+    var go=function(){if(go.done)return;go.done=1;var o=d.createElement("script");o.type="text/javascript",o.async=!0,o.src=r+"?sdkid="+e+"&lib="+t;var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+{%- if defer_forwarder %}
+    try { new PerformanceObserver(function () { setTimeout(go, 50); }).observe({ type: "largest-contentful-paint", buffered: true }); } catch (x) {}
+    ["pointerdown", "scroll", "keydown", "touchstart"].forEach(function (v) { w.addEventListener(v, go, { once: true, passive: true }); });
+    w.addEventListener("load", go); setTimeout(go, 3000);
+{%- else %}
+    go();
+{%- endif %}
+  };
   ttq.load('{{ campaign.tiktok_pixel_id }}');
   ttq.page();
+  // for tiktok.adapter.js (set only when she has not opted out) and the landing pages' own events (sf-apf.js)
+  w.__tiktokPixelId = '{{ campaign.tiktok_pixel_id }}';
+  w.__tiktokAdvancedMatching = '{{ campaign.tiktok_advanced_matching_enabled }}';
+  w.__tiktokAllowedEvents = '{{ campaign.tiktok_allowed_events }}';
+  w.__tiktokBlockedEvents = '{{ campaign.tiktok_blocked_events }}';
 }(window, document, 'ttq');
-  // Exposed for tiktok.adapter.js. The base pixel above already fires page_view via ttq.page() — the
-  // adapter does NOT map dl_user_data (avoids a double page_view).
-  window.__tiktokPixelId = '{{ campaign.tiktok_pixel_id }}';
-  // Advanced Matching (ttq.identify with RAW email/phone) — OFF unless enabled AND consent handled.
-  window.__tiktokAdvancedMatching = '{{ campaign.tiktok_advanced_matching_enabled }}';
-  window.__tiktokAllowedEvents = '{{ campaign.tiktok_allowed_events }}';
-  window.__tiktokBlockedEvents = '{{ campaign.tiktok_blocked_events }}';
 </script>
 {% endif %}
 {% if campaign.northbeam_client_id and campaign.northbeam_client_id != "" %}
@@ -269,7 +285,7 @@ window.TriplePixelData={TripleName:"{{ campaign.triplewhale_name }}",ver:"2.17",
 {% if campaign.axon_event_key and campaign.axon_event_key != "" %}<script src="{{ 'js/axon.adapter.js' | campaign_asset }}"></script>{% endif %}
 {% if campaign.taboola_account_id and campaign.taboola_account_id != "" %}<script src="{{ 'js/taboola.adapter.js' | campaign_asset }}"></script>{% endif %}
 {% if campaign.triplewhale_name and campaign.triplewhale_name != "" %}<script src="{{ 'js/triplewhale.adapter.js' | campaign_asset }}"></script>{% endif %}
-{% if campaign.tiktok_pixel_id and campaign.tiktok_pixel_id != "" %}<script src="{{ 'js/tiktok.adapter.js' | campaign_asset }}"></script>{% endif %}
+{% if campaign.tiktok_pixel_id and campaign.tiktok_pixel_id != "" %}<script src="{{ 'js/tiktok.adapter.js' | campaign_asset }}"{% if defer_forwarder %} defer{% endif %}></script>{% endif %}
 {% if campaign.northbeam_client_id and campaign.northbeam_client_id != "" %}<script src="{{ 'js/northbeam.adapter.js' | campaign_asset }}"></script>{% endif %}
 {% if campaign.snap_pixel_id and campaign.snap_pixel_id != "" %}<script src="{{ 'js/snapchat.adapter.js' | campaign_asset }}"></script>{% endif %}
 {% if campaign.pinterest_tag_id and campaign.pinterest_tag_id != "" %}<script src="{{ 'js/pinterest.adapter.js' | campaign_asset }}"></script>{% endif %}

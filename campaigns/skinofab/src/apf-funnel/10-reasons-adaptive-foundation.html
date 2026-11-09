@@ -16,6 +16,12 @@ demos:
   items:
     - { key: "demo-silver", chip: "Fingertips only", caption: "Blended in with the fingertips" }
     - { key: "demo-robe", chip: "White dots, blended", caption: "Dotted on the cheeks and forehead, buffed in" }
+# TikTok (the owner, 9 Nov 2026: items, value and currency on the listicle too): the sales page's cards its buttons lead
+# to, the same SKU, name and prices as the sales page's packs[].axon (check_apf.py compares them). ViewContent names
+# the 5-bottle pack (the buttons' ?pack=trial-5), ClickButton the pack of the link she taps (js/sf-apf.js)
+ttq_items:
+  trial: { sku: "SKF-APF-1", name: "Adaptive Peptide Foundation - 1 bottle", value: "19.97", value_over: "39.97" }
+  trial-5: { sku: "SKF-APF-5-BRUSH", name: "Adaptive Peptide Foundation - 5 bottles", value: "99.97" }
 meta_tags:
   next-funnel: "SKINOFAB Adaptive Peptide Foundation"
   next-page-type: "product"
@@ -188,6 +194,7 @@ mission:
 closing: "No shade to guess, and 30 days to decide."
 ---
 {% assign offer_link = next_url | campaign_link %}{% assign pack_link = offer_link | append: '?pack=trial-5#offer' %}{% campaign_include 'sf-bf.html' %}
+{% if ttq_items %}<script type="application/json" id="sf-ttq-items">{{ ttq_items | json }}</script>{% endif %}
 <header class="sf-bar">
   <div class="sf-bar__in">
     <img class="sf-bar__logo" src="{{ 'images/sf/skinofab-wordmark.svg' | campaign_asset }}" alt="SKINOFAB" width="110" height="22">

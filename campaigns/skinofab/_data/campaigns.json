@@ -19,7 +19,9 @@
     "og_image": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/skinofab-foundation-stick-1-1080w-521676.jpg",
     "funnel_host": "https://try.skinofab.com",
     "store_phone": "+1 (563) 239-5520",
-    "store_phone_tel": "tel:+15632395520"
+    "store_phone_tel": "tel:+15632395520",
+    "tiktok_pixel_id": "DBKNTF3C77U4J2JQS370",
+    "tiktok_advanced_matching_enabled": "true"
   },
   "apf-funnel": {
     "name": "SKINOFAB Adaptive Peptide Foundation",
@@ -41,7 +43,9 @@
     "og_image": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg",
     "funnel_host": "https://try.skinofab.com",
     "store_phone": "+1 (563) 239-5520",
-    "store_phone_tel": "tel:+15632395520"
+    "store_phone_tel": "tel:+15632395520",
+    "tiktok_pixel_id": "DBKNTF3C77U4J2JQS370",
+    "tiktok_advanced_matching_enabled": "true"
   },
   "trial-funnel": {
     "name": "SKINOFAB Adaptive Peptide Foundation Flash Trial",
@@ -63,6 +67,8 @@
     "og_image": "https://cdn.cachebucket.com/media/skinofab/themes/34/assets/sfa-hero-c3926a.jpg",
     "funnel_host": "https://try.skinofab.com",
     "store_phone": "+1 (563) 239-5520",
-    "store_phone_tel": "tel:+15632395520"
+    "store_phone_tel": "tel:+15632395520",
+    "tiktok_pixel_id": "DBKNTF3C77U4J2JQS370",
+    "tiktok_advanced_matching_enabled": "true"
   }
 }

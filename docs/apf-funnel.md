@@ -414,6 +414,42 @@ weak connection would be.
   the funnel on a static CDN would remove both (see "Static hosting" below: the repo is ready). That needs the owner to
   connect the host and point a domain at it.
 
+### TikTok pixel (9 Nov 2026)
+
+The owner's TikTok pixel `DBKNTF3C77U4J2JQS370` is on every page of the three funnels (apf, trial, stick):
+`tiktok_pixel_id` and `tiktok_advanced_matching_enabled: "true"` in `_data/campaigns.json`, the Route C base code in
+`_includes/analytics-head.html` and `js/tiktok.adapter.js`, both with SKINOFAB LOCAL PATCHes.
+
+| Page | TikTok events (each with its item: SKU, name, price, quantity, brand; value; currency USD; an event_id) |
+|---|---|
+| Listicle | Pageview, LandingPageView (TikTok's own), ViewContent (the 5-bottle pack its buttons lead to), ClickButton (the pack of the tapped link) |
+| Sales page | Pageview, LandingPageView, ViewContent (the pack it opens on), AddToCart (the tapped pack) |
+| Checkouts | InitiateCheckout, AddPaymentInfo |
+| Offers / thank-you | Purchase for the order (on the first `?ref_id=` page), Purchase for each accepted offer (`{order}-US{n}` event_id) |
+| Stick funnel | Pageview, ViewContent (product page), InitiateCheckout, AddPaymentInfo, Purchase, offer purchases |
+
+- **The buyer's data.** On the checkout, as soon as a valid email or phone is typed, and on every event after it (the
+  SDK's `user_properties`: email, phone, first and last name, city, state, ZIP, country, customer id), the adapter
+  calls `ttq.identify`. The pixel SHA-256-hashes email, phone, names and ZIP before they leave the browser; the
+  `external_id` (customer id, else the email) is hashed by the adapter first, since the pixel sends that field as
+  given. It is not held behind the newsletter box (the owner's instruction).
+- **Privacy.** Global Privacy Control or the privacy-choices opt-out (`sf_optout`) and there is no `ttq` at all: no
+  script, no request (checked live: 0 requests to TikTok). The privacy policy already names TikTok Inc. and its pixel.
+- **Speed.** TikTok's main script is 90–130 KB. On the listicle and the sales page it loads after the hero has
+  painted (or at her first scroll or tap, the load event, or 3 s); ttq queues every call until then, and a tap that
+  leaves the page waits for it (at most 1.2 s). On the checkout, offer and thank-you pages it loads at once, so a
+  purchase is never lost to a redirect. Live on slow 4G after the change: sales page LCP 2.0–2.4 s, AppLovin
+  page_view 2.1–2.2 s (unchanged).
+- **Proof (9 Nov 2026, store preview).** Every event above answered HTTP 200 for the pixel; the purchase and offer
+  purchase mapping was checked through the same code path with a simulated order and TikTok's requests stopped
+  (value, currency, items and the hashed buyer data all present). No live order was placed.
+- **Server side (Events API).** Not set up: the funnel pages are static pages on the store, with no server of ours
+  to hold the access token, and the token is never put in a page or in git. Every pixel event carries an event_id,
+  so a server-side feed added later (a relay on NEXT's order webhook) deduplicates against the pixel.
+- `check_apf.py` fails a page without the pixel, without the opt-out check before it, with the main script loading
+  with the first screen on a landing page (or late on a page that redirects), a listicle item that differs from the
+  sales page's card, or an adapter without the patches.
+
 ### Reading order (5 Nov 2026)
 
 The owner asked for a page that says in three seconds what we sell and how, then reads top to bottom without
