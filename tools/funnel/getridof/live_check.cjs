@@ -31,7 +31,7 @@ const base = process.argv[2] || 'https://getridof.shop';
     await p.screenshot({ path: `${process.argv[3] || '.'}/live-checkout-${vp.n}.png`, fullPage: false });
     const r2 = await p.goto(base + '/mouse-pouches-checkout-refill/?forceBundleId=main:buy3', { waitUntil: 'load' }); await p.waitForTimeout(9000);
     const s2 = (await p.locator('[data-next-cart-summary]').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
-    ok(`[${vp.n}] refill checkout ${r2.status()}, 3 packs = $55.98`, /55\.98/.test(s2), s2.slice(0, 120));
+    ok(`[${vp.n}] refill checkout ${r2.status()}, 3 packs first order = $47.97`, /47\.97/.test(s2), s2.slice(0, 120));
     const r3 = await p.goto(base + '/mouse-pouches-thank-you/', { waitUntil: 'load' });
     ok(`[${vp.n}] thank-you page ${r3.status()}`, r3.status() === 200);
     await p.goto(base + '/mouse-pouches/', { waitUntil: 'load' }); await p.waitForTimeout(1500);

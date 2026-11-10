@@ -26,7 +26,7 @@ disclaimer: Results vary. Designed to repel mice; not guaranteed to eliminate an
 - **Awareness / sophistication:** 3 (solution-aware) / 4 (crowded "natural repellent" market). Lead with the mechanism, not just "natural".
 - **Problem mechanism:** *The Scent Trail Cycle*. Mice follow pheromone and urine trails through the same entry points, so traps and poison leave the trail for the next mice.
 - **Solution mechanism:** *The 4-Oil Barrier*. Peppermint (40%) overwhelms their sense of smell, cinnamon (5%) masks the trails, cedarwood (4%) discourages nesting, and a castor-oil base (5%) releases the blend slowly for up to 90 days.
-- **Offer:** Buy 1 $29.99 · Buy 2 Get 1 Free $55.98 (pre-selected) · Buy 3 Get 2 Free $74.95 · Automatic Refills at $34.99/pack every 60 days, cancel anytime · free US shipping · exit offer of an extra 10% (GROMOUSE10).
+- **Offer:** one-time Buy 1 $29.99 · Buy 2 Get 1 Free $55.98 (pre-selected) · Buy 3 Get 2 Free $74.95. Subscription (default): 50% off the first order ($24.99 / $47.97 / $64.95), then $34.99/pack every 60 days, cancel anytime · free US shipping · exit offer of an extra 10% (GROMOUSE10).
 - **Guarantee:** 30-day money-back. If mice don't leave within 30 days, a full refund, no forms. Matches /refund-policy/ [CONFIRM: refund policy text says 30 days].
 - **Urgency:** BFCM bundle pricing ends Mon Dec 1, 2026, 11:59pm ET (real). **Scarcity:** BFCM bundle stock is limited [CONFIRM: real number of BFCM bundles].
 - **Proof inventory:** reviews + UGC (sister store, same product) [CONFIRM: counts 1,668 / 35,129+ / 1,000,000+]; EPA FIFRA 25(b) minimum-risk list for all four active oils (public source); comparison table. Removed: the "As seen in BuzzFeed / HuffPost / USA Today" bar (no coverage of this brand).
@@ -66,7 +66,7 @@ Mice keep coming back because they follow invisible scent trails left by every m
 
 [CTA: Get My Pouches — Buy 2, Get 1 Free]
 
-Save 30% more with Automatic Refills (cancel anytime) · Free US shipping · 30-day money-back guarantee
+Subscribe and get 50% off your first order ($24.99 / $47.97 / $64.95), then $34.99 a pack every 60 days. Cancel anytime · Free US shipping · 30-day money-back guarantee
 
 ## 06 · State the Problem Clearly
 
@@ -190,7 +190,8 @@ Here's what you get with the Best Seller bundle:
 - 3 packs, 36 pouches, enough to protect a full home: ~~$178.00~~
 - Free US shipping
 - The 30-day money-back guarantee
-- **Today: $55.98, just $1.56 a pouch**
+- One-time: $55.98
+- **Subscribe: $47.97 for your first order, just $1.33 a pouch.** Then $34.99 a pack every 60 days, cancel anytime
 
 Bundle prices go back up after Cyber Monday.
 

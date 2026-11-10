@@ -212,3 +212,38 @@
     if (bar) bar.click();
   }, true);
 })();
+
+/* ---------- subscription pricing in the bundle box (campaign 2362: sub-1/sub-3/sub-5 offers) ----------
+   Refills ticked: first order 50% off ($24.99 / $47.97 / $64.95), then $34.99 a pack every 60 days.
+   Unticked: one-time prices ($29.99 / $55.98 / $74.95). Compare-at stays the page's ($89 / $178 / $267). */
+(function () {
+  var PRICES = { buy1: { one: ['$29.99', '66% OFF'], sub: ['$24.99', '72% OFF'] },
+                 buy3: { one: ['$55.98', '69% OFF'], sub: ['$47.97', '73% OFF'] },
+                 buy5: { one: ['$74.95', '72% OFF'], sub: ['$64.95', '76% OFF'] } };
+  var refill = document.querySelector('[data-gro-refill]');
+  if (!refill) return;
+  var title = refill.querySelector('.kaching-bundles__subscriptions__title');
+  var sub = refill.querySelector('.kaching-bundles__subscriptions__subtitle');
+  if (title) title.textContent = 'Subscribe & get 50% off your first order';
+  if (sub) sub.textContent = 'Then $34.99 a pack every 60 days · Cancel anytime';
+  // subscription details under the ADD TO CART button (shown while refills are ticked)
+  var atc = document.querySelector('#gro-buy') && document.querySelector('[data-gro-atc]');
+  var info = document.createElement('div');
+  info.className = 'gro-subinfo';
+  info.innerHTML = '<p class="gro-subinfo__line">First order 50% off · then <b>$34.99 a pack every 60 days</b></p>' +
+    '<div class="gro-subinfo__row"><span><i>↻</i>Renews every 60 days</span><span><i>✕</i>Cancel anytime</span><span><i>✓</i>30-day money-back</span></div>';
+  var box = document.getElementById('gro-buy');
+  if (box) box.parentNode.insertBefore(info, box.nextSibling);
+  function paint() {
+    var on = refill.getAttribute('aria-checked') === 'true';
+    document.querySelectorAll('[data-gro-bundle]').forEach(function (bar) {
+      var p = PRICES[bar.dataset.groBundle]; if (!p) return;
+      var v = on ? p.sub : p.one;
+      var price = bar.querySelector('.kaching-bundles__bar-price .money'); if (price) price.textContent = v[0];
+      var off = bar.querySelector('.kaching-bundles__bar-subtitle'); if (off) off.textContent = v[1];
+    });
+    info.style.display = on ? '' : 'none';
+  }
+  new MutationObserver(paint).observe(refill, { attributes: true, attributeFilter: ['aria-checked'] });
+  paint();
+})();

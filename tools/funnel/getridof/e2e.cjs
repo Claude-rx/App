@@ -1,7 +1,7 @@
 // End-to-end check of the Get Rid Of mouse-pouches funnel against a served _site (default http://localhost:8765).
 //   node tools/funnel/getridof/e2e.cjs [baseUrl] [outDir]
 // PDP: bundle bars, refill toggle, ADD TO CART -> checkout URL; accordions, tabs. Checkout: the chosen card is
-// selected and the live Campaign Cart total matches campaign 2362 (29.99 / 55.98 / 74.95). Places no order.
+// selected and the live Campaign Cart total matches campaign 2362 (one-time 29.99 / 55.98 / 74.95; subscribed first order 24.99 / 47.97 / 64.95). Places no order.
 const { chromium } = require('playwright');
 const base = process.argv[2] || 'http://localhost:8765';
 const out = process.argv[3] || '.';
@@ -18,7 +18,7 @@ const results = []; const ok = (name, pass, detail = '') => { results.push({ nam
     ok(`[${vp.name}] no SoFyre text visible`, !(await p.evaluate(() => /sofyre/i.test(document.body.innerText))));
     ok(`[${vp.name}] no requests to the source store`, external.length === 0, external.slice(0, 3).join(' '));
     ok(`[${vp.name}] default bundle = buy3`, await p.evaluate(() => document.querySelector('[data-gro-bundle="buy3"]').classList.contains('kaching-bundles__bar--selected')));
-    ok(`[${vp.name}] 5-pack shows $74.95`, (await p.locator('[data-gro-bundle="buy5"] .kaching-bundles__bar-price').innerText()).includes('74.95'));
+    ok(`[${vp.name}] 5-pack shows $64.95 subscribed (default)`, (await p.locator('[data-gro-bundle="buy5"] .kaching-bundles__bar-price').innerText()).includes('64.95'));
     await p.screenshot({ path: `${out}/pdp-${vp.name}.png`, fullPage: false });
     // accordion (FAQ) opens
     const acc = p.locator('gp-accordion').nth(1).locator('.gp-accordion-item').first();
@@ -45,7 +45,7 @@ const results = []; const ok = (name, pass, detail = '') => { results.push({ nam
     // refill checkout, 3-pack
     await p.goto(base + '/mouse-pouches/checkout-refill/?forceBundleId=main:buy3', { waitUntil: 'load' }); await p.waitForTimeout(6000);
     const t2 = await p.locator('[data-next-cart-summary]').first().innerText().catch(() => '');
-    ok(`[${vp.name}] refill checkout 3-pack total $55.98`, /55\.98/.test(t2), t2.replace(/\s+/g, ' ').slice(0, 200));
+    ok(`[${vp.name}] refill checkout 3-pack first order $47.97 (50% off)`, /47\.97/.test(t2), t2.replace(/\s+/g, ' ').slice(0, 200));
     ok(`[${vp.name}] refill terms shown`, await p.locator('.gro-refill-terms').isVisible());
     await p.screenshot({ path: `${out}/checkout-refill-${vp.name}.png`, fullPage: true });
     ok(`[${vp.name}] no page JS errors`, errs.length === 0, errs.slice(0, 3).join(' | '));

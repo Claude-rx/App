@@ -147,3 +147,10 @@ footer.footer { display: none !important; }
 /* header "Shop Now" CTA (sticky with the header) */
 .header__icons .gro-shop-cta { background: #7EA254 !important; color: #fff !important; font-weight: 700 !important; letter-spacing: .02em; padding-left: 20px !important; padding-right: 20px !important; }
 .header__icons .gro-shop-cta:hover { background: #6B8D45 !important; }
+/* subscription details under the bundle box */
+.gro-subinfo { margin: 8px 0 4px; text-align: center; font-family: Inter, "Helvetica Neue", Arial, sans-serif; color: #23372B; }
+.gro-subinfo__line { margin: 0 0 8px; font-size: 13.5px; }
+.gro-subinfo__row { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; font-size: 12.5px; }
+.gro-subinfo__row span { display: inline-flex; align-items: center; gap: 6px; }
+.gro-subinfo__row i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; background: #EEF4E6; color: #4F7A2E; display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+.gro-stack__note { margin: 4px 0 10px !important; font-size: 13px !important; opacity: .75; text-align: left; }
