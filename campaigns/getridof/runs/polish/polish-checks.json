@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:8765",
-  "ran_at": "2026-11-10T09:11:24.670Z",
+  "ran_at": "2026-11-10T11:16:39.665Z",
   "results": [
     {
       "check": "[desktop] default card buy3 selected (SDK class)",

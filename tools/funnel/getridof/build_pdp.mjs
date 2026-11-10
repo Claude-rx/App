@@ -5,7 +5,7 @@
 //
 // What it does, in a browser DOM (Playwright, network off), then as text:
 //  - brand: every "SoFyre" in the copy, titles and alt text becomes "Get Rid Of"; the header/footer logo is the
-//    store's own logo (cdn.cachebucket.com, copied locally); links to sofyre.com point at getridof.29next.store
+//    store's own logo (cdn.cachebucket.com, copied locally); links to sofyre.com point at getridof.shop
 //  - removes what only works on the source store: Shopify JSON-LD and meta, Shop Pay / dynamic checkout buttons,
 //    cart drawer, search, social links, the newsletter form, hidden upsell popups, the Kaching app's config payload
 //  - the bundle box (Buy 1 / Buy 2 Get 1 / Buy 3 Get 2 + "Save 30% with automatic refills") and every ADD TO CART
@@ -24,7 +24,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../.
 const SRC = path.join(ROOT, 'exports/sofyre/offline');
 const CAMP = path.join(ROOT, 'campaigns/getridof/src/mouse-pouches');
 const OUT_ASSETS = path.join(CAMP, 'assets/pdp');
-const STORE = 'https://getridof.29next.store';
+const STORE = 'https://getridof.shop';   // every visible link goes to the main domain
 const ASSET_URL = '/mouse-pouches/pdp/';
 // brand colour = the new packaging's green (sampled from brand/getridof/new-pack.png); replaces the reference page's lime
 const BRAND_GREEN = '#7EA254';
@@ -55,6 +55,16 @@ for (const f of fs.readdirSync(OUT_ASSETS)) if (f.endsWith('.css')) { const fp =
 const SECTIONS = Object.fromEntries([...fs.readFileSync(path.join(ROOT, 'tools/funnel/getridof/sections.html'), 'utf8')
   .matchAll(/<!--@([\w-]+)-->([\s\S]*?)<!--@end-->/g)].map(m => [m[1], m[2].trim()]));
 for (const f of fs.readdirSync(path.join(ROOT, 'brand/getridof/sections'))) fs.copyFileSync(path.join(ROOT, 'brand/getridof/sections', f), path.join(OUT_ASSETS, f));
+
+// authority figure (section 12): only a real, consenting expert from brand/getridof/expert.json; never generated
+const EXPERT = JSON.parse(fs.readFileSync(path.join(ROOT, 'brand/getridof/expert.json'), 'utf8'));
+const esc = v => String(v || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+if (EXPERT.approved && ['name', 'credentials', 'photo_file', 'quote'].every(k => String(EXPERT[k] || '').trim())) {
+  SECTIONS.expert = `<div class="gro-expert"><img src="assets/${esc(EXPERT.photo_file)}" alt="${esc(EXPERT.name)}" width="120" height="120" loading="lazy">
+    <blockquote>“${esc(EXPERT.quote)}”</blockquote><p class="gro-expert__who"><b>${esc(EXPERT.name)}</b>, ${esc(EXPERT.credentials)}${EXPERT.organization ? ' · ' + esc(EXPERT.organization) : ''}</p>
+    ${EXPERT.disclosure ? `<p class="gro-expert__disc">${esc(EXPERT.disclosure)}</p>` : ''}</div>`;
+  console.error('expert: ' + EXPERT.name);
+} else console.error('expert: none approved in brand/getridof/expert.json (section 12 shows the EPA source only)');
 
 // 2. DOM pass
 const browser = await chromium.launch();
@@ -168,19 +178,32 @@ const report = await page.evaluate(({ STORE, SECTIONS }) => {
   const S = {
     hero, press: find(/BUZZZ/), timeline: find(/Exactly What Happens/), safe: find(/Safe Home/), props: find(/35,129/),
     reviews: find(/Real Results From/), science: find(/Science of Nature/), directions: find(/Directions Of Use/),
-    stack: find(/How We Stack Up/), guarantee: find(/^30 Day Money Back Guarantee$/i), faq: find(/^FAQ$/), help: find(/Still Need help/i),
+    stack: find(/How We Stack Up/), guarantee: find(/^30 Day Money Back Guarantee$/i), faq: find(/^FAQ$/), help: find(/Still Need help/i) || null,
   };
-  const missing = Object.entries(S).filter(([, v]) => !v).map(([k]) => k);
+  const missing = Object.entries(S).filter(([k, v]) => !v && k !== 'help').map(([k]) => k);
   if (missing.length) throw new Error('sections not found: ' + missing.join(', '));
   S.press.remove(); count('press-bar-removed');   // "as seen in" logos: coverage of the sister brand, not this one
-  S.guarantee.appendChild(frag(SECTIONS['guarantee-claim'])); S.faq.appendChild(frag(SECTIONS['faq-extra'])); S.help.appendChild(frag(SECTIONS.service));
+  S.guarantee.appendChild(frag(SECTIONS['guarantee-claim']));
+  // FAQ extras go into the FAQ's right-hand column, after its last item
+  const faqCols = S.faq.querySelectorAll('gp-accordion'); const lastCol = faqCols[faqCols.length - 1];
+  lastCol.parentElement.insertBefore(frag(SECTIONS['faq-extra']), lastCol.nextSibling);
+  // the GemPages "Still Need help?" box is replaced by the customer-service section (step 20)
+  const helpH = [...S.faq.querySelectorAll('h2,h3,p')].find(e => /Still Need help/i.test(e.textContent));
+  if (helpH) { let box = helpH; for (let i = 0; i < 6 && box.parentElement; i++) box = box.parentElement; if (box.matches('gp-row')) { box.remove(); count('old-help-box'); } }
+  // footer: the store's footer (signup heading without a form, policy list) becomes the brand footer
+  const oldFooter = document.querySelector('footer.footer');
+  if (oldFooter) { oldFooter.parentElement.insertBefore(frag(SECTIONS.footer), oldFooter); oldFooter.remove(); count('footer'); }
   const rest = secs.filter(x => !Object.values(S).includes(x));   // anything unmapped keeps its place at the end
   const order = [S.hero, 'problem', 'mechanism', 'solution-intro', S.timeline, 'others', S.stack, S.science, S.safe, 'before-after', 'proof', 'dream',
-                 S.directions, S.guarantee, 'offer', 'scarcity', S.props, S.reviews, S.faq, ...(S.help !== S.faq ? [S.help] : []), ...rest];
+                 S.directions, S.guarantee, 'offer', 'scarcity', S.props, S.reviews, S.faq, 'support', ...(S.help && S.help !== S.faq ? [S.help] : []), ...rest];
   for (const item of order) { main.appendChild(typeof item === 'string' ? frag(SECTIONS[item]) : item); }
+  if (SECTIONS.expert) { const auth = main.querySelector('[data-gro-step="12"] .gro-authority'); if (auth) { auth.parentElement.insertBefore(frag(SECTIONS.expert), auth); count('expert'); } }
   count('sections-ordered', order.length);
   // section buttons carry the ATC hook added above only for pre-existing buttons
   main.querySelectorAll('.gro-btn[data-gro-atc]').forEach(() => count('section-cta'));
+
+  // header button: "Track Order" becomes the sticky "Shop Now" CTA (the header stays on top; it scrolls to the bundle box)
+  document.querySelectorAll('a.header__icons-btn').forEach(a => { a.textContent = 'Shop Now'; a.setAttribute('href', '#gro-buy'); a.classList.add('gro-shop-cta'); count('shop-cta'); });
 
   // countdown hook
   document.querySelectorAll('gp-countdown-timer').forEach(t => { t.setAttribute('data-gro-countdown', ''); count('countdown'); });

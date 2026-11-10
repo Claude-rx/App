@@ -95,3 +95,55 @@ html, body:not(.gro-menu-open) { overflow: visible !important; height: auto !imp
   #MainContent .gro-atf { padding: 0 4px; margin-top: 4px; }
   #MainContent .gro-atf .gro-atf__headline { font-size: 30px !important; }
 }
+
+/* FAQ extras: inside the FAQ's right column, styled like its items */
+.gro-faq-extra { max-width: none; margin: 15px 0 0; padding: 0; display: grid; gap: 15px; }
+.gro-faq-extra details { margin: 0; border: 1px solid #24433D; border-radius: 5px; padding: 0; background: #fff; }
+.gro-faq-extra summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 67px; padding: 11px 24px 10px 13px; font: 600 13px/1.3 "Helvetica Neue", Arial, sans-serif; text-transform: uppercase; color: #24433D; }
+.gro-faq-extra summary::-webkit-details-marker { display: none; }
+.gro-faq-extra summary::after { content: ""; flex: 0 0 27px; height: 27px; border-radius: 50%; background: #7EA254 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%23243918' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat; transition: transform .2s; }
+.gro-faq-extra details[open] summary::after { transform: rotate(180deg); }
+.gro-faq-extra details p { margin: 0; padding: 0 24px 14px 13px; font-size: 15px; line-height: 1.55; }
+/* customer service (step 20) */
+.gro-support__lead { max-width: 560px; margin: 0 auto 22px !important; }
+.gro-support { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 900px; margin: 0 auto; }
+.gro-support__card { display: grid; justify-items: center; gap: 4px; padding: 22px 16px; background: #fff; border: 1px solid #dfe7d4; border-radius: 16px; text-decoration: none; color: #1d2a22; transition: border-color .15s, transform .15s; }
+.gro-support__card:hover { border-color: #7EA254; transform: translateY(-2px); }
+.gro-support__icon { width: 46px; height: 46px; border-radius: 50%; background: #23372B; color: #fff; display: grid; place-items: center; margin-bottom: 6px; }
+.gro-support__icon svg { width: 22px; height: 22px; }
+.gro-support__card b { font-size: 17px; color: #23372B; } .gro-support__card span { font-size: 15px; } .gro-support__card small { font-size: 13px; opacity: .65; }
+.gro-support__trust { margin-top: 20px !important; font-size: 14px !important; font-weight: 600; color: #23372B; }
+/* footer */
+footer.footer { display: none !important; }
+.gro-footer { background: #23372B; color: #E7EEDF; font-family: Inter, "Helvetica Neue", Arial, sans-serif; padding: 56px 16px 28px; }
+.gro-footer__top { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; }
+.gro-footer__brand img { width: 180px; height: auto; display: block; margin-bottom: 14px; }
+.gro-footer__brand p { font-size: 15px; line-height: 1.55; margin: 0 0 16px; opacity: .85; max-width: 300px; }
+.gro-footer__badge { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,.25); border-radius: 12px; padding: 10px 14px; }
+.gro-footer__badge b { font-size: 20px; color: #B9D98F; } .gro-footer__badge span { font-size: 12px; line-height: 1.25; text-transform: uppercase; letter-spacing: .06em; }
+.gro-footer__col h3 { font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: #fff; margin: 4px 0 14px; font-weight: 700; }
+.gro-footer__col a { display: block; color: #E7EEDF; opacity: .85; text-decoration: none; font-size: 15px; line-height: 1.4; margin-bottom: 10px; }
+.gro-footer__col a:hover { opacity: 1; color: #B9D98F; }
+.gro-footer__pay { max-width: 1120px; margin: 34px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.14); display: flex; flex-wrap: wrap; gap: 8px; }
+.gro-footer__pay span { font-size: 11px; font-weight: 800; letter-spacing: .06em; padding: 6px 10px; border-radius: 6px; background: #fff; color: #23372B; }
+.gro-footer__legal { max-width: 1120px; margin: 18px auto 0; font-size: 12.5px; line-height: 1.6; opacity: .7; }
+.gro-footer__legal p { margin: 0 0 8px; }
+@media (max-width: 767px) {
+  .gro-support { grid-template-columns: 1fr; }
+  .gro-footer { padding: 40px 20px 24px; } .gro-footer__top { grid-template-columns: 1fr 1fr; gap: 28px 20px; } .gro-footer__brand { grid-column: 1 / -1; }
+}
+/* authority figure card (renders only from brand/getridof/expert.json with approved: true) */
+.gro-expert { background: #fff; border: 1px solid #dfe7d4; border-radius: 16px; padding: 24px; margin: 6px 0 16px; display: grid; justify-items: center; gap: 10px; }
+.gro-expert img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #7EA254; }
+.gro-expert blockquote { margin: 0; font-family: "Playfair Display", Georgia, serif; font-size: 21px; line-height: 1.4; color: #23372B; }
+.gro-expert__who { margin: 0 !important; font-size: 15px !important; } .gro-expert__disc { margin: 0 !important; font-size: 12px !important; opacity: .65; }
+/* FAQ extras: match the GemPages items exactly (bottom edge, 15px bold caps, green chevron) */
+#MainContent .gro-faq-extra details { border: 1px solid #24433D !important; border-radius: 5px !important; box-shadow: 0 3px 0 #24433D; padding: 0 !important; margin: 0 !important; }
+#MainContent .gro-faq-extra summary { display: flex !important; align-items: center; justify-content: space-between; gap: 14px; min-height: 58px; padding: 10px 24px 10px 13px !important; font: 600 15px/1.25 "Helvetica Neue", Arial, sans-serif !important; letter-spacing: 0 !important; text-transform: uppercase; color: #24433D !important; list-style: none !important; }
+#MainContent .gro-faq-extra summary::marker { content: ""; }
+#MainContent .gro-faq-extra summary::after { content: "" !important; display: block !important; flex: 0 0 24px; width: 24px; height: 24px; border-radius: 50%; background: #CBE89A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%23243918' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/15px no-repeat; border: 1px solid #243918; transition: transform .2s; }
+#MainContent .gro-faq-extra details[open] summary::after { transform: rotate(180deg); }
+#MainContent .gro-faq-extra details p { padding: 0 24px 14px 13px !important; margin: 0 !important; }
+/* header "Shop Now" CTA (sticky with the header) */
+.header__icons .gro-shop-cta { background: #7EA254 !important; color: #fff !important; font-weight: 700 !important; letter-spacing: .02em; padding-left: 20px !important; padding-right: 20px !important; }
+.header__icons .gro-shop-cta:hover { background: #6B8D45 !important; }

@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 CAMP = ROOT / 'campaigns/getridof/src/mouse-pouches'
 TEMPLATE = ROOT / 'tools/funnel/getridof/olympus-checkout.template.html'
-STORE = 'https://getridof.29next.store'
+STORE = 'https://getridof.shop'   # every visible link goes to the main domain
 EMAIL = 'support@getridof.shop'
 
 GALLERY = ['t12-rodent-57d2b1.png', 'image2-829fe1.webp', 'image3-597645.webp', 'image4-ef9455.webp',

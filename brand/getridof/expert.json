@@ -1,0 +1,10 @@
+{
+  "_readme": "Authority figure for the sales page (section 12). It renders ONLY when approved is true and every field is filled with a REAL person who agreed in writing to this exact quote. Keep their signed approval on file. Photo: a real photo of them, 600x600+, placed in brand/getridof/sections/ and named in photo_file.",
+  "approved": false,
+  "name": "",
+  "credentials": "",
+  "organization": "",
+  "photo_file": "",
+  "quote": "",
+  "disclosure": "Paid advisor to Get Rid Of"
+}
