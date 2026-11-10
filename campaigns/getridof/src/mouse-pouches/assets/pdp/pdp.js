@@ -189,3 +189,26 @@
     });
   });
 })();
+
+/* ---------- long-sales-page sections: real-deadline countdown + offer buttons that pick a bundle ---------- */
+(function () {
+  document.querySelectorAll('[data-gro-deadline]').forEach(function (box) {
+    var end = new Date(box.getAttribute('data-gro-deadline')).getTime();
+    var set = function (u, v) { var el = box.querySelector('[data-u="' + u + '"]'); if (el) el.textContent = (v < 10 ? '0' : '') + v; };
+    var tick = function () {
+      var s = Math.floor((end - Date.now()) / 1000);
+      if (s <= 0) { box.style.display = 'none'; return false; }   // real deadline: gone once it has passed
+      set('d', Math.floor(s / 86400)); set('h', Math.floor(s % 86400 / 3600)); set('m', Math.floor(s % 3600 / 60)); set('s', s % 60);
+      return true;
+    };
+    if (tick()) var t = setInterval(function () { if (!tick()) clearInterval(t); }, 1000);
+  });
+  // an offer button may name the bundle it sells (data-gro-bundle-pick); window capture runs before the shared ATC
+  // handler (document capture), so the bundle is selected before the checkout URL is built
+  window.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-gro-bundle-pick]');
+    if (!b) return;
+    var bar = document.querySelector('[data-gro-bundle="' + b.getAttribute('data-gro-bundle-pick') + '"]');
+    if (bar) bar.click();
+  }, true);
+})();

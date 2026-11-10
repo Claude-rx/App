@@ -51,12 +51,17 @@ for (const f of fs.readdirSync(OUT_ASSETS)) if (f.endsWith('.css')) { const fp =
   await b.close();
 }
 
+// long-sales-page sections (tools/funnel/getridof/sections.html, copy from campaigns/getridof/sales-page/copy-deck.md)
+const SECTIONS = Object.fromEntries([...fs.readFileSync(path.join(ROOT, 'tools/funnel/getridof/sections.html'), 'utf8')
+  .matchAll(/<!--@([\w-]+)-->([\s\S]*?)<!--@end-->/g)].map(m => [m[1], m[2].trim()]));
+for (const f of fs.readdirSync(path.join(ROOT, 'brand/getridof/sections'))) fs.copyFileSync(path.join(ROOT, 'brand/getridof/sections', f), path.join(OUT_ASSETS, f));
+
 // 2. DOM pass
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 await page.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
 await page.goto('file://' + path.join(SRC, 'index.html'), { waitUntil: 'load' });
-const report = await page.evaluate(({ STORE }) => {
+const report = await page.evaluate(({ STORE, SECTIONS }) => {
   const n = {}; const count = (k, v = 1) => (n[k] = (n[k] || 0) + v);
   const rm = (sel, k) => document.querySelectorAll(sel).forEach(e => { e.remove(); count(k || sel); });
 
@@ -150,10 +155,37 @@ const report = await page.evaluate(({ STORE }) => {
   document.querySelectorAll('gp-product-button, gp-button').forEach(g => { g.removeAttribute('gp-href'); });
   document.querySelectorAll('product-form form').forEach(f => { f.removeAttribute('action'); f.setAttribute('onsubmit', 'return false'); });
 
+  // ---- the 20-step long-sales-page order (campaigns/getridof/sales-page/copy-deck.md) ----
+  const frag = html => { const t = document.createElement('template'); t.innerHTML = html; return t.content.firstElementChild; };
+  // above the fold (2-4): problem/promise headline, summary, benefit bullets, guarantee, before the product title
+  const title = document.querySelector('.exp-atf__product-title');
+  if (title) { title.parentElement.insertBefore(frag(SECTIONS.atf), title); count('atf'); }
+  const main = document.querySelector('#MainContent');
+  const secs = [...main.children].filter(e => e.matches('section, div.shopify-section, .shopify-section'));
+  const hero = secs[0];
+  // match on the section's own headings (h1-h3 or GemPages heading text), never inside the hero's buy box
+  const find = re => secs.find(s => s !== hero && [...s.querySelectorAll('h1,h2,h3,[data-gp-text] p')].some(h => re.test(h.textContent.trim())));
+  const S = {
+    hero, press: find(/BUZZZ/), timeline: find(/Exactly What Happens/), safe: find(/Safe Home/), props: find(/35,129/),
+    reviews: find(/Real Results From/), science: find(/Science of Nature/), directions: find(/Directions Of Use/),
+    stack: find(/How We Stack Up/), guarantee: find(/^30 Day Money Back Guarantee$/i), faq: find(/^FAQ$/), help: find(/Still Need help/i),
+  };
+  const missing = Object.entries(S).filter(([, v]) => !v).map(([k]) => k);
+  if (missing.length) throw new Error('sections not found: ' + missing.join(', '));
+  S.press.remove(); count('press-bar-removed');   // "as seen in" logos: coverage of the sister brand, not this one
+  S.guarantee.appendChild(frag(SECTIONS['guarantee-claim'])); S.faq.appendChild(frag(SECTIONS['faq-extra'])); S.help.appendChild(frag(SECTIONS.service));
+  const rest = secs.filter(x => !Object.values(S).includes(x));   // anything unmapped keeps its place at the end
+  const order = [S.hero, 'problem', 'mechanism', 'solution-intro', S.timeline, 'others', S.stack, S.science, S.safe, 'before-after', 'proof', 'dream',
+                 S.directions, S.guarantee, 'offer', 'scarcity', S.props, S.reviews, S.faq, ...(S.help !== S.faq ? [S.help] : []), ...rest];
+  for (const item of order) { main.appendChild(typeof item === 'string' ? frag(SECTIONS[item]) : item); }
+  count('sections-ordered', order.length);
+  // section buttons carry the ATC hook added above only for pre-existing buttons
+  main.querySelectorAll('.gro-btn[data-gro-atc]').forEach(() => count('section-cta'));
+
   // countdown hook
   document.querySelectorAll('gp-countdown-timer').forEach(t => { t.setAttribute('data-gro-countdown', ''); count('countdown'); });
   return n;
-}, { STORE });
+}, { STORE, SECTIONS });
 
 let html = await page.evaluate(() => '<!doctype html>\n' + document.documentElement.outerHTML);
 await browser.close();
