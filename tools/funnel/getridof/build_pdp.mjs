@@ -26,6 +26,9 @@ const CAMP = path.join(ROOT, 'campaigns/getridof/src/mouse-pouches');
 const OUT_ASSETS = path.join(CAMP, 'assets/pdp');
 const STORE = 'https://getridof.29next.store';
 const ASSET_URL = '/mouse-pouches/pdp/';
+// brand colour = the new packaging's green (sampled from brand/getridof/new-pack.png); replaces the reference page's lime
+const BRAND_GREEN = '#7EA254';
+const recolor = t => t.replace(/#ccf46f/gi, BRAND_GREEN).replace(/(rgba?\(\s*)204(\s*,\s*)244(\s*,\s*)111/gi, '$1126$2162$384');
 
 // 1. assets
 fs.mkdirSync(OUT_ASSETS, { recursive: true });
@@ -37,6 +40,7 @@ for (const [name, url] of [['gro-logo.svg', `https://cdn.cachebucket.com/media/g
 }
 fs.copyFileSync(path.join(ROOT, 'tools/funnel/getridof/pdp.js'), path.join(OUT_ASSETS, 'pdp.js'));
 fs.copyFileSync(path.join(ROOT, 'tools/funnel/getridof/pdp.css'), path.join(OUT_ASSETS, 'pdp.css'));
+for (const f of fs.readdirSync(OUT_ASSETS)) if (f.endsWith('.css')) { const fp = path.join(OUT_ASSETS, f); fs.writeFileSync(fp, recolor(fs.readFileSync(fp, 'utf8'))); }
 
 // favicon + touch icon for the checkout/receipt layout (the starter shipped NEXT's): the store logo on white, square
 {
@@ -155,7 +159,7 @@ let html = await page.evaluate(() => '<!doctype html>\n' + document.documentElem
 await browser.close();
 
 // 3. text pass: asset paths, leftovers
-html = html.replace(/(["'(])assets\//g, `$1${ASSET_URL}`);
+html = recolor(html.replace(/(["'(])assets\//g, `$1${ASSET_URL}`));
 html = html.replace(/(https?:)?\/\/sofyre\.com\/cdn\/[^"' )]+/g, '');      // stray CDN refs (badge template etc.)
 html = html.replace('</head>', `<link rel="stylesheet" href="${ASSET_URL}pdp.css">\n<link rel="icon" href="${ASSET_URL}gro-logo.svg">\n</head>`);
 html = html.replace('</body>', `<script src="${ASSET_URL}pdp.js" defer></script>\n</body>`);

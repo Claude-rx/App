@@ -1,6 +1,14 @@
 /* Get Rid Of checkout additions (build_checkout.py) */
-.gro-refill-terms{margin:12px 0;padding:12px 14px;border:1px solid #CCF46F;background:#F8FCEB;border-radius:8px;font-size:13px;line-height:1.45;color:#23372B}
+.gro-refill-terms{margin:12px 0;padding:12px 14px;border:1px solid #7EA254;background:#EEF4E6;border-radius:8px;font-size:13px;line-height:1.45;color:#23372B}
 .gro-refill-terms a{color:#23372B;text-decoration:underline}
 /* bundle cards: the deal is the title (package name hidden); the % off is stated on the PDP, not the SDK's 62.67% badge */
 [data-next-bundle-card] .os-card__title [data-next-display="package.name"],
 [data-next-bundle-card] [data-next-discounts="offer"].os-card__title-badge{display:none!important}
+/* brand palette = the packaging: green #7EA254 on deep green #23372B (replaces the starter's blue/navy/teal) */
+.promo-banner__bar{background:#23372B!important;color:#fff!important}
+.submit-button{background:#7EA254!important;border-color:#7EA254!important;color:#fff!important}
+.submit-button:hover{background:#6B8D45!important;border-color:#6B8D45!important}
+[data-next-bundle-card].next-selected{border-color:#23372B!important}
+.os-card__label-2{background:#EEF4E6!important;color:#4F7A2E!important;border-color:#7EA254!important}
+.card-icons,.card-icons svg,.card-icons path{color:#4F7A2E!important;border-color:#4F7A2E!important}
+.footer_section,.icon-img{color:#23372B;border-color:#23372B}
