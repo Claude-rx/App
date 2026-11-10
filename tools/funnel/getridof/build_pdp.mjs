@@ -29,7 +29,7 @@ const ASSET_URL = '/mouse-pouches/pdp/';
 
 // 1. assets
 fs.mkdirSync(OUT_ASSETS, { recursive: true });
-for (const f of fs.readdirSync(path.join(SRC, 'assets'))) fs.copyFileSync(path.join(SRC, 'assets', f), path.join(OUT_ASSETS, f));
+for (const f of fs.readdirSync(path.join(SRC, 'assets'))) if (!/sofyre/i.test(f)) fs.copyFileSync(path.join(SRC, 'assets', f), path.join(OUT_ASSETS, f));
 for (const [name, url] of [['gro-logo.svg', `https://cdn.cachebucket.com/media/getridof/themes/11/assets/assets/img/gro/logo.svg`],
                            ['gro-logo-white.svg', `https://cdn.cachebucket.com/media/getridof/themes/11/assets/assets/img/gro/logo-white.svg`]]) {
   const r = await fetch(url); if (!r.ok) throw new Error(`logo ${url}: ${r.status}`);
