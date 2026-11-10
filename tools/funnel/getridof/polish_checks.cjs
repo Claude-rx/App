@@ -22,7 +22,7 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
     const radioVis = await p.evaluate(() => [...document.querySelectorAll('[data-next-bundle-card]')].map(c => getComputedStyle(c.querySelector('.radio-inner') || c, '::before').content + '|' + getComputedStyle(c.querySelector('.radio-inner') || c).opacity + '|' + getComputedStyle(c.querySelector('.radio-inner') || c).backgroundColor));
     ok(`[${vp.n}] radio visuals follow selection`, radioVis[0] !== radioVis[1], radioVis.join(' / '));
     const total1 = await p.locator('[data-next-cart-summary]').first().innerText();
-    ok(`[${vp.n}] buy1 total $29.99`, /29\.99/.test(total1));
+    ok(`[${vp.n}] buy1 total $24.99 (subscription first order)`, /24\.99/.test(total1));
     await p.locator('[data-next-bundle-card]').first().screenshot({ path: `${out}/bundle-cards-${vp.n}.png` }).catch(() => {});
     await p.locator('[data-next-bundle-selector]').first().screenshot({ path: `${out}/bundle-selector-${vp.n}.png` });
     // bump
@@ -30,7 +30,7 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
     const before = await bump.getAttribute('class');
     await bump.click(); await p.waitForTimeout(1800);
     const after = await bump.getAttribute('class'); const t2 = await p.locator('[data-next-cart-summary]').first().innerText();
-    ok(`[${vp.n}] bump toggles on and adds $3.97`, !/next-(active|selected|in-cart)/.test(before || '') && /next-(active|selected|in-cart)/.test(after || '') && /33\.96/.test(t2), `${before} -> ${after}`);
+    ok(`[${vp.n}] bump toggles on and adds $3.97`, !/next-(active|selected|in-cart)/.test(before || '') && /next-(active|selected|in-cart)/.test(after || '') && /28\.96/.test(t2), `${before} -> ${after}`);
     await bump.screenshot({ path: `${out}/bump-${vp.n}.png` });
     await bump.click(); await p.waitForTimeout(1500);
     ok(`[${vp.n}] bump toggles off`, !/next-(active|selected|in-cart)/.test(await bump.getAttribute('class') || ''));
@@ -61,7 +61,7 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
     await p.screenshot({ path: `${out}/exit-intent.png` });
     await p.locator('[data-exit-intent-action="apply-coupon"]').first().click(); await p.waitForTimeout(3000);
     const t = await p.locator('[data-next-cart-summary]').first().innerText();
-    ok('[desktop] exit coupon GROMOUSE10 applies (3-pack $55.98 -> $50.37)', /50\.37/.test(t), t.replace(/\s+/g, ' ').slice(0, 220));
+    ok('[desktop] exit coupon GROMOUSE10 applies (3-pack $47.97 -> $43.17)', /43\.17/.test(t), t.replace(/\s+/g, ' ').slice(0, 220));
   }
   await b.close();
   require('fs').writeFileSync(`${out}/polish-checks.json`, JSON.stringify({ base, ran_at: new Date().toISOString(), results: res }, null, 2));

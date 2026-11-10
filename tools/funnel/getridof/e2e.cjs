@@ -1,7 +1,7 @@
 // End-to-end check of the Get Rid Of mouse-pouches funnel against a served _site (default http://localhost:8765).
 //   node tools/funnel/getridof/e2e.cjs [baseUrl] [outDir]
 // PDP: bundle bars, refill toggle, ADD TO CART -> checkout URL; accordions, tabs. Checkout: the chosen card is
-// selected and the live Campaign Cart total matches campaign 2362 (one-time 29.99 / 55.98 / 74.95; subscribed first order 24.99 / 47.97 / 64.95). Places no order.
+// selected and the live Campaign Cart total matches campaign 2362 (subscription first order 24.99 / 47.97 / 64.95). Places no order.
 const { chromium } = require('playwright');
 const base = process.argv[2] || 'http://localhost:8765';
 const out = process.argv[3] || '.';
@@ -29,25 +29,24 @@ const results = []; const ok = (name, pass, detail = '') => { results.push({ nam
     const tab = p.locator('gp-tab').first(); const li = tab.locator('li.gp-tab-item').nth(2);
     await li.scrollIntoViewIfNeeded(); await li.click(); await p.waitForTimeout(300);
     ok(`[${vp.name}] timeline tab switches`, await li.getAttribute('aria-selected') === 'true');
-    // buy box: 5-pack, refill off -> one-time checkout
+    // buy box: 5-pack, subscription (locked on) -> the one checkout
     await p.locator('[data-gro-bundle="buy5"]').scrollIntoViewIfNeeded(); await p.locator('[data-gro-bundle="buy5"]').click();
-    const refillOn = await p.locator('[data-gro-refill]').getAttribute('aria-checked');
-    if (refillOn === 'true') await p.locator('[data-gro-refill]').click();
+    await p.locator('[data-gro-refill]').dispatchEvent('click');   // locked (aria-disabled): a click must not untick it
+    ok(`[${vp.name}] subscription box stays ticked (subscription-only)`, await p.locator('[data-gro-refill]').getAttribute('aria-checked') === 'true');
     await Promise.all([p.waitForURL(/checkout\//), p.locator('[data-gro-atc]').first().click()]);
     const u = new URL(p.url());
-    ok(`[${vp.name}] ATC -> one-time checkout with buy5 + utm kept`, u.pathname === '/mouse-pouches/checkout/' && u.searchParams.get('forceBundleId') === 'main:buy5' && u.searchParams.get('utm_source') === 'test', u.pathname + u.search);
+    ok(`[${vp.name}] ATC -> checkout with buy5 + utm kept`, u.pathname === '/mouse-pouches/checkout/' && u.searchParams.get('forceBundleId') === 'main:buy5' && u.searchParams.get('utm_source') === 'test', u.pathname + u.search);
     await p.waitForFunction(() => window.next && document.querySelector('[data-next-bundle-card][data-next-bundle-id="buy5"]'), null, { timeout: 30000 }).catch(() => {});
     await p.waitForTimeout(5000);
     const st = await p.evaluate(() => { const s = window.next && window.next.cart && window.next.cart.getState ? window.next.cart.getState() : (window.nextDebug && window.nextDebug.stores.cart.getState()); return s ? JSON.stringify({ items: (s.items || []).map(i => [i.packageId, i.quantity]), total: s.totals && s.totals.total && s.totals.total.value, sub: s.totals && s.totals.subtotal && s.totals.subtotal.value }) : null; }).catch(e => 'err ' + e.message);
     const totalText = await p.locator('[data-next-cart-summary]').first().innerText().catch(() => '');
-    ok(`[${vp.name}] checkout cart = 5 x pkg 1, total $74.95`, /74\.95/.test(totalText) || /74\.95/.test(st || ''), (st || '') + ' | ' + totalText.replace(/\s+/g, ' ').slice(0, 160));
+    ok(`[${vp.name}] checkout cart = 5 subscribed packs, first order $64.95`, /64\.95/.test(totalText) || /64\.95/.test(st || ''), (st || '') + ' | ' + totalText.replace(/\s+/g, ' ').slice(0, 160));
     await p.screenshot({ path: `${out}/checkout-${vp.name}.png`, fullPage: true });
-    // refill checkout, 3-pack
-    await p.goto(base + '/mouse-pouches/checkout-refill/?forceBundleId=main:buy3', { waitUntil: 'load' }); await p.waitForTimeout(6000);
+    // same checkout, 3-pack: subscription first order + renewal terms by the button
+    await p.goto(base + '/mouse-pouches/checkout/?forceBundleId=main:buy3', { waitUntil: 'load' }); await p.waitForTimeout(6000);
     const t2 = await p.locator('[data-next-cart-summary]').first().innerText().catch(() => '');
-    ok(`[${vp.name}] refill checkout 3-pack first order $47.97 (50% off)`, /47\.97/.test(t2), t2.replace(/\s+/g, ' ').slice(0, 200));
+    ok(`[${vp.name}] checkout 3-pack first order $47.97 (50% off)`, /47\.97/.test(t2), t2.replace(/\s+/g, ' ').slice(0, 200));
     ok(`[${vp.name}] refill terms shown`, await p.locator('.gro-refill-terms').isVisible());
-    await p.screenshot({ path: `${out}/checkout-refill-${vp.name}.png`, fullPage: true });
     ok(`[${vp.name}] no page JS errors`, errs.length === 0, errs.slice(0, 3).join(' | '));
     await ctx.close();
   }

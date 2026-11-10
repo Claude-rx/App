@@ -9,7 +9,7 @@
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var CHECKOUT = { one: '/mouse-pouches/checkout/', refill: '/mouse-pouches/checkout-refill/' };
+  var CHECKOUT = { one: '/mouse-pouches/checkout/', refill: '/mouse-pouches/checkout/' };   // subscription-only: one checkout
 
   /* ---------- buy box ---------- */
   var bars = $$('[data-gro-bundle]');
@@ -31,7 +31,9 @@
     var main = $('.kaching-bundles__bar-main', b);
     if (main) main.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); state.bundle = b.dataset.groBundle; renderBox(); } });
   });
-  if (refillEl) {
+  var SUBSCRIPTION_ONLY = true;   // every order is the subscription: the box stays ticked and is not a toggle
+  if (SUBSCRIPTION_ONLY) { state.refill = true; if (refillEl) { refillEl.setAttribute('aria-disabled', 'true'); refillEl.classList.add('gro-locked'); } }
+  if (refillEl && !SUBSCRIPTION_ONLY) {
     var flip = function (e) { e.preventDefault(); state.refill = !state.refill; renderBox(); };
     refillEl.addEventListener('click', flip);
     refillEl.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') flip(e); });

@@ -7,18 +7,25 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   // routing meta tags
-  for (const pg of ['mouse-pouches-checkout', 'mouse-pouches-checkout-refill']) {
-    const html = await (await p.request.get(`${base}/${pg}/`)).text();
-    const m = html.match(/next-success-url" content="([^"]*)"/);
-    ok(`${pg}: completed order goes to the upsell`, m && m[1] === '/mouse-pouches-special-offer/', m && m[1]);
+  // flow: sales page -> checkout (subscription) -> upsell 1 -> upsell 2 -> thank you
+  const ck = await (await p.request.get(`${base}/mouse-pouches-checkout/`)).text();
+  const m = ck.match(/next-success-url" content="([^"]*)"/);
+  ok('checkout: completed order goes to upsell 1', m && m[1] === '/mouse-pouches-special-offer/', m && m[1]);
+  const gone = await p.request.get(`${base}/mouse-pouches-checkout-refill/`);
+  ok('old split refill checkout is gone', gone.status() === 404, String(gone.status()));
+  for (const [pg, next] of [['mouse-pouches-special-offer', '/mouse-pouches-special-offer-2/'], ['mouse-pouches-special-offer-2', '/mouse-pouches-thank-you/']]) {
+    const up = await (await p.request.get(`${base}/${pg}/`)).text();
+    const acc = (up.match(/next-upsell-accept-url" content="([^"]*)"/) || [])[1], dec = (up.match(/next-upsell-decline-url" content="([^"]*)"/) || [])[1];
+    ok(`${pg}: accept and decline go to ${next}`, acc === next && dec === next, `accept=${acc} decline=${dec}`);
   }
-  const up = await (await p.request.get(`${base}/mouse-pouches-special-offer/`)).text();
-  const acc = (up.match(/next-upsell-accept-url" content="([^"]*)"/) || [])[1], dec = (up.match(/next-upsell-decline-url" content="([^"]*)"/) || [])[1];
-  ok('upsell: accept and decline go to the thank-you page', acc === '/mouse-pouches-thank-you/' && dec === '/mouse-pouches-thank-you/', `accept=${acc} decline=${dec}`);
+  await p.goto(`${base}/mouse-pouches-special-offer-2/`, { waitUntil: 'load' }); await p.waitForTimeout(8000);
+  const u2 = (await p.locator('body').innerText()).replace(/\s+/g, ' ');
+  ok('upsell 2 shows the Copper Seal Kit at $14.99 (50% off $29.99)', /Copper Seal Kit/.test(u2) && /\$14\.99/.test(u2) && /\$29\.99/.test(u2), (u2.match(/\$\d+\.\d\d/g) || []).slice(0, 4).join(' '));
+  await p.screenshot({ path: (process.argv[3] || '.') + '/live-upsell-2.png', fullPage: true });
   // upsell price
   await p.goto(`${base}/mouse-pouches-special-offer/`, { waitUntil: 'load' }); await p.waitForTimeout(8000);
   const ut = (await p.locator('body').innerText()).replace(/\s+/g, ' ');
-  ok('upsell page shows $29.99 (40% off $49.99)', /\$29\.99/.test(ut) && /\$49\.99/.test(ut), (ut.match(/\$\d+\.\d\d/g) || []).slice(0, 4).join(' '));
+  ok('upsell 1 shows one more pack at $29.99 (40% off $49.99)', /\$29\.99/.test(ut) && /\$49\.99/.test(ut), (ut.match(/\$\d+\.\d\d/g) || []).slice(0, 4).join(' '));
   await p.screenshot({ path: (process.argv[3] || '.') + '/live-upsell.png', fullPage: true });
   // checkout payment surfaces
   await p.goto(`${base}/mouse-pouches-checkout/?forceBundleId=main:buy3`, { waitUntil: 'load' });
@@ -43,7 +50,7 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
   await fill('[data-next-checkout-field="postal"]', '10118');
   await p.waitForTimeout(1500);
   const sum = (await p.locator('[data-next-cart-summary]').first().innerText()).replace(/\s+/g, ' ');
-  ok('checkout total for 3 packs = $55.98, free shipping', /55\.98/.test(sum) && /Free/i.test(sum), sum.slice(0, 120));
+  ok('checkout total for 3 subscribed packs = $47.97, free shipping', /47\.97/.test(sum) && /Free/i.test(sum), sum.slice(0, 120));
   const submit = await p.evaluate(() => { const s = document.querySelector('[data-next-checkout="form"] button[type="submit"], .submit-button'); return s ? { text: s.innerText.trim(), disabled: s.disabled } : null; });
   ok('order button present and enabled (not clicked)', submit && !submit.disabled, submit && submit.text);
   await p.screenshot({ path: (process.argv[3] || '.') + '/live-checkout-filled.png', fullPage: true });
