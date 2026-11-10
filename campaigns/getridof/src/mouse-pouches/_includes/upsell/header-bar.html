@@ -8,11 +8,11 @@
     variant: include arg > header_bar frontmatter > "steps".
       steps → logo left, Checkout › Upgrades › Summary stepper right (default).
       logo  → centered logo only.
-    logo: asset path override (default images/next-dark.svg).
+    logo: asset path override (default pdp/gro-logo.svg).
     {% campaign_include 'upsell/header-bar.html' variant='logo' %}
 {%- endcomment -%}
 {%- assign hb_variant = variant | default: header_bar | default: 'steps' -%}
-{%- assign hb_logo = logo | default: 'images/next-dark.svg' -%}
+{%- assign hb_logo = logo | default: 'pdp/gro-logo.svg' -%}
 <section class="upsell-header-bar{% if hb_variant == 'logo' %} upsell-header-bar--logo{% endif %}">
   <div class="container">
     <div class="upsell-header-bar__wrapper">

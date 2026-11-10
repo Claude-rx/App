@@ -1,0 +1,118 @@
+---
+title: "Olympus — Upsell (single offer)"
+page_type: upsell
+next_url: receipt.html
+decline_url: receipt.html
+scripts:
+  - js/upsells.js
+  - js/payment-logos.js
+# Single-offer upsell: one package, one fixed price, accept or skip, no quantity tiers — upsell_offer.type: single.
+# Demo copy sells a protection plan; swap the strings for any add-on. Prices are SDK-driven.
+# `voucher` (optional) applies a coupon to the accepted line via a hidden linked bundle selector; prices
+# then read bundle.<selector_id>.* (post-voucher). Without `voucher`, prices read package.* and the compare
+# row / badge gate on package.hasRetailPrice / package.hasSavings.
+# Demo: campaign 1471 package 12 "Lifetime Protection" ($100) + LIFE50 → $50.
+announcement_text: "Special Offer Unlocked - Do Not Close This Page"
+upsell_hero:
+  variant: plain
+  title: '<span class="hide-tablet-down">{first_name} </span>Protect Your Order For Life'
+  text: 'Lock in lifetime replacement and accident coverage for a one-time <strong>{price}</strong>.'
+# SDK-native countdown (data-next-timer): persisted in localStorage per persistence_id. duration is seconds.
+countdown_timer:
+  text: "Act fast:"
+  highlight: "this one-time offer expires in"
+  duration: 1800
+  persistence_id: "upsell-single"
+# Layout knobs for the offer shell (upsell/offer.html) in the BOX style — values shown are what this page uses:
+upsell_layout:
+  style: box               # box (bordered box on the surface colour, image left, centered copy, inline prices) | card
+  media: image             # carousel (swiper_slides / swiper_thumbs) | image (upsell_offer.image) | grid (media_images) | video (media_video) | none
+  media_width: medium      # box style only: narrow | medium | wide (image column width on desktop)
+  show_bullets: false      # box style hides the bullets unless true (offer_bullets)
+  show_decline: false      # box style shows the decline only in the closing card (a hidden in-offer skip is its target) unless true
+  show_payment_logos: true # payment-logos.html (resolved from the campaign's payment methods)
+  # Not used by the box style: boxed, media_position, media_align, show_ships_info, decline_position (card style only)
+upsell_offer:
+  type: single   # tier-cards | tier-pills | stepper | single | mv — the only switch needed; tiers are generated from package_id unless upsell_bundle_tiers is set
+  pricing_mode: discounted   # struck retail + % badge; the shared contract default is full_price (one row)
+  package_id: 12
+  voucher: "LIFE50"
+  selector_id: "upsell-single"
+  # title: "Lifetime Protection Plan"   # optional HTML override — defaults to the package name from the SDK
+  image: "images/1x1_1.svg"   # product / plan artwork — replace with the campaign asset
+  rating_text: "<strong>4.8/5</strong> - 19,569+ Protection Reviews"
+  urgency_text: "★ Your one-time customer price — it won't appear again"
+  price_label: "Yours Today"
+  accept_text: "Yes, Protect My Order For"
+  social_proof: "96% of first-time purchasers took this offer"
+  details_hint: "Want the details first? Here's exactly what's covered ↓"
+  decline_text: "No thank you, I don't want to protect my order"
+upsell_body:
+  - type: features
+    title: "What your protection covers"
+    text: "Everything that can go wrong with a product you use every day, handled."
+    items:
+      - title: "Lifetime replacement"
+        text: "If it ever wears out or stops working properly, we replace it free, for as long as you own it."
+      - title: "Accidental damage"
+        text: "Spills, drops, rips, pet damage — all covered, no fault questions asked."
+      - title: "Free replacement shipping"
+        text: "Every approved claim ships a replacement to your door at zero cost. You never pay postage."
+      - title: "Priority support"
+        text: "Skip the queue. Protection-plan members get dedicated, front-of-line support."
+  - type: comparison
+    title: "With protection vs. without"
+    text: "The same things happen to every product over time. What changes is who pays for it."
+    recommended_label: "RECOMMENDED"
+    with:
+      title: "With Protection"
+      subtitle: "You are covered"
+      items:
+        - "Torn or damaged → replaced free"
+        - "Wears out with age → new one shipped"
+        - "Pet, spill or accident → covered"
+        - "Replacement shipping → always free"
+        - "Support → priority, front of line"
+    without:
+      title: "Without Protection"
+      subtitle: "You are not covered"
+      items:
+        - "Buy a replacement at full retail"
+        - "Wear and tear comes out of pocket"
+        - "Accidents come straight out of pocket"
+        - "Pay standard shipping on every order"
+        - "Wait in the standard support queue"
+  - type: steps
+    title: "If something goes wrong, claims take 2 minutes"
+    text: "No paperwork, no shipping the old one back, no hold music. Here's the whole process."
+    steps:
+      - title: "Snap a photo"
+        text: "Text or email us one quick picture of the issue, right from your phone."
+      - title: "We approve it fast"
+        text: "Most claims are verified within 24 hours. No forms, no sending the old one back."
+      - title: "Replacement ships free"
+        text: "A fresh replacement is on its way to your door, shipping covered, every time."
+closing_cta:
+  variant: card
+  note: "Backed by our 60-day money-back guarantee — remove this protection any time before it's used."
+  title: "Add lifetime protection to your order?"
+---
+{% comment %}
+  Single-offer upsell composed from the upsell partial set: countdown → plain hero heading → box-style
+  offer (upsell_layout.style: box — bordered card, image left, centered copy, inline price, accept) → body sections (features · comparison · steps) → closing card.
+  The closing card's accept / skip are proxies that forward to the one SDK offer above
+  (upsell/closing-cta.html), so both CTAs always add the same line. Keep data-next-show and
+  data-next-display on separate elements (SDK ≥0.4.31 skips hidden displays and never re-runs on unhide).
+{% endcomment %}
+<div class="page-wrapper">
+  <div class="main-wrapper">
+    {% campaign_include 'upsell/announcement.html' announcement_text=announcement_text %}
+    {% campaign_include 'upsell/header-bar.html' %}
+    {% campaign_include 'countdown-timer.html' countdown_timer=countdown_timer %}
+    {% campaign_include 'upsell/hero.html' upsell_hero=upsell_hero %}
+    {% campaign_include 'upsell/offer.html' %}
+    {% campaign_include 'upsell/body.html' upsell_body=upsell_body %}
+    {% campaign_include 'upsell/closing-cta.html' %}
+    {% campaign_include 'footer.html' %}
+  </div>
+</div>

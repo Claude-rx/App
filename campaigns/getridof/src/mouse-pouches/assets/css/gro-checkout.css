@@ -12,3 +12,10 @@
 .os-card__label-2{background:#EEF4E6!important;color:#4F7A2E!important;border-color:#7EA254!important}
 .card-icons,.card-icons svg,.card-icons path{color:#4F7A2E!important;border-color:#4F7A2E!important}
 .footer_section,.icon-img{color:#23372B;border-color:#23372B}
+/* upsell palette: packaging green #7EA254, deep green #23372B */
+.announcement__block{background:#23372B!important;color:#fff!important}
+.upsell-container--box{border-color:#7EA254!important}
+.bullet_features-icon-svg,.bullet_features-icon-svg svg,.bullet_features-icon-svg path{color:#4F7A2E!important;border-color:#4F7A2E!important}
+.icon-wrapper.cc-circle{background:#7EA254!important}
+a.button.cc-xl,.button.cc-xl{background:#7EA254!important;border-color:#7EA254!important;color:#fff!important}
+a.button.cc-xl:hover{background:#6B8D45!important}
