@@ -20,7 +20,7 @@ The HTML sits inside {% verbatim %}; local files become theme assets assets/grom
 links between pages (in HTML and in pdp.js) move to the store routes above. Every file written carries the GENERATED
 marker and is replaced on each run. The Admin token is the proxy-injected one; nothing prints it.
 """
-import hashlib, json, re, shutil, subprocess, sys, urllib.request
+import hashlib, json, re, shutil, subprocess, sys, time, urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -147,10 +147,26 @@ def main(theme, push):
     size = sum((theme / f).stat().st_size for f in files)
     print(f'{len(written)} templates, {len(assets.names)} assets, {size / 1e6:.1f} MB')
     if not push: return
-    for i in range(0, len(files), 40):
-        r = subprocess.run(['ntk', 'push', '-a', 'proxy-injected', '-s', STORE, '-t', str(THEME_ID), *files[i:i + 40]], cwd=theme, capture_output=True, text=True)
-        if r.returncode or 'ERROR' in (r.stdout + r.stderr): raise SystemExit(f'ntk push failed:\n{(r.stdout + r.stderr)[-2000:]}')
-        print(f'pushed {min(i + 40, len(files))}/{len(files)}')
+    # push only what changed since the last successful push (the store throttles, then rejects uploads as "empty")
+    manifest_f = ROOT / 'tools/funnel/getridof/theme-push-manifest.json'
+    pushed = json.loads(manifest_f.read_text()) if manifest_f.exists() else {}
+    digest = {f: hashlib.sha256((theme / f).read_bytes()).hexdigest() for f in files}
+    todo = [f for f in files if pushed.get(f) != digest[f]]
+    print(f'{len(todo)} of {len(files)} files changed since the last push')
+    for i in range(0, len(todo), 10):
+        batch = todo[i:i + 10]
+        for attempt in range(1, 5):
+            r = subprocess.run(['ntk', 'push', '-a', 'proxy-injected', '-s', STORE, '-t', str(THEME_ID), *batch], cwd=theme, capture_output=True, text=True)
+            out = r.stdout + r.stderr
+            if not r.returncode and 'ERROR' not in out and 'failed' not in out:
+                break
+            if attempt == 4: raise SystemExit(f'ntk push failed after 4 attempts:\n{out[-1500:]}')
+            wait = 15 * attempt
+            print(f'  batch {i // 10 + 1}: upload refused (throttled?), retrying in {wait}s')
+            time.sleep(wait)
+        for f in batch: pushed[f] = digest[f]
+        manifest_f.write_text(json.dumps(pushed, indent=0, sort_keys=True))   # progress survives an interrupted run
+        print(f'pushed {min(i + 10, len(todo))}/{len(todo)}')
     existing = {p['slug']: p for p in api('GET', 'pages/?limit=100')['results']}
     for d, (slug, title) in PAGES.items():
         body = {'title': title, 'slug': slug, 'template': slug, 'meta_title': f'{title} | Get Rid Of'}
