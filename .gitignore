@@ -28,3 +28,6 @@ campaigns/skinofab/_site/
 node_modules/
 .DS_Store
 cowork-skills/
+# Get Rid Of Page Kit project: installed packages and build output
+campaigns/getridof/node_modules/
+campaigns/getridof/_site/

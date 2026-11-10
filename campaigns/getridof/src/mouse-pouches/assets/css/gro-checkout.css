@@ -1,0 +1,6 @@
+/* Get Rid Of checkout additions (build_checkout.py) */
+.gro-refill-terms{margin:12px 0;padding:12px 14px;border:1px solid #CCF46F;background:#F8FCEB;border-radius:8px;font-size:13px;line-height:1.45;color:#23372B}
+.gro-refill-terms a{color:#23372B;text-decoration:underline}
+/* bundle cards: the deal is the title (package name hidden); the % off is stated on the PDP, not the SDK's 62.67% badge */
+[data-next-bundle-card] .os-card__title [data-next-display="package.name"],
+[data-next-bundle-card] [data-next-discounts="offer"].os-card__title-badge{display:none!important}

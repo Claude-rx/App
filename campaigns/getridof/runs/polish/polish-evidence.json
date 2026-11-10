@@ -1,0 +1,33 @@
+{
+  "status": "completed",
+  "note": "Recorded locally: this run has no Campaigns OS Build Packet, so `campaigns-os record polish` (which needs --packet) was not run. Field shapes follow docs/polish-evidence.md.",
+  "evidence": {
+    "visual_review": {
+      "screenshots": ["runs/polish/checkout-desktop.png", "runs/polish/checkout-mobile.png", "runs/polish/bundle-selector-desktop.png", "runs/polish/bundle-selector-mobile.png", "runs/polish/bump-desktop.png", "runs/polish/bump-mobile.png", "runs/polish/card-fields-desktop.png", "runs/polish/card-fields-mobile.png", "runs/polish/exit-intent.png"],
+      "pdp": "PDP reviewed at 1440 and 390: gallery slides resized to the stage (were frozen at 631px), every section renders, accordions/tabs/countdown/bundle box live"
+    },
+    "brand_review": {
+      "favicon": { "status": "confirmed_non_template", "detail": "store logo rendered to favicon.png/webclip.png; PDP uses gro-logo.svg" },
+      "brand_bleed": { "cleared": true, "promo_codes": "none", "favicon": "brand favicon", "fonts": "design fonts only", "colors": "reference page palette kept" },
+      "logos": "header logo and comparison-table wordmark are the store logo (cdn.cachebucket.com, copied locally)"
+    },
+    "checkout_review": {
+      "field_labels": "inset labels/placeholders legible on first paint (First Name*, Last Name*, Email*, Phone (Optional), Country, Address, Card number, Month, Year, CVV)",
+      "bump_compare_price_rule": "Package Protection uses full_price: one $3.97/ea row, no compare price",
+      "card_fields": "cc-number and cvv iframes 20px tall, centered in 48px controls (14px above and below), desktop and mobile",
+      "express_wallets": "campaign offers bankcard only; SDK hides the express block (display:none), no empty box",
+      "bundle_selector": "selection follows the SDK next-selected class; picking a card clears the previous one; static data-selected removed",
+      "exit_intent": "shows on exit; Apply applies GROMOUSE10 (3-pack $55.98 -> $50.37)"
+    },
+    "template_residue_review": {
+      "copy": "no Lorem/Product Name/Package Title/Daniel K./180,000/XXCODE/SPEC_ left in built pages",
+      "guarantee": "90-day seal and copy replaced with the PDP's 30-day guarantee",
+      "progress": "Bonus Deals step removed (no upsells): Checkout -> Order Confirmed",
+      "starter_favicon": { "status": "confirmed_non_template" },
+      "demo_pages": "presell, landing and 5 upsell demo pages removed"
+    },
+    "commerce_flow_review": "PDP bundle + refill choice -> checkout or checkout-refill with ?forceBundleId=main:<buy1|buy3|buy5> and UTM params kept; live Cart API totals 29.99 / 55.98 / 74.95 on one-time and auto-refill (tools/funnel/getridof/e2e.cjs 24/24, polish_checks.cjs 20/20); no order placed",
+    "issues": [],
+    "commands": ["node tools/funnel/getridof/e2e.cjs http://localhost:8765", "node tools/funnel/getridof/polish_checks.cjs http://localhost:8765 campaigns/getridof/runs/polish"]
+  }
+}

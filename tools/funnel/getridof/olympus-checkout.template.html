@@ -1,0 +1,492 @@
+---
+title: "Olympus Checkout"
+page_type: checkout
+promo_sale: "default" # <promo-timer> only (its own sale list in js/promo-timer.js); the banner reads promo_banner
+promo_banner: # delete this block to remove the banner (see _includes/promo-banner.html)
+  variant: classic # slim | classic
+  text: "GET UP TO 69% OFF NOW!"
+  code_label: "USE PROMO CODE:"
+  code: "XXCODE"
+  suffix: "- LIMITED TIME OFFER"
+next_url: upsell-bundle-stepper.html
+cart_summary_variant: "01"
+order_bump_variant: "check01+switch01"
+styles:
+  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
+scripts:
+  - js/promo-timer.js
+  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
+  - js/checkout.js
+  - js/payment-logos.js
+  - js/checkout-olympus.js
+swiper_slides:
+  - src: "images/1x1_1.svg"
+    alt: ""
+  - src: "images/1x1_1.svg"
+    alt: ""
+  - src: "images/1x1_1.svg"
+    alt: ""
+  - src: "images/1x1_1.svg"
+    alt: ""
+  - src: "images/1x1_1.svg"
+    alt: ""
+  - src: "images/1x1_1.svg"
+    alt: ""
+swiper_thumbs:
+  - src: "images/1x1_2.svg"
+    alt: ""
+  - src: "images/1x1_2.svg"
+    alt: ""
+  - src: "images/1x1_2.svg"
+    alt: ""
+  - src: "images/1x1_2.svg"
+    alt: ""
+  - src: "images/1x1_2.svg"
+    alt: ""
+  - src: "images/1x1_2.svg"
+    alt: ""
+packages:
+  main_package: 1
+  prepurchase_1: 7
+  prepurchase_2: 9
+# payment_methods: { method_order, default_method, show_<method>: false } — payment radio order, first-open method, and which radios to drop (e.g. show_paypal: false); keys and rules in _includes/payment-methods.html
+order_bump:
+  check01:
+    # Pre-purchase add-on (checkbox card). Optional keys (full list: _includes/bump-check01.html):
+    #   sync_quantity: <main packageId>    -> add-on qty mirrors the main bundle (omit = fixed qty 1)
+    #   pricing_mode: full_price|discounted|compare_at|unit_total|unit_only (default full_price, one "$X/ea" row;
+    #                 discounted adds the struck originalUnitPrice, shown only while the SDK reports a discount)
+    #                 (legacy show_per_unit_price / show_compare_price / show_line_total_price still honored when passed without pricing_mode — see the partial)
+    package_id: 7
+    sync_quantity: 1
+    title: "Get Extended Warranty"
+    image_src: "images/1x1_1.svg"
+    features:
+      - "1 year with our replacement and protection"
+      - "Accidental Damage Protection"
+      - "Express Replacement Service"
+      - "24/7 Priority Customer Support"
+  switch01:
+    # Pre-purchase add-on (toggle switch). Optional keys:
+    #   show_unit_price: true|false -> append "or $X/ea" after the line total (default true)
+    #   (no quantity sync — switch01 is a single line item by design)
+    package_id: 9
+    title: "Shipping Insurance & Loss Prevention"
+    description_prefix: "Total shipping coverage and extended warranty. Breakage, loss, delays, porch pirates - even defects. 100% protected for just"
+    show_unit_price: true
+shipping_methods:
+  # One shipping method on every tier. A campaign lists each storefront shipping method once, so a
+  # cheaper tier gets a coupon (`vouchers`), not a second method. Price the method at the highest tier
+  # rate; the coupon is a "percentage off shipping" Code Offer (100% = free). Replace the ref_id and the
+  # `vouchers` codes with your campaign's own. See "Shipping by tier" in docs/campaign-page-kit-template-context.md.
+  standard: 1
+bundles:
+  - id: "bundle-1x"
+    quantity: 1
+    shipping_method: "standard"
+    selected: true
+    title_prefix: "1x "
+    badge_text: "Most Popular"
+    badge_pill_class: "os-card__label--pill-primary"
+  - id: "bundle-2x"
+    quantity: 2
+    shipping_method: "standard"
+    vouchers: "FREESHIP"
+    shipping_label: "+ Free Shipping"
+    title_prefix: "2x "
+    badge_text: "Best Deal"
+    badge_pill_class: "os-card__label--pill-secondary"
+  - id: "bundle-3x"
+    quantity: 3
+    shipping_method: "standard"
+    vouchers: "FREESHIP"
+    title_prefix: "3x "
+    total_tone_class: "os-dark"
+    shipping_label: "+ Free Shipping"
+address_form:
+  label_style: inset # whole checkout form (contact + shipping + billing): inset (default) | floating | static — see shipping-address-form.html
+  gated: true # true = only the Address field shows until the shopper types an address (then apartment / city / state / postal / phone appear); false = every field visible from the start
+---
+<div class="page-wrapper">
+      <div class="main-wrapper">
+
+        {% campaign_include 'promo-banner.html' promo_banner=promo_banner %}
+        {% campaign_include 'checkout-header.html' %}
+        <div class="encrypted-banner">
+          <div class="padding-global">
+            <div class="contain small">
+              <div class="scarcity-banner__content">
+                <div class="encrypted-banner__icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2m-6 9c-1.1 0-2-.9-2-2s.9-2 2-2s2 .9 2 2s-.9 2-2 2m3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1z"></path>
+                  </svg></div>
+                <div class="text-sm">100% Encrypted &amp; Secure Checkout</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% campaign_include 'checkout-progress.html' %}
+        <div class="section-checkout cc-gray">
+          <div class="container">
+            <div class="checkout-page-layout">
+              <div class="show-tablet">
+                <div class="heading-box">
+                  <div class="hero_review-box">
+                    <div class="review_component cc-sm">
+                      <div class="review_component-wrapper">
+                        <div class="star_wrapper">
+                          <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                              <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                            </svg></div>
+                          <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                              <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                            </svg></div>
+                          <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                              <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                            </svg></div>
+                          <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                              <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                            </svg></div>
+                          <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                              <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                            </svg></div>
+                        </div>
+                        <div>TRUSTED BY 180,000+ FAMILIES</div>
+                      </div>
+                    </div>
+                  </div>
+                  <h1 class="display-md"><span>Product Name</span></h1>
+                  <div class="text-reg"><strong>2026 New &amp; Improved, Premium product bundle</strong></div>
+                </div>
+              </div>
+              <div class="checkout-wrapper">
+                <div class="checkout-layout__left">
+                  <div class="checkout-layout__content">
+                    <div class="checkout-layout__content-inner">
+                      <div class="checkout-media__wrapper">
+                        {% campaign_include 'swiper-gallery.html' main_slides=swiper_slides thumbs=swiper_thumbs variant='sw1' %}
+                      </div>
+                      <div class="icons-grids hide-tablet-down">
+                        <div class="icon-image">
+                          <div class="icon-img"><img loading="eager" src="{{ 'images/1x1_2.svg' | campaign_asset }}" alt="" class="cover"></div>
+                          <div class="text-xs">Benefit one</div>
+                        </div>
+                        <div class="icon-image">
+                          <div class="icon-img"><img loading="eager" src="{{ 'images/1x1_2.svg' | campaign_asset }}" alt="" class="cover"></div>
+                          <div class="text-xs">Benefit two</div>
+                        </div>
+                        <div class="icon-image">
+                          <div class="icon-img"><img loading="eager" src="{{ 'images/1x1_2.svg' | campaign_asset }}" alt="" class="cover"></div>
+                          <div class="text-xs">Benefit three</div>
+                        </div>
+                        <div class="icon-image">
+                          <div class="icon-img"><img loading="eager" src="{{ 'images/1x1_2.svg' | campaign_asset }}" alt="" class="cover"></div>
+                          <div class="text-xs">Benefit four</div>
+                        </div>
+                      </div>
+                
+                      <div class="checkout-reviews hide-tablet-down">
+                          <div class="checkout-review">
+                            <div class="checkout-review__body grid-cell">
+                              <div class="checkout-review__stars">
+                                <div class="review_component cc-sm"><div class="review_component-wrapper"><div class="star_wrapper"><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div></div></div></div>
+                              </div>
+                              <p class="checkout-review__title">Woke up without the soreness<br></p>
+                              <p class="checkout-review__description">I’ve had morning back pain for years, and this is the first thing that’s helped without taking something. I didn’t expect a sheet to make that kind of difference, but it really does.<br></p>
+                              <div class="checkout-review__meta">
+                                <div class="review-auth">Daniel K.</div>
+                                <div class="review-auth">|</div>
+                                <div class="checkout-review__verified">Verified Customer</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="checkout-review">
+                            <div class="checkout-review__body grid-cell">
+                              <div class="checkout-review__stars">
+                                <div class="review_component cc-sm"><div class="review_component-wrapper"><div class="star_wrapper"><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div></div></div></div>
+                              </div>
+                              <p class="checkout-review__title">Woke up without the soreness<br></p>
+                              <p class="checkout-review__description">I’ve had morning back pain for years, and this is the first thing that’s helped without taking something. I didn’t expect a sheet to make that kind of difference, but it really does.<br></p>
+                              <div class="checkout-review__meta">
+                                <div class="review-auth">Daniel K.</div>
+                                <div class="review-auth">|</div>
+                                <div class="checkout-review__verified">Verified Customer</div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    
+                   
+                  </div>
+                </div>
+                <div class="checkout-layout__right">
+                  <div class="checkout-layout__form">
+                  <div class="checkout__form-container">
+                    <div class="hide-tablet">
+                      <div class="hero_heading-box">
+                        <div class="heading-box">
+                          <div class="hero_review-box">
+                            <div class="review_component cc-sm">
+                              <div class="review_component-wrapper">
+                                <div class="star_wrapper">
+                                <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                                    <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                                  </svg></div>
+                                <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                                    <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                                  </svg></div>
+                                <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                                    <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                                  </svg></div>
+                                <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                                    <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                                  </svg></div>
+                                <div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="15" height="15" rx="2" fill="#1BBA86"></rect>
+                                    <path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path>
+                                  </svg></div>
+                                </div>
+                                <div>TRUSTED BY 180,000+ FAMILIES</div>
+                              </div>
+                            </div>
+                          </div>
+                          <h1 class="display-md"><span>Product Name</span></h1>
+                          <div class="text-reg"><strong>2026 New &amp; Improved, Premium product bundle</strong></div>
+                        </div>
+                        <div class="sub-head-text">
+                          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <promo-timer{% if promo_sale %} force-sale="{{ promo_sale }}"{% endif %}></promo-timer>
+                    <div class="checkout-form">
+                      <form data-next-checkout="form" id="combo_form" method="post">
+                        <div class="form-content">
+                          <div class="form-sections">
+                            <div class="form-section grid-row-gap2 form-section--first">
+                              <h2 class="form-section__title">Step 1: Pick Your Bundle Deal</h2>
+                              {% comment %} v0 catalog: bundle-selector partial. Canonical 3-tier defaults live in page frontmatter so CampaignSpec package/shipping ids stay visible.
+                                   Reference variant (data-next-bundles= JSON config-driven) preserved below as commented reference. {% endcomment %}
+                              {% campaign_include 'bundle-selector.html' selector_id='main' packages=packages shipping_methods=shipping_methods bundles=bundles %}
+                              {% comment %}
+                              Reference only — optional config-driven variant.
+                              Kept as an optional implementation reference; do not treat as the default checkout pattern.
+                              Auto-render cards should use {bundle.*} fields for title/image (not data-next-display="package.*").
+                              SDK 0.4.18+: inline <template> inside selector is supported (no template id required).
+                              <div
+                                data-next-bundle-selector
+                                data-next-selector-id="main"
+                                data-next-bundles='[{"id":"bundle-1x","title":"1x Package Title","imageSrc":"{{ 'images/1x1_1.svg' | campaign_asset }}","shippingId":"SPEC_STANDARD_SHIPPING_REF","labelSlotClass":"","totalToneClass":"","badgeText":"Most Popular","badgePillClass":"os-card__label--pill-primary","items":[{"packageId":1,"quantity":1}],"selected":true},{"id":"bundle-2x","title":"2x Package Title","imageSrc":"{{ 'images/1x1_1.svg' | campaign_asset }}","shippingId":"SPEC_STANDARD_SHIPPING_REF","vouchers":["SPEC_FREE_SHIPPING_COUPON"],"labelSlotClass":"","totalToneClass":"","badgeText":"Best Deal","badgePillClass":"os-card__label--pill-secondary","items":[{"packageId":1,"quantity":2}]},{"id":"bundle-3x","title":"3x Package Title","imageSrc":"{{ 'images/1x1_1.svg' | campaign_asset }}","shippingId":"SPEC_STANDARD_SHIPPING_REF","vouchers":["SPEC_FREE_SHIPPING_COUPON"],"labelSlotClass":"hide","totalToneClass":"os-dark","badgeText":"","badgePillClass":"","items":[{"packageId":1,"quantity":3}]}]'
+                                data-next-selection-mode="swap"
+                                data-next-include-shipping="true"
+                                class="os-option os-cards__vertical os--gap-xl"
+                              >
+                                <template>
+                                  <div data-next-bundle-card data-next-bundle-id="{bundle.id}" data-next-shipping-id="{bundle.shippingId}" role="button" class="os-card">
+                                    <div class="os-card__header-slot"></div>
+                                    <div class="os-card__wrapper">
+                                      <div class="os-card__content os--align-middle" data-next-package-id="1">
+                                        <div data-selected="true" class="radio-style-1">
+                                          <div class="radio-inner"></div>
+                                        </div>
+                                        <div class="os-card__image-slot hide-tablet"><img src="{bundle.imageSrc}" alt="" class="image"></div>
+                                        <div class="os-card__main-slot">
+                                          <div class="os-card__title-section">
+                                            <div class="os-card__title-wrapper">
+                                              <div class="os-card__title">{bundle.title}</div>
+                                              <div data-next-bundle-display="hasDiscount" class="os-card__title-badge pb--bestseller">
+                                                <div>SAVE <span data-next-bundle-display="discountPercentage">-</span></div>
+                                              </div>
+                                            </div>
+                                            <div class="os-card__subtitle-wrapper">
+                                              <div data-next-bundle-display="hasDiscount" class="os-card__subtitle-text">Save <span data-next-bundle-display="discountAmount">-</span><span data-next-show="shipping.isFree"> + Free Shipping</span></div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="os-card__secondary-slot">
+                                          <div class="os-card__pricing">
+                                            <div class="os-card__price-container">
+                                              <div data-next-bundle-display="hasDiscount" class="os-card__price os--compare os-style"><span data-next-bundle-display="originalUnitPrice">-</span></div>
+                                              <div class="os-card__price os--current"><span data-next-bundle-display="unitPrice">-</span>/ea</div>
+                                            </div>
+                                            <div class="os-card__total-container">
+                                              <div class="os-card__total-label">Total:</div>
+                                              <div data-next-bundle-display="hasDiscount" class="os-card__total-compare"><span data-next-bundle-display="originalPrice">-</span></div>
+                                              <div class="os-card__total-current {bundle.totalToneClass}"><span data-next-bundle-display="price">-</span></div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="os-card__bottom-slot hide"></div>
+                                    </div>
+                                    <div class="os-card__footer-slot"></div>
+                                    <div class="os-card__label-slot {bundle.labelSlotClass}">
+                                      <div class="os-card__label-2 os-card__label--middle-right {bundle.badgePillClass}">
+                                        <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path></svg></div>
+                                        <div class="os-card__label-text-2">{bundle.badgeText}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </template>
+                              </div>
+                              {% endcomment %}
+                            </div>
+
+                            <div data-next-component="shipping-form" class="form-sections">
+                              {% campaign_include 'customer-info-form.html' %}
+                              {% campaign_include 'shipping-address-form.html' %}
+                            </div>
+                        {% assign bump_variant = order_bump_variant | default: 'check01+switch01' %}
+                        {% unless bump_variant == 'none' %}
+                          <div class="order-bumps">
+                          {% if bump_variant == 'check01' %}
+                          {% campaign_include 'bump-check01.html' packages=packages %}
+                          {% elsif bump_variant == 'check02' %}
+                          {% campaign_include 'bump-check02.html' packages=packages %}
+                          {% elsif bump_variant == 'check03' %}
+                          {% campaign_include 'bump-check03.html' packages=packages %}
+                          {% elsif bump_variant == 'switch01' %}
+                          {% campaign_include 'bump-switch01.html' packages=packages %}
+                          {% elsif bump_variant == 'check01+switch01' %}
+                          {% campaign_include 'bump-check01.html' packages=packages %}
+                          {% campaign_include 'bump-switch01.html' packages=packages %}
+                          {% else %}
+                          {% campaign_include 'bump-check01.html' packages=packages %}
+                          {% campaign_include 'bump-switch01.html' packages=packages %}
+                          {% endif %}
+                          </div>
+                        {% endunless %}
+                            <div class="form-section form-section--last">
+                              <div class="form-section__header">
+                                <h1 class="form-section__title">4. Payment Method</h1>
+                                <div class="form-section__subtitle">All transactions are secure and encrypted.<br></div>
+
+                              </div>
+                              {% campaign_include 'express-checkout.html' show_title=false %}
+                              {% campaign_include 'payment-methods.html' %}
+                            </div>
+                            <div class="form-section form-section--last">
+                              <div class="cart-box cart-box--card">
+                                {% assign summary_variant = cart_summary_variant | default: '01' %}
+                                {% if summary_variant == '02' %}
+                                {% campaign_include 'cart-summary02.html' %}
+                                {% elsif summary_variant == '03' %}
+                                {% campaign_include 'cart-summary03.html' %}
+                                {% elsif summary_variant == '04' %}
+                                {% campaign_include 'cart-summary04.html' %}
+                                {% else %}
+                                {% campaign_include 'cart-summary01.html' %}
+                                {% endif %}
+                              </div>
+                            </div>
+                            {% comment %} END SUMMARY V2 {% endcomment %}
+
+                            {% campaign_include 'submit-block.html' %}
+                          </div>
+                        </div>
+                      </form>
+
+                      
+                    </div>
+                    <div class="checkout-trust-bar">
+                      <div class="trust-badges">
+                        <div class="trust-badge__item">
+                          <div class="trust-badge--icon"><svg width="100%" height="100%" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M10.2857 0.5C6.97714 0.5 4.28571 3.23949 4.28571 6.60714V10.0969H2.57143C1.14857 10.0969 0 11.266 0 12.7143V22.3112C0 23.7595 1.14857 24.9286 2.57143 24.9286H18C19.4229 24.9286 20.5714 23.7595 20.5714 22.3112V12.7143C20.5714 11.266 19.4229 10.0969 18 10.0969H16.2857V6.60714C16.2857 3.23949 13.5943 0.5 10.2857 0.5ZM6 6.60714C6 4.19918 7.92 2.2449 10.2857 2.2449C12.6514 2.2449 14.5714 4.19918 14.5714 6.60714V10.0969H6V6.60714ZM18.8571 12.7143V22.3112C18.8571 22.7911 18.4714 23.1837 18 23.1837H2.57143C2.1 23.1837 1.71429 22.7911 1.71429 22.3112V12.7143C1.71429 12.2344 2.1 11.8418 2.57143 11.8418H18C18.4714 11.8418 18.8571 12.2344 18.8571 12.7143Z" fill="#5C5C5E"></path>
+                              <path d="M10.2857 13.587C8.87138 13.587 7.71423 14.7473 7.71423 16.1869C7.71423 17.3123 8.41709 18.3069 9.45423 18.6646C9.43709 18.717 9.42852 18.7606 9.42852 18.813V20.5579C9.42852 21.0377 9.81423 21.4303 10.2857 21.4303C10.7571 21.4303 11.1428 21.0377 11.1428 20.5579V18.813C11.1428 18.7606 11.1257 18.7083 11.1171 18.6646C12.4628 18.2022 13.1828 16.7191 12.7285 15.3581C12.3771 14.2937 11.3914 13.5783 10.2942 13.587H10.2857ZM10.2857 17.0768C9.81423 17.0768 9.42852 16.6842 9.42852 16.2043C9.42852 15.7245 9.81423 15.3319 10.2857 15.3319C10.7571 15.3319 11.1428 15.7245 11.1428 16.2043C11.1428 16.6842 10.7571 17.0768 10.2857 17.0768Z" fill="#5C5C5E"></path>
+                            </svg></div>
+                          <div class="trust-badge--text">SECURE<br>SSL ENCRYPTION</div>
+                        </div>
+                        <div class="trust-badge__item">
+                          <div class="trust-badge--icon"><svg width="100%" height="100%" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g clip-path="url(#clip0_213_4831)">
+                                <path d="M11.4991 0.503307C11.285 0.520446 11.0854 0.617568 10.9379 0.771819C8.34589 3.47122 4.63146 4.69666 0.8505 4.78807C0.378964 4.79664 0 5.17941 0 5.64502C0 16.177 4.67196 24.1466 11.3198 26.1776C11.4846 26.2262 11.6611 26.2262 11.826 26.1776C18.4738 24.1495 23.1429 16.1798 23.1429 5.64502C23.1429 5.17941 22.7639 4.79664 22.2924 4.78807C18.5114 4.69666 14.797 3.47122 12.2021 0.771819C12.0198 0.580433 11.7624 0.483312 11.4962 0.503307H11.4991ZM11.5714 2.52857C14.2734 4.99659 17.8026 6.16776 21.3609 6.41057C21.1352 15.8742 16.9203 22.6213 11.5714 24.4237C6.22254 22.6241 2.00475 15.8742 1.782 6.41342C5.34021 6.17062 8.87239 4.99945 11.5714 2.53143V2.52857ZM16.4546 9.34991C16.2289 9.3642 16.0177 9.46132 15.8673 9.627L10.4056 15.2772L7.84832 12.752C7.50986 12.4178 6.95732 12.4178 6.61886 12.752C6.28039 13.0862 6.28039 13.6318 6.61886 13.966L9.801 17.1082C10.1424 17.4424 10.692 17.4367 11.0276 17.1025C11.0305 17.0996 11.0363 17.0939 11.0391 17.0911L17.1141 10.8067C17.4497 10.4668 17.4439 9.92693 17.0997 9.59557C16.929 9.4299 16.6947 9.34134 16.4546 9.35277V9.34991Z" fill="#5C5C5E"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_213_4831">
+                                  <rect width="23.1429" height="25.7143" fill="white" transform="translate(0 0.5)"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                          <div class="trust-badge--text">GUARANTEED<br>SAFE CHECKOUT</div>
+                        </div>
+                      </div>{% campaign_include 'payment-logos.html' show_secure=false %}
+                    </div>
+                    <div class="icons-grids hide-tablet-up">
+                      <div class="icon-image">
+                        <div class="icon-img"><img loading="eager" src="{{ 'images/1x1_2.svg' | campaign_asset }}" alt="" class="cover"></div>
+                        <div class="text-xs">Benefit one</div>
+                      </div>
+                      <div class="icon-image">
+                        <div class="icon-img"><img loading="eager" src="{{ 'images/1x1_2.svg' | campaign_asset }}" alt="" class="cover"></div>
+                        <div class="text-xs">Benefit two</div>
+                      </div>
+                      <div class="icon-image">
+                        <div class="icon-img"><img loading="eager" src="{{ 'images/1x1_2.svg' | campaign_asset }}" alt="" class="cover"></div>
+                        <div class="text-xs">Benefit three</div>
+                      </div>
+                      <div class="icon-image">
+                        <div class="icon-img"><img loading="eager" src="{{ 'images/1x1_2.svg' | campaign_asset }}" alt="" class="cover"></div>
+                        <div class="text-xs">Benefit four</div>
+                      </div>
+                    </div>
+              
+                    <div class="checkout-reviews hide-tablet-up">
+                        <div class="checkout-review">
+                          <div class="checkout-review__body grid-cell">
+                            <div class="checkout-review__stars">
+                              <div class="review_component cc-sm"><div class="review_component-wrapper"><div class="star_wrapper"><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div></div></div></div>
+                            </div>
+                            <p class="checkout-review__title">Woke up without the soreness<br></p>
+                            <p class="checkout-review__description">I’ve had morning back pain for years, and this is the first thing that’s helped without taking something. I didn’t expect a sheet to make that kind of difference, but it really does.<br></p>
+                            <div class="checkout-review__meta">
+                              <div class="review-auth">Daniel K.</div>
+                              <div class="review-auth">|</div>
+                              <div class="checkout-review__verified">Verified Customer</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="checkout-review">
+                          <div class="checkout-review__body grid-cell">
+                            <div class="checkout-review__stars">
+                              <div class="review_component cc-sm"><div class="review_component-wrapper"><div class="star_wrapper"><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div><div class="star_img"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="15" height="15" rx="2" fill="#1BBA86"></rect><path d="M7.3125 2.25012L8.53329 6.00734L12.4839 6.00734L9.28779 8.32943L10.5086 12.0867L7.3125 9.76456L4.11642 12.0867L5.33721 8.32943L2.14113 6.00734L6.09171 6.00734L7.3125 2.25012Z" fill="white"></path></svg></div></div></div></div>
+                            </div>
+                            <p class="checkout-review__title">Woke up without the soreness<br></p>
+                            <p class="checkout-review__description">I’ve had morning back pain for years, and this is the first thing that’s helped without taking something. I didn’t expect a sheet to make that kind of difference, but it really does.<br></p>
+                            <div class="checkout-review__meta">
+                              <div class="review-auth">Daniel K.</div>
+                              <div class="review-auth">|</div>
+                              <div class="checkout-review__verified">Verified Customer</div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="guarantee-section"><img loading="lazy" src="{{ 'images/90d.webp' | campaign_asset }}" alt="" class="guarantee-badge">
+                      <div class="text-xs"><strong>90 Day Money-Back Guarantee:</strong> Feel safe knowing you're protected. Try it risk-free and return it within 90 days for a full refund or replacement—no questions asked.</div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      {% campaign_include 'footer.html' %}
+    </div>
+
+
+
+
+        <script>if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => initSwiperGalleries()); } else { initSwiperGalleries(); }</script>

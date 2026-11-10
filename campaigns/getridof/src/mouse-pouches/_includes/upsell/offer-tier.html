@@ -1,0 +1,31 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/offer-tier.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-offer-tier
+  next_version: 1
+  next_sdk_owns: nothing (assign-only helper)
+  next_sdk_surface: upsell offer (resolves one tier's fields for the selector / controls loops)
+  next_params: i (1-based tier index). Reads tiers / tiers_generated / selector_id / package_id /
+    default_vouchers_json from upsell/offer-context.html. Sets t_id, t_quantity, t_items_json, t_vouchers_json,
+    t_label, t_hint, t_button_value, t_selected — from tiers[i-1] when declared, else generated from package_id.
+{%- endcomment -%}
+{%- if tiers_generated -%}
+  {%- assign t_quantity = i -%}
+  {%- assign t_id = selector_id | append: '-' | append: i | append: 'x' -%}
+  {%- assign t_items_json = '[{"packageId":' | append: package_id | append: ',"quantity":' | append: i | append: '}]' -%}
+  {%- assign t_vouchers_json = default_vouchers_json -%}
+  {%- assign t_label = 'Buy ' | append: i -%}
+  {%- if i == 1 -%}{%- assign t_hint = '1 unit' -%}{%- else -%}{%- assign t_hint = i | append: ' units' -%}{%- endif -%}
+  {%- assign t_button_value = i -%}
+  {%- if i == 1 -%}{%- assign t_selected = true -%}{%- else -%}{%- assign t_selected = false -%}{%- endif -%}
+{%- else -%}
+  {%- assign t_i0 = i | minus: 1 -%}
+  {%- assign t_tier = tiers[t_i0] -%}
+  {%- assign t_quantity = t_tier.quantity | default: i -%}
+  {%- assign t_id = t_tier.id -%}
+  {%- assign t_items_json = t_tier.items_json -%}
+  {%- assign t_vouchers_json = t_tier.vouchers_json -%}
+  {%- assign t_label = t_tier.label | default: t_tier.id -%}
+  {%- assign t_hint = t_tier.hint | default: '' -%}
+  {%- assign t_button_value = t_tier.button_value | default: t_tier.quantity | default: i -%}
+  {%- if t_tier.selected -%}{%- assign t_selected = true -%}{%- else -%}{%- assign t_selected = false -%}{%- endif -%}
+{%- endif -%}

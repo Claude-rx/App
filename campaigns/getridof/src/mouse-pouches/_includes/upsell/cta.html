@@ -1,0 +1,49 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/cta.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-cta
+  next_version: 1
+  next_sdk_owns: upsell add action
+  next_sdk_surface: upsell offer (accept button · note · ships-from info · payment logos)
+  next_params: reads offer / layout / price_path from upsell/offer-context.html.
+    proxy: include arg. true renders data-upsell-proxy="add" instead of data-next-upsell-action="add" — for a
+      second CTA OUTSIDE [data-next-upsell="offer"] (upsell/closing-cta.html); initUpsellProxyActions()
+      (upsells.js) forwards the click to the real in-offer action, so there is exactly one SDK offer per page.
+    compact: include arg. true renders button + note only (no ships-info / payment logos).
+    cta_style: include arg. box → the same .button as every upsell CTA with the live price appended, social
+      proof, centered payment logos, no ships-info (the upsell-single look).
+    offer.accept_text (default "Yes, Add to My Order"), offer.accept_show_price: true appends the live price,
+    offer.cta_note (line under the button, e.g. "We will ship it FREE in the same order"),
+    ships-from row → upsell/ships-info.html (ships_info { icon, flag, text }; upsell_layout.show_ships_info: false hides),
+    offer.social_proof (green success pill).
+  next_dont_touch: data-next-upsell-action, data-next-display, data-next-format
+{% endcomment %}
+{%- if cta_style == 'box' -%}
+<a {% if proxy %}data-upsell-proxy="add"{% else %}data-next-upsell-action="add"{% endif %} href="#" class="button cc-xl" pb-animate="pulse-upsell">
+  <div data-button="content" class="button_content"><div>{{ offer.accept_text | default: 'Yes, Add To My Order For' }}{% unless offer.accept_show_price == false %} <span data-next-display="{{ price_path }}" data-next-format="currency">$9.99</span>{% endunless %}</div></div>
+</a>
+{%- if offer.cta_note %}<p class="upsell-cta__note">{% campaign_include 'upsell/copy.html' text=offer.cta_note %}</p>{% endif %}
+{%- unless compact %}
+{%- if offer.social_proof %}
+<div class="upsell-success padding-xxsmall text-center text-base font-bold color-black max-width-xsmall align-center">{% campaign_include 'upsell/copy.html' text=offer.social_proof %}</div>
+{%- endif %}
+{%- unless layout.show_payment_logos == false %}
+{% campaign_include 'payment-logos.html' wrapper_class="flex-center flex-col" %}
+{%- endunless %}
+{%- endunless %}
+{%- else -%}
+<a {% if proxy %}data-upsell-proxy="add"{% else %}data-next-upsell-action="add"{% endif %} href="#" class="button cc-xl" pb-animate="pulse-upsell">
+  <div data-button="content" class="button_content"><div>{{ offer.accept_text | default: 'Yes, Add to My Order' }}{% if offer.accept_show_price %} <span data-next-display="{{ price_path }}" data-next-format="currency">$24.95</span>{% endif %}</div></div>
+</a>
+{%- if offer.cta_note %}
+<p class="upsell-cta__note">{% campaign_include 'upsell/copy.html' text=offer.cta_note %}</p>
+{%- endif %}
+{%- unless compact %}
+{%- campaign_include 'upsell/ships-info.html' ships_info=ships_info -%}
+{%- if offer.social_proof %}
+<div class="upsell-success padding-xxsmall text-center text-base font-bold color-black">{% campaign_include 'upsell/copy.html' text=offer.social_proof %}</div>
+{%- endif %}
+{%- unless layout.show_payment_logos == false %}
+{% campaign_include 'payment-logos.html' wrapper_class="hide-tablet-up" %}
+{%- endunless %}
+{%- endunless %}
+{%- endif -%}

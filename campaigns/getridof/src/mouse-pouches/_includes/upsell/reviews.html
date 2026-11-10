@@ -1,0 +1,50 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/reviews.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-reviews
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell page (stacked customer reviews list)
+  next_params:
+    section: { rating_text (e.g. "4.9 Customer Rating"), title (HTML), items[] { title, body, author, avatar, verified } }.
+  Static list, no Swiper — the checkout reviews slider stays on checkout. Reuses .review_component stars and
+  adds .upsell-review* row styles in core.
+{%- endcomment -%}
+{%- if section.items and section.items.size > 0 -%}
+<section class="section cc-sm upsell-reviews">
+  <div class="container">
+    <div class="heading-box text-center max-width-large align-center">
+      {%- if section.rating_text %}
+      <div class="review_component cc-sm flex-center">
+        <div class="review_component-wrapper">
+          <div class="review_stars-wrapper cc-color cc-black">
+            {%- for i in (1..5) %}<div class="review_component-star"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007l5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527l1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354L7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273l-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433l2.082-5.006Z" clip-rule="evenodd"></path></svg></div>{% endfor %}
+          </div>
+          <div class="font-bold">{{ section.rating_text }}</div>
+        </div>
+      </div>
+      {%- endif %}
+      {%- if section.title %}<h2 class="display-lg">{% campaign_include 'upsell/copy.html' text=section.title %}</h2>{% endif %}
+    </div>
+    <div class="upsell-reviews__list margin-32">
+      {%- for r in section.items %}
+      <article class="upsell-review">
+        <div class="review_component cc-sm">
+          <div class="review_stars-wrapper cc-color cc-black">
+            {%- for i in (1..5) %}<div class="review_component-star"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007l5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527l1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354L7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273l-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433l2.082-5.006Z" clip-rule="evenodd"></path></svg></div>{% endfor %}
+          </div>
+        </div>
+        {%- if r.title %}<p class="upsell-review__title">{{ r.title }}</p>{% endif %}
+        <p class="upsell-review__body">{{ r.body }}</p>
+        <div class="upsell-review__meta">
+          {%- if r.avatar %}<img loading="lazy" src="{{ r.avatar | campaign_asset }}" alt="" class="upsell-review__avatar">{% endif %}
+          <div>
+            <p class="upsell-review__author">{{ r.author }}</p>
+            {%- unless r.verified == false %}<p class="upsell-review__verified"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg> {% if r.verified and r.verified != true %}{{ r.verified }}{% else %}Verified Buyer{% endif %}</p>{% endunless %}
+          </div>
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif -%}

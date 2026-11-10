@@ -1,0 +1,30 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/steps.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-steps
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell page (numbered "how it works" steps)
+  next_params:
+    section: { title, text, steps[] { title, text } }.
+{%- endcomment -%}
+{%- if section.steps and section.steps.size > 0 -%}
+<section class="section cc-sm">
+  <div class="container">
+    <div class="heading-box text-center max-width-large align-center">
+      <h2 class="display-md">{{ section.title | default: 'How it works' }}</h2>
+      {%- if section.text %}<p class="text-lg">{{ section.text }}</p>{% endif %}
+    </div>
+    <div class="grid-3col-standard margin-32">
+      {%- for step in section.steps %}
+      <div class="checkout-features__item checkout-features__item--card flex-col flex-center text-center">
+        <div class="icon-wrapper cc-circle cc-primary cc-sm tw-700">{{ forloop.index }}</div>
+        <div class="heading-box">
+          <h3 class="checkout-features__item-title">{{ step.title }}</h3>
+          <p class="text-base">{{ step.text }}</p>
+        </div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif -%}

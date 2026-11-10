@@ -1,0 +1,79 @@
+{%- comment -%} GENERATED from _shared/checkout/_includes/payment-logos.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: payment-logos
+  next_version: 5
+  next_sdk_owns: campaign available_payment_methods / available_express_payment_methods (read at runtime)
+  next_sdk_surface: checkout + upsell (accepted payment logos, optional secure-checkout line) — shared partial
+  next_params:
+    wrapper_class: include arg (hide-tablet-up / hide-tablet-down / flex-center flex-col …).
+    show_secure: include arg, default true — the lock + "100% Encrypted & Secure Checkout" line above the logos.
+      Pass false where the page already has its own trust badges (apollo checkout).
+    payment_flags: optional object — per-method / per-brand OVERRIDE only. By default logos resolve from the
+      campaign: js/payment-logos.js (load it on every page that includes this partial) reads
+      next.getCampaignData().available_payment_methods + available_express_payment_methods on next:initialized
+      and reveals the logos whose platform payment-source code the campaign offers. A logo never shows for a
+      method the campaign does not offer.
+      Card brands: the platform exposes cards as ONE method code, `bankcard`; the merchant's accepted-brand
+      list (gateway accepted_card_types — visa, mastercard, american_express, discover, diners_club, jcb,
+      maestro, dankort; empty = all) is not in the campaign payload. So when bankcard is offered the row
+      shows the four common tiles (visa, mastercard, american_express, discover) and the other four are
+      opt-in: payment_flags.show_jcb: true etc. Any brand can be forced off (show_american_express: false).
+      Methods: show_paypal, show_apple_pay, show_google_pay, show_klarna, show_affirm, show_link, show_shop_pay,
+      show_twint, show_bancontact, show_ideal, show_sepa_debit — true forces on, false forces off.
+      secure_text overrides the lock line. style: "flat" renders the legacy upsell-payment-logos.svg sprite
+      with no runtime gating.
+  next_dont_touch: data-payment-logo / data-card-brand / data-card-default / data-payment-force — the runtime
+    contract with payment-logos.js.
+    {% campaign_include 'payment-logos.html' wrapper_class="hide-tablet-down" %}
+    {% campaign_include 'payment-logos.html' show_secure=false %}   (checkout, under the submit button)
+{%- endcomment -%}
+{%- assign pf = payment_flags -%}
+<div class="payment-img-wrapper {{ wrapper_class }}">
+  {%- unless show_secure == false %}
+  <div class="trust-badge invert"><img loading="lazy" src="{{ 'images/icons8-lock-24_1icons8-lock-24.png' | campaign_asset }}" alt="" class="trust-badge__icon">
+    <div class="badge-text-black">{{ pf.secure_text | default: '100% Encrypted &amp; Secure Checkout' }}</div>
+  </div>
+  {%- endunless %}
+  {%- if pf.style == 'flat' -%}
+  <img loading="lazy" src="{{ 'images/upsell-payment-logos.svg' | campaign_asset }}" alt="" class="credit-card__flags">
+  {%- else -%}
+  {%- comment -%} One <img> per method; hidden until the SDK confirms the method (cards render immediately —
+       bankcard is the baseline — and are hidden only if the campaign really has no card method). {%- endcomment -%}
+  {%- capture logo_rows -%}
+bankcard|visa|cc-visa.svg|Visa|default
+bankcard|mastercard|cc_master.svg|Mastercard|default
+bankcard|american_express|cc_amex.svg|American Express|default
+bankcard|discover|cc_discover.svg|Discover|default
+bankcard|diners_club|cc_diners_club.svg|Diners Club|
+bankcard|jcb|cc_jcb.svg|JCB|
+bankcard|maestro|cc_maestro.svg|Maestro|
+bankcard|dankort|cc_dankort.svg|Dankort|
+paypal||paypal-logo.svg|PayPal|
+apple_pay||apple-pay-logo.svg|Apple Pay|
+google_pay||google-pay-logo.svg|Google Pay|
+klarna||klarna-logo.svg|Klarna|
+affirm||affirm-logo.svg|Affirm|
+link||link-logo.svg|Link|
+shop_pay||shop-pay-logo.svg|Shop Pay|
+twint||twint-logo.svg|TWINT|
+bancontact||bancontact-logo.svg|Bancontact|
+ideal||ideal-logo.svg|iDEAL|
+sepa_debit||sepa-logo.svg|SEPA Direct Debit|
+  {%- endcapture -%}
+  <div class="payment-logos" data-payment-logos aria-label="Accepted payment methods">
+    {%- comment -%} The split separator below is a LITERAL newline inside the quotes (Liquid has no \n escape) — it is intentional. {%- endcomment -%}
+    {%- assign rows = logo_rows | strip | split: '
+' -%}
+    {%- for row in rows -%}
+    {%- assign cells = row | strip | split: '|' -%}
+    {%- assign code = cells[0] -%}
+    {%- assign brand = cells[1] -%}
+    {%- if brand != '' -%}{%- assign flag_key = 'show_' | append: brand -%}{%- else -%}{%- assign flag_key = 'show_' | append: code -%}{%- endif -%}
+    {%- assign force = pf[flag_key] -%}
+    {%- assign is_default = false -%}{%- if cells[4] == 'default' -%}{%- assign is_default = true -%}{%- endif -%}
+    {%- assign img_src = 'images/' | append: cells[2] -%}
+    <img loading="lazy" src="{{ img_src | campaign_asset }}" alt="{{ cells[3] }}" class="payment-logos__item" data-payment-logo="{{ code }}"{% if brand != '' %} data-card-brand="{{ brand }}" data-card-default="{{ is_default }}"{% endif %}{% if force == true %} data-payment-force="show"{% elsif force == false %} data-payment-force="hide" hidden{% elsif is_default == false %} hidden{% endif %}>
+    {%- endfor %}
+  </div>
+  {%- endif -%}
+</div>

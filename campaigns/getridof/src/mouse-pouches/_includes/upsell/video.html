@@ -1,0 +1,32 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/video.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-video
+  next_version: 1
+  next_sdk_owns: nothing
+  next_sdk_surface: upsell offer (VSL / product video — its own include in the content column, under the heading)
+  next_params:
+    upsell_video: object. src (REQUIRED; local path or https URL — use cdn.cachebucket.com for NEXT-hosted
+      files), poster, title (small heading above the player), autoplay (default true → renders
+      autoplay + muted, the only combination browsers allow without a gesture), loop, controls (default true),
+      preload (default "metadata" when autoplaying, "none" when autoplay: false — the poster is then the only
+      bytes fetched until the shopper taps play), id (optional element id).
+  Loading: the frame reserves a 16:9 box in CSS (no layout shift while the poster / first frame arrives);
+  poster + preload keep the initial cost to one image when autoplay is off; keep the file a short H.264 MP4
+  on cdn.cachebucket.com. Browsers ignore lazy-loading on <video>, so there is no loading="lazy" here.
+  Custom player: the element carries data-upsell-video (and your id). Set controls: false, add the player's
+  CSS/JS to the page styles:/scripts: and a small js file of your own that targets [data-upsell-video]
+  (e.g. new Plyr(document.querySelector('[data-upsell-video]'))). The partial stays untouched.
+  Renders nothing without upsell_video.src. Native <video> on purpose: no Plyr, no custom control bar, no
+  iOS sound-unlock script — zero dependencies across eight families and it obeys autoplay policy. A campaign
+  that wants a branded player layers it on top of this element.
+    {% campaign_include 'upsell/video.html' upsell_video=upsell_video %}
+{%- endcomment -%}
+{%- if upsell_video and upsell_video.src -%}
+<div class="upsell-video">
+  {%- if upsell_video.title %}<p class="upsell-video__title">{{ upsell_video.title }}</p>{% endif %}
+  <div class="upsell-video__frame">
+    {%- if upsell_video.autoplay == false -%}{%- assign uv_preload = upsell_video.preload | default: 'none' -%}{%- else -%}{%- assign uv_preload = upsell_video.preload | default: 'metadata' -%}{%- endif %}
+    <video class="upsell-video__player" data-upsell-video{% if upsell_video.id %} id="{{ upsell_video.id }}"{% endif %} src="{{ upsell_video.src | campaign_asset }}"{% if upsell_video.poster %} poster="{{ upsell_video.poster | campaign_asset }}"{% endif %} playsinline preload="{{ uv_preload }}"{% unless upsell_video.controls == false %} controls{% endunless %}{% unless upsell_video.autoplay == false %} autoplay muted{% endunless %}{% if upsell_video.loop %} loop{% endif %}></video>
+  </div>
+</div>
+{%- endif -%}
