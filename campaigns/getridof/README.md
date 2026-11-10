@@ -59,7 +59,27 @@ node tools/funnel/getridof/polish_checks.cjs http://localhost:8765 campaigns/get
 selection, the bump, the hosted card fields, the express area and the exit coupon (20 checks). The evidence is in
 `runs/polish/`.
 
-## Going live (one time)
+## Live on the store (theme 11)
+
+| Page | URL |
+|---|---|
+| Sales page | https://getridof.shop/mouse-pouches/ |
+| Checkout | https://getridof.shop/mouse-pouches-checkout/ |
+| Checkout, Automatic Refills | https://getridof.shop/mouse-pouches-checkout-refill/ |
+| Thank you | https://getridof.shop/mouse-pouches-thank-you/ |
+
+Redeploy after a rebuild (writes only `templates/pages/page.mouse-pouches*.html` and `assets/gromp/`, then updates
+the 4 store pages; `ntk` from `pip install next-theme-kit`, a pull of theme 11 as the working copy):
+
+```bash
+python3 -I tools/funnel/getridof/deploy_store.py <theme-11 copy> --push
+```
+
+```bash
+node tools/funnel/getridof/live_check.cjs https://getridof.shop
+```
+
+## Other hosting
 
 1. **Host `_site/`.** On Netlify, `netlify.toml` already sets the build command (`npm run build:static`), the publish
    folder (`_site`) and Node 22. Vercel and Cloudflare Pages work too, with the same command and folder.
