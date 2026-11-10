@@ -12,3 +12,5 @@ gp-carousel-v3.carousel-gallery .gro-thumb-active { outline: 2px solid #23372B; 
   gp-carousel-v3.gro-carousel .gem-slider-item { scroll-snap-align: start; }
 }
 body.gro-menu-open .header-mobile-menu { display: block !important; opacity: 1 !important; transform: none !important; visibility: visible !important; }
+/* scroll guard: no captured popup lock may stop the page scrolling (only the open mobile menu may) */
+html, body:not(.gro-menu-open) { overflow-y: auto !important; overflow-x: hidden; height: auto !important; }

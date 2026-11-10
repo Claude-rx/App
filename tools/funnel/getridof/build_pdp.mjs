@@ -119,6 +119,12 @@ const report = await page.evaluate(({ STORE }) => {
   // form posts to the source store
   document.querySelectorAll('form[action]').forEach(f => { if (/sofyre|^\//.test(f.getAttribute('action'))) { f.removeAttribute('action'); f.setAttribute('onsubmit', 'return false'); count('form-inert'); } });
 
+  // scroll locks frozen in by popups open at capture time (Klaviyo's form left klaviyo-prevent-body-scrolling on body)
+  [document.documentElement, document.body].forEach(el => {
+    [...el.classList].filter(c => /prevent-body-scroll|no-scroll|overflow-hidden|modal-open|scroll-lock|lock-scroll|menu-open|drawer-open/i.test(c)).forEach(c => { el.classList.remove(c); count('scroll-lock'); });
+    el.style.removeProperty('overflow'); el.style.removeProperty('position');
+  });
+
   // bundle box hooks
   const bars = [...document.querySelectorAll('.kaching-bundles__bar[data-deal-bar-id]')];
   const ids = ['buy1', 'buy3', 'buy5'];
