@@ -26,7 +26,7 @@ PAGE = MARK + """
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="ml-route" content="%%(route)s @%(build)s">
+<meta name="ml-route" content="%%(route)s">
 <title>MedicLab</title>
 <script>location.replace('%(entry)s' + location.search + location.hash);</script>
 <meta http-equiv="refresh" content="0;url=%(entry)s">
@@ -34,7 +34,7 @@ PAGE = MARK + """
 </head>
 <body><p><a href="%(entry)s">Continue to MedicLab</a></p></body>
 </html>
-""" % {'entry': ENTRY, 'build': __import__('datetime').datetime.now(__import__('datetime').timezone.utc).strftime('%Y%m%dT%H%M%S')}
+""" % {'entry': ENTRY}
 
 
 # a server error must never redirect: a funnel page that fails to render would otherwise loop to itself
