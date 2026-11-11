@@ -102,6 +102,10 @@ check('data-next-upsell-action="add"' in u and 'data-next-upsell-action="skip"' 
 check('data-next-timer' not in u and 'countdown' not in u.lower().replace('countdown-timer.html', ''),
       'upsell: countdown present (no fake urgency)')
 check('$29.97' in u, 'upsell: one-time price not stated')
+# any "N% off" stated on the upsell must be the real discount of $29.97 against $52.97 (43%), not the voucher's 45%
+real = round((1 - 29.97 / 52.97) * 100)
+for n in set(re.findall(r'(\d+)% off', u, re.I)):
+    check(int(n) == real, f'upsell: says {n}% off, the real discount is {real}%')
 
 t = html['berberine-thank-you']
 check('What happens next' in t, 'thank-you: next-steps block missing')

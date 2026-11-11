@@ -21,7 +21,7 @@ so the store and the weight page agree.
 | 1a | `berberine.html` → `/berberine/` | 24 sections from the live mediclab.us Berberine product page (the Slow Door, the Open-Door Meal Routine, research cards with doses, pharmacist checklist, label math, comparison, guarantee, offer, honest no-reviews block, objections, FAQ). Copy source: `berberine/source-mediclab-us-pdp.txt`, `source-faq.json`; images are the PDP's own. Offer picker: Monthly plan (default) or One bottle; every CTA opens checkout with that card selected (`?forceBundleId=plan\|one`), keeping the visit's query string |
 | 1b | `weight-support.html` → `/weight-support/` | The copy deck's 20 sections, verbatim (`tools/mediclab/build_sales_page.py` from `natural-glp1/`), images in `images/ml/weight/` |
 | 2 | `berberine-checkout.html` | Two plan cards, details, shipping, payment, summary with refill frequency. Monthly plan terms + required consent checkbox next to the button (`js/ml-plan-consent.js`) |
-| 3 | `berberine-offer.html` | One more bottle, one-time, **$29.97** (45% off $52.97). One tap, no card re-entry. No timer, no ratings |
+| 3 | `berberine-offer.html` | One more bottle, one-time, **$29.97** (43% off $52.97; voucher BERBERINE45 is 45% with .97 rounding). One tap, no card re-entry. No timer, no ratings |
 | 4 | `berberine-thank-you.html` | Order receipt, what happens next (shipping, how to take it, refill reminder), the Empty-Bottle Promise |
 
 ## The offer (as on mediclab.us)
@@ -47,6 +47,18 @@ Ids: `tools/mediclab/berberine-ids.json`.
 
 > Product **#7** is a duplicate from a re-run before the SKU lookup existed. It is **unpublished** and renamed
 > "DUPLICATE - delete me". Delete it in Dashboard > Products (the API delete was not allowed from this session).
+
+## Label (Weight Management*, 2026-11-11)
+
+The bottle now reads **Berberine · Weight Management*** with the pills METABOLISM / CRAVINGS / GLUCOSE.
+
+- Next product #4 gallery: the 8 delivered store images (`wm-01` … `wm-08`, ids in `tools/mediclab/berberine-ids.json`).
+- Checkout gallery (`images/ml/product/berberine-1..6`) and pack shots (`images/ml/berberine/bottle-*`): the delivered mockups.
+- Lifestyle photos that showed the old label (weight page: hero, doctor, review1-6, usage, solution; glucose page:
+  with-meals, couple-cooking) were relabelled in place, the rest of each photo untouched:
+  `tools/mediclab/relabel.py crop|paste` (bottle crop → image edit with the new pack shot as reference → feathered paste)
+  and, where the model redrew the bottle at another size, `tools/mediclab/relabel_transplant.py` (label-only transplant
+  aligned on the heart logo, light matched). Boxes and parameters: `tools/mediclab/relabel-boxes.json`.
 
 ## Brand (mediclab.us)
 

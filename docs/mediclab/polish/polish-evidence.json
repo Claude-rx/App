@@ -16,7 +16,7 @@
         "1280x900",
         "390x900"
       ],
-      "result": "4 pages x 2 viewports: no horizontal scroll, no broken images, no console errors, Fustat on every page; served live on try.mediclab.us (theme 1 preview) with the same build",
+      "result": "5 pages x 2 viewports (390, 1280): no horizontal scroll, no broken or distorted images, no console errors, Fustat on every page, offer radios pre-selected and in sync; live on try.mediclab.us (theme 1) byte-identical to the build",
       "note": "page_load is produced by `campaigns-os polish capture`, which needs the Build Packet; run it once the campaign exists"
     },
     "brand_review": {
@@ -52,16 +52,20 @@
     "commerce_flow_review": "berberine CTAs -> /berberine-checkout/?forceBundleId=plan|one (both offer blocks in sync) -> success /berberine-offer/ -> accept and decline /berberine-thank-you/. Upsell: hero-5 package + BERBERINE45 voucher ($29.97), no countdown, no ratings. Receipt binds order.*. Storefront routes go to the sales page with the query string.",
     "issues": [
       {
-        "code": "campaign.missing",
-        "message": "The campaign cannot be created: the store has no payment gateway (gateway group 1 lists no currency). Live SDK checks (prices, card fields, wallets, selector interaction) wait on it."
-      },
-      {
         "code": "fixed.radio_group",
         "message": "Both offer blocks shared one radio group, so the top offer loaded unselected; fixed with one group per block, gated."
       },
       {
         "code": "fixed.image_stretch",
         "message": "Images with width/height attributes rendered at the attribute height (stretched); fixed with img{height:auto}, verified on 390 and 1280."
+      },
+      {
+        "code": "fixed.label_update",
+        "message": "New label (Berberine Weight Management*, METABOLISM / CRAVINGS / GLUCOSE): product #4 gallery, checkout gallery and pack shots replaced with the delivered mockups; 12 lifestyle photos relabelled (tools/mediclab/relabel.py, relabel_transplant.py; boxes in relabel-boxes.json), every composite reviewed zoomed for seams and ghosting."
+      },
+      {
+        "code": "fixed.upsell_percent",
+        "message": "Upsell copy said 45% off; $29.97 against $52.97 is 43% off (the voucher is 45% with .97 rounding). Copy fixed and gated in check_funnel.py."
       }
     ],
     "commands": [
@@ -70,7 +74,8 @@
       "node imgratio.cjs (every visible sales image at its natural aspect ratio, 390 and 1280)",
       "node radio.cjs (offer radios pre-selected, both blocks in sync, CTAs carry forceBundleId and the query string)",
       "residue + brand-bleed + GLP-1/weight-loss claim scan of _site/berberine (python)",
-      "curl -I cdn.cachebucket.com og image"
+      "curl -I cdn.cachebucket.com og image",
+      "python3 -I tools/mediclab/check_funnel.py --live (includes the upsell percent gate)"
     ]
   }
 }
