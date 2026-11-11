@@ -11,7 +11,8 @@ SITE = ROOT / 'campaigns' / 'mediclab' / '_site' / 'berberine-glp1'
 PAGES = ['glp1-support', 'berberine-checkout', 'berberine-offer', 'berberine-thank-you']
 FDA = 'These statements have not been evaluated by the Food and Drug Administration'
 DEMO = ['LLbBgtusfE2zopDcjnOY9NbrlN690zSjuedqQ04J', 'demo.29next.com', 'TRUSTED BY 180,000', '19,569', 'Lorem ipsum',
-        'Daniel K.', 'XXCODE', 'EXIT10', 'placehold.co', 'next-dark.svg', 'Product Name', 'Extended Warranty']
+        'Daniel K.', 'XXCODE', 'EXIT10', 'placehold.co', 'next-dark.svg', 'Product Name', 'Extended Warranty',
+        'Package Title', 'Your headline', 'data-selected="true"', 'images/favicon.png', '#FF9425', 'Plus Jakarta']
 fails = []
 
 

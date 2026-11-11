@@ -95,7 +95,7 @@
       <div class="os-card__header-slot"></div>
       <div class="os-card__wrapper">
         <div class="os-card__content os--align-middle" data-next-package-id="{{ card_package_id }}">
-          <div{% if b.selected %} data-selected="true"{% endif %} class="radio-style-1">
+          <div class="radio-style-1">
             <div class="radio-inner"></div>
           </div>
           <div class="os-card__image-slot hide-tablet"><img data-next-display="package.image" alt="" class="image"></div>
@@ -103,7 +103,7 @@
             <div class="os-card__title-section">
               
               <div class="os-card__title-wrapper">
-                <div class="os-card__title">{{ b.title_prefix }}<span data-next-display="package.name">Package Title</span></div>
+                <div class="os-card__title">{{ b.title_prefix }}{% if b.title %}<span>{{ b.title }}</span>{% else %}<span data-next-display="package.name">{{ campaign.name }}</span>{% endif %}</div>
                 <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="os-card__title-badge pb--bestseller">
                   <template>
                     <span>SAVE {discount.percentage}</span>
@@ -147,7 +147,7 @@
       {% if b.badge_text -%}
       <div class="os-card__label-slot">
         <div class="os-card__label-2 os-card__label--middle-right{% if b.badge_pill_class %} {{ b.badge_pill_class }}{% endif %}">
-          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path></svg></div>
+          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="currentColor"></path></svg></div>
           <div class="os-card__label-text-2">{{ b.badge_text }}</div>
         </div>
       </div>
@@ -203,7 +203,7 @@
       <div class="os-card__footer-slot"></div>
       <div class="os-card__label-slot">
         <div class="os-card__label-2 os-card__label--middle-right os-card__label--pill-primary">
-          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path></svg></div>
+          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="currentColor"></path></svg></div>
           <div class="os-card__label-text-2">Most Popular</div>
         </div>
       </div>
@@ -251,7 +251,7 @@
       <div class="os-card__footer-slot"></div>
       <div class="os-card__label-slot">
         <div class="os-card__label-2 os-card__label--middle-right os-card__label--pill-secondary">
-          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path></svg></div>
+          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="currentColor"></path></svg></div>
           <div class="os-card__label-text-2">Best Deal</div>
         </div>
       </div>

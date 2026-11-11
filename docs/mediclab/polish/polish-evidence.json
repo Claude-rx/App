@@ -1,0 +1,56 @@
+{
+  "status": "completed_with_warnings",
+  "evidence": {
+    "visual_review": {
+      "screenshots": [
+        "docs/mediclab/polish/d-glp1-support.jpg",
+        "docs/mediclab/polish/m-glp1-support.jpg",
+        "docs/mediclab/polish/d-berberine-checkout.jpg",
+        "docs/mediclab/polish/m-berberine-checkout.jpg",
+        "docs/mediclab/polish/d-berberine-offer.jpg",
+        "docs/mediclab/polish/m-berberine-offer.jpg",
+        "docs/mediclab/polish/d-berberine-thank-you.jpg",
+        "docs/mediclab/polish/m-berberine-thank-you.jpg"
+      ],
+      "viewports": ["1280x900", "390x900"],
+      "result": "4 pages x 2 viewports: no horizontal scroll, no broken images, no console errors, Fustat on every page; served live on try.mediclab.us (theme 1 preview) with the same build",
+      "note": "page_load is produced by `campaigns-os polish capture`, which needs the Build Packet; run it once the campaign exists"
+    },
+    "brand_review": {
+      "favicon": { "status": "confirmed_non_template", "note": "MedicLab mark cut from the mediclab.us logo, images/ml/mediclab-favicon.png and mediclab-webclip.png" },
+      "brand_bleed": {
+        "cleared": true,
+        "promo_codes": "none",
+        "favicon": "brand favicon",
+        "fonts": "design fonts only (Fustat, the mediclab.us font)",
+        "colors": "tokenized (mediclab-funnel.css sets the next-core tokens; badge star uses currentColor)"
+      },
+      "brand_source": "mediclab.us (live store, read 2026-11-11): Fustat, #1D503A primary pill buttons, #0B2A1B header with the white logo, #F5F1E8 cream, #C4301C sale badge",
+      "share_image": "cdn.cachebucket.com host"
+    },
+    "checkout_review": {
+      "field_labels": "inset labels legible on first paint (First Name*, Last Name*, Email*, phone placeholder), address block gated",
+      "bump_compare_price_rule": "no order bumps on this checkout, so no compare price renders",
+      "bundle_selector": "two cards (plan, one); preselected by data-next-selected on the card only; the starter's static radio data-selected removed so the selected look follows the SDK's next-selected class",
+      "plan_terms": "monthly plan terms next to the submit button with a required consent box, shown only while the plan card is selected",
+      "pending_live_sdk": "card field centering, express wallet mount and selected/deselected interaction need the campaign api key (SDK hydration)"
+    },
+    "template_residue_review": {
+      "starter_favicon": { "status": "confirmed_non_template" },
+      "copy_residue": "none: starter 'Package Title' fallback replaced by the copy-deck plan names; no lorem, Product Name, Your headline, TODO or [VERIFY] on any page",
+      "sales_copy_parity": "visible text equals the source sales page word for word (ratio 0.9995); the one removal is the FAQ's 'Express is $5.97.', the store has no express method",
+      "gate": "tools/mediclab/check_funnel.py fails the build on any of these strings"
+    },
+    "commerce_flow_review": "glp1-support CTAs -> /berberine-checkout/?forceBundleId=plan|one (both offer blocks in sync) -> success /berberine-offer/ -> accept and decline /berberine-thank-you/. Upsell: hero-5 package + BERBERINE45 voucher ($29.97), no countdown, no ratings. Receipt binds order.*. Storefront routes go to the sales page with the query string.",
+    "issues": [
+      { "code": "campaign.missing", "message": "The campaign cannot be created: the store has no payment gateway (gateway group 1 lists no currency). Live SDK checks (prices, card fields, wallets, selector interaction) wait on it." }
+    ],
+    "commands": [
+      "python3 -I tools/mediclab/check_funnel.py",
+      "node qa.cjs (Playwright: 4 pages x 1280/390, fonts, overflow, broken images, console errors)",
+      "residue + brand-bleed scan of _site/berberine-glp1 (python)",
+      "sales copy parity diff against the uploaded index.html (python difflib)",
+      "curl -I cdn.cachebucket.com og image"
+    ]
+  }
+}

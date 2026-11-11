@@ -101,3 +101,8 @@ h1, h2, h3, .display-md, .form-section__title { font-family: var(--_text---font-
 .ml-thanks-hero h1 { font-size: clamp(26px, 5vw, 36px); margin: 0 0 6px; }
 .ml-next { background: #fff; border: 1px solid #e3e0d7; border-radius: 16px; padding: 18px 20px; margin: 16px 0; }
 .ml-next ol { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+
+/* badge: brand sale red pill with a white star (the starter's star was a hardcoded orange) */
+.os-card__label-2 { background: #c4301c; color: #ffffff; }
+.os-card__label-2 .card-icons { color: #e3f6a4; }
+.os-card__title { font-weight: 700; color: #1f2421; }
