@@ -69,7 +69,13 @@ replaced to match the live store. `assets/css/sales.css` + `berberine.css` (sale
 ## Launch runbook
 
 Steps 1 to 4 are done (Stripe gateway group 1: card, Apple Pay, PayPal; campaign 2475 created, verified and wired).
-Left: Allowed Domains and publishing the theme (step 5), then a test order (step 6).
+Theme "MedicLab Funnels" is published (active) on try.mediclab.us. Left: **Allowed Domains** (step 5, Dashboard only),
+then a test order (step 6).
+
+> 2026-11-11: campaign 2475 had lost `bankcard` from its payment methods (only Apple Pay and PayPal were left), so
+> `verify` failed. Restored through the skill's update path (one PATCH, journalled in the run manifest); verify passes
+> again: card, Apple Pay, PayPal; express Apple Pay, PayPal; $20.97 / $52.97 / $29.97. Re-run `verify` after any
+> Dashboard change to the campaign or the gateway.
 
 1. **Dashboard > Settings > Payments**: add the card gateway (a Test gateway is enough to QA). Also: business address and
    support phone in Settings > General.
