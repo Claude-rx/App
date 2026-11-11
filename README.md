@@ -1,6 +1,6 @@
 # App
 
-SKINOFAB on Next Commerce: the funnel sources and build (`campaigns/skinofab/`), the store theme (`skinofab-theme/`),
+SKINOFAB on Next Commerce (and **Mediclab**: [docs/mediclab/](docs/mediclab/README.md), store connector `tools/stores/`): the funnel sources and build (`campaigns/skinofab/`), the store theme (`skinofab-theme/`),
 tooling (`tools/`), and the agent setup. **Start with [docs/NEXT-COMMERCE-HANDOFF.md](docs/NEXT-COMMERCE-HANDOFF.md).**
 
 ## Next Commerce AI tooling

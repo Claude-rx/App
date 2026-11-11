@@ -1,0 +1,17 @@
+{
+  "_comment": "Next Commerce stores this repo works with. Tokens are NEVER stored here: each store names the env var that holds its Admin API token.",
+  "mediclab": {
+    "name": "Mediclab",
+    "subdomain": "mediclab",
+    "base_url": "https://mediclab.29next.store",
+    "token_env": "MEDICLAB_ADMIN_TOKEN",
+    "api_version": "2024-04-01"
+  },
+  "skinofab": {
+    "name": "SKINOFAB",
+    "subdomain": "skinofab",
+    "base_url": "https://skinofab.29next.store",
+    "token_env": "SKINOFAB_ADMIN_TOKEN",
+    "api_version": "2024-04-01"
+  }
+}

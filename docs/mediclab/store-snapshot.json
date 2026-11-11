@@ -1,0 +1,274 @@
+{
+  "audited_at": "2026-11-11 05:16 UTC",
+  "store": "mediclab",
+  "checks": [
+    [
+      "BLOCKER",
+      "store",
+      "Business contact address is empty (needed on checkout, receipts, policies and by gateways)"
+    ],
+    [
+      "WARN",
+      "store",
+      "No support phone number on the store"
+    ],
+    [
+      "WARN",
+      "store",
+      "No primary domain connected (store runs on *.29next.store)"
+    ],
+    [
+      "BLOCKER",
+      "catalog",
+      "No real products, only the demo \"Example Product\". Create the Mediclab products before a campaign can sell them"
+    ],
+    [
+      "WARN",
+      "catalog",
+      "1 demo product(s) still public; delete or unpublish before launch"
+    ],
+    [
+      "BLOCKER",
+      "payments",
+      "No payment gateway configured (Dashboard > Settings > Payments). Checkout cannot take money"
+    ],
+    [
+      "WARN",
+      "payments",
+      "No express methods (Apple Pay / Google Pay / PayPal) available"
+    ],
+    [
+      "WARN",
+      "shipping",
+      "#1 Default (0.00 USD): no countries restricted (ships everywhere)"
+    ],
+    [
+      "WARN",
+      "fulfillment",
+      "Fulfillment location has no address and no callback URL (no 3PL connected yet)"
+    ],
+    [
+      "BLOCKER",
+      "campaigns",
+      "No campaign in the Campaigns App: the funnel needs one (packages, offers, shipping, API key)"
+    ],
+    [
+      "WARN",
+      "storefront",
+      "No storefront theme installed (fine for a standalone Page Kit funnel)"
+    ]
+  ],
+  "snapshot": {
+    "store": {
+      "name": "Mediclab",
+      "tagline": "",
+      "timezone": "America/New_York",
+      "contact_address": {
+        "company_name": "",
+        "line1": "",
+        "line2": "",
+        "postcode": "",
+        "city": "",
+        "state": "",
+        "country": null,
+        "phone_number": ""
+      },
+      "primary_domain": null,
+      "tax_id": "",
+      "available_languages": [
+        {
+          "code": "en",
+          "label": "English"
+        }
+      ],
+      "available_currencies": [
+        {
+          "code": "USD",
+          "label": "$ USD"
+        }
+      ],
+      "payments": {
+        "environment_key": "***",
+        "certificate_token": "***",
+        "available_express_payment_methods": [],
+        "available_payment_methods": [
+          {
+            "code": "bankcard",
+            "label": "Bankcard"
+          }
+        ]
+      }
+    },
+    "products": [
+      {
+        "id": 3,
+        "url": "https://mediclab.29next.store/catalogue/example-product_3/",
+        "title": "Example Product",
+        "slug": "example-product",
+        "structure": "parent",
+        "is_discountable": true,
+        "is_public": true,
+        "ranking": 0,
+        "categories": [
+          {
+            "id": 1,
+            "name": "Example Category",
+            "slug": "example-category"
+          }
+        ],
+        "enable_subscription": true,
+        "interval": "day",
+        "interval_counts": [
+          90,
+          60,
+          30
+        ],
+        "images": [],
+        "recommended_products": [],
+        "external_tax_code": null,
+        "variant_attributes": [],
+        "variants": [
+          {
+            "id": 2,
+            "product_id": 3,
+            "title": "Example Product",
+            "sku": "DEMO-SKU-123",
+            "upc": "",
+            "purchase_availability": "available",
+            "inventory_availability": "untracked",
+            "track_stock": false,
+            "allow_backorders": false,
+            "images": [],
+            "variant_attribute_values": [],
+            "prices": [
+              {
+                "currency": "USD",
+                "price": "49.99",
+                "retail": "39.99",
+                "subscription": null,
+                "subscription_suggested_downsell": null
+              }
+            ],
+            "stockrecords": [
+              {
+                "id": 1,
+                "location_id": 1,
+                "num_in_stock": 100,
+                "num_allocated": 0,
+                "low_stock_threshold": 0
+              }
+            ],
+            "unit_cost": "0.00",
+            "requires_shipping": true,
+            "date_created": "2017-09-28T08:23:08.368000-04:00",
+            "date_updated": "2025-05-29T01:33:58.616003-04:00",
+            "metadata": {}
+          }
+        ],
+        "rating": null,
+        "date_created": "2025-05-29T01:33:58.587623-04:00",
+        "date_updated": "2025-05-29T01:33:58.587643-04:00",
+        "metadata": {}
+      }
+    ],
+    "categories": [
+      {
+        "id": 1,
+        "name": "Example Category",
+        "description": "",
+        "meta_title": null,
+        "meta_description": null,
+        "image": "",
+        "slug": "example-category",
+        "is_public": true,
+        "external_tax_code": null,
+        "template": null
+      }
+    ],
+    "campaigns": [],
+    "gateways": [],
+    "shipping_methods": [
+      {
+        "id": 1,
+        "name": "Default",
+        "description": "",
+        "prices": [
+          {
+            "currency": "USD",
+            "price_per_order": "0.00"
+          }
+        ],
+        "delivery_time": "",
+        "code": "default",
+        "countries": [],
+        "is_public": true
+      }
+    ],
+    "locations": [
+      {
+        "id": 1,
+        "address": null,
+        "name": "Store Location",
+        "callback_url": null,
+        "accept_return": true,
+        "allowed_destination_countries": []
+      }
+    ],
+    "themes": [],
+    "pages": [
+      {
+        "id": 3,
+        "title": "Contact Us",
+        "slug": "contact",
+        "template": "",
+        "meta_title": null,
+        "meta_description": null,
+        "metadata": {}
+      },
+      {
+        "id": 1,
+        "title": "Privacy Policy",
+        "slug": "privacy",
+        "template": "",
+        "meta_title": null,
+        "meta_description": null,
+        "metadata": {}
+      },
+      {
+        "id": 2,
+        "title": "Terms & Conditions",
+        "slug": "terms",
+        "template": "",
+        "meta_title": null,
+        "meta_description": null,
+        "metadata": {}
+      }
+    ],
+    "webhooks": [
+      {
+        "id": 1,
+        "events": [
+          "order.updated",
+          "order.created",
+          "transaction.created",
+          "transaction.updated",
+          "fulfillment.created",
+          "fulfillment.updated",
+          "dispute.created",
+          "dispute.updated"
+        ],
+        "secret_key": "***",
+        "created_at": "2026-10-18T07:11:23.379245-04:00",
+        "updated_at": "2026-10-18T07:11:23.379254-04:00",
+        "name": "Nexus Report Webhook",
+        "target": "https://accounts.29next.com/reports/webhook/receiver/",
+        "active": true,
+        "next_check_date": null,
+        "warning_count": 0,
+        "api_version": "2024-04-01"
+      }
+    ],
+    "orders": [],
+    "subscriptions": []
+  }
+}

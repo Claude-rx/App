@@ -25,6 +25,8 @@ jobs:
           python-version: "3.13"
       - name: Python packages the funnel checks use
         run: python3 -m pip install --quiet pillow pyyaml
+      - name: Store connector unit tests
+        run: npm run test:stores
       - name: AXON adapter unit tests
         run: npm run test:axon
       - name: Build the funnels (Campaign Page Kit)
