@@ -53,7 +53,7 @@ if __name__ == '__main__':
     for pg in F.PAGES:
         slug = pg['file']
         title, desc = TITLES[pg['id']]
-        body = {'title': title, 'slug': slug, 'template': slug, 'meta_title': title + ' | ' + getattr(F, 'BRAND', 'SKINOFAB'), 'meta_description': desc}
+        body = {'title': title, 'slug': slug, 'template': slug if getattr(F, 'PAGE_TEMPLATES', True) else '', 'meta_title': title + ' | ' + getattr(F, 'BRAND', 'SKINOFAB'), 'meta_description': desc}
         cur = have.get(slug)
         if cur and all(str(cur.get(k)) == str(v) for k, v in body.items()):
             print('ok     ', F.FUNNEL_HOST + F.route(pg['id'], served=True)); continue

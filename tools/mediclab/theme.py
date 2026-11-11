@@ -48,14 +48,16 @@ ERROR_500 = MARK.replace('this route goes to the sales page', 'server error page
 
 
 def page_dispatch():
-    """pages/page.html renders the funnel page by slug, and sends any other store page to the sales page. The store
-    picks a page's own template (page.<template>.html) only from the active theme; the dispatch makes the funnel render
-    in preview too, and keeps working if a page loses its template setting."""
+    """pages/page.html renders the funnel page by slug, and sends any other store page to the sales page. Each funnel
+    page's template (page.<file>.html, written by deploy_theme.py) is inlined here, not included: on this store an
+    {% include %} of another theme template fails the render (404), and a page's own template choice is not honoured
+    in preview. The store pages keep an empty template, so preview and live render the same way."""
     out = [MARK.replace('this route goes to the sales page', 'store pages: funnel page by slug, else the sales page')]
     for n, p in enumerate(F.PAGES):
         f = p['file']
-        out.append(('{% if' if n == 0 else '{% elif') + f" page.slug == '{f}' or flatpage.url == '/{f}/' %}}"
-                   f"{{% include 'pages/page.{f}.html' %}}")
+        tpl = (THEME / 'templates' / 'pages' / f'page.{f}.html').read_text()
+        body = tpl.split('\n', 1)[1] if tpl.startswith('{# GENERATED') else tpl     # drop deploy_theme's marker line
+        out.append(('{% if' if n == 0 else '{% elif') + f" page.slug == '{f}' %}}" + body)
     out.append('{% else %}' + PAGE.split('\n', 1)[1].replace('%(route)s', 'pages/page.html') + '{% endif %}')
     return '\n'.join(out) + '\n'
 

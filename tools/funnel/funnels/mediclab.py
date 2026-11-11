@@ -19,6 +19,8 @@ PROJECT = 'campaigns/mediclab'           # the Page Kit project (deploy_theme.py
 STORE = 'https://mediclab.29next.store'
 FUNNEL_HOST = 'https://try.mediclab.us'
 STORE_ROUTE = '/'
+PAGE_TEMPLATES = False                   # store pages keep an empty template: pages/page.html renders them by slug
+                                         # (tools/mediclab/theme.py; this store fails {% include %} and ignores the choice in preview)
 TEMPLATE_PREFIX = 'mlb-'
 PAGES = [
     {'id': 'sales', 'file': 'glp1-support', 'type': 'presell', 'sdk': 'product', 'entry': True, 'next': 'checkout',
