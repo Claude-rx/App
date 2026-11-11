@@ -3,14 +3,23 @@
 **Sales page → checkout → upsell (same product) → thank you**, served at **https://try.mediclab.us/berberine/**,
 campaign only (Campaigns App cart, checkout and upsell; no storefront), in the mediclab.us brand.
 
-**Positioning: healthy glucose metabolism, never GLP-1 or weight loss.** Berberine and the Natural GLP-1 weight-loss
-supplement are two different products with two funnels. The weight-loss / natural GLP-1 sales page, its copy deck and
-images are parked for funnel 2 in [natural-glp1/](natural-glp1/) (not built, not served). The gates fail the Berberine
-funnel on any GLP-1 or weight-loss wording.
+**Campaign 2475 "MedicLab Berberine Funnel"** (created and verified 2026-11-11: 39/39 PASS, Cart API $20.97 / $52.97 /
+$29.97). **One product, two entry pages, one checkout:**
+
+| Entry | Angle | Copy source |
+|---|---|---|
+| `/berberine/` | healthy glucose metabolism (the store's own positioning) | the live mediclab.us product page |
+| `/weight-support/` | weight management, "natural GLP-1 support" | the delivered copy deck (`natural-glp1/copy-deck.md`), with its compliance lines: FDA disclaimer, "not a GLP-1 medication" FAQ, no pounds promised, example-review and model labels |
+
+Both go to the same `/berberine-checkout/` → `/berberine-offer/` → `/berberine-thank-you/`, whose copy is angle-neutral.
+The gates keep GLP-1 / weight wording off the glucose page and the shared pages, and require the weight page's
+compliance lines. Note: the mediclab.us product page FAQ says Berberine is not sold as a weight-loss product; update it
+so the store and the weight page agree.
 
 | Step | Page (`campaigns/mediclab/src/berberine/`) | What it does |
 |---|---|---|
-| 1 | `berberine.html` → `/berberine/` | 24 sections from the live mediclab.us Berberine product page (the Slow Door, the Open-Door Meal Routine, research cards with doses, pharmacist checklist, label math, comparison, guarantee, offer, honest no-reviews block, objections, FAQ). Copy source: `berberine/source-mediclab-us-pdp.txt`, `source-faq.json`; images are the PDP's own. Offer picker: Monthly plan (default) or One bottle; every CTA opens checkout with that card selected (`?forceBundleId=plan\|one`), keeping the visit's query string |
+| 1a | `berberine.html` → `/berberine/` | 24 sections from the live mediclab.us Berberine product page (the Slow Door, the Open-Door Meal Routine, research cards with doses, pharmacist checklist, label math, comparison, guarantee, offer, honest no-reviews block, objections, FAQ). Copy source: `berberine/source-mediclab-us-pdp.txt`, `source-faq.json`; images are the PDP's own. Offer picker: Monthly plan (default) or One bottle; every CTA opens checkout with that card selected (`?forceBundleId=plan\|one`), keeping the visit's query string |
+| 1b | `weight-support.html` → `/weight-support/` | The copy deck's 20 sections, verbatim (`tools/mediclab/build_sales_page.py` from `natural-glp1/`), images in `images/ml/weight/` |
 | 2 | `berberine-checkout.html` | Two plan cards, details, shipping, payment, summary with refill frequency. Monthly plan terms + required consent checkbox next to the button (`js/ml-plan-consent.js`) |
 | 3 | `berberine-offer.html` | One more bottle, one-time, **$29.97** (45% off $52.97). One tap, no card re-entry. No timer, no ratings |
 | 4 | `berberine-thank-you.html` | Order receipt, what happens next (shipping, how to take it, refill reminder), the Empty-Bottle Promise |
@@ -47,8 +56,8 @@ replaced to match the live store. `assets/css/sales.css` + `berberine.css` (sale
 
 ## Launch runbook
 
-Blocked on one Dashboard step today: **the store has no payment gateway**, so the gateway group "Default" carries no
-currency and the Campaigns App refuses a campaign on it.
+Steps 1 to 4 are done (Stripe gateway group 1: card, Apple Pay, PayPal; campaign 2475 created, verified and wired).
+Left: Allowed Domains and publishing the theme (step 5), then a test order (step 6).
 
 1. **Dashboard > Settings > Payments**: add the card gateway (a Test gateway is enough to QA). Also: business address and
    support phone in Settings > General.

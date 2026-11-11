@@ -1,4 +1,5 @@
-"""The MedicLab Berberine funnel (FUNNEL=mediclab), healthy glucose metabolism: sales page -> checkout -> one upsell -> thank you, on the Mediclab
+"""The MedicLab Berberine funnels (FUNNEL=mediclab), one product and one campaign (2475), two entry pages: the healthy
+glucose metabolism sales page /berberine/ and the weight-management angle /weight-support/; then the shared sales page -> checkout -> one upsell -> thank you, on the Mediclab
 store (mediclab.29next.store), served at https://try.mediclab.us, the store's primary domain.
 
 Campaign only, no storefront: every page is a standalone theme template with no base layout (deploy_theme.py), so the
@@ -25,6 +26,8 @@ TEMPLATE_PREFIX = 'mlb-'
 PAGES = [
     {'id': 'sales', 'file': 'berberine', 'type': 'presell', 'sdk': 'product', 'entry': True, 'next': 'checkout',
      'label': 'Sales page: the Open-Door Meal Routine, healthy glucose metabolism (mediclab.us product page copy)'},
+    {'id': 'weight', 'file': 'weight-support', 'type': 'presell', 'sdk': 'product', 'next': 'checkout',
+     'label': 'Sales page, weight-management angle (the delivered copy deck), same product and checkout'},
     {'id': 'checkout', 'file': 'berberine-checkout', 'type': 'checkout', 'sdk': 'checkout', 'success': 'offer',
      'label': 'Checkout: monthly plan ($20.97, then $42.97 every 30 days) or one bottle ($52.97)'},
     {'id': 'offer', 'file': 'berberine-offer', 'type': 'upsell', 'sdk': 'upsell', 'accept': 'thank-you',
@@ -38,6 +41,9 @@ TITLES = {
     'sales': ('MedicLab Berberine: a routine for the hours after you eat',
               'Two capsules with meals and a few minutes of walking after you eat, a daily routine that supports healthy '
               'glucose metabolism.* 60-day empty-bottle guarantee.'),
+    'weight': ('Natural GLP-1 Support for Adults 40+ Done Fighting Stubborn Weight',
+               'MedicLab Berberine: two capsules with meals, protein first, a 10-minute walk after dinner. '
+               '60-day empty-bottle guarantee.'),
     'checkout': ('Secure checkout', 'Checkout for MedicLab Berberine.'),
     'offer': ('One more bottle', 'A one-time offer for your order.'),
     'thank-you': ('Thank you', 'Your order is confirmed.'),

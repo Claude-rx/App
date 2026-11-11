@@ -8,7 +8,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / 'campaigns' / 'mediclab' / '_site' / 'berberine'
-PAGES = ['berberine', 'berberine-checkout', 'berberine-offer', 'berberine-thank-you']
+PAGES = ['berberine', 'weight-support', 'berberine-checkout', 'berberine-offer', 'berberine-thank-you']
+WEIGHT = 'weight-support'   # the weight-management angle: GLP-1 / weight wording allowed, its compliance lines required
 FDA = 'These statements have not been evaluated by the Food and Drug Administration'
 DEMO = ['LLbBgtusfE2zopDcjnOY9NbrlN690zSjuedqQ04J', 'demo.29next.com', 'TRUSTED BY 180,000', '19,569', 'Lorem ipsum',
         'Daniel K.', 'XXCODE', 'EXIT10', 'placehold.co', 'next-dark.svg', 'Product Name', 'Extended Warranty',
@@ -39,15 +40,18 @@ for name, h in html.items():
     check('{{' not in h and '{%' not in h, f'{name}: unrendered Liquid')
 
 # FDA disclaimer wherever a claim is made (sales page, checkout, upsell)
-for name in ('berberine', 'berberine-checkout', 'berberine-offer'):
+for name in ('berberine', WEIGHT, 'berberine-checkout', 'berberine-offer'):
     check(FDA in html[name], f'{name}: FDA disclaimer missing')
 
-# Berberine is sold for healthy glucose metabolism only: no GLP-1 and no weight-loss claims anywhere in this funnel
+# The glucose sales page and the shared checkout, upsell and thank-you carry no GLP-1 or weight-loss claims; only the
+# weight-management entry page (/weight-support/) uses that angle, with its own compliance lines below
 # (the store's own FAQ answer, "Will it help me lose weight? We do not make that claim.", is the one allowed mention)
 CLAIMS = re.compile(r'glp-?1|semaglutide|tirzepatide|ozempic|wegovy|weight[- ]loss plan|stubborn weight|lose weight|'
                     r'fat burn|appetite|cravings|natural ozempic', re.I)
 ALLOWED = ('Will it help me lose weight?', 'we will not sell it as a weight-loss product')
 for name, h in html.items():
+    if name == WEIGHT:
+        continue
     t = text(h)
     for a in ALLOWED:
         t = t.replace(a, '')
@@ -69,6 +73,18 @@ check(not dup, f'sales page: radio group(s) {dup} pre-check more than one input 
 for label in ('Staged with models', 'No reviews here yet', 'not a medical endorsement'.capitalize(), '3-month minimum',
               'Is it safe with my medication?', 'About 73 mg'):
     check(label.lower() in s.lower(), f'sales page: compliance / honesty line "{label}" missing')
+
+w = html[WEIGHT]
+check(len(re.findall(r'id="s(0[1-9]|1\d|20)"', w)) == 20, 'weight page: not all 20 copy-deck sections present')
+check('Express is $5.97' not in w, 'weight page: promises express shipping the store does not sell')
+for m in re.findall(r'<a[^>]+data-cta[^>]*>', w):
+    check('/berberine-checkout/' in m and 'forceBundleId=plan' in m, f'weight page: CTA not pointing at the checkout plan card: {m[:120]}')
+check(w.count('data-cta') >= 3, 'weight page: CTAs missing')
+for label in ('Example review', 'Model portrayal', 'Is this a GLP-1 medication?', 'contains no GLP-1, semaglutide or tirzepatide',
+              'not a substitute for any prescription', "we don't promise pounds"):
+    check(label.lower() in w.lower(), f'weight page: compliance line "{label}" missing')
+dupw = [n for n, k in Counter(re.findall(r'<input[^>]*name="([^"]+)"[^>]*checked', w)).items() if k > 1]
+check(not dupw, f'weight page: radio group(s) {dupw} pre-check more than one input')
 
 c = html['berberine-checkout']
 check('data-next-bundle-id="plan"' in c and 'data-next-bundle-id="one"' in c, 'checkout: plan / one cards missing')

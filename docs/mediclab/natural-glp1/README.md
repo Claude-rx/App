@@ -1,16 +1,11 @@
-# Funnel 2 (parked): Natural GLP-1 weight-loss supplement
+# Weight-management angle: source material
 
-**Not built, not served.** Berberine and the Natural GLP-1 weight-loss supplement are two different products. This folder
-keeps the first sales page, which positioned Berberine as natural GLP-1 support for weight loss, as the starting point
-for funnel 2:
+The weight-management entry page `/weight-support/` (campaigns/mediclab/src/berberine/weight-support.html) is built
+from these files by `tools/mediclab/build_sales_page.py`. Same product (MedicLab Berberine) and same campaign (2475) as
+the glucose page `/berberine/`.
 
 | File | What |
 |---|---|
-| `copy-deck.md`, `persona-weight-segment.md` | the copy deck and persona as delivered (they name Berberine as the ingredient; rework for product 2's formula) |
-| `sales-page.source.html`, `img/` | the delivered sales page and its images |
-| `sales-page.page-kit.html`, `sales.css` | the Page Kit conversion in the mediclab.us brand (`tools/mediclab/build_sales_page.py`) |
-
-To build funnel 2 we need product 2: name, SKU, price and plan, Supplement Facts / label, images, and the claims it may
-make. Then: import it, plan its campaign (`next-campaigns-create`), give it its own Page Kit campaign and store pages.
-Known fix to carry over: the two offer blocks shared one radio group (`name="offer"`), so the top block loaded with no
-selection; the Berberine page uses one group per block.
+| `copy-deck.md`, `persona-weight-segment.md` | the copy deck and persona as delivered |
+| `sales-page.source.html`, `img/` | the delivered sales page and its images (the build copies them into the campaign) |
+| `sales-page.page-kit.html`, `sales.css` | an earlier conversion, kept for reference |

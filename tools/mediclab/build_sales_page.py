@@ -1,32 +1,21 @@
-"""PARKED for funnel 2 (Natural GLP-1 weight loss), not built or served. Turn the natural GLP-1 sales page (copy-deck render: index.html + img/ from the uploaded zip) into the funnel's
-Campaign Page Kit sales page, in the mediclab.us brand.
+"""Funnel 2, the weight-management angle for MedicLab Berberine (same product and campaign 2475 as the glucose funnel):
+turn the delivered sales page (copy-deck render: index.html + img/, kept in docs/mediclab/natural-glp1/) into the Page Kit
+page /weight-support/, in the mediclab.us brand.
 
-usage: python3 -I tools/mediclab/build_sales_page.py <unzipped sales-page dir>
+usage: python3 -I tools/mediclab/build_sales_page.py [<unzipped sales-page dir>]   (default docs/mediclab/natural-glp1)
 
-Writes into docs/mediclab/natural-glp1/page-kit/ (parked for funnel 2):
-  glp1-support.html            the page (frontmatter + the deck's 20 sections, verbatim copy)
-  assets/css/sales.css         the page's own CSS with the brand tokens of mediclab.us
-  assets/images/ml/*           the page images (copied as delivered)
-
-What changes from the upload, and why:
-  - brand: mediclab.us is Fustat, forest green #1D503A pill buttons, a deep green #0B2A1B header with the white logo,
-    cream #F5F1E8 sections; the deck's Jost / #1F3D2C / orange #C2410C are replaced by those tokens. The sale badge
-    takes the store's sale red #C4301C.
-  - CTAs: every "buy" link went to the Shopify cart (mediclab.us/cart/add?...). They go to the funnel checkout, carrying
-    the chosen offer as ?forceBundleId=plan | one (the checkout's two bundle cards).
-  - the two offer blocks (sections 05 and 16) used radio values 0/1 and 2/3, so picking the plan in 16 sent the
-    one-bottle link; both use plan / one now and stay in sync.
-  - FAQ "How fast is shipping?": the store has no express shipping method yet, so "Express is $5.97." is dropped
-    until one exists (never promise what checkout cannot sell).
-The copy is otherwise the deck's, word for word; the compliance lines (FDA disclaimer, model disclosure, example
-reviews label) are kept.
+Writes campaigns/mediclab/src/berberine/weight-support.html, assets/css/sales.css and assets/images/ml/weight/*.
+The copy is the deck's, word for word, with its compliance lines (FDA disclaimer, "not a GLP-1 medication" FAQ,
+example-review and model-portrayal labels). Changes: mediclab.us brand tokens; CTAs to the shared checkout with
+?forceBundleId=plan|one; one radio group per offer block (one shared group left the top block unselected); the FAQ's
+"Express is $5.97." dropped (the store has no express method).
 """
 import re, shutil, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CAMP = ROOT / 'docs' / 'mediclab' / 'natural-glp1' / 'page-kit'   # parked: Berberine is not a GLP-1 product
-SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else sys.exit(__doc__)
+CAMP = ROOT / 'campaigns' / 'mediclab' / 'src' / 'berberine'
+SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / 'docs' / 'mediclab' / 'natural-glp1'
 
 BRAND = {  # deck token -> mediclab.us
     '--primary:#1F3D2C': '--primary:#1D503A',
@@ -70,14 +59,13 @@ SYNC_JS = """<script>
   // the chosen offer (sections 05 and 16 stay in sync) rides into every CTA as the checkout's bundle card
   var base = document.body.getAttribute('data-checkout');
   function sync(){
-    var c = document.querySelector('input[name=offer]:checked'); if (!c) return;
+    var c = document.querySelector('input[name^=offer]:checked'); if (!c) return;
     document.querySelectorAll('.offer').forEach(function(o){ o.classList.toggle('selected', o.querySelector('input').value === c.value); });
-    document.querySelectorAll('input[name=offer][value="' + c.value + '"]').forEach(function(i){ i.checked = true; });
     var q = location.search.replace(/^\\?/, '').split('&').filter(function(p){ return p && p.indexOf('forceBundleId=') !== 0; });
     q.unshift('forceBundleId=' + c.value);
     document.querySelectorAll('a[data-cta]').forEach(function(a){ a.href = base + '?' + q.join('&'); });
   }
-  document.addEventListener('change', function(e){ if (e.target.name === 'offer') { document.querySelectorAll('input[name=offer]').forEach(function(i){ i.checked = i.value === e.target.value; }); sync(); } });
+  document.addEventListener('change', function(e){ if (/^offer/.test(e.target.name || '')) { document.querySelectorAll('input[name^=offer]').forEach(function(i){ i.checked = i.value === e.target.value; }); sync(); } });
   sync();
   // sticky mobile CTA once the hero offer scrolls away
   var bar = document.querySelector('.sticky-cta'), anchor = document.querySelector('#s05');
@@ -89,7 +77,7 @@ SYNC_JS = """<script>
 
 
 def main():
-    html = (SRC / 'index.html').read_text()
+    html = (SRC / ('index.html' if (SRC / 'index.html').exists() else 'sales-page.source.html')).read_text()
     css = '\n'.join(re.findall(r'<style>(.*?)</style>', html, re.S))
     for a, b in BRAND.items():
         css = css.replace(a, b)
@@ -100,15 +88,13 @@ def main():
     body = html[html.index('<body>') + 6: html.rindex('<script>')]
 
     # images -> campaign assets
-    img_dir = CAMP / 'assets' / 'images' / 'ml'
+    img_dir = CAMP / 'assets' / 'images' / 'ml' / 'weight'
     img_dir.mkdir(parents=True, exist_ok=True)
     for f in (SRC / 'img').iterdir():
-        shutil.copy2(f, img_dir / f.name)
-    shutil.copy2(ROOT / 'brand' / 'mediclab' / 'mediclab-logo-white.png', img_dir / 'mediclab-logo-white.png')
-    body = re.sub(r'src="img/([^"]+)"', lambda m: 'src="{{ \'images/ml/%s\' | campaign_asset }}"' % m.group(1), body)
-    # header logo: the white one on the deep green bar
-    body = body.replace("{{ 'images/ml/mediclab-logo-charcoal.png' | campaign_asset }}",
-                        "{{ 'images/ml/mediclab-logo-white.png' | campaign_asset }}", 1)
+        if not f.name.startswith('mediclab-logo'):
+            shutil.copy2(f, img_dir / f.name)
+    body = re.sub(r'src="img/(mediclab-logo-[^"]+)"', 'src="{{ \'images/ml/mediclab-logo-white.png\' | campaign_asset }}"', body, count=1)
+    body = re.sub(r'src="img/([^"]+)"', lambda m: 'src="{{ \'images/ml/weight/%s\' | campaign_asset }}"' % m.group(1), body)
     # CTAs -> funnel checkout (the script adds ?forceBundleId=)
     body = re.sub(r'href="https://mediclab\.us/cart/add\?[^"]*"', f'href="{CHECKOUT}?forceBundleId=plan"', body)
     # offer radios: 0/2 = monthly plan, 1/3 = one bottle
@@ -116,6 +102,9 @@ def main():
         body = body.replace(f'name="offer" value="{old}"', f'name="offer" value="{new}"')
         body = body.replace(f'data-offer="{old}"', f'data-offer="{new}"')
     body = re.sub(r'(<input type="radio" name="offer" value="plan")(>)', r'\1 checked\2', body)
+    # one radio group per offer block (sections 05 and 16), or the browser keeps only the last pre-checked radio
+    i = body.index('id="s16"')
+    body = body[:i] + body[i:].replace('name="offer"', 'name="offer-2"')
     # no express method on the store yet
     n = body.count(' Express is $5.97.')
     body = body.replace(' Express is $5.97.', '')
@@ -131,12 +120,12 @@ def main():
              'page_type: product\n'
              f'description: "{desc}"\n'
              'next_url: berberine-checkout.html\n'
-             'styles:\n  - css/sales.css\n'
+             'styles:\n  - css/sales.css\n  - css/berberine.css\n'
              '---\n')
     page = front + body.replace('<body>', '') + SYNC_JS + '\n'
     page = page.replace('<main id="top">', '<main id="top">', 1)
-    (CAMP / 'sales-page.page-kit.html').write_text(page)
-    print('wrote', CAMP / 'sales-page.page-kit.html', len(page), 'bytes;', len(list(img_dir.iterdir())), 'images')
+    (CAMP / 'weight-support.html').write_text(page)
+    print('wrote', CAMP / 'weight-support.html', len(page), 'bytes;', len(list(img_dir.iterdir())), 'images')
 
 
 if __name__ == '__main__':
