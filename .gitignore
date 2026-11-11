@@ -30,3 +30,6 @@ campaigns/mediclab/node_modules/
 node_modules/
 .DS_Store
 cowork-skills/
+
+# ntk config (holds the Admin API key)
+mediclab-theme/config.yml

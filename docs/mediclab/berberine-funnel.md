@@ -1,13 +1,14 @@
 # MedicLab Berberine funnel (Next Commerce)
 
-**Sales page → checkout → upsell (same product) → thank you**, on `mediclab.29next.store`, in the mediclab.us brand.
+**Sales page → checkout → upsell (same product) → thank you**, served at **https://try.mediclab.us/glp1-support/**,
+campaign only (Campaigns App cart, checkout and upsell; no storefront), in the mediclab.us brand.
 
 | Step | Page (`campaigns/mediclab/src/berberine-glp1/`) | What it does |
 |---|---|---|
 | 1 | `glp1-support.html` → `/berberine-glp1/glp1-support/` | The copy deck's 20 sections, verbatim (`copy-deck.md`, `persona-weight-segment.md`). Offer picker: Monthly plan (default) or One bottle; every CTA opens checkout with that card selected (`?forceBundleId=plan\|one`) |
-| 2 | `checkout.html` | Two plan cards, details, shipping, payment, summary with refill frequency. Monthly plan terms + required consent checkbox next to the button (`js/ml-plan-consent.js`) |
-| 3 | `upsell.html` | One more bottle, one-time, **$29.97** (45% off $52.97). One tap, no card re-entry. No timer, no ratings |
-| 4 | `thank-you.html` | Order receipt, what happens next (shipping, how to take it, refill reminder), the Empty-Bottle Promise |
+| 2 | `berberine-checkout.html` | Two plan cards, details, shipping, payment, summary with refill frequency. Monthly plan terms + required consent checkbox next to the button (`js/ml-plan-consent.js`) |
+| 3 | `berberine-offer.html` | One more bottle, one-time, **$29.97** (45% off $52.97). One tap, no card re-entry. No timer, no ratings |
+| 4 | `berberine-thank-you.html` | Order receipt, what happens next (shipping, how to take it, refill reminder), the Empty-Bottle Promise |
 
 ## The offer (copy deck section 05)
 
@@ -61,8 +62,16 @@ currency and the Campaigns App refuses a campaign on it.
    python3 -I tools/mediclab/wire_funnel.py
    cd campaigns/mediclab && npm run build:static && cd ../.. && python3 -I tools/mediclab/check_funnel.py --live
    ```
-5. Host `campaigns/mediclab/_site/` (Netlify or Vercel: base directory `campaigns/mediclab`, configs included; `/`
-   redirects to the sales page). Add the domain to the campaign's **Allowed Domains** (Campaigns App > Settings).
+5. Publish to **https://try.mediclab.us** (the store's primary domain), campaign only:
+   ```bash
+   tools/mediclab/publish.sh            # build, gates, theme templates, ntk push to theme "MedicLab Funnels" (#1)
+   ```
+   Each funnel page is a standalone template in theme #1 (`mediclab-theme/`): no storefront layout, cart, checkout or
+   scripts, only the Campaign Cart SDK. Every other storefront route (home, catalogue, cart, search, 404, other pages)
+   goes to the sales page with its query string kept (UTMs, click ids). Store pages `glp1-support`,
+   `berberine-checkout`, `berberine-offer`, `berberine-thank-you` render them (`FUNNEL=mediclab tools/funnel/store_pages.py`).
+   Then: **Dashboard > Storefront > Themes > publish "MedicLab Funnels"**, and add `try.mediclab.us` to the campaign's
+   **Allowed Domains** (Campaigns App > campaign > Settings).
 6. Place a test order with the Test gateway on both cards and accept the upsell; confirm the recurring line shows
    "every 30 days" on the receipt.
 

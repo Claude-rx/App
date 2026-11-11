@@ -64,7 +64,7 @@ tbody td:nth-child(2){background:#E6EFE9}
 .site-foot a{color:#fff}
 .site-foot .foot-logo{height:26px;width:auto;margin:0 auto 18px}
 """
-CHECKOUT = "{{ 'checkout.html' | campaign_link }}"
+CHECKOUT = "{{ 'berberine-checkout.html' | campaign_link }}"
 SYNC_JS = """<script>
 (function(){
   // the chosen offer (sections 05 and 16 stay in sync) rides into every CTA as the checkout's bundle card
@@ -130,7 +130,7 @@ def main():
              'page_layout: base-sales.html\n'
              'page_type: product\n'
              f'description: "{desc}"\n'
-             'next_url: checkout.html\n'
+             'next_url: berberine-checkout.html\n'
              'styles:\n  - css/sales.css\n'
              '---\n')
     page = front + body.replace('<body>', '') + SYNC_JS + '\n'
