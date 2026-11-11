@@ -61,7 +61,7 @@
       },
       {
         "code": "fixed.label_update",
-        "message": "New label (Berberine Weight Management*, METABOLISM / CRAVINGS / GLUCOSE): product #4 gallery, checkout gallery and pack shots replaced with the delivered mockups; 12 lifestyle photos relabelled (tools/mediclab/relabel.py, relabel_transplant.py; boxes in relabel-boxes.json), every composite reviewed zoomed for seams and ghosting."
+        "message": "New label (Berberine Weight Management*, METABOLISM / CRAVINGS / GLUCOSE): product #4 gallery, checkout gallery and pack shots replaced with the delivered mockups; 12 lifestyle photos re-rendered with GPT Image 2.5 from the original photo plus the pack shot (the first pass, a flat label pasted on, read as fake and was replaced); each checked zoomed on the label."
       },
       {
         "code": "fixed.upsell_percent",

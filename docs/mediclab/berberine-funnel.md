@@ -58,10 +58,10 @@ The bottle now reads **Berberine · Weight Management*** with the pills METABOLI
 - Next product #4 gallery: the 8 delivered store images (`wm-01` … `wm-08`, ids in `tools/mediclab/berberine-ids.json`).
 - Checkout gallery (`images/ml/product/berberine-1..6`) and pack shots (`images/ml/berberine/bottle-*`): the delivered mockups.
 - Lifestyle photos that showed the old label (weight page: hero, doctor, review1-6, usage, solution; glucose page:
-  with-meals, couple-cooking) were relabelled in place, the rest of each photo untouched:
-  `tools/mediclab/relabel.py crop|paste` (bottle crop → image edit with the new pack shot as reference → feathered paste)
-  and, where the model redrew the bottle at another size, `tools/mediclab/relabel_transplant.py` (label-only transplant
-  aligned on the heart logo, light matched). Boxes and parameters: `tools/mediclab/relabel-boxes.json`.
+  with-meals, couple-cooking) were **re-rendered** with GPT Image 2.5 (Kie.ai, `flare`, 2K): input 1 = the original
+  photo, input 2 = the new pack shot (`images/ml/berberine/bottle-front.jpg`); same scene and people, the real bottle
+  in place, label wrapped on the cylinder in the scene's light. Prompt: `docs/mediclab/label-photo-prompt.txt`. Every
+  output was checked zoomed on the label (text, wrap, hands, light), then fitted to the original size.
 
 ## Brand (mediclab.us)
 
