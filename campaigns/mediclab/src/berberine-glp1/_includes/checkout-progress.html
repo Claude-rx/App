@@ -1,0 +1,11 @@
+<div class="checkout-progress">
+  <div class="container cc-small">
+    <div class="progress-wrapper">
+      <div class="step"><div class="step-label{% if page_type == 'checkout' %} active{% endif %}">Checkout</div></div>
+      <div class="line {% if page_type == 'checkout' %}line-active arrow-active{% else %}line-active{% endif %}"></div>
+      <div class="step"><div class="step-label{% if page_type == 'upsell' %} active{% endif %}">Special offer</div></div>
+      <div class="line {% if page_type == 'receipt' %}line-active{% else %}line-inactive arrow-inactive{% endif %}"></div>
+      <div class="step"><div class="step-label{% if page_type == 'receipt' %} active{% endif %}">Confirmation</div></div>
+    </div>
+  </div>
+</div>

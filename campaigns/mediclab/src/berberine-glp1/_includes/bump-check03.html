@@ -1,0 +1,94 @@
+{%- comment -%} GENERATED from _shared/checkout/_includes/bump-check03.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: order-bump-card
+  next_version: 1.1.0
+  next_sdk_min: 0.4.27
+  next_purpose: Product-card pre-purchase upsell with an optional line-item property field. Unsynced by default (one add-on product); can opt into quantity-sync with the main bundle.
+  next_params:
+    order_bump.check03: optional frontmatter object for package_id, title, subtitle, image_src, image_alt, badge_text, savings_text, personalization, exclude_property, sync_quantity, and is_upsell.
+    package_id:         number, default order_bump.check03.package_id or packages.prepurchase_2 or 78 (distinct from bump-check01's demo defaults, so the two bumps never share a package when both render with unset ids).
+    NOTE: the toggles below are read from order_bump.check03 (frontmatter) ONLY, not bare include args — sibling bumps leak shared arg names into campaign_include's scope (see the assign block below).
+    order_bump.check03.sync_quantity:      number|nil. data-next-package-sync — the packageId whose cart quantity the bump mirrors (set to packages.main_package to scale the add-on with the main bundle selection). Default nil (unsynced).
+    order_bump.check03.price_mode:         'total' (default) | 'unit'. 'total' shows originalPrice + price (LINE TOTALS that multiply with synced qty). 'unit' shows unitPrice/ea (per-unit, STABLE — does not change on sync, like bump-check01). Savings line (savings_text) renders in both modes.
+    order_bump.check03.show_compare_price: bool, default true. Render the struck compare price (originalPrice in 'total' mode, originalUnitPrice in 'unit' mode). It, the badge and the savings line show only while the SDK reports a discount (hasDiscount), so a no-discount add-on shows its price alone.
+    is_upsell:          bool, default true (deliberate). data-next-is-upsell flag; false keeps the bump a plain line on the initial order.
+  next_sdk_owns:
+    - data-next-package-toggle
+    - data-next-toggle-card
+    - data-next-is-upsell
+    - data-next-package-id
+    - data-next-package-sync
+    - data-next-toggle-display
+    - data-next-toggle-image
+    - data-next-property
+    - data-next-exclude-property
+  next_dont_touch:
+    - Unsynced by default (one add-on product). Opt into quantity-sync via package_sync / order_bump.check03.sync_quantity. Uses data-next-package-sync (packageId match) — for an MV/configurable main product switch to data-next-product-sync (product_id match) instead; see CLAUDE.md.
+  next_note:
+    - The optional personalization input sits INSIDE the PackageToggle click target (data-next-toggle-card).
+      A click/keydown inside the field must NOT toggle the bump; that protection is guardBumpPersonalization(),
+      which ships in checkout-apollo.js and the MV checkout JS (checkout-apollo-mv-full.js /
+      checkout-olympus-mv-full.js). Personalization is wired safely on apollo, apollo-mv-single-step,
+      olympus-mv-single-step, and olympus-mv-two-step. Before enabling order_bump.check03.personalization
+      on any other family (demeter, olympus, shop-single-step, shop-three-step), port
+      guardBumpPersonalization into that template's checkout JS or a field click will toggle the bump.
+{% endcomment %}
+{% assign bump = order_bump.check03 -%}
+{% assign pkg_id = package_id | default: bump.package_id | default: packages.prepurchase_2 | default: 78 -%}
+{%- comment -%} Config is read from order_bump.check03 (frontmatter) only — NOT bare include args — because sibling bumps (check01/check02) assign shared names like package_sync / show_compare_price into the shared campaign_include scope, which would leak in here. {%- endcomment -%}
+{% assign bump_sync = bump.sync_quantity -%}
+{% assign b_price_mode = bump.price_mode | default: 'total' -%}
+{% if bump.show_compare_price != nil %}{% assign b_compare = bump.show_compare_price %}{% else %}{% assign b_compare = true %}{% endif -%}
+{% comment %} Resolve into a private local — never assign the public arg name: campaign_include shares scope, so a public assign here would leak into sibling bumps on the page and defeat their own frontmatter fallbacks. {% endcomment -%}
+{% if is_upsell != nil %}{% assign b_is_upsell = is_upsell %}{% elsif bump.is_upsell != nil %}{% assign b_is_upsell = bump.is_upsell %}{% else %}{% assign b_is_upsell = true %}{% endif -%}
+{% assign b_title = bump_title | default: bump.title | default: 'Add a personalized add-on' -%}
+{% assign b_subtitle = bump_subtitle | default: bump.subtitle | default: 'Perfect companion for your order' -%}
+{% assign b_image_src = bump.image_src | default: 'images/1x1_1.svg' -%}
+{% assign b_image_alt = bump.image_alt | default: '' -%}
+{% assign b_badge_text = bump.badge_text | default: '' -%}
+{% assign b_savings_text = bump.savings_text | default: 'Instant savings when added' -%}
+{% assign b_exclude = bump.exclude_property | default: '' -%}
+{% assign b_personalization = bump.personalization -%}
+<div data-next-catalog-component="order-bump-card" data-component="prepurchase-upsell" data-variant="check03" data-next-await="">
+  <div data-next-package-toggle>
+    <div class="bump-card bump-card--product" data-next-toggle-card{% if b_is_upsell %} data-next-is-upsell="true"{% endif %}{% if bump_sync %} data-next-package-sync="{{ bump_sync }}"{% endif %} data-next-package-id="{{ pkg_id }}"{% if b_exclude != "" %} data-next-exclude-property="{{ b_exclude }}"{% endif %}>
+      {% if b_badge_text != "" %}<div class="bump__badge" data-next-toggle-display="hasDiscount"><span data-next-toggle-display="discountPercentage" data-next-format="percentage">{{ b_badge_text }}</span> OFF</div>{% endif %}
+      <div class="bump-product__main">
+        <div class="bump__checkbox" aria-hidden="true">
+          <div os-component="check" class="checkbox__icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--fe" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 10l-2 2l6 6L20 8l-2-2l-8 8z"></path></svg></div>
+        </div>
+        <img data-next-toggle-image loading="lazy" alt="{{ b_image_alt }}" src="{{ b_image_src | campaign_asset }}" class="bump__image bump-product__image">
+        <div class="bump-product__copy">
+          <div class="bump__title">{{ b_title }}</div>
+          <div class="bump__description">{{ b_subtitle }}</div>
+        </div>
+        <div class="bump-product__price">
+          {% if b_price_mode == 'unit' %}
+          {% comment %} Per-unit price: stable, does not multiply with synced qty (like bump-check01) {% endcomment %}
+          <div class="bump__price-row">
+            {% if b_compare %}<span data-next-toggle-display="hasDiscount"><span data-next-toggle-display="originalUnitPrice" class="bump__price-reg">--</span></span>{% endif %}
+            <span class="bump__price-unit"><span data-next-toggle-display="unitPrice" class="bump__price-total">--</span><span class="text-sm text-muted text-weight-normal">/ea</span></span>
+          </div>
+          {% else %}
+          {% comment %} Line-total price: multiplies with synced qty {% endcomment %}
+          <div class="bump__price-row">
+            {% if b_compare %}<span data-next-toggle-display="hasDiscount"><span data-next-toggle-display="originalPrice" class="bump__price-reg">--</span></span>{% endif %}
+            <span data-next-toggle-display="price" class="bump__price-total">--</span>
+          </div>
+          {% endif %}
+          {% if b_savings_text != "" %}<div class="bump__savings" data-next-toggle-display="hasDiscount">{{ b_savings_text }} <span data-next-toggle-display="discountAmount">--</span></div>{% endif %}
+        </div>
+      </div>
+      {% if b_personalization and b_personalization.enabled %}
+      {% assign bp_key = b_personalization.property_key | default: 'bump_custom_text' -%}
+      {% assign bp_label = b_personalization.label | default: 'Custom text for this add-on' -%}
+      {% assign bp_placeholder = b_personalization.placeholder | default: '' -%}
+      {% assign bp_maxlength = b_personalization.maxlength | default: 24 -%}
+      <div class="os-slot__personalization bump__personalization bump-product__personalization">
+        <label class="os-card__variant-label">{{ bp_label }}{% if b_personalization.optional %} <span class="text-muted text-weight-normal">(optional)</span>{% endif %}</label>
+        <input data-next-property="{{ bp_key }}" type="text" maxlength="{{ bp_maxlength }}"{% if bp_placeholder != "" %} placeholder="{{ bp_placeholder }}"{% endif %} class="input-flds">
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

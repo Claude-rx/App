@@ -1,0 +1,22 @@
+{
+  "berberine-glp1": {
+    "name": "MedicLab Berberine GLP-1 Support",
+    "description": "MedicLab Berberine, natural GLP-1 support for adults 40+: two capsules with meals, protein first, a 10-minute walk after dinner. First bottle $20.97 on the monthly plan. 60-day empty-bottle guarantee.",
+    "entry_url": "glp1-support",
+    "sdk_version": "0.4.43",
+    "store_name": "MedicLab",
+    "store_url": "https://mediclab.us",
+    "store_terms": "https://mediclab.us/pages/subscription-auto-refill-terms",
+    "store_privacy": "https://mediclab.us/policies/privacy-policy",
+    "store_contact": "https://mediclab.us/pages/contact",
+    "store_returns": "https://mediclab.us/policies/refund-policy",
+    "store_shipping": "https://mediclab.us/policies/shipping-policy",
+    "store_phone": "+1 (757) 906-1702",
+    "store_phone_tel": "tel:+17579061702",
+    "gtm_id": "",
+    "fb_pixel_id": "",
+    "og_image": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx3-berberine-with-product.jpg",
+    "store_email": "hello@mediclab.us",
+    "store_company": "MediCo Inc. \u00b7 MedicLab Wellness Supplements"
+  }
+}

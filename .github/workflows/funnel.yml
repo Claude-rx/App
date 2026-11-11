@@ -39,6 +39,15 @@ jobs:
           python3 -I tools/funnel/check_funnel.py
           python3 -I tools/funnel/apf/check_apf.py
           python3 -I tools/funnel/trial/check_trial.py
+      - name: MedicLab funnel unit tests (campaign plan shaping, page wiring)
+        run: python3 -I tools/mediclab/test_wire_funnel.py
+      - name: Build the MedicLab funnel (Campaign Page Kit)
+        working-directory: campaigns/mediclab
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build:static
+      - name: MedicLab funnel checks
+        run: python3 -I tools/mediclab/check_funnel.py
 
   live-axon:
     # The live funnel pages still load the fixed AXON adapter (a theme regenerated from stale sources undoes it).

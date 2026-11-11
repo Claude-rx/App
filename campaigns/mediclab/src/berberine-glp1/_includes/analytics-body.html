@@ -1,0 +1,15 @@
+{%- comment -%} GENERATED from _shared/analytics/_includes/analytics-body.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  Analytics noscript fallbacks (top of <body>). Included by all three base layouts;
+  mirrors analytics-head.html gating. See docs/campaign-page-kit-template-context.md.
+{%- endcomment -%}
+{% unless environment == "development" %}
+{% if campaign.gtm_id and campaign.gtm_id != "" %}
+{% comment %} Google Tag Manager (noscript) {% endcomment %}
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ campaign.gtm_id }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+{% endif %}
+{% if campaign.fb_pixel_id and campaign.fb_pixel_id != "" %}
+{% comment %} Meta Pixel (noscript) {% endcomment %}
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={{ campaign.fb_pixel_id }}&ev=PageView&noscript=1"></noscript>
+{% endif %}
+{% endunless %}

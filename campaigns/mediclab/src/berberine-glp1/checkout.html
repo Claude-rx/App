@@ -1,0 +1,173 @@
+---
+title: "Checkout | MedicLab Berberine, Natural GLP-1 Support"
+page_type: checkout
+next_url: upsell.html
+cart_summary_variant: "02"          # shows each line's refill frequency ("every 30 days") or "One-time purchase"
+order_bump_variant: "none"
+styles:
+  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
+  - css/mediclab-funnel.css
+scripts:
+  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
+  - js/checkout.js
+  - js/payment-logos.js
+  - js/ml-gallery.js
+  - js/ml-plan-consent.js
+swiper_slides:
+  - { src: "images/ml/product/berberine-1.jpg", alt: "MedicLab Berberine bottle with capsules" }
+  - { src: "images/ml/product/berberine-2.jpg", alt: "MedicLab Berberine, gallery 2" }
+  - { src: "images/ml/product/berberine-3.jpg", alt: "MedicLab Berberine, gallery 3" }
+  - { src: "images/ml/product/berberine-4.jpg", alt: "MedicLab Berberine, gallery 4" }
+  - { src: "images/ml/product/berberine-5.jpg", alt: "MedicLab Berberine, gallery 5" }
+  - { src: "images/ml/product/berberine-6.jpg", alt: "MedicLab Berberine, gallery 6" }
+swiper_thumbs:
+  - { src: "images/ml/product/berberine-1.jpg", alt: "" }
+  - { src: "images/ml/product/berberine-2.jpg", alt: "" }
+  - { src: "images/ml/product/berberine-3.jpg", alt: "" }
+  - { src: "images/ml/product/berberine-4.jpg", alt: "" }
+  - { src: "images/ml/product/berberine-5.jpg", alt: "" }
+  - { src: "images/ml/product/berberine-6.jpg", alt: "" }
+# Campaign ids: written by tools/mediclab/wire_funnel.py from the next-campaigns-create run manifest. Do not hand-edit
+# the values on "# wire:" lines; re-run the wire script after the campaign changes.
+packages:
+  main_package: 2 # wire:plan
+shipping_methods:
+  free: 1 # wire:shipping
+bundles:
+  - id: "plan"
+    package_id: 2 # wire:plan
+    shipping_method: "free"
+    selected: true
+    subtitle_text: "First bottle 50% off, then $42.97 every 30 days. Email reminder 3 days before each refill. 3-month minimum, then cancel any time."
+    shipping_label: "Free US shipping on every refill"
+    badge_text: "Best value"
+    badge_pill_class: "os-card__label--pill-primary"
+  - id: "one"
+    package_id: 1 # wire:one
+    shipping_method: "free"
+    subtitle_text: "60 capsules, a 30-day supply. No plan, no refills."
+    shipping_label: "Free US shipping"
+address_form:
+  label_style: inset
+  gated: true
+---
+<div class="page-wrapper ml-checkout">
+  <div class="main-wrapper">
+    <div class="ml-announce">Free US shipping · 60-day empty-bottle guarantee · Made in the USA</div>
+    {% campaign_include 'checkout-header.html' %}
+    {% campaign_include 'checkout-progress.html' %}
+    <div class="section-checkout cc-gray">
+      <div class="container">
+        <div class="checkout-page-layout">
+          <div class="show-tablet">
+            <div class="heading-box">
+              <div class="ml-eyebrow">MedicLab Berberine · Natural GLP-1 Support</div>
+              <h1 class="display-md">Start your GLP-1 Support Routine</h1>
+              <div class="text-reg">Two capsules with meals, protein first, a 10-minute walk after dinner.*</div>
+            </div>
+          </div>
+          <div class="checkout-wrapper">
+            <div class="checkout-layout__left">
+              <div class="checkout-layout__content">
+                <div class="checkout-layout__content-inner">
+                  <div class="checkout-media__wrapper">
+                    {% campaign_include 'swiper-gallery.html' main_slides=swiper_slides thumbs=swiper_thumbs variant='sw1' %}
+                  </div>
+                  <ul class="ml-ticks hide-tablet-down">
+                    <li>800 mg berberine extract per serving, every amount printed</li>
+                    <li>Taken with meals: gentle on the stomach</li>
+                    <li>Made in the USA in an FDA-registered, GMP facility</li>
+                    <li>No needle, no prescription</li>
+                  </ul>
+                  <div class="ml-routine hide-tablet-down">
+                    <h2 class="ml-h3">The 3-Step GLP-1 Support Routine</h2>
+                    <ol>
+                      <li><strong>The Capsule.</strong> One with lunch, one with dinner.</li>
+                      <li><strong>The Plate.</strong> Protein first, then everything else.</li>
+                      <li><strong>The Walk.</strong> Ten easy minutes after dinner.</li>
+                    </ol>
+                  </div>
+                  <div class="ml-guarantee hide-tablet-down">
+                    <img src="{{ 'images/ml/guarantee-60.svg' | campaign_asset }}" alt="" width="64" height="64">
+                    <div><strong>The Empty-Bottle Promise.</strong> Take it with your meals for up to 60 days. Not for you? Email hello@mediclab.us within 60 days of delivery and we refund your first order in full, even if the bottle is empty. Nothing to send back.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="checkout-layout__right">
+              <div class="checkout-layout__form">
+                <div class="checkout__form-container">
+                  <div class="hide-tablet">
+                    <div class="hero_heading-box">
+                      <div class="heading-box">
+                        <div class="ml-eyebrow">MedicLab Berberine · Natural GLP-1 Support</div>
+                        <h1 class="display-md">Start your GLP-1 Support Routine</h1>
+                        <div class="text-reg">Two capsules with meals, protein first, a 10-minute walk after dinner.*</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="checkout-form">
+                    <form data-next-checkout="form" id="combo_form" method="post">
+                      <div class="form-content">
+                        <div class="form-sections">
+                          <div class="form-section grid-row-gap2 form-section--first">
+                            <h2 class="form-section__title">Step 1: Choose your plan</h2>
+                            {% campaign_include 'bundle-selector.html' selector_id='main' packages=packages shipping_methods=shipping_methods bundles=bundles %}
+                          </div>
+                          <div data-next-component="shipping-form" class="form-sections">
+                            {% campaign_include 'customer-info-form.html' section_title='Step 2: Your details' show_phone=true phone_required=true %}
+                            {% campaign_include 'shipping-address-form.html' section_title='Step 3: Shipping address' %}
+                          </div>
+                          <div class="form-section form-section--last">
+                            <div class="form-section__header">
+                              <h2 class="form-section__title">Step 4: Payment</h2>
+                              <div class="form-section__subtitle">All transactions are secure and encrypted.</div>
+                            </div>
+                            {% campaign_include 'express-checkout.html' show_title=false %}
+                            {% campaign_include 'payment-methods.html' %}
+                          </div>
+                          <div class="form-section form-section--last">
+                            <div class="cart-box cart-box--card">
+                              {% campaign_include 'cart-summary02.html' %}
+                            </div>
+                          </div>
+                          <div class="ml-plan-terms" data-ml-plan-terms>
+                            <p><strong>Your monthly plan:</strong> today you pay $20.97 for your first bottle. Then a refill ships every 30 days and your card is charged $42.97 each time, with free shipping, until you cancel. We email you 3 days before every refill. Because the first bottle is 50% off, the plan has a 3-month minimum; after that, cancel any time from your account or by emailing <a href="mailto:{{ campaign.store_email }}">{{ campaign.store_email }}</a>. <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Subscription terms</a>.</p>
+                            <label class="ml-consent"><input type="checkbox" id="ml-plan-consent" data-ml-plan-consent> <span>I agree to the monthly plan terms above: $20.97 today, then $42.97 every 30 days until I cancel.</span></label>
+                            <p class="ml-consent-error" data-ml-consent-error hidden>Please tick the box to confirm the monthly plan terms.</p>
+                          </div>
+                          {% capture ml_disclaimer %}By placing your order you agree to our <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener">Terms</a> and <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener">Privacy Policy</a>.{% endcapture %}
+                          {% campaign_include 'submit-block.html' cta_text='Place my order →' subtext='60-day empty-bottle guarantee · Free US shipping' disclaimer=ml_disclaimer %}
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="checkout-trust-bar">
+                    <div class="trust-badges">
+                      <div class="trust-badge__item"><div class="trust-badge--text">SECURE<br>SSL ENCRYPTION</div></div>
+                      <div class="trust-badge__item"><div class="trust-badge--text">60-DAY<br>EMPTY-BOTTLE PROMISE</div></div>
+                    </div>
+                    {% campaign_include 'payment-logos.html' show_secure=false %}
+                  </div>
+                  <ul class="ml-ticks hide-tablet-up">
+                    <li>800 mg berberine extract per serving, every amount printed</li>
+                    <li>Taken with meals: gentle on the stomach</li>
+                    <li>Made in the USA in an FDA-registered, GMP facility</li>
+                  </ul>
+                  <div class="ml-guarantee hide-tablet-up">
+                    <img src="{{ 'images/ml/guarantee-60.svg' | campaign_asset }}" alt="" width="56" height="56">
+                    <div><strong>The Empty-Bottle Promise.</strong> Not for you? Email us within 60 days of delivery and we refund your first order in full, even if the bottle is empty.</div>
+                  </div>
+                  <div class="ml-safety">
+                    <strong>Before you start:</strong> ask your doctor first if you take any prescription medicine, especially blood sugar medicine (including metformin or a GLP-1 medication), a blood thinner or cyclosporine. Not for anyone pregnant, nursing or under 18.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% campaign_include 'footer.html' %}
+</div>

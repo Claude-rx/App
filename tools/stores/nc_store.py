@@ -118,8 +118,12 @@ def evaluate(snap):
 
     prods = snap.get('products')
     if _ok(prods):
-        real = [p for p in prods if not all(v.get('sku') in EXAMPLE_SKUS for v in p.get('variants', [])) and p.get('slug') != 'example-product']
-        demo = len(prods) - len(real)
+        hidden = [p for p in prods if p.get('is_public') is False]
+        shown = [p for p in prods if p.get('is_public') is not False]
+        real = [p for p in shown if not all(v.get('sku') in EXAMPLE_SKUS for v in p.get('variants', [])) and p.get('slug') != 'example-product']
+        demo = len(shown) - len(real)
+        if hidden:
+            c.append(('WARN', 'catalog', f'{len(hidden)} unpublished product(s): ' + ', '.join(f"#{p['id']} {p['title']}" for p in hidden[:5])))
         if not real:
             c.append(('BLOCKER', 'catalog', 'No real products, only the demo "Example Product". Create the Mediclab products before a campaign can sell them'))
         else:

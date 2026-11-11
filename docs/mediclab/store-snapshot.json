@@ -1,5 +1,5 @@
 {
-  "audited_at": "2026-11-11 05:16 UTC",
+  "audited_at": "2026-11-11 06:31 UTC",
   "store": "mediclab",
   "checks": [
     [
@@ -18,9 +18,14 @@
       "No primary domain connected (store runs on *.29next.store)"
     ],
     [
-      "BLOCKER",
+      "WARN",
       "catalog",
-      "No real products, only the demo \"Example Product\". Create the Mediclab products before a campaign can sell them"
+      "1 unpublished product(s): #7 DUPLICATE - delete me (Berberine import re-run)"
+    ],
+    [
+      "OK",
+      "catalog",
+      "1 real product(s)"
     ],
     [
       "WARN",
@@ -169,6 +174,410 @@
         "date_created": "2025-05-29T01:33:58.587623-04:00",
         "date_updated": "2025-05-29T01:33:58.587643-04:00",
         "metadata": {}
+      },
+      {
+        "id": 4,
+        "url": "https://mediclab.29next.store/catalogue/berberine-for-healthy-glucose-metabolism-800-mg-extract-60-capsules_4/",
+        "title": "Berberine for Healthy Glucose Metabolism, 800 mg Extract, 60 Capsules",
+        "slug": "berberine-for-healthy-glucose-metabolism-800-mg-extract-60-capsules",
+        "structure": "parent",
+        "is_discountable": true,
+        "is_public": true,
+        "ranking": 0,
+        "categories": [],
+        "enable_subscription": true,
+        "interval": "day",
+        "interval_counts": [
+          30
+        ],
+        "images": [
+          {
+            "id": 1,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx3-berberine-with-product.jpg",
+            "caption": "MedicLab Berberine bottle with capsules beside it",
+            "display_order": 0,
+            "product": 4,
+            "variants": []
+          },
+          {
+            "id": 2,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s2.png",
+            "caption": "Berberine by MedicLab, gallery slide 2",
+            "display_order": 1,
+            "product": 4,
+            "variants": []
+          },
+          {
+            "id": 3,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s3.png",
+            "caption": "Berberine by MedicLab, gallery slide 3",
+            "display_order": 2,
+            "product": 4,
+            "variants": []
+          },
+          {
+            "id": 4,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s4.png",
+            "caption": "Berberine by MedicLab, gallery slide 4",
+            "display_order": 3,
+            "product": 4,
+            "variants": []
+          },
+          {
+            "id": 5,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s5.png",
+            "caption": "Berberine by MedicLab, gallery slide 5",
+            "display_order": 4,
+            "product": 4,
+            "variants": []
+          },
+          {
+            "id": 6,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s6.png",
+            "caption": "Berberine by MedicLab, gallery slide 6",
+            "display_order": 5,
+            "product": 4,
+            "variants": []
+          },
+          {
+            "id": 7,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s7.png",
+            "caption": "Berberine by MedicLab, gallery slide 7",
+            "display_order": 6,
+            "product": 4,
+            "variants": []
+          },
+          {
+            "id": 8,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s8.png",
+            "caption": "Berberine by MedicLab, gallery slide 8",
+            "display_order": 7,
+            "product": 4,
+            "variants": []
+          }
+        ],
+        "recommended_products": [],
+        "external_tax_code": null,
+        "variant_attributes": [
+          {
+            "name": "Purchase",
+            "code": "purchase",
+            "values": [
+              "One-time purchase",
+              "Monthly refill plan"
+            ]
+          }
+        ],
+        "variants": [
+          {
+            "id": 5,
+            "product_id": 4,
+            "title": "Berberine for Healthy Glucose Metabolism, 800 mg Extract, 60 Capsules - One-time purchase",
+            "sku": "JTP4BERB",
+            "upc": "",
+            "purchase_availability": "available",
+            "inventory_availability": "untracked",
+            "track_stock": false,
+            "allow_backorders": true,
+            "images": [
+              {
+                "id": 1,
+                "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx3-berberine-with-product.jpg",
+                "caption": "MedicLab Berberine bottle with capsules beside it",
+                "display_order": 0,
+                "product": 4,
+                "variants": []
+              }
+            ],
+            "variant_attribute_values": [
+              {
+                "name": "Purchase",
+                "value": "One-time purchase",
+                "code": "purchase"
+              }
+            ],
+            "prices": [
+              {
+                "currency": "USD",
+                "price": "52.97",
+                "retail": null,
+                "subscription": null,
+                "subscription_suggested_downsell": null
+              }
+            ],
+            "stockrecords": [
+              {
+                "id": 2,
+                "location_id": 1,
+                "num_in_stock": 1000,
+                "num_allocated": 0,
+                "low_stock_threshold": 0
+              }
+            ],
+            "unit_cost": "0.00",
+            "requires_shipping": true,
+            "date_created": "2026-11-11T01:14:54.476351-05:00",
+            "date_updated": "2026-11-11T01:14:54.484763-05:00",
+            "metadata": {}
+          },
+          {
+            "id": 6,
+            "product_id": 4,
+            "title": "Berberine for Healthy Glucose Metabolism, 800 mg Extract, 60 Capsules - Monthly refill plan",
+            "sku": "JTP4BERB-SUB",
+            "upc": "",
+            "purchase_availability": "available",
+            "inventory_availability": "untracked",
+            "track_stock": false,
+            "allow_backorders": true,
+            "images": [
+              {
+                "id": 1,
+                "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx3-berberine-with-product.jpg",
+                "caption": "MedicLab Berberine bottle with capsules beside it",
+                "display_order": 0,
+                "product": 4,
+                "variants": []
+              }
+            ],
+            "variant_attribute_values": [
+              {
+                "name": "Purchase",
+                "value": "Monthly refill plan",
+                "code": "purchase"
+              }
+            ],
+            "prices": [
+              {
+                "currency": "USD",
+                "price": "52.97",
+                "retail": null,
+                "subscription": null,
+                "subscription_suggested_downsell": null
+              }
+            ],
+            "stockrecords": [
+              {
+                "id": 3,
+                "location_id": 1,
+                "num_in_stock": 1000,
+                "num_allocated": 0,
+                "low_stock_threshold": 0
+              }
+            ],
+            "unit_cost": "0.00",
+            "requires_shipping": true,
+            "date_created": "2026-11-11T01:14:54.650568-05:00",
+            "date_updated": "2026-11-11T01:14:54.667819-05:00",
+            "metadata": {}
+          }
+        ],
+        "rating": null,
+        "date_created": "2026-11-11T01:14:54.293207-05:00",
+        "date_updated": "2026-11-11T01:14:54.334464-05:00",
+        "metadata": {}
+      },
+      {
+        "id": 7,
+        "url": "https://mediclab.29next.store/catalogue/duplicate-delete-me-berberine-import-re-run_7/",
+        "title": "DUPLICATE - delete me (Berberine import re-run)",
+        "slug": "duplicate-delete-me-berberine-import-re-run",
+        "structure": "parent",
+        "is_discountable": true,
+        "is_public": false,
+        "ranking": 0,
+        "categories": [],
+        "enable_subscription": true,
+        "interval": "day",
+        "interval_counts": [
+          30
+        ],
+        "images": [
+          {
+            "id": 9,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx3-berberine-with-product_O36PHnR.jpg",
+            "caption": "MedicLab Berberine bottle with capsules beside it",
+            "display_order": 0,
+            "product": 7,
+            "variants": []
+          },
+          {
+            "id": 10,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s2_XwYeoUC.png",
+            "caption": "Berberine by MedicLab, gallery slide 2",
+            "display_order": 1,
+            "product": 7,
+            "variants": []
+          },
+          {
+            "id": 11,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s3_uqoPOxl.png",
+            "caption": "Berberine by MedicLab, gallery slide 3",
+            "display_order": 2,
+            "product": 7,
+            "variants": []
+          },
+          {
+            "id": 12,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s4_2zq1zT9.png",
+            "caption": "Berberine by MedicLab, gallery slide 4",
+            "display_order": 3,
+            "product": 7,
+            "variants": []
+          },
+          {
+            "id": 13,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s5_e4DFWC8.png",
+            "caption": "Berberine by MedicLab, gallery slide 5",
+            "display_order": 4,
+            "product": 7,
+            "variants": []
+          },
+          {
+            "id": 14,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s6_MZQoj3D.png",
+            "caption": "Berberine by MedicLab, gallery slide 6",
+            "display_order": 5,
+            "product": 7,
+            "variants": []
+          },
+          {
+            "id": 15,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s7_auhfkk8.png",
+            "caption": "Berberine by MedicLab, gallery slide 7",
+            "display_order": 6,
+            "product": 7,
+            "variants": []
+          },
+          {
+            "id": 16,
+            "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx4-berberine-s8_OTKKl4t.png",
+            "caption": "Berberine by MedicLab, gallery slide 8",
+            "display_order": 7,
+            "product": 7,
+            "variants": []
+          }
+        ],
+        "recommended_products": [],
+        "external_tax_code": null,
+        "variant_attributes": [
+          {
+            "name": "Purchase",
+            "code": "purchase",
+            "values": [
+              "One-time purchase",
+              "Monthly refill plan"
+            ]
+          }
+        ],
+        "variants": [
+          {
+            "id": 8,
+            "product_id": 7,
+            "title": "DUPLICATE - delete me (Berberine import re-run) - One-time purchase",
+            "sku": "JTP4BERB",
+            "upc": "",
+            "purchase_availability": "available",
+            "inventory_availability": "untracked",
+            "track_stock": false,
+            "allow_backorders": true,
+            "images": [
+              {
+                "id": 9,
+                "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx3-berberine-with-product_O36PHnR.jpg",
+                "caption": "MedicLab Berberine bottle with capsules beside it",
+                "display_order": 0,
+                "product": 7,
+                "variants": []
+              }
+            ],
+            "variant_attribute_values": [
+              {
+                "name": "Purchase",
+                "value": "One-time purchase",
+                "code": "purchase"
+              }
+            ],
+            "prices": [
+              {
+                "currency": "USD",
+                "price": "52.97",
+                "retail": null,
+                "subscription": null,
+                "subscription_suggested_downsell": null
+              }
+            ],
+            "stockrecords": [
+              {
+                "id": 4,
+                "location_id": 1,
+                "num_in_stock": 1000,
+                "num_allocated": 0,
+                "low_stock_threshold": 0
+              }
+            ],
+            "unit_cost": "0.00",
+            "requires_shipping": true,
+            "date_created": "2026-11-11T01:15:24.065970-05:00",
+            "date_updated": "2026-11-11T01:15:24.075103-05:00",
+            "metadata": {}
+          },
+          {
+            "id": 9,
+            "product_id": 7,
+            "title": "DUPLICATE - delete me (Berberine import re-run) - Monthly refill plan",
+            "sku": "JTP4BERB-SUB",
+            "upc": "",
+            "purchase_availability": "available",
+            "inventory_availability": "untracked",
+            "track_stock": false,
+            "allow_backorders": true,
+            "images": [
+              {
+                "id": 9,
+                "attachment": "https://cdn.29next.store/media/mediclab/images/products/2026/11/mlx3-berberine-with-product_O36PHnR.jpg",
+                "caption": "MedicLab Berberine bottle with capsules beside it",
+                "display_order": 0,
+                "product": 7,
+                "variants": []
+              }
+            ],
+            "variant_attribute_values": [
+              {
+                "name": "Purchase",
+                "value": "Monthly refill plan",
+                "code": "purchase"
+              }
+            ],
+            "prices": [
+              {
+                "currency": "USD",
+                "price": "52.97",
+                "retail": null,
+                "subscription": null,
+                "subscription_suggested_downsell": null
+              }
+            ],
+            "stockrecords": [
+              {
+                "id": 5,
+                "location_id": 1,
+                "num_in_stock": 1000,
+                "num_allocated": 0,
+                "low_stock_threshold": 0
+              }
+            ],
+            "unit_cost": "0.00",
+            "requires_shipping": true,
+            "date_created": "2026-11-11T01:15:24.184945-05:00",
+            "date_updated": "2026-11-11T01:15:24.193576-05:00",
+            "metadata": {}
+          }
+        ],
+        "rating": null,
+        "date_created": "2026-11-11T01:15:23.999665-05:00",
+        "date_updated": "2026-11-11T01:16:37.788719-05:00",
+        "metadata": {}
       }
     ],
     "categories": [
@@ -244,30 +653,9 @@
         "metadata": {}
       }
     ],
-    "webhooks": [
-      {
-        "id": 1,
-        "events": [
-          "order.updated",
-          "order.created",
-          "transaction.created",
-          "transaction.updated",
-          "fulfillment.created",
-          "fulfillment.updated",
-          "dispute.created",
-          "dispute.updated"
-        ],
-        "secret_key": "***",
-        "created_at": "2026-10-18T07:11:23.379245-04:00",
-        "updated_at": "2026-10-18T07:11:23.379254-04:00",
-        "name": "Nexus Report Webhook",
-        "target": "https://accounts.29next.com/reports/webhook/receiver/",
-        "active": true,
-        "next_check_date": null,
-        "warning_count": 0,
-        "api_version": "2024-04-01"
-      }
-    ],
+    "webhooks": {
+      "error": "HTTP 429 on webhooks/?limit=100"
+    },
     "orders": [],
     "subscriptions": []
   }

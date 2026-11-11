@@ -1,0 +1,46 @@
+{% comment %}
+  next_component: billing-address-form
+  next_version: 2.0.0
+  next_sdk_min: 0.4.41
+  next_purpose: "Same as shipping" toggle plus an SDK-built billing address block. Used inside payment-methods.html (credit card form section).
+  next_params:
+    default_same_as_shipping: bool, default true. Pass true/false literals only — in Liquid, strings/numbers/empty values are truthy. Controls initial state of the use-shipping-address checkbox.
+    toggle_label:             string, default "Use shipping address as billing address".
+    section_title:            string, default "Billing Address". Heading shown when toggle is unchecked.
+    label_style:              string, default "inset" (label floats in at the top of the field when filled). "floating" = cc-floating, label lifts onto the field's top border on a white chip when filled (the .label-checkout--floating look). "static" = cc-static, non-floating — label always visible above the field, placeholder hidden. Also toggleable per page without an include arg via frontmatter `address_form.label_style` (the include arg wins when both are set) — useful because this partial is included from the shared payment-methods.html, which passes no args.
+  next_sdk_owns:
+    - os-input-field="use-shipping-address" (toggle checkbox container)
+    - os-checkout-element="different-billing-address" (form container, expanded on uncheck)
+    - data-next-address="billing" (the block; SDK renders the selected country's billing fields into it — replaces the legacy os-checkout-component="billing-form" injected mount)
+    - data-next-address-state (loading | ready — set by the SDK, styleable)
+  next_theming:
+    classes_designer_owns: [.billing-address, .billing-address__form, .checkbox-wrapper, .checkout__checkbox, .checkbox__input, .checkbox__label, .form-section__title, .cc-billing]
+    css_vars_designer_owns: []
+    notes: The SDK-built controls are styled by the "SDK address blocks" section of next-core.css.
+  next_dont_touch:
+    - Do NOT prefill field markup inside the block — hand-written billing address inputs are deprecated (SDK >= 0.4.40); the SDK owns everything inside it
+    - "Same as shipping" toggle MUST hide the entire address block (CSS via os-checkout-element), not just collapse it
+    - Field naming convention `use_shipping_address` for the checkbox is SDK-recognized
+  next_gotchas:
+    - Custom checkout HTML can regress shipping/billing mounts. This component keeps the canonical SDK-owned structure intact when templates are edited.
+    - Field set and order are country-driven, same i18n rules service as shipping-address-form
+    - Needs SDK >= 0.4.41: on 0.4.40 the billing block did not re-render when the billing country changed (campaign-cart#110, fixed in 0.4.41 — verified CA -> GB re-renders and survives a reload). Do not pin a template using this block below 0.4.41.
+  next_variants:
+    - inline (default; expands inline on uncheck)
+  next_related:
+    - shipping-address-form (provides the address that populates this when toggle is checked)
+    - payment-methods.html (this partial lives inside the credit card form section there)
+{% endcomment %}
+{% if default_same_as_shipping == nil %}{% assign default_same_as_shipping = true %}{% endif -%}
+{% assign toggle = toggle_label | default: 'Use shipping address as billing address' -%}
+{% assign sec_title = section_title | default: 'Billing Address' -%}
+{% assign baf_label_style = label_style | default: address_form.label_style -%}
+<div data-next-catalog-component="billing-address-form" class="billing-address">
+  <div os-input-field="use-shipping-address" class="checkbox-wrapper"><label class="checkout__checkbox"><input type="checkbox" name="use_shipping_address" id="use_shipping_address" data-name="Use Shipping Address" class="checkbox__input"{% if default_same_as_shipping %} checked=""{% endif %}>
+      <div class="checkbox__label">{{ toggle | escape }}</div>
+    </label></div>
+  <div os-checkout-element="different-billing-address" class="billing-address__form">
+    <h2 class="form-section__title cc-billing">{{ sec_title }}</h2>
+    <div data-next-address="billing"{% if baf_label_style == 'floating' %} class="cc-floating"{% elsif baf_label_style == 'static' %} class="cc-static"{% endif %}></div>
+  </div>
+</div>

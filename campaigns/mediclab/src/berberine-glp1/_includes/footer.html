@@ -1,0 +1,20 @@
+<footer class="footer_section ml-footer">
+  <div class="container">
+    <div class="footer_layout">
+      <div class="footer_copy-info">
+        <img class="ml-footer__logo" src="{{ 'images/ml/mediclab-logo-white.png' | campaign_asset }}" alt="{{ campaign.store_name }}" width="140" height="29" loading="lazy">
+        <div class="footer_link-wrapper">
+          <a href="{{ campaign.store_shipping }}" target="_blank" rel="noopener" class="footer_legal-link">Shipping</a>
+          <a href="{{ campaign.store_returns }}" target="_blank" rel="noopener" class="footer_legal-link">Refunds</a>
+          <a href="{{ campaign.store_privacy }}" target="_blank" rel="noopener" class="footer_legal-link">Privacy</a>
+          <a href="{{ campaign.store_terms }}" target="_blank" rel="noopener" class="footer_legal-link">Subscription terms</a>
+          <a href="{{ campaign.store_contact }}" target="_blank" rel="noopener" class="footer_legal-link">Contact</a>
+          <a href="mailto:{{ campaign.store_email }}" class="footer_legal-link">{{ campaign.store_email }}</a>
+        </div>
+        <p class="ml-footer__fda">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease. MedicLab Berberine is a dietary supplement. It is not a GLP-1 medication, contains no GLP-1, semaglutide or tirzepatide, and is not a substitute for any prescription. Ask your doctor before use if you take any medicine, including blood sugar medicine or a GLP-1 medication.</p>
+        <div class="text-xs">© <span class="copyright-year"></span> {{ campaign.store_company }}</div>
+<script>(function(){ var y = new Date().getFullYear(); document.querySelectorAll(".copyright-year").forEach(function(el){ el.textContent = y; }); })();</script>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,29 @@
+{
+  "name": "mediclab-funnels",
+  "version": "1.0.0",
+  "description": "MedicLab funnels (Campaign Page Kit): npm run build:static builds _site/ for a static host",
+  "main": "index.js",
+  "scripts": {
+    "test": "python3 -I ../../tools/mediclab/check_funnel.py",
+    "setup": "campaign-init",
+    "start": "campaign-start",
+    "dev": "campaign-dev",
+    "build": "campaign-build",
+    "clone": "campaign-clone",
+    "config": "campaign-config",
+    "compress": "campaign-compress",
+    "compress:preview": "campaign-compress --preview",
+    "migrate": "campaign-migrate",
+    "build:static": "node scripts/build-static.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "next-campaign-page-kit": "0.3.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true
+}

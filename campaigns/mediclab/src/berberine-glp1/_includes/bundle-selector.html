@@ -1,0 +1,304 @@
+{% comment %}
+  next_component: bundle-selector
+  next_version: 1.2.0
+  next_sdk_min: 0.4.18
+  next_purpose: Tiered package selector. Customer picks a quantity tier (e.g. 1x/2x/3x) that maps to a bundle of package IDs at checkout. SDK swaps cart on selection change.
+  next_params:
+    selector_id:        string, default "main". data-next-selector-id value. Stable per page.
+    await:              bool, default true. Renders skeleton while bundle prices hydrate.
+    include_shipping:   bool, default true. Required when any card has data-next-shipping-id.
+    selection_mode:     enum [swap, select], default "swap". checkout=swap; upsell may select.
+    packages:           object, optional. Dict with main_package, prepurchase_1, prepurchase_2 keys. Defaults for card package IDs.
+    shipping_methods:   object, optional. Dict of Campaigns App shipping method ref_ids, e.g. standard/free. Blank values emit no data-next-shipping-id.
+                        Recommended: ONE method (the campaign's single storefront method, priced at the
+                        highest tier rate) on every card; cheaper tiers carry a shipping coupon in `vouchers`.
+    bundles:            array of card defs. Defaults to canonical 3-tier (1x/2x/3x of packageId 1).
+                        Each card:
+                          { id, quantity, shipping_method, shipping_id, vouchers, items_json, selected, title_prefix, package_id,
+                            subtitle_text,    # v1.1: free-text subtitle. Overrides the
+                                              # default auto-generated "Save Xamount" text.
+                                              # If set, the subtitle is rendered unconditionally
+                                              # (no SDK gating). Use for design-driven copy
+                                              # like "Try the ritual" on the no-discount tier.
+                            shipping_label,   # v1.1: free-text shipping callout appended to
+                                              # the subtitle (e.g. "+ Free shipping",
+                                              # "+ $9.99 shipping"). NO SDK validation —
+                                              # operator/build aligns with offer/method reality.
+                            total_tone_class, badge_text, badge_pill_class }
+  next_sdk_owns:
+    - data-next-bundle-selector
+    - data-next-selector-id
+    - data-next-bundle-card
+    - data-next-bundle-id
+    - data-next-bundle-items
+    - data-next-bundle-display
+    - data-next-shipping-id
+    - data-next-bundle-vouchers (per-card coupon code(s), when configured)
+    - data-next-selection-mode
+    - data-next-include-shipping
+    - data-next-selected
+    - data-next-package-id
+    - data-next-await
+    - data-next-display
+  next_theming:
+    classes_designer_owns: [.os-card, .os-card__title-badge, .os-card__price, .os-card__total-current, .pb--bestseller, .os-cards__vertical, .os--gap-xl]
+    css_vars_designer_owns: []  # v1.1 token bridge
+  next_dont_touch:
+    - data-next-* attributes are SDK-owned; renaming breaks runtime
+    - bundle ids must be stable strings; do not auto-generate per render
+    - data-next-shipping-id values must be valid Campaigns API ref_ids; do not carry demo ref_ids between campaigns
+    - data-next-bundle-items packageId values must exist in the Campaigns API
+  next_gotchas:
+    - Per-card data-next-shipping-id matters when tiers have different shipping (e.g. 3x free, 1x/2x standard).
+    - The Olympus starter page sets demo shipping_methods in frontmatter to demonstrate a free-shipping tier. The build/operator must replace those refs from the CampaignSpec/Campaigns App for each campaign.
+    - data-next-include-shipping="true" required when any card uses tier-specific shipping or totals will be wrong.
+    - data-next-selected="true" on the initial card; SDK toggles next-selected class at runtime.
+    - data-next-await="" on outer wrapper renders skeleton until SDK hydrates prices.
+    - hasDiscount tokens resolve to a CSS class string ('hide' when no discount); use as classname, not boolean.
+    - subtitle_text and shipping_label are FREE TEXT — the build skill cannot validate
+      stated copy against actual offer/shipping data. Design carries the opinion;
+      build renders faithfully; ad-hoc visual review is the gate.
+    - NEVER use data-next-show="shipping.isFree" inside bundle cards to gate a
+      shipping label. It is cart-level state that only reflects the currently
+      selected card — on all other cards it is always hidden. Use shipping_label
+      static text on the specific bundle card instead.
+  next_variants:
+    - manual-cards (this partial; canonical for olympus)
+    - config-driven (data-next-bundles= JSON; see commented reference in olympus/checkout.html)
+    - configurable-slots (olympus-mv pattern; v1 extraction)
+  next_related:
+    - variant-selector (paired with bundle-selector when bundles have configurable slots)
+    - order-summary (renders the cart total bound to the selected bundle)
+{% endcomment %}
+{% assign sel_id = selector_id | default: 'main' -%}
+{% assign sel_mode = selection_mode | default: 'swap' -%}
+{% if include_shipping == nil %}{% assign include_shipping = true %}{% endif -%}
+{% if await == nil %}{% assign await = true %}{% endif -%}
+<div data-next-catalog-component="bundle-selector" data-next-bundle-selector data-next-selector-id="{{ sel_id }}" data-next-selection-mode="{{ sel_mode }}"{% if include_shipping %} data-next-include-shipping="true"{% endif %} class="os-option"{% if await %} data-next-await=""{% endif %}>
+  <div class="os-cards__vertical os--gap-xl">
+    {% if bundles -%}
+    {% for b in bundles -%}
+    {% assign card_package_id = b.package_id | default: packages.main_package | default: 1 -%}
+    {% assign card_quantity = b.quantity | default: 1 -%}
+    {% assign shipping_key = b.shipping_method -%}
+    {% assign card_shipping_id = b.shipping_id -%}
+    {% if card_shipping_id == nil and shipping_key %}{% assign card_shipping_id = shipping_methods[shipping_key] %}{% endif -%}
+    {% assign card_vouchers = b.vouchers | join: ',' -%}
+    {% if b.items_json -%}
+      {% assign card_items = b.items_json -%}
+    {% elsif b.items -%}
+      {% assign card_items = b.items -%}
+    {% else -%}
+      {% capture card_items %}[{"packageId":{{ card_package_id }},"quantity":{{ card_quantity }}}]{% endcapture -%}
+    {% endif -%}
+    <div data-next-bundle-card data-next-bundle-id="{{ b.id }}"{% if card_shipping_id %} data-next-shipping-id="{{ card_shipping_id }}"{% endif %}{% if card_vouchers and card_vouchers != "" %} data-next-bundle-vouchers="{{ card_vouchers }}"{% endif %} data-next-bundle-items='{{ card_items }}'{% if b.selected %} data-next-selected="true"{% endif %} role="button" class="os-card">
+      <div class="os-card__header-slot"></div>
+      <div class="os-card__wrapper">
+        <div class="os-card__content os--align-middle" data-next-package-id="{{ card_package_id }}">
+          <div{% if b.selected %} data-selected="true"{% endif %} class="radio-style-1">
+            <div class="radio-inner"></div>
+          </div>
+          <div class="os-card__image-slot hide-tablet"><img data-next-display="package.image" alt="" class="image"></div>
+          <div class="os-card__main-slot">
+            <div class="os-card__title-section">
+              
+              <div class="os-card__title-wrapper">
+                <div class="os-card__title">{{ b.title_prefix }}<span data-next-display="package.name">Package Title</span></div>
+                <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="os-card__title-badge pb--bestseller">
+                  <template>
+                    <span>SAVE {discount.percentage}</span>
+                  </template>
+                </div>
+                <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="os-card__title-badge pb--bestseller" style="display:none">
+                  <template>
+                    <span>+{discount.percentage}</span>
+                  </template>
+                </div>
+              </div>
+              
+              <div class="os-card__subtitle-wrapper">
+                {%- if b.subtitle_text %}
+                <div class="os-card__subtitle-text">{{ b.subtitle_text }}</div>
+                {%- else %}
+                <div data-next-bundle-display="hasDiscount" class="os-card__subtitle-text">Save <span data-next-bundle-display="discountAmount">-</span></div>
+                {%- endif %}
+                {%- if b.shipping_label %}<div class="os-card__subtitle-text">{{ b.shipping_label }}</div>{%- endif %}
+              </div>
+              
+            </div>
+          </div>
+          <div class="os-card__secondary-slot">
+            <div class="os-card__pricing">
+              <div class="os-card__price-container">
+                <div data-next-bundle-display="hasDiscount" class="os-card__price os--compare os-style"><span data-next-bundle-display="originalUnitPrice">-</span></div>
+                <div class="os-card__price os--current"><span data-next-bundle-display="unitPrice">-</span>/ea</div>
+              </div>
+              <div class="os-card__total-container">
+                <div class="os-card__total-label">Total:</div>
+                <div data-next-bundle-display="hasDiscount" class="os-card__total-compare"><span data-next-bundle-display="originalPrice">-</span></div>
+                <div class="os-card__total-current{% if b.total_tone_class %} {{ b.total_tone_class }}{% endif %}"><span data-next-bundle-display="price">-</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="os-card__bottom-slot hide"></div>
+      </div>
+      <div class="os-card__footer-slot"></div>
+      {% if b.badge_text -%}
+      <div class="os-card__label-slot">
+        <div class="os-card__label-2 os-card__label--middle-right{% if b.badge_pill_class %} {{ b.badge_pill_class }}{% endif %}">
+          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path></svg></div>
+          <div class="os-card__label-text-2">{{ b.badge_text }}</div>
+        </div>
+      </div>
+      {%- endif %}
+    </div>
+    {% endfor -%}
+    {% else -%}
+    {%- comment -%} Default: canonical 3-tier (1x/2x/3x). Package ID from packages.main_package param or fallback 1. Shipping refs are optional and must be supplied through shipping_methods. Override cards entirely by passing `bundles=[...]`. {%- endcomment -%}
+    {%- assign _pkg = packages.main_package | default: 1 -%}
+    {%- assign _standard_ship = shipping_methods.standard -%}
+    {%- comment -%} 3x uses shipping_methods.free when a page still maps one (legacy two-method setup), else the one standard method. {%- endcomment -%}
+    {%- assign _free_ship = shipping_methods.free | default: shipping_methods.standard -%}
+    <div data-next-bundle-card data-next-bundle-id="bundle-1x"{% if _standard_ship %} data-next-shipping-id="{{ _standard_ship }}"{% endif %} data-next-bundle-items='[{"packageId":{{ _pkg }},"quantity":1}]' data-next-selected="true" role="button" class="os-card">
+      <div class="os-card__header-slot"></div>
+      <div class="os-card__wrapper">
+        <div class="os-card__content os--align-middle" data-next-package-id="{{ _pkg }}">
+          <div data-selected="true" class="radio-style-1">
+            <div class="radio-inner"></div>
+          </div>
+          <div class="os-card__image-slot hide-tablet"><img data-next-display="package.image" alt="" class="image"></div>
+          <div class="os-card__main-slot">
+            <div class="os-card__title-section">
+              <div class="os-card__title-wrapper">
+                <div class="os-card__title">1x <span data-next-display="package.name">Package Title</span></div>
+                <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="os-card__title-badge pb--bestseller">
+                  <template><span>SAVE {discount.percentage}</span></template>
+                </div>
+                <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="os-card__title-badge pb--bestseller" style="display:none">
+                  <template><span>+{discount.percentage}</span></template>
+                </div>
+              </div>
+              <div class="os-card__subtitle-wrapper">
+                <div data-next-bundle-display="hasDiscount" class="os-card__subtitle-text">Save <span data-next-bundle-display="discountAmount">-</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="os-card__secondary-slot">
+            <div class="os-card__pricing">
+              <div class="os-card__price-container">
+                <div data-next-bundle-display="hasDiscount" class="os-card__price os--compare os-style"><span data-next-bundle-display="originalUnitPrice">-</span></div>
+                <div class="os-card__price os--current"><span data-next-bundle-display="unitPrice">-</span>/ea</div>
+              </div>
+              <div class="os-card__total-container">
+                <div class="os-card__total-label">Total:</div>
+                <div data-next-bundle-display="hasDiscount" class="os-card__total-compare"><span data-next-bundle-display="originalPrice">-</span></div>
+                <div class="os-card__total-current"><span data-next-bundle-display="price">-</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="os-card__bottom-slot hide"></div>
+      </div>
+      <div class="os-card__footer-slot"></div>
+      <div class="os-card__label-slot">
+        <div class="os-card__label-2 os-card__label--middle-right os-card__label--pill-primary">
+          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path></svg></div>
+          <div class="os-card__label-text-2">Most Popular</div>
+        </div>
+      </div>
+    </div>
+    <div data-next-bundle-card data-next-bundle-id="bundle-2x"{% if _standard_ship %} data-next-shipping-id="{{ _standard_ship }}"{% endif %} data-next-bundle-items='[{"packageId":{{ _pkg }},"quantity":2}]' role="button" class="os-card">
+      <div class="os-card__header-slot"></div>
+      <div class="os-card__wrapper">
+        <div class="os-card__content os--align-middle" data-next-package-id="{{ _pkg }}">
+          <div class="radio-style-1">
+            <div class="radio-inner"></div>
+          </div>
+          <div class="os-card__image-slot hide-tablet"><img data-next-display="package.image" alt="" class="image"></div>
+          <div class="os-card__main-slot">
+            <div class="os-card__title-section">
+              <div class="os-card__title-wrapper">
+                <div class="os-card__title">2x <span data-next-display="package.name">Package Title</span></div>
+                <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="os-card__title-badge pb--bestseller">
+                  <template><span>SAVE {discount.percentage}</span></template>
+                </div>
+                <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="os-card__title-badge pb--bestseller" style="display:none">
+                  <template><span>+{discount.percentage}</span></template>
+                </div>
+              </div>
+              <div class="os-card__subtitle-wrapper">
+                <div data-next-bundle-display="hasDiscount" class="os-card__subtitle-text">Save <span data-next-bundle-display="discountAmount">-</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="os-card__secondary-slot">
+            <div class="os-card__pricing">
+              <div class="os-card__price-container">
+                <div data-next-bundle-display="hasDiscount" class="os-card__price os--compare os-style"><span data-next-bundle-display="originalUnitPrice">-</span></div>
+                <div class="os-card__price os--current"><span data-next-bundle-display="unitPrice">-</span>/ea</div>
+              </div>
+              <div class="os-card__total-container">
+                <div class="os-card__total-label">Total:</div>
+                <div data-next-bundle-display="hasDiscount" class="os-card__total-compare"><span data-next-bundle-display="originalPrice">-</span></div>
+                <div class="os-card__total-current"><span data-next-bundle-display="price">-</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="os-card__bottom-slot hide"></div>
+      </div>
+      <div class="os-card__footer-slot"></div>
+      <div class="os-card__label-slot">
+        <div class="os-card__label-2 os-card__label--middle-right os-card__label--pill-secondary">
+          <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path></svg></div>
+          <div class="os-card__label-text-2">Best Deal</div>
+        </div>
+      </div>
+    </div>
+    <div data-next-bundle-card data-next-bundle-id="bundle-3x"{% if _free_ship %} data-next-shipping-id="{{ _free_ship }}"{% endif %} data-next-bundle-items='[{"packageId":{{ _pkg }},"quantity":3}]' role="button" class="os-card">
+      <div class="os-card__header-slot"></div>
+      <div class="os-card__wrapper">
+        <div class="os-card__content os--align-middle" data-next-package-id="{{ _pkg }}">
+          <div class="radio-style-1">
+            <div class="radio-inner"></div>
+          </div>
+          <div class="os-card__image-slot hide-tablet"><img data-next-display="package.image" alt="" class="image"></div>
+          <div class="os-card__main-slot">
+            <div class="os-card__title-section">
+              <div class="os-card__title-wrapper">
+                <div class="os-card__title">3x <span data-next-display="package.name">Package Title</span></div>
+                <div data-next-discounts="offer" data-next-bundle-display="hasDiscount" class="os-card__title-badge pb--bestseller">
+                  <template><span>SAVE {discount.percentage}</span></template>
+                </div>
+                <div data-next-discounts="voucher" data-next-show="cart.hasCoupon()" class="os-card__title-badge pb--bestseller" style="display:none">
+                  <template><span>+{discount.percentage}</span></template>
+                </div>
+              </div>
+              <div class="os-card__subtitle-wrapper">
+                <div data-next-bundle-display="hasDiscount" class="os-card__subtitle-text">Save <span data-next-bundle-display="discountAmount">-</span></div>
+                {% if shipping_methods.free %}<div class="os-card__subtitle-text"> + Free Shipping</div>{% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="os-card__secondary-slot">
+            <div class="os-card__pricing">
+              <div class="os-card__price-container">
+                <div data-next-bundle-display="hasDiscount" class="os-card__price os--compare os-style"><span data-next-bundle-display="originalUnitPrice">-</span></div>
+                <div class="os-card__price os--current"><span data-next-bundle-display="unitPrice">-</span>/ea</div>
+              </div>
+              <div class="os-card__total-container">
+                <div class="os-card__total-label">Total:</div>
+                <div data-next-bundle-display="hasDiscount" class="os-card__total-compare"><span data-next-bundle-display="originalPrice">-</span></div>
+                <div class="os-card__total-current os-dark"><span data-next-bundle-display="price">-</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="os-card__bottom-slot hide"></div>
+      </div>
+      <div class="os-card__footer-slot"></div>
+    </div>
+    {%- endif %}
+  </div>
+</div>

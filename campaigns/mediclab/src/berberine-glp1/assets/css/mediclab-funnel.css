@@ -1,0 +1,103 @@
+/* MedicLab brand layer for the checkout, upsell and thank-you pages (mediclab.us: Fustat, forest green pill buttons,
+   deep green header, cream surfaces). Loaded after next-core.css; it only sets tokens and styles the ml-* blocks. */
+@import url("https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&display=swap");
+
+:root, body {
+  --_text---font-family--primary: "Fustat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --_text---font-family--heading: "Fustat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --brand--color--background: #ffffff;
+  --brand--color--surface: #fbfaf7;
+  --brand--color--foreground: #202020;
+  --brand--color--border: #e3e0d7;
+
+  --brand--color--primary: #1d503a;
+  --brand--color--primary-dark: #0b2a1b;
+  --brand--color--primary-light: #e6efe9;
+  --brand--color--primary-lighter: #f5f1e8;
+  --brand--color--primary-foreground: #ffffff;
+  --brand--color--cta-primary: #1d503a;
+
+  --brand--color--accent: #1d503a;
+  --brand--color--complementary-1: #f5f1e8;
+  --brand--color--text-secondary: #2b3330;
+  --brand--color--text-muted: #545b57;
+  --brand--color--rating-star: #1d503a;
+
+  --brand--color--pill-primary: #ffffff;
+  --brand--color--pill-primary-surface: #c4301c;
+  --brand--color--pill-secondary: #0b2a1b;
+  --brand--color--pill-secondary-surface: #e3f6a4;
+
+  --system-colors--success: #1d503a;
+  --system-colors--success-medium: #1d503a;
+
+  --radius-size--buttons: 999px;
+  --radius-size--base: 14px;
+  --radius--cards: 16px;
+  --radius--input: 12px;
+  --component--color--outline: #1d503a;
+}
+
+body { font-family: var(--_text---font-family--primary); color: #202020; }
+h1, h2, h3, .display-md, .form-section__title { font-family: var(--_text---font-family--heading); letter-spacing: -.01em; }
+
+/* announcement + header (mediclab.us: cream bar, deep green header, white logo) */
+.ml-announce { background: #f5f1e8; color: #1f2421; text-align: center; font-size: 13px; font-weight: 500; padding: 8px 16px; }
+.ml-header { background: #0b2a1b; border-bottom: 0; }
+.ml-header .checkout-header__inner { background: transparent; }
+.ml-header .brand-logo { height: 28px !important; width: auto !important; max-width: none; }
+@media (max-width: 767px) { .ml-header .brand-logo { height: 24px !important; } .ml-header__help { font-size: 13px; } }
+.ml-header__help { color: #c9d9cf; font-size: 14px; text-align: right; }
+.ml-header__help a { color: #ffffff; text-decoration: none; font-weight: 600; }
+
+/* page */
+.section-checkout.cc-gray { background: #f5f1e8; }
+.ml-eyebrow { display: inline-block; background: #e6efe9; color: #1d503a; border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+.ml-h3 { font-size: 18px; font-weight: 700; margin: 0 0 8px; }
+
+.ml-ticks { list-style: none; padding: 0; margin: 20px 0; display: grid; gap: 10px; }
+.ml-ticks li { position: relative; padding-left: 30px; font-size: 15px; }
+.ml-ticks li::before { content: ""; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%; background: #1d503a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center / 14px no-repeat; }
+
+.ml-routine { background: #ffffff; border: 1px solid #e3e0d7; border-radius: 16px; padding: 18px 20px; margin: 16px 0; }
+.ml-routine ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+
+.ml-guarantee { display: flex; gap: 14px; align-items: center; background: #ffffff; border: 2px solid #1d503a; border-radius: 16px; padding: 14px 16px; margin: 16px 0; font-size: 14px; line-height: 1.5; }
+.ml-guarantee img { flex: 0 0 auto; }
+
+.ml-safety { background: #fbfaf7; border: 1px solid #e3e0d7; border-radius: 12px; padding: 12px 14px; font-size: 13px; color: #545b57; margin: 16px 0; }
+
+/* bundle cards */
+.os-card { border-radius: 16px; }
+.os-card.next-selected { border-color: #1d503a; box-shadow: 0 0 0 3px #e6efe9; }
+.os-card__subtitle-text { color: #2b3330; font-size: 13px; line-height: 1.45; }
+.radio-style-1.next-selected, .os-card.next-selected .radio-style-1 { border-color: #1d503a; }
+
+/* plan terms + consent */
+.ml-plan-terms { background: #ffffff; border: 1px solid #e3e0d7; border-radius: 14px; padding: 14px 16px; margin: 6px 0 14px; font-size: 13.5px; line-height: 1.5; color: #2b3330; }
+.ml-plan-terms[hidden] { display: none; }
+.ml-plan-terms p { margin: 0 0 10px; }
+.ml-plan-terms a { color: #1d503a; font-weight: 600; }
+.ml-consent { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; color: #1f2421; cursor: pointer; }
+.ml-consent input { width: 20px; height: 20px; margin-top: 1px; accent-color: #1d503a; flex: 0 0 auto; }
+.ml-consent-error { color: #c4301c; font-weight: 600; margin: 8px 0 0 !important; }
+
+/* submit (pill, brand green) */
+.submit-button { border-radius: 999px !important; background: #1d503a !important; }
+.submit-button:hover { background: #0b2a1b !important; }
+
+/* footer */
+.ml-footer { background: #0b2a1b; color: #c9d9cf; }
+.ml-footer .footer_legal-link { color: #ffffff; }
+.ml-footer__logo { height: 26px; width: auto; margin: 0 auto 14px; display: block; }
+.ml-footer__fda { font-size: 12px; line-height: 1.55; max-width: 760px; margin: 14px auto; color: #c9d9cf; text-align: center; }
+
+/* upsell + thank-you */
+.ml-upsell-hero { background: #0b2a1b; color: #fff; text-align: center; padding: 22px 16px; }
+.ml-upsell-hero h1 { color: #fff; font-size: clamp(24px, 5vw, 34px); margin: 0 0 6px; }
+.ml-upsell-hero p { color: #e3f6a4; margin: 0; font-weight: 600; }
+.ml-thanks-hero { text-align: center; padding: 28px 16px 8px; }
+.ml-thanks-hero h1 { font-size: clamp(26px, 5vw, 36px); margin: 0 0 6px; }
+.ml-next { background: #fff; border: 1px solid #e3e0d7; border-radius: 16px; padding: 18px 20px; margin: 16px 0; }
+.ml-next ol { margin: 0; padding-left: 20px; display: grid; gap: 8px; }

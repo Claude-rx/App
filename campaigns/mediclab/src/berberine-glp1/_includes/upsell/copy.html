@@ -1,0 +1,19 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/copy.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{%- comment -%}
+  next_component: upsell-copy
+  next_version: 1
+  next_sdk_owns: package name / price / discount display spans
+  next_sdk_surface: upsell page copy (token substitution helper)
+  next_params: text (string, HTML allowed). Reads the tok_* spans from upsell/offer-context.html.
+  Tokens — resolved from the ONE upsell_offer.package_id / selector ids, so copy never hardcodes a package id:
+    {package_name}   package.<id>.name
+    {price}          selected offer price   (bundle.<selector_id>.price · package.price on single without voucher)
+    {compare_price}  struck / retail price  (bundle.<selector_id>.originalPrice · package.price_retail)
+    {discount}       selected discount %    (bundle.<selector_id>.discountPercentage · package.savingsPercentage)
+    {price_1x} {discount_1x}   pinned 1× tier (display-only selector) on tier-cards / tier-pills / mv; same as
+                               {price} / {discount} on stepper / single
+    {discount_max}   discount % of the highest tier (bundle.<selector_id>-<tier_count>x) on tier types
+    {first_name}     order.customer.firstName
+    {% campaign_include 'upsell/copy.html' text=upsell_hero.offer %}
+{%- endcomment -%}
+{{- text | replace: '{package_name}', tok_package_name | replace: '{compare_price}', tok_compare_price | replace: '{price_1x}', tok_price_1x | replace: '{discount_1x}', tok_discount_1x | replace: '{discount_max}', tok_discount_max | replace: '{price}', tok_price | replace: '{discount}', tok_discount | replace: '{first_name}', tok_first_name -}}

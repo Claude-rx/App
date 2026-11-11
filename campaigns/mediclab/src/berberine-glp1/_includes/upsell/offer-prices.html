@@ -1,0 +1,80 @@
+{%- comment -%} GENERATED from _shared/upsell/_includes/upsell/offer-prices.html — edit the source and run `npm run sync:shared`. Do not edit this copy. {%- endcomment -%}
+{% comment %}
+  next_component: upsell-offer-prices
+  next_version: 1
+  next_sdk_owns: price / compare / savings display
+  next_sdk_surface: upsell offer (price rows adjacent to the accept control)
+  next_params: reads offer / *_path / price_is_scoped from upsell/offer-context.html.
+    price_layout: include arg. rows (default: the two-column Retail | Offer block) | inline (struck compare +
+      "<price_label> $X" on one line — the upsell-single look; the % badge is rendered by the heading in box style).
+    Skipped entirely when offer.heading_prices is true (the price already sits in the heading strip) unless
+      offer.price_rows: true asks for both.
+    pricing_mode: include arg > offer.pricing_mode > "full_price" — the shared commerce contract's upsell
+      default (template-brand-contract.shared-commerce.v0 pricing_surfaces.upsell.default_mode: one visible
+      price row next to the accept control; same_price_strike_rule: no offer/voucher → full_price only).
+      Demo pages opt into discounted explicitly.
+      discounted  → Retail (struck) | Offer price + "(X% OFF)"          (2 visible rows; contract alias compare_at_current)
+      compare_at  → Retail (struck) | Offer price                       (2 rows)
+      full_price  → Offer price only                                    (1 row)
+      unit_total  → Per unit (unitPrice) | Total (price)                (2 rows)
+      unit_only   → Per unit (unitPrice) only                           (1 row)
+      Never hide a .price-wrapper row with campaign CSS — pick the mode (Campaigns OS browser QA blocks
+      upsells with zero visible price rows).
+    offer.retail_label (default "Retail Price"), offer.price_label (default "Offer Price"),
+    offer.unit_label (default "Per unit"), offer.total_label (default "Total"),
+    offer.retail_shipping (default "+$4.95 SHIPPING", "" hides), offer.offer_shipping (default "+ FREE SHIPPING", "" hides).
+  next_dont_touch: data-next-display, data-next-format, data-next-show
+
+  bundle.* remote display often returns unformatted numbers — keep data-next-format="currency" / "percentage".
+  data-next-show does not support the bundle.* namespace, so bundle offers always show both rows (the tier
+  vouchers guarantee savings); single offers without a voucher gate the compare row on package.hasRetailPrice.
+{% endcomment %}
+{%- assign skip_price_rows = false -%}
+{%- if offer.heading_prices and offer.price_rows != true -%}{%- assign skip_price_rows = true -%}{%- endif -%}
+{%- unless skip_price_rows -%}
+{%- assign pricing_mode = pricing_mode | default: offer.pricing_mode | default: 'full_price' -%}
+{%- assign p_retail_shipping = offer.retail_shipping -%}{%- if p_retail_shipping == nil -%}{%- assign p_retail_shipping = '+$4.95 SHIPPING' -%}{%- endif -%}
+{%- assign p_offer_shipping = offer.offer_shipping -%}{%- if p_offer_shipping == nil -%}{%- assign p_offer_shipping = '+ FREE SHIPPING' -%}{%- endif -%}
+{%- if price_layout == 'inline' -%}
+<div class="prices-text-wrapper cc-start" data-pricing-mode="{{ pricing_mode }}">
+  {%- if pricing_mode == 'discounted' or pricing_mode == 'compare_at' %}
+  <div{% if price_is_scoped %} data-next-show="package.hasRetailPrice"{% endif %}>
+    <span class="text-3xl text-strike color-muted" data-next-display="{{ compare_path }}" data-next-format="currency">$19.99</span>
+  </div>
+  {%- endif %}
+  <div class="text-3xl tw-700">{{ offer.price_label | default: 'Yours Today' }} <span data-next-display="{{ price_path }}" data-next-format="currency">$9.99</span></div>
+</div>
+{%- else -%}
+<div class="prices-text-wrapper" data-pricing-mode="{{ pricing_mode }}">
+  {%- if pricing_mode == 'discounted' or pricing_mode == 'compare_at' %}
+  <div class="price-wrapper"{% if price_is_scoped %} data-next-show="package.hasRetailPrice"{% endif %}>
+    <div class="text-sm tw-600">{{ offer.retail_label | default: 'Retail Price' }}</div>
+    <div class="upsell-offer__price diagonal-strike color-muted" data-next-display="{{ compare_path }}" data-next-format="currency">$49.99</div>
+    {%- if p_retail_shipping != '' %}<div class="text-xs font-bold"><strike>{{ p_retail_shipping }}</strike></div>{% endif %}
+  </div>
+  <div class="upsell-offer__divider"></div>
+  {%- endif %}
+  {%- if pricing_mode == 'unit_total' or pricing_mode == 'unit_only' %}
+  <div class="price-wrapper">
+    <div class="text-sm tw-600">{{ offer.unit_label | default: 'Per unit' }}</div>
+    <div class="upsell-offer__price"><span data-next-display="{{ unit_price_path }}" data-next-format="currency">$24.95</span><span class="text-sm tw-600">/ea</span></div>
+  </div>
+  {%- endif %}
+  {%- if pricing_mode == 'unit_total' %}
+  <div class="upsell-offer__divider"></div>
+  {%- endif %}
+  {%- unless pricing_mode == 'unit_only' %}
+  <div class="price-wrapper">
+    <div class="upsell-offer__price-heading">
+      <div class="text-sm tw-600">{% if pricing_mode == 'unit_total' %}{{ offer.total_label | default: 'Total' }}{% else %}{{ offer.price_label | default: 'Offer Price' }}{% endif %}</div>
+      {%- if pricing_mode == 'discounted' %}
+      <div class="text-sm font-bold color-primary"{% if price_is_scoped %} data-next-show="package.hasSavings"{% endif %}>(<span data-next-display="{{ pct_path }}" data-next-format="percentage"></span> OFF)</div>
+      {%- endif %}
+    </div>
+    <div class="upsell-offer__price" data-next-display="{{ price_path }}" data-next-format="currency">$24.95</div>
+    {%- if p_offer_shipping != '' %}<div class="text-xs font-bold color-primary">{{ p_offer_shipping }}</div>{% endif %}
+  </div>
+  {%- endunless %}
+</div>
+{%- endif -%}
+{%- endunless -%}

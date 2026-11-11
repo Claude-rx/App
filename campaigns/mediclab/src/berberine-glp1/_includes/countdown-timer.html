@@ -1,0 +1,39 @@
+{%- comment -%}
+  countdown-timer.html — slim urgency bar + countdown (not the <promo-timer> web component). Two modes, chosen by data:
+
+  SDK mode (preferred) — set `duration` (seconds). Renders the SDK-native
+  data-next-timer: persisted in localStorage per `persistence_id`, so a reload
+  does not restart the clock. No page JS needed. Used on upsell pages.
+    countdown_timer: { text, highlight, duration: 1800, persistence_id: "upsell-single" }
+
+  Legacy mode — set `start` ("MM:SS"). The countdown span carries
+  data-next-element="timer" and is driven by the handler in checkout.js
+  (counts down from `start`, stops at 00:00, not persisted). Used on checkout.
+    countdown_timer: { text, highlight, start: "10:00" }
+
+  Renders nothing when countdown_timer is absent.
+    {% campaign_include 'countdown-timer.html' countdown_timer=countdown_timer %}
+{%- endcomment -%}
+{%- if countdown_timer -%}
+{%- if countdown_timer.duration -%}
+<div class="countdown-timer" data-next-timer data-duration="{{ countdown_timer.duration }}" data-persistence-id="{{ countdown_timer.persistence_id | default: 'countdown-timer' }}" data-format="mm:ss">
+  <div class="countdown-timer__inner">
+    <p class="countdown-timer__label">
+      <span class="countdown-timer__label-accent">{{ countdown_timer.text }}</span>
+      <span class="countdown-timer__label-strong">{{ countdown_timer.highlight }}</span>
+    </p>
+    <span class="countdown-timer__pill"><span data-next-timer-display>{{ countdown_timer.duration | divided_by: 60 | prepend: '00' | slice: -2, 2 }}:00</span></span>
+  </div>
+</div>
+{%- else -%}
+<div class="countdown-timer">
+  <div class="countdown-timer__inner">
+    <p class="countdown-timer__label">
+      <span class="countdown-timer__label-accent">{{ countdown_timer.text }}</span>
+      <span class="countdown-timer__label-strong">{{ countdown_timer.highlight }}</span>
+    </p>
+    <span class="countdown-timer__pill"><span data-next-element="timer">{{ countdown_timer.start }}</span></span>
+  </div>
+</div>
+{%- endif -%}
+{%- endif -%}

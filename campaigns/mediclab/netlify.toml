@@ -1,0 +1,8 @@
+# Netlify: base directory campaigns/mediclab; nothing else to set. Add the site's domain to the campaign's
+# Allowed Domains in the Campaigns App.
+[build]
+  command = "npm run build:static"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "22"

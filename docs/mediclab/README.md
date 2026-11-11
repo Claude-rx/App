@@ -24,17 +24,22 @@ npm run store:audit:mediclab               # refreshes STORE-READINESS.md + stor
 from the snapshot and never prints the token. Stores are registered in `tools/stores/stores.json`.
 Exit codes: `0` ready · `1` blockers · `2` cannot connect.
 
+## Funnel
+
+**[berberine-funnel.md](berberine-funnel.md)**: Berberine sales page → checkout → upsell → thank you, the offer, and the
+launch runbook. Product imported from mediclab.us (Next product #4).
+
 ## Where the store stands
 
-See **[STORE-READINESS.md](STORE-READINESS.md)** (generated). The store is brand new: only the demo product, no
-gateway, no campaign, no orders. Four blockers before a funnel can take an order:
+See **[STORE-READINESS.md](STORE-READINESS.md)** (generated). Berberine is imported (product #4); no gateway, no
+campaign and no orders yet. Blockers before the funnel can take an order:
 
 | # | Blocker | Who / where |
 |---|---|---|
-| 1 | **Products** — only `Example Product` (DEMO-SKU-123). Create the Mediclab SKUs (title, SKU, price, images, subscription intervals if any) | Admin API (`next-campaigns-create` can read them once they exist) or Dashboard |
+| 1 | ~~Products~~ — **done**: Berberine imported from mediclab.us (`tools/mediclab/import_berberine.py`) | — |
 | 2 | **Payment gateway** — none (only `bankcard` method listed). Add card processor; add PayPal / Apple Pay for express | Dashboard > Settings > Payments (not API) |
 | 3 | **Business address + support phone** — empty | Dashboard > Settings > General |
-| 4 | **Campaign** — none in the Campaigns App. Packages (Buy 1/2/3), offers, shipping, API key for the funnel | `next-campaigns-create` skill |
+| 4 | **Campaign** — planned and validated, waits on the gateway (runbook in [berberine-funnel.md](berberine-funnel.md)) | `tools/mediclab/campaign_plan.py` + `next-campaigns-create` |
 
 Then the funnel itself: scaffold with `next-campaigns-setup` (Campaign Page Kit, same stack as `campaigns/skinofab/`),
 build → polish → QA (`next-campaigns-build`, `-polish`, `-qa`), host standalone (Vercel/Netlify) and add the domain to

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>{{ title }}</title>
+  {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+  <meta name="theme-color" content="#0B2A1B">
+  {% campaign_include 'meta-social.html' %}
+  {% comment %} The sales page loads the SDK too: it records the visit's attribution (UTMs, click ids) on the
+       entry page, so the order placed two pages later carries it. {% endcomment %}
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://campaigns.apps.29next.com" crossorigin>
+  {% if next_url %}<link rel="prefetch" href="{{ next_url | campaign_link }}" as="document">{% endif %}
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&display=swap">
+  {% for style in styles %}<link rel="stylesheet" href="{{ style | campaign_asset }}">
+  {% endfor %}
+  <script src="{{ 'config.js' | campaign_asset }}"></script>
+  <meta name="next-funnel" content="{{ campaign.name }}">
+  <meta name="next-page-type" content="{{ page_type }}">
+  <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v{{ campaign.sdk_version }}/dist/loader.js" type="module"></script>
+  {% campaign_include 'analytics-head.html' %}
+  <link href="{{ 'images/favicon.png' | campaign_asset }}" rel="shortcut icon" type="image/png">
+  <link href="{{ 'images/webclip.png' | campaign_asset }}" rel="apple-touch-icon">
+</head>
+<body data-checkout="{{ 'checkout.html' | campaign_link }}">
+  {% campaign_include 'analytics-body.html' %}
+  {{ content }}
+</body>
+</html>

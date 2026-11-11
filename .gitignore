@@ -23,6 +23,8 @@ next-campaigns-create-runs/
 # the funnel's Page Kit project: installed packages and build output (tools/build_store.sh rebuilds _site/)
 campaigns/skinofab/node_modules/
 campaigns/skinofab/_site/
+campaigns/mediclab/_site/
+campaigns/mediclab/node_modules/
 
 # Agent workspace
 node_modules/
