@@ -4,7 +4,7 @@ window.nextReady = window.nextReady || [];
 
 window.nextConfig = {
   // Required: Your Campaign Cart API key
-  apiKey: "", // wire:api_key (public Campaign Cart key, written by tools/mediclab/wire_funnel.py)
+  apiKey: "nWepSkwHfnqysoU2k7WjtpJ8xaNir8nRjgvX9xcR", // wire:api_key (public Campaign Cart key, written by tools/mediclab/wire_funnel.py)
   
   // Currency behavior when country changes
   currencyBehavior: 'auto', // 'auto' | 'manual'

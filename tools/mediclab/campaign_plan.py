@@ -1,5 +1,5 @@
 """Build the MedicLab Berberine campaign plan: run the next-campaigns-create `recommend`, then shape it into the funnel's
-offer (copy deck section 05) before `plan` prints it for approval.
+offer (as on mediclab.us) before `plan` prints it for approval.
 
 usage: python3 -I tools/mediclab/campaign_plan.py [--discovery <discovery.json>] [--out <dir>]
 
@@ -8,7 +8,7 @@ Defaults: discovery next-campaigns-create-runs/mediclab/discovery.json, plan wri
 operator-approved step with the hash `plan` prints.
 
 The offer, from the copy deck:
-  plan-6   Monthly GLP-1 Support Plan   variant 6 (JTP4BERB-SUB)  $20.97 first bottle (50% off), then $42.97 every 30 days
+  plan-6   Monthly refill plan          variant 6 (JTP4BERB-SUB)  $20.97 first bottle (50% off), then $42.97 every 30 days
   hero-5   One bottle, one-time         variant 5 (JTP4BERB)      $52.97
   upsell   One more bottle, one-time    package hero-5 + voucher BERBERINE45 (45%, .97 rounding) = $29.97, post-purchase
 Shipping: the store's "default" method, free, US only. A campaign takes one package per variant, which is why the
@@ -34,7 +34,7 @@ def shape(plan):
     pk = {p['key']: p for p in plan['packages']}
     one, monthly = pk[f'hero-{ONE_TIME}'], pk[f'hero-{MONTHLY}']
     one['name'] = 'MedicLab Berberine - One Bottle'
-    monthly.update(key='plan-' + str(MONTHLY), name='MedicLab Berberine - Monthly GLP-1 Support Plan', price=FIRST,
+    monthly.update(key='plan-' + str(MONTHLY), name='MedicLab Berberine - Monthly Refill Plan', price=FIRST,
                    price_recurring=RECURRING, interval='day', interval_count=EVERY_DAYS)
     rows = []
     for r in plan['landed_prices']:
@@ -59,10 +59,18 @@ def shape(plan):
 
 def main():
     disc = arg('--discovery', ROOT / 'next-campaigns-create-runs' / 'mediclab' / 'discovery.json')
+    # the gateway group and its methods come from the live store (discovery), never assumed: the group must carry USD
+    groups = [g for g in json.loads(disc.read_text())['gateway_groups'] if 'USD' in (g.get('currencies') or [])]
+    if not groups:
+        sys.exit('no gateway group carries USD: add a payment gateway in Dashboard > Settings > Payments, then discover')
+    group = groups[0]
+    methods = ','.join(group['payment_methods'])
+    express = ','.join(group.get('express_payment_methods') or [])
     out = arg('--out', disc.parent)
     cmd = ['bash', str(SKILL), 'recommend', '--discovery', str(disc), '--hero', str(PRODUCT), '--ctc', 'high',
            '--anchor-price', ONE_BOTTLE, '--shipping', 'default:0.00', '--name', NAME, '--countries', 'US',
-           '--currency', 'USD', '--language', 'en', '--gateway-group', '1', '--payment-methods', 'bankcard',
+           '--currency', 'USD', '--language', 'en', '--gateway-group', str(group['id']), '--payment-methods', methods,
+           *(['--express-methods', express] if express else []),
            '--upsell', f'{ONE_TIME}:{ONE_BOTTLE}:{UPSELL_PCT}', '--exit', '0', '--rounding', '0.97',
            '--short-name', f'{PRODUCT}:BERBERINE', '--statement-descriptor', 'MEDICLAB', '--out', str(out)]
     r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)

@@ -1,0 +1,9 @@
+{
+  "campaign_id": 2475,
+  "packages": {
+    "plan": 2,
+    "one": 1
+  },
+  "shipping_method": 1,
+  "upsell_voucher": "BERBERINE45"
+}
