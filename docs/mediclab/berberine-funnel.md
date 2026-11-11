@@ -1,28 +1,34 @@
 # MedicLab Berberine funnel (Next Commerce)
 
-**Sales page → checkout → upsell (same product) → thank you**, served at **https://try.mediclab.us/glp1-support/**,
+**Sales page → checkout → upsell (same product) → thank you**, served at **https://try.mediclab.us/berberine/**,
 campaign only (Campaigns App cart, checkout and upsell; no storefront), in the mediclab.us brand.
 
-| Step | Page (`campaigns/mediclab/src/berberine-glp1/`) | What it does |
+**Positioning: healthy glucose metabolism, never GLP-1 or weight loss.** Berberine and the Natural GLP-1 weight-loss
+supplement are two different products with two funnels. The weight-loss / natural GLP-1 sales page, its copy deck and
+images are parked for funnel 2 in [natural-glp1/](natural-glp1/) (not built, not served). The gates fail the Berberine
+funnel on any GLP-1 or weight-loss wording.
+
+| Step | Page (`campaigns/mediclab/src/berberine/`) | What it does |
 |---|---|---|
-| 1 | `glp1-support.html` → `/berberine-glp1/glp1-support/` | The copy deck's 20 sections, verbatim (`copy-deck.md`, `persona-weight-segment.md`). Offer picker: Monthly plan (default) or One bottle; every CTA opens checkout with that card selected (`?forceBundleId=plan\|one`) |
+| 1 | `berberine.html` → `/berberine/` | 24 sections from the live mediclab.us Berberine product page (the Slow Door, the Open-Door Meal Routine, research cards with doses, pharmacist checklist, label math, comparison, guarantee, offer, honest no-reviews block, objections, FAQ). Copy source: `berberine/source-mediclab-us-pdp.txt`, `source-faq.json`; images are the PDP's own. Offer picker: Monthly plan (default) or One bottle; every CTA opens checkout with that card selected (`?forceBundleId=plan\|one`), keeping the visit's query string |
 | 2 | `berberine-checkout.html` | Two plan cards, details, shipping, payment, summary with refill frequency. Monthly plan terms + required consent checkbox next to the button (`js/ml-plan-consent.js`) |
 | 3 | `berberine-offer.html` | One more bottle, one-time, **$29.97** (45% off $52.97). One tap, no card re-entry. No timer, no ratings |
 | 4 | `berberine-thank-you.html` | Order receipt, what happens next (shipping, how to take it, refill reminder), the Empty-Bottle Promise |
 
-## The offer (copy deck section 05)
+## The offer (as on mediclab.us)
 
 | Card / line | Store variant | Campaign package | Price |
 |---|---|---|---|
-| Monthly GLP-1 Support Plan | `JTP4BERB-SUB` (id 6) | `plan-6`, recurring | **$20.97** first bottle, then **$42.97 every 30 days** |
+| Monthly refill plan | `JTP4BERB-SUB` (id 6) | `plan-6`, recurring | **$20.97** first bottle, then **$42.97 every 30 days** |
 | One bottle, one-time | `JTP4BERB` (id 5) | `hero-5` | **$52.97** |
 | Upsell: one more bottle | `JTP4BERB` (id 5) | `hero-5` + voucher `BERBERINE45` | **$29.97** |
 
 Free US shipping on everything (store method `default`, $0). A campaign takes one package per variant, so the monthly plan
 has its own variant; both variants ship the same bottle.
 
-The **3-month minimum** is a policy (stated on the sales page, at checkout and in the subscription terms). The platform
-does not enforce it; support does, on cancellation requests.
+The **3-month minimum** comes from the mediclab.us subscription terms (50% first-order refill plans: first order plus 2
+refills). It is stated on the sales page, at checkout and in the terms. The platform does not enforce it; support does,
+on cancellation requests.
 
 ## Product import (done)
 
@@ -37,7 +43,7 @@ Ids: `tools/mediclab/berberine-ids.json`.
 
 Fustat · forest green `#1D503A` pill buttons · deep green `#0B2A1B` header with the white logo · cream `#F5F1E8`
 sections · lime `#E3F6A4` CTA on dark sections · sale red `#C4301C` badge. The deck's Jost / `#1F3D2C` / orange were
-replaced to match the live store. `assets/css/sales.css` (sales page) and `assets/css/mediclab-funnel.css` (the rest).
+replaced to match the live store. `assets/css/sales.css` + `berberine.css` (sales page) and `assets/css/mediclab-funnel.css` (the rest).
 
 ## Launch runbook
 
@@ -68,7 +74,7 @@ currency and the Campaigns App refuses a campaign on it.
    ```
    Each funnel page is a standalone template in theme #1 (`mediclab-theme/`): no storefront layout, cart, checkout or
    scripts, only the Campaign Cart SDK. Every other storefront route (home, catalogue, cart, search, 404, other pages)
-   goes to the sales page with its query string kept (UTMs, click ids). Store pages `glp1-support`,
+   goes to the sales page with its query string kept (UTMs, click ids). Store pages `berberine`,
    `berberine-checkout`, `berberine-offer`, `berberine-thank-you` render them (`FUNNEL=mediclab tools/funnel/store_pages.py`).
    Then: **Dashboard > Storefront > Themes > publish "MedicLab Funnels"**, and add `try.mediclab.us` to the campaign's
    **Allowed Domains** (Campaigns App > campaign > Settings).
@@ -83,8 +89,9 @@ cd campaigns/mediclab && npm run build:static && npm test   # build + funnel gat
 ```
 
 The gates (`tools/mediclab/check_funnel.py`, also in CI) fail on starter demo content (demo API key, fake review counts,
-placeholder copy), Shopify cart links, missing FDA disclaimer, a missing copy-deck section, the upsell code on checkout,
-undisclosed plan terms or a missing consent box, and a countdown on the upsell.
+placeholder copy), Shopify cart links, missing FDA disclaimer, GLP-1 or weight-loss wording, missing honesty lines
+(staged-models note, no-reviews block, medicine FAQ, the 73 mg math), a radio group with two pre-checked inputs, the upsell
+code on checkout, undisclosed plan terms or a missing consent box, and a countdown on the upsell.
 
 ## Not done, on purpose
 
@@ -92,5 +99,6 @@ undisclosed plan terms or a missing consent box, and a countdown on the upsell.
   method in Dashboard > Settings > Shipping, then put it back on the campaign and the FAQ.
 - **Apple Pay / Google Pay / PayPal**: shown automatically once the gateway offers them.
 - **Analytics (GTM, Meta, AppLovin)**: keys are empty in `_data/campaigns.json`; the adapters ship with the template.
-- **Reviews**: the deck's six are labelled example reviews; replace with verified buyer reviews after 30 to 60 days.
-- **Clinician photo**: a model, disclosed on the page; replace with a consenting, named professional.
+- **Reviews**: none yet, and the page says so (as mediclab.us does); add verified buyer reviews as they arrive.
+- **Old address**: `/glp1-support/` (the first build) now goes to `/berberine/`; its store page record can be deleted in
+  the Dashboard.

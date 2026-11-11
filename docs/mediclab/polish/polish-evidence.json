@@ -3,8 +3,8 @@
   "evidence": {
     "visual_review": {
       "screenshots": [
-        "docs/mediclab/polish/d-glp1-support.jpg",
-        "docs/mediclab/polish/m-glp1-support.jpg",
+        "docs/mediclab/polish/d-berberine.jpg",
+        "docs/mediclab/polish/m-berberine.jpg",
         "docs/mediclab/polish/d-berberine-checkout.jpg",
         "docs/mediclab/polish/m-berberine-checkout.jpg",
         "docs/mediclab/polish/d-berberine-offer.jpg",
@@ -12,12 +12,18 @@
         "docs/mediclab/polish/d-berberine-thank-you.jpg",
         "docs/mediclab/polish/m-berberine-thank-you.jpg"
       ],
-      "viewports": ["1280x900", "390x900"],
+      "viewports": [
+        "1280x900",
+        "390x900"
+      ],
       "result": "4 pages x 2 viewports: no horizontal scroll, no broken images, no console errors, Fustat on every page; served live on try.mediclab.us (theme 1 preview) with the same build",
       "note": "page_load is produced by `campaigns-os polish capture`, which needs the Build Packet; run it once the campaign exists"
     },
     "brand_review": {
-      "favicon": { "status": "confirmed_non_template", "note": "MedicLab mark cut from the mediclab.us logo, images/ml/mediclab-favicon.png and mediclab-webclip.png" },
+      "favicon": {
+        "status": "confirmed_non_template",
+        "note": "MedicLab mark cut from the mediclab.us logo, images/ml/mediclab-favicon.png and mediclab-webclip.png"
+      },
       "brand_bleed": {
         "cleared": true,
         "promo_codes": "none",
@@ -36,20 +42,34 @@
       "pending_live_sdk": "card field centering, express wallet mount and selected/deselected interaction need the campaign api key (SDK hydration)"
     },
     "template_residue_review": {
-      "starter_favicon": { "status": "confirmed_non_template" },
+      "starter_favicon": {
+        "status": "confirmed_non_template"
+      },
       "copy_residue": "none: starter 'Package Title' fallback replaced by the copy-deck plan names; no lorem, Product Name, Your headline, TODO or [VERIFY] on any page",
-      "sales_copy_parity": "visible text equals the source sales page word for word (ratio 0.9995); the one removal is the FAQ's 'Express is $5.97.', the store has no express method",
+      "sales_copy_parity": "Berberine sales page copy comes from the live mediclab.us product page (docs/mediclab/berberine/); no GLP-1 or weight-loss wording (gated)",
       "gate": "tools/mediclab/check_funnel.py fails the build on any of these strings"
     },
-    "commerce_flow_review": "glp1-support CTAs -> /berberine-checkout/?forceBundleId=plan|one (both offer blocks in sync) -> success /berberine-offer/ -> accept and decline /berberine-thank-you/. Upsell: hero-5 package + BERBERINE45 voucher ($29.97), no countdown, no ratings. Receipt binds order.*. Storefront routes go to the sales page with the query string.",
+    "commerce_flow_review": "berberine CTAs -> /berberine-checkout/?forceBundleId=plan|one (both offer blocks in sync) -> success /berberine-offer/ -> accept and decline /berberine-thank-you/. Upsell: hero-5 package + BERBERINE45 voucher ($29.97), no countdown, no ratings. Receipt binds order.*. Storefront routes go to the sales page with the query string.",
     "issues": [
-      { "code": "campaign.missing", "message": "The campaign cannot be created: the store has no payment gateway (gateway group 1 lists no currency). Live SDK checks (prices, card fields, wallets, selector interaction) wait on it." }
+      {
+        "code": "campaign.missing",
+        "message": "The campaign cannot be created: the store has no payment gateway (gateway group 1 lists no currency). Live SDK checks (prices, card fields, wallets, selector interaction) wait on it."
+      },
+      {
+        "code": "fixed.radio_group",
+        "message": "Both offer blocks shared one radio group, so the top offer loaded unselected; fixed with one group per block, gated."
+      },
+      {
+        "code": "fixed.image_stretch",
+        "message": "Images with width/height attributes rendered at the attribute height (stretched); fixed with img{height:auto}, verified on 390 and 1280."
+      }
     ],
     "commands": [
       "python3 -I tools/mediclab/check_funnel.py",
-      "node qa.cjs (Playwright: 4 pages x 1280/390, fonts, overflow, broken images, console errors)",
-      "residue + brand-bleed scan of _site/berberine-glp1 (python)",
-      "sales copy parity diff against the uploaded index.html (python difflib)",
+      "node qa.cjs (Playwright: 4 pages x 1280/390, lazy images forced, fonts, overflow, broken visible images, console errors)",
+      "node imgratio.cjs (every visible sales image at its natural aspect ratio, 390 and 1280)",
+      "node radio.cjs (offer radios pre-selected, both blocks in sync, CTAs carry forceBundleId and the query string)",
+      "residue + brand-bleed + GLP-1/weight-loss claim scan of _site/berberine (python)",
       "curl -I cdn.cachebucket.com og image"
     ]
   }

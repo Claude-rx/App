@@ -1,4 +1,4 @@
-"""Gates for the built MedicLab Berberine funnel (campaigns/mediclab/_site/berberine-glp1/). Run after the Page Kit
+"""Gates for the built MedicLab Berberine funnel (campaigns/mediclab/_site/berberine/). Run after the Page Kit
 build; exits 1 on any failure. --live additionally requires the pages to be wired to a campaign (a real apiKey).
 
 usage: python3 -I tools/mediclab/check_funnel.py [--live]
@@ -7,8 +7,8 @@ import re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SITE = ROOT / 'campaigns' / 'mediclab' / '_site' / 'berberine-glp1'
-PAGES = ['glp1-support', 'berberine-checkout', 'berberine-offer', 'berberine-thank-you']
+SITE = ROOT / 'campaigns' / 'mediclab' / '_site' / 'berberine'
+PAGES = ['berberine', 'berberine-checkout', 'berberine-offer', 'berberine-thank-you']
 FDA = 'These statements have not been evaluated by the Food and Drug Administration'
 DEMO = ['LLbBgtusfE2zopDcjnOY9NbrlN690zSjuedqQ04J', 'demo.29next.com', 'TRUSTED BY 180,000', '19,569', 'Lorem ipsum',
         'Daniel K.', 'XXCODE', 'EXIT10', 'placehold.co', 'next-dark.svg', 'Product Name', 'Extended Warranty',
@@ -39,19 +39,36 @@ for name, h in html.items():
     check('{{' not in h and '{%' not in h, f'{name}: unrendered Liquid')
 
 # FDA disclaimer wherever a claim is made (sales page, checkout, upsell)
-for name in ('glp1-support', 'berberine-checkout', 'berberine-offer'):
+for name in ('berberine', 'berberine-checkout', 'berberine-offer'):
     check(FDA in html[name], f'{name}: FDA disclaimer missing')
 
-s = html['glp1-support']
-check(len(re.findall(r'id="s(0[1-9]|1\d|20)"', s)) == 20, 'sales page: not all 20 copy-deck sections present')
+# Berberine is sold for healthy glucose metabolism only: no GLP-1 and no weight-loss claims anywhere in this funnel
+# (the store's own FAQ answer, "Will it help me lose weight? We do not make that claim.", is the one allowed mention)
+CLAIMS = re.compile(r'glp-?1|semaglutide|tirzepatide|ozempic|wegovy|weight[- ]loss plan|stubborn weight|lose weight|'
+                    r'fat burn|appetite|cravings|natural ozempic', re.I)
+ALLOWED = ('Will it help me lose weight?', 'we will not sell it as a weight-loss product')
+for name, h in html.items():
+    t = text(h)
+    for a in ALLOWED:
+        t = t.replace(a, '')
+    t = re.sub(r'We do not make that claim\..{0,200}?weight-loss product\.', '', t, flags=re.S)
+    found = sorted({m.group(0).lower() for m in CLAIMS.finditer(t)})
+    check(not found, f'{name}: GLP-1 / weight-loss wording on the Berberine funnel: {found}')
+
+s = html['berberine']
+check(len(re.findall(r'<section id="s\d{2}"', s)) >= 20, 'sales page: sections missing (expected 20+)')
+check('Supports healthy glucose metabolism*' in s, 'sales page: the glucose metabolism claim (with its asterisk) is missing')
 check('Express is $5.97' not in s, 'sales page: promises express shipping the store does not sell')
-check(s.count('data-cta') >= 3, 'sales page: CTAs missing')
+check(s.count('data-cta') >= 6, 'sales page: CTAs missing')
 for m in re.findall(r'<a[^>]+data-cta[^>]*>', s):
     check('/berberine-checkout/' in m and 'forceBundleId=plan' in m, f'sales page: CTA not pointing at the checkout plan card: {m[:120]}')
 check('value="plan" checked' in s, 'sales page: monthly plan is not the default offer')
-for label in ('Example review', 'Model portrayal'):
-    check(label in s, f'sales page: compliance label "{label}" missing')
-check('not a GLP-1 medication' in s or 'Is this a GLP-1 medication?' in s, 'sales page: GLP-1 medication FAQ missing')
+from collections import Counter
+dup = [n for n, k in Counter(re.findall(r'<input[^>]*name="([^"]+)"[^>]*checked', s)).items() if k > 1]
+check(not dup, f'sales page: radio group(s) {dup} pre-check more than one input (the browser keeps only the last)')
+for label in ('Staged with models', 'No reviews here yet', 'not a medical endorsement'.capitalize(), '3-month minimum',
+              'Is it safe with my medication?', 'About 73 mg'):
+    check(label.lower() in s.lower(), f'sales page: compliance / honesty line "{label}" missing')
 
 c = html['berberine-checkout']
 check('data-next-bundle-id="plan"' in c and 'data-next-bundle-id="one"' in c, 'checkout: plan / one cards missing')
@@ -74,7 +91,7 @@ t = html['berberine-thank-you']
 check('What happens next' in t, 'thank-you: next-steps block missing')
 check('every 30 days' in t, 'thank-you: refill reminder missing')
 
-cfg = (SITE.parent / 'berberine-glp1').glob('**/config.js')
+cfg = SITE.glob('**/config.js')
 cfg_text = ''.join(p.read_text() for p in cfg)
 if '--live' in sys.argv:
     check(re.search(r'apiKey:\s*"[A-Za-z0-9]{20,}"', cfg_text) is not None, 'config.js: not wired to a campaign (apiKey empty)')

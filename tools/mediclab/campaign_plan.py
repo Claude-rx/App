@@ -22,7 +22,7 @@ SKILL = ROOT / '.claude' / 'skills' / 'next-campaigns-create' / 'next-campaigns-
 IDS = json.loads((ROOT / 'tools' / 'mediclab' / 'berberine-ids.json').read_text())
 PRODUCT = IDS['product_id']
 ONE_TIME, MONTHLY = IDS['variants']['JTP4BERB'], IDS['variants']['JTP4BERB-SUB']
-NAME = 'MedicLab Berberine GLP-1 Support Funnel'
+NAME = 'MedicLab Berberine Funnel'
 FIRST, RECURRING, EVERY_DAYS, ONE_BOTTLE, UPSELL_PCT = '20.97', '42.97', 30, '52.97', 45
 
 

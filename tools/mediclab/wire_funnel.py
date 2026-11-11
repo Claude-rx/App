@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CAMP = ROOT / 'campaigns' / 'mediclab'
-SRC = CAMP / 'src' / 'berberine-glp1'
+SRC = CAMP / 'src' / 'berberine'
 FILES = [SRC / 'berberine-checkout.html', SRC / 'berberine-offer.html', SRC / 'assets' / 'config.js']
 IDS = json.loads((ROOT / 'tools' / 'mediclab' / 'berberine-ids.json').read_text())
 

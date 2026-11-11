@@ -7,17 +7,7 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/berberine-glp1/glp1-support/",
-      "permanent": false
-    },
-    {
-      "source": "/berberine",
-      "destination": "/berberine-glp1/glp1-support/",
-      "permanent": false
-    },
-    {
-      "source": "/glp1",
-      "destination": "/berberine-glp1/glp1-support/",
+      "destination": "/berberine/berberine/",
       "permanent": false
     }
   ],

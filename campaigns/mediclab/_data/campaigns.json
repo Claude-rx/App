@@ -1,8 +1,8 @@
 {
-  "berberine-glp1": {
-    "name": "MedicLab Berberine GLP-1 Support",
-    "description": "MedicLab Berberine, natural GLP-1 support for adults 40+: two capsules with meals, protein first, a 10-minute walk after dinner. First bottle $20.97 on the monthly plan. 60-day empty-bottle guarantee.",
-    "entry_url": "glp1-support",
+  "berberine": {
+    "name": "MedicLab Berberine",
+    "description": "MedicLab Berberine: two capsules with meals and a few minutes of walking after you eat, a daily routine that supports healthy glucose metabolism.* 800 mg extract, about 73 mg berberine per serving, the math printed. First bottle $20.97 on the monthly refill plan. 60-day empty-bottle guarantee.",
+    "entry_url": "berberine",
     "sdk_version": "0.4.43",
     "store_name": "MedicLab",
     "store_url": "https://mediclab.us",

@@ -1,9 +1,9 @@
-"""Turn the MedicLab Berberine sales page (copy-deck render: index.html + img/ from the uploaded zip) into the funnel's
+"""PARKED for funnel 2 (Natural GLP-1 weight loss), not built or served. Turn the natural GLP-1 sales page (copy-deck render: index.html + img/ from the uploaded zip) into the funnel's
 Campaign Page Kit sales page, in the mediclab.us brand.
 
 usage: python3 -I tools/mediclab/build_sales_page.py <unzipped sales-page dir>
 
-Writes into campaigns/mediclab/src/berberine-glp1/:
+Writes into docs/mediclab/natural-glp1/page-kit/ (parked for funnel 2):
   glp1-support.html            the page (frontmatter + the deck's 20 sections, verbatim copy)
   assets/css/sales.css         the page's own CSS with the brand tokens of mediclab.us
   assets/images/ml/*           the page images (copied as delivered)
@@ -25,7 +25,7 @@ import re, shutil, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CAMP = ROOT / 'campaigns' / 'mediclab' / 'src' / 'berberine-glp1'
+CAMP = ROOT / 'docs' / 'mediclab' / 'natural-glp1' / 'page-kit'   # parked: Berberine is not a GLP-1 product
 SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else sys.exit(__doc__)
 
 BRAND = {  # deck token -> mediclab.us
@@ -135,8 +135,8 @@ def main():
              '---\n')
     page = front + body.replace('<body>', '') + SYNC_JS + '\n'
     page = page.replace('<main id="top">', '<main id="top">', 1)
-    (CAMP / 'glp1-support.html').write_text(page)
-    print('wrote', CAMP / 'glp1-support.html', len(page), 'bytes;', len(list(img_dir.iterdir())), 'images')
+    (CAMP / 'sales-page.page-kit.html').write_text(page)
+    print('wrote', CAMP / 'sales-page.page-kit.html', len(page), 'bytes;', len(list(img_dir.iterdir())), 'images')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,39 @@
+/* MedicLab Berberine sales page components (on top of sales.css: same tokens, mediclab.us brand) */
+/* images carry width/height attributes (no layout shift); the height follows the width, never the attribute */
+img{height:auto}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin:0 0 .6em}
+.tone-dark .kicker{color:#e3f6a4}
+.sec .wrap.wide{max-width:1080px}
+.small-note{font-size:14px;color:var(--muted)}
+.tone-dark .small-note,.tone-dark .cta-note{color:#c9d9cf}
+.cta-note{font-size:14px;color:var(--muted);text-align:center;margin-top:-4px}
+.cta-note a{color:inherit}
+.media-narrow{max-width:420px;margin-inline:auto}
+.steps li>div{flex:1}
+/* cards */
+.cards,.studies,.ingredients{display:grid;gap:14px;margin:12px 0 18px}
+.card,.study,.ingredient{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.tone-plain .card,.tone-plain .study,.tone-plain .ingredient{background:#fbfaf7}
+.card h3,.ingredient h3{font-size:18px;margin-top:0}
+.study .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--accent-tint);color:var(--primary);border-radius:999px;padding:3px 10px;margin:0 0 8px}
+.study .big,.ingredient .big{font-size:30px;font-weight:800;line-height:1.1;color:var(--primary);margin:0 0 6px}
+.study .cite{font-size:14px;font-weight:600;margin:0 0 6px}
+.study .dose{font-size:13.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin:0}
+/* reasons */
+.reasons{display:grid;gap:16px;margin:14px 0 18px}
+.reason{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start;background:#fbfaf7;border:1px solid var(--line);border-radius:18px;padding:14px}
+.reason img{width:96px;height:96px;object-fit:cover;border-radius:12px}
+.reason h3{margin:0 0 .3em;font-size:18px}
+.reason .kicker{margin-bottom:.2em}
+/* before / after */
+.ba img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;margin-bottom:12px}
+.timeline{list-style:none;padding:0;margin:16px 0;display:grid;gap:10px}
+.timeline li{background:var(--bg);border-inline-start:4px solid var(--primary);border-radius:10px;padding:12px 14px}
+@media (min-width:860px){
+ .cards{grid-template-columns:1fr 1fr}
+ .studies{grid-template-columns:repeat(3,1fr)}
+ .ingredients{grid-template-columns:repeat(3,1fr)}
+ .reasons{grid-template-columns:1fr 1fr}
+ .reason{grid-template-columns:140px 1fr}
+ .reason img{width:140px;height:140px}
+}
