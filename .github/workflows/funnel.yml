@@ -41,6 +41,8 @@ jobs:
           python3 -I tools/funnel/trial/check_trial.py
       - name: MedicLab funnel unit tests (campaign plan shaping, page wiring)
         run: python3 -I tools/mediclab/test_wire_funnel.py
+      - name: MedicLab import tests (exact Shopify SKU)
+        run: python3 -I tools/mediclab/test_import_berberine.py
       - name: Build the MedicLab funnel (Campaign Page Kit)
         working-directory: campaigns/mediclab
         run: |

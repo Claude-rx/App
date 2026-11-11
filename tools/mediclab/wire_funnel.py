@@ -24,8 +24,8 @@ IDS = json.loads((ROOT / 'tools' / 'mediclab' / 'berberine-ids.json').read_text(
 
 
 def values(manifest):
-    one_key = f"hero-{IDS['variants']['JTP4BERB']}"
-    plan_key = f"plan-{IDS['variants']['JTP4BERB-SUB']}"
+    one_key = f"hero-{IDS['variants']['one_time']}"
+    plan_key = f"plan-{IDS['variants']['monthly']}"
     pk = {p['key']: p for p in manifest['packages']}
     missing = [k for k in (one_key, plan_key) if not (pk.get(k) or {}).get('id')]
     if missing:

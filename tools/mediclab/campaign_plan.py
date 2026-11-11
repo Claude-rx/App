@@ -8,7 +8,7 @@ Defaults: discovery next-campaigns-create-runs/mediclab/discovery.json, plan wri
 operator-approved step with the hash `plan` prints.
 
 The offer, from the copy deck:
-  plan-6   Monthly refill plan          variant 6 (JTP4BERB-SUB)  $20.97 first bottle (50% off), then $42.97 every 30 days
+  plan-6   Monthly refill plan          variant 6 (JTP4BERB)      $20.97 first bottle (50% off), then $42.97 every 30 days
   hero-5   One bottle, one-time         variant 5 (JTP4BERB)      $52.97
   upsell   One more bottle, one-time    package hero-5 + voucher BERBERINE45 (45%, .97 rounding) = $29.97, post-purchase
 Shipping: the store's "default" method, free, US only. A campaign takes one package per variant, which is why the
@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SKILL = ROOT / '.claude' / 'skills' / 'next-campaigns-create' / 'next-campaigns-create.sh'
 IDS = json.loads((ROOT / 'tools' / 'mediclab' / 'berberine-ids.json').read_text())
 PRODUCT = IDS['product_id']
-ONE_TIME, MONTHLY = IDS['variants']['JTP4BERB'], IDS['variants']['JTP4BERB-SUB']
+ONE_TIME, MONTHLY = IDS['variants']['one_time'], IDS['variants']['monthly']
 NAME = 'MedicLab Berberine Funnel'
 FIRST, RECURRING, EVERY_DAYS, ONE_BOTTLE, UPSELL_PCT = '20.97', '42.97', 30, '52.97', 45
 
@@ -50,7 +50,7 @@ def shape(plan):
             o['name'] = 'One more bottle at $29.97'
     plan['rationale'].append(
         f'Monthly plan: package {monthly["key"]} is recurring, ${FIRST} on the first order (50% off ${ONE_BOTTLE}), then '
-        f'${RECURRING} every {EVERY_DAYS} days (copy deck 05). Its own variant JTP4BERB-SUB, because a campaign takes '
+        f'${RECURRING} every {EVERY_DAYS} days (copy deck 05). Its own variant (same SKU JTP4BERB), because a campaign takes '
         f'one package per variant and the one-time bottle is ${ONE_BOTTLE}.')
     plan['handoff'].append('The 3-month minimum on the monthly plan is a policy in the subscription terms; the platform '
                            'does not enforce it. Support enforces it on cancellation requests.')

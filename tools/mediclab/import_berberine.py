@@ -1,5 +1,6 @@
 """Import MedicLab Berberine from the Mediclab Shopify store (mediclab.us) into the Next Commerce store
-(mediclab.29next.store). Idempotent: finds the product by slug and the variants by SKU, creates only what is missing.
+(mediclab.29next.store), and keep it in sync. Idempotent: finds the product by the Shopify SKU, finds each variant by
+its "Purchase" option, creates what is missing and corrects what drifted (title, description, SKU, price).
 
 usage: MEDICLAB_ADMIN_TOKEN=... python3 -I tools/mediclab/import_berberine.py [--dry-run]
 
@@ -7,10 +8,10 @@ Source of truth is the public Shopify product JSON (https://mediclab.us/products
 SKU, price, weight and the 8 gallery images (downloaded from cdn.shopify.com and uploaded base64).
 
 A Next campaign takes one package per store variant, and the funnel sells the same bottle two ways, so the product
-carries two variants with the attribute "Purchase":
-  JTP4BERB      "One-time purchase"     $52.97   (the Shopify variant; the one-bottle offer and the upsell)
-  JTP4BERB-SUB  "Monthly refill plan"   $52.97   (the campaign package prices it $20.97 first, $42.97 every 30 days)
-Both ship the same bottle; the warehouse packs JTP4BERB for either.
+carries two variants with the attribute "Purchase", both with the exact Shopify SKU (what the warehouse ships):
+  one_time  "One-time purchase"     JTP4BERB  $52.97   (the one-bottle offer and the upsell)
+  monthly   "Monthly refill plan"   JTP4BERB  $52.97   (the campaign package prices it $20.97 first, $42.97 every 30 days)
+Variants are told apart by their option, never by SKU (the SKU is the same on purpose).
 Writes tools/mediclab/berberine-ids.json (product and variant ids for the campaign plan). The token is never printed.
 """
 import base64, json, os, sys, time, urllib.error, urllib.request
@@ -26,9 +27,10 @@ HDR = {'Authorization': 'Bearer ' + TOKEN, 'X-29next-API-Version': '2024-04-01',
        'Content-Type': 'application/json', 'Accept': 'application/json', 'User-Agent': 'mediclab-import/1'}
 SLUG = 'berberine'
 ATTR = 'Purchase'
+SKU = 'JTP4BERB'   # the Shopify variant SKU; asserted against mediclab.us on every run
 VARIANTS = [
-    {'sku': 'JTP4BERB', 'value': 'One-time purchase', 'price': '52.97'},
-    {'sku': 'JTP4BERB-SUB', 'value': 'Monthly refill plan', 'price': '52.97'},
+    {'role': 'one_time', 'value': 'One-time purchase'},
+    {'role': 'monthly', 'value': 'Monthly refill plan'},
 ]
 
 
@@ -54,6 +56,11 @@ def fetch(url):
         return r.read()
 
 
+def opt(variant):
+    """The variant's "Purchase" option value: how the two same-SKU variants are told apart."""
+    return next((a['value'] for a in variant.get('variant_attribute_values', []) if a.get('name') == ATTR), None)
+
+
 def variant_body(v):
     return {'sku': v['sku'], 'variant_attribute_values': [{'name': ATTR, 'value': v['value']}],
             'prices': [{'currency': 'USD', 'price': v['price']}],
@@ -66,17 +73,19 @@ def main():
         sys.exit('MEDICLAB_ADMIN_TOKEN is not set')
     src = json.loads(fetch(SHOPIFY))['product']
     sv = src['variants'][0]
-    assert sv['sku'] == 'JTP4BERB' and sv['price'] == '52.97', (sv['sku'], sv['price'])
+    assert len(src['variants']) == 1 and sv['sku'] == SKU, ('Shopify SKU changed', [v['sku'] for v in src['variants']])
+    for v in VARIANTS:
+        v.update(sku=sv['sku'], price=sv['price'])
     fields = {'title': src['title'], 'slug': SLUG, 'description': src['body_html'], 'is_public': True,
               'enable_subscription': True, 'interval': 'day', 'interval_counts': [30],
               'meta_title': 'MedicLab Berberine, 800 mg Extract, 60 Capsules',
-              'meta_description': 'Berberine for healthy glucose metabolism. 800 mg extract per serving, 60 capsules. '
-                                  'Made in the USA. 60-day empty-bottle guarantee.',
+              'meta_description': 'Berberine, 800 mg extract per serving, 60 capsules. Made in the USA. '
+                                  '60-day empty-bottle guarantee.',
               'variant_attributes': [{'name': ATTR, 'values': [v['value'] for v in VARIANTS]}]}
     # Next re-slugs a product from its title, so the import finds its product by SKU, never by slug; a public product
     # wins over an unpublished one (product 7, a duplicate from the first re-run, is unpublished pending deletion)
     mine = [p for p in call('GET', 'products/?limit=100')['results']
-            if any(v.get('sku') == 'JTP4BERB' for v in p.get('variants', []))]
+            if any(v.get('sku') == SKU for v in p.get('variants', []))]
     found = next((p for p in mine if p.get('is_public')), mine[0] if mine else None)
     if found:
         pk = found['id']
@@ -87,11 +96,27 @@ def main():
         pk = call('POST', 'products/', {**fields, 'variants': [variant_body(v) for v in VARIANTS]})['id']
         print('created product', pk)
     prod = call('GET', f'products/{pk}/')
-    have = {v['sku'] for v in prod['variants']}
+    # product fields follow Shopify (title and description change there, e.g. the Weight Management relaunch)
+    drift = {k: fields[k] for k in ('title', 'description', 'meta_title', 'meta_description')
+             if (prod.get(k) or '') != fields[k]}
+    if drift:
+        print(('would update' if DRY else 'updated'), 'product fields:', sorted(drift))
+        if not DRY:
+            call('PATCH', f'products/{pk}/', drift)
+    by_opt = {opt(v): v for v in prod['variants']}
     for v in VARIANTS:
-        if v['sku'] in have: continue
-        if DRY: print('would create variant', v['sku']); continue
-        call('POST', f'products/{pk}/variants/', variant_body(v)); print('created variant', v['sku'])
+        cur = by_opt.get(v['value'])
+        if not cur:
+            if DRY: print('would create variant', v['role'], v['sku']); continue
+            call('POST', f'products/{pk}/variants/', variant_body(v)); print('created variant', v['role'], v['sku'])
+            continue
+        price = next((p['price'] for p in cur.get('prices', []) if p.get('currency') == 'USD'), None)
+        fix = {**({'sku': v['sku']} if cur.get('sku') != v['sku'] else {}),
+               **({'price': v['price']} if price != v['price'] else {})}
+        if fix:
+            print(('would update' if DRY else 'updated'), 'variant', cur['id'], v['role'], fix)
+            if not DRY:
+                call('PATCH', f'products/variants/{cur["id"]}/', fix)
     prod = call('GET', f'products/{pk}/')
     if not prod.get('images') and not DRY:
         for order, img in enumerate(src['images'][:10]):
@@ -101,9 +126,14 @@ def main():
                                                      'display_order': order, 'caption': img.get('alt') or src['title']})
             print('uploaded image', order, name)
         prod = call('GET', f'products/{pk}/')
-    by_sku = {v['sku']: v for v in prod['variants']}
-    ids = {'product_id': pk, 'title': prod['title'],
-           'variants': {s: by_sku[s]['id'] for s in (v['sku'] for v in VARIANTS)},
+    prod = call('GET', f'products/{pk}/')
+    by_opt = {opt(v): v for v in prod['variants']}
+    if DRY and any(v['value'] not in by_opt for v in VARIANTS):
+        return
+    bad = [(by_opt[v['value']]['id'], by_opt[v['value']].get('sku')) for v in VARIANTS if by_opt[v['value']].get('sku') != SKU]
+    assert DRY or not bad, ('variant SKU not synced', bad)
+    ids = {'product_id': pk, 'title': prod['title'], 'sku': SKU,
+           'variants': {v['role']: by_opt[v['value']]['id'] for v in VARIANTS},
            'images': [i.get('attachment') for i in prod.get('images', [])]}
     (HERE / 'berberine-ids.json').write_text(json.dumps(ids, indent=2) + '\n')
     print(json.dumps(ids, indent=2))

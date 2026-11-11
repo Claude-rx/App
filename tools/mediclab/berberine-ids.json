@@ -1,9 +1,10 @@
 {
   "product_id": 4,
-  "title": "Berberine for Healthy Glucose Metabolism, 800 mg Extract, 60 Capsules",
+  "title": "Berberine for Weight Management, 800 mg Extract, 60 Capsules",
+  "sku": "JTP4BERB",
   "variants": {
-    "JTP4BERB": 5,
-    "JTP4BERB-SUB": 6
+    "one_time": 5,
+    "monthly": 6
   },
   "images": [
     "https://cdn.29next.store/media/mediclab/images/products/2026/11/wm-01-mlx3-berberine-with-product.jpg",

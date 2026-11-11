@@ -28,12 +28,13 @@ so the store and the weight page agree.
 
 | Card / line | Store variant | Campaign package | Price |
 |---|---|---|---|
-| Monthly refill plan | `JTP4BERB-SUB` (id 6) | `plan-6`, recurring | **$20.97** first bottle, then **$42.97 every 30 days** |
-| One bottle, one-time | `JTP4BERB` (id 5) | `hero-5` | **$52.97** |
+| Monthly refill plan | `JTP4BERB` (id 6, option "Monthly refill plan") | `plan-6`, recurring | **$20.97** first bottle, then **$42.97 every 30 days** |
+| One bottle, one-time | `JTP4BERB` (id 5, option "One-time purchase") | `hero-5` | **$52.97** |
 | Upsell: one more bottle | `JTP4BERB` (id 5) | `hero-5` + voucher `BERBERINE45` | **$29.97** |
 
 Free US shipping on everything (store method `default`, $0). A campaign takes one package per variant, so the monthly plan
-has its own variant; both variants ship the same bottle.
+has its own variant. **Both variants carry the exact Shopify SKU `JTP4BERB`** (what the warehouse ships); the import
+tells them apart by their "Purchase" option, never by SKU.
 
 The **3-month minimum** comes from the mediclab.us subscription terms (50% first-order refill plans: first order plus 2
 refills). It is stated on the sales page, at checkout and in the terms. The platform does not enforce it; support does,
@@ -41,8 +42,10 @@ on cancellation requests.
 
 ## Product import (done)
 
-`tools/mediclab/import_berberine.py` copied Berberine from mediclab.us (Shopify product 7806645436625): title, full
-description, SKU `JTP4BERB`, $52.97, 8 gallery images. Next product **#4**. Idempotent (finds the product by SKU).
+`tools/mediclab/import_berberine.py` copies Berberine from mediclab.us (Shopify product 7806645436625) and keeps it in
+sync: title, full description, SKU `JTP4BERB`, $52.97. Next product **#4** ("Berberine for Weight Management, 800 mg
+Extract, 60 Capsules", as on Shopify). Idempotent: re-run it after any Shopify change; it corrects drift in title,
+description, SKU and price, and fails if the Shopify SKU itself changes.
 Ids: `tools/mediclab/berberine-ids.json`.
 
 > Product **#7** is a duplicate from a re-run before the SKU lookup existed. It is **unpublished** and renamed
