@@ -16,6 +16,12 @@
     "gtm_id": "",
     "fb_pixel_id": "",
     "og_image": "",
-    "store_email": "support@getridof.shop"
+    "store_email": "support@getridof.shop",
+    "axon_event_key": "b4bc9878-3e1d-43fc-94de-d53f78913b7c",
+    "axon_item_category_id": "7137",
+    "axon_category_by_package": "GRO-MOUSE-OT:7137,GRO-MOUSE-AR:7137,7:7137,8:7137,GRO-COPPER:728,17:728",
+    "axon_send_user_data": "true",
+    "axon_allowed_events": "all",
+    "axon_image_url": "https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png"
   }
 }

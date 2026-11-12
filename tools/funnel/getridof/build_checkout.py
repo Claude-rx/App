@@ -221,7 +221,14 @@ data['mouse-pouches'].update({
     'name': 'Get Rid Of Mouse Repellent Pouches', 'description': 'Get Rid Of Rodent Repellent Pouches: natural 4-oil formula, mice gone in 72 hours, 90 days per pouch.',
     'entry_url': '', 'store_name': 'Get Rid Of', 'store_url': STORE, 'store_terms': f'{STORE}/terms/', 'store_privacy': f'{STORE}/privacy/',
     'store_contact': f'{STORE}/contact/', 'store_returns': f'{STORE}/refund-policy/', 'store_shipping': f'{STORE}/shipping-policy/',
-    'store_email': EMAIL, 'store_phone': '', 'store_phone_tel': '', 'gtm_id': '', 'fb_pixel_id': '', 'og_image': ''})
+    'store_email': EMAIL, 'store_phone': '', 'store_phone_tel': '', 'gtm_id': '', 'fb_pixel_id': '', 'og_image': '',
+    # AppLovin Axon (Route C): every page. 7137 = Home & Garden > Household Supplies > Pest Control > Repellents >
+    # Animal & Pet Repellents (pouches, variants 7/8); 728 = Pest Control (Copper Seal Kit, variant 17). Keys are the
+    # SDK's item_id (SKU) or item_variant_id. user_data on: email/phone/
+    # user_id/phone_last10_hashed (AppLovin's pixel hashes email/phone in the browser).
+    'axon_event_key': 'b4bc9878-3e1d-43fc-94de-d53f78913b7c', 'axon_item_category_id': '7137',
+    'axon_category_by_package': 'GRO-MOUSE-OT:7137,GRO-MOUSE-AR:7137,7:7137,8:7137,GRO-COPPER:728,17:728', 'axon_send_user_data': 'true', 'axon_allowed_events': 'all',
+    'axon_image_url': 'https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png'})
 data_f.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 cfg = CAMP / 'assets/config.js'
 c = cfg.read_text()

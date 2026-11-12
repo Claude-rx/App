@@ -1,4 +1,6 @@
-/* GENERATED from _shared/analytics/js/axon.adapter.js — edit the source and run `npm run sync:shared`. Do not edit this copy. */
+/* Based on the starter's GENERATED _shared/analytics/js/axon.adapter.js (copy kept at tools/funnel/getridof/axon.adapter.starter.js).
+ * Get Rid Of changes (marked GRO): user_data on every event that has it, phone_last10_hashed, per-package category ids,
+ * a .png image_url fallback. Re-apply them if the starter copy is ever re-synced. */
 /**
  * axon.adapter.js — AppLovin Axon adapter for next-forwarder-core.js (Route C, no GTM).
  *
@@ -113,6 +115,45 @@
     return out;
   }
 
+  // GRO: SHA-256 (hex), synchronous so events keep their order; used for phone_last10_hashed only
+  function sha256(ascii) {
+    function r(v, n) { return (v >>> n) | (v << (32 - n)); }
+    var K = [], H = [], p = 0, c = 2, i, j, w, a, b, t1, t2;
+    for (; p < 64; c++) { for (i = 2; i * i <= c; i++) if (c % i === 0) break; if (i * i > c) { if (p < 8) H[p] = (Math.pow(c, .5) * 4294967296) | 0; K[p++] = (Math.pow(c, 1 / 3) * 4294967296) | 0; } }
+    var words = [], bits = ascii.length * 8;
+    ascii += '\x80'; while (ascii.length % 64 - 56) ascii += '\x00';
+    for (i = 0; i < ascii.length; i++) words[i >> 2] |= ascii.charCodeAt(i) << ((3 - i) % 4) * 8;
+    words[words.length] = (bits / 4294967296) | 0; words[words.length] = bits;
+    for (j = 0; j < words.length;) {
+      w = words.slice(j, j += 16); var h = H.slice(0);
+      for (i = 0; i < 64; i++) {
+        if (i >= 16) { var w15 = w[i - 15], w2 = w[i - 2]; w[i] = (w[i - 16] + (r(w15, 7) ^ r(w15, 18) ^ (w15 >>> 3)) + w[i - 7] + (r(w2, 17) ^ r(w2, 19) ^ (w2 >>> 10))) | 0; }
+        a = h[0]; b = h[4];
+        t1 = h[7] + (r(b, 6) ^ r(b, 11) ^ r(b, 25)) + ((b & h[5]) ^ (~b & h[6])) + K[i] + w[i];
+        t2 = (r(a, 2) ^ r(a, 13) ^ r(a, 22)) + ((a & h[1]) ^ (a & h[2]) ^ (h[1] & h[2]));
+        h = [(t1 + t2) | 0].concat(h); h[4] = (h[4] + t1) | 0; h.length = 8;
+      }
+      for (i = 0; i < 8; i++) H[i] = (H[i] + h[i]) | 0;
+    }
+    var out = ''; for (i = 0; i < 8; i++) for (j = 3; j + 1; j--) { var bt = (H[i] >> (j * 8)) & 255; out += (bt < 16 ? '0' : '') + bt.toString(16); }
+    return out;
+  }
+  // GRO: AppLovin's phone_last10_hashed: last 10 digits, no country code, SHA-256 hex; only for >= 10 digits
+  function withLast10(user) {
+    if (user && user.phone && !user.phone_last10_hashed) {
+      var d = String(user.phone).replace(/\D/g, '');
+      if (d.length >= 10) user.phone_last10_hashed = sha256(d.slice(-10));
+    }
+    return user;
+  }
+  // GRO: category per product, keyed by the SDK's item_id (SKU) or item_variant_id (campaigns.json axon_category_by_package)
+  var categoryByPackage = {};
+  String(window.__axonCategoryByPackage || '').split(',').forEach(function (pair) {
+    var kv = pair.split(':'); if (kv.length === 2 && /^\d+$/.test(kv[1].trim())) categoryByPackage[kv[0].trim()] = Number(kv[1].trim());
+  });
+  // GRO: Axon needs .png/.jpg; the campaign's package images are .webp, so a .png product shot stands in
+  var fallbackImage = String(window.__axonImageUrl || '');
+
   // item_category_id: a positive integer or nothing.
   function categoryId(raw) {
     var s = raw === undefined || raw === null ? '' : String(raw).trim();
@@ -146,11 +187,13 @@
       if (it.item_name) out.item_name = it.item_name;
       if (it.price !== undefined && it.price !== null) out.price = it.price;
       if (it.quantity !== undefined && it.quantity !== null) out.quantity = it.quantity;
-      if (it.item_brand) out.item_brand = it.item_brand;
+      out.item_brand = it.item_brand || 'Get Rid Of';                  // GRO: brand on every item
       if (it.item_variant_id) out.item_variant_id = it.item_variant_id;
-      var cat = categoryId(it.item_category) || fallbackCategoryId;
+      var pkg = it.item_id !== undefined && it.item_id !== null ? String(it.item_id) : '';
+      var cat = categoryId(it.item_category) || categoryByPackage[pkg] || categoryByPackage[String(it.item_variant_id || '')] || fallbackCategoryId;
       if (cat) out.item_category_id = cat;                            // Axon: integer item_category_id
       if (typeof it.item_image === 'string' && IMAGE_RE.test(it.item_image)) out.image_url = it.item_image;
+      else if (IMAGE_RE.test(fallbackImage) && /^GRO-MOUSE-/.test(String(it.item_id || ''))) out.image_url = fallbackImage;  // GRO: pouch photo, pouch SKUs only
       if (it.discount !== undefined && it.discount !== null && it.discount !== '') out.discount = it.discount;
       return out;
     });
@@ -183,8 +226,12 @@
     allowedEvents: allowed,
     blockedEvents: blocked,
     send: function (name, ec, evt) {
-      // page_view is not an ecommerce event — send it bare.
-      if (name === 'page_view') { window.axon('track', 'page_view'); return; }
+      // page_view is not an ecommerce event; it carries user_data only (GRO), once the shopper is known.
+      if (name === 'page_view') {
+        var pvUser = window.__axonSendUserData === true ? withLast10(mergeUser(pageUserData(), userData(evt))) : undefined;
+        if (pvUser) window.axon('track', 'page_view', { user_data: pvUser }); else window.axon('track', 'page_view');
+        return;
+      }
 
       var params = {};
       if (ec.currency) params.currency = ec.currency;
@@ -198,14 +245,14 @@
 
       copy(ec, params, EXTRA[name] || []);
       if (params.payment_type !== undefined) params.payment_type = paymentType(params.payment_type);
+      var user;
+      if (window.__axonSendUserData === true) {
+        // GRO: every event, not only purchase. The event's own fields win; the page's latest dl_user_data fills gaps.
+        user = withLast10(mergeUser(pageUserData(), userData(evt)));
+      }
+      if (user) params.user_data = user;
       if (name === 'purchase') {
-        var user;
-        if (window.__axonSendUserData === true) {
-          user = userData(evt);
-          if (evt && evt.event === 'dl_upsell_purchase') user = mergeUser(pageUserData(), user);
-        }
-        if (user) params.user_data = user;
-        else if (DEBUG && !warnedUserData && window.console) {
+        if (!user && DEBUG && !warnedUserData && window.console) {
           warnedUserData = true;
           console.warn('[axon.adapter] purchase sent without user_data (' +
             (window.__axonSendUserData === true ? 'no usable email, phone or customer_id' : 'axon_send_user_data is off') + ')');

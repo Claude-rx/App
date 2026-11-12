@@ -51,8 +51,29 @@
     var t = e.target.closest && e.target.closest('[data-gro-atc]');
     if (!t) return;
     e.preventDefault(); e.stopPropagation();
-    location.href = checkoutUrl();
+    var url = checkoutUrl();
+    axonTrack('add_to_cart', axonPayload());
+    setTimeout(function () { location.href = url; }, window.axon ? 300 : 0);   // let the pixel send before leaving
   }, true);
+
+  /* ---------- AppLovin Axon (no SDK on this page: events are sent here) ----------
+   * Same item shape as axon.adapter.js on the checkout: item_id = SKU of the subscription variant (package 2,
+   * GRO-MOUSE-AR, variant 8), item_category_id 7137 = Animal & Pet Repellents, image_url must be .png/.jpg. */
+  var AXON_TIERS = { buy1: { qty: 1, unit: 24.99 }, buy3: { qty: 3, unit: 15.99 }, buy5: { qty: 5, unit: 12.99 } };
+  var AXON_RETAIL = 49.99;
+  function axonPayload() {
+    var t = AXON_TIERS[state.bundle] || AXON_TIERS.buy3;
+    var item = { item_id: 'GRO-MOUSE-AR', item_name: 'Mouse Repellent Pouches', item_variant_id: '8', item_brand: 'Get Rid Of',
+                 item_category_id: 7137, price: t.unit, quantity: t.qty, discount: Math.round((AXON_RETAIL - t.unit) * 100) / 100 };
+    if (window.__axonImageUrl) item.image_url = window.__axonImageUrl;
+    return { currency: 'USD', value: Math.round(t.unit * t.qty * 100) / 100, items: [item] };
+  }
+  function axonTrack(name, data) {
+    try { if (typeof window.axon === 'function') data ? window.axon('track', name, data) : window.axon('track', name); } catch (err) { /* never block the page */ }
+  }
+  window.groAxonPayload = axonPayload;
+  axonTrack('page_view');
+  axonTrack('view_item', axonPayload());
   // links to the buy box scroll to it
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href="#gro-buy"]');

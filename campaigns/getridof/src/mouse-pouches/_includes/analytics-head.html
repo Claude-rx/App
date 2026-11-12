@@ -133,6 +133,8 @@
   // Integer category id for items whose SDK item_category is text (the campaign name, which Axon
   // rejects with HTTP 400). Applies to every item in the campaign; "" = left out.
   window.__axonItemCategoryId = "{{ campaign.axon_item_category_id }}";
+  window.__axonCategoryByPackage = "{{ campaign.axon_category_by_package }}";   // GRO: per-package category ids
+  window.__axonImageUrl = "{{ campaign.axon_image_url }}";                       // GRO: .png image_url fallback
   // user_data (email/phone/customer id, hashed by Axon's pixel) on purchase. Off unless the campaign sets
   // axon_send_user_data: "true"; only when the store's consent policy covers sharing it with AppLovin.
   {% if campaign.axon_send_user_data == true or campaign.axon_send_user_data == "true" %}window.__axonSendUserData = true;{% endif %}

@@ -216,6 +216,13 @@ await browser.close();
 // 3. text pass: asset paths, leftovers
 html = recolor(html.replace(/(["'(])assets\//g, `$1${ASSET_URL}`));
 html = html.replace(/(https?:)?\/\/sofyre\.com\/cdn\/[^"' )]+/g, '');      // stray CDN refs (badge template etc.)
+// AppLovin Axon base pixel (same event key as the checkout pages, from campaigns.json). The PDP has no Campaign Cart
+// SDK, so pdp.js sends page_view / view_item / add_to_cart itself (see its "AppLovin Axon" block).
+const CAMPAIGN = JSON.parse(fs.readFileSync(path.join(ROOT, 'campaigns/getridof/_data/campaigns.json'), 'utf8'))['mouse-pouches'];
+const AXON_KEY = CAMPAIGN.axon_event_key || '';
+if (AXON_KEY && !/^[0-9a-f-]{36}$/i.test(AXON_KEY)) throw new Error('axon_event_key is not an event key');
+const AXON_HEAD = AXON_KEY ? `<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey="${AXON_KEY}";for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);axon("init");window.__axonEventKey="${AXON_KEY}";window.__axonImageUrl=${JSON.stringify(CAMPAIGN.axon_image_url || '')};</script>\n` : '';
+html = html.replace('<head>', '<head>\n' + AXON_HEAD);
 html = html.replace('</head>', `<link rel="stylesheet" href="${ASSET_URL}pdp.css">\n<link rel="icon" href="${ASSET_URL}gro-logo.svg">\n</head>`);
 html = html.replace('</body>', `<script src="${ASSET_URL}pdp.js" defer></script>\n</body>`);
 html = html.replace(/<!-- Offline snapshot[^>]*-->/, '');
