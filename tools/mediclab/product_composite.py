@@ -14,7 +14,7 @@ product cutout is fitted to the matte (by height, true 1.83 aspect, centred) and
 magenta's edge spill is removed; grain and a touch of blur to sit in the photo."""
 import sys
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter
 from scipy import ndimage
 
 D = __file__.rsplit('/', 1)[0]
@@ -25,7 +25,8 @@ def magenta(A, tol=70):
     r, g, b = A[..., 0], A[..., 1], A[..., 2]
     return (r > 150) & (b > 120) & (g < 120) & (r - g > tol) & (b - g > tol - 20)
 
-def key(scene, out, light=None, scale_adj=1.0, dy=0, grain=1.8, blur=0.5, blob='largest', source=None):
+def key(scene, out, light=None, scale_adj=1.0, dy=0, grain=1.8, blur=0.5, blob='largest', source=None, anchor='bottom'):
+    scale_adj = float(scale_adj); dy = int(dy)
     sc = Image.open(scene).convert('RGB'); A = np.asarray(sc).astype(float)
     M = magenta(A)
     M = ndimage.binary_opening(M, iterations=1)
@@ -45,7 +46,12 @@ def key(scene, out, light=None, scale_adj=1.0, dy=0, grain=1.8, blur=0.5, blob='
     # bottle height from the matte: top of the cap to the base; width follows the real aspect
     h = (y1 - y0) * scale_adj; w = h * CUT.width / CUT.height
     cx = (x0 + x1) / 2 if (x1 - x0) > 0.75 * w else xs[ys < y0 + (y1 - y0) * 0.2].mean()   # cap centre if the sides are hidden
-    cut = CUT.resize((int(w), int(h)), Image.LANCZOS); ox, oy = int(cx - w / 2), int(y1 - h) + dy
+    cut = CUT.resize((int(w), int(h)), Image.LANCZOS)
+    if anchor == 'center':      # hand-held: keep the bottle centred in the grip
+        oy = int((y0 + y1) / 2 - h / 2) + dy
+    else:                       # standing: the base stays where it touches the surface
+        oy = int(y1 - h) + dy
+    ox = int(cx - w / 2)
     C = np.asarray(cut).astype(float)
     # light: scene brightness and tint around the bottle, gradient left to right
     pad = int(w * 0.6)
@@ -75,18 +81,25 @@ def key(scene, out, light=None, scale_adj=1.0, dy=0, grain=1.8, blur=0.5, blob='
     a_crop = a[yy0 - oy:yy1 - oy, xx0 - ox:xx1 - ox] * (1 - occ_soft)
     alpha = Image.fromarray((np.clip(a_crop, 0, 1) * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(0.7))
     out_im = sc.copy()
-    # kill leftover magenta (matte bigger than the bottle, edge spill): fill from the scene around it
-    left = ndimage.binary_dilation(M, iterations=3)
+    # leftover matte (larger than the real bottle) and its edge spill: harmonic fill (smooth, no streaks) from the
+    # photo around it, then grain; the real bottle covers most of it
+    left = ndimage.binary_dilation(M, iterations=4) & ~occ
+    out_im = sc.copy()
     if left.any():
-        blurred = np.asarray(sc.filter(ImageFilter.GaussianBlur(9))).astype(float)
-        R = A.copy(); mask3 = left[..., None]
-        # replace magenta with nearby non-magenta colour (dilate-erode trick via repeated blur of unmasked pixels)
-        valid = (~left).astype(float); num = np.asarray(Image.fromarray(np.uint8(A * valid[..., None])).filter(ImageFilter.GaussianBlur(14))).astype(float)
-        den = np.asarray(Image.fromarray(np.uint8(valid * 255)).filter(ImageFilter.GaussianBlur(14))).astype(float)[..., None] / 255.0
-        fillc = np.clip(num / np.maximum(den, 1e-3), 0, 255)
-        R = np.where(mask3, fillc, A); out_im = Image.fromarray(R.astype('uint8'))
-        # restore true occluders (fingers) over the fill
-        out_im.paste(sc, (0, 0), Image.fromarray((occ & ~left).astype('uint8') * 255))
+        from scipy.sparse import lil_matrix
+        from scipy.sparse.linalg import spsolve
+        ys_, xs_ = np.nonzero(left); idx = -np.ones(left.shape, int); idx[ys_, xs_] = np.arange(len(ys_))
+        n = len(ys_); Lm = lil_matrix((n, n)); bvec = np.zeros((n, 3))
+        for k, (y, x) in enumerate(zip(ys_, xs_)):
+            Lm[k, k] = 4
+            for yy, xx in ((y-1, x), (y+1, x), (y, x-1), (y, x+1)):
+                yy = min(max(yy, 0), left.shape[0]-1); xx = min(max(xx, 0), left.shape[1]-1)
+                if left[yy, xx]: Lm[k, idx[yy, xx]] -= 1
+                else: bvec[k] += A[yy, xx]
+        Lc = Lm.tocsc(); F = A.copy()
+        for ch in range(3): F[ys_, xs_, ch] = spsolve(Lc, bvec[:, ch])
+        F[ys_, xs_] += np.random.normal(0, grain * 1.5, (n, 3))
+        out_im = Image.fromarray(np.clip(F, 0, 255).astype('uint8'))
     O = np.asarray(out_im).astype(float)
     ry0, ry1 = max(oy - int(h * 0.1), 0), min(oy + int(h * 1.7), H); rx0, rx1 = max(ox - int(w * 0.5), 0), min(ox + int(w * 1.5), W)
     R = O[ry0:ry1, rx0:rx1]; r, g, b = R[..., 0], R[..., 1], R[..., 2]
@@ -103,3 +116,34 @@ def key(scene, out, light=None, scale_adj=1.0, dy=0, grain=1.8, blur=0.5, blob='
 if __name__ == '__main__':
     kw = dict(a.split('=', 1) for a in sys.argv[3:])
     print(key(sys.argv[1], sys.argv[2], **kw))
+
+
+def place(plate, out, base_cx, base_y, height, grain=1.8, blur=0.5, shadow=0.38):
+    """Standing bottle on a clean plate (scene with the bottle removed): the real cutout at an exact pixel height,
+    base centred at (base_cx, base_y), light matched to the surroundings, soft contact shadow drawn underneath."""
+    sc = Image.open(plate).convert('RGB'); A = np.asarray(sc).astype(float)
+    h = int(height); w = int(h * CUT.width / CUT.height); ox, oy = int(base_cx - w / 2), int(base_y - h)
+    cut = CUT.resize((w, h), Image.LANCZOS); C = np.asarray(cut).astype(float)
+    pad = int(w * 0.8)
+    ring = A[max(oy - pad // 2, 0):min(base_y, A.shape[0]), max(ox - pad, 0):min(ox + w + pad, A.shape[1])].reshape(-1, 3)
+    sat = ring.max(1) - ring.min(1); neutral = ring[sat < np.percentile(sat, 35)]
+    nb = neutral[neutral.mean(1) > np.percentile(neutral.mean(1), 50)].mean(0)
+    k = float(np.clip((nb[0] - nb[2]) / nb.mean() / 2, -0.03, 0.05)); tint = np.array([1 + k, 1.0, 1 - k])
+    bright = ring[ring.mean(1) > np.percentile(ring.mean(1), 70)].mean()
+    expo = float(np.clip(bright / 205.0, 0.8, 1.08))
+    Ls = A[oy:base_y, max(ox - pad, 0):ox].mean(); Rs = A[oy:base_y, ox + w:ox + w + pad].mean()
+    gr = np.linspace(1 + 0.07 * np.sign(Ls - Rs), 1 - 0.07 * np.sign(Ls - Rs), w) if abs(Ls - Rs) > 12 else np.ones(w)
+    rgb = np.clip(C[..., :3] * (tint * expo)[None, None, :] * gr[None, :, None] + np.random.normal(0, grain, (h, w, 3)), 0, 255)
+    patch = Image.fromarray(rgb.astype('uint8')).filter(ImageFilter.GaussianBlur(blur))
+    alpha = Image.fromarray(C[..., 3].astype('uint8')).filter(ImageFilter.GaussianBlur(0.7))
+    # contact shadow: a tight dark core at the base plus a soft wider falloff, offset away from the light
+    sh = Image.new('L', sc.size, 0); d = ImageDraw.Draw(sh)
+    off = int(0.06 * w * np.sign(Ls - Rs)) if abs(Ls - Rs) > 12 else 0
+    d.ellipse((ox - int(0.06 * w) + off, base_y - int(0.05 * w), ox + w + int(0.06 * w) + off, base_y + int(0.07 * w)), fill=int(255 * shadow))
+    d.ellipse((ox + int(0.04 * w), base_y - int(0.025 * w), ox + w - int(0.04 * w), base_y + int(0.025 * w)), fill=int(255 * min(shadow * 1.6, 0.75)))
+    sh = sh.filter(ImageFilter.GaussianBlur(max(2, w * 0.05)))
+    S = np.asarray(sh).astype(float)[..., None] / 255
+    out_im = Image.fromarray((A * (1 - S)).astype('uint8'))
+    out_im.paste(patch, (ox, oy), alpha)
+    out_im.save(out)
+    return dict(bottle=(ox, oy, ox + w, base_y), tint=tint.round(3).tolist(), expo=round(expo, 3))

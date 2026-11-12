@@ -61,13 +61,14 @@ The bottle now reads **Berberine · Weight Management*** with the pills METABOLI
 - Checkout gallery (`images/ml/product/berberine-1..6`) and pack shots (`images/ml/berberine/bottle-*`): the delivered mockups.
 - **Every lifestyle photo shows the real product, pixel for pixel** (19 photos: weight page, glucose page, listicle).
   Image models redraw a bottle differently every time (shape, size, label), so they never draw it here:
-  1. Kie.ai (Nano Banana 2, GPT Image 2.5) turns the scene's bottle into a flat **magenta matte** of the bottle's outline
-     at real-world size (10 cm, about 80% of a drinking glass), fingers in front;
-  2. `tools/mediclab/product_composite.py` keys the matte and fits the **real bottle cutout**
+  1. standing bottles: Kie.ai (Nano Banana 2) only removes the scene's bottle (a clean plate); `place()` in
+     `tools/mediclab/product_composite.py` stands the real bottle there at an exact pixel height (about 70% of a
+     drinking glass, the real 10 cm) with a drawn contact shadow;
+  2. hand-held bottles: the model turns the bottle into a flat **magenta matte** sized to the palm, fingers in front, and
+     `key()` fits the **real bottle cutout**
      (`docs/mediclab/product/berberine-front-cutout.png`, cut from the official product photo, true 1.83 aspect) to it,
      keeps fingers in front, matches the scene's warmth and exposure, and turns the matte's reflections neutral.
-  The routine loop video is animated from such a composite with the bottle untouched, and the exact bottle is stamped on
-  every frame.
+  The routine loop video is a slow push-in on the composited capsule photo (ffmpeg, no generated motion).
 
 ## Brand (mediclab.us)
 
