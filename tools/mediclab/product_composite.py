@@ -147,3 +147,52 @@ def place(plate, out, base_cx, base_y, height, grain=1.8, blur=0.5, shadow=0.38)
     out_im.paste(patch, (ox, oy), alpha)
     out_im.save(out)
     return dict(bottle=(ox, oy, ox + w, base_y), tint=tint.round(3).tolist(), expo=round(expo, 3))
+
+
+def fix_label_text(img, out, geom=None, inset=0.0, hand=False):
+    """Replace only the label's text strip (between the heart and the bottom band: "Berberine", "Weight Management*",
+    the three pills, "DIETARY SUPPLEMENT · 60 CAPSULES") with the real artwork, mapped by the heart and band of the
+    generated bottle and relit with its own shading. Image models garble small print; this keeps it exact."""
+    import sys as _s
+    _s.path.insert(0, __file__.rsplit('/', 1)[0])
+    sc = Image.open(img).convert('RGB'); A = np.asarray(sc).astype(float)
+    if geom is None:
+        from label_geom import label_geom
+        geom = label_geom(sc, 100)
+    (hx0, hy0, hx1, hy1), (bx0, by0, bx1, by1) = geom
+    H0, B0 = (244, 577, 787, 1127), (4, 1503, 956, 1637)
+    src = Image.new('RGB', CUT.size, (255, 255, 255)); src.paste(CUT, mask=CUT.split()[3])
+    # source strip (cutout coords) -> target strip (scene coords), x by the band, y from heart bottom to band top
+    sx0, sx1 = B0[0] + (B0[2] - B0[0]) * inset, B0[2] - (B0[2] - B0[0]) * inset
+    tx0, tx1 = bx0 + (bx1 - bx0) * inset, bx1 - (bx1 - bx0) * inset
+    sy0, sy1 = H0[3] + 1, B0[3]; ty0, ty1 = hy1 + 1, by1
+    tw, th = int(round(tx1 - tx0)), int(round(ty1 - ty0))
+    strip = np.asarray(src.crop((int(sx0), int(sy0), int(sx1), int(sy1))).resize((tw, th), Image.LANCZOS)).astype(float)
+    tgt = A[int(round(ty0)):int(round(ty0)) + th, int(round(tx0)):int(round(tx0)) + tw]
+    # relight: the generated paper's low-frequency light (shading, warmth) over the artwork's paper
+    def lowpass(a, r):
+        return np.asarray(Image.fromarray(np.clip(a, 0, 255).astype('uint8')).filter(ImageFilter.GaussianBlur(r))).astype(float)
+    r = max(4, th // 3)
+    paper_t = lowpass(np.where((tgt.mean(2, keepdims=True) > np.percentile(tgt.mean(2), 40)), tgt, tgt.mean((0, 1))), r)
+    paper_s = lowpass(np.where((strip.mean(2, keepdims=True) > np.percentile(strip.mean(2), 40)), strip, strip.mean((0, 1))), r)
+    rel = np.clip(strip * paper_t / np.maximum(paper_s, 1), 0, 255)
+    rel = np.asarray(Image.fromarray(rel.astype('uint8')).filter(ImageFilter.GaussianBlur(0.4))).astype(float)
+    m = np.ones((th, tw)); fy = max(2, th // 25); fx = max(2, tw // 60)
+    m[:fy] *= np.linspace(0, 1, fy)[:, None]                       # soft only under the heart; the band edge stays crisp
+    m[:, :fx] *= np.linspace(0, 1, fx)[None]; m[:, -fx:] *= np.linspace(1, 0, fx)[None]
+    # the strip spans exactly the band's width, i.e. the bottle body; fingers over the label stay in front
+    skin = np.zeros((th, tw), bool)
+    if hand:   # a finger over the label continues past the bottle's edge; label paper never does
+        y, x = int(round(ty0)), int(round(tx0)); px = max(4, tw // 6)
+        X0, X1 = max(x - px, 0), min(x + tw + px, A.shape[1]); E = A[y:y + th, X0:X1]
+        er, eg, eb = E[..., 0], E[..., 1], E[..., 2]
+        sk = (er - eg >= 18) & (er - eb >= 42) & (er > 70) & (E.mean(2) < 205)
+        sk = ndimage.binary_opening(sk, iterations=2); lab_, n_ = ndimage.label(sk)
+        outer = set(np.unique(lab_[:, :max(2, (x - X0) // 2)])) | set(np.unique(lab_[:, -max(2, (X1 - x - tw) // 2):]))
+        sk = ndimage.binary_dilation(np.isin(lab_, [i for i in outer if i]), iterations=2)
+        skin = sk[:, x - X0:x - X0 + tw]
+    m *= 1 - np.asarray(Image.fromarray((skin * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(1.2))).astype(float) / 255
+    out_arr = A.copy(); y, x = int(round(ty0)), int(round(tx0))
+    out_arr[y:y + th, x:x + tw] = tgt * (1 - m[..., None]) + rel * m[..., None]
+    Image.fromarray(out_arr.astype('uint8')).save(out)
+    return dict(strip=(x, y, x + tw, y + th))
