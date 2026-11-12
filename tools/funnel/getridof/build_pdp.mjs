@@ -234,3 +234,8 @@ fs.writeFileSync(path.join(CAMP, 'index.html'), front + '{% raw %}' + html + '{%
 fs.mkdirSync(path.join(CAMP, '_layouts'), { recursive: true });
 fs.writeFileSync(path.join(CAMP, '_layouts/pdp.html'), '{{ content }}\n');
 console.log(JSON.stringify(report), '\nleft "sofyre" mentions (URLs/ids only):', left, '\nwrote', path.join(CAMP, 'index.html'), (html.length / 1e6).toFixed(2) + ' MB');
+
+// 5. step 1 copied the reference page's packaging shots: put the new-packaging images back over them, every run
+//    (skipping this once shipped the old photos; see swap_images.py)
+const { execFileSync } = await import('node:child_process');
+execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/swap_images.py')], { stdio: 'inherit' });
