@@ -184,3 +184,18 @@ tbody td:nth-child(2){background:#E6EFE9}
 .site-foot{background:#0B2A1B;color:#C9D9CF;border-top:0}
 .site-foot a{color:#fff}
 .site-foot .foot-logo{height:26px;width:auto;margin:0 auto 18px}
+/* ---- upgrades: pathway, research, clinician checklist, timeline ---- */
+.wp-pathway{margin:22px 0;padding:18px;border-radius:18px;background:#E6EFE9}
+.wp-pathway h3,.wp-timeline h3,.wp-clinic h3{margin:0 0 10px;font-size:22px;line-height:1.25;color:#1F2421}
+.wp-pathway-grid{display:grid;gap:10px}
+.wp-col{background:#fff;border-radius:14px;padding:14px;border:1px solid #E3E0D7}.wp-col p{margin:6px 0 0}
+.wp-us{border:2px solid #1D503A}.wp-us b{color:#1D503A}
+.wp-fine{font-size:14px;color:#545B57;margin:10px 0 0}
+.wp-studies{display:grid;gap:10px;margin:16px 0}
+.wp-study{background:#fff;border:1px solid #E3E0D7;border-radius:14px;padding:14px 16px}.wp-study b{display:block;color:#1F2421;font-size:18px;margin:6px 0 4px}.wp-study p{margin:0;font-size:15px;color:#545B57}
+.wp-tag{display:inline-block;background:#1D503A;color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:3px 10px}
+.wp-clinic{display:grid;gap:16px;align-items:center;background:#F5F1E8;border-radius:20px;padding:18px;margin:18px 0}
+.wp-checks{list-style:none;padding:0;margin:0;display:grid;gap:8px}.wp-checks li{position:relative;padding-left:28px}.wp-checks li::before{content:'✓';position:absolute;left:0;color:#1D503A;font-weight:800}
+.wp-timeline{margin:18px 0 0;padding:18px;background:#fff;border-radius:18px;border:1px solid #E3E0D7}
+.wp-timeline ol{margin:0;padding-left:20px;display:grid;gap:8px}
+@media(min-width:760px){.wp-pathway-grid{grid-template-columns:1fr 1fr}.wp-studies{grid-template-columns:1fr 1fr 1fr}.wp-clinic{grid-template-columns:1.3fr 1fr;padding:26px}}

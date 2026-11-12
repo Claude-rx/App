@@ -129,3 +129,22 @@ h2 { color: var(--ink); font-weight: 800; line-height: 1.2; letter-spacing: -.00
   .lc-offer .lc-cta-note, .lc-offer .lc-why, .lc-offer .lc-more { text-align: left; }
   .lc-sticky { display: none; }
 }
+
+/* research, clinician checklist, pathway, timeline (12 Nov) */
+.lc-pathway { background: #fff; border: 2px solid var(--primary); border-radius: 14px; padding: 14px 16px; margin: 0 0 14px; }
+.lc-pathway b { color: var(--primary); }
+.lc-research { margin: 34px 0; }
+.lc-research h2, .lc-timeline h2 { font-size: clamp(22px, 5vw, 29px); margin: 0 0 14px; }
+.lc-studies { display: grid; gap: 10px; margin: 0 0 18px; }
+.lc-studies > div { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; background: #fff; }
+.lc-studies span { display: inline-block; background: var(--primary); color: #fff; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; border-radius: 999px; padding: 3px 10px; }
+.lc-studies b { display: block; color: var(--ink); font-size: 18px; line-height: 1.3; margin: 8px 0 4px; }
+.lc-studies small { color: var(--muted); font-size: 14px; }
+.lc-doc { max-width: 420px; margin-left: auto; margin-right: auto; }
+.lc-checklist { background: var(--deep); color: #E8EFEA; border-radius: 18px; padding: 18px; }
+.lc-checklist h3 { color: #fff; margin: 0 0 12px; font-size: 21px; line-height: 1.25; }
+.lc-checklist .lc-fine { color: #C9D9CF; }
+.lc-timeline { margin: 34px 0; padding: 22px 18px; background: var(--cream); border-radius: 20px; }
+.lc-timeline ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.lc-timeline p { margin: 0 0 12px; }
+@media (min-width: 760px) { .lc-studies { grid-template-columns: repeat(3, 1fr); } .lc-timeline { padding: 30px 32px; } }

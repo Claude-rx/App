@@ -84,6 +84,10 @@ check(w.count('data-cta') >= 3, 'weight page: CTAs missing')
 for label in ('Example review', 'Model portrayal', 'Is this a GLP-1 medication?', 'contains no GLP-1, semaglutide or tirzepatide',
               'not a substitute for any prescription', "we don't promise pounds"):
     check(label.lower() in w.lower(), f'weight page: compliance line "{label}" missing')
+check(w.count('class="wp-study"') >= 6, 'weight page: research cards missing (expected 6+)')
+for blk in ('wp-pathway', 'wp-clinic', 'wp-timeline'):
+    check(blk in w, f'weight page: {blk} block missing')
+check('Yin J., Xing H., Ye J.' in w and 'Asbaghi' in w and 'Yu Y.' in w, 'weight page: study citations missing')
 dupw = [n for n, k in Counter(re.findall(r'<input[^>]*name="([^"]+)"[^>]*checked', w)).items() if k > 1]
 check(not dupw, f'weight page: radio group(s) {dupw} pre-check more than one input')
 
@@ -92,6 +96,8 @@ Lt = text(L)
 check(len(re.findall(r'<section class="lc-item" id="r[1-8]"', L)) == 8, 'listicle: not exactly 8 numbered reasons')
 for sec in ('id="root-problem"', 'id="root-solution"', 'id="compare"', 'id="faq"', 'id="offer"'):
     check(sec in L, f'listicle: section {sec} missing')
+for sec in ('id="research"', 'id="timeline"', 'class="lc-pathway"', 'class="lc-checklist"'):
+    check(sec in L, f'listicle: {sec} missing')
 check(L.count('<tr>') >= 8, 'listicle: injection vs berberine comparison table incomplete')
 check(L.count('data-cta') >= 4, 'listicle: CTAs missing')
 for m in re.findall(r'<a[^>]+data-cta[^>]*>', L):
