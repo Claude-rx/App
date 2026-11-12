@@ -10,10 +10,12 @@ $29.97). **One product, two entry pages, one checkout:**
 |---|---|---|
 | `/berberine/` | healthy glucose metabolism (the store's own positioning) | the live mediclab.us product page |
 | `/weight-support/` | weight management, "natural GLP-1 support" | the delivered copy deck (`natural-glp1/copy-deck.md`), with its compliance lines: FDA disclaimer, "not a GLP-1 medication" FAQ, no pounds promised, example-review and model labels |
+| `/berberine-natural-glp1/` | **presell listicle for cold traffic**: "8 Reasons Everyone Over 40 Is Using Berberine, the 'Natural GLP-1', in Their Weight-Loss Plan" | the copy deck and persona (claims, objections, research) rewritten as an advertorial: root problem (the Quiet Signal), root solution (Capsule, Plate, Walk), 8 reasons, an honest GLP-1 injection vs berberine table, the 7 persona objections, offer box. CTAs go straight to checkout (plan card; one-bottle link), keeping UTMs and click ids. Images and the routine loop video made with Kie.ai (GPT Image 2.5 + Seedance 2.5) from the real pack shot |
 
 Both go to the same `/berberine-checkout/` → `/berberine-offer/` → `/berberine-thank-you/`, whose copy is angle-neutral.
-The gates keep GLP-1 / weight wording off the glucose page and the shared pages, and require the weight page's
-compliance lines. Note: the mediclab.us product page FAQ says Berberine is not sold as a weight-loss product; update it
+The gates keep GLP-1 / weight wording off the glucose page and the shared pages, and require the weight page's and the
+listicle's compliance lines (advertorial disclosure, not a GLP-1 medication, no pounds promised, models disclosed, no
+Novo Nordisk affiliation; no invented results, stats or countdowns). Note: the mediclab.us product page FAQ says Berberine is not sold as a weight-loss product; update it
 so the store and the weight page agree.
 
 | Step | Page (`campaigns/mediclab/src/berberine/`) | What it does |

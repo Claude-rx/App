@@ -8,8 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / 'campaigns' / 'mediclab' / '_site' / 'berberine'
-PAGES = ['berberine', 'weight-support', 'berberine-checkout', 'berberine-offer', 'berberine-thank-you']
+PAGES = ['berberine', 'berberine-natural-glp1', 'weight-support', 'berberine-checkout', 'berberine-offer', 'berberine-thank-you']
 WEIGHT = 'weight-support'   # the weight-management angle: GLP-1 / weight wording allowed, its compliance lines required
+LISTICLE = 'berberine-natural-glp1'   # presell listicle, same angle: wording allowed, its own compliance lines required
 FDA = 'These statements have not been evaluated by the Food and Drug Administration'
 DEMO = ['LLbBgtusfE2zopDcjnOY9NbrlN690zSjuedqQ04J', 'demo.29next.com', 'TRUSTED BY 180,000', '19,569', 'Lorem ipsum',
         'Daniel K.', 'XXCODE', 'EXIT10', 'placehold.co', 'next-dark.svg', 'Product Name', 'Extended Warranty',
@@ -40,7 +41,7 @@ for name, h in html.items():
     check('{{' not in h and '{%' not in h, f'{name}: unrendered Liquid')
 
 # FDA disclaimer wherever a claim is made (sales page, checkout, upsell)
-for name in ('berberine', WEIGHT, 'berberine-checkout', 'berberine-offer'):
+for name in ('berberine', LISTICLE, WEIGHT, 'berberine-checkout', 'berberine-offer'):
     check(FDA in html[name], f'{name}: FDA disclaimer missing')
 
 # The glucose sales page and the shared checkout, upsell and thank-you carry no GLP-1 or weight-loss claims; only the
@@ -50,7 +51,7 @@ CLAIMS = re.compile(r'glp-?1|semaglutide|tirzepatide|ozempic|wegovy|weight[- ]lo
                     r'fat burn|appetite|cravings|natural ozempic', re.I)
 ALLOWED = ('Will it help me lose weight?', 'we will not sell it as a weight-loss product')
 for name, h in html.items():
-    if name == WEIGHT:
+    if name in (WEIGHT, LISTICLE):
         continue
     t = text(h)
     for a in ALLOWED:
@@ -85,6 +86,27 @@ for label in ('Example review', 'Model portrayal', 'Is this a GLP-1 medication?'
     check(label.lower() in w.lower(), f'weight page: compliance line "{label}" missing')
 dupw = [n for n, k in Counter(re.findall(r'<input[^>]*name="([^"]+)"[^>]*checked', w)).items() if k > 1]
 check(not dupw, f'weight page: radio group(s) {dupw} pre-check more than one input')
+
+L = html[LISTICLE]
+Lt = text(L)
+check(len(re.findall(r'<section class="lc-item" id="r[1-8]"', L)) == 8, 'listicle: not exactly 8 numbered reasons')
+for sec in ('id="root-problem"', 'id="root-solution"', 'id="compare"', 'id="faq"', 'id="offer"'):
+    check(sec in L, f'listicle: section {sec} missing')
+check(L.count('<tr>') >= 8, 'listicle: injection vs berberine comparison table incomplete')
+check(L.count('data-cta') >= 4, 'listicle: CTAs missing')
+for m in re.findall(r'<a[^>]+data-cta[^>]*>', L):
+    check('/berberine-checkout/' in m and 'forceBundleId=' in m, f'listicle: CTA not pointing at a checkout card: {m[:120]}')
+for label in ('Advertorial', 'is not a GLP-1 medication', 'contains no GLP-1, semaglutide or tirzepatide',
+              'not a substitute for any prescription', "don't promise pounds", 'follow your doctor',
+              'People shown are models', 'not affiliated with Novo Nordisk', 'Individual results vary'):
+    check(label.lower() in Lt.lower(), f'listicle: compliance line "{label}" missing')
+# no invented results, proof or urgency on a page aimed at cold traffic
+for bad in (r'\blost \d+\s*(lbs?|pounds|kg)', r'\d+\s*(lbs?|pounds)\s+in\s+\d+', r'clinically proven', r'guaranteed (weight|results)',
+            r'\b\d{2,3},\d{3}\+? (customers|women|people)', r'only \d+ (left|bottles)', r'(sale|offer) ends', r'works like ozempic'):
+    check(re.search(bad, Lt, re.I) is None, f'listicle: banned claim pattern "{bad}"')
+check('data-next-timer' not in L and 'countdown' not in L.lower(), 'listicle: countdown present (no fake urgency)')
+for img in re.findall(r"images/ml/listicle/([\w-]+\.(?:jpg|mp4))", L):
+    check((SITE / 'images' / 'ml' / 'listicle' / img).exists(), f'listicle: asset {img} missing from the build')
 
 c = html['berberine-checkout']
 check('data-next-bundle-id="plan"' in c and 'data-next-bundle-id="one"' in c, 'checkout: plan / one cards missing')

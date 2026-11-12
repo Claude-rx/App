@@ -26,6 +26,8 @@ TEMPLATE_PREFIX = 'mlb-'
 PAGES = [
     {'id': 'sales', 'file': 'berberine', 'type': 'presell', 'sdk': 'product', 'entry': True, 'next': 'checkout',
      'label': 'Sales page: the Open-Door Meal Routine, healthy glucose metabolism (mediclab.us product page copy)'},
+    {'id': 'listicle', 'file': 'berberine-natural-glp1', 'type': 'presell', 'sdk': 'product', 'next': 'checkout',
+     'label': 'Presell listicle for cold traffic: 8 reasons, root problem/solution, GLP-1 injection comparison'},
     {'id': 'weight', 'file': 'weight-support', 'type': 'presell', 'sdk': 'product', 'next': 'checkout',
      'label': 'Sales page, weight-management angle (the delivered copy deck), same product and checkout'},
     {'id': 'checkout', 'file': 'berberine-checkout', 'type': 'checkout', 'sdk': 'checkout', 'success': 'offer',
@@ -41,6 +43,9 @@ TITLES = {
     'sales': ('MedicLab Berberine: a routine for the hours after you eat',
               'Two capsules with meals and a few minutes of walking after you eat, a daily routine that supports healthy '
               'glucose metabolism.* 60-day empty-bottle guarantee.'),
+    'listicle': ('8 Reasons Everyone Over 40 Is Using Berberine, the "Natural GLP-1", in Their Weight-Loss Plan',
+                 "After 40, your body's own fullness signal gets quieter. Why adults are adding berberine to their "
+                 'weight-loss plan instead of a needle, and how it compares with a GLP-1 injection.'),
     'weight': ('Natural GLP-1 Support for Adults 40+ Done Fighting Stubborn Weight',
                'MedicLab Berberine: two capsules with meals, protein first, a 10-minute walk after dinner. '
                '60-day empty-bottle guarantee.'),
