@@ -33,3 +33,4 @@ cowork-skills/
 
 # ntk config (holds the Admin API key)
 mediclab-theme/config.yml
+mediclab-theme/assets/tmp/
