@@ -1,31 +1,26 @@
 {
   "base": "http://localhost:8765",
-  "ran_at": "2026-11-13T13:35:13.266Z",
+  "ran_at": "2026-11-13T16:49:14.947Z",
   "results": [
     {
-      "check": "[desktop] default card buy3 selected (SDK class)",
+      "check": "[desktop] no visible bundle picker (Shopify-style)",
       "pass": true,
-      "detail": "[{\"id\":\"buy1\",\"sdk\":false,\"radio\":null},{\"id\":\"buy3\",\"sdk\":true,\"radio\":null},{\"id\":\"buy5\",\"sdk\":false,\"radio\":null}]"
+      "detail": "visible cards: 0"
     },
     {
-      "check": "[desktop] picking buy1 deselects buy3",
-      "pass": true,
-      "detail": "[{\"id\":\"buy1\",\"sdk\":true,\"radio\":null},{\"id\":\"buy3\",\"sdk\":false,\"radio\":null},{\"id\":\"buy5\",\"sdk\":false,\"radio\":null}]"
-    },
-    {
-      "check": "[desktop] no stale static data-selected on an unselected card",
-      "pass": true,
-      "detail": "[{\"id\":\"buy1\",\"sdk\":true,\"radio\":null},{\"id\":\"buy3\",\"sdk\":false,\"radio\":null},{\"id\":\"buy5\",\"sdk\":false,\"radio\":null}]"
-    },
-    {
-      "check": "[desktop] radio visuals follow selection",
-      "pass": true,
-      "detail": "none|1|rgb(0, 0, 0) / none|1|rgba(0, 0, 0, 0) / none|1|rgba(0, 0, 0, 0)"
-    },
-    {
-      "check": "[desktop] buy1 total $24.99 (subscription first order)",
+      "check": "[desktop] default tier = 3 packs, $47.97",
       "pass": true,
       "detail": ""
+    },
+    {
+      "check": "[desktop] buy1 from the sales page -> 1 pack(s), $24.99",
+      "pass": true,
+      "detail": "Item Amount 1x Mouse Repellent Pouches - Auto-Refill $49.99/ea $24.99/ea $49.99 $24.99 Sub"
+    },
+    {
+      "check": "[desktop] buy5 from the sales page -> 5 pack(s), $64.95",
+      "pass": true,
+      "detail": "Item Amount 5x Mouse Repellent Pouches - Auto-Refill 5-Pack $49.99/ea $12.99/ea $249.95 $6"
     },
     {
       "check": "[desktop] bump toggles on and adds $3.97",
@@ -48,29 +43,24 @@
       "detail": "\"no container\""
     },
     {
-      "check": "[mobile] default card buy3 selected (SDK class)",
+      "check": "[mobile] no visible bundle picker (Shopify-style)",
       "pass": true,
-      "detail": "[{\"id\":\"buy1\",\"sdk\":false,\"radio\":null},{\"id\":\"buy3\",\"sdk\":true,\"radio\":null},{\"id\":\"buy5\",\"sdk\":false,\"radio\":null}]"
+      "detail": "visible cards: 0"
     },
     {
-      "check": "[mobile] picking buy1 deselects buy3",
-      "pass": true,
-      "detail": "[{\"id\":\"buy1\",\"sdk\":true,\"radio\":null},{\"id\":\"buy3\",\"sdk\":false,\"radio\":null},{\"id\":\"buy5\",\"sdk\":false,\"radio\":null}]"
-    },
-    {
-      "check": "[mobile] no stale static data-selected on an unselected card",
-      "pass": true,
-      "detail": "[{\"id\":\"buy1\",\"sdk\":true,\"radio\":null},{\"id\":\"buy3\",\"sdk\":false,\"radio\":null},{\"id\":\"buy5\",\"sdk\":false,\"radio\":null}]"
-    },
-    {
-      "check": "[mobile] radio visuals follow selection",
-      "pass": true,
-      "detail": "none|1|rgb(0, 0, 0) / none|1|rgba(0, 0, 0, 0) / none|1|rgba(0, 0, 0, 0)"
-    },
-    {
-      "check": "[mobile] buy1 total $24.99 (subscription first order)",
+      "check": "[mobile] default tier = 3 packs, $47.97",
       "pass": true,
       "detail": ""
+    },
+    {
+      "check": "[mobile] buy1 from the sales page -> 1 pack(s), $24.99",
+      "pass": true,
+      "detail": "Item Amount 1x Mouse Repellent Pouches - Auto-Refill $49.99/ea $24.99/ea $49.99 $24.99 Sub"
+    },
+    {
+      "check": "[mobile] buy5 from the sales page -> 5 pack(s), $64.95",
+      "pass": true,
+      "detail": "Item Amount 5x Mouse Repellent Pouches - Auto-Refill 5-Pack $49.99/ea $12.99/ea $249.95 $6"
     },
     {
       "check": "[mobile] bump toggles on and adds $3.97",

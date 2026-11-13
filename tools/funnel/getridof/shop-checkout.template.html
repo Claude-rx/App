@@ -1,0 +1,139 @@
+---
+title: "Shop Checkout"
+page_type: checkout
+next_url: upsell-bundle-stepper.html
+order_bump_variant: "check02"
+packages:
+  main_package: 1
+  prepurchase_1: 7
+  prepurchase_2: 9
+# payment_methods: { method_order, default_method, show_<method>: false } — payment radio order, first-open method, and which radios to drop (e.g. show_paypal: false); keys and rules in _includes/payment-methods.html
+order_bump:
+  check02:
+    # Pre-purchase add-on (expanded checkbox). Optional keys:
+    #   sync_quantity: <main packageId> -> add-on qty mirrors the main bundle (omit = fixed qty 1)
+    #   description_prefix / description_suffix wrap the inline price (single total; no compare/per-unit toggle)
+    package_id: 9
+    sync_quantity: 1
+    title: "YES, &nbsp;I Will Take It"
+    image_src: "images/icon.svg"
+    description_prefix: "Get peace of mind with"
+    description_suffix: "in the event your delivery is damaged, stolen, or lost during transit for"
+scripts:
+  - js/checkout.js
+  - js/promo-timer.js
+address_form:
+  label_style: inset # whole checkout form (contact + shipping + billing): inset (default) | floating | static — see shipping-address-form.html
+  gated: false # true = only the Address field shows until the shopper types an address (then apartment / city / state / postal / phone appear); false = every field visible from the start
+---
+<div class="page-wrapper checkout--shop">
+
+      <div class="main-wrapper">
+        {% campaign_include 'checkout-header.html' %}
+        <div class="checkout-content">
+          <div class="checkout__content">
+            <div class="checkout__layout">
+              <div class="checkout__column checkout__column--left">
+                <div class="checkout__form-container checkout__form-container--main">
+                  <div class="checkout-header__brand justify-center hide"><img src="{{ 'images/next-dark.svg' | campaign_asset }}" loading="eager" alt="{{ campaign.store_name }}" class="brand-logo"></div>
+                  <div class="order-summary-mobile">
+                    <div data-initial-state="closed" data-next-accordion="order-summary" data-open-text="Hide Order Summary" data-close-text="Show Order Summary" data-toggle-class="next-expanded" class="order-summary-mobile__accordion">
+                      <div data-next-accordion-trigger="order-summary" class="order-summary__trigger">
+                        <div class="order-summary__inner">
+                          <div class="order-summary__mobile-left">
+                            <div class="summary-toggle">
+                              <div data-next-accordion-text="order-summary" class="summary-toggle__text show_text">Show Order Summary</div><img os-summary-icon="" loading="lazy" alt="" src="{{ 'images/arrow-down.svg' | campaign_asset }}" class="summary-toggle__icon">
+                            </div>
+                          </div>
+                          <div data-next-show="cart.hasItems" class="order-summary__mobile-right">
+                            <div data-next-show="cart.hasDiscounts" class="summary_price price--crossed cc-sm"><span data-next-display="cart.subtotal"></span></div>
+                            <div data-next-display="cart.total" class="summary_price price--total"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div data-next-accordion-panel="order-summary" class="accordion__panel payment-method__form--expanded">
+                        {% campaign_include 'cart-summary04.html' %}
+                      </div>
+                    </div>
+                  </div>
+                  {% assign bump_variant = order_bump_variant | default: 'check02' %}
+                  {% unless bump_variant == 'none' %}
+                    {% if bump_variant == 'check01' %}
+                    {% campaign_include 'bump-check01.html' packages=packages %}
+                    {% elsif bump_variant == 'check03' %}
+                    {% campaign_include 'bump-check03.html' packages=packages %}
+                    {% elsif bump_variant == 'switch01' %}
+                    {% campaign_include 'bump-switch01.html' packages=packages %}
+                    {% else %}
+                    {% campaign_include 'bump-check02.html' packages=packages %}
+                    {% endif %}
+                  {% endunless %}
+                  {% campaign_include 'express-checkout.html' %}
+                  <div class="checkout-form">
+                    <form data-next-checkout="form" id="combo_form" method="post">
+                      <div class="form-content">
+                        <div class="form-sections">
+                          <div class="form-section form-section--first">
+                            <h2 class="form-section__title">Contact</h2>
+                            <div class="form-group">
+                              <div class="form-input"><label for="email" class="label-checkout">Email</label><input autocomplete="email" name="email" data-name="Email" type="email" id="email" placeholder="Email*" data-next-checkout-field="email" class="input-flds"></div>
+                            </div>
+                            <div class="checkbox-wrapper"><label for="accepts_marketing" class="checkout__checkbox"><input type="checkbox" data-next-checkout-field="accepts_marketing" name="accepts_marketing" id="accepts_marketing" class="checkbox__input" checked="">
+                                <div class="checkbox__label">Email me with news and offers</div>
+                              </label></div>
+                          </div>
+                          <div class="form-section">
+                            <h1 class="form-section__title">Shipping</h1>
+                            <div data-next-component="shipping-form">
+                              {% comment %} SDK-built address block (SDK >= 0.4.41): renders the selected country's fields in that country's order; fields already declared elsewhere in the form (email) are skipped. Hand-written address inputs are deprecated — see _includes/shipping-address-form.html in apollo for the partial form of this. address_form.gated (frontmatter): true = only the Address field shows until an address is typed; false = every field visible. {% endcomment %}
+                              <div data-next-address="shipping" class="{% if address_form.gated == true or address_form.gated == 'true' %}cc-gated{% else %}cc-ungated{% endif %}{% if address_form.label_style == 'floating' %} cc-floating{% elsif address_form.label_style == 'static' %} cc-static{% endif %}"></div>
+                            </div>
+                          </div>
+                          <div class="form-section form-section--last">
+                            <div class="form-section__header">
+                              <h1 class="form-section__title">Payment</h1>
+                              <div class="form-section__subtitle">All transactions are secure and encrypted.<br></div>
+
+                            </div>
+                            {% campaign_include 'payment-methods.html' %}
+                          </div>
+                          <div class="submit-section">
+                            <div class="submit-section__disclaimer">By clicking the button below, you agree with our Terms of Use and Privacy Policy.</div>
+                            <div class="submit-section__button"><button os-checkout-payment="combo" data-action="submit" type="submit" class="submit-button">
+                                <div data-pb-element="checkout-button-spinner" class="submit-button__loader">
+                                  <div class="three-quarter-spinner black"></div>
+                                </div>
+                                <div data-pb-element="checkout-button-info" class="submit-button__content">
+                                  <div class="submit-button__text">
+                                    <div data-i18n="complete_purchase" class="submit-button__main-text">COMPLETE PURCHASE →</div>
+                                  </div>
+                                  <div data-i18n="try_risk_free" class="submit-button__subtext">TRY IT RISK FREE! - 30 DAY MONEY BACK GUARANTEE!</div>
+                                </div>
+                              </button></div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="guarantee-section"><img loading="lazy" src="{{ 'images/30d.webp' | campaign_asset }}" alt="" class="guarantee-badge">
+                    <div class="text-xs"><strong>30 Day Money-Back Guarantee:</strong> Feel safe knowing you're protected. Try it risk-free and return it within 30 days for a full refund or replacement—no questions asked.</div>
+                  </div>
+                  {% campaign_include 'checkout-footer-links.html' %}
+                </div>
+              </div>
+              <div class="checkout__column checkout__column--right">
+                <div class="checkout__summary">
+                  <div class="summary-desktop">
+                    <div class="summary-wrap">
+                      <div class="summary-holder">
+                        {% campaign_include 'cart-summary04.html' %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

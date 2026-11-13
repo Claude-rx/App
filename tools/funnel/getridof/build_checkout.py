@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds the Get Rid Of Mouse Pouches checkout pages from the olympus starter template.
+"""Builds the Get Rid Of Mouse Pouches checkout (Shopify-style layout from the shop-single-step starter, shop_checkout.py).
 
     python3 tools/funnel/getridof/build_checkout.py
 
@@ -14,12 +14,14 @@ shipping method 1 (free); offers count 1/3/5 -> $29.99 / $55.98 / $74.95; no exi
 The bundle ids buy1/buy3/buy5 are the ones the PDP sends with ?forceBundleId=main:<id>.
 Every claim below is the PDP's own copy (30-day guarantee, 35,129+ properties, the reviews, the benefits).
 """
-import json, re
+import json, re, sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import shop_checkout  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[3]
 CAMP = ROOT / 'campaigns/getridof/src/mouse-pouches'
-TEMPLATE = ROOT / 'tools/funnel/getridof/olympus-checkout.template.html'
 STORE = 'https://getridof.shop'   # every visible link goes to the main domain
 EMAIL = 'support@getridof.shop'
 
@@ -108,99 +110,13 @@ bundles:
 {card("buy1", 1, "Buy 1", "1x Pack | 12 Pouches")}{card("buy3", 3, "Buy 2, Get 1 Free", "3x Pack | 36 Pouches", True, "Best Seller")}{card("buy5", 5, "Buy 3, Get 2 Free", "5x Pack | 60 Pouches", False, "Best Value")}refill_terms: {"true" if refill else "false"}
 address_form:
   label_style: inset
-  gated: true
+  gated: false
 ---
 '''
 
-def body(refill):
-    s = TEMPLATE.read_text().split('---', 2)[2]
-    name = 'Get Rid Of Rodent Repellent Pouches'
-    s = s.replace('TRUSTED BY 180,000+ FAMILIES', '35,129+ PROPERTIES PROTECTED')
-    s = s.replace('<span>Product Name</span>', f'<span>{name}</span>')
-    s = s.replace('2026 New &amp; Improved, Premium product bundle',
-                  '12 pouches a pack · natural 4-oil formula' + (' · Automatic Refills' if refill else ''))
-    s = s.replace('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                  'Natural 4-oil formula. Mice retreat within 72 hours; each pouch protects for 90 days.')
-    for i, b in enumerate(['Benefit one', 'Benefit two', 'Benefit three', 'Benefit four']):
-        s = s.replace(f'>{b}<', f'>{BENEFITS[i]}<')
-    s = s.replace("{{ 'images/1x1_2.svg' | campaign_asset }}\" alt=\"\" class=\"cover\"",
-                  "{{ 'pdp/gro-check.svg' | campaign_asset }}\" alt=\"\" class=\"cover\"")
-    # reviews: the template repeats one review twice in each of its two columns -> Robert, Tom, Robert, Tom
-    n = [0]
-    def rev(m):
-        t, d, a, w = REVIEWS[n[0] % 2]; n[0] += 1
-        blk = m.group(0)
-        blk = blk.replace('Woke up without the soreness', t)
-        blk = re.sub(r'(<p class="checkout-review__description">).*?(<br></p>)', lambda x: x.group(1) + d + x.group(2), blk, flags=re.S)
-        blk = blk.replace('Daniel K.', a).replace('Verified Customer', 'Verified Buyer · ' + w)
-        return blk
-    s = re.sub(r'<p class="checkout-review__title">Woke up without the soreness.*?Verified Customer', rev, s, flags=re.S)
-    s = s.replace("<strong>90 Day Money-Back Guarantee:</strong> Feel safe knowing you're protected. Try it risk-free and return it within 90 days for a full refund or replacement—no questions asked.",
-                  "<strong>30-Day Money-Back Guarantee:</strong> We stand behind our product. 100% refund valid for 30 days. No questions asked.")
-    # drop the commented reference block for config-driven bundles (it carries demo SPEC_ ids)
-    s = re.sub(r"\{% comment %\}((?!\{% endcomment %\}).)*?Reference only.*?\{% endcomment %\}", '', s, flags=re.S)
-    # Automatic Refills disclosure: right under the order button and the payment badges
-    # phone required: AppLovin Axon user_data needs it on purchase (and it improves match rates everywhere)
-    assert "{% campaign_include 'customer-info-form.html' %}" in s
-    s = s.replace("{% campaign_include 'customer-info-form.html' %}", "{% campaign_include 'customer-info-form.html' phone_required=true %}", 1)
-    # Order of the payment step (owner's spec, for conversion): order summary BEFORE Step 4, then
-    #   payment options -> COMPLETE PURCHASE -> payment badges -> Automatic Refills disclosure.
-    summary = re.search(r'[ \t]*<div class="form-section form-section--last">\s*<div class="cart-box cart-box--card">.*?\{% comment %\} END SUMMARY V2 \{% endcomment %\}\n', s, re.S)
-    assert summary, 'order summary block not found'
-    s = s.replace(summary.group(0), '', 1)
-    pay = re.search(r'[ \t]*<div class="form-section form-section--last">\s*<div class="form-section__header">\s*<h1 class="form-section__title">4\. Payment Method<', s)
-    assert pay, 'payment section not found'
-    s = s[:pay.start()] + summary.group(0) + s[pay.start():]
-    assert s.count("{% campaign_include 'submit-block.html' %}") == 1
-    s = s.replace("{% campaign_include 'submit-block.html' %}",
-                  "{% campaign_include 'submit-block.html' disclaimer=submit_disclaimer %}\n"
-                  "                            {% campaign_include 'payment-logos.html' payment_flags=payment_flags wrapper_class='gro-pay-badges' %}\n"
-                  "                            {% if refill_terms %}{% campaign_include 'gro-refill-terms.html' %}{% endif %}", 1)
-    # the logos now sit under the button; the trust bar keeps only its SSL / safe-checkout badges
-    trust = "</div>{% campaign_include 'payment-logos.html' show_secure=false %}"
-    assert trust in s
-    s = s.replace(trust, '</div>', 1)
-    # no top express PayPal / Apple Pay buttons: they open the wallet before the form is validated, so they skip the
-    # required phone (Axon user_data). PayPal + Apple Pay stay as payment-method radios, which do require it.
-    ex = "{% campaign_include 'express-checkout.html' show_title=false %}"
-    assert s.count(ex) == 1, 'express include not found'
-    s = s.replace(ex, '', 1)
-    # a short review right under the product line (both header copies: mobile + desktop)
-    sub = '<div class="text-reg"><strong>12 pouches a pack · natural 4-oil formula' + (' · Automatic Refills' if refill else '') + '</strong></div>'
-    assert s.count(sub) >= 1, 'product subtitle not found'
-    # mobile header copy (1st): Robert's review under the product line. Desktop copy (2nd): the same review under the
-    # "Natural 4-oil formula..." description (owner's layout).
-    def hrev(r):
-        t, _, a, _ = r
-        return (f'<div class="gro-hrev" role="note"><p class="gro-hrev__q">{t}</p>'
-                f'<p class="gro-hrev__by"><span class="gro-hrev__stars" aria-label="5 out of 5 stars">★★★★★</span> {a} · Verified Buyer</p></div>')
-    parts = s.split(sub)
-    assert len(parts) == 3, f'expected 2 product subtitles, got {len(parts) - 1}'
-    s = parts[0] + sub + hrev(REVIEWS[0]) + parts[1] + sub + parts[2]
-    desc = re.search(r'<div class="sub-head-text">\s*<div>Natural 4-oil formula\.[^<]*</div>\s*</div>', s)
-    assert desc, 'description line not found'
-    s = s.replace(desc.group(0), desc.group(0) + hrev(REVIEWS[0]), 1)
-    # image slider: desktop only (owner's request). Hidden below 992px, where its lazy images never download, and
-    # Swiper's CSS + JS are fetched only on desktop, then the gallery is started (the starter never called it).
-    gal = '<div class="checkout-media__wrapper">'
-    assert s.count(gal) == 1, 'checkout gallery not found'
-    s = s.replace(gal, '<div class="checkout-media__wrapper hide-tablet-down">', 1)
-    loader = ("<script>(function(){if(!matchMedia('(min-width: 992px)').matches)return;var d=document,"
-              "c=d.createElement('link');c.rel='stylesheet';c.href='https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.css';"
-              "d.head.appendChild(c);var j=d.createElement('script');j.src='https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.js';"
-              "j.async=true;j.onload=function(){var go=function(){if(typeof initSwiperGalleries==='function')initSwiperGalleries();};"
-              "d.readyState==='loading'?d.addEventListener('DOMContentLoaded',go):go();};d.head.appendChild(j);})();</script>")
-    s = s.replace("{% campaign_include 'swiper-gallery.html'", loader + "\n                        {% campaign_include 'swiper-gallery.html'", 1)
-    # no exit-intent popup on this checkout (removed at the owner's request)
-    s = s.replace("{{ 'images/90d.webp' | campaign_asset }}", "{{ 'images/30d.webp' | campaign_asset }}")
-    s = s.replace('>4. Payment Method<', '>Step 4: Payment Method<')
-    left = [p for p in ['Daniel K', 'Lorem', 'Product Name', 'Benefit one', '180,000', 'SPEC_'] if p in s]
-    assert not left, f'template placeholders left: {left}'
-    return s
-
 (CAMP / 'checkout-refill.html').unlink(missing_ok=True)   # subscription-only funnel: one checkout
 for refill, fn in [(True, 'checkout.html')]:
-    (CAMP / fn).write_text(front(refill) + body(refill))
+    (CAMP / fn).write_text(front(refill) + shop_checkout.body(REVIEWS))   # Shopify-style layout (shop_checkout.py)
 
 (CAMP / '_includes/gro-refill-terms.html').write_text(f'''{{% comment %}} Automatic Refills disclosure, under the order button + payment badges on checkout.html (build_checkout.py). {{% endcomment %}}
 <div class="gro-refill-terms" role="note">
@@ -219,7 +135,7 @@ core.write_text(core.read_text().split('\n/* gro: refill terms */')[0])   # earl
 (CAMP / 'assets/css/gro-checkout.css').write_text("""/* Get Rid Of checkout additions (build_checkout.py) */
 .gro-refill-terms{margin:12px 0;padding:12px 14px;border:1px solid #7EA254;background:#EEF4E6;border-radius:8px;font-size:13px;line-height:1.45;color:#23372B}
 .gro-refill-terms a{color:#23372B;text-decoration:underline}
-/* header review under the product line */
+""" + shop_checkout.CSS + """/* header review under the product line */
 .gro-hrev{margin:14px auto 4px;max-width:520px;background:#F1F2EE;border-radius:12px;padding:14px 18px;text-align:left}
 .gro-hrev__q{margin:0 0 6px;font-style:italic;font-weight:700;font-size:17px;line-height:1.35;color:#23372B}
 .gro-hrev__by{margin:0;font-size:15px;color:#4a4f4a}

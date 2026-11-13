@@ -61,12 +61,14 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
   // owner's layout: order summary above Step 4, then payment options -> COMPLETE PURCHASE -> payment badges -> Automatic Refills
   const lay = await p.evaluate(() => {
     const y = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().top + scrollY : null; };
-    return { summary: y('.cart-box'), payment: y('[data-next-payment-method="credit"]'), submit: y('.submit-button'), badges: y('.gro-pay-badges'), refill: y('.gro-refill-terms'),
+    return { summary: (() => { const e = document.querySelector('.checkout__column--right [data-next-cart-summary]'); return e && e.offsetParent ? 1 : null; })(), payment: y('[data-next-payment-method="credit"]'), submit: y('.submit-button'), badges: y('.gro-pay-badges'), refill: y('.gro-refill-terms'),
       logos: [...document.querySelectorAll('.gro-pay-badges .payment-logos__item')].filter(e => e.offsetParent).map(e => e.alt),
       popup: !!document.querySelector('[class*="exit-intent"], #sc-exit') };
   });
-  const seq = [lay.summary, lay.payment, lay.submit, lay.badges, lay.refill];
-  ok('payment step order: summary > payment > button > badges > Automatic Refills', seq.every(v => v !== null) && seq.every((v, i) => !i || v > seq[i - 1]), JSON.stringify(seq.map(Math.round)));
+  // Shopify-style layout: order summary in the right column (desktop); left column: payment > button > badges > refills
+  ok('order summary shown in the right column (desktop)', lay.summary === 1);
+  const seq = [lay.payment, lay.submit, lay.badges, lay.refill];
+  ok('payment step order: payment > button > badges > Automatic Refills', seq.every(v => v !== null) && seq.every((v, i) => !i || v > seq[i - 1]), JSON.stringify(seq.map(Math.round)));
   ok('all payment badges under the button', ['Visa', 'Mastercard', 'American Express', 'Discover', 'PayPal', 'Apple Pay'].every(n => lay.logos.includes(n)), lay.logos.join(', '));
   ok('no exit-intent popup markup', !lay.popup);
   // phone left empty on purpose: the order button must stop on it (no order request is sent; the card is empty anyway)

@@ -12,25 +12,24 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
     await p.goto(base + '/mouse-pouches/checkout/', { waitUntil: 'load' });
     await p.waitForFunction(() => document.querySelector('[data-next-bundle-card].next-selected'), null, { timeout: 30000 });
     await p.waitForTimeout(2500);
-    const state = () => p.evaluate(() => [...document.querySelectorAll('[data-next-bundle-card]')].map(c => ({ id: c.dataset.nextBundleId, sdk: c.classList.contains('next-selected'), radio: (c.querySelector('.radio-style-1') || {}).getAttribute ? c.querySelector('.radio-style-1').getAttribute('data-selected') : null })));
-    const s0 = await state();
-    ok(`[${vp.n}] default card buy3 selected (SDK class)`, s0.find(c => c.id === 'buy3').sdk && s0.filter(c => c.sdk).length === 1, JSON.stringify(s0));
-    await p.locator('[data-next-bundle-card][data-next-bundle-id="buy1"]').click(); await p.waitForTimeout(1500);
-    const s1 = await state();
-    ok(`[${vp.n}] picking buy1 deselects buy3`, s1.find(c => c.id === 'buy1').sdk && !s1.find(c => c.id === 'buy3').sdk, JSON.stringify(s1));
-    ok(`[${vp.n}] no stale static data-selected on an unselected card`, !s1.some(c => !c.sdk && c.radio === 'true'), JSON.stringify(s1));
-    const radioVis = await p.evaluate(() => [...document.querySelectorAll('[data-next-bundle-card]')].map(c => getComputedStyle(c.querySelector('.radio-inner') || c, '::before').content + '|' + getComputedStyle(c.querySelector('.radio-inner') || c).opacity + '|' + getComputedStyle(c.querySelector('.radio-inner') || c).backgroundColor));
-    ok(`[${vp.n}] radio visuals follow selection`, radioVis[0] !== radioVis[1], radioVis.join(' / '));
-    const total1 = await p.locator('[data-next-cart-summary]').first().innerText();
-    ok(`[${vp.n}] buy1 total $24.99 (subscription first order)`, /24\.99/.test(total1));
-    await p.locator('[data-next-bundle-card]').first().screenshot({ path: `${out}/bundle-cards-${vp.n}.png` }).catch(() => {});
-    await p.locator('[data-next-bundle-selector]').first().screenshot({ path: `${out}/bundle-selector-${vp.n}.png` });
+    // Shopify-style checkout: no visible bundle picker; the tier comes from the sales page as ?forceBundleId=main:<id>
+    // and a hidden selector applies it. Default (no parameter) = buy3.
+    const tierCards = await p.evaluate(() => [...document.querySelectorAll('[data-next-bundle-card]')].filter(c => c.offsetParent).length);
+    ok(`[${vp.n}] no visible bundle picker (Shopify-style)`, tierCards === 0, `visible cards: ${tierCards}`);
+    const sumText = async () => (await p.locator('[data-next-cart-summary]').first().innerText()).replace(/\s+/g, ' ');
+    ok(`[${vp.n}] default tier = 3 packs, $47.97`, /47\.97/.test(await sumText()));
+    for (const [id, price, packs] of [['buy1', '24.99', 1], ['buy5', '64.95', 5]]) {
+      await p.goto(base + `/mouse-pouches/checkout/?forceBundleId=main:${id}`, { waitUntil: 'load' });
+      await p.waitForFunction(() => document.querySelector('[data-next-bundle-card].next-selected'), null, { timeout: 30000 }); await p.waitForTimeout(2500);
+      const t = await sumText();
+      ok(`[${vp.n}] ${id} from the sales page -> ${packs} pack(s), $${price}`, t.includes(price), t.slice(0, 90));
+    }
     // bump
     const bump = p.locator('[data-next-toggle-card]').first();
     const before = await bump.getAttribute('class');
     await bump.click(); await p.waitForTimeout(1800);
     const after = await bump.getAttribute('class'); const t2 = await p.locator('[data-next-cart-summary]').first().innerText();
-    ok(`[${vp.n}] bump toggles on and adds $3.97`, !/next-(active|selected|in-cart)/.test(before || '') && /next-(active|selected|in-cart)/.test(after || '') && /28\.96/.test(t2), `${before} -> ${after}`);
+    ok(`[${vp.n}] bump toggles on and adds $3.97`, !/next-(active|selected|in-cart)/.test(before || '') && /next-(active|selected|in-cart)/.test(after || '') && /68\.92/.test(t2), `${before} -> ${after}`);
     await bump.screenshot({ path: `${out}/bump-${vp.n}.png` });
     await bump.click(); await p.waitForTimeout(1500);
     ok(`[${vp.n}] bump toggles off`, !/next-(active|selected|in-cart)/.test(await bump.getAttribute('class') || ''));
