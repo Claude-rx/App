@@ -13,14 +13,11 @@ cart_summary_variant: "02"
 order_bump_variant: "check01"
 styles:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
-  - css/exit-intent-popup.css
   - css/gro-checkout.css
 scripts:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - js/checkout.js
   - js/payment-logos.js
-  - js/checkout-olympus.js
-  - js/gro-checkout.js
 swiper_slides:
   - src: "pdp/t12-rodent-57d2b1.png"
     alt: "Rodent Repellent Pouches with Automatic Refills"
@@ -91,15 +88,6 @@ bundles:
     badge_text: "Best Value"
     badge_pill_class: "os-card__label--pill-primary"
 refill_terms: true
-exit_intent:
-  coupon_code: "GROMOUSE10"
-  popup_image: "pdp/t12-rodent-57d2b1.png"
-  headline: "Wait!"
-  subheadline: "Before you go, take 10% off."
-  offer_title: "Your pouches, 10% off today"
-  offer_label: "Take a further <strong>10% off</strong> your pouches"
-  offer_detail: "Applies to the pouches in today’s order, on top of your bundle price."
-  cta_label: "Apply my 10% off"
 address_form:
   label_style: inset
   gated: true
@@ -428,6 +416,3 @@ address_form:
 
 
         <script>if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => initSwiperGalleries()); } else { initSwiperGalleries(); }</script>
-
-{% assign exit_image = exit_intent.popup_image | campaign_asset %}
-{% campaign_include 'exit-intent-popup.html' coupon_code=exit_intent.coupon_code popup_image=exit_image headline=exit_intent.headline subheadline=exit_intent.subheadline offer_title=exit_intent.offer_title offer_label=exit_intent.offer_label offer_detail=exit_intent.offer_detail cta_label=exit_intent.cta_label %}

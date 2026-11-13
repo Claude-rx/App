@@ -10,7 +10,7 @@ Writes, under campaigns/getridof/src/mouse-pouches/:
 and brands the shared header, receipt, campaigns.json entry and config.js.
 
 Campaign 2362 (Campaigns App, getridof.29next.store): packages 1 One-Time, 2 Auto-Refill, 3 Package Protection;
-shipping method 1 (free); offers count 1/3/5 -> $29.99 / $55.98 / $74.95; exit voucher GROMOUSE10 (10% off).
+shipping method 1 (free); offers count 1/3/5 -> $29.99 / $55.98 / $74.95; no exit-intent popup.
 The bundle ids buy1/buy3/buy5 are the ones the PDP sends with ?forceBundleId=main:<id>.
 Every claim below is the PDP's own copy (30-day guarantee, 35,129+ properties, the reviews, the benefits).
 """
@@ -67,14 +67,11 @@ cart_summary_variant: "{'02' if refill else '01'}"
 order_bump_variant: "check01"
 styles:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
-  - css/exit-intent-popup.css
   - css/gro-checkout.css
 scripts:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - js/checkout.js
   - js/payment-logos.js
-  - js/checkout-olympus.js
-  - js/gro-checkout.js
 swiper_slides:
 {slides}
 swiper_thumbs:
@@ -96,15 +93,6 @@ shipping_methods:
   standard: 1
 bundles:
 {card("buy1", 1, "Buy 1", "1x Pack | 12 Pouches")}{card("buy3", 3, "Buy 2, Get 1 Free", "3x Pack | 36 Pouches", True, "Best Seller")}{card("buy5", 5, "Buy 3, Get 2 Free", "5x Pack | 60 Pouches", False, "Best Value")}refill_terms: {"true" if refill else "false"}
-exit_intent:
-  coupon_code: "GROMOUSE10"
-  popup_image: "pdp/t12-rodent-57d2b1.png"
-  headline: "Wait!"
-  subheadline: "Before you go, take 10% off."
-  offer_title: "Your pouches, 10% off today"
-  offer_label: "Take a further <strong>10% off</strong> your pouches"
-  offer_detail: "Applies to the pouches in today’s order, on top of your bundle price."
-  cta_label: "Apply my 10% off"
 address_form:
   label_style: inset
   gated: true
@@ -138,13 +126,10 @@ def body(refill):
                   "<strong>30-Day Money-Back Guarantee:</strong> We stand behind our product. 100% refund valid for 30 days. No questions asked.")
     # drop the commented reference block for config-driven bundles (it carries demo SPEC_ ids)
     s = re.sub(r"\{% comment %\}((?!\{% endcomment %\}).)*?Reference only.*?\{% endcomment %\}", '', s, flags=re.S)
-    # refill disclosure above the order button, exit-intent template at the end
+    # refill disclosure above the order button
     s = s.replace("{% campaign_include 'submit-block.html' %}",
                   "{% if refill_terms %}{% campaign_include 'gro-refill-terms.html' %}{% endif %}\n                            {% campaign_include 'submit-block.html' %}", 1)
-    s += ("\n{% assign exit_image = exit_intent.popup_image | campaign_asset %}\n"
-          "{% campaign_include 'exit-intent-popup.html' coupon_code=exit_intent.coupon_code popup_image=exit_image headline=exit_intent.headline "
-          "subheadline=exit_intent.subheadline offer_title=exit_intent.offer_title offer_label=exit_intent.offer_label "
-          "offer_detail=exit_intent.offer_detail cta_label=exit_intent.cta_label %}\n")
+    # no exit-intent popup on this checkout (removed at the owner's request)
     s = s.replace("{{ 'images/90d.webp' | campaign_asset }}", "{{ 'images/30d.webp' | campaign_asset }}")
     s = s.replace('>4. Payment Method<', '>Step 4: Payment Method<')
     left = [p for p in ['Daniel K', 'Lorem', 'Product Name', 'Benefit one', '180,000', 'SPEC_'] if p in s]
@@ -165,11 +150,7 @@ for refill, fn in [(True, 'checkout.html')]:
 ''')
 (CAMP / 'assets/pdp').mkdir(parents=True, exist_ok=True)
 (CAMP / 'assets/pdp/gro-check.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#CCF46F"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#23372B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>\n')
-(CAMP / 'assets/js/gro-checkout.js').write_text('''/* Get Rid Of checkout: exit-intent offer (GROMOUSE10, 10% off the pouches) from the template in the page. */
-window.addEventListener('next:initialized', function () {
-  if (typeof initExitIntentTemplate === 'function') initExitIntentTemplate('exit-intent');
-});
-''')
+(CAMP / 'assets/js/gro-checkout.js').unlink(missing_ok=True)   # held the exit-intent popup, now removed
 core = CAMP / 'assets/css/next-core.css'
 core.write_text(core.read_text().split('\n/* gro: refill terms */')[0])   # earlier builds appended here
 (CAMP / 'assets/css/gro-checkout.css').write_text("""/* Get Rid Of checkout additions (build_checkout.py) */

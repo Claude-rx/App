@@ -54,15 +54,13 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
   await p.mouse.move(700, 300); await p.mouse.move(700, 5, { steps: 10 }); await p.mouse.move(700, -50);
   await p.evaluate(() => document.dispatchEvent(new MouseEvent('mouseout', { relatedTarget: null, clientY: -5, bubbles: true })));
   await p.waitForTimeout(1500);
-  const popup = p.locator('.exit-intent-popup').first();
-  const shown = await popup.isVisible().catch(() => false);
-  ok('[desktop] exit-intent popup shows', shown);
-  if (shown) {
-    await p.screenshot({ path: `${out}/exit-intent.png` });
-    await p.locator('[data-exit-intent-action="apply-coupon"]').first().click(); await p.waitForTimeout(3000);
-    const t = await p.locator('[data-next-cart-summary]').first().innerText();
-    ok('[desktop] exit coupon GROMOUSE10 applies (3-pack $47.97 -> $43.17)', /43\.17/.test(t), t.replace(/\s+/g, ' ').slice(0, 220));
-  }
+  // the exit popup was removed at the owner's request: nothing may pop up (no SDK exit-intent overlay, no placeholder image)
+  const overlay = await p.evaluate(() => [...document.querySelectorAll('body *')].some(e => {
+    const st = getComputedStyle(e); if (st.position !== 'fixed' || st.display === 'none' || st.visibility === 'hidden') return false;
+    const r = e.getBoundingClientRect(); return r.width > innerWidth * 0.5 && r.height > innerHeight * 0.5 && +st.zIndex > 100; }));
+  const placeholder = await p.evaluate(() => !!document.querySelector('img[src*="placehold"]'));
+  ok('[desktop] no exit-intent popup on leaving the page', !overlay && !placeholder);
+  await p.screenshot({ path: `${out}/exit-intent.png` });
   await b.close();
   require('fs').writeFileSync(`${out}/polish-checks.json`, JSON.stringify({ base, ran_at: new Date().toISOString(), results: res }, null, 2));
   const f = res.filter(r => !r.pass).length; console.log(`\n${res.length - f}/${res.length} passed`); process.exit(f ? 1 : 0);

@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:8765",
-  "ran_at": "2026-11-12T14:10:16.896Z",
+  "ran_at": "2026-11-13T07:05:56.352Z",
   "results": [
     {
       "check": "[desktop] default card buy3 selected (SDK class)",
@@ -93,14 +93,9 @@
       "detail": "{\"buttons\":2,\"visibleHeight\":138,\"display\":\"flex\"}"
     },
     {
-      "check": "[desktop] exit-intent popup shows",
+      "check": "[desktop] no exit-intent popup on leaving the page",
       "pass": true,
       "detail": ""
-    },
-    {
-      "check": "[desktop] exit coupon GROMOUSE10 applies (3-pack $47.97 -> $43.17)",
-      "pass": true,
-      "detail": "3 Rodent Repellent Pouches – Auto-Refill $149.97 $43.17 Subtotal $149.97 Subscribe & Save – Buy 2, Get 1 Free + 50% Off −$102.01 Extra 10% Off −$4.79 Shipping Free Today You Saved 71% OFF Discount: $106.80 Grand Total: U"
     }
   ]
 }
