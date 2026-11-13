@@ -156,6 +156,11 @@ def body(refill):
     trust = "</div>{% campaign_include 'payment-logos.html' show_secure=false %}"
     assert trust in s
     s = s.replace(trust, '</div>', 1)
+    # no top express PayPal / Apple Pay buttons: they open the wallet before the form is validated, so they skip the
+    # required phone (Axon user_data). PayPal + Apple Pay stay as payment-method radios, which do require it.
+    ex = "{% campaign_include 'express-checkout.html' show_title=false %}"
+    assert s.count(ex) == 1, 'express include not found'
+    s = s.replace(ex, '', 1)
     # no product image slider on the checkout (owner's request): drop the gallery and its Swiper assets
     gal = re.search(r'[ \t]*<div class="checkout-media__wrapper">\s*\{% campaign_include \'swiper-gallery.html\'[^%]*%\}\s*</div>\n', s)
     assert gal, 'checkout gallery not found'

@@ -42,7 +42,8 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
     return { card: !!document.querySelector('[data-next-checkout-field="cc-number"] iframe'), cvv: !!document.querySelector('[data-next-checkout-field="cvv"] iframe'), express: btns, expressShown: ex ? getComputedStyle(ex).display !== 'none' : false, radios };
   });
   ok('card number + CVV fields loaded (29next payments / Adyen)', pay.card && pay.cvv);
-  ok('express checkout shown (PayPal / Apple Pay as the browser allows)', pay.expressShown, JSON.stringify(pay.express));
+  ok('no top express buttons (they would skip the required phone)', !pay.expressShown, JSON.stringify(pay.express));
+  ok('PayPal + Apple Pay offered as payment options', ['paypal', 'apple_pay'].every(m => pay.radios.includes(m)), pay.radios.join(', '));
   ok('payment method radios', pay.radios.length > 0, pay.radios.join(', '));
   // fill the form (no submit)
   const fill = async (sel, v) => { const el = p.locator(sel).first(); if (await el.count()) { await el.fill(v); await el.blur().catch(() => {}); } };
@@ -68,6 +69,11 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
   ok('payment step order: summary > payment > button > badges > Automatic Refills', seq.every(v => v !== null) && seq.every((v, i) => !i || v > seq[i - 1]), JSON.stringify(seq.map(Math.round)));
   ok('all payment badges under the button', ['Visa', 'Mastercard', 'American Express', 'Discover', 'PayPal', 'Apple Pay'].every(n => lay.logos.includes(n)), lay.logos.join(', '));
   ok('no exit-intent popup markup', !lay.popup);
+  // phone left empty on purpose: the order button must stop on it (no order request is sent; the card is empty anyway)
+  const orderPosts = []; p.on('request', r => { if (r.method() === 'POST' && /\/api\/v1\/orders/.test(r.url())) orderPosts.push(r.url()); });
+  await p.locator('.submit-button').click(); await p.waitForTimeout(2500);
+  const stop = await p.evaluate(() => document.activeElement && document.activeElement.id);
+  ok('order blocked without a phone number', stop === 'phone' && orderPosts.length === 0, `focus=${stop} orderPosts=${orderPosts.length}`);
   await p.screenshot({ path: (process.argv[3] || '.') + '/live-checkout-filled.png', fullPage: true });
   ok('no JavaScript errors', errs.length === 0, errs.slice(0, 2).join(' | '));
   await b.close();

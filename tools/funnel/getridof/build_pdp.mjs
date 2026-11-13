@@ -247,3 +247,5 @@ const { execFileSync } = await import('node:child_process');
 execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/swap_images.py')], { stdio: 'inherit' });
 // desktop fonts TTF/OTF -> WOFF2 (the exported page shipped a 311 KB TTF that every visitor downloads)
 execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/optimize_fonts.py')], { stdio: 'inherit' });
+// below-the-fold images lazy-load (first screen + buy box stay eager)
+execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/lazy_images.py')], { stdio: 'inherit' });

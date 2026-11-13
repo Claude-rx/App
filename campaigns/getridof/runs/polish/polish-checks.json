@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:8765",
-  "ran_at": "2026-11-13T11:50:38.734Z",
+  "ran_at": "2026-11-13T12:55:55.133Z",
   "results": [
     {
       "check": "[desktop] default card buy3 selected (SDK class)",
@@ -45,7 +45,7 @@
     {
       "check": "[desktop] express area not an empty visible box (campaign is card-only)",
       "pass": true,
-      "detail": "{\"buttons\":2,\"visibleHeight\":84,\"display\":\"flex\"}"
+      "detail": "\"no container\""
     },
     {
       "check": "[mobile] default card buy3 selected (SDK class)",
@@ -90,7 +90,7 @@
     {
       "check": "[mobile] express area not an empty visible box (campaign is card-only)",
       "pass": true,
-      "detail": "{\"buttons\":2,\"visibleHeight\":138,\"display\":\"flex\"}"
+      "detail": "\"no container\""
     },
     {
       "check": "[desktop] no exit-intent popup on leaving the page",
