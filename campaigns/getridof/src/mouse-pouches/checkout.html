@@ -12,42 +12,10 @@ next_url: upsell.html
 cart_summary_variant: "02"
 order_bump_variant: "check01"
 styles:
-  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
   - css/gro-checkout.css
 scripts:
-  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - js/checkout.js
   - js/payment-logos.js
-swiper_slides:
-  - src: "pdp/t12-rodent-57d2b1.png"
-    alt: "Rodent Repellent Pouches with Automatic Refills"
-  - src: "pdp/image2-829fe1.webp"
-    alt: "Rodent Repellent Pouches with Automatic Refills"
-  - src: "pdp/image3-597645.webp"
-    alt: "Rodent Repellent Pouches with Automatic Refills"
-  - src: "pdp/image4-ef9455.webp"
-    alt: "Rodent Repellent Pouches with Automatic Refills"
-  - src: "pdp/image5-4e7092.webp"
-    alt: "Rodent Repellent Pouches with Automatic Refills"
-  - src: "pdp/image6-7a8fe2.webp"
-    alt: "Rodent Repellent Pouches with Automatic Refills"
-  - src: "pdp/image7-6cb854.webp"
-    alt: "Rodent Repellent Pouches with Automatic Refills"
-swiper_thumbs:
-  - src: "pdp/t12-rodent-57d2b1.png"
-    alt: ""
-  - src: "pdp/image2-829fe1.webp"
-    alt: ""
-  - src: "pdp/image3-597645.webp"
-    alt: ""
-  - src: "pdp/image4-ef9455.webp"
-    alt: ""
-  - src: "pdp/image5-4e7092.webp"
-    alt: ""
-  - src: "pdp/image6-7a8fe2.webp"
-    alt: ""
-  - src: "pdp/image7-6cb854.webp"
-    alt: ""
 packages:
   main_package: 2
   prepurchase_1: 3
@@ -165,9 +133,6 @@ address_form:
                 <div class="checkout-layout__left">
                   <div class="checkout-layout__content">
                     <div class="checkout-layout__content-inner">
-                      <div class="checkout-media__wrapper">
-                        {% campaign_include 'swiper-gallery.html' main_slides=swiper_slides thumbs=swiper_thumbs variant='sw1' %}
-                      </div>
                       <div class="icons-grids hide-tablet-down">
                         <div class="icon-image">
                           <div class="icon-img"><img loading="eager" src="{{ 'pdp/gro-check.svg' | campaign_asset }}" alt="" class="cover"></div>

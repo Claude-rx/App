@@ -72,16 +72,10 @@ next_url: receipt.html
 cart_summary_variant: "{'02' if refill else '01'}"
 order_bump_variant: "check01"
 styles:
-  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
   - css/gro-checkout.css
 scripts:
-  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - js/checkout.js
   - js/payment-logos.js
-swiper_slides:
-{slides}
-swiper_thumbs:
-{thumbs}
 packages:
   main_package: {pkg}
   prepurchase_1: 3
@@ -162,6 +156,10 @@ def body(refill):
     trust = "</div>{% campaign_include 'payment-logos.html' show_secure=false %}"
     assert trust in s
     s = s.replace(trust, '</div>', 1)
+    # no product image slider on the checkout (owner's request): drop the gallery and its Swiper assets
+    gal = re.search(r'[ \t]*<div class="checkout-media__wrapper">\s*\{% campaign_include \'swiper-gallery.html\'[^%]*%\}\s*</div>\n', s)
+    assert gal, 'checkout gallery not found'
+    s = s.replace(gal.group(0), '', 1)
     # no exit-intent popup on this checkout (removed at the owner's request)
     s = s.replace("{{ 'images/90d.webp' | campaign_asset }}", "{{ 'images/30d.webp' | campaign_asset }}")
     s = s.replace('>4. Payment Method<', '>Step 4: Payment Method<')
