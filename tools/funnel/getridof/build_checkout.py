@@ -161,6 +161,18 @@ def body(refill):
     ex = "{% campaign_include 'express-checkout.html' show_title=false %}"
     assert s.count(ex) == 1, 'express include not found'
     s = s.replace(ex, '', 1)
+    # a short review right under the product line (both header copies: mobile + desktop)
+    sub = '<div class="text-reg"><strong>12 pouches a pack · natural 4-oil formula' + (' · Automatic Refills' if refill else '') + '</strong></div>'
+    assert s.count(sub) >= 1, 'product subtitle not found'
+    # mobile header copy (1st) gets Robert's review; the desktop copy (2nd) gets Tom's, since Robert's full review
+    # already sits in the desktop left column
+    def hrev(r):
+        t, _, a, _ = r
+        return (f'<div class="gro-hrev" role="note"><p class="gro-hrev__q">{t}</p>'
+                f'<p class="gro-hrev__by"><span class="gro-hrev__stars" aria-label="5 out of 5 stars">★★★★★</span> {a} · Verified Buyer</p></div>')
+    parts = s.split(sub)
+    assert len(parts) == 3, f'expected 2 product subtitles, got {len(parts) - 1}'
+    s = parts[0] + sub + hrev(REVIEWS[0]) + parts[1] + sub + hrev(REVIEWS[1]) + parts[2]
     # no product image slider on the checkout (owner's request): drop the gallery and its Swiper assets
     gal = re.search(r'[ \t]*<div class="checkout-media__wrapper">\s*\{% campaign_include \'swiper-gallery.html\'[^%]*%\}\s*</div>\n', s)
     assert gal, 'checkout gallery not found'
@@ -193,6 +205,12 @@ core.write_text(core.read_text().split('\n/* gro: refill terms */')[0])   # earl
 (CAMP / 'assets/css/gro-checkout.css').write_text("""/* Get Rid Of checkout additions (build_checkout.py) */
 .gro-refill-terms{margin:12px 0;padding:12px 14px;border:1px solid #7EA254;background:#EEF4E6;border-radius:8px;font-size:13px;line-height:1.45;color:#23372B}
 .gro-refill-terms a{color:#23372B;text-decoration:underline}
+/* header review under the product line */
+.gro-hrev{margin:14px auto 4px;max-width:520px;background:#F1F2EE;border-radius:12px;padding:14px 18px;text-align:left}
+.gro-hrev__q{margin:0 0 6px;font-style:italic;font-weight:700;font-size:17px;line-height:1.35;color:#23372B}
+.gro-hrev__by{margin:0;font-size:15px;color:#4a4f4a}
+.gro-hrev__stars{color:#F2B636;letter-spacing:2px;margin-right:6px}
+@media (min-width:992px){.gro-hrev{margin-left:0}}
 /* payment step order: button -> consent line -> badges -> refill terms */
 .submit-section{display:flex;flex-direction:column}
 .submit-section__button{order:1}
