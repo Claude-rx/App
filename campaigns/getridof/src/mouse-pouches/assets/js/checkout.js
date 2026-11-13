@@ -55,47 +55,6 @@ document.querySelectorAll('[data-next-element="timer"]').forEach(timer => {
   }, 1000);
 });
 
-// ─── Exit intent — image only ───────────────────────────────────────────────
-// Simplest approach: pass an image URL. Clicking the image fires action().
-// Call inside a next:initialized event handler.
-function initExitIntentImage(image, action) {
-  window.next.exitIntent({
-    image,
-    action,
-    showCloseButton: true,
-    // overlayClosable: true,    // click overlay to close (default: true)
-    // maxTriggers: 1,           // times to show per session (default: 1)
-    // disableOnMobile: true,    // desktop only by default (default: true)
-    // mobileScrollTrigger: false, // trigger on scroll-up on mobile (default: false)
-  });
-  // next.on('exit-intent:shown', (data) => {});
-  // next.on('exit-intent:clicked', (data) => {}); // image clicked
-  // next.on('exit-intent:dismissed', (data) => {});
-}
-
-// ─── Exit intent — template ─────────────────────────────────────────────────
-// Richer approach: uses a <template data-template="name"> block in the HTML.
-// Button actions are driven by data-exit-intent-action attributes in the template:
-//   data-exit-intent-action="apply-coupon" + data-coupon-code="CODE"
-//   data-exit-intent-action="close"
-//   data-exit-intent-action="custom"  ← this is the only one that fires action()
-// Call inside a next:initialized event handler.
-function initExitIntentTemplate(templateName, action) {
-  window.next.exitIntent({
-    template: templateName,
-    action,
-    showCloseButton: true,
-    // overlayClosable: true,
-    // maxTriggers: 1,
-    // disableOnMobile: true,
-    // mobileScrollTrigger: false,
-  });
-  // next.on('exit-intent:shown', (data) => {});
-  // next.on('exit-intent:action', (data) => {}); // data.action, data.couponCode
-  // next.on('exit-intent:dismissed', (data) => {});
-  // next.on('exit-intent:closed', (data) => {});
-}
-
 // ─── Next modal (generic component) ────────────────────────────────────────
 // Auto-initialises on .next-page-modal__trigger / [data-next-modal-close] elements
 (function () {

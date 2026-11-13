@@ -97,6 +97,15 @@ order_bump:
       - "We reship it at no cost"
 shipping_methods:
   standard: 1
+submit_disclaimer: "By completing your purchase you agree to our Terms of Use, Privacy Policy and the Automatic Refills terms below."
+payment_flags:
+  secure_text: "100% Encrypted &amp; Secure Checkout"
+  show_visa: true
+  show_mastercard: true
+  show_american_express: true
+  show_discover: true
+  show_paypal: true
+  show_apple_pay: true
 bundles:
 {card("buy1", 1, "Buy 1", "1x Pack | 12 Pouches")}{card("buy3", 3, "Buy 2, Get 1 Free", "3x Pack | 36 Pouches", True, "Best Seller")}{card("buy5", 5, "Buy 3, Get 2 Free", "5x Pack | 60 Pouches", False, "Best Value")}refill_terms: {"true" if refill else "false"}
 address_form:
@@ -132,12 +141,27 @@ def body(refill):
                   "<strong>30-Day Money-Back Guarantee:</strong> We stand behind our product. 100% refund valid for 30 days. No questions asked.")
     # drop the commented reference block for config-driven bundles (it carries demo SPEC_ ids)
     s = re.sub(r"\{% comment %\}((?!\{% endcomment %\}).)*?Reference only.*?\{% endcomment %\}", '', s, flags=re.S)
-    # refill disclosure above the order button
+    # Automatic Refills disclosure: right under the order button and the payment badges
     # phone required: AppLovin Axon user_data needs it on purchase (and it improves match rates everywhere)
     assert "{% campaign_include 'customer-info-form.html' %}" in s
     s = s.replace("{% campaign_include 'customer-info-form.html' %}", "{% campaign_include 'customer-info-form.html' phone_required=true %}", 1)
+    # Order of the payment step (owner's spec, for conversion): order summary BEFORE Step 4, then
+    #   payment options -> COMPLETE PURCHASE -> payment badges -> Automatic Refills disclosure.
+    summary = re.search(r'[ \t]*<div class="form-section form-section--last">\s*<div class="cart-box cart-box--card">.*?\{% comment %\} END SUMMARY V2 \{% endcomment %\}\n', s, re.S)
+    assert summary, 'order summary block not found'
+    s = s.replace(summary.group(0), '', 1)
+    pay = re.search(r'[ \t]*<div class="form-section form-section--last">\s*<div class="form-section__header">\s*<h1 class="form-section__title">4\. Payment Method<', s)
+    assert pay, 'payment section not found'
+    s = s[:pay.start()] + summary.group(0) + s[pay.start():]
+    assert s.count("{% campaign_include 'submit-block.html' %}") == 1
     s = s.replace("{% campaign_include 'submit-block.html' %}",
-                  "{% if refill_terms %}{% campaign_include 'gro-refill-terms.html' %}{% endif %}\n                            {% campaign_include 'submit-block.html' %}", 1)
+                  "{% campaign_include 'submit-block.html' disclaimer=submit_disclaimer %}\n"
+                  "                            {% campaign_include 'payment-logos.html' payment_flags=payment_flags wrapper_class='gro-pay-badges' %}\n"
+                  "                            {% if refill_terms %}{% campaign_include 'gro-refill-terms.html' %}{% endif %}", 1)
+    # the logos now sit under the button; the trust bar keeps only its SSL / safe-checkout badges
+    trust = "</div>{% campaign_include 'payment-logos.html' show_secure=false %}"
+    assert trust in s
+    s = s.replace(trust, '</div>', 1)
     # no exit-intent popup on this checkout (removed at the owner's request)
     s = s.replace("{{ 'images/90d.webp' | campaign_asset }}", "{{ 'images/30d.webp' | campaign_asset }}")
     s = s.replace('>4. Payment Method<', '>Step 4: Payment Method<')
@@ -149,7 +173,7 @@ def body(refill):
 for refill, fn in [(True, 'checkout.html')]:
     (CAMP / fn).write_text(front(refill) + body(refill))
 
-(CAMP / '_includes/gro-refill-terms.html').write_text(f'''{{% comment %}} Automatic Refills disclosure, by the order button on checkout-refill (build_checkout.py). {{% endcomment %}}
+(CAMP / '_includes/gro-refill-terms.html').write_text(f'''{{% comment %}} Automatic Refills disclosure, under the order button + payment badges on checkout.html (build_checkout.py). {{% endcomment %}}
 <div class="gro-refill-terms" role="note">
   <strong>Automatic Refills:</strong> today you pay the bundle price shown above. Each pack lasts about a month, so your refill
   ships when it runs out, at <strong>$34.99 per pack</strong> (the same number of packs as today): 1 pack every 30 days,
@@ -166,6 +190,13 @@ core.write_text(core.read_text().split('\n/* gro: refill terms */')[0])   # earl
 (CAMP / 'assets/css/gro-checkout.css').write_text("""/* Get Rid Of checkout additions (build_checkout.py) */
 .gro-refill-terms{margin:12px 0;padding:12px 14px;border:1px solid #7EA254;background:#EEF4E6;border-radius:8px;font-size:13px;line-height:1.45;color:#23372B}
 .gro-refill-terms a{color:#23372B;text-decoration:underline}
+/* payment step order: button -> consent line -> badges -> refill terms */
+.submit-section{display:flex;flex-direction:column}
+.submit-section__button{order:1}
+.submit-section__disclaimer{order:2;margin-top:8px;font-size:12px;text-align:center}
+.gro-pay-badges{margin:14px 0 4px;text-align:center}
+.gro-pay-badges .payment-logos{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.gro-pay-badges .payment-logos__item{height:26px;width:auto}
 /* bundle cards: the deal is the title (package name hidden); the % off is stated on the PDP, not the SDK's 62.67% badge */
 [data-next-bundle-card] .os-card__title [data-next-display="package.name"],
 [data-next-bundle-card] [data-next-discounts="offer"].os-card__title-badge{display:none!important}

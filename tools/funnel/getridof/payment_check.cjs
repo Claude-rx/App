@@ -57,6 +57,17 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
   ok('checkout total for 3 subscribed packs = $47.97, free shipping', /47\.97/.test(sum) && /Free/i.test(sum), sum.slice(0, 120));
   const submit = await p.evaluate(() => { const s = document.querySelector('[data-next-checkout="form"] button[type="submit"], .submit-button'); return s ? { text: s.innerText.trim(), disabled: s.disabled } : null; });
   ok('order button present and enabled (not clicked)', submit && !submit.disabled, submit && submit.text);
+  // owner's layout: order summary above Step 4, then payment options -> COMPLETE PURCHASE -> payment badges -> Automatic Refills
+  const lay = await p.evaluate(() => {
+    const y = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().top + scrollY : null; };
+    return { summary: y('.cart-box'), payment: y('[data-next-payment-method="credit"]'), submit: y('.submit-button'), badges: y('.gro-pay-badges'), refill: y('.gro-refill-terms'),
+      logos: [...document.querySelectorAll('.gro-pay-badges .payment-logos__item')].filter(e => e.offsetParent).map(e => e.alt),
+      popup: !!document.querySelector('[class*="exit-intent"], #sc-exit') };
+  });
+  const seq = [lay.summary, lay.payment, lay.submit, lay.badges, lay.refill];
+  ok('payment step order: summary > payment > button > badges > Automatic Refills', seq.every(v => v !== null) && seq.every((v, i) => !i || v > seq[i - 1]), JSON.stringify(seq.map(Math.round)));
+  ok('all payment badges under the button', ['Visa', 'Mastercard', 'American Express', 'Discover', 'PayPal', 'Apple Pay'].every(n => lay.logos.includes(n)), lay.logos.join(', '));
+  ok('no exit-intent popup markup', !lay.popup);
   await p.screenshot({ path: (process.argv[3] || '.') + '/live-checkout-filled.png', fullPage: true });
   ok('no JavaScript errors', errs.length === 0, errs.slice(0, 2).join(' | '));
   await b.close();

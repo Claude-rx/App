@@ -113,6 +113,8 @@ def page(o):
              'scripts:', '  - js/upsells.js', '  - js/payment-logos.js', 'styles:', '  - css/gro-checkout.css',
              f'announcement_text: {q(o["announce"])}', f'badge_note: {q(o["badge_note"])}',
              f'map_title: {q(o["map"][0])}', f'map_intro: {q(o["map"][1])}',
+             'payment_flags:', '  show_visa: true', '  show_mastercard: true', '  show_american_express: true',
+             '  show_discover: true', '  show_paypal: true', '  show_apple_pay: true',
              'upsell_hero:', '  variant: plain', f'  title: {q(o["hero_title"])}', f'  text: {q(o["hero_text"])}',
              'upsell_layout:', '  style: box', '  media: image', '  media_width: medium', '  show_bullets: true',
              '  show_decline: false', '  show_payment_logos: true',

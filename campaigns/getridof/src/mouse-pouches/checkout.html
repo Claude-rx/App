@@ -63,6 +63,15 @@ order_bump:
       - "We reship it at no cost"
 shipping_methods:
   standard: 1
+submit_disclaimer: "By completing your purchase you agree to our Terms of Use, Privacy Policy and the Automatic Refills terms below."
+payment_flags:
+  secure_text: "100% Encrypted &amp; Secure Checkout"
+  show_visa: true
+  show_mastercard: true
+  show_american_express: true
+  show_discover: true
+  show_paypal: true
+  show_apple_pay: true
 bundles:
   - id: "buy1"
     quantity: 1
@@ -294,15 +303,6 @@ address_form:
                           </div>
                         {% endunless %}
                             <div class="form-section form-section--last">
-                              <div class="form-section__header">
-                                <h1 class="form-section__title">Step 4: Payment Method</h1>
-                                <div class="form-section__subtitle">All transactions are secure and encrypted.<br></div>
-
-                              </div>
-                              {% campaign_include 'express-checkout.html' show_title=false %}
-                              {% campaign_include 'payment-methods.html' %}
-                            </div>
-                            <div class="form-section form-section--last">
                               <div class="cart-box cart-box--card">
                                 {% assign summary_variant = cart_summary_variant | default: '01' %}
                                 {% if summary_variant == '02' %}
@@ -317,9 +317,19 @@ address_form:
                               </div>
                             </div>
                             {% comment %} END SUMMARY V2 {% endcomment %}
+                            <div class="form-section form-section--last">
+                              <div class="form-section__header">
+                                <h1 class="form-section__title">Step 4: Payment Method</h1>
+                                <div class="form-section__subtitle">All transactions are secure and encrypted.<br></div>
 
+                              </div>
+                              {% campaign_include 'express-checkout.html' show_title=false %}
+                              {% campaign_include 'payment-methods.html' %}
+                            </div>
+
+                            {% campaign_include 'submit-block.html' disclaimer=submit_disclaimer %}
+                            {% campaign_include 'payment-logos.html' payment_flags=payment_flags wrapper_class='gro-pay-badges' %}
                             {% if refill_terms %}{% campaign_include 'gro-refill-terms.html' %}{% endif %}
-                            {% campaign_include 'submit-block.html' %}
                           </div>
                         </div>
                       </form>
@@ -348,7 +358,7 @@ address_form:
                             </svg></div>
                           <div class="trust-badge--text">GUARANTEED<br>SAFE CHECKOUT</div>
                         </div>
-                      </div>{% campaign_include 'payment-logos.html' show_secure=false %}
+                      </div>
                     </div>
                     <div class="icons-grids hide-tablet-up">
                       <div class="icon-image">

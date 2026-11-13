@@ -1,6 +1,13 @@
 /* Get Rid Of checkout additions (build_checkout.py) */
 .gro-refill-terms{margin:12px 0;padding:12px 14px;border:1px solid #7EA254;background:#EEF4E6;border-radius:8px;font-size:13px;line-height:1.45;color:#23372B}
 .gro-refill-terms a{color:#23372B;text-decoration:underline}
+/* payment step order: button -> consent line -> badges -> refill terms */
+.submit-section{display:flex;flex-direction:column}
+.submit-section__button{order:1}
+.submit-section__disclaimer{order:2;margin-top:8px;font-size:12px;text-align:center}
+.gro-pay-badges{margin:14px 0 4px;text-align:center}
+.gro-pay-badges .payment-logos{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.gro-pay-badges .payment-logos__item{height:26px;width:auto}
 /* bundle cards: the deal is the title (package name hidden); the % off is stated on the PDP, not the SDK's 62.67% badge */
 [data-next-bundle-card] .os-card__title [data-next-display="package.name"],
 [data-next-bundle-card] [data-next-discounts="offer"].os-card__title-badge{display:none!important}

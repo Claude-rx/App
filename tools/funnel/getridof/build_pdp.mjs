@@ -245,3 +245,5 @@ console.log(JSON.stringify(report), '\nleft "sofyre" mentions (URLs/ids only):',
 //    (skipping this once shipped the old photos; see swap_images.py)
 const { execFileSync } = await import('node:child_process');
 execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/swap_images.py')], { stdio: 'inherit' });
+// desktop fonts TTF/OTF -> WOFF2 (the exported page shipped a 311 KB TTF that every visitor downloads)
+execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/optimize_fonts.py')], { stdio: 'inherit' });
