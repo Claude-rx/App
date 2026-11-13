@@ -45,10 +45,16 @@ def front(refill):
     name = 'Rodent Repellent Pouches' + (' with Automatic Refills' if refill else '')
     slides = '\n'.join(f'  - src: "pdp/{g}"\n    alt: {yq(name)}' for g in GALLERY)
     thumbs = '\n'.join(f'  - src: "pdp/{g}"\n    alt: ""' for g in GALLERY)
-    sub = ' · then $34.99 a pack every 60 days' if refill else ''
+    # each pack lasts a month: the subscription renews by pack count (1 -> 30 days, 3 -> 90, 5 -> 150), $34.99 a pack.
+    # One campaign package per schedule: 2 (variant 8), 5 (variant 37), 6 (variant 38).
+    SUB_PKG = {1: 2, 3: 5, 5: 6}
+    def sub(q):
+        if not refill: return ''
+        return ' · then $34.99 every 30 days' if q == 1 else f' · then {q} packs (${q * 34.99:.2f}) every {q * 30} days'
     def card(i, q, title, label, selected=False, badge=None):
         s = (f'  - id: "{i}"\n    quantity: {q}\n    shipping_method: "standard"\n'
-             f'    title_prefix: {yq(title)}\n    subtitle_text: {yq(label + sub)}\n    shipping_label: "+ Free Shipping"\n')
+             + (f'    package_id: {SUB_PKG[q]}\n' if refill else '') +
+             f'    title_prefix: {yq(title)}\n    subtitle_text: {yq(label + sub(q))}\n    shipping_label: "+ Free Shipping"\n')
         if badge: s += f'    badge_text: {yq(badge)}\n    badge_pill_class: "os-card__label--pill-primary"\n'
         if selected: s += '    selected: true\n'
         return s
@@ -145,8 +151,9 @@ for refill, fn in [(True, 'checkout.html')]:
 
 (CAMP / '_includes/gro-refill-terms.html').write_text(f'''{{% comment %}} Automatic Refills disclosure, by the order button on checkout-refill (build_checkout.py). {{% endcomment %}}
 <div class="gro-refill-terms" role="note">
-  <strong>Automatic Refills:</strong> today you pay the bundle price shown above. Then a refill ships every 60 days at
-  <strong>$34.99 per pack</strong> (the same number of packs as today), charged to this card, until you cancel.
+  <strong>Automatic Refills:</strong> today you pay the bundle price shown above. Each pack lasts about a month, so your refill
+  ships when it runs out, at <strong>$34.99 per pack</strong> (the same number of packs as today): 1 pack every 30 days,
+  3 packs ($104.97) every 90 days, 5 packs ($174.95) every 150 days. Charged to this card until you cancel.
   No commitment: cancel anytime from <a href="{STORE}/accounts/subscriptions/" target="_blank">your account</a>
   or by emailing <a href="mailto:{EMAIL}">{EMAIL}</a>. <a href="{STORE}/auto-refill-terms/" target="_blank">Auto-Refill Terms</a>.
 </div>
@@ -211,7 +218,7 @@ data['mouse-pouches'].update({
     # SDK's item_id (SKU) or item_variant_id. user_data on: email/phone/
     # user_id/phone_last10_hashed (AppLovin's pixel hashes email/phone in the browser).
     'axon_event_key': 'b4bc9878-3e1d-43fc-94de-d53f78913b7c', 'axon_item_category_id': '7137',
-    'axon_category_by_package': 'GRO-MOUSE-OT:7137,GRO-MOUSE-AR:7137,7:7137,8:7137,GRO-COPPER:728,17:728', 'axon_send_user_data': 'true', 'axon_allowed_events': 'all',
+    'axon_category_by_package': 'cdkh:7137,7:7137,8:7137,37:7137,38:7137,GRO-COPPER:728,17:728', 'axon_send_user_data': 'true', 'axon_allowed_events': 'all',
     'axon_image_url': 'https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png'})
 data_f.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 cfg = CAMP / 'assets/config.js'

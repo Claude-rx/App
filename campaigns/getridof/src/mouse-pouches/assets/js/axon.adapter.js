@@ -195,7 +195,7 @@
       var cat = categoryId(it.item_category) || categoryByPackage[pkg] || categoryByPackage[String(it.item_variant_id || '')] || fallbackCategoryId;
       if (cat) out.item_category_id = cat;                            // Axon: integer item_category_id
       if (typeof it.item_image === 'string' && IMAGE_RE.test(it.item_image)) out.image_url = it.item_image;
-      else if (IMAGE_RE.test(fallbackImage) && /^GRO-MOUSE-/.test(String(it.item_id || ''))) out.image_url = fallbackImage;  // GRO: pouch photo, pouch SKUs only
+      else if (IMAGE_RE.test(fallbackImage) && cat === 7137) out.image_url = fallbackImage;  // GRO: pouch photo, pouch SKUs only
       if (it.discount !== undefined && it.discount !== null && it.discount !== '') out.discount = it.discount;
       return out;
     });

@@ -10,7 +10,7 @@ Each built page becomes its own page template, templates/pages/page.<slug>.html,
 `template` is that slug (the theme's shared page.html router is not touched):
 
     /mouse-pouches/                   sales page (PDP)
-    /mouse-pouches-checkout/          checkout (subscription: 50% off the first order, then $34.99/pack every 60 days)
+    /mouse-pouches-checkout/          checkout (subscription: 50% off the first order, then $34.99 a pack every 30 days; 3 packs every 90, 5 every 150)
     /mouse-pouches-special-offer/     upsell 1: one more pack, 30% off ($34.97)
     /mouse-pouches-exclusive-offer/   downsell 1 (declined upsell 1): one more pack, 50% off ($24.97)
     /mouse-pouches-special-offer-2/   upsell 2: whole-home 5 packs ($48.95)

@@ -58,12 +58,12 @@
 
   /* ---------- AppLovin Axon (no SDK on this page: events are sent here) ----------
    * Same item shape as axon.adapter.js on the checkout: item_id = SKU of the subscription variant (package 2,
-   * GRO-MOUSE-AR, variant 8), item_category_id 7137 = Animal & Pet Repellents, image_url must be .png/.jpg. */
-  var AXON_TIERS = { buy1: { qty: 1, unit: 24.99 }, buy3: { qty: 3, unit: 15.99 }, buy5: { qty: 5, unit: 12.99 } };
+   * SKU cdkh; subscription variants 8 / 37 / 38 for the 1 / 3 / 5-pack), item_category_id 7137 = Animal & Pet Repellents, image_url must be .png/.jpg. */
+  var AXON_TIERS = { buy1: { qty: 1, unit: 24.99, variant: '8' }, buy3: { qty: 3, unit: 15.99, variant: '37' }, buy5: { qty: 5, unit: 12.99, variant: '38' } };
   var AXON_RETAIL = 49.99;
   function axonPayload() {
     var t = AXON_TIERS[state.bundle] || AXON_TIERS.buy3;
-    var item = { item_id: 'GRO-MOUSE-AR', item_name: 'Mouse Repellent Pouches', item_variant_id: '8', item_brand: 'Get Rid Of',
+    var item = { item_id: 'cdkh', item_name: 'Mouse Repellent Pouches', item_variant_id: t.variant, item_brand: 'Get Rid Of',
                  item_category_id: 7137, price: t.unit, quantity: t.qty, discount: Math.round((AXON_RETAIL - t.unit) * 100) / 100 };
     if (window.__axonImageUrl) item.image_url = window.__axonImageUrl;
     return { currency: 'USD', value: Math.round(t.unit * t.qty * 100) / 100, items: [item] };
@@ -237,7 +237,7 @@
 })();
 
 /* ---------- subscription pricing in the bundle box (campaign 2362: sub-1/sub-3/sub-5 offers) ----------
-   Refills ticked: first order 50% off ($24.99 / $47.97 / $64.95), then $34.99 a pack every 60 days.
+   Refills ticked: first order 50% off ($24.99 / $47.97 / $64.95), then $34.99 a pack every 30 days (each pack lasts a month: 1 pack every 30 days, 3 every 90, 5 every 150).
    Unticked: one-time prices ($29.99 / $55.98 / $74.95). Compare-at stays the page's ($89 / $178 / $267). */
 (function () {
   var PRICES = { buy1: { one: ['$29.99', '66% OFF'], sub: ['$24.99', '72% OFF'] },
@@ -248,13 +248,22 @@
   var title = refill.querySelector('.kaching-bundles__subscriptions__title');
   var sub = refill.querySelector('.kaching-bundles__subscriptions__subtitle');
   if (title) title.textContent = 'Subscribe & get 50% off your first order';
-  if (sub) sub.textContent = 'Then $34.99 a pack every 60 days · Cancel anytime';
+  if (sub) sub.textContent = 'Then $34.99 a pack every 30 days · Cancel anytime';
   // subscription details under the ADD TO CART button (shown while refills are ticked)
   var atc = document.querySelector('#gro-buy') && document.querySelector('[data-gro-atc]');
   var info = document.createElement('div');
   info.className = 'gro-subinfo';
-  info.innerHTML = '<p class="gro-subinfo__line">First order 50% off · then <b>$34.99 a pack every 60 days</b></p>' +
-    '<div class="gro-subinfo__row"><span><i>↻</i>Renews every 60 days</span><span><i>✕</i>Cancel anytime</span><span><i>✓</i>30-day money-back</span></div>';
+  info.innerHTML = '<p class="gro-subinfo__line">First order 50% off · then <b>$34.99 a pack every 30 days</b></p>' +
+    '<div class="gro-subinfo__row"><span><i>↻</i><em data-gro-renew>Renews every 30 days</em></span><span><i>✕</i>Cancel anytime</span><span><i>✓</i>30-day money-back</span></div>';
+  // each pack lasts a month: the renewal follows the bundle (campaign packages 2 / 5 / 6)
+  var RENEW = { buy1: 'Renews every 30 days', buy3: '3 packs renew every 90 days', buy5: '5 packs renew every 150 days' };
+  function paintRenew() {
+    var sel = document.querySelector('[data-gro-bundle].kaching-bundles__bar--selected');
+    var el = info.querySelector('[data-gro-renew]');
+    if (el && sel && RENEW[sel.dataset.groBundle]) el.textContent = RENEW[sel.dataset.groBundle];
+  }
+  document.addEventListener('click', function () { setTimeout(paintRenew, 0); });
+  setTimeout(paintRenew, 0);
   var box = document.getElementById('gro-buy');
   if (box) box.parentNode.insertBefore(info, box.nextSibling);
   function paint() {
