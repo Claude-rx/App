@@ -27,7 +27,7 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
     await p.goto(`${base}/${pg}/`, { waitUntil: 'load' }); await p.waitForTimeout(8000);
     const t = (await p.locator('body').innerText()).replace(/\s+/g, ' ');
     ok(`${label} at ${price} (was ${was}), limited-time + exclusive badges, house map`,
-       t.includes(price) && t.includes(was) && /Limited-time offer/i.test(t) && /Exclusive offer just for you/i.test(t) && !!(await p.$('.gro-map svg')),
+       t.includes(price) && t.includes(was) && /Limited-time offer/i.test(t) && /Exclusive offer just for you/i.test(t) && (await p.$$('.gro-map__stage img[src*="house-3d"]')).length === 1 && (await p.$$('.gro-map__pin')).length === 11,
        (t.match(/\$\d+\.\d\d/g) || []).slice(0, 4).join(' '));
     await p.screenshot({ path: (process.argv[3] || '.') + `/live-${pg}.png`, fullPage: true });
   }

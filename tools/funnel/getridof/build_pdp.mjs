@@ -58,12 +58,18 @@ for (const f of fs.readdirSync(path.join(ROOT, 'brand/getridof/sections'))) fs.c
 
 // authority figure (section 12): only a real, consenting expert from brand/getridof/expert.json; never generated
 const EXPERT = JSON.parse(fs.readFileSync(path.join(ROOT, 'brand/getridof/expert.json'), 'utf8'));
-const esc = v => String(v || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-if (EXPERT.approved && ['name', 'credentials', 'photo_file', 'quote'].every(k => String(EXPERT[k] || '').trim())) {
-  SECTIONS.expert = `<div class="gro-expert"><img src="assets/${esc(EXPERT.photo_file)}" alt="${esc(EXPERT.name)}" width="120" height="120" loading="lazy">
-    <blockquote>“${esc(EXPERT.quote)}”</blockquote><p class="gro-expert__who"><b>${esc(EXPERT.name)}</b>, ${esc(EXPERT.credentials)}${EXPERT.organization ? ' · ' + esc(EXPERT.organization) : ''}</p>
+const CERTS = (EXPERT.certifications || []).filter(c => c && c.title && c.issuer);
+if (EXPERT.approved === true && ['name', 'credentials', 'bio', 'photo_file', 'quote'].every(k => String(EXPERT[k] || '').trim())) {
+  if (!fs.existsSync(path.join(ROOT, 'brand/getridof/sections', EXPERT.photo_file))) throw new Error('expert photo missing: ' + EXPERT.photo_file);
+  const certs = CERTS.map(c => `<li><b>${esc(c.title)}</b><span>${esc(c.issuer)}${c.number ? ' · No. ' + esc(c.number) : ''}</span></li>`).join('');
+  SECTIONS.expert = `<div class="gro-expert">
+    <div class="gro-expert__head"><img src="assets/${esc(EXPERT.photo_file)}" alt="${esc(EXPERT.name)}" width="120" height="120" loading="lazy">
+      <div><p class="gro-expert__who"><b>${esc(EXPERT.name)}</b></p><p class="gro-expert__cred">${esc(EXPERT.credentials)}${EXPERT.organization ? ' · ' + esc(EXPERT.organization) : ''}${EXPERT.years_experience ? ' · ' + esc(EXPERT.years_experience) + ' years in the field' : ''}</p></div></div>
+    <p class="gro-expert__bio">${esc(EXPERT.bio)}</p>
+    ${certs ? `<ul class="gro-expert__certs" aria-label="Certifications">${certs}</ul>` : ''}
+    <blockquote>“${esc(EXPERT.quote)}”</blockquote>
     ${EXPERT.disclosure ? `<p class="gro-expert__disc">${esc(EXPERT.disclosure)}</p>` : ''}</div>`;
-  console.error('expert: ' + EXPERT.name);
+  console.error('expert: ' + EXPERT.name + ' (' + CERTS.length + ' certifications)');
 } else console.error('expert: none approved in brand/getridof/expert.json (section 12 shows the EPA source only)');
 
 // 2. DOM pass

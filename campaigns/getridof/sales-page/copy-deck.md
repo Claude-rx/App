@@ -262,3 +262,8 @@ Our mouse experts can help with placement and with choosing the right pack size.
 - Hours: Monday to Friday, 8am–8pm [CONFIRM: time zone and reply time]
 
 [CTA: Get My Pouches]
+
+## Update 2026-11-13: root solution, reveal, more before/after, expert card
+- Step 8 now opens with a 3-card strip, **The problem → The root cause → The root solution** ("Stop chasing the mouse. Break the trail."), then the product reveal: "Introducing Get Rid Of Rodent Repellent Pouches" with Place / Block / Keep out and a CTA, then the 4-oil cards.
+- Step 11 adds "Every room, the same change": pantry and garage before/after pairs (Kie illustrations, labelled as illustrations).
+- Step 12 expert card now carries bio + certifications (issuer + number); it renders only from an approved, real expert in brand/getridof/expert.json.

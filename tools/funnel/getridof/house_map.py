@@ -1,81 +1,43 @@
 #!/usr/bin/env python3
-"""House map for the Get Rid Of upsell pages: a cutaway of a typical 2-story home + garage + basement with one dot
-per pouch, so the shopper sees why one pack (12 pouches) covers one area and a whole home takes 5 packs (60).
+"""House map for the Get Rid Of upsell pages: a 3D cutaway of a typical 2-story home (garage + basement) with a pin
+per zone showing how many pouches go there, so the shopper sees why one pack (12 pouches) covers one zone and a whole
+home takes 5 packs (60).
 
-    python3 tools/funnel/getridof/house_map.py      # called by build_checkout.py; writes _includes/gro-house-map.html
+    python3 tools/funnel/getridof/house_map.py      # called by build_offers.py; writes _includes/gro-house-map.html
 
-The include takes `map_title` and `map_intro` (HTML) from the page; the counts below are the single source for the
-dots, the room labels and the totals line, so they can never disagree.
+The render (assets/pdp/gro-house-3d.webp, Kie Nano Banana 2, brand/getridof/generated/house-3d.webp) carries no text:
+labels and counts are HTML pins placed in % of the image, so they stay sharp and always match ROOMS. ROOMS is the
+single source for the pins, the list and the total.
 """
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / 'campaigns/getridof/src/mouse-pouches/_includes/gro-house-map.html'
+IMG = 'pdp/gro-house-3d.webp'          # 1600 x 1195
 PER_PACK = 12
 
-# (label, pouches, x, y, w, h) — boxes in the 800 x 600 drawing
+# (label, pouches, x %, y %, label side) — positions measured on the render
 ROOMS = [
-    ('Attic',          8, 150, 128, 300, 66),    # drawn inside the roof triangle
-    ('Bedroom',        3,  60, 200, 170, 130),
-    ('Bedroom',        3, 230, 200, 170, 130),
-    ('Bathroom',       2, 400, 200, 160, 130),
-    ('Living room',    4,  60, 330, 170, 130),
-    ('Kitchen',        8, 230, 330, 190, 130),
-    ('Pantry',         4, 420, 330, 140,  65),
-    ('Laundry',        4, 420, 395, 140,  65),
-    ('Garage',        10, 560, 330, 200, 130),
-    ('Basement & utility', 10, 60, 460, 500, 110),
-    ('Crawl space & doors', 4, 560, 460, 200, 110),
+    ('Attic',               8, 52.0, 17.0, 'r'),
+    ('Main bedroom',        3, 25.0, 37.0, 'r'),
+    ('Kids’ bedroom',       3, 49.0, 38.5, 'r'),
+    ('Bathroom',            2, 67.0, 36.0, 'r'),
+    ('Living room',         4, 23.5, 59.0, 'r'),
+    ('Kitchen',             8, 52.0, 57.0, 'r'),
+    ('Pantry & laundry',    8, 71.0, 58.0, 'l'),
+    ('Garage',             10, 84.5, 55.5, 'l'),
+    ('Basement storage',    6, 16.5, 77.5, 'r'),
+    ('Furnace & utility',   4, 50.0, 80.0, 'r'),
+    ('Entry doors & sills', 4, 66.0, 77.5, 'r'),
 ]
 TOTAL = sum(r[1] for r in ROOMS)
 assert TOTAL == 5 * PER_PACK, TOTAL
 
-GREEN, DEEP, LINE, FILL = '#7EA254', '#23372B', '#23372B', '#F6F8F2'
-
-
-def dots(n, x, y, w, h):
-    cols = min(n, max(1, (w - 24) // 16))
-    out = []
-    for i in range(n):
-        cx = x + 16 + (i % cols) * 16
-        cy = y + h - 16 - (i // cols) * 16
-        out.append(f'<circle cx="{cx}" cy="{cy}" r="6.5" fill="{GREEN}" stroke="#fff" stroke-width="1.5"/>')
-    return ''.join(out)
-
-
-def room(label, n, x, y, w, h, wall=True):
-    box = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{FILL}" stroke="{LINE}" stroke-width="2.5"/>' if wall else ''
-    if h < 100:   # short rooms: one label line so the dots have room
-        text = (f'<text x="{x + 10}" y="{y + 22}" font-size="15" font-weight="700" fill="{DEEP}">{label}'
-                f'<tspan font-size="13" font-weight="400" fill="#4F7A2E"> · {n}</tspan></text>')
-    else:
-        text = (f'<text x="{x + 10}" y="{y + 22}" font-size="15" font-weight="700" fill="{DEEP}">{label}</text>'
-                f'<text x="{x + 10}" y="{y + 40}" font-size="13" fill="#4F7A2E">{n} pouches</text>')
-    return box + text + dots(n, x, y, w, h)
-
-
-def svg():
-    parts = [
-        f'<svg viewBox="0 0 800 600" role="img" aria-labelledby="gro-map-t gro-map-d" xmlns="http://www.w3.org/2000/svg" '
-        f'font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif" style="width:100%;height:auto;display:block">',
-        '<title id="gro-map-t">Where pouches go in a typical home</title>',
-        f'<desc id="gro-map-d">Cutaway of a two-story home with garage and basement. {TOTAL} pouches in total: '
-        + ', '.join(f'{l} {n}' for l, n, *_ in ROOMS) + '.</desc>',
-        '<rect x="0" y="0" width="800" height="600" rx="16" fill="#fff"/>',
-        # ground line + soil
-        f'<rect x="20" y="460" width="760" height="120" fill="#EDE6DA"/>',
-        f'<line x1="20" y1="460" x2="780" y2="460" stroke="{DEEP}" stroke-width="3"/>',
-        # roof (main house) + garage roof
-        f'<polygon points="40,200 310,60 580,200" fill="{FILL}" stroke="{LINE}" stroke-width="3" stroke-linejoin="round"/>',
-        f'<polygon points="550,330 660,282 770,330" fill="{FILL}" stroke="{LINE}" stroke-width="3" stroke-linejoin="round"/>',
-    ]
-    for i, (label, n, x, y, w, h) in enumerate(ROOMS):
-        parts.append(room(label, n, x, y, w, h, wall=(label != 'Attic')))
-    parts.append('</svg>')
-    return ''.join(parts)
-
 
 def html():
+    pins = ''.join(
+        f'<li class="gro-map__pin gro-map__pin--{side}" style="left:{x}%;top:{y}%"><b>{n}</b><span>{label}</span></li>'
+        for label, n, x, y, side in ROOMS)
     rows = ''.join(f'<li><span>{l}</span><strong>{n}</strong></li>' for l, n, *_ in ROOMS)
     return f'''{{%- comment -%}} GENERATED by tools/funnel/getridof/house_map.py — edit the generator, not this file.
   Args: map_title, map_intro (HTML). {TOTAL} pouches = {TOTAL // PER_PACK} packs of {PER_PACK}. {{%- endcomment -%}}
@@ -83,17 +45,19 @@ def html():
   <p class="gro-map__eyebrow">Your home, room by room</p>
   <h2 class="gro-map__title">{{{{ map_title | default: 'Why one pack isn’t enough for a whole house' }}}}</h2>
   <p class="gro-map__intro">{{{{ map_intro | default: 'Mice don’t stay in one room. They travel inside walls and between floors, and they settle wherever there is no scent barrier.' }}}}</p>
+  <figure class="gro-map__figure">
+    <div class="gro-map__stage">
+      <img src="{{{{ '{IMG}' | campaign_asset }}}}" alt="3D cutaway of a two-story home with garage and basement, with the number of pouches for each room" width="1600" height="1195" loading="lazy">
+      <ol class="gro-map__pins" aria-hidden="true">{pins}</ol>
+    </div>
+    <figcaption><span class="gro-map__dot">#</span> = pouches for that zone &nbsp;·&nbsp; {TOTAL} pouches = <strong>{TOTAL // PER_PACK} packs</strong> for a typical 2-story home with garage and basement</figcaption>
+  </figure>
   <div class="gro-map__grid">
-    <figure class="gro-map__figure">{svg()}
-      <figcaption><span class="gro-map__dot"></span> = 1 pouch &nbsp;·&nbsp; {TOTAL} pouches = <strong>{TOTAL // PER_PACK} packs</strong> for a typical 2-story home with garage and basement</figcaption>
-    </figure>
-    <div class="gro-map__side">
-      <ul class="gro-map__list">{rows}<li class="gro-map__total"><span>Whole home</span><strong>{TOTAL} = {TOTAL // PER_PACK} packs</strong></li></ul>
-      <div class="gro-map__why">
-        <p><strong>1 pack = {PER_PACK} pouches.</strong> That covers about one zone, like the kitchen and pantry.</p>
-        <p><strong>Leave a zone bare and that’s where they go.</strong> The garage, attic and basement are where mice nest first, and the places you check last.</p>
-        <p><strong>Every floor, at the same time.</strong> Treating the whole house at once leaves them nowhere quiet to move to.</p>
-      </div>
+    <ul class="gro-map__list">{rows}<li class="gro-map__total"><span>Whole home</span><strong>{TOTAL} = {TOTAL // PER_PACK} packs</strong></li></ul>
+    <div class="gro-map__why">
+      <p><strong>1 pack = {PER_PACK} pouches.</strong> That covers about one zone, like the kitchen and pantry.</p>
+      <p><strong>Leave a zone bare and that’s where they go.</strong> The garage, attic and basement are where mice nest first, and the places you check last.</p>
+      <p><strong>Every floor, at the same time.</strong> Treating the whole house at once leaves them nowhere quiet to move to.</p>
     </div>
   </div>
 </section>
@@ -105,18 +69,28 @@ CSS = '''/* gro: house map (house_map.py) */
 .gro-map__eyebrow{display:inline-block;background:#EAF2DF;color:#23372B;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin:0 0 10px}
 .gro-map__title{font-size:clamp(24px,3.4vw,34px);line-height:1.15;color:#23372B;margin:0 0 10px;font-weight:800}
 .gro-map__intro{max-width:680px;margin:0 auto 22px;color:#3d4a40;font-size:17px;line-height:1.5}
-.gro-map__grid{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start;text-align:left}
-.gro-map__figure{margin:0;border:2px solid #DDE7CF;border-radius:18px;overflow:hidden;background:#fff}
+.gro-map__figure{margin:0 0 22px;border:2px solid #DDE7CF;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 12px 40px rgba(35,55,43,.10)}
+.gro-map__stage{position:relative}
+.gro-map__stage img{display:block;width:100%;height:auto}
+.gro-map__pins{list-style:none;margin:0;padding:0}
+.gro-map__pin{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;pointer-events:none}
+.gro-map__pin b{display:grid;place-items:center;min-width:34px;height:34px;padding:0 6px;border-radius:999px;background:#7EA254;color:#fff;font-size:16px;font-weight:800;border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.gro-map__pin span{background:rgba(35,55,43,.92);color:#fff;font-size:13px;font-weight:700;padding:5px 10px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.gro-map__pin--l{flex-direction:row-reverse}
+.gro-map__pin--r span{order:2}
 .gro-map__figure figcaption{padding:12px 16px;font-size:14px;color:#23372B;border-top:1px solid #E8EEDF;background:#FAFCF6}
-.gro-map__dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:#7EA254;vertical-align:-1px}
-.gro-map__list{list-style:none;margin:0 0 16px;padding:0;border:2px solid #DDE7CF;border-radius:14px;overflow:hidden}
+.gro-map__dot{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#7EA254;color:#fff;font-size:11px;font-weight:800;vertical-align:-4px}
+.gro-map__grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;text-align:left}
+.gro-map__list{list-style:none;margin:0;padding:0;border:2px solid #DDE7CF;border-radius:14px;overflow:hidden;columns:1}
 .gro-map__list li{display:flex;justify-content:space-between;padding:8px 14px;font-size:15px;color:#23372B;border-bottom:1px solid #EEF2E8}
 .gro-map__list li:last-child{border-bottom:0}
 .gro-map__total{background:#23372B;color:#fff!important}
 .gro-map__total strong{color:#CFE3B6}
-.gro-map__why p{margin:0 0 10px;font-size:15px;line-height:1.5;color:#3d4a40}
+.gro-map__why p{margin:0 0 12px;font-size:16px;line-height:1.55;color:#3d4a40}
 .gro-map__why strong{color:#23372B}
-@media (max-width:820px){.gro-map__grid{grid-template-columns:1fr}}
+@media (max-width:820px){.gro-map__grid{grid-template-columns:1fr}
+  .gro-map__pin span{display:none}
+  .gro-map__pin b{min-width:26px;height:26px;font-size:13px;border-width:2px}}
 /* gro: offer badges */
 .gro-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px auto 6px;padding:0 16px}
 .gro-badge{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;letter-spacing:.04em;text-transform:uppercase;padding:9px 16px;border-radius:999px}

@@ -155,3 +155,42 @@ footer.footer { display: none !important; }
 .gro-subinfo__row i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; background: #EEF4E6; color: #4F7A2E; display: grid; place-items: center; font-weight: 800; font-size: 12px; }
 .gro-stack__note { margin: 4px 0 10px !important; font-size: 13px !important; opacity: .75; text-align: left; }
 [data-gro-refill].gro-locked { cursor: default; }
+
+/* gro: root-cause strip + solution reveal + more before/after */
+.gro-h3 { font-family: "Playfair Display", Georgia, serif; font-size: clamp(22px, 2.8vw, 30px); font-weight: 500; color: var(--gro-deep); margin: 36px 0 8px; }
+.gro-rc { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 22px 0 8px; padding: 0; counter-reset: rc; text-align: left; }
+.gro-rc__step { position: relative; background: #fff; border: 2px solid #e3eadb; border-radius: 16px; padding: 18px 18px 16px; }
+.gro-rc__step small { display: block; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+.gro-rc__step b { display: block; font-size: 18px; line-height: 1.25; color: var(--gro-deep); margin-bottom: 6px; }
+.gro-rc__step span { font-size: 15px; line-height: 1.5; color: #3d4a40; }
+.gro-rc__step--problem small { color: #c0392b; } .gro-rc__step--cause small { color: #b7791f; }
+.gro-rc__step--fix { border-color: var(--gro-green); background: var(--gro-tint); } .gro-rc__step--fix small { color: #4F7A2E; }
+.gro-rc__step:not(:last-child)::after { content: "→"; position: absolute; right: -14px; top: 50%; transform: translate(50%, -50%); width: 28px; height: 28px; border-radius: 50%; background: var(--gro-deep); color: #fff; display: grid; place-items: center; font-size: 15px; z-index: 1; }
+.gro-reveal { margin-top: 30px; align-items: center; }
+.gro-lead { font-size: 18px; line-height: 1.55; color: #2c3a30; }
+.gro-how { list-style: none; counter-reset: how; margin: 16px 0 20px; padding: 0; }
+.gro-how li { counter-increment: how; position: relative; padding: 0 0 14px 52px; }
+.gro-how li::before { content: counter(how); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--gro-green); color: #fff; font-weight: 800; display: grid; place-items: center; }
+.gro-how b { display: block; font-size: 17px; color: var(--gro-deep); } .gro-how span { font-size: 15px; line-height: 1.5; color: #3d4a40; }
+.gro-baps { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0 12px; text-align: left; }
+.gro-bap { margin: 0; background: var(--gro-tint); border-radius: 16px; overflow: hidden; }
+.gro-bap__imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.gro-bap__imgs img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; }
+.gro-bap figcaption { padding: 14px 16px; font-size: 15px; line-height: 1.5; }
+.gro-ba__tag--before { background: #c0392b; color: #fff; } .gro-ba__tag--after { background: var(--gro-green); color: #fff; }
+@media (max-width: 760px) {
+  .gro-rc { grid-template-columns: 1fr; gap: 22px; }
+  .gro-rc__step:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -11px; transform: translate(50%, 50%); }
+  .gro-baps { grid-template-columns: 1fr; }
+}
+/* gro: expert card with bio + certifications (renders only from an approved brand/getridof/expert.json) */
+.gro-expert { justify-items: stretch; text-align: left; }
+.gro-expert__head { display: flex; align-items: center; gap: 16px; }
+.gro-expert__head img { flex: 0 0 auto; width: 96px; height: 96px; }
+.gro-expert__cred { margin: 2px 0 0 !important; font-size: 14px !important; color: #4F7A2E; font-weight: 600; }
+.gro-expert__bio { margin: 0 !important; font-size: 15px !important; line-height: 1.6; color: #3d4a40; }
+.gro-expert__certs { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.gro-expert__certs li { display: flex; flex-direction: column; background: var(--gro-tint); border: 1px solid #cfe0bb; border-radius: 10px; padding: 8px 12px; }
+.gro-expert__certs li::before { content: "✓ Certified"; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #4F7A2E; }
+.gro-expert__certs b { font-size: 14px; color: #23372B; } .gro-expert__certs span { font-size: 12px; color: #5b6a5e; }
+.gro-expert blockquote { text-align: center; }

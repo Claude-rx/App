@@ -24,18 +24,28 @@ a.button.cc-xl:hover{background:#6B8D45!important}
 .gro-map__eyebrow{display:inline-block;background:#EAF2DF;color:#23372B;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin:0 0 10px}
 .gro-map__title{font-size:clamp(24px,3.4vw,34px);line-height:1.15;color:#23372B;margin:0 0 10px;font-weight:800}
 .gro-map__intro{max-width:680px;margin:0 auto 22px;color:#3d4a40;font-size:17px;line-height:1.5}
-.gro-map__grid{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start;text-align:left}
-.gro-map__figure{margin:0;border:2px solid #DDE7CF;border-radius:18px;overflow:hidden;background:#fff}
+.gro-map__figure{margin:0 0 22px;border:2px solid #DDE7CF;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 12px 40px rgba(35,55,43,.10)}
+.gro-map__stage{position:relative}
+.gro-map__stage img{display:block;width:100%;height:auto}
+.gro-map__pins{list-style:none;margin:0;padding:0}
+.gro-map__pin{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;pointer-events:none}
+.gro-map__pin b{display:grid;place-items:center;min-width:34px;height:34px;padding:0 6px;border-radius:999px;background:#7EA254;color:#fff;font-size:16px;font-weight:800;border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.gro-map__pin span{background:rgba(35,55,43,.92);color:#fff;font-size:13px;font-weight:700;padding:5px 10px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.gro-map__pin--l{flex-direction:row-reverse}
+.gro-map__pin--r span{order:2}
 .gro-map__figure figcaption{padding:12px 16px;font-size:14px;color:#23372B;border-top:1px solid #E8EEDF;background:#FAFCF6}
-.gro-map__dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:#7EA254;vertical-align:-1px}
-.gro-map__list{list-style:none;margin:0 0 16px;padding:0;border:2px solid #DDE7CF;border-radius:14px;overflow:hidden}
+.gro-map__dot{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#7EA254;color:#fff;font-size:11px;font-weight:800;vertical-align:-4px}
+.gro-map__grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;text-align:left}
+.gro-map__list{list-style:none;margin:0;padding:0;border:2px solid #DDE7CF;border-radius:14px;overflow:hidden;columns:1}
 .gro-map__list li{display:flex;justify-content:space-between;padding:8px 14px;font-size:15px;color:#23372B;border-bottom:1px solid #EEF2E8}
 .gro-map__list li:last-child{border-bottom:0}
 .gro-map__total{background:#23372B;color:#fff!important}
 .gro-map__total strong{color:#CFE3B6}
-.gro-map__why p{margin:0 0 10px;font-size:15px;line-height:1.5;color:#3d4a40}
+.gro-map__why p{margin:0 0 12px;font-size:16px;line-height:1.55;color:#3d4a40}
 .gro-map__why strong{color:#23372B}
-@media (max-width:820px){.gro-map__grid{grid-template-columns:1fr}}
+@media (max-width:820px){.gro-map__grid{grid-template-columns:1fr}
+  .gro-map__pin span{display:none}
+  .gro-map__pin b{min-width:26px;height:26px;font-size:13px;border-width:2px}}
 /* gro: offer badges */
 .gro-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px auto 6px;padding:0 16px}
 .gro-badge{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;letter-spacing:.04em;text-transform:uppercase;padding:9px 16px;border-radius:999px}
