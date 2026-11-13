@@ -7,26 +7,30 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   // routing meta tags
-  // flow: sales page -> checkout (subscription) -> upsell 1 -> upsell 2 -> thank you
+  // flow: sales page -> checkout (subscription) -> upsell 1 (30%) -no-> downsell 1 (50%) -> upsell 2 (5 packs) -no-> downsell 2 -> thank you
   const ck = await (await p.request.get(`${base}/mouse-pouches-checkout/`)).text();
   const m = ck.match(/next-success-url" content="([^"]*)"/);
   ok('checkout: completed order goes to upsell 1', m && m[1] === '/mouse-pouches-special-offer/', m && m[1]);
+  ok('checkout: phone is required (Axon user_data)', /id="phone"[^>]*/.test(ck) && /required data-next-required="true" name="phone"/.test(ck));
   const gone = await p.request.get(`${base}/mouse-pouches-checkout-refill/`);
   ok('old split refill checkout is gone', gone.status() === 404, String(gone.status()));
-  for (const [pg, next] of [['mouse-pouches-special-offer', '/mouse-pouches-special-offer-2/'], ['mouse-pouches-special-offer-2', '/mouse-pouches-thank-you/']]) {
+  const OFFERS = [
+    ['mouse-pouches-special-offer', '/mouse-pouches-special-offer-2/', '/mouse-pouches-exclusive-offer/', '$34.97', '$49.99', 'upsell 1: 1 pack 30% off'],
+    ['mouse-pouches-exclusive-offer', '/mouse-pouches-special-offer-2/', '/mouse-pouches-special-offer-2/', '$24.97', '$49.99', 'downsell 1: 1 pack 50% off'],
+    ['mouse-pouches-special-offer-2', '/mouse-pouches-thank-you/', '/mouse-pouches-exclusive-offer-2/', '$48.95', '$249.95', 'upsell 2: 5 packs'],
+    ['mouse-pouches-exclusive-offer-2', '/mouse-pouches-thank-you/', '/mouse-pouches-thank-you/', '$38.95', '$249.95', 'downsell 2: 5 packs'],
+  ];
+  for (const [pg, accTo, decTo, price, was, label] of OFFERS) {
     const up = await (await p.request.get(`${base}/${pg}/`)).text();
     const acc = (up.match(/next-upsell-accept-url" content="([^"]*)"/) || [])[1], dec = (up.match(/next-upsell-decline-url" content="([^"]*)"/) || [])[1];
-    ok(`${pg}: accept and decline go to ${next}`, acc === next && dec === next, `accept=${acc} decline=${dec}`);
+    ok(`${pg}: yes -> ${accTo}, no -> ${decTo}`, acc === accTo && dec === decTo, `accept=${acc} decline=${dec}`);
+    await p.goto(`${base}/${pg}/`, { waitUntil: 'load' }); await p.waitForTimeout(8000);
+    const t = (await p.locator('body').innerText()).replace(/\s+/g, ' ');
+    ok(`${label} at ${price} (was ${was}), limited-time + exclusive badges, house map`,
+       t.includes(price) && t.includes(was) && /Limited-time offer/i.test(t) && /Exclusive offer just for you/i.test(t) && !!(await p.$('.gro-map svg')),
+       (t.match(/\$\d+\.\d\d/g) || []).slice(0, 4).join(' '));
+    await p.screenshot({ path: (process.argv[3] || '.') + `/live-${pg}.png`, fullPage: true });
   }
-  await p.goto(`${base}/mouse-pouches-special-offer-2/`, { waitUntil: 'load' }); await p.waitForTimeout(8000);
-  const u2 = (await p.locator('body').innerText()).replace(/\s+/g, ' ');
-  ok('upsell 2 shows the Copper Seal Kit at $14.99 (50% off $29.99)', /Copper Seal Kit/.test(u2) && /\$14\.99/.test(u2) && /\$29\.99/.test(u2), (u2.match(/\$\d+\.\d\d/g) || []).slice(0, 4).join(' '));
-  await p.screenshot({ path: (process.argv[3] || '.') + '/live-upsell-2.png', fullPage: true });
-  // upsell price
-  await p.goto(`${base}/mouse-pouches-special-offer/`, { waitUntil: 'load' }); await p.waitForTimeout(8000);
-  const ut = (await p.locator('body').innerText()).replace(/\s+/g, ' ');
-  ok('upsell 1 shows one more pack at $29.99 (40% off $49.99)', /\$29\.99/.test(ut) && /\$49\.99/.test(ut), (ut.match(/\$\d+\.\d\d/g) || []).slice(0, 4).join(' '));
-  await p.screenshot({ path: (process.argv[3] || '.') + '/live-upsell.png', fullPage: true });
   // checkout payment surfaces
   await p.goto(`${base}/mouse-pouches-checkout/?forceBundleId=main:buy3`, { waitUntil: 'load' });
   await p.waitForFunction(() => document.querySelector('[data-next-checkout-field="cc-number"] iframe'), null, { timeout: 45000 }).catch(() => {});

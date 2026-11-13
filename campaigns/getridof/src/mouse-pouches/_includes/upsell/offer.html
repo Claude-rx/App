@@ -62,7 +62,7 @@
         <div role="button"
              data-next-bundle-card
              data-next-bundle-id="{{ selector_id }}-card"
-             data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":1}]'
+             data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":{{ offer.quantity | default: 1 }}}]'
              data-next-bundle-vouchers='["{{ offer.voucher }}"]'
              data-next-selected="true"
              class="os-card next-selected"></div>
@@ -142,7 +142,7 @@
         <div role="button"
              data-next-bundle-card
              data-next-bundle-id="{{ selector_id }}-card"
-             data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":1}]'
+             data-next-bundle-items='[{"packageId":{{ package_id }},"quantity":{{ offer.quantity | default: 1 }}}]'
              data-next-bundle-vouchers='["{{ offer.voucher }}"]'
              data-next-selected="true"
              class="os-card next-selected"></div>

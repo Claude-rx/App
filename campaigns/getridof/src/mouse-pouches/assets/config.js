@@ -14,7 +14,7 @@ window.nextConfig = {
     expressCheckout: {
       enabled: true, // Enable/disable express checkout methods
       requireValidation: true, // Require form validation before express checkout if radio option - not express buttons
-      requiredFields: ['email', 'fname', 'lname'], // Fields required for express checkout radio option
+      requiredFields: ['email', 'fname', 'lname', 'phone'], // Fields required for express checkout radio option
       methodOrder: ['paypal', 'apple_pay', 'google_pay', 'shop_pay', 'link'] // Express button order. Also a filter: a method the campaign offers but this list omits gets no button
     },
     // Card number / CVV fields (SDK 0.4.41+): created by 29next's payment wrapper (payments.29next.com) —

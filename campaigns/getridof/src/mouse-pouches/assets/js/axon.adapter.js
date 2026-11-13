@@ -88,6 +88,8 @@
     var phone = typeof up.customer_phone === 'string' ? up.customer_phone.replace(/[\s().-]/g, '') : '';
     if (/^\+[1-9]\d{7,14}$/.test(phone)) out.phone = phone.slice(1);
     var id = up.customer_id !== undefined && up.customer_id !== null ? String(up.customer_id).trim() : '';
+    // GRO: Axon wants user_id >= 6 chars; store customer ids are short (e.g. 133), so send a stable prefixed id
+    if (id && id !== '0' && id.length < 6) id = 'getridof-' + id;
     if (id.length >= 6) out.user_id = id;
     return out.email || out.phone || out.user_id ? out : undefined;
   }
@@ -252,6 +254,12 @@
       }
       if (user) params.user_data = user;
       if (name === 'purchase') {
+        // GRO: discount_applications (Axon: "pass an empty array when no promotions applied")
+        var apps = [], seen = {};
+        String(ec.coupon || '').split(',').forEach(function (c) { c = c.trim(); if (c && !seen[c]) { seen[c] = 1; apps.push({ code: c, title: 'Promo code ' + c }); } });
+        var offerDiscount = (ec.items || []).some(function (it) { return Number(it && it.discount) > 0; });
+        if (offerDiscount && !apps.length) apps.push({ title: 'Get Rid Of offer discount' });
+        params.discount_applications = apps;
         if (!user && DEBUG && !warnedUserData && window.console) {
           warnedUserData = true;
           console.warn('[axon.adapter] purchase sent without user_data (' +
