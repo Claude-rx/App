@@ -25,6 +25,9 @@ marker and is replaced on each run. The Admin token is the proxy-injected one; n
 import hashlib, json, re, shutil, subprocess, sys, time, urllib.error, urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from asset_optimize import optimize  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[3]
 SITE = ROOT / 'campaigns/getridof/_site/mouse-pouches'
 SLUG = 'mouse-pouches'
@@ -77,8 +80,9 @@ class Assets:
             data = SASS_MINMAX.sub(lambda m: m.group(1).upper() + '(', self.css(src, data.decode('utf-8'))).encode()
         elif src.suffix == '.js':
             data = js_routes(data.decode('utf-8')).encode()
+        data, suffix = optimize(src.suffix, data)   # images -> right-sized WebP, fonts -> Latin subset
         stem = re.sub(r'[^a-z0-9-]+', '-', src.stem.lower()).strip('-')[:48]
-        name = f'{ASSET_DIR}-{stem}-{hashlib.sha1(data).hexdigest()[:6]}{src.suffix.lower()}'
+        name = f'{ASSET_DIR}-{stem}-{hashlib.sha1(data).hexdigest()[:6]}{suffix}'
         (self.out / name).write_bytes(data)
         self.names[rel] = name
         return name

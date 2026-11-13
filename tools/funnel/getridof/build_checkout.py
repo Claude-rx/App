@@ -76,6 +76,10 @@ styles:
 scripts:
   - js/checkout.js
   - js/payment-logos.js
+swiper_slides:
+{slides}
+swiper_thumbs:
+{thumbs}
 packages:
   main_package: {pkg}
   prepurchase_1: 3
@@ -164,19 +168,29 @@ def body(refill):
     # a short review right under the product line (both header copies: mobile + desktop)
     sub = '<div class="text-reg"><strong>12 pouches a pack · natural 4-oil formula' + (' · Automatic Refills' if refill else '') + '</strong></div>'
     assert s.count(sub) >= 1, 'product subtitle not found'
-    # mobile header copy (1st) gets Robert's review; the desktop copy (2nd) gets Tom's, since Robert's full review
-    # already sits in the desktop left column
+    # mobile header copy (1st): Robert's review under the product line. Desktop copy (2nd): the same review under the
+    # "Natural 4-oil formula..." description (owner's layout).
     def hrev(r):
         t, _, a, _ = r
         return (f'<div class="gro-hrev" role="note"><p class="gro-hrev__q">{t}</p>'
                 f'<p class="gro-hrev__by"><span class="gro-hrev__stars" aria-label="5 out of 5 stars">★★★★★</span> {a} · Verified Buyer</p></div>')
     parts = s.split(sub)
     assert len(parts) == 3, f'expected 2 product subtitles, got {len(parts) - 1}'
-    s = parts[0] + sub + hrev(REVIEWS[0]) + parts[1] + sub + hrev(REVIEWS[1]) + parts[2]
-    # no product image slider on the checkout (owner's request): drop the gallery and its Swiper assets
-    gal = re.search(r'[ \t]*<div class="checkout-media__wrapper">\s*\{% campaign_include \'swiper-gallery.html\'[^%]*%\}\s*</div>\n', s)
-    assert gal, 'checkout gallery not found'
-    s = s.replace(gal.group(0), '', 1)
+    s = parts[0] + sub + hrev(REVIEWS[0]) + parts[1] + sub + parts[2]
+    desc = re.search(r'<div class="sub-head-text">\s*<div>Natural 4-oil formula\.[^<]*</div>\s*</div>', s)
+    assert desc, 'description line not found'
+    s = s.replace(desc.group(0), desc.group(0) + hrev(REVIEWS[0]), 1)
+    # image slider: desktop only (owner's request). Hidden below 992px, where its lazy images never download, and
+    # Swiper's CSS + JS are fetched only on desktop, then the gallery is started (the starter never called it).
+    gal = '<div class="checkout-media__wrapper">'
+    assert s.count(gal) == 1, 'checkout gallery not found'
+    s = s.replace(gal, '<div class="checkout-media__wrapper hide-tablet-down">', 1)
+    loader = ("<script>(function(){if(!matchMedia('(min-width: 992px)').matches)return;var d=document,"
+              "c=d.createElement('link');c.rel='stylesheet';c.href='https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.css';"
+              "d.head.appendChild(c);var j=d.createElement('script');j.src='https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.js';"
+              "j.async=true;j.onload=function(){var go=function(){if(typeof initSwiperGalleries==='function')initSwiperGalleries();};"
+              "d.readyState==='loading'?d.addEventListener('DOMContentLoaded',go):go();};d.head.appendChild(j);})();</script>")
+    s = s.replace("{% campaign_include 'swiper-gallery.html'", loader + "\n                        {% campaign_include 'swiper-gallery.html'", 1)
     # no exit-intent popup on this checkout (removed at the owner's request)
     s = s.replace("{{ 'images/90d.webp' | campaign_asset }}", "{{ 'images/30d.webp' | campaign_asset }}")
     s = s.replace('>4. Payment Method<', '>Step 4: Payment Method<')

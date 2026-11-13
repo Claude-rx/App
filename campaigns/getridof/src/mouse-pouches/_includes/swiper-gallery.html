@@ -39,7 +39,7 @@
           {% for slide in main_slides %}
           <div class="swiper-slide">
             <div class="swiper-slide_inner">
-              <div class="swiper-slide_image-wrap is-square"><img loading="eager" src="{{ slide.src | campaign_asset }}" alt="{{ slide.alt }}" class="cover"></div>
+              <div class="swiper-slide_image-wrap is-square"><img loading="lazy" src="{{ slide.src | campaign_asset }}" alt="{{ slide.alt }}" class="cover"></div>
             </div>
           </div>
           {% endfor %}
@@ -55,7 +55,7 @@
               {% for thumb in thumbs %}
               <div class="swiper-slide is-thumb{% if forloop.first %} swiper-slide-thumb-active{% endif %}">
                 <div class="swiper-slide_inner">
-                  <div class="swiper-slide_image-wrap"><img loading="eager" src="{{ thumb.src | campaign_asset }}" alt="{{ thumb.alt }}" class="cover"></div>
+                  <div class="swiper-slide_image-wrap"><img loading="lazy" src="{{ thumb.src | campaign_asset }}" alt="{{ thumb.alt }}" class="cover"></div>
                 </div>
               </div>
               {% endfor %}
