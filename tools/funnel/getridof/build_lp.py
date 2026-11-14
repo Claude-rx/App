@@ -43,11 +43,13 @@ IMAGES = {
     'av-russel': ('Frame_1484584519_ea551e31-7ec5-4687-8149-17d3c8965-97a552.webp', 88, 80),
     'av-dale': ('Frame_1484584519_1_ff003d52-42a0-49c8-89d3-f0a91aa-a2c534.webp', 88, 80),
     'reveal': ('gro-solution-reveal.webp', 960, 78),
+    'thumb': ('gro-pack.webp', 168, 82),   # bundle cards on the checkout
     'problem-sq': ('gro-problem-pantry.webp', 640, 72, 1.0), 'scent-trail-sq': ('gro-scent-trail.webp', 720, 76, 1.6),
     'p-night': ('gro-p-night.webp', 640, 72), 'p-trap': ('gro-p-trap.webp', 800, 72),
     'a-multiply': ('gro-a-multiply.webp', 640, 72), 'a-contaminate': ('gro-a-contaminate.webp', 640, 72),
     'a-destroy': ('gro-a-destroy.webp', 640, 72), 'a-return': ('gro-a-return.webp', 640, 72),
     'r-gap': ('gro-r-gap.webp', 720, 72), 'r-trail': ('gro-r-trail.webp', 720, 72),
+    's-gap': ('gro-s-gap.webp', 720, 72), 's-trail': ('gro-s-trail.webp', 720, 72), 's-door': ('gro-s-door.webp', 720, 72),
     'timeline': ('gro-timeline.webp', 720, 76),
     'pantry-before': ('gro-pantry-before.webp', 640, 72), 'pantry-after': ('gro-pantry-after.webp', 640, 72),
     'garage-before': ('gro-garage-before.webp', 640, 72), 'garage-after': ('gro-garage-after.webp', 640, 72),
@@ -155,11 +157,11 @@ def main():
     axon = AXON.replace('%KEY%', key).replace('%IMG%', json.dumps(camp.get('axon_image_url') or '')) if key else ''
     def card(r):
         _, slug, who, where, pre, head, body = r
-        return (f'    <article class="rev"><div class="rev__t"><span class="st" aria-label="5 out of 5 stars">★★★★★</span><span class="vb vb--b">✓ Verified Buyer</span></div>'
+        return (f'    <article class="rev"><div class="rev__t"><span class="sbx" aria-label="5 out of 5 stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span><span class="vb vb--b">✓ Verified Buyer</span></div>'
                 f'<p class="rev__q">{pre}</p><h3>{head}</h3><p>{body}</p>'
                 f'<footer><img src="/mouse-pouches/lp/av-{slug}.webp" alt="" width="40" height="40" loading="lazy"><span><b>{who}</b>{where}</span></footer></article>')
     reviews = '\n'.join(
-        f'  <div class="revs" data-pane="{tab}"{"" if n == 0 else " hidden"}>\n' + '\n'.join(card(r) for r in REVIEWS if r[0] == tab) + '\n  </div>'
+        f'  <div class="revs revs--v" data-pane="{tab}"{"" if n == 0 else " hidden"}>\n' + '\n'.join(card(r) for r in REVIEWS if r[0] == tab) + '\n  </div>'
         for n, tab in enumerate(('home', 'rv', 'farm')))
     tags, on = tracking_tags(camp)
     expert, expert_name = expert_card()

@@ -46,7 +46,7 @@
     });
     var t = T[state.bundle], p = price(state.bundle);
     $$('[data-total]').forEach(function (e) { e.textContent = money(p); });
-    var name = $('[data-sb-name]'); if (name) name.textContent = t.n;
+    $$('[data-sb-name]').forEach(function (e) { e.textContent = t.n; });
     var was = $('[data-sb-was]'); if (was) was.textContent = money(t.was);
     var title = $('[data-sub-title]'), terms = $('[data-sub-terms]');
     if (title) title.textContent = state.sub ? 'Subscribe & save: pay ' + money(t.sub) + ' today' : 'Subscribe & save ' + money(t.one - t.sub) + ' on this order';
@@ -154,6 +154,17 @@
   var revs = $('.revs'); if (revs) revs.addEventListener('scroll', function () { track('reviews_swipe', null, true); }, { passive: true });
   $$('.faq details').forEach(function (d) { d.addEventListener('toggle', function () { if (d.open) track('faq_open', { q: ($('summary', d).textContent || '').slice(0, 40) }); }); });
 
+  /* ---------- sections fade up as they scroll into view ---------- */
+  if ('IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    $$('.tile, .stepi li, .card, .fam figure, .baps figure, .ba figure, .agi div, .pack, .rev').forEach(function (el, n) {
+      if (el.getBoundingClientRect().top < innerHeight) return;   // already on screen: leave it visible
+      el.classList.add('rv'); el.style.transitionDelay = (n % 3) * 70 + 'ms'; io.observe(el);
+    });
+  }
+
   /* ---------- scroll depth ---------- */
   var marks = [25, 50, 75, 100], st = 0;
   window.addEventListener('scroll', function () {
@@ -173,8 +184,8 @@
     (function tickDl() {
       var s = Math.floor((end - Date.now()) / 1000);
       if (s <= 0) { box.style.display = 'none'; return; }
-      u.d.textContent = pad(Math.floor(s / 86400)); u.h.textContent = pad(Math.floor(s % 86400 / 3600));
-      u.m.textContent = pad(Math.floor(s % 3600 / 60)); u.s.textContent = pad(s % 60);
+      var v = { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 };
+      for (var k in v) if (u[k]) u[k].textContent = pad(v[k]);
       setTimeout(tickDl, 1000);
     })();
   });

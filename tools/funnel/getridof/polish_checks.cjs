@@ -15,7 +15,7 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
     // Shopify-style checkout: no visible bundle picker; the tier comes from the sales page as ?forceBundleId=main:<id>
     // and a hidden selector applies it. Default (no parameter) = buy3.
     const tierCards = await p.evaluate(() => [...document.querySelectorAll('[data-next-bundle-card]')].filter(c => c.offsetParent).length);
-    ok(`[${vp.n}] no visible bundle picker (Shopify-style)`, tierCards === 0, `visible cards: ${tierCards}`);
+    ok(`[${vp.n}] Step 1 shows the three bundle cards of the chosen mode`, tierCards === 3, `visible cards: ${tierCards}`);
     const sumText = async () => (await p.locator('[data-next-cart-summary]').first().innerText()).replace(/\s+/g, ' ');
     ok(`[${vp.n}] default tier = 3 packs, $47.97`, /47\.97/.test(await sumText()));
     for (const [id, price, packs] of [['buy1', '22.49', 1], ['buy5', '64.95', 5]]) {

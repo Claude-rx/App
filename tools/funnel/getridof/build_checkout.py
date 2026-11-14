@@ -243,8 +243,8 @@ html:not(.gro-prices) .upsell-container[data-next-await] :is(.badge,button,a):ha
 [data-next-bundle-card] [data-next-discounts="offer"].os-card__title-badge{display:none!important}
 /* brand palette = the packaging: green #7EA254 on deep green #23372B (replaces the starter's blue/navy/teal) */
 .promo-banner__bar{background:#23372B!important;color:#fff!important}
-.submit-button{background:#7EA254!important;border-color:#7EA254!important;color:#fff!important}
-.submit-button:hover{background:#6B8D45!important;border-color:#6B8D45!important}
+.submit-button{background:#2f7d1e!important;border-color:#2f7d1e!important;color:#fff!important;box-shadow:0 4px 0 #1d5211}
+.submit-button:hover{background:#256617!important;border-color:#256617!important}
 [data-next-bundle-card].next-selected{border-color:#23372B!important}
 .os-card__label-2{background:#EEF4E6!important;color:#4F7A2E!important;border-color:#7EA254!important}
 .card-icons,.card-icons svg,.card-icons path{color:#4F7A2E!important;border-color:#4F7A2E!important}
