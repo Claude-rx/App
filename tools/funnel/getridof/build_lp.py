@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[3]
 HERE = ROOT / 'tools/funnel/getridof/lp'
 CAMP = ROOT / 'campaigns/getridof/src/mouse-pouches'
 SRC = CAMP / 'assets/pdp'            # new-packaging images (swap_images.py output, committed)
+SECTIONS = ROOT / 'brand/getridof/sections'   # generated section images (Kie), looked up first
 OUT = CAMP / 'assets/lp'
 
 # name -> (source in assets/pdp, width, WebP quality)
@@ -41,6 +42,11 @@ IMAGES = {
     'av-gary': ('Frame_1484584520_66c4055f-d094-4e29-b545-8ddee8d7e-07a331.png', 88, 80),
     'av-russel': ('Frame_1484584519_ea551e31-7ec5-4687-8149-17d3c8965-97a552.webp', 88, 80),
     'av-dale': ('Frame_1484584519_1_ff003d52-42a0-49c8-89d3-f0a91aa-a2c534.webp', 88, 80),
+    'reveal': ('gro-solution-reveal.webp', 720, 74),
+    'pantry-before': ('gro-pantry-before.webp', 640, 72), 'pantry-after': ('gro-pantry-after.webp', 640, 72),
+    'garage-before': ('gro-garage-before.webp', 640, 72), 'garage-after': ('gro-garage-after.webp', 640, 72),
+    'fam-baby': ('gro-fam-baby.webp', 640, 74), 'fam-kids': ('image3-597645.webp', 640, 74), 'fam-pets': ('gro-fam-pets.webp', 640, 74),
+    'ugc-1': ('gro-ugc-1.webp', 520, 74), 'ugc-2': ('gro-ugc-2.webp', 520, 74), 'ugc-3': ('gro-ugc-3.webp', 520, 74), 'ugc-4': ('gro-ugc-4.webp', 520, 74),
     'av-thomas': ('Frame_1484584687-298c6b.png', 88, 80), 'av-earl': ('Frame_1484584520_47133397-48d5-4b69-bd33-cf40c8238-44c647.png', 88, 80),
 }
 HERO_INLINE = (560, 62)   # width, quality of the embedded first image (sharper hero-1 swaps in after load on big screens)
@@ -97,11 +103,30 @@ def tracking_tags(t):
     return '\n'.join(out), [k for k in ('clarity_id', 'ga4_id') if t.get(k)]
 
 
+def expert_card():
+    """Authority figure: only a real, consenting expert from brand/getridof/expert.json (approved: true). Never generated."""
+    e = json.loads((ROOT / 'brand/getridof/expert.json').read_text())
+    esc = lambda v: str(v or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
+    if e.get('approved') is not True or not all(str(e.get(k) or '').strip() for k in ('name', 'credentials', 'bio', 'photo_file', 'quote')):
+        return '', None
+    photo = SECTIONS / e['photo_file']
+    if not photo.is_file(): raise SystemExit(f'expert photo missing: {photo}')
+    data, _ = webp(photo, 240, 80)
+    (OUT / 'expert.webp').write_bytes(data)
+    certs = ''.join(f'<li><b>{esc(c["title"])}</b> · {esc(c["issuer"])}' + (f' · No. {esc(c["number"])}' if c.get('number') else '') + '</li>'
+                    for c in e.get('certifications') or [] if c.get('title') and c.get('issuer'))
+    who = esc(e['credentials']) + (' · ' + esc(e['organization']) if e.get('organization') else '') + (f' · {esc(e["years_experience"])} years in the field' if e.get('years_experience') else '')
+    return (f'  <div class="xp"><div class="xp__h"><img src="/mouse-pouches/lp/expert.webp" alt="{esc(e["name"])}" width="92" height="92" loading="lazy">'
+            f'<div><b>{esc(e["name"])}</b><span>{who}</span></div></div><p style="margin:0">{esc(e["bio"])}</p>'
+            + (f'<ul aria-label="Certifications">{certs}</ul>' if certs else '') +
+            f'<blockquote>“{esc(e["quote"])}”</blockquote>' + (f'<small>{esc(e["disclosure"])}</small>' if e.get('disclosure') else '') + '</div>'), e['name']
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     total = 0
     for name, (src, width, q) in IMAGES.items():
-        data, _ = webp(SRC / src, width, q)
+        data, _ = webp(SECTIONS / src if (SECTIONS / src).is_file() else SRC / src, width, q)
         (OUT / f'{name}.webp').write_bytes(data); total += len(data)
     hero, _ = webp(SRC / IMAGES['hero-1'][0], *HERO_INLINE)
     camp = json.loads((ROOT / 'campaigns/getridof/_data/campaigns.json').read_text())['mouse-pouches']
@@ -113,13 +138,14 @@ def main():
         f'<footer><img src="/mouse-pouches/lp/av-{slug}.webp" alt="" width="40" height="40" loading="lazy"><span><b>{who}</b>{where} · <span class="vb">✓ Verified buyer</span></span></footer></article>'
         for slug, who, where, h, body in REVIEWS)
     tags, on = tracking_tags(camp)
+    expert, expert_name = expert_card()
     css = re.sub(r'/\*.*?\*/', '', (HERE / 'lp.css').read_text(), flags=re.S)
     css = re.sub(r'\s*\n\s*', '', css)
     js = (HERE / 'lp.js').read_text()
     html = (HERE / 'page.html').read_text()
     for token, value in (('@@CSS@@', css), ('@@JS@@', js), ('@@AXON_HEAD@@', axon), ('@@FUNNEL@@', camp['name']),
                          ('@@HERO_DATA@@', 'data:image/webp;base64,' + base64.b64encode(hero).decode()),
-                         ('@@REVIEWS@@', reviews), ('@@TRACKING@@', SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
+                         ('@@REVIEWS@@', reviews), ('@@EXPERT@@', expert), ('@@TRACKING@@', SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
         assert html.count(token) == 1, token
         html = html.replace(token, value)
     assert '@@' not in html and '{%' not in html and '{{' not in html and '</script' not in js.lower()
@@ -129,7 +155,7 @@ def main():
     (CAMP / 'index.html').write_text(front + '{% raw %}' + html + '{% endraw %}\n', encoding='utf-8')
     (CAMP / '_layouts/pdp.html').write_text('{{ content }}\n')
     print(f'wrote {CAMP / "index.html"}: {len(html) / 1024:.0f} KB (hero inline {len(hero) / 1024:.0f} KB, css {len(css) / 1024:.0f} KB, js {len(js) / 1024:.0f} KB); '
-          f'{len(IMAGES)} images, {total / 1024:.0f} KB lazy; tracking tags on: {on or "none"}')
+          f'{len(IMAGES)} images, {total / 1024:.0f} KB lazy; tracking tags on: {on or "none"}; expert card: {expert_name or "off (no approved expert in brand/getridof/expert.json)"}')
 
 
 if __name__ == '__main__':
