@@ -25,7 +25,7 @@ SRC = CAMP / 'assets/pdp'            # new-packaging images (swap_images.py outp
 SECTIONS = ROOT / 'brand/getridof/sections'   # generated section images (Kie), looked up first
 OUT = CAMP / 'assets/lp'
 
-# name -> (source in assets/pdp, width, WebP quality)
+# name -> (source in brand/getridof/sections or assets/pdp, width, WebP quality[, centre-crop to this width/height ratio])
 IMAGES = {
     'hero-1': ('t12-rodent-57d2b1.png', 1024, 80),
     'hero-2': ('image2-829fe1.webp', 800, 76), 'hero-3': ('image3-597645.webp', 800, 76), 'hero-4': ('image4-ef9455.webp', 800, 76),
@@ -43,6 +43,11 @@ IMAGES = {
     'av-russel': ('Frame_1484584519_ea551e31-7ec5-4687-8149-17d3c8965-97a552.webp', 88, 80),
     'av-dale': ('Frame_1484584519_1_ff003d52-42a0-49c8-89d3-f0a91aa-a2c534.webp', 88, 80),
     'reveal': ('gro-solution-reveal.webp', 720, 74),
+    'problem-sq': ('gro-problem-pantry.webp', 640, 72, 1.0), 'scent-trail-sq': ('gro-scent-trail.webp', 720, 76, 1.6),
+    'p-night': ('gro-p-night.webp', 640, 72), 'p-trap': ('gro-p-trap.webp', 800, 72),
+    'a-multiply': ('gro-a-multiply.webp', 640, 72), 'a-contaminate': ('gro-a-contaminate.webp', 640, 72),
+    'a-destroy': ('gro-a-destroy.webp', 640, 72), 'a-return': ('gro-a-return.webp', 640, 72),
+    'r-gap': ('gro-r-gap.webp', 720, 72), 'r-trail': ('gro-r-trail.webp', 720, 72),
     'timeline': ('gro-timeline.webp', 720, 76),
     'pantry-before': ('gro-pantry-before.webp', 640, 72), 'pantry-after': ('gro-pantry-after.webp', 640, 72),
     'garage-before': ('gro-garage-before.webp', 640, 72), 'garage-after': ('gro-garage-after.webp', 640, 72),
@@ -98,8 +103,12 @@ GA4 = ('<script async src="https://www.googletagmanager.com/gtag/js?id=%ID%"></s
        'function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","%ID%");</script>')
 
 
-def webp(src, width, quality):
+def webp(src, width, quality, ratio=None):
     im = Image.open(src)
+    if ratio:   # centre crop to width/height = ratio
+        w, h = im.size
+        if w / h > ratio: nw = round(h * ratio); im = im.crop(((w - nw) // 2, 0, (w - nw) // 2 + nw, h))
+        else: nh = round(w / ratio); im = im.crop((0, (h - nh) // 2, w, (h - nh) // 2 + nh))
     im = im.convert('RGBA' if im.mode in ('RGBA', 'LA', 'P') else 'RGB')
     if im.mode == 'RGBA' and im.getextrema()[3][0] == 255: im = im.convert('RGB')
     if im.width > width: im = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
@@ -136,8 +145,8 @@ def expert_card():
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     total = 0
-    for name, (src, width, q) in IMAGES.items():
-        data, _ = webp(SECTIONS / src if (SECTIONS / src).is_file() else SRC / src, width, q)
+    for name, (src, width, q, *crop) in IMAGES.items():
+        data, _ = webp(SECTIONS / src if (SECTIONS / src).is_file() else SRC / src, width, q, *crop)
         (OUT / f'{name}.webp').write_bytes(data); total += len(data)
     hero, _ = webp(SRC / IMAGES['hero-1'][0], *HERO_INLINE)
     camp = json.loads((ROOT / 'campaigns/getridof/_data/campaigns.json').read_text())['mouse-pouches']
