@@ -41,6 +41,7 @@
     <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v{{ campaign.sdk_version }}/dist/loader.js" type="module"></script>
 
     {% campaign_include 'analytics-head.html' %}
+    {% if campaign.clarity_id and campaign.clarity_id != "" %}<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","{{ campaign.clarity_id }}");</script>{% endif %}
 
     <link href="{{ 'css/next-core.css' | campaign_asset }}" rel="stylesheet" type="text/css">
     {% for style in styles %}
@@ -53,6 +54,7 @@
   <body>
     {% campaign_include 'analytics-body.html' %}
     {{ content }}
+    <script defer src="{{ 'js/gro-funnel.js' | campaign_asset }}"></script>
     {% for script in scripts %}
     <script defer src="{{ script | campaign_asset }}"></script>
     {% endfor %}

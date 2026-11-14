@@ -66,7 +66,8 @@ def body(reviews):
     s = _once(s, '<h1 class="form-section__title">Payment</h1>', '<h2 class="form-section__title">Payment</h2>', 'payment title')
     addr = re.search(r'<div data-next-address="shipping"[^>]*></div>', s)
     assert addr, 'address block'
-    s = s.replace(addr.group(0), addr.group(0) + '\n                              ' + PHONE_ROW, 1)
+    # the wrapper holds the address block's height: the SDK re-renders the inner element (it collapses for a moment)
+    s = s.replace(addr.group(0), '<div class="gro-addr">' + addr.group(0) + '</div>\n                              ' + PHONE_ROW, 1)
     pay = re.search(r'[ \t]*<div class="form-section form-section--last">\s*<div class="form-section__header">\s*<h2 class="form-section__title">Payment</h2>', s)
     assert pay, 'payment section'
     s = s[:pay.start()] + '                          ' + BUMP + '\n' + s[pay.start():]

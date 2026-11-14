@@ -22,6 +22,8 @@
     "axon_category_by_package": "cdkh:7137,7:7137,8:7137,37:7137,38:7137,GRO-COPPER:728,17:728",
     "axon_send_user_data": "true",
     "axon_allowed_events": "all",
-    "axon_image_url": "https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png"
+    "axon_image_url": "https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png",
+    "clarity_id": "",
+    "ga4_id": ""
   }
 }

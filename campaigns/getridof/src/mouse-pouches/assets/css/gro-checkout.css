@@ -5,6 +5,18 @@
 .gro-rt{display:none}
 .gro-b-buy1 .gro-rt--buy1,.gro-b-buy3 .gro-rt--buy3,.gro-b-buy5 .gro-rt--buy5{display:inline}
 .gro-onetime .gro-refill-terms,.gro-onetime .gro-sub-only{display:none}
+/* no layout jumps while the SDK fills the page: room is held for the address fields and the mobile summary bar */
+.gro-addr{min-height:496px}
+.order-summary-mobile{min-height:61px}
+@media (min-width:992px){.gro-addr{min-height:304px}.order-summary-mobile{min-height:0}}
+/* offer pages: product, copy and layout paint at once; only the numbers the SDK fills wait for it */
+html:not(.next-display-ready) .upsell-container[data-next-await]::before,
+html:not(.next-display-ready) .upsell-container[data-next-await]::after{display:none}
+.upsell-container[data-next-await] *{opacity:1}
+/* the pages ship placeholder numbers ($0.00, $9.99): nothing the SDK fills is shown until it holds the real value
+   (gro-funnel.js adds .gro-prices when the price changes from its placeholder, or after 10 s as a fallback) */
+html:not(.gro-prices) [data-next-display^="bundle."]{visibility:hidden}
+html:not(.gro-prices) .upsell-container[data-next-await] :is(.badge,button,a):has([data-next-display]){opacity:0}
 /* Shopify-style checkout (shop_checkout.py) */
 .gro-shop-header .brand-logo{height:34px;width:auto}
 .checkout--shop .form-section__title{font-size:21px;font-weight:600}

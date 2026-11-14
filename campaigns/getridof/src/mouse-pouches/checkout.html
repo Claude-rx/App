@@ -62,6 +62,16 @@ order_bump:
 shipping_methods:
   standard: 1
 submit_disclaimer: "By completing your purchase you agree to our Terms of Use and Privacy Policy<span class='gro-sub-only'> and the Automatic Refills terms below</span>."
+payment_methods:
+  show_klarna: false
+  show_google_pay: false
+  show_twint: false
+  show_affirm: false
+  show_bancontact: false
+  show_ideal: false
+  show_sepa_debit: false
+  show_link: false
+  show_shop_pay: false
 payment_flags:
   secure_text: "100% Encrypted &amp; Secure Checkout"
   show_visa: true
@@ -175,7 +185,7 @@ address_form:
                             <h2 class="form-section__title">Delivery</h2>
                             <div data-next-component="shipping-form">
                               {% comment %} SDK-built address block (SDK >= 0.4.41): renders the selected country's fields in that country's order; fields already declared elsewhere in the form (email) are skipped. Hand-written address inputs are deprecated — see _includes/shipping-address-form.html in apollo for the partial form of this. address_form.gated (frontmatter): true = only the Address field shows until an address is typed; false = every field visible. {% endcomment %}
-                              <div data-next-address="shipping" class="{% if address_form.gated == true or address_form.gated == 'true' %}cc-gated{% else %}cc-ungated{% endif %}{% if address_form.label_style == 'floating' %} cc-floating{% elsif address_form.label_style == 'static' %} cc-static{% endif %}"></div>
+                              <div class="gro-addr"><div data-next-address="shipping" class="{% if address_form.gated == true or address_form.gated == 'true' %}cc-gated{% else %}cc-ungated{% endif %}{% if address_form.label_style == 'floating' %} cc-floating{% elsif address_form.label_style == 'static' %} cc-static{% endif %}"></div></div>
                               <div class="form-group gro-phone"><div class="form-input"><label for="phone" class="label-checkout">Phone</label><input autocomplete="tel-full" required data-next-required="true" name="phone" data-name="Phone" type="tel" id="phone" placeholder="Phone*" data-next-checkout-field="phone" class="input-flds"></div></div>
                             </div>
                           </div>

@@ -1,5 +1,0 @@
-{
-  "_readme": "Tracking tags for the Get Rid Of funnel pages. Leave an id empty to keep that tag off. clarity_id: Microsoft Clarity project id (clarity.microsoft.com > Settings > Setup, e.g. abcd1234ef). ga4_id: Google Analytics 4 measurement id (G-XXXXXXXXXX). Neither is a secret. Rebuild and deploy after changing.",
-  "clarity_id": "",
-  "ga4_id": ""
-}

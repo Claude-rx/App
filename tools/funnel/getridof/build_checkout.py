@@ -15,6 +15,65 @@ The bundle ids buy1/buy3/buy5 are the ones the PDP sends with ?forceBundleId=mai
 Every claim below is the PDP's own copy (30-day guarantee, 35,129+ properties, the reviews, the benefits).
 """
 import json, re, sys
+FUNNEL_JS = r'''/* Get Rid Of — funnel step events for the checkout, offer and thank-you pages (build_checkout.py writes this file).
+ * Pushes gro_* events to window.dataLayer and, when their tags are on (campaigns.json clarity_id / ga4_id), to Microsoft
+ * Clarity and GA4. The sales page sends its own (lp/lp.js). No personal data: field names only, never values. */
+(function () {
+  'use strict';
+  var meta = document.querySelector('meta[name="next-page-type"]');
+  var type = (meta && meta.content) || 'page';
+  var sent = {};
+  window.dataLayer = window.dataLayer || [];
+  function track(name, props, once) {
+    if (once) { if (sent[name]) return; sent[name] = 1; }
+    try {
+      var e = { event: 'gro_' + name, gro_page: type, gro_bundle: window.groBundle || '' };
+      for (var k in props || {}) e['gro_' + k] = props[k];
+      window.dataLayer.push(e);
+      if (typeof window.clarity === 'function') window.clarity('event', 'gro_' + name);
+      if (typeof window.gtag === 'function') window.gtag('event', 'gro_' + name, props || {});
+    } catch (err) { /* never block the page */ }
+  }
+  window.groTrack = track;
+  track(type + '_view', null, true);
+  // prices: reveal once the SDK has replaced the placeholder numbers (see gro-checkout.css)
+  (function () {
+    var root = document.documentElement, els = document.querySelectorAll('[data-next-display^="bundle."][data-next-display$=".price"]');
+    if (!els.length) { root.classList.add('gro-prices'); return; }
+    var first = []; for (var i = 0; i < els.length; i++) first.push(els[i].textContent);
+    var n = 0, iv = setInterval(function () {
+      var real = false; for (var j = 0; j < els.length; j++) if (els[j].textContent !== first[j] && /[1-9]/.test(els[j].textContent)) real = true;
+      if (real || ++n > 100) { clearInterval(iv); root.classList.add('gro-prices'); if (!real) track('prices_timeout'); }
+    }, 100);
+  })();
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-next-upsell-action], .submit-button') : null;
+    if (!t) return;
+    if (t.hasAttribute('data-next-upsell-action')) { track('offer_' + (t.getAttribute('data-next-upsell-action') === 'add' ? 'accept' : 'decline')); return; }
+    track('submit_click');
+    setTimeout(function () {
+      var bad = document.querySelector('.next-error-field');
+      if (bad) track('submit_blocked', { field: bad.getAttribute('data-next-checkout-field') || bad.name || bad.id || 'field' });
+    }, 700);
+  }, true);
+  if (type !== 'checkout') return;
+  document.addEventListener('focusin', function (e) { if (e.target.matches && e.target.matches('input, select')) track('form_start', null, true); });
+  document.addEventListener('change', function (e) {
+    var t = e.target; if (!t || !t.matches || !t.matches('input, select')) return;
+    if (t.name === 'payment_method') { track('payment_method', { method: t.value }); return; }
+    var id = t.getAttribute('data-next-checkout-field') || t.name || t.id;
+    if (id && t.value) track('field_' + id.replace(/[^a-z0-9]+/gi, '_').toLowerCase(), null, true);
+  }, true);
+  // card fields live in iframes: a tap on their wrapper is the signal
+  document.addEventListener('pointerdown', function (e) { if (e.target.closest && e.target.closest('[data-next-checkout-field="cc-number"], [data-next-checkout-field="cvv"]')) track('card_field_tap', null, true); }, true);
+  // payment errors shown by the SDK
+  var errs = document.querySelectorAll('[data-next-component$="-error"]');
+  if (errs.length && 'MutationObserver' in window) {
+    var mo = new MutationObserver(function () { for (var i = 0; i < errs.length; i++) if (errs[i].offsetParent !== null) { track('payment_error'); break; } });
+    for (var i = 0; i < errs.length; i++) mo.observe(errs[i], { attributes: true, childList: true, subtree: true });
+  }
+})();
+'''
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -101,6 +160,16 @@ order_bump:
 shipping_methods:
   standard: 1
 submit_disclaimer: "By completing your purchase you agree to our Terms of Use and Privacy Policy<span class='gro-sub-only'> and the Automatic Refills terms below</span>."
+payment_methods:
+  show_klarna: false
+  show_google_pay: false
+  show_twint: false
+  show_affirm: false
+  show_bancontact: false
+  show_ideal: false
+  show_sepa_debit: false
+  show_link: false
+  show_shop_pay: false
 payment_flags:
   secure_text: "100% Encrypted &amp; Secure Checkout"
   show_visa: true
@@ -144,6 +213,18 @@ core.write_text(core.read_text().split('\n/* gro: refill terms */')[0])   # earl
 .gro-rt{display:none}
 .gro-b-buy1 .gro-rt--buy1,.gro-b-buy3 .gro-rt--buy3,.gro-b-buy5 .gro-rt--buy5{display:inline}
 .gro-onetime .gro-refill-terms,.gro-onetime .gro-sub-only{display:none}
+/* no layout jumps while the SDK fills the page: room is held for the address fields and the mobile summary bar */
+.gro-addr{min-height:496px}
+.order-summary-mobile{min-height:61px}
+@media (min-width:992px){.gro-addr{min-height:304px}.order-summary-mobile{min-height:0}}
+/* offer pages: product, copy and layout paint at once; only the numbers the SDK fills wait for it */
+html:not(.next-display-ready) .upsell-container[data-next-await]::before,
+html:not(.next-display-ready) .upsell-container[data-next-await]::after{display:none}
+.upsell-container[data-next-await] *{opacity:1}
+/* the pages ship placeholder numbers ($0.00, $9.99): nothing the SDK fills is shown until it holds the real value
+   (gro-funnel.js adds .gro-prices when the price changes from its placeholder, or after 10 s as a fallback) */
+html:not(.gro-prices) [data-next-display^="bundle."]{visibility:hidden}
+html:not(.gro-prices) .upsell-container[data-next-await] :is(.badge,button,a):has([data-next-display]){opacity:0}
 """ + shop_checkout.CSS + """/* header review under the product line */
 .gro-hrev{margin:14px auto 4px;max-width:520px;background:#F1F2EE;border-radius:12px;padding:14px 18px;text-align:left}
 .gro-hrev__q{margin:0 0 6px;font-style:italic;font-weight:700;font-size:17px;line-height:1.35;color:#23372B}
@@ -211,6 +292,9 @@ data['mouse-pouches'].update({
     'axon_event_key': 'b4bc9878-3e1d-43fc-94de-d53f78913b7c', 'axon_item_category_id': '7137',
     'axon_category_by_package': 'cdkh:7137,7:7137,8:7137,37:7137,38:7137,GRO-COPPER:728,17:728', 'axon_send_user_data': 'true', 'axon_allowed_events': 'all',
     'axon_image_url': 'https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png'})
+# Session recordings / heatmaps (Microsoft Clarity) and GA4: off while the id is empty. Set them here in campaigns.json.
+data['mouse-pouches'].setdefault('clarity_id', '')
+data['mouse-pouches'].setdefault('ga4_id', '')
 data_f.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 cfg = CAMP / 'assets/config.js'
 c = cfg.read_text()
@@ -218,6 +302,22 @@ if 'storeName' in c:
     c = re.sub(r"storeName:\s*(['\"])[^'\"]*\1", "storeName: 'getridof'", c)
 c = c.replace("requiredFields: ['email', 'fname', 'lname']", "requiredFields: ['email', 'fname', 'lname', 'phone']")   # GRO: phone before PayPal / Apple Pay too
 cfg.write_text(c)
+# funnel step events on every checkout / offer / thank-you page, and the Clarity tag when campaigns.json has a clarity_id
+(CAMP / 'assets/js/gro-funnel.js').write_text(FUNNEL_JS)
+CLARITY = ('    {% if campaign.clarity_id and campaign.clarity_id != "" %}<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};'
+           't=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})'
+           '(window,document,"clarity","script","{{ campaign.clarity_id }}");</script>{% endif %}\n')
+base = CAMP / '_layouts/base.html'
+bl = base.read_text()
+if 'clarity.ms/tag' not in bl:
+    anchor = "    {% campaign_include 'analytics-head.html' %}\n"
+    assert bl.count(anchor) == 1
+    bl = bl.replace(anchor, anchor + CLARITY)
+if 'js/gro-funnel.js' not in bl:
+    anchor = "    {% for script in scripts %}\n"
+    assert bl.count(anchor) == 1
+    bl = bl.replace(anchor, "    <script defer src=\"{{ 'js/gro-funnel.js' | campaign_asset }}\"></script>\n" + anchor)
+base.write_text(bl)
 print('wrote checkout.html (subscription), refill terms, header, receipt, campaigns.json')
 
 # ---- post-purchase offers: upsell -> downsell -> upsell-2 -> downsell-2 (see build_offers.py) ----

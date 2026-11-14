@@ -7,7 +7,8 @@ build_pdp.mjs produced (2.3 MB of HTML, ~5 s to first paint on a 4G phone); that
 Hand-written template (lp/page.html), styles (lp/lp.css) and script (lp/lp.js) are inlined into one document:
 no framework, no web fonts, no render-blocking request. The first gallery image is embedded, so the first screen
 paints from the HTML alone; every other image is right-sized here and lazy-loaded.
-Tracking tags (Microsoft Clarity, GA4) come from brand/getridof/tracking.json and stay off while their ids are empty.
+Tracking tags (Microsoft Clarity, GA4) come from clarity_id / ga4_id in campaigns/getridof/_data/campaigns.json (the same
+keys the checkout and offer pages use) and stay off while the ids are empty.
 """
 import base64
 import io
@@ -89,8 +90,7 @@ def webp(src, width, quality):
     return buf.getvalue(), im.size
 
 
-def tracking_tags():
-    t = json.loads((ROOT / 'brand/getridof/tracking.json').read_text())
+def tracking_tags(t):
     out = []
     if re.fullmatch(r'[a-z0-9]{8,14}', t.get('clarity_id') or ''): out.append(CLARITY.replace('%ID%', t['clarity_id']))
     if re.fullmatch(r'G-[A-Z0-9]{6,14}', t.get('ga4_id') or ''): out.append(GA4.replace('%ID%', t['ga4_id']))
@@ -112,7 +112,7 @@ def main():
         f'    <article class="rev"><span class="st" aria-label="5 out of 5 stars">★★★★★</span><h3>{h}</h3><p>{body}</p>'
         f'<footer><img src="/mouse-pouches/lp/av-{slug}.webp" alt="" width="40" height="40" loading="lazy"><span><b>{who}</b>{where} · <span class="vb">✓ Verified buyer</span></span></footer></article>'
         for slug, who, where, h, body in REVIEWS)
-    tags, on = tracking_tags()
+    tags, on = tracking_tags(camp)
     css = re.sub(r'/\*.*?\*/', '', (HERE / 'lp.css').read_text(), flags=re.S)
     css = re.sub(r'\s*\n\s*', '', css)
     js = (HERE / 'lp.js').read_text()
