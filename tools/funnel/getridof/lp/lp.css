@@ -146,7 +146,7 @@ article.wc{padding:12px 12px 10px}
 .q{background:var(--tint);border-radius:var(--r);padding:14px 16px;margin-top:14px}
 .q p{font-style:italic;font-weight:700;color:var(--gd);font-size:15.5px;line-height:1.4}
 .q span{display:block;margin-top:6px;font-size:13px;color:var(--mut)}
-.q span .st{display:inline;color:#f5a623}
+.q span .st{display:inline;color:#00b67a}
 /* sections */
 .sec{padding:44px 0}
 .sec--tint{background:var(--tint)}

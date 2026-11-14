@@ -24,6 +24,9 @@ const PRICES = { buy1: ['22.49', '24.99'], buy3: ['47.97', '49.98'], buy5: ['64.
     const gz = require('zlib').gzipSync(Buffer.from(html)).length;
     ok(`[${vp.name}] page is lean (HTML under 85 KB compressed, incl. the store's ~28 KB monitoring script)`, gz < 85 * 1024, Math.round(gz / 1024) + ' KB compressed, ' + Math.round(html.length / 1024) + ' KB raw');
     ok(`[${vp.name}] no SoFyre text`, !/sofyre/i.test(html));
+    // boxed stars sit in one row everywhere (a stacked column means a display rule broke them)
+    const tall = await p.evaluate(() => [...document.querySelectorAll('.sbx')].filter(e => e.offsetParent && e.getBoundingClientRect().height > 44).map(e => (e.parentElement.className || e.parentElement.tagName) + ' ' + Math.round(e.getBoundingClientRect().height)));
+    ok(`[${vp.name}] star rows are one line high`, tall.length === 0, tall.join(' | '));
     ok(`[${vp.name}] part of the campaign (next-funnel, page type product)`, /name="next-funnel" content="[^"]+"/.test(html) && /name="next-page-type" content="product"/.test(html) && /campaign-cart@v[\d.]+\/dist\/loader\.js/.test(html));
     const first = await p.evaluate(() => { const vis = s => [...document.querySelectorAll(s)].some(e => { if (e.offsetParent === null && getComputedStyle(e).position !== 'fixed') return false; const r = e.getBoundingClientRect(); return r.height > 0 && r.top >= 0 && r.bottom <= innerHeight + 1; });
       return { h1: vis('h1'), rating: vis('.rate'), atc: vis('[data-gro-atc], a.sn'), price: vis('[data-total], [data-p]'), img: vis('.gal__t img') || document.querySelector('.gal__t img').getBoundingClientRect().top < innerHeight, overflow: document.documentElement.scrollWidth > innerWidth + 1 }; });
