@@ -42,7 +42,7 @@ IMAGES = {
     'av-gary': ('Frame_1484584520_66c4055f-d094-4e29-b545-8ddee8d7e-07a331.png', 88, 80),
     'av-russel': ('Frame_1484584519_ea551e31-7ec5-4687-8149-17d3c8965-97a552.webp', 88, 80),
     'av-dale': ('Frame_1484584519_1_ff003d52-42a0-49c8-89d3-f0a91aa-a2c534.webp', 88, 80),
-    'reveal': ('gro-solution-reveal.webp', 720, 74),
+    'reveal': ('gro-solution-reveal.webp', 960, 78),
     'problem-sq': ('gro-problem-pantry.webp', 640, 72, 1.0), 'scent-trail-sq': ('gro-scent-trail.webp', 720, 76, 1.6),
     'p-night': ('gro-p-night.webp', 640, 72), 'p-trap': ('gro-p-trap.webp', 800, 72),
     'a-multiply': ('gro-a-multiply.webp', 640, 72), 'a-contaminate': ('gro-a-contaminate.webp', 640, 72),
