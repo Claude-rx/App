@@ -43,6 +43,7 @@ IMAGES = {
     'av-russel': ('Frame_1484584519_ea551e31-7ec5-4687-8149-17d3c8965-97a552.webp', 88, 80),
     'av-dale': ('Frame_1484584519_1_ff003d52-42a0-49c8-89d3-f0a91aa-a2c534.webp', 88, 80),
     'reveal': ('gro-solution-reveal.webp', 720, 74),
+    'timeline': ('gro-timeline.webp', 720, 76),
     'pantry-before': ('gro-pantry-before.webp', 640, 72), 'pantry-after': ('gro-pantry-after.webp', 640, 72),
     'garage-before': ('gro-garage-before.webp', 640, 72), 'garage-after': ('gro-garage-after.webp', 640, 72),
     'fam-baby': ('gro-fam-baby.webp', 640, 74), 'fam-kids': ('image3-597645.webp', 640, 74), 'fam-pets': ('gro-fam-pets.webp', 640, 74),
@@ -51,26 +52,36 @@ IMAGES = {
 }
 HERO_INLINE = (560, 62)   # width, quality of the embedded first image (sharper hero-1 swaps in after load on big screens)
 
-# The page's existing customer stories (carried over from the previous page, not written here).
+# The page's customer stories, carried over from the original page (not written here): (tab, avatar, name, who/where,
+# "before" quote, headline, story).
 REVIEWS = [
-    ('robert', 'Robert L.', '🏠 Homeowner · Columbus, Ohio', '“Finally something that keeps them gone - for good.”',
-     'Tried every trap and poison for 3 years straight. Placed pouches under the kitchen sink and along the basement wall. Eleven days later, not a single mouse. Six weeks on, still nothing.'),
-    ('tom', 'Tom W.', '🏠 Homeowner · Nashville, Tennessee', '“I wasted $200+ on traps, then I found this.”',
-     'Pouches behind the fridge, along the garage wall, inside the crawl space. Week two: completely silent. Was ready to call an exterminator and spend $400. Glad I didn\'t.'),
-    ('amelia', 'Amelia R.', '🏠 Homeowner · Rochester, New York', '“First October in six years I haven\'t had to deal with them.”',
-     'Old house, lots of entry points. Lined every basement corner and both garage door edges before the cold hit. Usually by mid-October I\'m setting traps every other day. Not this year.'),
-    ('dave', 'Dave B.', '🚐 Full-time RV · Bozeman, Montana', '“Three months in a field in Texas. Not one mouse.”',
-     'We live in our RV full time. Put pouches under every seat, in both storage bays and the slide-out compartments. Haven\'t touched a trap since.'),
-    ('gary', 'Gary M.', '🚐 RV owner · Austin, Texas', '“Opened it in spring and not a single mouse.”',
-     'Mice had chewed wiring and shredded insulation two winters in a row. Tucked pouches into the engine bay, wheel wells and every storage compartment. Four months later: untouched.'),
-    ('russel', 'Russel O.', '🚐 RV owner · Duluth, Minnesota', '“This season: completely clean.”',
-     'Placed pouches in all four storage compartments and two under the dinette before closing her up. Six months later I opened it up spotless.'),
-    ('dale', 'Dale T.', '🌾 Farmer · Lancaster, Pennsylvania', '“Six weeks in, the feed room is clean. Dogs are fine.”',
-     'Put pouches around the entire feed storage perimeter, every 8 feet. Within two weeks the droppings stopped. Nothing to clean up: no dead mice, no poison, no mess.'),
-    ('thomas', 'Thomas E.', '🌾 Farmer · Des Moines, Iowa', '“First clean winter in eight years.”',
-     'Covered the feed room perimeter and tucked pouches inside three pieces of equipment that always got hit. Didn\'t have to pull a single trap all season.'),
-    ('earl', 'Earl H.', '🌾 Farmer · Abilene, Kansas', '“Bins have been clean for four months.”',
-     'Mice got into my grain bins two years running. Placed pouches around every bin entry and along the floor perimeter. Two weeks later the activity stopped.'),
+    ('home', 'robert', 'Robert L.', '🏠 Homeowner · Columbus, Ohio', '“Tried every trap and poison for 3 years straight. Nothing lasted more than a week."',
+     '“Finally something that keeps them gone - for good.”',
+     "Placed pouches under the kitchen sink and along the basement wall. Eleven days later, not a single mouse. Six weeks on — still nothing. My wife actually feels comfortable in her own kitchen again. I genuinely wish I'd found this years ago."),
+    ('home', 'tom', 'Tom W.', '🏠 Homeowner · Nashville, Tennessee', '"Spent close to $200 on traps, poison and one of those ultrasonic plug-ins. Nothing worked longer than a few days."',
+     'I wasted $200+ on traps, then I found this Get Rid Of solution...',
+     "Pouches behind the fridge, along the garage wall, inside the crawl space. Week two - completely silent. Was ready to call an exterminator and spend $400. Glad I didn't."),
+    ('home', 'amelia', 'Amelia R.', '🏠 Homeowner · Rochester, New York', '"Old house, lots of entry points. Had mice every single winter for six years." "First October in six years I haven\'t had to deal with them."',
+     '“This just works, that’s all I want to say!!!',
+     "Lined every basement corner and both garage door edges before the cold hit. Usually by mid-October I'm setting traps every other day. Not this year. Not one."),
+    ('rv', 'dave', 'Dave B.', '🚐 Full-Time RV · Bozeman, Montana', '"We live in our RV full time. Tried every spray and trap on the market — mice kept coming back every time we parked anywhere rural."',
+     '"Three months in a field in Texas. Not one mouse the entire time."',
+     "Put pouches under every seat, in both storage bays and the slide-out compartments. Didn't think something this simple would work. Haven't touched a trap since. For full-timers this is the only thing that's actually worked for us."),
+    ('rv', 'gary', 'Gary M.', '🚐 RV Owner · Austin, Texas', '"Mice had completely destroyed my RV two winters in a row. Chewed wiring, shredded insulation — thousands in damage."',
+     '"Opened it in spring and not a single mouse. First time in three years."',
+     'Tucked pouches into the engine bay, wheel wells and every storage compartment before putting her away for winter. Pulled her out four months later completely untouched. Already ordered a second set for next season.'),
+    ('rv', 'russel', 'Russel O.', '🚐 RV Owner · Duluth, Minnesota', '"Pulled my camper out last April and the damage was unreal. Chewed through seat cushions, found droppings everywhere."',
+     '"This season — completely clean. Not a dropping, not a chew mark. Nothing."',
+     'Placed pouches in all four storage compartments and two under the dinette before closing her up. Six months later opened it up spotless. Saved myself a $600 repair bill minimum.'),
+    ('farm', 'dale', 'Dale T.', '🌾 Farmer · Lancaster, Pennsylvania', '"Lost so much feed to mice every single year. Tried poison but worried constantly about my dogs and cattle getting into it."',
+     '"Six weeks in — feed room is clean. Dogs are fine. Haven\'t touched a trap since."',
+     "Put pouches around the entire feed storage perimeter, every 8 feet like the instructions said. Within two weeks the droppings stopped completely. What got me is there's nothing to clean up — no dead mice, no poison, no mess. Just gone."),
+    ('farm', 'thomas', 'Thomas E.', '🌾 Farmer · Des Moines, Iowa', '"Every fall without fail — mice moved into the equipment shed and feed room the second the temperature dropped."',
+     '"Set them out in September this year. October came and went. Nothing."',
+     "Covered the feed room perimeter and tucked pouches inside three pieces of equipment that always got hit. Didn't have to pull a single trap all season. First clean winter in eight years."),
+    ('farm', 'earl', 'Earl H.', '🌾 Farmer · Abilene, Kansas', '"Mice got into my grain bins two years running. Lost hundreds of dollars of feed before I even noticed."',
+     '"Bins have been clean for four months. Not a single dropping."',
+     'Placed pouches around every bin entry and along the floor perimeter. Two weeks later the activity stopped completely. No poison near my feed, no dead mice to find. Just gone.'),
 ]
 
 AXON = ('<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){'
@@ -133,10 +144,14 @@ def main():
     key = camp.get('axon_event_key') or ''
     if key and not re.fullmatch(r'[0-9a-fA-F-]{36}', key): raise SystemExit('axon_event_key is not an event key')
     axon = AXON.replace('%KEY%', key).replace('%IMG%', json.dumps(camp.get('axon_image_url') or '')) if key else ''
+    def card(r):
+        _, slug, who, where, pre, head, body = r
+        return (f'    <article class="rev"><div class="rev__t"><span class="st" aria-label="5 out of 5 stars">★★★★★</span><span class="vb vb--b">✓ Verified Buyer</span></div>'
+                f'<p class="rev__q">{pre}</p><h3>{head}</h3><p>{body}</p>'
+                f'<footer><img src="/mouse-pouches/lp/av-{slug}.webp" alt="" width="40" height="40" loading="lazy"><span><b>{who}</b>{where}</span></footer></article>')
     reviews = '\n'.join(
-        f'    <article class="rev"><span class="st" aria-label="5 out of 5 stars">★★★★★</span><h3>{h}</h3><p>{body}</p>'
-        f'<footer><img src="/mouse-pouches/lp/av-{slug}.webp" alt="" width="40" height="40" loading="lazy"><span><b>{who}</b>{where} · <span class="vb">✓ Verified buyer</span></span></footer></article>'
-        for slug, who, where, h, body in REVIEWS)
+        f'  <div class="revs" data-pane="{tab}"{"" if n == 0 else " hidden"}>\n' + '\n'.join(card(r) for r in REVIEWS if r[0] == tab) + '\n  </div>'
+        for n, tab in enumerate(('home', 'rv', 'farm')))
     tags, on = tracking_tags(camp)
     expert, expert_name = expert_card()
     css = re.sub(r'/\*.*?\*/', '', (HERE / 'lp.css').read_text(), flags=re.S)

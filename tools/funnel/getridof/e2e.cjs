@@ -42,6 +42,11 @@ const PRICES = { buy1: ['22.49', '24.99'], buy3: ['47.97', '49.98'], buy5: ['64.
     ok(`[${vp.name}] one-time copy when unticked`, /One-time purchase: \$49\.98, no refills/.test(await p.locator('[data-sub-terms]').innerText()));
     await p.locator('[data-gro-sub]').check();
     ok(`[${vp.name}] renewal terms shown when subscribed`, /3 packs \(\$104\.97\) every 90 days/.test(await p.locator('[data-sub-terms]').innerText()));
+    // tabs: reviews by customer type, week-by-week timeline
+    await p.locator('[data-gro-tabs="rev"] button').nth(2).scrollIntoViewIfNeeded(); await p.locator('[data-gro-tabs="rev"] button').nth(2).click();
+    await p.locator('[data-gro-tabs="tl"] button').nth(3).click();
+    ok(`[${vp.name}] tabs switch (Farmers reviews, Week 3 timeline)`, await p.evaluate(() => /Farmer/.test(document.querySelector('.revs:not([hidden])').innerText) && /KNOW NOT TO RETURN/i.test(document.querySelector('.tlp:not([hidden])').innerText)));
+    await p.locator('[data-gro-tabs="rev"] button').first().click();
     // FAQ opens
     const faq = p.locator('.faq details').first(); await faq.locator('summary').scrollIntoViewIfNeeded(); await faq.locator('summary').click();
     ok(`[${vp.name}] FAQ opens`, await faq.evaluate(d => d.open));
@@ -52,7 +57,7 @@ const PRICES = { buy1: ['22.49', '24.99'], buy3: ['47.97', '49.98'], buy5: ['64.
     await p.evaluate(async () => { const g = document.querySelector('.revs'); g.scrollIntoView(); for (let x = 0; x < g.scrollWidth; x += 300) { g.scrollTo(x, 0); await new Promise(r => setTimeout(r, 80)); } });
     await p.evaluate(async () => { const g = document.querySelector('[data-gro-gallery]'); g.scrollIntoView(); for (let i = 1; i < 7; i++) { g.scrollTo(i * g.clientWidth, 0); await new Promise(r => setTimeout(r, 350)); } g.scrollTo(0, 0); });
     await p.waitForFunction(() => [...document.querySelectorAll('[data-gro-gallery] img, .revs img, .ugc img')].every(i => i.complete), null, { timeout: 15000 }).catch(() => {});
-    const imgs = await p.evaluate(() => [...document.images].filter(i => !i.complete || i.naturalWidth === 0).map(i => (i.getAttribute('src') || '').slice(-40)));
+    const imgs = await p.evaluate(() => [...document.images].filter(i => i.offsetParent !== null && (!i.complete || i.naturalWidth === 0)).map(i => (i.getAttribute('src') || '').slice(-40)));
     ok(`[${vp.name}] all images load`, imgs.length === 0, imgs.slice(0, 4).join(' '));
     if (vp.isMobile) ok(`[mobile] sticky buy bar shows while the buy box is off screen`, await p.evaluate(() => { const s = document.querySelector('[data-gro-sticky]'); return getComputedStyle(s).display !== 'none' && !s.classList.contains('off'); }));
     // subscribed 5-pack -> checkout

@@ -140,6 +140,17 @@
       if (document.readyState === 'complete') setTimeout(swap, 300); else window.addEventListener('load', function () { setTimeout(swap, 300); });
     }
   }
+  /* ---------- tabs (reviews by customer type, week-by-week timeline) ---------- */
+  $$('[data-gro-tabs]').forEach(function (bar) {
+    var btns = $$('button', bar), scope = bar.parentNode;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        btns.forEach(function (x) { x.classList.toggle('on', x === b); });
+        $$('[data-pane]', scope).forEach(function (pn) { pn.hidden = pn.getAttribute('data-pane') !== b.getAttribute('data-tab'); });
+        track('tab_' + bar.getAttribute('data-gro-tabs'), { tab: b.getAttribute('data-tab') });
+      });
+    });
+  });
   var revs = $('.revs'); if (revs) revs.addEventListener('scroll', function () { track('reviews_swipe', null, true); }, { passive: true });
   $$('.faq details').forEach(function (d) { d.addEventListener('toggle', function () { if (d.open) track('faq_open', { q: ($('summary', d).textContent || '').slice(0, 40) }); }); });
 
