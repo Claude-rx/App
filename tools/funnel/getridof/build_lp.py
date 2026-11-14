@@ -144,6 +144,26 @@ def expert_card():
             f'<blockquote>“{esc(e["quote"])}”</blockquote>' + (f'<small>{esc(e["disclosure"])}</small>' if e.get('disclosure') else '') + '</div>'), e['name']
 
 
+def video_section():
+    """Video reviews (brand/getridof/videos.json): only files the brand owns or is licensed to use for Get Rid Of. Empty = no section."""
+    cfg = json.loads((ROOT / 'brand/getridof/videos.json').read_text())
+    src = ROOT / 'brand/getridof/videos'
+    esc = lambda v: str(v or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
+    cards = []
+    for n, v in enumerate(cfg.get('videos') or [], 1):
+        f, poster = src / v['file'], src / v['poster']
+        if not f.is_file() or not poster.is_file(): raise SystemExit(f'video review {n}: missing {f.name} or {poster.name} in {src}')
+        if f.stat().st_size > 8 * 1024 * 1024: raise SystemExit(f'video review {n}: {f.name} is over 8 MB')
+        (OUT / f'v-{n}.mp4').write_bytes(f.read_bytes())
+        (OUT / f'v-{n}.webp').write_bytes(webp(poster, 480, 74, 0.8)[0])
+        cards.append(f'    <article class="vr"><button type="button" class="vr__m" data-n="{n}" data-gro-video="/mouse-pouches/lp/v-{n}.mp4" aria-label="Play video: {esc(v["title"])}">'
+                     f'<img src="/mouse-pouches/lp/v-{n}.webp" alt="" loading="lazy" width="480" height="600"><span class="vr__p"></span></button>'
+                     f'<div class="vr__b"><span class="st" aria-label="5 out of 5 stars">★★★★★</span><h3>{esc(v["title"])}</h3><p>“{esc(v["quote"])}”</p><small>{esc(v.get("name"))}</small></div></article>')
+    if not cards: return '', 0
+    return (f'<section class="sec sec--tint" id="videos"><div class="w c">\n  <h2 class="h2">{esc(cfg.get("heading") or "Real homes. Real results.")}</h2>\n  <div class="vrs">\n'
+            + '\n'.join(cards) + '\n  </div>\n</div></section>\n\n'), len(cards)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     total = 0
@@ -165,13 +185,14 @@ def main():
         for n, tab in enumerate(('home', 'rv', 'farm')))
     tags, on = tracking_tags(camp)
     expert, expert_name = expert_card()
+    videos, n_videos = video_section()
     css = re.sub(r'/\*.*?\*/', '', (HERE / 'lp.css').read_text(), flags=re.S)
     css = re.sub(r'\s*\n\s*', '', css)
     js = (HERE / 'lp.js').read_text()
     html = (HERE / 'page.html').read_text()
     for token, value in (('@@CSS@@', css), ('@@JS@@', js), ('@@AXON_HEAD@@', axon), ('@@FUNNEL@@', camp['name']),
                          ('@@HERO_DATA@@', 'data:image/webp;base64,' + base64.b64encode(hero).decode()),
-                         ('@@REVIEWS@@', reviews), ('@@EXPERT@@', expert), ('@@TRACKING@@', SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
+                         ('@@REVIEWS@@', reviews), ('@@EXPERT@@', expert), ('@@VIDEOS@@', videos), ('@@TRACKING@@', SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
         assert html.count(token) == 1, token
         html = html.replace(token, value)
     assert '@@' not in html and '{%' not in html and '{{' not in html and '</script' not in js.lower()
@@ -181,7 +202,7 @@ def main():
     (CAMP / 'index.html').write_text(front + '{% raw %}' + html + '{% endraw %}\n', encoding='utf-8')
     (CAMP / '_layouts/pdp.html').write_text('{{ content }}\n')
     print(f'wrote {CAMP / "index.html"}: {len(html) / 1024:.0f} KB (hero inline {len(hero) / 1024:.0f} KB, css {len(css) / 1024:.0f} KB, js {len(js) / 1024:.0f} KB); '
-          f'{len(IMAGES)} images, {total / 1024:.0f} KB lazy; tracking tags on: {on or "none"}; expert card: {expert_name or "off (no approved expert in brand/getridof/expert.json)"}')
+          f'{len(IMAGES)} images, {total / 1024:.0f} KB lazy; tracking tags on: {on or "none"}; video reviews: {n_videos}; expert card: {expert_name or "off (no approved expert in brand/getridof/expert.json)"}')
 
 
 if __name__ == '__main__':

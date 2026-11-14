@@ -1,0 +1,12 @@
+{
+  "_readme": "Video reviews carousel on the sales page (above the written reviews). It renders only when 'videos' is not empty. Use ONLY videos the brand owns or has written permission to use for Get Rid Of, from people who agreed to appear for this brand. Put each .mp4 (portrait, under 8 MB) and a poster image in brand/getridof/videos/, then list them here. quote must be words actually said in the video. Rebuild and deploy after changing.",
+  "heading": "Real homes. Real results.",
+  "videos": [],
+  "_example": {
+    "file": "anna.mp4",
+    "poster": "anna.jpg",
+    "title": "Three weeks, not one dropping",
+    "quote": "I put one under the sink and one in the garage.",
+    "name": "Anna P. · Ohio"
+  }
+}

@@ -12,7 +12,7 @@ and brands the shared header, receipt, campaigns.json entry and config.js.
 Campaign 2362 (Campaigns App, getridof.29next.store): packages 1 One-Time, 2 Auto-Refill, 3 Package Protection;
 shipping method 1 (free); offers count 1/3/5 -> $29.99 / $55.98 / $74.95; no exit-intent popup.
 The bundle ids buy1/buy3/buy5 are the ones the PDP sends with ?forceBundleId=main:<id>.
-Every claim below is the PDP's own copy (30-day guarantee, 35,129+ properties, the reviews, the benefits).
+Every claim below is the PDP's own copy (90-day guarantee since 14 Nov 2026, the owner's call, 35,129+ properties, the reviews, the benefits).
 """
 import json, re, sys
 FUNNEL_JS = r'''/* Get Rid Of — funnel step events for the checkout, offer and thank-you pages (build_checkout.py writes this file).
@@ -269,7 +269,7 @@ hdr = CAMP / '_includes/checkout-header.html'
 h = hdr.read_text()
 h = h.replace("{{ 'images/next-dark.svg' | campaign_asset }}", "{{ 'pdp/gro-logo.svg' | campaign_asset }}")
 h = re.sub(r'<img loading="lazy" src="\{\{ \'images/90d.webp\' \| campaign_asset \}\}" alt="" class="mg-image">\s*', '', h)
-h = h.replace('90 - Day 100%<br>Money Back Guarantee', '30-Day 100%<br>Money Back Guarantee')
+h = h.replace('90 - Day 100%<br>Money Back Guarantee', '90-Day 100%<br>Money Back Guarantee').replace('30-Day 100%<br>Money Back Guarantee', '90-Day 100%<br>Money Back Guarantee')
 h = re.sub(r'Questions\?<br>Call: <a href="\{\{ campaign\.store_phone_tel \}\}" class="link-tel">\{\{ campaign\.store_phone \}\}</a>',
            'Questions?<br>Email: <a href="mailto:{{ campaign.store_email }}" class="link-tel">{{ campaign.store_email }}</a>', h)
 hdr.write_text(h)

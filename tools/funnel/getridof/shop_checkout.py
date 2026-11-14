@@ -66,7 +66,7 @@ def step1():
             '<div data-next-catalog-component="bundle-selector" data-next-bundle-selector data-next-selector-id="main" data-next-selection-mode="swap" '
             f'data-next-include-shipping="true" class="gro-bs">{body}</div>'
             '<div class="gro-inc"><p>🎁 <b>EARLY BLACK FRIDAY SPECIAL</b><span>Included with every order today</span></p>'
-            '<div class="gro-inc__g"><span><i>FREE</i><u>🚚</u>US shipping</span><span><i>FREE</i><u>↩</u>30-day money-back guarantee</span>'
+            '<div class="gro-inc__g"><span><i>FREE</i><u>🚚</u>US shipping</span><span><i>FREE</i><u>↩</u>90-day money-back guarantee</span>'
             '<span><i>FAST</i><u>📦</u>Ships in 1 business day</span></div></div></div>')
 
 
@@ -90,7 +90,7 @@ def social(extra=''):
                     f'<div class="gro-rc__s" aria-label="5 out of 5 stars">★★★★★</div><p>{t}</p></div>' for n, w, t in CARDS)
     return (f'<div class="gro-soc{extra}"><h3 class="gro-div"><span>Trusted customer reviews</span></h3>{com}'
             '<h3 class="gro-div"><span>Why choose us</span></h3>'
-            '<div class="gro-why"><div><u>🛡</u><p><b>30-Day Money-Back Guarantee</b>If mice haven\'t left in 30 days, we refund your purchase in full.</p></div>'
+            '<div class="gro-why"><div><u>🛡</u><p><b>90-Day Money-Back Guarantee</b>If mice haven\'t left in 90 days, we refund your purchase in full.</p></div>'
             '<div><u>🏠</u><p><b>35,129+ Properties Protected</b>Homes, RVs, barns and sheds.</p></div>'
             '<div><u>🔒</u><p><b>Shop With Confidence</b>Your details are encrypted and sent securely over SSL.</p></div></div>'
             '<h3 class="gro-more">More Trusted Customer Reviews</h3>'
@@ -135,12 +135,13 @@ def body(reviews=None):
     s = s[:pay.start()] + "                          <div class=\"form-section gro-bump\">{% campaign_include 'bump-check01.html' packages=packages %}</div>\n" + s[pay.start():]
     sub = re.search(r'[ \t]*<div class="submit-section">.*?</button></div>\n\s*</div>\n', s, re.S)
     assert sub, 'submit section'
-    s = s.replace(sub.group(0), "                          {% campaign_include 'submit-block.html' disclaimer=submit_disclaimer subtext='TRY IT RISK-FREE · 30-DAY MONEY-BACK GUARANTEE' %}\n"
+    s = s.replace(sub.group(0), "                          {% campaign_include 'submit-block.html' disclaimer=submit_disclaimer subtext='TRY IT RISK-FREE · 90-DAY MONEY-BACK GUARANTEE' %}\n"
                   "                          {% campaign_include 'payment-logos.html' payment_flags=payment_flags wrapper_class='gro-pay-badges' %}\n"
                   "                          {% if refill_terms %}{% campaign_include 'gro-refill-terms.html' %}{% endif %}\n"
                   '                          ' + ICONS + '\n', 1)
-    s = s.replace("Feel safe knowing you're protected. Try it risk-free and return it within 30 days for a full refund or replacement—no questions asked.",
-                  "We stand behind our product. 100% refund valid for 30 days. No questions asked.")
+    s = _once(s, "<strong>30 Day Money-Back Guarantee:</strong> Feel safe knowing you're protected. Try it risk-free and return it within 30 days for a full refund or replacement—no questions asked.",
+              "<strong>90 Day Money-Back Guarantee:</strong> We stand behind our product. 100% refund valid for 90 days. No questions asked.", 'guarantee text')
+    s = _once(s, "{{ 'images/30d.webp' | campaign_asset }}", "{{ 'images/90d.webp' | campaign_asset }}", 'guarantee badge')
     # Early Black Friday box under the mobile summary bar; reviews after the form on phones, under the summary on desktop
     mob = re.search(r'<div class="order-summary-mobile">.*?\{% campaign_include \'cart-summary04.html\' %\}\s*</div>\s*</div>\s*</div>', s, re.S)
     assert mob, 'mobile summary'

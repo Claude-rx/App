@@ -33,9 +33,9 @@ MAP1 = ('Why one pack isn’t enough for your whole house',
 MAP5 = ('Protect every room, every floor, for the whole family',
         'A typical 2-story home with a garage and basement needs about 60 pouches. That’s exactly 5 packs.')
 B1 = ['12 more pouches, the same 4-oil formula', '{pct} off: {price} instead of {compare_price}',
-      'Added with one click, no need to re-enter your card', 'Same 30-day money-back guarantee']
+      'Added with one click, no need to re-enter your card', 'Same 90-day money-back guarantee']
 B5 = ['60 pouches: enough for a typical 2-story home, garage and basement', '{discount} off: {price} instead of {compare_price}',
-      '{per_pack}, our lowest price ever', 'One click, same 30-day money-back guarantee']
+      '{per_pack}, our lowest price ever', 'One click, same 90-day money-back guarantee']
 
 OFFERS = {
     'upsell': dict(
@@ -130,7 +130,7 @@ def page(o):
              'upsell_body:', '  - type: features', f'    title: {q(o["features_title"])}', f'    text: {q(o["features_text"])}',
              '    items:'] + [x for t, d in FEATS for x in (f'      - title: {q(t)}', f'        text: {q(d)}')] + [
              'closing_cta:', '  variant: card', f'  title: {q(o["closing"])}',
-             '  note: "Limited-time, exclusive offer. One click, no need to re-enter your card. Same 30-day money-back guarantee."',
+             '  note: "Limited-time, exclusive offer. One click, no need to re-enter your card. Same 90-day money-back guarantee."',
              '---', '']
     return '\n'.join(lines)
 

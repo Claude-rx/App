@@ -89,6 +89,17 @@
 
   /* ---------- clicks: add to cart, pack picks, scroll links ---------- */
   var leaving = false;
+  /* ---------- video reviews: the file loads only when its card is tapped ---------- */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-gro-video]') : null;
+    if (!b) return;
+    var v = document.createElement('video');
+    v.src = b.getAttribute('data-gro-video'); v.controls = true; v.autoplay = true; v.playsInline = true; v.setAttribute('playsinline', '');
+    var poster = b.querySelector('img'); if (poster) v.poster = poster.currentSrc || poster.src;
+    b.innerHTML = ''; b.appendChild(v); b.removeAttribute('data-gro-video');
+    track('video_play', { n: b.getAttribute('data-n') || '' });
+  });
+  var hcx = $('[data-gro-hc-x]'); if (hcx) hcx.addEventListener('click', function () { $('[data-gro-hc]').style.display = 'none'; track('formula_badge_close'); });
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target.closest('[data-gro-pick],[data-gro-atc],[data-gro-scroll]') : null;
     if (!t) return;
