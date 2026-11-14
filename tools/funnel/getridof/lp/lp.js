@@ -99,7 +99,7 @@
     b.innerHTML = ''; b.appendChild(v); b.removeAttribute('data-gro-video');
     track('video_play', { n: b.getAttribute('data-n') || '' });
   });
-  var hcx = $('[data-gro-hc-x]'); if (hcx) hcx.addEventListener('click', function () { $('[data-gro-hc]').style.display = 'none'; track('formula_badge_close'); });
+  var hcx = $('[data-gro-hc-x]'); if (hcx) hcx.addEventListener('click', function () { var hc = $('[data-gro-hc]'); hc.hidden = true; hc.parentNode.classList.add('nohc'); track('formula_badge_close'); });
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target.closest('[data-gro-pick],[data-gro-atc],[data-gro-scroll]') : null;
     if (!t) return;

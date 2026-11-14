@@ -69,9 +69,16 @@ node tools/funnel/getridof/e2e.cjs http://localhost:8765
 node tools/funnel/getridof/polish_checks.cjs http://localhost:8765 campaigns/getridof/runs/polish
 ```
 
-`e2e.cjs` checks the PDP → checkout handoff and live Cart API totals (24 checks). `polish_checks.cjs` checks card
-selection, the bump, the hosted card fields, the express area and the exit coupon (20 checks). The evidence is in
-`runs/polish/`.
+```bash
+node tools/funnel/getridof/mobile_audit.cjs http://localhost:8765 campaigns/getridof/runs/mobile
+```
+
+`e2e.cjs` checks the sales page → checkout handoff and live Cart API totals (43 checks). `polish_checks.cjs` checks
+bundle selection, the bump and the hosted card fields (17 checks); its evidence is in `runs/polish/`.
+`mobile_audit.cjs` opens all eight steps (sales page, both checkout modes, the four offer pages, the thank-you page)
+at 320, 360, 390 and 430 px wide and checks for sideways scroll, anything sticking out of the screen, text under
+10 px, buy / pay buttons under 40 px, broken images and script errors (192 checks). Add `--store` to run it against
+the store routes, for example `node tools/funnel/getridof/mobile_audit.cjs https://getridof.shop /tmp/mobile --store`.
 
 ## Live on the store (theme 11)
 

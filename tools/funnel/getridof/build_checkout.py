@@ -316,6 +316,10 @@ if 'clarity.ms/tag' not in bl:
     anchor = "    {% campaign_include 'analytics-head.html' %}\n"
     assert bl.count(anchor) == 1
     bl = bl.replace(anchor, anchor + CLARITY)
+if 'gro: offer photo first' not in bl:
+    anchor = '    <link rel="dns-prefetch" href="//i18n-rules.nextcommerce.com">\n'
+    assert bl.count(anchor) == 1
+    bl = bl.replace(anchor, anchor + '    {% comment %} gro: offer photo first {% endcomment %}{% if upsell_offer.image %}<link rel="preload" as="image" href="{{ upsell_offer.image | campaign_asset }}" fetchpriority="high">{% endif %}\n')
 if 'js/gro-funnel.js' not in bl:
     anchor = "    {% for script in scripts %}\n"
     assert bl.count(anchor) == 1

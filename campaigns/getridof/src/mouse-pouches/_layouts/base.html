@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://campaigns.apps.29next.com" crossorigin>
     <link rel="dns-prefetch" href="//cdn-countries.muddy-wind-c7ca.workers.dev">
     <link rel="dns-prefetch" href="//i18n-rules.nextcommerce.com">
+    {% comment %} gro: offer photo first {% endcomment %}{% if upsell_offer.image %}<link rel="preload" as="image" href="{{ upsell_offer.image | campaign_asset }}" fetchpriority="high">{% endif %}
     {% if next_step %}<link rel="prefetch" href="{{ next_step | campaign_link }}" as="document">{% elsif next_url %}<link rel="prefetch" href="{{ next_url | campaign_link }}" as="document">{% endif %}
     {% if decline_url and decline_url != next_url %}<link rel="prefetch" href="{{ decline_url | campaign_link }}" as="document">{% endif %}
 

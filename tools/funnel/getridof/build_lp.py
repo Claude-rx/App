@@ -91,9 +91,13 @@ REVIEWS = [
      'Placed pouches around every bin entry and along the floor perimeter. Two weeks later the activity stopped completely. No poison near my feed, no dead mice to find. Just gone.'),
 ]
 
+# AppLovin's own snippet with one change: the two pixel files are requested when the page has finished loading instead of
+# in the middle of it (about 0.2 s later on a slow phone). Events called before that wait in its queue, as designed, so
+# nothing is lost, and the pixel no longer competes with the page for the connection or holds the load event back.
 AXON = ('<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){'
         'a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey="%KEY%";'
-        'for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}'
+        'var g=function(){for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}};'
+        '"complete"===r.readyState?g():e.addEventListener("load",g)}}'
         '(window,document);axon("init");window.__axonEventKey="%KEY%";window.__axonImageUrl=%IMG%;</script>')
 # Campaign Cart SDK on the sales page: campaign page view + attribution capture. Loaded after the page is interactive.
 SDK = ("<script>window.addEventListener('load',function(){setTimeout(function(){var c=document.createElement('script');c.src='/mouse-pouches/config.js';"

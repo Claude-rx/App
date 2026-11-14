@@ -80,7 +80,7 @@ CARDS = [('Gary M.', 'RV owner · Austin, Texas', 'Opened it in spring and not a
          ('Dale T.', 'Farmer · Lancaster, Pennsylvania', 'Six weeks in, the feed room is clean. Dogs are fine. Haven\'t touched a trap since.'),
          ('Thomas E.', 'Farmer · Des Moines, Iowa', 'Set them out in September this year. October came and went. Nothing.'),
          ('Earl H.', 'Farmer · Abilene, Kansas', 'Bins have been clean for four months. Not a single dropping.')]
-ICONS = ('<div class="gro-ti"><span><u>🌿</u>Four plant oils, no poison</span><span><u>📦</u>Ships within 1 business day</span><span><u>🛡</u>Up to 90 days per pouch</span></div>')
+ICONS = ('<div class="gro-ti"><span><u>🌿</u>Four plant oils, no poison</span><span><u>📦</u>Ships within 1 business day</span><span><u>⏳</u>Up to 90 days per pouch</span></div>')
 
 
 # The review thread: the page's existing customer stories as comment bubbles, with the three customer photos as
@@ -108,7 +108,7 @@ def social(extra=''):
                     f'<div class="gro-rc__s" aria-label="5 out of 5 stars">★★★★★</div><p>{t}</p></div>' for n, w, t in CARDS)
     return (f'<div class="gro-soc{extra}"><h3 class="gro-div"><span>Trusted customer reviews</span></h3>{com}'
             '<h3 class="gro-div"><span>Why choose us</span></h3>'
-            '<div class="gro-why"><div><u>🛡</u><p><b>90-Day Money-Back Guarantee</b>If mice haven\'t left in 90 days, we refund your purchase in full.</p></div>'
+            '<div class="gro-why"><div><u>✅</u><p><b>90-Day Money-Back Guarantee</b>If mice haven\'t left in 90 days, we refund your purchase in full.</p></div>'
             '<div><u>🏠</u><p><b>35,129+ Properties Protected</b>Homes, RVs, barns and sheds.</p></div>'
             '<div><u>🔒</u><p><b>Shop With Confidence</b>Your details are encrypted and sent securely over SSL.</p></div></div>'
             '<h3 class="gro-more">More Trusted Customer Reviews</h3>'
@@ -184,7 +184,7 @@ CSS = """/* Checkout layout after the owner's reference (shop_checkout.py) */
 .gro-ch__sec{font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#1b241d}
 .gro-ch__ship{font-size:12px;font-weight:700;border:1.5px solid #1b241d;border-radius:99px;padding:2px 10px;color:#1b241d}
 .gro-ebf{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center;margin:14px 0 4px;padding:13px 14px;border:1px solid #f1c9cf;background:#fdf1f2;border-radius:10px}
-.gro-ebf__i{width:38px;height:38px;border-radius:50%;background:#a3122a;color:#fff;font-weight:800;font-size:18px;display:grid;place-items:center}
+.gro-ebf .gro-ebf__i{width:38px;height:38px;border-radius:50%;background:#a3122a;color:#fff;font-weight:800;font-size:18px;display:grid;place-items:center}
 .gro-ebf b{display:block;color:#a3122a;font-size:16px;letter-spacing:.01em}
 .gro-ebf span{font-size:14px;line-height:1.4;color:#33402f}
 .gro-ebf strong{color:#a3122a;font-variant-numeric:tabular-nums}
@@ -218,7 +218,8 @@ CSS = """/* Checkout layout after the owner's reference (shop_checkout.py) */
 .gro-inc__g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
 .gro-inc__g span{position:relative;font-size:11.5px;font-weight:700;line-height:1.25;color:#1b241d}
 .gro-inc__g u{display:grid;place-items:center;text-decoration:none;height:54px;margin-bottom:5px;border:1px dashed #c9a56a;border-radius:8px;background:#fff;font-size:24px}
-.gro-inc__g i{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-style:normal;background:#c8102e;color:#fff;font-size:9.5px;font-weight:800;border-radius:5px;padding:1px 7px}
+.gro-inc__g i{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-style:normal;background:#c8102e;color:#fff;font-size:10px;font-weight:800;border-radius:5px;padding:1px 7px}
+.gro-phone{margin-top:16px}
 .gro-ship{margin:10px 0 0;padding:9px 12px;background:#eaf6e4;border:1px solid #bfe0b0;border-radius:6px;font-size:13.5px;color:#2c5a1c}
 .gro-bump{margin-bottom:8px}
 .gro-ti{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 6px;text-align:center}

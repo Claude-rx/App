@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / 'campaigns/getridof/src/mouse-pouches/_includes/gro-house-map.html'
-IMG = 'pdp/gro-house-3d.webp'          # 1600 x 1195
+IMG = 'pdp/gro-house-3d-960.webp'      # 960 x 717, made from pdp/gro-house-3d.webp (1600 x 1195) by build_offers.py
 PER_PACK = 12
 
 # (label, pouches, x %, y %, label side) — positions measured on the render
@@ -47,7 +47,7 @@ def html():
   <p class="gro-map__intro">{{{{ map_intro | default: 'Mice don’t stay in one room. They travel inside walls and between floors, and they settle wherever there is no scent barrier.' }}}}</p>
   <figure class="gro-map__figure">
     <div class="gro-map__stage">
-      <img src="{{{{ '{IMG}' | campaign_asset }}}}" alt="3D cutaway of a two-story home with garage and basement, with the number of pouches for each room" width="1600" height="1195" loading="lazy">
+      <img src="{{{{ '{IMG}' | campaign_asset }}}}" alt="3D cutaway of a two-story home with garage and basement, with the number of pouches for each room" width="960" height="717" loading="lazy" decoding="async">
       <ol class="gro-map__pins" aria-hidden="true">{pins}</ol>
     </div>
     <figcaption><span class="gro-map__dot">#</span> = pouches for that zone &nbsp;·&nbsp; {TOTAL} pouches = <strong>{TOTAL // PER_PACK} packs</strong> for a typical 2-story home with garage and basement</figcaption>

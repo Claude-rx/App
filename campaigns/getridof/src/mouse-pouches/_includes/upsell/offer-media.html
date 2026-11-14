@@ -18,7 +18,7 @@
 {%- if media == 'video' -%}
 {%- campaign_include 'upsell/video.html' upsell_video=media_video -%}
 {%- elsif media == 'image' -%}
-<img loading="eager" src="{{ offer.image | default: 'images/1x1_1.svg' | campaign_asset }}" alt="{{ offer.image_alt | default: '' }}" class="width-full upsell-offer__image"{% if offer.image_display %} data-next-display="{{ offer.image_display }}"{% endif %}>
+<img loading="eager" fetchpriority="high" decoding="async" src="{{ offer.image | default: 'images/1x1_1.svg' | campaign_asset }}" alt="{{ offer.image_alt | default: '' }}" class="width-full upsell-offer__image"{% if offer.image_display %} data-next-display="{{ offer.image_display }}"{% endif %}>
 {%- elsif media == 'grid' -%}
 <div class="upsell-media-grid">
   {%- for img in media_images %}

@@ -44,7 +44,7 @@ OFFERS = {
         badge_note='Your order is confirmed. This 70%-off price is only available on this page.',
         hero_title='Exclusive: Add Another Pack for 70% Off',
         hero_text='One pack covers about one zone of your home. Protect the next one too: 12 more pouches for just <strong>{price}</strong>, added to the order you just placed.',
-        qty=1, voucher='GROU1PK30Q', selector='upsell-pouch', offer_title=PACK1, image='pdp/t12-rodent-57d2b1.png',
+        qty=1, voucher='GROU1PK30Q', selector='upsell-pouch', offer_title=PACK1, image='pdp/gro-offer-pack.webp',
         accept='Yes, add 1 pack for', decline_text='No thanks, one pack is enough',
         bullets=[b.replace('{pct}', '70%') for b in B1],
         features_title='Where a second pack goes', features_text='Mice don’t stop at the kitchen. Put the second pack where they nest first.',
@@ -55,7 +55,7 @@ OFFERS = {
         badge_note='We cut the price in half, just for you. This 50%-off price disappears when you leave this page.',
         hero_title='Wait! Take an Extra Pack at 50% Off',
         hero_text='Here’s our best price on one more pack: 12 pouches for just <strong>{price}</strong>. That’s half off, added to your order with one click.',
-        qty=1, voucher='GROD1PK50Q', selector='downsell-pouch', offer_title=PACK1, image='pdp/t12-rodent-57d2b1.png',
+        qty=1, voucher='GROD1PK50Q', selector='downsell-pouch', offer_title=PACK1, image='pdp/gro-offer-pack.webp',
         accept='Yes, add 1 pack at 50% off for', decline_text='No thanks, I’ll pass on 50% off',
         bullets=[b.replace('{pct}', '50%') for b in B1],
         features_title='Where your extra pack goes', features_text='Cover the zone mice will move to next.',
@@ -66,7 +66,7 @@ OFFERS = {
         badge_note='Only for customers who just ordered. This whole-home price is only available on this page.',
         hero_title='Protect the Entire House &amp; Family: 5 Packs for Only {price}',
         hero_text='Every room, every floor, the garage, attic and basement: 5 packs (60 pouches) for just <strong>{price}</strong>. That’s under $10 a pack.',
-        qty=5, voucher='GROU2FIVE48Q', selector='upsell-home5', offer_title=PACK5, image='pdp/gro-whole-home-5-pack.webp',
+        qty=5, voucher='GROU2FIVE48Q', selector='upsell-home5', offer_title=PACK5, image='pdp/gro-offer-5pack.webp',
         accept='Yes, protect my whole house for', decline_text='No thanks, I’ll protect just part of my home',
         bullets=[b.replace('{per_pack}', 'Under $10 per pack') for b in B5],
         features_title='What 60 pouches cover', features_text='Every zone at once, so mice have nowhere quiet left to move to.',
@@ -77,7 +77,7 @@ OFFERS = {
         badge_note='Our lowest price ever, only for you. It’s gone the moment you leave this page.',
         hero_title='Final Offer: The Whole-Home 5 Packs for Only {price}',
         hero_text='Our lowest price ever: 5 packs (60 pouches) to cover the entire house for just <strong>{price}</strong>. Less than $8 a pack.',
-        qty=5, voucher='GROD2FIVE38Q', selector='downsell-home5', offer_title=PACK5, image='pdp/gro-whole-home-5-pack.webp',
+        qty=5, voucher='GROD2FIVE38Q', selector='downsell-home5', offer_title=PACK5, image='pdp/gro-offer-5pack.webp',
         accept='Yes, protect my whole house for', decline_text='No thanks, complete my order',
         bullets=[b.replace('{per_pack}', 'Less than $8 per pack') for b in B5],
         features_title='What 60 pouches cover', features_text='Every zone at once, so mice have nowhere quiet left to move to.',
@@ -135,7 +135,20 @@ def page(o):
     return '\n'.join(lines)
 
 
+def offer_images():
+    """The photo at the top of each offer page is its largest element: ship it at the size it is shown (2x a 320px slot)."""
+    from PIL import Image
+    for src, dst in (('t12-rodent-57d2b1.png', 'gro-offer-pack.webp'), ('gro-whole-home-5-pack.webp', 'gro-offer-5pack.webp')):
+        im = Image.open(CAMP / 'assets/pdp' / src).convert('RGB')
+        im.thumbnail((640, 640), Image.LANCZOS)
+        im.save(CAMP / 'assets/pdp' / dst, 'WEBP', quality=80, method=6)
+    im = Image.open(CAMP / 'assets/pdp/gro-house-3d.webp').convert('RGB')
+    im.thumbnail((960, 960), Image.LANCZOS)
+    im.save(CAMP / 'assets/pdp/gro-house-3d-960.webp', 'WEBP', quality=74, method=6)
+
+
 def main():
+    offer_images()
     subprocess.run([sys.executable, str(HERE / 'house_map.py')], check=True)
     sys.path.insert(0, str(HERE))
     from house_map import CSS as MAP_CSS
