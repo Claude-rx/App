@@ -303,6 +303,7 @@ cfg = CAMP / 'assets/config.js'
 c = cfg.read_text()
 if 'storeName' in c:
     c = re.sub(r"storeName:\s*(['\"])[^'\"]*\1", "storeName: 'getridof'", c)
+c = c.replace("methodOrder: ['paypal', 'apple_pay', 'google_pay', 'shop_pay', 'link']", "methodOrder: ['paypal', 'apple_pay']")   # GRO: the express bar shows PayPal and Apple Pay only
 c = c.replace("requiredFields: ['email', 'fname', 'lname']", "requiredFields: ['email', 'fname', 'lname', 'phone']")   # GRO: phone before PayPal / Apple Pay too
 cfg.write_text(c)
 # funnel step events on every checkout / offer / thank-you page, and the Clarity tag when campaigns.json has a clarity_id

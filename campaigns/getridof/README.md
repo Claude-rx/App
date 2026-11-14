@@ -80,6 +80,23 @@ at 320, 360, 390 and 430 px wide and checks for sideways scroll, anything sticki
 10 px, buy / pay buttons under 40 px, broken images and script errors (192 checks). Add `--store` to run it against
 the store routes, for example `node tools/funnel/getridof/mobile_audit.cjs https://getridof.shop /tmp/mobile --store`.
 
+
+### Reviews on the sales page
+
+Three review blocks, all built by `build_lp.py`: the scrolling photo strip under the hero, the tabbed customer stories
+(`REVIEWS` in `build_lp.py`, carried over from the original page) and the review wall before the questions
+(`wall_section()`: the four customer photos plus the full stories). Stars are green boxed stars everywhere
+(`.sbx` on the sales page, `.gro-sbx` on the checkout).
+
+To add reviews, put them in `brand/getridof/reviews.json` (photos in `brand/getridof/reviews/`) and rebuild. Add only
+reviews that real Get Rid Of customers sent, and note where each came from in `source` (required, not shown).
+
+### Checkout layout (14 Nov 2026)
+
+Step 1 bundle cards → PayPal / Apple Pay express buttons → contact → shipping address → payment → order button →
+card logos → security badges → refill terms. There is no order bump. Express buttons skip the form, so an express
+order can arrive without a phone number.
+
 ## Live on the store (theme 11)
 
 | Page | URL |

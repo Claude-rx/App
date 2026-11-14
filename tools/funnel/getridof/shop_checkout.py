@@ -8,9 +8,10 @@ campaign-cart-starter-templates src/shop-single-step/checkout.html) and lays it 
 Funnel specifics:
 - Step 1 shows three bundle cards. The sales page sends the choice as ?forceBundleId=main:<id>; subscription ids
   buy1/buy3/buy5 (packages 2 / 5 / 6) or one-time ids ot1/ot3/ot5 (package 1). Only the three cards of that mode show.
-- phone required (AppLovin Axon user_data); no express buttons above the form (they skip validation); PayPal and
+- phone required on the form (AppLovin Axon user_data). PayPal / Apple Pay express buttons sit under Step 1 at the
+  owner's request (14 Nov 2026); they skip the form, so an express order can arrive without a phone number. PayPal and
   Apple Pay stay as payment options, which do require the phone
-- Package Protection bump just before the payment step
+- no order bump: the Package Protection box was removed at the owner's request (14 Nov 2026)
 - under the payment step: order button -> consent line -> payment badges -> Automatic Refills terms (owner's order)
 - the Early Black Friday countdown runs to the real end date (the same one the sales page shows)
 - reviews are the page's existing customer stories; nothing here is invented, and there are no like counts
@@ -80,6 +81,8 @@ CARDS = [('Gary M.', 'RV owner · Austin, Texas', 'Opened it in spring and not a
          ('Dale T.', 'Farmer · Lancaster, Pennsylvania', 'Six weeks in, the feed room is clean. Dogs are fine. Haven\'t touched a trap since.'),
          ('Thomas E.', 'Farmer · Des Moines, Iowa', 'Set them out in September this year. October came and went. Nothing.'),
          ('Earl H.', 'Farmer · Abilene, Kansas', 'Bins have been clean for four months. Not a single dropping.')]
+# Three plain statements about this checkout (no third-party seals: none is licensed for this store).
+SEC = '<div class="gro-sec"><span><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 10V7a6 6 0 0112 0v3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="10" width="16" height="11" rx="2" fill="currentColor"/></svg><b>Secure Payments</b><small>Card details are encrypted</small></span><span><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.400 9.300-8 11-4.600-1.700-8-6-8-11V5z" fill="currentColor"/><path d="M8.300 12.200l2.700 2.700 4.800-5.200" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Safe &amp; Secure</b><small>SSL encrypted checkout</small></span><span><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7.500 12.300l3 3 6-6.300" fill="none" stroke="#fff" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></svg><b>90-Day Guarantee</b><small>Money back, no questions</small></span></div>'
 ICONS = ('<div class="gro-ti"><span><u>🌿</u>Four plant oils, no poison</span><span><u>📦</u>Ships within 1 business day</span><span><u>⏳</u>Up to 90 days per pouch</span></div>')
 
 
@@ -105,14 +108,14 @@ def social(extra=''):
                         f'<div class="gro-cm__c"><div class="gro-cm__b"><b>{n}</b><span>{t}</span></div><p class="gro-cm__m">✓ Verified buyer</p></div></div>')
     com = ''.join(rows)
     cards = ''.join(f'<div class="gro-rc"><div class="gro-rc__h"><i>{"".join(w[0] for w in n.replace(".", "").split())}</i><div><b>{n}</b><small>{w}</small></div></div>'
-                    f'<div class="gro-rc__s" aria-label="5 out of 5 stars">★★★★★</div><p>{t}</p></div>' for n, w, t in CARDS)
+                    f'<div class="gro-rc__s gro-sbx" aria-label="5 out of 5 stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div><p>{t}</p></div>' for n, w, t in CARDS)
     return (f'<div class="gro-soc{extra}"><h3 class="gro-div"><span>Trusted customer reviews</span></h3>{com}'
             '<h3 class="gro-div"><span>Why choose us</span></h3>'
             '<div class="gro-why"><div><u>✅</u><p><b>90-Day Money-Back Guarantee</b>If mice haven\'t left in 90 days, we refund your purchase in full.</p></div>'
             '<div><u>🏠</u><p><b>35,129+ Properties Protected</b>Homes, RVs, barns and sheds.</p></div>'
             '<div><u>🔒</u><p><b>Shop With Confidence</b>Your details are encrypted and sent securely over SSL.</p></div></div>'
             '<h3 class="gro-more">More Trusted Customer Reviews</h3>'
-            f'<p class="gro-rate"><span>★★★★★</span> 4.8 • Based on 1,668 verified reviews</p>{cards}</div>')
+            f'<p class="gro-rate"><span class="gro-sbx gro-sbx--48" aria-hidden="true"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span> 4.8 • Based on 1,668 verified reviews</p>{cards}</div>')
 
 
 # Which bundle is selected, as classes on <html>: gro-b-<id>, plus gro-onetime for a one-time purchase (no Automatic
@@ -141,7 +144,8 @@ def body(reviews=None):
     assert bump, 'bump block'
     s = s.replace(bump.group(0), '', 1)
     s = _once(s, "{% campaign_include 'express-checkout.html' %}", '', 'express')
-    s = _once(s, '<div class="form-sections">', '<div class="form-sections">\n                          ' + step1(), 'step 1')
+    s = _once(s, '<div class="form-sections">', '<div class="form-sections">\n                          ' + step1()
+              + "\n                          <div class=\"gro-exp\">{% campaign_include 'express-checkout.html' %}</div>", 'step 1')
     s = _once(s, '<h2 class="form-section__title">Contact</h2>', '<h2 class="form-section__title">Step 2: Contact information</h2>', 'contact title')
     s = _once(s, '<h1 class="form-section__title">Shipping</h1>', '<h2 class="form-section__title">Step 3: Shipping address</h2>', 'delivery')
     s = _once(s, '<h1 class="form-section__title">Payment</h1>', '<h2 class="form-section__title">Step 4: Payment method</h2>', 'payment title')
@@ -152,13 +156,11 @@ def body(reviews=None):
     assert addr, 'address block'
     # the wrapper holds the address block's height: the SDK re-renders the inner element (it collapses for a moment)
     s = s.replace(addr.group(0), '<div class="gro-addr">' + addr.group(0) + '</div>\n                              ' + PHONE_ROW, 1)
-    pay = re.search(r'[ \t]*<div class="form-section form-section--last">\s*<div class="form-section__header">\s*<h2 class="form-section__title">Step 4: Payment method</h2>', s)
-    assert pay, 'payment section'
-    s = s[:pay.start()] + "                          <div class=\"form-section gro-bump\">{% campaign_include 'bump-check01.html' packages=packages %}</div>\n" + s[pay.start():]
     sub = re.search(r'[ \t]*<div class="submit-section">.*?</button></div>\n\s*</div>\n', s, re.S)
     assert sub, 'submit section'
     s = s.replace(sub.group(0), "                          {% campaign_include 'submit-block.html' disclaimer=submit_disclaimer subtext='TRY IT RISK-FREE · 90-DAY MONEY-BACK GUARANTEE' %}\n"
                   "                          {% campaign_include 'payment-logos.html' payment_flags=payment_flags wrapper_class='gro-pay-badges' %}\n"
+                  '                          ' + SEC + '\n'
                   "                          {% if refill_terms %}{% campaign_include 'gro-refill-terms.html' %}{% endif %}\n"
                   '                          ' + ICONS + '\n', 1)
     s = _once(s, "<strong>30 Day Money-Back Guarantee:</strong> Feel safe knowing you're protected. Try it risk-free and return it within 30 days for a full refund or replacement—no questions asked.",
@@ -221,7 +223,14 @@ CSS = """/* Checkout layout after the owner's reference (shop_checkout.py) */
 .gro-inc__g i{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-style:normal;background:#c8102e;color:#fff;font-size:10px;font-weight:800;border-radius:5px;padding:1px 7px}
 .gro-phone{margin-top:16px}
 .gro-ship{margin:10px 0 0;padding:9px 12px;background:#eaf6e4;border:1px solid #bfe0b0;border-radius:6px;font-size:13.5px;color:#2c5a1c}
-.gro-bump{margin-bottom:8px}
+.gro-exp{margin:14px 0 2px;min-height:124px}
+.gro-exp .express-checkout__buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;min-height:44px}
+.gro-exp .express-checkout__buttons>*{margin:0;width:100%}
+.gro-exp .express-checkout__title{text-align:center;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#1b241d;margin-bottom:8px}
+.gro-sec{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 4px}
+.gro-sec span{display:grid;justify-items:center;gap:2px;text-align:center;padding:10px 4px;border:1px solid #d9dfd3;border-radius:10px;background:#f6f8f2;color:#1b5e20}
+.gro-sec b{font-size:12.5px;line-height:1.2;color:#1b241d}
+.gro-sec small{font-size:10.5px;line-height:1.25;color:#5b665d}
 .gro-ti{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 6px;text-align:center}
 .gro-ti span{font-size:12px;line-height:1.3;color:#1b241d}
 .gro-ti u{display:grid;place-items:center;text-decoration:none;width:54px;height:54px;border-radius:50%;background:#1b241d;margin:0 auto 6px;font-size:24px}
@@ -243,13 +252,18 @@ CSS = """/* Checkout layout after the owner's reference (shop_checkout.py) */
 .gro-why b{display:block;font-size:15.5px;color:#1b241d}
 .gro-more{margin:18px 0 10px;padding:16px 10px;text-align:center;background:#f6f0e6;border-radius:10px;font-size:18px;font-weight:800;color:#1b241d}
 .gro-rate{text-align:center;font-size:14.5px;margin:0 0 12px;color:#1b241d}
-.gro-rate span,.gro-rc__s{color:#f5a623;letter-spacing:2px}
-.gro-rc{border:1px solid #e1e4dc;border-radius:12px;padding:14px;margin-bottom:10px;background:#fff}
-.gro-rc__h{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center;margin-bottom:8px}
-.gro-rc__h i{width:40px;height:40px;border-radius:50%;background:#fdf1c4;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:14px;color:#1b241d}
+.gro-sbx{display:inline-flex;gap:2px;vertical-align:-4px}
+.gro-sbx i{display:grid;place-items:center;width:20px;height:20px;background:#00b67a;color:#fff;font-style:normal;font-size:13px;line-height:1;border-radius:2px}
+.gro-sbx--48 i:last-child{background:linear-gradient(90deg,#00b67a 80%,#dcdce6 80%)}
+.gro-rc__s{display:flex}
+.gro-rc{border:1px solid #e3e6e8;border-radius:14px;padding:16px;margin-bottom:12px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.gro-rc__h{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #e3e6e8}
+.gro-rc__h i{width:44px;height:44px;border-radius:50%;background:#fdf1c4;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:14px;color:#1b241d}
 .gro-rc__h b{display:block;font-size:15px;color:#1b241d}
 .gro-rc__h small{font-size:12px;color:#5b665d}
-.gro-rc p{margin:8px 0 0;font-size:14.5px;line-height:1.45;color:#1b241d}
+.gro-rc p{margin:10px 0 0;font-size:15px;line-height:1.5;color:#1b241d}
+.gro-rc:nth-of-type(3n+2) .gro-rc__h i{background:#e3f0d8}
+.gro-rc:nth-of-type(3n) .gro-rc__h i{background:#e1e6f5}
 .checkout__column--right .gro-soc{margin-top:8px}
 @media (min-width:992px){.gro-ch__in{padding:16px 24px}.gro-ch__in img{height:30px}.gro-ch__r{flex-direction:row;align-items:center;gap:12px}.gro-bc__in{grid-template-columns:22px 56px 1fr auto;padding:14px 16px}.gro-bc__t b{font-size:17px}}
 """

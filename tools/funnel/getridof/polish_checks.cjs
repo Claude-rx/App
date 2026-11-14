@@ -24,15 +24,15 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
       const t = await sumText();
       ok(`[${vp.n}] ${id} from the sales page -> ${packs} pack(s), $${price}`, t.includes(price), t.slice(0, 90));
     }
-    // bump
-    const bump = p.locator('[data-next-toggle-card]').first();
-    const before = await bump.getAttribute('class');
-    await bump.click(); await p.waitForTimeout(1800);
-    const after = await bump.getAttribute('class'); const t2 = await p.locator('[data-next-cart-summary]').first().innerText();
-    ok(`[${vp.n}] bump toggles on and adds $3.97`, !/next-(active|selected|in-cart)/.test(before || '') && /next-(active|selected|in-cart)/.test(after || '') && /68\.92/.test(t2), `${before} -> ${after}`);
-    await bump.screenshot({ path: `${out}/bump-${vp.n}.png` });
-    await bump.click(); await p.waitForTimeout(1500);
-    ok(`[${vp.n}] bump toggles off`, !/next-(active|selected|in-cart)/.test(await bump.getAttribute('class') || ''));
+    // no order bump (the Package Protection box was removed on 14 Nov 2026): shipping address is followed by payment
+    const bumps = await p.evaluate(() => document.querySelectorAll('[data-next-bump], [data-next-toggle-card]').length);
+    const t2 = (await p.locator('[data-next-cart-summary]').first().innerText()).replace(/\s+/g, ' ');
+    ok(`[${vp.n}] no order bump on the page or in the cart`, bumps === 0 && !/Package Protection/i.test(t2), `bump elements: ${bumps}`);
+    // express buttons under Step 1: PayPal always; Apple Pay only where the device offers it
+    await p.waitForFunction(() => document.querySelector('[data-next-express-checkout="buttons"] .cc-paypal'), null, { timeout: 20000 }).catch(() => {});
+    const exp = await p.evaluate(() => [...document.querySelectorAll('[data-next-express-checkout="buttons"] > *')].filter(e => e.offsetParent).map(e => (e.className.match(/cc-[a-z-]+/) || [''])[0] + ' ' + Math.round(e.getBoundingClientRect().height)));
+    ok(`[${vp.n}] express checkout shows a PayPal button of normal height`, exp.some(x => /^cc-paypal (4\d|5\d)$/.test(x)) && exp.every(x => /^cc-(paypal|apple-pay) /.test(x)), exp.join(', '));
+    await p.locator('.gro-exp').first().screenshot({ path: `${out}/express-${vp.n}.png` }).catch(() => {});
     // card fields
     await p.waitForFunction(() => document.querySelector('[data-next-checkout-field="cc-number"] iframe'), null, { timeout: 30000 }).catch(() => {});
     await p.waitForTimeout(2000);

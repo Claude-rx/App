@@ -42,7 +42,8 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
     return { card: !!document.querySelector('[data-next-checkout-field="cc-number"] iframe'), cvv: !!document.querySelector('[data-next-checkout-field="cvv"] iframe'), express: btns, expressShown: ex ? getComputedStyle(ex).display !== 'none' : false, radios };
   });
   ok('card number + CVV fields loaded (29next payments / Adyen)', pay.card && pay.cvv);
-  ok('no top express buttons (they would skip the required phone)', !pay.expressShown, JSON.stringify(pay.express));
+  // express bar under Step 1 (owner's request, 14 Nov 2026): PayPal always, Apple Pay where offered, and nothing else
+  ok('express checkout shows PayPal (and only PayPal / Apple Pay)', pay.expressShown && pay.express.some(x => /cc-paypal/.test(x)) && !pay.express.some(x => /google|shop-pay|link|klarna/i.test(x)), JSON.stringify(pay.express));
   ok('PayPal + Apple Pay offered as payment options', ['paypal', 'apple_pay'].every(m => pay.radios.includes(m)), pay.radios.join(', '));
   ok('payment method radios', pay.radios.length > 0, pay.radios.join(', '));
   // fill the form (no submit)

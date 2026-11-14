@@ -184,6 +184,22 @@
     mqo.observe(mq);
   }
 
+  /* ---------- review wall: "Read more" opens a long story; the link is removed where the story already fits ---------- */
+  document.addEventListener('click', function (e) {
+    var m = e.target.closest ? e.target.closest('[data-gro-more]') : null;
+    if (!m) return;
+    m.parentNode.classList.add('open'); m.parentNode.removeChild(m); track('review_read_more');
+  });
+  var wall = $('.wall');
+  if (wall && 'IntersectionObserver' in window) {
+    var wo = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      wo.disconnect();
+      $$('.wc__t', wall).forEach(function (t) { var m = $('[data-gro-more]', t.parentNode); if (m && t.scrollHeight <= t.clientHeight + 2) m.parentNode.removeChild(m); });
+    }, { rootMargin: '500px 0px' });
+    wo.observe(wall);
+  }
+
   /* ---------- sections fade up as they scroll into view ---------- */
   if ('IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(function () {
     var io = new IntersectionObserver(function (es) {

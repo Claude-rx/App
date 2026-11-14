@@ -1,0 +1,14 @@
+{
+  "_readme": "Extra customer reviews for the wall before the questions on the sales page (after the page's existing stories). Add ONLY reviews real customers of Get Rid Of sent you (email, order follow-up, social message), with their OK to publish. 'source' is required and is not shown on the page: note where the review came from (for example 'order 100123, email 2026-12-02'). 'photo' is optional: a file the customer sent, placed in brand/getridof/reviews/. Set 'verified' to true only for a buyer you can match to an order. Rebuild and deploy after changing.",
+  "reviews": [],
+  "_example": {
+    "name": "Anna P.",
+    "where": "Homeowner · Dayton, Ohio",
+    "rating": 5,
+    "title": "Three weeks, not one dropping",
+    "text": "The customer's own words, as long as they wrote them.",
+    "photo": "anna.jpg",
+    "verified": true,
+    "source": "order 100123, email 2026-12-02"
+  }
+}

@@ -162,10 +162,58 @@ def video_section():
         (OUT / f'v-{n}.webp').write_bytes(webp(poster, 480, 74, 0.8)[0])
         cards.append(f'    <article class="vr"><button type="button" class="vr__m" data-n="{n}" data-gro-video="/mouse-pouches/lp/v-{n}.mp4" aria-label="Play video: {esc(v["title"])}">'
                      f'<img src="/mouse-pouches/lp/v-{n}.webp" alt="" loading="lazy" width="480" height="600"><span class="vr__p"></span></button>'
-                     f'<div class="vr__b"><span class="st" aria-label="5 out of 5 stars">★★★★★</span><h3>{esc(v["title"])}</h3><p>“{esc(v["quote"])}”</p><small>{esc(v.get("name"))}</small></div></article>')
+                     f'<div class="vr__b"><span class="sbx sbx--s" aria-label="5 out of 5 stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span><h3>{esc(v["title"])}</h3><p>“{esc(v["quote"])}”</p><small>{esc(v.get("name"))}</small></div></article>')
     if not cards: return '', 0
     return (f'<section class="sec sec--tint" id="videos"><div class="w c">\n  <h2 class="h2">{esc(cfg.get("heading") or "Real homes. Real results.")}</h2>\n  <div class="vrs">\n'
             + '\n'.join(cards) + '\n  </div>\n</div></section>\n\n'), len(cards)
+
+
+# Review wall before the questions: customer photos and the full customer stories in one masonry grid.
+# Nothing here is written for the page: the stories are REVIEWS above (carried over from the original page) and the
+# photos are the four customer photos. A photo is never attached to a named story it did not come with.
+# Real reviews collected later go in brand/getridof/reviews.json and are added after these.
+WALL_ORDER = [3, 'robert', 'dave', 1, 'dale', 'tom', 2, 'gary', 'thomas', 'amelia', 4, 'russel', 'earl']
+PHOTO_ALT = {1: 'A customer holding a bag of Rodent Repellent Pouches', 2: 'A customer outdoors holding a bag of Rodent Repellent Pouches',
+             3: 'A customer showing a bag of Rodent Repellent Pouches', 4: 'A customer at home with a bag of Rodent Repellent Pouches'}
+
+
+def wall_section():
+    esc = lambda v: str(v or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    unq = lambda v: re.sub(r'\s+', ' ', re.sub(r'[“”"]', '', v)).strip()
+    stars = lambda n: ('<span class="sbx sbx--s" aria-label="%d out of 5 stars">' % n) + '<i>★</i>' * n + '</span>'
+    by = {r[1]: r for r in REVIEWS}
+    cards = []
+
+    def story(avatar, who, where, head, text, rating=5, verified=True):
+        av = f'<img src="{avatar}" alt="" width="36" height="36" loading="lazy">' if avatar else ''
+        vb = '<span class="vb">✓ Verified Buyer</span>' if verified else ''
+        h3 = f'<h3>{head}</h3>' if head else ''
+        cards.append(f'    <article class="wc"><header>{av}<div><b>{who}</b>{vb}</div></header>{stars(rating)}{h3}'
+                     f'<p class="wc__t">{text}</p><button type="button" class="wc__m" data-gro-more>Read more</button><small>{where}</small></article>')
+
+    for item in WALL_ORDER:
+        if isinstance(item, int):
+            cards.append(f'    <figure class="wc wc--ph"><img src="/mouse-pouches/lp/ugc-{item}.webp" alt="{PHOTO_ALT[item]}" width="520" height="645" loading="lazy" decoding="async">'
+                         '<figcaption>📷 Customer photo</figcaption></figure>')
+        else:
+            _, slug, who, where, pre, head, body = by[item]
+            story(f'/mouse-pouches/lp/av-{slug}.webp', who, where, unq(head), unq(pre) + ' ' + unq(body))
+    extra = json.loads((ROOT / 'brand/getridof/reviews.json').read_text()).get('reviews') or []
+    for n, r in enumerate(extra, 1):
+        if not (r.get('name') and r.get('text') and r.get('source')): raise SystemExit(f'reviews.json entry {n}: name, text and source are required')
+        photo = ''
+        if r.get('photo'):
+            src = ROOT / 'brand/getridof/reviews' / r['photo']
+            if not src.is_file(): raise SystemExit(f'reviews.json entry {n}: missing photo {src}')
+            (OUT / f'rv-{n}.webp').write_bytes(webp(src, 520, 74)[0])
+            cards.append(f'    <figure class="wc wc--ph"><img src="/mouse-pouches/lp/rv-{n}.webp" alt="Photo sent by {esc(r["name"])}" width="520" height="645" loading="lazy" decoding="async">'
+                         f'<figcaption>📷 {esc(r["name"])}</figcaption></figure>')
+        story('', esc(r['name']), esc(r.get('where')), esc(r.get('title')), esc(r['text']), int(r.get('rating') or 5), bool(r.get('verified')))
+    return ('<section class="sec sec--tint" id="stories"><div class="w c">\n'
+            '  <p class="rated"><span class="sbx sbx--48" aria-hidden="true"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span> Rated <b>4.8</b> out of 5 · 1,668 verified reviews</p>\n'
+            '  <h2 class="h2" style="margin-top:8px">More stories from our customers</h2>\n  <div class="wall">\n' + '\n'.join(cards) + '\n  </div>\n'
+            '  <button type="button" class="btn btn--in" data-gro-atc data-gro-src="stories" style="margin:14px auto 0">Protect my home now</button>\n'
+            '  <p class="und">90-day money-back guarantee · Free US shipping</p>\n</div></section>\n\n'), len(cards)
 
 
 def main():
@@ -190,6 +238,7 @@ def main():
     tags, on = tracking_tags(camp)
     expert, expert_name = expert_card()
     videos, n_videos = video_section()
+    wall, n_wall = wall_section()
     css = re.sub(r'/\*.*?\*/', '', (HERE / 'lp.css').read_text(), flags=re.S)
     css = re.sub(r'\s*\n\s*', '', css)
     # lp.js keeps its comments in the repository; the inlined copy drops the /* */ blocks and the indentation
@@ -199,7 +248,7 @@ def main():
     html = (HERE / 'page.html').read_text()
     for token, value in (('@@CSS@@', css), ('@@JS@@', js), ('@@AXON_HEAD@@', axon), ('@@FUNNEL@@', camp['name']),
                          ('@@HERO_DATA@@', 'data:image/webp;base64,' + base64.b64encode(hero).decode()),
-                         ('@@REVIEWS@@', reviews), ('@@EXPERT@@', expert), ('@@VIDEOS@@', videos), ('@@TRACKING@@', SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
+                         ('@@REVIEWS@@', reviews), ('@@EXPERT@@', expert), ('@@VIDEOS@@', videos), ('@@WALL@@', wall), ('@@TRACKING@@', SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
         assert html.count(token) == 1, token
         html = html.replace(token, value)
     assert '@@' not in html and '{%' not in html and '{{' not in html and '</script' not in js.lower()
@@ -209,7 +258,7 @@ def main():
     (CAMP / 'index.html').write_text(front + '{% raw %}' + html + '{% endraw %}\n', encoding='utf-8')
     (CAMP / '_layouts/pdp.html').write_text('{{ content }}\n')
     print(f'wrote {CAMP / "index.html"}: {len(html) / 1024:.0f} KB (hero inline {len(hero) / 1024:.0f} KB, css {len(css) / 1024:.0f} KB, js {len(js) / 1024:.0f} KB); '
-          f'{len(IMAGES)} images, {total / 1024:.0f} KB lazy; tracking tags on: {on or "none"}; video reviews: {n_videos}; expert card: {expert_name or "off (no approved expert in brand/getridof/expert.json)"}')
+          f'{len(IMAGES)} images, {total / 1024:.0f} KB lazy; tracking tags on: {on or "none"}; review wall cards: {n_wall}; video reviews: {n_videos}; expert card: {expert_name or "off (no approved expert in brand/getridof/expert.json)"}')
 
 
 if __name__ == '__main__':
