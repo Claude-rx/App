@@ -88,7 +88,9 @@ def social(extra=''):
                   f'<div><b>{n}</b><span>{t}</span><small>✓ Verified buyer</small></div></div>' for s, n, t in COMMENTS)
     cards = ''.join(f'<div class="gro-rc"><div class="gro-rc__h"><i>{"".join(w[0] for w in n.replace(".", "").split())}</i><div><b>{n}</b><small>{w}</small></div></div>'
                     f'<div class="gro-rc__s" aria-label="5 out of 5 stars">★★★★★</div><p>{t}</p></div>' for n, w, t in CARDS)
+    photos = ''.join(f'<img src="{{{{ \'lp/ugc-{n}.webp\' | campaign_asset }}}}" alt="A customer with a bag of Rodent Repellent Pouches" width="130" height="162" loading="lazy">' for n in (3, 1, 2, 4))
     return (f'<div class="gro-soc{extra}"><h3 class="gro-div"><span>Trusted customer reviews</span></h3>{com}'
+            f'<div class="gro-ph">{photos}</div>'
             '<h3 class="gro-div"><span>Why choose us</span></h3>'
             '<div class="gro-why"><div><u>🛡</u><p><b>90-Day Money-Back Guarantee</b>If mice haven\'t left in 90 days, we refund your purchase in full.</p></div>'
             '<div><u>🏠</u><p><b>35,129+ Properties Protected</b>Homes, RVs, barns and sheds.</p></div>'
@@ -212,6 +214,8 @@ CSS = """/* Checkout layout after the owner's reference (shop_checkout.py) */
 .gro-cm b{display:block;font-size:14px;color:#1b241d}
 .gro-cm span{display:block;font-size:14.5px;line-height:1.4;color:#1b241d}
 .gro-cm small{display:block;margin-top:3px;font-size:11.5px;font-weight:700;color:#2f7d1e}
+.gro-ph{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:4px 0 6px}
+.gro-ph img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:10px}
 .gro-why div{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #e1e4dc}
 .gro-why div:last-child{border-bottom:0}
 .gro-why u{text-decoration:none;font-size:24px;text-align:center}

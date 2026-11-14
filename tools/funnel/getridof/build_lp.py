@@ -181,7 +181,7 @@ def main():
                 f'<p class="rev__q">{pre}</p><h3>{head}</h3><p>{body}</p>'
                 f'<footer><img src="/mouse-pouches/lp/av-{slug}.webp" alt="" width="40" height="40" loading="lazy"><span><b>{who}</b>{where}</span></footer></article>')
     reviews = '\n'.join(
-        f'  <div class="revs revs--v" data-pane="{tab}"{"" if n == 0 else " hidden"}>\n' + '\n'.join(card(r) for r in REVIEWS if r[0] == tab) + '\n  </div>'
+        f'  <div class="revs" data-pane="{tab}"{"" if n == 0 else " hidden"}>\n' + '\n'.join(card(r) for r in REVIEWS if r[0] == tab) + '\n  </div>'
         for n, tab in enumerate(('home', 'rv', 'farm')))
     tags, on = tracking_tags(camp)
     expert, expert_name = expert_card()
