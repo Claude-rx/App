@@ -18,7 +18,7 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
     ok(`[${vp.n}] no visible bundle picker (Shopify-style)`, tierCards === 0, `visible cards: ${tierCards}`);
     const sumText = async () => (await p.locator('[data-next-cart-summary]').first().innerText()).replace(/\s+/g, ' ');
     ok(`[${vp.n}] default tier = 3 packs, $47.97`, /47\.97/.test(await sumText()));
-    for (const [id, price, packs] of [['buy1', '24.99', 1], ['buy5', '64.95', 5]]) {
+    for (const [id, price, packs] of [['buy1', '22.49', 1], ['buy5', '64.95', 5]]) {
       await p.goto(base + `/mouse-pouches/checkout/?forceBundleId=main:${id}`, { waitUntil: 'load' });
       await p.waitForFunction(() => document.querySelector('[data-next-bundle-card].next-selected'), null, { timeout: 30000 }); await p.waitForTimeout(2500);
       const t = await sumText();

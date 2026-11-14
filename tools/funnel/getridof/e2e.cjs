@@ -1,7 +1,7 @@
 // End-to-end check of the Get Rid Of mouse-pouches funnel against a served _site (default http://localhost:8765).
 //   node tools/funnel/getridof/e2e.cjs [baseUrl] [outDir]
 // PDP: bundle bars, refill toggle, ADD TO CART -> checkout URL; accordions, tabs. Checkout: the chosen card is
-// selected and the live Campaign Cart total matches campaign 2362 (subscription first order 24.99 / 47.97 / 64.95). Places no order.
+// selected and the live Campaign Cart total matches campaign 2362 (subscription first order 22.49 / 47.97 / 64.95). Places no order.
 const { chromium } = require('playwright');
 const base = process.argv[2] || 'http://localhost:8765';
 const out = process.argv[3] || '.';

@@ -7,7 +7,7 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   // routing meta tags
-  // flow: sales page -> checkout (subscription) -> upsell 1 (30%) -no-> downsell 1 (50%) -> upsell 2 (5 packs) -no-> downsell 2 -> thank you
+  // flow: sales page -> checkout (subscription) -> upsell 1 (70%) -no-> upsell 2 (5 packs) -no-> downsell 2 -> thank you
   const ck = await (await p.request.get(`${base}/mouse-pouches-checkout/`)).text();
   const m = ck.match(/next-success-url" content="([^"]*)"/);
   ok('checkout: completed order goes to upsell 1', m && m[1] === '/mouse-pouches-special-offer/', m && m[1]);
@@ -15,7 +15,7 @@ const ok = (n, p, d = '') => console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  '
   const gone = await p.request.get(`${base}/mouse-pouches-checkout-refill/`);
   ok('old split refill checkout is gone', gone.status() === 404, String(gone.status()));
   const OFFERS = [
-    ['mouse-pouches-special-offer', '/mouse-pouches-special-offer-2/', '/mouse-pouches-exclusive-offer/', '$34.97', '$49.99', 'upsell 1: 1 pack 30% off'],
+    ['mouse-pouches-special-offer', '/mouse-pouches-special-offer-2/', '/mouse-pouches-special-offer-2/', '$14.98', '$49.99', 'upsell 1: 1 pack 70% off'],
     ['mouse-pouches-exclusive-offer', '/mouse-pouches-special-offer-2/', '/mouse-pouches-special-offer-2/', '$24.97', '$49.99', 'downsell 1: 1 pack 50% off'],
     ['mouse-pouches-special-offer-2', '/mouse-pouches-thank-you/', '/mouse-pouches-exclusive-offer-2/', '$48.95', '$249.95', 'upsell 2: 5 packs'],
     ['mouse-pouches-exclusive-offer-2', '/mouse-pouches-thank-you/', '/mouse-pouches-thank-you/', '$38.95', '$249.95', 'downsell 2: 5 packs'],

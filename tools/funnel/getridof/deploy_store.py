@@ -10,8 +10,8 @@ Each built page becomes its own page template, templates/pages/page.<slug>.html,
 `template` is that slug (the theme's shared page.html router is not touched):
 
     /mouse-pouches/                   sales page (PDP)
-    /mouse-pouches-checkout/          checkout (subscription: 50% off the first order, then $34.99 a pack every 30 days; 3 packs every 90, 5 every 150)
-    /mouse-pouches-special-offer/     upsell 1: one more pack, 30% off ($34.97)
+    /mouse-pouches-checkout/          checkout (subscription: first order 55% off 1 pack, 50% off 3 or 5, then $34.99 a pack every 30 days; 3 packs every 90, 5 every 150)
+    /mouse-pouches-special-offer/     upsell 1: one more pack, 70% off ($14.98)
     /mouse-pouches-exclusive-offer/   downsell 1 (declined upsell 1): one more pack, 50% off ($24.97)
     /mouse-pouches-special-offer-2/   upsell 2: whole-home 5 packs ($48.95)
     /mouse-pouches-exclusive-offer-2/ downsell 2 (declined upsell 2): 5 packs ($38.95)
@@ -37,7 +37,7 @@ ASSET_DIR = 'gromp'
 PAGES = {  # built page dir ('' = index) -> store slug, title
     '': ('mouse-pouches', 'Rodent Repellent Pouches'),
     'checkout': ('mouse-pouches-checkout', 'Secure Checkout'),
-    'upsell': ('mouse-pouches-special-offer', 'One More Pack, 30% Off'),
+    'upsell': ('mouse-pouches-special-offer', 'One More Pack, 70% Off'),
     'downsell': ('mouse-pouches-exclusive-offer', 'Extra Pack, 50% Off'),
     'upsell-2': ('mouse-pouches-special-offer-2', 'Whole-Home 5 Packs'),
     'downsell-2': ('mouse-pouches-exclusive-offer-2', 'Whole-Home 5 Packs, Final Offer'),

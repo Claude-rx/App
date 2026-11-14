@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Get Rid Of post-purchase offers (campaign 2362). Run by build_checkout.py (after the checkout is written).
 
-    checkout -> upsell     (1 pack, 30% off  = $34.97)  --yes--> upsell-2
-                                                       --no---> downsell (1 pack, 50% off = $24.97) -> upsell-2
+    checkout -> upsell     (1 pack, 70% off  = $14.98)  --yes--> upsell-2
+                                                       --no---> upsell-2
+    (downsell, 1 pack 50% off = $24.97, is no longer routed: since the owner set upsell 1 to 70% off on 14 Nov 2026 it
+    would offer a higher price after a no)
              -> upsell-2   (5 packs, $48.95)            --yes--> receipt
                                                        --no---> downsell-2 (5 packs, $38.95) -> receipt
 
@@ -37,16 +39,16 @@ B5 = ['60 pouches: enough for a typical 2-story home, garage and basement', '{di
 
 OFFERS = {
     'upsell': dict(
-        title='One More Pack, 30% Off', next='upsell-2.html', decline='downsell.html',
+        title='One More Pack, 70% Off', next='upsell-2.html', decline='upsell-2.html',
         announce='EXCLUSIVE OFFER JUST FOR YOU · LIMITED TIME ONLY',
-        badge_note='Your order is confirmed. This 30%-off price is only available on this page.',
-        hero_title='Exclusive: Add Another Pack for 30% Off',
+        badge_note='Your order is confirmed. This 70%-off price is only available on this page.',
+        hero_title='Exclusive: Add Another Pack for 70% Off',
         hero_text='One pack covers about one zone of your home. Protect the next one too: 12 more pouches for just <strong>{price}</strong>, added to the order you just placed.',
         qty=1, voucher='GROU1PK30Q', selector='upsell-pouch', offer_title=PACK1, image='pdp/t12-rodent-57d2b1.png',
         accept='Yes, add 1 pack for', decline_text='No thanks, one pack is enough',
-        bullets=[b.replace('{pct}', '30%') for b in B1],
+        bullets=[b.replace('{pct}', '70%') for b in B1],
         features_title='Where a second pack goes', features_text='Mice don’t stop at the kitchen. Put the second pack where they nest first.',
-        closing='Add one more pack for 30% off?', map=MAP1),
+        closing='Add one more pack for 70% off?', map=MAP1),
     'downsell': dict(
         title='Last Chance: 50% Off One More Pack', next='upsell-2.html', decline='upsell-2.html',
         announce='WAIT! ONE-TIME EXCLUSIVE OFFER · LIMITED TIME',
@@ -156,7 +158,7 @@ def main():
     f.write_text(f.read_text().replace('next_url: receipt.html', 'next_url: upsell.html', 1))
     hb = CAMP / '_includes/upsell/header-bar.html'
     hb.write_text(hb.read_text().replace('images/next-dark.svg', 'pdp/gro-logo.svg'))
-    print('wrote upsell, downsell, upsell-2, downsell-2 (checkout -> up1 -no-> down1 -> up2 -no-> down2 -> receipt)')
+    print('wrote upsell, downsell, upsell-2, downsell-2 (checkout -> up1 -no-> up2 -no-> down2 -> receipt)')
 
 
 if __name__ == '__main__':
