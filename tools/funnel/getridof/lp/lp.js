@@ -155,7 +155,7 @@
   $$('.faq details').forEach(function (d) { d.addEventListener('toggle', function () { if (d.open) track('faq_open', { q: ($('summary', d).textContent || '').slice(0, 40) }); }); });
 
   /* ---------- sections fade up as they scroll into view ---------- */
-  if ('IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+  if ('IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(function () {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
     }, { rootMargin: '0px 0px -8% 0px' });
@@ -163,7 +163,7 @@
       if (el.getBoundingClientRect().top < innerHeight) return;   // already on screen: leave it visible
       el.classList.add('rv'); el.style.transitionDelay = (n % 3) * 70 + 'ms'; io.observe(el);
     });
-  }
+  });   // set up when the browser is idle: it measures every card, which must not delay the first paint
 
   /* ---------- scroll depth ---------- */
   var marks = [25, 50, 75, 100], st = 0;
