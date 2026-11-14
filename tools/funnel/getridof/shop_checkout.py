@@ -133,6 +133,10 @@ def body(reviews=None):
     s = TEMPLATE.read_text().split('---', 2)[2]
     s = s.replace("{{ 'images/next-dark.svg' | campaign_asset }}", LOGO)
     s = _once(s, "{% campaign_include 'checkout-header.html' %}", HEADER, 'header')
+    # The starter keeps a second, hidden logo above the mobile order summary. It showed for ~0.4 s on a slow phone
+    # until the stylesheet with .hide arrived, pushing the page down 37 px and back (layout shift 0.04-0.06).
+    s, n = re.subn(r'[ \t]*<div class="checkout-header__brand justify-center hide">.*?</div>\n', '', s, flags=re.S)
+    assert n == 1, f'hidden second logo: found {n}'
     bump = re.search(r'[ \t]*\{% assign bump_variant = order_bump_variant.*?\{% endunless %\}\n', s, re.S)
     assert bump, 'bump block'
     s = s.replace(bump.group(0), '', 1)
