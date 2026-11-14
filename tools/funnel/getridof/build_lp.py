@@ -188,7 +188,10 @@ def main():
     videos, n_videos = video_section()
     css = re.sub(r'/\*.*?\*/', '', (HERE / 'lp.css').read_text(), flags=re.S)
     css = re.sub(r'\s*\n\s*', '', css)
-    js = (HERE / 'lp.js').read_text()
+    # lp.js keeps its comments in the repository; the inlined copy drops the /* */ blocks and the indentation
+    # (every /* in that file is a comment: none sits inside a string or a regular expression).
+    js = re.sub(r'/\*.*?\*/', '', (HERE / 'lp.js').read_text(), flags=re.S)
+    js = re.sub(r'\n\s+', '\n', js).strip()
     html = (HERE / 'page.html').read_text()
     for token, value in (('@@CSS@@', css), ('@@JS@@', js), ('@@AXON_HEAD@@', axon), ('@@FUNNEL@@', camp['name']),
                          ('@@HERO_DATA@@', 'data:image/webp;base64,' + base64.b64encode(hero).decode()),

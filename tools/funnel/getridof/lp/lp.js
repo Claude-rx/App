@@ -165,6 +165,25 @@
   var revs = $('.revs'); if (revs) revs.addEventListener('scroll', function () { track('reviews_swipe', null, true); }, { passive: true });
   $$('.faq details').forEach(function (d) { d.addEventListener('toggle', function () { if (d.open) track('faq_open', { q: ($('summary', d).textContent || '').slice(0, 40) }); }); });
 
+  /* ---------- customer photo strip: an endless left-scrolling row (40 px a second, pauses under the finger or pointer) ----------
+     The page ships the four photos once. When the strip is about to scroll into view they are copied five more times
+     (same files, so nothing new downloads) and the row slides by exactly one copy, which makes the loop seamless. */
+  var mq = $('[data-gro-mq]');
+  if (mq && 'IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    var mqo = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      mqo.disconnect();
+      var row = $('.ugc__t', mq), set = $$('img', row), ready = 0;
+      var go = function () {
+        for (var k = 0; k < 5; k++) set.forEach(function (im) { var c = im.cloneNode(false); c.removeAttribute('loading'); c.alt = ''; c.setAttribute('aria-hidden', 'true'); row.appendChild(c); });
+        mq.classList.add('on');
+      };
+      var one = function () { if (++ready === set.length) go(); };
+      set.forEach(function (im) { im.loading = 'eager'; if (im.complete) one(); else { im.addEventListener('load', one); im.addEventListener('error', one); } });
+    }, { rootMargin: '600px 0px' });
+    mqo.observe(mq);
+  }
+
   /* ---------- sections fade up as they scroll into view ---------- */
   if ('IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(function () {
     var io = new IntersectionObserver(function (es) {
