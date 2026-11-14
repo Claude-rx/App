@@ -1,6 +1,10 @@
 /* Get Rid Of checkout additions (build_checkout.py) */
 .gro-refill-terms{margin:12px 0;padding:12px 14px;border:1px solid #7EA254;background:#EEF4E6;border-radius:8px;font-size:13px;line-height:1.45;color:#23372B}
 .gro-refill-terms a{color:#23372B;text-decoration:underline}
+/* the bundle comes from the sales page (?forceBundleId=main:<id>); shop_checkout.py's head script puts it on <html> */
+.gro-rt{display:none}
+.gro-b-buy1 .gro-rt--buy1,.gro-b-buy3 .gro-rt--buy3,.gro-b-buy5 .gro-rt--buy5{display:inline}
+.gro-onetime .gro-refill-terms,.gro-onetime .gro-sub-only{display:none}
 /* Shopify-style checkout (shop_checkout.py) */
 .gro-shop-header .brand-logo{height:34px;width:auto}
 .checkout--shop .form-section__title{font-size:21px;font-weight:600}

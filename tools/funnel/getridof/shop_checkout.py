@@ -34,6 +34,13 @@ PAY_TAIL = ("{% campaign_include 'submit-block.html' disclaimer=submit_disclaime
             "                          {% if refill_terms %}{% campaign_include 'gro-refill-terms.html' %}{% endif %}\n")
 
 
+# Which bundle the shopper picked on the sales page, as classes on <html>: gro-b-<id>, plus gro-onetime for a
+# one-time purchase (no Automatic Refills terms). No parameter = the default bundle, buy3.
+BUNDLE_CLASS = ("<script>(function(){var m=/[?&]forceBundleId=main(?::|%3A)([a-z0-9]+)/i.exec(location.search),b=m?m[1].toLowerCase():'buy3';"
+                "if(!/^(buy|ot)[135]$/.test(b))b='buy3';var c=document.documentElement.classList;c.add('gro-b-'+b);if(b.indexOf('ot')===0)c.add('gro-onetime');"
+                "window.groBundle=b;})();</script>\n")
+
+
 def review(r, extra=''):
     t, _, a, _ = r
     return (f'<div class="gro-hrev{extra}" role="note"><p class="gro-hrev__q">{t}</p>'
@@ -76,7 +83,7 @@ def body(reviews):
     assert desk, 'desktop summary'
     s = s.replace(desk.group(0), desk.group(0) + '\n                    ' + review(reviews[0]), 1)
     assert 'SPEC_' not in s and 'next-dark.svg' not in s
-    return s
+    return BUNDLE_CLASS + s
 
 
 CSS = """/* Shopify-style checkout (shop_checkout.py) */
