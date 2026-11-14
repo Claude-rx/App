@@ -276,6 +276,9 @@ hdr.write_text(h)
 rc = CAMP / 'receipt.html'
 r = rc.read_text().replace('title: "Olympus — Receipt"', 'title: "Thank You | Get Rid Of"').replace("{{ 'images/next-dark.svg' | campaign_asset }}", "{{ 'pdp/gro-logo.svg' | campaign_asset }}")
 rc.write_text(r)
+# the thank-you page's loading skeleton showed the starter's logo until the order loaded
+sk = CAMP / '_includes/receipt-skeleton.html'
+sk.write_text(sk.read_text().replace("{{ 'images/next-dark.svg' | campaign_asset }}", "{{ 'pdp/gro-logo.svg' | campaign_asset }}"))
 
 # campaigns.json and config.js
 data_f = ROOT / 'campaigns/getridof/_data/campaigns.json'
