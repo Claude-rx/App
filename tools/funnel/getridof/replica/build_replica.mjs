@@ -1,18 +1,21 @@
-// Builds the Get Rid Of Mouse Pouches product page (campaigns/getridof/src/mouse-pouches/index.html) from the offline
-// export of the reference PDP (exports/sofyre/offline/). Re-runnable: it always starts from the export.
+// Builds the replica funnel's product page, /mouse-repellent-pouches/ (campaign 2721): the brand's proven product page
+// (offline export in exports/sofyre/offline/) rebuilt as Get Rid Of, section for section, in the source order.
+// Run through build_replica.py, which first copies the checkout / offer / thank-you pages into the funnel folder.
 //
-//   node tools/funnel/getridof/build_pdp.mjs
+//   node tools/funnel/getridof/replica/build_replica.mjs
 //
 // What it does, in a browser DOM (Playwright, network off), then as text:
 //  - brand: every "SoFyre" in the copy, titles and alt text becomes "Get Rid Of"; the header/footer logo is the
-//    store's own logo (cdn.cachebucket.com, copied locally); links to sofyre.com point at getridof.shop
+//    store's own logo; links to sofyre.com point at getridof.shop; packaging photos are swapped for the Get Rid Of
+//    packaging (swap_images.py)
 //  - removes what only works on the source store: Shopify JSON-LD and meta, Shop Pay / dynamic checkout buttons,
 //    cart drawer, search, social links, the newsletter form, hidden upsell popups, the Kaching app's config payload
-//  - the bundle box (Buy 1 / Buy 2 Get 1 / Buy 3 Get 2 + "Save 30% with automatic refills") and every ADD TO CART
-//    button become the funnel's: pdp.js sends the shopper to the checkout with the chosen bundle preselected
-//    (?forceBundleId=), the one-time checkout or the Auto-Refill one
-//  - the 5-pack price shows $74.95, the amount campaign 2362 charges (74.97 is not reachable with 5 equal units)
-//  - assets: the export's 250 files are copied to src/mouse-pouches/assets/pdp/ and referenced as /mouse-pouches/pdp/
+//  - the bundle box (Buy 1 / Buy 2 Get 1 Free / Buy 3 Get 2 Free + Automatic Refills) and every ADD TO CART button
+//    become the funnel's: pdp.js shows campaign 2721's prices and sends the shopper to the checkout with the chosen
+//    bundle preselected (?forceBundleId=main:buy1|buy3|buy5 with refills, ot1|ot3|ot5 without)
+//  - what differs from the source, on purpose: the money-back guarantee is this brand's 90 days, the dispatch line
+//    quotes this brand's shipping time, the payment marks are the ones this checkout takes, and the "as seen in"
+//    press logos are left out (they are not this brand's)
 import { createRequire } from 'node:module';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -20,26 +23,34 @@ import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(HERE, '../../../..');
+const SLUG = 'mouse-repellent-pouches';
 const SRC = path.join(ROOT, 'exports/sofyre/offline');
-const CAMP = path.join(ROOT, 'campaigns/getridof/src/mouse-pouches');
+const CAMP = path.join(ROOT, 'campaigns/getridof/src', SLUG);
 const OUT_ASSETS = path.join(CAMP, 'assets/pdp');
 const STORE = 'https://getridof.shop';   // every visible link goes to the main domain
-const ASSET_URL = '/mouse-pouches/pdp/';
+const ASSET_URL = `/${SLUG}/pdp/`;
 // brand colour = the new packaging's green (sampled from brand/getridof/new-pack.png); replaces the reference page's lime
 const BRAND_GREEN = '#7EA254';
 const recolor = t => t.replace(/#ccf46f/gi, BRAND_GREEN).replace(/(rgba?\(\s*)204(\s*,\s*)244(\s*,\s*)111/gi, '$1126$2162$384');
 
 // 1. assets
 fs.mkdirSync(OUT_ASSETS, { recursive: true });
-for (const f of fs.readdirSync(path.join(SRC, 'assets'))) if (!/sofyre/i.test(f)) fs.copyFileSync(path.join(SRC, 'assets', f), path.join(OUT_ASSETS, f));
+// The funnel folder arrives with src/mouse-pouches/assets/pdp (build_replica.py): the same files with the Get Rid Of
+// packaging and the 90-day guarantee already in the images. Only what is missing there is taken from the export.
+let fresh = 0;
+for (const f of fs.readdirSync(path.join(SRC, 'assets'))) if (!/sofyre/i.test(f) && !fs.existsSync(path.join(OUT_ASSETS, f))) { fs.copyFileSync(path.join(SRC, 'assets', f), path.join(OUT_ASSETS, f)); fresh++; }
+const freshImages = fs.readdirSync(path.join(SRC, 'assets')).filter(f => /\.(png|jpe?g|webp|gif|avif)$/i.test(f) && !/sofyre/i.test(f) && !fs.existsSync(path.join(ROOT, 'campaigns/getridof/src/mouse-pouches/assets/pdp', f)));
+if (freshImages.length) throw new Error('images that never went through the brand swap: ' + freshImages.join(', '));
 for (const [name, url] of [['gro-logo.svg', `https://cdn.cachebucket.com/media/getridof/themes/11/assets/assets/img/gro/logo.svg`],
                            ['gro-logo-white.svg', `https://cdn.cachebucket.com/media/getridof/themes/11/assets/assets/img/gro/logo-white.svg`]]) {
   const r = await fetch(url); if (!r.ok) throw new Error(`logo ${url}: ${r.status}`);
   fs.writeFileSync(path.join(OUT_ASSETS, name), Buffer.from(await r.arrayBuffer()));
 }
-fs.copyFileSync(path.join(ROOT, 'tools/funnel/getridof/pdp.js'), path.join(OUT_ASSETS, 'pdp.js'));
-fs.copyFileSync(path.join(ROOT, 'tools/funnel/getridof/pdp.css'), path.join(OUT_ASSETS, 'pdp.css'));
+const PRICES = JSON.parse(fs.readFileSync(path.join(HERE, 'prices.json'), 'utf8'));   // what the bundle box shows
+fs.writeFileSync(path.join(OUT_ASSETS, 'pdp.js'), fs.readFileSync(path.join(HERE, 'pdp.js'), 'utf8').replaceAll('@@SLUG@@', SLUG).replace('@@PRICES@@', JSON.stringify(PRICES)));
+fs.copyFileSync(path.join(HERE, 'pdp.css'), path.join(OUT_ASSETS, 'pdp.css'));
 for (const f of fs.readdirSync(OUT_ASSETS)) if (f.endsWith('.css')) { const fp = path.join(OUT_ASSETS, f); fs.writeFileSync(fp, recolor(fs.readFileSync(fp, 'utf8'))); }
 
 // favicon + touch icon for the checkout/receipt layout (the starter shipped NEXT's): the store logo on white, square
@@ -51,33 +62,14 @@ for (const f of fs.readdirSync(OUT_ASSETS)) if (f.endsWith('.css')) { const fp =
   await b.close();
 }
 
-// long-sales-page sections (tools/funnel/getridof/sections.html, copy from campaigns/getridof/sales-page/copy-deck.md)
-const SECTIONS = Object.fromEntries([...fs.readFileSync(path.join(ROOT, 'tools/funnel/getridof/sections.html'), 'utf8')
-  .matchAll(/<!--@([\w-]+)-->([\s\S]*?)<!--@end-->/g)].map(m => [m[1], m[2].trim()]));
-for (const f of fs.readdirSync(path.join(ROOT, 'brand/getridof/sections'))) fs.copyFileSync(path.join(ROOT, 'brand/getridof/sections', f), path.join(OUT_ASSETS, f));
-
-// authority figure (section 12): only a real, consenting expert from brand/getridof/expert.json; never generated
-const EXPERT = JSON.parse(fs.readFileSync(path.join(ROOT, 'brand/getridof/expert.json'), 'utf8'));
-const CERTS = (EXPERT.certifications || []).filter(c => c && c.title && c.issuer);
-if (EXPERT.approved === true && ['name', 'credentials', 'bio', 'photo_file', 'quote'].every(k => String(EXPERT[k] || '').trim())) {
-  if (!fs.existsSync(path.join(ROOT, 'brand/getridof/sections', EXPERT.photo_file))) throw new Error('expert photo missing: ' + EXPERT.photo_file);
-  const certs = CERTS.map(c => `<li><b>${esc(c.title)}</b><span>${esc(c.issuer)}${c.number ? ' · No. ' + esc(c.number) : ''}</span></li>`).join('');
-  SECTIONS.expert = `<div class="gro-expert">
-    <div class="gro-expert__head"><img src="assets/${esc(EXPERT.photo_file)}" alt="${esc(EXPERT.name)}" width="120" height="120" loading="lazy">
-      <div><p class="gro-expert__who"><b>${esc(EXPERT.name)}</b></p><p class="gro-expert__cred">${esc(EXPERT.credentials)}${EXPERT.organization ? ' · ' + esc(EXPERT.organization) : ''}${EXPERT.years_experience ? ' · ' + esc(EXPERT.years_experience) + ' years in the field' : ''}</p></div></div>
-    <p class="gro-expert__bio">${esc(EXPERT.bio)}</p>
-    ${certs ? `<ul class="gro-expert__certs" aria-label="Certifications">${certs}</ul>` : ''}
-    <blockquote>“${esc(EXPERT.quote)}”</blockquote>
-    ${EXPERT.disclosure ? `<p class="gro-expert__disc">${esc(EXPERT.disclosure)}</p>` : ''}</div>`;
-  console.error('expert: ' + EXPERT.name + ' (' + CERTS.length + ' certifications)');
-} else console.error('expert: none approved in brand/getridof/expert.json (section 12 shows the EPA source only)');
-
 // 2. DOM pass
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 await page.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
 await page.goto('file://' + path.join(SRC, 'index.html'), { waitUntil: 'load' });
-const report = await page.evaluate(({ STORE, SECTIONS }) => {
+const FOOTER = fs.readFileSync(path.join(HERE, 'footer.html'), 'utf8').replace(/<!--[\s\S]*?-->/, '').trim();
+const COST_DAY = '$0.25';   // "Cost per day of protection": one pack with Automatic Refills, $22.49 over its 90 days
+const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) => {
   const n = {}; const count = (k, v = 1) => (n[k] = (n[k] || 0) + v);
   const rm = (sel, k) => document.querySelectorAll(sel).forEach(e => { e.remove(); count(k || sel); });
 
@@ -106,11 +98,19 @@ const report = await page.evaluate(({ STORE, SECTIONS }) => {
   // brand in text, alt/title/content attributes
   const swap = s => s.replace(/SOFYRE/g, 'GET RID OF').replace(/sofyre/gi, 'Get Rid Of');
   const tw = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_TEXT);
+  const later = [];   // edits that replace nodes wait until the walk is over
   for (let t; (t = tw.nextNode());) {
     const pe = t.parentElement; if (!pe || ['SCRIPT'].includes(pe.tagName)) continue;
     if (pe.tagName === 'STYLE') { if (/sofyre/i.test(t.data)) t.data = t.data.replace(/sofyre-/gi, 'gro-'); continue; }
     if (/sofyre/i.test(t.data)) { t.data = swap(t.data); count('text-brand'); }
+    if (/30[\s-]?days?\b/i.test(t.data) && /money|guarantee|refund|leave within/i.test(pe.closest('section, div, li, p').textContent)) { t.data = t.data.replace(/30([\s-]?days?\b)/gi, '90$1'); count('guarantee-90'); }
+    // "UP TO 72% OFF" (banner and the badge on the first photo) stays: this campaign's deepest discount is 74%
+    if (/an 8% concentration formula/.test(t.data)) { t.data = t.data.replace('an 8% concentration formula', 'a 40% peppermint formula'); count('formula-40'); }   // the page states 40% everywhere else
+    if (t.data.trim() === 'Today' && /^Ships/.test(pe.parentElement.textContent.trim())) { const line = pe.parentElement; later.push(() => { line.innerHTML = 'Ships in<br><strong>1 Day</strong>'; line.style.whiteSpace = 'nowrap'; line.parentElement.style.overflow = 'visible'; count('ships'); }); }   // the page's own shipping terms
+    if (/perimetereter/.test(t.data)) { t.data = t.data.replace(/perimetereter/g, 'perimeter'); count('typo'); }
+    if (t.data.trim() === '$0.33') { t.data = t.data.replace('$0.33', COST_DAY); count('cost-per-day'); }
   }
+  later.forEach(f => f());
   document.querySelectorAll('[alt],[title],[aria-label],meta[content]').forEach(e => ['alt', 'title', 'aria-label', 'content'].forEach(a => {
     const v = e.getAttribute(a); if (v && /sofyre/i.test(v) && !/^https?:|^\/\//.test(v)) { e.setAttribute(a, swap(v)); count('attr-brand'); }
   }));
@@ -154,11 +154,28 @@ const report = await page.evaluate(({ STORE, SECTIONS }) => {
   const bars = [...document.querySelectorAll('.kaching-bundles__bar[data-deal-bar-id]')];
   const ids = ['buy1', 'buy3', 'buy5'];
   bars.forEach((bar, i) => { bar.setAttribute('data-gro-bundle', ids[i]); count('bundle-bar'); });
-  const p5 = bars[2] && bars[2].querySelector('.kaching-bundles__bar-price .money');
-  if (p5 && p5.textContent.trim() === '$74.97') { p5.textContent = '$74.95'; count('price-74.95'); }
   const sub = document.querySelector('.kaching-bundles__subscriptions [role="checkbox"]');
   if (sub) { sub.setAttribute('data-gro-refill', ''); count('refill-toggle'); }
   const box = document.querySelector('kaching-bundles-block'); if (box) box.id = 'gro-buy';
+  // the state the page opens in is written into the HTML, so the first paint needs no script: this campaign's
+  // prices with Automatic Refills ticked, Buy 2 Get 1 Free selected, and the refill terms under the box
+  if (sub) sub.setAttribute('aria-checked', 'true');
+  bars.forEach((bar, i) => {
+    const p = PRICES[ids[i]], set = (sel, v) => { const e = bar.querySelector(sel); if (!e) throw new Error('bundle bar: ' + sel + ' not found'); e.textContent = v; };
+    set('.kaching-bundles__bar-price .money', p.sub[0]); set('.kaching-bundles__bar-full-price .money', p.full); set('.kaching-bundles__bar-subtitle', p.sub[1]);
+    bar.classList.toggle('kaching-bundles__bar--selected', ids[i] === 'buy3'); count('bundle-price');
+  });
+  if (box) {
+    const info = document.createElement('div'); info.className = 'gro-subinfo';
+    info.innerHTML = `<p class="gro-subinfo__line"><span data-gro-firstoff>First order ${PRICES.buy3.sub[0]}</span> · then <b>$34.99 a pack</b>, <span data-gro-renew>${PRICES.buy3.renew}</span></p>` +
+      '<div class="gro-subinfo__row"><span><i>↻</i>Skip anytime</span><span><i>✕</i>Cancel anytime</span><span><i>✓</i>90-day money-back</span></div>';
+    box.parentNode.insertBefore(info, box.nextSibling); count('refill-terms');
+  }
+  // the gallery stage gets a hook for its sizing rule (pdp.css)
+  const track = document.querySelector('gp-carousel-v3.gp-feature-image-carousel .gem-slider-wrapper');
+  if (!track) throw new Error('gallery track not found'); track.parentElement.classList.add('gro-stage');
+  // the snapshot's frozen desktop sizes (inline, some !important) would beat that rule: they go
+  [track, ...track.children].forEach(e => ['width', 'min-width', 'max-width', 'height', 'transform'].forEach(k => e.style.removeProperty(k)));
 
   // every ADD TO CART / add-to-cart style button
   const isAtc = el => /add\s*to\s*cart/i.test(el.textContent || '');
@@ -171,42 +188,52 @@ const report = await page.evaluate(({ STORE, SECTIONS }) => {
   document.querySelectorAll('gp-product-button, gp-button').forEach(g => { g.removeAttribute('gp-href'); });
   document.querySelectorAll('product-form form').forEach(f => { f.removeAttribute('action'); f.setAttribute('onsubmit', 'return false'); });
 
-  // ---- the 20-step long-sales-page order (campaigns/getridof/sales-page/copy-deck.md) ----
-  const frag = html => { const t = document.createElement('template'); t.innerHTML = html; return t.content.firstElementChild; };
-  // above the fold (2-4): problem/promise headline, summary, benefit bullets, guarantee, before the product title
-  const title = document.querySelector('.exp-atf__product-title');
-  if (title) { title.parentElement.insertBefore(frag(SECTIONS.atf), title); count('atf'); }
+  // "as seen in" press logos: coverage of the sister brand, not this one
   const main = document.querySelector('#MainContent');
-  const secs = [...main.children].filter(e => e.matches('section, div.shopify-section, .shopify-section'));
-  const hero = secs[0];
-  // match on the section's own headings (h1-h3 or GemPages heading text), never inside the hero's buy box
-  const find = re => secs.find(s => s !== hero && [...s.querySelectorAll('h1,h2,h3,[data-gp-text] p')].some(h => re.test(h.textContent.trim())));
-  const S = {
-    hero, press: find(/BUZZZ/), timeline: find(/Exactly What Happens/), safe: find(/Safe Home/), props: find(/35,129/),
-    reviews: find(/Real Results From/), science: find(/Science of Nature/), directions: find(/Directions Of Use/),
-    stack: find(/How We Stack Up/), guarantee: find(/^30 Day Money Back Guarantee$/i), faq: find(/^FAQ$/), help: find(/Still Need help/i) || null,
-  };
-  const missing = Object.entries(S).filter(([k, v]) => !v && k !== 'help').map(([k]) => k);
-  if (missing.length) throw new Error('sections not found: ' + missing.join(', '));
-  S.press.remove(); count('press-bar-removed');   // "as seen in" logos: coverage of the sister brand, not this one
-  S.guarantee.appendChild(frag(SECTIONS['guarantee-claim']));
-  // FAQ extras go into the FAQ's right-hand column, after its last item
-  const faqCols = S.faq.querySelectorAll('gp-accordion'); const lastCol = faqCols[faqCols.length - 1];
-  lastCol.parentElement.insertBefore(frag(SECTIONS['faq-extra']), lastCol.nextSibling);
-  // the GemPages "Still Need help?" box is replaced by the customer-service section (step 20)
-  const helpH = [...S.faq.querySelectorAll('h2,h3,p')].find(e => /Still Need help/i.test(e.textContent));
-  if (helpH) { let box = helpH; for (let i = 0; i < 6 && box.parentElement; i++) box = box.parentElement; if (box.matches('gp-row')) { box.remove(); count('old-help-box'); } }
-  // footer: the store's footer (signup heading without a form, policy list) becomes the brand footer
+  const buzz = [...main.querySelectorAll('p, h2, h3, span, div')].find(x => /BUZZ/i.test(x.textContent) && !x.children.length);
+  if (buzz) {
+    // the band = the smallest block around that line that also holds the logos, and nothing else
+    let box = buzz; while (box.parentElement && box.parentElement !== main && box.querySelectorAll('img').length < 3) box = box.parentElement;
+    const sec = box.closest('section'); if (sec && sec.textContent.trim().length < 600) box = sec;
+    if (box.textContent.trim().length > 600) throw new Error('press band not isolated');
+    box.remove(); count('press-bar-removed');
+  }
+
+  // header menu: the source store's other products are not sold here; the menu keeps this product and Contact Us
+  document.querySelectorAll('.header-mobile-menu__items a.header-items__link').forEach(a => {
+    if (/Rodent Repellent Pouches/i.test(a.textContent)) return;
+    const par = a.parentElement; a.remove(); if (par && !par.children.length) par.remove(); count('menu-other-product');
+  });
+
+  // first-screen weight. The gallery's photos come from the funnel's optimised set (lp/hero-N.webp, made by
+  // build_lp.py from the same files); only the first loads with the page (build_replica.py then embeds it in the
+  // HTML). Photos 2-7 and the thumbnails are fetched once the page has loaded or on the first touch (pdp.js).
+  const PX = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  const defer = (img, src) => { img.setAttribute('data-gro-src', src); img.setAttribute('src', PX); img.removeAttribute('srcset'); img.removeAttribute('fetchpriority'); img.removeAttribute('loading'); count('img-deferred'); };
+  const slides = [...document.querySelectorAll('gp-carousel-v3.gp-feature-image-carousel img:not(.seasonal-badge)')];
+  if (slides.length !== 7) throw new Error('gallery: expected 7 photos, found ' + slides.length);
+  slides.forEach((img, i) => {
+    const src = `/${SLUG}/lp/hero-${i + 1}.webp`;
+    if (i) return defer(img, src);
+    img.setAttribute('src', src); img.removeAttribute('srcset'); img.setAttribute('fetchpriority', 'high'); img.setAttribute('data-gro-hero', ''); count('hero');
+  });
+  document.querySelectorAll('gp-carousel-v3.carousel-gallery img').forEach(img => defer(img, img.getAttribute('src')));
+  // the header menu's two pictures: small files, fetched when the menu is opened
+  document.querySelectorAll('.header-mobile-menu img').forEach(img => {
+    const s = img.getAttribute('src') || '';
+    if (/P_1_1-/.test(s)) img.setAttribute('src', `/${SLUG}/lp/thumb.webp`); else if (/Buy_3-/.test(s)) img.setAttribute('src', `/${SLUG}/pdp/gro-menu-banner.webp`); else return;
+    img.setAttribute('loading', 'lazy'); img.setAttribute('decoding', 'async'); count('menu-img');
+  });
+
+  // payment marks under the button: only what this checkout takes (no Shop Pay, Diners or Maestro)
+  document.querySelectorAll('img[src*="ShopPay-"], img[src*="DinersClub-"], img[src*="Maestro-"]').forEach(img => {
+    let box = img.closest('[class*="gp-group/image"]') || img; const par = box.parentElement; box.remove();
+    if (par && !par.children.length && !par.textContent.trim()) par.remove(); count('pay-mark-removed');
+  });
+
+  // footer: the source store's footer (newsletter signup, its own policy list) gives way to the brand footer
   const oldFooter = document.querySelector('footer.footer');
-  if (oldFooter) { oldFooter.parentElement.insertBefore(frag(SECTIONS.footer), oldFooter); oldFooter.remove(); count('footer'); }
-  const rest = secs.filter(x => !Object.values(S).includes(x));   // anything unmapped keeps its place at the end
-  const order = [S.hero, 'problem', 'mechanism', 'solution-intro', S.timeline, 'others', S.stack, S.science, S.safe, 'before-after', 'proof', 'dream',
-                 S.directions, S.guarantee, 'offer', 'scarcity', S.props, S.reviews, S.faq, 'support', ...(S.help && S.help !== S.faq ? [S.help] : []), ...rest];
-  for (const item of order) { main.appendChild(typeof item === 'string' ? frag(SECTIONS[item]) : item); }
-  if (SECTIONS.expert) { const auth = main.querySelector('[data-gro-step="12"] .gro-authority'); if (auth) { auth.parentElement.insertBefore(frag(SECTIONS.expert), auth); count('expert'); } }
-  count('sections-ordered', order.length);
-  // section buttons carry the ATC hook added above only for pre-existing buttons
-  main.querySelectorAll('.gro-btn[data-gro-atc]').forEach(() => count('section-cta'));
+  if (oldFooter) { const t = document.createElement('template'); t.innerHTML = FOOTER; oldFooter.parentElement.insertBefore(t.content.firstElementChild, oldFooter); oldFooter.remove(); count('footer'); }
 
   // header button: "Track Order" becomes the sticky "Shop Now" CTA (the header stays on top; it scrolls to the bundle box)
   document.querySelectorAll('a.header__icons-btn').forEach(a => { a.textContent = 'Shop Now'; a.setAttribute('href', '#gro-buy'); a.classList.add('gro-shop-cta'); count('shop-cta'); });
@@ -214,7 +241,7 @@ const report = await page.evaluate(({ STORE, SECTIONS }) => {
   // countdown hook
   document.querySelectorAll('gp-countdown-timer').forEach(t => { t.setAttribute('data-gro-countdown', ''); count('countdown'); });
   return n;
-}, { STORE, SECTIONS });
+}, { STORE, FOOTER, COST_DAY, SLUG, PRICES });
 
 let html = await page.evaluate(() => '<!doctype html>\n' + document.documentElement.outerHTML);
 await browser.close();
@@ -224,33 +251,31 @@ html = recolor(html.replace(/(["'(])assets\//g, `$1${ASSET_URL}`));
 html = html.replace(/(https?:)?\/\/sofyre\.com\/cdn\/[^"' )]+/g, '');      // stray CDN refs (badge template etc.)
 // AppLovin Axon base pixel (same event key as the checkout pages, from campaigns.json). The PDP has no Campaign Cart
 // SDK, so pdp.js sends page_view / view_item / add_to_cart itself (see its "AppLovin Axon" block).
-const CAMPAIGN = JSON.parse(fs.readFileSync(path.join(ROOT, 'campaigns/getridof/_data/campaigns.json'), 'utf8'))['mouse-pouches'];
+const CAMPAIGN = JSON.parse(fs.readFileSync(path.join(ROOT, 'campaigns/getridof/_data/campaigns.json'), 'utf8'))[SLUG];
 const AXON_KEY = CAMPAIGN.axon_event_key || '';
 if (AXON_KEY && !/^[0-9a-f-]{36}$/i.test(AXON_KEY)) throw new Error('axon_event_key is not an event key');
 const AXON_HEAD = AXON_KEY ? `<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey="${AXON_KEY}";for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);axon("init");window.__axonEventKey="${AXON_KEY}";window.__axonImageUrl=${JSON.stringify(CAMPAIGN.axon_image_url || '')};</script>\n` : '';
 html = html.replace('<head>', '<head>\n' + AXON_HEAD);
-// Campaign 2362 on the sales page: the same campaign config + Campaign Cart SDK as the checkout, and the same
+// The campaign on the product page: the same campaign config + Campaign Cart SDK as the checkout, and the same
 // next-funnel name, so the campaign sees the page as its product step (page view, view_item, UTM / click-id
 // attribution captured at landing and carried into the checkout). The loader is a module script (deferred).
-const CAMPAIGN_HEAD = `<script src="/mouse-pouches/config.js"></script>\n<meta name="next-funnel" content="${CAMPAIGN.name}">\n<meta name="next-page-type" content="product">\n<script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v${CAMPAIGN.sdk_version}/dist/loader.js" type="module"></script>\n`;
+// Deferred scripts run in document order: pdp.js first (the page's own interactions must not wait for the SDK's
+// module graph), then config.js, then the loader.
+const CAMPAIGN_HEAD = `<script src="${ASSET_URL}pdp.js" defer></script>\n<script src="/${SLUG}/config.js" defer></script>\n<meta name="next-funnel" content="${CAMPAIGN.name}">\n<meta name="next-page-type" content="product">\n<script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v${CAMPAIGN.sdk_version}/dist/loader.js" type="module"></script>\n`;
 html = html.replace('</head>', CAMPAIGN_HEAD + '</head>');
 html = html.replace('</head>', `<link rel="stylesheet" href="${ASSET_URL}pdp.css">\n<link rel="icon" href="${ASSET_URL}gro-logo.svg">\n</head>`);
-html = html.replace('</body>', `<script src="${ASSET_URL}pdp.js" defer></script>\n</body>`);
 html = html.replace(/<!-- Offline snapshot[^>]*-->/, '');
 const left = (html.match(/sofyre/gi) || []).length;
 
 // 4. page with front matter; the body is raw HTML (no Liquid inside)
-const front = `---\npage_layout: pdp.html\ntitle: "Rodent Repellent Pouches – Get Rid Of"\npage_type: product\n# Generated by tools/funnel/getridof/build_pdp.mjs from exports/sofyre/offline/ — edit the builder, not this file.\n---\n`;
+const front = `---\npage_layout: pdp.html\ntitle: "Rodent Repellent Pouches – Get Rid Of"\npage_type: product\n# Generated by tools/funnel/getridof/replica/build_replica.mjs from exports/sofyre/offline/ — edit the builder, not this file.\n---\n`;
 fs.writeFileSync(path.join(CAMP, 'index.html'), front + '{% raw %}' + html + '{% endraw %}\n');
 fs.mkdirSync(path.join(CAMP, '_layouts'), { recursive: true });
 fs.writeFileSync(path.join(CAMP, '_layouts/pdp.html'), '{{ content }}\n');
 console.log(JSON.stringify(report), '\nleft "sofyre" mentions (URLs/ids only):', left, '\nwrote', path.join(CAMP, 'index.html'), (html.length / 1e6).toFixed(2) + ' MB');
 
-// 5. step 1 copied the reference page's packaging shots: put the new-packaging images back over them, every run
-//    (skipping this once shipped the old photos; see swap_images.py)
 const { execFileSync } = await import('node:child_process');
-execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/swap_images.py')], { stdio: 'inherit' });
 // desktop fonts TTF/OTF -> WOFF2 (the exported page shipped a 311 KB TTF that every visitor downloads)
-execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/optimize_fonts.py')], { stdio: 'inherit' });
+execFileSync('python3', ['-I', path.join(ROOT, 'tools/funnel/getridof/optimize_fonts.py'), SLUG], { stdio: 'inherit' });
 // below-the-fold images lazy-load (first screen + buy box stay eager)
-execFileSync('python3', [path.join(ROOT, 'tools/funnel/getridof/lazy_images.py')], { stdio: 'inherit' });
+execFileSync('python3', ['-I', path.join(ROOT, 'tools/funnel/getridof/lazy_images.py'), SLUG], { stdio: 'inherit' });

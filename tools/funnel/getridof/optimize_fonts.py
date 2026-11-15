@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """Convert the sales page's desktop fonts (TTF/OTF, up to 630 KB each) to WOFF2 and point every @font-face at them.
 
-    python3 tools/funnel/getridof/optimize_fonts.py      # run by build_pdp.mjs after swap_images.py; idempotent
+    python3 tools/funnel/getridof/optimize_fonts.py [slug]      # run by replica/build_replica.mjs after swap_images.py; idempotent
 
 WOFF2 is the same glyphs, Brotli-compressed (about 40-60% smaller); every browser that runs the Campaign Cart SDK reads
 it. Needs fonttools + brotli (pip install fonttools brotli). References are rewritten in index.html and pdp/*.css.
 """
 import re
+import sys
 from pathlib import Path
 from fontTools.ttLib import TTFont
 
-CAMP = Path(__file__).resolve().parents[3] / 'campaigns/getridof/src/mouse-pouches'
+CAMP = Path(__file__).resolve().parents[3] / 'campaigns/getridof/src' / (sys.argv[1] if len(sys.argv) > 1 else 'mouse-pouches')
 PDP = CAMP / 'assets/pdp'
 
 

@@ -43,6 +43,12 @@ BUNDLES = [
 ]
 # What subscribing saves on the first order, per pack count: (subscriber price, one-time price, saving).
 SAVE = {1: ('22.49', '34.99', '12.50'), 3: ('47.97', '69.99', '22.02')}
+# The 5-pack (Buy 3, Get 2 FREE): not on the standard checkout. The replica funnel's product page sells it, so that
+# funnel's checkout gets it through with_five_pack() (replica/build_replica.py).
+FIVE = [('buy5', 5, 6, '64.95', '12.99', 74), ('ot5', 5, 1, '104.95', '20.99', 58)]
+SAVE5 = ('64.95', '104.95', '40.00')
+DEAL = {3: ('Early Black Friday deal', '★ Most Popular', 'Buy 2, Get 1 FREE', '3 packs · 36 pouches'),
+        5: ('Biggest saving', '★ Best Value', 'Buy 3, Get 2 FREE', '5 packs · 60 pouches')}
 GIFTS_BY = 'Dec. 1st'    # the Early Black Friday deadline (DEADLINE), as the gifts box words it
 
 
@@ -52,7 +58,7 @@ def bundle_card(i, packs, package, price, each, off):
     items = json.dumps([{'packageId': package, 'quantity': packs}], separators=(',', ':'))
     sel = ' data-next-selected="true"' if i == 'buy3' else ''
     attrs = (f'data-next-bundle-card data-next-bundle-id="{i}" data-next-shipping-id="{{{{ shipping_methods.standard }}}}" '
-             f"data-next-bundle-items='{items}'{sel} role=\"button\" class=\"gro-bc gro-bc--{mode} gro-bc--{packs}\"")
+             f"data-next-bundle-items='{items}'{sel} role=\"button\" class=\"gro-bc gro-bc--{mode} gro-bc--{min(packs, 3)}{' gro-bc--five' if packs == 5 else ''}\"")
     thumb = "{{ 'lp/thumb.webp' | campaign_asset }}"
     if packs == 1:
         return (f'<div {attrs}><div class="gro-bc__in"><span class="gro-bc__r"></span>'
@@ -60,20 +66,39 @@ def bundle_card(i, packs, package, price, each, off):
                 '<div class="gro-bc__t"><b>1x Rodent Repellent Pouches</b><small>1 pack · 12 pouches</small></div>'
                 f'<div class="gro-bc__p"><span class="gro-bc__row"><span class="gro-bc__off">{off}% OFF</span><s>$49.99</s></span>'
                 f'<b data-next-bundle-display="price">${price}</b></div></div></div>')
-    return (f'<div {attrs}><div class="gro-bc__hd"><span>Early Black Friday deal</span><b>★ Most Popular</b></div>'
+    kicker, flag, title, sub = DEAL[packs]
+    return (f'<div {attrs}><div class="gro-bc__hd"><span>{kicker}</span><b>{flag}</b></div>'
             '<div class="gro-bc__in"><span class="gro-bc__r"></span>'
             f'<span class="gro-bc__x3"><img src="{thumb}" alt="" width="56" height="60" loading="eager"><img src="{thumb}" alt="" width="56" height="60" loading="eager">'
             f'<img src="{thumb}" alt="" width="56" height="60" loading="eager"></span>'
-            '<div class="gro-bc__t"><b>Buy 2, Get 1 FREE</b><small>3 packs · 36 pouches</small><em>+ FREE Placement Guide</em></div>'
+            f'<div class="gro-bc__t"><b>{title}</b><small>{sub}</small><em>+ FREE Placement Guide</em></div>'
             f'<div class="gro-bc__p"><s>$49.99</s><b>${each}</b><small>per pack</small>'
             f'<small class="gro-bc__tot"><span data-next-bundle-display="price">${price}</span> today</small></div></div></div>')
+
+
+def _sv(pre):
+    return ''.join(f'<span class="gro-sv gro-sv--{pre}{n}">${SAVE[n][0]} instead of ${SAVE[n][1]}</span>' for n in (1, 3))
+
+
+def with_five_pack(html):
+    """Add Buy 3, Get 2 FREE (subscription and one-time) to a built checkout page. Returns the new page."""
+    cards = {b[0]: bundle_card(*b) for b in BUNDLES}
+    five = {b[0]: bundle_card(*b) for b in FIVE}
+    for k3, k5 in (('buy3', 'buy5'), ('ot3', 'ot5')):
+        html = _once(html, cards[k3], cards[k3] + five[k5], f'{k3} card')
+    for pre in ('buy', 'ot'):
+        html = _once(html, _sv(pre), _sv(pre) + f'<span class="gro-sv gro-sv--{pre}5">${SAVE5[0]} instead of ${SAVE5[1]}</span>', f'{pre} saving line')
+    assert html.count('[13]$/') == 2, 'bundle id pattern'
+    html = html.replace('[13]$/', '[135]$/')
+    css = '<style>.gro-b-buy5 .gro-sv--buy5,.gro-b-ot5 .gro-sv--ot5{display:inline}</style>'
+    return _once(html, '<div class="form-section gro-s1">', css + '<div class="form-section gro-s1">', 'step 1')
 
 
 def step1():
     cards = {b[0]: bundle_card(*b) for b in BUNDLES}
     up = '<div class="gro-up gro-bc--{m}"><span>Upgrade your order</span></div>'
     body = cards['buy1'] + up.format(m='sub') + cards['buy3'] + cards['ot1'] + up.format(m='ot') + cards['ot3']
-    sv = lambda pre: ''.join(f'<span class="gro-sv gro-sv--{pre}{n}">${SAVE[n][0]} instead of ${SAVE[n][1]}</span>' for n in (1, 3))
+    sv = _sv
     mode = ('<div class="gro-mode" role="group" aria-label="Purchase type">'
             '<button type="button" data-gro-mode="buy"><b>Subscribe &amp; Save</b><i>Lowest price · skip or cancel anytime</i></button>'
             '<button type="button" data-gro-mode="ot"><b>One-time purchase</b><i>No subscriber discount</i></button></div>')

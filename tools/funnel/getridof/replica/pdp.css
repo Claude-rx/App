@@ -5,6 +5,12 @@
 gp-accordion .gp-accordion-item_icon { transition: transform 200ms ease; }
 gp-accordion .gro-open .gp-accordion-item_icon { transform: rotate(180deg); }
 gp-carousel-v3.carousel-gallery .gro-thumb-active { outline: 2px solid #23372B; outline-offset: -2px; border-radius: 6px; }
+/* product gallery: every photo is as wide and as tall as the stage, from the first paint (the snapshot froze the
+   slides at the desktop width; pdp.js sets the same sizes again when it moves the track) */
+.gro-stage { container-type: inline-size; }
+#MainContent .gro-stage > .gem-slider-wrapper.gem-slider-wrapper { width: calc(100cqw * 7) !important; }
+#MainContent .gro-stage > .gem-slider-wrapper.gem-slider-wrapper > * { width: 100cqw !important; min-width: 100cqw !important; max-width: 100cqw !important; height: 100cqw !important; }
+
 /* phones and tablets: review / UGC carousels scroll sideways with snap */
 @media (max-width: 1023px) {
   gp-carousel-v3.gro-carousel .swiper-initialized { overflow-x: auto !important; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
@@ -195,7 +201,3 @@ footer.footer { display: none !important; }
 .gro-expert__certs b { font-size: 14px; color: #23372B; } .gro-expert__certs span { font-size: 12px; color: #5b6a5e; }
 .gro-expert blockquote { text-align: center; }
 
-/* owner's request: hide the "Subscribe & get 50% off your first order" toggle box. It stays in the page (ticked,
-   so prices and the checkout link keep the subscription); the terms still show under ADD TO CART and at checkout. */
-#gro-buy .kaching-bundles__subscriptions,
-.kaching-bundles__subscriptions { display: none !important; }

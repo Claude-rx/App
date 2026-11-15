@@ -64,6 +64,18 @@ FUNNELS = {
             'receipt': ('mice-5-reasons-thank-you', 'Thank You'),
         },
     },
+    'replica': {
+        'slug': 'mouse-repellent-pouches', 'asset_dir': 'gromrp', 'manifest': 'theme-push-manifest.replica.json',
+        'pages': {
+            '': ('mouse-repellent-pouches', 'Rodent Repellent Pouches – Get Rid Of'),
+            'checkout': ('mouse-repellent-pouches-checkout', 'Secure Checkout'),
+            'upsell': ('mouse-repellent-pouches-special-offer', 'One More Pack, 70% Off'),
+            'downsell': ('mouse-repellent-pouches-exclusive-offer', 'Extra Pack, 50% Off'),
+            'upsell-2': ('mouse-repellent-pouches-special-offer-2', 'Whole-Home 5 Packs'),
+            'downsell-2': ('mouse-repellent-pouches-exclusive-offer-2', 'Whole-Home 5 Packs, Final Offer'),
+            'receipt': ('mouse-repellent-pouches-thank-you', 'Thank You'),
+        },
+    },
 }
 
 

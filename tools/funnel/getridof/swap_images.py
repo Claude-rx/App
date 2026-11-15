@@ -2,18 +2,20 @@
 """Put the new-packaging product images (brand/getridof/generated/, made with Kie Nano Banana 2 from
 brand/getridof/new-pack.png) in place of the reference page's packaging shots.
 
-    python3 tools/funnel/getridof/swap_images.py      # run after build_pdp.mjs, before campaign-build
+    python3 tools/funnel/getridof/swap_images.py [slug]      # run by replica/build_replica.mjs, before campaign-build
 
 Each target keeps its file name, pixel size and format, so every reference (PDP gallery and thumbnails, info tiles,
 directions sachets, checkout gallery, exit popup) picks up the new image with no markup change. The new image is
 center-cropped to the target's aspect ratio. Customer (UGC) photos are deliberately not edited.
 """
+import sys
 from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[3]
 GEN = ROOT / 'brand/getridof/generated'
-PDP = ROOT / 'campaigns/getridof/src/mouse-pouches/assets/pdp'
+SLUG = sys.argv[1] if len(sys.argv) > 1 else 'mouse-pouches'
+PDP = ROOT / 'campaigns/getridof/src' / SLUG / 'assets/pdp'
 
 SWAP = {
     'hero-no-more-mice': ['t12-rodent-57d2b1.png', 't12-rodent-6095bb.png', 'P_1_1-bd629d.png'],
@@ -47,7 +49,7 @@ def main():
         new = Image.open(GEN / f'{src}.webp').convert('RGB')
         for t in targets:
             path = PDP / t
-            if not path.exists(): raise SystemExit(f'missing target {t} (run build_pdp.mjs first)')
+            if not path.exists(): raise SystemExit(f'missing target {t} (run replica/build_replica.mjs first)')
             old = Image.open(path)
             w, h = old.size
             # draw at 2x the old size (sharper on retina) unless the old one was already large

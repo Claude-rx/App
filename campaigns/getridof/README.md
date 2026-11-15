@@ -27,7 +27,7 @@ ticked by default and optional: ticked -> `?forceBundleId=main:buy1|buy3|buy5` (
 `main:ot1|ot3|ot5` (package 1 x 1 / 3 / 5, no Automatic Refills terms at checkout). UTM parameters are kept. Every
 buy button on the page, and the sticky bar on phones, uses the current selection.
 
-The previous sales page (a page-builder clone, 2.3 MB of HTML) is still buildable with `build_pdp.mjs` for rollback.
+The page-builder clone this page replaced now lives on as its own funnel, `/mouse-repellent-pouches/` (see "Replica funnel" below); its builder moved to `tools/funnel/getridof/replica/`.
 
 ### Numbers
 
@@ -234,3 +234,68 @@ to the checkout, where the offer is chosen.
 - **Poison-Free Formula seal** (`.pf`, inline SVG): the brand's own promise about the ingredients. It is not a third-party certificate; a real one (lab report, certifying body) can replace it when the owner has the document.
 - **Timeline**: two short lines per stage. Repeated lines elsewhere were trimmed; no section was removed.
 - `e2e.cjs` checks these (47 checks).
+
+## Replica funnel: /mouse-repellent-pouches/ (campaign 2721)
+
+A third funnel for the same product: the brand's proven product page (offline export in `exports/sofyre/offline/`),
+rebuilt as Get Rid Of section for section, then the same checkout, offers and thank-you pages.
+
+| Page | Store route |
+|---|---|
+| product page | `/mouse-repellent-pouches/` |
+| checkout | `/mouse-repellent-pouches-checkout/` |
+| offers | `/mouse-repellent-pouches-special-offer/`, `-exclusive-offer/`, `-special-offer-2/`, `-exclusive-offer-2/` |
+| thank-you | `/mouse-repellent-pouches-thank-you/` |
+
+- **Campaign:** Campaigns App campaign 2721, "Get Rid Of - Rodent Repellent Pouches PDP", a clone of 2362 made with
+  `next-campaigns-create` (same package, shipping and offer ids and prices, its own API key). Run directory:
+  `next-campaigns-create-runs/getridof/clone-2362-pdp/` (gitignored). A price change on 2362 does not reach it.
+- **Bundle box:** Buy 1 / Buy 2, Get 1 Free / Buy 3, Get 2 Free, with the Automatic Refills box ticked on arrival.
+  Ticked: $22.49 / $47.97 / $64.95 (then $34.99 a pack). Unticked: one-time $34.99 / $69.99 / $104.95. The table is
+  `replica/prices.json`; `build_replica.py` refuses to build if it differs from what `shop_checkout.py` charges.
+- **Checkout:** the standard one plus the 5-pack option (`shop_checkout.with_five_pack`), for this funnel only.
+- **What differs from the source page, on purpose:** 90-day guarantee (not 30); "Ships in 1 Day" (the store's terms,
+  not "Ships Today"); payment marks limited to what this checkout takes; the header menu lists this product only;
+  the brand footer with the store's policy links; the "as seen in" press logos are left out (they are not this
+  brand's); brand green instead of the source's lime. Everything else, including the review and sales figures, is
+  carried over as it stands on the source page.
+- **Images:** all from `src/mouse-pouches/assets/pdp` (Get Rid Of packaging). `replica/debrand_images.py` is the
+  one-off pass that removed the old brand name from the seven images the lean sales page never used.
+- **Speed:** the first gallery photo is embedded in the HTML, photos 2-7 load after the page, the open state of the
+  bundle box is written into the HTML (no script needed for the first paint), and `replica/purge_css.mjs` reduces
+  16 stylesheets and ~200 style blocks to one file with the rules in use. On a throttled phone the page paints in
+  about 1.4 s on the store (it was ~30 s before this work); layout shift 0.004.
+- Never edit `src/mouse-repellent-pouches` by hand: it is regenerated and gitignored.
+
+```bash
+python3 -I tools/funnel/getridof/build_lp.py
+```
+
+```bash
+python3 -I tools/funnel/getridof/build_checkout.py
+```
+
+```bash
+python3 -I tools/funnel/getridof/replica/build_replica.py
+```
+
+```bash
+cd campaigns/getridof && CPK_ENV=production npx --no-install campaign-build
+```
+
+```bash
+python3 -I tools/funnel/getridof/deploy_store.py <theme dir> --push --funnel replica
+```
+
+Checks (none places an order):
+
+```bash
+node tools/funnel/getridof/replica_check.cjs https://getridof.shop
+```
+
+```bash
+node tools/funnel/getridof/run_for.cjs mouse-repellent-pouches tools/funnel/getridof/payment_check.cjs https://getridof.shop
+```
+
+Still to do in the Campaigns App dashboard for campaign 2721 (the API does not cover them): Allowed Domains and the
+PayPal account link, as for 2716.

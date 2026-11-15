@@ -1,22 +1,23 @@
-/* Get Rid Of — Mouse Pouches PDP runtime (no dependencies).
+/* Get Rid Of — replica product page runtime (no dependencies). @@SLUG@@ is the funnel slug (build_replica.mjs).
  * The page is a static snapshot of a GemPages/Shopify product page; this file brings back the interactions its
  * own scripts provided and connects the buy box to the Campaigns App funnel:
- *   bundle bars + refill toggle -> ADD TO CART -> /mouse-pouches/checkout[-refill]/?forceBundleId=main:<bundle>
+ *   bundle bars + Automatic Refills toggle -> ADD TO CART -> /@@SLUG@@/checkout/?forceBundleId=main:<bundle>
+ *     (buy1 / buy3 / buy5 with refills, ot1 / ot3 / ot5 for a one-time purchase)
  *   accordions, tabs, product gallery (thumbs, dots, swipe), review carousels (swipe on phones),
  *   "Order within" countdown, info chips.
- * Built into the page by tools/funnel/getridof/build_pdp.mjs. */
+ * Built into the page by tools/funnel/getridof/replica/build_replica.mjs. */
 (function () {
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var CHECKOUT = { one: '/mouse-pouches/checkout/', refill: '/mouse-pouches/checkout/' };   // subscription-only: one checkout
+  var CHECKOUT = '/@@SLUG@@/checkout/';
 
   /* ---------- buy box ---------- */
   var bars = $$('[data-gro-bundle]');
   var refillEl = $('[data-gro-refill]');
   var state = {
     bundle: (bars.filter(function (b) { return b.classList.contains('kaching-bundles__bar--selected'); })[0] || bars[1] || bars[0] || { dataset: {} }).dataset.groBundle || 'buy3',
-    refill: refillEl ? refillEl.getAttribute('aria-checked') === 'true' : false
+    refill: true   // Automatic Refills are ticked on arrival, as on the source page; the shopper can untick them
   };
   function renderBox() {
     bars.forEach(function (b) {
@@ -31,7 +32,7 @@
     var main = $('.kaching-bundles__bar-main', b);
     if (main) main.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); state.bundle = b.dataset.groBundle; renderBox(); } });
   });
-  var SUBSCRIPTION_ONLY = true;   // every order is the subscription: the box stays ticked and is not a toggle
+  var SUBSCRIPTION_ONLY = false;  // the box is a real toggle: unticked = one-time purchase
   if (SUBSCRIPTION_ONLY) { state.refill = true; if (refillEl) { refillEl.setAttribute('aria-disabled', 'true'); refillEl.classList.add('gro-locked'); } }
   if (refillEl && !SUBSCRIPTION_ONLY) {
     var flip = function (e) { e.preventDefault(); state.refill = !state.refill; renderBox(); };
@@ -43,8 +44,8 @@
   function checkoutUrl() {
     var q = new URLSearchParams(location.search);
     q.delete('forceBundleId'); q.delete('forcePackageId');
-    q.set('forceBundleId', 'main:' + state.bundle);
-    return (state.refill ? CHECKOUT.refill : CHECKOUT.one) + '?' + q.toString();
+    q.set('forceBundleId', 'main:' + (state.refill ? state.bundle : state.bundle.replace('buy', 'ot')));
+    return CHECKOUT + '?' + q.toString();
   }
   window.groCheckoutUrl = checkoutUrl;
   document.addEventListener('click', function (e) {
@@ -59,10 +60,11 @@
   /* ---------- AppLovin Axon (no SDK on this page: events are sent here) ----------
    * Same item shape as axon.adapter.js on the checkout: item_id = SKU of the subscription variant (package 2,
    * SKU cdkh; subscription variants 8 / 37 / 38 for the 1 / 3 / 5-pack), item_category_id 7137 = Animal & Pet Repellents, image_url must be .png/.jpg. */
-  var AXON_TIERS = { buy1: { qty: 1, unit: 22.49, variant: '8' }, buy3: { qty: 3, unit: 15.99, variant: '37' }, buy5: { qty: 5, unit: 12.99, variant: '38' } };
+  var AXON_TIERS = { buy1: { qty: 1, unit: 22.49, variant: '8' }, buy3: { qty: 3, unit: 15.99, variant: '37' }, buy5: { qty: 5, unit: 12.99, variant: '38' },
+                     ot1: { qty: 1, unit: 34.99, variant: '7' }, ot3: { qty: 3, unit: 23.33, variant: '7' }, ot5: { qty: 5, unit: 20.99, variant: '7' } };
   var AXON_RETAIL = 49.99;
   function axonPayload() {
-    var t = AXON_TIERS[state.bundle] || AXON_TIERS.buy3;
+    var t = AXON_TIERS[state.refill ? state.bundle : state.bundle.replace('buy', 'ot')] || AXON_TIERS.buy3;
     var item = { item_id: 'cdkh', item_name: 'Mouse Repellent Pouches', item_variant_id: t.variant, item_brand: 'Get Rid Of',
                  item_category_id: 7137, price: t.unit, quantity: t.qty, discount: Math.round((AXON_RETAIL - t.unit) * 100) / 100 };
     if (window.__axonImageUrl) item.image_url = window.__axonImageUrl;
@@ -159,6 +161,21 @@
     go(0);
   }
 
+  /* ---------- gallery photos 2-7 and the thumbnails: fetched once the page has loaded, or on the first touch ---------- */
+  var deferredDone = false;
+  function loadDeferred() {
+    if (deferredDone) return; deferredDone = true;
+    $$('img[data-gro-src]').forEach(function (i) { i.src = i.getAttribute('data-gro-src'); i.removeAttribute('data-gro-src'); });
+  }
+  ['pointerdown', 'touchstart', 'keydown', 'wheel', 'scroll'].forEach(function (ev) { addEventListener(ev, loadDeferred, { once: true, passive: true }); });
+  var afterLoad = function (f, ms) { if (document.readyState === 'complete') setTimeout(f, ms); else addEventListener('load', function () { setTimeout(f, ms); }); };
+  afterLoad(loadDeferred, 1500);
+  // the first photo arrives inside the HTML at phone size; on wider screens the full file replaces it after load
+  afterLoad(function () {
+    var hero = $('img[data-gro-hd]'); if (!hero || hero.getBoundingClientRect().width <= 420) return;
+    var full = new Image(); full.onload = function () { hero.src = full.src; }; full.src = hero.getAttribute('data-gro-hd');
+  }, 300);
+
   /* ---------- other carousels: drop loop clones; swipeable scroller on phones ---------- */
   $$('gp-carousel-v3').forEach(function (c) {
     if (c === feat || c === thumbs) return;
@@ -213,71 +230,34 @@
   });
 })();
 
-/* ---------- long-sales-page sections: real-deadline countdown + offer buttons that pick a bundle ---------- */
+/* ---------- prices in the bundle box (campaign 2721, a copy of 2362) ----------
+   Automatic Refills ticked: first order $22.49 / $47.97 / $64.95, then $34.99 a pack (1 pack every 30 days, 3 every 90,
+   5 every 150). Unticked: one-time $34.99 / $69.99 / $104.95. Compare-at is the pack's regular price, $49.99 each.
+   The table is replica/prices.json (put here by build_replica.mjs, which also writes the ticked state into the HTML
+   so the first paint already shows it); build_replica.py checks it against shop_checkout.py. */
 (function () {
-  document.querySelectorAll('[data-gro-deadline]').forEach(function (box) {
-    var end = new Date(box.getAttribute('data-gro-deadline')).getTime();
-    var set = function (u, v) { var el = box.querySelector('[data-u="' + u + '"]'); if (el) el.textContent = (v < 10 ? '0' : '') + v; };
-    var tick = function () {
-      var s = Math.floor((end - Date.now()) / 1000);
-      if (s <= 0) { box.style.display = 'none'; return false; }   // real deadline: gone once it has passed
-      set('d', Math.floor(s / 86400)); set('h', Math.floor(s % 86400 / 3600)); set('m', Math.floor(s % 3600 / 60)); set('s', s % 60);
-      return true;
-    };
-    if (tick()) var t = setInterval(function () { if (!tick()) clearInterval(t); }, 1000);
-  });
-  // an offer button may name the bundle it sells (data-gro-bundle-pick); window capture runs before the shared ATC
-  // handler (document capture), so the bundle is selected before the checkout URL is built
-  window.addEventListener('click', function (e) {
-    var b = e.target.closest && e.target.closest('[data-gro-bundle-pick]');
-    if (!b) return;
-    var bar = document.querySelector('[data-gro-bundle="' + b.getAttribute('data-gro-bundle-pick') + '"]');
-    if (bar) bar.click();
-  }, true);
-})();
-
-/* ---------- subscription pricing in the bundle box (campaign 2362: sub-1/sub-3/sub-5 offers) ----------
-   Refills ticked: first order $22.49 (55% off) / $47.97 / $64.95 (50% off), then $34.99 a pack every 30 days (each pack lasts a month: 1 pack every 30 days, 3 every 90, 5 every 150).
-   Unticked: one-time prices ($29.99 / $55.98 / $74.95). Compare-at stays the page's ($89 / $178 / $267). */
-(function () {
-  var PRICES = { buy1: { one: ['$29.99', '66% OFF'], sub: ['$22.49', '75% OFF'] },
-                 buy3: { one: ['$55.98', '69% OFF'], sub: ['$47.97', '73% OFF'] },
-                 buy5: { one: ['$74.95', '72% OFF'], sub: ['$64.95', '76% OFF'] } };
+  var PRICES = @@PRICES@@;
   var refill = document.querySelector('[data-gro-refill]');
   if (!refill) return;
-  var title = refill.querySelector('.kaching-bundles__subscriptions__title');
-  var sub = refill.querySelector('.kaching-bundles__subscriptions__subtitle');
-  if (title) title.textContent = 'Subscribe & get up to 55% off your first order';
-  if (sub) sub.textContent = 'Then $34.99 a pack every 30 days · Cancel anytime';
-  // subscription details under the ADD TO CART button (shown while refills are ticked)
-  var atc = document.querySelector('#gro-buy') && document.querySelector('[data-gro-atc]');
-  var info = document.createElement('div');
-  info.className = 'gro-subinfo';
-  info.innerHTML = '<p class="gro-subinfo__line"><span data-gro-firstoff>First order 50% off</span> · then <b>$34.99 a pack every 30 days</b></p>' +
-    '<div class="gro-subinfo__row"><span><i>↻</i><em data-gro-renew>Renews every 30 days</em></span><span><i>✕</i>Cancel anytime</span><span><i>✓</i>30-day money-back</span></div>';
-  // each pack lasts a month: the renewal follows the bundle (campaign packages 2 / 5 / 6)
-  var RENEW = { buy1: 'Renews every 30 days', buy3: '3 packs renew every 90 days', buy5: '5 packs renew every 150 days' };
-  function paintRenew() {
-    var sel = document.querySelector('[data-gro-bundle].kaching-bundles__bar--selected');
-    var el = info.querySelector('[data-gro-renew]');
-    if (el && sel && RENEW[sel.dataset.groBundle]) el.textContent = RENEW[sel.dataset.groBundle];
-    var fo = info.querySelector('[data-gro-firstoff]');
-    if (fo && sel) fo.textContent = sel.dataset.groBundle === 'buy1' ? 'First order 55% off' : 'First order 50% off';
-  }
-  document.addEventListener('click', function () { setTimeout(paintRenew, 0); });
-  setTimeout(paintRenew, 0);
-  var box = document.getElementById('gro-buy');
-  if (box) box.parentNode.insertBefore(info, box.nextSibling);
+  // the terms of the refills, under the bundle box (in the HTML already; shown while they are ticked)
+  var info = document.querySelector('.gro-subinfo');
+  if (!info) return;
   function paint() {
     var on = refill.getAttribute('aria-checked') === 'true';
     document.querySelectorAll('[data-gro-bundle]').forEach(function (bar) {
       var p = PRICES[bar.dataset.groBundle]; if (!p) return;
       var v = on ? p.sub : p.one;
       var price = bar.querySelector('.kaching-bundles__bar-price .money'); if (price) price.textContent = v[0];
+      var full = bar.querySelector('.kaching-bundles__bar-full-price .money'); if (full) full.textContent = p.full;
       var off = bar.querySelector('.kaching-bundles__bar-subtitle'); if (off) off.textContent = v[1];
     });
+    var sel = document.querySelector('[data-gro-bundle].kaching-bundles__bar--selected');
+    var id = sel ? sel.dataset.groBundle : 'buy3';
+    info.querySelector('[data-gro-firstoff]').textContent = 'First order ' + PRICES[id].sub[0];
+    info.querySelector('[data-gro-renew]').textContent = PRICES[id].renew;
     info.style.display = on ? '' : 'none';
   }
   new MutationObserver(paint).observe(refill, { attributes: true, attributeFilter: ['aria-checked'] });
+  document.addEventListener('click', function () { setTimeout(paint, 0); });
   paint();
 })();

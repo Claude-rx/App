@@ -1,0 +1,38 @@
+{
+  "buy1": {
+    "full": "$49.99",
+    "one": [
+      "$34.99",
+      "30% OFF"
+    ],
+    "sub": [
+      "$22.49",
+      "55% OFF"
+    ],
+    "renew": "1 pack every 30 days"
+  },
+  "buy3": {
+    "full": "$149.97",
+    "one": [
+      "$69.99",
+      "53% OFF"
+    ],
+    "sub": [
+      "$47.97",
+      "68% OFF"
+    ],
+    "renew": "3 packs every 90 days"
+  },
+  "buy5": {
+    "full": "$249.95",
+    "one": [
+      "$104.95",
+      "58% OFF"
+    ],
+    "sub": [
+      "$64.95",
+      "74% OFF"
+    ],
+    "renew": "5 packs every 150 days"
+  }
+}
