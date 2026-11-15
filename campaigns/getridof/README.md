@@ -225,3 +225,12 @@ to the checkout, where the offer is chosen.
   `src/mouse-pouches/assets/guide/placement-guide.pdf`. The checkout remembers the chosen bundle for the tab
   (`sessionStorage gro_bundle`), and the thank-you page shows the download to 3-pack orders. Add the same link to the
   order confirmation email in the store settings if you want it delivered by email too.
+
+## Sales page sections (15 Nov 2026, later pass)
+
+- **Why it works** (`#why`, now ahead of the timeline): three logic steps, then one card per oil with its job, a CSS-animated SVG (`.an1`–`.an4` in `lp/lp.css`, 8 s loops, static under reduced motion) and a result line, then the summary box. The copy describes what each scent does; it makes no "works for every mouse" claim, and the guarantee line carries the promise.
+- **Household**: two cards (Babies & kids, Pets).
+- **Pack guide**: four cards (1, 2–3, 4–6, 8+ packs) with the recommendation band and a button to the checkout. `pack-8.webp` is the fourth illustration.
+- **Poison-Free Formula seal** (`.pf`, inline SVG): the brand's own promise about the ingredients. It is not a third-party certificate; a real one (lab report, certifying body) can replace it when the owner has the document.
+- **Timeline**: two short lines per stage. Repeated lines elsewhere were trimmed; no section was removed.
+- `e2e.cjs` checks these (47 checks).

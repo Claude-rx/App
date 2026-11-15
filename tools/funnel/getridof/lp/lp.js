@@ -212,7 +212,7 @@
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
     }, { rootMargin: '0px 0px -8% 0px' });
-    $$('.tile, .stepi li, .card, .fam figure, .baps figure, .ba figure, .agi div, .pack, .rev').forEach(function (el, n) {
+    $$('.tile, .stepi li, .why, .fam figure, .baps figure, .ba figure, .agi div, .pack, .rev').forEach(function (el, n) {
       if (el.getBoundingClientRect().top < innerHeight) return;   // already on screen: leave it visible
       el.classList.add('rv'); el.style.transitionDelay = (n % 3) * 70 + 'ms'; io.observe(el);
     });

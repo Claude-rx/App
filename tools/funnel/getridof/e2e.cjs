@@ -37,6 +37,13 @@ const results = []; const ok = (name, pass, detail = '') => { results.push({ nam
       amounts: (document.body.innerText.match(/\$(22\.49|34\.99|47\.97|69\.99|64\.95|104\.95|49\.99|149\.97|15\.99|23\.33)/g) || []).length,
       card: !!document.querySelector('#gro-buy.ofr [data-gro-atc]'), cta: document.querySelectorAll('[data-gro-atc]').length, scroll: document.querySelectorAll('main [data-gro-scroll]').length }));
     ok(`[${vp.name}] no prices and no buy box; the offer card and every button go to the checkout`, !priced.box && priced.amounts === 0 && priced.card && priced.cta >= 8 && priced.scroll === 0, JSON.stringify(priced));
+    // root-solution section: three logic steps, four oil cards each with a running animation; two household cards; four pack cards; poison-free seal
+    const root = await p.evaluate(() => ({ steps: document.querySelectorAll('#why .lg li').length, cards: document.querySelectorAll('#why .why').length,
+      anims: [...document.querySelectorAll('#why .an')].filter(a => a.getAnimations({ subtree: true }).some(x => x.playState === 'running')).length,
+      before: !!(document.querySelector('#why').compareDocumentPosition(document.querySelector('#timeline')) & Node.DOCUMENT_POSITION_FOLLOWING),
+      fam: document.querySelectorAll('.fam figure').length, packs: document.querySelectorAll('.packs .pack').length, seal: !!document.querySelector('.pf svg') }));
+    ok(`[${vp.name}] why it works: 3 logic steps, 4 oils each with a running animation, ahead of the timeline`, root.steps === 3 && root.cards === 4 && root.anims === 4 && root.before, JSON.stringify(root));
+    ok(`[${vp.name}] household = 2 cards, pack guide = 4 cards, poison-free seal present`, root.fam === 2 && root.packs === 4 && root.seal, JSON.stringify(root));
     // tabs: reviews by customer type, week-by-week timeline
     await p.locator('[data-gro-tabs="rev"] button').nth(2).scrollIntoViewIfNeeded(); await p.locator('[data-gro-tabs="rev"] button').nth(2).click();
     await p.locator('[data-gro-tabs="tl"] button').nth(3).click();
