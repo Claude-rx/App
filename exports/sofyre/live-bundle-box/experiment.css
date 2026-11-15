@@ -1,0 +1,174 @@
+/* DEV-15574 — SoFyre — PDP | Rebuild the offer ladder (VARIANT) */
+
+.exp-pdp-offer-ladder-treatment kaching-bundles-block {
+  --exp-ol-ink: #24433d;
+  --exp-ol-ink-soft: #4f6661;
+  --exp-ol-price: #cb6600;
+  --exp-ol-muted: #808887;
+  --exp-ol-pill-text: #d4e07d;
+  --exp-ol-border: #cdcdcd;
+  --exp-ol-badge-dark: #464646;
+  --exp-ol-badge-red: #b93243;
+  --exp-ol-radius: 4px;
+  --exp-ol-gap: 16px;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-urgency {
+  margin: 0 0 14px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--exp-ol-ink);
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-urgency strong {
+  font-weight: 700;
+}
+
+/* Ladder spacing — the GemPages wrapper forces gap/radio size with !important */
+.exp-pdp-offer-ladder-treatment .kaching-bundles__block > .kaching-bundles__bars:not(.kaching-bundles__subscriptions) {
+  gap: var(--exp-ol-gap) !important;
+}
+
+/* Card shell — Kaching keeps the selected background + 2px ink border */
+.exp-pdp-offer-ladder-treatment .kaching-bundles__bar[data-deal-bar-id] .kaching-bundles__bar-container {
+  border-radius: var(--exp-ol-radius);
+}
+
+.exp-pdp-offer-ladder-treatment .kaching-bundles__bar[data-deal-bar-id]:not(.kaching-bundles__bar--selected) .kaching-bundles__bar-container {
+  box-shadow: inset 0 0 0 1px var(--exp-ol-border);
+}
+
+.exp-pdp-offer-ladder-treatment .kaching-bundles__bar[data-deal-bar-id] .kaching-bundles__bar-wrapper {
+  padding: 14px 14px 14px 12px;
+}
+
+.exp-pdp-offer-ladder-treatment .kaching-bundles__bar[data-deal-bar-id] .kaching-bundles__bar-main {
+  align-items: center;
+  gap: 10px;
+}
+
+.exp-pdp-offer-ladder-treatment .kaching-bundles__bar[data-deal-bar-id] .kaching-bundles__bar-radio {
+  flex-shrink: 0;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0;
+}
+
+/* Swap Kaching's content for the experiment layer once it is mounted */
+.exp-pdp-offer-ladder-treatment .kaching-bundles__bar:has(.exp-ol-card) .kaching-bundles__bar-content,
+.exp-pdp-offer-ladder-treatment .kaching-bundles__bar:has(.exp-ol-card) .kaching-bundles__bar-most-popular {
+  display: none;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-card {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  font-family: inherit;
+  color: var(--exp-ol-ink);
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-left {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-pill {
+  padding: 2px 6px;
+  border-radius: 3px;
+  background-color: var(--exp-ol-ink);
+  color: var(--exp-ol-pill-text);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-pack {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--exp-ol-ink-soft);
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-save,
+.exp-pdp-offer-ladder-treatment .exp-ol-each {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--exp-ol-ink);
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-right {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-price {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--exp-ol-price);
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-compare {
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--exp-ol-muted);
+  text-decoration: line-through;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-card [hidden] {
+  display: none;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-badge {
+  position: absolute;
+  z-index: 1;
+  top: -13px;
+  right: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-badge--best {
+  background-color: var(--exp-ol-badge-dark);
+}
+
+.exp-pdp-offer-ladder-treatment .exp-ol-badge--lowest {
+  background-color: var(--exp-ol-badge-red);
+}

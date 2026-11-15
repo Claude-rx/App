@@ -4,12 +4,12 @@
     python3 -I tools/funnel/getridof/replica/debrand_images.py
 
 The replica product page shows images the lean sales page never used, and a review of all of them found the old brand
-name on seven. This script fixes those files in place (same names and proportions, so no markup changes):
+name on eight. This script fixes those files in place (same names and proportions, so no markup changes):
 
   - customer photos (4): replaced by the de-branded versions in brand/getridof/sections/gro-ugc-*.webp
   - phone version of the "Safe home" photo and the third "All natural" tile: the Get Rid Of packaging renders in
     brand/getridof/generated/ that their desktop versions already use
-  - small "No more mice" thumbnail: redrawn from the corrected first gallery photo (90-day guarantee)
+  - small "No more mice" thumbnails (2): redrawn from the corrected first gallery photo (90-day guarantee)
   - "Works everywhere" tile: the brand word painted out on the bag and on the pouch; its thumbnail redrawn from it
 
 Safe to run again.
@@ -30,7 +30,10 @@ REPLACE = {   # target in assets/pdp -> source image
     'Frame_1484584549-5421fa.webp': GEN / 'hand-drop-sachet.webp',
     'image5-4979c3.webp': GEN / 'all-natural.webp',
     'P_1_1-bd629d.png': PDP / 't12-rodent-57d2b1.png',
+    # the header menu's product picture in the 15 Nov capture (not in the first one: its size comes from the capture)
+    'Screenshot2026-06-23at40710PM_5a7d1618-cb1a-4023-b-40542d.png': PDP / 't12-rodent-57d2b1.png',
 }
+CAPTURE = ROOT / 'exports/sofyre/live-desktop/assets'
 # "Works everywhere": where the brand word sits, as fractions of the image (x0, y0, x1, y1)
 WORD_ON_BAG = (0.474, 0.414, 0.524, 0.436)
 WORD_ON_POUCH = (0.548, 0.574, 0.616, 0.601)
@@ -64,7 +67,7 @@ def paint_out(im, box):
 def main():
     for name, src in REPLACE.items():
         dst = PDP / name
-        w, h = Image.open(dst).size
+        w, h = Image.open(dst if dst.exists() else CAPTURE / name).size
         new = Image.open(src).convert('RGB')
         k = 2 if max(w, h) <= 400 else 1
         save(cover(new, w * k, h * k) if (w * k, h * k) != new.size else new, dst)

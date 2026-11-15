@@ -250,21 +250,31 @@ rebuilt as Get Rid Of section for section, then the same checkout, offers and th
 - **Campaign:** Campaigns App campaign 2721, "Get Rid Of - Rodent Repellent Pouches PDP", a clone of 2362 made with
   `next-campaigns-create` (same package, shipping and offer ids and prices, its own API key). Run directory:
   `next-campaigns-create-runs/getridof/clone-2362-pdp/` (gitignored). A price change on 2362 does not reach it.
-- **Bundle box:** Buy 1 / Buy 2, Get 1 Free / Buy 3, Get 2 Free, with the Automatic Refills box ticked on arrival.
-  Ticked: $22.49 / $47.97 / $64.95 (then $34.99 a pack). Unticked: one-time $34.99 / $69.99 / $104.95. The table is
-  `replica/prices.json`; `build_replica.py` refuses to build if it differs from what `shop_checkout.py` charges.
+- **Source:** the live page as captured on 15 Nov 2026 (`exports/sofyre/live-desktop/`, made with
+  `exports/sofyre/tools/full.js`); it matches the HTML file the owner supplied the same day. The owner's instruction:
+  an exact copy, nothing added or changed except the 90-day guarantee (plus this brand, its prices and its photos).
+- **Bundle box:** the source's "offer ladder" version (12 / 36 / 60 Pouches, % OFF pill, Save $, price per pouch,
+  High Demand line, BEST SELLER / LOWEST PRICE EVER badges), which the source store shows part of its visitors. Its
+  markup and stylesheet are in `exports/sofyre/live-bundle-box/`. Numbers come from `replica/prices.json`: with
+  Automatic Refills $22.49 / $47.97 / $64.95, one-time $34.99 / $69.99 / $104.95, compare-at $49.99 a pack;
+  `build_replica.py` refuses to build if they differ from what `shop_checkout.py` charges. The refill terms are shown
+  on the checkout, not on this page (the source has none there).
 - **Checkout:** the standard one plus the 5-pack option (`shop_checkout.with_five_pack`), for this funnel only.
-- **What differs from the source page, on purpose:** 90-day guarantee (not 30); "Ships in 1 Day" (the store's terms,
-  not "Ships Today"); payment marks limited to what this checkout takes; the header menu lists this product only;
-  the brand footer with the store's policy links; the "as seen in" press logos are left out (they are not this
-  brand's); brand green instead of the source's lime. Everything else, including the review and sales figures, is
-  carried over as it stands on the source page.
+- **What differs from the source:** brand name and logo; product photos (Get Rid Of packaging); prices; 90 days
+  instead of 30; "Cost per day" follows the price ($0.25). Nothing else: the source's colours, footer, header button,
+  press band, payment icons and copy are as they are (including its "perimetereter" typo and "8% concentration" line).
+- **What could not be copied** (it only works on the source store): the Shop Pay button, cart, search, newsletter
+  form, social links, the discount pop-up, and the menu's links to that store's other products.
+- **Rebuilt behaviour** (the capture has no scripts; `replica/pdp.js`): bundle selection and the refills toggle,
+  gallery with miniatures and swipe, both tab groups, accordions, moving photo strips and press band, review cards
+  that scroll sideways on phones, countdown, menu.
 - **Images:** all from `src/mouse-pouches/assets/pdp` (Get Rid Of packaging). `replica/debrand_images.py` is the
-  one-off pass that removed the old brand name from the seven images the lean sales page never used.
+  one-off pass that removed the old brand name from the images the lean sales page never used.
 - **Speed:** the first gallery photo is embedded in the HTML, photos 2-7 load after the page, the open state of the
-  bundle box is written into the HTML (no script needed for the first paint), and `replica/purge_css.mjs` reduces
-  16 stylesheets and ~200 style blocks to one file with the rules in use. On a throttled phone the page paints in
-  about 1.4 s on the store (it was ~30 s before this work); layout shift 0.004.
+  bundle box is written into the HTML (no script needed for the first paint), the pixel loads after the page, and
+  `replica/purge_css.mjs` reduces 16 stylesheets and ~200 style blocks to one file with the rules in use
+  (`GRO_NO_PURGE=1` builds without it, to compare). On a throttled phone the page paints in about 1.25 s on the
+  store; layout shift 0.003.
 - Never edit `src/mouse-repellent-pouches` by hand: it is regenerated and gitignored.
 
 ```bash
@@ -295,6 +305,14 @@ node tools/funnel/getridof/replica_check.cjs https://getridof.shop
 
 ```bash
 node tools/funnel/getridof/run_for.cjs mouse-repellent-pouches tools/funnel/getridof/payment_check.cjs https://getridof.shop
+```
+
+```bash
+node tools/funnel/getridof/replica_mobile_check.cjs https://getridof.shop
+```
+
+```bash
+node tools/funnel/getridof/axon_check.cjs https://getridof.shop
 ```
 
 Still to do in the Campaigns App dashboard for campaign 2721 (the API does not cover them): Allowed Domains and the

@@ -18,7 +18,8 @@ const extFor = (u, t='') => {
 const local = new Map(); // url -> relative path
 (async () => {
   const b = await chromium.launch();
-  const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+  // VIEW=mobile captures the phone version of the page (the store serves a different bundle box there)
+  const ctx = await b.newContext(process.env.VIEW === 'mobile' ? { ...require('playwright').devices['iPhone 13'] } : { viewport: { width: 1440, height: 900 } });
   const p = await ctx.newPage();
   p.on('response', async r => {
     const rt = r.request().resourceType();

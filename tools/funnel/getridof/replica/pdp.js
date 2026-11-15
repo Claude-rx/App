@@ -218,6 +218,7 @@
       if (seen[k]) s.remove(); else seen[k] = 1;
     });
     c.classList.add('gro-carousel');
+    if (wrap.parentElement) wrap.parentElement.classList.add('gro-scroller');   // the box the cards slide in (pdp.css lets it scroll on phones)
     wrap.style.setProperty('transform', 'none', 'important');
     wrap.style.setProperty('width', 'auto', 'important');
   });
@@ -263,33 +264,28 @@
 })();
 
 /* ---------- prices in the bundle box (campaign 2721, a copy of 2362) ----------
-   Automatic Refills ticked: first order $22.49 / $47.97 / $64.95, then $34.99 a pack (1 pack every 30 days, 3 every 90,
-   5 every 150). Unticked: one-time $34.99 / $69.99 / $104.95. Compare-at is the pack's regular price, $49.99 each.
-   The table is replica/prices.json (put here by build_replica.mjs, which also writes the ticked state into the HTML
-   so the first paint already shows it); build_replica.py checks it against shop_checkout.py. */
+   Automatic Refills ticked: first order $22.49 / $47.97 / $64.95 (then $34.99 a pack; the terms are on the checkout).
+   Unticked: one-time $34.99 / $69.99 / $104.95. Compare-at is the pack's regular price, $49.99 each.
+   LADDER holds the lines of the offer-ladder cards for both states (price, % OFF, Save $, price per pouch), computed
+   by build_replica.mjs from replica/prices.json, which build_replica.py checks against the checkout. The ticked
+   state is already in the HTML, so the first paint needs no script. */
 (function () {
   var PRICES = @@PRICES@@;
+  var LADDER = @@LADDER@@;
   var refill = document.querySelector('[data-gro-refill]');
   if (!refill) return;
-  // the terms of the refills, under the bundle box (in the HTML already; shown while they are ticked)
-  var info = document.querySelector('.gro-subinfo');
-  if (!info) return;
   function paint() {
     var on = refill.getAttribute('aria-checked') === 'true';
     document.querySelectorAll('[data-gro-bundle]').forEach(function (bar) {
-      var p = PRICES[bar.dataset.groBundle]; if (!p) return;
-      var v = on ? p.sub : p.one;
-      var price = bar.querySelector('.kaching-bundles__bar-price .money'); if (price) price.textContent = v[0];
-      var full = bar.querySelector('.kaching-bundles__bar-full-price .money'); if (full) full.textContent = p.full;
-      var off = bar.querySelector('.kaching-bundles__bar-subtitle'); if (off) off.textContent = v[1];
+      var id = bar.dataset.groBundle, p = PRICES[id], row = LADDER[id]; if (!p || !row) return;
+      var v = on ? p.sub : p.one, side = on ? row.sub : row.one;
+      var set = function (sel, text) { var e = bar.querySelector(sel); if (e) e.textContent = text; };
+      // the card the shopper sees
+      set('.exp-ol-price', side.price); set('.exp-ol-compare', row.full); set('.exp-ol-pill', side.off); set('.exp-ol-save', side.save); set('.exp-ol-each', side.each);
+      // the bar's own (hidden) lines, kept in step
+      set('.kaching-bundles__bar-price .money', v[0]); set('.kaching-bundles__bar-full-price .money', p.full); set('.kaching-bundles__bar-subtitle', v[1]);
     });
-    var sel = document.querySelector('[data-gro-bundle].kaching-bundles__bar--selected');
-    var id = sel ? sel.dataset.groBundle : 'buy3';
-    info.querySelector('[data-gro-firstoff]').textContent = 'First order ' + PRICES[id].sub[0];
-    info.querySelector('[data-gro-renew]').textContent = PRICES[id].renew;
-    info.style.display = on ? '' : 'none';
   }
   new MutationObserver(paint).observe(refill, { attributes: true, attributeFilter: ['aria-checked'] });
-  document.addEventListener('click', function () { setTimeout(paint, 0); });
   paint();
 })();

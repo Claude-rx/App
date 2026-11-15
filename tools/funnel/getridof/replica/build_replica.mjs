@@ -13,9 +13,13 @@
 //  - the bundle box (Buy 1 / Buy 2 Get 1 Free / Buy 3 Get 2 Free + Automatic Refills) and every ADD TO CART button
 //    become the funnel's: pdp.js shows campaign 2721's prices and sends the shopper to the checkout with the chosen
 //    bundle preselected (?forceBundleId=main:buy1|buy3|buy5 with refills, ot1|ot3|ot5 without)
-//  - what differs from the source, on purpose: the money-back guarantee is this brand's 90 days, the dispatch line
-//    quotes this brand's shipping time, the payment marks are the ones this checkout takes, and the "as seen in"
-//    press logos are left out (they are not this brand's)
+//  - what differs from the source, and nothing else: the brand name and logo, the product photos (Get Rid Of
+//    packaging), this campaign's prices in the bundle box, and the 90-day guarantee. The owner asked for an exact
+//    copy: no copy edits, no added sections, the source's colours, footer, header button and press band as they are.
+//  - what cannot be copied because it only works on the source store: the Shop Pay button, cart, search, the
+//    newsletter form, social links, the discount pop-up, and the menu's links to that store's other products.
+//  - the bundle box is the "offer ladder" version the source store shows part of its visitors (12 / 36 / 60 Pouches,
+//    % OFF pill, Save $, price per pouch); its markup and stylesheet were captured to exports/sofyre/live-bundle-box/.
 import { createRequire } from 'node:module';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,21 +30,22 @@ const { chromium } = require('playwright');
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../../../..');
 const SLUG = 'mouse-repellent-pouches';
-const SRC = path.join(ROOT, 'exports/sofyre/offline');
+const SRC = path.join(ROOT, 'exports/sofyre/live-desktop');   // the source page as captured on 15 Nov 2026 (exports/sofyre/tools/full.js)
 const CAMP = path.join(ROOT, 'campaigns/getridof/src', SLUG);
 const OUT_ASSETS = path.join(CAMP, 'assets/pdp');
 const STORE = 'https://getridof.shop';   // every visible link goes to the main domain
 const ASSET_URL = `/${SLUG}/pdp/`;
-// brand colour = the new packaging's green (sampled from brand/getridof/new-pack.png); replaces the reference page's lime
-const BRAND_GREEN = '#7EA254';
-const recolor = t => t.replace(/#ccf46f/gi, BRAND_GREEN).replace(/(rgba?\(\s*)204(\s*,\s*)244(\s*,\s*)111/gi, '$1126$2162$384');
 
 // 1. assets
 fs.mkdirSync(OUT_ASSETS, { recursive: true });
 // The funnel folder arrives with src/mouse-pouches/assets/pdp (build_replica.py): the same files with the Get Rid Of
 // packaging and the 90-day guarantee already in the images. Only what is missing there is taken from the export.
 let fresh = 0;
-for (const f of fs.readdirSync(path.join(SRC, 'assets'))) if (!/sofyre/i.test(f) && !fs.existsSync(path.join(OUT_ASSETS, f))) { fs.copyFileSync(path.join(SRC, 'assets', f), path.join(OUT_ASSETS, f)); fresh++; }
+const RASTER = /\.(png|jpe?g|webp|gif|avif)$/i;   // stylesheets, fonts and vector files are always the capture's own (source colours)
+for (const f of fs.readdirSync(path.join(SRC, 'assets'))) if (!/sofyre/i.test(f) && (!RASTER.test(f) || !fs.existsSync(path.join(OUT_ASSETS, f)))) { fs.copyFileSync(path.join(SRC, 'assets', f), path.join(OUT_ASSETS, f)); fresh++; }
+fs.copyFileSync(path.join(ROOT, 'exports/sofyre/live-bundle-box/experiment.css'), path.join(OUT_ASSETS, 'offer-ladder.css'));
+// the header menu's bag icon: a plain icon whose file name carries the old brand, copied under a neutral name
+fs.copyFileSync(path.join(SRC, 'assets/Sofyre_Rodent_Repellent-e5561d.svg'), path.join(OUT_ASSETS, 'gro-menu-icon.svg'));
 const freshImages = fs.readdirSync(path.join(SRC, 'assets')).filter(f => /\.(png|jpe?g|webp|gif|avif)$/i.test(f) && !/sofyre/i.test(f) && !fs.existsSync(path.join(ROOT, 'campaigns/getridof/src/mouse-pouches/assets/pdp', f)));
 if (freshImages.length) throw new Error('images that never went through the brand swap: ' + freshImages.join(', '));
 for (const [name, url] of [['gro-logo.svg', `https://cdn.cachebucket.com/media/getridof/themes/11/assets/assets/img/gro/logo.svg`],
@@ -49,9 +54,7 @@ for (const [name, url] of [['gro-logo.svg', `https://cdn.cachebucket.com/media/g
   fs.writeFileSync(path.join(OUT_ASSETS, name), Buffer.from(await r.arrayBuffer()));
 }
 const PRICES = JSON.parse(fs.readFileSync(path.join(HERE, 'prices.json'), 'utf8'));   // what the bundle box shows
-fs.writeFileSync(path.join(OUT_ASSETS, 'pdp.js'), fs.readFileSync(path.join(HERE, 'pdp.js'), 'utf8').replaceAll('@@SLUG@@', SLUG).replace('@@PRICES@@', JSON.stringify(PRICES)));
 fs.copyFileSync(path.join(HERE, 'pdp.css'), path.join(OUT_ASSETS, 'pdp.css'));
-for (const f of fs.readdirSync(OUT_ASSETS)) if (f.endsWith('.css')) { const fp = path.join(OUT_ASSETS, f); fs.writeFileSync(fp, recolor(fs.readFileSync(fp, 'utf8'))); }
 
 // favicon + touch icon for the checkout/receipt layout (the starter shipped NEXT's): the store logo on white, square
 {
@@ -67,9 +70,15 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 await page.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
 await page.goto('file://' + path.join(SRC, 'index.html'), { waitUntil: 'load' });
-const FOOTER = fs.readFileSync(path.join(HERE, 'footer.html'), 'utf8').replace(/<!--[\s\S]*?-->/, '').trim();
+// the offer ladder's lines, from prices.json: % off, the saving and the price per pouch against the regular price
+const money = v => '$' + v.toFixed(2);
+const ladderSide = (price, full, packs) => ({ price: money(price), off: Math.round((1 - price / full) * 100) + '% OFF', save: 'Save ' + money(full - price), each: money(price / (12 * packs)) + ' Each Pouch' });
+const LADDER = Object.fromEntries(Object.entries(PRICES).map(([id, r]) => { const n = Number(id.slice(3)), full = Number(r.full.slice(1));
+  return [id, { title: `${12 * n} Pouches`, pack: `(${n} Pack${n > 1 ? 's' : ''})`, full: money(full), sub: ladderSide(Number(r.sub[0].slice(1)), full, n), one: ladderSide(Number(r.one[0].slice(1)), full, n),
+    badge: n === 3 ? ['best', 'BEST SELLER'] : n === 5 ? ['lowest', 'LOWEST PRICE EVER'] : null }]; }));
+fs.writeFileSync(path.join(OUT_ASSETS, 'pdp.js'), fs.readFileSync(path.join(HERE, 'pdp.js'), 'utf8').replaceAll('@@SLUG@@', SLUG).replace('@@PRICES@@', JSON.stringify(PRICES)).replace('@@LADDER@@', () => JSON.stringify(LADDER)));
 const COST_DAY = '$0.25';   // "Cost per day of protection": one pack with Automatic Refills, $22.49 over its 90 days
-const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) => {
+const report = await page.evaluate(({ STORE, COST_DAY, SLUG, PRICES, LADDER }) => {
   const n = {}; const count = (k, v = 1) => (n[k] = (n[k] || 0) + v);
   const rm = (sel, k) => document.querySelectorAll(sel).forEach(e => { e.remove(); count(k || sel); });
 
@@ -88,6 +97,8 @@ const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) =
   rm('cart-drawer, cart-drawer-upsell, cart-drawer-items, #CartDrawer, .cart-drawer, #shopify-section-cart-drawer', 'cart-drawer');
   rm('details-modal.header__search, predictive-search, .header__icon--cart, a[href$="/cart"].header__icon', 'search-cart');
   rm('template', 'template');
+  // the newsletter block (heading, line and form) and the social links: they belong to the source store
+  document.querySelectorAll('.footer-block').forEach(b => { if (b.querySelector('form.footer__newsletter, form.newsletter-form')) { b.parentNode.removeChild(b); count('newsletter-block'); } });
   rm('.list-social, .footer__list-social, .footer-block--newsletter, .footer__newsletter, form[action*="/contact"]', 'social-newsletter');
   // hidden "add another bag" upsell popup and similar modal shells
   document.querySelectorAll('.popup-subtitle').forEach(p => { const box = p.closest('[class*="popup"]:not(body)'); if (box) { (box.parentElement.closest('[class*="popup"]') || box).remove(); count('upsell-popup'); } });
@@ -104,10 +115,6 @@ const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) =
     if (pe.tagName === 'STYLE') { if (/sofyre/i.test(t.data)) t.data = t.data.replace(/sofyre-/gi, 'gro-'); continue; }
     if (/sofyre/i.test(t.data)) { t.data = swap(t.data); count('text-brand'); }
     if (/30[\s-]?days?\b/i.test(t.data) && /money|guarantee|refund|leave within/i.test(pe.closest('section, div, li, p').textContent)) { t.data = t.data.replace(/30([\s-]?days?\b)/gi, '90$1'); count('guarantee-90'); }
-    // "UP TO 72% OFF" (banner and the badge on the first photo) stays: this campaign's deepest discount is 74%
-    if (/an 8% concentration formula/.test(t.data)) { t.data = t.data.replace('an 8% concentration formula', 'a 40% peppermint formula'); count('formula-40'); }   // the page states 40% everywhere else
-    if (t.data.trim() === 'Today' && /^Ships/.test(pe.parentElement.textContent.trim())) { const line = pe.parentElement; later.push(() => { line.innerHTML = 'Ships in<br><strong>1 Day</strong>'; line.style.whiteSpace = 'nowrap'; line.parentElement.style.overflow = 'visible'; count('ships'); }); }   // the page's own shipping terms
-    if (/perimetereter/.test(t.data)) { t.data = t.data.replace(/perimetereter/g, 'perimeter'); count('typo'); }
     if (t.data.trim() === '$0.33') { t.data = t.data.replace('$0.33', COST_DAY); count('cost-per-day'); }
   }
   later.forEach(f => f());
@@ -116,7 +123,10 @@ const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) =
   }));
   document.querySelectorAll('[data-sofyre-managed]').forEach(e => e.removeAttribute('data-sofyre-managed'));
 
-  // logos
+  // logos. The source header's wordmark is text; here it is the brand's logo.
+  document.querySelectorAll('a.header__heading-link').forEach(a => { if (a.querySelector('img')) return;
+    a.innerHTML = '<img src="assets/gro-logo.svg" alt="Get Rid Of" width="200" height="31" class="header__heading-logo gro-logo">'; count('logo-text'); });
+  document.querySelectorAll('img[src*="Sofyre_Rodent_Repellent-"]').forEach(img => { img.setAttribute('src', 'assets/gro-menu-icon.svg'); count('menu-icon'); });
   document.querySelectorAll('img.header__heading-logo, .footer img[class*="logo"], img[class*="logo"]').forEach(img => {
     const white = !!img.closest('footer, .footer'); img.setAttribute('src', 'assets/' + (white ? 'gro-logo-white.svg' : 'gro-logo.svg'));
     img.setAttribute('alt', 'Get Rid Of'); img.removeAttribute('srcset'); img.setAttribute('width', '200'); img.setAttribute('height', '31'); count('logo');
@@ -158,19 +168,30 @@ const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) =
   if (sub) { sub.setAttribute('data-gro-refill', ''); count('refill-toggle'); }
   const box = document.querySelector('kaching-bundles-block'); if (box) box.id = 'gro-buy';
   // the state the page opens in is written into the HTML, so the first paint needs no script: this campaign's
-  // prices with Automatic Refills ticked, Buy 2 Get 1 Free selected, and the refill terms under the box
+  // prices with Automatic Refills ticked and the 36-pouch bundle selected
   if (sub) sub.setAttribute('aria-checked', 'true');
   bars.forEach((bar, i) => {
     const p = PRICES[ids[i]], set = (sel, v) => { const e = bar.querySelector(sel); if (!e) throw new Error('bundle bar: ' + sel + ' not found'); e.textContent = v; };
     set('.kaching-bundles__bar-price .money', p.sub[0]); set('.kaching-bundles__bar-full-price .money', p.full); set('.kaching-bundles__bar-subtitle', p.sub[1]);
     bar.classList.toggle('kaching-bundles__bar--selected', ids[i] === 'buy3'); count('bundle-price');
   });
-  if (box) {
-    const info = document.createElement('div'); info.className = 'gro-subinfo';
-    info.innerHTML = `<p class="gro-subinfo__line"><span data-gro-firstoff>First order ${PRICES.buy3.sub[0]}</span> · then <b>$34.99 a pack</b>, <span data-gro-renew>${PRICES.buy3.renew}</span></p>` +
-      '<div class="gro-subinfo__row"><span><i>↻</i>Skip anytime</span><span><i>✕</i>Cancel anytime</span><span><i>✓</i>90-day money-back</span></div>';
-    box.parentNode.insertBefore(info, box.nextSibling); count('refill-terms');
-  }
+  // the "offer ladder" layer, exactly as the source store's experiment script builds it (exports/sofyre/live-bundle-box)
+  document.documentElement.classList.add('exp-pdp-offer-ladder-treatment');
+  const barsBox = box && box.querySelector('.kaching-bundles__bars');
+  if (!barsBox) throw new Error('bundle bars not found');
+  const urgency = document.createElement('p'); urgency.className = 'exp-ol-urgency';
+  urgency.innerHTML = '<span class="exp-ol-urgency__icon" aria-hidden="true">🔥</span> <strong class="">High Demand</strong> — Selling Fast Due To Rodent Season';
+  barsBox.parentNode.insertBefore(urgency, barsBox);
+  bars.forEach((bar, i) => {
+    const row = LADDER[ids[i]], main = bar.querySelector('.kaching-bundles__bar-main'), label = bar.querySelector('label.kaching-bundles__bar-container');
+    if (!main || !label) throw new Error('bundle bar: main / label not found');
+    const card = document.createElement('div'); card.className = 'exp-ol-card';
+    card.innerHTML = `<div class="exp-ol-left"><div class="exp-ol-title-row"><span class="exp-ol-title">${row.title}</span><span class="exp-ol-pill">${row.sub.off}</span></div><span class="exp-ol-pack">${row.pack}</span><span class="exp-ol-save">${row.sub.save}</span></div>` +
+      `<div class="exp-ol-right"><span class="exp-ol-price">${row.sub.price}</span><s class="exp-ol-compare">${row.full}</s><span class="exp-ol-each">${row.sub.each}</span></div>`;
+    main.appendChild(card);
+    if (row.badge) { const b = document.createElement('span'); b.className = 'exp-ol-badge exp-ol-badge--' + row.badge[0]; b.innerHTML = '<span class="exp-ol-badge__icon" aria-hidden="true">🔥</span> ' + row.badge[1]; label.appendChild(b); }
+    count('ladder-card');
+  });
   // the gallery stage gets a hook for its sizing rule (pdp.css)
   const track = document.querySelector('gp-carousel-v3.gp-feature-image-carousel .gem-slider-wrapper');
   if (!track) throw new Error('gallery track not found'); track.parentElement.classList.add('gro-stage');
@@ -188,16 +209,7 @@ const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) =
   document.querySelectorAll('gp-product-button, gp-button').forEach(g => { g.removeAttribute('gp-href'); });
   document.querySelectorAll('product-form form').forEach(f => { f.removeAttribute('action'); f.setAttribute('onsubmit', 'return false'); });
 
-  // "as seen in" press logos: coverage of the sister brand, not this one
   const main = document.querySelector('#MainContent');
-  const buzz = [...main.querySelectorAll('p, h2, h3, span, div')].find(x => /BUZZ/i.test(x.textContent) && !x.children.length);
-  if (buzz) {
-    // the band = the smallest block around that line that also holds the logos, and nothing else
-    let box = buzz; while (box.parentElement && box.parentElement !== main && box.querySelectorAll('img').length < 3) box = box.parentElement;
-    const sec = box.closest('section'); if (sec && sec.textContent.trim().length < 600) box = sec;
-    if (box.textContent.trim().length > 600) throw new Error('press band not isolated');
-    box.remove(); count('press-bar-removed');
-  }
 
   // header menu: the source store's other products are not sold here; the menu keeps this product and Contact Us
   document.querySelectorAll('.header-mobile-menu__items a.header-items__link').forEach(a => {
@@ -217,15 +229,14 @@ const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) =
     if (i) return defer(img, src);
     img.setAttribute('src', src); img.removeAttribute('srcset'); img.setAttribute('fetchpriority', 'high'); img.setAttribute('data-gro-hero', ''); count('hero');
   });
-  // miniatures under the main photo (the source page's phone layout shows them; its captured desktop markup holds
-  // them in a hidden slider frozen at zero size). A plain row of buttons takes that slider's place: small files made
-  // by build_replica.py, the first one marked as current; pdp.js moves the gallery when one is tapped.
-  document.querySelectorAll('.gallery-wrapper.gp-product-images-gallery').forEach(e => { if (e.querySelector('gp-carousel-v3.carousel-gallery')) { e.parentNode.removeChild(e); count('old-thumb-slider'); } });
-  const dotsEl = document.querySelector('.exp-atf__dots');
-  if (!dotsEl) throw new Error('gallery dots not found');
+  // miniatures under the main photo: the source shows them in a slider its own script drives (frozen in the capture).
+  // A plain row of buttons takes that slider's place, five to a row as on the source: small files made by
+  // build_replica.py, the first one marked as current; pdp.js moves the gallery when one is tapped.
+  const oldThumbs = [...document.querySelectorAll('.gallery-wrapper.gp-product-images-gallery')].find(e => e.querySelector('gp-carousel-v3.carousel-gallery'));
+  if (!oldThumbs) throw new Error('thumbnail slider not found');
   const row = document.createElement('div'); row.className = 'gro-thumbs'; row.setAttribute('role', 'group'); row.setAttribute('aria-label', 'Product photos');
   row.innerHTML = slides.map((_, i) => `<button type="button" class="gro-thumb${i ? '' : ' gro-thumb-active'}" aria-label="Photo ${i + 1} of ${slides.length}"><img src="/${SLUG}/pdp/gro-thumb-${i + 1}.webp" alt="" width="128" height="128" decoding="async"></button>`).join('');
-  dotsEl.parentNode.insertBefore(row, dotsEl.nextSibling); count('thumbs', slides.length);
+  oldThumbs.parentNode.insertBefore(row, oldThumbs); oldThumbs.parentNode.removeChild(oldThumbs); count('thumbs', slides.length);
   // the header menu's two pictures: small files, fetched when the menu is opened
   document.querySelectorAll('.header-mobile-menu img').forEach(img => {
     const s = img.getAttribute('src') || '';
@@ -237,29 +248,16 @@ const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) =
   // give every strip a phone-sized default, which pdp.js then sets from the real width
   document.querySelectorAll('gp-marquee .rfm-marquee').forEach(m => { m.style.setProperty('--duration', '26.7s'); m.style.setProperty('--play', 'running'); count('strip-pace'); });
 
-  // payment marks under the button: only what this checkout takes (no Shop Pay, Diners or Maestro)
-  document.querySelectorAll('img[src*="ShopPay-"], img[src*="DinersClub-"], img[src*="Maestro-"]').forEach(img => {
-    let box = img.closest('[class*="gp-group/image"]') || img; const par = box.parentElement; box.remove();
-    if (par && !par.children.length && !par.textContent.trim()) par.remove(); count('pay-mark-removed');
-  });
-
-  // footer: the source store's footer (newsletter signup, its own policy list) gives way to the brand footer
-  const oldFooter = document.querySelector('footer.footer');
-  if (oldFooter) { const t = document.createElement('template'); t.innerHTML = FOOTER; oldFooter.parentElement.insertBefore(t.content.firstElementChild, oldFooter); oldFooter.remove(); count('footer'); }
-
-  // header button: "Track Order" becomes the sticky "Shop Now" CTA (the header stays on top; it scrolls to the bundle box)
-  document.querySelectorAll('a.header__icons-btn').forEach(a => { a.textContent = 'Shop Now'; a.setAttribute('href', '#gro-buy'); a.classList.add('gro-shop-cta'); count('shop-cta'); });
-
   // countdown hook
   document.querySelectorAll('gp-countdown-timer').forEach(t => { t.setAttribute('data-gro-countdown', ''); count('countdown'); });
   return n;
-}, { STORE, FOOTER, COST_DAY, SLUG, PRICES });
+}, { STORE, COST_DAY, SLUG, PRICES, LADDER });
 
 let html = await page.evaluate(() => '<!doctype html>\n' + document.documentElement.outerHTML);
 await browser.close();
 
 // 3. text pass: asset paths, leftovers
-html = recolor(html.replace(/(["'(])assets\//g, `$1${ASSET_URL}`));
+html = html.replace(/(["'(])assets\//g, `$1${ASSET_URL}`);
 html = html.replace(/(https?:)?\/\/sofyre\.com\/cdn\/[^"' )]+/g, '');      // stray CDN refs (badge template etc.)
 // AppLovin Axon base pixel (same event key as the checkout pages, from campaigns.json). The PDP has no Campaign Cart
 // SDK, so pdp.js sends page_view / view_item / add_to_cart itself (see its "AppLovin Axon" block).
@@ -279,7 +277,7 @@ html = html.replace('<head>', '<head>\n' + AXON_HEAD);
 // module graph), then config.js, then the loader.
 const CAMPAIGN_HEAD = `<script src="${ASSET_URL}pdp.js" defer></script>\n<script src="/${SLUG}/config.js" defer></script>\n<meta name="next-funnel" content="${CAMPAIGN.name}">\n<meta name="next-page-type" content="product">\n<script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v${CAMPAIGN.sdk_version}/dist/loader.js" type="module"></script>\n`;
 html = html.replace('</head>', CAMPAIGN_HEAD + '</head>');
-html = html.replace('</head>', `<link rel="stylesheet" href="${ASSET_URL}pdp.css">\n<link rel="icon" href="${ASSET_URL}gro-logo.svg">\n</head>`);
+html = html.replace('</head>', `<link rel="stylesheet" href="${ASSET_URL}offer-ladder.css">\n<link rel="stylesheet" href="${ASSET_URL}pdp.css">\n<link rel="icon" href="${ASSET_URL}gro-logo.svg">\n</head>`);
 html = html.replace(/<!-- Offline snapshot[^>]*-->/, '');
 const left = (html.match(/sofyre/gi) || []).length;
 
