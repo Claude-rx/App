@@ -15,7 +15,8 @@
 //    bundle preselected (?forceBundleId=main:buy1|buy3|buy5 with refills, ot1|ot3|ot5 without)
 //  - what differs from the source, and nothing else: the brand name and logo, the product photos (Get Rid Of
 //    packaging), this campaign's prices in the bundle box, and the 90-day guarantee. The owner asked for an exact
-//    copy: no copy edits, no added sections, the source's colours, footer, header button and press band as they are.
+//    copy: no copy edits, no added sections, the source's colours, header button and press band as they are.
+//    One later request: a fuller footer (replica/footer.html) with every policy and the shop / help links.
 //  - what cannot be copied because it only works on the source store: the Shop Pay button, cart, search, the
 //    newsletter form, social links, the discount pop-up, and the menu's links to that store's other products.
 //  - the bundle box is the "offer ladder" version the source store shows part of its visitors (12 / 36 / 60 Pouches,
@@ -77,8 +78,9 @@ const LADDER = Object.fromEntries(Object.entries(PRICES).map(([id, r]) => { cons
   return [id, { title: `${12 * n} Pouches`, pack: `(${n} Pack${n > 1 ? 's' : ''})`, full: money(full), sub: ladderSide(Number(r.sub[0].slice(1)), full, n), one: ladderSide(Number(r.one[0].slice(1)), full, n),
     badge: n === 3 ? ['best', 'BEST SELLER'] : n === 5 ? ['lowest', 'LOWEST PRICE EVER'] : null }]; }));
 fs.writeFileSync(path.join(OUT_ASSETS, 'pdp.js'), fs.readFileSync(path.join(HERE, 'pdp.js'), 'utf8').replaceAll('@@SLUG@@', SLUG).replace('@@PRICES@@', JSON.stringify(PRICES)).replace('@@LADDER@@', () => JSON.stringify(LADDER)));
+const FOOTER = fs.readFileSync(path.join(HERE, 'footer.html'), 'utf8').replace(/<!--[\s\S]*?-->/, '').replaceAll('@@SLUG_ROOT@@', `/${SLUG}/`).trim();
 const COST_DAY = '$0.25';   // "Cost per day of protection": one pack with Automatic Refills, $22.49 over its 90 days
-const report = await page.evaluate(({ STORE, COST_DAY, SLUG, PRICES, LADDER }) => {
+const report = await page.evaluate(({ STORE, COST_DAY, SLUG, PRICES, LADDER, FOOTER }) => {
   const n = {}; const count = (k, v = 1) => (n[k] = (n[k] || 0) + v);
   const rm = (sel, k) => document.querySelectorAll(sel).forEach(e => { e.remove(); count(k || sel); });
 
@@ -248,10 +250,19 @@ const report = await page.evaluate(({ STORE, COST_DAY, SLUG, PRICES, LADDER }) =
   // give every strip a phone-sized default, which pdp.js then sets from the real width
   document.querySelectorAll('gp-marquee .rfm-marquee').forEach(m => { m.style.setProperty('--duration', '26.7s'); m.style.setProperty('--play', 'running'); count('strip-pace'); });
 
+  // footer: the owner's fuller footer (replica/footer.html) in place of the captured one; the FAQ section gets the
+  // anchor its Help link points at
+  const oldFooter = document.querySelector('footer.footer');
+  if (!oldFooter) throw new Error('footer not found');
+  { const t = document.createElement('template'); t.innerHTML = FOOTER; oldFooter.parentNode.insertBefore(t.content.firstElementChild, oldFooter); oldFooter.parentNode.removeChild(oldFooter); count('footer'); }
+  const faqHead = [...document.querySelectorAll('#MainContent h1, #MainContent h2, #MainContent h3')].find(h => /^\s*FAQ\s*$/.test(h.textContent));
+  if (!faqHead) throw new Error('FAQ heading not found');
+  (faqHead.closest('section') || faqHead).id = 'gro-faq';
+
   // countdown hook
   document.querySelectorAll('gp-countdown-timer').forEach(t => { t.setAttribute('data-gro-countdown', ''); count('countdown'); });
   return n;
-}, { STORE, COST_DAY, SLUG, PRICES, LADDER });
+}, { STORE, COST_DAY, SLUG, PRICES, LADDER, FOOTER });
 
 let html = await page.evaluate(() => '<!doctype html>\n' + document.documentElement.outerHTML);
 await browser.close();

@@ -261,8 +261,16 @@ rebuilt as Get Rid Of section for section, then the same checkout, offers and th
   on the checkout, not on this page (the source has none there).
 - **Checkout:** the standard one plus the 5-pack option (`shop_checkout.with_five_pack`), for this funnel only.
 - **What differs from the source:** brand name and logo; product photos (Get Rid Of packaging); prices; 90 days
-  instead of 30; "Cost per day" follows the price ($0.25). Nothing else: the source's colours, footer, header button,
-  press band, payment icons and copy are as they are (including its "perimetereter" typo and "8% concentration" line).
+  instead of 30; "Cost per day" follows the price ($0.25); the footer (below). Nothing else: the source's colours,
+  header button, press band, payment icons and copy are as they are (including its "perimetereter" typo and
+  "8% concentration" line).
+- **Footer** (`replica/footer.html`, styles `.gro-footer` in `replica/pdp.css`): the owner asked for a fuller one than
+  the source's six links. Logo, 90-day badge, support email and hours; Shop (pouches, Mice, Groundhogs, Product
+  safety, Blog), Help (Contact, FAQ anchor `#gro-faq`, Manage refills, Shipping, Refunds) and Legal (Terms, Privacy,
+  Auto-refill terms, Cookie policy, Your privacy choices, Accessibility); the six payment marks this checkout takes;
+  disclaimer. Only pages that exist on getridof.shop are linked (`replica_mobile_check.cjs` requests each one).
+  The checkout, offer and thank-you pages of all three funnels also link Shipping, Auto-refill terms and Contact
+  (`_includes/checkout-footer-links.html`, `_includes/footer.html`, `receipt.html`).
 - **What could not be copied** (it only works on the source store): the Shop Pay button, cart, search, newsletter
   form, social links, the discount pop-up, and the menu's links to that store's other products.
 - **Rebuilt behaviour** (the capture has no scripts; `replica/pdp.js`): bundle selection and the refills toggle,

@@ -249,6 +249,7 @@ html:not(.gro-prices) .upsell-container[data-next-await] :is(.badge,button,a):ha
 .os-card__label-2{background:#EEF4E6!important;color:#4F7A2E!important;border-color:#7EA254!important}
 .card-icons,.card-icons svg,.card-icons path{color:#4F7A2E!important;border-color:#4F7A2E!important}
 .footer_section,.icon-img{color:#23372B;border-color:#23372B}
+.checkout-footer-links{flex-wrap:wrap;row-gap:.5rem}
 """)
 
 
