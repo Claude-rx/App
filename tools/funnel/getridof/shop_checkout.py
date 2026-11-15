@@ -39,8 +39,10 @@ EBF = ('<div class="gro-ebf"><span class="gro-ebf__i" aria-hidden="true">%</span
 # id, packs, package, title, first-order price, per pack, % off (campaign 2362; e2e / polish checks fail if these drift)
 BUNDLES = [
     ('buy1', 1, 2, 'Buy 1', '22.49', '22.49', 55), ('buy3', 3, 5, 'Buy 2, Get 1 FREE', '47.97', '15.99', 68), ('buy5', 5, 6, 'Buy 3, Get 2 FREE', '64.95', '12.99', 74),
-    ('ot1', 1, 1, 'Buy 1', '24.99', '24.99', 50), ('ot3', 3, 1, 'Buy 2, Get 1 FREE', '49.98', '16.66', 67), ('ot5', 5, 1, 'Buy 3, Get 2 FREE', '69.95', '13.99', 72),
+    ('ot1', 1, 1, 'Buy 1', '34.99', '34.99', 30), ('ot3', 3, 1, 'Buy 2, Get 1 FREE', '69.99', '23.33', 53), ('ot5', 5, 1, 'Buy 3, Get 2 FREE', '104.95', '20.99', 58),
 ]
+# What subscribing saves on the first order, per pack count: one-time price minus subscriber price (14 Nov 2026 gap).
+SAVE = {1: ('22.49', '34.99', '12.50'), 3: ('47.97', '69.99', '22.02'), 5: ('64.95', '104.95', '40.00')}
 
 
 def bundle_card(i, packs, package, title, price, each, off):
@@ -54,7 +56,8 @@ def bundle_card(i, packs, package, title, price, each, off):
             f"data-next-bundle-items='{items}'{sel} role=\"button\" class=\"gro-bc gro-bc--{mode} gro-bc--{packs}\">{head}"
             f'<div class="gro-bc__in"><span class="gro-bc__r"></span>'
             f'<img src="{{{{ \'lp/thumb.webp\' | campaign_asset }}}}" alt="" width="56" height="60" loading="eager">'
-            f'<div class="gro-bc__t"><b>{title}</b><small>{sub}</small><em>+ FREE US shipping</em></div>'
+            f'<div class="gro-bc__t"><b>{title}</b><small>{sub}</small><em>+ FREE US shipping</em>'
+            + (f'<i>✓ You save ${SAVE[packs][2]} vs one-time</i>' if mode == 'sub' else '') + '</div>'
             f'<div class="gro-bc__p"><span class="gro-bc__off">{off}% OFF</span><s data-next-bundle-display="originalPrice">${packs * 49.99:.2f}</s>'
             f'<b data-next-bundle-display="price">${price}</b><small>${each} per pack</small></div></div></div>')
 
@@ -63,7 +66,11 @@ def step1():
     cards = [bundle_card(*b) for b in BUNDLES]
     up = '<div class="gro-up gro-bc--{m}"><span>Upgrade your order</span></div>'
     body = cards[0] + up.format(m='sub') + cards[1] + cards[2] + cards[3] + up.format(m='ot') + cards[4] + cards[5]
-    return ('<div class="form-section gro-s1"><h2 class="form-section__title">Step 1: Choose bundle offer</h2>'
+    sv = lambda pre: ''.join(f'<span class="gro-sv gro-sv--{pre}{n}">${SAVE[n][0]} instead of ${SAVE[n][1]}</span>' for n in (1, 3, 5))
+    switch = ('<div class="gro-sw"><p class="gro-sw__s">✓ <b>Subscribe &amp; Save applied.</b> You pay ' + sv('buy') + ' today.</p>'
+              '<p class="gro-sw__o">💡 <b>Subscribers pay less:</b> ' + sv('ot') + '. <a href="#" data-gro-switch>Switch to Subscribe &amp; Save</a>'
+              '<small>Refills ship automatically at $34.99 a pack. Skip or cancel anytime.</small></p></div>')
+    return ('<div class="form-section gro-s1"><h2 class="form-section__title">Step 1: Choose bundle offer</h2>' + switch +
             '<div data-next-catalog-component="bundle-selector" data-next-bundle-selector data-next-selector-id="main" data-next-selection-mode="swap" '
             f'data-next-include-shipping="true" class="gro-bs">{body}</div>'
             '<div class="gro-inc"><p>🎁 <b>EARLY BLACK FRIDAY SPECIAL</b><span>Included with every order today</span></p>'
@@ -124,7 +131,10 @@ BUNDLE_CLASS = ("<script>(function(){var m=/[?&]forceBundleId=main(?::|%3A)([a-z
                 "if(!/^(buy|ot)[135]$/.test(b))b='buy3';var c=document.documentElement.classList;"
                 "function set(b){for(var i=c.length-1;i>=0;i--)if(/^gro-b-/.test(c[i]))c.remove(c[i]);c.add('gro-b-'+b);c.toggle('gro-onetime',b.indexOf('ot')===0);window.groBundle=b}"
                 "set(b);document.addEventListener('click',function(e){var k=e.target.closest&&e.target.closest('[data-next-bundle-card]');"
-                "if(k&&/^(buy|ot)[135]$/.test(k.getAttribute('data-next-bundle-id')))set(k.getAttribute('data-next-bundle-id'))});})();</script>\n")
+                "if(k&&/^(buy|ot)[135]$/.test(k.getAttribute('data-next-bundle-id')))set(k.getAttribute('data-next-bundle-id'));"
+                # one-time shopper taps "Switch to Subscribe & Save": reload on the matching subscription bundle, keeping the other URL parameters
+                "var a=e.target.closest&&e.target.closest('[data-gro-switch]');if(a){e.preventDefault();var q=new URLSearchParams(location.search);"
+                "q.set('forceBundleId','main:'+String(window.groBundle||'ot3').replace('ot','buy'));location.search=q.toString()}});})();</script>\n")
 
 
 def _once(s, old, new, what):
@@ -214,6 +224,15 @@ CSS = """/* Checkout layout after the owner's reference (shop_checkout.py) */
 .gro-up{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#1b241d;margin:2px 0}
 .gro-up::before,.gro-up::after{content:"";flex:1;height:1px;background:#cfd6c8}
 .gro-onetime .gro-bc--sub,html:not(.gro-onetime) .gro-bc--ot{display:none}
+.gro-bc__t i{display:block;font-style:normal;font-size:12px;font-weight:800;color:#1b5e20;margin-top:4px}
+.gro-sw p{margin:0 0 12px;padding:10px 12px;border-radius:10px;font-size:14px;line-height:1.4}
+.gro-sw__s{background:#eaf6e4;border:1px solid #bfe0b0;color:#1b5e20}
+.gro-sw__o{display:none;background:#fff6dc;border:1px solid #ecd58c;color:#5c4300}
+.gro-sw__o a{display:inline-block;font-weight:800;color:#1b5e20;text-decoration:underline;padding:6px 0}
+.gro-sw__o small{display:block;font-size:12px;margin-top:2px}
+.gro-onetime .gro-sw__s{display:none}.gro-onetime .gro-sw__o{display:block}
+.gro-sv{display:none;font-weight:800}
+.gro-b-buy1 .gro-sv--buy1,.gro-b-buy3 .gro-sv--buy3,.gro-b-buy5 .gro-sv--buy5,.gro-b-ot1 .gro-sv--ot1,.gro-b-ot3 .gro-sv--ot3,.gro-b-ot5 .gro-sv--ot5{display:inline}
 .gro-inc{background:#fbf3e4;border-radius:12px;padding:12px 12px 14px;margin-top:12px}
 .gro-inc p{margin:0 0 10px;font-size:13.5px;line-height:1.4;color:#1b241d}
 .gro-inc p span{display:block;font-weight:700}

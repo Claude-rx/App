@@ -9,7 +9,7 @@ const base = process.argv[2] || 'http://localhost:8765';
 const out = process.argv[3] || '.';
 const CHECKOUT = /mouse-pouches(\/|-)checkout\//;
 const results = []; const ok = (name, pass, detail = '') => { results.push({ name, pass, detail }); console.log((pass ? 'PASS ' : 'FAIL ') + name + (detail ? '  ' + detail : '')); };
-const PRICES = { buy1: ['22.49', '24.99'], buy3: ['47.97', '49.98'], buy5: ['64.95', '69.95'] };   // [subscribe, one-time] = campaign 2362
+const PRICES = { buy1: ['22.49', '34.99'], buy3: ['47.97', '69.99'], buy5: ['64.95', '104.95'] };   // [subscribe, one-time] = campaign 2362
 (async () => {
   const b = await chromium.launch();
   for (const vp of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 390, height: 664, isMobile: true, hasTouch: true }]) {
@@ -43,8 +43,8 @@ const PRICES = { buy1: ['22.49', '24.99'], buy3: ['47.97', '49.98'], buy5: ['64.
         if (!t.includes(PRICES[id][mode])) priceOk = false;
       }
     }
-    ok(`[${vp.name}] buy box prices: subscribe 22.49 / 47.97 / 64.95, one-time 24.99 / 49.98 / 69.95`, priceOk, seen.join(' '));
-    ok(`[${vp.name}] one-time copy when unticked`, /One-time purchase: \$49\.98, no refills/.test(await p.locator('[data-sub-terms]').innerText()));
+    ok(`[${vp.name}] buy box prices: subscribe 22.49 / 47.97 / 64.95, one-time 34.99 / 69.99 / 104.95`, priceOk, seen.join(' '));
+    ok(`[${vp.name}] one-time copy when unticked`, /One-time purchase: \$69\.99, no refills/.test(await p.locator('[data-sub-terms]').innerText()));
     await p.locator('[data-gro-sub]').check();
     ok(`[${vp.name}] renewal terms shown when subscribed`, /3 packs \(\$104\.97\) every 90 days/.test(await p.locator('[data-sub-terms]').innerText()));
     // tabs: reviews by customer type, week-by-week timeline
@@ -82,8 +82,8 @@ const PRICES = { buy1: ['22.49', '24.99'], buy3: ['47.97', '49.98'], buy5: ['64.
     await p.locator('[data-gro-sub]').uncheck();
     await Promise.all([p.waitForURL(CHECKOUT), p.locator('#gro-buy [data-gro-atc]').click()]);
     u = new URL(p.url());
-    t = await summary('24\\.99');
-    ok(`[${vp.name}] one-time 1 pack -> main:ot1, total $24.99`, u.searchParams.get('forceBundleId') === 'main:ot1' && /24\.99/.test(t), u.search + ' | ' + t.slice(0, 120));
+    t = await summary('34\\.99');
+    ok(`[${vp.name}] one-time 1 pack -> main:ot1, total $34.99`, u.searchParams.get('forceBundleId') === 'main:ot1' && /34\.99/.test(t), u.search + ' | ' + t.slice(0, 120));
     ok(`[${vp.name}] one-time checkout: no Automatic Refills terms, no "Every 30 days"`, await p.evaluate(() => { const e = document.querySelector('.gro-refill-terms'); const d = document.querySelector('.submit-section__disclaimer'); return (!e || e.offsetParent === null) && !!d && !/Automatic Refills/.test(d.innerText) && !/Every \d+ days/i.test(document.querySelector('[data-next-cart-summary]').innerText); }));
     // default checkout (no parameter) = 3 subscribed packs
     await p.goto(base + (CHECKOUT.test('/mouse-pouches-checkout/') && /getridof/.test(base) ? '/mouse-pouches-checkout/' : '/mouse-pouches/checkout/'), { waitUntil: 'load' });

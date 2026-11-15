@@ -9,9 +9,9 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var T = {
-    buy1: { n: 'Buy 1', packs: 1, was: 49.99, sub: 22.49, one: 24.99, renew: '1 pack ($34.99) every 30 days', v: { sub: '8', one: '7' } },
-    buy3: { n: 'Buy 2, Get 1 Free', packs: 3, was: 149.97, sub: 47.97, one: 49.98, renew: '3 packs ($104.97) every 90 days', v: { sub: '37', one: '7' } },
-    buy5: { n: 'Buy 3, Get 2 Free', packs: 5, was: 249.95, sub: 64.95, one: 69.95, renew: '5 packs ($174.95) every 150 days', v: { sub: '38', one: '7' } }
+    buy1: { n: 'Buy 1', packs: 1, was: 49.99, sub: 22.49, one: 34.99, renew: '1 pack ($34.99) every 30 days', v: { sub: '8', one: '7' } },
+    buy3: { n: 'Buy 2, Get 1 Free', packs: 3, was: 149.97, sub: 47.97, one: 69.99, renew: '3 packs ($104.97) every 90 days', v: { sub: '37', one: '7' } },
+    buy5: { n: 'Buy 3, Get 2 Free', packs: 5, was: 249.95, sub: 64.95, one: 104.95, renew: '5 packs ($174.95) every 150 days', v: { sub: '38', one: '7' } }
   };
   var state = { bundle: 'buy3', sub: true };
   var money = function (n) { return '$' + n.toFixed(2); };
@@ -43,13 +43,17 @@
       $('[data-p]', o).textContent = money(p);
       $('[data-pp]', o).textContent = money(p / (t.packs * 12)) + '/pouch';
       $('[data-off]', o).textContent = Math.round((1 - p / t.was) * 100) + '% OFF';
+      var sv = $('[data-sv]', o);
+      if (sv) { sv.textContent = state.sub ? '✓ Subscriber price: ' + money(t.one - t.sub) + ' less than one-time' : 'Subscribers pay ' + money(t.sub) + ' (save ' + money(t.one - t.sub) + ')'; sv.classList.toggle('alt', !state.sub); }
     });
     var t = T[state.bundle], p = price(state.bundle);
     $$('[data-total]').forEach(function (e) { e.textContent = money(p); });
     $$('[data-sb-name]').forEach(function (e) { e.textContent = t.n; });
     var was = $('[data-sb-was]'); if (was) was.textContent = money(t.was);
     var title = $('[data-sub-title]'), terms = $('[data-sub-terms]');
-    if (title) title.textContent = state.sub ? 'Subscribe & save: pay ' + money(t.sub) + ' today' : 'Subscribe & save ' + money(t.one - t.sub) + ' on this order';
+    if (title) title.textContent = state.sub ? 'Subscribe & save: pay ' + money(t.sub) + ' today, not ' + money(t.one) : 'Subscribe & save ' + money(t.one - t.sub) + ' on this order';
+    $$('[data-gro-mode]').forEach(function (m) { m.classList.toggle('on', (m.getAttribute('data-gro-mode') === 'sub') === state.sub); });
+    var ms = $('[data-mode-save]'); if (ms) ms.textContent = 'Save ' + money(t.one - t.sub) + ' today';
     if (terms) terms.textContent = state.sub
       ? 'Then ' + t.renew + ' at $34.99 a pack, free shipping. Skip or cancel anytime. Untick for a one-time purchase (' + money(t.one) + ').'
       : 'One-time purchase: ' + money(t.one) + ', no refills. Tick to pay ' + money(t.sub) + ' today, then ' + t.renew + '. Skip or cancel anytime.';
@@ -60,6 +64,9 @@
     o.addEventListener('click', function (e) { e.preventDefault(); pick(o.getAttribute('data-gro-bundle')); });
   });
   if (subEl) subEl.addEventListener('change', function () { state.sub = subEl.checked; paint(); track('sub_toggle', { on: state.sub }); });
+  $$('[data-gro-mode]').forEach(function (m) {
+    m.addEventListener('click', function () { var s = m.getAttribute('data-gro-mode') === 'sub'; if (s === state.sub) return; state.sub = s; paint(); track('sub_toggle', { on: state.sub, src: 'switch' }); });
+  });
   paint();
 
   function bundleId() { return state.sub ? state.bundle : 'ot' + T[state.bundle].packs; }

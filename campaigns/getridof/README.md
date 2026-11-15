@@ -185,3 +185,23 @@ node tools/funnel/getridof/run_for.cjs mice-5-reasons tools/funnel/getridof/mobi
 ```
 
 `run_for.cjs` runs a mouse-pouches check against another funnel that shares its checkout and offer pages.
+
+## Prices (15 Nov 2026): subscription vs one-time
+
+Both campaigns (2362 and 2716) carry the same offers. The one-time discount was cut on 15 Nov 2026 so that
+subscribing is clearly cheaper; subscription prices did not change.
+
+| Packs | Subscribe (first order) | One-time | Subscriber saves |
+|---|---|---|---|
+| 1 | $22.49 (55% off) | $34.99 (30% off) | $12.50 |
+| 3 (Buy 2, Get 1 Free) | $47.97 (68% off) | $69.99 (53% off) | $22.02 |
+| 5 (Buy 3, Get 2 Free) | $64.95 (74% off) | $104.95 (58% off) | $40.00 |
+
+- Campaign offers on the one-time package: Buy 1 at 30.00%, 3 packs at 53.33%, 5 packs at 58.01%. The store floors the
+  discounted unit price to the cent, so 30.01% lands at $34.98; keep 30.00%.
+- Pages: the prices are in `T` in `tools/funnel/getridof/lp/lp.js` (sales page and listicle) and in `BUNDLES` / `SAVE`
+  in `shop_checkout.py` (checkout cards and the "subscribers pay less" banners). `e2e.cjs` and `listicle_check.cjs`
+  compare them with the live cart, so a campaign change without a page change fails the checks.
+- Campaign changes go through `next-campaigns-create` (`diff` then `update`): run directories
+  `next-campaigns-create-runs/getridof-pdp135/` (2362) and `next-campaigns-create-runs/getridof-2716/` (2716).
+  Change both campaigns together.

@@ -53,6 +53,15 @@ html:not(.gro-prices) .upsell-container[data-next-await] :is(.badge,button,a):ha
 .gro-up{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#1b241d;margin:2px 0}
 .gro-up::before,.gro-up::after{content:"";flex:1;height:1px;background:#cfd6c8}
 .gro-onetime .gro-bc--sub,html:not(.gro-onetime) .gro-bc--ot{display:none}
+.gro-bc__t i{display:block;font-style:normal;font-size:12px;font-weight:800;color:#1b5e20;margin-top:4px}
+.gro-sw p{margin:0 0 12px;padding:10px 12px;border-radius:10px;font-size:14px;line-height:1.4}
+.gro-sw__s{background:#eaf6e4;border:1px solid #bfe0b0;color:#1b5e20}
+.gro-sw__o{display:none;background:#fff6dc;border:1px solid #ecd58c;color:#5c4300}
+.gro-sw__o a{display:inline-block;font-weight:800;color:#1b5e20;text-decoration:underline;padding:6px 0}
+.gro-sw__o small{display:block;font-size:12px;margin-top:2px}
+.gro-onetime .gro-sw__s{display:none}.gro-onetime .gro-sw__o{display:block}
+.gro-sv{display:none;font-weight:800}
+.gro-b-buy1 .gro-sv--buy1,.gro-b-buy3 .gro-sv--buy3,.gro-b-buy5 .gro-sv--buy5,.gro-b-ot1 .gro-sv--ot1,.gro-b-ot3 .gro-sv--ot3,.gro-b-ot5 .gro-sv--ot5{display:inline}
 .gro-inc{background:#fbf3e4;border-radius:12px;padding:12px 12px 14px;margin-top:12px}
 .gro-inc p{margin:0 0 10px;font-size:13.5px;line-height:1.4;color:#1b241d}
 .gro-inc p span{display:block;font-weight:700}

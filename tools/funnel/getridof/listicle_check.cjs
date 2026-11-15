@@ -10,7 +10,7 @@ const base = (process.argv[2] || 'http://localhost:8765').replace(/\/$/, '');
 const out = process.argv[3] || '.';
 const SLUG = 'mice-5-reasons';
 const CHECKOUT = new RegExp(SLUG + '(\\/|-)checkout\\/');
-const PRICES = { buy1: ['22.49', '24.99'], buy3: ['47.97', '49.98'], buy5: ['64.95', '69.95'] };   // [subscribe, one-time]
+const PRICES = { buy1: ['22.49', '34.99'], buy3: ['47.97', '69.99'], buy5: ['64.95', '104.95'] };   // [subscribe, one-time]
 let pass = 0, fail = 0;
 const ok = (n, p, d = '') => { p ? pass++ : fail++; console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  ' + d : '')); };
 
@@ -51,7 +51,7 @@ const ok = (n, p, d = '') => { p ? pass++ : fail++; console.log((p ? 'PASS ' : '
       if (mode === 1) await p.locator('[data-gro-sub]').uncheck();
       for (const id of ['buy1', 'buy3', 'buy5']) { const t = await p.locator(`[data-gro-bundle="${id}"] [data-p]`).innerText(); seen.push(t); if (!t.includes(PRICES[id][mode])) priceOk = false; }
     }
-    ok(`[${vp.name}] offer prices: subscribe 22.49 / 47.97 / 64.95, one-time 24.99 / 49.98 / 69.95`, priceOk, seen.join(' '));
+    ok(`[${vp.name}] offer prices: subscribe 22.49 / 47.97 / 64.95, one-time 34.99 / 69.99 / 104.95`, priceOk, seen.join(' '));
     await p.locator('[data-gro-sub]').check();
     // images: scroll the page, nothing broken
     await p.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); } });
@@ -74,8 +74,8 @@ const ok = (n, p, d = '') => { p ? pass++ : fail++; console.log((p ? 'PASS ' : '
     await p.locator('[data-gro-bundle="buy1"]').scrollIntoViewIfNeeded(); await p.locator('[data-gro-bundle="buy1"]').click();
     await p.locator('[data-gro-sub]').uncheck();
     await Promise.all([p.waitForURL(CHECKOUT), p.locator('#gro-buy [data-gro-atc]').click()]);
-    u = new URL(p.url()); t = await summary('24\\.99');
-    ok(`[${vp.name}] one-time 1 pack -> main:ot1, total $24.99`, u.searchParams.get('forceBundleId') === 'main:ot1' && /24\.99/.test(t), u.search + ' | ' + t.slice(-70));
+    u = new URL(p.url()); t = await summary('34\\.99');
+    ok(`[${vp.name}] one-time 1 pack -> main:ot1, total $34.99`, u.searchParams.get('forceBundleId') === 'main:ot1' && /34\.99/.test(t), u.search + ' | ' + t.slice(-70));
     ok(`[${vp.name}] no requests to the source store`, external.length === 0, external.slice(0, 2).join(' '));
     ok(`[${vp.name}] no page JS errors`, errs.length === 0, errs.slice(0, 2).join(' | '));
     await ctx.close();
