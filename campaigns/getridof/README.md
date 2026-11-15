@@ -126,3 +126,62 @@ node tools/funnel/getridof/live_check.cjs https://getridof.shop
    Production domain. The API cannot do this. Until it is done, the SDK refuses every call from that domain, so no
    prices and no checkout.
 4. Open `https://<domain>/mouse-pouches/checkout/`. The cards should show $29.99 / $55.98 / $74.95.
+
+## Listicle funnel: /mice-5-reasons/ (campaign 2716)
+
+A second funnel for the same product, aimed at homeowners: listicle → checkout → offers → thank-you.
+
+| Page | Store route |
+|---|---|
+| "5 Reasons Everything You Tried Against Mice Failed" | `/mice-5-reasons/` |
+| checkout | `/mice-5-reasons-checkout/` |
+| offers | `/mice-5-reasons-special-offer/`, `-exclusive-offer/`, `-special-offer-2/`, `-exclusive-offer-2/` |
+| thank-you | `/mice-5-reasons-thank-you/` |
+
+- **Campaign:** Campaigns App campaign 2716, "Get Rid Of - Mouse Pouches Listicle", a clone of 2362 made with
+  `next-campaigns-create` (same package, shipping and offer reference ids, its own API key). Its run directory is
+  `next-campaigns-create-runs/getridof/clone-2362-listicle/` (gitignored). A price or offer change on 2362 does not
+  reach 2716: change both, or adopt 2716 and update it.
+- **Pages:** `tools/funnel/getridof/build_listicle.py` copies `src/mouse-pouches` to `src/mice-5-reasons` (so the
+  checkout, offer and thank-you pages are the same ones), swaps in campaign 2716's key and replaces the sales page with
+  the listicle (`tools/funnel/getridof/listicle/page.html` + `ls.css`). The listicle reuses the sales page's stylesheet,
+  script, top bar, offer box, how-it-works animation and footer from `tools/funnel/getridof/lp/`. Never edit
+  `src/mice-5-reasons` by hand: it is regenerated.
+- **Copy:** written for the homeowner brief in `brand/getridof/persona-homeowner.md`. Customer quotes are carried over
+  from the brand's original listicle and sales page; images are in `brand/getridof/sections/gro-ls-*`.
+
+```bash
+python3 -I tools/funnel/getridof/build_lp.py
+```
+
+```bash
+python3 -I tools/funnel/getridof/build_checkout.py
+```
+
+```bash
+python3 -I tools/funnel/getridof/build_listicle.py
+```
+
+```bash
+cd campaigns/getridof && CPK_ENV=production npx --no-install campaign-build
+```
+
+```bash
+python3 -I tools/funnel/getridof/deploy_store.py <theme dir> --push --funnel listicle
+```
+
+Checks (none places an order):
+
+```bash
+node tools/funnel/getridof/listicle_check.cjs https://getridof.shop
+```
+
+```bash
+node tools/funnel/getridof/run_for.cjs mice-5-reasons tools/funnel/getridof/payment_check.cjs https://getridof.shop
+```
+
+```bash
+node tools/funnel/getridof/run_for.cjs mice-5-reasons tools/funnel/getridof/mobile_audit.cjs https://getridof.shop /tmp/mobile --store
+```
+
+`run_for.cjs` runs a mouse-pouches check against another funnel that shares its checkout and offer pages.
