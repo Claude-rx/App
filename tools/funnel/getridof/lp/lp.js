@@ -88,7 +88,12 @@
     return { currency: 'USD', value: p, items: [item] };
   }
   function axon(name, data) {
-    try { if (typeof window.axon === 'function') data ? window.axon('track', name, data) : window.axon('track', name); } catch (err) { /* never block the page */ }
+    try {
+      if (typeof window.axon !== 'function') return;
+      var user = window.groAxonUser ? window.groAxonUser.get() : undefined;   // user_id always; email / phone once the shopper gave them
+      if (user) { data = data || {}; data.user_data = user; }
+      data ? window.axon('track', name, data) : window.axon('track', name);
+    } catch (err) { /* never block the page */ }
   }
   window.groAxonPayload = axonPayload;
   axon('page_view'); axon('view_item', axonPayload());

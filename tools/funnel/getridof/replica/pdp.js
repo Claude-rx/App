@@ -71,7 +71,12 @@
     return { currency: 'USD', value: Math.round(t.unit * t.qty * 100) / 100, items: [item] };
   }
   function axonTrack(name, data) {
-    try { if (typeof window.axon === 'function') data ? window.axon('track', name, data) : window.axon('track', name); } catch (err) { /* never block the page */ }
+    try {
+      if (typeof window.axon !== 'function') return;
+      var user = window.groAxonUser ? window.groAxonUser.get() : undefined;   // user_id always; email / phone once the shopper gave them
+      if (user) { data = data || {}; data.user_data = user; }
+      data ? window.axon('track', name, data) : window.axon('track', name);
+    } catch (err) { /* never block the page */ }
   }
   window.groAxonPayload = axonPayload;
   axonTrack('page_view');
@@ -120,7 +125,18 @@
     var offStyle = (navs[active === 0 ? 1 : 0] || navs[active]).getAttribute('style') || '';
     var show = function (i) {
       navs.forEach(function (n, k) { n.setAttribute('style', k === i ? onStyle : offStyle); n.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
-      panels.forEach(function (p, k) { p.style.display = k === i ? 'block' : 'none'; });
+      // a panel that was closed when the page was captured carries visibility:hidden, position:absolute, height:0
+      // and overflow:hidden inline: the open one gets the open panel's values, not only display
+      panels.forEach(function (p, k) {
+        var on = k === i;
+        p.style.display = on ? 'block' : 'none';
+        p.style.visibility = on ? 'visible' : 'hidden';
+        p.style.position = on ? 'relative' : 'absolute';
+        p.style.height = on ? 'auto' : '0px';
+        p.style.overflow = on ? 'visible' : 'hidden';
+        p.style.setProperty('--v', on ? 'visible' : 'hidden'); p.style.setProperty('--pos', on ? 'relative' : 'absolute');
+      });
+      if (typeof loadDeferred === 'function') setTimeout(function () { window.dispatchEvent(new Event('scroll')); }, 0);   // lazy photos in the newly shown panel
     };
     navs.forEach(function (n, i) {
       n.setAttribute('role', 'tab'); n.setAttribute('tabindex', '0');
@@ -132,7 +148,7 @@
 
   /* ---------- product gallery: featured carousel + thumbs + mobile dots ---------- */
   var feat = $('gp-carousel-v3.gp-feature-image-carousel');
-  var thumbs = $('gp-carousel-v3.carousel-gallery');
+  var thumbs = $$('.gro-thumb');   // the row of miniatures under the photo
   var dots = $$('.exp-atf__dot');
   if (feat) {
     var wrap = $('.gem-slider-wrapper', feat);
@@ -146,11 +162,16 @@
       slides.forEach(function (s) { s.style.setProperty('width', w + 'px', 'important'); s.style.setProperty('min-width', w + 'px', 'important'); s.style.setProperty('max-width', w + 'px', 'important'); s.style.setProperty('height', w + 'px', 'important'); });
       wrap.style.setProperty('width', (w * slides.length) + 'px', 'important');
       wrap.style.transition = 'transform 300ms ease';
-      wrap.style.transform = 'translate3d(' + (-cur * w) + 'px,0,0)';
+      // the slides sit a few pixels apart, so the shift is the slide's own offset in the track, not cur * width
+      var shift = slides[cur].getBoundingClientRect().left - slides[0].getBoundingClientRect().left;
+      wrap.style.transform = 'translate3d(' + (-shift) + 'px,0,0)';
       dots.forEach(function (d, k) { d.setAttribute('aria-current', k === cur ? 'true' : 'false'); });
-      if (thumbs) $$('.gem-slider-item', thumbs).forEach(function (t, k) { t.classList.toggle('gro-thumb-active', k === cur); });
+      thumbs.forEach(function (t, k) {
+        t.classList.toggle('gro-thumb-active', k === cur);
+        if (k === cur && t.parentNode.scrollWidth > t.parentNode.clientWidth) t.parentNode.scrollTo({ left: t.offsetLeft - (t.parentNode.clientWidth - t.offsetWidth) / 2, behavior: 'smooth' });
+      });
     };
-    if (thumbs) $$('.gem-slider-item', thumbs).forEach(function (t, k) { t.addEventListener('click', function () { go(k); }); });
+    thumbs.forEach(function (t, k) { t.addEventListener('click', function () { if (typeof loadDeferred === 'function') loadDeferred(); go(k); }); });
     dots.forEach(function (d, k) { d.addEventListener('click', function (e) { e.preventDefault(); go(k); }); });
     $$('.gp-carousel-action-back', feat).forEach(function (b) { b.addEventListener('click', function () { go(cur - 1); }); });
     $$('.gp-carousel-action-next', feat).forEach(function (b) { b.addEventListener('click', function () { go(cur + 1); }); });
@@ -176,9 +197,20 @@
     var full = new Image(); full.onload = function () { hero.src = full.src; }; full.src = hero.getAttribute('data-gro-hd');
   }, 300);
 
+  /* ---------- moving photo strips: the same speed as the source page (40 px a second) ----------
+   * Each strip is two copies of one track sliding by its own width; the time for one pass follows the track's width,
+   * which differs per screen. The HTML carries a phone-sized default so the strip moves before this runs. */
+  function paceStrips() {
+    $$('gp-marquee .rfm-marquee').forEach(function (m) {
+      var w = m.getBoundingClientRect().width;
+      if (w > 0) m.style.setProperty('--duration', (Math.round(w / 40 * 10) / 10) + 's');
+    });
+  }
+  paceStrips(); addEventListener('load', paceStrips); addEventListener('resize', paceStrips);
+
   /* ---------- other carousels: drop loop clones; swipeable scroller on phones ---------- */
   $$('gp-carousel-v3').forEach(function (c) {
-    if (c === feat || c === thumbs) return;
+    if (c === feat) return;
     var wrap = $('.gem-slider-wrapper', c); if (!wrap) return;
     var seen = {};
     Array.prototype.slice.call(wrap.children).forEach(function (s) {

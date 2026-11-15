@@ -60,9 +60,27 @@ const ok = (n, p, d = '') => { p ? pass++ : fail++; console.log((p ? 'PASS ' : '
     // interactions the page's own scripts used to provide
     const acc = p.locator('gp-accordion .gp-accordion-item').first();
     await acc.locator('.gp-accordion-item_header').click(); await p.waitForTimeout(200);
-    const tabs = await p.evaluate(() => { const t = [...document.querySelectorAll('gp-tab li.gp-tab-item')].find(l => /Week 3/i.test(l.textContent)); if (t) t.click(); const f = [...document.querySelectorAll('gp-tab li.gp-tab-item')].find(l => /Farmers/i.test(l.textContent)); if (f) f.click();
-      const shown = [...document.querySelectorAll('gp-tab .gp-tab-item')].filter(x => x.tagName !== 'LI' && getComputedStyle(x).display !== 'none').map(x => x.textContent); return { week3: shown.some(x => /KNOW NOT TO RETURN|THEY'VE LEFT/i.test(x)), farmers: shown.some(x => /Farmer ·|Farmer\b/.test(x)) }; });
-    ok(`[${vp.name}] accordion opens; timeline and review tabs switch`, await acc.evaluate(i => i.classList.contains('gro-open')) && tabs.week3 && tabs.farmers, JSON.stringify(tabs));
+    // miniatures under the main photo: seven, the first marked current; tapping the fourth moves the gallery to photo 4
+    await p.evaluate(() => scrollTo(0, 0));
+    const th0 = await p.evaluate(() => [...document.querySelectorAll('.gro-thumb')].filter(t => t.getBoundingClientRect().width > 30 && t.querySelector('img').naturalWidth > 0).length + ':' + [...document.querySelectorAll('.gro-thumb')].map(t => t.classList.contains('gro-thumb-active') ? 1 : 0).join(''));
+    await p.locator('.gro-thumb').nth(3).click(); await p.waitForTimeout(700);
+    const th1 = await p.evaluate(() => { const st = document.querySelector('.gro-stage').getBoundingClientRect(); const s4 = document.querySelectorAll('.gro-stage .gem-slider-wrapper > *')[3]; const r = s4.getBoundingClientRect(); const im = s4.querySelector('img');
+      return { active: [...document.querySelectorAll('.gro-thumb')].map(t => t.classList.contains('gro-thumb-active') ? 1 : 0).join(''), aligned: Math.abs(r.left - st.left) < 2, loaded: im.naturalWidth > 100 }; });
+    ok(`[${vp.name}] miniatures: seven under the photo; tapping one shows that photo`, th0 === '7:1000000' && th1.active === '0001000' && th1.aligned && th1.loaded, th0 + ' -> ' + JSON.stringify(th1));
+    await p.locator('.gro-thumb').nth(0).click();
+    // every tab of both tab groups opens a panel that is really on screen (not only display:block)
+    const opened = [];
+    for (const label of ['Week 1', 'Week 2', 'Week 3', 'Hours 1', 'RV Owner', 'Farmers', 'Homeowners']) {
+      const li = p.locator('gp-tab li.gp-tab-item', { hasText: new RegExp(label, 'i') }).first(); await li.scrollIntoViewIfNeeded(); await li.click(); await p.waitForTimeout(250);
+      opened.push(await li.evaluate((l, label) => { const tab = l.closest('gp-tab'); const panels = [...tab.querySelectorAll('.gp-tab-item')].filter(x => x.tagName !== 'LI' && x.parentElement.closest('gp-tab') === tab);
+        const open = panels.filter(x => { const c = getComputedStyle(x); return c.display !== 'none' && c.visibility !== 'hidden' && x.getBoundingClientRect().height > 150; });
+        const t = open.length === 1 ? open[0].innerText : ''; const want = { 'Week 1': /WEEK 1/, 'Week 2': /WEEK 2/, 'Week 3': /KNOW NOT TO RETURN/i, 'Hours 1': /HOUR 1-72/, 'RV Owner': /RV/, 'Farmers': /Farmer|feed|barn|bins/i, 'Homeowners': /Homeowner/ }[label];
+        return (open.length === 1 && want.test(t) ? '' : '!') + label; }, label));
+    }
+    ok(`[${vp.name}] accordion opens; all four timeline tabs and all three review tabs show their content`, await acc.evaluate(i => i.classList.contains('gro-open')) && opened.every(x => x[0] !== '!'), opened.join(', '));
+    // customer-photo strips move, as on the source page: one strip on wide screens, two on phones in opposite directions
+    const strips = await p.evaluate(() => [...document.querySelectorAll('gp-marquee')].filter(m => m.getBoundingClientRect().height > 20).map(m => { const c = getComputedStyle(m.querySelector('.rfm-marquee')); return c.animationName + '/' + parseFloat(c.animationDuration) + '/' + c.animationDirection + '/' + c.animationPlayState; }));
+    ok(`[${vp.name}] photo strip${vp.isMobile ? 's (two, opposite directions)' : ''} moving`, strips.length === (vp.isMobile ? 2 : 1) && strips.every(x => /^gp-merquee-scroll\/([1-9]\d*(\.\d+)?)\/(normal|reverse)\/running$/.test(x)) && (!vp.isMobile || (/\/normal\//.test(strips[0]) && /\/reverse\//.test(strips[1]))), strips.join(' | '));
     await p.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); } });
     await p.waitForFunction(() => [...document.images].filter(i => i.offsetParent !== null).every(i => i.complete), null, { timeout: 20000 }).catch(() => {});
     const imgs = await p.evaluate(() => [...document.images].filter(i => i.offsetParent !== null && (!i.complete || i.naturalWidth === 0)).map(i => (i.getAttribute('src') || '').slice(-40)));

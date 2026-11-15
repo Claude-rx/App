@@ -98,7 +98,18 @@ AXON = ('<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.a
         'a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey="%KEY%";'
         'var g=function(){for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}};'
         '"complete"===r.readyState?g():e.addEventListener("load",g)}}'
-        '(window,document);axon("init");window.__axonEventKey="%KEY%";window.__axonImageUrl=%IMG%;</script>')
+        '(window,document);axon("init");window.__axonEventKey="%KEY%";window.__axonImageUrl=%IMG%;%FLAG%%USER%</script>')
+# axon-user.js: the first-party user_id (and remembered email / phone) the page's events carry, same helper as the checkout
+AXON_USER = re.sub(r'/\*.*?\*/', '', (Path(__file__).resolve().parent / 'axon-user.js').read_text(), count=1, flags=re.S).strip()
+def axon_head(camp):
+    """The Axon base code for a product page of this campaign ('' when the campaign has no event key)."""
+    key = camp.get('axon_event_key') or ''
+    if not key: return ''
+    if not re.fullmatch(r'[0-9a-fA-F-]{36}', key): raise SystemExit('axon_event_key is not an event key')
+    flag = 'window.__axonSendUserData=true;' if str(camp.get('axon_send_user_data')).lower() == 'true' else ''
+    return AXON.replace('%KEY%', key).replace('%IMG%', json.dumps(camp.get('axon_image_url') or '')).replace('%FLAG%', flag).replace('%USER%', AXON_USER)
+
+
 # Campaign Cart SDK on the sales page: campaign page view + attribution capture. Loaded after the page is interactive.
 SDK = ("<script>window.addEventListener('load',function(){setTimeout(function(){var c=document.createElement('script');c.src='/mouse-pouches/config.js';"
        "c.onload=function(){var s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v%VER%/dist/loader.js';"
@@ -226,7 +237,7 @@ def main():
     camp = json.loads((ROOT / 'campaigns/getridof/_data/campaigns.json').read_text())['mouse-pouches']
     key = camp.get('axon_event_key') or ''
     if key and not re.fullmatch(r'[0-9a-fA-F-]{36}', key): raise SystemExit('axon_event_key is not an event key')
-    axon = AXON.replace('%KEY%', key).replace('%IMG%', json.dumps(camp.get('axon_image_url') or '')) if key else ''
+    axon = axon_head(camp)
     def card(r):
         _, slug, who, where, pre, head, body = r
         return (f'    <article class="rev"><div class="rev__t"><span class="sbx" aria-label="5 out of 5 stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span><span class="vb vb--b">✓ Verified Buyer</span></div>'

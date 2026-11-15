@@ -1,6 +1,8 @@
 /* Based on the starter's GENERATED _shared/analytics/js/axon.adapter.js (copy kept at tools/funnel/getridof/axon.adapter.starter.js).
- * Get Rid Of changes (marked GRO): user_data on every event that has it, phone_last10_hashed, per-package category ids,
- * a .png image_url fallback. Re-apply them if the starter copy is ever re-synced. */
+ * Get Rid Of changes (marked GRO): user_data on every event (a first-party user_id always; the email and phone the
+ * shopper gave, carried across the funnel's pages by window.groAxonUser, see tools/funnel/getridof/axon-user.js),
+ * US phone numbers without a country code, phone_last10_hashed, per-package category ids, a .png image_url fallback.
+ * Re-apply them if the starter copy is ever re-synced. */
 /**
  * axon.adapter.js — AppLovin Axon adapter for next-forwarder-core.js (Route C, no GTM).
  *
@@ -87,6 +89,9 @@
     if (EMAIL_RE.test(email)) out.email = email;
     var phone = typeof up.customer_phone === 'string' ? up.customer_phone.replace(/[\s().-]/g, '') : '';
     if (/^\+[1-9]\d{7,14}$/.test(phone)) out.phone = phone.slice(1);
+    // GRO: this store ships to the US only, so a number typed without a country code is a US number
+    else if (/^[2-9]\d{9}$/.test(phone)) out.phone = '1' + phone;
+    else if (/^1[2-9]\d{9}$/.test(phone)) out.phone = phone;
     var id = up.customer_id !== undefined && up.customer_id !== null ? String(up.customer_id).trim() : '';
     // GRO: Axon wants user_id >= 6 chars; store customer ids are short (e.g. 133), so send a stable prefixed id
     if (id && id !== '0' && id.length < 6) id = 'getridof-' + id;
@@ -115,6 +120,19 @@
     for (k in page) out[k] = page[k];
     for (k in own || {}) out[k] = own[k];
     return out;
+  }
+
+  // GRO: the shopper for this event. One user_id for the whole journey (the browser's first-party id), then per
+  // field: what the funnel already remembers, then this page's dl_user_data, then the event's own values. Whatever
+  // email / phone results is remembered for the next pages (the offer-page purchases arrive without them).
+  function shopper(evt) {
+    var store = window.groAxonUser;
+    var base = store ? store.get() : undefined;
+    var user = mergeUser(base, mergeUser(pageUserData(), userData(evt)));
+    if (!user) return undefined;
+    if (base && base.user_id) user.user_id = base.user_id;
+    if (store) store.remember(user);
+    return withLast10(user);
   }
 
   // GRO: SHA-256 (hex), synchronous so events keep their order; used for phone_last10_hashed only
@@ -230,7 +248,7 @@
     send: function (name, ec, evt) {
       // page_view is not an ecommerce event; it carries user_data only (GRO), once the shopper is known.
       if (name === 'page_view') {
-        var pvUser = window.__axonSendUserData === true ? withLast10(mergeUser(pageUserData(), userData(evt))) : undefined;
+        var pvUser = window.__axonSendUserData === true ? shopper(evt) : undefined;
         if (pvUser) window.axon('track', 'page_view', { user_data: pvUser }); else window.axon('track', 'page_view');
         return;
       }
@@ -249,8 +267,8 @@
       if (params.payment_type !== undefined) params.payment_type = paymentType(params.payment_type);
       var user;
       if (window.__axonSendUserData === true) {
-        // GRO: every event, not only purchase. The event's own fields win; the page's latest dl_user_data fills gaps.
-        user = withLast10(mergeUser(pageUserData(), userData(evt)));
+        // GRO: every event, not only purchase (see shopper above)
+        user = shopper(evt);
       }
       if (user) params.user_data = user;
       if (name === 'purchase') {

@@ -324,6 +324,12 @@ c = c.replace("requiredFields: ['email', 'fname', 'lname']", "requiredFields: ['
 cfg.write_text(c)
 # funnel step events on every checkout / offer / thank-you page, and the Clarity tag when campaigns.json has a clarity_id
 (CAMP / 'assets/js/gro-funnel.js').write_text(FUNNEL_JS)
+# AppLovin user data helper (axon-user.js), inlined after the Axon base code in the include every SDK page loads
+AXON_USER = re.sub(r'/\*.*?\*/', '', (Path(__file__).resolve().parent / 'axon-user.js').read_text(), count=1, flags=re.S).strip()
+ah = CAMP / '_includes/analytics-head.html'
+a_txt, n_axon = re.subn(r'(<!-- gro-axon-user:start[^>]*-->\n).*?(<!-- gro-axon-user:end -->)', lambda m: m.group(1) + '{% raw %}<script>' + AXON_USER + '</script>{% endraw %}\n' + m.group(2), ah.read_text(), flags=re.S)
+assert n_axon == 1, 'analytics-head.html: gro-axon-user markers not found'
+ah.write_text(a_txt)
 CLARITY = ('    {% if campaign.clarity_id and campaign.clarity_id != "" %}<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};'
            't=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})'
            '(window,document,"clarity","script","{{ campaign.clarity_id }}");</script>{% endif %}\n')

@@ -217,13 +217,25 @@ const report = await page.evaluate(({ STORE, FOOTER, COST_DAY, SLUG, PRICES }) =
     if (i) return defer(img, src);
     img.setAttribute('src', src); img.removeAttribute('srcset'); img.setAttribute('fetchpriority', 'high'); img.setAttribute('data-gro-hero', ''); count('hero');
   });
-  document.querySelectorAll('gp-carousel-v3.carousel-gallery img').forEach(img => defer(img, img.getAttribute('src')));
+  // miniatures under the main photo (the source page's phone layout shows them; its captured desktop markup holds
+  // them in a hidden slider frozen at zero size). A plain row of buttons takes that slider's place: small files made
+  // by build_replica.py, the first one marked as current; pdp.js moves the gallery when one is tapped.
+  document.querySelectorAll('.gallery-wrapper.gp-product-images-gallery').forEach(e => { if (e.querySelector('gp-carousel-v3.carousel-gallery')) { e.parentNode.removeChild(e); count('old-thumb-slider'); } });
+  const dotsEl = document.querySelector('.exp-atf__dots');
+  if (!dotsEl) throw new Error('gallery dots not found');
+  const row = document.createElement('div'); row.className = 'gro-thumbs'; row.setAttribute('role', 'group'); row.setAttribute('aria-label', 'Product photos');
+  row.innerHTML = slides.map((_, i) => `<button type="button" class="gro-thumb${i ? '' : ' gro-thumb-active'}" aria-label="Photo ${i + 1} of ${slides.length}"><img src="/${SLUG}/pdp/gro-thumb-${i + 1}.webp" alt="" width="128" height="128" decoding="async"></button>`).join('');
+  dotsEl.parentNode.insertBefore(row, dotsEl.nextSibling); count('thumbs', slides.length);
   // the header menu's two pictures: small files, fetched when the menu is opened
   document.querySelectorAll('.header-mobile-menu img').forEach(img => {
     const s = img.getAttribute('src') || '';
     if (/P_1_1-/.test(s)) img.setAttribute('src', `/${SLUG}/lp/thumb.webp`); else if (/Buy_3-/.test(s)) img.setAttribute('src', `/${SLUG}/pdp/gro-menu-banner.webp`); else return;
     img.setAttribute('loading', 'lazy'); img.setAttribute('decoding', 'async'); count('menu-img');
   });
+
+  // moving photo strips: a strip that was hidden when the page was captured has no pace (0s = it never moves);
+  // give every strip a phone-sized default, which pdp.js then sets from the real width
+  document.querySelectorAll('gp-marquee .rfm-marquee').forEach(m => { m.style.setProperty('--duration', '26.7s'); m.style.setProperty('--play', 'running'); count('strip-pace'); });
 
   // payment marks under the button: only what this checkout takes (no Shop Pay, Diners or Maestro)
   document.querySelectorAll('img[src*="ShopPay-"], img[src*="DinersClub-"], img[src*="Maestro-"]').forEach(img => {
@@ -254,7 +266,11 @@ html = html.replace(/(https?:)?\/\/sofyre\.com\/cdn\/[^"' )]+/g, '');      // st
 const CAMPAIGN = JSON.parse(fs.readFileSync(path.join(ROOT, 'campaigns/getridof/_data/campaigns.json'), 'utf8'))[SLUG];
 const AXON_KEY = CAMPAIGN.axon_event_key || '';
 if (AXON_KEY && !/^[0-9a-f-]{36}$/i.test(AXON_KEY)) throw new Error('axon_event_key is not an event key');
-const AXON_HEAD = AXON_KEY ? `<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey="${AXON_KEY}";for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}}}(window,document);axon("init");window.__axonEventKey="${AXON_KEY}";window.__axonImageUrl=${JSON.stringify(CAMPAIGN.axon_image_url || '')};</script>\n` : '';
+// The pixel files are fetched once the page has loaded (as on the sales page): events called before that wait in
+// its queue. axon-user.js gives every event its user_data (see that file).
+const AXON_USER = fs.readFileSync(path.join(ROOT, 'tools/funnel/getridof/axon-user.js'), 'utf8').replace(/\/\*[\s\S]*?\*\//, '').trim();
+const AXON_FLAG = String(CAMPAIGN.axon_send_user_data).toLowerCase() === 'true' ? 'window.__axonSendUserData=true;' : '';
+const AXON_HEAD = AXON_KEY ? `<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey="${AXON_KEY}";var g=function(){for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}};"complete"===r.readyState?g():e.addEventListener("load",g)}}(window,document);axon("init");window.__axonEventKey="${AXON_KEY}";window.__axonImageUrl=${JSON.stringify(CAMPAIGN.axon_image_url || '')};${AXON_FLAG}${AXON_USER}</script>\n` : '';
 html = html.replace('<head>', '<head>\n' + AXON_HEAD);
 // The campaign on the product page: the same campaign config + Campaign Cart SDK as the checkout, and the same
 // next-funnel name, so the campaign sees the page as its product step (page view, view_item, UTM / click-id

@@ -18,6 +18,7 @@ Never edit src/mouse-repellent-pouches by hand: it is regenerated. The key is ne
 import base64
 import io
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -108,8 +109,11 @@ def webp(src, width, quality):
 
 
 def small_images():
-    """The header menu's banner (a 1.4 MB PNG in the source page) as a small WebP."""
+    """Small files made for this page: the header menu's banner (a 1.4 MB PNG in the source) and the gallery miniatures."""
     (CAMP / 'assets/pdp/gro-menu-banner.webp').write_bytes(webp(CAMP / 'assets/pdp/Buy_3-707070.png', 640, 76))
+    # the seven miniatures under the main photo, from the same optimised gallery photos
+    for n in range(1, 8):
+        (CAMP / f'assets/pdp/gro-thumb-{n}.webp').write_bytes(webp(CAMP / f'assets/lp/hero-{n}.webp', 128, 70))
 
 
 def embed_hero(html):
@@ -131,7 +135,8 @@ def main():
     subprocess.run(['node', str(HERE / 'build_replica.mjs')], check=True)
     page = CAMP / 'index.html'
     page.write_text(embed_hero(page.read_text()))
-    subprocess.run(['node', str(HERE / 'purge_css.mjs')], check=True)   # last: one stylesheet with the rules the page uses
+    if os.environ.get('GRO_NO_PURGE') != '1':   # GRO_NO_PURGE=1 keeps the source stylesheets, to compare a pruned build against
+        subprocess.run(['node', str(HERE / 'purge_css.mjs')], check=True)   # last: one stylesheet with the rules the page uses
     html = page.read_text()
     if f'/{BASE}/' in html: raise SystemExit('the product page still links to the other funnel')
     print(f'replica funnel: {CAMP.relative_to(ROOT)} ({page.stat().st_size / 1e6:.2f} MB product page); api key: {which}')

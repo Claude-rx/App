@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import build_lp as lp  # noqa: E402  (REVIEWS, webp, AXON, SDK, tracking_tags)
+import build_lp as lp  # noqa: E402  (REVIEWS, webp, axon_head, SDK, tracking_tags)
 
 ROOT = Path(__file__).resolve().parents[3]
 HERE = ROOT / 'tools/funnel/getridof/listicle'
@@ -158,7 +158,7 @@ def main():
 
     key = camp.get('axon_event_key') or ''
     if key and not re.fullmatch(r'[0-9a-fA-F-]{36}', key): raise SystemExit('axon_event_key is not an event key')
-    axon = lp.AXON.replace('%KEY%', key).replace('%IMG%', json.dumps(camp.get('axon_image_url') or '')) if key else ''
+    axon = lp.axon_head(camp)
     tags, on = lp.tracking_tags(camp)
     css = (ROOT / 'tools/funnel/getridof/lp/lp.css').read_text() + '\n' + (HERE / 'ls.css').read_text()
     css = re.sub(r'\s*\n\s*', '', re.sub(r'/\*.*?\*/', '', css, flags=re.S))
