@@ -47,6 +47,7 @@
 "assets/grols/grols-paypal-d813cc.svg": "7c84e9a91a694ca48ad6899325862bb509ba927281198d4c9d1c5da31de6054a",
 "assets/grols/grols-paypal-logo-812a71.svg": "adf9b3c556710fac2e0f2ecf748a1f82afd023d7957336ef228db33f1deb83d3",
 "assets/grols/grols-paypal-txt-63acaf.svg": "65b5b5ac3704273a1a888af98295d7ef805682c6c3c24554349eb10ef7f6f2ef",
+"assets/grols/grols-placement-guide-119325.pdf": "b92ddf44e5b351a1757da78ef818a988002abd97de48873df968155d4d8db3a6",
 "assets/grols/grols-r-gap-bd9c4b.webp": "627c79803fb697d70a57f308508d5a83fb1c15134bf6a44c25d5d4c12ebbabe9",
 "assets/grols/grols-r-trail-573200.webp": "d852a1aff8d5d9eb798fe6975c1ac70db844a0032064639b4cd19907c2f7e627",
 "assets/grols/grols-scent-trail-sq-e1590c.webp": "760c4f97bddb1fe788cd466704dbe614495515bcee50645d8d364b744dd089a9",
@@ -60,11 +61,11 @@
 "assets/grols/grols-ugc-4-7ebbd7.webp": "12c363f3cc4cfbb32744f034e56880fb69b1348258e1a6089973c65cee76819f",
 "assets/grols/grols-upsells-22339a.js": "8a5883415cc9ed47a97517f9e1d76982513e010507035bc6c26d6cc7079cf9f7",
 "assets/grols/grols-webclip-4dac88.webp": "912b63a04ba0f8ed75da099fe1adf4ee5ebabbd59ab9fd5abaebdd0ec53ef261",
-"templates/pages/page.mice-5-reasons-checkout.html": "256458047c066acff147034107919d9621551073e5df48331f96fa0be186445e",
-"templates/pages/page.mice-5-reasons-exclusive-offer-2.html": "cd28f689d46d661bb18e244206efac4448c0517dfc0bf7a9ad6f237df509ec97",
-"templates/pages/page.mice-5-reasons-exclusive-offer.html": "3230997730e93d939c9306bb96b329fae1f2f6d66f7e0c89bb987af83de7730a",
-"templates/pages/page.mice-5-reasons-special-offer-2.html": "fe2662f2c1d37bb49889a3083adf722ed361a88a0c5da18b13b07200db81b905",
-"templates/pages/page.mice-5-reasons-special-offer.html": "34f5701205a318f6bc3f6f3db5bd56b041a23481a4779173d847a10d0a87d417",
-"templates/pages/page.mice-5-reasons-thank-you.html": "dc00e86c82da15e0144cef241c4bcb056b3c23216f8fecfbb823540878e9a986",
-"templates/pages/page.mice-5-reasons.html": "138a88914a6c98919e3a9c809d08c3eb61e66d7bdb103b56468ac0def5c92615"
+"templates/pages/page.mice-5-reasons-checkout.html": "2fb4f4997f8de93e0d8e9c91f0a1e7c5ff846cf36fdcaf437be29dd466a44f28",
+"templates/pages/page.mice-5-reasons-exclusive-offer-2.html": "0f49db385499716a6b0f8222706b4c61dcb1244b32b9d23c4bc4bfdddec0c228",
+"templates/pages/page.mice-5-reasons-exclusive-offer.html": "7bab2ba4eed63a2b027c7f519a08ea646654ffea0b42d2a70118ce4aff17602b",
+"templates/pages/page.mice-5-reasons-special-offer-2.html": "8e7b99331f030fc79f344ee8e19f4d03bcfcd3090dfd402c8f17ce5cbca225d0",
+"templates/pages/page.mice-5-reasons-special-offer.html": "a2bf226320e07157a790b4ec702496df5ed982a3670f7a0e1a664ce9ea9d7e45",
+"templates/pages/page.mice-5-reasons-thank-you.html": "22c2670f4e576e037fd5cbfd654e604be06249e345508c6e3d3b0472c25ae444",
+"templates/pages/page.mice-5-reasons.html": "a54f0b264e38d313d98e03b72f055ecb7a14b25e8fcd613f234a391539db35cc"
 }

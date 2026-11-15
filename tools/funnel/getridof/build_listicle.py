@@ -152,9 +152,8 @@ def main():
     pdp = (ROOT / 'tools/funnel/getridof/lp/page.html').read_text()
     top = block(pdp, '<header class="top">', '</header>')
     demo = block(pdp, '<figure class="demo">', '</figure>')
-    buy = block(pdp, '<div class="buy" id="gro-buy">', 'aria-label="Payment methods">')
-    buy += block(pdp[pdp.index(buy) + len(buy):], '', '</div>') + '\n    </div>'
-    assert buy.count('<div') == buy.count('</div>'), 'buy box block is not balanced'
+    buy = block(pdp, '<div class="ofr" id="gro-buy">', '<!--/ofr-->')     # the offer card (no prices; the choice is made in the checkout)
+    assert buy.count('<div') == buy.count('</div>'), 'offer card block is not balanced'
     foot = block(pdp, '<footer class="ft">', '</footer>')
 
     key = camp.get('axon_event_key') or ''

@@ -40,10 +40,14 @@ html:not(.gro-prices) .upsell-container[data-next-await] :is(.badge,button,a):ha
 .gro-bc__t small{display:block;font-size:12.5px;color:#5b665d}
 .gro-bc__t em{display:inline-block;font-style:normal;font-size:11.5px;font-weight:800;background:#fdeeb4;color:#5c4300;border-radius:5px;padding:2px 7px;margin-top:4px}
 .gro-bc__p{text-align:right;line-height:1.2}
-.gro-bc__off{display:inline-block;background:#c8102e;color:#fff;font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px;margin-bottom:3px}
-.gro-bc__p s{display:block;font-size:12.5px;color:#a3122a}
+.gro-bc__off{display:inline-block;background:#c8102e;color:#fff;font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px}
+.gro-bc__p s{display:block;font-size:13px;color:#a3122a}
+.gro-bc__row{display:flex;align-items:center;justify-content:flex-end;gap:6px}.gro-bc__row s{display:inline}
 .gro-bc__p b{display:block;font-size:18px;color:#1b241d}
-.gro-bc__p small{font-size:11.5px;color:#5b665d}
+.gro-bc__p small{display:block;font-size:12px;color:#5b665d}
+.gro-bc__tot{margin-top:2px;font-weight:700}
+.gro-bc__x3{display:flex;width:66px}.gro-bc__x3 img{width:30px;height:42px;margin-left:-12px}.gro-bc__x3 img:first-child{margin-left:0}.gro-bc__x3 img:nth-child(2){transform:translateY(-4px);z-index:1}
+.gro-bc--3 .gro-bc__in{grid-template-columns:22px 66px 1fr auto}
 .gro-bc__hd{display:flex;justify-content:space-between;align-items:center;background:#23372B;color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px}
 .gro-bc__hd b{color:#ffd24a;text-transform:none;letter-spacing:0;font-size:12.5px}
 .gro-bc__hd--v{background:#4F7A2E}
@@ -61,7 +65,28 @@ html:not(.gro-prices) .upsell-container[data-next-await] :is(.badge,button,a):ha
 .gro-sw__o small{display:block;font-size:12px;margin-top:2px}
 .gro-onetime .gro-sw__s{display:none}.gro-onetime .gro-sw__o{display:block}
 .gro-sv{display:none;font-weight:800}
-.gro-b-buy1 .gro-sv--buy1,.gro-b-buy3 .gro-sv--buy3,.gro-b-buy5 .gro-sv--buy5,.gro-b-ot1 .gro-sv--ot1,.gro-b-ot3 .gro-sv--ot3,.gro-b-ot5 .gro-sv--ot5{display:inline}
+.gro-mode{display:grid;grid-template-columns:1.2fr 1fr;gap:8px;margin:10px 0 12px}
+.gro-mode button{border:1.5px solid #d6dbd0;background:#fff;border-radius:12px;padding:9px 8px;min-height:54px;text-align:center;line-height:1.2;color:#1b241d;cursor:pointer;font-family:inherit}
+.gro-mode b{display:block;font-size:14.5px;font-weight:800}
+.gro-mode i{display:block;font-style:normal;font-size:11.5px;color:#5b665d;margin-top:3px}
+html:not(.gro-onetime) .gro-mode [data-gro-mode="buy"],.gro-onetime .gro-mode [data-gro-mode="ot"]{border-color:#23372B;box-shadow:0 0 0 1.5px #23372B;background:#f6faf1}
+.gro-gift{background:#fbf3e4;border-radius:12px;padding:12px 12px 14px;margin-top:12px}
+.gro-gift p{margin:0;font-size:13.5px;line-height:1.4;color:#1b241d}
+.gro-gift__h{font-weight:500}
+.gro-gift__s{margin:2px 0 14px!important;font-weight:700}
+.gro-gift__s--off{display:none}
+.gro-gift__g{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+.gro-gift__t{position:relative;font-size:11.5px;font-weight:700;line-height:1.25;color:#1b241d}
+.gro-gift__t u{display:grid;place-items:center;text-decoration:none;height:58px;margin-bottom:5px;border:1px dashed #c9a56a;border-radius:8px;background:#fff;font-size:24px}
+.gro-gift__t u img{width:auto;height:44px}
+.gro-gift__t i{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-style:normal;white-space:nowrap;background:#c8102e;color:#fff;font-size:10px;font-weight:800;border-radius:5px;padding:1px 7px}
+.gro-gift__t i em{display:none;font-style:normal}
+.gro-b-buy1 .gro-gift__s--on,.gro-b-ot1 .gro-gift__s--on{display:none}.gro-b-buy1 .gro-gift__s--off,.gro-b-ot1 .gro-gift__s--off{display:block}
+.gro-b-buy1 .gro-gift__t--lock,.gro-b-ot1 .gro-gift__t--lock{color:#9a9a94}
+.gro-b-buy1 .gro-gift__t--lock u,.gro-b-ot1 .gro-gift__t--lock u{border-color:#cfcfc8;filter:grayscale(1);opacity:.55}
+.gro-b-buy1 .gro-gift__t--lock i,.gro-b-ot1 .gro-gift__t--lock i{background:#8d8d86}
+.gro-b-buy1 .gro-gift__t--lock i b,.gro-b-ot1 .gro-gift__t--lock i b{display:none}.gro-b-buy1 .gro-gift__t--lock i em,.gro-b-ot1 .gro-gift__t--lock i em{display:inline}
+.gro-b-buy1 .gro-sv--buy1,.gro-b-buy3 .gro-sv--buy3,.gro-b-ot1 .gro-sv--ot1,.gro-b-ot3 .gro-sv--ot3{display:inline}
 .gro-inc{background:#fbf3e4;border-radius:12px;padding:12px 12px 14px;margin-top:12px}
 .gro-inc p{margin:0 0 10px;font-size:13.5px;line-height:1.4;color:#1b241d}
 .gro-inc p span{display:block;font-weight:700}

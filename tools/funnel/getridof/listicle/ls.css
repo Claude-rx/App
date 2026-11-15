@@ -52,7 +52,7 @@
 .col figcaption{position:absolute;left:8%;right:8%;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.72);color:#fff;font-weight:800;font-size:17px;line-height:1.25;text-align:center;border-radius:10px;padding:9px 10px}
 .off h2{font-size:30px;line-height:1.08}
 .off h2 em{font-style:normal;color:#ffd24a}
-.off .buy{background:#fff;color:var(--ink);border-radius:18px;padding:16px 14px;margin-top:16px;text-align:left}
+.off .ofr{color:var(--ink);margin-top:16px;border-color:#fff}
 .cm{display:grid;grid-template-columns:40px 1fr;gap:8px;margin:0 0 12px;align-items:start;text-align:left}
 .cm__av{width:40px;height:40px;border-radius:50%;object-fit:cover}
 .cm__c{min-width:0}

@@ -205,3 +205,23 @@ subscribing is clearly cheaper; subscription prices did not change.
 - Campaign changes go through `next-campaigns-create` (`diff` then `update`): run directories
   `next-campaigns-create-runs/getridof-pdp135/` (2362) and `next-campaigns-create-runs/getridof-2716/` (2716).
   Change both campaigns together.
+
+## Offer flow (15 Nov 2026): no prices before the checkout
+
+After the owner's reference funnel, the sales page and the listicle show the offer but no price, and every button goes
+to the checkout, where the offer is chosen.
+
+- **Sales page and listicle:** an offer card (`.ofr`, in `tools/funnel/getridof/lp/page.html`, reused by the listicle)
+  with "Buy 2, Get 1 FREE" and the bonuses; no bundle picker, no subscribe tick, no dollar amounts. Buttons carry
+  `data-gro-atc` and land on `?forceBundleId=main:buy3` with the tracking parameters kept.
+- **Checkout Step 1** (`step1()` in `shop_checkout.py`): a Subscribe & Save / One-time switch, then two options per
+  purchase type: `1x Rodent Repellent Pouches` and the `Buy 2, Get 1 FREE` deal card (default). Bundle ids are
+  `buy1` / `buy3` (subscription) and `ot1` / `ot3` (one-time). The 5-pack is no longer offered up front (it is still
+  the second post-purchase offer); an old `buy5` / `ot5` link lands on the 3-pack. Headline discount: up to 68%.
+- **Gifts box:** "1 FREE pack" and "Placement Guide (PDF)" come with Buy 2, Get 1 FREE and show as locked while 1x is
+  selected. "FREE US shipping" and "90-day guarantee" are on every order, so they are never shown as locked.
+  Do not add a bonus here that the order does not actually deliver.
+- **Placement guide:** `brand/getridof/guide/placement-guide.html` → `node tools/funnel/getridof/build_guide.cjs` →
+  `src/mouse-pouches/assets/guide/placement-guide.pdf`. The checkout remembers the chosen bundle for the tab
+  (`sessionStorage gro_bundle`), and the thank-you page shows the download to 3-pack orders. Add the same link to the
+  order confirmation email in the store settings if you want it delivered by email too.

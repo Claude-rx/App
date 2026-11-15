@@ -275,6 +275,22 @@ h = re.sub(r'Questions\?<br>Call: <a href="\{\{ campaign\.store_phone_tel \}\}" 
 hdr.write_text(h)
 rc = CAMP / 'receipt.html'
 r = rc.read_text().replace('title: "Olympus — Receipt"', 'title: "Thank You | Get Rid Of"').replace("{{ 'images/next-dark.svg' | campaign_asset }}", "{{ 'pdp/gro-logo.svg' | campaign_asset }}")
+# Buy 2, Get 1 FREE comes with the Whole-Home Placement Guide (tools/funnel/getridof/build_guide.cjs). The checkout
+# remembers the chosen bundle for this tab (sessionStorage gro_bundle), and the thank-you page shows the download to
+# 3-pack orders.
+GUIDE = """                  <div class="receipt_section gro-guide" hidden>
+                    <div class="receipt_section-head">
+                      <div class="display-xs">🎁 Your free Whole-Home Placement Guide</div>
+                      <div class="receipt_section-head--desc">It comes with Buy 2, Get 1 FREE: where to put all 36 pouches, room by room. <a href="{{ 'guide/placement-guide.pdf' | campaign_asset }}" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline">Download the guide (PDF)</a></div>
+                    </div>
+                  </div>
+                  <style>.gro-guide[hidden]{display:none!important}</style>
+                  <script>try{if(/3$/.test(sessionStorage.getItem('gro_bundle')||''))document.querySelector('.gro-guide').hidden=false}catch(e){}</script>
+"""
+if 'gro-guide' not in r:
+    anchor = re.search(r'You’ll get a confirmation email with your order number soon\.</div>\s*</div>\s*</div>\n', r)
+    assert anchor, 'receipt: confirmation section not found'
+    r = r[:anchor.end()] + GUIDE + r[anchor.end():]
 rc.write_text(r)
 # the thank-you page's loading skeleton showed the starter's logo until the order loaded
 sk = CAMP / '_includes/receipt-skeleton.html'

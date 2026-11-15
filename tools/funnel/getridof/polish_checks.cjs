@@ -15,14 +15,14 @@ const res = []; const ok = (n, p, d = '') => { res.push({ check: n, pass: !!p, d
     // Shopify-style checkout: no visible bundle picker; the tier comes from the sales page as ?forceBundleId=main:<id>
     // and a hidden selector applies it. Default (no parameter) = buy3.
     const tierCards = await p.evaluate(() => [...document.querySelectorAll('[data-next-bundle-card]')].filter(c => c.offsetParent).length);
-    ok(`[${vp.n}] Step 1 shows the three bundle cards of the chosen mode`, tierCards === 3, `visible cards: ${tierCards}`);
+    ok(`[${vp.n}] Step 1 shows the two options of the chosen purchase type (1x, Buy 2 Get 1 FREE)`, tierCards === 2, `visible cards: ${tierCards}`);
     const sumText = async () => (await p.locator('[data-next-cart-summary]').first().innerText()).replace(/\s+/g, ' ');
     ok(`[${vp.n}] default tier = 3 packs, $47.97`, /47\.97/.test(await sumText()));
-    for (const [id, price, packs] of [['buy1', '22.49', 1], ['buy5', '64.95', 5]]) {
+    for (const [id, price, packs] of [['buy1', '22.49', 1], ['ot3', '69.99', 3]]) {
       await p.goto(base + `/mouse-pouches/checkout/?forceBundleId=main:${id}`, { waitUntil: 'load' });
       await p.waitForFunction(() => document.querySelector('[data-next-bundle-card].next-selected'), null, { timeout: 30000 }); await p.waitForTimeout(2500);
       const t = await sumText();
-      ok(`[${vp.n}] ${id} from the sales page -> ${packs} pack(s), $${price}`, t.includes(price), t.slice(0, 90));
+      ok(`[${vp.n}] ${id} by link -> ${packs} pack(s), $${price}`, t.includes(price), t.slice(0, 90));
     }
     // no order bump (the Package Protection box was removed on 14 Nov 2026): shipping address is followed by payment
     const bumps = await p.evaluate(() => document.querySelectorAll('[data-next-bump], [data-next-toggle-card]').length);

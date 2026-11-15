@@ -31,51 +31,70 @@ HEADER = ('<section class="gro-ch"><div class="gro-ch__in">'
           '<div class="gro-ch__r"><span class="gro-ch__sec">🔒 Secure checkout</span><span class="gro-ch__ship">🇺🇸 Free US shipping</span></div>'
           '</div></section>')
 EBF = ('<div class="gro-ebf"><span class="gro-ebf__i" aria-hidden="true">%</span><div><b>EARLY BLACK FRIDAY IS LIVE!</b>'
-       '<span>Items in your cart are in high demand. Up to 74% off. Ends in <strong data-gro-ebf>soon</strong></span></div></div>\n'
+       '<span>Items in your cart are in high demand. Up to 68% off. Ends in <strong data-gro-ebf>soon</strong></span></div></div>\n'
        "<script>(function(){var el=document.querySelector('[data-gro-ebf]');if(!el)return;var end=new Date('" + DEADLINE + "').getTime();"
        "function p(n){return(n<10?'0':'')+n}(function t(){var s=Math.floor((end-Date.now())/1e3);if(s<=0){el.parentNode.parentNode.parentNode.style.display='none';return}"
        "var d=Math.floor(s/86400);el.textContent=(d?d+'d ':'')+p(Math.floor(s%86400/3600))+':'+p(Math.floor(s%3600/60))+':'+p(s%60);setTimeout(t,1e3)})()})();</script>")
 
 # id, packs, package, title, first-order price, per pack, % off (campaign 2362; e2e / polish checks fail if these drift)
 BUNDLES = [
-    ('buy1', 1, 2, 'Buy 1', '22.49', '22.49', 55), ('buy3', 3, 5, 'Buy 2, Get 1 FREE', '47.97', '15.99', 68), ('buy5', 5, 6, 'Buy 3, Get 2 FREE', '64.95', '12.99', 74),
-    ('ot1', 1, 1, 'Buy 1', '34.99', '34.99', 30), ('ot3', 3, 1, 'Buy 2, Get 1 FREE', '69.99', '23.33', 53), ('ot5', 5, 1, 'Buy 3, Get 2 FREE', '104.95', '20.99', 58),
+    ('buy1', 1, 2, '22.49', '22.49', 55), ('buy3', 3, 5, '47.97', '15.99', 68),
+    ('ot1', 1, 1, '34.99', '34.99', 30), ('ot3', 3, 1, '69.99', '23.33', 53),
 ]
-# What subscribing saves on the first order, per pack count: one-time price minus subscriber price (14 Nov 2026 gap).
-SAVE = {1: ('22.49', '34.99', '12.50'), 3: ('47.97', '69.99', '22.02'), 5: ('64.95', '104.95', '40.00')}
+# What subscribing saves on the first order, per pack count: (subscriber price, one-time price, saving).
+SAVE = {1: ('22.49', '34.99', '12.50'), 3: ('47.97', '69.99', '22.02')}
+GIFTS_BY = 'Dec. 1st'    # the Early Black Friday deadline (DEADLINE), as the gifts box words it
 
 
-def bundle_card(i, packs, package, title, price, each, off):
+def bundle_card(i, packs, package, price, each, off):
+    """Step 1 options, after the owner's reference: a plain 1x card, then the Buy 2, Get 1 FREE deal card."""
     mode = 'ot' if i.startswith('ot') else 'sub'
     items = json.dumps([{'packageId': package, 'quantity': packs}], separators=(',', ':'))
-    head = {3: '<div class="gro-bc__hd"><span>Early Black Friday deal</span><b>★ Most Popular</b></div>',
-            5: '<div class="gro-bc__hd gro-bc__hd--v"><span>Whole-home pack</span><b>Best Value</b></div>'}.get(packs, '')
     sel = ' data-next-selected="true"' if i == 'buy3' else ''
-    sub = f'{packs} pack{"s" if packs > 1 else ""} · {packs * 12} pouches'
-    return (f'<div data-next-bundle-card data-next-bundle-id="{i}" data-next-shipping-id="{{{{ shipping_methods.standard }}}}" '
-            f"data-next-bundle-items='{items}'{sel} role=\"button\" class=\"gro-bc gro-bc--{mode} gro-bc--{packs}\">{head}"
-            f'<div class="gro-bc__in"><span class="gro-bc__r"></span>'
-            f'<img src="{{{{ \'lp/thumb.webp\' | campaign_asset }}}}" alt="" width="56" height="60" loading="eager">'
-            f'<div class="gro-bc__t"><b>{title}</b><small>{sub}</small><em>+ FREE US shipping</em>'
-            + (f'<i>✓ You save ${SAVE[packs][2]} vs one-time</i>' if mode == 'sub' else '') + '</div>'
-            f'<div class="gro-bc__p"><span class="gro-bc__off">{off}% OFF</span><s data-next-bundle-display="originalPrice">${packs * 49.99:.2f}</s>'
-            f'<b data-next-bundle-display="price">${price}</b><small>${each} per pack</small></div></div></div>')
+    attrs = (f'data-next-bundle-card data-next-bundle-id="{i}" data-next-shipping-id="{{{{ shipping_methods.standard }}}}" '
+             f"data-next-bundle-items='{items}'{sel} role=\"button\" class=\"gro-bc gro-bc--{mode} gro-bc--{packs}\"")
+    thumb = "{{ 'lp/thumb.webp' | campaign_asset }}"
+    if packs == 1:
+        return (f'<div {attrs}><div class="gro-bc__in"><span class="gro-bc__r"></span>'
+                f'<img src="{thumb}" alt="" width="56" height="60" loading="eager">'
+                '<div class="gro-bc__t"><b>1x Rodent Repellent Pouches</b><small>1 pack · 12 pouches</small></div>'
+                f'<div class="gro-bc__p"><span class="gro-bc__row"><span class="gro-bc__off">{off}% OFF</span><s>$49.99</s></span>'
+                f'<b data-next-bundle-display="price">${price}</b></div></div></div>')
+    return (f'<div {attrs}><div class="gro-bc__hd"><span>Early Black Friday deal</span><b>★ Most Popular</b></div>'
+            '<div class="gro-bc__in"><span class="gro-bc__r"></span>'
+            f'<span class="gro-bc__x3"><img src="{thumb}" alt="" width="56" height="60" loading="eager"><img src="{thumb}" alt="" width="56" height="60" loading="eager">'
+            f'<img src="{thumb}" alt="" width="56" height="60" loading="eager"></span>'
+            '<div class="gro-bc__t"><b>Buy 2, Get 1 FREE</b><small>3 packs · 36 pouches</small><em>+ FREE Placement Guide</em></div>'
+            f'<div class="gro-bc__p"><s>$49.99</s><b>${each}</b><small>per pack</small>'
+            f'<small class="gro-bc__tot"><span data-next-bundle-display="price">${price}</span> today</small></div></div></div>')
 
 
 def step1():
-    cards = [bundle_card(*b) for b in BUNDLES]
+    cards = {b[0]: bundle_card(*b) for b in BUNDLES}
     up = '<div class="gro-up gro-bc--{m}"><span>Upgrade your order</span></div>'
-    body = cards[0] + up.format(m='sub') + cards[1] + cards[2] + cards[3] + up.format(m='ot') + cards[4] + cards[5]
-    sv = lambda pre: ''.join(f'<span class="gro-sv gro-sv--{pre}{n}">${SAVE[n][0]} instead of ${SAVE[n][1]}</span>' for n in (1, 3, 5))
+    body = cards['buy1'] + up.format(m='sub') + cards['buy3'] + cards['ot1'] + up.format(m='ot') + cards['ot3']
+    sv = lambda pre: ''.join(f'<span class="gro-sv gro-sv--{pre}{n}">${SAVE[n][0]} instead of ${SAVE[n][1]}</span>' for n in (1, 3))
+    mode = ('<div class="gro-mode" role="group" aria-label="Purchase type">'
+            '<button type="button" data-gro-mode="buy"><b>Subscribe &amp; Save</b><i>Lowest price · skip or cancel anytime</i></button>'
+            '<button type="button" data-gro-mode="ot"><b>One-time purchase</b><i>No subscriber discount</i></button></div>')
     switch = ('<div class="gro-sw"><p class="gro-sw__s">✓ <b>Subscribe &amp; Save applied.</b> You pay ' + sv('buy') + ' today.</p>'
-              '<p class="gro-sw__o">💡 <b>Subscribers pay less:</b> ' + sv('ot') + '. <a href="#" data-gro-switch>Switch to Subscribe &amp; Save</a>'
+              '<p class="gro-sw__o">💡 <b>Subscribers pay less:</b> ' + sv('ot') + '. <a href="#" data-gro-mode="buy">Switch to Subscribe &amp; Save</a>'
               '<small>Refills ship automatically at $34.99 a pack. Skip or cancel anytime.</small></p></div>')
-    return ('<div class="form-section gro-s1"><h2 class="form-section__title">Step 1: Choose bundle offer</h2>' + switch +
+    tag = '<i><b>FREE</b><em>🔒 LOCKED</em></i>'
+    # Only bonuses that exist. The free pack and the guide come with Buy 2, Get 1 FREE, so they lock on 1x.
+    # Shipping and the guarantee are on every order, so they are never shown as locked.
+    gifts = ('<div class="gro-gift"><p class="gro-gift__h">🎁 EARLY BLACK FRIDAY SPECIAL</p>'
+             f'<p class="gro-gift__s gro-gift__s--on"><b>FREE with Buy 2, Get 1 FREE</b> on orders by {GIFTS_BY}</p>'
+             '<p class="gro-gift__s gro-gift__s--off"><b>Choose Buy 2, Get 1 FREE</b> to unlock your FREE gifts</p>'
+             '<div class="gro-gift__g">'
+             f'<span class="gro-gift__t gro-gift__t--lock">{tag}<u><img src="{{{{ \'lp/thumb.webp\' | campaign_asset }}}}" alt="" width="44" height="47" loading="lazy"></u>1 FREE pack</span>'
+             f'<span class="gro-gift__t gro-gift__t--lock">{tag}<u>📘</u>Placement Guide (PDF)</span>'
+             f'<span class="gro-gift__t">{tag}<u>🚚</u>FREE US shipping</span>'
+             f'<span class="gro-gift__t">{tag}<u>↩</u>90-day guarantee</span>'
+             '</div></div>')
+    return ('<div class="form-section gro-s1"><h2 class="form-section__title">Step 1: Choose bundle offer</h2>' + mode + switch +
             '<div data-next-catalog-component="bundle-selector" data-next-bundle-selector data-next-selector-id="main" data-next-selection-mode="swap" '
-            f'data-next-include-shipping="true" class="gro-bs">{body}</div>'
-            '<div class="gro-inc"><p>🎁 <b>EARLY BLACK FRIDAY SPECIAL</b><span>Included with every order today</span></p>'
-            '<div class="gro-inc__g"><span><i>FREE</i><u>🚚</u>US shipping</span><span><i>FREE</i><u>↩</u>90-day money-back guarantee</span>'
-            '<span><i>FAST</i><u>📦</u>Ships in 1 business day</span></div></div></div>')
+            f'data-next-include-shipping="true" class="gro-bs">{body}</div>' + gifts + '</div>')
 
 
 # The page's existing customer stories (short forms of the sales page's reviews; avatars are the same files).
@@ -128,13 +147,14 @@ def social(extra=''):
 # Which bundle is selected, as classes on <html>: gro-b-<id>, plus gro-onetime for a one-time purchase (no Automatic
 # Refills terms, one-time cards shown). Set from the URL before paint, then kept in step with clicks on the cards.
 BUNDLE_CLASS = ("<script>(function(){var m=/[?&]forceBundleId=main(?::|%3A)([a-z0-9]+)/i.exec(location.search),b=m?m[1].toLowerCase():'buy3';"
-                "if(!/^(buy|ot)[135]$/.test(b))b='buy3';var c=document.documentElement.classList;"
-                "function set(b){for(var i=c.length-1;i>=0;i--)if(/^gro-b-/.test(c[i]))c.remove(c[i]);c.add('gro-b-'+b);c.toggle('gro-onetime',b.indexOf('ot')===0);window.groBundle=b}"
+                "if(!/^(buy|ot)[13]$/.test(b))b=(b.indexOf('ot')===0?'ot':'buy')+'3';var c=document.documentElement.classList;"
+                "function set(b){for(var i=c.length-1;i>=0;i--)if(/^gro-b-/.test(c[i]))c.remove(c[i]);c.add('gro-b-'+b);c.toggle('gro-onetime',b.indexOf('ot')===0);window.groBundle=b;try{sessionStorage.setItem('gro_bundle',b)}catch(x){}}"
                 "set(b);document.addEventListener('click',function(e){var k=e.target.closest&&e.target.closest('[data-next-bundle-card]');"
-                "if(k&&/^(buy|ot)[135]$/.test(k.getAttribute('data-next-bundle-id')))set(k.getAttribute('data-next-bundle-id'));"
-                # one-time shopper taps "Switch to Subscribe & Save": reload on the matching subscription bundle, keeping the other URL parameters
-                "var a=e.target.closest&&e.target.closest('[data-gro-switch]');if(a){e.preventDefault();var q=new URLSearchParams(location.search);"
-                "q.set('forceBundleId','main:'+String(window.groBundle||'ot3').replace('ot','buy'));location.search=q.toString()}});})();</script>\n")
+                "if(k&&/^(buy|ot)[13]$/.test(k.getAttribute('data-next-bundle-id')))set(k.getAttribute('data-next-bundle-id'));"
+                # Subscribe & Save / One-time switch: select the same pack count in the other purchase type by clicking its card,
+                # which is how the SDK swaps the cart (the card is only hidden by CSS).
+                "var a=e.target.closest&&e.target.closest('[data-gro-mode]');if(a){e.preventDefault();var t=a.getAttribute('data-gro-mode')+String(window.groBundle||'buy3').replace(/^[a-z]+/,'');"
+                "if(t!==window.groBundle){var d=document.querySelector('[data-next-bundle-id=\"'+t+'\"]');if(d)d.click()}}});})();</script>\n")
 
 
 def _once(s, old, new, what):
@@ -211,10 +231,14 @@ CSS = """/* Checkout layout after the owner's reference (shop_checkout.py) */
 .gro-bc__t small{display:block;font-size:12.5px;color:#5b665d}
 .gro-bc__t em{display:inline-block;font-style:normal;font-size:11.5px;font-weight:800;background:#fdeeb4;color:#5c4300;border-radius:5px;padding:2px 7px;margin-top:4px}
 .gro-bc__p{text-align:right;line-height:1.2}
-.gro-bc__off{display:inline-block;background:#c8102e;color:#fff;font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px;margin-bottom:3px}
-.gro-bc__p s{display:block;font-size:12.5px;color:#a3122a}
+.gro-bc__off{display:inline-block;background:#c8102e;color:#fff;font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px}
+.gro-bc__p s{display:block;font-size:13px;color:#a3122a}
+.gro-bc__row{display:flex;align-items:center;justify-content:flex-end;gap:6px}.gro-bc__row s{display:inline}
 .gro-bc__p b{display:block;font-size:18px;color:#1b241d}
-.gro-bc__p small{font-size:11.5px;color:#5b665d}
+.gro-bc__p small{display:block;font-size:12px;color:#5b665d}
+.gro-bc__tot{margin-top:2px;font-weight:700}
+.gro-bc__x3{display:flex;width:66px}.gro-bc__x3 img{width:30px;height:42px;margin-left:-12px}.gro-bc__x3 img:first-child{margin-left:0}.gro-bc__x3 img:nth-child(2){transform:translateY(-4px);z-index:1}
+.gro-bc--3 .gro-bc__in{grid-template-columns:22px 66px 1fr auto}
 .gro-bc__hd{display:flex;justify-content:space-between;align-items:center;background:#23372B;color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px}
 .gro-bc__hd b{color:#ffd24a;text-transform:none;letter-spacing:0;font-size:12.5px}
 .gro-bc__hd--v{background:#4F7A2E}
@@ -232,7 +256,28 @@ CSS = """/* Checkout layout after the owner's reference (shop_checkout.py) */
 .gro-sw__o small{display:block;font-size:12px;margin-top:2px}
 .gro-onetime .gro-sw__s{display:none}.gro-onetime .gro-sw__o{display:block}
 .gro-sv{display:none;font-weight:800}
-.gro-b-buy1 .gro-sv--buy1,.gro-b-buy3 .gro-sv--buy3,.gro-b-buy5 .gro-sv--buy5,.gro-b-ot1 .gro-sv--ot1,.gro-b-ot3 .gro-sv--ot3,.gro-b-ot5 .gro-sv--ot5{display:inline}
+.gro-mode{display:grid;grid-template-columns:1.2fr 1fr;gap:8px;margin:10px 0 12px}
+.gro-mode button{border:1.5px solid #d6dbd0;background:#fff;border-radius:12px;padding:9px 8px;min-height:54px;text-align:center;line-height:1.2;color:#1b241d;cursor:pointer;font-family:inherit}
+.gro-mode b{display:block;font-size:14.5px;font-weight:800}
+.gro-mode i{display:block;font-style:normal;font-size:11.5px;color:#5b665d;margin-top:3px}
+html:not(.gro-onetime) .gro-mode [data-gro-mode="buy"],.gro-onetime .gro-mode [data-gro-mode="ot"]{border-color:#23372B;box-shadow:0 0 0 1.5px #23372B;background:#f6faf1}
+.gro-gift{background:#fbf3e4;border-radius:12px;padding:12px 12px 14px;margin-top:12px}
+.gro-gift p{margin:0;font-size:13.5px;line-height:1.4;color:#1b241d}
+.gro-gift__h{font-weight:500}
+.gro-gift__s{margin:2px 0 14px!important;font-weight:700}
+.gro-gift__s--off{display:none}
+.gro-gift__g{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+.gro-gift__t{position:relative;font-size:11.5px;font-weight:700;line-height:1.25;color:#1b241d}
+.gro-gift__t u{display:grid;place-items:center;text-decoration:none;height:58px;margin-bottom:5px;border:1px dashed #c9a56a;border-radius:8px;background:#fff;font-size:24px}
+.gro-gift__t u img{width:auto;height:44px}
+.gro-gift__t i{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-style:normal;white-space:nowrap;background:#c8102e;color:#fff;font-size:10px;font-weight:800;border-radius:5px;padding:1px 7px}
+.gro-gift__t i em{display:none;font-style:normal}
+.gro-b-buy1 .gro-gift__s--on,.gro-b-ot1 .gro-gift__s--on{display:none}.gro-b-buy1 .gro-gift__s--off,.gro-b-ot1 .gro-gift__s--off{display:block}
+.gro-b-buy1 .gro-gift__t--lock,.gro-b-ot1 .gro-gift__t--lock{color:#9a9a94}
+.gro-b-buy1 .gro-gift__t--lock u,.gro-b-ot1 .gro-gift__t--lock u{border-color:#cfcfc8;filter:grayscale(1);opacity:.55}
+.gro-b-buy1 .gro-gift__t--lock i,.gro-b-ot1 .gro-gift__t--lock i{background:#8d8d86}
+.gro-b-buy1 .gro-gift__t--lock i b,.gro-b-ot1 .gro-gift__t--lock i b{display:none}.gro-b-buy1 .gro-gift__t--lock i em,.gro-b-ot1 .gro-gift__t--lock i em{display:inline}
+.gro-b-buy1 .gro-sv--buy1,.gro-b-buy3 .gro-sv--buy3,.gro-b-ot1 .gro-sv--ot1,.gro-b-ot3 .gro-sv--ot3{display:inline}
 .gro-inc{background:#fbf3e4;border-radius:12px;padding:12px 12px 14px;margin-top:12px}
 .gro-inc p{margin:0 0 10px;font-size:13.5px;line-height:1.4;color:#1b241d}
 .gro-inc p span{display:block;font-weight:700}

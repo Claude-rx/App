@@ -311,6 +311,7 @@
 "assets/gromp/gromp-pdp-font-helvetica-neue-700-62c933-32a563.otf": "14928444e337995a7fe9bae85e20b83139f6e0c78416df87feaf68613d41e02e",
 "assets/gromp/gromp-pdp-font-helvetica-neue-700-62c933-61ef34.woff2": "cfc9e75b925b9b4bf3670a41fe34c2228df821eb4ec38c5fcd4a9b9a912110ab",
 "assets/gromp/gromp-pdp-font-helvetica-neue-700-62c933-a78276.woff2": "d11262274aa1152c6858bf344373d354d084520758cc87c8564d688ba77be720",
+"assets/gromp/gromp-placement-guide-119325.pdf": "b92ddf44e5b351a1757da78ef818a988002abd97de48873df968155d4d8db3a6",
 "assets/gromp/gromp-poppins-i456b43284e8b52fc64c1fd271f289a39e8477e9-9b2756.woff": "c4d7a1043ae0623ea6ca4655eb547cfecf3eaa1043cd652d40ec461514a7ae60",
 "assets/gromp/gromp-poppins-i4846ad1e22474f856bd6b81ba4585a60799a9f5-846ad1.woff2": "e14852f0e1e174469f49552127804c9d854d46be2439625dcae973e4cb6ed1c8",
 "assets/gromp/gromp-poppins-i742fd71da11e9d101e1e6c7932199f925f9eea4-42fd71.woff2": "b3fc257714112f59b894a710d0a60d1c528e4038ebc9ea5f544bb86af3d6f7b7",
@@ -458,11 +459,11 @@
 "assets/gromp/gromp-wlpwgwvfavdoq2-v-6qu-45b4c6-91313f.woff2": "b7e7538f59bff1812841d7627f8e49e70fe86438f9f7b397a028c0d05301c874",
 "assets/gromp/gromp-wlpwgwvfavdoq2-v9aqu4wc-83ea95-40e4cd.woff2": "b5d815d42066da25e5894bdfe47a415e1f79ef436486e3f843b475806d2e613c",
 "assets/gromp/gromp-wlpwgwvfavdoq2-v9kqu4wc-1213be-c90658.woff2": "aab0b318aab11e9f0bcd21ff9d2b0ff6ad7a3f061a071b53af670d4749d2cba2",
-"templates/pages/page.mouse-pouches-checkout.html": "3bc4096081a283c46258591c062363ff0b00ababa750e7ac9121049f71b55cd8",
-"templates/pages/page.mouse-pouches-exclusive-offer-2.html": "ec4fa7b495a3369086ebc10aa728879e2420d119f001238ae3133e8f41717930",
-"templates/pages/page.mouse-pouches-exclusive-offer.html": "321dbd279a258a694a4cead609df274a24c8fefa63e1ca0bd4eaf1a1cc62a1ed",
-"templates/pages/page.mouse-pouches-special-offer-2.html": "5f7d9daeda14411f0aaa69dcd3ef59bcfb4392c7cd30dc9d5aa71ec7f878f16e",
-"templates/pages/page.mouse-pouches-special-offer.html": "0e6f7adb6e2a98dbf32c7cc29fd3f5e57ea57a7f1e4341a8d8415b849b3c3133",
-"templates/pages/page.mouse-pouches-thank-you.html": "fff7c46b108035b0655e92ccc8f775ca6fdee7c74cb4e7db87afd652f83d4dec",
-"templates/pages/page.mouse-pouches.html": "15bc4e32c0e9efbc68e458b4434f57c1690fd565f2065328fa5781b8bd29f482"
+"templates/pages/page.mouse-pouches-checkout.html": "e2c095161f3d9967fb503ec7081738dbf09fe5ae86e51e28572e0b70ef31a581",
+"templates/pages/page.mouse-pouches-exclusive-offer-2.html": "d84d9d9b2a936f1ef5a1e30b4e7387b0ac85cb0dc2e724b86cbfc515c44f268a",
+"templates/pages/page.mouse-pouches-exclusive-offer.html": "ad3a15066d98370ff16bb3ecfd0a4535ace566f5c47f04efab42e5bcc389399a",
+"templates/pages/page.mouse-pouches-special-offer-2.html": "9111b9dd817a42c9a5c8b8d059e52f02762ddb6827070321c0220e26ff5edeb6",
+"templates/pages/page.mouse-pouches-special-offer.html": "ed87e3112d6273135b40e176e99e47cddb7209d7c6fa5fd9df6982fb9cb76a3b",
+"templates/pages/page.mouse-pouches-thank-you.html": "923b1542e422d621a1da35fec54e395f185da63eedc041d14bc9b2412d2ddfdf",
+"templates/pages/page.mouse-pouches.html": "3d923122ecd951ea830ed7db0b5f8c5bb17b5c9365bca0fc256eff0606b2e1d1"
 }

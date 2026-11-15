@@ -9,7 +9,6 @@ const base = process.argv[2] || 'http://localhost:8765';
 const out = process.argv[3] || '.';
 const CHECKOUT = /mouse-pouches(\/|-)checkout\//;
 const results = []; const ok = (name, pass, detail = '') => { results.push({ name, pass, detail }); console.log((pass ? 'PASS ' : 'FAIL ') + name + (detail ? '  ' + detail : '')); };
-const PRICES = { buy1: ['22.49', '34.99'], buy3: ['47.97', '69.99'], buy5: ['64.95', '104.95'] };   // [subscribe, one-time] = campaign 2362
 (async () => {
   const b = await chromium.launch();
   for (const vp of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 390, height: 664, isMobile: true, hasTouch: true }]) {
@@ -29,24 +28,15 @@ const PRICES = { buy1: ['22.49', '34.99'], buy3: ['47.97', '69.99'], buy5: ['64.
     ok(`[${vp.name}] star rows are one line high`, tall.length === 0, tall.join(' | '));
     ok(`[${vp.name}] part of the campaign (next-funnel, page type product)`, /name="next-funnel" content="[^"]+"/.test(html) && /name="next-page-type" content="product"/.test(html) && /campaign-cart@v[\d.]+\/dist\/loader\.js/.test(html));
     const first = await p.evaluate(() => { const vis = s => [...document.querySelectorAll(s)].some(e => { if (e.offsetParent === null && getComputedStyle(e).position !== 'fixed') return false; const r = e.getBoundingClientRect(); return r.height > 0 && r.top >= 0 && r.bottom <= innerHeight + 1; });
-      return { h1: vis('h1'), rating: vis('.rate'), atc: vis('[data-gro-atc], a.sn'), price: vis('[data-total], [data-p]'), img: vis('.gal__t img') || document.querySelector('.gal__t img').getBoundingClientRect().top < innerHeight, overflow: document.documentElement.scrollWidth > innerWidth + 1 }; });
-    ok(`[${vp.name}] first screen: headline, rating, product, price and a buy button`, first.h1 && first.rating && first.atc && first.price && first.img, JSON.stringify(first));
+      return { h1: vis('h1'), rating: vis('.rate'), atc: vis('[data-gro-atc], a.sn'), img: vis('.gal__t img') || document.querySelector('.gal__t img').getBoundingClientRect().top < innerHeight, overflow: document.documentElement.scrollWidth > innerWidth + 1 }; });
+    ok(`[${vp.name}] first screen: headline, rating, product and a buy button`, first.h1 && first.rating && first.atc && first.img, JSON.stringify(first));
     ok(`[${vp.name}] no sideways scroll`, !first.overflow);
     await p.screenshot({ path: `${out}/pdp-${vp.name}.png`, fullPage: false });
-    ok(`[${vp.name}] default = Buy 2 Get 1 Free, subscribed`, await p.evaluate(() => document.querySelector('[data-gro-bundle="buy3"]').classList.contains('on') && document.querySelector('[data-gro-sub]').checked));
-    // every price on the buy box, both modes
-    let priceOk = true; const seen = [];
-    for (const mode of [0, 1]) {
-      if (mode === 1) await p.locator('[data-gro-sub]').uncheck();
-      for (const id of ['buy1', 'buy3', 'buy5']) {
-        const t = await p.locator(`[data-gro-bundle="${id}"] [data-p]`).innerText(); seen.push(t);
-        if (!t.includes(PRICES[id][mode])) priceOk = false;
-      }
-    }
-    ok(`[${vp.name}] buy box prices: subscribe 22.49 / 47.97 / 64.95, one-time 34.99 / 69.99 / 104.95`, priceOk, seen.join(' '));
-    ok(`[${vp.name}] one-time copy when unticked`, /One-time purchase: \$69\.99, no refills/.test(await p.locator('[data-sub-terms]').innerText()));
-    await p.locator('[data-gro-sub]').check();
-    ok(`[${vp.name}] renewal terms shown when subscribed`, /3 packs \(\$104\.97\) every 90 days/.test(await p.locator('[data-sub-terms]').innerText()));
+    // no prices and no buy box on the sales page: the offer is chosen in the checkout
+    const priced = await p.evaluate(() => ({ box: !!document.querySelector('[data-gro-bundle], [data-gro-sub], [data-p], [data-total]'),
+      amounts: (document.body.innerText.match(/\$(22\.49|34\.99|47\.97|69\.99|64\.95|104\.95|49\.99|149\.97|15\.99|23\.33)/g) || []).length,
+      card: !!document.querySelector('#gro-buy.ofr [data-gro-atc]'), cta: document.querySelectorAll('[data-gro-atc]').length, scroll: document.querySelectorAll('main [data-gro-scroll]').length }));
+    ok(`[${vp.name}] no prices and no buy box; the offer card and every button go to the checkout`, !priced.box && priced.amounts === 0 && priced.card && priced.cta >= 8 && priced.scroll === 0, JSON.stringify(priced));
     // tabs: reviews by customer type, week-by-week timeline
     await p.locator('[data-gro-tabs="rev"] button').nth(2).scrollIntoViewIfNeeded(); await p.locator('[data-gro-tabs="rev"] button').nth(2).click();
     await p.locator('[data-gro-tabs="tl"] button').nth(3).click();
@@ -65,26 +55,30 @@ const PRICES = { buy1: ['22.49', '34.99'], buy3: ['47.97', '69.99'], buy5: ['64.
     const imgs = await p.evaluate(() => [...document.images].filter(i => i.offsetParent !== null && (!i.complete || i.naturalWidth === 0)).map(i => (i.getAttribute('src') || '').slice(-40)));
     ok(`[${vp.name}] all images load`, imgs.length === 0, imgs.slice(0, 4).join(' '));
     if (vp.isMobile) ok(`[mobile] sticky buy bar shows while the buy box is off screen`, await p.evaluate(() => { const s = document.querySelector('[data-gro-sticky]'); return getComputedStyle(s).display !== 'none' && !s.classList.contains('off'); }));
-    // subscribed 5-pack -> checkout
+    // hero button -> checkout, tracking parameters kept
     await p.evaluate(() => scrollTo(0, 0));
-    await p.locator('[data-gro-bundle="buy5"]').scrollIntoViewIfNeeded(); await p.locator('[data-gro-bundle="buy5"]').click();
-    await Promise.all([p.waitForURL(CHECKOUT), p.locator('#gro-buy [data-gro-atc]').click()]);
+    await Promise.all([p.waitForURL(CHECKOUT), p.locator('.hero [data-gro-atc]').first().click()]);
     let u = new URL(p.url());
-    ok(`[${vp.name}] ADD TO CART -> checkout with buy5 + utm kept`, u.searchParams.get('forceBundleId') === 'main:buy5' && u.searchParams.get('utm_source') === 'test', u.pathname + u.search);
+    ok(`[${vp.name}] "Buy now" -> checkout on Buy 2, Get 1 FREE + utm kept`, u.searchParams.get('forceBundleId') === 'main:buy3' && u.searchParams.get('utm_source') === 'test', u.pathname + u.search);
+    // the offer is chosen in the checkout: Subscribe & Save / One-time switch, 1x and Buy 2 Get 1 FREE, gifts box
     const summary = async (re) => { await p.waitForFunction(r => new RegExp(r).test((document.querySelector('[data-next-cart-summary]') || {}).innerText || ''), re, { timeout: 30000 }).catch(() => {}); return (await p.locator('[data-next-cart-summary]').first().innerText().catch(() => '')).replace(/\s+/g, ' '); };
-    let t = await summary('64\\.95');
-    ok(`[${vp.name}] checkout: 5 subscribed packs, first order $64.95`, /64\.95/.test(t), t.slice(0, 140));
-    ok(`[${vp.name}] checkout: Automatic Refills terms for 5 packs`, await p.evaluate(() => { const e = document.querySelector('.gro-refill-terms'); return !!e && e.offsetParent !== null && /5 packs every 150 days for \$174\.95/.test(e.innerText) && !/3 packs every 90/.test(e.innerText); }));
+    const st = () => p.evaluate(() => ({ cards: [...document.querySelectorAll('[data-next-bundle-card]')].filter(c => c.offsetParent).map(c => c.getAttribute('data-next-bundle-id') + (c.classList.contains('next-selected') ? '*' : '')).join(','),
+      locked: [...document.querySelectorAll('.gro-gift__t i em')].filter(e => getComputedStyle(e).display !== 'none').length, terms: (() => { const e = document.querySelector('.gro-refill-terms'); return e && e.offsetParent !== null ? e.innerText.replace(/\s+/g, ' ') : ''; })() }));
+    let t = await summary('47\\.97'); let s = await st();
+    ok(`[${vp.name}] checkout: Buy 2, Get 1 FREE subscribed by default, $47.97, gifts unlocked, 3-pack refill terms`, /47\.97/.test(t) && s.cards === 'buy1,buy3*' && s.locked === 0 && /3 packs every 90 days for \$104\.97/.test(s.terms), s.cards + ' | locked ' + s.locked + ' | ' + t.slice(-40));
+    await p.locator('[data-next-bundle-id="buy1"]').click(); t = await summary('22\\.49'); s = await st();
+    ok(`[${vp.name}] checkout: 1x subscribed $22.49, the two bonus gifts lock, 1-pack refill terms`, /22\.49/.test(t) && s.cards === 'buy1*,buy3' && s.locked === 2 && /1 pack every 30 days for \$34\.99/.test(s.terms), s.cards + ' | locked ' + s.locked);
+    await p.locator('.gro-mode [data-gro-mode="ot"]').click(); t = await summary('34\\.99'); s = await st();
+    ok(`[${vp.name}] checkout: switch to one-time -> 1x $34.99, no refill terms`, /34\.99/.test(t) && s.cards === 'ot1*,ot3' && s.terms === '' && await p.evaluate(() => { const d = document.querySelector('.submit-section__disclaimer'); return !!d && !/Automatic Refills/.test(d.innerText); }), s.cards + ' | ' + t.slice(-40));
+    await p.locator('[data-next-bundle-id="ot3"]').click(); t = await summary('69\\.99'); s = await st();
+    ok(`[${vp.name}] checkout: one-time Buy 2, Get 1 FREE $69.99, gifts unlocked`, /69\.99/.test(t) && s.cards === 'ot1,ot3*' && s.locked === 0, s.cards + ' | locked ' + s.locked);
+    await p.locator('.gro-sw__o [data-gro-mode="buy"]').click(); t = await summary('47\\.97'); s = await st();
+    ok(`[${vp.name}] checkout: "Switch to Subscribe & Save" -> $47.97 with refill terms`, /47\.97/.test(t) && s.cards === 'buy1,buy3*' && /3 packs every 90 days/.test(s.terms), s.cards);
     await p.screenshot({ path: `${out}/checkout-${vp.name}.png`, fullPage: true });
-    // one-time single pack -> checkout
-    await p.goto(base + '/mouse-pouches/', { waitUntil: 'load' }); await p.waitForTimeout(400);
-    await p.locator('[data-gro-bundle="buy1"]').scrollIntoViewIfNeeded(); await p.locator('[data-gro-bundle="buy1"]').click();
-    await p.locator('[data-gro-sub]').uncheck();
-    await Promise.all([p.waitForURL(CHECKOUT), p.locator('#gro-buy [data-gro-atc]').click()]);
-    u = new URL(p.url());
-    t = await summary('34\\.99');
-    ok(`[${vp.name}] one-time 1 pack -> main:ot1, total $34.99`, u.searchParams.get('forceBundleId') === 'main:ot1' && /34\.99/.test(t), u.search + ' | ' + t.slice(0, 120));
-    ok(`[${vp.name}] one-time checkout: no Automatic Refills terms, no "Every 30 days"`, await p.evaluate(() => { const e = document.querySelector('.gro-refill-terms'); const d = document.querySelector('.submit-section__disclaimer'); return (!e || e.offsetParent === null) && !!d && !/Automatic Refills/.test(d.innerText) && !/Every \d+ days/i.test(document.querySelector('[data-next-cart-summary]').innerText); }));
+    // an old link to the retired 5-pack lands on Buy 2, Get 1 FREE
+    await p.goto(base + (CHECKOUT.test('/mouse-pouches-checkout/') && /getridof/.test(base) ? '/mouse-pouches-checkout/' : '/mouse-pouches/checkout/') + '?forceBundleId=main:buy5', { waitUntil: 'load' });
+    t = await summary('47\\.97'); s = await st();
+    ok(`[${vp.name}] old 5-pack link -> Buy 2, Get 1 FREE $47.97`, /47\.97/.test(t) && s.cards === 'buy1,buy3*', s.cards + ' | ' + t.slice(-40));
     // default checkout (no parameter) = 3 subscribed packs
     await p.goto(base + (CHECKOUT.test('/mouse-pouches-checkout/') && /getridof/.test(base) ? '/mouse-pouches-checkout/' : '/mouse-pouches/checkout/'), { waitUntil: 'load' });
     t = await summary('47\\.97');
