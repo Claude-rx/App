@@ -50,6 +50,10 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     ok(`${T} root solution: the how-it-works animation is in reason 1 and runs`, body.demo && body.anim && body.anim !== 'none', body.anim);
     const rootS = await p.evaluate(() => ({ root: document.querySelectorAll('#root .root__p, #root .root__s').length, jump: !!document.querySelector('#root a[href="#r2"]'),
       cards: [...document.querySelectorAll('#r2 .whys .why')].map(c => (c.querySelector('.why__j') || {}).textContent + ' | ' + (c.querySelector('.why__h b') || {}).textContent + ' | ' + (c.querySelector('.why__r') ? 'result' : '') + ' | ' + (c.querySelector('figure svg') ? 'anim' : '')) }));
+    const order = await p.evaluate(() => { const y = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().top + scrollY : -1; };
+      return { problem: y('#problem'), root: y('#root'), reasons: y('#reasons'), r1: y('#r1'), steps: document.querySelectorAll('#problem .stepi li').length, failed: document.querySelectorAll('#problem .xl li').length, fixes: document.querySelectorAll('.rs .fixes').length }; });
+    ok(`${T} the problem comes first (how mice get in, why everything failed), then the root solution, then the 9 reasons, each saying which part of the problem it solves`,
+      order.problem > 0 && order.problem < order.root && order.root < order.reasons && order.reasons < order.r1 && order.steps === 3 && order.failed === 5 && order.fixes === 9, JSON.stringify(order));
     ok(`${T} root problem and root solution are stated before the reasons, with a jump to the ingredients`, rootS.root === 2 && rootS.jump);
     ok(`${T} reason 2: one card per ingredient (peppermint, cinnamon, cedarwood, castor), each with its job, what it does, the result and an animation`,
       rootS.cards.length === 4 && ['Peppermint', 'Cinnamon', 'Cedarwood', 'Castor'].every((n, i) => rootS.cards[i].includes(n)) && rootS.cards.every(c => /Job \d/.test(c) && /result/.test(c) && /anim/.test(c)), rootS.cards.map(c => c.split(' | ')[0]).join(' ; '));
