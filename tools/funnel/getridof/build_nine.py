@@ -46,7 +46,7 @@ CLONE_MANIFEST = ROOT / 'next-campaigns-create-runs/getridof/clone-2362-nine/run
 # FALLBACK: an older brand image used while a photo in IMAGES has not been generated yet (the build says which).
 FALLBACK = {'gro-n9-trash.webp': 'gro-ls-hero.jpg', 'gro-n9-engine.webp': 'gro-s-door.webp'}
 IMAGES = {
-    'garage': ('gro-n9-garage.webp', 800, 74, 4 / 3), 'family': ('gro-n9-family-dog.webp', 800, 74, 4 / 3),
+    'garage': ('gro-n9-garage.webp', 800, 74, 4 / 3), 'sink': ('gro-n9-hero-sink.webp', 900, 74, 16 / 9), 'family': ('gro-n9-family-dog.webp', 800, 74, 4 / 3),
     # made from the real pack photo by nine/pack_pictures.py (no generated label text)
     'ingredients': ('gro-n9-ingredients.webp', 960, 80, 4 / 3), 'pack': ('gro-n9-pack.webp', 640, 82), 'guarantee': ('gro-n9-guarantee.webp', 720, 80),
     'trash': ('gro-n9-trash.webp', 800, 72, 4 / 3), 'engine': ('gro-n9-engine.webp', 800, 74, 4 / 3),
@@ -54,7 +54,7 @@ IMAGES = {
     'home-apartment': ('gro-home-apartment.webp', 480, 72, 4 / 3), 'home-ranch': ('gro-home-ranch.webp', 480, 72, 4 / 3),
     'home-two-story': ('gro-home-two-story.webp', 480, 72, 4 / 3), 'home-large': ('gro-home-large.webp', 480, 72, 4 / 3),
 }
-HERO = ('gro-n9-hero-sink.webp', 828, 52, 16 / 9)     # inlined: the first screen paints from the HTML alone
+HERO = ('gro-n9-mouse-pantry.webp', 828, 52, 16 / 9)     # inlined: the first screen paints from the HTML alone
 
 # The post-purchase offers. One package (id 1, the one-time pack) with the campaign's own vouchers:
 #   GROU1PK30Q    70.02% off any quantity   (offer 10)  -> 1, 2 or 3 more packs
@@ -282,7 +282,8 @@ def main():
     (OUT / 'hero.webp').write_bytes(lp.webp(SECTIONS / HERO[0], 1100, 76, HERO[3])[0])
 
     pdp = (ROOT / 'tools/funnel/getridof/lp/page.html').read_text()
-    top = ls.block(pdp, '<header class="top">', '</header>')
+    top = ('<header class="nm"><div class="w nm__in"><span class="nm__b">The Get Rid Of <i>Journal</i></span>'
+           '<span class="nm__ad">Advertorial</span></div></header>')
     demo = ls.block(pdp, '<figure class="demo">', '</figure>')
     buy = ls.block(pdp, '<div class="ofr" id="gro-buy">', '<!--/ofr-->')     # the offer card (no prices; the choice is made in the checkout)
     assert buy.count('<div') == buy.count('</div>'), 'offer card block is not balanced'
@@ -327,7 +328,7 @@ def main():
     if key and not re.fullmatch(r'[0-9a-fA-F-]{36}', key): raise SystemExit('axon_event_key is not an event key')
     axon = lp.axon_head(camp)
     tags, on = lp.tracking_tags(camp)
-    css = (ROOT / 'tools/funnel/getridof/lp/lp.css').read_text() + '\n' + (ROOT / 'tools/funnel/getridof/listicle/ls.css').read_text() + '\n' + (HERE / 'n9.css').read_text()
+    css = (ROOT / 'tools/funnel/getridof/lp/lp.css').read_text() + '\n' + (ROOT / 'tools/funnel/getridof/listicle/ls.css').read_text() + '\n' + (HERE / 'n9.css').read_text() + '\n' + (HERE / 'native.css').read_text()
     css = re.sub(r'\s*\n\s*', '', re.sub(r'/\*.*?\*/', '', css, flags=re.S))
     js = re.sub(r'/\*.*?\*/', '', (ROOT / 'tools/funnel/getridof/lp/lp.js').read_text(), flags=re.S)
     js = re.sub(r'\n\s+', '\n', js).strip()

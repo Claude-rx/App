@@ -48,6 +48,7 @@
 "assets/gron9/gron9-guarantee-f04ee7.webp": "e52d81524a8c095efafdb9a0310efd21b1539be712db23f5c1b7c0e854cad3e5",
 "assets/gron9/gron9-hand-f8a33c.webp": "fc78f361e5b1a214fc2e309d0206aef8da4e0554c4a36d76c7f29ab06787ea6c",
 "assets/gron9/gron9-hero-59e0e8.webp": "9086a26ce6707d7896fcce085662efe7b033718e899b04e817f4f804f28bec53",
+"assets/gron9/gron9-hero-e5fe23.webp": "ed7ee5665046a1c705acbcb0b3af5a3b4f6af727f13a19c4619a848dbc82c110",
 "assets/gron9/gron9-home-apartment-0b17b0.webp": "8087d4c61c1b32fd979d065c8dfe05b13b80266c66a2a5c1b4e74256ac91040f",
 "assets/gron9/gron9-home-apartment-156f51.webp": "db2b88e793c700c8780322aedb983bf1bb424d6714c04a93ed09c797d246b17c",
 "assets/gron9/gron9-home-large-b9716e.webp": "101125beff6f65d37139279da9d3c4e38507d78af24fa2c1de3f6ce37a4360e5",
@@ -78,6 +79,7 @@
 "assets/gron9/gron9-scent-trail-sq-e1590c.webp": "760c4f97bddb1fe788cd466704dbe614495515bcee50645d8d364b744dd089a9",
 "assets/gron9/gron9-sepa-logo-b17ddc.svg": "ef2da5c94e9c2306560519f5e4e6ebf1664d77106285b3782508949be38a51dd",
 "assets/gron9/gron9-shop-pay-logo-df9c3b.svg": "72f96fd7e4fe98251f488c462fe8cbecb6073ac80c8710db14a12e842bb438fb",
+"assets/gron9/gron9-sink-e2219d.webp": "4bc18ec3ec397e405b146f5e0bdd2664200570c6b7cd26a57f0f68b561af2b77",
 "assets/gron9/gron9-thumb-806d82.webp": "4dc554557312780e1c3b8768058e14d0a769cf273605439b7736eb66caa1a1a3",
 "assets/gron9/gron9-trash-4f3a18.webp": "7230c871db8d5cdac8a1652677a4df6ecdc264f6ae6503d7f5c54a3164439c31",
 "assets/gron9/gron9-trash-b9c1af.webp": "9e81c7821553c800dfbdec4a24643678817f580cb4ca18bf350221a940421d28",
@@ -92,5 +94,5 @@
 "templates/pages/page.mice-9-reasons-home-plan.html": "2a1d85c5846040101d6e606cbed9f11ffd6db2e2a161286312911476c7b1ce4a",
 "templates/pages/page.mice-9-reasons-last-offer.html": "ec0f9ce7370abbd556c901140cca2476765464e87de3037ede36f30245afb736",
 "templates/pages/page.mice-9-reasons-thank-you.html": "63c6850a9c48a2f78578a2b265d8588fe5034c1bf09e417f975c541bc25ea9f9",
-"templates/pages/page.mice-9-reasons.html": "8dd019e83103fad8bec11e369a3e50eef644be41085ff594cac53bb09453febf"
+"templates/pages/page.mice-9-reasons.html": "d7759ebb5d74b0be9785eeb665e9c3e60c415db8c1f0783e68a009e5f782fc80"
 }
