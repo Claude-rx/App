@@ -1,8 +1,9 @@
 /* Get Rid Of — the home-plan quiz on the first offer page, and the default choice on the smaller offer page.
  * It only chooses which of the page's SDK bundle cards is selected (a click on that card): the Campaign Cart SDK
  * owns the cards, the prices and the accept button. No personal data is read or stored: two answers and a pack count.
- * Plan sizes are the brand's own guide: one pack (12 pouches) per zone; an apartment is 2 zones, a one-story house 3,
- * a two-story house 5, a large home 6; a garage/shed or a vehicle adds one each. */
+ * Plan sizes follow the brand's own guide: one pack (12 pouches) per zone. An apartment and a one-story house are 2
+ * zones, a two-story house 4, a large home 5; a garage or shed adds one and a vehicle adds one. That gives the guide's
+ * own examples: one-story house + garage = 3 packs, two-story house + garage = 5 packs. */
 (function () {
   'use strict';
   function ss(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } }
@@ -12,12 +13,12 @@
   function tierFor(gap) { if (gap <= 1) return 1; if (gap <= 3) return gap; return 5; }
 
   /* select a bundle card by id; the SDK attaches its click handler when it starts, so retry until the card reports it */
-  function choose(id) {
+  function choose(id, mark) {
     var tries = 0;
     [].forEach.call(document.querySelectorAll('[data-next-bundle-card][data-gq-rec]'), function (c) { c.removeAttribute('data-gq-rec'); });
     (function go() {
       var card = document.querySelector('[data-next-bundle-card][data-next-bundle-id="' + id + '"]');
-      if (card) card.setAttribute('data-gq-rec', '');
+      if (card && mark) card.setAttribute('data-gq-rec', '');
       if (card && card.classList.contains('next-selected')) return;
       if (card) card.click();
       if (++tries < 40) setTimeout(go, 250);
@@ -27,7 +28,7 @@
   /* the smaller offer page: default to the whole-home pack when the quiz said the home needs it */
   if (document.querySelector('[data-next-selector-id="home-plan-last"]')) {
     var saved = parseInt(ss('gro_plan_tier') || '', 10);
-    if (saved === 5) choose('home-plan-last-5');
+    if (saved === 5) choose('home-plan-last-5', false);
     return;
   }
 
@@ -52,14 +53,16 @@
       root.querySelector('[data-gq-gap]').textContent = plural(gap, 'pack');
       line.textContent = state.name.charAt(0).toUpperCase() + state.name.slice(1) + (state.extra ? ' with the extras you picked' : '') + ' takes about ' + plural(need, 'pack') +
         ', one per zone. Your order covers ' + plural(have, 'zone') + '. We selected ' + plural(t, 'more pack') + ' below' +
-        (t > gap ? ', the lowest price per pack.' : '.');
+        (t > gap ? ': it costs less per pack than ' + plural(gap, 'pack') + ' bought one at a time.' : gap > t ? ', the largest add-on on this page.' : '.');
     } else {
       wrap.hidden = true;
-      line.textContent = 'Good news: your order already covers ' + state.name + '. Each pouch lasts up to 90 days, so many customers add one pack now for the next swap.';
+      line.textContent = 'Good news: your order already covers ' + state.name + '. You don’t need more today.' +
+        (/^buy/.test(ss('gro_bundle') || '') ? ' Your refills keep the pouches fresh.' : ' Each pouch lasts up to 90 days, so a spare pack would cover the next swap.');
     }
     ss('gro_plan_tier', String(t));
     show('r');
-    choose('home-plan-' + t);
+    root.querySelector('[data-gq-go]').textContent = gap > 0 ? 'See my plan and price ↓' : 'See the add-on prices ↓';
+    choose('home-plan-' + t, gap > 0);
     track('quiz_done', { home: state.name, extra: state.extra, need: need, ordered: have, tier: t });
   }
   root.addEventListener('click', function (e) {

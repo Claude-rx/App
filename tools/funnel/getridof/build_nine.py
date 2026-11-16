@@ -44,11 +44,10 @@ CLONE_MANIFEST = ROOT / 'next-campaigns-create-runs/getridof/clone-2362-nine/run
 
 # name -> (source in brand/getridof/sections, width, WebP quality[, centre-crop ratio])
 # FALLBACK: an older brand image used while a photo in IMAGES has not been generated yet (the build says which).
-FALLBACK = {'gro-n9-open-bag.webp': 'gro-solution-reveal.webp', 'gro-n9-trash.webp': 'gro-ls-hero.jpg', 'gro-n9-engine.webp': 'gro-s-door.webp'}
+FALLBACK = {'gro-n9-trash.webp': 'gro-ls-hero.jpg', 'gro-n9-engine.webp': 'gro-s-door.webp'}
 IMAGES = {
-    'open-bag': ('gro-n9-open-bag.webp', 800, 74, 4 / 3), 'garage': ('gro-n9-garage.webp', 800, 74, 4 / 3),
+    'garage': ('gro-n9-garage.webp', 800, 74, 4 / 3),
     'trash': ('gro-n9-trash.webp', 800, 72, 4 / 3), 'engine': ('gro-n9-engine.webp', 800, 74, 4 / 3),
-    'hand': ('gro-ls-hand-pack.jpg', 720, 76),
     # the quiz
     'home-apartment': ('gro-home-apartment.webp', 480, 72, 4 / 3), 'home-ranch': ('gro-home-ranch.webp', 480, 72, 4 / 3),
     'home-two-story': ('gro-home-two-story.webp', 480, 72, 4 / 3), 'home-large': ('gro-home-large.webp', 480, 72, 4 / 3),
@@ -134,6 +133,14 @@ def checkout():
         '<div class="form-input"><label for="shipping_fname" class="label-checkout">First Name</label><input autocomplete="given-name" placeholder="First Name*" maxlength="256" name="shipping_fname" data-name="Shipping First Name" type="text" id="shipping_fname" data-next-checkout-field="fname" class="input-flds"></div>'
         '<div class="form-input"><label for="shipping_lname" class="label-checkout">Last Name</label><input autocomplete="family-name" placeholder="Last Name*" maxlength="256" name="shipping_lname" data-name="Shipping Last Name" type="text" id="shipping_lname" data-next-checkout-field="lname" class="input-flds"></div>'
         '</div>\n                              <div class="gro-addr"><div data-next-address="shipping"')
+    # Subscribe & Save is selected by default, so its refill size, schedule and price are stated where it is chosen.
+    # The figures are the ones in the checkout's own Automatic Refills terms (gro-refill-terms.html); if those change, this stops.
+    terms = (CAMP / '_includes/gro-refill-terms.html').read_text()
+    for must in ('1 pack every 30 days for $34.99', '3 packs every 90 days for $104.97'):
+        assert must in terms, f'refill terms changed: {must}'
+    rep('</span> today.</p><p class="gro-sw__o">',
+        '</span> today.<small class="gro-sw__r">Then <span class="gro-rt gro-rt--buy1">1 pack every 30 days for $34.99</span>'
+        '<span class="gro-rt gro-rt--buy3">3 packs every 90 days for $104.97</span>, free shipping, until you cancel. Skip or cancel anytime.</small></p><p class="gro-sw__o">')
     f.write_text(s)
     css = CAMP / 'assets/css/gro-checkout.css'
     css.write_text(css.read_text() + (HERE / 'checkout.css').read_text())
@@ -160,19 +167,19 @@ OFFERS = {
         announce='ORDER CONFIRMED · ONE QUICK QUESTION BEFORE IT SHIPS',
         badge_note='Your order is confirmed. These prices are for customers who just ordered and are only on this page.',
         hero_title='Your Order Is Confirmed. Now Let’s Size It to Your Home.',
-        hero_text='One pack covers one zone. Mice move to the next quiet room. Answer two questions and we’ll show how many pouches your home takes, at prices that are only on this page.',
+        hero_text='One pack covers one zone, and mice move to the next quiet room. Answer two questions and we’ll show how many packs your home takes. Add-on packs ship in the same box, so they cost less here than anywhere else on the site.',
         selector='home-plan', offer_title='Your Home Plan · Rodent Repellent Pouches', image='pdp/gro-offer-5pack.webp',
         quantity_label='Your plan (tap to change)',
         tiers=tier('home-plan-1', 1, V_PACK, '1 more pack', '12 pouches · one more zone')
               + tier('home-plan-2', 2, V_PACK, '2 more packs', '24 pouches · two more zones')
               + tier('home-plan-3', 3, V_PACK, '3 more packs', '36 pouches · kitchen, basement, garage')
               + tier('home-plan-5', 5, V_FIVE, '5 more packs', '60 pouches · whole home · lowest price per pack', True),
-        accept='Yes, add my plan for', decline_text='No thanks, I’ll cover one zone for now',
+        accept='Yes, add my plan for', decline_text='No thanks, my order is enough for now',
         bullets=['The same 4-oil pouches you just ordered', 'Added to your order with one click, no need to re-enter your card',
                  'Ships in the same box, free', 'Same 90-day money-back guarantee'],
         features_title='Where the extra pouches go', features_text='Mice don’t stop at the kitchen. Close every zone at once and they have nowhere quiet left to move to.',
         closing='Add the pouches your home needs?',
-        map=('Why one zone is not a whole house', 'Your first order protects one zone. Here is where pouches go in a typical home.')),
+        map=('Why one zone is not a whole house', 'One pack protects one zone. Here is where pouches go in a typical home.')),
     'downsell': dict(
         title='A Smaller Start', next='receipt.html', decline='receipt.html', quiz=False,
         announce='BEFORE YOU GO · LAST OFFER ON THIS ORDER',
@@ -204,7 +211,7 @@ def offer_page(o):
              '  show_discover: true', '  show_paypal: true', '  show_apple_pay: true',
              'upsell_hero:', '  variant: plain', f'  title: {q(o["hero_title"])}', f'  text: {q(o["hero_text"])}',
              'upsell_layout:', '  style: box', '  media: image', '  media_width: medium', '  show_bullets: true',
-             '  show_decline: false', '  show_payment_logos: true',
+             '  show_decline: true', '  show_payment_logos: true',
              'upsell_offer:', '  type: tier-cards', '  pricing_mode: discounted', '  show_rating: false', f'  package_id: {PACK}',
              f'  selector_id: {q(o["selector"])}', f'  display_selector_id: {q(o["selector"] + "-display")}',
              f'  display_bundle_id: {q(o["selector"] + "-display-card")}',
@@ -264,7 +271,13 @@ def main():
     buy = ls.block(pdp, '<div class="ofr" id="gro-buy">', '<!--/ofr-->')     # the offer card (no prices; the choice is made in the checkout)
     assert buy.count('<div') == buy.count('</div>'), 'offer card block is not balanced'
     foot = ls.block(pdp, '<footer class="ft">', '</footer>')
+    logic = ls.block(pdp, '<ol class="lg">', '</ol>')
+    whys = ls.block(pdp, '<div class="whys">', '<p class="note">Animated illustrations. Place one pouch at every entry point. Results vary by home.</p>')
+    assert whys.count('<article class="why">') == 4 and whys.count('class="why__j"') == 4, 'the sales page no longer has one card per ingredient'
+    whys = whys.replace('<p class="note">Animated illustrations. Place one pouch at every entry point. Results vary by home.</p>',
+                        '<p class="note">The animations illustrate what each oil is in the blend to do. They are not test footage. Results vary by home.</p>')
     ls.SLUG = SLUG                                   # the review wall and comment thread link this funnel's own images
+    ls.THREAD = ['dave', 1, 'russel', 'thomas', 2, 'earl']   # Gary M. and Dale T. are quoted in reasons 8 and 5
     wall, thread = ls.wall(), ls.thread()
     xp, has_expert = expert()
 
@@ -278,7 +291,7 @@ def main():
     js = re.sub(r'\n\s+', '\n', js).strip()
     html = (HERE / 'page.html').read_text()
     for token, value in (('@@CSS@@', css), ('@@JS@@', js), ('@@AXON_HEAD@@', axon), ('@@FUNNEL@@', camp['name']), ('@@TOP@@', top),
-                         ('@@HERO_DATA@@', 'data:image/webp;base64,' + base64.b64encode(hero).decode()), ('@@DEMO@@', demo), ('@@BUY@@', buy),
+                         ('@@HERO_DATA@@', 'data:image/webp;base64,' + base64.b64encode(hero).decode()), ('@@DEMO@@', demo), ('@@BUY@@', buy), ('@@LOGIC@@', logic), ('@@WHYS@@', whys),
                          ('@@WALL@@', wall), ('@@THREAD@@', thread), ('@@EXPERT@@', xp), ('@@FOOTER@@', foot),
                          ('@@TRACKING@@', lp.SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
         assert html.count(token) == 1, token

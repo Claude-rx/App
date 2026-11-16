@@ -48,6 +48,11 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
       fit: document.querySelectorAll('.fit__y li').length + '/' + document.querySelectorAll('.fit__n li').length }));
     ok(`${T} nine numbered reasons, each with a "Why it works" box`, body.nums === '123456789' && body.why === 9, body.nums + ' | ' + body.why + ' boxes');
     ok(`${T} root solution: the how-it-works animation is in reason 1 and runs`, body.demo && body.anim && body.anim !== 'none', body.anim);
+    const rootS = await p.evaluate(() => ({ root: document.querySelectorAll('#root .root__p, #root .root__s').length, jump: !!document.querySelector('#root a[href="#r2"]'),
+      cards: [...document.querySelectorAll('#r2 .whys .why')].map(c => (c.querySelector('.why__j') || {}).textContent + ' | ' + (c.querySelector('.why__h b') || {}).textContent + ' | ' + (c.querySelector('.why__r') ? 'result' : '') + ' | ' + (c.querySelector('figure svg') ? 'anim' : '')) }));
+    ok(`${T} root problem and root solution are stated before the reasons, with a jump to the ingredients`, rootS.root === 2 && rootS.jump);
+    ok(`${T} reason 2: one card per ingredient (peppermint, cinnamon, cedarwood, castor), each with its job, what it does, the result and an animation`,
+      rootS.cards.length === 4 && ['Peppermint', 'Cinnamon', 'Cedarwood', 'Castor'].every((n, i) => rootS.cards[i].includes(n)) && rootS.cards.every(c => /Job \d/.test(c) && /result/.test(c) && /anim/.test(c)), rootS.cards.map(c => c.split(' | ')[0]).join(' ; '));
     ok(`${T} the 14-day check (3 steps) and the plan for mice already inside (4 steps)`, body.check === 3 && body.plan === 4, `${body.check} / ${body.plan}`);
     ok(`${T} reviews, comment thread, "is this for you" and questions are on the page`, body.wall >= 5 && body.thread >= 6 && body.faq >= 5 && body.fit === '3/3', `${body.wall} review cards, ${body.thread} comments, ${body.faq} questions, fit ${body.fit}`);
     // honesty rules
@@ -80,6 +85,12 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     await p.waitForFunction(() => /47\.97/.test((document.querySelector('[data-next-cart-summary]') || {}).innerText || ''), null, { timeout: 30000 }).catch(() => {});
     const total = (await p.locator('[data-next-cart-summary]').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
     ok(`${T} checkout: Buy 2, Get 1 FREE subscribed by default, $47.97 from the live cart`, /47\.97/.test(total), total.slice(-50));
+    const terms = () => p.evaluate(() => { const e = document.querySelector('.gro-sw__s .gro-sw__r'); return e && e.offsetParent !== null ? e.innerText.replace(/\s+/g, ' ') : ''; });
+    const t3 = await terms();
+    await p.locator('.gro-mode [data-gro-mode="ot"]').click(); await p.waitForTimeout(600); const tOne = await terms();
+    await p.locator('.gro-mode [data-gro-mode="buy"]').click();
+    await p.waitForFunction(() => /47\.97/.test((document.querySelector('[data-next-cart-summary]') || {}).innerText || ''), null, { timeout: 30000 }).catch(() => {});
+    ok(`${T} Subscribe & Save states its refill size, schedule and price where it is chosen; a one-time purchase shows none`, /3 packs every 90 days for \$104\.97/.test(t3) && /until you cancel/.test(t3) && tOne === '', t3.slice(0, 90) + ' | one-time: "' + tOne + '"');
     await p.waitForSelector('[data-next-address="shipping"][data-next-address-state="ready"]', { timeout: 30000 }).catch(() => {});
     const vis = () => p.evaluate(() => { const v = f => { const e = document.querySelector('#combo_form [data-next-checkout-field="' + f + '"]'); return !!e && e.offsetHeight > 0; };
       const r = f => document.querySelector('[data-next-checkout-field="' + f + '"]').getBoundingClientRect();
@@ -121,17 +132,20 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     await p.waitForFunction(() => [...document.querySelectorAll('[data-gro-quiz] [data-gq-home] img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 15000 }).catch(() => {});
     const quiz = await p.evaluate(() => ({ homes: document.querySelectorAll('[data-gro-quiz] [data-gq-home]').length, imgs: [...document.querySelectorAll('[data-gro-quiz] [data-gq-home] img')].every(i => i.complete && i.naturalWidth > 0), q2: document.querySelector('[data-gq="2"]').hidden, r: document.querySelector('[data-gq="r"]').hidden }));
     ok(`${T} quiz: question 1 shows four homes with photos; question 2 and the result are hidden`, quiz.homes === 4 && quiz.imgs && quiz.q2 && quiz.r, JSON.stringify(quiz));
-    await p.click('[data-gq-home="5"]'); await p.waitForTimeout(200); await p.click('[data-gq="2"] [data-gq-extra="1"] >> nth=0');
-    await p.waitForFunction(() => { const c = document.querySelector('#gro-plan [data-next-bundle-id="home-plan-3"]'); return c && c.classList.contains('next-selected'); }, null, { timeout: 15000 }).catch(() => {});
+    await p.click('[data-gq-name="a two-story house"]'); await p.waitForTimeout(200); await p.click('[data-gq="2"] [data-gq-extra="1"] >> nth=0');
+    await p.waitForFunction(() => { const c = document.querySelector('#gro-plan [data-next-bundle-id="home-plan-2"]'); return c && c.classList.contains('next-selected'); }, null, { timeout: 15000 }).catch(() => {});
     cs = await cards();
     const res = await p.evaluate(() => ({ total: document.querySelector('[data-gq-total]').textContent, ordered: document.querySelector('[data-gq-ordered]').textContent, gap: document.querySelector('[data-gq-gap]').textContent,
       cta: [...document.querySelectorAll('#gro-plan [data-next-upsell-action="add"]')].map(e => e.textContent.replace(/\s+/g, ' ').trim())[0] || '' }));
-    ok(`${T} quiz: two-story house + garage, 3 packs ordered -> 6-pack plan, 3 open, the 3-pack card is selected and marked`, res.total === '6 packs' && res.ordered === '3 packs' && res.gap === '3 packs' && cs.filter(c => c.sel).map(c => c.id).join() === 'home-plan-3' && cs.find(c => c.id === 'home-plan-3').rec, JSON.stringify(res));
-    ok(`${T} the accept button carries the selected plan's price`, res.cta.includes(cs[2].price), res.cta);
-    await p.click('[data-gq="r"] [data-gq-again]'); await p.click('[data-gq-home="2"]'); await p.click('[data-gq="2"] [data-gq-extra="0"]');
+    ok(`${T} quiz: two-story house + garage, 3 packs ordered -> 5-pack plan (the brand guide's figure), 2 open, the 2-pack card is selected and marked`, res.total === '5 packs' && res.ordered === '3 packs' && res.gap === '2 packs' && cs.filter(c => c.sel).map(c => c.id).join() === 'home-plan-2' && cs.find(c => c.id === 'home-plan-2').rec, JSON.stringify(res));
+    ok(`${T} the accept button carries the selected plan's price`, res.cta.includes(cs[1].price), res.cta);
+    const no = await p.evaluate(() => { const a = document.querySelector('#gro-plan [data-next-upsell-action="add"]'), d = [...document.querySelectorAll('#gro-plan [data-next-upsell-action="skip"]')].find(e => e.offsetParent !== null);
+      return d ? { text: d.textContent.trim(), gap: Math.round(d.getBoundingClientRect().top - a.getBoundingClientRect().bottom) } : null; });
+    ok(`${T} the "No thanks" link is visible right under the accept button`, !!no && no.gap >= 0 && no.gap < 400 && /No thanks/.test(no.text), JSON.stringify(no));
+    await p.click('[data-gq="r"] [data-gq-again]'); await p.click('[data-gq-name="an apartment or condo"]'); await p.click('[data-gq="2"] [data-gq-extra="0"]');
     await p.waitForFunction(() => { const c = document.querySelector('#gro-plan [data-next-bundle-id="home-plan-1"]'); return c && c.classList.contains('next-selected'); }, null, { timeout: 15000 }).catch(() => {});
-    const enough = await p.evaluate(() => ({ line: document.querySelector('[data-gq-line]').textContent, gapHidden: document.querySelector('[data-gq-gapwrap]').hidden, sel: [...document.querySelectorAll('#gro-plan .next-bundle-tier-grid .next-selected')].map(e => e.getAttribute('data-next-bundle-id')).join() }));
-    ok(`${T} quiz: apartment with 3 packs ordered -> says the order already covers it, offers one spare pack`, /already covers an apartment/.test(enough.line) && enough.gapHidden && enough.sel === 'home-plan-1', enough.sel);
+    const enough = await p.evaluate(() => ({ line: document.querySelector('[data-gq-line]').textContent, gapHidden: document.querySelector('[data-gq-gapwrap]').hidden, sel: [...document.querySelectorAll('#gro-plan .next-bundle-tier-grid .next-selected')].map(e => e.getAttribute('data-next-bundle-id')).join(), rec: document.querySelectorAll('#gro-plan [data-gq-rec]').length }));
+    ok(`${T} quiz: apartment with 3 packs ordered -> says the order already covers it and nothing more is needed; no card is marked as "sized for your home"`, /already covers an apartment/.test(enough.line) && /don.t need more today/.test(enough.line) && /refills keep/.test(enough.line) && enough.gapHidden && enough.sel === 'home-plan-1' && enough.rec === 0, enough.line.slice(0, 110));
     const route = await p.evaluate(() => ({ accept: (document.querySelector('meta[name="next-upsell-accept-url"]') || {}).content || '', decline: (document.querySelector('meta[name="next-upsell-decline-url"]') || {}).content || '',
       offers: document.querySelectorAll('[data-next-upsell="offer"]').length, skip: document.querySelectorAll('[data-next-upsell-action="skip"], [data-upsell-proxy="skip"]').length }));
     ok(`${T} one SDK offer; yes -> thank-you, no -> the smaller offer`, route.offers === 1 && route.skip >= 1 && /mice-9-reasons(\/receipt|-thank-you)\//.test(route.accept) && /mice-9-reasons(\/downsell|-last-offer)\//.test(route.decline), route.accept + ' | ' + route.decline);

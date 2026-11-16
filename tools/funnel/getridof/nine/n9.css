@@ -35,3 +35,23 @@
 @media(min-width:768px){
  .rsrc{grid-template-columns:1fr 1fr}.fit{grid-template-columns:1fr 1fr}.chk{grid-template-columns:repeat(3,1fr)}.chk li{grid-template-columns:1fr;text-align:center}
 }
+/* root problem / root solution, after the intro */
+.root{display:grid;gap:10px;margin:6px 0 18px}
+.root>div{border-radius:16px;padding:16px;text-align:left}
+.root span{display:block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.root b{display:block;font-size:22px;line-height:1.15;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+.art .root p{font-size:15.5px;line-height:1.5;margin:0}
+.root__p{background:#fdf3f3;border:1px solid #f0d2d2}.root__p span{color:#b3261e}.root__p b{color:#3a1f1f}
+.root__s{background:var(--gd);color:#fff}.root__s span{color:#b9d98f}.root__s b{color:#fff}.art .root__s p{color:#e3ecd9}
+.root__s a{display:inline-block;margin-top:10px;color:#cfe59a;font-weight:800;font-size:15px;text-decoration:underline}
+/* the ingredient cards inside reason 2 */
+.rs .lg{margin:6px 0 16px;max-width:none}
+.rs .whys{margin:8px 0 14px}
+.rs .sum{text-align:center}
+.art .rs .sum p{color:#fff}.art .rs .sum .sum__g{color:#cfe59a}
+.rs__i--t img{aspect-ratio:4/5;object-position:50% 30%}
+/* buttons: centred labels; in-page jumps stop below the sticky top bar */
+.lh .btn,.rs .btn,.gua .btn,.fin .btn{text-align:center;justify-content:center}
+#gro-buy,#r2,.rs{scroll-margin-top:84px}
+@media(min-width:768px){.root{grid-template-columns:1fr 1fr}.rs .whys{grid-template-columns:1fr 1fr}.rs__i--t img{aspect-ratio:16/10;object-position:50% 22%}}
+.art .rs .sum b,.art .rs .sum__e span{color:#cfe59a}.art .rs .sum__e span{color:#fff}

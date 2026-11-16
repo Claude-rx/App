@@ -346,6 +346,9 @@ A fourth funnel for the same product: listicle → checkout → home-plan quiz o
   root solution, the persuasion plan and the sources).
 - **Page:** `tools/funnel/getridof/nine/page.html` + `n9.css`, built by `build_nine.py` on top of the sales page's
   styles, script, top bar, offer card, animation and footer. Nine reasons; each one ends in a "Why it works" box.
+  The root problem and root solution are stated right after the intro, and reason 2 carries the sales page's three
+  logic steps and its card per ingredient (peppermint, cinnamon, cedarwood, castor: the job, what it does, the
+  result, an animation), taken from `lp/page.html` at build time so the two pages cannot drift apart.
 - **Content rules:** Amazon quotes are word for word, from other brands' listings, and the page says so. Customer
   quotes and photos are the brand's own. The "What the research says" section links each fact to its source
   (Penn State and NC State Extension, CDC, EPA, FTC, Scientific American) and says they do not endorse the brand.
@@ -353,16 +356,20 @@ A fourth funnel for the same product: listicle → checkout → home-plan quiz o
   words. The page says what the product does not do (it will not evict a nest; not for groundhogs or open yards).
 - **Checkout:** the standard one, with two changes for this funnel (`checkout()` in `build_nine.py`,
   `nine/checkout.css`): first and last name on one row, and the short address form of the reference checkout (only
-  the address line shows until it is typed; then city, state, ZIP and phone appear).
+  the address line shows until it is typed; then city, state, ZIP and phone appear). Because Subscribe & Save is
+  the default, its refill size, schedule and price are also stated in the box where it is chosen (the same figures
+  as the Automatic Refills terms under the button; the build stops if those terms change).
 - **Offers** (`offers()` in `build_nine.py`): both pages sell package 1 (the one-time pack) with the campaign's own
   vouchers, as tier cards the SDK prices. Nothing is typed in: 1, 2 or 3 more packs use `GROU1PK30Q`, 5 packs use
   `GROU2FIVE48Q`; the smaller offer is 1 pack (`GROU1PK30Q`) or 5 packs at the lower `GROD2FIVE38Q`.
   The quiz (`nine/quiz.html`, `nine/quiz.js`) asks the home type and what else to protect, works out the plan from
-  the brand's guide (one pack per zone: apartment 2, one-story 3, two-story 5, large 6, plus one for a garage/shed
-  and one for a vehicle), subtracts the packs just ordered (`sessionStorage.gro_bundle`) and selects that card. It
+  the brand's guide (one pack per zone: apartment 2, one-story 2, two-story 4, large 5, plus one for a garage/shed
+  and one for a vehicle, which gives the guide's own examples: one-story + garage = 3 packs, two-story + garage = 5), subtracts the packs just ordered (`sessionStorage.gro_bundle`) and selects that card. It
   only clicks the SDK's own card; the SDK owns prices and the accept button.
-- **Images:** the nine new photos (`brand/getridof/sections/gro-n9-*.webp`, `gro-home-*.webp`) were generated with
-  Kie (Nano Banana 2) from the real pack photo. They show the product in use and four home types. None shows a
+- **Images:** the new photos (`brand/getridof/sections/gro-n9-*.webp`, `gro-home-*.webp`) were generated with
+  Kie (Nano Banana 2); the ones that show the bag used the clean pack photo as the reference. They show the product
+  in use and four home types. The generator cannot spell the bag's small print, so the hero's micro-text is softened
+  and photos with an unreadable label are not used. None shows a
   person presented as an expert or a customer, and none is a before/after.
 - Never edit `src/mice-9-reasons` by hand: it is regenerated and gitignored.
 
