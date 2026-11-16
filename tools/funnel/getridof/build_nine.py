@@ -158,6 +158,18 @@ def checkout():
     t = "I wasted $200+ on traps. Week two with the pouches: completely silent. Was ready to call an exterminator. Glad I didn't."
     assert s.count(t) == 2, ('checkout review bubble changed', s.count(t))
     s = s.replace(t, 'Spent close to $200 on traps, poison and one of those ultrasonic plug-ins. Week two - completely silent. Was ready to call an exterminator and spend $400. Glad I didn\'t.')
+    for a, b in (('Finally something that keeps them gone - for good. Eleven days later, not a single mouse. Six weeks on, still nothing.',
+                  'Finally something that keeps them gone - for good. … Eleven days later, not a single mouse. Six weeks on — still nothing.'),
+                 ("First October in six years I haven't had to deal with them. This just works.",
+                  "First October in six years I haven't had to deal with them. … This just works, that’s all I want to say!!!"),
+                 ('We live in our RV full time. Three months in a field in Texas. Not one mouse the entire time.',
+                  'We live in our RV full time. … Three months in a field in Texas. Not one mouse the entire time.'),
+                 ('This season: completely clean. Not a dropping, not a chew mark. Nothing.',
+                  'This season — completely clean. Not a dropping, not a chew mark. Nothing.'),
+                 ("Six weeks in, the feed room is clean. Dogs are fine. Haven't touched a trap since.",
+                  "Six weeks in — feed room is clean. Dogs are fine. Haven't touched a trap since.")):
+        assert s.count(a) == 2, ('checkout review text changed', a[:50], s.count(a))
+        s = s.replace(a, b)
     rep('100% refund valid for 90 days. No questions asked.', "If mice haven't left within 90 days, we refund your purchase in full.")
     rep('Money back, no questions', 'Full refund if mice stay')
     rep('Refills ship automatically at $34.99 a pack. Skip or cancel anytime.', 'Subscriber refills are $34.99 a pack; skip or cancel anytime.')
@@ -217,7 +229,7 @@ OFFERS = {
         accept='Yes, add it for', decline_text='No thanks, complete my order',
         bullets=['The same 4-oil pouches you just ordered', 'One click, no need to re-enter your card',
                  'One-time add-on: your refill schedule does not change', 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
-        features_title='Where one more pack goes', features_text='Put it where mice go when the kitchen stops being welcome.',
+        features_title='Where one more pack goes', features_text='Put it in a zone your order doesn’t cover yet, like the garage, basement or attic.',
         closing='Add it to your order?',
         map=('Where the next pouches go', 'One pack covers one zone. Here is where pouches go in a typical home.')),
 }
@@ -322,6 +334,7 @@ def main():
              'A scent barrier reaches every mouse that comes near the gap.'),
             ('The mouse stops at the pouch and backs away.', 'Up close, the mint is meant to be all a mouse can smell.'),
             ('The next mouse finds no path to follow.', 'The next mouse is meant to find a much harder trail to follow.'),
+            ('The barrier stays up for up to 90 days.', 'It is made to keep the barrier up for up to 90 days.'),
             ('At 40%, the scent around the pouch drowns out everything behind it, food included.',
              'At 40%, it is there to drown out the smells behind the pouch, food included.'),
             ('Scent marks covered: the next mouse finds no path', 'Scent marks covered: no clear path for the next mouse')):
