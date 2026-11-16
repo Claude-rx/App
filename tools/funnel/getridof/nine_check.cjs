@@ -28,7 +28,8 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     const T = `[${vp.name}]`;
 
     // ---------- the listicle ----------
-    const resp = await p.goto(url('') + '?utm_source=test', { waitUntil: 'load' });
+    let resp = await p.goto(url('') + '?utm_source=test', { waitUntil: 'load' });
+    if (resp.status() >= 500) { console.log(`NOTE ${T} the store answered ${resp.status()}; retrying once in 10 s`); await p.waitForTimeout(10000); resp = await p.goto(url('') + '?utm_source=test', { waitUntil: 'load' }); }
     const html = await resp.text();
     await p.waitForTimeout(600);
     ok(`${T} listicle loads`, resp.status() === 200 && /9 Reasons/.test(await p.title()), String(resp.status()));
