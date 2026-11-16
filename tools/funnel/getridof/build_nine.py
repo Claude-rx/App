@@ -193,7 +193,7 @@ OFFERS = {
         tiers=tier('home-plan-1', 1, V_PACK, '1 more pack', '12 pouches · one more zone', True)
               + tier('home-plan-2', 2, V_PACK, '2 more packs', '24 pouches · two more zones')
               + tier('home-plan-3', 3, V_PACK, '3 more packs', '36 pouches · kitchen, basement, garage')
-              + tier('home-plan-5', 5, V_FIVE, '5 more packs', '60 pouches · whole home · lowest price per pack'),
+              + tier('home-plan-5', 5, V_FIVE, '5 more packs', '60 pouches · lowest price per pack'),
         accept='Yes, add it to my order for', decline_text='No thanks, my order is enough for now',
         bullets=['The same 4-oil pouches you just ordered', 'Added to your order with one click, no need to re-enter your card',
                  'One-time add-on: your refill schedule does not change', 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
@@ -205,11 +205,11 @@ OFFERS = {
         announce='BEFORE YOU GO · LAST OFFER ON THIS ORDER',
         badge_note='This is the last offer before your receipt.',
         hero_title='One Last Add-On Before Your Receipt',
-        hero_text='Pick one more pack for the room mice move to next, or take the whole-home 5 packs at our lowest price. Added to the order you just placed.',
+        hero_text='Pick one more pack for the room mice move to next, or take 5 more packs at our lowest price per pack. Added to the order you just placed.',
         selector='home-plan-last', offer_title='Rodent Repellent Pouches', image='n9/pack.webp',
         quantity_label='Choose one',
         tiers=tier('home-plan-last-1', 1, V_PACK, '1 more pack', '12 pouches · the next zone', True)
-              + tier('home-plan-last-5', 5, V_FIVE_LOW, 'Whole home · 5 packs', '60 pouches · our lowest price per pack'),
+              + tier('home-plan-last-5', 5, V_FIVE_LOW, '5 more packs', '60 pouches · our lowest price per pack'),
         accept='Yes, add it for', decline_text='No thanks, complete my order',
         bullets=['The same 4-oil pouches you just ordered', 'One click, no need to re-enter your card',
                  'One-time add-on: your refill schedule does not change', 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
@@ -296,6 +296,9 @@ def main():
     buy = ls.block(pdp, '<div class="ofr" id="gro-buy">', '<!--/ofr-->')     # the offer card (no prices; the choice is made in the checkout)
     assert buy.count('<div') == buy.count('</div>'), 'offer card block is not balanced'
     foot = ls.block(pdp, '<footer class="ft">', '</footer>')
+    for a in ('<a href="https://getridof.shop/mice/">Mice</a>', '<a href="https://getridof.shop/groundhogs/">Groundhogs</a>'):
+        assert foot.count(a) == 1, f'footer link changed: {a}'
+        foot = foot.replace(a, '')
     whys = ls.block(pdp, '<div class="whys">', '<p class="note">Animated illustrations. Place one pouch at every entry point. Results vary by home.</p>')
     assert whys.count('<article class="why">') == 4 and whys.count('class="why__j"') == 4, 'the sales page no longer has one card per ingredient'
     for a, b in (
@@ -313,8 +316,10 @@ def main():
              'Animation: a mouse walks toward a storage corner where a pouch sits on the shelf, stops at the cedarwood scent and turns back without settling.'),
             ('A scent barrier works on every mouse that comes near, because every mouse has to breathe.',
              'A scent barrier reaches every mouse that comes near the gap.'),
-            ('The mouse stops at the pouch and backs away.', 'Up close, the mint is all a mouse can smell.'),
-            ('The next mouse finds no path to follow.', 'The next mouse has a much harder trail to follow.'),
+            ('The mouse stops at the pouch and backs away.', 'Up close, the mint is meant to be all a mouse can smell.'),
+            ('The next mouse finds no path to follow.', 'The next mouse is meant to find a much harder trail to follow.'),
+            ('At 40%, the scent around the pouch drowns out everything behind it, food included.',
+             'At 40%, it is there to drown out the smells behind the pouch, food included.'),
             ('Scent marks covered: the next mouse finds no path', 'Scent marks covered: no clear path for the next mouse')):
         assert whys.count(a) == 1, f'ingredient card text changed on the sales page: {a}'
         whys = whys.replace(a, b)

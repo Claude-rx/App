@@ -25,7 +25,14 @@
     })();
   }
 
-  /* the smaller offer page: default to the whole-home pack when the quiz said the home needs it */
+  /* one-time buyers have no refills: the add-on note speaks to them, not to subscribers */
+  if (/^ot/.test(ss('gro_bundle') || '')) {
+    [].forEach.call(document.querySelectorAll('.bullet-features-text-box > div'), function (d) {
+      if (/refill schedule does not change/.test(d.textContent)) d.textContent = 'One-time add-on: nothing recurring, no subscription';
+    });
+  }
+
+  /* the smaller offer page: default to the 5-pack when the quiz said the home needs it */
   if (document.querySelector('[data-next-selector-id="home-plan-last"]')) {
     var saved = parseInt(ss('gro_plan_tier') || '', 10);
     if (saved === 5) choose('home-plan-last-5', false);
