@@ -67,7 +67,7 @@ FUNNELS = {
     'nine': {
         'slug': 'mice-9-reasons', 'asset_dir': 'gron9', 'manifest': 'theme-push-manifest.nine.json',
         'pages': {
-            '': ('mice-9-reasons', "9 Reasons These Pouches Work When Everything Else Didn't"),
+            '': ('mice-9-reasons', '9 Reasons These Pouches Keep Mice Out When Everything Else Failed'),
             'checkout': ('mice-9-reasons-checkout', 'Secure Checkout'),
             'upsell': ('mice-9-reasons-home-plan', 'Size Your Home Plan'),
             'downsell': ('mice-9-reasons-last-offer', 'A Smaller Start'),

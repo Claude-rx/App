@@ -56,3 +56,14 @@
 @media(min-width:768px){.root{grid-template-columns:1fr 1fr}.rs .whys{grid-template-columns:1fr 1fr}.rs__i--t img{aspect-ratio:16/10;object-position:50% 22%}}
 .art .rs .sum b,.art .rs .sum__e span{color:#cfe59a}.art .rs .sum__e span{color:#fff}
 .bf i+b{margin-top:1px}
+/* first screen: the three things she wants, under the button */
+.und--t{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;font-weight:700;color:#2f6b1c}
+/* how many packs, before the order */
+.sz{display:grid;gap:10px;margin:14px 0 12px;text-align:left}
+.sz>div{display:grid;grid-template-columns:104px 1fr;column-gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;padding-right:12px}
+.sz img{grid-row:1/4;width:104px;height:100%;min-height:92px;object-fit:cover}
+.sz b{font-size:21px;line-height:1.1;color:var(--cta);align-self:end;padding-top:10px}
+.sz span{font-size:15.5px;font-weight:700;color:var(--gd);line-height:1.25}
+.sz i{font-style:normal;font-size:13px;color:var(--mut);align-self:start;padding-bottom:10px}
+#size .btn{max-width:420px;margin:6px auto 0}
+@media(min-width:768px){.sz{grid-template-columns:repeat(3,1fr)}.sz>div{grid-template-columns:1fr;padding:0 0 12px;text-align:center}.sz img{grid-row:auto;width:100%;height:auto;aspect-ratio:4/3}.sz b{padding-top:12px}.sz i{padding:0 10px}}
