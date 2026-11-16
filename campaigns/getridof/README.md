@@ -325,3 +325,80 @@ node tools/funnel/getridof/axon_check.cjs https://getridof.shop
 
 Still to do in the Campaigns App dashboard for campaign 2721 (the API does not cover them): Allowed Domains and the
 PayPal account link, as for 2716.
+
+## 9-reason listicle funnel: /mice-9-reasons/ (campaign 2796)
+
+A fourth funnel for the same product: listicle → checkout → home-plan quiz offer → smaller offer → thank-you.
+
+| Page | Store route |
+|---|---|
+| "9 Reasons These Pouches Work When Everything Else Didn't" | `/mice-9-reasons/` |
+| checkout | `/mice-9-reasons-checkout/` |
+| home-plan offer (quiz) | `/mice-9-reasons-home-plan/` |
+| smaller offer (after a no) | `/mice-9-reasons-last-offer/` |
+| thank-you | `/mice-9-reasons-thank-you/` |
+
+- **Campaign:** Campaigns App campaign 2796, "Get Rid Of - 9 Reasons Listicle", a clone of 2362 made with
+  next-campaigns-create on 16 Nov 2026 (same packages, prices, shipping and vouchers; verified). Its public key is in
+  `tools/funnel/getridof/nine/campaign.json`; the run manifest is in `next-campaigns-create-runs/` (gitignored).
+- **Research:** `brand/getridof/research/amazon-review-analysis.md` (320 Amazon reviews of other brands' repellents,
+  pulled with Apify on 16 Nov 2026 and tagged one by one) and `persona-and-strategy.md` (buyer persona, root problem,
+  root solution, the persuasion plan and the sources).
+- **Page:** `tools/funnel/getridof/nine/page.html` + `n9.css`, built by `build_nine.py` on top of the sales page's
+  styles, script, top bar, offer card, animation and footer. Nine reasons; each one ends in a "Why it works" box.
+- **Content rules:** Amazon quotes are word for word, from other brands' listings, and the page says so. Customer
+  quotes and photos are the brand's own. The "What the research says" section links each fact to its source
+  (Penn State and NC State Extension, CDC, EPA, FTC, Scientific American) and says they do not endorse the brand.
+  An expert appears only when `brand/getridof/expert.json` is approved and complete: a real person, in their own
+  words. The page says what the product does not do (it will not evict a nest; not for groundhogs or open yards).
+- **Checkout:** the standard one, with two changes for this funnel (`checkout()` in `build_nine.py`,
+  `nine/checkout.css`): first and last name on one row, and the short address form of the reference checkout (only
+  the address line shows until it is typed; then city, state, ZIP and phone appear).
+- **Offers** (`offers()` in `build_nine.py`): both pages sell package 1 (the one-time pack) with the campaign's own
+  vouchers, as tier cards the SDK prices. Nothing is typed in: 1, 2 or 3 more packs use `GROU1PK30Q`, 5 packs use
+  `GROU2FIVE48Q`; the smaller offer is 1 pack (`GROU1PK30Q`) or 5 packs at the lower `GROD2FIVE38Q`.
+  The quiz (`nine/quiz.html`, `nine/quiz.js`) asks the home type and what else to protect, works out the plan from
+  the brand's guide (one pack per zone: apartment 2, one-story 3, two-story 5, large 6, plus one for a garage/shed
+  and one for a vehicle), subtracts the packs just ordered (`sessionStorage.gro_bundle`) and selects that card. It
+  only clicks the SDK's own card; the SDK owns prices and the accept button.
+- **Images:** the nine new photos (`brand/getridof/sections/gro-n9-*.webp`, `gro-home-*.webp`) were generated with
+  Kie (Nano Banana 2) from the real pack photo. They show the product in use and four home types. None shows a
+  person presented as an expert or a customer, and none is a before/after.
+- Never edit `src/mice-9-reasons` by hand: it is regenerated and gitignored.
+
+```bash
+python3 -I tools/funnel/getridof/build_lp.py
+```
+
+```bash
+python3 -I tools/funnel/getridof/build_checkout.py
+```
+
+```bash
+python3 -I tools/funnel/getridof/build_nine.py
+```
+
+```bash
+cd campaigns/getridof && CPK_ENV=production npx --no-install campaign-build
+```
+
+```bash
+python3 -I tools/funnel/getridof/deploy_store.py <theme dir> --push --funnel nine
+```
+
+Checks (none places an order):
+
+```bash
+node tools/funnel/getridof/nine_check.cjs https://getridof.shop
+```
+
+```bash
+GRO_PAGES='[["listicle","/mice-9-reasons/"],["checkout","/mice-9-reasons-checkout/?forceBundleId=main:buy3"],["home-plan","/mice-9-reasons-home-plan/"],["last-offer","/mice-9-reasons-last-offer/"],["thank-you","/mice-9-reasons-thank-you/"]]' node tools/funnel/getridof/mobile_audit.cjs https://getridof.shop . --store
+```
+
+```bash
+node tools/funnel/getridof/axon_check.cjs https://getridof.shop
+```
+
+Still to do in the Campaigns App dashboard for campaign 2796 (the API does not cover them): Allowed Domains and the
+PayPal account link, as for 2716 and 2721.
