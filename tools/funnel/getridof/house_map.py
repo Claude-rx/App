@@ -50,13 +50,13 @@ def html():
       <img src="{{{{ '{IMG}' | campaign_asset }}}}" alt="3D cutaway of a two-story home with garage and basement, with the number of pouches for each room" width="960" height="717" loading="lazy" decoding="async">
       <ol class="gro-map__pins" aria-hidden="true">{pins}</ol>
     </div>
-    <figcaption><span class="gro-map__dot">#</span> = pouches for that zone &nbsp;·&nbsp; {TOTAL} pouches = <strong>{TOTAL // PER_PACK} packs</strong> for a typical 2-story home with garage and basement</figcaption>
+    <figcaption><span class="gro-map__dot">#</span> = pouches for that room &nbsp;·&nbsp; {TOTAL} pouches = <strong>{TOTAL // PER_PACK} packs</strong> for a typical 2-story home with garage and basement</figcaption>
   </figure>
   <div class="gro-map__grid">
     <ul class="gro-map__list">{rows}<li class="gro-map__total"><span>Whole home</span><strong>{TOTAL} = {TOTAL // PER_PACK} packs</strong></li></ul>
     <div class="gro-map__why">
       <p><strong>1 pack = {PER_PACK} pouches.</strong> That covers about one zone, like the kitchen and pantry.</p>
-      <p><strong>Leave a zone bare and that’s where they go.</strong> The garage, attic and basement are where mice nest first, and the places you check last.</p>
+      <p><strong>Leave a room bare and that’s where they go.</strong> The garage, attic and basement are where mice nest first, and the places you check last.</p>
       <p><strong>Every floor, at the same time.</strong> Treating the whole house at once leaves them nowhere quiet to move to.</p>
     </div>
   </div>

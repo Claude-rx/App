@@ -183,7 +183,7 @@ FEATS = [('At every way in', 'The pipe gap under the sink, door edges, both ends
 OFFERS = {
     'upsell': dict(
         title='Size Your Home Plan', next='receipt.html', decline='downsell.html', quiz=True,
-        announce='ORDER CONFIRMED · ONE QUICK QUESTION BEFORE IT SHIPS',
+        announce='ORDER CONFIRMED · TWO QUICK QUESTIONS BEFORE IT SHIPS',
         badge_note='Your order is confirmed. These add-on prices are for customers who just ordered.',
         hero_title='Your Order Is Confirmed. Now Let’s Size It to Your Home.',
         hero_text='One pack covers one zone, and mice move to the next quiet room. Answer two questions and we’ll show how many packs your home takes. Add-on packs ship in the same box as your order.',
