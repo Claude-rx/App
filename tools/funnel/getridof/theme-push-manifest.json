@@ -321,6 +321,7 @@
 "assets/gromp/gromp-pdp-font-helvetica-neue-700-62c933-a78276.woff2": "d11262274aa1152c6858bf344373d354d084520758cc87c8564d688ba77be720",
 "assets/gromp/gromp-placement-guide-119325.pdf": "b92ddf44e5b351a1757da78ef818a988002abd97de48873df968155d4d8db3a6",
 "assets/gromp/gromp-placement-guide-2f16e2.pdf": "2e97f69fd5fe05c715b671b05ceeb7beec498073a8aac19876b54ea3fa779012",
+"assets/gromp/gromp-placement-guide-9cc421.pdf": "6ed4b2c94a30a3e6953d985bd564f2361626fbb38beb561c174dc89c5d9a0220",
 "assets/gromp/gromp-poppins-i456b43284e8b52fc64c1fd271f289a39e8477e9-9b2756.woff": "c4d7a1043ae0623ea6ca4655eb547cfecf3eaa1043cd652d40ec461514a7ae60",
 "assets/gromp/gromp-poppins-i4846ad1e22474f856bd6b81ba4585a60799a9f5-846ad1.woff2": "e14852f0e1e174469f49552127804c9d854d46be2439625dcae973e4cb6ed1c8",
 "assets/gromp/gromp-poppins-i742fd71da11e9d101e1e6c7932199f925f9eea4-42fd71.woff2": "b3fc257714112f59b894a710d0a60d1c528e4038ebc9ea5f544bb86af3d6f7b7",
@@ -473,6 +474,6 @@
 "templates/pages/page.mouse-pouches-exclusive-offer.html": "ab6a551a5c2895f5711f8296af8639ca5689477c0f1c749409a715102f910d90",
 "templates/pages/page.mouse-pouches-special-offer-2.html": "0d5c04e7ca669b57553a55f5c653b75eecff2f376c70e8e5d6992d5f4262620a",
 "templates/pages/page.mouse-pouches-special-offer.html": "cddaa29e0a45d1886d2c1d40cea62f3e1fdf550ac415abcd9bcf2e450b40e12c",
-"templates/pages/page.mouse-pouches-thank-you.html": "c75f03ff4f62fb394ca6ab2f64c61a9d22788ba5710df3d398ac12696c9e50f5",
+"templates/pages/page.mouse-pouches-thank-you.html": "22e8fc5dd912512bc674e9d715f1abf077e1d6a05c4ffeecbd3201e58c409cce",
 "templates/pages/page.mouse-pouches.html": "23165095ea3d6e4a98ed1b45a60f177680c45f3d1e55ac096382ddb973d65a0e"
 }

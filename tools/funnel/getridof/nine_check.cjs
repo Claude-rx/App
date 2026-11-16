@@ -205,6 +205,17 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     ok(`${T} add-on note: subscribers keep their refill schedule; one-time buyers are told nothing recurs`, /refill schedule does not change/.test(subNote) && /nothing recurring, no subscription/.test(otNote), subNote + ' | ' + otNote);
     ok(`${T} smaller offer: no quiz; yes and no both -> thank-you`, r2.quiz === 0 && /mice-9-reasons(\/receipt|-thank-you)\//.test(r2.accept) && /mice-9-reasons(\/receipt|-thank-you)\//.test(r2.decline), r2.accept + ' | ' + r2.decline);
 
+    // a buyer who answers the quiz before the prices arrive still reads a whole sentence, and the price fills in
+    const q2 = await ctx.newPage();
+    await q2.addInitScript(() => { try { sessionStorage.setItem('gro_bundle', 'buy5'); } catch (e) {} });
+    await q2.goto(url('upsell'), { waitUntil: 'domcontentloaded' });
+    await q2.waitForFunction(() => [...document.querySelectorAll('button')].some(x => x.textContent.trim().startsWith('Just the home')), null, { timeout: 30000 });
+    await q2.evaluate(() => ['Apartment or condo', 'Just the home'].forEach(t => { const x = [...document.querySelectorAll('button')].find(y => y.textContent.trim().startsWith(t)); if (x) x.click(); }));
+    const spare = () => q2.evaluate(() => { const l = [...document.querySelectorAll('p,div')].find(x => x.children.length === 0 && /Good news/.test(x.textContent)); return l ? l.textContent : ''; });
+    const early = await spare();
+    await q2.waitForFunction(() => [...document.querySelectorAll('p,div')].some(x => x.children.length === 0 && /One pack is \$\d/.test(x.textContent)), null, { timeout: 30000 }).catch(() => {});
+    const late = await spare(); await q2.close();
+    ok(`${T} quiz answered before prices load: no broken "One pack is below", and the price fills in`, !/One pack is below/.test(early) && /One pack is \$\d/.test(late), early.replace(/.*swap\? /, '') + ' -> ' + late.replace(/.*swap\? /, ''));
     ok(`${T} no requests to the source store`, external.length === 0, external.slice(0, 2).join(' '));
     ok(`${T} no page JS errors`, errs.length === 0, errs.slice(0, 2).join(' | '));
     await ctx.close();

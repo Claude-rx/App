@@ -43,6 +43,7 @@
 "assets/gron9/gron9-gro-offer-5pack-0f8639.webp": "1d1d8af17328bdf259df564a8f72ab9e9a74836eac5624e9edecf9411c379ee8",
 "assets/gron9/gron9-gro-offer-pack-014c70.webp": "fa9352abfe1df130dd6c9f255ce0d28541a2bd8dd683e187a6d9f8ffcc05f946",
 "assets/gron9/gron9-gro-quiz-2a0a98.js": "2a4644e1d002af00a0344f2936e07bec6b9b1430c61f268f734963bddd6e2fa1",
+"assets/gron9/gron9-gro-quiz-3675d2.js": "8aa79cfa49b28f5693593329bdd1940915c77d034d0bf08620cbf3482887a86f",
 "assets/gron9/gron9-gro-quiz-42eeb2.js": "5371569ddb7924f2279a71ae3456e2398ac87514f8c99c97edde8a272d069c80",
 "assets/gron9/gron9-gro-quiz-46535f.js": "b724e3c6862d4a83602b66c9847f3276010f705ba71680017ed8fe42fc2ffe5a",
 "assets/gron9/gron9-gro-quiz-85e8bf.js": "b9a0192a914c59f15435d16a9e81fc65dc1fc8867e5c75f4cc404478f6fe7124",
@@ -79,6 +80,7 @@
 "assets/gron9/gron9-paypal-txt-63acaf.svg": "65b5b5ac3704273a1a888af98295d7ef805682c6c3c24554349eb10ef7f6f2ef",
 "assets/gron9/gron9-placement-guide-119325.pdf": "b92ddf44e5b351a1757da78ef818a988002abd97de48873df968155d4d8db3a6",
 "assets/gron9/gron9-placement-guide-2f16e2.pdf": "2e97f69fd5fe05c715b671b05ceeb7beec498073a8aac19876b54ea3fa779012",
+"assets/gron9/gron9-placement-guide-9cc421.pdf": "6ed4b2c94a30a3e6953d985bd564f2361626fbb38beb561c174dc89c5d9a0220",
 "assets/gron9/gron9-r-gap-bd9c4b.webp": "627c79803fb697d70a57f308508d5a83fb1c15134bf6a44c25d5d4c12ebbabe9",
 "assets/gron9/gron9-r-trail-573200.webp": "d852a1aff8d5d9eb798fe6975c1ac70db844a0032064639b4cd19907c2f7e627",
 "assets/gron9/gron9-reveal-5f1c7a.webp": "03805921f77f893aa7350065aaae36822e30b2c1d9e785c93f148999b913ad76",
@@ -97,8 +99,8 @@
 "assets/gron9/gron9-upsells-22339a.js": "8a5883415cc9ed47a97517f9e1d76982513e010507035bc6c26d6cc7079cf9f7",
 "assets/gron9/gron9-webclip-4dac88.webp": "912b63a04ba0f8ed75da099fe1adf4ee5ebabbd59ab9fd5abaebdd0ec53ef261",
 "templates/pages/page.mice-9-reasons-checkout.html": "c76a93eb5192dbe99fd277f239341342a5a6ad15f7a4b708811197030dcff392",
-"templates/pages/page.mice-9-reasons-home-plan.html": "6fe55050d04ae46a5b6b7a47528bb40d3aae644b4b21aef185bc4470edac2389",
-"templates/pages/page.mice-9-reasons-last-offer.html": "39a0ef2f9f9f18361793c30dccb5d678bc9d1a410ad96e64ddf808c8ad214e18",
-"templates/pages/page.mice-9-reasons-thank-you.html": "33bc5e108763bab434162df3658066f56c4618ae1f96d04f8e79b13c6ad64142",
+"templates/pages/page.mice-9-reasons-home-plan.html": "a1e9c9ed32b6fa56594bad50c8b6fb94b1734665de056605aaa94fc10553a617",
+"templates/pages/page.mice-9-reasons-last-offer.html": "d743766d5b6e7590a99b6489457297f8df094d48c8d8bd4492a13f7962b772b0",
+"templates/pages/page.mice-9-reasons-thank-you.html": "45347fa88e935d4ee6d93d39365960fcebf26af3c522e98f6367593964b89e3c",
 "templates/pages/page.mice-9-reasons.html": "df34479d84d8a583a032e1fbb0ba3b87c186462dfed35e906096628beb6cb72a"
 }

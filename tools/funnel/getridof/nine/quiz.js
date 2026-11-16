@@ -83,10 +83,13 @@
           : gap > t ? 'We selected the 5-pack below, the largest add-on on this page.' : 'We selected ' + plural(t, 'more pack') + ' below.');
     } else {
       wrap.hidden = true;
-      line.textContent = 'Good news: your order already covers this plan. You don’t need more today.' +
-        (/^buy/.test(ss('gro_bundle') || '') ? ' Your refills keep the pouches fresh.' : ' Each pouch lasts up to 90 days.') +
-        (function () { var e = document.querySelector('[data-next-bundle-id="home-plan-1"] [data-next-bundle-display="price"]'), p = e && /\$\d/.test(e.textContent) ? e.textContent.trim() : '';
-          return ' Want a spare for the next swap? One pack' + (p ? ' is ' + p : ' is') + ' below. Otherwise, tap No thanks.'; })();
+      var base = 'Good news: your order already covers this plan. You don’t need more today.' +
+        (/^buy/.test(ss('gro_bundle') || '') ? ' Your refills keep the pouches fresh.' : ' Each pouch lasts up to 90 days.');
+      var price = function () { var e = document.querySelector('[data-next-bundle-id="home-plan-1"] [data-next-bundle-display="price"]'); return e && /\$\d/.test(e.textContent) ? e.textContent.trim() : ''; };
+      var say = function (p) { line.textContent = base + ' Want a spare for the next swap? ' + (p ? 'One pack is ' + p + ' below.' : 'The 1-pack price is below.') + ' Otherwise, tap No thanks.'; };
+      var p0 = price(); say(p0);
+      /* answered before the SDK priced the cards: fill the price in as soon as it arrives (only if this line is still showing) */
+      if (!p0) (function wait(n) { var p = price(); if (p) { if (line.textContent.indexOf('The 1-pack price is below.') !== -1) say(p); return; } if (n < 80) setTimeout(function () { wait(n + 1); }, 250); })(0);
     }
     ss('gro_plan_tier', String(t));
     ss('gro_plan', gap > 0 ? 'open' : 'covered');
