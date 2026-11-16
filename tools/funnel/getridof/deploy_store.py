@@ -64,6 +64,16 @@ FUNNELS = {
             'receipt': ('mice-5-reasons-thank-you', 'Thank You'),
         },
     },
+    'nine': {
+        'slug': 'mice-9-reasons', 'asset_dir': 'gron9', 'manifest': 'theme-push-manifest.nine.json',
+        'pages': {
+            '': ('mice-9-reasons', "9 Reasons These Pouches Work When Everything Else Didn't"),
+            'checkout': ('mice-9-reasons-checkout', 'Secure Checkout'),
+            'upsell': ('mice-9-reasons-home-plan', 'Size Your Home Plan'),
+            'downsell': ('mice-9-reasons-last-offer', 'A Smaller Start'),
+            'receipt': ('mice-9-reasons-thank-you', 'Thank You'),
+        },
+    },
     'replica': {
         'slug': 'mouse-repellent-pouches', 'asset_dir': 'gromrp', 'manifest': 'theme-push-manifest.replica.json',
         'pages': {

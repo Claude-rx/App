@@ -1,0 +1,33 @@
+<section class="gq" id="gro-quiz" data-gro-quiz aria-label="Size your home plan">
+  <div class="gq__in">
+    <p class="gq__step" data-gq-step>Question 1 of 2 · takes 20 seconds</p>
+    <div class="gq__q" data-gq="1">
+      <h2>What kind of home are you protecting?</h2>
+      <div class="gq__opts gq__opts--img">
+        <button type="button" data-gq-home="2" data-gq-name="an apartment or condo"><img src="{{ 'n9/home-apartment.webp' | campaign_asset }}" alt="" width="480" height="360" loading="lazy"><b>Apartment or condo</b><span>Under 1,000 sq ft</span></button>
+        <button type="button" data-gq-home="3" data-gq-name="a one-story house"><img src="{{ 'n9/home-ranch.webp' | campaign_asset }}" alt="" width="480" height="360" loading="lazy"><b>One-story house</b><span>1,000 to 2,000 sq ft</span></button>
+        <button type="button" data-gq-home="5" data-gq-name="a two-story house"><img src="{{ 'n9/home-two-story.webp' | campaign_asset }}" alt="" width="480" height="360" loading="lazy"><b>Two-story house</b><span>2,000 to 3,000 sq ft</span></button>
+        <button type="button" data-gq-home="6" data-gq-name="a large home"><img src="{{ 'n9/home-large.webp' | campaign_asset }}" alt="" width="480" height="360" loading="lazy"><b>Large home or property</b><span>Over 3,000 sq ft</span></button>
+      </div>
+    </div>
+    <div class="gq__q" data-gq="2" hidden>
+      <h2>Anything else you want mice out of?</h2>
+      <div class="gq__opts">
+        <button type="button" data-gq-extra="0"><b>Just the home</b></button>
+        <button type="button" data-gq-extra="1"><b>A garage or shed too</b></button>
+        <button type="button" data-gq-extra="1"><b>An RV, camper or stored vehicle too</b></button>
+        <button type="button" data-gq-extra="2"><b>Both</b></button>
+      </div>
+      <button type="button" class="gq__again" data-gq-again>← Back</button>
+    </div>
+    <div class="gq__r" data-gq="r" hidden aria-live="polite">
+      <p class="gq__k">Your home plan</p>
+      <h2><span data-gq-total>5</span> · about <span data-gq-pouches>60</span> pouches</h2>
+      <p class="gq__line" data-gq-line></p>
+      <div class="gq__bar" role="img" aria-label="How much of your plan your order covers"><i data-gq-have></i></div>
+      <p class="gq__lg"><span>Your order: <b data-gq-ordered>1 pack</b></span><span data-gq-gapwrap>Still open: <b data-gq-gap>4 packs</b></span></p>
+      <a href="#gro-plan" class="gq__go" data-gq-go>See my plan and price ↓</a>
+      <button type="button" class="gq__again" data-gq-again>Change my answers</button>
+    </div>
+  </div>
+</section>

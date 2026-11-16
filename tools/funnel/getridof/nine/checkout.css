@@ -1,0 +1,40 @@
+
+/* ---- 9-reason funnel (build_nine.py, nine/checkout.css) ---- */
+/* shipping step of the reference checkout: names on one row; the rest of the address and the phone show once an address is typed */
+.gro-names{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.gro-names .form-input{margin:0;min-width:0}
+.gro-addr:has([data-next-checkout-field="address1"]:placeholder-shown)~.gro-phone{display:none}
+/* home-plan quiz on the first offer page */
+.gq{padding:8px 16px 4px}
+.gq__in{max-width:760px;margin:0 auto;background:#fff;border:2px solid #7EA254;border-radius:18px;padding:18px 16px 16px;text-align:center;box-shadow:0 6px 22px rgba(35,55,43,.08)}
+.gq__step,.gq__k{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#4F7A2E;margin:0 0 6px}
+.gq h2{font-size:23px;line-height:1.15;font-weight:800;color:#23372B;margin:0 0 14px}
+.gq__opts{display:grid;gap:10px}
+.gq__opts--img{grid-template-columns:1fr 1fr}
+.gq__opts button{appearance:none;cursor:pointer;background:#F3F6EE;border:2px solid #dfe6d6;border-radius:14px;padding:13px 12px;font:inherit;color:#1b241d;text-align:center;min-height:52px}
+.gq__opts--img button{padding:0 0 10px;overflow:hidden;background:#fff}
+.gq__opts button:hover,.gq__opts button:focus-visible{border-color:#2f7d1e;outline:none}
+.gq__opts img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;margin-bottom:8px}
+.gq__opts b{display:block;font-size:15.5px;line-height:1.2;padding:0 6px}
+.gq__opts span{display:block;font-size:12.5px;color:#5b665d;margin-top:2px;padding:0 6px}
+.gq__line{font-size:15.5px;line-height:1.5;color:#26302a;margin:0 0 12px}
+.gq__bar{height:14px;border-radius:999px;background:#f3d9d9;overflow:hidden;margin:0 0 6px}
+.gq__bar i{display:block;height:100%;width:20%;background:#7EA254;border-radius:999px;transition:width .5s ease}
+.gq__lg{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;color:#5b665d;margin:0 0 14px}
+.gq__lg b{color:#23372B}
+.gq__go{display:block;background:#2f7d1e;color:#fff!important;font-weight:800;font-size:17px;text-decoration:none;border-radius:12px;padding:14px 12px}
+.gq__again{appearance:none;background:none;border:0;font:inherit;font-size:13.5px;color:#5b665d;text-decoration:underline;cursor:pointer;margin-top:10px;padding:6px}
+.gq [hidden]{display:none!important}
+@media(min-width:768px){.gq__opts--img{grid-template-columns:repeat(4,1fr)}.gq__opts:not(.gq__opts--img){grid-template-columns:1fr 1fr}.gq h2{font-size:28px}.gq__in{padding:24px}}
+/* the short address form is two rows until an address is typed: reserve that, not the full form */
+.gro-addr{min-height:112px}
+@media (min-width:992px){.gro-addr{min-height:112px}}
+/* plan cards on the offer pages: two per row on a phone, brand colours, and a mark on the size the quiz picked */
+#gro-plan .next-bundle-tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#gro-plan .next-bundle-tier-grid .os-card{margin:0;position:relative}
+#gro-plan .next-bundle-tier-card__inner{padding:14px 8px 12px}
+#gro-plan .next-bundle-tier-card__hint{font-size:12.5px;line-height:1.3;min-height:2.6em}
+#gro-plan .next-bundle-tier-card__badge{color:#2f7d1e}
+#gro-plan .os-card.next-selected{border-color:#2f7d1e!important;background:#eef6e4!important;box-shadow:0 0 0 2px #2f7d1e inset}
+#gro-plan .os-card[data-gq-rec]::before{content:"✓ Sized for your home";position:absolute;left:50%;top:-11px;transform:translateX(-50%);white-space:nowrap;background:#2f7d1e;color:#fff;font-size:11px;font-weight:800;letter-spacing:.04em;border-radius:999px;padding:3px 9px;z-index:1}
+@media(min-width:768px){#gro-plan .next-bundle-tier-grid{grid-template-columns:repeat(4,1fr)}}

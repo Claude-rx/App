@@ -11,7 +11,8 @@ const store = process.argv.includes('--store');
 const R = store
   ? { sales: '/mouse-pouches/', checkout: '/mouse-pouches-checkout/', up1: '/mouse-pouches-special-offer/', down1: '/mouse-pouches-exclusive-offer/', up2: '/mouse-pouches-special-offer-2/', down2: '/mouse-pouches-exclusive-offer-2/', receipt: '/mouse-pouches-thank-you/' }
   : { sales: '/mouse-pouches/', checkout: '/mouse-pouches/checkout/', up1: '/mouse-pouches/upsell/', down1: '/mouse-pouches/downsell/', up2: '/mouse-pouches/upsell-2/', down2: '/mouse-pouches/downsell-2/', receipt: '/mouse-pouches/receipt/' };
-const PAGES = [
+// GRO_PAGES='[["name","/path/"],...]' audits another funnel's own pages (the 9-reason funnel has two offer pages, not four).
+const PAGES = process.env.GRO_PAGES ? JSON.parse(process.env.GRO_PAGES) : [
   ['sales', R.sales], ['checkout-3pack', R.checkout + '?forceBundleId=main:buy3'], ['checkout-onetime', R.checkout + '?forceBundleId=main:ot1'],
   ['offer-1', R.up1], ['offer-1-no', R.down1], ['offer-2', R.up2], ['offer-2-no', R.down2], ['receipt', R.receipt],
 ];
