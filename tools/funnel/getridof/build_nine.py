@@ -187,7 +187,7 @@ OFFERS = {
         announce='ORDER CONFIRMED · TWO QUICK QUESTIONS BEFORE IT SHIPS',
         badge_note='Your order is confirmed. These add-on prices are for customers who just ordered.',
         hero_title='Your Order Is Confirmed. Now Let’s Size It to Your Home.',
-        hero_text='One pack covers one zone, and mice move to the next quiet room. Answer two questions and we’ll show how many packs your home takes. Add-on packs ship in the same box as your order.',
+        hero_text='One pack covers one zone, and a room with no pouches is still open to mice. Answer two questions and we’ll show how many packs your home takes. Add-on packs ship in the same box as your order.',
         selector='home-plan', offer_title='Your Home Plan · Rodent Repellent Pouches', image='n9/pack.webp',
         quantity_label='Your plan (tap to change)',
         tiers=tier('home-plan-1', 1, V_PACK, '1 more pack', '12 pouches · one more zone', True)
@@ -197,15 +197,15 @@ OFFERS = {
         accept='Yes, add it to my order for', decline_text='No thanks, my order is enough for now',
         bullets=['The same 4-oil pouches you just ordered', 'Added to your order with one click, no need to re-enter your card',
                  'One-time add-on: your refill schedule does not change', 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
-        features_title='Where the extra pouches go', features_text='Mice don’t stop at the kitchen. Close every zone at once and they have nowhere quiet left to move to.',
+        features_title='Where the extra pouches go', features_text='Mice don’t stop at the kitchen. Cover every zone at once, so no quiet room is left without a pouch.',
         closing='Add more pouches to your order?',
-        map=('Why one zone is not a whole house', 'One pack protects one zone. Here is where pouches go in a typical home.')),
+        map=('Why one zone is not a whole house', 'One pack covers one zone. Here is where pouches go in a typical home.')),
     'downsell': dict(
         title='A Smaller Start', next='receipt.html', decline='receipt.html', quiz=False,
         announce='BEFORE YOU GO · LAST OFFER ON THIS ORDER',
         badge_note='This is the last offer before your receipt.',
         hero_title='One Last Add-On Before Your Receipt',
-        hero_text='Pick one more pack for the room mice move to next, or take 5 more packs at our lowest price per pack. Added to the order you just placed.',
+        hero_text='Pick one more pack for the next zone in your home, or take 5 more packs at our lowest price per pack. Added to the order you just placed.',
         selector='home-plan-last', offer_title='Rodent Repellent Pouches', image='n9/pack.webp',
         quantity_label='Choose one',
         tiers=tier('home-plan-last-1', 1, V_PACK, '1 more pack', '12 pouches · the next zone', True)
@@ -215,7 +215,7 @@ OFFERS = {
                  'One-time add-on: your refill schedule does not change', 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
         features_title='Where one more pack goes', features_text='Put it where mice go when the kitchen stops being welcome.',
         closing='Add it to your order?',
-        map=('Where mice move next', 'When one zone is covered they try the next quiet one. Here is where pouches go in a typical home.')),
+        map=('Where the next pouches go', 'One pack covers one zone. Here is where pouches go in a typical home.')),
 }
 
 
@@ -310,7 +310,7 @@ def main():
             # cedarwood: it is there for new arrivals; a nest that is already in a wall is reason 7's job
             ('Job 3 · Takes away the nest', 'Job 3 · Spoils the nesting spots'),
             ('The nesting corner smells wrong: they move out', 'The corner smells wrong: no place to settle'),
-            ("Nowhere smells safe to settle, so they don't stay.", 'A new arrival finds nowhere that smells safe to settle. (A nest already in your wall is a different job: see reason 7.)'),
+            ("Nowhere smells safe to settle, so they don't stay.", 'A new arrival is meant to find nowhere that smells safe to settle. (A nest already in your wall is a different job: see reason 7.)'),
             ('<span>No nest</span>', '<span>No place to settle</span>'),
             ('Animation: a mouse sits in its nest in a storage corner. A pouch is placed on the shelf, the cedarwood scent fills the corner and the mouse leaves the nest.',
              'Animation: a mouse walks toward a storage corner where a pouch sits on the shelf, stops at the cedarwood scent and turns back without settling.'),
@@ -377,11 +377,16 @@ def main():
                          ('@@TRACKING@@', lp.SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
         assert html.count(token) == 1, token
         html = html.replace(token, value)
-    html = html.replace(f'/{BASE}/', f'/{SLUG}/')          # sales-page blocks and the script point at this funnel's own pages
+    html = html.replace(f'/{BASE}/', f'/{SLUG}/')
+    for a, b in (('Pouch at the entry: trail masked, mice turn around', 'Pouch at the entry: trail masked, made to turn mice away'),
+                 ("Cinnamon's sharp, spicy smell sits on top of those marks and covers them", "Cinnamon's sharp, spicy smell is there to sit on top of those marks and cover them"),
+                 ('Get Rid Of pouches are designed to repel mice and other rodents;', 'Get Rid Of pouches are designed to repel mice in enclosed spaces;')):
+        assert a in html, f'sales-page text changed: {a}'
+        html = html.replace(a, b)          # sales-page blocks and the script point at this funnel's own pages
     assert '@@' not in html and '{%' not in html and '{{' not in html and '</script' not in js.lower()
     assert f'/{BASE}' not in html and not re.search(r'sofyre', html, re.I)
     assert html.count('<span class="rs__n">') == 9, 'the page must carry nine reasons'
-    front = ('---\npage_layout: pdp.html\ntitle: "Still Hearing Them in the Walls? 9 Reasons These Pouches Keep Mice Out – Get Rid Of"\npage_type: product\n'
+    front = ('---\npage_layout: pdp.html\ntitle: "Still Hearing Them in the Walls? 9 Reasons Homeowners Put These Pouches at the Way In – Get Rid Of"\npage_type: product\n'
              '# Generated by tools/funnel/getridof/build_nine.py from tools/funnel/getridof/nine/ — edit those, not this file.\n---\n')
     (CAMP / 'index.html').write_text(front + '{% raw %}' + html + '{% endraw %}\n', encoding='utf-8')
     checkout()

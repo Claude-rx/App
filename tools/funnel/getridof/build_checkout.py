@@ -282,7 +282,7 @@ r = rc.read_text().replace('title: "Olympus — Receipt"', 'title: "Thank You | 
 GUIDE = """                  <div class="receipt_section gro-guide" hidden>
                     <div class="receipt_section-head">
                       <div class="display-xs">🎁 Your free Whole-Home Placement Guide</div>
-                      <div class="receipt_section-head--desc">It comes with Buy 2, Get 1 FREE: where to put all 36 pouches, room by room. <a href="{{ 'guide/placement-guide.pdf' | campaign_asset }}" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline">Download the guide (PDF)</a></div>
+                      <div class="receipt_section-head--desc">It comes with Buy 2, Get 1 FREE: where each pouch goes, room by room. <a href="{{ 'guide/placement-guide.pdf' | campaign_asset }}" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline">Download the guide (PDF)</a></div>
                     </div>
                   </div>
                   <style>.gro-guide[hidden]{display:none!important}</style>

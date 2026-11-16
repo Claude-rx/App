@@ -19,8 +19,8 @@ PER_PACK = 12
 # (label, pouches, x %, y %, label side) — positions measured on the render
 ROOMS = [
     ('Attic',               8, 52.0, 17.0, 'r'),
-    ('Main bedroom',        3, 25.0, 37.0, 'r'),
-    ('Kids’ bedroom',       3, 49.0, 38.5, 'r'),
+    ('Bedroom closets',     3, 25.0, 37.0, 'r'),
+    ('Linen closet',        3, 49.0, 38.5, 'r'),
     ('Bathroom',            2, 67.0, 36.0, 'r'),
     ('Living room',         4, 23.5, 59.0, 'r'),
     ('Kitchen',             8, 52.0, 57.0, 'r'),
@@ -56,8 +56,8 @@ def html():
     <ul class="gro-map__list">{rows}<li class="gro-map__total"><span>Whole home</span><strong>{TOTAL} = {TOTAL // PER_PACK} packs</strong></li></ul>
     <div class="gro-map__why">
       <p><strong>1 pack = {PER_PACK} pouches.</strong> That covers about one zone, like the kitchen and pantry.</p>
-      <p><strong>Leave a room bare and that’s where they go.</strong> The garage, attic and basement are where mice nest first, and the places you check last.</p>
-      <p><strong>Every floor, at the same time.</strong> Treating the whole house at once leaves them nowhere quiet to move to.</p>
+      <p><strong>A room with no pouch is still open to them.</strong> The garage, attic and basement are where mice nest first, and the places you check last.</p>
+      <p><strong>Every floor, at the same time.</strong> Cover every zone at once, so no quiet room is left without a pouch.</p>
     </div>
   </div>
 </section>
