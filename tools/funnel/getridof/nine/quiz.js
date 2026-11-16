@@ -34,6 +34,11 @@
       if (h) h.textContent = 'Want a Spare Pack for Your Next Swap?';
       if (p) p.textContent = 'Your order already covers your home. Each pouch lasts up to 90 days, so a spare pack is ready when it is time to swap. Added to the order you just placed.';
       if (mt) mt.textContent = 'Where pouches go in a typical home';
+      var mi = document.querySelector('.gro-map__intro'); if (mi) mi.textContent = 'Here is where pouches go in a typical home.';
+      var c1 = document.querySelector('[data-next-bundle-id="home-plan-last-1"]'), c5 = document.querySelector('[data-next-bundle-id="home-plan-last-5"]');
+      var hint = function (c, t) { var e = c && c.querySelector('.next-bundle-tier-card__hint'); if (e) e.textContent = t; };
+      var lab = function (c, t) { var e = c && c.querySelector('.next-bundle-tier-card__label'); if (e) e.textContent = t; };
+      hint(c1, '12 pouches · a spare for your next swap'); lab(c5, '5 spare packs'); hint(c5, '60 pouches · lowest price per pack');
     }
     return;
   }

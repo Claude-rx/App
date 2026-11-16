@@ -41,11 +41,13 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
       return { h1: vis('h1'), by: vis('.by'), img: vis('.lh__m img'), overflow: document.documentElement.scrollWidth > innerWidth + 1 }; });
     ok(`${T} first screen: headline, byline and the hero image`, first.h1 && first.by && first.img, JSON.stringify(first));
     ok(`${T} no sideways scroll`, !first.overflow);
+    const native = await p.evaluate(() => ({ heroBtn: !!document.querySelector('.lh .btn'), barHidden: document.querySelector('[data-gro-sticky]').classList.contains('pre'), advert: /Advertorial/.test((document.querySelector('.nm') || {}).textContent || '') }));
+    ok(`${T} native first screen: masthead marked Advertorial, no sales button, sticky bar hidden until reason 1`, !native.heroBtn && native.barHidden && native.advert, JSON.stringify(native));
     const body = await p.evaluate(() => ({ reasons: [...document.querySelectorAll('.rs h2')].map(h => h.textContent.trim().slice(0, 24)), nums: [...document.querySelectorAll('.rs__n')].map(n => n.textContent).join(''),
       why: [...document.querySelectorAll('.rs .ok > b')].filter(x => /why it works/i.test(x.textContent)).length, quotes: document.querySelectorAll('.rs .qt').length,
       demo: !!document.querySelector('#r1 .demo svg .m1'), anim: getComputedStyle(document.querySelector('.demo .m1')).animationName,
       check: document.querySelectorAll('#r6 .chk li').length, plan: document.querySelectorAll('#r7 .pl li').length,
-      wall: document.querySelectorAll('.wall .wc').length, thread: document.querySelectorAll('.thr .cm').length, faq: document.querySelectorAll('.faq details').length,
+      wall: document.querySelectorAll('.wall .wc').length, photos: document.querySelectorAll('#stories .ph4 img').length, thread: document.querySelectorAll('.thr .cm').length, faq: document.querySelectorAll('.faq details').length,
       fit: document.querySelectorAll('.fit__y li').length + '/' + document.querySelectorAll('.fit__n li').length }));
     ok(`${T} nine numbered reasons, each with a "Why it works" box`, body.nums === '123456789' && body.why === 9, body.nums + ' | ' + body.why + ' boxes');
     ok(`${T} root solution: the how-it-works animation is in reason 1 and runs`, body.demo && body.anim && body.anim !== 'none', body.anim);
@@ -59,7 +61,7 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     ok(`${T} reason 2: one card per ingredient (peppermint, cinnamon, cedarwood, castor), each with its job, what it does, the result and an animation`,
       rootS.cards.length === 4 && ['Peppermint', 'Cinnamon', 'Cedarwood', 'Castor'].every((n, i) => rootS.cards[i].includes(n)) && rootS.cards.every(c => /Job \d/.test(c) && /result/.test(c) && /anim/.test(c)), rootS.cards.map(c => c.split(' | ')[0]).join(' ; '));
     ok(`${T} the 14-day check (3 steps) and the plan for mice already inside (4 steps)`, body.check === 3 && body.plan === 4, `${body.check} / ${body.plan}`);
-    ok(`${T} reviews, comment thread, "is this for you" and questions are on the page`, body.wall >= 5 && body.thread >= 6 && body.faq >= 5 && body.fit === '3/3', `${body.wall} review cards, ${body.thread} comments, ${body.faq} questions, fit ${body.fit}`);
+    ok(`${T} reviews, comment thread, "is this for you" and questions are on the page`, body.wall >= 3 && body.thread >= 4 && body.photos === 4 && body.faq >= 5 && body.fit === '3/3', `${body.wall} review cards, ${body.thread} comments, ${body.faq} questions, fit ${body.fit}`);
     // honesty rules
     const honest = await p.evaluate(() => { const t = document.body.innerText; const aq = document.querySelector('.aq');
       return { amazon: !!aq && aq.querySelectorAll('blockquote').length === 3 && /not reviews of Get Rid Of/i.test(aq.innerText),
@@ -73,7 +75,7 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     ok(`${T} star rows are one line high`, tall === 0);
     const priced = await p.evaluate(() => ({ box: !!document.querySelector('[data-gro-bundle], [data-gro-sub], [data-p], [data-total]'),
       amounts: (document.querySelector('main').innerText.match(/\$(22\.49|34\.99|47\.97|69\.99|64\.95|104\.95|49\.99|149\.97|15\.99|14\.98|48\.95|38\.95)/g) || []).length,
-      card: !!document.querySelector('#gro-buy.ofr [data-gro-atc]'), hrefs: [...document.querySelectorAll('main a.btn, .sb a.btn')].map(a => a.getAttribute('href')) }));
+      card: !!document.querySelector('#gro-buy [data-gro-atc]'), hrefs: [...document.querySelectorAll('main a.btn, .sb a.btn')].map(a => a.getAttribute('href')) }));
     ok(`${T} no prices and no buy box; offer card present`, !priced.box && priced.amounts === 0 && priced.card, JSON.stringify({ box: priced.box, amounts: priced.amounts, card: priced.card }));
     ok(`${T} every button points at this funnel's checkout`, priced.hrefs.length >= 7 && priced.hrefs.every(h => CHECKOUT.test(h)), priced.hrefs.length + ' buttons');
     await p.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); } });
@@ -84,9 +86,10 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
 
     // ---------- the checkout ----------
     await p.evaluate(() => scrollTo(0, 0));
-    await Promise.all([p.waitForURL(CHECKOUT), p.locator('.lh [data-gro-atc]').click()]);
+    await p.locator('#r1 [data-gro-atc]').scrollIntoViewIfNeeded();
+    await Promise.all([p.waitForURL(CHECKOUT), p.locator('#r1 [data-gro-atc]').click()]);
     const u = new URL(p.url());
-    ok(`${T} hero button -> this funnel's checkout on Buy 2, Get 1 FREE + utm kept`, u.searchParams.get('forceBundleId') === 'main:buy3' && u.searchParams.get('utm_source') === 'test', u.pathname + u.search);
+    ok(`${T} first button (reason 1) -> this funnel's checkout on Buy 2, Get 1 FREE + utm kept`, u.searchParams.get('forceBundleId') === 'main:buy3' && u.searchParams.get('utm_source') === 'test', u.pathname + u.search);
     await p.waitForFunction(() => /47\.97/.test((document.querySelector('[data-next-cart-summary]') || {}).innerText || ''), null, { timeout: 30000 }).catch(() => {});
     const total = (await p.locator('[data-next-cart-summary]').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
     ok(`${T} checkout: Buy 2, Get 1 FREE subscribed by default, $47.97 from the live cart`, /47\.97/.test(total), total.slice(-50));

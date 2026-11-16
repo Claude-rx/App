@@ -54,7 +54,7 @@ IMAGES = {
     'home-apartment': ('gro-home-apartment.webp', 480, 72, 4 / 3), 'home-ranch': ('gro-home-ranch.webp', 480, 72, 4 / 3),
     'home-two-story': ('gro-home-two-story.webp', 480, 72, 4 / 3), 'home-large': ('gro-home-large.webp', 480, 72, 4 / 3),
 }
-HERO = ('gro-n9-mouse-pantry.webp', 760, 48, 16 / 9)     # inlined: the first screen paints from the HTML alone
+HERO = ('gro-n9-mouse-pantry.webp', 760, 48, 16 / 9)     # the 1100px version replaces it after load     # inlined: the first screen paints from the HTML alone
 
 # The post-purchase offers. One package (id 1, the one-time pack) with the campaign's own vouchers:
 #   GROU1PK30Q    70.02% off any quantity   (offer 10)  -> 1, 2 or 3 more packs
@@ -311,8 +311,10 @@ def main():
             ('Animation: a mouse sits in its nest in a storage corner. A pouch is placed on the shelf, the cedarwood scent fills the corner and the mouse leaves the nest.',
              'Animation: a mouse walks toward a storage corner where a pouch sits on the shelf, stops at the cedarwood scent and turns back without settling.'),
             ('A scent barrier works on every mouse that comes near, because every mouse has to breathe.',
-             'A scent barrier works on every mouse that comes near the gap, not just the one that touches a trap.'),
-            ('The mouse stops at the pouch and backs away.', 'Most mice stop at the pouch and turn back.')):
+             'A scent barrier reaches every mouse that comes near the gap.'),
+            ('The mouse stops at the pouch and backs away.', 'Up close, the mint is all a mouse can smell.'),
+            ('The next mouse finds no path to follow.', 'The next mouse has a much harder trail to follow.'),
+            ('Scent marks covered: the next mouse finds no path', 'Scent marks covered: no clear path for the next mouse')):
         assert whys.count(a) == 1, f'ingredient card text changed on the sales page: {a}'
         whys = whys.replace(a, b)
     # the cedarwood animation on this page: no nest and no "EMPTY" label; a "?" where the mouse stops (CSS in nine/n9.css)
@@ -325,8 +327,13 @@ def main():
     whys = whys.replace('<p class="note">Animated illustrations. Place one pouch at every entry point. Results vary by home.</p>',
                         '<p class="note">The animations illustrate what each oil is in the blend to do. They are not test footage. Results vary by home.</p>')
     ls.SLUG = SLUG                                   # the review wall and comment thread link this funnel's own images
-    ls.THREAD = ['dave', 1, 'russel', 'thomas', 2, 'earl']   # Gary M. and Dale T. are quoted in reasons 8 and 5
+    ls.THREAD = ['dave', 'russel', 'thomas', 'earl']          # Gary M. and Dale T. are quoted in reasons 8 and 5
+    ls.WALL = ['robert', 'tom', 'amelia']                       # the customer photos get their own labelled row below
     wall, thread = ls.wall(), ls.thread()
+    for e in ('🏠 ', '🚐 ', '🌾 '): wall, thread = wall.replace(e, ''), thread.replace(e, '')
+    wall, thread = wall.replace('<span class="vb">✓ Verified Buyer</span>', ''), thread.replace('<p class="cm__m">✓ Verified buyer</p>', '')
+    wall += ('\n  <p class="ph-t">Photos customers sent us</p>\n  <div class="ph4">' + ''.join(
+        f'<img src="/{SLUG}/lp/ugc-{n}.webp" alt="{ls.PHOTO_ALT[n]}" width="520" height="645" loading="lazy" decoding="async">' for n in (1, 2, 3, 4)) + '</div>')
     a = '<span>Three months in a field in Texas. Not one mouse the entire time.</span>'
     assert thread.count(a) == 1, 'the RV comment changed'
     thread = thread.replace(a, '<span>We live in our RV full time… Three months in a field in Texas. Not one mouse the entire time.</span>')
@@ -342,7 +349,7 @@ def main():
     js = re.sub(r'\n\s+', '\n', js).strip()
     html = (HERE / 'page.html').read_text()
     for token, value in (('@@CSS@@', css), ('@@JS@@', js), ('@@AXON_HEAD@@', axon), ('@@FUNNEL@@', camp['name']), ('@@TOP@@', top),
-                         ('@@HERO_DATA@@', 'data:image/webp;base64,' + base64.b64encode(hero).decode()), ('@@DEMO@@', demo), ('@@BUY@@', buy), ('@@WHYS@@', whys),
+                         ('@@HERO_DATA@@', 'data:image/webp;base64,' + base64.b64encode(hero).decode()), ('@@DEMO@@', demo), ('@@WHYS@@', whys),
                          ('@@WALL@@', wall), ('@@THREAD@@', thread), ('@@EXPERT@@', xp), ('@@FOOTER@@', foot),
                          ('@@TRACKING@@', lp.SDK.replace('%VER%', camp['sdk_version']) + ('\n' + tags if tags else ''))):
         assert html.count(token) == 1, token
