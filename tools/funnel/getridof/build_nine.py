@@ -154,6 +154,10 @@ def checkout():
         '<span class="gro-rt gro-rt--buy3">3 packs every 90 days for $104.97</span>, free shipping, until you cancel. Skip or cancel anytime.</small></p><p class="gro-sw__o">')
     rep('<i>Lowest price · skip or cancel anytime</i>', '<i>Lowest price today · skip or cancel anytime</i>')
     rep('Items in your cart are in high demand. Up to 68% off. Ends in', 'Early Black Friday pricing ends Dec 1. Up to 68% off. Ends in')
+    # Tom W.'s own words (his review says "close to $200"; the shortened bubble said "$200+")
+    t = "I wasted $200+ on traps. Week two with the pouches: completely silent. Was ready to call an exterminator. Glad I didn't."
+    assert s.count(t) == 2, ('checkout review bubble changed', s.count(t))
+    s = s.replace(t, 'Spent close to $200 on traps, poison and one of those ultrasonic plug-ins. Week two - completely silent. Was ready to call an exterminator and spend $400. Glad I didn\'t.')
     rep('100% refund valid for 90 days. No questions asked.', "If mice haven't left within 90 days, we refund your purchase in full.")
     rep('Money back, no questions', 'Full refund if mice stay')
     rep('Refills ship automatically at $34.99 a pack. Skip or cancel anytime.', 'Subscriber refills are $34.99 a pack; skip or cancel anytime.')
@@ -338,6 +342,10 @@ def main():
     wall, thread = ls.wall(), ls.thread()
     for e in ('🏠 ', '🚐 ', '🌾 '): wall, thread = wall.replace(e, ''), thread.replace(e, '')
     thread = thread.replace('<p class="cm__m">✓ Verified buyer</p>', '')
+    # Tom W.'s headline said "$200+" but his own text says "close to $200": use a line from his review as the headline
+    h = '<h3>I wasted $200+ on traps, then I found this Get Rid Of solution...</h3>'
+    assert wall.count(h) == 1, 'Tom W. headline changed'
+    wall = wall.replace(h, '<h3>Week two - completely silent.</h3>')
     # more reviews: the brand's own customer quotes (the same words and names the listicle shows), as the same cards
     tp = '<span class="sbx sbx--s" aria-label="5 out of 5 stars">' + '<i>★</i>' * 5 + '</span>'
     extra = ''.join(
