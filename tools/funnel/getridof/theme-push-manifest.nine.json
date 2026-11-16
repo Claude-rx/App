@@ -1,6 +1,7 @@
 {
 "assets/gron9/gron9-90d-292fac.webp": "b1a62955e3295b23d28ab4427a7682ae8ac5becbede81a19cfd2dcf53ee61e15",
 "assets/gron9/gron9-a-multiply-ab8681.webp": "bd7e260850283676f2b7b1d00bc4aad4e0b306eef6692049bb3b4170f9000f07",
+"assets/gron9/gron9-a-return-8daa4d.webp": "c87a8bcea0c3775607f9849e68aef141760dc1e0b56c91f251285f0d8887d616",
 "assets/gron9/gron9-affirm-logo-264821.svg": "210b09b40cb93ba69c7966da3389a4900e9e1c3211b732392023d4f6f7f46655",
 "assets/gron9/gron9-apple-pay-logo-d7b774.svg": "9d2bea52b20363bae914bdeecb5daac2592dc1839cf87e47e259d439cde78283",
 "assets/gron9/gron9-arrow-down-114155.svg": "49b7df8af46bd1bb099fb986ca7bb4b03b217564fe4809ea6942262f2a67526e",
@@ -42,6 +43,7 @@
 "assets/gron9/gron9-gro-offer-pack-014c70.webp": "fa9352abfe1df130dd6c9f255ce0d28541a2bd8dd683e187a6d9f8ffcc05f946",
 "assets/gron9/gron9-gro-quiz-2a0a98.js": "2a4644e1d002af00a0344f2936e07bec6b9b1430c61f268f734963bddd6e2fa1",
 "assets/gron9/gron9-gro-quiz-46535f.js": "b724e3c6862d4a83602b66c9847f3276010f705ba71680017ed8fe42fc2ffe5a",
+"assets/gron9/gron9-gro-quiz-a62763.js": "279fc6397ff7b1d6a6c8676df6cf776dfba0ea69b7c2fa66f1c41e86577f4db3",
 "assets/gron9/gron9-gro-quiz-dc879f.js": "749b7be46c5fa43b6491545c4c8030e09adc407dcc83bf19f6bd2fa8f54c3d7f",
 "assets/gron9/gron9-gro-quiz-f40234.js": "3554a9b6bb033abece2f0bbadd46098c909923341af5f6deb7d5de534bb0c776",
 "assets/gron9/gron9-guarantee-77f3bc.webp": "0e3c9cb2e9e48ecb35d85a3a4890f4343ce1dffd60e1e479d4d049409a0b42c1",
@@ -90,9 +92,9 @@
 "assets/gron9/gron9-ugc-4-7ebbd7.webp": "12c363f3cc4cfbb32744f034e56880fb69b1348258e1a6089973c65cee76819f",
 "assets/gron9/gron9-upsells-22339a.js": "8a5883415cc9ed47a97517f9e1d76982513e010507035bc6c26d6cc7079cf9f7",
 "assets/gron9/gron9-webclip-4dac88.webp": "912b63a04ba0f8ed75da099fe1adf4ee5ebabbd59ab9fd5abaebdd0ec53ef261",
-"templates/pages/page.mice-9-reasons-checkout.html": "6964459ad19bc069834d72009c004731f26a8f27e313a4096e84e2efeb355ec8",
-"templates/pages/page.mice-9-reasons-home-plan.html": "2a1d85c5846040101d6e606cbed9f11ffd6db2e2a161286312911476c7b1ce4a",
-"templates/pages/page.mice-9-reasons-last-offer.html": "ec0f9ce7370abbd556c901140cca2476765464e87de3037ede36f30245afb736",
+"templates/pages/page.mice-9-reasons-checkout.html": "2d7083d55a2603e6a0ad32ca4af7ccf5b202a58e524f53df717637ba8fc007f9",
+"templates/pages/page.mice-9-reasons-home-plan.html": "35cb718eb403a041ae8ab8ab2e0e12bde8b975cdee3abe134053a83f04707530",
+"templates/pages/page.mice-9-reasons-last-offer.html": "cde29d7d9197b9347cb2876d5417129b019db7bd4a456f424955ec23ba339b98",
 "templates/pages/page.mice-9-reasons-thank-you.html": "63c6850a9c48a2f78578a2b265d8588fe5034c1bf09e417f975c541bc25ea9f9",
-"templates/pages/page.mice-9-reasons.html": "21cd4c23e44d9ee38c9f237fc6c759a99028668ae1719257a67bb914145a9185"
+"templates/pages/page.mice-9-reasons.html": "7ada45cdb894ed0aa07c55816f65bc23be45ff246009946ea815bf95c48d4c33"
 }

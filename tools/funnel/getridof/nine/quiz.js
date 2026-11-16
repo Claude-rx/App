@@ -29,6 +29,12 @@
   if (document.querySelector('[data-next-selector-id="home-plan-last"]')) {
     var saved = parseInt(ss('gro_plan_tier') || '', 10);
     if (saved === 5) choose('home-plan-last-5', false);
+    if (ss('gro_plan') === 'covered') {    // the quiz just told this buyer the order covers the home
+      var h = document.querySelector('h1.display-lg'), p = h && h.parentNode.querySelector('p.text-xl'), mt = document.querySelector('.gro-map__title');
+      if (h) h.textContent = 'Want a Spare Pack for Your Next Swap?';
+      if (p) p.textContent = 'Your order already covers your home. Each pouch lasts up to 90 days, so a spare pack is ready when it is time to swap. Added to the order you just placed.';
+      if (mt) mt.textContent = 'Where pouches go in a typical home';
+    }
     return;
   }
 
@@ -63,6 +69,7 @@
           return ' Want a spare for the next swap? One pack' + (p ? ' is ' + p : ' is') + ' below. Otherwise, tap No thanks.'; })();
     }
     ss('gro_plan_tier', String(t));
+    ss('gro_plan', gap > 0 ? 'open' : 'covered');
     show('r');
     root.querySelector('[data-gq-go]').textContent = gap > 0 ? 'See my plan and price ↓' : 'See the add-on prices ↓';
     choose('home-plan-' + t, gap > 0);
