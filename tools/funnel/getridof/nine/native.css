@@ -138,3 +138,5 @@
 .nt .wc small{color:#777;font-size:12.5px}
 .nt .wc__m{color:#00845a}
 @media(min-width:768px){.nt #stories .wall{columns:2;column-gap:12px;max-width:none}}
+/* desktop: the three "what is really going on" cards put the number above the title, so the text uses the card width */
+@media(min-width:768px){.nt .stepi div{grid-template-columns:1fr;align-items:start;gap:6px}.nt .stepi i{grid-row:auto}}

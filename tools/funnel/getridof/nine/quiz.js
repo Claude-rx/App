@@ -46,6 +46,14 @@
       var hint = function (c, t) { var e = c && c.querySelector('.next-bundle-tier-card__hint'); if (e) e.textContent = t; };
       var lab = function (c, t) { var e = c && c.querySelector('.next-bundle-tier-card__label'); if (e) e.textContent = t; };
       hint(c1, '12 pouches · a spare for your next swap'); lab(c5, '5 spare packs'); hint(c5, '60 pouches · lowest price per pack');
+      /* the rest of the page speaks to a spare too, not to a new room */
+      [].forEach.call(document.querySelectorAll('h2.display-md'), function (h2) {
+        if (!/Where one more pack goes/.test(h2.textContent)) return;
+        h2.textContent = 'Where a spare pack goes';
+        var t = h2.nextElementSibling;
+        if (t) t.textContent = 'Keep it sealed and out of reach of children until swap day. Then put fresh pouches in the same spots: every way in, along the walls, and the places you rarely check.';
+      });
+      var see = document.querySelector('a[href="#gro-map"]'); if (see) see.textContent = 'See where pouches go ↓';
     }
     return;
   }
