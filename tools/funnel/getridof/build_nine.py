@@ -328,10 +328,28 @@ def main():
                         '<p class="note">The animations illustrate what each oil is in the blend to do. They are not test footage. Results vary by home.</p>')
     ls.SLUG = SLUG                                   # the review wall and comment thread link this funnel's own images
     ls.THREAD = ['dave', 'russel', 'thomas', 'earl']          # Gary M. and Dale T. are quoted in reasons 8 and 5
-    ls.WALL = ['robert', 'tom', 'amelia']                       # the customer photos get their own labelled row below
+    ls.WALL = ['robert', 'tom', 'amelia', 'gary', 'dale']       # the customer photos get their own labelled row below
     wall, thread = ls.wall(), ls.thread()
     for e in ('🏠 ', '🚐 ', '🌾 '): wall, thread = wall.replace(e, ''), thread.replace(e, '')
-    wall, thread = wall.replace('<span class="vb">✓ Verified Buyer</span>', ''), thread.replace('<p class="cm__m">✓ Verified buyer</p>', '')
+    thread = thread.replace('<p class="cm__m">✓ Verified buyer</p>', '')
+    # more reviews: the brand's own customer quotes (the same words and names the listicle shows), as the same cards
+    tp = '<span class="sbx sbx--s" aria-label="5 out of 5 stars">' + '<i>★</i>' * 5 + '</span>'
+    extra = ''.join(
+        f'\n    <article class="wc"><header><span class="wc__av" aria-hidden="true">{ini}</span><div><b>{who}</b></div></header>{tp}'
+        f'<p class="wc__t">{q}</p><small>{where}</small></article>'
+        for ini, who, where, q in (
+            ('RK', 'Rachel K.', 'Wisconsin', 'I tried the highest rated pouches, peppermint spray... none of them were strong enough. Mice just ignored them.'),
+            ('SP', 'Sarah P.', 'Michigan', "I've tried so many products. This is the first one where mice actually RAN when I put the pouches out. They left and never came back."),
+            ('PM', 'Patricia M.', 'Colorado', "I've spent hundreds on products that failed. Wish I'd found these first. Would've saved so much money and frustration.")))
+    assert wall.endswith('\n  </div>'), 'wall markup changed'
+    wall = wall[:-len('\n  </div>')] + extra + '\n  </div>'
+    # two even columns on desktop: a short quote between the long reviews (columns fill top to bottom)
+    head, _, rest = wall.partition('\n    <article')
+    cards = ['\n    <article' + c for c in rest[:-len('\n  </div>')].split('\n    <article')]
+    name = lambda c: re.search(r'<b>([^<]+)</b>', c).group(1)
+    order = ['Robert L.', 'Tom W.', 'Rachel K.', 'Amelia R.', 'Gary M.', 'Dale T.', 'Sarah P.', 'Patricia M.']
+    assert sorted(map(name, cards)) == sorted(order), [name(c) for c in cards]
+    wall = head + ''.join(sorted(cards, key=lambda c: order.index(name(c)))) + '\n  </div>'
     wall += ('\n  <p class="ph-t">Photos customers sent us</p>\n  <div class="ph4">' + ''.join(
         f'<img src="/{SLUG}/lp/ugc-{n}.webp" alt="{ls.PHOTO_ALT[n]}" width="520" height="645" loading="lazy" decoding="async">' for n in (1, 2, 3, 4)) + '</div>')
     a = '<span>Three months in a field in Texas. Not one mouse the entire time.</span>'

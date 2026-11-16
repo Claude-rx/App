@@ -82,9 +82,6 @@
 /* ---- round 6: quieter ---- */
 /* 1. the ingredient summary pills read again (an older rule made them white on white) */
 .nt .art .rs .sum__e span{color:#222}
-/* stars: plain gold characters, not coloured squares */
-.nt .sbx i,.nt .sbx--s i,.nt .sbx--48 i,.nt .sbx--48 i:last-child,.nt .sbx--l i{background:none;color:#b8860b;width:auto;height:auto;font-size:15px;border-radius:0;display:inline}
-.nt .sbx{gap:1px}
 /* kickers: sentence case, grey */
 .nt .ey,.nt .rs__n,.nt .ok>b,.nt .part,.nt .aq__h{text-transform:none;letter-spacing:0}
 .nt .ey,.nt .part,.nt .pt2 .part{color:#6b6b6b;font-size:14px;font-weight:700}
@@ -116,7 +113,6 @@
 .nt .gua img{border-radius:0}
 .nt #stories .w{max-width:680px}
 .nt #stories .wall{columns:1}
-.nt .wc{border-radius:0;border:0;border-bottom:1px solid var(--line);padding:14px 0}
 .nt .ph-t{font-weight:700;color:#444;margin:18px 0 8px;text-align:left}
 .nt .ph4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .nt .ph4 img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
@@ -126,5 +122,19 @@
 /* the sticky bar appears once the reader reaches reason 1 */
 .nt .sb{transition:transform .25s ease}
 .nt .sb.pre{transform:translateY(120%)}
-@media(min-width:768px){.nt #stories .wall{columns:2;max-width:none}}
 .nt .sec--dark .note,.nt .ofs .note{color:#777}
+/* ---- reviews: Trustpilot-style (green star boxes, white bordered cards) ---- */
+.nt .tps{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 10px;margin:0 0 18px}
+.nt .tps>b{font:700 20px/1 system-ui,sans-serif;color:#191919}
+.nt .tps p{flex-basis:100%;margin:0;font-size:14.5px;color:#444}
+.nt #stories .wall{columns:1;text-align:left}
+.nt .wc{background:#fff;border:1px solid #e3e3e3;border-radius:8px;padding:16px 16px 12px;margin:0 0 12px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.nt .wc header{margin-bottom:10px}
+.nt .wc header b{font-size:15px}
+.nt .wc .vb{display:block;color:#00845a;font-size:12px;font-weight:600;margin-top:2px}
+.nt .wc__av{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:#e9eff7;color:#2c4a73;font:700 13px/1 system-ui,sans-serif}
+.nt .wc h3{font-size:16px;margin:10px 0 5px;color:#191919}
+.nt .wc__t{font-size:15px;color:#2b2b2b;margin-top:8px}
+.nt .wc small{color:#777;font-size:12.5px}
+.nt .wc__m{color:#00845a}
+@media(min-width:768px){.nt #stories .wall{columns:2;column-gap:12px;max-width:none}}
