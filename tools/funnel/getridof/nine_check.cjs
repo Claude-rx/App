@@ -61,7 +61,7 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     ok(`${T} reason 2: one card per ingredient (peppermint, cinnamon, cedarwood, castor), each with its job, what it does, the result and an animation`,
       rootS.cards.length === 4 && ['Peppermint', 'Cinnamon', 'Cedarwood', 'Castor'].every((n, i) => rootS.cards[i].includes(n)) && rootS.cards.every(c => /Job \d/.test(c) && /result/.test(c) && /anim/.test(c)), rootS.cards.map(c => c.split(' | ')[0]).join(' ; '));
     ok(`${T} the 14-day check (3 steps) and the plan for mice already inside (4 steps)`, body.check === 3 && body.plan === 4, `${body.check} / ${body.plan}`);
-    ok(`${T} reviews, comment thread, "is this for you" and questions are on the page`, body.wall >= 8 && body.tps && body.green && body.thread >= 4 && body.photos === 4 && body.faq >= 5 && body.fit === '3/3', `${body.wall} review cards (rating line ${body.tps}, green stars ${body.green}), ${body.thread} comments, ${body.faq} questions, fit ${body.fit}`);
+    ok(`${T} reviews, comment thread, "is this for you" and questions are on the page`, body.wall >= 7 && body.tps && body.green && body.thread >= 4 && body.photos === 4 && body.faq >= 5 && body.fit === '3/3', `${body.wall} review cards (rating line ${body.tps}, green stars ${body.green}), ${body.thread} comments, ${body.faq} questions, fit ${body.fit}`);
     // honesty rules
     const honest = await p.evaluate(() => { const t = document.body.innerText; const aq = document.querySelector('.aq');
       return { amazon: !!aq && aq.querySelectorAll('blockquote').length === 3 && /not reviews of Get Rid Of/i.test(aq.innerText),

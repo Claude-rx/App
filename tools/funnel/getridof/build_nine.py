@@ -153,6 +153,7 @@ def checkout():
         '</span> today.<small class="gro-sw__r">Then <span class="gro-rt gro-rt--buy1">1 pack every 30 days for $34.99</span>'
         '<span class="gro-rt gro-rt--buy3">3 packs every 90 days for $104.97</span>, free shipping, until you cancel. Skip or cancel anytime.</small></p><p class="gro-sw__o">')
     rep('<i>Lowest price · skip or cancel anytime</i>', '<i>Lowest price today · skip or cancel anytime</i>')
+    rep('Items in your cart are in high demand. Up to 68% off. Ends in', 'Early Black Friday pricing ends Dec 1. Up to 68% off. Ends in')
     rep('100% refund valid for 90 days. No questions asked.', "If mice haven't left within 90 days, we refund your purchase in full.")
     rep('Money back, no questions', 'Full refund if mice stay')
     rep('Refills ship automatically at $34.99 a pack. Skip or cancel anytime.', 'Subscriber refills are $34.99 a pack; skip or cancel anytime.')
@@ -195,7 +196,7 @@ OFFERS = {
               + tier('home-plan-5', 5, V_FIVE, '5 more packs', '60 pouches · whole home · lowest price per pack'),
         accept='Yes, add it to my order for', decline_text='No thanks, my order is enough for now',
         bullets=['The same 4-oil pouches you just ordered', 'Added to your order with one click, no need to re-enter your card',
-                 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
+                 'One-time add-on: your refill schedule does not change', 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
         features_title='Where the extra pouches go', features_text='Mice don’t stop at the kitchen. Close every zone at once and they have nowhere quiet left to move to.',
         closing='Add more pouches to your order?',
         map=('Why one zone is not a whole house', 'One pack protects one zone. Here is where pouches go in a typical home.')),
@@ -211,7 +212,7 @@ OFFERS = {
               + tier('home-plan-last-5', 5, V_FIVE_LOW, 'Whole home · 5 packs', '60 pouches · our lowest price per pack'),
         accept='Yes, add it for', decline_text='No thanks, complete my order',
         bullets=['The same 4-oil pouches you just ordered', 'One click, no need to re-enter your card',
-                 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
+                 'One-time add-on: your refill schedule does not change', 'Ships in the same box, free', 'Same 90-day money-back guarantee'],
         features_title='Where one more pack goes', features_text='Put it where mice go when the kitchen stops being welcome.',
         closing='Add it to your order?',
         map=('Where mice move next', 'When one zone is covered they try the next quiet one. Here is where pouches go in a typical home.')),
@@ -339,7 +340,6 @@ def main():
         f'<p class="wc__t">{q}</p><small>{where}</small></article>'
         for ini, who, where, q in (
             ('RK', 'Rachel K.', 'Wisconsin', 'I tried the highest rated pouches, peppermint spray... none of them were strong enough. Mice just ignored them.'),
-            ('SP', 'Sarah P.', 'Michigan', "I've tried so many products. This is the first one where mice actually RAN when I put the pouches out. They left and never came back."),
             ('PM', 'Patricia M.', 'Colorado', "I've spent hundreds on products that failed. Wish I'd found these first. Would've saved so much money and frustration.")))
     assert wall.endswith('\n  </div>'), 'wall markup changed'
     wall = wall[:-len('\n  </div>')] + extra + '\n  </div>'
@@ -347,7 +347,7 @@ def main():
     head, _, rest = wall.partition('\n    <article')
     cards = ['\n    <article' + c for c in rest[:-len('\n  </div>')].split('\n    <article')]
     name = lambda c: re.search(r'<b>([^<]+)</b>', c).group(1)
-    order = ['Robert L.', 'Tom W.', 'Rachel K.', 'Amelia R.', 'Gary M.', 'Dale T.', 'Sarah P.', 'Patricia M.']
+    order = ['Robert L.', 'Tom W.', 'Rachel K.', 'Amelia R.', 'Gary M.', 'Dale T.', 'Patricia M.']
     assert sorted(map(name, cards)) == sorted(order), [name(c) for c in cards]
     wall = head + ''.join(sorted(cards, key=lambda c: order.index(name(c)))) + '\n  </div>'
     wall += ('\n  <p class="ph-t">Photos customers sent us</p>\n  <div class="ph4">' + ''.join(
