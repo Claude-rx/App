@@ -54,7 +54,7 @@ IMAGES = {
     'home-apartment': ('gro-home-apartment.webp', 480, 72, 4 / 3), 'home-ranch': ('gro-home-ranch.webp', 480, 72, 4 / 3),
     'home-two-story': ('gro-home-two-story.webp', 480, 72, 4 / 3), 'home-large': ('gro-home-large.webp', 480, 72, 4 / 3),
 }
-HERO = ('gro-n9-mouse-pantry.webp', 828, 52, 16 / 9)     # inlined: the first screen paints from the HTML alone
+HERO = ('gro-n9-mouse-pantry.webp', 760, 48, 16 / 9)     # inlined: the first screen paints from the HTML alone
 
 # The post-purchase offers. One package (id 1, the one-time pack) with the campaign's own vouchers:
 #   GROU1PK30Q    70.02% off any quantity   (offer 10)  -> 1, 2 or 3 more packs
