@@ -54,7 +54,7 @@ IMAGES = {
     'home-apartment': ('gro-home-apartment.webp', 480, 72, 4 / 3), 'home-ranch': ('gro-home-ranch.webp', 480, 72, 4 / 3),
     'home-two-story': ('gro-home-two-story.webp', 480, 72, 4 / 3), 'home-large': ('gro-home-large.webp', 480, 72, 4 / 3),
 }
-HERO = ('gro-n9-hero-sink.webp', 640, 60, 16 / 9)     # inlined: the first screen paints from the HTML alone
+HERO = ('gro-n9-hero-sink.webp', 828, 52, 16 / 9)     # inlined: the first screen paints from the HTML alone
 
 # The post-purchase offers. One package (id 1, the one-time pack) with the campaign's own vouchers:
 #   GROU1PK30Q    70.02% off any quantity   (offer 10)  -> 1, 2 or 3 more packs
@@ -130,6 +130,15 @@ def checkout():
         assert s.count(a) == 1, (a[:70], s.count(a))
         s = s.replace(a, b)
     rep('address_form:\n  label_style: inset\n  gated: false\n', 'address_form:\n  label_style: inset\n  gated: true\n')
+    # The sales page links here with ?forceBundleId=main:buy3, and that stays in the address bar. A phone browser reloads
+    # a background tab, which would re-apply buy3 over a choice the buyer made here (for example one-time, 1 pack). So
+    # the first visit records the parameter it applied, and a reload with the same parameter gets the buyer's last choice
+    # (sessionStorage.gro_bundle, written by the script below) in its place, before the Campaign Cart SDK reads the URL.
+    keep = ("<script>(function(){try{var q=/([?&]forceBundleId=)([^&#]*)/i.exec(location.search);if(!q)return;var v=decodeURIComponent(q[2]),"
+            "seen=sessionStorage.getItem('gro_fb'),own=sessionStorage.getItem('gro_bundle');"
+            "if(seen===v&&own&&/^(buy|ot)[13]$/.test(own)&&v!=='main:'+own){history.replaceState(history.state,'',location.pathname+"
+            "location.search.replace(q[0],q[1]+encodeURIComponent('main:'+own))+location.hash)}else sessionStorage.setItem('gro_fb',v)}catch(e){}})();</script>\n")
+    rep('<script>(function(){var m=/[?&]forceBundleId=main', keep + '<script>(function(){var m=/[?&]forceBundleId=main')
     rep('<div class="gro-addr"><div data-next-address="shipping"',
         '<div class="form-group gro-names">'
         '<div class="form-input"><label for="shipping_fname" class="label-checkout">First Name</label><input autocomplete="given-name" placeholder="First Name*" maxlength="256" name="shipping_fname" data-name="Shipping First Name" type="text" id="shipping_fname" data-next-checkout-field="fname" class="input-flds"></div>'
@@ -191,7 +200,7 @@ OFFERS = {
         title='A Smaller Start', next='receipt.html', decline='receipt.html', quiz=False,
         announce='BEFORE YOU GO · LAST OFFER ON THIS ORDER',
         badge_note='This is the last offer before your receipt.',
-        hero_title='Not Ready for the Full Plan? Take the Smaller Step.',
+        hero_title='One Last Add-On Before Your Receipt',
         hero_text='Pick one more pack for the room mice move to next, or take the whole-home 5 packs at our lowest price. Added to the order you just placed.',
         selector='home-plan-last', offer_title='Rodent Repellent Pouches', image='n9/pack.webp',
         quantity_label='Choose one',
@@ -224,7 +233,7 @@ def offer_page(o):
              f'  display_bundle_id: {q(o["selector"] + "-display-card")}',
              f'  title: {q(o["offer_title"])}', f'  image: {q(o["image"])}', f'  quantity_label: {q(o["quantity_label"])}',
              '  price_label: "Yours today"', f'  accept_text: {q(o["accept"])}',
-             '  details_hint: "Where the extra pouches go ↓"', f'  decline_text: {q(o["decline_text"])}',
+             '  details_hint: "<a href=\\"#gro-map\\">See where the extra pouches go ↓</a>"', f'  decline_text: {q(o["decline_text"])}',
              'upsell_bundle_tiers:'] + o['tiers'] + [
              'offer_bullets:'] + [f'  - {q(b)}' for b in o['bullets']] + [
              'upsell_body:', '  - type: features', f'    title: {q(o["features_title"])}', f'    text: {q(o["features_text"])}',
@@ -246,7 +255,7 @@ def offers():
     assert hero in tpl and offer in tpl and body in tpl
     tpl = tpl.replace(hero, "    {% campaign_include 'gro-offer-badges.html' badge_note=badge_note %}\n" + hero)
     tpl = tpl.replace(offer, "    {% if gro_quiz %}{% campaign_include 'gro-quiz.html' %}{% endif %}\n    <div id=\"gro-plan\">\n" + offer + "    </div>\n")
-    tpl = tpl.replace(body, "    {% campaign_include 'gro-house-map.html' map_title=map_title map_intro=map_intro %}\n" + body)
+    tpl = tpl.replace(body, "    <div id=\"gro-map\">{% campaign_include 'gro-house-map.html' map_title=map_title map_intro=map_intro %}</div>\n" + body)
     for name, o in OFFERS.items():
         (CAMP / f'{name}.html').write_text(offer_page(o) + tpl, encoding='utf-8')
     quiz = (HERE / 'quiz.html').read_text()
@@ -290,9 +299,20 @@ def main():
             ('Job 3 · Takes away the nest', 'Job 3 · Spoils the nesting spots'),
             ('The nesting corner smells wrong: they move out', 'The corner smells wrong: no place to settle'),
             ("Nowhere smells safe to settle, so they don't stay.", 'A new arrival finds nowhere that smells safe to settle. (A nest already in your wall is a different job: see reason 7.)'),
-            ('<span>No nest</span>', '<span>No place to settle</span>')):
+            ('<span>No nest</span>', '<span>No place to settle</span>'),
+            ('Animation: a mouse sits in its nest in a storage corner. A pouch is placed on the shelf, the cedarwood scent fills the corner and the mouse leaves the nest.',
+             'Animation: a mouse walks toward a storage corner where a pouch sits on the shelf, stops at the cedarwood scent and turns back without settling.'),
+            ('A scent barrier works on every mouse that comes near, because every mouse has to breathe.',
+             'A scent barrier reaches every mouse that comes near, because every mouse has to breathe.')):
         assert whys.count(a) == 1, f'ingredient card text changed on the sales page: {a}'
         whys = whys.replace(a, b)
+    # the cedarwood animation on this page: no nest and no "EMPTY" label; a "?" where the mouse stops (CSS in nine/n9.css)
+    k = whys.index('<figure class="an an3">'); e = whys.index('</figure>', k)
+    an3, n = re.subn(r'<g class="ns">.*?</g>', '', whys[k:e], count=1, flags=re.S)
+    an3, m = re.subn(r'<text class="em dl"[^>]*>EMPTY</text>', '', an3, count=1)
+    assert n == 1 and m == 1, 'the cedarwood animation changed on the sales page'
+    an3 = an3.replace('<text class="cp"', '<text class="q" x="166" y="76" text-anchor="middle">?</text><text class="cp"', 1)
+    whys = whys[:k] + an3 + whys[e:]
     whys = whys.replace('<p class="note">Animated illustrations. Place one pouch at every entry point. Results vary by home.</p>',
                         '<p class="note">The animations illustrate what each oil is in the blend to do. They are not test footage. Results vary by home.</p>')
     ls.SLUG = SLUG                                   # the review wall and comment thread link this funnel's own images

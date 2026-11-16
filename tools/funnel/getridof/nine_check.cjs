@@ -91,6 +91,17 @@ const money = (s) => /^\$\d+\.\d\d$/.test((s || '').trim());
     await p.locator('.gro-mode [data-gro-mode="buy"]').click();
     await p.waitForFunction(() => /47\.97/.test((document.querySelector('[data-next-cart-summary]') || {}).innerText || ''), null, { timeout: 30000 }).catch(() => {});
     ok(`${T} Subscribe & Save states its refill size, schedule and price where it is chosen; a one-time purchase shows none`, /3 packs every 90 days for \$104\.97/.test(t3) && /until you cancel/.test(t3) && tOne === '', t3.slice(0, 90) + ' | one-time: "' + tOne + '"');
+    // a reload must keep the buyer's own choice, although ?forceBundleId=main:buy3 is still in the address
+    await p.locator('.gro-mode [data-gro-mode="ot"]').click(); await p.waitForTimeout(400);
+    await p.locator('[data-next-bundle-id="ot1"]').click();
+    await p.waitForFunction(() => /34\.99/.test((document.querySelector('[data-next-cart-summary]') || {}).innerText || ''), null, { timeout: 30000 }).catch(() => {});
+    await p.reload({ waitUntil: 'load' });
+    await p.waitForFunction(() => /34\.99/.test((document.querySelector('[data-next-cart-summary]') || {}).innerText || ''), null, { timeout: 30000 }).catch(() => {});
+    const kept = await p.evaluate(() => ({ sel: [...document.querySelectorAll('[data-next-bundle-card].next-selected')].map(c => c.getAttribute('data-next-bundle-id')).join(), sum: ((document.querySelector('[data-next-cart-summary]') || {}).innerText || '').replace(/\s+/g, ' ').slice(-40), terms: (() => { const e = document.querySelector('.gro-sw__s .gro-sw__r'); return e && e.offsetParent !== null; })() }));
+    ok(`${T} a reload keeps a one-time, 1-pack choice (no switch back to the subscription)`, /ot1/.test(kept.sel) && /34\.99/.test(kept.sum) && !kept.terms, JSON.stringify(kept));
+    await p.locator('.gro-mode [data-gro-mode="buy"]').click(); await p.waitForTimeout(400);
+    await p.locator('[data-next-bundle-id="buy3"]').click();
+    await p.waitForFunction(() => /47\.97/.test((document.querySelector('[data-next-cart-summary]') || {}).innerText || ''), null, { timeout: 30000 }).catch(() => {});
     await p.waitForSelector('[data-next-address="shipping"][data-next-address-state="ready"]', { timeout: 30000 }).catch(() => {});
     const vis = () => p.evaluate(() => { const v = f => { const e = document.querySelector('#combo_form [data-next-checkout-field="' + f + '"]'); return !!e && e.offsetHeight > 0; };
       const r = f => document.querySelector('[data-next-checkout-field="' + f + '"]').getBoundingClientRect();

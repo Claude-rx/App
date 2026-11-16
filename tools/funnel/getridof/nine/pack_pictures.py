@@ -61,7 +61,7 @@ def place(bg, height, cx, base_y, shadow=True):
 # 1. reason 2: the pack among its ingredients
 st = Image.open(B / 'gro-n9-still-bg.webp').convert('RGBA')
 W, H = st.size
-st = place(st, round(H * .66), round(W * .56), round(H * .80))
+st = place(st, round(H * .52), round(W * .62), round(H * .69))
 st.convert('RGB').save(B / 'gro-n9-ingredients.webp', 'WEBP', quality=90, method=6)
 
 # 2. offer pages: the pack on a soft studio background
