@@ -55,3 +55,4 @@
 #gro-buy,#r2,.rs{scroll-margin-top:84px}
 @media(min-width:768px){.root{grid-template-columns:1fr 1fr}.rs .whys{grid-template-columns:1fr 1fr}.rs__i--t img{aspect-ratio:16/10;object-position:50% 22%}}
 .art .rs .sum b,.art .rs .sum__e span{color:#cfe59a}.art .rs .sum__e span{color:#fff}
+.bf i+b{margin-top:1px}

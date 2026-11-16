@@ -51,12 +51,13 @@
     if (gap > 0) {
       wrap.hidden = false;
       root.querySelector('[data-gq-gap]').textContent = plural(gap, 'pack');
-      line.textContent = state.name.charAt(0).toUpperCase() + state.name.slice(1) + (state.extra ? ' with the extras you picked' : '') + ' takes about ' + plural(need, 'pack') +
-        ', one per zone. Your order covers ' + plural(have, 'zone') + '. We selected ' + plural(t, 'more pack') + ' below' +
-        (t > gap ? ': it costs less per pack than ' + plural(gap, 'pack') + ' bought one at a time.' : gap > t ? ', the largest add-on on this page.' : '.');
+      line.textContent = state.name.charAt(0).toUpperCase() + state.name.slice(1) + (state.extra === 1 ? ' with the extra you picked' : state.extra ? ' with the extras you picked' : '') + ' takes about ' + plural(need, 'pack') +
+        ', one per zone. Your order covers ' + plural(have, 'zone') + ', so ' + (gap === 1 ? '1 is' : gap + ' are') + ' still open. ' +
+        (t > gap ? 'We selected the 5-pack below: on this page it costs less than ' + gap + ' single packs.'
+          : gap > t ? 'We selected the 5-pack below, the largest add-on on this page.' : 'We selected ' + plural(t, 'more pack') + ' below.');
     } else {
       wrap.hidden = true;
-      line.textContent = 'Good news: your order already covers ' + state.name + '. You don’t need more today.' +
+      line.textContent = 'Good news: your order already covers this plan. You don’t need more today.' +
         (/^buy/.test(ss('gro_bundle') || '') ? ' Your refills keep the pouches fresh.' : ' Each pouch lasts up to 90 days, so a spare pack would cover the next swap.');
     }
     ss('gro_plan_tier', String(t));
@@ -77,8 +78,8 @@
       show('1');
     } else if (b.hasAttribute('data-gq-go')) {
       e.preventDefault();
-      var plan = document.getElementById('gro-plan');
-      if (plan) plan.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var plan = document.querySelector('#gro-plan .next-bundle-tier-grid') || document.getElementById('gro-plan');
+      if (plan) plan.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
 })();

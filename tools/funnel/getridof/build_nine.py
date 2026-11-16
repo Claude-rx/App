@@ -46,7 +46,9 @@ CLONE_MANIFEST = ROOT / 'next-campaigns-create-runs/getridof/clone-2362-nine/run
 # FALLBACK: an older brand image used while a photo in IMAGES has not been generated yet (the build says which).
 FALLBACK = {'gro-n9-trash.webp': 'gro-ls-hero.jpg', 'gro-n9-engine.webp': 'gro-s-door.webp'}
 IMAGES = {
-    'garage': ('gro-n9-garage.webp', 800, 74, 4 / 3),
+    'garage': ('gro-n9-garage.webp', 800, 74, 4 / 3), 'family': ('gro-n9-family-dog.webp', 800, 74, 4 / 3),
+    # made from the real pack photo by nine/pack_pictures.py (no generated label text)
+    'ingredients': ('gro-n9-ingredients.webp', 960, 80, 4 / 3), 'pack': ('gro-n9-pack.webp', 640, 82), 'guarantee': ('gro-n9-guarantee.webp', 720, 80),
     'trash': ('gro-n9-trash.webp', 800, 72, 4 / 3), 'engine': ('gro-n9-engine.webp', 800, 74, 4 / 3),
     # the quiz
     'home-apartment': ('gro-home-apartment.webp', 480, 72, 4 / 3), 'home-ranch': ('gro-home-ranch.webp', 480, 72, 4 / 3),
@@ -141,7 +143,12 @@ def checkout():
     rep('</span> today.</p><p class="gro-sw__o">',
         '</span> today.<small class="gro-sw__r">Then <span class="gro-rt gro-rt--buy1">1 pack every 30 days for $34.99</span>'
         '<span class="gro-rt gro-rt--buy3">3 packs every 90 days for $104.97</span>, free shipping, until you cancel. Skip or cancel anytime.</small></p><p class="gro-sw__o">')
+    rep('<i>Lowest price · skip or cancel anytime</i>', '<i>Lowest price today · skip or cancel anytime</i>')
     f.write_text(s)
+    rt = CAMP / '_includes/gro-refill-terms.html'
+    a = 'Each pack lasts about a month, so your refill ships when it runs out:'
+    assert terms.count(a) == 1, 'refill terms wording changed'
+    rt.write_text(terms.replace(a, 'Your refills then ship automatically:'))
     css = CAMP / 'assets/css/gro-checkout.css'
     css.write_text(css.read_text() + (HERE / 'checkout.css').read_text())
 
@@ -165,28 +172,28 @@ OFFERS = {
     'upsell': dict(
         title='Size Your Home Plan', next='receipt.html', decline='downsell.html', quiz=True,
         announce='ORDER CONFIRMED · ONE QUICK QUESTION BEFORE IT SHIPS',
-        badge_note='Your order is confirmed. These prices are for customers who just ordered and are only on this page.',
+        badge_note='Your order is confirmed. These add-on prices are for customers who just ordered.',
         hero_title='Your Order Is Confirmed. Now Let’s Size It to Your Home.',
-        hero_text='One pack covers one zone, and mice move to the next quiet room. Answer two questions and we’ll show how many packs your home takes. Add-on packs ship in the same box, so they cost less here than anywhere else on the site.',
-        selector='home-plan', offer_title='Your Home Plan · Rodent Repellent Pouches', image='pdp/gro-offer-5pack.webp',
+        hero_text='One pack covers one zone, and mice move to the next quiet room. Answer two questions and we’ll show how many packs your home takes. Add-on packs ship in the same box as your order.',
+        selector='home-plan', offer_title='Your Home Plan · Rodent Repellent Pouches', image='n9/pack.webp',
         quantity_label='Your plan (tap to change)',
         tiers=tier('home-plan-1', 1, V_PACK, '1 more pack', '12 pouches · one more zone')
               + tier('home-plan-2', 2, V_PACK, '2 more packs', '24 pouches · two more zones')
               + tier('home-plan-3', 3, V_PACK, '3 more packs', '36 pouches · kitchen, basement, garage')
               + tier('home-plan-5', 5, V_FIVE, '5 more packs', '60 pouches · whole home · lowest price per pack', True),
-        accept='Yes, add my plan for', decline_text='No thanks, my order is enough for now',
+        accept='Yes, add it to my order for', decline_text='No thanks, my order is enough for now',
         bullets=['The same 4-oil pouches you just ordered', 'Added to your order with one click, no need to re-enter your card',
                  'Ships in the same box, free', 'Same 90-day money-back guarantee'],
         features_title='Where the extra pouches go', features_text='Mice don’t stop at the kitchen. Close every zone at once and they have nowhere quiet left to move to.',
-        closing='Add the pouches your home needs?',
+        closing='Add more pouches to your order?',
         map=('Why one zone is not a whole house', 'One pack protects one zone. Here is where pouches go in a typical home.')),
     'downsell': dict(
         title='A Smaller Start', next='receipt.html', decline='receipt.html', quiz=False,
         announce='BEFORE YOU GO · LAST OFFER ON THIS ORDER',
-        badge_note='This is the last offer before your receipt. These prices are gone when you leave this page.',
+        badge_note='This is the last offer before your receipt.',
         hero_title='Not Ready for the Full Plan? Take the Smaller Step.',
         hero_text='Pick one more pack for the room mice move to next, or take the whole-home 5 packs at our lowest price. Added to the order you just placed.',
-        selector='home-plan-last', offer_title='Rodent Repellent Pouches', image='pdp/gro-offer-pack.webp',
+        selector='home-plan-last', offer_title='Rodent Repellent Pouches', image='n9/pack.webp',
         quantity_label='Choose one',
         tiers=tier('home-plan-last-1', 1, V_PACK, '1 more pack', '12 pouches · the next zone', True)
               + tier('home-plan-last-5', 5, V_FIVE_LOW, 'Whole home · 5 packs', '60 pouches · our lowest price per pack'),
@@ -274,6 +281,19 @@ def main():
     logic = ls.block(pdp, '<ol class="lg">', '</ol>')
     whys = ls.block(pdp, '<div class="whys">', '<p class="note">Animated illustrations. Place one pouch at every entry point. Results vary by home.</p>')
     assert whys.count('<article class="why">') == 4 and whys.count('class="why__j"') == 4, 'the sales page no longer has one card per ingredient'
+    for a, b in (
+            # percentages: the pack label is the authority and only the peppermint figure could be read off it for sure
+            ('<b>Cinnamon oil · 5%</b>', '<b>Cinnamon oil</b>'), ('<b>Cedarwood oil · 4%</b>', '<b>Cedarwood oil</b>'), ('<b>Castor-oil base · 5%</b>', '<b>Castor oil</b>'),
+            ('Plant oils on their own evaporate fast. The thick castor-oil base holds the blend inside the pouch and lets it out a little at a time.',
+             'Plant oils on their own evaporate fast. Thick castor oil slows them down, and the corn-cob granules inside the pouch hold the blend and let it out a little at a time.'),
+            ('Slow release: still working on day 90', 'Slow release: made to last up to 90 days'),
+            # cedarwood: it is there for new arrivals; a nest that is already in a wall is reason 7's job
+            ('Job 3 · Takes away the nest', 'Job 3 · Spoils the nesting spots'),
+            ('The nesting corner smells wrong: they move out', 'The corner smells wrong: no place to settle'),
+            ("Nowhere smells safe to settle, so they don't stay.", 'A new arrival finds nowhere that smells safe to settle. (A nest already in your wall is a different job: see reason 7.)'),
+            ('<span>No nest</span>', '<span>No place to settle</span>')):
+        assert whys.count(a) == 1, f'ingredient card text changed on the sales page: {a}'
+        whys = whys.replace(a, b)
     whys = whys.replace('<p class="note">Animated illustrations. Place one pouch at every entry point. Results vary by home.</p>',
                         '<p class="note">The animations illustrate what each oil is in the blend to do. They are not test footage. Results vary by home.</p>')
     ls.SLUG = SLUG                                   # the review wall and comment thread link this funnel's own images
