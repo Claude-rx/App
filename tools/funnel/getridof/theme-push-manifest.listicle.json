@@ -49,6 +49,7 @@
 "assets/grols/grols-paypal-logo-812a71.svg": "adf9b3c556710fac2e0f2ecf748a1f82afd023d7957336ef228db33f1deb83d3",
 "assets/grols/grols-paypal-txt-63acaf.svg": "65b5b5ac3704273a1a888af98295d7ef805682c6c3c24554349eb10ef7f6f2ef",
 "assets/grols/grols-placement-guide-119325.pdf": "b92ddf44e5b351a1757da78ef818a988002abd97de48873df968155d4d8db3a6",
+"assets/grols/grols-placement-guide-2f16e2.pdf": "2e97f69fd5fe05c715b671b05ceeb7beec498073a8aac19876b54ea3fa779012",
 "assets/grols/grols-r-gap-bd9c4b.webp": "627c79803fb697d70a57f308508d5a83fb1c15134bf6a44c25d5d4c12ebbabe9",
 "assets/grols/grols-r-trail-573200.webp": "d852a1aff8d5d9eb798fe6975c1ac70db844a0032064639b4cd19907c2f7e627",
 "assets/grols/grols-scent-trail-sq-e1590c.webp": "760c4f97bddb1fe788cd466704dbe614495515bcee50645d8d364b744dd089a9",
@@ -67,6 +68,6 @@
 "templates/pages/page.mice-5-reasons-exclusive-offer.html": "5a26284abc3903b052728dbe855f9772d0253397ddfc4024ac77e93733ec19d0",
 "templates/pages/page.mice-5-reasons-special-offer-2.html": "65a065010878836c45b8f427364b00adecade53272fd64c8e981d46484b6c494",
 "templates/pages/page.mice-5-reasons-special-offer.html": "2a45fdc30c04c2d72a428138db0b37a281e78b5ca5846e219ecda45c56602c4a",
-"templates/pages/page.mice-5-reasons-thank-you.html": "6d8ad6a8f45804f974e56613eb1a0cc507c20a98e40bf1a74384e36e1d222488",
+"templates/pages/page.mice-5-reasons-thank-you.html": "1d153db714c3ef574b0ad78926a579122bd1e110b89a7b51286bfa8e26c545e7",
 "templates/pages/page.mice-5-reasons.html": "6a73bf6867e9d98f0b09543f6ee038aa33626d157d1c30d50189c292775a7bb0"
 }

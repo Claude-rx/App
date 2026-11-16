@@ -67,7 +67,7 @@ FUNNELS = {
     'nine': {
         'slug': 'mice-9-reasons', 'asset_dir': 'gron9', 'manifest': 'theme-push-manifest.nine.json',
         'pages': {
-            '': ('mice-9-reasons', '9 Reasons These Pouches Keep Mice Out When Everything Else Failed'),
+            '': ('mice-9-reasons', 'Still Hearing Them in the Walls? 9 Reasons These Pouches Keep Mice Out'),
             'checkout': ('mice-9-reasons-checkout', 'Secure Checkout'),
             'upsell': ('mice-9-reasons-home-plan', 'Size Your Home Plan'),
             'downsell': ('mice-9-reasons-last-offer', 'A Smaller Start'),
@@ -235,7 +235,11 @@ def main(theme, push):
         for f in batch: pushed[f] = digest[f]
         manifest_f.write_text(json.dumps(pushed, indent=0, sort_keys=True))   # progress survives an interrupted run
         print(f'pushed {min(i + 10, len(todo))}/{len(todo)}')
-    existing = {p['slug']: p for p in api('GET', 'pages/?limit=100')['results']}
+    existing, url = {}, 'pages/?limit=100'
+    while url:   # the store has more than 100 pages: read them all, or a page past the first 100 looks missing
+        r = api('GET', url)
+        existing.update({p['slug']: p for p in r['results']})
+        url = r.get('next') and 'pages/?' + r['next'].split('?', 1)[1]
     for d, (slug, title) in PAGES.items():
         body = {'title': title, 'slug': slug, 'template': slug, 'meta_title': f'{title} | Get Rid Of'}
         if slug in existing: api('PATCH', f"pages/{existing[slug]['id']}/", body); print('updated page', slug)

@@ -6,9 +6,9 @@
 <style>
 @page{size:Letter;margin:14mm 15mm}
 *{box-sizing:border-box}
-body{margin:0;font:11.5pt/1.5 "Helvetica Neue",Arial,sans-serif;color:#1b241d}
+body{margin:0;font:11pt/1.45 "Helvetica Neue",Arial,sans-serif;color:#1b241d}
 h1{font-size:25pt;line-height:1.1;margin:0 0 4pt;color:#23372B;letter-spacing:-.01em}
-h2{font-size:14.5pt;margin:15pt 0 6pt;color:#23372B}
+h2{font-size:14pt;margin:12pt 0 5pt;color:#23372B}
 p{margin:0 0 7pt}
 .top{display:flex;justify-content:space-between;align-items:center;border-bottom:2pt solid #23372B;padding-bottom:7pt;margin-bottom:12pt}
 .top img{height:15pt}
@@ -25,11 +25,13 @@ ol,ul{margin:0 0 7pt;padding-left:16pt}
 li{margin-bottom:3.5pt}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:14pt}
 figure{margin:8pt 0 0}
-figure img{width:100%;border-radius:8pt}
+figure img{width:100%;max-height:165pt;object-fit:cover;object-position:50% 40%;border-radius:8pt}
 figcaption{font-size:9pt;color:#5b665d;margin-top:3pt}
 .small{font-size:9.5pt;color:#5b665d}
 .pb{break-before:page}
-.foot{margin-top:12pt;padding-top:7pt;border-top:.6pt solid #dfe6d6;font-size:9.5pt;color:#5b665d}
+figure,h2,table,ol,ul,.box{break-inside:avoid}
+h2{break-after:avoid}
+.foot{margin-top:8pt;padding-top:5pt;border-top:.6pt solid #dfe6d6;font-size:9.5pt;color:#5b665d}
 </style>
 </head>
 <body>
@@ -70,7 +72,7 @@ figcaption{font-size:9pt;color:#5b665d;margin-top:3pt}
 </table>
 <p class="small">Smaller house or no basement? Move those pouches to the kitchen and garage. Each pouch covers roughly 65 sq. ft.; along a wall, space them 8 to 10 feet apart.</p>
 
-<figure class="pb">
+<figure>
   <img src="@@HOUSE@@" alt="Cutaway of a two-story home with garage and basement">
   <figcaption>Illustration of a typical two-story home with garage and basement.</figcaption>
 </figure>
@@ -78,17 +80,18 @@ figcaption{font-size:9pt;color:#5b665d;margin-top:3pt}
 <h2>3. Placing them</h2>
 <ol>
   <li><b>Take the pouch out of the bag and place it whole.</b> Do not cut it open.</li>
-  <li><b>Put it at the gap or in the corner</b>, on the floor or a shelf, not out in the open.</li>
+  <li><b>Put it at the gap or in the corner</b>, on the floor or a shelf, not out in the open. Wedge it in so nothing can drag it off.</li>
   <li><b>Write the date on it</b> with a marker. Each pouch works for up to 90 days.</li>
   <li><b>Keep it dry</b> and away from direct heat. Do not block vents.</li>
   <li><b>Keep pouches where children and pets cannot chew on them.</b></li>
   <li><b>Reseal the bag</b> with the pouches you have not placed yet.</li>
 </ol>
 
-<h2>4. What to expect</h2>
+<h2>4. What to expect, and how to check</h2>
 <ul>
-  <li><b>First 72 hours:</b> most customers notice less activity.</li>
-  <li><b>By week two:</b> the entry points are covered and the old trails are masked.</li>
+  <li><b>Day 0:</b> count the droppings in your worst spot and write the number down. Clean them up with gloves and disinfectant (no sweeping), then put the pouches down.</li>
+  <li><b>Mice already inside?</b> Set a few traps along the walls for one week and close the gaps you find with steel wool. Start the count when the traps come out.</li>
+  <li><b>Day 7 and Day 14:</b> count the new droppings. Fewer means fewer visits.</li>
   <li><b>Day 90:</b> replace the pouches. If you subscribed, your refill arrives on schedule.</li>
 </ul>
 <p class="small">Results vary with how severe the infestation is and how many entry points you have. Pouches are designed to repel mice; they are not a replacement for professional pest control in an established infestation.</p>

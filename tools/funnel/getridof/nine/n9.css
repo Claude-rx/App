@@ -58,6 +58,8 @@
 .bf i+b{margin-top:1px}
 /* first screen: the three things she wants, under the button */
 .und--t{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;font-weight:700;color:#2f6b1c}
+.lh .dek{font-size:17px;line-height:1.45;color:#33402f;margin:0 0 8px}
+@media(max-width:599px){#stories .wall{columns:1}}
 /* how many packs, before the order */
 .sz{display:grid;gap:10px;margin:14px 0 12px;text-align:left}
 .sz>div{display:grid;grid-template-columns:104px 1fr;column-gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;padding-right:12px}

@@ -58,7 +58,9 @@
     } else {
       wrap.hidden = true;
       line.textContent = 'Good news: your order already covers this plan. You don’t need more today.' +
-        (/^buy/.test(ss('gro_bundle') || '') ? ' Your refills keep the pouches fresh.' : ' Each pouch lasts up to 90 days, so a spare pack would cover the next swap.');
+        (/^buy/.test(ss('gro_bundle') || '') ? ' Your refills keep the pouches fresh.' : ' Each pouch lasts up to 90 days.') +
+        (function () { var e = document.querySelector('[data-next-bundle-id="home-plan-1"] [data-next-bundle-display="price"]'), p = e && /\$\d/.test(e.textContent) ? e.textContent.trim() : '';
+          return ' Want a spare for the next swap? One pack' + (p ? ' is ' + p : ' is') + ' below. Otherwise, tap No thanks.'; })();
     }
     ss('gro_plan_tier', String(t));
     show('r');
