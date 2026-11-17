@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "shopline-developer-mcp": {
+      "command": "npx",
+      "args": ["-y", "@shoplineos/shopline-developer-mcp"]
+    }
+  }
+}
