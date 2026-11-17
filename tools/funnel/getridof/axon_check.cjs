@@ -13,7 +13,7 @@ const STORE = /getridof/.test(base);
 const FUNNELS = [['mouse-pouches', '.hero [data-gro-atc]'], ['mice-5-reasons', '.lh [data-gro-atc]'], ['mouse-repellent-pouches', '#gro-buy ~ * [data-gro-atc], [data-gro-atc]'], ['mice-9-reasons', '#r1 [data-gro-atc]']];
 const OFFER = { 'mice-9-reasons': 'home-plan' };   // store slug of a funnel's first offer page when it is not "special-offer"
 const url = (slug, page) => page === '' ? `${base}/${slug}/` : STORE ? `${base}/${slug}-${{ checkout: 'checkout', upsell: OFFER[slug] || 'special-offer', receipt: 'thank-you' }[page]}/` : `${base}/${slug}/${page}/`;
-const ITEM = { item_id: 'cdkh', item_name: 'Rodent Repellent Pouches', item_variant_id: '37', item_category: 'x', price: 15.99, quantity: 3, discount: 34 };
+const ITEM = { item_id: 'cdkh-16-1s', item_name: 'Rodent Repellent Pouches', item_variant_id: '37', item_category: 'x', price: 15.99, quantity: 3, discount: 34 };
 let pass = 0, fail = 0;
 const ok = (n, p, d = '') => { p ? pass++ : fail++; console.log((p ? 'PASS ' : 'FAIL ') + n + (d ? '  ' + d : '')); };
 

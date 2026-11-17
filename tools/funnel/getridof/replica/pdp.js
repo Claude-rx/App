@@ -59,13 +59,13 @@
 
   /* ---------- AppLovin Axon (no SDK on this page: events are sent here) ----------
    * Same item shape as axon.adapter.js on the checkout: item_id = SKU of the subscription variant (package 2,
-   * SKU cdkh; subscription variants 8 / 37 / 38 for the 1 / 3 / 5-pack), item_category_id 7137 = Animal & Pet Repellents, image_url must be .png/.jpg. */
+   * SKU cdkh-16-1s; subscription variants 8 / 37 / 38 for the 1 / 3 / 5-pack), item_category_id 7137 = Animal & Pet Repellents, image_url must be .png/.jpg. */
   var AXON_TIERS = { buy1: { qty: 1, unit: 22.49, variant: '8' }, buy3: { qty: 3, unit: 15.99, variant: '37' }, buy5: { qty: 5, unit: 12.99, variant: '38' },
                      ot1: { qty: 1, unit: 34.99, variant: '7' }, ot3: { qty: 3, unit: 23.33, variant: '7' }, ot5: { qty: 5, unit: 20.99, variant: '7' } };
   var AXON_RETAIL = 49.99;
   function axonPayload() {
     var t = AXON_TIERS[state.refill ? state.bundle : state.bundle.replace('buy', 'ot')] || AXON_TIERS.buy3;
-    var item = { item_id: 'cdkh', item_name: 'Mouse Repellent Pouches', item_variant_id: t.variant, item_brand: 'Get Rid Of',
+    var item = { item_id: 'cdkh-16-1s', item_name: 'Mouse Repellent Pouches', item_variant_id: t.variant, item_brand: 'Get Rid Of',
                  item_category_id: 7137, price: t.unit, quantity: t.qty, discount: Math.round((AXON_RETAIL - t.unit) * 100) / 100 };
     if (window.__axonImageUrl) item.image_url = window.__axonImageUrl;
     return { currency: 'USD', value: Math.round(t.unit * t.qty * 100) / 100, items: [item] };

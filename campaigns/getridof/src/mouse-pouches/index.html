@@ -575,7 +575,7 @@ window.groCheckoutUrl = checkoutUrl;
 window.groState = state;
 function axonPayload() {
 var t = T[state.bundle], p = price(state.bundle), unit = Math.round(p / t.packs * 100) / 100;
-var item = { item_id: 'cdkh', item_name: 'Mouse Repellent Pouches', item_variant_id: t.v[state.sub ? 'sub' : 'one'], item_brand: 'Get Rid Of',
+var item = { item_id: 'cdkh-16-1s', item_name: 'Mouse Repellent Pouches', item_variant_id: t.v[state.sub ? 'sub' : 'one'], item_brand: 'Get Rid Of',
 item_category_id: 7137, price: unit, quantity: t.packs, discount: Math.round((49.99 - unit) * 100) / 100 };
 if (window.__axonImageUrl) item.image_url = window.__axonImageUrl;
 return { currency: 'USD', value: p, items: [item] };

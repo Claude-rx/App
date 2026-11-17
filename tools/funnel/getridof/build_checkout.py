@@ -310,7 +310,7 @@ data['mouse-pouches'].update({
     # SDK's item_id (SKU) or item_variant_id. user_data on: email/phone/
     # user_id/phone_last10_hashed (AppLovin's pixel hashes email/phone in the browser).
     'axon_event_key': 'b4bc9878-3e1d-43fc-94de-d53f78913b7c', 'axon_item_category_id': '7137',
-    'axon_category_by_package': 'cdkh:7137,7:7137,8:7137,37:7137,38:7137,GRO-COPPER:728,17:728', 'axon_send_user_data': 'true', 'axon_allowed_events': 'all',
+    'axon_category_by_package': 'cdkh-16-1s:7137,7:7137,8:7137,37:7137,38:7137,GRO-COPPER:728,17:728', 'axon_send_user_data': 'true', 'axon_allowed_events': 'all',
     'axon_image_url': 'https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png'})
 # Session recordings / heatmaps (Microsoft Clarity) and GA4: off while the id is empty. Set them here in campaigns.json.
 data['mouse-pouches'].setdefault('clarity_id', '')
