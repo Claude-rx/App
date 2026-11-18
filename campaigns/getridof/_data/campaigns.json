@@ -24,7 +24,11 @@
     "axon_allowed_events": "all",
     "axon_image_url": "https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png",
     "clarity_id": "",
-    "ga4_id": ""
+    "ga4_id": "",
+    "tiktok_pixel_id": "DBUORJRC77UCDH70RUD0",
+    "tiktok_advanced_matching_enabled": "true",
+    "tiktok_allowed_events": "",
+    "tiktok_blocked_events": ""
   },
   "mice-5-reasons": {
     "name": "Get Rid Of - Mouse Pouches Listicle",
@@ -51,7 +55,11 @@
     "axon_allowed_events": "all",
     "axon_image_url": "https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png",
     "clarity_id": "",
-    "ga4_id": ""
+    "ga4_id": "",
+    "tiktok_pixel_id": "DBUORJRC77UCDH70RUD0",
+    "tiktok_advanced_matching_enabled": "true",
+    "tiktok_allowed_events": "",
+    "tiktok_blocked_events": ""
   },
   "mouse-repellent-pouches": {
     "name": "Get Rid Of - Rodent Repellent Pouches PDP",
@@ -78,7 +86,11 @@
     "axon_allowed_events": "all",
     "axon_image_url": "https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png",
     "clarity_id": "",
-    "ga4_id": ""
+    "ga4_id": "",
+    "tiktok_pixel_id": "DBUORJRC77UCDH70RUD0",
+    "tiktok_advanced_matching_enabled": "true",
+    "tiktok_allowed_events": "",
+    "tiktok_blocked_events": ""
   },
   "mice-9-reasons": {
     "name": "Get Rid Of - 9 Reasons Listicle",
@@ -105,6 +117,10 @@
     "axon_allowed_events": "all",
     "axon_image_url": "https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png",
     "clarity_id": "",
-    "ga4_id": ""
+    "ga4_id": "",
+    "tiktok_pixel_id": "DBUORJRC77UCDH70RUD0",
+    "tiktok_advanced_matching_enabled": "true",
+    "tiktok_allowed_events": "",
+    "tiktok_blocked_events": ""
   }
 }

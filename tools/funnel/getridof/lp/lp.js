@@ -88,6 +88,7 @@
     return { currency: 'USD', value: p, items: [item] };
   }
   function axon(name, data) {
+    if (window.groTT) window.groTT(name, data);   // TikTok: ViewContent / AddToCart (tiktok-head.js)
     try {
       if (typeof window.axon !== 'function') return;
       var user = window.groAxonUser ? window.groAxonUser.get() : undefined;   // user_id always; email / phone once the shopper gave them

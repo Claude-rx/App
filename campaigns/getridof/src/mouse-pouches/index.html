@@ -52,7 +52,32 @@ page_type: product
       try { sessionStorage.setItem(K, JSON.stringify(s)); } catch (e) { /* private mode: this page only */ }
     }
   };
-})(window);</script>
+})(window);</script><script>!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+  var go = function () { ttq.load('DBUORJRC77UCDH70RUD0'); ttq.page(); };
+  'complete' === d.readyState ? go() : w.addEventListener('load', go);
+}(window, document, 'ttq');
+window.groTT = function (name, data) {
+  try {
+    var ev = { view_item: 'ViewContent', add_to_cart: 'AddToCart' }[name];
+    if (!ev || !window.ttq) return;
+    var p = { content_type: 'product' };
+    if (data) {
+      if (data.currency) p.currency = data.currency;
+      if (data.value !== undefined && data.value !== null) p.value = data.value;
+      p.contents = (data.items || []).map(function (i) {
+        var c = { content_id: String(i.item_id) };
+        if (i.item_name) c.content_name = i.item_name;
+        if (i.item_brand) c.brand = i.item_brand;
+        if (i.price !== undefined) c.price = i.price;
+        if (i.quantity !== undefined) c.quantity = i.quantity;
+        return c;
+      });
+    }
+    window.ttq.track(ev, p);
+  } catch (e) { /* never block the page */ }
+};</script>
+
 </head>
 <body>
 <header class="top"><div class="w">
@@ -581,6 +606,7 @@ if (window.__axonImageUrl) item.image_url = window.__axonImageUrl;
 return { currency: 'USD', value: p, items: [item] };
 }
 function axon(name, data) {
+if (window.groTT) window.groTT(name, data);   // TikTok: ViewContent / AddToCart (tiktok-head.js)
 try {
 if (typeof window.axon !== 'function') return;
 var user = window.groAxonUser ? window.groAxonUser.get() : undefined;   // user_id always; email / phone once the shopper gave them

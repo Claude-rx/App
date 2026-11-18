@@ -280,7 +280,12 @@ if (AXON_KEY && !/^[0-9a-f-]{36}$/i.test(AXON_KEY)) throw new Error('axon_event_
 const AXON_USER = fs.readFileSync(path.join(ROOT, 'tools/funnel/getridof/axon-user.js'), 'utf8').replace(/\/\*[\s\S]*?\*\//, '').trim();
 const AXON_FLAG = String(CAMPAIGN.axon_send_user_data).toLowerCase() === 'true' ? 'window.__axonSendUserData=true;' : '';
 const AXON_HEAD = AXON_KEY ? `<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.albss.com/p/l/loader.iife.js"];if(!e.axon){var a=e.axon=function(){a.performOperation?a.performOperation.apply(a,arguments):a.operationQueue.push(arguments)};a.operationQueue=[],a.ts=Date.now(),a.eventKey="${AXON_KEY}";var g=function(){for(var n=r.getElementsByTagName("script")[0],o=0;o<t.length;o++){var i=r.createElement("script");i.async=!0,i.src=t[o],n.parentNode.insertBefore(i,n)}};"complete"===r.readyState?g():e.addEventListener("load",g)}}(window,document);axon("init");window.__axonEventKey="${AXON_KEY}";window.__axonImageUrl=${JSON.stringify(CAMPAIGN.axon_image_url || '')};${AXON_FLAG}${AXON_USER}</script>\n` : '';
-html = html.replace('<head>', '<head>\n' + AXON_HEAD);
+// TikTok pixel (tools/funnel/getridof/tiktok-head.js, as on the other sales pages): base code + window.groTT, which
+// pdp.js calls next to its AppLovin events.
+const TT_ID = CAMPAIGN.tiktok_pixel_id || '';
+if (TT_ID && !/^[A-Z0-9]{20}$/.test(TT_ID)) throw new Error('tiktok_pixel_id is not a TikTok pixel id');
+const TIKTOK_HEAD = TT_ID ? '<script>' + fs.readFileSync(path.join(ROOT, 'tools/funnel/getridof/tiktok-head.js'), 'utf8').replace(/\/\*[\s\S]*?\*\//, '').trim().replace('%ID%', TT_ID) + '</script>\n' : '';
+html = html.replace('<head>', '<head>\n' + AXON_HEAD + TIKTOK_HEAD);
 // The campaign on the product page: the same campaign config + Campaign Cart SDK as the checkout, and the same
 // next-funnel name, so the campaign sees the page as its product step (page view, view_item, UTM / click-id
 // attribution captured at landing and carried into the checkout). The loader is a module script (deferred).

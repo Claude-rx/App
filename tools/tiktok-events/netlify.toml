@@ -1,0 +1,13 @@
+# TikTok Events API relay for the Get Rid Of store (see README.md).
+# Netlify: New site from Git, this repository, base directory tools/tiktok-events. No build step; one function.
+[build]
+  base = "tools/tiktok-events"
+  publish = "public"
+  command = "echo no build"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[build.environment]
+  NODE_VERSION = "22"

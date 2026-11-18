@@ -311,7 +311,12 @@ data['mouse-pouches'].update({
     # user_id/phone_last10_hashed (AppLovin's pixel hashes email/phone in the browser).
     'axon_event_key': 'b4bc9878-3e1d-43fc-94de-d53f78913b7c', 'axon_item_category_id': '7137',
     'axon_category_by_package': 'cdkh-16-1s:7137,7:7137,8:7137,37:7137,38:7137,GRO-COPPER:728,17:728', 'axon_send_user_data': 'true', 'axon_allowed_events': 'all',
-    'axon_image_url': 'https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png'})
+    'axon_image_url': 'https://cdn.cachebucket.com/media/getridof/themes/11/assets/gro-new-pack.png',
+    # TikTok pixel (Route C, tiktok.adapter.js): ViewContent / AddToCart / InitiateCheckout / Purchase, upsells as Purchase
+    # with event_id {ref_id}-US{n}. Purchases are also sent server-side by tools/tiktok-events (same event_ids, so TikTok
+    # keeps one of each). Advanced matching (ttq.identify) fires only when the buyer ticks the newsletter box.
+    'tiktok_pixel_id': 'DBUORJRC77UCDH70RUD0', 'tiktok_advanced_matching_enabled': 'true',
+    'tiktok_allowed_events': '', 'tiktok_blocked_events': ''})
 # Session recordings / heatmaps (Microsoft Clarity) and GA4: off while the id is empty. Set them here in campaigns.json.
 data['mouse-pouches'].setdefault('clarity_id', '')
 data['mouse-pouches'].setdefault('ga4_id', '')
@@ -328,7 +333,9 @@ cfg.write_text(c)
 # AppLovin user data helper (axon-user.js), inlined after the Axon base code in the include every SDK page loads
 AXON_USER = re.sub(r'/\*.*?\*/', '', (Path(__file__).resolve().parent / 'axon-user.js').read_text(), count=1, flags=re.S).strip()
 ah = CAMP / '_includes/analytics-head.html'
-a_txt, n_axon = re.subn(r'(<!-- gro-axon-user:start[^>]*-->\n).*?(<!-- gro-axon-user:end -->)', lambda m: m.group(1) + '{% raw %}<script>' + AXON_USER + '</script>{% endraw %}\n' + m.group(2), ah.read_text(), flags=re.S)
+# items-fix.js: corrects the SDK's item labels (the 3-pack reported as Package Protection) before TikTok / AppLovin send them
+ITEMS_FIX = re.sub(r'/\*.*?\*/', '', (Path(__file__).resolve().parent / 'items-fix.js').read_text(), count=1, flags=re.S).strip()
+a_txt, n_axon = re.subn(r'(<!-- gro-axon-user:start[^>]*-->\n).*?(<!-- gro-axon-user:end -->)', lambda m: m.group(1) + '{% raw %}<script>' + AXON_USER + '</script><script>' + ITEMS_FIX + '</script>{% endraw %}\n' + m.group(2), ah.read_text(), flags=re.S)
 assert n_axon == 1, 'analytics-head.html: gro-axon-user markers not found'
 ah.write_text(a_txt)
 CLARITY = ('    {% if campaign.clarity_id and campaign.clarity_id != "" %}<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};'

@@ -101,13 +101,22 @@ AXON = ('<script>!function(e,r){var t=["https://s.axon.ai/pixel.js","https://c.a
         '(window,document);axon("init");window.__axonEventKey="%KEY%";window.__axonImageUrl=%IMG%;%FLAG%%USER%</script>')
 # axon-user.js: the first-party user_id (and remembered email / phone) the page's events carry, same helper as the checkout
 AXON_USER = re.sub(r'/\*.*?\*/', '', (Path(__file__).resolve().parent / 'axon-user.js').read_text(), count=1, flags=re.S).strip()
+def tiktok_head(camp):
+    """The TikTok base code + window.groTT for a sales page of this campaign ('' without tiktok_pixel_id). See tiktok-head.js."""
+    pid = camp.get('tiktok_pixel_id') or ''
+    if not pid: return ''
+    if not re.fullmatch(r'[A-Z0-9]{20}', pid): raise SystemExit('tiktok_pixel_id is not a TikTok pixel id')
+    js = re.sub(r'/\*.*?\*/', '', (HERE.parent / 'tiktok-head.js').read_text(), count=1, flags=re.S).strip()
+    return '<script>' + js.replace('%ID%', pid) + '</script>\n'
+
+
 def axon_head(camp):
-    """The Axon base code for a product page of this campaign ('' when the campaign has no event key)."""
+    """The Axon base code (+ the TikTok base code) for a product page of this campaign ('' when it has neither)."""
     key = camp.get('axon_event_key') or ''
-    if not key: return ''
+    if not key: return tiktok_head(camp)
     if not re.fullmatch(r'[0-9a-fA-F-]{36}', key): raise SystemExit('axon_event_key is not an event key')
     flag = 'window.__axonSendUserData=true;' if str(camp.get('axon_send_user_data')).lower() == 'true' else ''
-    return AXON.replace('%KEY%', key).replace('%IMG%', json.dumps(camp.get('axon_image_url') or '')).replace('%FLAG%', flag).replace('%USER%', AXON_USER)
+    return AXON.replace('%KEY%', key).replace('%IMG%', json.dumps(camp.get('axon_image_url') or '')).replace('%FLAG%', flag).replace('%USER%', AXON_USER) + tiktok_head(camp)
 
 
 # Campaign Cart SDK on the sales page: campaign page view + attribution capture. Loaded after the page is interactive.
